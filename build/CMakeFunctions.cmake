@@ -2,7 +2,7 @@
 # This file contains a number of CMake functions/macros to make life easier.
 # It can be called multiple times, but it will only be read the first time.
 #
-# Author:  John Labenski
+# Author:  John Labenski, GIS Federal LLC
 # Created: Oct 15, 2011
 #
 # GET_CMAKE_CURRENT_LIST_DIR() - Get CMAKE_CURRENT_LIST_DIR var for CMake < 2.8.3
