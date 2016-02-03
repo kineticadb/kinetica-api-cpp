@@ -1,0 +1,1 @@
+/usr/lib64/ccache/c++   -Wall -O3 -DNDEBUG    CMakeFiles/buffertest.dir/test/buffertest.cc.o  -o buffertest -rdynamic libavrocpp.so.1.7.7.0 -lboost_filesystem -lboost_system -lboost_program_options -lboost_iostreams -Wl,-rpath,/home/mmahmud/gisfederal/gpudb-dev/gpudb-dev-master/gpudb-api-cpp/thirdparty/build/avro-cpp-1.7.7/build 

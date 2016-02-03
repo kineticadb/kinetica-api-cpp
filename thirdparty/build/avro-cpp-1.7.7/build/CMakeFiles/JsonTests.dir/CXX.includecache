@@ -1,0 +1,40 @@
+#IncludeRegexLine: ^[ 	]*#[ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+../api/Config.hh
+
+/home/mmahmud/gisfederal/gpudb-dev/gpudb-dev-master/gpudb-api-cpp/thirdparty/build/avro-cpp-1.7.7/impl/json/JsonDom.hh
+iostream
+-
+stdint.h
+-
+map
+-
+string
+-
+vector
+-
+boost/shared_ptr.hpp
+-
+boost/any.hpp
+/home/mmahmud/gisfederal/gpudb-dev/gpudb-dev-master/gpudb-api-cpp/thirdparty/build/avro-cpp-1.7.7/impl/json/boost/any.hpp
+Config.hh
+/home/mmahmud/gisfederal/gpudb-dev/gpudb-dev-master/gpudb-api-cpp/thirdparty/build/avro-cpp-1.7.7/impl/json/Config.hh
+
+/home/mmahmud/gisfederal/gpudb-dev/gpudb-dev-master/gpudb-api-cpp/thirdparty/build/avro-cpp-1.7.7/test/JsonTests.cc
+limits
+-
+boost/test/included/unit_test_framework.hpp
+-
+boost/test/unit_test.hpp
+-
+boost/test/parameterized_test.hpp
+-
+../impl/json/JsonDom.hh
+/home/mmahmud/gisfederal/gpudb-dev/gpudb-dev-master/gpudb-api-cpp/thirdparty/build/avro-cpp-1.7.7/impl/json/JsonDom.hh
+

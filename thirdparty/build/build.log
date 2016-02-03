@@ -1,0 +1,451 @@
+ 
+tar -xzf ../snappy-1.1.3.tar.gz
+ 
+./configure --prefix=/home/mmahmud/gisfederal/gpudb-dev/gpudb-dev-master/gpudb-api-cpp/thirdparty/install
+checking for a BSD-compatible install... /bin/install -c
+checking whether build environment is sane... yes
+checking for a thread-safe mkdir -p... /bin/mkdir -p
+checking for gawk... gawk
+checking whether make sets $(MAKE)... yes
+checking whether make supports nested variables... yes
+checking build system type... x86_64-unknown-linux-gnu
+checking host system type... x86_64-unknown-linux-gnu
+checking how to print strings... printf
+checking for style of include used by make... GNU
+checking for gcc... gcc
+checking whether the C compiler works... yes
+checking for C compiler default output file name... a.out
+checking for suffix of executables... 
+checking whether we are cross compiling... no
+checking for suffix of object files... o
+checking whether we are using the GNU C compiler... yes
+checking whether gcc accepts -g... yes
+checking for gcc option to accept ISO C89... none needed
+checking whether gcc understands -c and -o together... yes
+checking dependency style of gcc... gcc3
+checking for a sed that does not truncate output... /bin/sed
+checking for grep that handles long lines and -e... /bin/grep
+checking for egrep... /bin/grep -E
+checking for fgrep... /bin/grep -F
+checking for ld used by gcc... /bin/ld
+checking if the linker (/bin/ld) is GNU ld... yes
+checking for BSD- or MS-compatible name lister (nm)... /bin/nm -B
+checking the name lister (/bin/nm -B) interface... BSD nm
+checking whether ln -s works... yes
+checking the maximum length of command line arguments... 1572864
+checking whether the shell understands some XSI constructs... yes
+checking whether the shell understands "+="... yes
+checking how to convert x86_64-unknown-linux-gnu file names to x86_64-unknown-linux-gnu format... func_convert_file_noop
+checking how to convert x86_64-unknown-linux-gnu file names to toolchain format... func_convert_file_noop
+checking for /bin/ld option to reload object files... -r
+checking for objdump... objdump
+checking how to recognize dependent libraries... pass_all
+checking for dlltool... no
+checking how to associate runtime and link libraries... printf %s\n
+checking for ar... ar
+checking for archiver @FILE support... @
+checking for strip... strip
+checking for ranlib... ranlib
+checking command to parse /bin/nm -B output from gcc object... ok
+checking for sysroot... no
+checking for mt... no
+checking if : is a manifest tool... no
+checking how to run the C preprocessor... gcc -E
+checking for ANSI C header files... yes
+checking for sys/types.h... yes
+checking for sys/stat.h... yes
+checking for stdlib.h... yes
+checking for string.h... yes
+checking for memory.h... yes
+checking for strings.h... yes
+checking for inttypes.h... yes
+checking for stdint.h... yes
+checking for unistd.h... yes
+checking for dlfcn.h... yes
+checking for objdir... .libs
+checking if gcc supports -fno-rtti -fno-exceptions... no
+checking for gcc option to produce PIC... -fPIC -DPIC
+checking if gcc PIC flag -fPIC -DPIC works... yes
+checking if gcc static flag -static works... no
+checking if gcc supports -c -o file.o... yes
+checking if gcc supports -c -o file.o... (cached) yes
+checking whether the gcc linker (/bin/ld -m elf_x86_64) supports shared libraries... yes
+checking whether -lc should be explicitly linked in... no
+checking dynamic linker characteristics... GNU/Linux ld.so
+checking how to hardcode library paths into programs... immediate
+checking whether stripping libraries is possible... yes
+checking if libtool supports shared libraries... yes
+checking whether to build shared libraries... yes
+checking whether to build static libraries... yes
+checking for g++... g++
+checking whether we are using the GNU C++ compiler... yes
+checking whether g++ accepts -g... yes
+checking dependency style of g++... gcc3
+checking how to run the C++ preprocessor... g++ -E
+checking for ld used by g++... /bin/ld -m elf_x86_64
+checking if the linker (/bin/ld -m elf_x86_64) is GNU ld... yes
+checking whether the g++ linker (/bin/ld -m elf_x86_64) supports shared libraries... yes
+checking for g++ option to produce PIC... -fPIC -DPIC
+checking if g++ PIC flag -fPIC -DPIC works... yes
+checking if g++ static flag -static works... no
+checking if g++ supports -c -o file.o... yes
+checking if g++ supports -c -o file.o... (cached) yes
+checking whether the g++ linker (/bin/ld -m elf_x86_64) supports shared libraries... yes
+checking dynamic linker characteristics... (cached) GNU/Linux ld.so
+checking how to hardcode library paths into programs... immediate
+checking whether byte ordering is bigendian... no
+checking for size_t... yes
+checking for ssize_t... yes
+checking for stdint.h... (cached) yes
+checking stddef.h usability... yes
+checking stddef.h presence... yes
+checking for stddef.h... yes
+checking sys/mman.h usability... yes
+checking sys/mman.h presence... yes
+checking for sys/mman.h... yes
+checking sys/resource.h usability... yes
+checking sys/resource.h presence... yes
+checking for sys/resource.h... yes
+checking windows.h usability... no
+checking windows.h presence... no
+checking for windows.h... no
+checking byteswap.h usability... yes
+checking byteswap.h presence... yes
+checking for byteswap.h... yes
+checking sys/byteswap.h usability... no
+checking sys/byteswap.h presence... no
+checking for sys/byteswap.h... no
+checking sys/endian.h usability... no
+checking sys/endian.h presence... no
+checking for sys/endian.h... no
+checking sys/time.h usability... yes
+checking sys/time.h presence... yes
+checking for sys/time.h... yes
+checking for mmap... yes
+checking for 'gtest-config'... checking for gtest-config... no
+no
+checking for pkg-config... /bin/pkg-config
+checking pkg-config is at least version 0.9.0... yes
+checking for gflags... no
+checking if the compiler supports __builtin_expect... yes
+checking if the compiler supports __builtin_ctzll... yes
+checking for zlibVersion in -lz... yes
+checking for lzo1x_1_15_compress in -llzo2... no
+checking for lzf_compress in -llzf... no
+checking for fastlz_compress in -lfastlz... no
+checking for qlz_compress in -lquicklz... no
+checking that generated files are newer than configure... done
+configure: creating ./config.status
+config.status: creating Makefile
+config.status: creating snappy-stubs-public.h
+config.status: creating config.h
+config.status: executing depfiles commands
+config.status: executing libtool commands
+ 
+make -j2
+make  all-am
+make[1]: Entering directory `/home/mmahmud/gisfederal/gpudb-dev/gpudb-dev-master/gpudb-api-cpp/thirdparty/build/snappy-1.1.3'
+/bin/sh ./libtool  --tag=CXX   --mode=compile g++ -DHAVE_CONFIG_H -I.     -g -O2 -MT snappy.lo -MD -MP -MF .deps/snappy.Tpo -c -o snappy.lo snappy.cc
+/bin/sh ./libtool  --tag=CXX   --mode=compile g++ -DHAVE_CONFIG_H -I.     -g -O2 -MT snappy-sinksource.lo -MD -MP -MF .deps/snappy-sinksource.Tpo -c -o snappy-sinksource.lo snappy-sinksource.cc
+libtool: compile:  g++ -DHAVE_CONFIG_H -I. -g -O2 -MT snappy.lo -MD -MP -MF .deps/snappy.Tpo -c snappy.cc  -fPIC -DPIC -o .libs/snappy.o
+libtool: compile:  g++ -DHAVE_CONFIG_H -I. -g -O2 -MT snappy-sinksource.lo -MD -MP -MF .deps/snappy-sinksource.Tpo -c snappy-sinksource.cc  -fPIC -DPIC -o .libs/snappy-sinksource.o
+libtool: compile:  g++ -DHAVE_CONFIG_H -I. -g -O2 -MT snappy-sinksource.lo -MD -MP -MF .deps/snappy-sinksource.Tpo -c snappy-sinksource.cc -o snappy-sinksource.o >/dev/null 2>&1
+mv -f .deps/snappy-sinksource.Tpo .deps/snappy-sinksource.Plo
+/bin/sh ./libtool  --tag=CXX   --mode=compile g++ -DHAVE_CONFIG_H -I.     -g -O2 -MT snappy-stubs-internal.lo -MD -MP -MF .deps/snappy-stubs-internal.Tpo -c -o snappy-stubs-internal.lo snappy-stubs-internal.cc
+libtool: compile:  g++ -DHAVE_CONFIG_H -I. -g -O2 -MT snappy-stubs-internal.lo -MD -MP -MF .deps/snappy-stubs-internal.Tpo -c snappy-stubs-internal.cc  -fPIC -DPIC -o .libs/snappy-stubs-internal.o
+libtool: compile:  g++ -DHAVE_CONFIG_H -I. -g -O2 -MT snappy-stubs-internal.lo -MD -MP -MF .deps/snappy-stubs-internal.Tpo -c snappy-stubs-internal.cc -o snappy-stubs-internal.o >/dev/null 2>&1
+mv -f .deps/snappy-stubs-internal.Tpo .deps/snappy-stubs-internal.Plo
+/bin/sh ./libtool  --tag=CXX   --mode=compile g++ -DHAVE_CONFIG_H -I.     -g -O2 -MT snappy-c.lo -MD -MP -MF .deps/snappy-c.Tpo -c -o snappy-c.lo snappy-c.cc
+libtool: compile:  g++ -DHAVE_CONFIG_H -I. -g -O2 -MT snappy-c.lo -MD -MP -MF .deps/snappy-c.Tpo -c snappy-c.cc  -fPIC -DPIC -o .libs/snappy-c.o
+libtool: compile:  g++ -DHAVE_CONFIG_H -I. -g -O2 -MT snappy-c.lo -MD -MP -MF .deps/snappy-c.Tpo -c snappy-c.cc -o snappy-c.o >/dev/null 2>&1
+mv -f .deps/snappy-c.Tpo .deps/snappy-c.Plo
+g++ -DHAVE_CONFIG_H -I.      -g -O2 -MT snappy_unittest-snappy_unittest.o -MD -MP -MF .deps/snappy_unittest-snappy_unittest.Tpo -c -o snappy_unittest-snappy_unittest.o `test -f 'snappy_unittest.cc' || echo './'`snappy_unittest.cc
+libtool: compile:  g++ -DHAVE_CONFIG_H -I. -g -O2 -MT snappy.lo -MD -MP -MF .deps/snappy.Tpo -c snappy.cc -o snappy.o >/dev/null 2>&1
+mv -f .deps/snappy.Tpo .deps/snappy.Plo
+g++ -DHAVE_CONFIG_H -I.      -g -O2 -MT snappy_unittest-snappy-test.o -MD -MP -MF .deps/snappy_unittest-snappy-test.Tpo -c -o snappy_unittest-snappy-test.o `test -f 'snappy-test.cc' || echo './'`snappy-test.cc
+mv -f .deps/snappy_unittest-snappy-test.Tpo .deps/snappy_unittest-snappy-test.Po
+/bin/sh ./libtool  --tag=CXX   --mode=link g++  -g -O2 -version-info 4:0:3  -o libsnappy.la -rpath /home/mmahmud/gisfederal/gpudb-dev/gpudb-dev-master/gpudb-api-cpp/thirdparty/install/lib snappy.lo snappy-sinksource.lo snappy-stubs-internal.lo snappy-c.lo  
+libtool: link: g++  -fPIC -DPIC -shared -nostdlib /usr/lib/gcc/x86_64-redhat-linux/4.8.3/../../../../lib64/crti.o /usr/lib/gcc/x86_64-redhat-linux/4.8.3/crtbeginS.o  .libs/snappy.o .libs/snappy-sinksource.o .libs/snappy-stubs-internal.o .libs/snappy-c.o   -L/usr/lib/gcc/x86_64-redhat-linux/4.8.3 -L/usr/lib/gcc/x86_64-redhat-linux/4.8.3/../../../../lib64 -L/lib/../lib64 -L/usr/lib/../lib64 -L/usr/lib/gcc/x86_64-redhat-linux/4.8.3/../../.. -lstdc++ -lm -lc -lgcc_s /usr/lib/gcc/x86_64-redhat-linux/4.8.3/crtendS.o /usr/lib/gcc/x86_64-redhat-linux/4.8.3/../../../../lib64/crtn.o  -O2   -Wl,-soname -Wl,libsnappy.so.1 -o .libs/libsnappy.so.1.3.0
+libtool: link: (cd ".libs" && rm -f "libsnappy.so.1" && ln -s "libsnappy.so.1.3.0" "libsnappy.so.1")
+libtool: link: (cd ".libs" && rm -f "libsnappy.so" && ln -s "libsnappy.so.1.3.0" "libsnappy.so")
+libtool: link: ar cru .libs/libsnappy.a  snappy.o snappy-sinksource.o snappy-stubs-internal.o snappy-c.o
+libtool: link: ranlib .libs/libsnappy.a
+libtool: link: ( cd ".libs" && rm -f "libsnappy.la" && ln -s "../libsnappy.la" "libsnappy.la" )
+mv -f .deps/snappy_unittest-snappy_unittest.Tpo .deps/snappy_unittest-snappy_unittest.Po
+/bin/sh ./libtool  --tag=CXX   --mode=link g++  -g -O2   -o snappy_unittest snappy_unittest-snappy_unittest.o snappy_unittest-snappy-test.o libsnappy.la -lz    
+libtool: link: g++ -g -O2 -o .libs/snappy_unittest snappy_unittest-snappy_unittest.o snappy_unittest-snappy-test.o  ./.libs/libsnappy.so -lz -Wl,-rpath -Wl,/home/mmahmud/gisfederal/gpudb-dev/gpudb-dev-master/gpudb-api-cpp/thirdparty/install/lib
+make[1]: Leaving directory `/home/mmahmud/gisfederal/gpudb-dev/gpudb-dev-master/gpudb-api-cpp/thirdparty/build/snappy-1.1.3'
+ 
+make install
+make[1]: Entering directory `/home/mmahmud/gisfederal/gpudb-dev/gpudb-dev-master/gpudb-api-cpp/thirdparty/build/snappy-1.1.3'
+ /bin/mkdir -p '/home/mmahmud/gisfederal/gpudb-dev/gpudb-dev-master/gpudb-api-cpp/thirdparty/install/lib'
+ /bin/sh ./libtool   --mode=install /bin/install -c   libsnappy.la '/home/mmahmud/gisfederal/gpudb-dev/gpudb-dev-master/gpudb-api-cpp/thirdparty/install/lib'
+libtool: install: /bin/install -c .libs/libsnappy.so.1.3.0 /home/mmahmud/gisfederal/gpudb-dev/gpudb-dev-master/gpudb-api-cpp/thirdparty/install/lib/libsnappy.so.1.3.0
+libtool: install: (cd /home/mmahmud/gisfederal/gpudb-dev/gpudb-dev-master/gpudb-api-cpp/thirdparty/install/lib && { ln -s -f libsnappy.so.1.3.0 libsnappy.so.1 || { rm -f libsnappy.so.1 && ln -s libsnappy.so.1.3.0 libsnappy.so.1; }; })
+libtool: install: (cd /home/mmahmud/gisfederal/gpudb-dev/gpudb-dev-master/gpudb-api-cpp/thirdparty/install/lib && { ln -s -f libsnappy.so.1.3.0 libsnappy.so || { rm -f libsnappy.so && ln -s libsnappy.so.1.3.0 libsnappy.so; }; })
+libtool: install: /bin/install -c .libs/libsnappy.lai /home/mmahmud/gisfederal/gpudb-dev/gpudb-dev-master/gpudb-api-cpp/thirdparty/install/lib/libsnappy.la
+libtool: install: /bin/install -c .libs/libsnappy.a /home/mmahmud/gisfederal/gpudb-dev/gpudb-dev-master/gpudb-api-cpp/thirdparty/install/lib/libsnappy.a
+libtool: install: chmod 644 /home/mmahmud/gisfederal/gpudb-dev/gpudb-dev-master/gpudb-api-cpp/thirdparty/install/lib/libsnappy.a
+libtool: install: ranlib /home/mmahmud/gisfederal/gpudb-dev/gpudb-dev-master/gpudb-api-cpp/thirdparty/install/lib/libsnappy.a
+libtool: finish: PATH="/opt/gpudb-core-libs/bin:/usr/local/cuda/bin:/opt/gpudb-core-libs/bin:/usr/local/cuda/bin:/usr/lib64/qt-3.3/bin:/usr/lib64/ccache:/usr/local/bin:/bin:/usr/bin:/usr/local/sbin:/usr/sbin:/home/mmahmud/.local/bin:/home/mmahmud/bin:/sbin" ldconfig -n /home/mmahmud/gisfederal/gpudb-dev/gpudb-dev-master/gpudb-api-cpp/thirdparty/install/lib
+----------------------------------------------------------------------
+Libraries have been installed in:
+   /home/mmahmud/gisfederal/gpudb-dev/gpudb-dev-master/gpudb-api-cpp/thirdparty/install/lib
+
+If you ever happen to want to link against installed libraries
+in a given directory, LIBDIR, you must either use libtool, and
+specify the full pathname of the library, or use the `-LLIBDIR'
+flag during linking and do at least one of the following:
+   - add LIBDIR to the `LD_LIBRARY_PATH' environment variable
+     during execution
+   - add LIBDIR to the `LD_RUN_PATH' environment variable
+     during linking
+   - use the `-Wl,-rpath -Wl,LIBDIR' linker flag
+   - have your system administrator add LIBDIR to `/etc/ld.so.conf'
+
+See any operating system documentation about shared libraries for
+more information, such as the ld(1) and ld.so(8) manual pages.
+----------------------------------------------------------------------
+ /bin/mkdir -p '/home/mmahmud/gisfederal/gpudb-dev/gpudb-dev-master/gpudb-api-cpp/thirdparty/install/share/doc/snappy'
+ /bin/install -c -m 644 ChangeLog COPYING INSTALL NEWS README format_description.txt framing_format.txt '/home/mmahmud/gisfederal/gpudb-dev/gpudb-dev-master/gpudb-api-cpp/thirdparty/install/share/doc/snappy'
+ /bin/mkdir -p '/home/mmahmud/gisfederal/gpudb-dev/gpudb-dev-master/gpudb-api-cpp/thirdparty/install/include'
+ /bin/install -c -m 644 snappy.h snappy-sinksource.h snappy-stubs-public.h snappy-c.h '/home/mmahmud/gisfederal/gpudb-dev/gpudb-dev-master/gpudb-api-cpp/thirdparty/install/include'
+make[1]: Leaving directory `/home/mmahmud/gisfederal/gpudb-dev/gpudb-dev-master/gpudb-api-cpp/thirdparty/build/snappy-1.1.3'
+ 
+tar -xzf ../avro-cpp-1.7.7.tar.gz
+ 
+sed -i 's/BOOST_MESSAGE/BOOST_TEST_MESSAGE/g' test/buffertest.cc
+ 
+sed -i 's/BOOST_CHECKPOINT/BOOST_TEST_CHECKPOINT/g' test/SchemaTests.cc
+ 
+cmake -DCMAKE_INSTALL_PREFIX=/home/mmahmud/gisfederal/gpudb-dev/gpudb-dev-master/gpudb-api-cpp/thirdparty/install -DCMAKE_INSTALL_RPATH='/home/mmahmud/gisfederal/gpudb-dev/gpudb-dev-master/gpudb-api-cpp/thirdparty/install/lib' ../
+-- The C compiler identification is GNU 4.8.3
+-- The CXX compiler identification is GNU 4.8.3
+-- Check for working C compiler: /usr/lib64/ccache/cc
+-- Check for working C compiler: /usr/lib64/ccache/cc -- works
+-- Detecting C compiler ABI info
+-- Detecting C compiler ABI info - done
+-- Check for working CXX compiler: /usr/lib64/ccache/c++
+-- Check for working CXX compiler: /usr/lib64/ccache/c++ -- works
+-- Detecting CXX compiler ABI info
+-- Detecting CXX compiler ABI info - done
+-- Boost version: 1.54.0
+-- Found the following Boost libraries:
+--   filesystem
+--   system
+--   program_options
+--   iostreams
+-- Configuring done
+-- Generating done
+-- Build files have been written to: /home/mmahmud/gisfederal/gpudb-dev/gpudb-dev-master/gpudb-api-cpp/thirdparty/build/avro-cpp-1.7.7/build
+ 
+make -j2
+Scanning dependencies of target avrocpp
+Scanning dependencies of target avrocpp_s
+[  2%] [  2%] Building CXX object CMakeFiles/avrocpp.dir/impl/Compiler.cc.o
+Building CXX object CMakeFiles/avrocpp_s.dir/impl/Compiler.cc.o
+[  4%] Building CXX object CMakeFiles/avrocpp_s.dir/impl/Node.cc.o
+[  5%] Building CXX object CMakeFiles/avrocpp.dir/impl/Node.cc.o
+[  7%] Building CXX object CMakeFiles/avrocpp_s.dir/impl/NodeImpl.cc.o
+[  8%] Building CXX object CMakeFiles/avrocpp.dir/impl/NodeImpl.cc.o
+[ 10%] Building CXX object CMakeFiles/avrocpp_s.dir/impl/ResolverSchema.cc.o
+[ 11%] Building CXX object CMakeFiles/avrocpp.dir/impl/ResolverSchema.cc.o
+[ 13%] Building CXX object CMakeFiles/avrocpp_s.dir/impl/Schema.cc.o
+[ 14%] Building CXX object CMakeFiles/avrocpp.dir/impl/Schema.cc.o
+[ 15%] Building CXX object CMakeFiles/avrocpp_s.dir/impl/Types.cc.o
+[ 17%] Building CXX object CMakeFiles/avrocpp_s.dir/impl/ValidSchema.cc.o
+[ 18%] Building CXX object CMakeFiles/avrocpp.dir/impl/Types.cc.o
+[ 20%] Building CXX object CMakeFiles/avrocpp.dir/impl/ValidSchema.cc.o
+[ 21%] Building CXX object CMakeFiles/avrocpp_s.dir/impl/Zigzag.cc.o
+[ 23%] Building CXX object CMakeFiles/avrocpp_s.dir/impl/BinaryEncoder.cc.o
+[ 24%] Building CXX object CMakeFiles/avrocpp.dir/impl/Zigzag.cc.o
+[ 26%] Building CXX object CMakeFiles/avrocpp.dir/impl/BinaryEncoder.cc.o
+[ 27%] Building CXX object CMakeFiles/avrocpp_s.dir/impl/BinaryDecoder.cc.o
+[ 28%] Building CXX object CMakeFiles/avrocpp.dir/impl/BinaryDecoder.cc.o
+[ 30%] Building CXX object CMakeFiles/avrocpp_s.dir/impl/Stream.cc.o
+[ 31%] Building CXX object CMakeFiles/avrocpp.dir/impl/Stream.cc.o
+[ 33%] Building CXX object CMakeFiles/avrocpp_s.dir/impl/FileStream.cc.o
+[ 34%] Building CXX object CMakeFiles/avrocpp.dir/impl/FileStream.cc.o
+[ 36%] Building CXX object CMakeFiles/avrocpp_s.dir/impl/Generic.cc.o
+[ 37%] Building CXX object CMakeFiles/avrocpp.dir/impl/Generic.cc.o
+[ 39%] Building CXX object CMakeFiles/avrocpp_s.dir/impl/GenericDatum.cc.o
+[ 40%] Building CXX object CMakeFiles/avrocpp.dir/impl/GenericDatum.cc.o
+[ 42%] Building CXX object CMakeFiles/avrocpp_s.dir/impl/DataFile.cc.o
+[ 43%] Building CXX object CMakeFiles/avrocpp.dir/impl/DataFile.cc.o
+[ 44%] Building CXX object CMakeFiles/avrocpp_s.dir/impl/parsing/Symbol.cc.o
+[ 46%] Building CXX object CMakeFiles/avrocpp.dir/impl/parsing/Symbol.cc.o
+[ 47%] Building CXX object CMakeFiles/avrocpp_s.dir/impl/parsing/ValidatingCodec.cc.o
+[ 49%] Building CXX object CMakeFiles/avrocpp.dir/impl/parsing/ValidatingCodec.cc.o
+[ 50%] Building CXX object CMakeFiles/avrocpp_s.dir/impl/parsing/JsonCodec.cc.o
+[ 52%] Building CXX object CMakeFiles/avrocpp.dir/impl/parsing/JsonCodec.cc.o
+[ 53%] Building CXX object CMakeFiles/avrocpp_s.dir/impl/parsing/ResolvingDecoder.cc.o
+[ 55%] Building CXX object CMakeFiles/avrocpp.dir/impl/parsing/ResolvingDecoder.cc.o
+[ 56%] Building CXX object CMakeFiles/avrocpp_s.dir/impl/json/JsonIO.cc.o
+[ 57%] Building CXX object CMakeFiles/avrocpp.dir/impl/json/JsonIO.cc.o
+[ 59%] Building CXX object CMakeFiles/avrocpp_s.dir/impl/json/JsonDom.cc.o
+[ 60%] Building CXX object CMakeFiles/avrocpp.dir/impl/json/JsonDom.cc.o
+[ 62%] Building CXX object CMakeFiles/avrocpp_s.dir/impl/Resolver.cc.o
+[ 63%] Building CXX object CMakeFiles/avrocpp.dir/impl/Resolver.cc.o
+[ 65%] Building CXX object CMakeFiles/avrocpp_s.dir/impl/Validator.cc.o
+[ 66%] Building CXX object CMakeFiles/avrocpp.dir/impl/Validator.cc.o
+Linking CXX static library libavrocpp_s.a
+[ 66%] Built target avrocpp_s
+Scanning dependencies of target avrogencpp
+[ 68%] Building CXX object CMakeFiles/avrogencpp.dir/impl/avrogencpp.cc.o
+Linking CXX shared library libavrocpp.so
+[ 68%] Built target avrocpp
+Scanning dependencies of target precompile
+[ 69%] Building CXX object CMakeFiles/precompile.dir/test/precompile.cc.o
+Linking CXX executable precompile
+[ 69%] Built target precompile
+Scanning dependencies of target unittest
+[ 71%] Building CXX object CMakeFiles/unittest.dir/test/unittest.cc.o
+Linking CXX executable avrogencpp
+[ 71%] Built target avrogencpp
+Scanning dependencies of target union_array_union_hh
+[ 72%] Generating union_array_union.hh
+[ 72%] Built target union_array_union_hh
+Scanning dependencies of target bigrecord2_hh
+[ 73%] Generating bigrecord2.hh
+[ 73%] Built target bigrecord2_hh
+Scanning dependencies of target empty_record_hh
+[ 75%] Generating empty_record.hh
+[ 75%] Built target empty_record_hh
+Scanning dependencies of target bigrecord_hh
+[ 76%] Generating bigrecord.hh
+[ 76%] Built target bigrecord_hh
+Scanning dependencies of target union_conflict_hh
+[ 78%] Generating union_conflict.hh
+[ 78%] Built target union_conflict_hh
+Scanning dependencies of target recursive_hh
+[ 79%] Generating recursive.hh
+[ 79%] Built target recursive_hh
+Scanning dependencies of target reuse_hh
+[ 81%] Generating reuse.hh
+[ 81%] Built target reuse_hh
+Scanning dependencies of target union_map_union_hh
+[ 82%] Generating union_map_union.hh
+[ 82%] Built target union_map_union_hh
+Scanning dependencies of target bigrecord_r_hh
+[ 84%] Generating bigrecord_r.hh
+[ 84%] Built target bigrecord_r_hh
+Scanning dependencies of target tweet_hh
+[ 85%] Generating tweet.hh
+[ 85%] Built target tweet_hh
+Scanning dependencies of target circulardep_hh
+[ 86%] Generating circulardep.hh
+[ 86%] Built target circulardep_hh
+Scanning dependencies of target CodecTests
+[ 88%] Building CXX object CMakeFiles/CodecTests.dir/test/CodecTests.cc.o
+Linking CXX executable unittest
+[ 88%] Built target unittest
+Scanning dependencies of target DataFileTests
+[ 89%] Building CXX object CMakeFiles/DataFileTests.dir/test/DataFileTests.cc.o
+Linking CXX executable CodecTests
+[ 89%] Built target CodecTests
+Scanning dependencies of target JsonTests
+[ 91%] Building CXX object CMakeFiles/JsonTests.dir/test/JsonTests.cc.o
+Linking CXX executable DataFileTests
+[ 91%] Built target DataFileTests
+Scanning dependencies of target LargeSchemaTests
+[ 92%] Building CXX object CMakeFiles/LargeSchemaTests.dir/test/LargeSchemaTests.cc.o
+Linking CXX executable JsonTests
+[ 92%] Built target JsonTests
+Scanning dependencies of target SchemaTests
+[ 94%] Building CXX object CMakeFiles/SchemaTests.dir/test/SchemaTests.cc.o
+Linking CXX executable LargeSchemaTests
+[ 94%] Built target LargeSchemaTests
+Scanning dependencies of target SpecificTests
+[ 95%] Building CXX object CMakeFiles/SpecificTests.dir/test/SpecificTests.cc.o
+Linking CXX executable SchemaTests
+[ 95%] Built target SchemaTests
+Scanning dependencies of target StreamTests
+[ 97%] Building CXX object CMakeFiles/StreamTests.dir/test/StreamTests.cc.o
+Linking CXX executable StreamTests
+[ 97%] Built target StreamTests
+Scanning dependencies of target buffertest
+[ 98%] Building CXX object CMakeFiles/buffertest.dir/test/buffertest.cc.o
+Linking CXX executable SpecificTests
+[ 98%] Built target SpecificTests
+Scanning dependencies of target AvrogencppTests
+[100%] Building CXX object CMakeFiles/AvrogencppTests.dir/test/AvrogencppTests.cc.o
+Linking CXX executable AvrogencppTests
+[100%] Built target AvrogencppTests
+Linking CXX executable buffertest
+[100%] Built target buffertest
+ 
+make install
+[ 33%] Built target avrocpp_s
+[ 34%] Built target avrogencpp
+[ 36%] Built target union_array_union_hh
+[ 37%] Built target bigrecord2_hh
+[ 39%] Built target empty_record_hh
+[ 40%] Built target bigrecord_hh
+[ 73%] Built target avrocpp
+[ 75%] Built target union_conflict_hh
+[ 76%] Built target recursive_hh
+[ 78%] Built target reuse_hh
+[ 79%] Built target union_map_union_hh
+[ 81%] Built target bigrecord_r_hh
+[ 82%] Built target tweet_hh
+[ 84%] Built target circulardep_hh
+[ 85%] Built target AvrogencppTests
+[ 86%] Built target CodecTests
+[ 88%] Built target DataFileTests
+[ 89%] Built target JsonTests
+[ 91%] Built target LargeSchemaTests
+[ 92%] Built target SchemaTests
+[ 94%] Built target SpecificTests
+[ 95%] Built target StreamTests
+[ 97%] Built target buffertest
+[ 98%] Built target precompile
+[100%] Built target unittest
+Install the project...
+-- Install configuration: "Release"
+-- Installing: /home/mmahmud/gisfederal/gpudb-dev/gpudb-dev-master/gpudb-api-cpp/thirdparty/install/lib/libavrocpp.so.1.7.7.0
+-- Installing: /home/mmahmud/gisfederal/gpudb-dev/gpudb-dev-master/gpudb-api-cpp/thirdparty/install/lib/libavrocpp.so
+-- Set runtime path of "/home/mmahmud/gisfederal/gpudb-dev/gpudb-dev-master/gpudb-api-cpp/thirdparty/install/lib/libavrocpp.so.1.7.7.0" to "/home/mmahmud/gisfederal/gpudb-dev/gpudb-dev-master/gpudb-api-cpp/thirdparty/install/lib"
+-- Installing: /home/mmahmud/gisfederal/gpudb-dev/gpudb-dev-master/gpudb-api-cpp/thirdparty/install/lib/libavrocpp_s.a
+-- Installing: /home/mmahmud/gisfederal/gpudb-dev/gpudb-dev-master/gpudb-api-cpp/thirdparty/install/bin/avrogencpp
+-- Set runtime path of "/home/mmahmud/gisfederal/gpudb-dev/gpudb-dev-master/gpudb-api-cpp/thirdparty/install/bin/avrogencpp" to "/home/mmahmud/gisfederal/gpudb-dev/gpudb-dev-master/gpudb-api-cpp/thirdparty/install/lib"
+-- Installing: /home/mmahmud/gisfederal/gpudb-dev/gpudb-dev-master/gpudb-api-cpp/thirdparty/install/include/avro
+-- Installing: /home/mmahmud/gisfederal/gpudb-dev/gpudb-dev-master/gpudb-api-cpp/thirdparty/install/include/avro/NodeConcepts.hh
+-- Installing: /home/mmahmud/gisfederal/gpudb-dev/gpudb-dev-master/gpudb-api-cpp/thirdparty/install/include/avro/Schema.hh
+-- Installing: /home/mmahmud/gisfederal/gpudb-dev/gpudb-dev-master/gpudb-api-cpp/thirdparty/install/include/avro/SchemaResolution.hh
+-- Installing: /home/mmahmud/gisfederal/gpudb-dev/gpudb-dev-master/gpudb-api-cpp/thirdparty/install/include/avro/Specific.hh
+-- Installing: /home/mmahmud/gisfederal/gpudb-dev/gpudb-dev-master/gpudb-api-cpp/thirdparty/install/include/avro/Types.hh
+-- Installing: /home/mmahmud/gisfederal/gpudb-dev/gpudb-dev-master/gpudb-api-cpp/thirdparty/install/include/avro/Decoder.hh
+-- Installing: /home/mmahmud/gisfederal/gpudb-dev/gpudb-dev-master/gpudb-api-cpp/thirdparty/install/include/avro/buffer
+-- Installing: /home/mmahmud/gisfederal/gpudb-dev/gpudb-dev-master/gpudb-api-cpp/thirdparty/install/include/avro/buffer/BufferStream.hh
+-- Installing: /home/mmahmud/gisfederal/gpudb-dev/gpudb-dev-master/gpudb-api-cpp/thirdparty/install/include/avro/buffer/detail
+-- Installing: /home/mmahmud/gisfederal/gpudb-dev/gpudb-dev-master/gpudb-api-cpp/thirdparty/install/include/avro/buffer/detail/BufferDetail.hh
+-- Installing: /home/mmahmud/gisfederal/gpudb-dev/gpudb-dev-master/gpudb-api-cpp/thirdparty/install/include/avro/buffer/detail/BufferDetailIterator.hh
+-- Installing: /home/mmahmud/gisfederal/gpudb-dev/gpudb-dev-master/gpudb-api-cpp/thirdparty/install/include/avro/buffer/Buffer.hh
+-- Installing: /home/mmahmud/gisfederal/gpudb-dev/gpudb-dev-master/gpudb-api-cpp/thirdparty/install/include/avro/buffer/BufferStreambuf.hh
+-- Installing: /home/mmahmud/gisfederal/gpudb-dev/gpudb-dev-master/gpudb-api-cpp/thirdparty/install/include/avro/buffer/BufferReader.hh
+-- Installing: /home/mmahmud/gisfederal/gpudb-dev/gpudb-dev-master/gpudb-api-cpp/thirdparty/install/include/avro/buffer/BufferPrint.hh
+-- Installing: /home/mmahmud/gisfederal/gpudb-dev/gpudb-dev-master/gpudb-api-cpp/thirdparty/install/include/avro/Parser.hh
+-- Installing: /home/mmahmud/gisfederal/gpudb-dev/gpudb-dev-master/gpudb-api-cpp/thirdparty/install/include/avro/Reader.hh
+-- Installing: /home/mmahmud/gisfederal/gpudb-dev/gpudb-dev-master/gpudb-api-cpp/thirdparty/install/include/avro/Compiler.hh
+-- Installing: /home/mmahmud/gisfederal/gpudb-dev/gpudb-dev-master/gpudb-api-cpp/thirdparty/install/include/avro/Zigzag.hh
+-- Installing: /home/mmahmud/gisfederal/gpudb-dev/gpudb-dev-master/gpudb-api-cpp/thirdparty/install/include/avro/NodeImpl.hh
+-- Installing: /home/mmahmud/gisfederal/gpudb-dev/gpudb-dev-master/gpudb-api-cpp/thirdparty/install/include/avro/AvroTraits.hh
+-- Installing: /home/mmahmud/gisfederal/gpudb-dev/gpudb-dev-master/gpudb-api-cpp/thirdparty/install/include/avro/Exception.hh
+-- Installing: /home/mmahmud/gisfederal/gpudb-dev/gpudb-dev-master/gpudb-api-cpp/thirdparty/install/include/avro/GenericDatum.hh
+-- Installing: /home/mmahmud/gisfederal/gpudb-dev/gpudb-dev-master/gpudb-api-cpp/thirdparty/install/include/avro/Encoder.hh
+-- Installing: /home/mmahmud/gisfederal/gpudb-dev/gpudb-dev-master/gpudb-api-cpp/thirdparty/install/include/avro/Layout.hh
+-- Installing: /home/mmahmud/gisfederal/gpudb-dev/gpudb-dev-master/gpudb-api-cpp/thirdparty/install/include/avro/Config.hh
+-- Installing: /home/mmahmud/gisfederal/gpudb-dev/gpudb-dev-master/gpudb-api-cpp/thirdparty/install/include/avro/Generic.hh
+-- Installing: /home/mmahmud/gisfederal/gpudb-dev/gpudb-dev-master/gpudb-api-cpp/thirdparty/install/include/avro/ResolverSchema.hh
+-- Installing: /home/mmahmud/gisfederal/gpudb-dev/gpudb-dev-master/gpudb-api-cpp/thirdparty/install/include/avro/Validator.hh
+-- Installing: /home/mmahmud/gisfederal/gpudb-dev/gpudb-dev-master/gpudb-api-cpp/thirdparty/install/include/avro/Resolver.hh
+-- Installing: /home/mmahmud/gisfederal/gpudb-dev/gpudb-dev-master/gpudb-api-cpp/thirdparty/install/include/avro/Writer.hh
+-- Installing: /home/mmahmud/gisfederal/gpudb-dev/gpudb-dev-master/gpudb-api-cpp/thirdparty/install/include/avro/Stream.hh
+-- Installing: /home/mmahmud/gisfederal/gpudb-dev/gpudb-dev-master/gpudb-api-cpp/thirdparty/install/include/avro/DataFile.hh
+-- Installing: /home/mmahmud/gisfederal/gpudb-dev/gpudb-dev-master/gpudb-api-cpp/thirdparty/install/include/avro/ValidSchema.hh
+-- Installing: /home/mmahmud/gisfederal/gpudb-dev/gpudb-dev-master/gpudb-api-cpp/thirdparty/install/include/avro/Serializer.hh
+-- Installing: /home/mmahmud/gisfederal/gpudb-dev/gpudb-dev-master/gpudb-api-cpp/thirdparty/install/include/avro/Boost.hh
+-- Installing: /home/mmahmud/gisfederal/gpudb-dev/gpudb-dev-master/gpudb-api-cpp/thirdparty/install/include/avro/AvroParse.hh
+-- Installing: /home/mmahmud/gisfederal/gpudb-dev/gpudb-dev-master/gpudb-api-cpp/thirdparty/install/include/avro/AvroSerialize.hh
+-- Installing: /home/mmahmud/gisfederal/gpudb-dev/gpudb-dev-master/gpudb-api-cpp/thirdparty/install/include/avro/ResolvingReader.hh
+-- Installing: /home/mmahmud/gisfederal/gpudb-dev/gpudb-dev-master/gpudb-api-cpp/thirdparty/install/include/avro/Node.hh
