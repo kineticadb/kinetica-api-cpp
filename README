@@ -1,5 +1,8 @@
-GPUdb CPP API
-===================================
+=================
+|               |
+| GPUdb C++ API |
+|               |
+=================
 
 The gpudb-api-cpp project contains the source code of the C++ GPUdb API.
 
