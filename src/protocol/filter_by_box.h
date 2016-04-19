@@ -10,7 +10,8 @@ namespace gpudb
 {
 
     /**
-     * A set of input parameters for {@link #filterByBox(FilterByBoxRequest&)}.
+     * A set of input parameters for {@link
+     * #filterByBox(const FilterByBoxRequest&) const}.
      * <p>
      * Calculates how many objects within the given table lie in a rectangular
      * box. The operation is synchronous meaning that GPUdb will not return the
@@ -50,7 +51,7 @@ namespace gpudb
          *                      created containing the results of the query.
          *                      Must not be an already existing collection,
          *                      table or view in GPUdb.  Default value is an
-         *                      empty {@link std::string}.
+         *                      empty string.
          * @param[in] xColumnName  Name of the column on which to perform the
          *                         bounding box query. If the table's data type
          *                         is not a shape type, must be a valid numeric
@@ -69,7 +70,7 @@ namespace gpudb
          * @param[in] maxY  Upper bound for @a yColumnName. Must be greater
          *                  than or equal to @a minY.
          * @param[in] options  Optional parameters.  Default value is an empty
-         *                     {@link std::map}.
+         *                     std::map.
          * 
          */
         FilterByBoxRequest(const std::string& tableName, const std::string& viewName, const std::string& xColumnName, const double minX, const double maxX, const std::string& yColumnName, const double minY, const double maxY, const std::map<std::string, std::string>& options):
@@ -186,7 +187,7 @@ namespace gpudb
 
     /**
      * A set of output parameters for {@link
-     * #filterByBox(FilterByBoxRequest&)}.
+     * #filterByBox(const FilterByBoxRequest&) const}.
      * <p>
      * Calculates how many objects within the given table lie in a rectangular
      * box. The operation is synchronous meaning that GPUdb will not return the

@@ -10,7 +10,8 @@ namespace gpudb
 {
 
     /**
-     * A set of input parameters for {@link #clearTable(ClearTableRequest&)}.
+     * A set of input parameters for {@link
+     * #clearTable(const ClearTableRequest&) const}.
      * <p>
      * Clears (drops) one or all tables in the GPUdb cluster. The operation is
      * synchronous meaning that the table will be cleared before the function
@@ -38,13 +39,13 @@ namespace gpudb
          * @param[in] tableName  Name of the table to be cleared. Must be an
          *                       existing GPUdb table. Empty string clears all
          *                       available tables in GPUdb.  Default value is
-         *                       an empty {@link std::string}.
+         *                       an empty string.
          * @param[in] authorization  Administrator password needed for clearing
          *                           protected tables. For unprotected tables
          *                           the string can be left blank.  Default
-         *                           value is an empty {@link std::string}.
+         *                           value is an empty string.
          * @param[in] options  Optional parameters.  Default value is an empty
-         *                     {@link std::map}.
+         *                     std::map.
          * 
          */
         ClearTableRequest(const std::string& tableName, const std::string& authorization, const std::map<std::string, std::string>& options):
@@ -112,7 +113,8 @@ namespace gpudb
 {
 
     /**
-     * A set of output parameters for {@link #clearTable(ClearTableRequest&)}.
+     * A set of output parameters for {@link
+     * #clearTable(const ClearTableRequest&) const}.
      * <p>
      * Clears (drops) one or all tables in the GPUdb cluster. The operation is
      * synchronous meaning that the table will be cleared before the function

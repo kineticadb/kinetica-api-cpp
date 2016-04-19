@@ -9,6 +9,9 @@
 #include <avro/Specific.hh>
 
 #include "gpudb_wrapper.h"
+#include "admin_get_shard_assignments.h"
+#include "admin_offline.h"
+#include "admin_set_shard_assignments.h"
 #include "admin_shutdown.h"
 #include "aggregate_convex_hull.h"
 #include "aggregate_group_by.h"
@@ -32,6 +35,7 @@
 #include "create_trigger_by_range.h"
 #include "create_type.h"
 #include "delete_records.h"
+#include "execute_proc.h"
 #include "filter.h"
 #include "filter_by_area.h"
 #include "filter_by_box.h"
@@ -52,6 +56,7 @@
 #include "insert_records.h"
 #include "insert_records_random.h"
 #include "insert_symbol.h"
+#include "lock_table.h"
 #include "show_system_properties.h"
 #include "show_system_status.h"
 #include "show_system_timing.h"
@@ -66,7 +71,6 @@
 #include "visualize_image.h"
 #include "visualize_image_classbreak.h"
 #include "visualize_image_heatmap.h"
-#include "visualize_image_heatmap_classbreak.h"
 #include "visualize_image_labels.h"
 #include "visualize_video.h"
 #include "visualize_video_heatmap.h"

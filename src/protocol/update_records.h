@@ -11,7 +11,7 @@ namespace gpudb
 
     /**
      * A set of input parameters for {@link
-     * #updateRecordsRaw(RawUpdateRecordsRequest&)}.
+     * #updateRecordsRaw(const RawUpdateRecordsRequest&) const}.
      * <p>
      * Runs multiple predicate-based updates in a single call.  With the list
      * of given expressions, any matching record's column values will be
@@ -74,10 +74,10 @@ namespace gpudb
          *                             not yield a matching record to be
          *                             updated, then the corresponding element
          *                             from this list will be added to the
-         *                             table.  Default value is an empty {@link
-         *                             std::vector}.
+         *                             table.  Default value is an empty
+         *                             std::vector.
          * @param[in] options  Optional parameters.  Default value is an empty
-         *                     {@link std::map}.
+         *                     std::map.
          * 
          */
         RawUpdateRecordsRequest(const std::string& tableName, const std::vector<std::string>& expressions, const std::vector<std::map<std::string, std::string> >& newValuesMaps, const std::vector<std::vector<uint8_t> >& recordsToInsert, const std::map<std::string, std::string>& options):
@@ -113,20 +113,19 @@ namespace gpudb
          *                             not yield a matching record to be
          *                             updated, then the corresponding element
          *                             from this list will be added to the
-         *                             table.  Default value is an empty {@link
-         *                             std::vector}.
+         *                             table.  Default value is an empty
+         *                             std::vector.
          * @param[in] recordsToInsertStr  An optional list of new json-avro
          *                                encoded objects to insert, one for
          *                                each update, to be added to the set
          *                                if the particular update did not
          *                                affect any objects.  Default value is
-         *                                an empty {@link std::vector}.
+         *                                an empty std::vector.
          * @param[in] recordEncoding  Identifies which of @a recordsToInsert
          *                            and @a recordsToInsertStr should be used.
-         *                            Default value is 'binary'. The allowed
-         *                            values are:  ~!~ * BINARY * JSON~!~
+         *                            Default value is 'binary'.
          * @param[in] options  Optional parameters.  Default value is an empty
-         *                     {@link std::map}.
+         *                     std::map.
          * 
          */
         RawUpdateRecordsRequest(const std::string& tableName, const std::vector<std::string>& expressions, const std::vector<std::map<std::string, std::string> >& newValuesMaps, const std::vector<std::vector<uint8_t> >& recordsToInsert, const std::vector<std::string>& recordsToInsertStr, const std::string& recordEncoding, const std::map<std::string, std::string>& options):
@@ -227,7 +226,7 @@ namespace gpudb
 
     /**
      * A set of input parameters for {@link
-     * #updateRecordsRaw(RawUpdateRecordsRequest&)}.
+     * #updateRecordsRaw(const RawUpdateRecordsRequest&) const}.
      * <p>
      * Runs multiple predicate-based updates in a single call.  With the list
      * of given expressions, any matching record's column values will be
@@ -290,9 +289,9 @@ namespace gpudb
          *                  @a expressions does not yield a matching record to
          *                  be updated, then the corresponding element from
          *                  this list will be added to the table.  Default
-         *                  value is an empty {@link std::vector}.
+         *                  value is an empty std::vector.
          * @param[in] options  Optional parameters.  Default value is an empty
-         *                     {@link std::map}.
+         *                     std::map.
          * 
          */
         UpdateRecordsRequest(const std::string& tableName, const std::vector<std::string>& expressions, const std::vector<std::map<std::string, std::string> >& newValuesMaps, const std::vector<T>& data, const std::map<std::string, std::string>& options):
@@ -317,7 +316,7 @@ namespace gpudb
 
     /**
      * A set of output parameters for {@link
-     * #updateRecordsRaw(RawUpdateRecordsRequest&)}.
+     * #updateRecordsRaw(const RawUpdateRecordsRequest&) const}.
      * <p>
      * Runs multiple predicate-based updates in a single call.  With the list
      * of given expressions, any matching record's column values will be

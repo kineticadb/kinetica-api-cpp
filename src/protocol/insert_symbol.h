@@ -11,7 +11,7 @@ namespace gpudb
 
     /**
      * A set of input parameters for {@link
-     * #insertSymbol(InsertSymbolRequest&)}.
+     * #insertSymbol(const InsertSymbolRequest&) const}.
      * <p>
      * Adds a symbol or icon (i.e. an image) to represent data points when data
      * is rendered visually. Users must provide the symbol identifier (string),
@@ -20,9 +20,9 @@ namespace gpudb
      * symbol used for rendering create a table with a string column named
      * 'SYMBOLCODE' (along with 'x' or 'y' for example). Then when the table is
      * rendered (via <a href="../rest/wms_rest.html" target="_top">WMS</a> or
-     * {@link #visualizeImage(VisualizeImageRequest&)}) if the 'dosymbology'
-     * parameter is 'true' then GPUdb uses the value of the 'SYMBOLCODE' column
-     * to pick the symbol displayed for each point.
+     * {@link #visualizeImage(const VisualizeImageRequest&) const}) if the
+     * 'dosymbology' parameter is 'true' then GPUdb uses the value of the
+     * 'SYMBOLCODE' column to pick the symbol displayed for each point.
      */
     struct InsertSymbolRequest
     {
@@ -47,16 +47,15 @@ namespace gpudb
          *                      same id that should be in the 'SYMBOLCODE'
          *                      column for objects using this symbol
          * @param[in] symbolFormat  Specifies the symbol format. Must be either
-         *                          'svg' or 'svg_path'.  The allowed values
-         *                          are:  ~!~ * SVG * SVG_PATH~!~
+         *                          'svg' or 'svg_path'.
          * @param[in] symbolData  The actual symbol data. If @a symbolFormat is
          *                        'svg' then this should be the raw bytes
          *                        representing an svg file. If @a symbolFormat
          *                        is svg path then this should be an svg path
-         *                        string, for example: 'M25.979,12.896,5.979,12
-         *                        .896,5.979,19.562,25.979,19.562z'
+         *                        string, for example:
+         *                        'M25.979,12.896,5.979,12.896,5.979,19.562,25.979,19.562z'
          * @param[in] options  Optional parameters.  Default value is an empty
-         *                     {@link std::map}.
+         *                     std::map.
          * 
          */
         InsertSymbolRequest(const std::string& symbolId, const std::string& symbolFormat, const std::vector<uint8_t>& symbolData, const std::map<std::string, std::string>& options):
@@ -133,7 +132,7 @@ namespace gpudb
 
     /**
      * A set of output parameters for {@link
-     * #insertSymbol(InsertSymbolRequest&)}.
+     * #insertSymbol(const InsertSymbolRequest&) const}.
      * <p>
      * Adds a symbol or icon (i.e. an image) to represent data points when data
      * is rendered visually. Users must provide the symbol identifier (string),
@@ -142,9 +141,9 @@ namespace gpudb
      * symbol used for rendering create a table with a string column named
      * 'SYMBOLCODE' (along with 'x' or 'y' for example). Then when the table is
      * rendered (via <a href="../rest/wms_rest.html" target="_top">WMS</a> or
-     * {@link #visualizeImage(VisualizeImageRequest&)}) if the 'dosymbology'
-     * parameter is 'true' then GPUdb uses the value of the 'SYMBOLCODE' column
-     * to pick the symbol displayed for each point.
+     * {@link #visualizeImage(const VisualizeImageRequest&) const}) if the
+     * 'dosymbology' parameter is 'true' then GPUdb uses the value of the
+     * 'SYMBOLCODE' column to pick the symbol displayed for each point.
      */
     struct InsertSymbolResponse
     {

@@ -11,15 +11,13 @@ namespace gpudb
 
     /**
      * A set of input parameters for {@link
-     * #visualizeImageHeatmap(VisualizeImageHeatmapRequest&)}.
+     * #visualizeImageHeatmap(const VisualizeImageHeatmapRequest&) const}.
      * <p>
      * Generates rasterized heatmap image tiles for an area of interest using
      * the given tables and the provided parameters.
      * <p>
      * All color values must be in the format RRGGBB or AARRGGBB (to specify
      * the alpha value).
-     * <p>
-
      * The heatmap image is contained in the @a imageData field.
      */
     struct VisualizeImageHeatmapRequest
@@ -41,11 +39,7 @@ namespace gpudb
             width(int32_t()),
             height(int32_t()),
             projection(std::string()),
-            colormap(std::string()),
-            blurRadius(int32_t()),
-            bgColor(int64_t()),
-            gradientStartColor(int64_t()),
-            gradientEndColor(int64_t()),
+            styleOptions(std::map<std::string, std::string>()),
             options(std::map<std::string, std::string>())
         {
         }
@@ -68,26 +62,13 @@ namespace gpudb
          * @param[in] width  Width of the generated image.
          * @param[in] height  Height of the generated image.
          * @param[in] projection  Spatial Reference System (i.e. EPSG Code).
-         *                        Default value is 'PLATE_CARREE'. The allowed
-         *                        values are:  ~!~ * EPSG:4326 * PLATE_CARREE *
-         *                        _900913 * EPSG:900913 * _102100 * EPSG:102100
-         *                        * _3857 * EPSG:3857 * WEB_MERCATOR~!~
-         * @param[in] colormap  Colormap for the heat map.  Default value is
-         *                      'none'.
-         * @param[in] blurRadius  Blurring radius for the heat map.  Default
-         *                        value is '5'. The minimum allowed value is 1.
-         *                        The maximum allowed value is 32.
-         * @param[in] bgColor  Background color of the generated image.
-         * @param[in] gradientStartColor  User defined gradient start color for
-         *                                the heat map.  Default value is
-         *                                'FFFFFF'.
-         * @param[in] gradientEndColor  User defined gradient end color for the
-         *                              heat map.  Default value is 'FF0000'.
+         *                        Default value is 'PLATE_CARREE'.
+         * @param[in] styleOptions  Various style related options.
          * @param[in] options  Optional parameters.  Default value is an empty
-         *                     {@link std::map}.
+         *                     std::map.
          * 
          */
-        VisualizeImageHeatmapRequest(const std::vector<std::string>& tableNames, const std::string& xColumnName, const std::string& yColumnName, const std::string& valueColumnName, const double minX, const double maxX, const double minY, const double maxY, const int32_t width, const int32_t height, const std::string& projection, const std::string& colormap, const int32_t blurRadius, const int64_t bgColor, const int64_t gradientStartColor, const int64_t gradientEndColor, const std::map<std::string, std::string>& options):
+        VisualizeImageHeatmapRequest(const std::vector<std::string>& tableNames, const std::string& xColumnName, const std::string& yColumnName, const std::string& valueColumnName, const double minX, const double maxX, const double minY, const double maxY, const int32_t width, const int32_t height, const std::string& projection, const std::map<std::string, std::string>& styleOptions, const std::map<std::string, std::string>& options):
             tableNames(tableNames),
             xColumnName(xColumnName),
             yColumnName(yColumnName),
@@ -99,11 +80,7 @@ namespace gpudb
             width(width),
             height(height),
             projection(projection),
-            colormap(colormap),
-            blurRadius(blurRadius),
-            bgColor(bgColor),
-            gradientStartColor(gradientStartColor),
-            gradientEndColor(gradientEndColor),
+            styleOptions(styleOptions),
             options(options)
         {
         }
@@ -119,11 +96,7 @@ namespace gpudb
         int32_t width;
         int32_t height;
         std::string projection;
-        std::string colormap;
-        int32_t blurRadius;
-        int64_t bgColor;
-        int64_t gradientStartColor;
-        int64_t gradientEndColor;
+        std::map<std::string, std::string> styleOptions;
         std::map<std::string, std::string> options;
     };
 }
@@ -145,11 +118,7 @@ namespace avro
             ::avro::encode(e, v.width);
             ::avro::encode(e, v.height);
             ::avro::encode(e, v.projection);
-            ::avro::encode(e, v.colormap);
-            ::avro::encode(e, v.blurRadius);
-            ::avro::encode(e, v.bgColor);
-            ::avro::encode(e, v.gradientStartColor);
-            ::avro::encode(e, v.gradientEndColor);
+            ::avro::encode(e, v.styleOptions);
             ::avro::encode(e, v.options);
         }
 
@@ -208,26 +177,10 @@ namespace avro
                             break;
 
                         case 11:
-                            ::avro::decode(d, v.colormap);
+                            ::avro::decode(d, v.styleOptions);
                             break;
 
                         case 12:
-                            ::avro::decode(d, v.blurRadius);
-                            break;
-
-                        case 13:
-                            ::avro::decode(d, v.bgColor);
-                            break;
-
-                        case 14:
-                            ::avro::decode(d, v.gradientStartColor);
-                            break;
-
-                        case 15:
-                            ::avro::decode(d, v.gradientEndColor);
-                            break;
-
-                        case 16:
                             ::avro::decode(d, v.options);
                             break;
 
@@ -249,11 +202,7 @@ namespace avro
                 ::avro::decode(d, v.width);
                 ::avro::decode(d, v.height);
                 ::avro::decode(d, v.projection);
-                ::avro::decode(d, v.colormap);
-                ::avro::decode(d, v.blurRadius);
-                ::avro::decode(d, v.bgColor);
-                ::avro::decode(d, v.gradientStartColor);
-                ::avro::decode(d, v.gradientEndColor);
+                ::avro::decode(d, v.styleOptions);
                 ::avro::decode(d, v.options);
             }
         }
@@ -265,15 +214,13 @@ namespace gpudb
 
     /**
      * A set of output parameters for {@link
-     * #visualizeImageHeatmap(VisualizeImageHeatmapRequest&)}.
+     * #visualizeImageHeatmap(const VisualizeImageHeatmapRequest&) const}.
      * <p>
      * Generates rasterized heatmap image tiles for an area of interest using
      * the given tables and the provided parameters.
      * <p>
      * All color values must be in the format RRGGBB or AARRGGBB (to specify
      * the alpha value).
-     * <p>
-
      * The heatmap image is contained in the @a imageData field.
      */
     struct VisualizeImageHeatmapResponse

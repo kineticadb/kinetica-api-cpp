@@ -11,7 +11,7 @@ namespace gpudb
 
     /**
      * A set of input parameters for {@link
-     * #filterByArea(FilterByAreaRequest&)}.
+     * #filterByArea(const FilterByAreaRequest&) const}.
      * <p>
      * Calculates which objects from a table are within a named area of
      * interest (NAI/polygon). The operation is synchronous meaning that GPUdb
@@ -51,7 +51,7 @@ namespace gpudb
          * @param[in] viewName  If provided, then this will be the name of the
          *                      view containing the results. Must not be an
          *                      already existing collection, table or view.
-         *                      Default value is an empty {@link std::string}.
+         *                      Default value is an empty string.
          * @param[in] xColumnName  Name of the column containing the x values
          *                         to be filtered.
          * @param[in] xVector  List of x coordinates of the vertices of the
@@ -61,7 +61,7 @@ namespace gpudb
          * @param[in] yVector  List of y coordinates of the vertices of the
          *                     polygon representing the area to be filtered.
          * @param[in] options  Optional parameters.  Default value is an empty
-         *                     {@link std::map}.
+         *                     std::map.
          * 
          */
         FilterByAreaRequest(const std::string& tableName, const std::string& viewName, const std::string& xColumnName, const std::vector<double>& xVector, const std::string& yColumnName, const std::vector<double>& yVector, const std::map<std::string, std::string>& options):
@@ -162,7 +162,7 @@ namespace gpudb
 
     /**
      * A set of output parameters for {@link
-     * #filterByArea(FilterByAreaRequest&)}.
+     * #filterByArea(const FilterByAreaRequest&) const}.
      * <p>
      * Calculates which objects from a table are within a named area of
      * interest (NAI/polygon). The operation is synchronous meaning that GPUdb

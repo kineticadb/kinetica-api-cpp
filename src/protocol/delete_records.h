@@ -11,7 +11,7 @@ namespace gpudb
 
     /**
      * A set of input parameters for {@link
-     * #deleteRecords(DeleteRecordsRequest&)}.
+     * #deleteRecords(const DeleteRecordsRequest&) const}.
      * <p>
      * Deletes record(s) matching the provided criteria from the given table.
      * The record selection criteria can either be one or more  @a expressions
@@ -50,7 +50,7 @@ namespace gpudb
          *                         to specifying @a record_id in the @a
          *                         options.
          * @param[in] options  Optional parameters.  Default value is an empty
-         *                     {@link std::map}.
+         *                     std::map.
          * 
          */
         DeleteRecordsRequest(const std::string& tableName, const std::vector<std::string>& expressions, const std::map<std::string, std::string>& options):
@@ -119,7 +119,7 @@ namespace gpudb
 
     /**
      * A set of output parameters for {@link
-     * #deleteRecords(DeleteRecordsRequest&)}.
+     * #deleteRecords(const DeleteRecordsRequest&) const}.
      * <p>
      * Deletes record(s) matching the provided criteria from the given table.
      * The record selection criteria can either be one or more  @a expressions

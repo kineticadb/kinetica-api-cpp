@@ -1,7 +1,11 @@
 #ifndef __GPUDB_HPP__
 #define __GPUDB_HPP__
 
+#include "protocol/EndpointKeywords.h"
+
 #include <boost/thread/mutex.hpp>
+
+
 
 namespace gpudb
 {
@@ -55,13 +59,15 @@ namespace gpudb
             size_t getThreadCount() const;
             avro::ExecutorPtr getExecutor() const;
 
+            static inline std::string get_version_info() { return GPUdb::api_version; }
+
             template<typename TRequest, typename TResponse> TResponse& submitRequest(const std::string& endpoint, const TRequest& request, TResponse& response, const bool enableCompression = false) const
             {
                 std::vector<uint8_t> requestBytes;
                 avro::encode(requestBytes, request);
-                GaiaResponse gaiaResponse;
-                submitRequestRaw(endpoint, requestBytes, gaiaResponse, enableCompression);
-                avro::decode(response, gaiaResponse.data);
+                GpudbResponse gpudbResponse;
+                submitRequestRaw(endpoint, requestBytes, gpudbResponse, enableCompression);
+                avro::decode(response, gpudbResponse.data);
                 return response;
             }
 
@@ -102,6 +108,7 @@ namespace gpudb
             }
 
         private:
+            static const std::string api_version;
             std::string url;
             std::string host;
             std::string service;
@@ -117,7 +124,7 @@ namespace gpudb
             mutable std::map<std::string, avro::DecoderPtr> knownTypes;
             mutable boost::mutex knownTypesMutex;
 
-            void submitRequestRaw(const std::string& endpoint, const std::vector<uint8_t>& request, GaiaResponse& response, const bool enableCompression) const;
+            void submitRequestRaw(const std::string& endpoint, const std::vector<uint8_t>& request, GpudbResponse& response, const bool enableCompression) const;
             avro::DecoderPtr getDecoder(const std::string& typeId) const;
             void setDecoderIfMissing(const std::string& typeId, const std::string& schemaString) const;
     };

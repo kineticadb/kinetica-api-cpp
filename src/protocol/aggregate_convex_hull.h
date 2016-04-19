@@ -11,7 +11,7 @@ namespace gpudb
 
     /**
      * A set of input parameters for {@link
-     * #aggregateConvexHull(AggregateConvexHullRequest&)}.
+     * #aggregateConvexHull(const AggregateConvexHullRequest&) const}.
      * <p>
      * Calculates and returns the convex hull for the values in a table
      * specified by @a tableName.
@@ -45,7 +45,7 @@ namespace gpudb
          *                         coordinates of the points for the operation
          *                         being performed.
          * @param[in] options  Optional parameters.  Default value is an empty
-         *                     {@link std::map}.
+         *                     std::map.
          * 
          */
         AggregateConvexHullRequest(const std::string& tableName, const std::string& xColumnName, const std::string& yColumnName, const std::map<std::string, std::string>& options):
@@ -122,7 +122,7 @@ namespace gpudb
 
     /**
      * A set of output parameters for {@link
-     * #aggregateConvexHull(AggregateConvexHullRequest&)}.
+     * #aggregateConvexHull(const AggregateConvexHullRequest&) const}.
      * <p>
      * Calculates and returns the convex hull for the values in a table
      * specified by @a tableName.

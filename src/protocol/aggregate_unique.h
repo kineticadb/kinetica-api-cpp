@@ -13,7 +13,7 @@ namespace gpudb
 
     /**
      * A set of input parameters for {@link
-     * #aggregateUniqueRaw(AggregateUniqueRequest&)}.
+     * #aggregateUniqueRaw(const AggregateUniqueRequest&) const}.
      * <p>
      * Returns all the unique values from a particular column (specified by @a
      * columnName) of a particular table (specified by @a tableName). If @a
@@ -26,8 +26,9 @@ namespace gpudb
      * <p>
      * {"limit":"10","sort_order":"descending"}.
      * <p>
-     * The response is returned as a dynamic schema. For details see: {dynamic
-     * schemas documentation}@{link ../../concepts/index.html#dynamic-schemas}.
+     * The response is returned as a dynamic schema. For details see: <a
+     * href="../../concepts/index.html#dynamic-schemas" target="_top">dynamic
+     * schemas documentation</a>.
      */
     struct AggregateUniqueRequest
     {
@@ -64,7 +65,7 @@ namespace gpudb
          *                   to indicate that the max number of results should
          *                   be returned.  Default value is 10000.
          * @param[in] options  Optional parameters.  Default value is an empty
-         *                     {@link std::map}.
+         *                     std::map.
          * 
          */
         AggregateUniqueRequest(const std::string& tableName, const std::string& columnName, const int64_t offset, const int64_t limit, const std::map<std::string, std::string>& options):
@@ -94,12 +95,10 @@ namespace gpudb
          *                   of results to be returned. Or END_OF_SET (-9999)
          *                   to indicate that the max number of results should
          *                   be returned.  Default value is 10000.
-         * @param[in] encoding  Specifies the encoding for returned objects;
-         *                      either 'binary' or 'json'.  Default value is
-         *                      'binary'. The allowed values are:  ~!~ * BINARY
-         *                      * JSON~!~
+         * @param[in] encoding  Specifies the encoding for returned records.
+         *                      Default value is 'binary'.
          * @param[in] options  Optional parameters.  Default value is an empty
-         *                     {@link std::map}.
+         *                     std::map.
          * 
          */
         AggregateUniqueRequest(const std::string& tableName, const std::string& columnName, const int64_t offset, const int64_t limit, const std::string& encoding, const std::map<std::string, std::string>& options):
@@ -192,7 +191,7 @@ namespace gpudb
 
     /**
      * A set of output parameters for {@link
-     * #aggregateUniqueRaw(AggregateUniqueRequest&)}.
+     * #aggregateUniqueRaw(const AggregateUniqueRequest&) const}.
      * <p>
      * Returns all the unique values from a particular column (specified by @a
      * columnName) of a particular table (specified by @a tableName). If @a
@@ -205,8 +204,9 @@ namespace gpudb
      * <p>
      * {"limit":"10","sort_order":"descending"}.
      * <p>
-     * The response is returned as a dynamic schema. For details see: {dynamic
-     * schemas documentation}@{link ../../concepts/index.html#dynamic-schemas}.
+     * The response is returned as a dynamic schema. For details see: <a
+     * href="../../concepts/index.html#dynamic-schemas" target="_top">dynamic
+     * schemas documentation</a>.
      */
     struct RawAggregateUniqueResponse
     {
@@ -289,7 +289,7 @@ namespace gpudb
 
     /**
      * A set of output parameters for {@link
-     * #aggregateUnique(AggregateUniqueRequest&)}.
+     * #aggregateUnique(const AggregateUniqueRequest&) const}.
      * <p>
      * Returns all the unique values from a particular column (specified by @a
      * columnName) of a particular table (specified by @a tableName). If @a
@@ -302,8 +302,9 @@ namespace gpudb
      * <p>
      * {"limit":"10","sort_order":"descending"}.
      * <p>
-     * The response is returned as a dynamic schema. For details see: {dynamic
-     * schemas documentation}@{link ../../concepts/index.html#dynamic-schemas}.
+     * The response is returned as a dynamic schema. For details see: <a
+     * href="../../concepts/index.html#dynamic-schemas" target="_top">dynamic
+     * schemas documentation</a>.
      */
     struct AggregateUniqueResponse
     {

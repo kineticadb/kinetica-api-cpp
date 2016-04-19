@@ -3,59 +3,63 @@
  *
  *  DO NOT EDIT DIRECTLY.
  */
-#ifndef __SHOW_SYSTEM_STATUS_H__
-#define __SHOW_SYSTEM_STATUS_H__
+#ifndef __ADMIN_OFFLINE_H__
+#define __ADMIN_OFFLINE_H__
 
 namespace gpudb
 {
 
     /**
      * A set of input parameters for {@link
-     * #showSystemStatus(const ShowSystemStatusRequest&) const}.
+     * #adminOffline(const AdminOfflineRequest&) const}.
      * <p>
-     * Provides server configuration and health related status to the caller.
-     * The GPUdb Admin tool uses it to present server related information to
-     * the user.
+     * Take the system offline. When the system is offline, no user operations
+     * can be performed with the exception of a system shutdown.
      */
-    struct ShowSystemStatusRequest
+    struct AdminOfflineRequest
     {
 
         /**
-         * Constructs a ShowSystemStatusRequest object with default parameter
+         * Constructs an AdminOfflineRequest object with default parameter
          * values.
          */
-        ShowSystemStatusRequest() :
+        AdminOfflineRequest() :
+            offline(bool()),
             options(std::map<std::string, std::string>())
         {
         }
 
         /**
-         * Constructs a ShowSystemStatusRequest object with the specified
+         * Constructs an AdminOfflineRequest object with the specified
          * parameters.
          * 
-         * @param[in] options  Optional parameters, currently unused.  Default
-         *                     value is an empty std::map.
+         * @param[in] offline  desired offline state
+         * @param[in] options  Optional parameters.  Default value is an empty
+         *                     std::map.
          * 
          */
-        ShowSystemStatusRequest(const std::map<std::string, std::string>& options):
+        AdminOfflineRequest(const bool offline, const std::map<std::string, std::string>& options):
+            offline(offline),
             options(options)
         {
         }
 
+        bool offline;
         std::map<std::string, std::string> options;
     };
 }
 
 namespace avro
 {
-    template<> struct codec_traits<gpudb::ShowSystemStatusRequest>
+    template<> struct codec_traits<gpudb::AdminOfflineRequest>
     {
-        static void encode(Encoder& e, const gpudb::ShowSystemStatusRequest& v)
+        static void encode(Encoder& e, const gpudb::AdminOfflineRequest& v)
         {
+            ::avro::encode(e, v.offline);
             ::avro::encode(e, v.options);
         }
 
-        static void decode(Decoder& d, gpudb::ShowSystemStatusRequest& v)
+        static void decode(Decoder& d, gpudb::AdminOfflineRequest& v)
         {
             if (::avro::ResolvingDecoder *rd = dynamic_cast< ::avro::ResolvingDecoder*>(&d))
             {
@@ -66,6 +70,10 @@ namespace avro
                     switch (*it)
                     {
                         case 0:
+                            ::avro::decode(d, v.offline);
+                            break;
+
+                        case 1:
                             ::avro::decode(d, v.options);
                             break;
 
@@ -76,6 +84,7 @@ namespace avro
             }
             else
             {
+                ::avro::decode(d, v.offline);
                 ::avro::decode(d, v.options);
             }
         }
@@ -87,38 +96,37 @@ namespace gpudb
 
     /**
      * A set of output parameters for {@link
-     * #showSystemStatus(const ShowSystemStatusRequest&) const}.
+     * #adminOffline(const AdminOfflineRequest&) const}.
      * <p>
-     * Provides server configuration and health related status to the caller.
-     * The GPUdb Admin tool uses it to present server related information to
-     * the user.
+     * Take the system offline. When the system is offline, no user operations
+     * can be performed with the exception of a system shutdown.
      */
-    struct ShowSystemStatusResponse
+    struct AdminOfflineResponse
     {
 
         /**
-         * Constructs a ShowSystemStatusResponse object with default parameter
+         * Constructs an AdminOfflineResponse object with default parameter
          * values.
          */
-        ShowSystemStatusResponse() :
-            statusMap(std::map<std::string, std::string>())
+        AdminOfflineResponse() :
+            isOffline(bool())
         {
         }
 
-        std::map<std::string, std::string> statusMap;
+        bool isOffline;
     };
 }
 
 namespace avro
 {
-    template<> struct codec_traits<gpudb::ShowSystemStatusResponse>
+    template<> struct codec_traits<gpudb::AdminOfflineResponse>
     {
-        static void encode(Encoder& e, const gpudb::ShowSystemStatusResponse& v)
+        static void encode(Encoder& e, const gpudb::AdminOfflineResponse& v)
         {
-            ::avro::encode(e, v.statusMap);
+            ::avro::encode(e, v.isOffline);
         }
 
-        static void decode(Decoder& d, gpudb::ShowSystemStatusResponse& v)
+        static void decode(Decoder& d, gpudb::AdminOfflineResponse& v)
         {
             if (::avro::ResolvingDecoder *rd = dynamic_cast< ::avro::ResolvingDecoder*>(&d))
             {
@@ -129,7 +137,7 @@ namespace avro
                     switch (*it)
                     {
                         case 0:
-                            ::avro::decode(d, v.statusMap);
+                            ::avro::decode(d, v.isOffline);
                             break;
 
                         default:
@@ -139,7 +147,7 @@ namespace avro
             }
             else
             {
-                ::avro::decode(d, v.statusMap);
+                ::avro::decode(d, v.isOffline);
             }
         }
     };

@@ -14,13 +14,13 @@ namespace gpudb
      * <p>
      * The wrapper used by the GPUdb server for all endpoint response.
      */
-    struct GaiaResponse
+    struct GpudbResponse
     {
 
         /**
-         * Constructs a GaiaResponse object with default parameter values.
+         * Constructs a GpudbResponse object with default parameter values.
          */
-        GaiaResponse() :
+        GpudbResponse() :
             status(std::string()),
             message(std::string()),
             dataType(std::string()),
@@ -39,9 +39,9 @@ namespace gpudb
 
 namespace avro
 {
-    template<> struct codec_traits<gpudb::GaiaResponse>
+    template<> struct codec_traits<gpudb::GpudbResponse>
     {
-        static void encode(Encoder& e, const gpudb::GaiaResponse& v)
+        static void encode(Encoder& e, const gpudb::GpudbResponse& v)
         {
             ::avro::encode(e, v.status);
             ::avro::encode(e, v.message);
@@ -50,7 +50,7 @@ namespace avro
             ::avro::encode(e, v.dataStr);
         }
 
-        static void decode(Decoder& d, gpudb::GaiaResponse& v)
+        static void decode(Decoder& d, gpudb::GpudbResponse& v)
         {
             if (::avro::ResolvingDecoder *rd = dynamic_cast< ::avro::ResolvingDecoder*>(&d))
             {

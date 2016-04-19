@@ -10,16 +10,18 @@ namespace gpudb
 {
 
     /**
-     * A set of input parameters for {@link #createTable(CreateTableRequest&)}.
+     * A set of input parameters for {@link
+     * #createTable(const CreateTableRequest&) const}.
      * <p>
      * Creates a new table or collection in GPUdb. If a new table is being
      * created then type of the table is given by @a typeId which must the be
      * the type id of a currently registered type (i.e. one created via {@link
-     * #createType(CreateTypeRequest&)}). The table will be created inside a
-     * collection if the option *collection_name* is specified. If that
-     * collection does not already exist then it will be created. To create a
-     * new, empty collection specify the collection name in @a tableName, leave
-     * @a typeId blank, and set the *is_collection* option to 'true'.
+     * #createType(const CreateTypeRequest&) const}). The table will be
+     * created inside a collection if the option *collection_name* is
+     * specified. If that collection does not already exist then it will be
+     * created. To create a new, empty collection specify the collection name
+     * in @a tableName, leave @a typeId blank, and set the *is_collection*
+     * option to 'true'.
      */
     struct CreateTableRequest
     {
@@ -41,15 +43,17 @@ namespace gpudb
          * 
          * @param[in] tableName  Name of the table to be created. Must not be
          *                       the name of a currently existing GPUdb table
-         *                       of a different type (requests with existing
-         *                       table of the same name and type id are
-         *                       silently ignored). Cannot be an empty string.
+         *                       of a different type.  Error for requests with
+         *                       existing table of the same name and type id
+         *                       may be suppressed by using the @a
+         *                       no_error_if_exists option.  Cannot be an empty
+         *                       string.
          * @param[in] typeId  ID of a currently registered type in GPUdb. All
          *                    objects added to the newly created table will be
          *                    of this type.  Must be an empty string if the
          *                    *is_collection* is 'true'.
          * @param[in] options  Optional parameters.  Default value is an empty
-         *                     {@link std::map}.
+         *                     std::map.
          * 
          */
         CreateTableRequest(const std::string& tableName, const std::string& typeId, const std::map<std::string, std::string>& options):
@@ -118,16 +122,17 @@ namespace gpudb
 
     /**
      * A set of output parameters for {@link
-     * #createTable(CreateTableRequest&)}.
+     * #createTable(const CreateTableRequest&) const}.
      * <p>
      * Creates a new table or collection in GPUdb. If a new table is being
      * created then type of the table is given by @a typeId which must the be
      * the type id of a currently registered type (i.e. one created via {@link
-     * #createType(CreateTypeRequest&)}). The table will be created inside a
-     * collection if the option *collection_name* is specified. If that
-     * collection does not already exist then it will be created. To create a
-     * new, empty collection specify the collection name in @a tableName, leave
-     * @a typeId blank, and set the *is_collection* option to 'true'.
+     * #createType(const CreateTypeRequest&) const}). The table will be
+     * created inside a collection if the option *collection_name* is
+     * specified. If that collection does not already exist then it will be
+     * created. To create a new, empty collection specify the collection name
+     * in @a tableName, leave @a typeId blank, and set the *is_collection*
+     * option to 'true'.
      */
     struct CreateTableResponse
     {

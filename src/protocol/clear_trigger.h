@@ -11,7 +11,7 @@ namespace gpudb
 
     /**
      * A set of input parameters for {@link
-     * #clearTrigger(ClearTriggerRequest&)}.
+     * #clearTrigger(const ClearTriggerRequest&) const}.
      * <p>
      * Clears or cancels the trigger identified by the specified handle. The
      * output returns the handle of the trigger cleared as well as indicating
@@ -36,7 +36,7 @@ namespace gpudb
          * 
          * @param[in] triggerId  ID for the trigger to be deactivated.
          * @param[in] options  Optional parameters.  Default value is an empty
-         *                     {@link std::map}.
+         *                     std::map.
          * 
          */
         ClearTriggerRequest(const std::string& triggerId, const std::map<std::string, std::string>& options):
@@ -97,7 +97,7 @@ namespace gpudb
 
     /**
      * A set of output parameters for {@link
-     * #clearTrigger(ClearTriggerRequest&)}.
+     * #clearTrigger(const ClearTriggerRequest&) const}.
      * <p>
      * Clears or cancels the trigger identified by the specified handle. The
      * output returns the handle of the trigger cleared as well as indicating

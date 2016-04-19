@@ -11,7 +11,7 @@ namespace gpudb
 
     /**
      * A set of input parameters for {@link
-     * #insertRecordsRaw(RawInsertRecordsRequest&)}.
+     * #insertRecordsRaw(const RawInsertRecordsRequest&) const}.
      * <p>
      * Adds multiple records to the specified table. The operation is
      * synchronous meaning that GPUdb will not return a response until all the
@@ -22,7 +22,7 @@ namespace gpudb
      * @a options can be used to customize this function's behavior. The only
      * parameter available is @a update_on_existing_pk. The value can be either
      * 'true' or 'false'. If the table has a {@link
-     * #createType(CreateTypeRequest&) primary key} and if @a
+     * #createType(const CreateTypeRequest&) const primary key} and if @a
      * update_on_existing_pk is 'true' then if any of the records being added
      * have the same primary key as existing records, the existing records are
      * replaced (i.e. *updated*) with the given records. If @a
@@ -61,7 +61,7 @@ namespace gpudb
          *                  that of the table. Empty array if @a listEncoding
          *                  is @a json.
          * @param[in] options  Optional parameters.  Default value is an empty
-         *                     {@link std::map}.
+         *                     std::map.
          * 
          */
         RawInsertRecordsRequest(const std::string& tableName, const std::vector<std::vector<uint8_t> >& list, const std::map<std::string, std::string>& options):
@@ -88,10 +88,9 @@ namespace gpudb
          *                     as that of the table. Empty array if @a
          *                     listEncoding is @a binary.
          * @param[in] listEncoding  The encoding of the records to be inserted.
-         *                          Default value is 'binary'. The allowed
-         *                          values are:  ~!~ * BINARY * JSON~!~
+         *                          Default value is 'binary'.
          * @param[in] options  Optional parameters.  Default value is an empty
-         *                     {@link std::map}.
+         *                     std::map.
          * 
          */
         RawInsertRecordsRequest(const std::string& tableName, const std::vector<std::vector<uint8_t> >& list, const std::vector<std::string>& listStr, const std::string& listEncoding, const std::map<std::string, std::string>& options):
@@ -176,7 +175,7 @@ namespace gpudb
 
     /**
      * A set of input parameters for {@link
-     * #insertRecordsRaw(RawInsertRecordsRequest&)}.
+     * #insertRecordsRaw(const RawInsertRecordsRequest&) const}.
      * <p>
      * Adds multiple records to the specified table. The operation is
      * synchronous meaning that GPUdb will not return a response until all the
@@ -187,14 +186,13 @@ namespace gpudb
      * @a options can be used to customize this function's behavior. The only
      * parameter available is @a update_on_existing_pk. The value can be either
      * 'true' or 'false'. If the table has a {@link
-     * #createType(std::string&,std::string&,std::map<std::string,
-     * std::vector<std::string> >&,std::map<std::string, std::string>&) primary
-     * key} and if @a update_on_existing_pk is 'true' then if any of the
-     * records being added have the same primary key as existing records, the
-     * existing records are replaced (i.e. *updated*) with the given records.
-     * If @a update_on_existing_pk is false and if the records being added have
-     * the same primary key as existing records, the given records with
-     * existing primary keys are ignored (the existing records are left
+     * #createType(const std::string&,const std::string&,const std::map<std::string, std::vector<std::string> >&,const std::map<std::string, std::string>&) const
+     * primary key} and if @a update_on_existing_pk is 'true' then if any of
+     * the records being added have the same primary key as existing records,
+     * the existing records are replaced (i.e. *updated*) with the given
+     * records. If @a update_on_existing_pk is false and if the records being
+     * added have the same primary key as existing records, the given records
+     * with existing primary keys are ignored (the existing records are left
      * unchanged). It is quite possible that in this case some of the given
      * records will be inserted and some (those having existing primary keys)
      * will be ignored (or updated). If the specified table does not have a
@@ -228,7 +226,7 @@ namespace gpudb
          *                  that of the table. Empty array if @a listEncoding
          *                  is @a json.
          * @param[in] options  Optional parameters.  Default value is an empty
-         *                     {@link std::map}.
+         *                     std::map.
          * 
          */
         InsertRecordsRequest(const std::string& tableName, const std::vector<T>& data, const std::map<std::string, std::string>& options):
@@ -249,7 +247,7 @@ namespace gpudb
 
     /**
      * A set of output parameters for {@link
-     * #insertRecordsRaw(RawInsertRecordsRequest&)}.
+     * #insertRecordsRaw(const RawInsertRecordsRequest&) const}.
      * <p>
      * Adds multiple records to the specified table. The operation is
      * synchronous meaning that GPUdb will not return a response until all the
@@ -260,7 +258,7 @@ namespace gpudb
      * @a options can be used to customize this function's behavior. The only
      * parameter available is @a update_on_existing_pk. The value can be either
      * 'true' or 'false'. If the table has a {@link
-     * #createType(CreateTypeRequest&) primary key} and if @a
+     * #createType(const CreateTypeRequest&) const primary key} and if @a
      * update_on_existing_pk is 'true' then if any of the records being added
      * have the same primary key as existing records, the existing records are
      * replaced (i.e. *updated*) with the given records. If @a

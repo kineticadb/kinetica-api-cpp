@@ -11,7 +11,7 @@ namespace gpudb
 
     /**
      * A set of input parameters for {@link
-     * #alterTableProperties(AlterTablePropertiesRequest&)}.
+     * #alterTableProperties(const AlterTablePropertiesRequest&) const}.
      * <p>
      * Updates properties for a group of specified tables. The user can change
      * the protected-ness of the tables and allow or disallow duplicate child
@@ -42,9 +42,9 @@ namespace gpudb
          *                           tables to be updated. Only one map can be
          *                           specified per function call so the changes
          *                           to the tables will be identical.  Default
-         *                           value is an empty {@link std::map}.
+         *                           value is an empty std::map.
          * @param[in] options  Optional parameters.  Default value is an empty
-         *                     {@link std::map}.
+         *                     std::map.
          * 
          */
         AlterTablePropertiesRequest(const std::vector<std::string>& tableNames, const std::map<std::string, std::string>& propertiesMap, const std::map<std::string, std::string>& options):
@@ -113,7 +113,7 @@ namespace gpudb
 
     /**
      * A set of output parameters for {@link
-     * #alterTableProperties(AlterTablePropertiesRequest&)}.
+     * #alterTableProperties(const AlterTablePropertiesRequest&) const}.
      * <p>
      * Updates properties for a group of specified tables. The user can change
      * the protected-ness of the tables and allow or disallow duplicate child

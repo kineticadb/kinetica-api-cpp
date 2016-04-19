@@ -15,6 +15,9 @@ int main(int argc, char* argv[])
     gpudb::GPUdb gpudb(host, gpudb::GPUdb::Options().setThreadCount(4));
     std::map<std::string, std::string> options;
 
+    // Get the version information
+    std::cout << "GPUdb C++ Client Version: " << gpudb.get_version_info() << std::endl;
+
     // Create some test data
 
     std::vector<gpudb::Type::Column> columns;
@@ -73,6 +76,8 @@ int main(int argc, char* argv[])
     gbColumns.push_back("min(y)");
     gbColumns.push_back("max(y)");
     std::map<std::string, std::string> gbParams;
+//    gbParams[ gpudb::AggregateGroupByRequest::OPTIONS.SORT_ORDER ] = gpudb::AggregateGroupByRequest::OPTIONS.ASCENDING;
+//    // gbParams[ gpudb::AggregateGroupByRequest::Options::SORT_ORDER ] = gpudb::AggregateGroupByRequest::Options::ASCENDING;
 
     gpudb::AggregateGroupByResponse gbResponse = gpudb.aggregateGroupBy(table_name, gbColumns, 0, 20, gbParams);
 

@@ -11,7 +11,7 @@ namespace gpudb
 
     /**
      * A set of input parameters for {@link
-     * #showTriggers(ShowTriggersRequest&)}.
+     * #showTriggers(const ShowTriggersRequest&) const}.
      * <p>
      * Retrieves information regarding the specified triggers or all existing
      * triggers currently active within GPUdb.
@@ -37,7 +37,7 @@ namespace gpudb
          *                        to be retrieved. Empty list means retrieve
          *                        information on all active triggers.
          * @param[in] options  Optional parameters.  Default value is an empty
-         *                     {@link std::map}.
+         *                     std::map.
          * 
          */
         ShowTriggersRequest(const std::vector<std::string>& triggerIds, const std::map<std::string, std::string>& options):
@@ -98,7 +98,7 @@ namespace gpudb
 
     /**
      * A set of output parameters for {@link
-     * #showTriggers(ShowTriggersRequest&)}.
+     * #showTriggers(const ShowTriggersRequest&) const}.
      * <p>
      * Retrieves information regarding the specified triggers or all existing
      * triggers currently active within GPUdb.

@@ -11,7 +11,7 @@ namespace gpudb
 
     /**
      * A set of input parameters for {@link
-     * #alterSystemProperties(AlterSystemPropertiesRequest&)}.
+     * #alterSystemProperties(const AlterSystemPropertiesRequest&) const}.
      * <p>
      * The alter_system_properties endpoint is primarily used to simplify the
      * testing of gpudb and is not expected to be used during normal execution.
@@ -39,7 +39,7 @@ namespace gpudb
          * @param[in] propertyUpdatesMap  Map containing the properties of the
          *                                system to be updated. Error if empty.
          * @param[in] options  Optional parameters.  Default value is an empty
-         *                     {@link std::map}.
+         *                     std::map.
          * 
          */
         AlterSystemPropertiesRequest(const std::map<std::string, std::string>& propertyUpdatesMap, const std::map<std::string, std::string>& options):
@@ -100,7 +100,7 @@ namespace gpudb
 
     /**
      * A set of output parameters for {@link
-     * #alterSystemProperties(AlterSystemPropertiesRequest&)}.
+     * #alterSystemProperties(const AlterSystemPropertiesRequest&) const}.
      * <p>
      * The alter_system_properties endpoint is primarily used to simplify the
      * testing of gpudb and is not expected to be used during normal execution.

@@ -11,7 +11,7 @@ namespace gpudb
 
     /**
      * A set of input parameters for {@link
-     * #filterBySeries(FilterBySeriesRequest&)}.
+     * #filterBySeries(const FilterBySeriesRequest&) const}.
      * <p>
      * Filters objects matching all points of the given track (works only on
      * track type data).  It allows users to specify a particular track to find
@@ -55,7 +55,7 @@ namespace gpudb
          * @param[in] viewName  If provided, then this will be the name of the
          *                      view containing the results. Must not be an
          *                      already existing collection, table or view.
-         *                      Default value is an empty {@link std::string}.
+         *                      Default value is an empty string.
          * @param[in] trackId  The ID of the track which will act as the
          *                     filtering points. Must be an existing track
          *                     within the given table.
@@ -64,7 +64,7 @@ namespace gpudb
          *                            be an valid track ID within the given
          *                            set.
          * @param[in] options  Optional parameters.  Default value is an empty
-         *                     {@link std::map}.
+         *                     std::map.
          * 
          */
         FilterBySeriesRequest(const std::string& tableName, const std::string& viewName, const std::string& trackId, const std::vector<std::string>& targetTrackIds, const std::map<std::string, std::string>& options):
@@ -149,7 +149,7 @@ namespace gpudb
 
     /**
      * A set of output parameters for {@link
-     * #filterBySeries(FilterBySeriesRequest&)}.
+     * #filterBySeries(const FilterBySeriesRequest&) const}.
      * <p>
      * Filters objects matching all points of the given track (works only on
      * track type data).  It allows users to specify a particular track to find

@@ -11,7 +11,7 @@ namespace gpudb
 
     /**
      * A set of input parameters for {@link
-     * #filterByValue(FilterByValueRequest&)}.
+     * #filterByValue(const FilterByValueRequest&) const}.
      * <p>
      * Calculates which objects from a table has a particular value for a
      * particular column. The input parameters provide a way to specify either
@@ -50,17 +50,17 @@ namespace gpudb
          * @param[in] viewName  If provided, then this will be the name of the
          *                      view containing the results. Must not be an
          *                      already existing collection, table or view.
-         *                      Default value is an empty {@link std::string}.
+         *                      Default value is an empty string.
          * @param[in] isString  Indicates whether the value being searched for
          *                      is string or numeric.
          * @param[in] value  The value to search for.  Default value is 0.
          * @param[in] valueStr  The string value to search for.  Default value
-         *                      is an empty {@link std::string}.
+         *                      is an empty string.
          * @param[in] columnName  Name of a column or an expression of one or
          *                        more columns on which the filter by value
          *                        would be applied.
          * @param[in] options  Optional parameters.  Default value is an empty
-         *                     {@link std::map}.
+         *                     std::map.
          * 
          */
         FilterByValueRequest(const std::string& tableName, const std::string& viewName, const bool isString, const double value, const std::string& valueStr, const std::string& columnName, const std::map<std::string, std::string>& options):
@@ -161,7 +161,7 @@ namespace gpudb
 
     /**
      * A set of output parameters for {@link
-     * #filterByValue(FilterByValueRequest&)}.
+     * #filterByValue(const FilterByValueRequest&) const}.
      * <p>
      * Calculates which objects from a table has a particular value for a
      * particular column. The input parameters provide a way to specify either

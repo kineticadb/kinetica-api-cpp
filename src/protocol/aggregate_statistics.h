@@ -11,7 +11,7 @@ namespace gpudb
 
     /**
      * A set of input parameters for {@link
-     * #aggregateStatistics(AggregateStatisticsRequest&)}.
+     * #aggregateStatistics(const AggregateStatisticsRequest&) const}.
      * <p>
      * Calculates the requested statistics of a given column in a given table.
      * The available statistics are count (number of total objects), mean, stdv
@@ -49,12 +49,9 @@ namespace gpudb
          * @param[in] columnName  Name of the column for which the statistics
          *                        are to be calculated.
          * @param[in] stats  Comma separated list of the statistics to
-         *                   calculate, e.g. "sum,mean".  The allowed values
-         *                   are:  ~!~ * MEAN * STDV * VARIANCE * SKEW *
-         *                   KURTOSIS * SUM * CARDINALITY *
-         *                   ESTIMATED_CARDINALITY~!~
+         *                   calculate, e.g. "sum,mean".
          * @param[in] options  Optional parameters.  Default value is an empty
-         *                     {@link std::map}.
+         *                     std::map.
          * 
          */
         AggregateStatisticsRequest(const std::string& tableName, const std::string& columnName, const std::string& stats, const std::map<std::string, std::string>& options):
@@ -131,7 +128,7 @@ namespace gpudb
 
     /**
      * A set of output parameters for {@link
-     * #aggregateStatistics(AggregateStatisticsRequest&)}.
+     * #aggregateStatistics(const AggregateStatisticsRequest&) const}.
      * <p>
      * Calculates the requested statistics of a given column in a given table.
      * The available statistics are count (number of total objects), mean, stdv

@@ -11,7 +11,7 @@ namespace gpudb
 
     /**
      * A set of input parameters for {@link
-     * #aggregateStatisticsByRange(AggregateStatisticsByRangeRequest&)}.
+     * #aggregateStatisticsByRange(const AggregateStatisticsByRangeRequest&) const}.
      * <p>
      * Divides the given set into bins and calculates statistics of the values
      * of a value-column in each bin.  The bins are based on the values of a
@@ -65,7 +65,7 @@ namespace gpudb
          * @param[in] selectExpression  For a non-empty expression statistics
          *                              are calculated for those records for
          *                              which the expression is true.  Default
-         *                              value is an empty {@link std::string}.
+         *                              value is an empty string.
          * @param[in] columnName  Name of the binning-column used to divide the
          *                        set samples into bins.
          * @param[in] valueColumnName  Optional Name of the column for which
@@ -81,7 +81,7 @@ namespace gpudb
          *                      [start+interval``*``i,
          *                      start+interval``*``(i+1)).
          * @param[in] options  Map of optional parameters:  Default value is an
-         *                     empty {@link std::map}.
+         *                     empty std::map.
          * 
          */
         AggregateStatisticsByRangeRequest(const std::string& tableName, const std::string& selectExpression, const std::string& columnName, const std::string& valueColumnName, const std::string& stats, const double start, const double end, const double interval, const std::map<std::string, std::string>& options):
@@ -198,7 +198,7 @@ namespace gpudb
 
     /**
      * A set of output parameters for {@link
-     * #aggregateStatisticsByRange(AggregateStatisticsByRangeRequest&)}.
+     * #aggregateStatisticsByRange(const AggregateStatisticsByRangeRequest&) const}.
      * <p>
      * Divides the given set into bins and calculates statistics of the values
      * of a value-column in each bin.  The bins are based on the values of a

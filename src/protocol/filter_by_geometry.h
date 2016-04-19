@@ -11,7 +11,7 @@ namespace gpudb
 
     /**
      * A set of input parameters for {@link
-     * #filterByGeometry(FilterByGeometryRequest&)}.
+     * #filterByGeometry(const FilterByGeometryRequest&) const}.
      * <p>
      * Applies a geometry filter against a spatial column in a given table,
      * collection or view. The filtering geometry is provided by @a inputWkt.
@@ -44,19 +44,16 @@ namespace gpudb
          * @param[in] viewName  If provided, then this will be the name of the
          *                      view containing the results. Must not be an
          *                      already existing collection, table or view.
-         *                      Default value is an empty {@link std::string}.
+         *                      Default value is an empty string.
          * @param[in] columnName  Name of the column to be used in the filter.
          *                        Must be a spatial column. Typically this will
          *                        be 'WKT'
          * @param[in] inputWkt  A geometry in WKT format that will be used to
          *                      filter the objects in @a tableName  Default
-         *                      value is an empty {@link std::string}.
+         *                      value is an empty string.
          * @param[in] operation  The geometric filtering operation to perform
-         *                       The allowed values are:  ~!~ * CONTAINS *
-         *                       CROSSES * DISJOINT * EQUALS * INTERSECTS *
-         *                       OVERLAPS * TOUCHES * WITHIN~!~
          * @param[in] options  Optional parameters.  Default value is an empty
-         *                     {@link std::map}.
+         *                     std::map.
          * 
          */
         FilterByGeometryRequest(const std::string& tableName, const std::string& viewName, const std::string& columnName, const std::string& inputWkt, const std::string& operation, const std::map<std::string, std::string>& options):
@@ -149,7 +146,7 @@ namespace gpudb
 
     /**
      * A set of output parameters for {@link
-     * #filterByGeometry(FilterByGeometryRequest&)}.
+     * #filterByGeometry(const FilterByGeometryRequest&) const}.
      * <p>
      * Applies a geometry filter against a spatial column in a given table,
      * collection or view. The filtering geometry is provided by @a inputWkt.

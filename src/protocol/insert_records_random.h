@@ -11,10 +11,10 @@ namespace gpudb
 
     /**
      * A set of input parameters for {@link
-     * #insertRecordsRandom(InsertRecordsRandomRequest&)}.
+     * #insertRecordsRandom(const InsertRecordsRandomRequest&) const}.
      * <p>
      * Generates a specified number of random records and adds them to the
-     * given tble. There is an optional parameter that allows the user to
+     * given table. There is an optional parameter that allows the user to
      * customize the ranges of the column values. It also allows the user to
      * specify linear profiles for some or all columns in which case linear
      * values are generated rather than random ones. Only individual tables are
@@ -60,7 +60,7 @@ namespace gpudb
          *                     different meanings depending on the type of the
          *                     column.  Below follows a more detailed
          *                     description of the map:  Default value is an
-         *                     empty {@link std::map}.
+         *                     empty std::map.
          * 
          */
         InsertRecordsRandomRequest(const std::string& tableName, const int64_t count, const std::map<std::string, std::map<std::string, double> >& options):
@@ -129,10 +129,10 @@ namespace gpudb
 
     /**
      * A set of output parameters for {@link
-     * #insertRecordsRandom(InsertRecordsRandomRequest&)}.
+     * #insertRecordsRandom(const InsertRecordsRandomRequest&) const}.
      * <p>
      * Generates a specified number of random records and adds them to the
-     * given tble. There is an optional parameter that allows the user to
+     * given table. There is an optional parameter that allows the user to
      * customize the ranges of the column values. It also allows the user to
      * specify linear profiles for some or all columns in which case linear
      * values are generated rather than random ones. Only individual tables are

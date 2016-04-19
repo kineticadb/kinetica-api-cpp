@@ -10,7 +10,8 @@ namespace gpudb
 {
 
     /**
-     * A set of input parameters for {@link #showTypes(ShowTypesRequest&)}.
+     * A set of input parameters for {@link
+     * #showTypes(const ShowTypesRequest&) const}.
      * <p>
      * Retrieves information for the specified data type. Given a type ID,
      * GPUdb returns the data type schema, the label, and the semantic type
@@ -39,7 +40,7 @@ namespace gpudb
          * @param[in] label  Option string that was supplied by user in a call
          *                   to /create/type.
          * @param[in] options  Optional parameters.  Default value is an empty
-         *                     {@link std::map}.
+         *                     std::map.
          * 
          */
         ShowTypesRequest(const std::string& typeId, const std::string& label, const std::map<std::string, std::string>& options):
@@ -107,7 +108,8 @@ namespace gpudb
 {
 
     /**
-     * A set of output parameters for {@link #showTypes(ShowTypesRequest&)}.
+     * A set of output parameters for {@link
+     * #showTypes(const ShowTypesRequest&) const}.
      * <p>
      * Retrieves information for the specified data type. Given a type ID,
      * GPUdb returns the data type schema, the label, and the semantic type

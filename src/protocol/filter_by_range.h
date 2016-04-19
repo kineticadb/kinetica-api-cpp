@@ -11,7 +11,7 @@ namespace gpudb
 
     /**
      * A set of input parameters for {@link
-     * #filterByRange(FilterByRangeRequest&)}.
+     * #filterByRange(const FilterByRangeRequest&) const}.
      * <p>
      * Calculates which objects from a table have a column that is within the
      * given bounds. An object from the table identified by @a tableName is
@@ -50,14 +50,14 @@ namespace gpudb
          * @param[in] viewName  If provided, then this will be the name of the
          *                      view containing the results. Must not be an
          *                      already existing collection, table or view.
-         *                      Default value is an empty {@link std::string}.
+         *                      Default value is an empty string.
          * @param[in] columnName  Name of a column or an expression of one or
          *                        more columns on which the operation would be
          *                        applied.
          * @param[in] lowerBound  Value of the lower bound (inclusive).
          * @param[in] upperBound  Value of the upper bound (inclusive).
          * @param[in] options  Optional parameters.  Default value is an empty
-         *                     {@link std::map}.
+         *                     std::map.
          * 
          */
         FilterByRangeRequest(const std::string& tableName, const std::string& viewName, const std::string& columnName, const double lowerBound, const double upperBound, const std::map<std::string, std::string>& options):
@@ -150,7 +150,7 @@ namespace gpudb
 
     /**
      * A set of output parameters for {@link
-     * #filterByRange(FilterByRangeRequest&)}.
+     * #filterByRange(const FilterByRangeRequest&) const}.
      * <p>
      * Calculates which objects from a table have a column that is within the
      * given bounds. An object from the table identified by @a tableName is

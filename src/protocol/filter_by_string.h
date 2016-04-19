@@ -11,7 +11,7 @@ namespace gpudb
 
     /**
      * A set of input parameters for {@link
-     * #filterByString(FilterByStringRequest&)}.
+     * #filterByString(const FilterByStringRequest&) const}.
      * <p>
      * Calculates which objects from a table, collection or view match a string
      * expression for the given string columns. The 'mode' may be:
@@ -58,16 +58,15 @@ namespace gpudb
          * @param[in] viewName  If provided, then this will be the name of the
          *                      view containing the results. Must not be an
          *                      already existing collection, table or view.
-         *                      Default value is an empty {@link std::string}.
+         *                      Default value is an empty string.
          * @param[in] expression  The expression with which to filter the
          *                        table.
          * @param[in] mode  The string filtering mode to apply. See above for
-         *                  details.  The allowed values are:  ~!~ * SEARCH *
-         *                  EQUALS * CONTAINS * STARTS_WITH * REGEX~!~
+         *                  details.
          * @param[in] columnNames  List of columns on which to apply the
          *                         filter. Ignored for 'search' mode.
          * @param[in] options  Optional parameters.  Default value is an empty
-         *                     {@link std::map}.
+         *                     std::map.
          * 
          */
         FilterByStringRequest(const std::string& tableName, const std::string& viewName, const std::string& expression, const std::string& mode, const std::vector<std::string>& columnNames, const std::map<std::string, std::string>& options):
@@ -160,7 +159,7 @@ namespace gpudb
 
     /**
      * A set of output parameters for {@link
-     * #filterByString(FilterByStringRequest&)}.
+     * #filterByString(const FilterByStringRequest&) const}.
      * <p>
      * Calculates which objects from a table, collection or view match a string
      * expression for the given string columns. The 'mode' may be:

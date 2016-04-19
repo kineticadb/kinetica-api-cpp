@@ -11,7 +11,7 @@ namespace gpudb
 
     /**
      * A set of input parameters for {@link
-     * #aggregateMinMax(AggregateMinMaxRequest&)}.
+     * #aggregateMinMax(const AggregateMinMaxRequest&) const}.
      * <p>
      * Calculates and returns the minimum and maximum values of a particular
      * column in a table.
@@ -40,7 +40,7 @@ namespace gpudb
          *                        more column on which the min-max will be
          *                        calculated.
          * @param[in] options  Optional parameters.  Default value is an empty
-         *                     {@link std::map}.
+         *                     std::map.
          * 
          */
         AggregateMinMaxRequest(const std::string& tableName, const std::string& columnName, const std::map<std::string, std::string>& options):
@@ -109,7 +109,7 @@ namespace gpudb
 
     /**
      * A set of output parameters for {@link
-     * #aggregateMinMax(AggregateMinMaxRequest&)}.
+     * #aggregateMinMax(const AggregateMinMaxRequest&) const}.
      * <p>
      * Calculates and returns the minimum and maximum values of a particular
      * column in a table.

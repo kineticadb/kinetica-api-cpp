@@ -11,7 +11,7 @@ namespace gpudb
 
     /**
      * A set of input parameters for {@link
-     * #updateRecordsBySeries(UpdateRecordsBySeriesRequest&)}.
+     * #updateRecordsBySeries(const UpdateRecordsBySeriesRequest&) const}.
      * <p>
      * Updates the view specified by @a tableName to include full series
      * (track) information from the @a worldTableName for the series (tracks)
@@ -44,10 +44,10 @@ namespace gpudb
          *                            series (track) information.
          * @param[in] viewName  Optional name of the view containing the series
          *                      (tracks) which have to be updated.  Default
-         *                      value is an empty {@link std::string}.
-         * @param[in] reserved  Default value is an empty {@link std::vector}.
+         *                      value is an empty string.
+         * @param[in] reserved  Default value is an empty std::vector.
          * @param[in] options  Optional parameters.  Default value is an empty
-         *                     {@link std::map}.
+         *                     std::map.
          * 
          */
         UpdateRecordsBySeriesRequest(const std::string& tableName, const std::string& worldTableName, const std::string& viewName, const std::vector<std::string>& reserved, const std::map<std::string, std::string>& options):
@@ -132,7 +132,7 @@ namespace gpudb
 
     /**
      * A set of output parameters for {@link
-     * #updateRecordsBySeries(UpdateRecordsBySeriesRequest&)}.
+     * #updateRecordsBySeries(const UpdateRecordsBySeriesRequest&) const}.
      * <p>
      * Updates the view specified by @a tableName to include full series
      * (track) information from the @a worldTableName for the series (tracks)

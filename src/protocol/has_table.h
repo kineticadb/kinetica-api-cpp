@@ -10,7 +10,8 @@ namespace gpudb
 {
 
     /**
-     * A set of input parameters for {@link #hasTable(HasTableRequest&)}.
+     * A set of input parameters for {@link
+     * #hasTable(const HasTableRequest&) const}.
      * <p>
      * Checks the existance of a table with the given name in GPUdb.
      */
@@ -31,7 +32,7 @@ namespace gpudb
          * 
          * @param[in] tableName  Name of the table to check for existance.
          * @param[in] options  Optional parameters.  Default value is an empty
-         *                     {@link std::map}.
+         *                     std::map.
          * 
          */
         HasTableRequest(const std::string& tableName, const std::map<std::string, std::string>& options):
@@ -91,7 +92,8 @@ namespace gpudb
 {
 
     /**
-     * A set of output parameters for {@link #hasTable(HasTableRequest&)}.
+     * A set of output parameters for {@link
+     * #hasTable(const HasTableRequest&) const}.
      * <p>
      * Checks the existance of a table with the given name in GPUdb.
      */

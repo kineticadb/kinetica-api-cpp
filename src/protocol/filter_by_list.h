@@ -11,7 +11,7 @@ namespace gpudb
 
     /**
      * A set of input parameters for {@link
-     * #filterByList(FilterByListRequest&)}.
+     * #filterByList(const FilterByListRequest&) const}.
      * <p>
      * Calculates which records from a table have values in the given list for
      * the corresponding column. The operation is synchronous meaning that
@@ -25,7 +25,8 @@ namespace gpudb
      * filter by list query with the column map {"x":["10.1", "2.3"],
      * "y":["0.0", "-31.5", "42.0"]} will return the count of all data points
      * whose x and y values match one of the values in the respective x- and
-     * y-lists.
+     * y-lists. If the filter_mode option is set to 'not_in_list' then the
+     * filter will match all items that are not in the provided list(s).
      */
     struct FilterByListRequest
     {
@@ -54,11 +55,11 @@ namespace gpudb
          * @param[in] viewName  If provided, then this will be the name of the
          *                      view containing the results. Must not be an
          *                      already existing collection, table or view.
-         *                      Default value is an empty {@link std::string}.
+         *                      Default value is an empty string.
          * @param[in] columnValuesMap  List of values for the corresponding
          *                             column in the table
          * @param[in] options  Optional parameters.  Default value is an empty
-         *                     {@link std::map}.
+         *                     std::map.
          * 
          */
         FilterByListRequest(const std::string& tableName, const std::string& viewName, const std::map<std::string, std::vector<std::string> >& columnValuesMap, const std::map<std::string, std::string>& options):
@@ -135,7 +136,7 @@ namespace gpudb
 
     /**
      * A set of output parameters for {@link
-     * #filterByList(FilterByListRequest&)}.
+     * #filterByList(const FilterByListRequest&) const}.
      * <p>
      * Calculates which records from a table have values in the given list for
      * the corresponding column. The operation is synchronous meaning that
@@ -149,7 +150,8 @@ namespace gpudb
      * filter by list query with the column map {"x":["10.1", "2.3"],
      * "y":["0.0", "-31.5", "42.0"]} will return the count of all data points
      * whose x and y values match one of the values in the respective x- and
-     * y-lists.
+     * y-lists. If the filter_mode option is set to 'not_in_list' then the
+     * filter will match all items that are not in the provided list(s).
      */
     struct FilterByListResponse
     {

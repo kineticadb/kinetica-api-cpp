@@ -11,7 +11,7 @@ namespace gpudb
 
     /**
      * A set of input parameters for {@link
-     * #showTableProperties(ShowTablePropertiesRequest&)}.
+     * #showTableProperties(const ShowTablePropertiesRequest&) const}.
      * <p>
      * Retrieves some table properties for each of the specified tables. For
      * each valid table, it returns whether it is a protected table and also if
@@ -38,7 +38,7 @@ namespace gpudb
          *                        provided tables must exist in GPUdb, or GPUdb
          *                        returns an error.
          * @param[in] options  Optional parameters.  Default value is an empty
-         *                     {@link std::map}.
+         *                     std::map.
          * 
          */
         ShowTablePropertiesRequest(const std::vector<std::string>& tableNames, const std::map<std::string, std::string>& options):
@@ -99,7 +99,7 @@ namespace gpudb
 
     /**
      * A set of output parameters for {@link
-     * #showTableProperties(ShowTablePropertiesRequest&)}.
+     * #showTableProperties(const ShowTablePropertiesRequest&) const}.
      * <p>
      * Retrieves some table properties for each of the specified tables. For
      * each valid table, it returns whether it is a protected table and also if

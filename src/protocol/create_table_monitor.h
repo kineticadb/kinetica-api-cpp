@@ -11,7 +11,7 @@ namespace gpudb
 
     /**
      * A set of input parameters for {@link
-     * #createTableMonitor(CreateTableMonitorRequest&)}.
+     * #createTableMonitor(const CreateTableMonitorRequest&) const}.
      * <p>
      * Creates a monitor that watches for new records inserted into a
      * particular table (identified by @a tableName) and forwards copies to
@@ -22,7 +22,7 @@ namespace gpudb
      * topic ID, and each subsequent part contains one binary-encoded Avro
      * object that was inserted. The monitor will continue to run (regardless
      * of whether or not there are any subscribers) until deactivated with
-     * {@link #clearTableMonitor(ClearTableMonitorRequest&)}.
+     * {@link #clearTableMonitor(const ClearTableMonitorRequest&) const}.
      */
     struct CreateTableMonitorRequest
     {
@@ -44,7 +44,7 @@ namespace gpudb
          * @param[in] tableName  Name of the table to monitor. Must not refer
          *                       to a collection.
          * @param[in] options  Optional parameters.  Default value is an empty
-         *                     {@link std::map}.
+         *                     std::map.
          * 
          */
         CreateTableMonitorRequest(const std::string& tableName, const std::map<std::string, std::string>& options):
@@ -105,7 +105,7 @@ namespace gpudb
 
     /**
      * A set of output parameters for {@link
-     * #createTableMonitor(CreateTableMonitorRequest&)}.
+     * #createTableMonitor(const CreateTableMonitorRequest&) const}.
      * <p>
      * Creates a monitor that watches for new records inserted into a
      * particular table (identified by @a tableName) and forwards copies to
@@ -116,7 +116,7 @@ namespace gpudb
      * topic ID, and each subsequent part contains one binary-encoded Avro
      * object that was inserted. The monitor will continue to run (regardless
      * of whether or not there are any subscribers) until deactivated with
-     * {@link #clearTableMonitor(ClearTableMonitorRequest&)}.
+     * {@link #clearTableMonitor(const ClearTableMonitorRequest&) const}.
      */
     struct CreateTableMonitorResponse
     {

@@ -306,7 +306,7 @@ namespace gpudb {
         knownTypes[typeId] = decoder;
     }
 
-    void GPUdb::submitRequestRaw(const std::string& endpoint, const std::vector<uint8_t>& request, GaiaResponse& response, const bool enableCompression) const
+    void GPUdb::submitRequestRaw(const std::string& endpoint, const std::vector<uint8_t>& request, GpudbResponse& response, const bool enableCompression) const
     {
         try
         {

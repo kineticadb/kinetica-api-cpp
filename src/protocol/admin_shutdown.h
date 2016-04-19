@@ -11,7 +11,7 @@ namespace gpudb
 
     /**
      * A set of input parameters for {@link
-     * #adminShutdown(AdminShutdownRequest&)}.
+     * #adminShutdown(const AdminShutdownRequest&) const}.
      * <p>
      * Exits the GPUdb server application. A authorization code is required
      * (chosen at the time of GPUdb configuration) to successfully complete
@@ -42,7 +42,7 @@ namespace gpudb
          *                           authorization code will result in an
          *                           error.
          * @param[in] options  Optional parameters.  Default value is an empty
-         *                     {@link std::map}.
+         *                     std::map.
          * 
          */
         AdminShutdownRequest(const std::string& exitType, const std::string& authorization, const std::map<std::string, std::string>& options):
@@ -111,7 +111,7 @@ namespace gpudb
 
     /**
      * A set of output parameters for {@link
-     * #adminShutdown(AdminShutdownRequest&)}.
+     * #adminShutdown(const AdminShutdownRequest&) const}.
      * <p>
      * Exits the GPUdb server application. A authorization code is required
      * (chosen at the time of GPUdb configuration) to successfully complete

@@ -11,7 +11,7 @@ namespace gpudb
 
     /**
      * A set of input parameters for {@link
-     * #getRecordsRaw(GetRecordsRequest&)}.
+     * #getRecordsRaw(const GetRecordsRequest&) const}.
      * <p>
      * Retrieves records from a given table, optionally filtered by an
      * expression and/or sorted by a column. This operation can only be
@@ -55,7 +55,7 @@ namespace gpudb
          *                   of results to be returned. Or END_OF_SET (-9999)
          *                   to indicate that the max number of results should
          *                   be returned.  Default value is 10000.
-         * @param[in] options  Default value is an empty {@link std::map}.
+         * @param[in] options  Default value is an empty std::map.
          * 
          */
         GetRecordsRequest(const std::string& tableName, const int64_t offset, const int64_t limit, const std::map<std::string, std::string>& options):
@@ -83,9 +83,8 @@ namespace gpudb
          *                   to indicate that the max number of results should
          *                   be returned.  Default value is 10000.
          * @param[in] encoding  Specifies the encoding for returned records.
-         *                      Default value is 'binary'. The allowed values
-         *                      are:  ~!~ * BINARY * JSON~!~
-         * @param[in] options  Default value is an empty {@link std::map}.
+         *                      Default value is 'binary'.
+         * @param[in] options  Default value is an empty std::map.
          * 
          */
         GetRecordsRequest(const std::string& tableName, const int64_t offset, const int64_t limit, const std::string& encoding, const std::map<std::string, std::string>& options):
@@ -170,7 +169,7 @@ namespace gpudb
 
     /**
      * A set of output parameters for {@link
-     * #getRecordsRaw(GetRecordsRequest&)}.
+     * #getRecordsRaw(const GetRecordsRequest&) const}.
      * <p>
      * Retrieves records from a given table, optionally filtered by an
      * expression and/or sorted by a column. This operation can only be
@@ -272,7 +271,8 @@ namespace gpudb
 {
 
     /**
-     * A set of output parameters for {@link #getRecords(GetRecordsRequest&)}.
+     * A set of output parameters for {@link
+     * #getRecords(const GetRecordsRequest&) const}.
      * <p>
      * Retrieves records from a given table, optionally filtered by an
      * expression and/or sorted by a column. This operation can only be

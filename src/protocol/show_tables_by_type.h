@@ -11,7 +11,7 @@ namespace gpudb
 
     /**
      * A set of input parameters for {@link
-     * #showTablesByType(ShowTablesByTypeRequest&)}.
+     * #showTablesByType(const ShowTablesByTypeRequest&) const}.
      * <p>
      * Gets names of the tables from GPUdb based on the type information. Each
      * table in GPUdb has a particular type. This type is made out of the type
@@ -42,7 +42,7 @@ namespace gpudb
          *                   instead of the type_id to retrieve all tables with
          *                   the given label.
          * @param[in] options  Optional parameters.  Default value is an empty
-         *                     {@link std::map}.
+         *                     std::map.
          * 
          */
         ShowTablesByTypeRequest(const std::string& typeId, const std::string& label, const std::map<std::string, std::string>& options):
@@ -111,7 +111,7 @@ namespace gpudb
 
     /**
      * A set of output parameters for {@link
-     * #showTablesByType(ShowTablesByTypeRequest&)}.
+     * #showTablesByType(const ShowTablesByTypeRequest&) const}.
      * <p>
      * Gets names of the tables from GPUdb based on the type information. Each
      * table in GPUdb has a particular type. This type is made out of the type

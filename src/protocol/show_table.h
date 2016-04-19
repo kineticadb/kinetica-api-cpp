@@ -10,7 +10,8 @@ namespace gpudb
 {
 
     /**
-     * A set of input parameters for {@link #showTable(ShowTableRequest&)}.
+     * A set of input parameters for {@link
+     * #showTable(const ShowTableRequest&) const}.
      * <p>
      * Retrieves detailed information about a particular GPUdb table, specified
      * in @a tableName. If the supplied @a tableName is a collection, the call
@@ -45,7 +46,7 @@ namespace gpudb
          *                       all collections and top-level tables is
          *                       returned.
          * @param[in] options  Optional parameters.  Default value is an empty
-         *                     {@link std::map}.
+         *                     std::map.
          * 
          */
         ShowTableRequest(const std::string& tableName, const std::map<std::string, std::string>& options):
@@ -105,7 +106,8 @@ namespace gpudb
 {
 
     /**
-     * A set of output parameters for {@link #showTable(ShowTableRequest&)}.
+     * A set of output parameters for {@link
+     * #showTable(const ShowTableRequest&) const}.
      * <p>
      * Retrieves detailed information about a particular GPUdb table, specified
      * in @a tableName. If the supplied @a tableName is a collection, the call

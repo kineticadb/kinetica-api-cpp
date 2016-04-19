@@ -13,7 +13,7 @@ namespace gpudb
 
     /**
      * A set of input parameters for {@link
-     * #getRecordsByColumnRaw(GetRecordsByColumnRequest&)}.
+     * #getRecordsByColumnRaw(const GetRecordsByColumnRequest&) const}.
      * <p>
      * For a given table, retrieves the values of the given columns within a
      * given range. It returns maps of column name to the vector of values for
@@ -29,8 +29,9 @@ namespace gpudb
      * deleted or modified) the records or values retrieved may differ between
      * calls (discontiguous or overlap) based on the type of the update.
      * <p>
-     * The response is returned as a dynamic schema. For details see: {dynamic
-     * schemas documentation}@{link ../../concepts/index.html#dynamic-schemas}.
+     * The response is returned as a dynamic schema. For details see: <a
+     * href="../../concepts/index.html#dynamic-schemas" target="_top">dynamic
+     * schemas documentation</a>.
      */
     struct GetRecordsByColumnRequest
     {
@@ -68,7 +69,7 @@ namespace gpudb
          *                   default is 10000). Or END_OF_column (-9999) to
          *                   indicate that the max number of results should be
          *                   returned.
-         * @param[in] options  Default value is an empty {@link std::map}.
+         * @param[in] options  Default value is an empty std::map.
          * 
          */
         GetRecordsByColumnRequest(const std::string& tableName, const std::vector<std::string>& columnNames, const int64_t offset, const int64_t limit, const std::map<std::string, std::string>& options):
@@ -102,9 +103,8 @@ namespace gpudb
          *                   returned.
          * @param[in] encoding  Specifies the encoding for returned records;
          *                      either 'binary' or 'json'.  Default value is
-         *                      'binary'. The allowed values are:  ~!~ * BINARY
-         *                      * JSON~!~
-         * @param[in] options  Default value is an empty {@link std::map}.
+         *                      'binary'.
+         * @param[in] options  Default value is an empty std::map.
          * 
          */
         GetRecordsByColumnRequest(const std::string& tableName, const std::vector<std::string>& columnNames, const int64_t offset, const int64_t limit, const std::string& encoding, const std::map<std::string, std::string>& options):
@@ -197,7 +197,7 @@ namespace gpudb
 
     /**
      * A set of output parameters for {@link
-     * #getRecordsByColumnRaw(GetRecordsByColumnRequest&)}.
+     * #getRecordsByColumnRaw(const GetRecordsByColumnRequest&) const}.
      * <p>
      * For a given table, retrieves the values of the given columns within a
      * given range. It returns maps of column name to the vector of values for
@@ -213,8 +213,9 @@ namespace gpudb
      * deleted or modified) the records or values retrieved may differ between
      * calls (discontiguous or overlap) based on the type of the update.
      * <p>
-     * The response is returned as a dynamic schema. For details see: {dynamic
-     * schemas documentation}@{link ../../concepts/index.html#dynamic-schemas}.
+     * The response is returned as a dynamic schema. For details see: <a
+     * href="../../concepts/index.html#dynamic-schemas" target="_top">dynamic
+     * schemas documentation</a>.
      */
     struct RawGetRecordsByColumnResponse
     {
@@ -297,7 +298,7 @@ namespace gpudb
 
     /**
      * A set of output parameters for {@link
-     * #getRecordsByColumn(GetRecordsByColumnRequest&)}.
+     * #getRecordsByColumn(const GetRecordsByColumnRequest&) const}.
      * <p>
      * For a given table, retrieves the values of the given columns within a
      * given range. It returns maps of column name to the vector of values for
@@ -313,8 +314,9 @@ namespace gpudb
      * deleted or modified) the records or values retrieved may differ between
      * calls (discontiguous or overlap) based on the type of the update.
      * <p>
-     * The response is returned as a dynamic schema. For details see: {dynamic
-     * schemas documentation}@{link ../../concepts/index.html#dynamic-schemas}.
+     * The response is returned as a dynamic schema. For details see: <a
+     * href="../../concepts/index.html#dynamic-schemas" target="_top">dynamic
+     * schemas documentation</a>.
      */
     struct GetRecordsByColumnResponse
     {

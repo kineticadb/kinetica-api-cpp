@@ -68,7 +68,7 @@ template<> GetRecordsResponse<boost::any>& GPUdb::getRecords(const GetRecordsReq
  * @param limit  A positive integer indicating the maximum number of results to
  *               be returned. Or END_OF_SET (-9999) to indicate that the max
  *               number of results should be returned.  Default value is 10000.
- * @param options  Default value is an empty {@link std::map}.
+ * @param options  Default value is an empty std::map.
  * 
  * @return Response object containing the result of the operation.
  * 
@@ -96,7 +96,7 @@ template<> GetRecordsResponse<boost::any> GPUdb::getRecords(const std::string& t
  * @param limit  A positive integer indicating the maximum number of results to
  *               be returned. Or END_OF_SET (-9999) to indicate that the max
  *               number of results should be returned.  Default value is 10000.
- * @param options  Default value is an empty {@link std::map}.
+ * @param options  Default value is an empty std::map.
  * @param[out] response_  Response object containing the results of the
  *                        operation.
  * 
@@ -113,10 +113,10 @@ template<> GetRecordsResponse<boost::any>& GPUdb::getRecords(const std::string& 
  * This operation supports paging through the data via the @a offset and @a
  * limit parameters.
  * <p>
- * In contrast to {@link #getRecords(GetRecordsRequest&)} this returns records
- * grouped by series/track. So if @a offset is 0 and @a limit is 5 this
- * operation would return the first 5 series/tracks in @a tableName. Each
- * series/track will be returned sorted by their TIMESTAMP column.
+ * In contrast to {@link #getRecords(const GetRecordsRequest&) const} this
+ * returns records grouped by series/track. So if @a offset is 0 and @a limit
+ * is 5 this operation would return the first 5 series/tracks in @a tableName.
+ * Each series/track will be returned sorted by their TIMESTAMP column.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -134,10 +134,11 @@ template<> GetRecordsBySeriesResponse<boost::any> GPUdb::getRecordsBySeries(cons
  * limit parameters.
  * <p>
  * In contrast to {@link
- * #getRecords(GetRecordsRequest&,GetRecordsResponse<boost::any>&)} this
- * returns records grouped by series/track. So if @a offset is 0 and @a limit
- * is 5 this operation would return the first 5 series/tracks in @a tableName.
- * Each series/track will be returned sorted by their TIMESTAMP column.
+ * #getRecords(const GetRecordsRequest&,GetRecordsResponse<boost::any>&) const}
+ * this returns records grouped by series/track. So if @a offset is 0 and @a
+ * limit is 5 this operation would return the first 5 series/tracks in @a
+ * tableName. Each series/track will be returned sorted by their TIMESTAMP
+ * column.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -158,11 +159,11 @@ template<> GetRecordsBySeriesResponse<boost::any>& GPUdb::getRecordsBySeries(con
  * limit parameters.
  * <p>
  * In contrast to {@link
- * #getRecords(std::string&,int64_t,int64_t,std::map<std::string,
- * std::string>&)} this returns records grouped by series/track. So if @a
- * offset is 0 and @a limit is 5 this operation would return the first 5
- * series/tracks in @a tableName. Each series/track will be returned sorted by
- * their TIMESTAMP column.
+ * #getRecords(const std::string&,const int64_t,const int64_t,const std::map<std::string, std::string>&) const}
+ * this returns records grouped by series/track. So if @a offset is 0 and @a
+ * limit is 5 this operation would return the first 5 series/tracks in @a
+ * tableName. Each series/track will be returned sorted by their TIMESTAMP
+ * column.
  * 
  * @param tableName  Name of the collection/table/view for which series/tracks
  *                   will be fetched.
@@ -181,8 +182,7 @@ template<> GetRecordsBySeriesResponse<boost::any>& GPUdb::getRecordsBySeries(con
  *               series/tracks to be returned. Or END_OF_SET (-9999) to
  *               indicate that the max number of results should be returned.
  *               Default value is 10000.
- * @param options  Optional parameters.  Default value is an empty {@link
- *                 std::map}.
+ * @param options  Optional parameters.  Default value is an empty std::map.
  * 
  * @return Response object containing the result of the operation.
  * 
@@ -197,11 +197,11 @@ template<> GetRecordsBySeriesResponse<boost::any> GPUdb::getRecordsBySeries(cons
  * limit parameters.
  * <p>
  * In contrast to {@link
- * #getRecords(std::string&,int64_t,int64_t,std::map<std::string,
- * std::string>&,GetRecordsResponse<boost::any>&)} this returns records grouped
- * by series/track. So if @a offset is 0 and @a limit is 5 this operation would
- * return the first 5 series/tracks in @a tableName. Each series/track will be
- * returned sorted by their TIMESTAMP column.
+ * #getRecords(const std::string&,const int64_t,const int64_t,const std::map<std::string, std::string>&,GetRecordsResponse<boost::any>&) const}
+ * this returns records grouped by series/track. So if @a offset is 0 and @a
+ * limit is 5 this operation would return the first 5 series/tracks in @a
+ * tableName. Each series/track will be returned sorted by their TIMESTAMP
+ * column.
  * 
  * @param tableName  Name of the collection/table/view for which series/tracks
  *                   will be fetched.
@@ -220,8 +220,7 @@ template<> GetRecordsBySeriesResponse<boost::any> GPUdb::getRecordsBySeries(cons
  *               series/tracks to be returned. Or END_OF_SET (-9999) to
  *               indicate that the max number of results should be returned.
  *               Default value is 10000.
- * @param options  Optional parameters.  Default value is an empty {@link
- *                 std::map}.
+ * @param options  Optional parameters.  Default value is an empty std::map.
  * @param[out] response_  Response object containing the results of the
  *                        operation.
  * 
@@ -234,7 +233,7 @@ template<> GetRecordsBySeriesResponse<boost::any>& GPUdb::getRecordsBySeries(con
 /**
  * Retrieves records from a collection. The operation can optionally return the
  * record IDs which can be used in certain queries such as {@link
- * #deleteRecords(DeleteRecordsRequest&)}.
+ * #deleteRecords(const DeleteRecordsRequest&) const}.
  * <p>
  * This operation supports paging through the data via the @a offset and @a
  * limit parameters.
@@ -250,7 +249,7 @@ template<> GetRecordsFromCollectionResponse<boost::any> GPUdb::getRecordsFromCol
 /**
  * Retrieves records from a collection. The operation can optionally return the
  * record IDs which can be used in certain queries such as {@link
- * #deleteRecords(DeleteRecordsRequest&,DeleteRecordsResponse&)}.
+ * #deleteRecords(const DeleteRecordsRequest&,DeleteRecordsResponse&) const}.
  * <p>
  * This operation supports paging through the data via the @a offset and @a
  * limit parameters.
@@ -269,8 +268,7 @@ template<> GetRecordsFromCollectionResponse<boost::any>& GPUdb::getRecordsFromCo
 /**
  * Retrieves records from a collection. The operation can optionally return the
  * record IDs which can be used in certain queries such as {@link
- * #deleteRecords(std::string&,std::vector<std::string>&,std::map<std::string,
- * std::string>&)}.
+ * #deleteRecords(const std::string&,const std::vector<std::string>&,const std::map<std::string, std::string>&) const}.
  * <p>
  * This operation supports paging through the data via the @a offset and @a
  * limit parameters.
@@ -285,7 +283,7 @@ template<> GetRecordsFromCollectionResponse<boost::any>& GPUdb::getRecordsFromCo
  * @param limit  A positive integer indicating the maximum number of results to
  *               be returned, or END_OF_SET (-9999) to indicate that the max
  *               number of results should be returned.  Default value is 10000.
- * @param options  Default value is an empty {@link std::map}.
+ * @param options  Default value is an empty std::map.
  * 
  * @return Response object containing the result of the operation.
  * 
@@ -295,8 +293,7 @@ template<> GetRecordsFromCollectionResponse<boost::any> GPUdb::getRecordsFromCol
 /**
  * Retrieves records from a collection. The operation can optionally return the
  * record IDs which can be used in certain queries such as {@link
- * #deleteRecords(std::string&,std::vector<std::string>&,std::map<std::string,
- * std::string>&,DeleteRecordsResponse&)}.
+ * #deleteRecords(const std::string&,const std::vector<std::string>&,const std::map<std::string, std::string>&,DeleteRecordsResponse&) const}.
  * <p>
  * This operation supports paging through the data via the @a offset and @a
  * limit parameters.
@@ -311,7 +308,7 @@ template<> GetRecordsFromCollectionResponse<boost::any> GPUdb::getRecordsFromCol
  * @param limit  A positive integer indicating the maximum number of results to
  *               be returned, or END_OF_SET (-9999) to indicate that the max
  *               number of results should be returned.  Default value is 10000.
- * @param options  Default value is an empty {@link std::map}.
+ * @param options  Default value is an empty std::map.
  * @param[out] response_  Response object containing the results of the
  *                        operation.
  * 

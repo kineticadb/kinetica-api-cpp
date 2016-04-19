@@ -10,7 +10,8 @@ namespace gpudb
 {
 
     /**
-     * A set of input parameters for {@link #filter(FilterRequest&)}.
+     * A set of input parameters for {@link
+     * #filter(const FilterRequest&) const}.
      * <p>
      * Filters data based on the specified expression.  The results are stored
      * in a result set with the given @a viewName.
@@ -47,13 +48,13 @@ namespace gpudb
          * @param[in] viewName  If provided, then this will be the name of the
          *                      view containing the results. Must not be an
          *                      already existing collection, table or view .
-         *                      Default value is an empty {@link std::string}.
+         *                      Default value is an empty string.
          * @param[in] expression  The select expression GPUdb uses to filter
          *                        the specified table.  For details see <a
          *                        href="../../concepts/index.html#expressions"
          *                        target="_top">concepts</a>.
          * @param[in] options  Optional parameters.  Default value is an empty
-         *                     {@link std::map}.
+         *                     std::map.
          * 
          */
         FilterRequest(const std::string& tableName, const std::string& viewName, const std::string& expression, const std::map<std::string, std::string>& options):
@@ -129,7 +130,8 @@ namespace gpudb
 {
 
     /**
-     * A set of output parameters for {@link #filter(FilterRequest&)}.
+     * A set of output parameters for {@link
+     * #filter(const FilterRequest&) const}.
      * <p>
      * Filters data based on the specified expression.  The results are stored
      * in a result set with the given @a viewName.

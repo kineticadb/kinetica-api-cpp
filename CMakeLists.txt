@@ -61,10 +61,26 @@ EXIT_IF_HELP_REQUESTED()
 EXECUTE_PROCESS(COMMAND "date" OUTPUT_VARIABLE GPUDB_API_CPP_CMAKE_BUILD_DATE_STRING)
 string(STRIP "${GPUDB_API_CPP_CMAKE_BUILD_DATE_STRING}" GPUDB_API_CPP_CMAKE_BUILD_DATE_STRING)
 
-set( GPUDB_API_CPP_MAJOR_VERSION   "4" )
-set( GPUDB_API_CPP_MINOR_VERSION   "0" )
-set( GPUDB_API_CPP_RELEASE_VERSION "0" )
-set( GPUDB_API_CPP_VERSION         "${GPUDB_API_CPP_MAJOR_VERSION}.${GPUDB_API_CPP_MINOR_VERSION}.${GPUDB_API_CPP_RELEASE_VERSION}" )
+# Get the version info from the C++ API version file
+file(READ "${CMAKE_SOURCE_DIR}/src/VERSION" API_CPP_VERSION_STR)
+
+string(REGEX MATCH "MAJOR[ \t]*=[ \t]*([0-9]+)"    _dummy ${API_CPP_VERSION_STR} )
+set(API_CPP_VERSION_MAJOR   ${CMAKE_MATCH_1} CACHE INTERNAL "" FORCE)
+
+string(REGEX MATCH "MINOR[ \t]*=[ \t]*([0-9]+)"    _dummy ${API_CPP_VERSION_STR} )
+set(API_CPP_VERSION_MINOR   ${CMAKE_MATCH_1} CACHE INTERNAL "" FORCE)
+
+string(REGEX MATCH "REVISION[ \t]*=[ \t]*([0-9]+)" _dummy ${API_CPP_VERSION_STR} )
+set(API_CPP_VERSION_REVISION ${CMAKE_MATCH_1} CACHE INTERNAL "" FORCE)
+
+string(REGEX MATCH "ABI_VERSION[ \t]*=[ \t]*([0-9]+)" _dummy ${API_CPP_VERSION_STR} )
+set(API_CPP_ABI_VERSION ${CMAKE_MATCH_1} CACHE INTERNAL "" FORCE)
+
+
+set( GPUDB_API_CPP_VERSION
+    "${API_CPP_VERSION_MAJOR}.${API_CPP_VERSION_MINOR}.${API_CPP_VERSION_REVISION}.${API_CPP_ABI_VERSION}"
+     CACHE INTERNAL "" FORCE)
+
 
 include("build/CMakeGitVersion.cmake")
 GetGitRepoVersionInfo(${CMAKE_SOURCE_DIR} GPUDB_API_CPP_)
@@ -275,6 +291,7 @@ ADD_LIBRARY_FULL( gpudb_api_cpp_lib
         GPUdbFunctions.hpp
         GPUdbTemplates.hpp
         Type.hpp
+	protocol/EndpointKeywords.h
         protocol/GPUdbProtocol.h
     SOURCES
         Avro.cpp
@@ -283,6 +300,7 @@ ADD_LIBRARY_FULL( gpudb_api_cpp_lib
         GPUdb.cpp
         GPUdbException.cpp
         Type.cpp
+	protocol/EndpointKeywords.cpp
     LINK_LIBRARIES
         ${GPUDB_API_CPP_LINK_LIBRARIES}
     PROPERTIES FOLDER "Library"
@@ -311,6 +329,7 @@ ADD_EXECUTABLE_FULL( gpudb-api-example
 )
 
 endfunction( gpudb_api_cpp_example_TARGETS )
+
 
 # ===========================================================================
 # Add the subdirectories with their projects in them

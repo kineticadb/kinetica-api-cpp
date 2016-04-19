@@ -11,7 +11,7 @@ namespace gpudb
 
     /**
      * A set of input parameters for {@link
-     * #aggregateHistogram(AggregateHistogramRequest&)}.
+     * #aggregateHistogram(const AggregateHistogramRequest&) const}.
      * <p>
      * Performs a histogram calculation given a table, a column, and an
      * interval function. The @a interval is used to produce bins of that size
@@ -57,7 +57,7 @@ namespace gpudb
          * @param[in] interval  The size of each bin within the start and end
          *                      parameters.
          * @param[in] options  Optional parameters.  Default value is an empty
-         *                     {@link std::map}.
+         *                     std::map.
          * 
          */
         AggregateHistogramRequest(const std::string& tableName, const std::string& columnName, const double start, const double end, const double interval, const std::map<std::string, std::string>& options):
@@ -150,7 +150,7 @@ namespace gpudb
 
     /**
      * A set of output parameters for {@link
-     * #aggregateHistogram(AggregateHistogramRequest&)}.
+     * #aggregateHistogram(const AggregateHistogramRequest&) const}.
      * <p>
      * Performs a histogram calculation given a table, a column, and an
      * interval function. The @a interval is used to produce bins of that size

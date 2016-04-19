@@ -11,7 +11,7 @@ namespace gpudb
 
     /**
      * A set of input parameters for {@link
-     * #visualizeVideo(VisualizeVideoRequest&)}.
+     * #visualizeVideo(const VisualizeVideoRequest&) const}.
      * <p>
      * Creates raster images of data in the given table based on provided input
      * parameters. Numerous parameters are required to call this function. Some
@@ -70,26 +70,10 @@ namespace gpudb
             height(int32_t()),
             projection(std::string()),
             bgColor(int64_t()),
-            doPoints(std::vector<bool>()),
-            doShapes(std::vector<bool>()),
-            doTracks(std::vector<bool>()),
-            pointcolors(std::vector<int64_t>()),
-            pointsizes(std::vector<int32_t>()),
-            pointshapes(std::vector<std::string>()),
-            shapelinewidths(std::vector<int32_t>()),
-            shapelinecolors(std::vector<int64_t>()),
-            shapefillcolors(std::vector<int64_t>()),
-            tracklinewidths(std::vector<int32_t>()),
-            tracklinecolors(std::vector<int64_t>()),
-            trackmarkersizes(std::vector<int32_t>()),
-            trackmarkercolors(std::vector<int64_t>()),
-            trackmarkershapes(std::vector<std::string>()),
-            trackheadcolors(std::vector<int64_t>()),
-            trackheadsizes(std::vector<int32_t>()),
-            trackheadshapes(std::vector<std::string>()),
             timeIntervals(std::vector<std::vector<double> >()),
             videoStyle(std::string()),
             sessionKey(std::string()),
+            styleOptions(std::map<std::string, std::vector<std::string> >()),
             options(std::map<std::string, std::string>())
         {
         }
@@ -119,74 +103,18 @@ namespace gpudb
          * @param[in] width  Width of the generated image.
          * @param[in] height  Height of the generated image.
          * @param[in] projection  Spatial Reference System (i.e. EPSG Code).
-         *                        Default value is 'PLATE_CARREE'. The allowed
-         *                        values are:  ~!~ * EPSG:4326 * PLATE_CARREE *
-         *                        _900913 * EPSG:900913 * _102100 * EPSG:102100
-         *                        * _3857 * EPSG:3857 * WEB_MERCATOR~!~
+         *                        Default value is 'PLATE_CARREE'.
          * @param[in] bgColor  Background color of the generated image.
-         * @param[in] doPoints  Rasterize point data toggle.  Default value is
-         *                      'true'. The allowed values are:  ~!~ * TRUE *
-         *                      FALSE~!~
-         * @param[in] doShapes  Rasterize shapes toggle.  Default value is
-         *                      'true'. The allowed values are:  ~!~ * TRUE *
-         *                      FALSE~!~
-         * @param[in] doTracks  Rasterize tracks toggle.  Default value is
-         *                      'true'. The allowed values are:  ~!~ * TRUE *
-         *                      FALSE~!~
-         * @param[in] pointcolors  RGB color value in hex for the points.
-         *                         Default value is 'FF0000'.
-         * @param[in] pointsizes  Size of points.  Default value is '3'. The
-         *                        minimum allowed value is 0. The maximum
-         *                        allowed value is 20.
-         * @param[in] pointshapes  Shape of the point.  The allowed values are:
-         *                         ~!~ * NONE * CIRCLE * SQUARE * DIAMOND *
-         *                         HOLLOWCIRCLE * HOLLOWSQUARE * HOLLOWDIAMOND
-         *                         * SYMBOLCODE~!~
-         * @param[in] shapelinewidths  Width of the lines.  Default value is
-         *                             '3'. The minimum allowed value is 0. The
-         *                             maximum allowed value is 20.
-         * @param[in] shapelinecolors  RGB color values in hex for the line.
-         *                             Default is yellow.  Default value is
-         *                             'FFFF00 '.
-         * @param[in] shapefillcolors  RGB color values in hex for the fill
-         *                             color of the shapes. Use '-1' for no
-         *                             fill.  Default value is '-1'.
-         * @param[in] tracklinewidths  Width of the track lines. '0' implies do
-         *                             not draw track lines.  Default value is
-         *                             '3'. The minimum allowed value is 0. The
-         *                             maximum allowed value is 20.
-         * @param[in] tracklinecolors  RGB color values for the track lines.
-         *                             Default value is 'green'.
-         * @param[in] trackmarkersizes  Size of the track point markers.
-         *                              Default value is '3'. The minimum
-         *                              allowed value is 0. The maximum allowed
-         *                              value is 20.
-         * @param[in] trackmarkercolors  Color of the track point markers.
-         *                               Default value is '0000FF'.
-         * @param[in] trackmarkershapes  Shape of track point markers.  Default
-         *                               value is 'none'. The allowed values
-         *                               are:  ~!~ * NONE * CIRCLE * SQUARE *
-         *                               DIAMOND * HOLLOWCIRCLE * HOLLOWSQUARE
-         *                               * HOLLOWDIAMOND * SYMBOLCODE~!~
-         * @param[in] trackheadcolors  Color of track head markers.  Default
-         *                             value is 'FFFFFF'.
-         * @param[in] trackheadsizes  Size of track head markers.  Default
-         *                            value is '10'. The minimum allowed value
-         *                            is 0. The maximum allowed value is 20.
-         * @param[in] trackheadshapes  Shape of track head markers.  Default
-         *                             value is 'circle'. The allowed values
-         *                             are:  ~!~ * NONE * CIRCLE * SQUARE *
-         *                             DIAMOND * HOLLOWCIRCLE * HOLLOWSQUARE *
-         *                             HOLLOWDIAMOND * SYMBOLCODE~!~
          * @param[in] timeIntervals
          * @param[in] videoStyle
          * @param[in] sessionKey  User Provided session key that is later used
          *                        to retrieve the generated video from the WMS.
+         * @param[in] styleOptions  Styling options for the image.
          * @param[in] options  Optional parameters.  Default value is an empty
-         *                     {@link std::map}.
+         *                     std::map.
          * 
          */
-        VisualizeVideoRequest(const std::vector<std::string>& tableNames, const std::vector<std::string>& worldTableNames, const std::vector<std::vector<std::string> >& trackIds, const std::string& xColumnName, const std::string& yColumnName, const double minX, const double maxX, const double minY, const double maxY, const int32_t width, const int32_t height, const std::string& projection, const int64_t bgColor, const std::vector<bool>& doPoints, const std::vector<bool>& doShapes, const std::vector<bool>& doTracks, const std::vector<int64_t>& pointcolors, const std::vector<int32_t>& pointsizes, const std::vector<std::string>& pointshapes, const std::vector<int32_t>& shapelinewidths, const std::vector<int64_t>& shapelinecolors, const std::vector<int64_t>& shapefillcolors, const std::vector<int32_t>& tracklinewidths, const std::vector<int64_t>& tracklinecolors, const std::vector<int32_t>& trackmarkersizes, const std::vector<int64_t>& trackmarkercolors, const std::vector<std::string>& trackmarkershapes, const std::vector<int64_t>& trackheadcolors, const std::vector<int32_t>& trackheadsizes, const std::vector<std::string>& trackheadshapes, const std::vector<std::vector<double> >& timeIntervals, const std::string& videoStyle, const std::string& sessionKey, const std::map<std::string, std::string>& options):
+        VisualizeVideoRequest(const std::vector<std::string>& tableNames, const std::vector<std::string>& worldTableNames, const std::vector<std::vector<std::string> >& trackIds, const std::string& xColumnName, const std::string& yColumnName, const double minX, const double maxX, const double minY, const double maxY, const int32_t width, const int32_t height, const std::string& projection, const int64_t bgColor, const std::vector<std::vector<double> >& timeIntervals, const std::string& videoStyle, const std::string& sessionKey, const std::map<std::string, std::vector<std::string> >& styleOptions, const std::map<std::string, std::string>& options):
             tableNames(tableNames),
             worldTableNames(worldTableNames),
             trackIds(trackIds),
@@ -200,26 +128,10 @@ namespace gpudb
             height(height),
             projection(projection),
             bgColor(bgColor),
-            doPoints(doPoints),
-            doShapes(doShapes),
-            doTracks(doTracks),
-            pointcolors(pointcolors),
-            pointsizes(pointsizes),
-            pointshapes(pointshapes),
-            shapelinewidths(shapelinewidths),
-            shapelinecolors(shapelinecolors),
-            shapefillcolors(shapefillcolors),
-            tracklinewidths(tracklinewidths),
-            tracklinecolors(tracklinecolors),
-            trackmarkersizes(trackmarkersizes),
-            trackmarkercolors(trackmarkercolors),
-            trackmarkershapes(trackmarkershapes),
-            trackheadcolors(trackheadcolors),
-            trackheadsizes(trackheadsizes),
-            trackheadshapes(trackheadshapes),
             timeIntervals(timeIntervals),
             videoStyle(videoStyle),
             sessionKey(sessionKey),
+            styleOptions(styleOptions),
             options(options)
         {
         }
@@ -237,26 +149,10 @@ namespace gpudb
         int32_t height;
         std::string projection;
         int64_t bgColor;
-        std::vector<bool> doPoints;
-        std::vector<bool> doShapes;
-        std::vector<bool> doTracks;
-        std::vector<int64_t> pointcolors;
-        std::vector<int32_t> pointsizes;
-        std::vector<std::string> pointshapes;
-        std::vector<int32_t> shapelinewidths;
-        std::vector<int64_t> shapelinecolors;
-        std::vector<int64_t> shapefillcolors;
-        std::vector<int32_t> tracklinewidths;
-        std::vector<int64_t> tracklinecolors;
-        std::vector<int32_t> trackmarkersizes;
-        std::vector<int64_t> trackmarkercolors;
-        std::vector<std::string> trackmarkershapes;
-        std::vector<int64_t> trackheadcolors;
-        std::vector<int32_t> trackheadsizes;
-        std::vector<std::string> trackheadshapes;
         std::vector<std::vector<double> > timeIntervals;
         std::string videoStyle;
         std::string sessionKey;
+        std::map<std::string, std::vector<std::string> > styleOptions;
         std::map<std::string, std::string> options;
     };
 }
@@ -280,26 +176,10 @@ namespace avro
             ::avro::encode(e, v.height);
             ::avro::encode(e, v.projection);
             ::avro::encode(e, v.bgColor);
-            ::avro::encode(e, v.doPoints);
-            ::avro::encode(e, v.doShapes);
-            ::avro::encode(e, v.doTracks);
-            ::avro::encode(e, v.pointcolors);
-            ::avro::encode(e, v.pointsizes);
-            ::avro::encode(e, v.pointshapes);
-            ::avro::encode(e, v.shapelinewidths);
-            ::avro::encode(e, v.shapelinecolors);
-            ::avro::encode(e, v.shapefillcolors);
-            ::avro::encode(e, v.tracklinewidths);
-            ::avro::encode(e, v.tracklinecolors);
-            ::avro::encode(e, v.trackmarkersizes);
-            ::avro::encode(e, v.trackmarkercolors);
-            ::avro::encode(e, v.trackmarkershapes);
-            ::avro::encode(e, v.trackheadcolors);
-            ::avro::encode(e, v.trackheadsizes);
-            ::avro::encode(e, v.trackheadshapes);
             ::avro::encode(e, v.timeIntervals);
             ::avro::encode(e, v.videoStyle);
             ::avro::encode(e, v.sessionKey);
+            ::avro::encode(e, v.styleOptions);
             ::avro::encode(e, v.options);
         }
 
@@ -366,86 +246,22 @@ namespace avro
                             break;
 
                         case 13:
-                            ::avro::decode(d, v.doPoints);
-                            break;
-
-                        case 14:
-                            ::avro::decode(d, v.doShapes);
-                            break;
-
-                        case 15:
-                            ::avro::decode(d, v.doTracks);
-                            break;
-
-                        case 16:
-                            ::avro::decode(d, v.pointcolors);
-                            break;
-
-                        case 17:
-                            ::avro::decode(d, v.pointsizes);
-                            break;
-
-                        case 18:
-                            ::avro::decode(d, v.pointshapes);
-                            break;
-
-                        case 19:
-                            ::avro::decode(d, v.shapelinewidths);
-                            break;
-
-                        case 20:
-                            ::avro::decode(d, v.shapelinecolors);
-                            break;
-
-                        case 21:
-                            ::avro::decode(d, v.shapefillcolors);
-                            break;
-
-                        case 22:
-                            ::avro::decode(d, v.tracklinewidths);
-                            break;
-
-                        case 23:
-                            ::avro::decode(d, v.tracklinecolors);
-                            break;
-
-                        case 24:
-                            ::avro::decode(d, v.trackmarkersizes);
-                            break;
-
-                        case 25:
-                            ::avro::decode(d, v.trackmarkercolors);
-                            break;
-
-                        case 26:
-                            ::avro::decode(d, v.trackmarkershapes);
-                            break;
-
-                        case 27:
-                            ::avro::decode(d, v.trackheadcolors);
-                            break;
-
-                        case 28:
-                            ::avro::decode(d, v.trackheadsizes);
-                            break;
-
-                        case 29:
-                            ::avro::decode(d, v.trackheadshapes);
-                            break;
-
-                        case 30:
                             ::avro::decode(d, v.timeIntervals);
                             break;
 
-                        case 31:
+                        case 14:
                             ::avro::decode(d, v.videoStyle);
                             break;
 
-                        case 32:
+                        case 15:
                             ::avro::decode(d, v.sessionKey);
                             break;
 
-                        case 33:
+                        case 16:
+                            ::avro::decode(d, v.styleOptions);
+                            break;
+
+                        case 17:
                             ::avro::decode(d, v.options);
                             break;
 
@@ -469,26 +285,10 @@ namespace avro
                 ::avro::decode(d, v.height);
                 ::avro::decode(d, v.projection);
                 ::avro::decode(d, v.bgColor);
-                ::avro::decode(d, v.doPoints);
-                ::avro::decode(d, v.doShapes);
-                ::avro::decode(d, v.doTracks);
-                ::avro::decode(d, v.pointcolors);
-                ::avro::decode(d, v.pointsizes);
-                ::avro::decode(d, v.pointshapes);
-                ::avro::decode(d, v.shapelinewidths);
-                ::avro::decode(d, v.shapelinecolors);
-                ::avro::decode(d, v.shapefillcolors);
-                ::avro::decode(d, v.tracklinewidths);
-                ::avro::decode(d, v.tracklinecolors);
-                ::avro::decode(d, v.trackmarkersizes);
-                ::avro::decode(d, v.trackmarkercolors);
-                ::avro::decode(d, v.trackmarkershapes);
-                ::avro::decode(d, v.trackheadcolors);
-                ::avro::decode(d, v.trackheadsizes);
-                ::avro::decode(d, v.trackheadshapes);
                 ::avro::decode(d, v.timeIntervals);
                 ::avro::decode(d, v.videoStyle);
                 ::avro::decode(d, v.sessionKey);
+                ::avro::decode(d, v.styleOptions);
                 ::avro::decode(d, v.options);
             }
         }
@@ -500,7 +300,7 @@ namespace gpudb
 
     /**
      * A set of output parameters for {@link
-     * #visualizeVideo(VisualizeVideoRequest&)}.
+     * #visualizeVideo(const VisualizeVideoRequest&) const}.
      * <p>
      * Creates raster images of data in the given table based on provided input
      * parameters. Numerous parameters are required to call this function. Some

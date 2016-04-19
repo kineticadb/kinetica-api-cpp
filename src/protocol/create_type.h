@@ -10,7 +10,8 @@ namespace gpudb
 {
 
     /**
-     * A set of input parameters for {@link #createType(CreateTypeRequest&)}.
+     * A set of input parameters for {@link
+     * #createType(const CreateTypeRequest&) const}.
      * <p>
      * Creates a new type in GPUdb describing the layout or schema of a table.
      * The type definition is a JSON string describing the fields (i.e.
@@ -18,42 +19,21 @@ namespace gpudb
      * Supported data types are: double, float, int, long, string, and bytes.
      * In addition one or more properties can be specified for each column
      * which customize the memory usage and query availability of that column.
+     * Note that some properties are mutually exclusive--i.e. they cannot be
+     * specified for any given column simultaneously.  One example of mutually
+     * exclusive properties are @a data and @a store_only.
      * <p>
-     *     Described below are some viable configurations of properties for
-     * various types of columns:
-     * <p>
-     *     .. csv-table::
-     *         :header: "column Type", "Permitted Properties Combination"
-     *         :widths: 15, 60
-     * <p>
-     *         "Numeric", "'data' (default if no property is provided for a
-     * numeric column)"
-     *         "Numeric", "'store_only'"
-     *         "String", "'data' (default if no property is provided for a
-     * string column)"
-     *         "String", "'text_search' (persists the data and disables all
-     * queries except the filter by string query (with the 'search' mode); i.e.
-     * implied 'store_only')"
-     *         "String", "'store_only'"
-     *         "String", "'data', 'text_search'"
-     *         "String", "'text_search', 'store_only'"
-     *         "String", "'data', 'disk_optimized'"
-     *         "String", "'data', 'text_search', 'disk_optimized'"
-     *         "bytes", "'store_only'"
-     * <p>
-     *     To set a *primary key* on one or more columns include the property
+     * To set a *primary key* on one or more columns include the property
      * 'primary_key' on the desired column_names. If a primary key is specified
      * then GPUdb enforces a uniqueness constraint in that only a single object
      * can exist with a given primary key. When {@link
-     * #insertRecordsRaw(RawInsertRecordsRequest&) inserting} data into a table
-     * with a primary key, depending on the parameters in the request, incoming
-     * objects with primary keys that match existing objects will either
-     * overwrite (i.e. update) the existing object or will be skipped and not
-     * added into the set.
+     * #insertRecordsRaw(const RawInsertRecordsRequest&) const inserting}
+     * data into a table with a primary key, depending on the parameters in the
+     * request, incoming objects with primary keys that match existing objects
+     * will either overwrite (i.e. update) the existing object or will be
+     * skipped and not added into the set.
      * <p>
-     *     Examples of a type definition with some of the parameters:
-     * <p>
-     *     Type definition::
+     * Example of a type definition with some of the parameters::
      * <p>
      *         {"type":"record",
      *         "name":"point",
@@ -94,9 +74,9 @@ namespace gpudb
          * @param[in] label  A user-defined description string which can be
          *                   used to differentiate between tables and types
          *                   with otherwise identical schemas.
-         * @param[in] properties  Default value is an empty {@link std::map}.
+         * @param[in] properties  Default value is an empty std::map.
          * @param[in] options  Optional parameters.  Default value is an empty
-         *                     {@link std::map}.
+         *                     std::map.
          * 
          */
         CreateTypeRequest(const std::string& typeDefinition, const std::string& label, const std::map<std::string, std::vector<std::string> >& properties, const std::map<std::string, std::string>& options):
@@ -172,7 +152,8 @@ namespace gpudb
 {
 
     /**
-     * A set of output parameters for {@link #createType(CreateTypeRequest&)}.
+     * A set of output parameters for {@link
+     * #createType(const CreateTypeRequest&) const}.
      * <p>
      * Creates a new type in GPUdb describing the layout or schema of a table.
      * The type definition is a JSON string describing the fields (i.e.
@@ -180,42 +161,21 @@ namespace gpudb
      * Supported data types are: double, float, int, long, string, and bytes.
      * In addition one or more properties can be specified for each column
      * which customize the memory usage and query availability of that column.
+     * Note that some properties are mutually exclusive--i.e. they cannot be
+     * specified for any given column simultaneously.  One example of mutually
+     * exclusive properties are @a data and @a store_only.
      * <p>
-     *     Described below are some viable configurations of properties for
-     * various types of columns:
-     * <p>
-     *     .. csv-table::
-     *         :header: "column Type", "Permitted Properties Combination"
-     *         :widths: 15, 60
-     * <p>
-     *         "Numeric", "'data' (default if no property is provided for a
-     * numeric column)"
-     *         "Numeric", "'store_only'"
-     *         "String", "'data' (default if no property is provided for a
-     * string column)"
-     *         "String", "'text_search' (persists the data and disables all
-     * queries except the filter by string query (with the 'search' mode); i.e.
-     * implied 'store_only')"
-     *         "String", "'store_only'"
-     *         "String", "'data', 'text_search'"
-     *         "String", "'text_search', 'store_only'"
-     *         "String", "'data', 'disk_optimized'"
-     *         "String", "'data', 'text_search', 'disk_optimized'"
-     *         "bytes", "'store_only'"
-     * <p>
-     *     To set a *primary key* on one or more columns include the property
+     * To set a *primary key* on one or more columns include the property
      * 'primary_key' on the desired column_names. If a primary key is specified
      * then GPUdb enforces a uniqueness constraint in that only a single object
      * can exist with a given primary key. When {@link
-     * #insertRecordsRaw(RawInsertRecordsRequest&) inserting} data into a table
-     * with a primary key, depending on the parameters in the request, incoming
-     * objects with primary keys that match existing objects will either
-     * overwrite (i.e. update) the existing object or will be skipped and not
-     * added into the set.
+     * #insertRecordsRaw(const RawInsertRecordsRequest&) const inserting}
+     * data into a table with a primary key, depending on the parameters in the
+     * request, incoming objects with primary keys that match existing objects
+     * will either overwrite (i.e. update) the existing object or will be
+     * skipped and not added into the set.
      * <p>
-     *     Examples of a type definition with some of the parameters:
-     * <p>
-     *     Type definition::
+     * Example of a type definition with some of the parameters::
      * <p>
      *         {"type":"record",
      *         "name":"point",

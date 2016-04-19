@@ -11,7 +11,7 @@ namespace gpudb
 
     /**
      * A set of input parameters for {@link
-     * #alterTableMetadata(AlterTableMetadataRequest&)}.
+     * #alterTableMetadata(const AlterTableMetadataRequest&) const}.
      * <p>
      * Updates (adds or changes) metadata for tables. The metadata key and
      * values must both be strings. This is an easy way to annotate whole
@@ -47,7 +47,7 @@ namespace gpudb
          *                         all existing metadata for the table(s) will
          *                         be cleared.
          * @param[in] options  Optional parameters.  Default value is an empty
-         *                     {@link std::map}.
+         *                     std::map.
          * 
          */
         AlterTableMetadataRequest(const std::vector<std::string>& tableNames, const std::map<std::string, std::string>& metadataMap, const std::map<std::string, std::string>& options):
@@ -116,7 +116,7 @@ namespace gpudb
 
     /**
      * A set of output parameters for {@link
-     * #alterTableMetadata(AlterTableMetadataRequest&)}.
+     * #alterTableMetadata(const AlterTableMetadataRequest&) const}.
      * <p>
      * Updates (adds or changes) metadata for tables. The metadata key and
      * values must both be strings. This is an easy way to annotate whole

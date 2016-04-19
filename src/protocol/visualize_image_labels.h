@@ -11,12 +11,12 @@ namespace gpudb
 
     /**
      * A set of input parameters for {@link
-     * #visualizeImageLabels(VisualizeImageLabelsRequest&)}.
+     * #visualizeImageLabels(const VisualizeImageLabelsRequest&) const}.
      * <p>
      * Generates a rasterized image tile containing text labels defined by data
      * contained in the given table, suitable for overlaying onto a feature
      * image tile covering the same area (for example one generated using
-     * {@link #visualizeImage(VisualizeImageRequest&)}).
+     * {@link #visualizeImage(const VisualizeImageRequest&) const}).
      * <p>
      * All color values must be integers encoded in the format RRGGBB or
      * AARRGGBB (to specify the alpha value) when represented in hexadecimal;
@@ -161,12 +161,9 @@ namespace gpudb
          * @param[in] width  Width of the generated image.
          * @param[in] height  Height of the generated image.
          * @param[in] projection  Spatial Reference System (i.e. EPSG Code).
-         *                        Default value is 'PLATE_CARREE'. The allowed
-         *                        values are:  ~!~ * EPSG:4326 * PLATE_CARREE *
-         *                        _900913 * EPSG:900913 * _102100 * EPSG:102100
-         *                        * _3857 * EPSG:3857 * WEB_MERCATOR~!~
+         *                        Default value is 'PLATE_CARREE'.
          * @param[in] options  Optional parameters.  Default value is an empty
-         *                     {@link std::map}.
+         *                     std::map.
          * 
          */
         VisualizeImageLabelsRequest(const std::string& tableName, const std::string& xColumnName, const std::string& yColumnName, const std::string& xOffset, const std::string& yOffset, const std::string& textString, const std::string& font, const std::string& textColor, const std::string& textAngle, const std::string& textScale, const std::string& drawBox, const std::string& drawLeader, const std::string& lineWidth, const std::string& lineColor, const std::string& fillColor, const std::string& leaderXColumnName, const std::string& leaderYColumnName, const double minX, const double maxX, const double minY, const double maxY, const int32_t width, const int32_t height, const std::string& projection, const std::map<std::string, std::string>& options):
@@ -411,12 +408,12 @@ namespace gpudb
 
     /**
      * A set of output parameters for {@link
-     * #visualizeImageLabels(VisualizeImageLabelsRequest&)}.
+     * #visualizeImageLabels(const VisualizeImageLabelsRequest&) const}.
      * <p>
      * Generates a rasterized image tile containing text labels defined by data
      * contained in the given table, suitable for overlaying onto a feature
      * image tile covering the same area (for example one generated using
-     * {@link #visualizeImage(VisualizeImageRequest&)}).
+     * {@link #visualizeImage(const VisualizeImageRequest&) const}).
      * <p>
      * All color values must be integers encoded in the format RRGGBB or
      * AARRGGBB (to specify the alpha value) when represented in hexadecimal;

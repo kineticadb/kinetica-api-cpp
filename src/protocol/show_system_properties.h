@@ -11,7 +11,7 @@ namespace gpudb
 
     /**
      * A set of input parameters for {@link
-     * #showSystemProperties(ShowSystemPropertiesRequest&)}.
+     * #showSystemProperties(const ShowSystemPropertiesRequest&) const}.
      * <p>
      * Returns server configuration and version related information to the
      * caller. The GPUdb Admin tool uses it to present server related
@@ -34,7 +34,7 @@ namespace gpudb
          * parameters.
          * 
          * @param[in] options  Optional parameters, currently unused.  Default
-         *                     value is an empty {@link std::map}.
+         *                     value is an empty std::map.
          * 
          */
         ShowSystemPropertiesRequest(const std::map<std::string, std::string>& options):
@@ -87,7 +87,7 @@ namespace gpudb
 
     /**
      * A set of output parameters for {@link
-     * #showSystemProperties(ShowSystemPropertiesRequest&)}.
+     * #showSystemProperties(const ShowSystemPropertiesRequest&) const}.
      * <p>
      * Returns server configuration and version related information to the
      * caller. The GPUdb Admin tool uses it to present server related

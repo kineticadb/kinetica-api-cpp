@@ -4,6 +4,250 @@
  *  DO NOT EDIT DIRECTLY.
  */
 
+
+// GPUdb Version
+const std::string GPUdb::api_version( "4.2.0.0" );
+
+
+
+/**
+ * 
+ * @param[in] request_  Request object containing the parameters for the
+ *                      operation.
+ * 
+ * @return Response object containing the result of the operation.
+ * 
+ */
+AdminGetShardAssignmentsResponse GPUdb::adminGetShardAssignments(const AdminGetShardAssignmentsRequest& request_) const
+{
+    AdminGetShardAssignmentsResponse actualResponse_;
+    submitRequest("/admin/getshardassignments", request_, actualResponse_, false);
+    return actualResponse_;
+}
+
+
+/**
+ * 
+ * @param[in] request_  Request object containing the parameters for the
+ *                      operation.
+ * @param[out] response_  Response object containing the results of the
+ *                        operation.
+ * 
+ * @return Response object containing the result of the operation (initially
+ *         passed in by reference).
+ * 
+ */
+AdminGetShardAssignmentsResponse& GPUdb::adminGetShardAssignments(const AdminGetShardAssignmentsRequest& request_, AdminGetShardAssignmentsResponse& response_) const
+{
+    submitRequest("/admin/getshardassignments", request_, response_, false);
+    return response_;
+}
+
+
+/**
+ * 
+ * @param dummy  Default value is an empty std::vector.
+ * 
+ * @return Response object containing the result of the operation.
+ * 
+ */
+AdminGetShardAssignmentsResponse GPUdb::adminGetShardAssignments(const std::string& dummy) const
+{
+    AdminGetShardAssignmentsRequest actualRequest_;
+    actualRequest_.dummy = dummy;
+    AdminGetShardAssignmentsResponse actualResponse_;
+    submitRequest("/admin/getshardassignments", actualRequest_, actualResponse_, false);
+    return actualResponse_;
+}
+
+
+/**
+ * 
+ * @param dummy  Default value is an empty std::vector.
+ * @param[out] response_  Response object containing the results of the
+ *                        operation.
+ * 
+ * @return Response object containing the result of the operation (initially
+ *         passed in by reference).
+ * 
+ */
+AdminGetShardAssignmentsResponse& GPUdb::adminGetShardAssignments(const std::string& dummy, AdminGetShardAssignmentsResponse& response_) const
+{
+    AdminGetShardAssignmentsRequest actualRequest_;
+    actualRequest_.dummy = dummy;
+    submitRequest("/admin/getshardassignments", actualRequest_, response_, false);
+    return response_;
+}
+
+
+/**
+ * Take the system offline. When the system is offline, no user operations can
+ * be performed with the exception of a system shutdown.
+ * 
+ * @param[in] request_  Request object containing the parameters for the
+ *                      operation.
+ * 
+ * @return Response object containing the result of the operation.
+ * 
+ */
+AdminOfflineResponse GPUdb::adminOffline(const AdminOfflineRequest& request_) const
+{
+    AdminOfflineResponse actualResponse_;
+    submitRequest("/admin/offline", request_, actualResponse_, false);
+    return actualResponse_;
+}
+
+
+/**
+ * Take the system offline. When the system is offline, no user operations can
+ * be performed with the exception of a system shutdown.
+ * 
+ * @param[in] request_  Request object containing the parameters for the
+ *                      operation.
+ * @param[out] response_  Response object containing the results of the
+ *                        operation.
+ * 
+ * @return Response object containing the result of the operation (initially
+ *         passed in by reference).
+ * 
+ */
+AdminOfflineResponse& GPUdb::adminOffline(const AdminOfflineRequest& request_, AdminOfflineResponse& response_) const
+{
+    submitRequest("/admin/offline", request_, response_, false);
+    return response_;
+}
+
+
+/**
+ * Take the system offline. When the system is offline, no user operations can
+ * be performed with the exception of a system shutdown.
+ * 
+ * @param offline  desired offline state
+ * @param options  Optional parameters.  Default value is an empty std::map.
+ * 
+ * @return Response object containing the result of the operation.
+ * 
+ */
+AdminOfflineResponse GPUdb::adminOffline(const bool offline, const std::map<std::string, std::string>& options) const
+{
+    AdminOfflineRequest actualRequest_;
+    actualRequest_.offline = offline;
+    actualRequest_.options = options;
+    AdminOfflineResponse actualResponse_;
+    submitRequest("/admin/offline", actualRequest_, actualResponse_, false);
+    return actualResponse_;
+}
+
+
+/**
+ * Take the system offline. When the system is offline, no user operations can
+ * be performed with the exception of a system shutdown.
+ * 
+ * @param offline  desired offline state
+ * @param options  Optional parameters.  Default value is an empty std::map.
+ * @param[out] response_  Response object containing the results of the
+ *                        operation.
+ * 
+ * @return Response object containing the result of the operation (initially
+ *         passed in by reference).
+ * 
+ */
+AdminOfflineResponse& GPUdb::adminOffline(const bool offline, const std::map<std::string, std::string>& options, AdminOfflineResponse& response_) const
+{
+    AdminOfflineRequest actualRequest_;
+    actualRequest_.offline = offline;
+    actualRequest_.options = options;
+    submitRequest("/admin/offline", actualRequest_, response_, false);
+    return response_;
+}
+
+
+/**
+ * 
+ * @param[in] request_  Request object containing the parameters for the
+ *                      operation.
+ * 
+ * @return Response object containing the result of the operation.
+ * 
+ */
+AdminSetShardAssignmentsResponse GPUdb::adminSetShardAssignments(const AdminSetShardAssignmentsRequest& request_) const
+{
+    AdminSetShardAssignmentsResponse actualResponse_;
+    submitRequest("/admin/setshardassignments", request_, actualResponse_, false);
+    return actualResponse_;
+}
+
+
+/**
+ * 
+ * @param[in] request_  Request object containing the parameters for the
+ *                      operation.
+ * @param[out] response_  Response object containing the results of the
+ *                        operation.
+ * 
+ * @return Response object containing the result of the operation (initially
+ *         passed in by reference).
+ * 
+ */
+AdminSetShardAssignmentsResponse& GPUdb::adminSetShardAssignments(const AdminSetShardAssignmentsRequest& request_, AdminSetShardAssignmentsResponse& response_) const
+{
+    submitRequest("/admin/setshardassignments", request_, response_, false);
+    return response_;
+}
+
+
+/**
+ * 
+ * @param version
+ * @param partialReassignment
+ * @param shardAssignmentsRank
+ * @param shardAssignmentsTom
+ * @param assignmentIndex
+ * 
+ * @return Response object containing the result of the operation.
+ * 
+ */
+AdminSetShardAssignmentsResponse GPUdb::adminSetShardAssignments(const int64_t version, const bool partialReassignment, const std::vector<int32_t>& shardAssignmentsRank, const std::vector<int32_t>& shardAssignmentsTom, const std::vector<int32_t>& assignmentIndex) const
+{
+    AdminSetShardAssignmentsRequest actualRequest_;
+    actualRequest_.version = version;
+    actualRequest_.partialReassignment = partialReassignment;
+    actualRequest_.shardAssignmentsRank = shardAssignmentsRank;
+    actualRequest_.shardAssignmentsTom = shardAssignmentsTom;
+    actualRequest_.assignmentIndex = assignmentIndex;
+    AdminSetShardAssignmentsResponse actualResponse_;
+    submitRequest("/admin/setshardassignments", actualRequest_, actualResponse_, false);
+    return actualResponse_;
+}
+
+
+/**
+ * 
+ * @param version
+ * @param partialReassignment
+ * @param shardAssignmentsRank
+ * @param shardAssignmentsTom
+ * @param assignmentIndex
+ * @param[out] response_  Response object containing the results of the
+ *                        operation.
+ * 
+ * @return Response object containing the result of the operation (initially
+ *         passed in by reference).
+ * 
+ */
+AdminSetShardAssignmentsResponse& GPUdb::adminSetShardAssignments(const int64_t version, const bool partialReassignment, const std::vector<int32_t>& shardAssignmentsRank, const std::vector<int32_t>& shardAssignmentsTom, const std::vector<int32_t>& assignmentIndex, AdminSetShardAssignmentsResponse& response_) const
+{
+    AdminSetShardAssignmentsRequest actualRequest_;
+    actualRequest_.version = version;
+    actualRequest_.partialReassignment = partialReassignment;
+    actualRequest_.shardAssignmentsRank = shardAssignmentsRank;
+    actualRequest_.shardAssignmentsTom = shardAssignmentsTom;
+    actualRequest_.assignmentIndex = assignmentIndex;
+    submitRequest("/admin/setshardassignments", actualRequest_, response_, false);
+    return response_;
+}
+
+
 /**
  * Exits the GPUdb server application. A authorization code is required (chosen
  * at the time of GPUdb configuration) to successfully complete this request.
@@ -50,8 +294,7 @@ AdminShutdownResponse& GPUdb::adminShutdown(const AdminShutdownRequest& request_
  * @param authorization  The password that GPUdb is configured with during
  *                       startup. Incorrect or missing authorization code will
  *                       result in an error.
- * @param options  Optional parameters.  Default value is an empty {@link
- *                 std::map}.
+ * @param options  Optional parameters.  Default value is an empty std::map.
  * 
  * @return Response object containing the result of the operation.
  * 
@@ -76,8 +319,7 @@ AdminShutdownResponse GPUdb::adminShutdown(const std::string& exitType, const st
  * @param authorization  The password that GPUdb is configured with during
  *                       startup. Incorrect or missing authorization code will
  *                       result in an error.
- * @param options  Optional parameters.  Default value is an empty {@link
- *                 std::map}.
+ * @param options  Optional parameters.  Default value is an empty std::map.
  * @param[out] response_  Response object containing the results of the
  *                        operation.
  * 
@@ -145,8 +387,7 @@ AggregateConvexHullResponse& GPUdb::aggregateConvexHull(const AggregateConvexHul
  *                     points for the operation being performed.
  * @param yColumnName  Name of the column containing the y coordinates of the
  *                     points for the operation being performed.
- * @param options  Optional parameters.  Default value is an empty {@link
- *                 std::map}.
+ * @param options  Optional parameters.  Default value is an empty std::map.
  * 
  * @return Response object containing the result of the operation.
  * 
@@ -175,8 +416,7 @@ AggregateConvexHullResponse GPUdb::aggregateConvexHull(const std::string& tableN
  *                     points for the operation being performed.
  * @param yColumnName  Name of the column containing the y coordinates of the
  *                     points for the operation being performed.
- * @param options  Optional parameters.  Default value is an empty {@link
- *                 std::map}.
+ * @param options  Optional parameters.  Default value is an empty std::map.
  * @param[out] response_  Response object containing the results of the
  *                        operation.
  * 
@@ -218,8 +458,9 @@ AggregateConvexHullResponse& GPUdb::aggregateConvexHull(const std::string& table
  * 'mean', 'stddev', 'stddev_pop', 'stddev_samp', 'var', 'var_pop' and
  * 'var_samp'.
  * <p>
- * The response is returned as a dynamic schema. For details see: {dynamic
- * schemas documentation}@{link ../../concepts/index.html#dynamic-schemas}.
+ * The response is returned as a dynamic schema. For details see: <a
+ * href="../../concepts/index.html#dynamic-schemas" target="_top">dynamic
+ * schemas documentation</a>.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -257,8 +498,9 @@ RawAggregateGroupByResponse GPUdb::aggregateGroupByRaw(const AggregateGroupByReq
  * 'mean', 'stddev', 'stddev_pop', 'stddev_samp', 'var', 'var_pop' and
  * 'var_samp'.
  * <p>
- * The response is returned as a dynamic schema. For details see: {dynamic
- * schemas documentation}@{link ../../concepts/index.html#dynamic-schemas}.
+ * The response is returned as a dynamic schema. For details see: <a
+ * href="../../concepts/index.html#dynamic-schemas" target="_top">dynamic
+ * schemas documentation</a>.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -298,8 +540,9 @@ RawAggregateGroupByResponse& GPUdb::aggregateGroupByRaw(const AggregateGroupByRe
  * 'mean', 'stddev', 'stddev_pop', 'stddev_samp', 'var', 'var_pop' and
  * 'var_samp'.
  * <p>
- * The response is returned as a dynamic schema. For details see: {dynamic
- * schemas documentation}@{link ../../concepts/index.html#dynamic-schemas}.
+ * The response is returned as a dynamic schema. For details see: <a
+ * href="../../concepts/index.html#dynamic-schemas" target="_top">dynamic
+ * schemas documentation</a>.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -340,8 +583,9 @@ AggregateGroupByResponse GPUdb::aggregateGroupBy(const AggregateGroupByRequest& 
  * 'mean', 'stddev', 'stddev_pop', 'stddev_samp', 'var', 'var_pop' and
  * 'var_samp'.
  * <p>
- * The response is returned as a dynamic schema. For details see: {dynamic
- * schemas documentation}@{link ../../concepts/index.html#dynamic-schemas}.
+ * The response is returned as a dynamic schema. For details see: <a
+ * href="../../concepts/index.html#dynamic-schemas" target="_top">dynamic
+ * schemas documentation</a>.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -384,25 +628,24 @@ AggregateGroupByResponse& GPUdb::aggregateGroupBy(const AggregateGroupByRequest&
  * 'mean', 'stddev', 'stddev_pop', 'stddev_samp', 'var', 'var_pop' and
  * 'var_samp'.
  * <p>
- * The response is returned as a dynamic schema. For details see: {dynamic
- * schemas documentation}@{link ../../concepts/index.html#dynamic-schemas}.
+ * The response is returned as a dynamic schema. For details see: <a
+ * href="../../concepts/index.html#dynamic-schemas" target="_top">dynamic
+ * schemas documentation</a>.
  * 
  * @param tableName  Name of the table on which the operation will be
  *                   performed. Must be a valid table/view/collection in GPUdb.
- * @param columnNames  List of two or more column names, expressions, and
+ * @param columnNames  List of one or more column names, expressions, and
  *                     aggregate expressions. Must include at least one
- *                     'grouping' column or expression and at least one
- *                     aggregate
- * @param offset  An positive integer indicating the number of initial results
+ *                     'grouping' column or expression.  If no aggregate is
+ *                     included, count(*) will be computed as a default.
+ * @param offset  A positive integer indicating the number of initial results
  *                to skip (this can be useful for paging through the results).
  *                The minimum allowed value is 0. The maximum allowed value is
  *                MAX_INT.
  * @param limit  A positive integer indicating the maximum number of results to
- *               be returned (default is 10000) Or END_OF_SET (-9999) to
- *               indicate that the max number of results should be returned.
- *               Default value is 1000.
- * @param options  Optional parameters.  Default value is an empty {@link
- *                 std::map}.
+ *               be returned Or END_OF_SET (-9999) to indicate that the max
+ *               number of results should be returned.  Default value is 1000.
+ * @param options  Optional parameters.  Default value is an empty std::map.
  * 
  * @return Response object containing the result of the operation.
  * 
@@ -446,25 +689,24 @@ AggregateGroupByResponse GPUdb::aggregateGroupBy(const std::string& tableName, c
  * 'mean', 'stddev', 'stddev_pop', 'stddev_samp', 'var', 'var_pop' and
  * 'var_samp'.
  * <p>
- * The response is returned as a dynamic schema. For details see: {dynamic
- * schemas documentation}@{link ../../concepts/index.html#dynamic-schemas}.
+ * The response is returned as a dynamic schema. For details see: <a
+ * href="../../concepts/index.html#dynamic-schemas" target="_top">dynamic
+ * schemas documentation</a>.
  * 
  * @param tableName  Name of the table on which the operation will be
  *                   performed. Must be a valid table/view/collection in GPUdb.
- * @param columnNames  List of two or more column names, expressions, and
+ * @param columnNames  List of one or more column names, expressions, and
  *                     aggregate expressions. Must include at least one
- *                     'grouping' column or expression and at least one
- *                     aggregate
- * @param offset  An positive integer indicating the number of initial results
+ *                     'grouping' column or expression.  If no aggregate is
+ *                     included, count(*) will be computed as a default.
+ * @param offset  A positive integer indicating the number of initial results
  *                to skip (this can be useful for paging through the results).
  *                The minimum allowed value is 0. The maximum allowed value is
  *                MAX_INT.
  * @param limit  A positive integer indicating the maximum number of results to
- *               be returned (default is 10000) Or END_OF_SET (-9999) to
- *               indicate that the max number of results should be returned.
- *               Default value is 1000.
- * @param options  Optional parameters.  Default value is an empty {@link
- *                 std::map}.
+ *               be returned Or END_OF_SET (-9999) to indicate that the max
+ *               number of results should be returned.  Default value is 1000.
+ * @param options  Optional parameters.  Default value is an empty std::map.
  * @param[out] response_  Response object containing the results of the
  *                        operation.
  * 
@@ -558,8 +800,7 @@ AggregateHistogramResponse& GPUdb::aggregateHistogram(const AggregateHistogramRe
  * @param start  Lower end value of the histogram interval, inclusive.
  * @param end  Upper end value of the histogram interval, inclusive.
  * @param interval  The size of each bin within the start and end parameters.
- * @param options  Optional parameters.  Default value is an empty {@link
- *                 std::map}.
+ * @param options  Optional parameters.  Default value is an empty std::map.
  * 
  * @return Response object containing the result of the operation.
  * 
@@ -597,8 +838,7 @@ AggregateHistogramResponse GPUdb::aggregateHistogram(const std::string& tableNam
  * @param start  Lower end value of the histogram interval, inclusive.
  * @param end  Upper end value of the histogram interval, inclusive.
  * @param interval  The size of each bin within the start and end parameters.
- * @param options  Optional parameters.  Default value is an empty {@link
- *                 std::map}.
+ * @param options  Optional parameters.  Default value is an empty std::map.
  * @param[out] response_  Response object containing the results of the
  *                        operation.
  * 
@@ -689,8 +929,7 @@ AggregateKMeansResponse& GPUdb::aggregateKMeans(const AggregateKMeansRequest& re
  * @param k  The number of mean points to be determined by the algorithm.
  * @param tolerance  Stop iterating when the distances between successive
  *                   points is less than the given tolerance.
- * @param options  Optional parameters.  Default value is an empty {@link
- *                 std::map}.
+ * @param options  Optional parameters.  Default value is an empty std::map.
  * 
  * @return Response object containing the result of the operation.
  * 
@@ -728,8 +967,7 @@ AggregateKMeansResponse GPUdb::aggregateKMeans(const std::string& tableName, con
  * @param k  The number of mean points to be determined by the algorithm.
  * @param tolerance  Stop iterating when the distances between successive
  *                   points is less than the given tolerance.
- * @param options  Optional parameters.  Default value is an empty {@link
- *                 std::map}.
+ * @param options  Optional parameters.  Default value is an empty std::map.
  * @param[out] response_  Response object containing the results of the
  *                        operation.
  * 
@@ -796,8 +1034,7 @@ AggregateMinMaxResponse& GPUdb::aggregateMinMax(const AggregateMinMaxRequest& re
  *                   performed. Must be a valid table in GPUdb.
  * @param columnName  Name of a column or an expression of one or more column
  *                    on which the min-max will be calculated.
- * @param options  Optional parameters.  Default value is an empty {@link
- *                 std::map}.
+ * @param options  Optional parameters.  Default value is an empty std::map.
  * 
  * @return Response object containing the result of the operation.
  * 
@@ -822,8 +1059,7 @@ AggregateMinMaxResponse GPUdb::aggregateMinMax(const std::string& tableName, con
  *                   performed. Must be a valid table in GPUdb.
  * @param columnName  Name of a column or an expression of one or more column
  *                    on which the min-max will be calculated.
- * @param options  Optional parameters.  Default value is an empty {@link
- *                 std::map}.
+ * @param options  Optional parameters.  Default value is an empty std::map.
  * @param[out] response_  Response object containing the results of the
  *                        operation.
  * 
@@ -913,11 +1149,8 @@ AggregateStatisticsResponse& GPUdb::aggregateStatistics(const AggregateStatistic
  * @param columnName  Name of the column for which the statistics are to be
  *                    calculated.
  * @param stats  Comma separated list of the statistics to calculate, e.g.
- *               "sum,mean".  The allowed values are:  ~!~ * MEAN * STDV *
- *               VARIANCE * SKEW * KURTOSIS * SUM * CARDINALITY *
- *               ESTIMATED_CARDINALITY~!~
- * @param options  Optional parameters.  Default value is an empty {@link
- *                 std::map}.
+ *               "sum,mean".
+ * @param options  Optional parameters.  Default value is an empty std::map.
  * 
  * @return Response object containing the result of the operation.
  * 
@@ -952,11 +1185,8 @@ AggregateStatisticsResponse GPUdb::aggregateStatistics(const std::string& tableN
  * @param columnName  Name of the column for which the statistics are to be
  *                    calculated.
  * @param stats  Comma separated list of the statistics to calculate, e.g.
- *               "sum,mean".  The allowed values are:  ~!~ * MEAN * STDV *
- *               VARIANCE * SKEW * KURTOSIS * SUM * CARDINALITY *
- *               ESTIMATED_CARDINALITY~!~
- * @param options  Optional parameters.  Default value is an empty {@link
- *                 std::map}.
+ *               "sum,mean".
+ * @param options  Optional parameters.  Default value is an empty std::map.
  * @param[out] response_  Response object containing the results of the
  *                        operation.
  * 
@@ -1083,7 +1313,7 @@ AggregateStatisticsByRangeResponse& GPUdb::aggregateStatisticsByRange(const Aggr
  * @param selectExpression  For a non-empty expression statistics are
  *                          calculated for those records for which the
  *                          expression is true.  Default value is an empty
- *                          {@link std::string}.
+ *                          string.
  * @param columnName  Name of the binning-column used to divide the set samples
  *                    into bins.
  * @param valueColumnName  Optional Name of the column for which statistics are
@@ -1097,7 +1327,7 @@ AggregateStatisticsByRangeResponse& GPUdb::aggregateStatisticsByRange(const Aggr
  *                  binning-column falls in the range [start+interval``*``i,
  *                  start+interval``*``(i+1)).
  * @param options  Map of optional parameters:  Default value is an empty
- *                 {@link std::map}.
+ *                 std::map.
  * 
  * @return Response object containing the result of the operation.
  * 
@@ -1149,7 +1379,7 @@ AggregateStatisticsByRangeResponse GPUdb::aggregateStatisticsByRange(const std::
  * @param selectExpression  For a non-empty expression statistics are
  *                          calculated for those records for which the
  *                          expression is true.  Default value is an empty
- *                          {@link std::string}.
+ *                          string.
  * @param columnName  Name of the binning-column used to divide the set samples
  *                    into bins.
  * @param valueColumnName  Optional Name of the column for which statistics are
@@ -1163,7 +1393,7 @@ AggregateStatisticsByRangeResponse GPUdb::aggregateStatisticsByRange(const std::
  *                  binning-column falls in the range [start+interval``*``i,
  *                  start+interval``*``(i+1)).
  * @param options  Map of optional parameters:  Default value is an empty
- *                 {@link std::map}.
+ *                 std::map.
  * @param[out] response_  Response object containing the results of the
  *                        operation.
  * 
@@ -1200,8 +1430,9 @@ AggregateStatisticsByRangeResponse& GPUdb::aggregateStatisticsByRange(const std:
  * <p>
  * {"limit":"10","sort_order":"descending"}.
  * <p>
- * The response is returned as a dynamic schema. For details see: {dynamic
- * schemas documentation}@{link ../../concepts/index.html#dynamic-schemas}.
+ * The response is returned as a dynamic schema. For details see: <a
+ * href="../../concepts/index.html#dynamic-schemas" target="_top">dynamic
+ * schemas documentation</a>.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -1229,8 +1460,9 @@ RawAggregateUniqueResponse GPUdb::aggregateUniqueRaw(const AggregateUniqueReques
  * <p>
  * {"limit":"10","sort_order":"descending"}.
  * <p>
- * The response is returned as a dynamic schema. For details see: {dynamic
- * schemas documentation}@{link ../../concepts/index.html#dynamic-schemas}.
+ * The response is returned as a dynamic schema. For details see: <a
+ * href="../../concepts/index.html#dynamic-schemas" target="_top">dynamic
+ * schemas documentation</a>.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -1260,8 +1492,9 @@ RawAggregateUniqueResponse& GPUdb::aggregateUniqueRaw(const AggregateUniqueReque
  * <p>
  * {"limit":"10","sort_order":"descending"}.
  * <p>
- * The response is returned as a dynamic schema. For details see: {dynamic
- * schemas documentation}@{link ../../concepts/index.html#dynamic-schemas}.
+ * The response is returned as a dynamic schema. For details see: <a
+ * href="../../concepts/index.html#dynamic-schemas" target="_top">dynamic
+ * schemas documentation</a>.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -1293,8 +1526,9 @@ AggregateUniqueResponse GPUdb::aggregateUnique(const AggregateUniqueRequest& req
  * <p>
  * {"limit":"10","sort_order":"descending"}.
  * <p>
- * The response is returned as a dynamic schema. For details see: {dynamic
- * schemas documentation}@{link ../../concepts/index.html#dynamic-schemas}.
+ * The response is returned as a dynamic schema. For details see: <a
+ * href="../../concepts/index.html#dynamic-schemas" target="_top">dynamic
+ * schemas documentation</a>.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -1328,8 +1562,9 @@ AggregateUniqueResponse& GPUdb::aggregateUnique(const AggregateUniqueRequest& re
  * <p>
  * {"limit":"10","sort_order":"descending"}.
  * <p>
- * The response is returned as a dynamic schema. For details see: {dynamic
- * schemas documentation}@{link ../../concepts/index.html#dynamic-schemas}.
+ * The response is returned as a dynamic schema. For details see: <a
+ * href="../../concepts/index.html#dynamic-schemas" target="_top">dynamic
+ * schemas documentation</a>.
  * 
  * @param tableName  Name of the table on which the operation will be
  *                   performed. Must be a valid table in GPUdb.
@@ -1343,8 +1578,7 @@ AggregateUniqueResponse& GPUdb::aggregateUnique(const AggregateUniqueRequest& re
  * @param limit  A positive integer indicating the maximum number of results to
  *               be returned. Or END_OF_SET (-9999) to indicate that the max
  *               number of results should be returned.  Default value is 10000.
- * @param options  Optional parameters.  Default value is an empty {@link
- *                 std::map}.
+ * @param options  Optional parameters.  Default value is an empty std::map.
  * 
  * @return Response object containing the result of the operation.
  * 
@@ -1379,8 +1613,9 @@ AggregateUniqueResponse GPUdb::aggregateUnique(const std::string& tableName, con
  * <p>
  * {"limit":"10","sort_order":"descending"}.
  * <p>
- * The response is returned as a dynamic schema. For details see: {dynamic
- * schemas documentation}@{link ../../concepts/index.html#dynamic-schemas}.
+ * The response is returned as a dynamic schema. For details see: <a
+ * href="../../concepts/index.html#dynamic-schemas" target="_top">dynamic
+ * schemas documentation</a>.
  * 
  * @param tableName  Name of the table on which the operation will be
  *                   performed. Must be a valid table in GPUdb.
@@ -1394,8 +1629,7 @@ AggregateUniqueResponse GPUdb::aggregateUnique(const std::string& tableName, con
  * @param limit  A positive integer indicating the maximum number of results to
  *               be returned. Or END_OF_SET (-9999) to indicate that the max
  *               number of results should be returned.  Default value is 10000.
- * @param options  Optional parameters.  Default value is an empty {@link
- *                 std::map}.
+ * @param options  Optional parameters.  Default value is an empty std::map.
  * @param[out] response_  Response object containing the results of the
  *                        operation.
  * 
@@ -1473,8 +1707,7 @@ AlterSystemPropertiesResponse& GPUdb::alterSystemProperties(const AlterSystemPro
  * 
  * @param propertyUpdatesMap  Map containing the properties of the system to be
  *                            updated. Error if empty.
- * @param options  Optional parameters.  Default value is an empty {@link
- *                 std::map}.
+ * @param options  Optional parameters.  Default value is an empty std::map.
  * 
  * @return Response object containing the result of the operation.
  * 
@@ -1499,8 +1732,7 @@ AlterSystemPropertiesResponse GPUdb::alterSystemProperties(const std::map<std::s
  * 
  * @param propertyUpdatesMap  Map containing the properties of the system to be
  *                            updated. Error if empty.
- * @param options  Optional parameters.  Default value is an empty {@link
- *                 std::map}.
+ * @param options  Optional parameters.  Default value is an empty std::map.
  * @param[out] response_  Response object containing the results of the
  *                        operation.
  * 
@@ -1521,10 +1753,10 @@ AlterSystemPropertiesResponse& GPUdb::alterSystemProperties(const std::map<std::
 /**
  * Creates or deletes an index on a particular column in a given table.
  * Creating an index can speed up certain search queries (such as {@link
- * #getRecordsRaw(GetRecordsRequest&)}, {@link
- * #deleteRecords(DeleteRecordsRequest&)}, {@link
- * #updateRecordsRaw(RawUpdateRecordsRequest&)}) when using expressions
- * containing equality or relational operators on indexed columns.
+ * #getRecordsRaw(const GetRecordsRequest&) const}, {@link
+ * #deleteRecords(const DeleteRecordsRequest&) const}, {@link
+ * #updateRecordsRaw(const RawUpdateRecordsRequest&) const}) when using
+ * expressions containing equality or relational operators on indexed columns.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -1543,11 +1775,13 @@ AlterTableResponse GPUdb::alterTable(const AlterTableRequest& request_) const
 /**
  * Creates or deletes an index on a particular column in a given table.
  * Creating an index can speed up certain search queries (such as {@link
- * #getRecordsRaw(GetRecordsRequest&,RawGetRecordsResponse&)}, {@link
- * #deleteRecords(DeleteRecordsRequest&,DeleteRecordsResponse&)}, {@link
- * #updateRecordsRaw(RawUpdateRecordsRequest&,UpdateRecordsResponse&)}) when
- * using expressions containing equality or relational operators on indexed
- * columns.
+ * #getRecordsRaw(const GetRecordsRequest&,RawGetRecordsResponse&) const},
+ * {@link
+ * #deleteRecords(const DeleteRecordsRequest&,DeleteRecordsResponse&) const},
+ * {@link
+ * #updateRecordsRaw(const RawUpdateRecordsRequest&,UpdateRecordsResponse&) const})
+ * when using expressions containing equality or relational operators on
+ * indexed columns.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -1568,9 +1802,9 @@ AlterTableResponse& GPUdb::alterTable(const AlterTableRequest& request_, AlterTa
 /**
  * Creates or deletes an index on a particular column in a given table.
  * Creating an index can speed up certain search queries (such as {@link
- * #getRecordsRaw(GetRecordsRequest&)}, {@link
- * #deleteRecords(std::string&,std::vector<std::string>&,std::map<std::string,
- * std::string>&)}, {@link #updateRecordsRaw(RawUpdateRecordsRequest&)}) when
+ * #getRecordsRaw(const GetRecordsRequest&) const}, {@link
+ * #deleteRecords(const std::string&,const std::vector<std::string>&,const std::map<std::string, std::string>&) const},
+ * {@link #updateRecordsRaw(const RawUpdateRecordsRequest&) const}) when
  * using expressions containing equality or relational operators on indexed
  * columns.
  * 
@@ -1578,10 +1812,8 @@ AlterTableResponse& GPUdb::alterTable(const AlterTableRequest& request_, AlterTa
  *                   valid table in GPUdb.  This can not be a collection.
  * @param columnName  Name of the column on which the index will be created or
  *                    deleted (can be empty when @a action = @a list).
- * @param action  Kind of index operation being performed on the table  The
- *                allowed values are:  ~!~ * CREATE * DELETE * LIST~!~
- * @param options  Optional parameters.  Default value is an empty {@link
- *                 std::map}.
+ * @param action  Kind of index operation being performed on the table
+ * @param options  Optional parameters.  Default value is an empty std::map.
  * 
  * @return Response object containing the result of the operation.
  * 
@@ -1602,20 +1834,18 @@ AlterTableResponse GPUdb::alterTable(const std::string& tableName, const std::st
 /**
  * Creates or deletes an index on a particular column in a given table.
  * Creating an index can speed up certain search queries (such as {@link
- * #getRecordsRaw(GetRecordsRequest&)}, {@link
- * #deleteRecords(std::string&,std::vector<std::string>&,std::map<std::string,
- * std::string>&,DeleteRecordsResponse&)}, {@link
- * #updateRecordsRaw(RawUpdateRecordsRequest&)}) when using expressions
- * containing equality or relational operators on indexed columns.
+ * #getRecordsRaw(const GetRecordsRequest&) const}, {@link
+ * #deleteRecords(const std::string&,const std::vector<std::string>&,const std::map<std::string, std::string>&,DeleteRecordsResponse&) const},
+ * {@link #updateRecordsRaw(const RawUpdateRecordsRequest&) const}) when
+ * using expressions containing equality or relational operators on indexed
+ * columns.
  * 
  * @param tableName  Table on which the operation will be performed. Must be a
  *                   valid table in GPUdb.  This can not be a collection.
  * @param columnName  Name of the column on which the index will be created or
  *                    deleted (can be empty when @a action = @a list).
- * @param action  Kind of index operation being performed on the table  The
- *                allowed values are:  ~!~ * CREATE * DELETE * LIST~!~
- * @param options  Optional parameters.  Default value is an empty {@link
- *                 std::map}.
+ * @param action  Kind of index operation being performed on the table
+ * @param options  Optional parameters.  Default value is an empty std::map.
  * @param[out] response_  Response object containing the results of the
  *                        operation.
  * 
@@ -1691,8 +1921,7 @@ AlterTableMetadataResponse& GPUdb::alterTableMetadata(const AlterTableMetadataRe
  *                     all the tables; so the change will be applied to every
  *                     table. If the provided map is empty, then all existing
  *                     metadata for the table(s) will be cleared.
- * @param options  Optional parameters.  Default value is an empty {@link
- *                 std::map}.
+ * @param options  Optional parameters.  Default value is an empty std::map.
  * 
  * @return Response object containing the result of the operation.
  * 
@@ -1723,8 +1952,7 @@ AlterTableMetadataResponse GPUdb::alterTableMetadata(const std::vector<std::stri
  *                     all the tables; so the change will be applied to every
  *                     table. If the provided map is empty, then all existing
  *                     metadata for the table(s) will be cleared.
- * @param options  Optional parameters.  Default value is an empty {@link
- *                 std::map}.
+ * @param options  Optional parameters.  Default value is an empty std::map.
  * @param[out] response_  Response object containing the results of the
  *                        operation.
  * 
@@ -1794,9 +2022,8 @@ AlterTablePropertiesResponse& GPUdb::alterTableProperties(const AlterTableProper
  * @param propertiesMap  Map containing the properties of the tables to be
  *                       updated. Only one map can be specified per function
  *                       call so the changes to the tables will be identical.
- *                       Default value is an empty {@link std::map}.
- * @param options  Optional parameters.  Default value is an empty {@link
- *                 std::map}.
+ *                       Default value is an empty std::map.
+ * @param options  Optional parameters.  Default value is an empty std::map.
  * 
  * @return Response object containing the result of the operation.
  * 
@@ -1824,9 +2051,8 @@ AlterTablePropertiesResponse GPUdb::alterTableProperties(const std::vector<std::
  * @param propertiesMap  Map containing the properties of the tables to be
  *                       updated. Only one map can be specified per function
  *                       call so the changes to the tables will be identical.
- *                       Default value is an empty {@link std::map}.
- * @param options  Optional parameters.  Default value is an empty {@link
- *                 std::map}.
+ *                       Default value is an empty std::map.
+ * @param options  Optional parameters.  Default value is an empty std::map.
  * @param[out] response_  Response object containing the results of the
  *                        operation.
  * 
@@ -1898,12 +2124,11 @@ ClearTableResponse& GPUdb::clearTable(const ClearTableRequest& request_, ClearTa
  * 
  * @param tableName  Name of the table to be cleared. Must be an existing GPUdb
  *                   table. Empty string clears all available tables in GPUdb.
- *                   Default value is an empty {@link std::string}.
+ *                   Default value is an empty string.
  * @param authorization  Administrator password needed for clearing protected
  *                       tables. For unprotected tables the string can be left
- *                       blank.  Default value is an empty {@link std::string}.
- * @param options  Optional parameters.  Default value is an empty {@link
- *                 std::map}.
+ *                       blank.  Default value is an empty string.
+ * @param options  Optional parameters.  Default value is an empty std::map.
  * 
  * @return Response object containing the result of the operation.
  * 
@@ -1929,12 +2154,11 @@ ClearTableResponse GPUdb::clearTable(const std::string& tableName, const std::st
  * 
  * @param tableName  Name of the table to be cleared. Must be an existing GPUdb
  *                   table. Empty string clears all available tables in GPUdb.
- *                   Default value is an empty {@link std::string}.
+ *                   Default value is an empty string.
  * @param authorization  Administrator password needed for clearing protected
  *                       tables. For unprotected tables the string can be left
- *                       blank.  Default value is an empty {@link std::string}.
- * @param options  Optional parameters.  Default value is an empty {@link
- *                 std::map}.
+ *                       blank.  Default value is an empty string.
+ * @param options  Optional parameters.  Default value is an empty std::map.
  * @param[out] response_  Response object containing the results of the
  *                        operation.
  * 
@@ -1955,7 +2179,7 @@ ClearTableResponse& GPUdb::clearTable(const std::string& tableName, const std::s
 
 /**
  * Deactivates a table monitor previously created with {@link
- * #createTableMonitor(CreateTableMonitorRequest&)}.
+ * #createTableMonitor(const CreateTableMonitorRequest&) const}.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -1972,8 +2196,8 @@ ClearTableMonitorResponse GPUdb::clearTableMonitor(const ClearTableMonitorReques
 
 
 /**
- * Deactivates a table monitor previously created with {@link #createTableMonit
- * or(CreateTableMonitorRequest&,CreateTableMonitorResponse&)}.
+ * Deactivates a table monitor previously created with {@link
+ * #createTableMonitor(const CreateTableMonitorRequest&,CreateTableMonitorResponse&) const}.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -1993,11 +2217,10 @@ ClearTableMonitorResponse& GPUdb::clearTableMonitor(const ClearTableMonitorReque
 
 /**
  * Deactivates a table monitor previously created with {@link
- * #createTableMonitor(std::string&,std::map<std::string, std::string>&)}.
+ * #createTableMonitor(const std::string&,const std::map<std::string, std::string>&) const}.
  * 
  * @param topicId  The topic ID returned by /create/tablemonitor.
- * @param options  Optional parameters.  Default value is an empty {@link
- *                 std::map}.
+ * @param options  Optional parameters.  Default value is an empty std::map.
  * 
  * @return Response object containing the result of the operation.
  * 
@@ -2015,12 +2238,10 @@ ClearTableMonitorResponse GPUdb::clearTableMonitor(const std::string& topicId, c
 
 /**
  * Deactivates a table monitor previously created with {@link
- * #createTableMonitor(std::string&,std::map<std::string,
- * std::string>&,CreateTableMonitorResponse&)}.
+ * #createTableMonitor(const std::string&,const std::map<std::string, std::string>&,CreateTableMonitorResponse&) const}.
  * 
  * @param topicId  The topic ID returned by /create/tablemonitor.
- * @param options  Optional parameters.  Default value is an empty {@link
- *                 std::map}.
+ * @param options  Optional parameters.  Default value is an empty std::map.
  * @param[out] response_  Response object containing the results of the
  *                        operation.
  * 
@@ -2084,8 +2305,7 @@ ClearTriggerResponse& GPUdb::clearTrigger(const ClearTriggerRequest& request_, C
  * failure of the trigger deactivation.
  * 
  * @param triggerId  ID for the trigger to be deactivated.
- * @param options  Optional parameters.  Default value is an empty {@link
- *                 std::map}.
+ * @param options  Optional parameters.  Default value is an empty std::map.
  * 
  * @return Response object containing the result of the operation.
  * 
@@ -2107,8 +2327,7 @@ ClearTriggerResponse GPUdb::clearTrigger(const std::string& triggerId, const std
  * failure of the trigger deactivation.
  * 
  * @param triggerId  ID for the trigger to be deactivated.
- * @param options  Optional parameters.  Default value is an empty {@link
- *                 std::map}.
+ * @param options  Optional parameters.  Default value is an empty std::map.
  * @param[out] response_  Response object containing the results of the
  *                        operation.
  * 
@@ -2173,8 +2392,7 @@ CreateJoinTableResponse& GPUdb::createJoinTable(const CreateJoinTableRequest& re
  *                       join_table. Cannot be an empty string.
  * @param tableNames  The list of table names making up the joined set
  * @param aliases  The list of aliases for each of the corresponding tables.
- * @param options  Optional parameters.  Default value is an empty {@link
- *                 std::map}.
+ * @param options  Optional parameters.  Default value is an empty std::map.
  * 
  * @return Response object containing the result of the operation.
  * 
@@ -2201,8 +2419,7 @@ CreateJoinTableResponse GPUdb::createJoinTable(const std::string& joinTableName,
  *                       join_table. Cannot be an empty string.
  * @param tableNames  The list of table names making up the joined set
  * @param aliases  The list of aliases for each of the corresponding tables.
- * @param options  Optional parameters.  Default value is an empty {@link
- *                 std::map}.
+ * @param options  Optional parameters.  Default value is an empty std::map.
  * @param[out] response_  Response object containing the results of the
  *                        operation.
  * 
@@ -2226,11 +2443,11 @@ CreateJoinTableResponse& GPUdb::createJoinTable(const std::string& joinTableName
  * Creates a new table or collection in GPUdb. If a new table is being created
  * then type of the table is given by @a typeId which must the be the type id
  * of a currently registered type (i.e. one created via {@link
- * #createType(CreateTypeRequest&)}). The table will be created inside a
- * collection if the option *collection_name* is specified. If that collection
- * does not already exist then it will be created. To create a new, empty
- * collection specify the collection name in @a tableName, leave @a typeId
- * blank, and set the *is_collection* option to 'true'.
+ * #createType(const CreateTypeRequest&) const}). The table will be created
+ * inside a collection if the option *collection_name* is specified. If that
+ * collection does not already exist then it will be created. To create a new,
+ * empty collection specify the collection name in @a tableName, leave @a
+ * typeId blank, and set the *is_collection* option to 'true'.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -2250,11 +2467,12 @@ CreateTableResponse GPUdb::createTable(const CreateTableRequest& request_) const
  * Creates a new table or collection in GPUdb. If a new table is being created
  * then type of the table is given by @a typeId which must the be the type id
  * of a currently registered type (i.e. one created via {@link
- * #createType(CreateTypeRequest&,CreateTypeResponse&)}). The table will be
- * created inside a collection if the option *collection_name* is specified. If
- * that collection does not already exist then it will be created. To create a
- * new, empty collection specify the collection name in @a tableName, leave @a
- * typeId blank, and set the *is_collection* option to 'true'.
+ * #createType(const CreateTypeRequest&,CreateTypeResponse&) const}). The
+ * table will be created inside a collection if the option *collection_name* is
+ * specified. If that collection does not already exist then it will be
+ * created. To create a new, empty collection specify the collection name in @a
+ * tableName, leave @a typeId blank, and set the *is_collection* option to
+ * 'true'.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -2276,23 +2494,22 @@ CreateTableResponse& GPUdb::createTable(const CreateTableRequest& request_, Crea
  * Creates a new table or collection in GPUdb. If a new table is being created
  * then type of the table is given by @a typeId which must the be the type id
  * of a currently registered type (i.e. one created via {@link
- * #createType(std::string&,std::string&,std::map<std::string,
- * std::vector<std::string> >&,std::map<std::string, std::string>&)}). The
- * table will be created inside a collection if the option *collection_name* is
- * specified. If that collection does not already exist then it will be
- * created. To create a new, empty collection specify the collection name in @a
- * tableName, leave @a typeId blank, and set the *is_collection* option to
- * 'true'.
+ * #createType(const std::string&,const std::string&,const std::map<std::string, std::vector<std::string> >&,const std::map<std::string, std::string>&) const}).
+ * The table will be created inside a collection if the option
+ * *collection_name* is specified. If that collection does not already exist
+ * then it will be created. To create a new, empty collection specify the
+ * collection name in @a tableName, leave @a typeId blank, and set the
+ * *is_collection* option to 'true'.
  * 
  * @param tableName  Name of the table to be created. Must not be the name of a
- *                   currently existing GPUdb table of a different type
- *                   (requests with existing table of the same name and type id
- *                   are silently ignored). Cannot be an empty string.
+ *                   currently existing GPUdb table of a different type.  Error
+ *                   for requests with existing table of the same name and type
+ *                   id may be suppressed by using the @a no_error_if_exists
+ *                   option.  Cannot be an empty string.
  * @param typeId  ID of a currently registered type in GPUdb. All objects added
  *                to the newly created table will be of this type.  Must be an
  *                empty string if the *is_collection* is 'true'.
- * @param options  Optional parameters.  Default value is an empty {@link
- *                 std::map}.
+ * @param options  Optional parameters.  Default value is an empty std::map.
  * 
  * @return Response object containing the result of the operation.
  * 
@@ -2313,23 +2530,22 @@ CreateTableResponse GPUdb::createTable(const std::string& tableName, const std::
  * Creates a new table or collection in GPUdb. If a new table is being created
  * then type of the table is given by @a typeId which must the be the type id
  * of a currently registered type (i.e. one created via {@link
- * #createType(std::string&,std::string&,std::map<std::string,
- * std::vector<std::string> >&,std::map<std::string,
- * std::string>&,CreateTypeResponse&)}). The table will be created inside a
- * collection if the option *collection_name* is specified. If that collection
- * does not already exist then it will be created. To create a new, empty
- * collection specify the collection name in @a tableName, leave @a typeId
- * blank, and set the *is_collection* option to 'true'.
+ * #createType(const std::string&,const std::string&,const std::map<std::string, std::vector<std::string> >&,const std::map<std::string, std::string>&,CreateTypeResponse&) const}).
+ * The table will be created inside a collection if the option
+ * *collection_name* is specified. If that collection does not already exist
+ * then it will be created. To create a new, empty collection specify the
+ * collection name in @a tableName, leave @a typeId blank, and set the
+ * *is_collection* option to 'true'.
  * 
  * @param tableName  Name of the table to be created. Must not be the name of a
- *                   currently existing GPUdb table of a different type
- *                   (requests with existing table of the same name and type id
- *                   are silently ignored). Cannot be an empty string.
+ *                   currently existing GPUdb table of a different type.  Error
+ *                   for requests with existing table of the same name and type
+ *                   id may be suppressed by using the @a no_error_if_exists
+ *                   option.  Cannot be an empty string.
  * @param typeId  ID of a currently registered type in GPUdb. All objects added
  *                to the newly created table will be of this type.  Must be an
  *                empty string if the *is_collection* is 'true'.
- * @param options  Optional parameters.  Default value is an empty {@link
- *                 std::map}.
+ * @param options  Optional parameters.  Default value is an empty std::map.
  * @param[out] response_  Response object containing the results of the
  *                        operation.
  * 
@@ -2357,7 +2573,8 @@ CreateTableResponse& GPUdb::createTable(const std::string& tableName, const std:
  * first part contains only the topic ID, and each subsequent part contains one
  * binary-encoded Avro object that was inserted. The monitor will continue to
  * run (regardless of whether or not there are any subscribers) until
- * deactivated with {@link #clearTableMonitor(ClearTableMonitorRequest&)}.
+ * deactivated with {@link
+ * #clearTableMonitor(const ClearTableMonitorRequest&) const}.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -2383,7 +2600,7 @@ CreateTableMonitorResponse GPUdb::createTableMonitor(const CreateTableMonitorReq
  * binary-encoded Avro object that was inserted. The monitor will continue to
  * run (regardless of whether or not there are any subscribers) until
  * deactivated with {@link
- * #clearTableMonitor(ClearTableMonitorRequest&,ClearTableMonitorResponse&)}.
+ * #clearTableMonitor(const ClearTableMonitorRequest&,ClearTableMonitorResponse&) const}.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -2411,12 +2628,11 @@ CreateTableMonitorResponse& GPUdb::createTableMonitor(const CreateTableMonitorRe
  * binary-encoded Avro object that was inserted. The monitor will continue to
  * run (regardless of whether or not there are any subscribers) until
  * deactivated with {@link
- * #clearTableMonitor(std::string&,std::map<std::string, std::string>&)}.
+ * #clearTableMonitor(const std::string&,const std::map<std::string, std::string>&) const}.
  * 
  * @param tableName  Name of the table to monitor. Must not refer to a
  *                   collection.
- * @param options  Optional parameters.  Default value is an empty {@link
- *                 std::map}.
+ * @param options  Optional parameters.  Default value is an empty std::map.
  * 
  * @return Response object containing the result of the operation.
  * 
@@ -2442,13 +2658,11 @@ CreateTableMonitorResponse GPUdb::createTableMonitor(const std::string& tableNam
  * binary-encoded Avro object that was inserted. The monitor will continue to
  * run (regardless of whether or not there are any subscribers) until
  * deactivated with {@link
- * #clearTableMonitor(std::string&,std::map<std::string,
- * std::string>&,ClearTableMonitorResponse&)}.
+ * #clearTableMonitor(const std::string&,const std::map<std::string, std::string>&,ClearTableMonitorResponse&) const}.
  * 
  * @param tableName  Name of the table to monitor. Must not refer to a
  *                   collection.
- * @param options  Optional parameters.  Default value is an empty {@link
- *                 std::map}.
+ * @param options  Optional parameters.  Default value is an empty std::map.
  * @param[out] response_  Response object containing the results of the
  *                        operation.
  * 
@@ -2469,15 +2683,16 @@ CreateTableMonitorResponse& GPUdb::createTableMonitor(const std::string& tableNa
 /**
  * Sets up an area  trigger mechanism for two column_names for one or more
  * tables. (This function is essentially the two-dimensional version of {@link
- * #createTriggerByRange(CreateTriggerByRangeRequest&)}.) Once the trigger has
- * been activated, any record added to the listed tables(s) via {@link
- * #insertRecordsRaw(RawInsertRecordsRequest&)} with the chosen columns' values
- * falling within the specified region will trip the trigger. All such records
- * will be queued at GPUdb's trigger port-by default '9001' but can also be
- * obtained via {@link #showSystemStatus(ShowSystemStatusRequest&)}-for any
+ * #createTriggerByRange(const CreateTriggerByRangeRequest&) const}.) Once
+ * the trigger has been activated, any record added to the listed tables(s) via
+ * {@link #insertRecordsRaw(const RawInsertRecordsRequest&) const} with the
+ * chosen columns' values falling within the specified region will trip the
+ * trigger. All such records will be queued at GPUdb's trigger port-by default
+ * '9001' but can also be obtained via {@link
+ * #showSystemStatus(const ShowSystemStatusRequest&) const}-for any
  * listening client to collect. Active triggers can be cancelled by using the
- * {@link #clearTrigger(ClearTriggerRequest&)} endpoint or by clearing all
- * relevant tables.
+ * {@link #clearTrigger(const ClearTriggerRequest&) const} endpoint or by
+ * clearing all relevant tables.
  * <p>
  * The output returns the trigger handle as well as indicating success or
  * failure of the trigger activation.
@@ -2498,17 +2713,18 @@ CreateTriggerByAreaResponse GPUdb::createTriggerByArea(const CreateTriggerByArea
 
 /**
  * Sets up an area  trigger mechanism for two column_names for one or more
- * tables. (This function is essentially the two-dimensional version of {@link 
- * #createTriggerByRange(CreateTriggerByRangeRequest&,CreateTriggerByRangeRespo
- * nse&)}.) Once the trigger has been activated, any record added to the listed
+ * tables. (This function is essentially the two-dimensional version of {@link
+ * #createTriggerByRange(const CreateTriggerByRangeRequest&,CreateTriggerByRangeResponse&) const}.)
+ * Once the trigger has been activated, any record added to the listed
  * tables(s) via {@link
- * #insertRecordsRaw(RawInsertRecordsRequest&,InsertRecordsResponse&)} with the
- * chosen columns' values falling within the specified region will trip the
- * trigger. All such records will be queued at GPUdb's trigger port-by default
- * '9001' but can also be obtained via {@link
- * #showSystemStatus(ShowSystemStatusRequest&,ShowSystemStatusResponse&)}-for
+ * #insertRecordsRaw(const RawInsertRecordsRequest&,InsertRecordsResponse&) const}
+ * with the chosen columns' values falling within the specified region will
+ * trip the trigger. All such records will be queued at GPUdb's trigger port-by
+ * default '9001' but can also be obtained via {@link
+ * #showSystemStatus(const ShowSystemStatusRequest&,ShowSystemStatusResponse&) const}-for
  * any listening client to collect. Active triggers can be cancelled by using
- * the {@link #clearTrigger(ClearTriggerRequest&,ClearTriggerResponse&)}
+ * the {@link
+ * #clearTrigger(const ClearTriggerRequest&,ClearTriggerResponse&) const}
  * endpoint or by clearing all relevant tables.
  * <p>
  * The output returns the trigger handle as well as indicating success or
@@ -2532,18 +2748,19 @@ CreateTriggerByAreaResponse& GPUdb::createTriggerByArea(const CreateTriggerByAre
 
 /**
  * Sets up an area  trigger mechanism for two column_names for one or more
- * tables. (This function is essentially the two-dimensional version of {@link 
- * #createTriggerByRange(std::string&,std::vector<std::string>&,std::string&,do
- * uble,double,std::map<std::string, std::string>&)}.) Once the trigger has
- * been activated, any record added to the listed tables(s) via {@link
- * #insertRecordsRaw(RawInsertRecordsRequest&)} with the chosen columns' values
- * falling within the specified region will trip the trigger. All such records
- * will be queued at GPUdb's trigger port-by default '9001' but can also be
- * obtained via {@link #showSystemStatus(std::map<std::string,
- * std::string>&)}-for any listening client to collect. Active triggers can be
- * cancelled by using the {@link
- * #clearTrigger(std::string&,std::map<std::string, std::string>&)} endpoint or
- * by clearing all relevant tables.
+ * tables. (This function is essentially the two-dimensional version of {@link
+ * #createTriggerByRange(const std::string&,const std::vector<std::string>&,const std::string&,const double,const double,const std::map<std::string, std::string>&) const}.)
+ * Once the trigger has been activated, any record added to the listed
+ * tables(s) via {@link
+ * #insertRecordsRaw(const RawInsertRecordsRequest&) const} with the chosen
+ * columns' values falling within the specified region will trip the trigger.
+ * All such records will be queued at GPUdb's trigger port-by default '9001'
+ * but can also be obtained via {@link
+ * #showSystemStatus(const std::map<std::string, std::string>&) const}-for
+ * any listening client to collect. Active triggers can be cancelled by using
+ * the {@link
+ * #clearTrigger(const std::string&,const std::map<std::string, std::string>&) const}
+ * endpoint or by clearing all relevant tables.
  * <p>
  * The output returns the trigger handle as well as indicating success or
  * failure of the trigger activation.
@@ -2562,8 +2779,7 @@ CreateTriggerByAreaResponse& GPUdb::createTriggerByArea(const CreateTriggerByAre
  *                 trigger is activated. This usually translates to the
  *                 y-coordinates of a geospatial region. Must be the same
  *                 length as xvals.
- * @param options  Optional parameters.  Default value is an empty {@link
- *                 std::map}.
+ * @param options  Optional parameters.  Default value is an empty std::map.
  * 
  * @return Response object containing the result of the operation.
  * 
@@ -2586,20 +2802,19 @@ CreateTriggerByAreaResponse GPUdb::createTriggerByArea(const std::string& reques
 
 /**
  * Sets up an area  trigger mechanism for two column_names for one or more
- * tables. (This function is essentially the two-dimensional version of {@link 
- * #createTriggerByRange(std::string&,std::vector<std::string>&,std::string&,do
- * uble,double,std::map<std::string,
- * std::string>&,CreateTriggerByRangeResponse&)}.) Once the trigger has been
- * activated, any record added to the listed tables(s) via {@link
- * #insertRecordsRaw(RawInsertRecordsRequest&)} with the chosen columns' values
- * falling within the specified region will trip the trigger. All such records
- * will be queued at GPUdb's trigger port-by default '9001' but can also be
- * obtained via {@link #showSystemStatus(std::map<std::string,
- * std::string>&,ShowSystemStatusResponse&)}-for any listening client to
- * collect. Active triggers can be cancelled by using the {@link
- * #clearTrigger(std::string&,std::map<std::string,
- * std::string>&,ClearTriggerResponse&)} endpoint or by clearing all relevant
- * tables.
+ * tables. (This function is essentially the two-dimensional version of {@link
+ * #createTriggerByRange(const std::string&,const std::vector<std::string>&,const std::string&,const double,const double,const std::map<std::string, std::string>&,CreateTriggerByRangeResponse&) const}.)
+ * Once the trigger has been activated, any record added to the listed
+ * tables(s) via {@link
+ * #insertRecordsRaw(const RawInsertRecordsRequest&) const} with the chosen
+ * columns' values falling within the specified region will trip the trigger.
+ * All such records will be queued at GPUdb's trigger port-by default '9001'
+ * but can also be obtained via {@link
+ * #showSystemStatus(const std::map<std::string, std::string>&,ShowSystemStatusResponse&) const}-for
+ * any listening client to collect. Active triggers can be cancelled by using
+ * the {@link
+ * #clearTrigger(const std::string&,const std::map<std::string, std::string>&,ClearTriggerResponse&) const}
+ * endpoint or by clearing all relevant tables.
  * <p>
  * The output returns the trigger handle as well as indicating success or
  * failure of the trigger activation.
@@ -2618,8 +2833,7 @@ CreateTriggerByAreaResponse GPUdb::createTriggerByArea(const std::string& reques
  *                 trigger is activated. This usually translates to the
  *                 y-coordinates of a geospatial region. Must be the same
  *                 length as xvals.
- * @param options  Optional parameters.  Default value is an empty {@link
- *                 std::map}.
+ * @param options  Optional parameters.  Default value is an empty std::map.
  * @param[out] response_  Response object containing the results of the
  *                        operation.
  * 
@@ -2645,14 +2859,15 @@ CreateTriggerByAreaResponse& GPUdb::createTriggerByArea(const std::string& reque
 /**
  * Sets up a simple range trigger for a column_name for one or more tables.
  * Once the trigger has been activated, any record added to the listed
- * tables(s) via {@link #insertRecordsRaw(RawInsertRecordsRequest&)} with the
- * chosen column_name's value falling within the specified range will trip the
+ * tables(s) via {@link
+ * #insertRecordsRaw(const RawInsertRecordsRequest&) const} with the chosen
+ * column_name's value falling within the specified range will trip the
  * trigger. All such records will be queued at GPUdb's trigger port-by default
  * '9001' but can also be obtained via {@link
- * #showSystemStatus(ShowSystemStatusRequest&)}-for any listening client to
- * collect. Active triggers can be cancelled by using the {@link
- * #clearTrigger(ClearTriggerRequest&)} endpoint or by clearing all relevant
- * tables.
+ * #showSystemStatus(const ShowSystemStatusRequest&) const}-for any
+ * listening client to collect. Active triggers can be cancelled by using the
+ * {@link #clearTrigger(const ClearTriggerRequest&) const} endpoint or by
+ * clearing all relevant tables.
  * <p>
  * The output returns the trigger handle as well as indicating success or
  * failure of the trigger activation.
@@ -2675,13 +2890,14 @@ CreateTriggerByRangeResponse GPUdb::createTriggerByRange(const CreateTriggerByRa
  * Sets up a simple range trigger for a column_name for one or more tables.
  * Once the trigger has been activated, any record added to the listed
  * tables(s) via {@link
- * #insertRecordsRaw(RawInsertRecordsRequest&,InsertRecordsResponse&)} with the
- * chosen column_name's value falling within the specified range will trip the
- * trigger. All such records will be queued at GPUdb's trigger port-by default
- * '9001' but can also be obtained via {@link
- * #showSystemStatus(ShowSystemStatusRequest&,ShowSystemStatusResponse&)}-for
+ * #insertRecordsRaw(const RawInsertRecordsRequest&,InsertRecordsResponse&) const}
+ * with the chosen column_name's value falling within the specified range will
+ * trip the trigger. All such records will be queued at GPUdb's trigger port-by
+ * default '9001' but can also be obtained via {@link
+ * #showSystemStatus(const ShowSystemStatusRequest&,ShowSystemStatusResponse&) const}-for
  * any listening client to collect. Active triggers can be cancelled by using
- * the {@link #clearTrigger(ClearTriggerRequest&,ClearTriggerResponse&)}
+ * the {@link
+ * #clearTrigger(const ClearTriggerRequest&,ClearTriggerResponse&) const}
  * endpoint or by clearing all relevant tables.
  * <p>
  * The output returns the trigger handle as well as indicating success or
@@ -2706,14 +2922,16 @@ CreateTriggerByRangeResponse& GPUdb::createTriggerByRange(const CreateTriggerByR
 /**
  * Sets up a simple range trigger for a column_name for one or more tables.
  * Once the trigger has been activated, any record added to the listed
- * tables(s) via {@link #insertRecordsRaw(RawInsertRecordsRequest&)} with the
- * chosen column_name's value falling within the specified range will trip the
+ * tables(s) via {@link
+ * #insertRecordsRaw(const RawInsertRecordsRequest&) const} with the chosen
+ * column_name's value falling within the specified range will trip the
  * trigger. All such records will be queued at GPUdb's trigger port-by default
  * '9001' but can also be obtained via {@link
- * #showSystemStatus(std::map<std::string, std::string>&)}-for any listening
- * client to collect. Active triggers can be cancelled by using the {@link
- * #clearTrigger(std::string&,std::map<std::string, std::string>&)} endpoint or
- * by clearing all relevant tables.
+ * #showSystemStatus(const std::map<std::string, std::string>&) const}-for
+ * any listening client to collect. Active triggers can be cancelled by using
+ * the {@link
+ * #clearTrigger(const std::string&,const std::map<std::string, std::string>&) const}
+ * endpoint or by clearing all relevant tables.
  * <p>
  * The output returns the trigger handle as well as indicating success or
  * failure of the trigger activation.
@@ -2724,8 +2942,7 @@ CreateTriggerByRangeResponse& GPUdb::createTriggerByRange(const CreateTriggerByR
  *                    activated.
  * @param min  The lower bound (inclusive) for the trigger range.
  * @param max  The upper bound (inclusive) for the trigger range.
- * @param options  Optional parameters.  Default value is an empty {@link
- *                 std::map}.
+ * @param options  Optional parameters.  Default value is an empty std::map.
  * 
  * @return Response object containing the result of the operation.
  * 
@@ -2748,16 +2965,16 @@ CreateTriggerByRangeResponse GPUdb::createTriggerByRange(const std::string& requ
 /**
  * Sets up a simple range trigger for a column_name for one or more tables.
  * Once the trigger has been activated, any record added to the listed
- * tables(s) via {@link #insertRecordsRaw(RawInsertRecordsRequest&)} with the
- * chosen column_name's value falling within the specified range will trip the
+ * tables(s) via {@link
+ * #insertRecordsRaw(const RawInsertRecordsRequest&) const} with the chosen
+ * column_name's value falling within the specified range will trip the
  * trigger. All such records will be queued at GPUdb's trigger port-by default
  * '9001' but can also be obtained via {@link
- * #showSystemStatus(std::map<std::string,
- * std::string>&,ShowSystemStatusResponse&)}-for any listening client to
- * collect. Active triggers can be cancelled by using the {@link
- * #clearTrigger(std::string&,std::map<std::string,
- * std::string>&,ClearTriggerResponse&)} endpoint or by clearing all relevant
- * tables.
+ * #showSystemStatus(const std::map<std::string, std::string>&,ShowSystemStatusResponse&) const}-for
+ * any listening client to collect. Active triggers can be cancelled by using
+ * the {@link
+ * #clearTrigger(const std::string&,const std::map<std::string, std::string>&,ClearTriggerResponse&) const}
+ * endpoint or by clearing all relevant tables.
  * <p>
  * The output returns the trigger handle as well as indicating success or
  * failure of the trigger activation.
@@ -2768,8 +2985,7 @@ CreateTriggerByRangeResponse GPUdb::createTriggerByRange(const std::string& requ
  *                    activated.
  * @param min  The lower bound (inclusive) for the trigger range.
  * @param max  The upper bound (inclusive) for the trigger range.
- * @param options  Optional parameters.  Default value is an empty {@link
- *                 std::map}.
+ * @param options  Optional parameters.  Default value is an empty std::map.
  * @param[out] response_  Response object containing the results of the
  *                        operation.
  * 
@@ -2797,43 +3013,22 @@ CreateTriggerByRangeResponse& GPUdb::createTriggerByRange(const std::string& req
  * type. Each field consists of a name and a data type. Supported data types
  * are: double, float, int, long, string, and bytes. In addition one or more
  * properties can be specified for each column which customize the memory usage
- * and query availability of that column.
+ * and query availability of that column.  Note that some properties are
+ * mutually exclusive--i.e. they cannot be specified for any given column
+ * simultaneously.  One example of mutually exclusive properties are @a data
+ * and @a store_only.
  * <p>
- *     Described below are some viable configurations of properties for various
- * types of columns:
- * <p>
- *     .. csv-table::
- *         :header: "column Type", "Permitted Properties Combination"
- *         :widths: 15, 60
- * <p>
- *         "Numeric", "'data' (default if no property is provided for a numeric
- * column)"
- *         "Numeric", "'store_only'"
- *         "String", "'data' (default if no property is provided for a string
- * column)"
- *         "String", "'text_search' (persists the data and disables all queries
- * except the filter by string query (with the 'search' mode); i.e. implied
- * 'store_only')"
- *         "String", "'store_only'"
- *         "String", "'data', 'text_search'"
- *         "String", "'text_search', 'store_only'"
- *         "String", "'data', 'disk_optimized'"
- *         "String", "'data', 'text_search', 'disk_optimized'"
- *         "bytes", "'store_only'"
- * <p>
- *     To set a *primary key* on one or more columns include the property
+ * To set a *primary key* on one or more columns include the property
  * 'primary_key' on the desired column_names. If a primary key is specified
  * then GPUdb enforces a uniqueness constraint in that only a single object can
  * exist with a given primary key. When {@link
- * #insertRecordsRaw(RawInsertRecordsRequest&) inserting} data into a table
- * with a primary key, depending on the parameters in the request, incoming
- * objects with primary keys that match existing objects will either overwrite
- * (i.e. update) the existing object or will be skipped and not added into the
- * set.
+ * #insertRecordsRaw(const RawInsertRecordsRequest&) const inserting} data
+ * into a table with a primary key, depending on the parameters in the request,
+ * incoming objects with primary keys that match existing objects will either
+ * overwrite (i.e. update) the existing object or will be skipped and not added
+ * into the set.
  * <p>
- *     Examples of a type definition with some of the parameters:
- * <p>
- *     Type definition::
+ * Example of a type definition with some of the parameters::
  * <p>
  *         {"type":"record",
  *         "name":"point",
@@ -2873,43 +3068,22 @@ CreateTypeResponse GPUdb::createType(const CreateTypeRequest& request_) const
  * type. Each field consists of a name and a data type. Supported data types
  * are: double, float, int, long, string, and bytes. In addition one or more
  * properties can be specified for each column which customize the memory usage
- * and query availability of that column.
+ * and query availability of that column.  Note that some properties are
+ * mutually exclusive--i.e. they cannot be specified for any given column
+ * simultaneously.  One example of mutually exclusive properties are @a data
+ * and @a store_only.
  * <p>
- *     Described below are some viable configurations of properties for various
- * types of columns:
- * <p>
- *     .. csv-table::
- *         :header: "column Type", "Permitted Properties Combination"
- *         :widths: 15, 60
- * <p>
- *         "Numeric", "'data' (default if no property is provided for a numeric
- * column)"
- *         "Numeric", "'store_only'"
- *         "String", "'data' (default if no property is provided for a string
- * column)"
- *         "String", "'text_search' (persists the data and disables all queries
- * except the filter by string query (with the 'search' mode); i.e. implied
- * 'store_only')"
- *         "String", "'store_only'"
- *         "String", "'data', 'text_search'"
- *         "String", "'text_search', 'store_only'"
- *         "String", "'data', 'disk_optimized'"
- *         "String", "'data', 'text_search', 'disk_optimized'"
- *         "bytes", "'store_only'"
- * <p>
- *     To set a *primary key* on one or more columns include the property
+ * To set a *primary key* on one or more columns include the property
  * 'primary_key' on the desired column_names. If a primary key is specified
  * then GPUdb enforces a uniqueness constraint in that only a single object can
  * exist with a given primary key. When {@link
- * #insertRecordsRaw(RawInsertRecordsRequest&,InsertRecordsResponse&)
+ * #insertRecordsRaw(const RawInsertRecordsRequest&,InsertRecordsResponse&) const
  * inserting} data into a table with a primary key, depending on the parameters
  * in the request, incoming objects with primary keys that match existing
  * objects will either overwrite (i.e. update) the existing object or will be
  * skipped and not added into the set.
  * <p>
- *     Examples of a type definition with some of the parameters:
- * <p>
- *     Type definition::
+ * Example of a type definition with some of the parameters::
  * <p>
  *         {"type":"record",
  *         "name":"point",
@@ -2951,43 +3125,22 @@ CreateTypeResponse& GPUdb::createType(const CreateTypeRequest& request_, CreateT
  * type. Each field consists of a name and a data type. Supported data types
  * are: double, float, int, long, string, and bytes. In addition one or more
  * properties can be specified for each column which customize the memory usage
- * and query availability of that column.
+ * and query availability of that column.  Note that some properties are
+ * mutually exclusive--i.e. they cannot be specified for any given column
+ * simultaneously.  One example of mutually exclusive properties are @a data
+ * and @a store_only.
  * <p>
- *     Described below are some viable configurations of properties for various
- * types of columns:
- * <p>
- *     .. csv-table::
- *         :header: "column Type", "Permitted Properties Combination"
- *         :widths: 15, 60
- * <p>
- *         "Numeric", "'data' (default if no property is provided for a numeric
- * column)"
- *         "Numeric", "'store_only'"
- *         "String", "'data' (default if no property is provided for a string
- * column)"
- *         "String", "'text_search' (persists the data and disables all queries
- * except the filter by string query (with the 'search' mode); i.e. implied
- * 'store_only')"
- *         "String", "'store_only'"
- *         "String", "'data', 'text_search'"
- *         "String", "'text_search', 'store_only'"
- *         "String", "'data', 'disk_optimized'"
- *         "String", "'data', 'text_search', 'disk_optimized'"
- *         "bytes", "'store_only'"
- * <p>
- *     To set a *primary key* on one or more columns include the property
+ * To set a *primary key* on one or more columns include the property
  * 'primary_key' on the desired column_names. If a primary key is specified
  * then GPUdb enforces a uniqueness constraint in that only a single object can
  * exist with a given primary key. When {@link
- * #insertRecordsRaw(RawInsertRecordsRequest&) inserting} data into a table
- * with a primary key, depending on the parameters in the request, incoming
- * objects with primary keys that match existing objects will either overwrite
- * (i.e. update) the existing object or will be skipped and not added into the
- * set.
+ * #insertRecordsRaw(const RawInsertRecordsRequest&) const inserting} data
+ * into a table with a primary key, depending on the parameters in the request,
+ * incoming objects with primary keys that match existing objects will either
+ * overwrite (i.e. update) the existing object or will be skipped and not added
+ * into the set.
  * <p>
- *     Examples of a type definition with some of the parameters:
- * <p>
- *     Type definition::
+ * Example of a type definition with some of the parameters::
  * <p>
  *         {"type":"record",
  *         "name":"point",
@@ -3011,9 +3164,8 @@ CreateTypeResponse& GPUdb::createType(const CreateTypeRequest& request_, CreateT
  * @param label  A user-defined description string which can be used to
  *               differentiate between tables and types with otherwise
  *               identical schemas.
- * @param properties  Default value is an empty {@link std::map}.
- * @param options  Optional parameters.  Default value is an empty {@link
- *                 std::map}.
+ * @param properties  Default value is an empty std::map.
+ * @param options  Optional parameters.  Default value is an empty std::map.
  * 
  * @return Response object containing the result of the operation.
  * 
@@ -3038,43 +3190,22 @@ CreateTypeResponse GPUdb::createType(const std::string& typeDefinition, const st
  * type. Each field consists of a name and a data type. Supported data types
  * are: double, float, int, long, string, and bytes. In addition one or more
  * properties can be specified for each column which customize the memory usage
- * and query availability of that column.
+ * and query availability of that column.  Note that some properties are
+ * mutually exclusive--i.e. they cannot be specified for any given column
+ * simultaneously.  One example of mutually exclusive properties are @a data
+ * and @a store_only.
  * <p>
- *     Described below are some viable configurations of properties for various
- * types of columns:
- * <p>
- *     .. csv-table::
- *         :header: "column Type", "Permitted Properties Combination"
- *         :widths: 15, 60
- * <p>
- *         "Numeric", "'data' (default if no property is provided for a numeric
- * column)"
- *         "Numeric", "'store_only'"
- *         "String", "'data' (default if no property is provided for a string
- * column)"
- *         "String", "'text_search' (persists the data and disables all queries
- * except the filter by string query (with the 'search' mode); i.e. implied
- * 'store_only')"
- *         "String", "'store_only'"
- *         "String", "'data', 'text_search'"
- *         "String", "'text_search', 'store_only'"
- *         "String", "'data', 'disk_optimized'"
- *         "String", "'data', 'text_search', 'disk_optimized'"
- *         "bytes", "'store_only'"
- * <p>
- *     To set a *primary key* on one or more columns include the property
+ * To set a *primary key* on one or more columns include the property
  * 'primary_key' on the desired column_names. If a primary key is specified
  * then GPUdb enforces a uniqueness constraint in that only a single object can
  * exist with a given primary key. When {@link
- * #insertRecordsRaw(RawInsertRecordsRequest&) inserting} data into a table
- * with a primary key, depending on the parameters in the request, incoming
- * objects with primary keys that match existing objects will either overwrite
- * (i.e. update) the existing object or will be skipped and not added into the
- * set.
+ * #insertRecordsRaw(const RawInsertRecordsRequest&) const inserting} data
+ * into a table with a primary key, depending on the parameters in the request,
+ * incoming objects with primary keys that match existing objects will either
+ * overwrite (i.e. update) the existing object or will be skipped and not added
+ * into the set.
  * <p>
- *     Examples of a type definition with some of the parameters:
- * <p>
- *     Type definition::
+ * Example of a type definition with some of the parameters::
  * <p>
  *         {"type":"record",
  *         "name":"point",
@@ -3098,9 +3229,8 @@ CreateTypeResponse GPUdb::createType(const std::string& typeDefinition, const st
  * @param label  A user-defined description string which can be used to
  *               differentiate between tables and types with otherwise
  *               identical schemas.
- * @param properties  Default value is an empty {@link std::map}.
- * @param options  Optional parameters.  Default value is an empty {@link
- *                 std::map}.
+ * @param properties  Default value is an empty std::map.
+ * @param options  Optional parameters.  Default value is an empty std::map.
  * @param[out] response_  Response object containing the results of the
  *                        operation.
  * 
@@ -3185,8 +3315,7 @@ DeleteRecordsResponse& GPUdb::deleteRecords(const DeleteRecordsRequest& request_
  *                     format should follow the guidelines provided /filter.
  *                     Specifying one or more @a expressions is mutually
  *                     exclusive to specifying @a record_id in the @a options.
- * @param options  Optional parameters.  Default value is an empty {@link
- *                 std::map}.
+ * @param options  Optional parameters.  Default value is an empty std::map.
  * 
  * @return Response object containing the result of the operation.
  * 
@@ -3219,8 +3348,7 @@ DeleteRecordsResponse GPUdb::deleteRecords(const std::string& tableName, const s
  *                     format should follow the guidelines provided /filter.
  *                     Specifying one or more @a expressions is mutually
  *                     exclusive to specifying @a record_id in the @a options.
- * @param options  Optional parameters.  Default value is an empty {@link
- *                 std::map}.
+ * @param options  Optional parameters.  Default value is an empty std::map.
  * @param[out] response_  Response object containing the results of the
  *                        operation.
  * 
@@ -3235,6 +3363,100 @@ DeleteRecordsResponse& GPUdb::deleteRecords(const std::string& tableName, const 
     actualRequest_.expressions = expressions;
     actualRequest_.options = options;
     submitRequest("/delete/records", actualRequest_, response_, false);
+    return response_;
+}
+
+
+/**
+ * Exectues a proc in the GPUdb Node.js proc server.
+ * 
+ * @param[in] request_  Request object containing the parameters for the
+ *                      operation.
+ * 
+ * @return Response object containing the result of the operation.
+ * 
+ */
+ExecuteProcResponse GPUdb::executeProc(const ExecuteProcRequest& request_) const
+{
+    ExecuteProcResponse actualResponse_;
+    submitRequest("/execute/proc", request_, actualResponse_, false);
+    return actualResponse_;
+}
+
+
+/**
+ * Exectues a proc in the GPUdb Node.js proc server.
+ * 
+ * @param[in] request_  Request object containing the parameters for the
+ *                      operation.
+ * @param[out] response_  Response object containing the results of the
+ *                        operation.
+ * 
+ * @return Response object containing the result of the operation (initially
+ *         passed in by reference).
+ * 
+ */
+ExecuteProcResponse& GPUdb::executeProc(const ExecuteProcRequest& request_, ExecuteProcResponse& response_) const
+{
+    submitRequest("/execute/proc", request_, response_, false);
+    return response_;
+}
+
+
+/**
+ * Exectues a proc in the GPUdb Node.js proc server.
+ * 
+ * @param name  Name of the proc to execute.
+ * @param params  A map containing string parameters to pass to the proc. Each
+ *                key/value pair specifies the name of a parameter and its
+ *                value.
+ * @param binParams  A map containing binary parameters to pass to the proc.
+ *                   Each key/value pair specifies the name of a parameter and
+ *                   its value.
+ * @param options  Optional parameters.  Default value is an empty std::map.
+ * 
+ * @return Response object containing the result of the operation.
+ * 
+ */
+ExecuteProcResponse GPUdb::executeProc(const std::string& name, const std::map<std::string, std::string>& params, const std::map<std::string, std::vector<uint8_t> >& binParams, const std::map<std::string, std::string>& options) const
+{
+    ExecuteProcRequest actualRequest_;
+    actualRequest_.name = name;
+    actualRequest_.params = params;
+    actualRequest_.binParams = binParams;
+    actualRequest_.options = options;
+    ExecuteProcResponse actualResponse_;
+    submitRequest("/execute/proc", actualRequest_, actualResponse_, false);
+    return actualResponse_;
+}
+
+
+/**
+ * Exectues a proc in the GPUdb Node.js proc server.
+ * 
+ * @param name  Name of the proc to execute.
+ * @param params  A map containing string parameters to pass to the proc. Each
+ *                key/value pair specifies the name of a parameter and its
+ *                value.
+ * @param binParams  A map containing binary parameters to pass to the proc.
+ *                   Each key/value pair specifies the name of a parameter and
+ *                   its value.
+ * @param options  Optional parameters.  Default value is an empty std::map.
+ * @param[out] response_  Response object containing the results of the
+ *                        operation.
+ * 
+ * @return Response object containing the result of the operation (initially
+ *         passed in by reference).
+ * 
+ */
+ExecuteProcResponse& GPUdb::executeProc(const std::string& name, const std::map<std::string, std::string>& params, const std::map<std::string, std::vector<uint8_t> >& binParams, const std::map<std::string, std::string>& options, ExecuteProcResponse& response_) const
+{
+    ExecuteProcRequest actualRequest_;
+    actualRequest_.name = name;
+    actualRequest_.params = params;
+    actualRequest_.binParams = binParams;
+    actualRequest_.options = options;
+    submitRequest("/execute/proc", actualRequest_, response_, false);
     return response_;
 }
 
@@ -3306,13 +3528,12 @@ FilterResponse& GPUdb::filter(const FilterRequest& request_, FilterResponse& res
  * @param viewName  If provided, then this will be the name of the view
  *                  containing the results. Must not be an already existing
  *                  collection, table or view .  Default value is an empty
- *                  {@link std::string}.
+ *                  string.
  * @param expression  The select expression GPUdb uses to filter the specified
  *                    table.  For details see <a
  *                    href="../../concepts/index.html#expressions"
  *                    target="_top">concepts</a>.
- * @param options  Optional parameters.  Default value is an empty {@link
- *                 std::map}.
+ * @param options  Optional parameters.  Default value is an empty std::map.
  * 
  * @return Response object containing the result of the operation.
  * 
@@ -3347,13 +3568,12 @@ FilterResponse GPUdb::filter(const std::string& tableName, const std::string& vi
  * @param viewName  If provided, then this will be the name of the view
  *                  containing the results. Must not be an already existing
  *                  collection, table or view .  Default value is an empty
- *                  {@link std::string}.
+ *                  string.
  * @param expression  The select expression GPUdb uses to filter the specified
  *                    table.  For details see <a
  *                    href="../../concepts/index.html#expressions"
  *                    target="_top">concepts</a>.
- * @param options  Optional parameters.  Default value is an empty {@link
- *                 std::map}.
+ * @param options  Optional parameters.  Default value is an empty std::map.
  * @param[out] response_  Response object containing the results of the
  *                        operation.
  * 
@@ -3434,7 +3654,7 @@ FilterByAreaResponse& GPUdb::filterByArea(const FilterByAreaRequest& request_, F
  * @param viewName  If provided, then this will be the name of the view
  *                  containing the results. Must not be an already existing
  *                  collection, table or view.  Default value is an empty
- *                  {@link std::string}.
+ *                  string.
  * @param xColumnName  Name of the column containing the x values to be
  *                     filtered.
  * @param xVector  List of x coordinates of the vertices of the polygon
@@ -3443,8 +3663,7 @@ FilterByAreaResponse& GPUdb::filterByArea(const FilterByAreaRequest& request_, F
  *                     filtered.
  * @param yVector  List of y coordinates of the vertices of the polygon
  *                 representing the area to be filtered.
- * @param options  Optional parameters.  Default value is an empty {@link
- *                 std::map}.
+ * @param options  Optional parameters.  Default value is an empty std::map.
  * 
  * @return Response object containing the result of the operation.
  * 
@@ -3480,7 +3699,7 @@ FilterByAreaResponse GPUdb::filterByArea(const std::string& tableName, const std
  * @param viewName  If provided, then this will be the name of the view
  *                  containing the results. Must not be an already existing
  *                  collection, table or view.  Default value is an empty
- *                  {@link std::string}.
+ *                  string.
  * @param xColumnName  Name of the column containing the x values to be
  *                     filtered.
  * @param xVector  List of x coordinates of the vertices of the polygon
@@ -3489,8 +3708,7 @@ FilterByAreaResponse GPUdb::filterByArea(const std::string& tableName, const std
  *                     filtered.
  * @param yVector  List of y coordinates of the vertices of the polygon
  *                 representing the area to be filtered.
- * @param options  Optional parameters.  Default value is an empty {@link
- *                 std::map}.
+ * @param options  Optional parameters.  Default value is an empty std::map.
  * @param[out] response_  Response object containing the results of the
  *                        operation.
  * 
@@ -3572,7 +3790,7 @@ FilterByBoxResponse& GPUdb::filterByBox(const FilterByBoxRequest& request_, Filt
  * @param viewName  Optional name of the result view that will be created
  *                  containing the results of the query. Must not be an already
  *                  existing collection, table or view in GPUdb.  Default value
- *                  is an empty {@link std::string}.
+ *                  is an empty string.
  * @param xColumnName  Name of the column on which to perform the bounding box
  *                     query. If the table's data type is not a shape type,
  *                     must be a valid numeric column.
@@ -3587,8 +3805,7 @@ FilterByBoxResponse& GPUdb::filterByBox(const FilterByBoxRequest& request_, Filt
  *              @a maxY.
  * @param maxY  Upper bound for @a yColumnName. Must be greater than or equal
  *              to @a minY.
- * @param options  Optional parameters.  Default value is an empty {@link
- *                 std::map}.
+ * @param options  Optional parameters.  Default value is an empty std::map.
  * 
  * @return Response object containing the result of the operation.
  * 
@@ -3624,7 +3841,7 @@ FilterByBoxResponse GPUdb::filterByBox(const std::string& tableName, const std::
  * @param viewName  Optional name of the result view that will be created
  *                  containing the results of the query. Must not be an already
  *                  existing collection, table or view in GPUdb.  Default value
- *                  is an empty {@link std::string}.
+ *                  is an empty string.
  * @param xColumnName  Name of the column on which to perform the bounding box
  *                     query. If the table's data type is not a shape type,
  *                     must be a valid numeric column.
@@ -3639,8 +3856,7 @@ FilterByBoxResponse GPUdb::filterByBox(const std::string& tableName, const std::
  *              @a maxY.
  * @param maxY  Upper bound for @a yColumnName. Must be greater than or equal
  *              to @a minY.
- * @param options  Optional parameters.  Default value is an empty {@link
- *                 std::map}.
+ * @param options  Optional parameters.  Default value is an empty std::map.
  * @param[out] response_  Response object containing the results of the
  *                        operation.
  * 
@@ -3713,17 +3929,13 @@ FilterByGeometryResponse& GPUdb::filterByGeometry(const FilterByGeometryRequest&
  * @param viewName  If provided, then this will be the name of the view
  *                  containing the results. Must not be an already existing
  *                  collection, table or view.  Default value is an empty
- *                  {@link std::string}.
+ *                  string.
  * @param columnName  Name of the column to be used in the filter. Must be a
  *                    spatial column. Typically this will be 'WKT'
  * @param inputWkt  A geometry in WKT format that will be used to filter the
- *                  objects in @a tableName  Default value is an empty {@link
- *                  std::string}.
- * @param operation  The geometric filtering operation to perform  The allowed
- *                   values are:  ~!~ * CONTAINS * CROSSES * DISJOINT * EQUALS
- *                   * INTERSECTS * OVERLAPS * TOUCHES * WITHIN~!~
- * @param options  Optional parameters.  Default value is an empty {@link
- *                 std::map}.
+ *                  objects in @a tableName  Default value is an empty string.
+ * @param operation  The geometric filtering operation to perform
+ * @param options  Optional parameters.  Default value is an empty std::map.
  * 
  * @return Response object containing the result of the operation.
  * 
@@ -3753,17 +3965,13 @@ FilterByGeometryResponse GPUdb::filterByGeometry(const std::string& tableName, c
  * @param viewName  If provided, then this will be the name of the view
  *                  containing the results. Must not be an already existing
  *                  collection, table or view.  Default value is an empty
- *                  {@link std::string}.
+ *                  string.
  * @param columnName  Name of the column to be used in the filter. Must be a
  *                    spatial column. Typically this will be 'WKT'
  * @param inputWkt  A geometry in WKT format that will be used to filter the
- *                  objects in @a tableName  Default value is an empty {@link
- *                  std::string}.
- * @param operation  The geometric filtering operation to perform  The allowed
- *                   values are:  ~!~ * CONTAINS * CROSSES * DISJOINT * EQUALS
- *                   * INTERSECTS * OVERLAPS * TOUCHES * WITHIN~!~
- * @param options  Optional parameters.  Default value is an empty {@link
- *                 std::map}.
+ *                  objects in @a tableName  Default value is an empty string.
+ * @param operation  The geometric filtering operation to perform
+ * @param options  Optional parameters.  Default value is an empty std::map.
  * @param[out] response_  Response object containing the results of the
  *                        operation.
  * 
@@ -3796,7 +4004,9 @@ FilterByGeometryResponse& GPUdb::filterByGeometry(const std::string& tableName, 
  * For example, if a type definition has the columns 'x' and 'y', then a filter
  * by list query with the column map {"x":["10.1", "2.3"], "y":["0.0", "-31.5",
  * "42.0"]} will return the count of all data points whose x and y values match
- * one of the values in the respective x- and y-lists.
+ * one of the values in the respective x- and y-lists. If the filter_mode
+ * option is set to 'not_in_list' then the filter will match all items that are
+ * not in the provided list(s).
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -3823,7 +4033,9 @@ FilterByListResponse GPUdb::filterByList(const FilterByListRequest& request_) co
  * For example, if a type definition has the columns 'x' and 'y', then a filter
  * by list query with the column map {"x":["10.1", "2.3"], "y":["0.0", "-31.5",
  * "42.0"]} will return the count of all data points whose x and y values match
- * one of the values in the respective x- and y-lists.
+ * one of the values in the respective x- and y-lists. If the filter_mode
+ * option is set to 'not_in_list' then the filter will match all items that are
+ * not in the provided list(s).
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -3852,7 +4064,9 @@ FilterByListResponse& GPUdb::filterByList(const FilterByListRequest& request_, F
  * For example, if a type definition has the columns 'x' and 'y', then a filter
  * by list query with the column map {"x":["10.1", "2.3"], "y":["0.0", "-31.5",
  * "42.0"]} will return the count of all data points whose x and y values match
- * one of the values in the respective x- and y-lists.
+ * one of the values in the respective x- and y-lists. If the filter_mode
+ * option is set to 'not_in_list' then the filter will match all items that are
+ * not in the provided list(s).
  * 
  * @param tableName  Name of the table to filter.  This may be the ID of a
  *                   collection, table or a result set (for chaining queries).
@@ -3861,11 +4075,10 @@ FilterByListResponse& GPUdb::filterByList(const FilterByListRequest& request_, F
  * @param viewName  If provided, then this will be the name of the view
  *                  containing the results. Must not be an already existing
  *                  collection, table or view.  Default value is an empty
- *                  {@link std::string}.
+ *                  string.
  * @param columnValuesMap  List of values for the corresponding column in the
  *                         table
- * @param options  Optional parameters.  Default value is an empty {@link
- *                 std::map}.
+ * @param options  Optional parameters.  Default value is an empty std::map.
  * 
  * @return Response object containing the result of the operation.
  * 
@@ -3894,7 +4107,9 @@ FilterByListResponse GPUdb::filterByList(const std::string& tableName, const std
  * For example, if a type definition has the columns 'x' and 'y', then a filter
  * by list query with the column map {"x":["10.1", "2.3"], "y":["0.0", "-31.5",
  * "42.0"]} will return the count of all data points whose x and y values match
- * one of the values in the respective x- and y-lists.
+ * one of the values in the respective x- and y-lists. If the filter_mode
+ * option is set to 'not_in_list' then the filter will match all items that are
+ * not in the provided list(s).
  * 
  * @param tableName  Name of the table to filter.  This may be the ID of a
  *                   collection, table or a result set (for chaining queries).
@@ -3903,11 +4118,10 @@ FilterByListResponse GPUdb::filterByList(const std::string& tableName, const std
  * @param viewName  If provided, then this will be the name of the view
  *                  containing the results. Must not be an already existing
  *                  collection, table or view.  Default value is an empty
- *                  {@link std::string}.
+ *                  string.
  * @param columnValuesMap  List of values for the corresponding column in the
  *                         table
- * @param options  Optional parameters.  Default value is an empty {@link
- *                 std::map}.
+ * @param options  Optional parameters.  Default value is an empty std::map.
  * @param[out] response_  Response object containing the results of the
  *                        operation.
  * 
@@ -4007,7 +4221,7 @@ FilterByRadiusResponse& GPUdb::filterByRadius(const FilterByRadiusRequest& reque
  * @param viewName  If provided, then this will be the name of the view
  *                  containing the results. Must not be an already existing
  *                  collection, table or view.  Default value is an empty
- *                  {@link std::string}.
+ *                  string.
  * @param xColumnName  Name of the column to be used for the x-coordinate (the
  *                     longitude) of the center.
  * @param xCenter  Value of the longitude of the center. Must be within
@@ -4023,8 +4237,7 @@ FilterByRadiusResponse& GPUdb::filterByRadius(const FilterByRadiusRequest& reque
  *                meters; so, for example, a value of '42000' means 42 km.  The
  *                minimum allowed value is 0. The maximum allowed value is
  *                MAX_INT.
- * @param options  Optional parameters.  Default value is an empty {@link
- *                 std::map}.
+ * @param options  Optional parameters.  Default value is an empty std::map.
  * 
  * @return Response object containing the result of the operation.
  * 
@@ -4066,7 +4279,7 @@ FilterByRadiusResponse GPUdb::filterByRadius(const std::string& tableName, const
  * @param viewName  If provided, then this will be the name of the view
  *                  containing the results. Must not be an already existing
  *                  collection, table or view.  Default value is an empty
- *                  {@link std::string}.
+ *                  string.
  * @param xColumnName  Name of the column to be used for the x-coordinate (the
  *                     longitude) of the center.
  * @param xCenter  Value of the longitude of the center. Must be within
@@ -4082,8 +4295,7 @@ FilterByRadiusResponse GPUdb::filterByRadius(const std::string& tableName, const
  *                meters; so, for example, a value of '42000' means 42 km.  The
  *                minimum allowed value is 0. The maximum allowed value is
  *                MAX_INT.
- * @param options  Optional parameters.  Default value is an empty {@link
- *                 std::map}.
+ * @param options  Optional parameters.  Default value is an empty std::map.
  * @param[out] response_  Response object containing the results of the
  *                        operation.
  * 
@@ -4172,13 +4384,12 @@ FilterByRangeResponse& GPUdb::filterByRange(const FilterByRangeRequest& request_
  * @param viewName  If provided, then this will be the name of the view
  *                  containing the results. Must not be an already existing
  *                  collection, table or view.  Default value is an empty
- *                  {@link std::string}.
+ *                  string.
  * @param columnName  Name of a column or an expression of one or more columns
  *                    on which the operation would be applied.
  * @param lowerBound  Value of the lower bound (inclusive).
  * @param upperBound  Value of the upper bound (inclusive).
- * @param options  Optional parameters.  Default value is an empty {@link
- *                 std::map}.
+ * @param options  Optional parameters.  Default value is an empty std::map.
  * 
  * @return Response object containing the result of the operation.
  * 
@@ -4213,13 +4424,12 @@ FilterByRangeResponse GPUdb::filterByRange(const std::string& tableName, const s
  * @param viewName  If provided, then this will be the name of the view
  *                  containing the results. Must not be an already existing
  *                  collection, table or view.  Default value is an empty
- *                  {@link std::string}.
+ *                  string.
  * @param columnName  Name of a column or an expression of one or more columns
  *                    on which the operation would be applied.
  * @param lowerBound  Value of the lower bound (inclusive).
  * @param upperBound  Value of the upper bound (inclusive).
- * @param options  Optional parameters.  Default value is an empty {@link
- *                 std::map}.
+ * @param options  Optional parameters.  Default value is an empty std::map.
  * @param[out] response_  Response object containing the results of the
  *                        operation.
  * 
@@ -4325,14 +4535,13 @@ FilterBySeriesResponse& GPUdb::filterBySeries(const FilterBySeriesRequest& reque
  * @param viewName  If provided, then this will be the name of the view
  *                  containing the results. Must not be an already existing
  *                  collection, table or view.  Default value is an empty
- *                  {@link std::string}.
+ *                  string.
  * @param trackId  The ID of the track which will act as the filtering points.
  *                 Must be an existing track within the given table.
  * @param targetTrackIds  Up to one track ID to intersect with the "filter"
  *                        track. If any provided, it must be an valid track ID
  *                        within the given set.
- * @param options  Optional parameters.  Default value is an empty {@link
- *                 std::map}.
+ * @param options  Optional parameters.  Default value is an empty std::map.
  * 
  * @return Response object containing the result of the operation.
  * 
@@ -4373,14 +4582,13 @@ FilterBySeriesResponse GPUdb::filterBySeries(const std::string& tableName, const
  * @param viewName  If provided, then this will be the name of the view
  *                  containing the results. Must not be an already existing
  *                  collection, table or view.  Default value is an empty
- *                  {@link std::string}.
+ *                  string.
  * @param trackId  The ID of the track which will act as the filtering points.
  *                 Must be an existing track within the given table.
  * @param targetTrackIds  Up to one track ID to intersect with the "filter"
  *                        track. If any provided, it must be an valid track ID
  *                        within the given set.
- * @param options  Optional parameters.  Default value is an empty {@link
- *                 std::map}.
+ * @param options  Optional parameters.  Default value is an empty std::map.
  * @param[out] response_  Response object containing the results of the
  *                        operation.
  * 
@@ -4494,15 +4702,12 @@ FilterByStringResponse& GPUdb::filterByString(const FilterByStringRequest& reque
  * @param viewName  If provided, then this will be the name of the view
  *                  containing the results. Must not be an already existing
  *                  collection, table or view.  Default value is an empty
- *                  {@link std::string}.
+ *                  string.
  * @param expression  The expression with which to filter the table.
- * @param mode  The string filtering mode to apply. See above for details.  The
- *              allowed values are:  ~!~ * SEARCH * EQUALS * CONTAINS *
- *              STARTS_WITH * REGEX~!~
+ * @param mode  The string filtering mode to apply. See above for details.
  * @param columnNames  List of columns on which to apply the filter. Ignored
  *                     for 'search' mode.
- * @param options  Optional parameters.  Default value is an empty {@link
- *                 std::map}.
+ * @param options  Optional parameters.  Default value is an empty std::map.
  * 
  * @return Response object containing the result of the operation.
  * 
@@ -4547,15 +4752,12 @@ FilterByStringResponse GPUdb::filterByString(const std::string& tableName, const
  * @param viewName  If provided, then this will be the name of the view
  *                  containing the results. Must not be an already existing
  *                  collection, table or view.  Default value is an empty
- *                  {@link std::string}.
+ *                  string.
  * @param expression  The expression with which to filter the table.
- * @param mode  The string filtering mode to apply. See above for details.  The
- *              allowed values are:  ~!~ * SEARCH * EQUALS * CONTAINS *
- *              STARTS_WITH * REGEX~!~
+ * @param mode  The string filtering mode to apply. See above for details.
  * @param columnNames  List of columns on which to apply the filter. Ignored
  *                     for 'search' mode.
- * @param options  Optional parameters.  Default value is an empty {@link
- *                 std::map}.
+ * @param options  Optional parameters.  Default value is an empty std::map.
  * @param[out] response_  Response object containing the results of the
  *                        operation.
  * 
@@ -4642,7 +4844,7 @@ FilterByTableResponse& GPUdb::filterByTable(const FilterByTableRequest& request_
  * @param viewName  If provided, then this will be the name of the view
  *                  containing the results. Must not be an already existing
  *                  collection, table or view.  Default value is an empty
- *                  {@link std::string}.
+ *                  string.
  * @param columnName  Name of the column by whose value the data will be
  *                    filtered from the table designated by @a tableName.
  * @param sourceTableName  Name of the table whose data will be compared
@@ -4652,8 +4854,7 @@ FilterByTableResponse& GPUdb::filterByTable(const FilterByTableRequest& request_
  *                               whose values will be used as the filter for
  *                               table @a tableName. Must match the type of the
  *                               @a columnName.
- * @param options  Optional parameters.  Default value is an empty {@link
- *                 std::map}.
+ * @param options  Optional parameters.  Default value is an empty std::map.
  * 
  * @return Response object containing the result of the operation.
  * 
@@ -4688,7 +4889,7 @@ FilterByTableResponse GPUdb::filterByTable(const std::string& tableName, const s
  * @param viewName  If provided, then this will be the name of the view
  *                  containing the results. Must not be an already existing
  *                  collection, table or view.  Default value is an empty
- *                  {@link std::string}.
+ *                  string.
  * @param columnName  Name of the column by whose value the data will be
  *                    filtered from the table designated by @a tableName.
  * @param sourceTableName  Name of the table whose data will be compared
@@ -4698,8 +4899,7 @@ FilterByTableResponse GPUdb::filterByTable(const std::string& tableName, const s
  *                               whose values will be used as the filter for
  *                               table @a tableName. Must match the type of the
  *                               @a columnName.
- * @param options  Optional parameters.  Default value is an empty {@link
- *                 std::map}.
+ * @param options  Optional parameters.  Default value is an empty std::map.
  * @param[out] response_  Response object containing the results of the
  *                        operation.
  * 
@@ -4786,16 +4986,15 @@ FilterByValueResponse& GPUdb::filterByValue(const FilterByValueRequest& request_
  * @param viewName  If provided, then this will be the name of the view
  *                  containing the results. Must not be an already existing
  *                  collection, table or view.  Default value is an empty
- *                  {@link std::string}.
+ *                  string.
  * @param isString  Indicates whether the value being searched for is string or
  *                  numeric.
  * @param value  The value to search for.  Default value is 0.
  * @param valueStr  The string value to search for.  Default value is an empty
- *                  {@link std::string}.
+ *                  string.
  * @param columnName  Name of a column or an expression of one or more columns
  *                    on which the filter by value would be applied.
- * @param options  Optional parameters.  Default value is an empty {@link
- *                 std::map}.
+ * @param options  Optional parameters.  Default value is an empty std::map.
  * 
  * @return Response object containing the result of the operation.
  * 
@@ -4831,16 +5030,15 @@ FilterByValueResponse GPUdb::filterByValue(const std::string& tableName, const s
  * @param viewName  If provided, then this will be the name of the view
  *                  containing the results. Must not be an already existing
  *                  collection, table or view.  Default value is an empty
- *                  {@link std::string}.
+ *                  string.
  * @param isString  Indicates whether the value being searched for is string or
  *                  numeric.
  * @param value  The value to search for.  Default value is 0.
  * @param valueStr  The string value to search for.  Default value is an empty
- *                  {@link std::string}.
+ *                  string.
  * @param columnName  Name of a column or an expression of one or more columns
  *                    on which the filter by value would be applied.
- * @param options  Optional parameters.  Default value is an empty {@link
- *                 std::map}.
+ * @param options  Optional parameters.  Default value is an empty std::map.
  * @param[out] response_  Response object containing the results of the
  *                        operation.
  * 
@@ -5006,7 +5204,7 @@ template<> GetRecordsResponse<boost::any>& GPUdb::getRecords(const GetRecordsReq
  * @param limit  A positive integer indicating the maximum number of results to
  *               be returned. Or END_OF_SET (-9999) to indicate that the max
  *               number of results should be returned.  Default value is 10000.
- * @param options  Default value is an empty {@link std::map}.
+ * @param options  Default value is an empty std::map.
  * 
  * @return Response object containing the result of the operation.
  * 
@@ -5052,7 +5250,7 @@ template<> GetRecordsResponse<boost::any> GPUdb::getRecords(const std::string& t
  * @param limit  A positive integer indicating the maximum number of results to
  *               be returned. Or END_OF_SET (-9999) to indicate that the max
  *               number of results should be returned.  Default value is 10000.
- * @param options  Default value is an empty {@link std::map}.
+ * @param options  Default value is an empty std::map.
  * @param[out] response_  Response object containing the results of the
  *                        operation.
  * 
@@ -5094,8 +5292,9 @@ template<> GetRecordsResponse<boost::any>& GPUdb::getRecords(const std::string& 
  * modified) the records or values retrieved may differ between calls
  * (discontiguous or overlap) based on the type of the update.
  * <p>
- * The response is returned as a dynamic schema. For details see: {dynamic
- * schemas documentation}@{link ../../concepts/index.html#dynamic-schemas}.
+ * The response is returned as a dynamic schema. For details see: <a
+ * href="../../concepts/index.html#dynamic-schemas" target="_top">dynamic
+ * schemas documentation</a>.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -5126,8 +5325,9 @@ RawGetRecordsByColumnResponse GPUdb::getRecordsByColumnRaw(const GetRecordsByCol
  * modified) the records or values retrieved may differ between calls
  * (discontiguous or overlap) based on the type of the update.
  * <p>
- * The response is returned as a dynamic schema. For details see: {dynamic
- * schemas documentation}@{link ../../concepts/index.html#dynamic-schemas}.
+ * The response is returned as a dynamic schema. For details see: <a
+ * href="../../concepts/index.html#dynamic-schemas" target="_top">dynamic
+ * schemas documentation</a>.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -5160,8 +5360,9 @@ RawGetRecordsByColumnResponse& GPUdb::getRecordsByColumnRaw(const GetRecordsByCo
  * modified) the records or values retrieved may differ between calls
  * (discontiguous or overlap) based on the type of the update.
  * <p>
- * The response is returned as a dynamic schema. For details see: {dynamic
- * schemas documentation}@{link ../../concepts/index.html#dynamic-schemas}.
+ * The response is returned as a dynamic schema. For details see: <a
+ * href="../../concepts/index.html#dynamic-schemas" target="_top">dynamic
+ * schemas documentation</a>.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -5196,8 +5397,9 @@ GetRecordsByColumnResponse GPUdb::getRecordsByColumn(const GetRecordsByColumnReq
  * modified) the records or values retrieved may differ between calls
  * (discontiguous or overlap) based on the type of the update.
  * <p>
- * The response is returned as a dynamic schema. For details see: {dynamic
- * schemas documentation}@{link ../../concepts/index.html#dynamic-schemas}.
+ * The response is returned as a dynamic schema. For details see: <a
+ * href="../../concepts/index.html#dynamic-schemas" target="_top">dynamic
+ * schemas documentation</a>.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -5234,8 +5436,9 @@ GetRecordsByColumnResponse& GPUdb::getRecordsByColumn(const GetRecordsByColumnRe
  * modified) the records or values retrieved may differ between calls
  * (discontiguous or overlap) based on the type of the update.
  * <p>
- * The response is returned as a dynamic schema. For details see: {dynamic
- * schemas documentation}@{link ../../concepts/index.html#dynamic-schemas}.
+ * The response is returned as a dynamic schema. For details see: <a
+ * href="../../concepts/index.html#dynamic-schemas" target="_top">dynamic
+ * schemas documentation</a>.
  * 
  * @param tableName  Name of the table on which this operation will be
  *                   performed. The table cannot be a parent set.
@@ -5249,7 +5452,7 @@ GetRecordsByColumnResponse& GPUdb::getRecordsByColumn(const GetRecordsByColumnRe
  *               be returned (if not provided the default is 10000). Or
  *               END_OF_column (-9999) to indicate that the max number of
  *               results should be returned.
- * @param options  Default value is an empty {@link std::map}.
+ * @param options  Default value is an empty std::map.
  * 
  * @return Response object containing the result of the operation.
  * 
@@ -5287,8 +5490,9 @@ GetRecordsByColumnResponse GPUdb::getRecordsByColumn(const std::string& tableNam
  * modified) the records or values retrieved may differ between calls
  * (discontiguous or overlap) based on the type of the update.
  * <p>
- * The response is returned as a dynamic schema. For details see: {dynamic
- * schemas documentation}@{link ../../concepts/index.html#dynamic-schemas}.
+ * The response is returned as a dynamic schema. For details see: <a
+ * href="../../concepts/index.html#dynamic-schemas" target="_top">dynamic
+ * schemas documentation</a>.
  * 
  * @param tableName  Name of the table on which this operation will be
  *                   performed. The table cannot be a parent set.
@@ -5302,7 +5506,7 @@ GetRecordsByColumnResponse GPUdb::getRecordsByColumn(const std::string& tableNam
  *               be returned (if not provided the default is 10000). Or
  *               END_OF_column (-9999) to indicate that the max number of
  *               results should be returned.
- * @param options  Default value is an empty {@link std::map}.
+ * @param options  Default value is an empty std::map.
  * @param[out] response_  Response object containing the results of the
  *                        operation.
  * 
@@ -5334,10 +5538,11 @@ GetRecordsByColumnResponse& GPUdb::getRecordsByColumn(const std::string& tableNa
  * This operation supports paging through the data via the @a offset and @a
  * limit parameters.
  * <p>
- * In contrast to {@link #getRecordsRaw(GetRecordsRequest&)} this returns
- * records grouped by series/track. So if @a offset is 0 and @a limit is 5 this
- * operation would return the first 5 series/tracks in @a tableName. Each
- * series/track will be returned sorted by their TIMESTAMP column.
+ * In contrast to {@link #getRecordsRaw(const GetRecordsRequest&) const}
+ * this returns records grouped by series/track. So if @a offset is 0 and @a
+ * limit is 5 this operation would return the first 5 series/tracks in @a
+ * tableName. Each series/track will be returned sorted by their TIMESTAMP
+ * column.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -5361,10 +5566,11 @@ RawGetRecordsBySeriesResponse GPUdb::getRecordsBySeriesRaw(const GetRecordsBySer
  * limit parameters.
  * <p>
  * In contrast to {@link
- * #getRecordsRaw(GetRecordsRequest&,RawGetRecordsResponse&)} this returns
- * records grouped by series/track. So if @a offset is 0 and @a limit is 5 this
- * operation would return the first 5 series/tracks in @a tableName. Each
- * series/track will be returned sorted by their TIMESTAMP column.
+ * #getRecordsRaw(const GetRecordsRequest&,RawGetRecordsResponse&) const}
+ * this returns records grouped by series/track. So if @a offset is 0 and @a
+ * limit is 5 this operation would return the first 5 series/tracks in @a
+ * tableName. Each series/track will be returned sorted by their TIMESTAMP
+ * column.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -5389,10 +5595,10 @@ RawGetRecordsBySeriesResponse& GPUdb::getRecordsBySeriesRaw(const GetRecordsBySe
  * This operation supports paging through the data via the @a offset and @a
  * limit parameters.
  * <p>
- * In contrast to {@link #getRecords(GetRecordsRequest&)} this returns records
- * grouped by series/track. So if @a offset is 0 and @a limit is 5 this
- * operation would return the first 5 series/tracks in @a tableName. Each
- * series/track will be returned sorted by their TIMESTAMP column.
+ * In contrast to {@link #getRecords(const GetRecordsRequest&) const} this
+ * returns records grouped by series/track. So if @a offset is 0 and @a limit
+ * is 5 this operation would return the first 5 series/tracks in @a tableName.
+ * Each series/track will be returned sorted by their TIMESTAMP column.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -5429,10 +5635,11 @@ template<> GetRecordsBySeriesResponse<boost::any> GPUdb::getRecordsBySeries(cons
  * limit parameters.
  * <p>
  * In contrast to {@link
- * #getRecords(GetRecordsRequest&,GetRecordsResponse<boost::any>&)} this
- * returns records grouped by series/track. So if @a offset is 0 and @a limit
- * is 5 this operation would return the first 5 series/tracks in @a tableName.
- * Each series/track will be returned sorted by their TIMESTAMP column.
+ * #getRecords(const GetRecordsRequest&,GetRecordsResponse<boost::any>&) const}
+ * this returns records grouped by series/track. So if @a offset is 0 and @a
+ * limit is 5 this operation would return the first 5 series/tracks in @a
+ * tableName. Each series/track will be returned sorted by their TIMESTAMP
+ * column.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -5471,11 +5678,11 @@ template<> GetRecordsBySeriesResponse<boost::any>& GPUdb::getRecordsBySeries(con
  * limit parameters.
  * <p>
  * In contrast to {@link
- * #getRecords(std::string&,int64_t,int64_t,std::map<std::string,
- * std::string>&)} this returns records grouped by series/track. So if @a
- * offset is 0 and @a limit is 5 this operation would return the first 5
- * series/tracks in @a tableName. Each series/track will be returned sorted by
- * their TIMESTAMP column.
+ * #getRecords(const std::string&,const int64_t,const int64_t,const std::map<std::string, std::string>&) const}
+ * this returns records grouped by series/track. So if @a offset is 0 and @a
+ * limit is 5 this operation would return the first 5 series/tracks in @a
+ * tableName. Each series/track will be returned sorted by their TIMESTAMP
+ * column.
  * 
  * @param tableName  Name of the collection/table/view for which series/tracks
  *                   will be fetched.
@@ -5494,8 +5701,7 @@ template<> GetRecordsBySeriesResponse<boost::any>& GPUdb::getRecordsBySeries(con
  *               series/tracks to be returned. Or END_OF_SET (-9999) to
  *               indicate that the max number of results should be returned.
  *               Default value is 10000.
- * @param options  Optional parameters.  Default value is an empty {@link
- *                 std::map}.
+ * @param options  Optional parameters.  Default value is an empty std::map.
  * 
  * @return Response object containing the result of the operation.
  * 
@@ -5535,11 +5741,11 @@ template<> GetRecordsBySeriesResponse<boost::any> GPUdb::getRecordsBySeries(cons
  * limit parameters.
  * <p>
  * In contrast to {@link
- * #getRecords(std::string&,int64_t,int64_t,std::map<std::string,
- * std::string>&,GetRecordsResponse<boost::any>&)} this returns records grouped
- * by series/track. So if @a offset is 0 and @a limit is 5 this operation would
- * return the first 5 series/tracks in @a tableName. Each series/track will be
- * returned sorted by their TIMESTAMP column.
+ * #getRecords(const std::string&,const int64_t,const int64_t,const std::map<std::string, std::string>&,GetRecordsResponse<boost::any>&) const}
+ * this returns records grouped by series/track. So if @a offset is 0 and @a
+ * limit is 5 this operation would return the first 5 series/tracks in @a
+ * tableName. Each series/track will be returned sorted by their TIMESTAMP
+ * column.
  * 
  * @param tableName  Name of the collection/table/view for which series/tracks
  *                   will be fetched.
@@ -5558,8 +5764,7 @@ template<> GetRecordsBySeriesResponse<boost::any> GPUdb::getRecordsBySeries(cons
  *               series/tracks to be returned. Or END_OF_SET (-9999) to
  *               indicate that the max number of results should be returned.
  *               Default value is 10000.
- * @param options  Optional parameters.  Default value is an empty {@link
- *                 std::map}.
+ * @param options  Optional parameters.  Default value is an empty std::map.
  * @param[out] response_  Response object containing the results of the
  *                        operation.
  * 
@@ -5596,7 +5801,7 @@ template<> GetRecordsBySeriesResponse<boost::any>& GPUdb::getRecordsBySeries(con
 /**
  * Retrieves records from a collection. The operation can optionally return the
  * record IDs which can be used in certain queries such as {@link
- * #deleteRecords(DeleteRecordsRequest&)}.
+ * #deleteRecords(const DeleteRecordsRequest&) const}.
  * <p>
  * This operation supports paging through the data via the @a offset and @a
  * limit parameters.
@@ -5618,7 +5823,7 @@ RawGetRecordsFromCollectionResponse GPUdb::getRecordsFromCollectionRaw(const Get
 /**
  * Retrieves records from a collection. The operation can optionally return the
  * record IDs which can be used in certain queries such as {@link
- * #deleteRecords(DeleteRecordsRequest&,DeleteRecordsResponse&)}.
+ * #deleteRecords(const DeleteRecordsRequest&,DeleteRecordsResponse&) const}.
  * <p>
  * This operation supports paging through the data via the @a offset and @a
  * limit parameters.
@@ -5642,7 +5847,7 @@ RawGetRecordsFromCollectionResponse& GPUdb::getRecordsFromCollectionRaw(const Ge
 /**
  * Retrieves records from a collection. The operation can optionally return the
  * record IDs which can be used in certain queries such as {@link
- * #deleteRecords(DeleteRecordsRequest&)}.
+ * #deleteRecords(const DeleteRecordsRequest&) const}.
  * <p>
  * This operation supports paging through the data via the @a offset and @a
  * limit parameters.
@@ -5698,7 +5903,7 @@ template<> GetRecordsFromCollectionResponse<boost::any> GPUdb::getRecordsFromCol
 /**
  * Retrieves records from a collection. The operation can optionally return the
  * record IDs which can be used in certain queries such as {@link
- * #deleteRecords(DeleteRecordsRequest&,DeleteRecordsResponse&)}.
+ * #deleteRecords(const DeleteRecordsRequest&,DeleteRecordsResponse&) const}.
  * <p>
  * This operation supports paging through the data via the @a offset and @a
  * limit parameters.
@@ -5756,8 +5961,7 @@ template<> GetRecordsFromCollectionResponse<boost::any>& GPUdb::getRecordsFromCo
 /**
  * Retrieves records from a collection. The operation can optionally return the
  * record IDs which can be used in certain queries such as {@link
- * #deleteRecords(std::string&,std::vector<std::string>&,std::map<std::string,
- * std::string>&)}.
+ * #deleteRecords(const std::string&,const std::vector<std::string>&,const std::map<std::string, std::string>&) const}.
  * <p>
  * This operation supports paging through the data via the @a offset and @a
  * limit parameters.
@@ -5772,7 +5976,7 @@ template<> GetRecordsFromCollectionResponse<boost::any>& GPUdb::getRecordsFromCo
  * @param limit  A positive integer indicating the maximum number of results to
  *               be returned, or END_OF_SET (-9999) to indicate that the max
  *               number of results should be returned.  Default value is 10000.
- * @param options  Default value is an empty {@link std::map}.
+ * @param options  Default value is an empty std::map.
  * 
  * @return Response object containing the result of the operation.
  * 
@@ -5827,8 +6031,7 @@ template<> GetRecordsFromCollectionResponse<boost::any> GPUdb::getRecordsFromCol
 /**
  * Retrieves records from a collection. The operation can optionally return the
  * record IDs which can be used in certain queries such as {@link
- * #deleteRecords(std::string&,std::vector<std::string>&,std::map<std::string,
- * std::string>&,DeleteRecordsResponse&)}.
+ * #deleteRecords(const std::string&,const std::vector<std::string>&,const std::map<std::string, std::string>&,DeleteRecordsResponse&) const}.
  * <p>
  * This operation supports paging through the data via the @a offset and @a
  * limit parameters.
@@ -5843,7 +6046,7 @@ template<> GetRecordsFromCollectionResponse<boost::any> GPUdb::getRecordsFromCol
  * @param limit  A positive integer indicating the maximum number of results to
  *               be returned, or END_OF_SET (-9999) to indicate that the max
  *               number of results should be returned.  Default value is 10000.
- * @param options  Default value is an empty {@link std::map}.
+ * @param options  Default value is an empty std::map.
  * @param[out] response_  Response object containing the results of the
  *                        operation.
  * 
@@ -5937,8 +6140,7 @@ HasTableResponse& GPUdb::hasTable(const HasTableRequest& request_, HasTableRespo
  * Checks the existance of a table with the given name in GPUdb.
  * 
  * @param tableName  Name of the table to check for existance.
- * @param options  Optional parameters.  Default value is an empty {@link
- *                 std::map}.
+ * @param options  Optional parameters.  Default value is an empty std::map.
  * 
  * @return Response object containing the result of the operation.
  * 
@@ -5958,8 +6160,7 @@ HasTableResponse GPUdb::hasTable(const std::string& tableName, const std::map<st
  * Checks the existance of a table with the given name in GPUdb.
  * 
  * @param tableName  Name of the table to check for existance.
- * @param options  Optional parameters.  Default value is an empty {@link
- *                 std::map}.
+ * @param options  Optional parameters.  Default value is an empty std::map.
  * @param[out] response_  Response object containing the results of the
  *                        operation.
  * 
@@ -6018,8 +6219,7 @@ HasTypeResponse& GPUdb::hasType(const HasTypeRequest& request_, HasTypeResponse&
  * 
  * @param typeId  Id of the type returned by GPUdb in response to /create/type
  *                request.
- * @param options  Optional parameters.  Default value is an empty {@link
- *                 std::map}.
+ * @param options  Optional parameters.  Default value is an empty std::map.
  * 
  * @return Response object containing the result of the operation.
  * 
@@ -6040,8 +6240,7 @@ HasTypeResponse GPUdb::hasType(const std::string& typeId, const std::map<std::st
  * 
  * @param typeId  Id of the type returned by GPUdb in response to /create/type
  *                request.
- * @param options  Optional parameters.  Default value is an empty {@link
- *                 std::map}.
+ * @param options  Optional parameters.  Default value is an empty std::map.
  * @param[out] response_  Response object containing the results of the
  *                        operation.
  * 
@@ -6068,17 +6267,18 @@ HasTypeResponse& GPUdb::hasType(const std::string& typeId, const std::map<std::s
  * <p>
  * @a options can be used to customize this function's behavior. The only
  * parameter available is @a update_on_existing_pk. The value can be either
- * 'true' or 'false'. If the table has a {@link #createType(CreateTypeRequest&)
- * primary key} and if @a update_on_existing_pk is 'true' then if any of the
- * records being added have the same primary key as existing records, the
- * existing records are replaced (i.e. *updated*) with the given records. If @a
- * update_on_existing_pk is false and if the records being added have the same
- * primary key as existing records, the given records with existing primary
- * keys are ignored (the existing records are left unchanged). It is quite
- * possible that in this case some of the given records will be inserted and
- * some (those having existing primary keys) will be ignored (or updated). If
- * the specified table does not have a primary key column then the @a
- * update_on_existing_pk option is ignored.
+ * 'true' or 'false'. If the table has a {@link
+ * #createType(const CreateTypeRequest&) const primary key} and if @a
+ * update_on_existing_pk is 'true' then if any of the records being added have
+ * the same primary key as existing records, the existing records are replaced
+ * (i.e. *updated*) with the given records. If @a update_on_existing_pk is
+ * false and if the records being added have the same primary key as existing
+ * records, the given records with existing primary keys are ignored (the
+ * existing records are left unchanged). It is quite possible that in this case
+ * some of the given records will be inserted and some (those having existing
+ * primary keys) will be ignored (or updated). If the specified table does not
+ * have a primary key column then the @a update_on_existing_pk option is
+ * ignored.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -6104,17 +6304,17 @@ InsertRecordsResponse GPUdb::insertRecordsRaw(const RawInsertRecordsRequest& req
  * @a options can be used to customize this function's behavior. The only
  * parameter available is @a update_on_existing_pk. The value can be either
  * 'true' or 'false'. If the table has a {@link
- * #createType(CreateTypeRequest&,CreateTypeResponse&) primary key} and if @a
- * update_on_existing_pk is 'true' then if any of the records being added have
- * the same primary key as existing records, the existing records are replaced
- * (i.e. *updated*) with the given records. If @a update_on_existing_pk is
- * false and if the records being added have the same primary key as existing
- * records, the given records with existing primary keys are ignored (the
- * existing records are left unchanged). It is quite possible that in this case
- * some of the given records will be inserted and some (those having existing
- * primary keys) will be ignored (or updated). If the specified table does not
- * have a primary key column then the @a update_on_existing_pk option is
- * ignored.
+ * #createType(const CreateTypeRequest&,CreateTypeResponse&) const primary
+ * key} and if @a update_on_existing_pk is 'true' then if any of the records
+ * being added have the same primary key as existing records, the existing
+ * records are replaced (i.e. *updated*) with the given records. If @a
+ * update_on_existing_pk is false and if the records being added have the same
+ * primary key as existing records, the given records with existing primary
+ * keys are ignored (the existing records are left unchanged). It is quite
+ * possible that in this case some of the given records will be inserted and
+ * some (those having existing primary keys) will be ignored (or updated). If
+ * the specified table does not have a primary key column then the @a
+ * update_on_existing_pk option is ignored.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -6134,7 +6334,7 @@ InsertRecordsResponse& GPUdb::insertRecordsRaw(const RawInsertRecordsRequest& re
 
 /**
  * Generates a specified number of random records and adds them to the given
- * tble. There is an optional parameter that allows the user to customize the
+ * table. There is an optional parameter that allows the user to customize the
  * ranges of the column values. It also allows the user to specify linear
  * profiles for some or all columns in which case linear values are generated
  * rather than random ones. Only individual tables are supported for this
@@ -6159,7 +6359,7 @@ InsertRecordsRandomResponse GPUdb::insertRecordsRandom(const InsertRecordsRandom
 
 /**
  * Generates a specified number of random records and adds them to the given
- * tble. There is an optional parameter that allows the user to customize the
+ * table. There is an optional parameter that allows the user to customize the
  * ranges of the column values. It also allows the user to specify linear
  * profiles for some or all columns in which case linear values are generated
  * rather than random ones. Only individual tables are supported for this
@@ -6186,7 +6386,7 @@ InsertRecordsRandomResponse& GPUdb::insertRecordsRandom(const InsertRecordsRando
 
 /**
  * Generates a specified number of random records and adds them to the given
- * tble. There is an optional parameter that allows the user to customize the
+ * table. There is an optional parameter that allows the user to customize the
  * ranges of the column values. It also allows the user to specify linear
  * profiles for some or all columns in which case linear values are generated
  * rather than random ones. Only individual tables are supported for this
@@ -6210,7 +6410,7 @@ InsertRecordsRandomResponse& GPUdb::insertRecordsRandom(const InsertRecordsRando
  *                 specified are: *min*, *max*, and *interval*.  These
  *                 parameters take on different meanings depending on the type
  *                 of the column.  Below follows a more detailed description of
- *                 the map:  Default value is an empty {@link std::map}.
+ *                 the map:  Default value is an empty std::map.
  * 
  * @return Response object containing the result of the operation.
  * 
@@ -6229,7 +6429,7 @@ InsertRecordsRandomResponse GPUdb::insertRecordsRandom(const std::string& tableN
 
 /**
  * Generates a specified number of random records and adds them to the given
- * tble. There is an optional parameter that allows the user to customize the
+ * table. There is an optional parameter that allows the user to customize the
  * ranges of the column values. It also allows the user to specify linear
  * profiles for some or all columns in which case linear values are generated
  * rather than random ones. Only individual tables are supported for this
@@ -6253,7 +6453,7 @@ InsertRecordsRandomResponse GPUdb::insertRecordsRandom(const std::string& tableN
  *                 specified are: *min*, *max*, and *interval*.  These
  *                 parameters take on different meanings depending on the type
  *                 of the column.  Below follows a more detailed description of
- *                 the map:  Default value is an empty {@link std::map}.
+ *                 the map:  Default value is an empty std::map.
  * @param[out] response_  Response object containing the results of the
  *                        operation.
  * 
@@ -6280,9 +6480,9 @@ InsertRecordsRandomResponse& GPUdb::insertRecordsRandom(const std::string& table
  * for rendering create a table with a string column named 'SYMBOLCODE' (along
  * with 'x' or 'y' for example). Then when the table is rendered (via <a
  * href="../rest/wms_rest.html" target="_top">WMS</a> or {@link
- * #visualizeImage(VisualizeImageRequest&)}) if the 'dosymbology' parameter is
- * 'true' then GPUdb uses the value of the 'SYMBOLCODE' column to pick the
- * symbol displayed for each point.
+ * #visualizeImage(const VisualizeImageRequest&) const}) if the
+ * 'dosymbology' parameter is 'true' then GPUdb uses the value of the
+ * 'SYMBOLCODE' column to pick the symbol displayed for each point.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -6306,8 +6506,8 @@ InsertSymbolResponse GPUdb::insertSymbol(const InsertSymbolRequest& request_) co
  * for rendering create a table with a string column named 'SYMBOLCODE' (along
  * with 'x' or 'y' for example). Then when the table is rendered (via <a
  * href="../rest/wms_rest.html" target="_top">WMS</a> or {@link
- * #visualizeImage(VisualizeImageRequest&,VisualizeImageResponse&)}) if the
- * 'dosymbology' parameter is 'true' then GPUdb uses the value of the
+ * #visualizeImage(const VisualizeImageRequest&,VisualizeImageResponse&) const})
+ * if the 'dosymbology' parameter is 'true' then GPUdb uses the value of the
  * 'SYMBOLCODE' column to pick the symbol displayed for each point.
  * 
  * @param[in] request_  Request object containing the parameters for the
@@ -6333,32 +6533,22 @@ InsertSymbolResponse& GPUdb::insertSymbol(const InsertSymbolRequest& request_, I
  * and any additional optional parameter (e.g. color). To have a symbol used
  * for rendering create a table with a string column named 'SYMBOLCODE' (along
  * with 'x' or 'y' for example). Then when the table is rendered (via <a
- * href="../rest/wms_rest.html" target="_top">WMS</a> or {@link #visualizeImage
- * (std::vector<std::string>&,std::vector<std::string>&,std::string&,std::strin
- * g&,std::vector<std::vector<std::string> >&,double,double,double,double,int32
- * _t,int32_t,std::string&,int64_t,std::vector<bool>&,std::vector<bool>&,std::v
- * ector<bool>&,std::vector<bool>&,std::vector<int64_t>&,std::vector<int32_t>&,
- * std::vector<std::string>&,std::vector<int32_t>&,std::vector<int64_t>&,std::v
- * ector<int64_t>&,std::vector<int32_t>&,std::vector<int64_t>&,std::vector<int3
- * 2_t>&,std::vector<int64_t>&,std::vector<std::string>&,std::vector<int64_t>&,
- * std::vector<int32_t>&,std::vector<std::string>&,std::map<std::string,
- * std::string>&)}) if the 'dosymbology' parameter is 'true' then GPUdb uses
- * the value of the 'SYMBOLCODE' column to pick the symbol displayed for each
- * point.
+ * href="../rest/wms_rest.html" target="_top">WMS</a> or {@link
+ * #visualizeImage(const std::vector<std::string>&,const std::vector<std::string>&,const std::string&,const std::string&,const std::vector<std::vector<std::string> >&,const double,const double,const double,const double,const int32_t,const int32_t,const std::string&,const int64_t,const std::map<std::string, std::vector<std::string> >&,const std::map<std::string, std::string>&) const})
+ * if the 'dosymbology' parameter is 'true' then GPUdb uses the value of the
+ * 'SYMBOLCODE' column to pick the symbol displayed for each point.
  * 
  * @param symbolId  The id of the symbol being added. This is the same id that
  *                  should be in the 'SYMBOLCODE' column for objects using this
  *                  symbol
  * @param symbolFormat  Specifies the symbol format. Must be either 'svg' or
- *                      'svg_path'.  The allowed values are:  ~!~ * SVG *
- *                      SVG_PATH~!~
+ *                      'svg_path'.
  * @param symbolData  The actual symbol data. If @a symbolFormat is 'svg' then
  *                    this should be the raw bytes representing an svg file. If
  *                    @a symbolFormat is svg path then this should be an svg
  *                    path string, for example:
  *                    'M25.979,12.896,5.979,12.896,5.979,19.562,25.979,19.562z'
- * @param options  Optional parameters.  Default value is an empty {@link
- *                 std::map}.
+ * @param options  Optional parameters.  Default value is an empty std::map.
  * 
  * @return Response object containing the result of the operation.
  * 
@@ -6383,32 +6573,22 @@ InsertSymbolResponse GPUdb::insertSymbol(const std::string& symbolId, const std:
  * and any additional optional parameter (e.g. color). To have a symbol used
  * for rendering create a table with a string column named 'SYMBOLCODE' (along
  * with 'x' or 'y' for example). Then when the table is rendered (via <a
- * href="../rest/wms_rest.html" target="_top">WMS</a> or {@link #visualizeImage
- * (std::vector<std::string>&,std::vector<std::string>&,std::string&,std::strin
- * g&,std::vector<std::vector<std::string> >&,double,double,double,double,int32
- * _t,int32_t,std::string&,int64_t,std::vector<bool>&,std::vector<bool>&,std::v
- * ector<bool>&,std::vector<bool>&,std::vector<int64_t>&,std::vector<int32_t>&,
- * std::vector<std::string>&,std::vector<int32_t>&,std::vector<int64_t>&,std::v
- * ector<int64_t>&,std::vector<int32_t>&,std::vector<int64_t>&,std::vector<int3
- * 2_t>&,std::vector<int64_t>&,std::vector<std::string>&,std::vector<int64_t>&,
- * std::vector<int32_t>&,std::vector<std::string>&,std::map<std::string,
- * std::string>&,VisualizeImageResponse&)}) if the 'dosymbology' parameter is
- * 'true' then GPUdb uses the value of the 'SYMBOLCODE' column to pick the
- * symbol displayed for each point.
+ * href="../rest/wms_rest.html" target="_top">WMS</a> or {@link
+ * #visualizeImage(const std::vector<std::string>&,const std::vector<std::string>&,const std::string&,const std::string&,const std::vector<std::vector<std::string> >&,const double,const double,const double,const double,const int32_t,const int32_t,const std::string&,const int64_t,const std::map<std::string, std::vector<std::string> >&,const std::map<std::string, std::string>&,VisualizeImageResponse&) const})
+ * if the 'dosymbology' parameter is 'true' then GPUdb uses the value of the
+ * 'SYMBOLCODE' column to pick the symbol displayed for each point.
  * 
  * @param symbolId  The id of the symbol being added. This is the same id that
  *                  should be in the 'SYMBOLCODE' column for objects using this
  *                  symbol
  * @param symbolFormat  Specifies the symbol format. Must be either 'svg' or
- *                      'svg_path'.  The allowed values are:  ~!~ * SVG *
- *                      SVG_PATH~!~
+ *                      'svg_path'.
  * @param symbolData  The actual symbol data. If @a symbolFormat is 'svg' then
  *                    this should be the raw bytes representing an svg file. If
  *                    @a symbolFormat is svg path then this should be an svg
  *                    path string, for example:
  *                    'M25.979,12.896,5.979,12.896,5.979,19.562,25.979,19.562z'
- * @param options  Optional parameters.  Default value is an empty {@link
- *                 std::map}.
+ * @param options  Optional parameters.  Default value is an empty std::map.
  * @param[out] response_  Response object containing the results of the
  *                        operation.
  * 
@@ -6424,6 +6604,116 @@ InsertSymbolResponse& GPUdb::insertSymbol(const std::string& symbolId, const std
     actualRequest_.symbolData = symbolData;
     actualRequest_.options = options;
     submitRequest("/insert/symbol", actualRequest_, response_, false);
+    return response_;
+}
+
+
+/**
+ * Locks a table.  By default a table has no locks and all operations are
+ * permitted.  A user may request a read-only or a write-only lock, after which
+ * only read or write operations are permitted on the table until the next
+ * request.  When lock_type is disable then then no operations are permitted on
+ * the table.  The lock status can be queried by passing an empty string for @a
+ * lockType.
+ * 
+ * @param[in] request_  Request object containing the parameters for the
+ *                      operation.
+ * 
+ * @return Response object containing the result of the operation.
+ * 
+ */
+LockTableResponse GPUdb::lockTable(const LockTableRequest& request_) const
+{
+    LockTableResponse actualResponse_;
+    submitRequest("/lock/table", request_, actualResponse_, false);
+    return actualResponse_;
+}
+
+
+/**
+ * Locks a table.  By default a table has no locks and all operations are
+ * permitted.  A user may request a read-only or a write-only lock, after which
+ * only read or write operations are permitted on the table until the next
+ * request.  When lock_type is disable then then no operations are permitted on
+ * the table.  The lock status can be queried by passing an empty string for @a
+ * lockType.
+ * 
+ * @param[in] request_  Request object containing the parameters for the
+ *                      operation.
+ * @param[out] response_  Response object containing the results of the
+ *                        operation.
+ * 
+ * @return Response object containing the result of the operation (initially
+ *         passed in by reference).
+ * 
+ */
+LockTableResponse& GPUdb::lockTable(const LockTableRequest& request_, LockTableResponse& response_) const
+{
+    submitRequest("/lock/table", request_, response_, false);
+    return response_;
+}
+
+
+/**
+ * Locks a table.  By default a table has no locks and all operations are
+ * permitted.  A user may request a read-only or a write-only lock, after which
+ * only read or write operations are permitted on the table until the next
+ * request.  When lock_type is disable then then no operations are permitted on
+ * the table.  The lock status can be queried by passing an empty string for @a
+ * lockType.
+ * 
+ * @param tableName  Name of the table to be locked. It must be a currently
+ *                   existing table and not a collection or a view.
+ * @param lockType  The type of lock being applied to the table or blank to
+ *                  query. Empty string returns the lock status without change
+ *                  the lock status of the table.  Default value is an empty
+ *                  string.
+ * @param options  Optional parameters.  Default value is an empty std::map.
+ * 
+ * @return Response object containing the result of the operation.
+ * 
+ */
+LockTableResponse GPUdb::lockTable(const std::string& tableName, const std::string& lockType, const std::map<std::string, std::string>& options) const
+{
+    LockTableRequest actualRequest_;
+    actualRequest_.tableName = tableName;
+    actualRequest_.lockType = lockType;
+    actualRequest_.options = options;
+    LockTableResponse actualResponse_;
+    submitRequest("/lock/table", actualRequest_, actualResponse_, false);
+    return actualResponse_;
+}
+
+
+/**
+ * Locks a table.  By default a table has no locks and all operations are
+ * permitted.  A user may request a read-only or a write-only lock, after which
+ * only read or write operations are permitted on the table until the next
+ * request.  When lock_type is disable then then no operations are permitted on
+ * the table.  The lock status can be queried by passing an empty string for @a
+ * lockType.
+ * 
+ * @param tableName  Name of the table to be locked. It must be a currently
+ *                   existing table and not a collection or a view.
+ * @param lockType  The type of lock being applied to the table or blank to
+ *                  query. Empty string returns the lock status without change
+ *                  the lock status of the table.  Default value is an empty
+ *                  string.
+ * @param options  Optional parameters.  Default value is an empty std::map.
+ * @param[out] response_  Response object containing the results of the
+ *                        operation.
+ * 
+ * @return Response object containing the result of the operation (initially
+ *         passed in by reference).
+ * 
+ */
+LockTableResponse& GPUdb::lockTable(const std::string& tableName, const std::string& lockType, const std::map<std::string, std::string>& options, LockTableResponse& response_) const
+{
+    LockTableRequest actualRequest_;
+    actualRequest_.tableName = tableName;
+    actualRequest_.lockType = lockType;
+    actualRequest_.options = options;
+    submitRequest("/lock/table", actualRequest_, response_, false);
     return response_;
 }
 
@@ -6474,7 +6764,7 @@ ShowSystemPropertiesResponse& GPUdb::showSystemProperties(const ShowSystemProper
  * user.
  * 
  * @param options  Optional parameters, currently unused.  Default value is an
- *                 empty {@link std::map}.
+ *                 empty std::map.
  * 
  * @return Response object containing the result of the operation.
  * 
@@ -6495,7 +6785,7 @@ ShowSystemPropertiesResponse GPUdb::showSystemProperties(const std::map<std::str
  * user.
  * 
  * @param options  Optional parameters, currently unused.  Default value is an
- *                 empty {@link std::map}.
+ *                 empty std::map.
  * @param[out] response_  Response object containing the results of the
  *                        operation.
  * 
@@ -6555,7 +6845,7 @@ ShowSystemStatusResponse& GPUdb::showSystemStatus(const ShowSystemStatusRequest&
  * GPUdb Admin tool uses it to present server related information to the user.
  * 
  * @param options  Optional parameters, currently unused.  Default value is an
- *                 empty {@link std::map}.
+ *                 empty std::map.
  * 
  * @return Response object containing the result of the operation.
  * 
@@ -6575,7 +6865,7 @@ ShowSystemStatusResponse GPUdb::showSystemStatus(const std::map<std::string, std
  * GPUdb Admin tool uses it to present server related information to the user.
  * 
  * @param options  Optional parameters, currently unused.  Default value is an
- *                 empty {@link std::map}.
+ *                 empty std::map.
  * @param[out] response_  Response object containing the results of the
  *                        operation.
  * 
@@ -6638,7 +6928,7 @@ ShowSystemTimingResponse& GPUdb::showSystemTiming(const ShowSystemTimingRequest&
  * information to the user.
  * 
  * @param options  Optional parameters, currently unused.  Default value is an
- *                 empty {@link std::map}.
+ *                 empty std::map.
  * 
  * @return Response object containing the result of the operation.
  * 
@@ -6659,7 +6949,7 @@ ShowSystemTimingResponse GPUdb::showSystemTiming(const std::map<std::string, std
  * information to the user.
  * 
  * @param options  Optional parameters, currently unused.  Default value is an
- *                 empty {@link std::map}.
+ *                 empty std::map.
  * @param[out] response_  Response object containing the results of the
  *                        operation.
  * 
@@ -6763,8 +7053,7 @@ ShowTableResponse& GPUdb::showTable(const ShowTableRequest& request_, ShowTableR
  * @param tableName  Name of the table for which to retrieve the information.
  *                   If blank then information about all collections and top-
  *                   level tables is returned.
- * @param options  Optional parameters.  Default value is an empty {@link
- *                 std::map}.
+ * @param options  Optional parameters.  Default value is an empty std::map.
  * 
  * @return Response object containing the result of the operation.
  * 
@@ -6803,8 +7092,7 @@ ShowTableResponse GPUdb::showTable(const std::string& tableName, const std::map<
  * @param tableName  Name of the table for which to retrieve the information.
  *                   If blank then information about all collections and top-
  *                   level tables is returned.
- * @param options  Optional parameters.  Default value is an empty {@link
- *                 std::map}.
+ * @param options  Optional parameters.  Default value is an empty std::map.
  * @param[out] response_  Response object containing the results of the
  *                        operation.
  * 
@@ -6869,8 +7157,7 @@ ShowTableMetadataResponse& GPUdb::showTableMetadata(const ShowTableMetadataReque
  * 
  * @param tableNames  Tables whose metadata will be fetched. All provided
  *                    tables must exist in GPUdb, or GPUdb returns an error.
- * @param options  Optional parameters.  Default value is an empty {@link
- *                 std::map}.
+ * @param options  Optional parameters.  Default value is an empty std::map.
  * 
  * @return Response object containing the result of the operation.
  * 
@@ -6891,8 +7178,7 @@ ShowTableMetadataResponse GPUdb::showTableMetadata(const std::vector<std::string
  * 
  * @param tableNames  Tables whose metadata will be fetched. All provided
  *                    tables must exist in GPUdb, or GPUdb returns an error.
- * @param options  Optional parameters.  Default value is an empty {@link
- *                 std::map}.
+ * @param options  Optional parameters.  Default value is an empty std::map.
  * @param[out] response_  Response object containing the results of the
  *                        operation.
  * 
@@ -6957,8 +7243,7 @@ ShowTablePropertiesResponse& GPUdb::showTableProperties(const ShowTablePropertie
  * 
  * @param tableNames  Tables whose properties will be fetched. All provided
  *                    tables must exist in GPUdb, or GPUdb returns an error.
- * @param options  Optional parameters.  Default value is an empty {@link
- *                 std::map}.
+ * @param options  Optional parameters.  Default value is an empty std::map.
  * 
  * @return Response object containing the result of the operation.
  * 
@@ -6981,8 +7266,7 @@ ShowTablePropertiesResponse GPUdb::showTableProperties(const std::vector<std::st
  * 
  * @param tableNames  Tables whose properties will be fetched. All provided
  *                    tables must exist in GPUdb, or GPUdb returns an error.
- * @param options  Optional parameters.  Default value is an empty {@link
- *                 std::map}.
+ * @param options  Optional parameters.  Default value is an empty std::map.
  * @param[out] response_  Response object containing the results of the
  *                        operation.
  * 
@@ -7054,8 +7338,7 @@ ShowTablesByTypeResponse& GPUdb::showTablesByType(const ShowTablesByTypeRequest&
  * @param typeId  Type id returned by a call to /create/type.
  * @param label  Optional user supplied label which can be used instead of the
  *               type_id to retrieve all tables with the given label.
- * @param options  Optional parameters.  Default value is an empty {@link
- *                 std::map}.
+ * @param options  Optional parameters.  Default value is an empty std::map.
  * 
  * @return Response object containing the result of the operation.
  * 
@@ -7082,8 +7365,7 @@ ShowTablesByTypeResponse GPUdb::showTablesByType(const std::string& typeId, cons
  * @param typeId  Type id returned by a call to /create/type.
  * @param label  Optional user supplied label which can be used instead of the
  *               type_id to retrieve all tables with the given label.
- * @param options  Optional parameters.  Default value is an empty {@link
- *                 std::map}.
+ * @param options  Optional parameters.  Default value is an empty std::map.
  * @param[out] response_  Response object containing the results of the
  *                        operation.
  * 
@@ -7147,8 +7429,7 @@ ShowTriggersResponse& GPUdb::showTriggers(const ShowTriggersRequest& request_, S
  * @param triggerIds  List of IDs of the triggers whose information to be
  *                    retrieved. Empty list means retrieve information on all
  *                    active triggers.
- * @param options  Optional parameters.  Default value is an empty {@link
- *                 std::map}.
+ * @param options  Optional parameters.  Default value is an empty std::map.
  * 
  * @return Response object containing the result of the operation.
  * 
@@ -7171,8 +7452,7 @@ ShowTriggersResponse GPUdb::showTriggers(const std::vector<std::string>& trigger
  * @param triggerIds  List of IDs of the triggers whose information to be
  *                    retrieved. Empty list means retrieve information on all
  *                    active triggers.
- * @param options  Optional parameters.  Default value is an empty {@link
- *                 std::map}.
+ * @param options  Optional parameters.  Default value is an empty std::map.
  * @param[out] response_  Response object containing the results of the
  *                        operation.
  * 
@@ -7256,8 +7536,7 @@ ShowTypesResponse& GPUdb::showTypes(const ShowTypesRequest& request_, ShowTypesR
  * @param typeId  Type Id returned in response to a call to /create/type.
  * @param label  Option string that was supplied by user in a call to
  *               /create/type.
- * @param options  Optional parameters.  Default value is an empty {@link
- *                 std::map}.
+ * @param options  Optional parameters.  Default value is an empty std::map.
  * 
  * @return Response object containing the result of the operation.
  * 
@@ -7290,8 +7569,7 @@ ShowTypesResponse GPUdb::showTypes(const std::string& typeId, const std::string&
  * @param typeId  Type Id returned in response to a call to /create/type.
  * @param label  Option string that was supplied by user in a call to
  *               /create/type.
- * @param options  Optional parameters.  Default value is an empty {@link
- *                 std::map}.
+ * @param options  Optional parameters.  Default value is an empty std::map.
  * @param[out] response_  Response object containing the results of the
  *                        operation.
  * 
@@ -7438,11 +7716,10 @@ UpdateRecordsBySeriesResponse& GPUdb::updateRecordsBySeries(const UpdateRecordsB
  * @param worldTableName  Name of the table containing the complete series
  *                        (track) information.
  * @param viewName  Optional name of the view containing the series (tracks)
- *                  which have to be updated.  Default value is an empty {@link
- *                  std::string}.
- * @param reserved  Default value is an empty {@link std::vector}.
- * @param options  Optional parameters.  Default value is an empty {@link
- *                 std::map}.
+ *                  which have to be updated.  Default value is an empty
+ *                  string.
+ * @param reserved  Default value is an empty std::vector.
+ * @param options  Optional parameters.  Default value is an empty std::map.
  * 
  * @return Response object containing the result of the operation.
  * 
@@ -7471,11 +7748,10 @@ UpdateRecordsBySeriesResponse GPUdb::updateRecordsBySeries(const std::string& ta
  * @param worldTableName  Name of the table containing the complete series
  *                        (track) information.
  * @param viewName  Optional name of the view containing the series (tracks)
- *                  which have to be updated.  Default value is an empty {@link
- *                  std::string}.
- * @param reserved  Default value is an empty {@link std::vector}.
- * @param options  Optional parameters.  Default value is an empty {@link
- *                 std::map}.
+ *                  which have to be updated.  Default value is an empty
+ *                  string.
+ * @param reserved  Default value is an empty std::vector.
+ * @param options  Optional parameters.  Default value is an empty std::map.
  * @param[out] response_  Response object containing the results of the
  *                        operation.
  * 
@@ -7563,63 +7839,15 @@ VisualizeImageResponse& GPUdb::visualizeImage(const VisualizeImageRequest& reque
  * @param width  Width of the generated image.
  * @param height  Height of the generated image.
  * @param projection  Spatial Reference System (i.e. EPSG Code).  Default value
- *                    is 'PLATE_CARREE'. The allowed values are:  ~!~ *
- *                    EPSG:4326 * PLATE_CARREE * _900913 * EPSG:900913 *
- *                    _102100 * EPSG:102100 * _3857 * EPSG:3857 *
- *                    WEB_MERCATOR~!~
+ *                    is 'PLATE_CARREE'.
  * @param bgColor  Background color of the generated image
- * @param doPoints  Rasterize point data toggle.  Default value is 'true'. The
- *                  allowed values are:  ~!~ * TRUE * FALSE~!~
- * @param doShapes  Rasterize shapes toggle.  Default value is 'true'. The
- *                  allowed values are:  ~!~ * TRUE * FALSE~!~
- * @param doTracks  Rasterize tracks toggle.  Default value is 'true'. The
- *                  allowed values are:  ~!~ * TRUE * FALSE~!~
- * @param doSymbology  Rasterize symbols toggle.  Default value is 'false'. The
- *                     allowed values are:  ~!~ * TRUE * FALSE~!~
- * @param pointcolors  RGB color value in hex for the points.
- * @param pointsizes  Size of points.  Default value is '3'. The minimum
- *                    allowed value is 0. The maximum allowed value is 20.
- * @param pointshapes  Shape of the point.  The allowed values are:  ~!~ * NONE
- *                     * CIRCLE * SQUARE * DIAMOND * HOLLOWCIRCLE *
- *                     HOLLOWSQUARE * HOLLOWDIAMOND * SYMBOLCODE~!~
- * @param shapelinewidths  Width of the lines.  Default value is '3'. The
- *                         minimum allowed value is 0. The maximum allowed
- *                         value is 20.
- * @param shapelinecolors  RGB color values in hex for the line.  Default value
- *                         is 'FFFF00 '.
- * @param shapefillcolors  RGB color values in hex for the fill color of the
- *                         shapes. Use '-1' for no fill.  Default value is
- *                         '-1'.
- * @param tracklinewidths  Width of the track lines. '0' implies do not draw
- *                         track lines.  Default value is '3'. The minimum
- *                         allowed value is 0. The maximum allowed value is 20.
- * @param tracklinecolors  RGB color values for the track lines.  Default value
- *                         is 'green'.
- * @param trackmarkersizes  Size of the track point markers.  Default value is
- *                          '3'. The minimum allowed value is 0. The maximum
- *                          allowed value is 20.
- * @param trackmarkercolors  Color of the track point markers.  Default value
- *                           is '0000FF'.
- * @param trackmarkershapes  Shape of track point markers.  Default value is
- *                           'none'. The allowed values are:  ~!~ * NONE *
- *                           CIRCLE * SQUARE * DIAMOND * HOLLOWCIRCLE *
- *                           HOLLOWSQUARE * HOLLOWDIAMOND * SYMBOLCODE~!~
- * @param trackheadcolors  Color of track head markers.  Default value is
- *                         'FFFFFF'.
- * @param trackheadsizes  Size of track head markers.  Default value is '10'.
- *                        The minimum allowed value is 0. The maximum allowed
- *                        value is 20.
- * @param trackheadshapes  Shape of track head markers.  Default value is
- *                         'circle'. The allowed values are:  ~!~ * NONE *
- *                         CIRCLE * SQUARE * DIAMOND * HOLLOWCIRCLE *
- *                         HOLLOWSQUARE * HOLLOWDIAMOND * SYMBOLCODE~!~
- * @param options  Optional parameters.  Default value is an empty {@link
- *                 std::map}.
+ * @param styleOptions  Styling options for the image.
+ * @param options  Optional parameters.  Default value is an empty std::map.
  * 
  * @return Response object containing the result of the operation.
  * 
  */
-VisualizeImageResponse GPUdb::visualizeImage(const std::vector<std::string>& tableNames, const std::vector<std::string>& worldTableNames, const std::string& xColumnName, const std::string& yColumnName, const std::vector<std::vector<std::string> >& trackIds, const double minX, const double maxX, const double minY, const double maxY, const int32_t width, const int32_t height, const std::string& projection, const int64_t bgColor, const std::vector<bool>& doPoints, const std::vector<bool>& doShapes, const std::vector<bool>& doTracks, const std::vector<bool>& doSymbology, const std::vector<int64_t>& pointcolors, const std::vector<int32_t>& pointsizes, const std::vector<std::string>& pointshapes, const std::vector<int32_t>& shapelinewidths, const std::vector<int64_t>& shapelinecolors, const std::vector<int64_t>& shapefillcolors, const std::vector<int32_t>& tracklinewidths, const std::vector<int64_t>& tracklinecolors, const std::vector<int32_t>& trackmarkersizes, const std::vector<int64_t>& trackmarkercolors, const std::vector<std::string>& trackmarkershapes, const std::vector<int64_t>& trackheadcolors, const std::vector<int32_t>& trackheadsizes, const std::vector<std::string>& trackheadshapes, const std::map<std::string, std::string>& options) const
+VisualizeImageResponse GPUdb::visualizeImage(const std::vector<std::string>& tableNames, const std::vector<std::string>& worldTableNames, const std::string& xColumnName, const std::string& yColumnName, const std::vector<std::vector<std::string> >& trackIds, const double minX, const double maxX, const double minY, const double maxY, const int32_t width, const int32_t height, const std::string& projection, const int64_t bgColor, const std::map<std::string, std::vector<std::string> >& styleOptions, const std::map<std::string, std::string>& options) const
 {
     VisualizeImageRequest actualRequest_;
     actualRequest_.tableNames = tableNames;
@@ -7635,24 +7863,7 @@ VisualizeImageResponse GPUdb::visualizeImage(const std::vector<std::string>& tab
     actualRequest_.height = height;
     actualRequest_.projection = projection;
     actualRequest_.bgColor = bgColor;
-    actualRequest_.doPoints = doPoints;
-    actualRequest_.doShapes = doShapes;
-    actualRequest_.doTracks = doTracks;
-    actualRequest_.doSymbology = doSymbology;
-    actualRequest_.pointcolors = pointcolors;
-    actualRequest_.pointsizes = pointsizes;
-    actualRequest_.pointshapes = pointshapes;
-    actualRequest_.shapelinewidths = shapelinewidths;
-    actualRequest_.shapelinecolors = shapelinecolors;
-    actualRequest_.shapefillcolors = shapefillcolors;
-    actualRequest_.tracklinewidths = tracklinewidths;
-    actualRequest_.tracklinecolors = tracklinecolors;
-    actualRequest_.trackmarkersizes = trackmarkersizes;
-    actualRequest_.trackmarkercolors = trackmarkercolors;
-    actualRequest_.trackmarkershapes = trackmarkershapes;
-    actualRequest_.trackheadcolors = trackheadcolors;
-    actualRequest_.trackheadsizes = trackheadsizes;
-    actualRequest_.trackheadshapes = trackheadshapes;
+    actualRequest_.styleOptions = styleOptions;
     actualRequest_.options = options;
     VisualizeImageResponse actualResponse_;
     submitRequest("/visualize/image", actualRequest_, actualResponse_, false);
@@ -7683,58 +7894,10 @@ VisualizeImageResponse GPUdb::visualizeImage(const std::vector<std::string>& tab
  * @param width  Width of the generated image.
  * @param height  Height of the generated image.
  * @param projection  Spatial Reference System (i.e. EPSG Code).  Default value
- *                    is 'PLATE_CARREE'. The allowed values are:  ~!~ *
- *                    EPSG:4326 * PLATE_CARREE * _900913 * EPSG:900913 *
- *                    _102100 * EPSG:102100 * _3857 * EPSG:3857 *
- *                    WEB_MERCATOR~!~
+ *                    is 'PLATE_CARREE'.
  * @param bgColor  Background color of the generated image
- * @param doPoints  Rasterize point data toggle.  Default value is 'true'. The
- *                  allowed values are:  ~!~ * TRUE * FALSE~!~
- * @param doShapes  Rasterize shapes toggle.  Default value is 'true'. The
- *                  allowed values are:  ~!~ * TRUE * FALSE~!~
- * @param doTracks  Rasterize tracks toggle.  Default value is 'true'. The
- *                  allowed values are:  ~!~ * TRUE * FALSE~!~
- * @param doSymbology  Rasterize symbols toggle.  Default value is 'false'. The
- *                     allowed values are:  ~!~ * TRUE * FALSE~!~
- * @param pointcolors  RGB color value in hex for the points.
- * @param pointsizes  Size of points.  Default value is '3'. The minimum
- *                    allowed value is 0. The maximum allowed value is 20.
- * @param pointshapes  Shape of the point.  The allowed values are:  ~!~ * NONE
- *                     * CIRCLE * SQUARE * DIAMOND * HOLLOWCIRCLE *
- *                     HOLLOWSQUARE * HOLLOWDIAMOND * SYMBOLCODE~!~
- * @param shapelinewidths  Width of the lines.  Default value is '3'. The
- *                         minimum allowed value is 0. The maximum allowed
- *                         value is 20.
- * @param shapelinecolors  RGB color values in hex for the line.  Default value
- *                         is 'FFFF00 '.
- * @param shapefillcolors  RGB color values in hex for the fill color of the
- *                         shapes. Use '-1' for no fill.  Default value is
- *                         '-1'.
- * @param tracklinewidths  Width of the track lines. '0' implies do not draw
- *                         track lines.  Default value is '3'. The minimum
- *                         allowed value is 0. The maximum allowed value is 20.
- * @param tracklinecolors  RGB color values for the track lines.  Default value
- *                         is 'green'.
- * @param trackmarkersizes  Size of the track point markers.  Default value is
- *                          '3'. The minimum allowed value is 0. The maximum
- *                          allowed value is 20.
- * @param trackmarkercolors  Color of the track point markers.  Default value
- *                           is '0000FF'.
- * @param trackmarkershapes  Shape of track point markers.  Default value is
- *                           'none'. The allowed values are:  ~!~ * NONE *
- *                           CIRCLE * SQUARE * DIAMOND * HOLLOWCIRCLE *
- *                           HOLLOWSQUARE * HOLLOWDIAMOND * SYMBOLCODE~!~
- * @param trackheadcolors  Color of track head markers.  Default value is
- *                         'FFFFFF'.
- * @param trackheadsizes  Size of track head markers.  Default value is '10'.
- *                        The minimum allowed value is 0. The maximum allowed
- *                        value is 20.
- * @param trackheadshapes  Shape of track head markers.  Default value is
- *                         'circle'. The allowed values are:  ~!~ * NONE *
- *                         CIRCLE * SQUARE * DIAMOND * HOLLOWCIRCLE *
- *                         HOLLOWSQUARE * HOLLOWDIAMOND * SYMBOLCODE~!~
- * @param options  Optional parameters.  Default value is an empty {@link
- *                 std::map}.
+ * @param styleOptions  Styling options for the image.
+ * @param options  Optional parameters.  Default value is an empty std::map.
  * @param[out] response_  Response object containing the results of the
  *                        operation.
  * 
@@ -7742,7 +7905,7 @@ VisualizeImageResponse GPUdb::visualizeImage(const std::vector<std::string>& tab
  *         passed in by reference).
  * 
  */
-VisualizeImageResponse& GPUdb::visualizeImage(const std::vector<std::string>& tableNames, const std::vector<std::string>& worldTableNames, const std::string& xColumnName, const std::string& yColumnName, const std::vector<std::vector<std::string> >& trackIds, const double minX, const double maxX, const double minY, const double maxY, const int32_t width, const int32_t height, const std::string& projection, const int64_t bgColor, const std::vector<bool>& doPoints, const std::vector<bool>& doShapes, const std::vector<bool>& doTracks, const std::vector<bool>& doSymbology, const std::vector<int64_t>& pointcolors, const std::vector<int32_t>& pointsizes, const std::vector<std::string>& pointshapes, const std::vector<int32_t>& shapelinewidths, const std::vector<int64_t>& shapelinecolors, const std::vector<int64_t>& shapefillcolors, const std::vector<int32_t>& tracklinewidths, const std::vector<int64_t>& tracklinecolors, const std::vector<int32_t>& trackmarkersizes, const std::vector<int64_t>& trackmarkercolors, const std::vector<std::string>& trackmarkershapes, const std::vector<int64_t>& trackheadcolors, const std::vector<int32_t>& trackheadsizes, const std::vector<std::string>& trackheadshapes, const std::map<std::string, std::string>& options, VisualizeImageResponse& response_) const
+VisualizeImageResponse& GPUdb::visualizeImage(const std::vector<std::string>& tableNames, const std::vector<std::string>& worldTableNames, const std::string& xColumnName, const std::string& yColumnName, const std::vector<std::vector<std::string> >& trackIds, const double minX, const double maxX, const double minY, const double maxY, const int32_t width, const int32_t height, const std::string& projection, const int64_t bgColor, const std::map<std::string, std::vector<std::string> >& styleOptions, const std::map<std::string, std::string>& options, VisualizeImageResponse& response_) const
 {
     VisualizeImageRequest actualRequest_;
     actualRequest_.tableNames = tableNames;
@@ -7758,24 +7921,7 @@ VisualizeImageResponse& GPUdb::visualizeImage(const std::vector<std::string>& ta
     actualRequest_.height = height;
     actualRequest_.projection = projection;
     actualRequest_.bgColor = bgColor;
-    actualRequest_.doPoints = doPoints;
-    actualRequest_.doShapes = doShapes;
-    actualRequest_.doTracks = doTracks;
-    actualRequest_.doSymbology = doSymbology;
-    actualRequest_.pointcolors = pointcolors;
-    actualRequest_.pointsizes = pointsizes;
-    actualRequest_.pointshapes = pointshapes;
-    actualRequest_.shapelinewidths = shapelinewidths;
-    actualRequest_.shapelinecolors = shapelinecolors;
-    actualRequest_.shapefillcolors = shapefillcolors;
-    actualRequest_.tracklinewidths = tracklinewidths;
-    actualRequest_.tracklinecolors = tracklinecolors;
-    actualRequest_.trackmarkersizes = trackmarkersizes;
-    actualRequest_.trackmarkercolors = trackmarkercolors;
-    actualRequest_.trackmarkershapes = trackmarkershapes;
-    actualRequest_.trackheadcolors = trackheadcolors;
-    actualRequest_.trackheadsizes = trackheadsizes;
-    actualRequest_.trackheadshapes = trackheadshapes;
+    actualRequest_.styleOptions = styleOptions;
     actualRequest_.options = options;
     submitRequest("/visualize/image", actualRequest_, response_, false);
     return response_;
@@ -7898,64 +8044,15 @@ VisualizeImageClassbreakResponse& GPUdb::visualizeImageClassbreak(const Visualiz
  * @param width  Width of the generated image.
  * @param height  Height of the generated image.
  * @param projection  Spatial Reference System (i.e. EPSG Code).  Default value
- *                    is 'PLATE_CARREE'. The allowed values are:  ~!~ *
- *                    EPSG:4326 * PLATE_CARREE * _900913 * EPSG:900913 *
- *                    _102100 * EPSG:102100 * _3857 * EPSG:3857 *
- *                    WEB_MERCATOR~!~
+ *                    is 'PLATE_CARREE'.
  * @param bgColor  Background color of the generated image.
- * @param doPoints  Rasterize point data toggle.  Default value is 'true'. The
- *                  allowed values are:  ~!~ * TRUE * FALSE~!~
- * @param doShapes  Rasterize shapes toggle.  Default value is 'true'. The
- *                  allowed values are:  ~!~ * TRUE * FALSE~!~
- * @param doTracks  Rasterize tracks toggle.  Default value is 'true'. The
- *                  allowed values are:  ~!~ * TRUE * FALSE~!~
- * @param doSymbology  Rasterize symbols toggle.  Default value is 'false'. The
- *                     allowed values are:  ~!~ * TRUE * FALSE~!~
- * @param pointcolors  RGB color value in hex for the points.  Default value is
- *                     'FF0000'.
- * @param pointsizes  Size of points.  Default value is '3'. The minimum
- *                    allowed value is 0. The maximum allowed value is 20.
- * @param pointshapes  Shape of the point.  The allowed values are:  ~!~ * NONE
- *                     * CIRCLE * SQUARE * DIAMOND * HOLLOWCIRCLE *
- *                     HOLLOWSQUARE * HOLLOWDIAMOND * SYMBOLCODE~!~
- * @param shapelinewidths  Width of the lines.  Default value is '3'. The
- *                         minimum allowed value is 0. The maximum allowed
- *                         value is 20.
- * @param shapelinecolors  RGB color values in hex for the line. Default is
- *                         yellow.  Default value is 'FFFF00 '.
- * @param shapefillcolors  RGB color values in hex for the fill color of the
- *                         shapes. Use '-1' for no fill.  Default value is
- *                         '-1'.
- * @param tracklinewidths  Width of the track lines. '0' implies do not draw
- *                         track lines.  Default value is '3'. The minimum
- *                         allowed value is 0. The maximum allowed value is 20.
- * @param tracklinecolors  RGB color values for the track lines.  Default value
- *                         is 'green'.
- * @param trackmarkersizes  Size of the track point markers.  Default value is
- *                          '3'. The minimum allowed value is 0. The maximum
- *                          allowed value is 20.
- * @param trackmarkercolors  Color of the track point markers.  Default value
- *                           is 'blue'.
- * @param trackmarkershapes  Shape of track point markers.  Default value is
- *                           'none'. The allowed values are:  ~!~ * NONE *
- *                           CIRCLE * SQUARE * DIAMOND * HOLLOWCIRCLE *
- *                           HOLLOWSQUARE * HOLLOWDIAMOND * SYMBOLCODE~!~
- * @param trackheadcolors  Color of track head markers.  Default value is
- *                         'FFFFFF'.
- * @param trackheadsizes  Size of track head markers.  Default value is '10'.
- *                        The minimum allowed value is 0. The maximum allowed
- *                        value is 20.
- * @param trackheadshapes  Shape of track head markers.  Default value is
- *                         'circle'. The allowed values are:  ~!~ * NONE *
- *                         CIRCLE * SQUARE * DIAMOND * HOLLOWCIRCLE *
- *                         HOLLOWSQUARE * HOLLOWDIAMOND * SYMBOLCODE~!~
- * @param options  Optional parameters.  Default value is an empty {@link
- *                 std::map}.
+ * @param styleOptions  Styling options for the image.
+ * @param options  Optional parameters.  Default value is an empty std::map.
  * 
  * @return Response object containing the result of the operation.
  * 
  */
-VisualizeImageClassbreakResponse GPUdb::visualizeImageClassbreak(const std::vector<std::string>& tableNames, const std::vector<std::string>& worldTableNames, const std::string& xColumnName, const std::string& yColumnName, const std::vector<std::vector<std::string> >& trackIds, const std::string& cbColumnName1, const std::vector<std::string>& cbVals1, const std::vector<std::string>& cbColumnName2, const std::vector<std::vector<std::string> >& cbVals2, const double minX, const double maxX, const double minY, const double maxY, const int32_t width, const int32_t height, const std::string& projection, const int64_t bgColor, const std::vector<bool>& doPoints, const std::vector<bool>& doShapes, const std::vector<bool>& doTracks, const std::vector<bool>& doSymbology, const std::vector<int64_t>& pointcolors, const std::vector<int32_t>& pointsizes, const std::vector<std::string>& pointshapes, const std::vector<int32_t>& shapelinewidths, const std::vector<int64_t>& shapelinecolors, const std::vector<int64_t>& shapefillcolors, const std::vector<int32_t>& tracklinewidths, const std::vector<int64_t>& tracklinecolors, const std::vector<int32_t>& trackmarkersizes, const std::vector<int64_t>& trackmarkercolors, const std::vector<std::string>& trackmarkershapes, const std::vector<int64_t>& trackheadcolors, const std::vector<int32_t>& trackheadsizes, const std::vector<std::string>& trackheadshapes, const std::map<std::string, std::string>& options) const
+VisualizeImageClassbreakResponse GPUdb::visualizeImageClassbreak(const std::vector<std::string>& tableNames, const std::vector<std::string>& worldTableNames, const std::string& xColumnName, const std::string& yColumnName, const std::vector<std::vector<std::string> >& trackIds, const std::string& cbColumnName1, const std::vector<std::string>& cbVals1, const std::vector<std::string>& cbColumnName2, const std::vector<std::vector<std::string> >& cbVals2, const double minX, const double maxX, const double minY, const double maxY, const int32_t width, const int32_t height, const std::string& projection, const int64_t bgColor, const std::map<std::string, std::vector<std::string> >& styleOptions, const std::map<std::string, std::string>& options) const
 {
     VisualizeImageClassbreakRequest actualRequest_;
     actualRequest_.tableNames = tableNames;
@@ -7975,24 +8072,7 @@ VisualizeImageClassbreakResponse GPUdb::visualizeImageClassbreak(const std::vect
     actualRequest_.height = height;
     actualRequest_.projection = projection;
     actualRequest_.bgColor = bgColor;
-    actualRequest_.doPoints = doPoints;
-    actualRequest_.doShapes = doShapes;
-    actualRequest_.doTracks = doTracks;
-    actualRequest_.doSymbology = doSymbology;
-    actualRequest_.pointcolors = pointcolors;
-    actualRequest_.pointsizes = pointsizes;
-    actualRequest_.pointshapes = pointshapes;
-    actualRequest_.shapelinewidths = shapelinewidths;
-    actualRequest_.shapelinecolors = shapelinecolors;
-    actualRequest_.shapefillcolors = shapefillcolors;
-    actualRequest_.tracklinewidths = tracklinewidths;
-    actualRequest_.tracklinecolors = tracklinecolors;
-    actualRequest_.trackmarkersizes = trackmarkersizes;
-    actualRequest_.trackmarkercolors = trackmarkercolors;
-    actualRequest_.trackmarkershapes = trackmarkershapes;
-    actualRequest_.trackheadcolors = trackheadcolors;
-    actualRequest_.trackheadsizes = trackheadsizes;
-    actualRequest_.trackheadshapes = trackheadshapes;
+    actualRequest_.styleOptions = styleOptions;
     actualRequest_.options = options;
     VisualizeImageClassbreakResponse actualResponse_;
     submitRequest("/visualize/image/classbreak", actualRequest_, actualResponse_, false);
@@ -8052,59 +8132,10 @@ VisualizeImageClassbreakResponse GPUdb::visualizeImageClassbreak(const std::vect
  * @param width  Width of the generated image.
  * @param height  Height of the generated image.
  * @param projection  Spatial Reference System (i.e. EPSG Code).  Default value
- *                    is 'PLATE_CARREE'. The allowed values are:  ~!~ *
- *                    EPSG:4326 * PLATE_CARREE * _900913 * EPSG:900913 *
- *                    _102100 * EPSG:102100 * _3857 * EPSG:3857 *
- *                    WEB_MERCATOR~!~
+ *                    is 'PLATE_CARREE'.
  * @param bgColor  Background color of the generated image.
- * @param doPoints  Rasterize point data toggle.  Default value is 'true'. The
- *                  allowed values are:  ~!~ * TRUE * FALSE~!~
- * @param doShapes  Rasterize shapes toggle.  Default value is 'true'. The
- *                  allowed values are:  ~!~ * TRUE * FALSE~!~
- * @param doTracks  Rasterize tracks toggle.  Default value is 'true'. The
- *                  allowed values are:  ~!~ * TRUE * FALSE~!~
- * @param doSymbology  Rasterize symbols toggle.  Default value is 'false'. The
- *                     allowed values are:  ~!~ * TRUE * FALSE~!~
- * @param pointcolors  RGB color value in hex for the points.  Default value is
- *                     'FF0000'.
- * @param pointsizes  Size of points.  Default value is '3'. The minimum
- *                    allowed value is 0. The maximum allowed value is 20.
- * @param pointshapes  Shape of the point.  The allowed values are:  ~!~ * NONE
- *                     * CIRCLE * SQUARE * DIAMOND * HOLLOWCIRCLE *
- *                     HOLLOWSQUARE * HOLLOWDIAMOND * SYMBOLCODE~!~
- * @param shapelinewidths  Width of the lines.  Default value is '3'. The
- *                         minimum allowed value is 0. The maximum allowed
- *                         value is 20.
- * @param shapelinecolors  RGB color values in hex for the line. Default is
- *                         yellow.  Default value is 'FFFF00 '.
- * @param shapefillcolors  RGB color values in hex for the fill color of the
- *                         shapes. Use '-1' for no fill.  Default value is
- *                         '-1'.
- * @param tracklinewidths  Width of the track lines. '0' implies do not draw
- *                         track lines.  Default value is '3'. The minimum
- *                         allowed value is 0. The maximum allowed value is 20.
- * @param tracklinecolors  RGB color values for the track lines.  Default value
- *                         is 'green'.
- * @param trackmarkersizes  Size of the track point markers.  Default value is
- *                          '3'. The minimum allowed value is 0. The maximum
- *                          allowed value is 20.
- * @param trackmarkercolors  Color of the track point markers.  Default value
- *                           is 'blue'.
- * @param trackmarkershapes  Shape of track point markers.  Default value is
- *                           'none'. The allowed values are:  ~!~ * NONE *
- *                           CIRCLE * SQUARE * DIAMOND * HOLLOWCIRCLE *
- *                           HOLLOWSQUARE * HOLLOWDIAMOND * SYMBOLCODE~!~
- * @param trackheadcolors  Color of track head markers.  Default value is
- *                         'FFFFFF'.
- * @param trackheadsizes  Size of track head markers.  Default value is '10'.
- *                        The minimum allowed value is 0. The maximum allowed
- *                        value is 20.
- * @param trackheadshapes  Shape of track head markers.  Default value is
- *                         'circle'. The allowed values are:  ~!~ * NONE *
- *                         CIRCLE * SQUARE * DIAMOND * HOLLOWCIRCLE *
- *                         HOLLOWSQUARE * HOLLOWDIAMOND * SYMBOLCODE~!~
- * @param options  Optional parameters.  Default value is an empty {@link
- *                 std::map}.
+ * @param styleOptions  Styling options for the image.
+ * @param options  Optional parameters.  Default value is an empty std::map.
  * @param[out] response_  Response object containing the results of the
  *                        operation.
  * 
@@ -8112,7 +8143,7 @@ VisualizeImageClassbreakResponse GPUdb::visualizeImageClassbreak(const std::vect
  *         passed in by reference).
  * 
  */
-VisualizeImageClassbreakResponse& GPUdb::visualizeImageClassbreak(const std::vector<std::string>& tableNames, const std::vector<std::string>& worldTableNames, const std::string& xColumnName, const std::string& yColumnName, const std::vector<std::vector<std::string> >& trackIds, const std::string& cbColumnName1, const std::vector<std::string>& cbVals1, const std::vector<std::string>& cbColumnName2, const std::vector<std::vector<std::string> >& cbVals2, const double minX, const double maxX, const double minY, const double maxY, const int32_t width, const int32_t height, const std::string& projection, const int64_t bgColor, const std::vector<bool>& doPoints, const std::vector<bool>& doShapes, const std::vector<bool>& doTracks, const std::vector<bool>& doSymbology, const std::vector<int64_t>& pointcolors, const std::vector<int32_t>& pointsizes, const std::vector<std::string>& pointshapes, const std::vector<int32_t>& shapelinewidths, const std::vector<int64_t>& shapelinecolors, const std::vector<int64_t>& shapefillcolors, const std::vector<int32_t>& tracklinewidths, const std::vector<int64_t>& tracklinecolors, const std::vector<int32_t>& trackmarkersizes, const std::vector<int64_t>& trackmarkercolors, const std::vector<std::string>& trackmarkershapes, const std::vector<int64_t>& trackheadcolors, const std::vector<int32_t>& trackheadsizes, const std::vector<std::string>& trackheadshapes, const std::map<std::string, std::string>& options, VisualizeImageClassbreakResponse& response_) const
+VisualizeImageClassbreakResponse& GPUdb::visualizeImageClassbreak(const std::vector<std::string>& tableNames, const std::vector<std::string>& worldTableNames, const std::string& xColumnName, const std::string& yColumnName, const std::vector<std::vector<std::string> >& trackIds, const std::string& cbColumnName1, const std::vector<std::string>& cbVals1, const std::vector<std::string>& cbColumnName2, const std::vector<std::vector<std::string> >& cbVals2, const double minX, const double maxX, const double minY, const double maxY, const int32_t width, const int32_t height, const std::string& projection, const int64_t bgColor, const std::map<std::string, std::vector<std::string> >& styleOptions, const std::map<std::string, std::string>& options, VisualizeImageClassbreakResponse& response_) const
 {
     VisualizeImageClassbreakRequest actualRequest_;
     actualRequest_.tableNames = tableNames;
@@ -8132,24 +8163,7 @@ VisualizeImageClassbreakResponse& GPUdb::visualizeImageClassbreak(const std::vec
     actualRequest_.height = height;
     actualRequest_.projection = projection;
     actualRequest_.bgColor = bgColor;
-    actualRequest_.doPoints = doPoints;
-    actualRequest_.doShapes = doShapes;
-    actualRequest_.doTracks = doTracks;
-    actualRequest_.doSymbology = doSymbology;
-    actualRequest_.pointcolors = pointcolors;
-    actualRequest_.pointsizes = pointsizes;
-    actualRequest_.pointshapes = pointshapes;
-    actualRequest_.shapelinewidths = shapelinewidths;
-    actualRequest_.shapelinecolors = shapelinecolors;
-    actualRequest_.shapefillcolors = shapefillcolors;
-    actualRequest_.tracklinewidths = tracklinewidths;
-    actualRequest_.tracklinecolors = tracklinecolors;
-    actualRequest_.trackmarkersizes = trackmarkersizes;
-    actualRequest_.trackmarkercolors = trackmarkercolors;
-    actualRequest_.trackmarkershapes = trackmarkershapes;
-    actualRequest_.trackheadcolors = trackheadcolors;
-    actualRequest_.trackheadsizes = trackheadsizes;
-    actualRequest_.trackheadshapes = trackheadshapes;
+    actualRequest_.styleOptions = styleOptions;
     actualRequest_.options = options;
     submitRequest("/visualize/image/classbreak", actualRequest_, response_, false);
     return response_;
@@ -8162,8 +8176,6 @@ VisualizeImageClassbreakResponse& GPUdb::visualizeImageClassbreak(const std::vec
  * <p>
  * All color values must be in the format RRGGBB or AARRGGBB (to specify the
  * alpha value).
- * <p>
-
  * The heatmap image is contained in the @a imageData field.
  * 
  * @param[in] request_  Request object containing the parameters for the
@@ -8186,8 +8198,6 @@ VisualizeImageHeatmapResponse GPUdb::visualizeImageHeatmap(const VisualizeImageH
  * <p>
  * All color values must be in the format RRGGBB or AARRGGBB (to specify the
  * alpha value).
- * <p>
-
  * The heatmap image is contained in the @a imageData field.
  * 
  * @param[in] request_  Request object containing the parameters for the
@@ -8212,8 +8222,6 @@ VisualizeImageHeatmapResponse& GPUdb::visualizeImageHeatmap(const VisualizeImage
  * <p>
  * All color values must be in the format RRGGBB or AARRGGBB (to specify the
  * alpha value).
- * <p>
-
  * The heatmap image is contained in the @a imageData field.
  * 
  * @param tableNames  Name of the table containing the data for the various
@@ -8228,26 +8236,14 @@ VisualizeImageHeatmapResponse& GPUdb::visualizeImageHeatmap(const VisualizeImage
  * @param width  Width of the generated image.
  * @param height  Height of the generated image.
  * @param projection  Spatial Reference System (i.e. EPSG Code).  Default value
- *                    is 'PLATE_CARREE'. The allowed values are:  ~!~ *
- *                    EPSG:4326 * PLATE_CARREE * _900913 * EPSG:900913 *
- *                    _102100 * EPSG:102100 * _3857 * EPSG:3857 *
- *                    WEB_MERCATOR~!~
- * @param colormap  Colormap for the heat map.  Default value is 'none'.
- * @param blurRadius  Blurring radius for the heat map.  Default value is '5'.
- *                    The minimum allowed value is 1. The maximum allowed value
- *                    is 32.
- * @param bgColor  Background color of the generated image.
- * @param gradientStartColor  User defined gradient start color for the heat
- *                            map.  Default value is 'FFFFFF'.
- * @param gradientEndColor  User defined gradient end color for the heat map.
- *                          Default value is 'FF0000'.
- * @param options  Optional parameters.  Default value is an empty {@link
- *                 std::map}.
+ *                    is 'PLATE_CARREE'.
+ * @param styleOptions  Various style related options.
+ * @param options  Optional parameters.  Default value is an empty std::map.
  * 
  * @return Response object containing the result of the operation.
  * 
  */
-VisualizeImageHeatmapResponse GPUdb::visualizeImageHeatmap(const std::vector<std::string>& tableNames, const std::string& xColumnName, const std::string& yColumnName, const std::string& valueColumnName, const double minX, const double maxX, const double minY, const double maxY, const int32_t width, const int32_t height, const std::string& projection, const std::string& colormap, const int32_t blurRadius, const int64_t bgColor, const int64_t gradientStartColor, const int64_t gradientEndColor, const std::map<std::string, std::string>& options) const
+VisualizeImageHeatmapResponse GPUdb::visualizeImageHeatmap(const std::vector<std::string>& tableNames, const std::string& xColumnName, const std::string& yColumnName, const std::string& valueColumnName, const double minX, const double maxX, const double minY, const double maxY, const int32_t width, const int32_t height, const std::string& projection, const std::map<std::string, std::string>& styleOptions, const std::map<std::string, std::string>& options) const
 {
     VisualizeImageHeatmapRequest actualRequest_;
     actualRequest_.tableNames = tableNames;
@@ -8261,11 +8257,7 @@ VisualizeImageHeatmapResponse GPUdb::visualizeImageHeatmap(const std::vector<std
     actualRequest_.width = width;
     actualRequest_.height = height;
     actualRequest_.projection = projection;
-    actualRequest_.colormap = colormap;
-    actualRequest_.blurRadius = blurRadius;
-    actualRequest_.bgColor = bgColor;
-    actualRequest_.gradientStartColor = gradientStartColor;
-    actualRequest_.gradientEndColor = gradientEndColor;
+    actualRequest_.styleOptions = styleOptions;
     actualRequest_.options = options;
     VisualizeImageHeatmapResponse actualResponse_;
     submitRequest("/visualize/image/heatmap", actualRequest_, actualResponse_, false);
@@ -8279,8 +8271,6 @@ VisualizeImageHeatmapResponse GPUdb::visualizeImageHeatmap(const std::vector<std
  * <p>
  * All color values must be in the format RRGGBB or AARRGGBB (to specify the
  * alpha value).
- * <p>
-
  * The heatmap image is contained in the @a imageData field.
  * 
  * @param tableNames  Name of the table containing the data for the various
@@ -8295,21 +8285,9 @@ VisualizeImageHeatmapResponse GPUdb::visualizeImageHeatmap(const std::vector<std
  * @param width  Width of the generated image.
  * @param height  Height of the generated image.
  * @param projection  Spatial Reference System (i.e. EPSG Code).  Default value
- *                    is 'PLATE_CARREE'. The allowed values are:  ~!~ *
- *                    EPSG:4326 * PLATE_CARREE * _900913 * EPSG:900913 *
- *                    _102100 * EPSG:102100 * _3857 * EPSG:3857 *
- *                    WEB_MERCATOR~!~
- * @param colormap  Colormap for the heat map.  Default value is 'none'.
- * @param blurRadius  Blurring radius for the heat map.  Default value is '5'.
- *                    The minimum allowed value is 1. The maximum allowed value
- *                    is 32.
- * @param bgColor  Background color of the generated image.
- * @param gradientStartColor  User defined gradient start color for the heat
- *                            map.  Default value is 'FFFFFF'.
- * @param gradientEndColor  User defined gradient end color for the heat map.
- *                          Default value is 'FF0000'.
- * @param options  Optional parameters.  Default value is an empty {@link
- *                 std::map}.
+ *                    is 'PLATE_CARREE'.
+ * @param styleOptions  Various style related options.
+ * @param options  Optional parameters.  Default value is an empty std::map.
  * @param[out] response_  Response object containing the results of the
  *                        operation.
  * 
@@ -8317,7 +8295,7 @@ VisualizeImageHeatmapResponse GPUdb::visualizeImageHeatmap(const std::vector<std
  *         passed in by reference).
  * 
  */
-VisualizeImageHeatmapResponse& GPUdb::visualizeImageHeatmap(const std::vector<std::string>& tableNames, const std::string& xColumnName, const std::string& yColumnName, const std::string& valueColumnName, const double minX, const double maxX, const double minY, const double maxY, const int32_t width, const int32_t height, const std::string& projection, const std::string& colormap, const int32_t blurRadius, const int64_t bgColor, const int64_t gradientStartColor, const int64_t gradientEndColor, const std::map<std::string, std::string>& options, VisualizeImageHeatmapResponse& response_) const
+VisualizeImageHeatmapResponse& GPUdb::visualizeImageHeatmap(const std::vector<std::string>& tableNames, const std::string& xColumnName, const std::string& yColumnName, const std::string& valueColumnName, const double minX, const double maxX, const double minY, const double maxY, const int32_t width, const int32_t height, const std::string& projection, const std::map<std::string, std::string>& styleOptions, const std::map<std::string, std::string>& options, VisualizeImageHeatmapResponse& response_) const
 {
     VisualizeImageHeatmapRequest actualRequest_;
     actualRequest_.tableNames = tableNames;
@@ -8331,223 +8309,9 @@ VisualizeImageHeatmapResponse& GPUdb::visualizeImageHeatmap(const std::vector<st
     actualRequest_.width = width;
     actualRequest_.height = height;
     actualRequest_.projection = projection;
-    actualRequest_.colormap = colormap;
-    actualRequest_.blurRadius = blurRadius;
-    actualRequest_.bgColor = bgColor;
-    actualRequest_.gradientStartColor = gradientStartColor;
-    actualRequest_.gradientEndColor = gradientEndColor;
+    actualRequest_.styleOptions = styleOptions;
     actualRequest_.options = options;
     submitRequest("/visualize/image/heatmap", actualRequest_, response_, false);
-    return response_;
-}
-
-
-/**
- * Generates 'class break' rasterized heatmap image tiles for an area of
- * interest using the given tables and the provided parameters.
- * <p>
- * A class break rendering is where data from one or more GPUdb tables is
- * rasterized with styling applied on a per-class basis. GPUdb supports class
- * breaks based on one or more data columns. Distinct values (for strings) or
- * ranges (for numeric attributes) must be provided in the
- * cb_column_name1/cb_vals1 and cb_column_name2/cb_vals2 parameters. The
- * styling parameters must be specified for each class.
- * <p>
- * All color values must be in the format RRGGBB or AARRGGBB (to specify the
- * alpha value).
- * 
- * @param[in] request_  Request object containing the parameters for the
- *                      operation.
- * 
- * @return Response object containing the result of the operation.
- * 
- */
-VisualizeImageHeatmapClassbreakResponse GPUdb::visualizeImageHeatmapClassbreak(const VisualizeImageHeatmapClassbreakRequest& request_) const
-{
-    VisualizeImageHeatmapClassbreakResponse actualResponse_;
-    submitRequest("/visualize/image/heatmap/classbreak", request_, actualResponse_, false);
-    return actualResponse_;
-}
-
-
-/**
- * Generates 'class break' rasterized heatmap image tiles for an area of
- * interest using the given tables and the provided parameters.
- * <p>
- * A class break rendering is where data from one or more GPUdb tables is
- * rasterized with styling applied on a per-class basis. GPUdb supports class
- * breaks based on one or more data columns. Distinct values (for strings) or
- * ranges (for numeric attributes) must be provided in the
- * cb_column_name1/cb_vals1 and cb_column_name2/cb_vals2 parameters. The
- * styling parameters must be specified for each class.
- * <p>
- * All color values must be in the format RRGGBB or AARRGGBB (to specify the
- * alpha value).
- * 
- * @param[in] request_  Request object containing the parameters for the
- *                      operation.
- * @param[out] response_  Response object containing the results of the
- *                        operation.
- * 
- * @return Response object containing the result of the operation (initially
- *         passed in by reference).
- * 
- */
-VisualizeImageHeatmapClassbreakResponse& GPUdb::visualizeImageHeatmapClassbreak(const VisualizeImageHeatmapClassbreakRequest& request_, VisualizeImageHeatmapClassbreakResponse& response_) const
-{
-    submitRequest("/visualize/image/heatmap/classbreak", request_, response_, false);
-    return response_;
-}
-
-
-/**
- * Generates 'class break' rasterized heatmap image tiles for an area of
- * interest using the given tables and the provided parameters.
- * <p>
- * A class break rendering is where data from one or more GPUdb tables is
- * rasterized with styling applied on a per-class basis. GPUdb supports class
- * breaks based on one or more data columns. Distinct values (for strings) or
- * ranges (for numeric attributes) must be provided in the
- * cb_column_name1/cb_vals1 and cb_column_name2/cb_vals2 parameters. The
- * styling parameters must be specified for each class.
- * <p>
- * All color values must be in the format RRGGBB or AARRGGBB (to specify the
- * alpha value).
- * 
- * @param tableNames  Name of the table containing the data for the various
- *                    layers to be rendered.
- * @param xColumnName  Name of the column containing the x coordinates.
- * @param yColumnName  Name of the column containing the y coordinates.
- * @param cbColumnName  Name of the column for the class break.
- * @param cbVals  Comma separated list of values (e.g. '0,5,10,15,30').
- * @param cbRanges  Comma separated list of ranges (e.g. '0:5,5:10,15:30').
- * @param minX  Lower bound for the x values.
- * @param maxX  Upper bound for the x values.
- * @param minY  Lower bound for the y values.
- * @param maxY  Upper bound for the y values.
- * @param width  Width of the generated image.
- * @param height  Height of the generated image.
- * @param projection  Spatial Reference System (i.e. EPSG Code).  Default value
- *                    is 'PLATE_CARREE'. The allowed values are:  ~!~ *
- *                    EPSG:4326 * PLATE_CARREE * _900913 * EPSG:900913 *
- *                    _102100 * EPSG:102100 * _3857 * EPSG:3857 *
- *                    WEB_MERCATOR~!~
- * @param colormaps  Colormap for the heat map.  Default value is 'none'.
- * @param blurRadii  Blurring radius for the heat map.  Default value is '5'.
- *                   The minimum allowed value is 1. The maximum allowed value
- *                   is 32.
- * @param bgColor  Background color of the generated image.
- * @param gradientStartColors  User defined gradient start color for the heat
- *                             map.  Default value is 'FFFFFF'.
- * @param gradientEndColors  User defined gradient end color for the heat map.
- *                           Default value is 'FF0000'.
- * @param options  Optional parameters.  Default value is an empty {@link
- *                 std::map}.
- * 
- * @return Response object containing the result of the operation.
- * 
- */
-VisualizeImageHeatmapClassbreakResponse GPUdb::visualizeImageHeatmapClassbreak(const std::vector<std::string>& tableNames, const std::string& xColumnName, const std::string& yColumnName, const std::string& cbColumnName, const std::vector<std::string>& cbVals, const std::vector<std::string>& cbRanges, const double minX, const double maxX, const double minY, const double maxY, const int32_t width, const int32_t height, const std::string& projection, const std::vector<std::string>& colormaps, const std::vector<int32_t>& blurRadii, const int64_t bgColor, const std::vector<int64_t>& gradientStartColors, const std::vector<int64_t>& gradientEndColors, const std::map<std::string, std::string>& options) const
-{
-    VisualizeImageHeatmapClassbreakRequest actualRequest_;
-    actualRequest_.tableNames = tableNames;
-    actualRequest_.xColumnName = xColumnName;
-    actualRequest_.yColumnName = yColumnName;
-    actualRequest_.cbColumnName = cbColumnName;
-    actualRequest_.cbVals = cbVals;
-    actualRequest_.cbRanges = cbRanges;
-    actualRequest_.minX = minX;
-    actualRequest_.maxX = maxX;
-    actualRequest_.minY = minY;
-    actualRequest_.maxY = maxY;
-    actualRequest_.width = width;
-    actualRequest_.height = height;
-    actualRequest_.projection = projection;
-    actualRequest_.colormaps = colormaps;
-    actualRequest_.blurRadii = blurRadii;
-    actualRequest_.bgColor = bgColor;
-    actualRequest_.gradientStartColors = gradientStartColors;
-    actualRequest_.gradientEndColors = gradientEndColors;
-    actualRequest_.options = options;
-    VisualizeImageHeatmapClassbreakResponse actualResponse_;
-    submitRequest("/visualize/image/heatmap/classbreak", actualRequest_, actualResponse_, false);
-    return actualResponse_;
-}
-
-
-/**
- * Generates 'class break' rasterized heatmap image tiles for an area of
- * interest using the given tables and the provided parameters.
- * <p>
- * A class break rendering is where data from one or more GPUdb tables is
- * rasterized with styling applied on a per-class basis. GPUdb supports class
- * breaks based on one or more data columns. Distinct values (for strings) or
- * ranges (for numeric attributes) must be provided in the
- * cb_column_name1/cb_vals1 and cb_column_name2/cb_vals2 parameters. The
- * styling parameters must be specified for each class.
- * <p>
- * All color values must be in the format RRGGBB or AARRGGBB (to specify the
- * alpha value).
- * 
- * @param tableNames  Name of the table containing the data for the various
- *                    layers to be rendered.
- * @param xColumnName  Name of the column containing the x coordinates.
- * @param yColumnName  Name of the column containing the y coordinates.
- * @param cbColumnName  Name of the column for the class break.
- * @param cbVals  Comma separated list of values (e.g. '0,5,10,15,30').
- * @param cbRanges  Comma separated list of ranges (e.g. '0:5,5:10,15:30').
- * @param minX  Lower bound for the x values.
- * @param maxX  Upper bound for the x values.
- * @param minY  Lower bound for the y values.
- * @param maxY  Upper bound for the y values.
- * @param width  Width of the generated image.
- * @param height  Height of the generated image.
- * @param projection  Spatial Reference System (i.e. EPSG Code).  Default value
- *                    is 'PLATE_CARREE'. The allowed values are:  ~!~ *
- *                    EPSG:4326 * PLATE_CARREE * _900913 * EPSG:900913 *
- *                    _102100 * EPSG:102100 * _3857 * EPSG:3857 *
- *                    WEB_MERCATOR~!~
- * @param colormaps  Colormap for the heat map.  Default value is 'none'.
- * @param blurRadii  Blurring radius for the heat map.  Default value is '5'.
- *                   The minimum allowed value is 1. The maximum allowed value
- *                   is 32.
- * @param bgColor  Background color of the generated image.
- * @param gradientStartColors  User defined gradient start color for the heat
- *                             map.  Default value is 'FFFFFF'.
- * @param gradientEndColors  User defined gradient end color for the heat map.
- *                           Default value is 'FF0000'.
- * @param options  Optional parameters.  Default value is an empty {@link
- *                 std::map}.
- * @param[out] response_  Response object containing the results of the
- *                        operation.
- * 
- * @return Response object containing the result of the operation (initially
- *         passed in by reference).
- * 
- */
-VisualizeImageHeatmapClassbreakResponse& GPUdb::visualizeImageHeatmapClassbreak(const std::vector<std::string>& tableNames, const std::string& xColumnName, const std::string& yColumnName, const std::string& cbColumnName, const std::vector<std::string>& cbVals, const std::vector<std::string>& cbRanges, const double minX, const double maxX, const double minY, const double maxY, const int32_t width, const int32_t height, const std::string& projection, const std::vector<std::string>& colormaps, const std::vector<int32_t>& blurRadii, const int64_t bgColor, const std::vector<int64_t>& gradientStartColors, const std::vector<int64_t>& gradientEndColors, const std::map<std::string, std::string>& options, VisualizeImageHeatmapClassbreakResponse& response_) const
-{
-    VisualizeImageHeatmapClassbreakRequest actualRequest_;
-    actualRequest_.tableNames = tableNames;
-    actualRequest_.xColumnName = xColumnName;
-    actualRequest_.yColumnName = yColumnName;
-    actualRequest_.cbColumnName = cbColumnName;
-    actualRequest_.cbVals = cbVals;
-    actualRequest_.cbRanges = cbRanges;
-    actualRequest_.minX = minX;
-    actualRequest_.maxX = maxX;
-    actualRequest_.minY = minY;
-    actualRequest_.maxY = maxY;
-    actualRequest_.width = width;
-    actualRequest_.height = height;
-    actualRequest_.projection = projection;
-    actualRequest_.colormaps = colormaps;
-    actualRequest_.blurRadii = blurRadii;
-    actualRequest_.bgColor = bgColor;
-    actualRequest_.gradientStartColors = gradientStartColors;
-    actualRequest_.gradientEndColors = gradientEndColors;
-    actualRequest_.options = options;
-    submitRequest("/visualize/image/heatmap/classbreak", actualRequest_, response_, false);
     return response_;
 }
 
@@ -8556,7 +8320,7 @@ VisualizeImageHeatmapClassbreakResponse& GPUdb::visualizeImageHeatmapClassbreak(
  * Generates a rasterized image tile containing text labels defined by data
  * contained in the given table, suitable for overlaying onto a feature image
  * tile covering the same area (for example one generated using {@link
- * #visualizeImage(VisualizeImageRequest&)}).
+ * #visualizeImage(const VisualizeImageRequest&) const}).
  * <p>
  * All color values must be integers encoded in the format RRGGBB or AARRGGBB
  * (to specify the alpha value) when represented in hexadecimal; although note
@@ -8589,7 +8353,7 @@ VisualizeImageLabelsResponse GPUdb::visualizeImageLabels(const VisualizeImageLab
  * Generates a rasterized image tile containing text labels defined by data
  * contained in the given table, suitable for overlaying onto a feature image
  * tile covering the same area (for example one generated using {@link
- * #visualizeImage(VisualizeImageRequest&,VisualizeImageResponse&)}).
+ * #visualizeImage(const VisualizeImageRequest&,VisualizeImageResponse&) const}).
  * <p>
  * All color values must be integers encoded in the format RRGGBB or AARRGGBB
  * (to specify the alpha value) when represented in hexadecimal; although note
@@ -8623,16 +8387,8 @@ VisualizeImageLabelsResponse& GPUdb::visualizeImageLabels(const VisualizeImageLa
 /**
  * Generates a rasterized image tile containing text labels defined by data
  * contained in the given table, suitable for overlaying onto a feature image
- * tile covering the same area (for example one generated using {@link #visuali
- * zeImage(std::vector<std::string>&,std::vector<std::string>&,std::string&,std
- * ::string&,std::vector<std::vector<std::string> >&,double,double,double,doubl
- * e,int32_t,int32_t,std::string&,int64_t,std::vector<bool>&,std::vector<bool>&
- * ,std::vector<bool>&,std::vector<bool>&,std::vector<int64_t>&,std::vector<int
- * 32_t>&,std::vector<std::string>&,std::vector<int32_t>&,std::vector<int64_t>&
- * ,std::vector<int64_t>&,std::vector<int32_t>&,std::vector<int64_t>&,std::vect
- * or<int32_t>&,std::vector<int64_t>&,std::vector<std::string>&,std::vector<int
- * 64_t>&,std::vector<int32_t>&,std::vector<std::string>&,std::map<std::string,
- * std::string>&)}).
+ * tile covering the same area (for example one generated using {@link
+ * #visualizeImage(const std::vector<std::string>&,const std::vector<std::string>&,const std::string&,const std::string&,const std::vector<std::vector<std::string> >&,const double,const double,const double,const double,const int32_t,const int32_t,const std::string&,const int64_t,const std::map<std::string, std::vector<std::string> >&,const std::map<std::string, std::string>&) const}).
  * <p>
  * All color values must be integers encoded in the format RRGGBB or AARRGGBB
  * (to specify the alpha value) when represented in hexadecimal; although note
@@ -8718,12 +8474,8 @@ VisualizeImageLabelsResponse& GPUdb::visualizeImageLabels(const VisualizeImageLa
  * @param width  Width of the generated image.
  * @param height  Height of the generated image.
  * @param projection  Spatial Reference System (i.e. EPSG Code).  Default value
- *                    is 'PLATE_CARREE'. The allowed values are:  ~!~ *
- *                    EPSG:4326 * PLATE_CARREE * _900913 * EPSG:900913 *
- *                    _102100 * EPSG:102100 * _3857 * EPSG:3857 *
- *                    WEB_MERCATOR~!~
- * @param options  Optional parameters.  Default value is an empty {@link
- *                 std::map}.
+ *                    is 'PLATE_CARREE'.
+ * @param options  Optional parameters.  Default value is an empty std::map.
  * 
  * @return Response object containing the result of the operation.
  * 
@@ -8765,16 +8517,8 @@ VisualizeImageLabelsResponse GPUdb::visualizeImageLabels(const std::string& tabl
 /**
  * Generates a rasterized image tile containing text labels defined by data
  * contained in the given table, suitable for overlaying onto a feature image
- * tile covering the same area (for example one generated using {@link #visuali
- * zeImage(std::vector<std::string>&,std::vector<std::string>&,std::string&,std
- * ::string&,std::vector<std::vector<std::string> >&,double,double,double,doubl
- * e,int32_t,int32_t,std::string&,int64_t,std::vector<bool>&,std::vector<bool>&
- * ,std::vector<bool>&,std::vector<bool>&,std::vector<int64_t>&,std::vector<int
- * 32_t>&,std::vector<std::string>&,std::vector<int32_t>&,std::vector<int64_t>&
- * ,std::vector<int64_t>&,std::vector<int32_t>&,std::vector<int64_t>&,std::vect
- * or<int32_t>&,std::vector<int64_t>&,std::vector<std::string>&,std::vector<int
- * 64_t>&,std::vector<int32_t>&,std::vector<std::string>&,std::map<std::string,
- * std::string>&,VisualizeImageResponse&)}).
+ * tile covering the same area (for example one generated using {@link
+ * #visualizeImage(const std::vector<std::string>&,const std::vector<std::string>&,const std::string&,const std::string&,const std::vector<std::vector<std::string> >&,const double,const double,const double,const double,const int32_t,const int32_t,const std::string&,const int64_t,const std::map<std::string, std::vector<std::string> >&,const std::map<std::string, std::string>&,VisualizeImageResponse&) const}).
  * <p>
  * All color values must be integers encoded in the format RRGGBB or AARRGGBB
  * (to specify the alpha value) when represented in hexadecimal; although note
@@ -8860,12 +8604,8 @@ VisualizeImageLabelsResponse GPUdb::visualizeImageLabels(const std::string& tabl
  * @param width  Width of the generated image.
  * @param height  Height of the generated image.
  * @param projection  Spatial Reference System (i.e. EPSG Code).  Default value
- *                    is 'PLATE_CARREE'. The allowed values are:  ~!~ *
- *                    EPSG:4326 * PLATE_CARREE * _900913 * EPSG:900913 *
- *                    _102100 * EPSG:102100 * _3857 * EPSG:3857 *
- *                    WEB_MERCATOR~!~
- * @param options  Optional parameters.  Default value is an empty {@link
- *                 std::map}.
+ *                    is 'PLATE_CARREE'.
+ * @param options  Optional parameters.  Default value is an empty std::map.
  * @param[out] response_  Response object containing the results of the
  *                        operation.
  * 
@@ -9058,66 +8798,19 @@ VisualizeVideoResponse& GPUdb::visualizeVideo(const VisualizeVideoRequest& reque
  * @param width  Width of the generated image.
  * @param height  Height of the generated image.
  * @param projection  Spatial Reference System (i.e. EPSG Code).  Default value
- *                    is 'PLATE_CARREE'. The allowed values are:  ~!~ *
- *                    EPSG:4326 * PLATE_CARREE * _900913 * EPSG:900913 *
- *                    _102100 * EPSG:102100 * _3857 * EPSG:3857 *
- *                    WEB_MERCATOR~!~
+ *                    is 'PLATE_CARREE'.
  * @param bgColor  Background color of the generated image.
- * @param doPoints  Rasterize point data toggle.  Default value is 'true'. The
- *                  allowed values are:  ~!~ * TRUE * FALSE~!~
- * @param doShapes  Rasterize shapes toggle.  Default value is 'true'. The
- *                  allowed values are:  ~!~ * TRUE * FALSE~!~
- * @param doTracks  Rasterize tracks toggle.  Default value is 'true'. The
- *                  allowed values are:  ~!~ * TRUE * FALSE~!~
- * @param pointcolors  RGB color value in hex for the points.  Default value is
- *                     'FF0000'.
- * @param pointsizes  Size of points.  Default value is '3'. The minimum
- *                    allowed value is 0. The maximum allowed value is 20.
- * @param pointshapes  Shape of the point.  The allowed values are:  ~!~ * NONE
- *                     * CIRCLE * SQUARE * DIAMOND * HOLLOWCIRCLE *
- *                     HOLLOWSQUARE * HOLLOWDIAMOND * SYMBOLCODE~!~
- * @param shapelinewidths  Width of the lines.  Default value is '3'. The
- *                         minimum allowed value is 0. The maximum allowed
- *                         value is 20.
- * @param shapelinecolors  RGB color values in hex for the line. Default is
- *                         yellow.  Default value is 'FFFF00 '.
- * @param shapefillcolors  RGB color values in hex for the fill color of the
- *                         shapes. Use '-1' for no fill.  Default value is
- *                         '-1'.
- * @param tracklinewidths  Width of the track lines. '0' implies do not draw
- *                         track lines.  Default value is '3'. The minimum
- *                         allowed value is 0. The maximum allowed value is 20.
- * @param tracklinecolors  RGB color values for the track lines.  Default value
- *                         is 'green'.
- * @param trackmarkersizes  Size of the track point markers.  Default value is
- *                          '3'. The minimum allowed value is 0. The maximum
- *                          allowed value is 20.
- * @param trackmarkercolors  Color of the track point markers.  Default value
- *                           is '0000FF'.
- * @param trackmarkershapes  Shape of track point markers.  Default value is
- *                           'none'. The allowed values are:  ~!~ * NONE *
- *                           CIRCLE * SQUARE * DIAMOND * HOLLOWCIRCLE *
- *                           HOLLOWSQUARE * HOLLOWDIAMOND * SYMBOLCODE~!~
- * @param trackheadcolors  Color of track head markers.  Default value is
- *                         'FFFFFF'.
- * @param trackheadsizes  Size of track head markers.  Default value is '10'.
- *                        The minimum allowed value is 0. The maximum allowed
- *                        value is 20.
- * @param trackheadshapes  Shape of track head markers.  Default value is
- *                         'circle'. The allowed values are:  ~!~ * NONE *
- *                         CIRCLE * SQUARE * DIAMOND * HOLLOWCIRCLE *
- *                         HOLLOWSQUARE * HOLLOWDIAMOND * SYMBOLCODE~!~
  * @param timeIntervals
  * @param videoStyle
  * @param sessionKey  User Provided session key that is later used to retrieve
  *                    the generated video from the WMS.
- * @param options  Optional parameters.  Default value is an empty {@link
- *                 std::map}.
+ * @param styleOptions  Styling options for the image.
+ * @param options  Optional parameters.  Default value is an empty std::map.
  * 
  * @return Response object containing the result of the operation.
  * 
  */
-VisualizeVideoResponse GPUdb::visualizeVideo(const std::vector<std::string>& tableNames, const std::vector<std::string>& worldTableNames, const std::vector<std::vector<std::string> >& trackIds, const std::string& xColumnName, const std::string& yColumnName, const double minX, const double maxX, const double minY, const double maxY, const int32_t width, const int32_t height, const std::string& projection, const int64_t bgColor, const std::vector<bool>& doPoints, const std::vector<bool>& doShapes, const std::vector<bool>& doTracks, const std::vector<int64_t>& pointcolors, const std::vector<int32_t>& pointsizes, const std::vector<std::string>& pointshapes, const std::vector<int32_t>& shapelinewidths, const std::vector<int64_t>& shapelinecolors, const std::vector<int64_t>& shapefillcolors, const std::vector<int32_t>& tracklinewidths, const std::vector<int64_t>& tracklinecolors, const std::vector<int32_t>& trackmarkersizes, const std::vector<int64_t>& trackmarkercolors, const std::vector<std::string>& trackmarkershapes, const std::vector<int64_t>& trackheadcolors, const std::vector<int32_t>& trackheadsizes, const std::vector<std::string>& trackheadshapes, const std::vector<std::vector<double> >& timeIntervals, const std::string& videoStyle, const std::string& sessionKey, const std::map<std::string, std::string>& options) const
+VisualizeVideoResponse GPUdb::visualizeVideo(const std::vector<std::string>& tableNames, const std::vector<std::string>& worldTableNames, const std::vector<std::vector<std::string> >& trackIds, const std::string& xColumnName, const std::string& yColumnName, const double minX, const double maxX, const double minY, const double maxY, const int32_t width, const int32_t height, const std::string& projection, const int64_t bgColor, const std::vector<std::vector<double> >& timeIntervals, const std::string& videoStyle, const std::string& sessionKey, const std::map<std::string, std::vector<std::string> >& styleOptions, const std::map<std::string, std::string>& options) const
 {
     VisualizeVideoRequest actualRequest_;
     actualRequest_.tableNames = tableNames;
@@ -9133,26 +8826,10 @@ VisualizeVideoResponse GPUdb::visualizeVideo(const std::vector<std::string>& tab
     actualRequest_.height = height;
     actualRequest_.projection = projection;
     actualRequest_.bgColor = bgColor;
-    actualRequest_.doPoints = doPoints;
-    actualRequest_.doShapes = doShapes;
-    actualRequest_.doTracks = doTracks;
-    actualRequest_.pointcolors = pointcolors;
-    actualRequest_.pointsizes = pointsizes;
-    actualRequest_.pointshapes = pointshapes;
-    actualRequest_.shapelinewidths = shapelinewidths;
-    actualRequest_.shapelinecolors = shapelinecolors;
-    actualRequest_.shapefillcolors = shapefillcolors;
-    actualRequest_.tracklinewidths = tracklinewidths;
-    actualRequest_.tracklinecolors = tracklinecolors;
-    actualRequest_.trackmarkersizes = trackmarkersizes;
-    actualRequest_.trackmarkercolors = trackmarkercolors;
-    actualRequest_.trackmarkershapes = trackmarkershapes;
-    actualRequest_.trackheadcolors = trackheadcolors;
-    actualRequest_.trackheadsizes = trackheadsizes;
-    actualRequest_.trackheadshapes = trackheadshapes;
     actualRequest_.timeIntervals = timeIntervals;
     actualRequest_.videoStyle = videoStyle;
     actualRequest_.sessionKey = sessionKey;
+    actualRequest_.styleOptions = styleOptions;
     actualRequest_.options = options;
     VisualizeVideoResponse actualResponse_;
     submitRequest("/visualize/video", actualRequest_, actualResponse_, false);
@@ -9212,61 +8889,14 @@ VisualizeVideoResponse GPUdb::visualizeVideo(const std::vector<std::string>& tab
  * @param width  Width of the generated image.
  * @param height  Height of the generated image.
  * @param projection  Spatial Reference System (i.e. EPSG Code).  Default value
- *                    is 'PLATE_CARREE'. The allowed values are:  ~!~ *
- *                    EPSG:4326 * PLATE_CARREE * _900913 * EPSG:900913 *
- *                    _102100 * EPSG:102100 * _3857 * EPSG:3857 *
- *                    WEB_MERCATOR~!~
+ *                    is 'PLATE_CARREE'.
  * @param bgColor  Background color of the generated image.
- * @param doPoints  Rasterize point data toggle.  Default value is 'true'. The
- *                  allowed values are:  ~!~ * TRUE * FALSE~!~
- * @param doShapes  Rasterize shapes toggle.  Default value is 'true'. The
- *                  allowed values are:  ~!~ * TRUE * FALSE~!~
- * @param doTracks  Rasterize tracks toggle.  Default value is 'true'. The
- *                  allowed values are:  ~!~ * TRUE * FALSE~!~
- * @param pointcolors  RGB color value in hex for the points.  Default value is
- *                     'FF0000'.
- * @param pointsizes  Size of points.  Default value is '3'. The minimum
- *                    allowed value is 0. The maximum allowed value is 20.
- * @param pointshapes  Shape of the point.  The allowed values are:  ~!~ * NONE
- *                     * CIRCLE * SQUARE * DIAMOND * HOLLOWCIRCLE *
- *                     HOLLOWSQUARE * HOLLOWDIAMOND * SYMBOLCODE~!~
- * @param shapelinewidths  Width of the lines.  Default value is '3'. The
- *                         minimum allowed value is 0. The maximum allowed
- *                         value is 20.
- * @param shapelinecolors  RGB color values in hex for the line. Default is
- *                         yellow.  Default value is 'FFFF00 '.
- * @param shapefillcolors  RGB color values in hex for the fill color of the
- *                         shapes. Use '-1' for no fill.  Default value is
- *                         '-1'.
- * @param tracklinewidths  Width of the track lines. '0' implies do not draw
- *                         track lines.  Default value is '3'. The minimum
- *                         allowed value is 0. The maximum allowed value is 20.
- * @param tracklinecolors  RGB color values for the track lines.  Default value
- *                         is 'green'.
- * @param trackmarkersizes  Size of the track point markers.  Default value is
- *                          '3'. The minimum allowed value is 0. The maximum
- *                          allowed value is 20.
- * @param trackmarkercolors  Color of the track point markers.  Default value
- *                           is '0000FF'.
- * @param trackmarkershapes  Shape of track point markers.  Default value is
- *                           'none'. The allowed values are:  ~!~ * NONE *
- *                           CIRCLE * SQUARE * DIAMOND * HOLLOWCIRCLE *
- *                           HOLLOWSQUARE * HOLLOWDIAMOND * SYMBOLCODE~!~
- * @param trackheadcolors  Color of track head markers.  Default value is
- *                         'FFFFFF'.
- * @param trackheadsizes  Size of track head markers.  Default value is '10'.
- *                        The minimum allowed value is 0. The maximum allowed
- *                        value is 20.
- * @param trackheadshapes  Shape of track head markers.  Default value is
- *                         'circle'. The allowed values are:  ~!~ * NONE *
- *                         CIRCLE * SQUARE * DIAMOND * HOLLOWCIRCLE *
- *                         HOLLOWSQUARE * HOLLOWDIAMOND * SYMBOLCODE~!~
  * @param timeIntervals
  * @param videoStyle
  * @param sessionKey  User Provided session key that is later used to retrieve
  *                    the generated video from the WMS.
- * @param options  Optional parameters.  Default value is an empty {@link
- *                 std::map}.
+ * @param styleOptions  Styling options for the image.
+ * @param options  Optional parameters.  Default value is an empty std::map.
  * @param[out] response_  Response object containing the results of the
  *                        operation.
  * 
@@ -9274,7 +8904,7 @@ VisualizeVideoResponse GPUdb::visualizeVideo(const std::vector<std::string>& tab
  *         passed in by reference).
  * 
  */
-VisualizeVideoResponse& GPUdb::visualizeVideo(const std::vector<std::string>& tableNames, const std::vector<std::string>& worldTableNames, const std::vector<std::vector<std::string> >& trackIds, const std::string& xColumnName, const std::string& yColumnName, const double minX, const double maxX, const double minY, const double maxY, const int32_t width, const int32_t height, const std::string& projection, const int64_t bgColor, const std::vector<bool>& doPoints, const std::vector<bool>& doShapes, const std::vector<bool>& doTracks, const std::vector<int64_t>& pointcolors, const std::vector<int32_t>& pointsizes, const std::vector<std::string>& pointshapes, const std::vector<int32_t>& shapelinewidths, const std::vector<int64_t>& shapelinecolors, const std::vector<int64_t>& shapefillcolors, const std::vector<int32_t>& tracklinewidths, const std::vector<int64_t>& tracklinecolors, const std::vector<int32_t>& trackmarkersizes, const std::vector<int64_t>& trackmarkercolors, const std::vector<std::string>& trackmarkershapes, const std::vector<int64_t>& trackheadcolors, const std::vector<int32_t>& trackheadsizes, const std::vector<std::string>& trackheadshapes, const std::vector<std::vector<double> >& timeIntervals, const std::string& videoStyle, const std::string& sessionKey, const std::map<std::string, std::string>& options, VisualizeVideoResponse& response_) const
+VisualizeVideoResponse& GPUdb::visualizeVideo(const std::vector<std::string>& tableNames, const std::vector<std::string>& worldTableNames, const std::vector<std::vector<std::string> >& trackIds, const std::string& xColumnName, const std::string& yColumnName, const double minX, const double maxX, const double minY, const double maxY, const int32_t width, const int32_t height, const std::string& projection, const int64_t bgColor, const std::vector<std::vector<double> >& timeIntervals, const std::string& videoStyle, const std::string& sessionKey, const std::map<std::string, std::vector<std::string> >& styleOptions, const std::map<std::string, std::string>& options, VisualizeVideoResponse& response_) const
 {
     VisualizeVideoRequest actualRequest_;
     actualRequest_.tableNames = tableNames;
@@ -9290,26 +8920,10 @@ VisualizeVideoResponse& GPUdb::visualizeVideo(const std::vector<std::string>& ta
     actualRequest_.height = height;
     actualRequest_.projection = projection;
     actualRequest_.bgColor = bgColor;
-    actualRequest_.doPoints = doPoints;
-    actualRequest_.doShapes = doShapes;
-    actualRequest_.doTracks = doTracks;
-    actualRequest_.pointcolors = pointcolors;
-    actualRequest_.pointsizes = pointsizes;
-    actualRequest_.pointshapes = pointshapes;
-    actualRequest_.shapelinewidths = shapelinewidths;
-    actualRequest_.shapelinecolors = shapelinecolors;
-    actualRequest_.shapefillcolors = shapefillcolors;
-    actualRequest_.tracklinewidths = tracklinewidths;
-    actualRequest_.tracklinecolors = tracklinecolors;
-    actualRequest_.trackmarkersizes = trackmarkersizes;
-    actualRequest_.trackmarkercolors = trackmarkercolors;
-    actualRequest_.trackmarkershapes = trackmarkershapes;
-    actualRequest_.trackheadcolors = trackheadcolors;
-    actualRequest_.trackheadsizes = trackheadsizes;
-    actualRequest_.trackheadshapes = trackheadshapes;
     actualRequest_.timeIntervals = timeIntervals;
     actualRequest_.videoStyle = videoStyle;
     actualRequest_.sessionKey = sessionKey;
+    actualRequest_.styleOptions = styleOptions;
     actualRequest_.options = options;
     submitRequest("/visualize/video", actualRequest_, response_, false);
     return response_;
@@ -9319,12 +8933,12 @@ VisualizeVideoResponse& GPUdb::visualizeVideo(const std::vector<std::string>& ta
 /**
  * Creates raster heat-map images of table data based on input parameters.
  * Numerous parameters are required to call this function. Some of the
- * important parameters are the attributes of the generated images (@a bgColor,
- * @a width, @a height), the collection of GPUdb table names on which this
- * function is to be applied and a user specified session key. This session key
- * is later used to fetch the generated images stored by GPUdb. The operation
- * is synchronous meaning that GPUdb will not return the request until all the
- * images are fully available.
+ * important parameters are the attributes of the generated images (@a
+ * bg_color, @a width, @a height), the collection of GPUdb table names on which
+ * this function is to be applied and a user specified session key. This
+ * session key is later used to fetch the generated images stored by GPUdb. The
+ * operation is synchronous meaning that GPUdb will not return the request
+ * until all the images are fully available.
  * <p>
  * Once the request has been processed then the generated video frames are
  * available for download via WMS using STYLES=cached. In this request the
@@ -9367,12 +8981,12 @@ VisualizeVideoHeatmapResponse GPUdb::visualizeVideoHeatmap(const VisualizeVideoH
 /**
  * Creates raster heat-map images of table data based on input parameters.
  * Numerous parameters are required to call this function. Some of the
- * important parameters are the attributes of the generated images (@a bgColor,
- * @a width, @a height), the collection of GPUdb table names on which this
- * function is to be applied and a user specified session key. This session key
- * is later used to fetch the generated images stored by GPUdb. The operation
- * is synchronous meaning that GPUdb will not return the request until all the
- * images are fully available.
+ * important parameters are the attributes of the generated images (@a
+ * bg_color, @a width, @a height), the collection of GPUdb table names on which
+ * this function is to be applied and a user specified session key. This
+ * session key is later used to fetch the generated images stored by GPUdb. The
+ * operation is synchronous meaning that GPUdb will not return the request
+ * until all the images are fully available.
  * <p>
  * Once the request has been processed then the generated video frames are
  * available for download via WMS using STYLES=cached. In this request the
@@ -9417,12 +9031,12 @@ VisualizeVideoHeatmapResponse& GPUdb::visualizeVideoHeatmap(const VisualizeVideo
 /**
  * Creates raster heat-map images of table data based on input parameters.
  * Numerous parameters are required to call this function. Some of the
- * important parameters are the attributes of the generated images (@a bgColor,
- * @a width, @a height), the collection of GPUdb table names on which this
- * function is to be applied and a user specified session key. This session key
- * is later used to fetch the generated images stored by GPUdb. The operation
- * is synchronous meaning that GPUdb will not return the request until all the
- * images are fully available.
+ * important parameters are the attributes of the generated images (@a
+ * bg_color, @a width, @a height), the collection of GPUdb table names on which
+ * this function is to be applied and a user specified session key. This
+ * session key is later used to fetch the generated images stored by GPUdb. The
+ * operation is synchronous meaning that GPUdb will not return the request
+ * until all the images are fully available.
  * <p>
  * Once the request has been processed then the generated video frames are
  * available for download via WMS using STYLES=cached. In this request the
@@ -9460,29 +9074,17 @@ VisualizeVideoHeatmapResponse& GPUdb::visualizeVideoHeatmap(const VisualizeVideo
  * @param width  Width of the generated video.
  * @param height  Height of the generated video.
  * @param projection  Spatial Reference System (i.e. EPSG Code).  Default value
- *                    is 'PLATE_CARREE'. The allowed values are:  ~!~ *
- *                    EPSG:4326 * PLATE_CARREE * _900913 * EPSG:900913 *
- *                    _102100 * EPSG:102100 * _3857 * EPSG:3857 *
- *                    WEB_MERCATOR~!~
- * @param bgColor  Background color of the generated frames.
- * @param colormap  Colormap for the heat map.  Default value is 'none'.
- * @param blurRadius  Blurring radius for the heat map.  Default value is '5'.
- *                    The minimum allowed value is 1. The maximum allowed value
- *                    is 32.
- * @param gradientStartColor  User defined gradient start color for the heat
- *                            map.  Default value is 'FFFFFF'.
- * @param gradientEndColor  User defined gradient end color for the heat map.
- *                          Default value is 'FF0000'.
+ *                    is 'PLATE_CARREE'.
  * @param videoStyle
  * @param sessionKey  User Provided session key that is later used to retrieve
  *                    the generated video from the WMS.
- * @param options  Optional parameters.  Default value is an empty {@link
- *                 std::map}.
+ * @param styleOptions  Various style related options.
+ * @param options  Optional parameters.  Default value is an empty std::map.
  * 
  * @return Response object containing the result of the operation.
  * 
  */
-VisualizeVideoHeatmapResponse GPUdb::visualizeVideoHeatmap(const std::vector<std::string>& tableNames, const std::string& xColumnName, const std::string& yColumnName, const double minX, const double maxX, const double minY, const double maxY, const std::vector<std::vector<double> >& timeIntervals, const int32_t width, const int32_t height, const std::string& projection, const int64_t bgColor, const std::string& colormap, const int32_t blurRadius, const int64_t gradientStartColor, const int64_t gradientEndColor, const std::string& videoStyle, const std::string& sessionKey, const std::map<std::string, std::string>& options) const
+VisualizeVideoHeatmapResponse GPUdb::visualizeVideoHeatmap(const std::vector<std::string>& tableNames, const std::string& xColumnName, const std::string& yColumnName, const double minX, const double maxX, const double minY, const double maxY, const std::vector<std::vector<double> >& timeIntervals, const int32_t width, const int32_t height, const std::string& projection, const std::string& videoStyle, const std::string& sessionKey, const std::map<std::string, std::string>& styleOptions, const std::map<std::string, std::string>& options) const
 {
     VisualizeVideoHeatmapRequest actualRequest_;
     actualRequest_.tableNames = tableNames;
@@ -9496,13 +9098,9 @@ VisualizeVideoHeatmapResponse GPUdb::visualizeVideoHeatmap(const std::vector<std
     actualRequest_.width = width;
     actualRequest_.height = height;
     actualRequest_.projection = projection;
-    actualRequest_.bgColor = bgColor;
-    actualRequest_.colormap = colormap;
-    actualRequest_.blurRadius = blurRadius;
-    actualRequest_.gradientStartColor = gradientStartColor;
-    actualRequest_.gradientEndColor = gradientEndColor;
     actualRequest_.videoStyle = videoStyle;
     actualRequest_.sessionKey = sessionKey;
+    actualRequest_.styleOptions = styleOptions;
     actualRequest_.options = options;
     VisualizeVideoHeatmapResponse actualResponse_;
     submitRequest("/visualize/video/heatmap", actualRequest_, actualResponse_, false);
@@ -9513,12 +9111,12 @@ VisualizeVideoHeatmapResponse GPUdb::visualizeVideoHeatmap(const std::vector<std
 /**
  * Creates raster heat-map images of table data based on input parameters.
  * Numerous parameters are required to call this function. Some of the
- * important parameters are the attributes of the generated images (@a bgColor,
- * @a width, @a height), the collection of GPUdb table names on which this
- * function is to be applied and a user specified session key. This session key
- * is later used to fetch the generated images stored by GPUdb. The operation
- * is synchronous meaning that GPUdb will not return the request until all the
- * images are fully available.
+ * important parameters are the attributes of the generated images (@a
+ * bg_color, @a width, @a height), the collection of GPUdb table names on which
+ * this function is to be applied and a user specified session key. This
+ * session key is later used to fetch the generated images stored by GPUdb. The
+ * operation is synchronous meaning that GPUdb will not return the request
+ * until all the images are fully available.
  * <p>
  * Once the request has been processed then the generated video frames are
  * available for download via WMS using STYLES=cached. In this request the
@@ -9556,24 +9154,12 @@ VisualizeVideoHeatmapResponse GPUdb::visualizeVideoHeatmap(const std::vector<std
  * @param width  Width of the generated video.
  * @param height  Height of the generated video.
  * @param projection  Spatial Reference System (i.e. EPSG Code).  Default value
- *                    is 'PLATE_CARREE'. The allowed values are:  ~!~ *
- *                    EPSG:4326 * PLATE_CARREE * _900913 * EPSG:900913 *
- *                    _102100 * EPSG:102100 * _3857 * EPSG:3857 *
- *                    WEB_MERCATOR~!~
- * @param bgColor  Background color of the generated frames.
- * @param colormap  Colormap for the heat map.  Default value is 'none'.
- * @param blurRadius  Blurring radius for the heat map.  Default value is '5'.
- *                    The minimum allowed value is 1. The maximum allowed value
- *                    is 32.
- * @param gradientStartColor  User defined gradient start color for the heat
- *                            map.  Default value is 'FFFFFF'.
- * @param gradientEndColor  User defined gradient end color for the heat map.
- *                          Default value is 'FF0000'.
+ *                    is 'PLATE_CARREE'.
  * @param videoStyle
  * @param sessionKey  User Provided session key that is later used to retrieve
  *                    the generated video from the WMS.
- * @param options  Optional parameters.  Default value is an empty {@link
- *                 std::map}.
+ * @param styleOptions  Various style related options.
+ * @param options  Optional parameters.  Default value is an empty std::map.
  * @param[out] response_  Response object containing the results of the
  *                        operation.
  * 
@@ -9581,7 +9167,7 @@ VisualizeVideoHeatmapResponse GPUdb::visualizeVideoHeatmap(const std::vector<std
  *         passed in by reference).
  * 
  */
-VisualizeVideoHeatmapResponse& GPUdb::visualizeVideoHeatmap(const std::vector<std::string>& tableNames, const std::string& xColumnName, const std::string& yColumnName, const double minX, const double maxX, const double minY, const double maxY, const std::vector<std::vector<double> >& timeIntervals, const int32_t width, const int32_t height, const std::string& projection, const int64_t bgColor, const std::string& colormap, const int32_t blurRadius, const int64_t gradientStartColor, const int64_t gradientEndColor, const std::string& videoStyle, const std::string& sessionKey, const std::map<std::string, std::string>& options, VisualizeVideoHeatmapResponse& response_) const
+VisualizeVideoHeatmapResponse& GPUdb::visualizeVideoHeatmap(const std::vector<std::string>& tableNames, const std::string& xColumnName, const std::string& yColumnName, const double minX, const double maxX, const double minY, const double maxY, const std::vector<std::vector<double> >& timeIntervals, const int32_t width, const int32_t height, const std::string& projection, const std::string& videoStyle, const std::string& sessionKey, const std::map<std::string, std::string>& styleOptions, const std::map<std::string, std::string>& options, VisualizeVideoHeatmapResponse& response_) const
 {
     VisualizeVideoHeatmapRequest actualRequest_;
     actualRequest_.tableNames = tableNames;
@@ -9595,13 +9181,9 @@ VisualizeVideoHeatmapResponse& GPUdb::visualizeVideoHeatmap(const std::vector<st
     actualRequest_.width = width;
     actualRequest_.height = height;
     actualRequest_.projection = projection;
-    actualRequest_.bgColor = bgColor;
-    actualRequest_.colormap = colormap;
-    actualRequest_.blurRadius = blurRadius;
-    actualRequest_.gradientStartColor = gradientStartColor;
-    actualRequest_.gradientEndColor = gradientEndColor;
     actualRequest_.videoStyle = videoStyle;
     actualRequest_.sessionKey = sessionKey;
+    actualRequest_.styleOptions = styleOptions;
     actualRequest_.options = options;
     submitRequest("/visualize/video/heatmap", actualRequest_, response_, false);
     return response_;

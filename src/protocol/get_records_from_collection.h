@@ -11,11 +11,11 @@ namespace gpudb
 
     /**
      * A set of input parameters for {@link
-     * #getRecordsFromCollectionRaw(GetRecordsFromCollectionRequest&)}.
+     * #getRecordsFromCollectionRaw(const GetRecordsFromCollectionRequest&) const}.
      * <p>
      * Retrieves records from a collection. The operation can optionally return
      * the record IDs which can be used in certain queries such as {@link
-     * #deleteRecords(DeleteRecordsRequest&)}.
+     * #deleteRecords(const DeleteRecordsRequest&) const}.
      * <p>
      * This operation supports paging through the data via the @a offset and @a
      * limit parameters.
@@ -52,7 +52,7 @@ namespace gpudb
          *                   of results to be returned, or END_OF_SET (-9999)
          *                   to indicate that the max number of results should
          *                   be returned.  Default value is 10000.
-         * @param[in] options  Default value is an empty {@link std::map}.
+         * @param[in] options  Default value is an empty std::map.
          * 
          */
         GetRecordsFromCollectionRequest(const std::string& tableName, const int64_t offset, const int64_t limit, const std::map<std::string, std::string>& options):
@@ -82,9 +82,8 @@ namespace gpudb
          *                   be returned.  Default value is 10000.
          * @param[in] encoding  Specifies the encoding for returned records;
          *                      either 'binary' or 'json'.  Default value is
-         *                      'binary'. The allowed values are:  ~!~ * BINARY
-         *                      * JSON~!~
-         * @param[in] options  Default value is an empty {@link std::map}.
+         *                      'binary'.
+         * @param[in] options  Default value is an empty std::map.
          * 
          */
         GetRecordsFromCollectionRequest(const std::string& tableName, const int64_t offset, const int64_t limit, const std::string& encoding, const std::map<std::string, std::string>& options):
@@ -169,11 +168,11 @@ namespace gpudb
 
     /**
      * A set of output parameters for {@link
-     * #getRecordsFromCollectionRaw(GetRecordsFromCollectionRequest&)}.
+     * #getRecordsFromCollectionRaw(const GetRecordsFromCollectionRequest&) const}.
      * <p>
      * Retrieves records from a collection. The operation can optionally return
      * the record IDs which can be used in certain queries such as {@link
-     * #deleteRecords(DeleteRecordsRequest&)}.
+     * #deleteRecords(const DeleteRecordsRequest&) const}.
      * <p>
      * This operation supports paging through the data via the @a offset and @a
      * limit parameters.
@@ -267,11 +266,11 @@ namespace gpudb
 
     /**
      * A set of output parameters for {@link
-     * #getRecordsFromCollection(GetRecordsFromCollectionRequest&)}.
+     * #getRecordsFromCollection(const GetRecordsFromCollectionRequest&) const}.
      * <p>
      * Retrieves records from a collection. The operation can optionally return
      * the record IDs which can be used in certain queries such as {@link
-     * #deleteRecords(DeleteRecordsRequest&)}.
+     * #deleteRecords(const DeleteRecordsRequest&) const}.
      * <p>
      * This operation supports paging through the data via the @a offset and @a
      * limit parameters.

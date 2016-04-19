@@ -11,7 +11,7 @@ namespace gpudb
 
     /**
      * A set of input parameters for {@link
-     * #filterByRadius(FilterByRadiusRequest&)}.
+     * #filterByRadius(const FilterByRadiusRequest&) const}.
      * <p>
      * Calculates which objects from a table lie within a circle with the given
      * radius and center point (i.e. circular NAI). The operation is
@@ -56,7 +56,7 @@ namespace gpudb
          * @param[in] viewName  If provided, then this will be the name of the
          *                      view containing the results. Must not be an
          *                      already existing collection, table or view.
-         *                      Default value is an empty {@link std::string}.
+         *                      Default value is an empty string.
          * @param[in] xColumnName  Name of the column to be used for the
          *                         x-coordinate (the longitude) of the center.
          * @param[in] xCenter  Value of the longitude of the center. Must be
@@ -73,7 +73,7 @@ namespace gpudb
          *                    of '42000' means 42 km.  The minimum allowed
          *                    value is 0. The maximum allowed value is MAX_INT.
          * @param[in] options  Optional parameters.  Default value is an empty
-         *                     {@link std::map}.
+         *                     std::map.
          * 
          */
         FilterByRadiusRequest(const std::string& tableName, const std::string& viewName, const std::string& xColumnName, const double xCenter, const std::string& yColumnName, const double yCenter, const double radius, const std::map<std::string, std::string>& options):
@@ -182,7 +182,7 @@ namespace gpudb
 
     /**
      * A set of output parameters for {@link
-     * #filterByRadius(FilterByRadiusRequest&)}.
+     * #filterByRadius(const FilterByRadiusRequest&) const}.
      * <p>
      * Calculates which objects from a table lie within a circle with the given
      * radius and center point (i.e. circular NAI). The operation is

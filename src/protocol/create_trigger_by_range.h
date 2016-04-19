@@ -11,18 +11,19 @@ namespace gpudb
 
     /**
      * A set of input parameters for {@link
-     * #createTriggerByRange(CreateTriggerByRangeRequest&)}.
+     * #createTriggerByRange(const CreateTriggerByRangeRequest&) const}.
      * <p>
      * Sets up a simple range trigger for a column_name for one or more tables.
      * Once the trigger has been activated, any record added to the listed
-     * tables(s) via {@link #insertRecordsRaw(RawInsertRecordsRequest&)} with
-     * the chosen column_name's value falling within the specified range will
-     * trip the trigger. All such records will be queued at GPUdb's trigger
-     * port-by default '9001' but can also be obtained via {@link
-     * #showSystemStatus(ShowSystemStatusRequest&)}-for any listening client to
-     * collect. Active triggers can be cancelled by using the {@link
-     * #clearTrigger(ClearTriggerRequest&)} endpoint or by clearing all
-     * relevant tables.
+     * tables(s) via {@link
+     * #insertRecordsRaw(const RawInsertRecordsRequest&) const} with the
+     * chosen column_name's value falling within the specified range will trip
+     * the trigger. All such records will be queued at GPUdb's trigger port-by
+     * default '9001' but can also be obtained via {@link
+     * #showSystemStatus(const ShowSystemStatusRequest&) const}-for any
+     * listening client to collect. Active triggers can be cancelled by using
+     * the {@link #clearTrigger(const ClearTriggerRequest&) const} endpoint
+     * or by clearing all relevant tables.
      * <p>
      * The output returns the trigger handle as well as indicating success or
      * failure of the trigger activation.
@@ -55,7 +56,7 @@ namespace gpudb
          * @param[in] min  The lower bound (inclusive) for the trigger range.
          * @param[in] max  The upper bound (inclusive) for the trigger range.
          * @param[in] options  Optional parameters.  Default value is an empty
-         *                     {@link std::map}.
+         *                     std::map.
          * 
          */
         CreateTriggerByRangeRequest(const std::string& requestId, const std::vector<std::string>& tableNames, const std::string& columnName, const double min, const double max, const std::map<std::string, std::string>& options):
@@ -148,18 +149,19 @@ namespace gpudb
 
     /**
      * A set of output parameters for {@link
-     * #createTriggerByRange(CreateTriggerByRangeRequest&)}.
+     * #createTriggerByRange(const CreateTriggerByRangeRequest&) const}.
      * <p>
      * Sets up a simple range trigger for a column_name for one or more tables.
      * Once the trigger has been activated, any record added to the listed
-     * tables(s) via {@link #insertRecordsRaw(RawInsertRecordsRequest&)} with
-     * the chosen column_name's value falling within the specified range will
-     * trip the trigger. All such records will be queued at GPUdb's trigger
-     * port-by default '9001' but can also be obtained via {@link
-     * #showSystemStatus(ShowSystemStatusRequest&)}-for any listening client to
-     * collect. Active triggers can be cancelled by using the {@link
-     * #clearTrigger(ClearTriggerRequest&)} endpoint or by clearing all
-     * relevant tables.
+     * tables(s) via {@link
+     * #insertRecordsRaw(const RawInsertRecordsRequest&) const} with the
+     * chosen column_name's value falling within the specified range will trip
+     * the trigger. All such records will be queued at GPUdb's trigger port-by
+     * default '9001' but can also be obtained via {@link
+     * #showSystemStatus(const ShowSystemStatusRequest&) const}-for any
+     * listening client to collect. Active triggers can be cancelled by using
+     * the {@link #clearTrigger(const ClearTriggerRequest&) const} endpoint
+     * or by clearing all relevant tables.
      * <p>
      * The output returns the trigger handle as well as indicating success or
      * failure of the trigger activation.

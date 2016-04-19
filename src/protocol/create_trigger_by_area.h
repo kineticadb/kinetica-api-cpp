@@ -11,20 +11,22 @@ namespace gpudb
 
     /**
      * A set of input parameters for {@link
-     * #createTriggerByArea(CreateTriggerByAreaRequest&)}.
+     * #createTriggerByArea(const CreateTriggerByAreaRequest&) const}.
      * <p>
      * Sets up an area  trigger mechanism for two column_names for one or more
      * tables. (This function is essentially the two-dimensional version of
-     * {@link #createTriggerByRange(CreateTriggerByRangeRequest&)}.) Once the
-     * trigger has been activated, any record added to the listed tables(s) via
-     * {@link #insertRecordsRaw(RawInsertRecordsRequest&)} with the chosen
-     * columns' values falling within the specified region will trip the
+     * {@link
+     * #createTriggerByRange(const CreateTriggerByRangeRequest&) const}.)
+     * Once the trigger has been activated, any record added to the listed
+     * tables(s) via {@link
+     * #insertRecordsRaw(const RawInsertRecordsRequest&) const} with the
+     * chosen columns' values falling within the specified region will trip the
      * trigger. All such records will be queued at GPUdb's trigger port-by
      * default '9001' but can also be obtained via {@link
-     * #showSystemStatus(ShowSystemStatusRequest&)}-for any listening client to
-     * collect. Active triggers can be cancelled by using the {@link
-     * #clearTrigger(ClearTriggerRequest&)} endpoint or by clearing all
-     * relevant tables.
+     * #showSystemStatus(const ShowSystemStatusRequest&) const}-for any
+     * listening client to collect. Active triggers can be cancelled by using
+     * the {@link #clearTrigger(const ClearTriggerRequest&) const} endpoint
+     * or by clearing all relevant tables.
      * <p>
      * The output returns the trigger handle as well as indicating success or
      * failure of the trigger activation.
@@ -69,7 +71,7 @@ namespace gpudb
          *                     translates to the y-coordinates of a geospatial
          *                     region. Must be the same length as xvals.
          * @param[in] options  Optional parameters.  Default value is an empty
-         *                     {@link std::map}.
+         *                     std::map.
          * 
          */
         CreateTriggerByAreaRequest(const std::string& requestId, const std::vector<std::string>& tableNames, const std::string& xColumnName, const std::vector<double>& xVector, const std::string& yColumnName, const std::vector<double>& yVector, const std::map<std::string, std::string>& options):
@@ -170,20 +172,22 @@ namespace gpudb
 
     /**
      * A set of output parameters for {@link
-     * #createTriggerByArea(CreateTriggerByAreaRequest&)}.
+     * #createTriggerByArea(const CreateTriggerByAreaRequest&) const}.
      * <p>
      * Sets up an area  trigger mechanism for two column_names for one or more
      * tables. (This function is essentially the two-dimensional version of
-     * {@link #createTriggerByRange(CreateTriggerByRangeRequest&)}.) Once the
-     * trigger has been activated, any record added to the listed tables(s) via
-     * {@link #insertRecordsRaw(RawInsertRecordsRequest&)} with the chosen
-     * columns' values falling within the specified region will trip the
+     * {@link
+     * #createTriggerByRange(const CreateTriggerByRangeRequest&) const}.)
+     * Once the trigger has been activated, any record added to the listed
+     * tables(s) via {@link
+     * #insertRecordsRaw(const RawInsertRecordsRequest&) const} with the
+     * chosen columns' values falling within the specified region will trip the
      * trigger. All such records will be queued at GPUdb's trigger port-by
      * default '9001' but can also be obtained via {@link
-     * #showSystemStatus(ShowSystemStatusRequest&)}-for any listening client to
-     * collect. Active triggers can be cancelled by using the {@link
-     * #clearTrigger(ClearTriggerRequest&)} endpoint or by clearing all
-     * relevant tables.
+     * #showSystemStatus(const ShowSystemStatusRequest&) const}-for any
+     * listening client to collect. Active triggers can be cancelled by using
+     * the {@link #clearTrigger(const ClearTriggerRequest&) const} endpoint
+     * or by clearing all relevant tables.
      * <p>
      * The output returns the trigger handle as well as indicating success or
      * failure of the trigger activation.

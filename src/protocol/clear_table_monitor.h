@@ -11,10 +11,10 @@ namespace gpudb
 
     /**
      * A set of input parameters for {@link
-     * #clearTableMonitor(ClearTableMonitorRequest&)}.
+     * #clearTableMonitor(const ClearTableMonitorRequest&) const}.
      * <p>
      * Deactivates a table monitor previously created with {@link
-     * #createTableMonitor(CreateTableMonitorRequest&)}.
+     * #createTableMonitor(const CreateTableMonitorRequest&) const}.
      */
     struct ClearTableMonitorRequest
     {
@@ -35,7 +35,7 @@ namespace gpudb
          * 
          * @param[in] topicId  The topic ID returned by /create/tablemonitor.
          * @param[in] options  Optional parameters.  Default value is an empty
-         *                     {@link std::map}.
+         *                     std::map.
          * 
          */
         ClearTableMonitorRequest(const std::string& topicId, const std::map<std::string, std::string>& options):
@@ -96,10 +96,10 @@ namespace gpudb
 
     /**
      * A set of output parameters for {@link
-     * #clearTableMonitor(ClearTableMonitorRequest&)}.
+     * #clearTableMonitor(const ClearTableMonitorRequest&) const}.
      * <p>
      * Deactivates a table monitor previously created with {@link
-     * #createTableMonitor(CreateTableMonitorRequest&)}.
+     * #createTableMonitor(const CreateTableMonitorRequest&) const}.
      */
     struct ClearTableMonitorResponse
     {

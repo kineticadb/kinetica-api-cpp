@@ -11,7 +11,7 @@ namespace gpudb
 
     /**
      * A set of input parameters for {@link
-     * #aggregateKMeans(AggregateKMeansRequest&)}.
+     * #aggregateKMeans(const AggregateKMeansRequest&) const}.
      * <p>
      * This endpoint runs the k-means algorithm - a heuristic algorithm that
      * attempts to do k-means clustering.  An ideal k-means clustering
@@ -57,7 +57,7 @@ namespace gpudb
          *                       successive points is less than the given
          *                       tolerance.
          * @param[in] options  Optional parameters.  Default value is an empty
-         *                     {@link std::map}.
+         *                     std::map.
          * 
          */
         AggregateKMeansRequest(const std::string& tableName, const std::vector<std::string>& columnNames, const int32_t k, const double tolerance, const std::map<std::string, std::string>& options):
@@ -142,7 +142,7 @@ namespace gpudb
 
     /**
      * A set of output parameters for {@link
-     * #aggregateKMeans(AggregateKMeansRequest&)}.
+     * #aggregateKMeans(const AggregateKMeansRequest&) const}.
      * <p>
      * This endpoint runs the k-means algorithm - a heuristic algorithm that
      * attempts to do k-means clustering.  An ideal k-means clustering

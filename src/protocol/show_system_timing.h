@@ -11,7 +11,7 @@ namespace gpudb
 
     /**
      * A set of input parameters for {@link
-     * #showSystemTiming(ShowSystemTimingRequest&)}.
+     * #showSystemTiming(const ShowSystemTimingRequest&) const}.
      * <p>
      * Returns the last 100 requests made to GPUdb along with the request
      * timing and internal job id. The GPUdb Admin tool uses it to present
@@ -34,7 +34,7 @@ namespace gpudb
          * parameters.
          * 
          * @param[in] options  Optional parameters, currently unused.  Default
-         *                     value is an empty {@link std::map}.
+         *                     value is an empty std::map.
          * 
          */
         ShowSystemTimingRequest(const std::map<std::string, std::string>& options):
@@ -87,7 +87,7 @@ namespace gpudb
 
     /**
      * A set of output parameters for {@link
-     * #showSystemTiming(ShowSystemTimingRequest&)}.
+     * #showSystemTiming(const ShowSystemTimingRequest&) const}.
      * <p>
      * Returns the last 100 requests made to GPUdb along with the request
      * timing and internal job id. The GPUdb Admin tool uses it to present

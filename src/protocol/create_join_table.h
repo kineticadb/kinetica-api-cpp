@@ -11,7 +11,7 @@ namespace gpudb
 
     /**
      * A set of input parameters for {@link
-     * #createJoinTable(CreateJoinTableRequest&)}.
+     * #createJoinTable(const CreateJoinTableRequest&) const}.
      * <p>
      * Creates a joint_table which is a list of tables and aliases for those
      * tables.
@@ -44,7 +44,7 @@ namespace gpudb
          * @param[in] aliases  The list of aliases for each of the
          *                     corresponding tables.
          * @param[in] options  Optional parameters.  Default value is an empty
-         *                     {@link std::map}.
+         *                     std::map.
          * 
          */
         CreateJoinTableRequest(const std::string& joinTableName, const std::vector<std::string>& tableNames, const std::vector<std::string>& aliases, const std::map<std::string, std::string>& options):
@@ -121,7 +121,7 @@ namespace gpudb
 
     /**
      * A set of output parameters for {@link
-     * #createJoinTable(CreateJoinTableRequest&)}.
+     * #createJoinTable(const CreateJoinTableRequest&) const}.
      * <p>
      * Creates a joint_table which is a list of tables and aliases for those
      * tables.

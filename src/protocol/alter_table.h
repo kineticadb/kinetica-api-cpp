@@ -10,14 +10,16 @@ namespace gpudb
 {
 
     /**
-     * A set of input parameters for {@link #alterTable(AlterTableRequest&)}.
+     * A set of input parameters for {@link
+     * #alterTable(const AlterTableRequest&) const}.
      * <p>
      * Creates or deletes an index on a particular column in a given table.
      * Creating an index can speed up certain search queries (such as {@link
-     * #getRecordsRaw(GetRecordsRequest&)}, {@link
-     * #deleteRecords(DeleteRecordsRequest&)}, {@link
-     * #updateRecordsRaw(RawUpdateRecordsRequest&)}) when using expressions
-     * containing equality or relational operators on indexed columns.
+     * #getRecordsRaw(const GetRecordsRequest&) const}, {@link
+     * #deleteRecords(const DeleteRecordsRequest&) const}, {@link
+     * #updateRecordsRaw(const RawUpdateRecordsRequest&) const}) when using
+     * expressions containing equality or relational operators on indexed
+     * columns.
      */
     struct AlterTableRequest
     {
@@ -45,10 +47,9 @@ namespace gpudb
          *                        created or deleted (can be empty when @a
          *                        action = @a list).
          * @param[in] action  Kind of index operation being performed on the
-         *                    table  The allowed values are:  ~!~ * CREATE *
-         *                    DELETE * LIST~!~
+         *                    table
          * @param[in] options  Optional parameters.  Default value is an empty
-         *                     {@link std::map}.
+         *                     std::map.
          * 
          */
         AlterTableRequest(const std::string& tableName, const std::string& columnName, const std::string& action, const std::map<std::string, std::string>& options):
@@ -124,14 +125,16 @@ namespace gpudb
 {
 
     /**
-     * A set of output parameters for {@link #alterTable(AlterTableRequest&)}.
+     * A set of output parameters for {@link
+     * #alterTable(const AlterTableRequest&) const}.
      * <p>
      * Creates or deletes an index on a particular column in a given table.
      * Creating an index can speed up certain search queries (such as {@link
-     * #getRecordsRaw(GetRecordsRequest&)}, {@link
-     * #deleteRecords(DeleteRecordsRequest&)}, {@link
-     * #updateRecordsRaw(RawUpdateRecordsRequest&)}) when using expressions
-     * containing equality or relational operators on indexed columns.
+     * #getRecordsRaw(const GetRecordsRequest&) const}, {@link
+     * #deleteRecords(const DeleteRecordsRequest&) const}, {@link
+     * #updateRecordsRaw(const RawUpdateRecordsRequest&) const}) when using
+     * expressions containing equality or relational operators on indexed
+     * columns.
      */
     struct AlterTableResponse
     {

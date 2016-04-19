@@ -11,7 +11,7 @@ namespace gpudb
 
     /**
      * A set of input parameters for {@link
-     * #getRecordsBySeriesRaw(GetRecordsBySeriesRequest&)}.
+     * #getRecordsBySeriesRaw(const GetRecordsBySeriesRequest&) const}.
      * <p>
      * Retrieves the complete series/track records from the given @a
      * worldTableName based on the partial track informaton contained in the @a
@@ -20,10 +20,11 @@ namespace gpudb
      * This operation supports paging through the data via the @a offset and @a
      * limit parameters.
      * <p>
-     * In contrast to {@link #getRecordsRaw(GetRecordsRequest&)} this returns
-     * records grouped by series/track. So if @a offset is 0 and @a limit is 5
-     * this operation would return the first 5 series/tracks in @a tableName.
-     * Each series/track will be returned sorted by their TIMESTAMP column.
+     * In contrast to {@link
+     * #getRecordsRaw(const GetRecordsRequest&) const} this returns records
+     * grouped by series/track. So if @a offset is 0 and @a limit is 5 this
+     * operation would return the first 5 series/tracks in @a tableName. Each
+     * series/track will be returned sorted by their TIMESTAMP column.
      */
     struct GetRecordsBySeriesRequest
     {
@@ -66,7 +67,7 @@ namespace gpudb
          *                   (-9999) to indicate that the max number of results
          *                   should be returned.  Default value is 10000.
          * @param[in] options  Optional parameters.  Default value is an empty
-         *                     {@link std::map}.
+         *                     std::map.
          * 
          */
         GetRecordsBySeriesRequest(const std::string& tableName, const std::string& worldTableName, const int32_t offset, const int32_t limit, const std::map<std::string, std::string>& options):
@@ -104,10 +105,9 @@ namespace gpudb
          *                   should be returned.  Default value is 10000.
          * @param[in] encoding  Specifies the encoding for returned records;
          *                      either 'binary' or 'json'.  Default value is
-         *                      'binary'. The allowed values are:  ~!~ * BINARY
-         *                      * JSON~!~
+         *                      'binary'.
          * @param[in] options  Optional parameters.  Default value is an empty
-         *                     {@link std::map}.
+         *                     std::map.
          * 
          */
         GetRecordsBySeriesRequest(const std::string& tableName, const std::string& worldTableName, const int32_t offset, const int32_t limit, const std::string& encoding, const std::map<std::string, std::string>& options):
@@ -200,7 +200,7 @@ namespace gpudb
 
     /**
      * A set of output parameters for {@link
-     * #getRecordsBySeriesRaw(GetRecordsBySeriesRequest&)}.
+     * #getRecordsBySeriesRaw(const GetRecordsBySeriesRequest&) const}.
      * <p>
      * Retrieves the complete series/track records from the given @a
      * worldTableName based on the partial track informaton contained in the @a
@@ -209,10 +209,11 @@ namespace gpudb
      * This operation supports paging through the data via the @a offset and @a
      * limit parameters.
      * <p>
-     * In contrast to {@link #getRecordsRaw(GetRecordsRequest&)} this returns
-     * records grouped by series/track. So if @a offset is 0 and @a limit is 5
-     * this operation would return the first 5 series/tracks in @a tableName.
-     * Each series/track will be returned sorted by their TIMESTAMP column.
+     * In contrast to {@link
+     * #getRecordsRaw(const GetRecordsRequest&) const} this returns records
+     * grouped by series/track. So if @a offset is 0 and @a limit is 5 this
+     * operation would return the first 5 series/tracks in @a tableName. Each
+     * series/track will be returned sorted by their TIMESTAMP column.
      */
     struct RawGetRecordsBySeriesResponse
     {
@@ -303,7 +304,7 @@ namespace gpudb
 
     /**
      * A set of output parameters for {@link
-     * #getRecordsBySeries(GetRecordsBySeriesRequest&)}.
+     * #getRecordsBySeries(const GetRecordsBySeriesRequest&) const}.
      * <p>
      * Retrieves the complete series/track records from the given @a
      * worldTableName based on the partial track informaton contained in the @a
@@ -312,10 +313,11 @@ namespace gpudb
      * This operation supports paging through the data via the @a offset and @a
      * limit parameters.
      * <p>
-     * In contrast to {@link #getRecords(GetRecordsRequest&)} this returns
-     * records grouped by series/track. So if @a offset is 0 and @a limit is 5
-     * this operation would return the first 5 series/tracks in @a tableName.
-     * Each series/track will be returned sorted by their TIMESTAMP column.
+     * In contrast to {@link #getRecords(const GetRecordsRequest&) const}
+     * this returns records grouped by series/track. So if @a offset is 0 and
+     * @a limit is 5 this operation would return the first 5 series/tracks in
+     * @a tableName. Each series/track will be returned sorted by their
+     * TIMESTAMP column.
      * 
      * @param <T>  The type of object being processed.
      * 

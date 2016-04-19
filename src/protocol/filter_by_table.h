@@ -11,7 +11,7 @@ namespace gpudb
 
     /**
      * A set of input parameters for {@link
-     * #filterByTable(FilterByTableRequest&)}.
+     * #filterByTable(const FilterByTableRequest&) const}.
      * <p>
      * Filters objects in one table based on objects in another table. The user
      * must specify matching column types from the two tables (i.e. the target
@@ -49,7 +49,7 @@ namespace gpudb
          * @param[in] viewName  If provided, then this will be the name of the
          *                      view containing the results. Must not be an
          *                      already existing collection, table or view.
-         *                      Default value is an empty {@link std::string}.
+         *                      Default value is an empty string.
          * @param[in] columnName  Name of the column by whose value the data
          *                        will be filtered from the table designated by
          *                        @a tableName.
@@ -63,7 +63,7 @@ namespace gpudb
          *                                   tableName. Must match the type of
          *                                   the @a columnName.
          * @param[in] options  Optional parameters.  Default value is an empty
-         *                     {@link std::map}.
+         *                     std::map.
          * 
          */
         FilterByTableRequest(const std::string& tableName, const std::string& viewName, const std::string& columnName, const std::string& sourceTableName, const std::string& sourceTableColumnName, const std::map<std::string, std::string>& options):
@@ -156,7 +156,7 @@ namespace gpudb
 
     /**
      * A set of output parameters for {@link
-     * #filterByTable(FilterByTableRequest&)}.
+     * #filterByTable(const FilterByTableRequest&) const}.
      * <p>
      * Filters objects in one table based on objects in another table. The user
      * must specify matching column types from the two tables (i.e. the target

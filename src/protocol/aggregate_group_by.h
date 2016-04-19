@@ -13,7 +13,7 @@ namespace gpudb
 
     /**
      * A set of input parameters for {@link
-     * #aggregateGroupByRaw(AggregateGroupByRequest&)}.
+     * #aggregateGroupByRaw(const AggregateGroupByRequest&) const}.
      * <p>
      * Calculates unique combinations (i.e. groups) of values for the given
      * columns in a given table/view/collection and computes aggregates on each
@@ -36,8 +36,9 @@ namespace gpudb
      * 'avg', 'mean', 'stddev', 'stddev_pop', 'stddev_samp', 'var', 'var_pop'
      * and 'var_samp'.
      * <p>
-     * The response is returned as a dynamic schema. For details see: {dynamic
-     * schemas documentation}@{link ../../concepts/index.html#dynamic-schemas}.
+     * The response is returned as a dynamic schema. For details see: <a
+     * href="../../concepts/index.html#dynamic-schemas" target="_top">dynamic
+     * schemas documentation</a>.
      */
     struct AggregateGroupByRequest
     {
@@ -63,21 +64,21 @@ namespace gpudb
          * @param[in] tableName  Name of the table on which the operation will
          *                       be performed. Must be a valid
          *                       table/view/collection in GPUdb.
-         * @param[in] columnNames  List of two or more column names,
+         * @param[in] columnNames  List of one or more column names,
          *                         expressions, and aggregate expressions. Must
          *                         include at least one 'grouping' column or
-         *                         expression and at least one aggregate
-         * @param[in] offset  An positive integer indicating the number of
+         *                         expression.  If no aggregate is included,
+         *                         count(*) will be computed as a default.
+         * @param[in] offset  A positive integer indicating the number of
          *                    initial results to skip (this can be useful for
          *                    paging through the results).  The minimum allowed
          *                    value is 0. The maximum allowed value is MAX_INT.
          * @param[in] limit  A positive integer indicating the maximum number
-         *                   of results to be returned (default is 10000) Or
-         *                   END_OF_SET (-9999) to indicate that the max number
-         *                   of results should be returned.  Default value is
-         *                   1000.
+         *                   of results to be returned Or END_OF_SET (-9999) to
+         *                   indicate that the max number of results should be
+         *                   returned.  Default value is 1000.
          * @param[in] options  Optional parameters.  Default value is an empty
-         *                     {@link std::map}.
+         *                     std::map.
          * 
          */
         AggregateGroupByRequest(const std::string& tableName, const std::vector<std::string>& columnNames, const int64_t offset, const int64_t limit, const std::map<std::string, std::string>& options):
@@ -97,24 +98,23 @@ namespace gpudb
          * @param[in] tableName  Name of the table on which the operation will
          *                       be performed. Must be a valid
          *                       table/view/collection in GPUdb.
-         * @param[in] columnNames  List of two or more column names,
+         * @param[in] columnNames  List of one or more column names,
          *                         expressions, and aggregate expressions. Must
          *                         include at least one 'grouping' column or
-         *                         expression and at least one aggregate
-         * @param[in] offset  An positive integer indicating the number of
+         *                         expression.  If no aggregate is included,
+         *                         count(*) will be computed as a default.
+         * @param[in] offset  A positive integer indicating the number of
          *                    initial results to skip (this can be useful for
          *                    paging through the results).  The minimum allowed
          *                    value is 0. The maximum allowed value is MAX_INT.
          * @param[in] limit  A positive integer indicating the maximum number
-         *                   of results to be returned (default is 10000) Or
-         *                   END_OF_SET (-9999) to indicate that the max number
-         *                   of results should be returned.  Default value is
-         *                   1000.
-         * @param[in] encoding  Specifies the encoding for returned objects.
-         *                      Default value is 'binary'. The allowed values
-         *                      are:  ~!~ * BINARY * JSON~!~
+         *                   of results to be returned Or END_OF_SET (-9999) to
+         *                   indicate that the max number of results should be
+         *                   returned.  Default value is 1000.
+         * @param[in] encoding  Specifies the encoding for returned records.
+         *                      Default value is 'binary'.
          * @param[in] options  Optional parameters.  Default value is an empty
-         *                     {@link std::map}.
+         *                     std::map.
          * 
          */
         AggregateGroupByRequest(const std::string& tableName, const std::vector<std::string>& columnNames, const int64_t offset, const int64_t limit, const std::string& encoding, const std::map<std::string, std::string>& options):
@@ -207,7 +207,7 @@ namespace gpudb
 
     /**
      * A set of output parameters for {@link
-     * #aggregateGroupByRaw(AggregateGroupByRequest&)}.
+     * #aggregateGroupByRaw(const AggregateGroupByRequest&) const}.
      * <p>
      * Calculates unique combinations (i.e. groups) of values for the given
      * columns in a given table/view/collection and computes aggregates on each
@@ -230,8 +230,9 @@ namespace gpudb
      * 'avg', 'mean', 'stddev', 'stddev_pop', 'stddev_samp', 'var', 'var_pop'
      * and 'var_samp'.
      * <p>
-     * The response is returned as a dynamic schema. For details see: {dynamic
-     * schemas documentation}@{link ../../concepts/index.html#dynamic-schemas}.
+     * The response is returned as a dynamic schema. For details see: <a
+     * href="../../concepts/index.html#dynamic-schemas" target="_top">dynamic
+     * schemas documentation</a>.
      */
     struct RawAggregateGroupByResponse
     {
@@ -306,7 +307,7 @@ namespace gpudb
 
     /**
      * A set of output parameters for {@link
-     * #aggregateGroupBy(AggregateGroupByRequest&)}.
+     * #aggregateGroupBy(const AggregateGroupByRequest&) const}.
      * <p>
      * Calculates unique combinations (i.e. groups) of values for the given
      * columns in a given table/view/collection and computes aggregates on each
@@ -329,8 +330,9 @@ namespace gpudb
      * 'avg', 'mean', 'stddev', 'stddev_pop', 'stddev_samp', 'var', 'var_pop'
      * and 'var_samp'.
      * <p>
-     * The response is returned as a dynamic schema. For details see: {dynamic
-     * schemas documentation}@{link ../../concepts/index.html#dynamic-schemas}.
+     * The response is returned as a dynamic schema. For details see: <a
+     * href="../../concepts/index.html#dynamic-schemas" target="_top">dynamic
+     * schemas documentation</a>.
      */
     struct AggregateGroupByResponse
     {
