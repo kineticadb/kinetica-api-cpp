@@ -6,6 +6,9 @@
 
 namespace gpudb
 {
+    /*
+     * Generic exceptions thrown by the C++ GPUdb client API.
+     */
     class GPUdbException : public std::exception
     {
         public:
@@ -16,6 +19,8 @@ namespace gpudb
         private:
             std::string message;
     };
+
+
 }
 
 #endif

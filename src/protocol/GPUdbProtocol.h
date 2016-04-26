@@ -9,10 +9,13 @@
 #include <avro/Specific.hh>
 
 #include "gpudb_wrapper.h"
+#include "admin_delete_node.h"
 #include "admin_get_shard_assignments.h"
 #include "admin_offline.h"
+#include "admin_rebalance.h"
 #include "admin_set_shard_assignments.h"
 #include "admin_shutdown.h"
+#include "admin_verify_db.h"
 #include "aggregate_convex_hull.h"
 #include "aggregate_group_by.h"
 #include "aggregate_histogram.h"

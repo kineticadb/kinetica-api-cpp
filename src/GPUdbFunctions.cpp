@@ -6,11 +6,14 @@
 
 
 // GPUdb Version
-const std::string GPUdb::api_version( "4.2.0.0" );
+const std::string GPUdb::api_version( "5.0.0.0" );
 
 
 
 /**
+ * Delete a node from the system.  To delete a node, the data is first
+ * distributed from the deleted node to all the other nodes.  Then the node is
+ * taken out of service.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -18,7 +21,112 @@ const std::string GPUdb::api_version( "4.2.0.0" );
  * @return Response object containing the result of the operation.
  * 
  */
-AdminGetShardAssignmentsResponse GPUdb::adminGetShardAssignments(const AdminGetShardAssignmentsRequest& request_) const
+
+AdminDeleteNodeResponse GPUdb::adminDeleteNode( const AdminDeleteNodeRequest& request_ ) const
+{
+    AdminDeleteNodeResponse actualResponse_;
+    submitRequest("/admin/delete/node", request_, actualResponse_, false);
+    return actualResponse_;
+}
+
+
+/**
+ * Delete a node from the system.  To delete a node, the data is first
+ * distributed from the deleted node to all the other nodes.  Then the node is
+ * taken out of service.
+ * 
+ * @param[in] request_  Request object containing the parameters for the
+ *                      operation.
+ * @param[out] response_  Response object containing the results of the
+ *                        operation.
+ * 
+ * @return Response object containing the result of the operation (initially
+ *         passed in by reference).
+ * 
+ */
+
+AdminDeleteNodeResponse& GPUdb::adminDeleteNode( const AdminDeleteNodeRequest& request_,
+                                                 AdminDeleteNodeResponse& response_ ) const
+{
+    submitRequest("/admin/delete/node", request_, response_, false);
+    return response_;
+}
+
+
+/**
+ * Delete a node from the system.  To delete a node, the data is first
+ * distributed from the deleted node to all the other nodes.  Then the node is
+ * taken out of service.
+ * 
+ * @param rank  Rank number of the node being removed from the system.
+ * @param authorization  The password that GPUdb is configured with during
+ *                       startup. Incorrect or missing authorization code will
+ *                       result in an error.
+ * @param options  Optional parameters.  Default value is an empty std::map.
+ * 
+ * @return Response object containing the result of the operation.
+ * 
+ */
+
+AdminDeleteNodeResponse GPUdb::adminDeleteNode( const int32_t rank,
+                                                const std::string& authorization,
+                                                const std::map<std::string, std::string>& options ) const
+{
+    AdminDeleteNodeRequest actualRequest_;
+    actualRequest_.rank = rank;
+    actualRequest_.authorization = authorization;
+    actualRequest_.options = options;
+    AdminDeleteNodeResponse actualResponse_;
+    submitRequest("/admin/delete/node", actualRequest_, actualResponse_, false);
+    return actualResponse_;
+}
+
+
+/**
+ * Delete a node from the system.  To delete a node, the data is first
+ * distributed from the deleted node to all the other nodes.  Then the node is
+ * taken out of service.
+ * 
+ * @param rank  Rank number of the node being removed from the system.
+ * @param authorization  The password that GPUdb is configured with during
+ *                       startup. Incorrect or missing authorization code will
+ *                       result in an error.
+ * @param options  Optional parameters.  Default value is an empty std::map.
+ * @param[out] response_  Response object containing the results of the
+ *                        operation.
+ * 
+ * @return Response object containing the result of the operation (initially
+ *         passed in by reference).
+ * 
+ */
+
+AdminDeleteNodeResponse& GPUdb::adminDeleteNode( const int32_t rank,
+                                                 const std::string& authorization,
+                                                 const std::map<std::string, std::string>& options,
+                                                 AdminDeleteNodeResponse& response_ ) const
+{
+    AdminDeleteNodeRequest actualRequest_;
+    actualRequest_.rank = rank;
+    actualRequest_.authorization = authorization;
+    actualRequest_.options = options;
+    submitRequest("/admin/delete/node", actualRequest_, response_, false);
+    return response_;
+}
+
+
+/**
+ * Returns the list of shards and the corresponding rank and tom containing the
+ * shard.  The response message contains arrays of 16384 (total number of
+ * shards in the system) rank and tom numbers corresponding to each shard.
+ * 
+ * @param[in] request_  Request object containing the parameters for the
+ *                      operation.
+ * 
+ * @return Response object containing the result of the operation.
+ * 
+ */
+
+AdminGetShardAssignmentsResponse GPUdb::adminGetShardAssignments( const AdminGetShardAssignmentsRequest& request_ ) const
 {
     AdminGetShardAssignmentsResponse actualResponse_;
     submitRequest("/admin/getshardassignments", request_, actualResponse_, false);
@@ -27,6 +135,9 @@ AdminGetShardAssignmentsResponse GPUdb::adminGetShardAssignments(const AdminGetS
 
 
 /**
+ * Returns the list of shards and the corresponding rank and tom containing the
+ * shard.  The response message contains arrays of 16384 (total number of
+ * shards in the system) rank and tom numbers corresponding to each shard.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -37,7 +148,9 @@ AdminGetShardAssignmentsResponse GPUdb::adminGetShardAssignments(const AdminGetS
  *         passed in by reference).
  * 
  */
-AdminGetShardAssignmentsResponse& GPUdb::adminGetShardAssignments(const AdminGetShardAssignmentsRequest& request_, AdminGetShardAssignmentsResponse& response_) const
+
+AdminGetShardAssignmentsResponse& GPUdb::adminGetShardAssignments( const AdminGetShardAssignmentsRequest& request_,
+                                                                   AdminGetShardAssignmentsResponse& response_ ) const
 {
     submitRequest("/admin/getshardassignments", request_, response_, false);
     return response_;
@@ -45,16 +158,20 @@ AdminGetShardAssignmentsResponse& GPUdb::adminGetShardAssignments(const AdminGet
 
 
 /**
+ * Returns the list of shards and the corresponding rank and tom containing the
+ * shard.  The response message contains arrays of 16384 (total number of
+ * shards in the system) rank and tom numbers corresponding to each shard.
  * 
- * @param dummy  Default value is an empty std::vector.
+ * @param options  Optional parameters.  Default value is an empty std::map.
  * 
  * @return Response object containing the result of the operation.
  * 
  */
-AdminGetShardAssignmentsResponse GPUdb::adminGetShardAssignments(const std::string& dummy) const
+
+AdminGetShardAssignmentsResponse GPUdb::adminGetShardAssignments( const std::map<std::string, std::string>& options ) const
 {
     AdminGetShardAssignmentsRequest actualRequest_;
-    actualRequest_.dummy = dummy;
+    actualRequest_.options = options;
     AdminGetShardAssignmentsResponse actualResponse_;
     submitRequest("/admin/getshardassignments", actualRequest_, actualResponse_, false);
     return actualResponse_;
@@ -62,8 +179,11 @@ AdminGetShardAssignmentsResponse GPUdb::adminGetShardAssignments(const std::stri
 
 
 /**
+ * Returns the list of shards and the corresponding rank and tom containing the
+ * shard.  The response message contains arrays of 16384 (total number of
+ * shards in the system) rank and tom numbers corresponding to each shard.
  * 
- * @param dummy  Default value is an empty std::vector.
+ * @param options  Optional parameters.  Default value is an empty std::map.
  * @param[out] response_  Response object containing the results of the
  *                        operation.
  * 
@@ -71,10 +191,12 @@ AdminGetShardAssignmentsResponse GPUdb::adminGetShardAssignments(const std::stri
  *         passed in by reference).
  * 
  */
-AdminGetShardAssignmentsResponse& GPUdb::adminGetShardAssignments(const std::string& dummy, AdminGetShardAssignmentsResponse& response_) const
+
+AdminGetShardAssignmentsResponse& GPUdb::adminGetShardAssignments( const std::map<std::string, std::string>& options,
+                                                                   AdminGetShardAssignmentsResponse& response_ ) const
 {
     AdminGetShardAssignmentsRequest actualRequest_;
-    actualRequest_.dummy = dummy;
+    actualRequest_.options = options;
     submitRequest("/admin/getshardassignments", actualRequest_, response_, false);
     return response_;
 }
@@ -90,7 +212,8 @@ AdminGetShardAssignmentsResponse& GPUdb::adminGetShardAssignments(const std::str
  * @return Response object containing the result of the operation.
  * 
  */
-AdminOfflineResponse GPUdb::adminOffline(const AdminOfflineRequest& request_) const
+
+AdminOfflineResponse GPUdb::adminOffline( const AdminOfflineRequest& request_ ) const
 {
     AdminOfflineResponse actualResponse_;
     submitRequest("/admin/offline", request_, actualResponse_, false);
@@ -111,7 +234,9 @@ AdminOfflineResponse GPUdb::adminOffline(const AdminOfflineRequest& request_) co
  *         passed in by reference).
  * 
  */
-AdminOfflineResponse& GPUdb::adminOffline(const AdminOfflineRequest& request_, AdminOfflineResponse& response_) const
+
+AdminOfflineResponse& GPUdb::adminOffline( const AdminOfflineRequest& request_,
+                                           AdminOfflineResponse& response_ ) const
 {
     submitRequest("/admin/offline", request_, response_, false);
     return response_;
@@ -122,13 +247,15 @@ AdminOfflineResponse& GPUdb::adminOffline(const AdminOfflineRequest& request_, A
  * Take the system offline. When the system is offline, no user operations can
  * be performed with the exception of a system shutdown.
  * 
- * @param offline  desired offline state
+ * @param offline  Set to true if desired state is offline.
  * @param options  Optional parameters.  Default value is an empty std::map.
  * 
  * @return Response object containing the result of the operation.
  * 
  */
-AdminOfflineResponse GPUdb::adminOffline(const bool offline, const std::map<std::string, std::string>& options) const
+
+AdminOfflineResponse GPUdb::adminOffline( const bool offline,
+                                          const std::map<std::string, std::string>& options ) const
 {
     AdminOfflineRequest actualRequest_;
     actualRequest_.offline = offline;
@@ -143,7 +270,7 @@ AdminOfflineResponse GPUdb::adminOffline(const bool offline, const std::map<std:
  * Take the system offline. When the system is offline, no user operations can
  * be performed with the exception of a system shutdown.
  * 
- * @param offline  desired offline state
+ * @param offline  Set to true if desired state is offline.
  * @param options  Optional parameters.  Default value is an empty std::map.
  * @param[out] response_  Response object containing the results of the
  *                        operation.
@@ -152,12 +279,107 @@ AdminOfflineResponse GPUdb::adminOffline(const bool offline, const std::map<std:
  *         passed in by reference).
  * 
  */
-AdminOfflineResponse& GPUdb::adminOffline(const bool offline, const std::map<std::string, std::string>& options, AdminOfflineResponse& response_) const
+
+AdminOfflineResponse& GPUdb::adminOffline( const bool offline,
+                                           const std::map<std::string, std::string>& options,
+                                           AdminOfflineResponse& response_ ) const
 {
     AdminOfflineRequest actualRequest_;
     actualRequest_.offline = offline;
     actualRequest_.options = options;
     submitRequest("/admin/offline", actualRequest_, response_, false);
+    return response_;
+}
+
+
+/**
+ * Rebalance the database such that all the nodes contain approximately equal
+ * number of records.
+ * 
+ * @param[in] request_  Request object containing the parameters for the
+ *                      operation.
+ * 
+ * @return Response object containing the result of the operation.
+ * 
+ */
+
+AdminRebalanceResponse GPUdb::adminRebalance( const AdminRebalanceRequest& request_ ) const
+{
+    AdminRebalanceResponse actualResponse_;
+    submitRequest("/admin/rebalance", request_, actualResponse_, false);
+    return actualResponse_;
+}
+
+
+/**
+ * Rebalance the database such that all the nodes contain approximately equal
+ * number of records.
+ * 
+ * @param[in] request_  Request object containing the parameters for the
+ *                      operation.
+ * @param[out] response_  Response object containing the results of the
+ *                        operation.
+ * 
+ * @return Response object containing the result of the operation (initially
+ *         passed in by reference).
+ * 
+ */
+
+AdminRebalanceResponse& GPUdb::adminRebalance( const AdminRebalanceRequest& request_,
+                                               AdminRebalanceResponse& response_ ) const
+{
+    submitRequest("/admin/rebalance", request_, response_, false);
+    return response_;
+}
+
+
+/**
+ * Rebalance the database such that all the nodes contain approximately equal
+ * number of records.
+ * 
+ * @param tableNames  Names of the tables to be rebalanced.  If array is empty,
+ *                    all tables will be rebalanced.
+ * @param options  Optional parameters.  Default value is an empty std::map.
+ * 
+ * @return Response object containing the result of the operation.
+ * 
+ */
+
+AdminRebalanceResponse GPUdb::adminRebalance( const std::vector<std::string>& tableNames,
+                                              const std::map<std::string, std::string>& options ) const
+{
+    AdminRebalanceRequest actualRequest_;
+    actualRequest_.tableNames = tableNames;
+    actualRequest_.options = options;
+    AdminRebalanceResponse actualResponse_;
+    submitRequest("/admin/rebalance", actualRequest_, actualResponse_, false);
+    return actualResponse_;
+}
+
+
+/**
+ * Rebalance the database such that all the nodes contain approximately equal
+ * number of records.
+ * 
+ * @param tableNames  Names of the tables to be rebalanced.  If array is empty,
+ *                    all tables will be rebalanced.
+ * @param options  Optional parameters.  Default value is an empty std::map.
+ * @param[out] response_  Response object containing the results of the
+ *                        operation.
+ * 
+ * @return Response object containing the result of the operation (initially
+ *         passed in by reference).
+ * 
+ */
+
+AdminRebalanceResponse& GPUdb::adminRebalance( const std::vector<std::string>& tableNames,
+                                               const std::map<std::string, std::string>& options,
+                                               AdminRebalanceResponse& response_ ) const
+{
+    AdminRebalanceRequest actualRequest_;
+    actualRequest_.tableNames = tableNames;
+    actualRequest_.options = options;
+    submitRequest("/admin/rebalance", actualRequest_, response_, false);
     return response_;
 }
 
@@ -170,7 +392,8 @@ AdminOfflineResponse& GPUdb::adminOffline(const bool offline, const std::map<std
  * @return Response object containing the result of the operation.
  * 
  */
-AdminSetShardAssignmentsResponse GPUdb::adminSetShardAssignments(const AdminSetShardAssignmentsRequest& request_) const
+
+AdminSetShardAssignmentsResponse GPUdb::adminSetShardAssignments( const AdminSetShardAssignmentsRequest& request_ ) const
 {
     AdminSetShardAssignmentsResponse actualResponse_;
     submitRequest("/admin/setshardassignments", request_, actualResponse_, false);
@@ -189,7 +412,9 @@ AdminSetShardAssignmentsResponse GPUdb::adminSetShardAssignments(const AdminSetS
  *         passed in by reference).
  * 
  */
-AdminSetShardAssignmentsResponse& GPUdb::adminSetShardAssignments(const AdminSetShardAssignmentsRequest& request_, AdminSetShardAssignmentsResponse& response_) const
+
+AdminSetShardAssignmentsResponse& GPUdb::adminSetShardAssignments( const AdminSetShardAssignmentsRequest& request_,
+                                                                   AdminSetShardAssignmentsResponse& response_ ) const
 {
     submitRequest("/admin/setshardassignments", request_, response_, false);
     return response_;
@@ -203,11 +428,18 @@ AdminSetShardAssignmentsResponse& GPUdb::adminSetShardAssignments(const AdminSet
  * @param shardAssignmentsRank
  * @param shardAssignmentsTom
  * @param assignmentIndex
+ * @param options  Optional parameters.  Default value is an empty std::map.
  * 
  * @return Response object containing the result of the operation.
  * 
  */
-AdminSetShardAssignmentsResponse GPUdb::adminSetShardAssignments(const int64_t version, const bool partialReassignment, const std::vector<int32_t>& shardAssignmentsRank, const std::vector<int32_t>& shardAssignmentsTom, const std::vector<int32_t>& assignmentIndex) const
+
+AdminSetShardAssignmentsResponse GPUdb::adminSetShardAssignments( const int64_t version,
+                                                                  const bool partialReassignment,
+                                                                  const std::vector<int32_t>& shardAssignmentsRank,
+                                                                  const std::vector<int32_t>& shardAssignmentsTom,
+                                                                  const std::vector<int32_t>& assignmentIndex,
+                                                                  const std::map<std::string, std::string>& options ) const
 {
     AdminSetShardAssignmentsRequest actualRequest_;
     actualRequest_.version = version;
@@ -215,6 +447,7 @@ AdminSetShardAssignmentsResponse GPUdb::adminSetShardAssignments(const int64_t v
     actualRequest_.shardAssignmentsRank = shardAssignmentsRank;
     actualRequest_.shardAssignmentsTom = shardAssignmentsTom;
     actualRequest_.assignmentIndex = assignmentIndex;
+    actualRequest_.options = options;
     AdminSetShardAssignmentsResponse actualResponse_;
     submitRequest("/admin/setshardassignments", actualRequest_, actualResponse_, false);
     return actualResponse_;
@@ -228,6 +461,7 @@ AdminSetShardAssignmentsResponse GPUdb::adminSetShardAssignments(const int64_t v
  * @param shardAssignmentsRank
  * @param shardAssignmentsTom
  * @param assignmentIndex
+ * @param options  Optional parameters.  Default value is an empty std::map.
  * @param[out] response_  Response object containing the results of the
  *                        operation.
  * 
@@ -235,7 +469,14 @@ AdminSetShardAssignmentsResponse GPUdb::adminSetShardAssignments(const int64_t v
  *         passed in by reference).
  * 
  */
-AdminSetShardAssignmentsResponse& GPUdb::adminSetShardAssignments(const int64_t version, const bool partialReassignment, const std::vector<int32_t>& shardAssignmentsRank, const std::vector<int32_t>& shardAssignmentsTom, const std::vector<int32_t>& assignmentIndex, AdminSetShardAssignmentsResponse& response_) const
+
+AdminSetShardAssignmentsResponse& GPUdb::adminSetShardAssignments( const int64_t version,
+                                                                   const bool partialReassignment,
+                                                                   const std::vector<int32_t>& shardAssignmentsRank,
+                                                                   const std::vector<int32_t>& shardAssignmentsTom,
+                                                                   const std::vector<int32_t>& assignmentIndex,
+                                                                   const std::map<std::string, std::string>& options,
+                                                                   AdminSetShardAssignmentsResponse& response_ ) const
 {
     AdminSetShardAssignmentsRequest actualRequest_;
     actualRequest_.version = version;
@@ -243,6 +484,7 @@ AdminSetShardAssignmentsResponse& GPUdb::adminSetShardAssignments(const int64_t 
     actualRequest_.shardAssignmentsRank = shardAssignmentsRank;
     actualRequest_.shardAssignmentsTom = shardAssignmentsTom;
     actualRequest_.assignmentIndex = assignmentIndex;
+    actualRequest_.options = options;
     submitRequest("/admin/setshardassignments", actualRequest_, response_, false);
     return response_;
 }
@@ -258,7 +500,8 @@ AdminSetShardAssignmentsResponse& GPUdb::adminSetShardAssignments(const int64_t 
  * @return Response object containing the result of the operation.
  * 
  */
-AdminShutdownResponse GPUdb::adminShutdown(const AdminShutdownRequest& request_) const
+
+AdminShutdownResponse GPUdb::adminShutdown( const AdminShutdownRequest& request_ ) const
 {
     AdminShutdownResponse actualResponse_;
     submitRequest("/admin/shutdown", request_, actualResponse_, false);
@@ -279,7 +522,9 @@ AdminShutdownResponse GPUdb::adminShutdown(const AdminShutdownRequest& request_)
  *         passed in by reference).
  * 
  */
-AdminShutdownResponse& GPUdb::adminShutdown(const AdminShutdownRequest& request_, AdminShutdownResponse& response_) const
+
+AdminShutdownResponse& GPUdb::adminShutdown( const AdminShutdownRequest& request_,
+                                             AdminShutdownResponse& response_ ) const
 {
     submitRequest("/admin/shutdown", request_, response_, false);
     return response_;
@@ -299,7 +544,10 @@ AdminShutdownResponse& GPUdb::adminShutdown(const AdminShutdownRequest& request_
  * @return Response object containing the result of the operation.
  * 
  */
-AdminShutdownResponse GPUdb::adminShutdown(const std::string& exitType, const std::string& authorization, const std::map<std::string, std::string>& options) const
+
+AdminShutdownResponse GPUdb::adminShutdown( const std::string& exitType,
+                                            const std::string& authorization,
+                                            const std::map<std::string, std::string>& options ) const
 {
     AdminShutdownRequest actualRequest_;
     actualRequest_.exitType = exitType;
@@ -327,13 +575,105 @@ AdminShutdownResponse GPUdb::adminShutdown(const std::string& exitType, const st
  *         passed in by reference).
  * 
  */
-AdminShutdownResponse& GPUdb::adminShutdown(const std::string& exitType, const std::string& authorization, const std::map<std::string, std::string>& options, AdminShutdownResponse& response_) const
+
+AdminShutdownResponse& GPUdb::adminShutdown( const std::string& exitType,
+                                             const std::string& authorization,
+                                             const std::map<std::string, std::string>& options,
+                                             AdminShutdownResponse& response_ ) const
 {
     AdminShutdownRequest actualRequest_;
     actualRequest_.exitType = exitType;
     actualRequest_.authorization = authorization;
     actualRequest_.options = options;
     submitRequest("/admin/shutdown", actualRequest_, response_, false);
+    return response_;
+}
+
+
+/**
+ * Verify database is in a consistent state.  When inconsistencies or errors
+ * are found, the verified_ok flag in the response is set to false and the list
+ * of errors found is provided in the error_list.
+ * 
+ * @param[in] request_  Request object containing the parameters for the
+ *                      operation.
+ * 
+ * @return Response object containing the result of the operation.
+ * 
+ */
+
+AdminVerifyDbResponse GPUdb::adminVerifyDb( const AdminVerifyDbRequest& request_ ) const
+{
+    AdminVerifyDbResponse actualResponse_;
+    submitRequest("/admin/verifydb", request_, actualResponse_, false);
+    return actualResponse_;
+}
+
+
+/**
+ * Verify database is in a consistent state.  When inconsistencies or errors
+ * are found, the verified_ok flag in the response is set to false and the list
+ * of errors found is provided in the error_list.
+ * 
+ * @param[in] request_  Request object containing the parameters for the
+ *                      operation.
+ * @param[out] response_  Response object containing the results of the
+ *                        operation.
+ * 
+ * @return Response object containing the result of the operation (initially
+ *         passed in by reference).
+ * 
+ */
+
+AdminVerifyDbResponse& GPUdb::adminVerifyDb( const AdminVerifyDbRequest& request_,
+                                             AdminVerifyDbResponse& response_ ) const
+{
+    submitRequest("/admin/verifydb", request_, response_, false);
+    return response_;
+}
+
+
+/**
+ * Verify database is in a consistent state.  When inconsistencies or errors
+ * are found, the verified_ok flag in the response is set to false and the list
+ * of errors found is provided in the error_list.
+ * 
+ * @param options  Optional parameters.  Default value is an empty std::map.
+ * 
+ * @return Response object containing the result of the operation.
+ * 
+ */
+
+AdminVerifyDbResponse GPUdb::adminVerifyDb( const std::map<std::string, std::string>& options ) const
+{
+    AdminVerifyDbRequest actualRequest_;
+    actualRequest_.options = options;
+    AdminVerifyDbResponse actualResponse_;
+    submitRequest("/admin/verifydb", actualRequest_, actualResponse_, false);
+    return actualResponse_;
+}
+
+
+/**
+ * Verify database is in a consistent state.  When inconsistencies or errors
+ * are found, the verified_ok flag in the response is set to false and the list
+ * of errors found is provided in the error_list.
+ * 
+ * @param options  Optional parameters.  Default value is an empty std::map.
+ * @param[out] response_  Response object containing the results of the
+ *                        operation.
+ * 
+ * @return Response object containing the result of the operation (initially
+ *         passed in by reference).
+ * 
+ */
+
+AdminVerifyDbResponse& GPUdb::adminVerifyDb( const std::map<std::string, std::string>& options,
+                                             AdminVerifyDbResponse& response_ ) const
+{
+    AdminVerifyDbRequest actualRequest_;
+    actualRequest_.options = options;
+    submitRequest("/admin/verifydb", actualRequest_, response_, false);
     return response_;
 }
 
@@ -348,7 +688,8 @@ AdminShutdownResponse& GPUdb::adminShutdown(const std::string& exitType, const s
  * @return Response object containing the result of the operation.
  * 
  */
-AggregateConvexHullResponse GPUdb::aggregateConvexHull(const AggregateConvexHullRequest& request_) const
+
+AggregateConvexHullResponse GPUdb::aggregateConvexHull( const AggregateConvexHullRequest& request_ ) const
 {
     AggregateConvexHullResponse actualResponse_;
     submitRequest("/aggregate/convexhull", request_, actualResponse_, false);
@@ -369,7 +710,9 @@ AggregateConvexHullResponse GPUdb::aggregateConvexHull(const AggregateConvexHull
  *         passed in by reference).
  * 
  */
-AggregateConvexHullResponse& GPUdb::aggregateConvexHull(const AggregateConvexHullRequest& request_, AggregateConvexHullResponse& response_) const
+
+AggregateConvexHullResponse& GPUdb::aggregateConvexHull( const AggregateConvexHullRequest& request_,
+                                                         AggregateConvexHullResponse& response_ ) const
 {
     submitRequest("/aggregate/convexhull", request_, response_, false);
     return response_;
@@ -392,7 +735,11 @@ AggregateConvexHullResponse& GPUdb::aggregateConvexHull(const AggregateConvexHul
  * @return Response object containing the result of the operation.
  * 
  */
-AggregateConvexHullResponse GPUdb::aggregateConvexHull(const std::string& tableName, const std::string& xColumnName, const std::string& yColumnName, const std::map<std::string, std::string>& options) const
+
+AggregateConvexHullResponse GPUdb::aggregateConvexHull( const std::string& tableName,
+                                                        const std::string& xColumnName,
+                                                        const std::string& yColumnName,
+                                                        const std::map<std::string, std::string>& options ) const
 {
     AggregateConvexHullRequest actualRequest_;
     actualRequest_.tableName = tableName;
@@ -424,7 +771,12 @@ AggregateConvexHullResponse GPUdb::aggregateConvexHull(const std::string& tableN
  *         passed in by reference).
  * 
  */
-AggregateConvexHullResponse& GPUdb::aggregateConvexHull(const std::string& tableName, const std::string& xColumnName, const std::string& yColumnName, const std::map<std::string, std::string>& options, AggregateConvexHullResponse& response_) const
+
+AggregateConvexHullResponse& GPUdb::aggregateConvexHull( const std::string& tableName,
+                                                         const std::string& xColumnName,
+                                                         const std::string& yColumnName,
+                                                         const std::map<std::string, std::string>& options,
+                                                         AggregateConvexHullResponse& response_ ) const
 {
     AggregateConvexHullRequest actualRequest_;
     actualRequest_.tableName = tableName;
@@ -468,7 +820,8 @@ AggregateConvexHullResponse& GPUdb::aggregateConvexHull(const std::string& table
  * @return Response object containing the result of the operation.
  * 
  */
-RawAggregateGroupByResponse GPUdb::aggregateGroupByRaw(const AggregateGroupByRequest& request_) const
+
+RawAggregateGroupByResponse GPUdb::aggregateGroupByRaw( const AggregateGroupByRequest& request_ ) const
 {
     RawAggregateGroupByResponse actualResponse_;
     submitRequest("/aggregate/groupby", request_, actualResponse_, false);
@@ -511,7 +864,9 @@ RawAggregateGroupByResponse GPUdb::aggregateGroupByRaw(const AggregateGroupByReq
  *         passed in by reference).
  * 
  */
-RawAggregateGroupByResponse& GPUdb::aggregateGroupByRaw(const AggregateGroupByRequest& request_, RawAggregateGroupByResponse& response_) const
+
+RawAggregateGroupByResponse& GPUdb::aggregateGroupByRaw( const AggregateGroupByRequest& request_,
+                                                         RawAggregateGroupByResponse& response_ ) const
 {
     submitRequest("/aggregate/groupby", request_, response_, false);
     return response_;
@@ -550,7 +905,8 @@ RawAggregateGroupByResponse& GPUdb::aggregateGroupByRaw(const AggregateGroupByRe
  * @return Response object containing the result of the operation.
  * 
  */
-AggregateGroupByResponse GPUdb::aggregateGroupBy(const AggregateGroupByRequest& request_) const
+
+AggregateGroupByResponse GPUdb::aggregateGroupBy( const AggregateGroupByRequest& request_ ) const
 {
     RawAggregateGroupByResponse actualResponse_;
     submitRequest("/aggregate/groupby", request_, actualResponse_, false);
@@ -596,7 +952,9 @@ AggregateGroupByResponse GPUdb::aggregateGroupBy(const AggregateGroupByRequest& 
  *         passed in by reference).
  * 
  */
-AggregateGroupByResponse& GPUdb::aggregateGroupBy(const AggregateGroupByRequest& request_, AggregateGroupByResponse& response_) const
+
+AggregateGroupByResponse& GPUdb::aggregateGroupBy( const AggregateGroupByRequest& request_,
+                                                   AggregateGroupByResponse& response_ ) const
 {
     RawAggregateGroupByResponse actualResponse_;
     submitRequest("/aggregate/groupby", request_, actualResponse_, false);
@@ -650,7 +1008,12 @@ AggregateGroupByResponse& GPUdb::aggregateGroupBy(const AggregateGroupByRequest&
  * @return Response object containing the result of the operation.
  * 
  */
-AggregateGroupByResponse GPUdb::aggregateGroupBy(const std::string& tableName, const std::vector<std::string>& columnNames, const int64_t offset, const int64_t limit, const std::map<std::string, std::string>& options) const
+
+AggregateGroupByResponse GPUdb::aggregateGroupBy( const std::string& tableName,
+                                                  const std::vector<std::string>& columnNames,
+                                                  const int64_t offset,
+                                                  const int64_t limit,
+                                                  const std::map<std::string, std::string>& options ) const
 {
     AggregateGroupByRequest actualRequest_;
     actualRequest_.tableName = tableName;
@@ -714,7 +1077,13 @@ AggregateGroupByResponse GPUdb::aggregateGroupBy(const std::string& tableName, c
  *         passed in by reference).
  * 
  */
-AggregateGroupByResponse& GPUdb::aggregateGroupBy(const std::string& tableName, const std::vector<std::string>& columnNames, const int64_t offset, const int64_t limit, const std::map<std::string, std::string>& options, AggregateGroupByResponse& response_) const
+
+AggregateGroupByResponse& GPUdb::aggregateGroupBy( const std::string& tableName,
+                                                   const std::vector<std::string>& columnNames,
+                                                   const int64_t offset,
+                                                   const int64_t limit,
+                                                   const std::map<std::string, std::string>& options,
+                                                   AggregateGroupByResponse& response_ ) const
 {
     AggregateGroupByRequest actualRequest_;
     actualRequest_.tableName = tableName;
@@ -747,7 +1116,8 @@ AggregateGroupByResponse& GPUdb::aggregateGroupBy(const std::string& tableName, 
  * @return Response object containing the result of the operation.
  * 
  */
-AggregateHistogramResponse GPUdb::aggregateHistogram(const AggregateHistogramRequest& request_) const
+
+AggregateHistogramResponse GPUdb::aggregateHistogram( const AggregateHistogramRequest& request_ ) const
 {
     AggregateHistogramResponse actualResponse_;
     submitRequest("/aggregate/histogram", request_, actualResponse_, false);
@@ -775,7 +1145,9 @@ AggregateHistogramResponse GPUdb::aggregateHistogram(const AggregateHistogramReq
  *         passed in by reference).
  * 
  */
-AggregateHistogramResponse& GPUdb::aggregateHistogram(const AggregateHistogramRequest& request_, AggregateHistogramResponse& response_) const
+
+AggregateHistogramResponse& GPUdb::aggregateHistogram( const AggregateHistogramRequest& request_,
+                                                       AggregateHistogramResponse& response_ ) const
 {
     submitRequest("/aggregate/histogram", request_, response_, false);
     return response_;
@@ -805,7 +1177,13 @@ AggregateHistogramResponse& GPUdb::aggregateHistogram(const AggregateHistogramRe
  * @return Response object containing the result of the operation.
  * 
  */
-AggregateHistogramResponse GPUdb::aggregateHistogram(const std::string& tableName, const std::string& columnName, const double start, const double end, const double interval, const std::map<std::string, std::string>& options) const
+
+AggregateHistogramResponse GPUdb::aggregateHistogram( const std::string& tableName,
+                                                      const std::string& columnName,
+                                                      const double start,
+                                                      const double end,
+                                                      const double interval,
+                                                      const std::map<std::string, std::string>& options ) const
 {
     AggregateHistogramRequest actualRequest_;
     actualRequest_.tableName = tableName;
@@ -846,7 +1224,14 @@ AggregateHistogramResponse GPUdb::aggregateHistogram(const std::string& tableNam
  *         passed in by reference).
  * 
  */
-AggregateHistogramResponse& GPUdb::aggregateHistogram(const std::string& tableName, const std::string& columnName, const double start, const double end, const double interval, const std::map<std::string, std::string>& options, AggregateHistogramResponse& response_) const
+
+AggregateHistogramResponse& GPUdb::aggregateHistogram( const std::string& tableName,
+                                                       const std::string& columnName,
+                                                       const double start,
+                                                       const double end,
+                                                       const double interval,
+                                                       const std::map<std::string, std::string>& options,
+                                                       AggregateHistogramResponse& response_ ) const
 {
     AggregateHistogramRequest actualRequest_;
     actualRequest_.tableName = tableName;
@@ -876,7 +1261,8 @@ AggregateHistogramResponse& GPUdb::aggregateHistogram(const std::string& tableNa
  * @return Response object containing the result of the operation.
  * 
  */
-AggregateKMeansResponse GPUdb::aggregateKMeans(const AggregateKMeansRequest& request_) const
+
+AggregateKMeansResponse GPUdb::aggregateKMeans( const AggregateKMeansRequest& request_ ) const
 {
     AggregateKMeansResponse actualResponse_;
     submitRequest("/aggregate/kmeans", request_, actualResponse_, false);
@@ -903,7 +1289,9 @@ AggregateKMeansResponse GPUdb::aggregateKMeans(const AggregateKMeansRequest& req
  *         passed in by reference).
  * 
  */
-AggregateKMeansResponse& GPUdb::aggregateKMeans(const AggregateKMeansRequest& request_, AggregateKMeansResponse& response_) const
+
+AggregateKMeansResponse& GPUdb::aggregateKMeans( const AggregateKMeansRequest& request_,
+                                                 AggregateKMeansResponse& response_ ) const
 {
     submitRequest("/aggregate/kmeans", request_, response_, false);
     return response_;
@@ -934,7 +1322,12 @@ AggregateKMeansResponse& GPUdb::aggregateKMeans(const AggregateKMeansRequest& re
  * @return Response object containing the result of the operation.
  * 
  */
-AggregateKMeansResponse GPUdb::aggregateKMeans(const std::string& tableName, const std::vector<std::string>& columnNames, const int32_t k, const double tolerance, const std::map<std::string, std::string>& options) const
+
+AggregateKMeansResponse GPUdb::aggregateKMeans( const std::string& tableName,
+                                                const std::vector<std::string>& columnNames,
+                                                const int32_t k,
+                                                const double tolerance,
+                                                const std::map<std::string, std::string>& options ) const
 {
     AggregateKMeansRequest actualRequest_;
     actualRequest_.tableName = tableName;
@@ -975,7 +1368,13 @@ AggregateKMeansResponse GPUdb::aggregateKMeans(const std::string& tableName, con
  *         passed in by reference).
  * 
  */
-AggregateKMeansResponse& GPUdb::aggregateKMeans(const std::string& tableName, const std::vector<std::string>& columnNames, const int32_t k, const double tolerance, const std::map<std::string, std::string>& options, AggregateKMeansResponse& response_) const
+
+AggregateKMeansResponse& GPUdb::aggregateKMeans( const std::string& tableName,
+                                                 const std::vector<std::string>& columnNames,
+                                                 const int32_t k,
+                                                 const double tolerance,
+                                                 const std::map<std::string, std::string>& options,
+                                                 AggregateKMeansResponse& response_ ) const
 {
     AggregateKMeansRequest actualRequest_;
     actualRequest_.tableName = tableName;
@@ -998,7 +1397,8 @@ AggregateKMeansResponse& GPUdb::aggregateKMeans(const std::string& tableName, co
  * @return Response object containing the result of the operation.
  * 
  */
-AggregateMinMaxResponse GPUdb::aggregateMinMax(const AggregateMinMaxRequest& request_) const
+
+AggregateMinMaxResponse GPUdb::aggregateMinMax( const AggregateMinMaxRequest& request_ ) const
 {
     AggregateMinMaxResponse actualResponse_;
     submitRequest("/aggregate/minmax", request_, actualResponse_, false);
@@ -1019,7 +1419,9 @@ AggregateMinMaxResponse GPUdb::aggregateMinMax(const AggregateMinMaxRequest& req
  *         passed in by reference).
  * 
  */
-AggregateMinMaxResponse& GPUdb::aggregateMinMax(const AggregateMinMaxRequest& request_, AggregateMinMaxResponse& response_) const
+
+AggregateMinMaxResponse& GPUdb::aggregateMinMax( const AggregateMinMaxRequest& request_,
+                                                 AggregateMinMaxResponse& response_ ) const
 {
     submitRequest("/aggregate/minmax", request_, response_, false);
     return response_;
@@ -1039,7 +1441,10 @@ AggregateMinMaxResponse& GPUdb::aggregateMinMax(const AggregateMinMaxRequest& re
  * @return Response object containing the result of the operation.
  * 
  */
-AggregateMinMaxResponse GPUdb::aggregateMinMax(const std::string& tableName, const std::string& columnName, const std::map<std::string, std::string>& options) const
+
+AggregateMinMaxResponse GPUdb::aggregateMinMax( const std::string& tableName,
+                                                const std::string& columnName,
+                                                const std::map<std::string, std::string>& options ) const
 {
     AggregateMinMaxRequest actualRequest_;
     actualRequest_.tableName = tableName;
@@ -1067,7 +1472,11 @@ AggregateMinMaxResponse GPUdb::aggregateMinMax(const std::string& tableName, con
  *         passed in by reference).
  * 
  */
-AggregateMinMaxResponse& GPUdb::aggregateMinMax(const std::string& tableName, const std::string& columnName, const std::map<std::string, std::string>& options, AggregateMinMaxResponse& response_) const
+
+AggregateMinMaxResponse& GPUdb::aggregateMinMax( const std::string& tableName,
+                                                 const std::string& columnName,
+                                                 const std::map<std::string, std::string>& options,
+                                                 AggregateMinMaxResponse& response_ ) const
 {
     AggregateMinMaxRequest actualRequest_;
     actualRequest_.tableName = tableName;
@@ -1096,7 +1505,8 @@ AggregateMinMaxResponse& GPUdb::aggregateMinMax(const std::string& tableName, co
  * @return Response object containing the result of the operation.
  * 
  */
-AggregateStatisticsResponse GPUdb::aggregateStatistics(const AggregateStatisticsRequest& request_) const
+
+AggregateStatisticsResponse GPUdb::aggregateStatistics( const AggregateStatisticsRequest& request_ ) const
 {
     AggregateStatisticsResponse actualResponse_;
     submitRequest("/aggregate/statistics", request_, actualResponse_, false);
@@ -1125,7 +1535,9 @@ AggregateStatisticsResponse GPUdb::aggregateStatistics(const AggregateStatistics
  *         passed in by reference).
  * 
  */
-AggregateStatisticsResponse& GPUdb::aggregateStatistics(const AggregateStatisticsRequest& request_, AggregateStatisticsResponse& response_) const
+
+AggregateStatisticsResponse& GPUdb::aggregateStatistics( const AggregateStatisticsRequest& request_,
+                                                         AggregateStatisticsResponse& response_ ) const
 {
     submitRequest("/aggregate/statistics", request_, response_, false);
     return response_;
@@ -1155,7 +1567,11 @@ AggregateStatisticsResponse& GPUdb::aggregateStatistics(const AggregateStatistic
  * @return Response object containing the result of the operation.
  * 
  */
-AggregateStatisticsResponse GPUdb::aggregateStatistics(const std::string& tableName, const std::string& columnName, const std::string& stats, const std::map<std::string, std::string>& options) const
+
+AggregateStatisticsResponse GPUdb::aggregateStatistics( const std::string& tableName,
+                                                        const std::string& columnName,
+                                                        const std::string& stats,
+                                                        const std::map<std::string, std::string>& options ) const
 {
     AggregateStatisticsRequest actualRequest_;
     actualRequest_.tableName = tableName;
@@ -1194,7 +1610,12 @@ AggregateStatisticsResponse GPUdb::aggregateStatistics(const std::string& tableN
  *         passed in by reference).
  * 
  */
-AggregateStatisticsResponse& GPUdb::aggregateStatistics(const std::string& tableName, const std::string& columnName, const std::string& stats, const std::map<std::string, std::string>& options, AggregateStatisticsResponse& response_) const
+
+AggregateStatisticsResponse& GPUdb::aggregateStatistics( const std::string& tableName,
+                                                         const std::string& columnName,
+                                                         const std::string& stats,
+                                                         const std::map<std::string, std::string>& options,
+                                                         AggregateStatisticsResponse& response_ ) const
 {
     AggregateStatisticsRequest actualRequest_;
     actualRequest_.tableName = tableName;
@@ -1236,7 +1657,8 @@ AggregateStatisticsResponse& GPUdb::aggregateStatistics(const std::string& table
  * @return Response object containing the result of the operation.
  * 
  */
-AggregateStatisticsByRangeResponse GPUdb::aggregateStatisticsByRange(const AggregateStatisticsByRangeRequest& request_) const
+
+AggregateStatisticsByRangeResponse GPUdb::aggregateStatisticsByRange( const AggregateStatisticsByRangeRequest& request_ ) const
 {
     AggregateStatisticsByRangeResponse actualResponse_;
     submitRequest("/aggregate/statistics/byrange", request_, actualResponse_, false);
@@ -1277,7 +1699,9 @@ AggregateStatisticsByRangeResponse GPUdb::aggregateStatisticsByRange(const Aggre
  *         passed in by reference).
  * 
  */
-AggregateStatisticsByRangeResponse& GPUdb::aggregateStatisticsByRange(const AggregateStatisticsByRangeRequest& request_, AggregateStatisticsByRangeResponse& response_) const
+
+AggregateStatisticsByRangeResponse& GPUdb::aggregateStatisticsByRange( const AggregateStatisticsByRangeRequest& request_,
+                                                                       AggregateStatisticsByRangeResponse& response_ ) const
 {
     submitRequest("/aggregate/statistics/byrange", request_, response_, false);
     return response_;
@@ -1332,7 +1756,16 @@ AggregateStatisticsByRangeResponse& GPUdb::aggregateStatisticsByRange(const Aggr
  * @return Response object containing the result of the operation.
  * 
  */
-AggregateStatisticsByRangeResponse GPUdb::aggregateStatisticsByRange(const std::string& tableName, const std::string& selectExpression, const std::string& columnName, const std::string& valueColumnName, const std::string& stats, const double start, const double end, const double interval, const std::map<std::string, std::string>& options) const
+
+AggregateStatisticsByRangeResponse GPUdb::aggregateStatisticsByRange( const std::string& tableName,
+                                                                      const std::string& selectExpression,
+                                                                      const std::string& columnName,
+                                                                      const std::string& valueColumnName,
+                                                                      const std::string& stats,
+                                                                      const double start,
+                                                                      const double end,
+                                                                      const double interval,
+                                                                      const std::map<std::string, std::string>& options ) const
 {
     AggregateStatisticsByRangeRequest actualRequest_;
     actualRequest_.tableName = tableName;
@@ -1401,7 +1834,17 @@ AggregateStatisticsByRangeResponse GPUdb::aggregateStatisticsByRange(const std::
  *         passed in by reference).
  * 
  */
-AggregateStatisticsByRangeResponse& GPUdb::aggregateStatisticsByRange(const std::string& tableName, const std::string& selectExpression, const std::string& columnName, const std::string& valueColumnName, const std::string& stats, const double start, const double end, const double interval, const std::map<std::string, std::string>& options, AggregateStatisticsByRangeResponse& response_) const
+
+AggregateStatisticsByRangeResponse& GPUdb::aggregateStatisticsByRange( const std::string& tableName,
+                                                                       const std::string& selectExpression,
+                                                                       const std::string& columnName,
+                                                                       const std::string& valueColumnName,
+                                                                       const std::string& stats,
+                                                                       const double start,
+                                                                       const double end,
+                                                                       const double interval,
+                                                                       const std::map<std::string, std::string>& options,
+                                                                       AggregateStatisticsByRangeResponse& response_ ) const
 {
     AggregateStatisticsByRangeRequest actualRequest_;
     actualRequest_.tableName = tableName;
@@ -1440,7 +1883,8 @@ AggregateStatisticsByRangeResponse& GPUdb::aggregateStatisticsByRange(const std:
  * @return Response object containing the result of the operation.
  * 
  */
-RawAggregateUniqueResponse GPUdb::aggregateUniqueRaw(const AggregateUniqueRequest& request_) const
+
+RawAggregateUniqueResponse GPUdb::aggregateUniqueRaw( const AggregateUniqueRequest& request_ ) const
 {
     RawAggregateUniqueResponse actualResponse_;
     submitRequest("/aggregate/unique", request_, actualResponse_, false);
@@ -1473,7 +1917,9 @@ RawAggregateUniqueResponse GPUdb::aggregateUniqueRaw(const AggregateUniqueReques
  *         passed in by reference).
  * 
  */
-RawAggregateUniqueResponse& GPUdb::aggregateUniqueRaw(const AggregateUniqueRequest& request_, RawAggregateUniqueResponse& response_) const
+
+RawAggregateUniqueResponse& GPUdb::aggregateUniqueRaw( const AggregateUniqueRequest& request_,
+                                                       RawAggregateUniqueResponse& response_ ) const
 {
     submitRequest("/aggregate/unique", request_, response_, false);
     return response_;
@@ -1502,7 +1948,8 @@ RawAggregateUniqueResponse& GPUdb::aggregateUniqueRaw(const AggregateUniqueReque
  * @return Response object containing the result of the operation.
  * 
  */
-AggregateUniqueResponse GPUdb::aggregateUnique(const AggregateUniqueRequest& request_) const
+
+AggregateUniqueResponse GPUdb::aggregateUnique( const AggregateUniqueRequest& request_ ) const
 {
     RawAggregateUniqueResponse actualResponse_;
     submitRequest("/aggregate/unique", request_, actualResponse_, false);
@@ -1539,7 +1986,9 @@ AggregateUniqueResponse GPUdb::aggregateUnique(const AggregateUniqueRequest& req
  *         passed in by reference).
  * 
  */
-AggregateUniqueResponse& GPUdb::aggregateUnique(const AggregateUniqueRequest& request_, AggregateUniqueResponse& response_) const
+
+AggregateUniqueResponse& GPUdb::aggregateUnique( const AggregateUniqueRequest& request_,
+                                                 AggregateUniqueResponse& response_ ) const
 {
     RawAggregateUniqueResponse actualResponse_;
     submitRequest("/aggregate/unique", request_, actualResponse_, false);
@@ -1583,7 +2032,12 @@ AggregateUniqueResponse& GPUdb::aggregateUnique(const AggregateUniqueRequest& re
  * @return Response object containing the result of the operation.
  * 
  */
-AggregateUniqueResponse GPUdb::aggregateUnique(const std::string& tableName, const std::string& columnName, const int64_t offset, const int64_t limit, const std::map<std::string, std::string>& options) const
+
+AggregateUniqueResponse GPUdb::aggregateUnique( const std::string& tableName,
+                                                const std::string& columnName,
+                                                const int64_t offset,
+                                                const int64_t limit,
+                                                const std::map<std::string, std::string>& options ) const
 {
     AggregateUniqueRequest actualRequest_;
     actualRequest_.tableName = tableName;
@@ -1637,7 +2091,13 @@ AggregateUniqueResponse GPUdb::aggregateUnique(const std::string& tableName, con
  *         passed in by reference).
  * 
  */
-AggregateUniqueResponse& GPUdb::aggregateUnique(const std::string& tableName, const std::string& columnName, const int64_t offset, const int64_t limit, const std::map<std::string, std::string>& options, AggregateUniqueResponse& response_) const
+
+AggregateUniqueResponse& GPUdb::aggregateUnique( const std::string& tableName,
+                                                 const std::string& columnName,
+                                                 const int64_t offset,
+                                                 const int64_t limit,
+                                                 const std::map<std::string, std::string>& options,
+                                                 AggregateUniqueResponse& response_ ) const
 {
     AggregateUniqueRequest actualRequest_;
     actualRequest_.tableName = tableName;
@@ -1667,7 +2127,8 @@ AggregateUniqueResponse& GPUdb::aggregateUnique(const std::string& tableName, co
  * @return Response object containing the result of the operation.
  * 
  */
-AlterSystemPropertiesResponse GPUdb::alterSystemProperties(const AlterSystemPropertiesRequest& request_) const
+
+AlterSystemPropertiesResponse GPUdb::alterSystemProperties( const AlterSystemPropertiesRequest& request_ ) const
 {
     AlterSystemPropertiesResponse actualResponse_;
     submitRequest("/alter/system/properties", request_, actualResponse_, false);
@@ -1691,7 +2152,9 @@ AlterSystemPropertiesResponse GPUdb::alterSystemProperties(const AlterSystemProp
  *         passed in by reference).
  * 
  */
-AlterSystemPropertiesResponse& GPUdb::alterSystemProperties(const AlterSystemPropertiesRequest& request_, AlterSystemPropertiesResponse& response_) const
+
+AlterSystemPropertiesResponse& GPUdb::alterSystemProperties( const AlterSystemPropertiesRequest& request_,
+                                                             AlterSystemPropertiesResponse& response_ ) const
 {
     submitRequest("/alter/system/properties", request_, response_, false);
     return response_;
@@ -1712,7 +2175,9 @@ AlterSystemPropertiesResponse& GPUdb::alterSystemProperties(const AlterSystemPro
  * @return Response object containing the result of the operation.
  * 
  */
-AlterSystemPropertiesResponse GPUdb::alterSystemProperties(const std::map<std::string, std::string>& propertyUpdatesMap, const std::map<std::string, std::string>& options) const
+
+AlterSystemPropertiesResponse GPUdb::alterSystemProperties( const std::map<std::string, std::string>& propertyUpdatesMap,
+                                                            const std::map<std::string, std::string>& options ) const
 {
     AlterSystemPropertiesRequest actualRequest_;
     actualRequest_.propertyUpdatesMap = propertyUpdatesMap;
@@ -1740,7 +2205,10 @@ AlterSystemPropertiesResponse GPUdb::alterSystemProperties(const std::map<std::s
  *         passed in by reference).
  * 
  */
-AlterSystemPropertiesResponse& GPUdb::alterSystemProperties(const std::map<std::string, std::string>& propertyUpdatesMap, const std::map<std::string, std::string>& options, AlterSystemPropertiesResponse& response_) const
+
+AlterSystemPropertiesResponse& GPUdb::alterSystemProperties( const std::map<std::string, std::string>& propertyUpdatesMap,
+                                                             const std::map<std::string, std::string>& options,
+                                                             AlterSystemPropertiesResponse& response_ ) const
 {
     AlterSystemPropertiesRequest actualRequest_;
     actualRequest_.propertyUpdatesMap = propertyUpdatesMap;
@@ -1764,7 +2232,8 @@ AlterSystemPropertiesResponse& GPUdb::alterSystemProperties(const std::map<std::
  * @return Response object containing the result of the operation.
  * 
  */
-AlterTableResponse GPUdb::alterTable(const AlterTableRequest& request_) const
+
+AlterTableResponse GPUdb::alterTable( const AlterTableRequest& request_ ) const
 {
     AlterTableResponse actualResponse_;
     submitRequest("/alter/table", request_, actualResponse_, false);
@@ -1792,7 +2261,9 @@ AlterTableResponse GPUdb::alterTable(const AlterTableRequest& request_) const
  *         passed in by reference).
  * 
  */
-AlterTableResponse& GPUdb::alterTable(const AlterTableRequest& request_, AlterTableResponse& response_) const
+
+AlterTableResponse& GPUdb::alterTable( const AlterTableRequest& request_,
+                                       AlterTableResponse& response_ ) const
 {
     submitRequest("/alter/table", request_, response_, false);
     return response_;
@@ -1818,7 +2289,11 @@ AlterTableResponse& GPUdb::alterTable(const AlterTableRequest& request_, AlterTa
  * @return Response object containing the result of the operation.
  * 
  */
-AlterTableResponse GPUdb::alterTable(const std::string& tableName, const std::string& columnName, const std::string& action, const std::map<std::string, std::string>& options) const
+
+AlterTableResponse GPUdb::alterTable( const std::string& tableName,
+                                      const std::string& columnName,
+                                      const std::string& action,
+                                      const std::map<std::string, std::string>& options ) const
 {
     AlterTableRequest actualRequest_;
     actualRequest_.tableName = tableName;
@@ -1853,7 +2328,12 @@ AlterTableResponse GPUdb::alterTable(const std::string& tableName, const std::st
  *         passed in by reference).
  * 
  */
-AlterTableResponse& GPUdb::alterTable(const std::string& tableName, const std::string& columnName, const std::string& action, const std::map<std::string, std::string>& options, AlterTableResponse& response_) const
+
+AlterTableResponse& GPUdb::alterTable( const std::string& tableName,
+                                       const std::string& columnName,
+                                       const std::string& action,
+                                       const std::map<std::string, std::string>& options,
+                                       AlterTableResponse& response_ ) const
 {
     AlterTableRequest actualRequest_;
     actualRequest_.tableName = tableName;
@@ -1877,7 +2357,8 @@ AlterTableResponse& GPUdb::alterTable(const std::string& tableName, const std::s
  * @return Response object containing the result of the operation.
  * 
  */
-AlterTableMetadataResponse GPUdb::alterTableMetadata(const AlterTableMetadataRequest& request_) const
+
+AlterTableMetadataResponse GPUdb::alterTableMetadata( const AlterTableMetadataRequest& request_ ) const
 {
     AlterTableMetadataResponse actualResponse_;
     submitRequest("/alter/table/metadata", request_, actualResponse_, false);
@@ -1900,7 +2381,9 @@ AlterTableMetadataResponse GPUdb::alterTableMetadata(const AlterTableMetadataReq
  *         passed in by reference).
  * 
  */
-AlterTableMetadataResponse& GPUdb::alterTableMetadata(const AlterTableMetadataRequest& request_, AlterTableMetadataResponse& response_) const
+
+AlterTableMetadataResponse& GPUdb::alterTableMetadata( const AlterTableMetadataRequest& request_,
+                                                       AlterTableMetadataResponse& response_ ) const
 {
     submitRequest("/alter/table/metadata", request_, response_, false);
     return response_;
@@ -1926,7 +2409,10 @@ AlterTableMetadataResponse& GPUdb::alterTableMetadata(const AlterTableMetadataRe
  * @return Response object containing the result of the operation.
  * 
  */
-AlterTableMetadataResponse GPUdb::alterTableMetadata(const std::vector<std::string>& tableNames, const std::map<std::string, std::string>& metadataMap, const std::map<std::string, std::string>& options) const
+
+AlterTableMetadataResponse GPUdb::alterTableMetadata( const std::vector<std::string>& tableNames,
+                                                      const std::map<std::string, std::string>& metadataMap,
+                                                      const std::map<std::string, std::string>& options ) const
 {
     AlterTableMetadataRequest actualRequest_;
     actualRequest_.tableNames = tableNames;
@@ -1960,7 +2446,11 @@ AlterTableMetadataResponse GPUdb::alterTableMetadata(const std::vector<std::stri
  *         passed in by reference).
  * 
  */
-AlterTableMetadataResponse& GPUdb::alterTableMetadata(const std::vector<std::string>& tableNames, const std::map<std::string, std::string>& metadataMap, const std::map<std::string, std::string>& options, AlterTableMetadataResponse& response_) const
+
+AlterTableMetadataResponse& GPUdb::alterTableMetadata( const std::vector<std::string>& tableNames,
+                                                       const std::map<std::string, std::string>& metadataMap,
+                                                       const std::map<std::string, std::string>& options,
+                                                       AlterTableMetadataResponse& response_ ) const
 {
     AlterTableMetadataRequest actualRequest_;
     actualRequest_.tableNames = tableNames;
@@ -1982,7 +2472,8 @@ AlterTableMetadataResponse& GPUdb::alterTableMetadata(const std::vector<std::str
  * @return Response object containing the result of the operation.
  * 
  */
-AlterTablePropertiesResponse GPUdb::alterTableProperties(const AlterTablePropertiesRequest& request_) const
+
+AlterTablePropertiesResponse GPUdb::alterTableProperties( const AlterTablePropertiesRequest& request_ ) const
 {
     AlterTablePropertiesResponse actualResponse_;
     submitRequest("/alter/table/properties", request_, actualResponse_, false);
@@ -2004,7 +2495,9 @@ AlterTablePropertiesResponse GPUdb::alterTableProperties(const AlterTablePropert
  *         passed in by reference).
  * 
  */
-AlterTablePropertiesResponse& GPUdb::alterTableProperties(const AlterTablePropertiesRequest& request_, AlterTablePropertiesResponse& response_) const
+
+AlterTablePropertiesResponse& GPUdb::alterTableProperties( const AlterTablePropertiesRequest& request_,
+                                                           AlterTablePropertiesResponse& response_ ) const
 {
     submitRequest("/alter/table/properties", request_, response_, false);
     return response_;
@@ -2028,7 +2521,10 @@ AlterTablePropertiesResponse& GPUdb::alterTableProperties(const AlterTableProper
  * @return Response object containing the result of the operation.
  * 
  */
-AlterTablePropertiesResponse GPUdb::alterTableProperties(const std::vector<std::string>& tableNames, const std::map<std::string, std::string>& propertiesMap, const std::map<std::string, std::string>& options) const
+
+AlterTablePropertiesResponse GPUdb::alterTableProperties( const std::vector<std::string>& tableNames,
+                                                          const std::map<std::string, std::string>& propertiesMap,
+                                                          const std::map<std::string, std::string>& options ) const
 {
     AlterTablePropertiesRequest actualRequest_;
     actualRequest_.tableNames = tableNames;
@@ -2060,7 +2556,11 @@ AlterTablePropertiesResponse GPUdb::alterTableProperties(const std::vector<std::
  *         passed in by reference).
  * 
  */
-AlterTablePropertiesResponse& GPUdb::alterTableProperties(const std::vector<std::string>& tableNames, const std::map<std::string, std::string>& propertiesMap, const std::map<std::string, std::string>& options, AlterTablePropertiesResponse& response_) const
+
+AlterTablePropertiesResponse& GPUdb::alterTableProperties( const std::vector<std::string>& tableNames,
+                                                           const std::map<std::string, std::string>& propertiesMap,
+                                                           const std::map<std::string, std::string>& options,
+                                                           AlterTablePropertiesResponse& response_ ) const
 {
     AlterTablePropertiesRequest actualRequest_;
     actualRequest_.tableNames = tableNames;
@@ -2084,7 +2584,8 @@ AlterTablePropertiesResponse& GPUdb::alterTableProperties(const std::vector<std:
  * @return Response object containing the result of the operation.
  * 
  */
-ClearTableResponse GPUdb::clearTable(const ClearTableRequest& request_) const
+
+ClearTableResponse GPUdb::clearTable( const ClearTableRequest& request_ ) const
 {
     ClearTableResponse actualResponse_;
     submitRequest("/clear/table", request_, actualResponse_, false);
@@ -2108,7 +2609,9 @@ ClearTableResponse GPUdb::clearTable(const ClearTableRequest& request_) const
  *         passed in by reference).
  * 
  */
-ClearTableResponse& GPUdb::clearTable(const ClearTableRequest& request_, ClearTableResponse& response_) const
+
+ClearTableResponse& GPUdb::clearTable( const ClearTableRequest& request_,
+                                       ClearTableResponse& response_ ) const
 {
     submitRequest("/clear/table", request_, response_, false);
     return response_;
@@ -2133,7 +2636,10 @@ ClearTableResponse& GPUdb::clearTable(const ClearTableRequest& request_, ClearTa
  * @return Response object containing the result of the operation.
  * 
  */
-ClearTableResponse GPUdb::clearTable(const std::string& tableName, const std::string& authorization, const std::map<std::string, std::string>& options) const
+
+ClearTableResponse GPUdb::clearTable( const std::string& tableName,
+                                      const std::string& authorization,
+                                      const std::map<std::string, std::string>& options ) const
 {
     ClearTableRequest actualRequest_;
     actualRequest_.tableName = tableName;
@@ -2166,7 +2672,11 @@ ClearTableResponse GPUdb::clearTable(const std::string& tableName, const std::st
  *         passed in by reference).
  * 
  */
-ClearTableResponse& GPUdb::clearTable(const std::string& tableName, const std::string& authorization, const std::map<std::string, std::string>& options, ClearTableResponse& response_) const
+
+ClearTableResponse& GPUdb::clearTable( const std::string& tableName,
+                                       const std::string& authorization,
+                                       const std::map<std::string, std::string>& options,
+                                       ClearTableResponse& response_ ) const
 {
     ClearTableRequest actualRequest_;
     actualRequest_.tableName = tableName;
@@ -2187,7 +2697,8 @@ ClearTableResponse& GPUdb::clearTable(const std::string& tableName, const std::s
  * @return Response object containing the result of the operation.
  * 
  */
-ClearTableMonitorResponse GPUdb::clearTableMonitor(const ClearTableMonitorRequest& request_) const
+
+ClearTableMonitorResponse GPUdb::clearTableMonitor( const ClearTableMonitorRequest& request_ ) const
 {
     ClearTableMonitorResponse actualResponse_;
     submitRequest("/clear/tablemonitor", request_, actualResponse_, false);
@@ -2208,7 +2719,9 @@ ClearTableMonitorResponse GPUdb::clearTableMonitor(const ClearTableMonitorReques
  *         passed in by reference).
  * 
  */
-ClearTableMonitorResponse& GPUdb::clearTableMonitor(const ClearTableMonitorRequest& request_, ClearTableMonitorResponse& response_) const
+
+ClearTableMonitorResponse& GPUdb::clearTableMonitor( const ClearTableMonitorRequest& request_,
+                                                     ClearTableMonitorResponse& response_ ) const
 {
     submitRequest("/clear/tablemonitor", request_, response_, false);
     return response_;
@@ -2225,7 +2738,9 @@ ClearTableMonitorResponse& GPUdb::clearTableMonitor(const ClearTableMonitorReque
  * @return Response object containing the result of the operation.
  * 
  */
-ClearTableMonitorResponse GPUdb::clearTableMonitor(const std::string& topicId, const std::map<std::string, std::string>& options) const
+
+ClearTableMonitorResponse GPUdb::clearTableMonitor( const std::string& topicId,
+                                                    const std::map<std::string, std::string>& options ) const
 {
     ClearTableMonitorRequest actualRequest_;
     actualRequest_.topicId = topicId;
@@ -2249,7 +2764,10 @@ ClearTableMonitorResponse GPUdb::clearTableMonitor(const std::string& topicId, c
  *         passed in by reference).
  * 
  */
-ClearTableMonitorResponse& GPUdb::clearTableMonitor(const std::string& topicId, const std::map<std::string, std::string>& options, ClearTableMonitorResponse& response_) const
+
+ClearTableMonitorResponse& GPUdb::clearTableMonitor( const std::string& topicId,
+                                                     const std::map<std::string, std::string>& options,
+                                                     ClearTableMonitorResponse& response_ ) const
 {
     ClearTableMonitorRequest actualRequest_;
     actualRequest_.topicId = topicId;
@@ -2270,7 +2788,8 @@ ClearTableMonitorResponse& GPUdb::clearTableMonitor(const std::string& topicId, 
  * @return Response object containing the result of the operation.
  * 
  */
-ClearTriggerResponse GPUdb::clearTrigger(const ClearTriggerRequest& request_) const
+
+ClearTriggerResponse GPUdb::clearTrigger( const ClearTriggerRequest& request_ ) const
 {
     ClearTriggerResponse actualResponse_;
     submitRequest("/clear/trigger", request_, actualResponse_, false);
@@ -2292,7 +2811,9 @@ ClearTriggerResponse GPUdb::clearTrigger(const ClearTriggerRequest& request_) co
  *         passed in by reference).
  * 
  */
-ClearTriggerResponse& GPUdb::clearTrigger(const ClearTriggerRequest& request_, ClearTriggerResponse& response_) const
+
+ClearTriggerResponse& GPUdb::clearTrigger( const ClearTriggerRequest& request_,
+                                           ClearTriggerResponse& response_ ) const
 {
     submitRequest("/clear/trigger", request_, response_, false);
     return response_;
@@ -2310,7 +2831,9 @@ ClearTriggerResponse& GPUdb::clearTrigger(const ClearTriggerRequest& request_, C
  * @return Response object containing the result of the operation.
  * 
  */
-ClearTriggerResponse GPUdb::clearTrigger(const std::string& triggerId, const std::map<std::string, std::string>& options) const
+
+ClearTriggerResponse GPUdb::clearTrigger( const std::string& triggerId,
+                                          const std::map<std::string, std::string>& options ) const
 {
     ClearTriggerRequest actualRequest_;
     actualRequest_.triggerId = triggerId;
@@ -2335,7 +2858,10 @@ ClearTriggerResponse GPUdb::clearTrigger(const std::string& triggerId, const std
  *         passed in by reference).
  * 
  */
-ClearTriggerResponse& GPUdb::clearTrigger(const std::string& triggerId, const std::map<std::string, std::string>& options, ClearTriggerResponse& response_) const
+
+ClearTriggerResponse& GPUdb::clearTrigger( const std::string& triggerId,
+                                           const std::map<std::string, std::string>& options,
+                                           ClearTriggerResponse& response_ ) const
 {
     ClearTriggerRequest actualRequest_;
     actualRequest_.triggerId = triggerId;
@@ -2355,7 +2881,8 @@ ClearTriggerResponse& GPUdb::clearTrigger(const std::string& triggerId, const st
  * @return Response object containing the result of the operation.
  * 
  */
-CreateJoinTableResponse GPUdb::createJoinTable(const CreateJoinTableRequest& request_) const
+
+CreateJoinTableResponse GPUdb::createJoinTable( const CreateJoinTableRequest& request_ ) const
 {
     CreateJoinTableResponse actualResponse_;
     submitRequest("/create/jointable", request_, actualResponse_, false);
@@ -2376,7 +2903,9 @@ CreateJoinTableResponse GPUdb::createJoinTable(const CreateJoinTableRequest& req
  *         passed in by reference).
  * 
  */
-CreateJoinTableResponse& GPUdb::createJoinTable(const CreateJoinTableRequest& request_, CreateJoinTableResponse& response_) const
+
+CreateJoinTableResponse& GPUdb::createJoinTable( const CreateJoinTableRequest& request_,
+                                                 CreateJoinTableResponse& response_ ) const
 {
     submitRequest("/create/jointable", request_, response_, false);
     return response_;
@@ -2397,7 +2926,11 @@ CreateJoinTableResponse& GPUdb::createJoinTable(const CreateJoinTableRequest& re
  * @return Response object containing the result of the operation.
  * 
  */
-CreateJoinTableResponse GPUdb::createJoinTable(const std::string& joinTableName, const std::vector<std::string>& tableNames, const std::vector<std::string>& aliases, const std::map<std::string, std::string>& options) const
+
+CreateJoinTableResponse GPUdb::createJoinTable( const std::string& joinTableName,
+                                                const std::vector<std::string>& tableNames,
+                                                const std::vector<std::string>& aliases,
+                                                const std::map<std::string, std::string>& options ) const
 {
     CreateJoinTableRequest actualRequest_;
     actualRequest_.joinTableName = joinTableName;
@@ -2427,7 +2960,12 @@ CreateJoinTableResponse GPUdb::createJoinTable(const std::string& joinTableName,
  *         passed in by reference).
  * 
  */
-CreateJoinTableResponse& GPUdb::createJoinTable(const std::string& joinTableName, const std::vector<std::string>& tableNames, const std::vector<std::string>& aliases, const std::map<std::string, std::string>& options, CreateJoinTableResponse& response_) const
+
+CreateJoinTableResponse& GPUdb::createJoinTable( const std::string& joinTableName,
+                                                 const std::vector<std::string>& tableNames,
+                                                 const std::vector<std::string>& aliases,
+                                                 const std::map<std::string, std::string>& options,
+                                                 CreateJoinTableResponse& response_ ) const
 {
     CreateJoinTableRequest actualRequest_;
     actualRequest_.joinTableName = joinTableName;
@@ -2455,7 +2993,8 @@ CreateJoinTableResponse& GPUdb::createJoinTable(const std::string& joinTableName
  * @return Response object containing the result of the operation.
  * 
  */
-CreateTableResponse GPUdb::createTable(const CreateTableRequest& request_) const
+
+CreateTableResponse GPUdb::createTable( const CreateTableRequest& request_ ) const
 {
     CreateTableResponse actualResponse_;
     submitRequest("/create/table", request_, actualResponse_, false);
@@ -2483,7 +3022,9 @@ CreateTableResponse GPUdb::createTable(const CreateTableRequest& request_) const
  *         passed in by reference).
  * 
  */
-CreateTableResponse& GPUdb::createTable(const CreateTableRequest& request_, CreateTableResponse& response_) const
+
+CreateTableResponse& GPUdb::createTable( const CreateTableRequest& request_,
+                                         CreateTableResponse& response_ ) const
 {
     submitRequest("/create/table", request_, response_, false);
     return response_;
@@ -2514,7 +3055,10 @@ CreateTableResponse& GPUdb::createTable(const CreateTableRequest& request_, Crea
  * @return Response object containing the result of the operation.
  * 
  */
-CreateTableResponse GPUdb::createTable(const std::string& tableName, const std::string& typeId, const std::map<std::string, std::string>& options) const
+
+CreateTableResponse GPUdb::createTable( const std::string& tableName,
+                                        const std::string& typeId,
+                                        const std::map<std::string, std::string>& options ) const
 {
     CreateTableRequest actualRequest_;
     actualRequest_.tableName = tableName;
@@ -2553,7 +3097,11 @@ CreateTableResponse GPUdb::createTable(const std::string& tableName, const std::
  *         passed in by reference).
  * 
  */
-CreateTableResponse& GPUdb::createTable(const std::string& tableName, const std::string& typeId, const std::map<std::string, std::string>& options, CreateTableResponse& response_) const
+
+CreateTableResponse& GPUdb::createTable( const std::string& tableName,
+                                         const std::string& typeId,
+                                         const std::map<std::string, std::string>& options,
+                                         CreateTableResponse& response_ ) const
 {
     CreateTableRequest actualRequest_;
     actualRequest_.tableName = tableName;
@@ -2582,7 +3130,8 @@ CreateTableResponse& GPUdb::createTable(const std::string& tableName, const std:
  * @return Response object containing the result of the operation.
  * 
  */
-CreateTableMonitorResponse GPUdb::createTableMonitor(const CreateTableMonitorRequest& request_) const
+
+CreateTableMonitorResponse GPUdb::createTableMonitor( const CreateTableMonitorRequest& request_ ) const
 {
     CreateTableMonitorResponse actualResponse_;
     submitRequest("/create/tablemonitor", request_, actualResponse_, false);
@@ -2611,7 +3160,9 @@ CreateTableMonitorResponse GPUdb::createTableMonitor(const CreateTableMonitorReq
  *         passed in by reference).
  * 
  */
-CreateTableMonitorResponse& GPUdb::createTableMonitor(const CreateTableMonitorRequest& request_, CreateTableMonitorResponse& response_) const
+
+CreateTableMonitorResponse& GPUdb::createTableMonitor( const CreateTableMonitorRequest& request_,
+                                                       CreateTableMonitorResponse& response_ ) const
 {
     submitRequest("/create/tablemonitor", request_, response_, false);
     return response_;
@@ -2637,7 +3188,9 @@ CreateTableMonitorResponse& GPUdb::createTableMonitor(const CreateTableMonitorRe
  * @return Response object containing the result of the operation.
  * 
  */
-CreateTableMonitorResponse GPUdb::createTableMonitor(const std::string& tableName, const std::map<std::string, std::string>& options) const
+
+CreateTableMonitorResponse GPUdb::createTableMonitor( const std::string& tableName,
+                                                      const std::map<std::string, std::string>& options ) const
 {
     CreateTableMonitorRequest actualRequest_;
     actualRequest_.tableName = tableName;
@@ -2670,7 +3223,10 @@ CreateTableMonitorResponse GPUdb::createTableMonitor(const std::string& tableNam
  *         passed in by reference).
  * 
  */
-CreateTableMonitorResponse& GPUdb::createTableMonitor(const std::string& tableName, const std::map<std::string, std::string>& options, CreateTableMonitorResponse& response_) const
+
+CreateTableMonitorResponse& GPUdb::createTableMonitor( const std::string& tableName,
+                                                       const std::map<std::string, std::string>& options,
+                                                       CreateTableMonitorResponse& response_ ) const
 {
     CreateTableMonitorRequest actualRequest_;
     actualRequest_.tableName = tableName;
@@ -2703,7 +3259,8 @@ CreateTableMonitorResponse& GPUdb::createTableMonitor(const std::string& tableNa
  * @return Response object containing the result of the operation.
  * 
  */
-CreateTriggerByAreaResponse GPUdb::createTriggerByArea(const CreateTriggerByAreaRequest& request_) const
+
+CreateTriggerByAreaResponse GPUdb::createTriggerByArea( const CreateTriggerByAreaRequest& request_ ) const
 {
     CreateTriggerByAreaResponse actualResponse_;
     submitRequest("/create/trigger/byarea", request_, actualResponse_, false);
@@ -2739,7 +3296,9 @@ CreateTriggerByAreaResponse GPUdb::createTriggerByArea(const CreateTriggerByArea
  *         passed in by reference).
  * 
  */
-CreateTriggerByAreaResponse& GPUdb::createTriggerByArea(const CreateTriggerByAreaRequest& request_, CreateTriggerByAreaResponse& response_) const
+
+CreateTriggerByAreaResponse& GPUdb::createTriggerByArea( const CreateTriggerByAreaRequest& request_,
+                                                         CreateTriggerByAreaResponse& response_ ) const
 {
     submitRequest("/create/trigger/byarea", request_, response_, false);
     return response_;
@@ -2784,7 +3343,14 @@ CreateTriggerByAreaResponse& GPUdb::createTriggerByArea(const CreateTriggerByAre
  * @return Response object containing the result of the operation.
  * 
  */
-CreateTriggerByAreaResponse GPUdb::createTriggerByArea(const std::string& requestId, const std::vector<std::string>& tableNames, const std::string& xColumnName, const std::vector<double>& xVector, const std::string& yColumnName, const std::vector<double>& yVector, const std::map<std::string, std::string>& options) const
+
+CreateTriggerByAreaResponse GPUdb::createTriggerByArea( const std::string& requestId,
+                                                        const std::vector<std::string>& tableNames,
+                                                        const std::string& xColumnName,
+                                                        const std::vector<double>& xVector,
+                                                        const std::string& yColumnName,
+                                                        const std::vector<double>& yVector,
+                                                        const std::map<std::string, std::string>& options ) const
 {
     CreateTriggerByAreaRequest actualRequest_;
     actualRequest_.requestId = requestId;
@@ -2841,7 +3407,15 @@ CreateTriggerByAreaResponse GPUdb::createTriggerByArea(const std::string& reques
  *         passed in by reference).
  * 
  */
-CreateTriggerByAreaResponse& GPUdb::createTriggerByArea(const std::string& requestId, const std::vector<std::string>& tableNames, const std::string& xColumnName, const std::vector<double>& xVector, const std::string& yColumnName, const std::vector<double>& yVector, const std::map<std::string, std::string>& options, CreateTriggerByAreaResponse& response_) const
+
+CreateTriggerByAreaResponse& GPUdb::createTriggerByArea( const std::string& requestId,
+                                                         const std::vector<std::string>& tableNames,
+                                                         const std::string& xColumnName,
+                                                         const std::vector<double>& xVector,
+                                                         const std::string& yColumnName,
+                                                         const std::vector<double>& yVector,
+                                                         const std::map<std::string, std::string>& options,
+                                                         CreateTriggerByAreaResponse& response_ ) const
 {
     CreateTriggerByAreaRequest actualRequest_;
     actualRequest_.requestId = requestId;
@@ -2878,7 +3452,8 @@ CreateTriggerByAreaResponse& GPUdb::createTriggerByArea(const std::string& reque
  * @return Response object containing the result of the operation.
  * 
  */
-CreateTriggerByRangeResponse GPUdb::createTriggerByRange(const CreateTriggerByRangeRequest& request_) const
+
+CreateTriggerByRangeResponse GPUdb::createTriggerByRange( const CreateTriggerByRangeRequest& request_ ) const
 {
     CreateTriggerByRangeResponse actualResponse_;
     submitRequest("/create/trigger/byrange", request_, actualResponse_, false);
@@ -2912,7 +3487,9 @@ CreateTriggerByRangeResponse GPUdb::createTriggerByRange(const CreateTriggerByRa
  *         passed in by reference).
  * 
  */
-CreateTriggerByRangeResponse& GPUdb::createTriggerByRange(const CreateTriggerByRangeRequest& request_, CreateTriggerByRangeResponse& response_) const
+
+CreateTriggerByRangeResponse& GPUdb::createTriggerByRange( const CreateTriggerByRangeRequest& request_,
+                                                           CreateTriggerByRangeResponse& response_ ) const
 {
     submitRequest("/create/trigger/byrange", request_, response_, false);
     return response_;
@@ -2947,7 +3524,13 @@ CreateTriggerByRangeResponse& GPUdb::createTriggerByRange(const CreateTriggerByR
  * @return Response object containing the result of the operation.
  * 
  */
-CreateTriggerByRangeResponse GPUdb::createTriggerByRange(const std::string& requestId, const std::vector<std::string>& tableNames, const std::string& columnName, const double min, const double max, const std::map<std::string, std::string>& options) const
+
+CreateTriggerByRangeResponse GPUdb::createTriggerByRange( const std::string& requestId,
+                                                          const std::vector<std::string>& tableNames,
+                                                          const std::string& columnName,
+                                                          const double min,
+                                                          const double max,
+                                                          const std::map<std::string, std::string>& options ) const
 {
     CreateTriggerByRangeRequest actualRequest_;
     actualRequest_.requestId = requestId;
@@ -2993,7 +3576,14 @@ CreateTriggerByRangeResponse GPUdb::createTriggerByRange(const std::string& requ
  *         passed in by reference).
  * 
  */
-CreateTriggerByRangeResponse& GPUdb::createTriggerByRange(const std::string& requestId, const std::vector<std::string>& tableNames, const std::string& columnName, const double min, const double max, const std::map<std::string, std::string>& options, CreateTriggerByRangeResponse& response_) const
+
+CreateTriggerByRangeResponse& GPUdb::createTriggerByRange( const std::string& requestId,
+                                                           const std::vector<std::string>& tableNames,
+                                                           const std::string& columnName,
+                                                           const double min,
+                                                           const double max,
+                                                           const std::map<std::string, std::string>& options,
+                                                           CreateTriggerByRangeResponse& response_ ) const
 {
     CreateTriggerByRangeRequest actualRequest_;
     actualRequest_.requestId = requestId;
@@ -3053,7 +3643,8 @@ CreateTriggerByRangeResponse& GPUdb::createTriggerByRange(const std::string& req
  * @return Response object containing the result of the operation.
  * 
  */
-CreateTypeResponse GPUdb::createType(const CreateTypeRequest& request_) const
+
+CreateTypeResponse GPUdb::createType( const CreateTypeRequest& request_ ) const
 {
     CreateTypeResponse actualResponse_;
     submitRequest("/create/type", request_, actualResponse_, false);
@@ -3111,7 +3702,9 @@ CreateTypeResponse GPUdb::createType(const CreateTypeRequest& request_) const
  *         passed in by reference).
  * 
  */
-CreateTypeResponse& GPUdb::createType(const CreateTypeRequest& request_, CreateTypeResponse& response_) const
+
+CreateTypeResponse& GPUdb::createType( const CreateTypeRequest& request_,
+                                       CreateTypeResponse& response_ ) const
 {
     submitRequest("/create/type", request_, response_, false);
     setDecoderIfMissing(response_.typeId, response_.typeDefinition);
@@ -3164,13 +3757,22 @@ CreateTypeResponse& GPUdb::createType(const CreateTypeRequest& request_, CreateT
  * @param label  A user-defined description string which can be used to
  *               differentiate between tables and types with otherwise
  *               identical schemas.
- * @param properties  Default value is an empty std::map.
+ * @param properties  Each key-value pair specifies the properties to use for a
+ *                    given column where the key is the column name.  All keys
+ *                    used must be relevant column names for the given table.
+ *                    Specifying any property overrides the default properties
+ *                    for that column (which is based on the column's data
+ *                    type).  Default value is an empty std::map.
  * @param options  Optional parameters.  Default value is an empty std::map.
  * 
  * @return Response object containing the result of the operation.
  * 
  */
-CreateTypeResponse GPUdb::createType(const std::string& typeDefinition, const std::string& label, const std::map<std::string, std::vector<std::string> >& properties, const std::map<std::string, std::string>& options) const
+
+CreateTypeResponse GPUdb::createType( const std::string& typeDefinition,
+                                      const std::string& label,
+                                      const std::map<std::string, std::vector<std::string> >& properties,
+                                      const std::map<std::string, std::string>& options ) const
 {
     CreateTypeRequest actualRequest_;
     actualRequest_.typeDefinition = typeDefinition;
@@ -3229,7 +3831,12 @@ CreateTypeResponse GPUdb::createType(const std::string& typeDefinition, const st
  * @param label  A user-defined description string which can be used to
  *               differentiate between tables and types with otherwise
  *               identical schemas.
- * @param properties  Default value is an empty std::map.
+ * @param properties  Each key-value pair specifies the properties to use for a
+ *                    given column where the key is the column name.  All keys
+ *                    used must be relevant column names for the given table.
+ *                    Specifying any property overrides the default properties
+ *                    for that column (which is based on the column's data
+ *                    type).  Default value is an empty std::map.
  * @param options  Optional parameters.  Default value is an empty std::map.
  * @param[out] response_  Response object containing the results of the
  *                        operation.
@@ -3238,7 +3845,12 @@ CreateTypeResponse GPUdb::createType(const std::string& typeDefinition, const st
  *         passed in by reference).
  * 
  */
-CreateTypeResponse& GPUdb::createType(const std::string& typeDefinition, const std::string& label, const std::map<std::string, std::vector<std::string> >& properties, const std::map<std::string, std::string>& options, CreateTypeResponse& response_) const
+
+CreateTypeResponse& GPUdb::createType( const std::string& typeDefinition,
+                                       const std::string& label,
+                                       const std::map<std::string, std::vector<std::string> >& properties,
+                                       const std::map<std::string, std::string>& options,
+                                       CreateTypeResponse& response_ ) const
 {
     CreateTypeRequest actualRequest_;
     actualRequest_.typeDefinition = typeDefinition;
@@ -3266,7 +3878,8 @@ CreateTypeResponse& GPUdb::createType(const std::string& typeDefinition, const s
  * @return Response object containing the result of the operation.
  * 
  */
-DeleteRecordsResponse GPUdb::deleteRecords(const DeleteRecordsRequest& request_) const
+
+DeleteRecordsResponse GPUdb::deleteRecords( const DeleteRecordsRequest& request_ ) const
 {
     DeleteRecordsResponse actualResponse_;
     submitRequest("/delete/records", request_, actualResponse_, false);
@@ -3292,7 +3905,9 @@ DeleteRecordsResponse GPUdb::deleteRecords(const DeleteRecordsRequest& request_)
  *         passed in by reference).
  * 
  */
-DeleteRecordsResponse& GPUdb::deleteRecords(const DeleteRecordsRequest& request_, DeleteRecordsResponse& response_) const
+
+DeleteRecordsResponse& GPUdb::deleteRecords( const DeleteRecordsRequest& request_,
+                                             DeleteRecordsResponse& response_ ) const
 {
     submitRequest("/delete/records", request_, response_, false);
     return response_;
@@ -3320,7 +3935,10 @@ DeleteRecordsResponse& GPUdb::deleteRecords(const DeleteRecordsRequest& request_
  * @return Response object containing the result of the operation.
  * 
  */
-DeleteRecordsResponse GPUdb::deleteRecords(const std::string& tableName, const std::vector<std::string>& expressions, const std::map<std::string, std::string>& options) const
+
+DeleteRecordsResponse GPUdb::deleteRecords( const std::string& tableName,
+                                            const std::vector<std::string>& expressions,
+                                            const std::map<std::string, std::string>& options ) const
 {
     DeleteRecordsRequest actualRequest_;
     actualRequest_.tableName = tableName;
@@ -3356,7 +3974,11 @@ DeleteRecordsResponse GPUdb::deleteRecords(const std::string& tableName, const s
  *         passed in by reference).
  * 
  */
-DeleteRecordsResponse& GPUdb::deleteRecords(const std::string& tableName, const std::vector<std::string>& expressions, const std::map<std::string, std::string>& options, DeleteRecordsResponse& response_) const
+
+DeleteRecordsResponse& GPUdb::deleteRecords( const std::string& tableName,
+                                             const std::vector<std::string>& expressions,
+                                             const std::map<std::string, std::string>& options,
+                                             DeleteRecordsResponse& response_ ) const
 {
     DeleteRecordsRequest actualRequest_;
     actualRequest_.tableName = tableName;
@@ -3376,7 +3998,8 @@ DeleteRecordsResponse& GPUdb::deleteRecords(const std::string& tableName, const 
  * @return Response object containing the result of the operation.
  * 
  */
-ExecuteProcResponse GPUdb::executeProc(const ExecuteProcRequest& request_) const
+
+ExecuteProcResponse GPUdb::executeProc( const ExecuteProcRequest& request_ ) const
 {
     ExecuteProcResponse actualResponse_;
     submitRequest("/execute/proc", request_, actualResponse_, false);
@@ -3396,7 +4019,9 @@ ExecuteProcResponse GPUdb::executeProc(const ExecuteProcRequest& request_) const
  *         passed in by reference).
  * 
  */
-ExecuteProcResponse& GPUdb::executeProc(const ExecuteProcRequest& request_, ExecuteProcResponse& response_) const
+
+ExecuteProcResponse& GPUdb::executeProc( const ExecuteProcRequest& request_,
+                                         ExecuteProcResponse& response_ ) const
 {
     submitRequest("/execute/proc", request_, response_, false);
     return response_;
@@ -3418,7 +4043,11 @@ ExecuteProcResponse& GPUdb::executeProc(const ExecuteProcRequest& request_, Exec
  * @return Response object containing the result of the operation.
  * 
  */
-ExecuteProcResponse GPUdb::executeProc(const std::string& name, const std::map<std::string, std::string>& params, const std::map<std::string, std::vector<uint8_t> >& binParams, const std::map<std::string, std::string>& options) const
+
+ExecuteProcResponse GPUdb::executeProc( const std::string& name,
+                                        const std::map<std::string, std::string>& params,
+                                        const std::map<std::string, std::vector<uint8_t> >& binParams,
+                                        const std::map<std::string, std::string>& options ) const
 {
     ExecuteProcRequest actualRequest_;
     actualRequest_.name = name;
@@ -3449,7 +4078,12 @@ ExecuteProcResponse GPUdb::executeProc(const std::string& name, const std::map<s
  *         passed in by reference).
  * 
  */
-ExecuteProcResponse& GPUdb::executeProc(const std::string& name, const std::map<std::string, std::string>& params, const std::map<std::string, std::vector<uint8_t> >& binParams, const std::map<std::string, std::string>& options, ExecuteProcResponse& response_) const
+
+ExecuteProcResponse& GPUdb::executeProc( const std::string& name,
+                                         const std::map<std::string, std::string>& params,
+                                         const std::map<std::string, std::vector<uint8_t> >& binParams,
+                                         const std::map<std::string, std::string>& options,
+                                         ExecuteProcResponse& response_ ) const
 {
     ExecuteProcRequest actualRequest_;
     actualRequest_.name = name;
@@ -3477,7 +4111,8 @@ ExecuteProcResponse& GPUdb::executeProc(const std::string& name, const std::map<
  * @return Response object containing the result of the operation.
  * 
  */
-FilterResponse GPUdb::filter(const FilterRequest& request_) const
+
+FilterResponse GPUdb::filter( const FilterRequest& request_ ) const
 {
     FilterResponse actualResponse_;
     submitRequest("/filter", request_, actualResponse_, false);
@@ -3504,7 +4139,9 @@ FilterResponse GPUdb::filter(const FilterRequest& request_) const
  *         passed in by reference).
  * 
  */
-FilterResponse& GPUdb::filter(const FilterRequest& request_, FilterResponse& response_) const
+
+FilterResponse& GPUdb::filter( const FilterRequest& request_,
+                               FilterResponse& response_ ) const
 {
     submitRequest("/filter", request_, response_, false);
     return response_;
@@ -3538,7 +4175,11 @@ FilterResponse& GPUdb::filter(const FilterRequest& request_, FilterResponse& res
  * @return Response object containing the result of the operation.
  * 
  */
-FilterResponse GPUdb::filter(const std::string& tableName, const std::string& viewName, const std::string& expression, const std::map<std::string, std::string>& options) const
+
+FilterResponse GPUdb::filter( const std::string& tableName,
+                              const std::string& viewName,
+                              const std::string& expression,
+                              const std::map<std::string, std::string>& options ) const
 {
     FilterRequest actualRequest_;
     actualRequest_.tableName = tableName;
@@ -3581,7 +4222,12 @@ FilterResponse GPUdb::filter(const std::string& tableName, const std::string& vi
  *         passed in by reference).
  * 
  */
-FilterResponse& GPUdb::filter(const std::string& tableName, const std::string& viewName, const std::string& expression, const std::map<std::string, std::string>& options, FilterResponse& response_) const
+
+FilterResponse& GPUdb::filter( const std::string& tableName,
+                               const std::string& viewName,
+                               const std::string& expression,
+                               const std::map<std::string, std::string>& options,
+                               FilterResponse& response_ ) const
 {
     FilterRequest actualRequest_;
     actualRequest_.tableName = tableName;
@@ -3607,7 +4253,8 @@ FilterResponse& GPUdb::filter(const std::string& tableName, const std::string& v
  * @return Response object containing the result of the operation.
  * 
  */
-FilterByAreaResponse GPUdb::filterByArea(const FilterByAreaRequest& request_) const
+
+FilterByAreaResponse GPUdb::filterByArea( const FilterByAreaRequest& request_ ) const
 {
     FilterByAreaResponse actualResponse_;
     submitRequest("/filter/byarea", request_, actualResponse_, false);
@@ -3632,7 +4279,9 @@ FilterByAreaResponse GPUdb::filterByArea(const FilterByAreaRequest& request_) co
  *         passed in by reference).
  * 
  */
-FilterByAreaResponse& GPUdb::filterByArea(const FilterByAreaRequest& request_, FilterByAreaResponse& response_) const
+
+FilterByAreaResponse& GPUdb::filterByArea( const FilterByAreaRequest& request_,
+                                           FilterByAreaResponse& response_ ) const
 {
     submitRequest("/filter/byarea", request_, response_, false);
     return response_;
@@ -3668,7 +4317,14 @@ FilterByAreaResponse& GPUdb::filterByArea(const FilterByAreaRequest& request_, F
  * @return Response object containing the result of the operation.
  * 
  */
-FilterByAreaResponse GPUdb::filterByArea(const std::string& tableName, const std::string& viewName, const std::string& xColumnName, const std::vector<double>& xVector, const std::string& yColumnName, const std::vector<double>& yVector, const std::map<std::string, std::string>& options) const
+
+FilterByAreaResponse GPUdb::filterByArea( const std::string& tableName,
+                                          const std::string& viewName,
+                                          const std::string& xColumnName,
+                                          const std::vector<double>& xVector,
+                                          const std::string& yColumnName,
+                                          const std::vector<double>& yVector,
+                                          const std::map<std::string, std::string>& options ) const
 {
     FilterByAreaRequest actualRequest_;
     actualRequest_.tableName = tableName;
@@ -3716,7 +4372,15 @@ FilterByAreaResponse GPUdb::filterByArea(const std::string& tableName, const std
  *         passed in by reference).
  * 
  */
-FilterByAreaResponse& GPUdb::filterByArea(const std::string& tableName, const std::string& viewName, const std::string& xColumnName, const std::vector<double>& xVector, const std::string& yColumnName, const std::vector<double>& yVector, const std::map<std::string, std::string>& options, FilterByAreaResponse& response_) const
+
+FilterByAreaResponse& GPUdb::filterByArea( const std::string& tableName,
+                                           const std::string& viewName,
+                                           const std::string& xColumnName,
+                                           const std::vector<double>& xVector,
+                                           const std::string& yColumnName,
+                                           const std::vector<double>& yVector,
+                                           const std::map<std::string, std::string>& options,
+                                           FilterByAreaResponse& response_ ) const
 {
     FilterByAreaRequest actualRequest_;
     actualRequest_.tableName = tableName;
@@ -3745,7 +4409,8 @@ FilterByAreaResponse& GPUdb::filterByArea(const std::string& tableName, const st
  * @return Response object containing the result of the operation.
  * 
  */
-FilterByBoxResponse GPUdb::filterByBox(const FilterByBoxRequest& request_) const
+
+FilterByBoxResponse GPUdb::filterByBox( const FilterByBoxRequest& request_ ) const
 {
     FilterByBoxResponse actualResponse_;
     submitRequest("/filter/bybox", request_, actualResponse_, false);
@@ -3770,7 +4435,9 @@ FilterByBoxResponse GPUdb::filterByBox(const FilterByBoxRequest& request_) const
  *         passed in by reference).
  * 
  */
-FilterByBoxResponse& GPUdb::filterByBox(const FilterByBoxRequest& request_, FilterByBoxResponse& response_) const
+
+FilterByBoxResponse& GPUdb::filterByBox( const FilterByBoxRequest& request_,
+                                         FilterByBoxResponse& response_ ) const
 {
     submitRequest("/filter/bybox", request_, response_, false);
     return response_;
@@ -3810,7 +4477,16 @@ FilterByBoxResponse& GPUdb::filterByBox(const FilterByBoxRequest& request_, Filt
  * @return Response object containing the result of the operation.
  * 
  */
-FilterByBoxResponse GPUdb::filterByBox(const std::string& tableName, const std::string& viewName, const std::string& xColumnName, const double minX, const double maxX, const std::string& yColumnName, const double minY, const double maxY, const std::map<std::string, std::string>& options) const
+
+FilterByBoxResponse GPUdb::filterByBox( const std::string& tableName,
+                                        const std::string& viewName,
+                                        const std::string& xColumnName,
+                                        const double minX,
+                                        const double maxX,
+                                        const std::string& yColumnName,
+                                        const double minY,
+                                        const double maxY,
+                                        const std::map<std::string, std::string>& options ) const
 {
     FilterByBoxRequest actualRequest_;
     actualRequest_.tableName = tableName;
@@ -3864,7 +4540,17 @@ FilterByBoxResponse GPUdb::filterByBox(const std::string& tableName, const std::
  *         passed in by reference).
  * 
  */
-FilterByBoxResponse& GPUdb::filterByBox(const std::string& tableName, const std::string& viewName, const std::string& xColumnName, const double minX, const double maxX, const std::string& yColumnName, const double minY, const double maxY, const std::map<std::string, std::string>& options, FilterByBoxResponse& response_) const
+
+FilterByBoxResponse& GPUdb::filterByBox( const std::string& tableName,
+                                         const std::string& viewName,
+                                         const std::string& xColumnName,
+                                         const double minX,
+                                         const double maxX,
+                                         const std::string& yColumnName,
+                                         const double minY,
+                                         const double maxY,
+                                         const std::map<std::string, std::string>& options,
+                                         FilterByBoxResponse& response_ ) const
 {
     FilterByBoxRequest actualRequest_;
     actualRequest_.tableName = tableName;
@@ -3891,7 +4577,8 @@ FilterByBoxResponse& GPUdb::filterByBox(const std::string& tableName, const std:
  * @return Response object containing the result of the operation.
  * 
  */
-FilterByGeometryResponse GPUdb::filterByGeometry(const FilterByGeometryRequest& request_) const
+
+FilterByGeometryResponse GPUdb::filterByGeometry( const FilterByGeometryRequest& request_ ) const
 {
     FilterByGeometryResponse actualResponse_;
     submitRequest("/filter/bygeometry", request_, actualResponse_, false);
@@ -3912,7 +4599,9 @@ FilterByGeometryResponse GPUdb::filterByGeometry(const FilterByGeometryRequest& 
  *         passed in by reference).
  * 
  */
-FilterByGeometryResponse& GPUdb::filterByGeometry(const FilterByGeometryRequest& request_, FilterByGeometryResponse& response_) const
+
+FilterByGeometryResponse& GPUdb::filterByGeometry( const FilterByGeometryRequest& request_,
+                                                   FilterByGeometryResponse& response_ ) const
 {
     submitRequest("/filter/bygeometry", request_, response_, false);
     return response_;
@@ -3940,7 +4629,13 @@ FilterByGeometryResponse& GPUdb::filterByGeometry(const FilterByGeometryRequest&
  * @return Response object containing the result of the operation.
  * 
  */
-FilterByGeometryResponse GPUdb::filterByGeometry(const std::string& tableName, const std::string& viewName, const std::string& columnName, const std::string& inputWkt, const std::string& operation, const std::map<std::string, std::string>& options) const
+
+FilterByGeometryResponse GPUdb::filterByGeometry( const std::string& tableName,
+                                                  const std::string& viewName,
+                                                  const std::string& columnName,
+                                                  const std::string& inputWkt,
+                                                  const std::string& operation,
+                                                  const std::map<std::string, std::string>& options ) const
 {
     FilterByGeometryRequest actualRequest_;
     actualRequest_.tableName = tableName;
@@ -3979,7 +4674,14 @@ FilterByGeometryResponse GPUdb::filterByGeometry(const std::string& tableName, c
  *         passed in by reference).
  * 
  */
-FilterByGeometryResponse& GPUdb::filterByGeometry(const std::string& tableName, const std::string& viewName, const std::string& columnName, const std::string& inputWkt, const std::string& operation, const std::map<std::string, std::string>& options, FilterByGeometryResponse& response_) const
+
+FilterByGeometryResponse& GPUdb::filterByGeometry( const std::string& tableName,
+                                                   const std::string& viewName,
+                                                   const std::string& columnName,
+                                                   const std::string& inputWkt,
+                                                   const std::string& operation,
+                                                   const std::map<std::string, std::string>& options,
+                                                   FilterByGeometryResponse& response_ ) const
 {
     FilterByGeometryRequest actualRequest_;
     actualRequest_.tableName = tableName;
@@ -4014,7 +4716,8 @@ FilterByGeometryResponse& GPUdb::filterByGeometry(const std::string& tableName, 
  * @return Response object containing the result of the operation.
  * 
  */
-FilterByListResponse GPUdb::filterByList(const FilterByListRequest& request_) const
+
+FilterByListResponse GPUdb::filterByList( const FilterByListRequest& request_ ) const
 {
     FilterByListResponse actualResponse_;
     submitRequest("/filter/bylist", request_, actualResponse_, false);
@@ -4046,7 +4749,9 @@ FilterByListResponse GPUdb::filterByList(const FilterByListRequest& request_) co
  *         passed in by reference).
  * 
  */
-FilterByListResponse& GPUdb::filterByList(const FilterByListRequest& request_, FilterByListResponse& response_) const
+
+FilterByListResponse& GPUdb::filterByList( const FilterByListRequest& request_,
+                                           FilterByListResponse& response_ ) const
 {
     submitRequest("/filter/bylist", request_, response_, false);
     return response_;
@@ -4083,7 +4788,11 @@ FilterByListResponse& GPUdb::filterByList(const FilterByListRequest& request_, F
  * @return Response object containing the result of the operation.
  * 
  */
-FilterByListResponse GPUdb::filterByList(const std::string& tableName, const std::string& viewName, const std::map<std::string, std::vector<std::string> >& columnValuesMap, const std::map<std::string, std::string>& options) const
+
+FilterByListResponse GPUdb::filterByList( const std::string& tableName,
+                                          const std::string& viewName,
+                                          const std::map<std::string, std::vector<std::string> >& columnValuesMap,
+                                          const std::map<std::string, std::string>& options ) const
 {
     FilterByListRequest actualRequest_;
     actualRequest_.tableName = tableName;
@@ -4129,7 +4838,12 @@ FilterByListResponse GPUdb::filterByList(const std::string& tableName, const std
  *         passed in by reference).
  * 
  */
-FilterByListResponse& GPUdb::filterByList(const std::string& tableName, const std::string& viewName, const std::map<std::string, std::vector<std::string> >& columnValuesMap, const std::map<std::string, std::string>& options, FilterByListResponse& response_) const
+
+FilterByListResponse& GPUdb::filterByList( const std::string& tableName,
+                                           const std::string& viewName,
+                                           const std::map<std::string, std::vector<std::string> >& columnValuesMap,
+                                           const std::map<std::string, std::string>& options,
+                                           FilterByListResponse& response_ ) const
 {
     FilterByListRequest actualRequest_;
     actualRequest_.tableName = tableName;
@@ -4162,7 +4876,8 @@ FilterByListResponse& GPUdb::filterByList(const std::string& tableName, const st
  * @return Response object containing the result of the operation.
  * 
  */
-FilterByRadiusResponse GPUdb::filterByRadius(const FilterByRadiusRequest& request_) const
+
+FilterByRadiusResponse GPUdb::filterByRadius( const FilterByRadiusRequest& request_ ) const
 {
     FilterByRadiusResponse actualResponse_;
     submitRequest("/filter/byradius", request_, actualResponse_, false);
@@ -4194,7 +4909,9 @@ FilterByRadiusResponse GPUdb::filterByRadius(const FilterByRadiusRequest& reques
  *         passed in by reference).
  * 
  */
-FilterByRadiusResponse& GPUdb::filterByRadius(const FilterByRadiusRequest& request_, FilterByRadiusResponse& response_) const
+
+FilterByRadiusResponse& GPUdb::filterByRadius( const FilterByRadiusRequest& request_,
+                                               FilterByRadiusResponse& response_ ) const
 {
     submitRequest("/filter/byradius", request_, response_, false);
     return response_;
@@ -4242,7 +4959,15 @@ FilterByRadiusResponse& GPUdb::filterByRadius(const FilterByRadiusRequest& reque
  * @return Response object containing the result of the operation.
  * 
  */
-FilterByRadiusResponse GPUdb::filterByRadius(const std::string& tableName, const std::string& viewName, const std::string& xColumnName, const double xCenter, const std::string& yColumnName, const double yCenter, const double radius, const std::map<std::string, std::string>& options) const
+
+FilterByRadiusResponse GPUdb::filterByRadius( const std::string& tableName,
+                                              const std::string& viewName,
+                                              const std::string& xColumnName,
+                                              const double xCenter,
+                                              const std::string& yColumnName,
+                                              const double yCenter,
+                                              const double radius,
+                                              const std::map<std::string, std::string>& options ) const
 {
     FilterByRadiusRequest actualRequest_;
     actualRequest_.tableName = tableName;
@@ -4303,7 +5028,16 @@ FilterByRadiusResponse GPUdb::filterByRadius(const std::string& tableName, const
  *         passed in by reference).
  * 
  */
-FilterByRadiusResponse& GPUdb::filterByRadius(const std::string& tableName, const std::string& viewName, const std::string& xColumnName, const double xCenter, const std::string& yColumnName, const double yCenter, const double radius, const std::map<std::string, std::string>& options, FilterByRadiusResponse& response_) const
+
+FilterByRadiusResponse& GPUdb::filterByRadius( const std::string& tableName,
+                                               const std::string& viewName,
+                                               const std::string& xColumnName,
+                                               const double xCenter,
+                                               const std::string& yColumnName,
+                                               const double yCenter,
+                                               const double radius,
+                                               const std::map<std::string, std::string>& options,
+                                               FilterByRadiusResponse& response_ ) const
 {
     FilterByRadiusRequest actualRequest_;
     actualRequest_.tableName = tableName;
@@ -4335,7 +5069,8 @@ FilterByRadiusResponse& GPUdb::filterByRadius(const std::string& tableName, cons
  * @return Response object containing the result of the operation.
  * 
  */
-FilterByRangeResponse GPUdb::filterByRange(const FilterByRangeRequest& request_) const
+
+FilterByRangeResponse GPUdb::filterByRange( const FilterByRangeRequest& request_ ) const
 {
     FilterByRangeResponse actualResponse_;
     submitRequest("/filter/byrange", request_, actualResponse_, false);
@@ -4362,7 +5097,9 @@ FilterByRangeResponse GPUdb::filterByRange(const FilterByRangeRequest& request_)
  *         passed in by reference).
  * 
  */
-FilterByRangeResponse& GPUdb::filterByRange(const FilterByRangeRequest& request_, FilterByRangeResponse& response_) const
+
+FilterByRangeResponse& GPUdb::filterByRange( const FilterByRangeRequest& request_,
+                                             FilterByRangeResponse& response_ ) const
 {
     submitRequest("/filter/byrange", request_, response_, false);
     return response_;
@@ -4394,7 +5131,13 @@ FilterByRangeResponse& GPUdb::filterByRange(const FilterByRangeRequest& request_
  * @return Response object containing the result of the operation.
  * 
  */
-FilterByRangeResponse GPUdb::filterByRange(const std::string& tableName, const std::string& viewName, const std::string& columnName, const double lowerBound, const double upperBound, const std::map<std::string, std::string>& options) const
+
+FilterByRangeResponse GPUdb::filterByRange( const std::string& tableName,
+                                            const std::string& viewName,
+                                            const std::string& columnName,
+                                            const double lowerBound,
+                                            const double upperBound,
+                                            const std::map<std::string, std::string>& options ) const
 {
     FilterByRangeRequest actualRequest_;
     actualRequest_.tableName = tableName;
@@ -4437,7 +5180,14 @@ FilterByRangeResponse GPUdb::filterByRange(const std::string& tableName, const s
  *         passed in by reference).
  * 
  */
-FilterByRangeResponse& GPUdb::filterByRange(const std::string& tableName, const std::string& viewName, const std::string& columnName, const double lowerBound, const double upperBound, const std::map<std::string, std::string>& options, FilterByRangeResponse& response_) const
+
+FilterByRangeResponse& GPUdb::filterByRange( const std::string& tableName,
+                                             const std::string& viewName,
+                                             const std::string& columnName,
+                                             const double lowerBound,
+                                             const double upperBound,
+                                             const std::map<std::string, std::string>& options,
+                                             FilterByRangeResponse& response_ ) const
 {
     FilterByRangeRequest actualRequest_;
     actualRequest_.tableName = tableName;
@@ -4473,7 +5223,8 @@ FilterByRangeResponse& GPUdb::filterByRange(const std::string& tableName, const 
  * @return Response object containing the result of the operation.
  * 
  */
-FilterBySeriesResponse GPUdb::filterBySeries(const FilterBySeriesRequest& request_) const
+
+FilterBySeriesResponse GPUdb::filterBySeries( const FilterBySeriesRequest& request_ ) const
 {
     FilterBySeriesResponse actualResponse_;
     submitRequest("/filter/byseries", request_, actualResponse_, false);
@@ -4506,7 +5257,9 @@ FilterBySeriesResponse GPUdb::filterBySeries(const FilterBySeriesRequest& reques
  *         passed in by reference).
  * 
  */
-FilterBySeriesResponse& GPUdb::filterBySeries(const FilterBySeriesRequest& request_, FilterBySeriesResponse& response_) const
+
+FilterBySeriesResponse& GPUdb::filterBySeries( const FilterBySeriesRequest& request_,
+                                               FilterBySeriesResponse& response_ ) const
 {
     submitRequest("/filter/byseries", request_, response_, false);
     return response_;
@@ -4546,7 +5299,12 @@ FilterBySeriesResponse& GPUdb::filterBySeries(const FilterBySeriesRequest& reque
  * @return Response object containing the result of the operation.
  * 
  */
-FilterBySeriesResponse GPUdb::filterBySeries(const std::string& tableName, const std::string& viewName, const std::string& trackId, const std::vector<std::string>& targetTrackIds, const std::map<std::string, std::string>& options) const
+
+FilterBySeriesResponse GPUdb::filterBySeries( const std::string& tableName,
+                                              const std::string& viewName,
+                                              const std::string& trackId,
+                                              const std::vector<std::string>& targetTrackIds,
+                                              const std::map<std::string, std::string>& options ) const
 {
     FilterBySeriesRequest actualRequest_;
     actualRequest_.tableName = tableName;
@@ -4596,7 +5354,13 @@ FilterBySeriesResponse GPUdb::filterBySeries(const std::string& tableName, const
  *         passed in by reference).
  * 
  */
-FilterBySeriesResponse& GPUdb::filterBySeries(const std::string& tableName, const std::string& viewName, const std::string& trackId, const std::vector<std::string>& targetTrackIds, const std::map<std::string, std::string>& options, FilterBySeriesResponse& response_) const
+
+FilterBySeriesResponse& GPUdb::filterBySeries( const std::string& tableName,
+                                               const std::string& viewName,
+                                               const std::string& trackId,
+                                               const std::vector<std::string>& targetTrackIds,
+                                               const std::map<std::string, std::string>& options,
+                                               FilterBySeriesResponse& response_ ) const
 {
     FilterBySeriesRequest actualRequest_;
     actualRequest_.tableName = tableName;
@@ -4634,7 +5398,8 @@ FilterBySeriesResponse& GPUdb::filterBySeries(const std::string& tableName, cons
  * @return Response object containing the result of the operation.
  * 
  */
-FilterByStringResponse GPUdb::filterByString(const FilterByStringRequest& request_) const
+
+FilterByStringResponse GPUdb::filterByString( const FilterByStringRequest& request_ ) const
 {
     FilterByStringResponse actualResponse_;
     submitRequest("/filter/bystring", request_, actualResponse_, false);
@@ -4670,7 +5435,9 @@ FilterByStringResponse GPUdb::filterByString(const FilterByStringRequest& reques
  *         passed in by reference).
  * 
  */
-FilterByStringResponse& GPUdb::filterByString(const FilterByStringRequest& request_, FilterByStringResponse& response_) const
+
+FilterByStringResponse& GPUdb::filterByString( const FilterByStringRequest& request_,
+                                               FilterByStringResponse& response_ ) const
 {
     submitRequest("/filter/bystring", request_, response_, false);
     return response_;
@@ -4712,7 +5479,13 @@ FilterByStringResponse& GPUdb::filterByString(const FilterByStringRequest& reque
  * @return Response object containing the result of the operation.
  * 
  */
-FilterByStringResponse GPUdb::filterByString(const std::string& tableName, const std::string& viewName, const std::string& expression, const std::string& mode, const std::vector<std::string>& columnNames, const std::map<std::string, std::string>& options) const
+
+FilterByStringResponse GPUdb::filterByString( const std::string& tableName,
+                                              const std::string& viewName,
+                                              const std::string& expression,
+                                              const std::string& mode,
+                                              const std::vector<std::string>& columnNames,
+                                              const std::map<std::string, std::string>& options ) const
 {
     FilterByStringRequest actualRequest_;
     actualRequest_.tableName = tableName;
@@ -4765,7 +5538,14 @@ FilterByStringResponse GPUdb::filterByString(const std::string& tableName, const
  *         passed in by reference).
  * 
  */
-FilterByStringResponse& GPUdb::filterByString(const std::string& tableName, const std::string& viewName, const std::string& expression, const std::string& mode, const std::vector<std::string>& columnNames, const std::map<std::string, std::string>& options, FilterByStringResponse& response_) const
+
+FilterByStringResponse& GPUdb::filterByString( const std::string& tableName,
+                                               const std::string& viewName,
+                                               const std::string& expression,
+                                               const std::string& mode,
+                                               const std::vector<std::string>& columnNames,
+                                               const std::map<std::string, std::string>& options,
+                                               FilterByStringResponse& response_ ) const
 {
     FilterByStringRequest actualRequest_;
     actualRequest_.tableName = tableName;
@@ -4795,7 +5575,8 @@ FilterByStringResponse& GPUdb::filterByString(const std::string& tableName, cons
  * @return Response object containing the result of the operation.
  * 
  */
-FilterByTableResponse GPUdb::filterByTable(const FilterByTableRequest& request_) const
+
+FilterByTableResponse GPUdb::filterByTable( const FilterByTableRequest& request_ ) const
 {
     FilterByTableResponse actualResponse_;
     submitRequest("/filter/bytable", request_, actualResponse_, false);
@@ -4822,7 +5603,9 @@ FilterByTableResponse GPUdb::filterByTable(const FilterByTableRequest& request_)
  *         passed in by reference).
  * 
  */
-FilterByTableResponse& GPUdb::filterByTable(const FilterByTableRequest& request_, FilterByTableResponse& response_) const
+
+FilterByTableResponse& GPUdb::filterByTable( const FilterByTableRequest& request_,
+                                             FilterByTableResponse& response_ ) const
 {
     submitRequest("/filter/bytable", request_, response_, false);
     return response_;
@@ -4859,7 +5642,13 @@ FilterByTableResponse& GPUdb::filterByTable(const FilterByTableRequest& request_
  * @return Response object containing the result of the operation.
  * 
  */
-FilterByTableResponse GPUdb::filterByTable(const std::string& tableName, const std::string& viewName, const std::string& columnName, const std::string& sourceTableName, const std::string& sourceTableColumnName, const std::map<std::string, std::string>& options) const
+
+FilterByTableResponse GPUdb::filterByTable( const std::string& tableName,
+                                            const std::string& viewName,
+                                            const std::string& columnName,
+                                            const std::string& sourceTableName,
+                                            const std::string& sourceTableColumnName,
+                                            const std::map<std::string, std::string>& options ) const
 {
     FilterByTableRequest actualRequest_;
     actualRequest_.tableName = tableName;
@@ -4907,7 +5696,14 @@ FilterByTableResponse GPUdb::filterByTable(const std::string& tableName, const s
  *         passed in by reference).
  * 
  */
-FilterByTableResponse& GPUdb::filterByTable(const std::string& tableName, const std::string& viewName, const std::string& columnName, const std::string& sourceTableName, const std::string& sourceTableColumnName, const std::map<std::string, std::string>& options, FilterByTableResponse& response_) const
+
+FilterByTableResponse& GPUdb::filterByTable( const std::string& tableName,
+                                             const std::string& viewName,
+                                             const std::string& columnName,
+                                             const std::string& sourceTableName,
+                                             const std::string& sourceTableColumnName,
+                                             const std::map<std::string, std::string>& options,
+                                             FilterByTableResponse& response_ ) const
 {
     FilterByTableRequest actualRequest_;
     actualRequest_.tableName = tableName;
@@ -4937,7 +5733,8 @@ FilterByTableResponse& GPUdb::filterByTable(const std::string& tableName, const 
  * @return Response object containing the result of the operation.
  * 
  */
-FilterByValueResponse GPUdb::filterByValue(const FilterByValueRequest& request_) const
+
+FilterByValueResponse GPUdb::filterByValue( const FilterByValueRequest& request_ ) const
 {
     FilterByValueResponse actualResponse_;
     submitRequest("/filter/byvalue", request_, actualResponse_, false);
@@ -4964,7 +5761,9 @@ FilterByValueResponse GPUdb::filterByValue(const FilterByValueRequest& request_)
  *         passed in by reference).
  * 
  */
-FilterByValueResponse& GPUdb::filterByValue(const FilterByValueRequest& request_, FilterByValueResponse& response_) const
+
+FilterByValueResponse& GPUdb::filterByValue( const FilterByValueRequest& request_,
+                                             FilterByValueResponse& response_ ) const
 {
     submitRequest("/filter/byvalue", request_, response_, false);
     return response_;
@@ -4999,7 +5798,14 @@ FilterByValueResponse& GPUdb::filterByValue(const FilterByValueRequest& request_
  * @return Response object containing the result of the operation.
  * 
  */
-FilterByValueResponse GPUdb::filterByValue(const std::string& tableName, const std::string& viewName, const bool isString, const double value, const std::string& valueStr, const std::string& columnName, const std::map<std::string, std::string>& options) const
+
+FilterByValueResponse GPUdb::filterByValue( const std::string& tableName,
+                                            const std::string& viewName,
+                                            const bool isString,
+                                            const double value,
+                                            const std::string& valueStr,
+                                            const std::string& columnName,
+                                            const std::map<std::string, std::string>& options ) const
 {
     FilterByValueRequest actualRequest_;
     actualRequest_.tableName = tableName;
@@ -5046,7 +5852,15 @@ FilterByValueResponse GPUdb::filterByValue(const std::string& tableName, const s
  *         passed in by reference).
  * 
  */
-FilterByValueResponse& GPUdb::filterByValue(const std::string& tableName, const std::string& viewName, const bool isString, const double value, const std::string& valueStr, const std::string& columnName, const std::map<std::string, std::string>& options, FilterByValueResponse& response_) const
+
+FilterByValueResponse& GPUdb::filterByValue( const std::string& tableName,
+                                             const std::string& viewName,
+                                             const bool isString,
+                                             const double value,
+                                             const std::string& valueStr,
+                                             const std::string& columnName,
+                                             const std::map<std::string, std::string>& options,
+                                             FilterByValueResponse& response_ ) const
 {
     FilterByValueRequest actualRequest_;
     actualRequest_.tableName = tableName;
@@ -5079,7 +5893,8 @@ FilterByValueResponse& GPUdb::filterByValue(const std::string& tableName, const 
  * @return Response object containing the result of the operation.
  * 
  */
-RawGetRecordsResponse GPUdb::getRecordsRaw(const GetRecordsRequest& request_) const
+
+RawGetRecordsResponse GPUdb::getRecordsRaw( const GetRecordsRequest& request_ ) const
 {
     RawGetRecordsResponse actualResponse_;
     submitRequest("/get/records", request_, actualResponse_, false);
@@ -5108,7 +5923,9 @@ RawGetRecordsResponse GPUdb::getRecordsRaw(const GetRecordsRequest& request_) co
  *         passed in by reference).
  * 
  */
-RawGetRecordsResponse& GPUdb::getRecordsRaw(const GetRecordsRequest& request_, RawGetRecordsResponse& response_) const
+
+RawGetRecordsResponse& GPUdb::getRecordsRaw( const GetRecordsRequest& request_,
+                                             RawGetRecordsResponse& response_ ) const
 {
     submitRequest("/get/records", request_, response_, false);
     return response_;
@@ -5133,7 +5950,8 @@ RawGetRecordsResponse& GPUdb::getRecordsRaw(const GetRecordsRequest& request_, R
  * @return Response object containing the result of the operation.
  * 
  */
-template<> GetRecordsResponse<boost::any> GPUdb::getRecords(const GetRecordsRequest& request_) const
+template<> 
+GetRecordsResponse<boost::any> GPUdb::getRecords( const GetRecordsRequest& request_ ) const
 {
     RawGetRecordsResponse actualResponse_;
     submitRequest("/get/records", request_, actualResponse_, false);
@@ -5169,7 +5987,9 @@ template<> GetRecordsResponse<boost::any> GPUdb::getRecords(const GetRecordsRequ
  *         passed in by reference).
  * 
  */
-template<> GetRecordsResponse<boost::any>& GPUdb::getRecords(const GetRecordsRequest& request_, GetRecordsResponse<boost::any>& response_) const
+template<> 
+GetRecordsResponse<boost::any>& GPUdb::getRecords( const GetRecordsRequest& request_,
+                                                   GetRecordsResponse<boost::any>& response_ ) const
 {
     RawGetRecordsResponse actualResponse_;
     submitRequest("/get/records", request_, actualResponse_, false);
@@ -5209,7 +6029,11 @@ template<> GetRecordsResponse<boost::any>& GPUdb::getRecords(const GetRecordsReq
  * @return Response object containing the result of the operation.
  * 
  */
-template<> GetRecordsResponse<boost::any> GPUdb::getRecords(const std::string& tableName, const int64_t offset, const int64_t limit, const std::map<std::string, std::string>& options) const
+template<> 
+GetRecordsResponse<boost::any> GPUdb::getRecords( const std::string& tableName,
+                                                  const int64_t offset,
+                                                  const int64_t limit,
+                                                  const std::map<std::string, std::string>& options ) const
 {
     GetRecordsRequest actualRequest_;
     actualRequest_.tableName = tableName;
@@ -5258,7 +6082,12 @@ template<> GetRecordsResponse<boost::any> GPUdb::getRecords(const std::string& t
  *         passed in by reference).
  * 
  */
-template<> GetRecordsResponse<boost::any>& GPUdb::getRecords(const std::string& tableName, const int64_t offset, const int64_t limit, const std::map<std::string, std::string>& options, GetRecordsResponse<boost::any>& response_) const
+template<> 
+GetRecordsResponse<boost::any>& GPUdb::getRecords( const std::string& tableName,
+                                                   const int64_t offset,
+                                                   const int64_t limit,
+                                                   const std::map<std::string, std::string>& options,
+                                                   GetRecordsResponse<boost::any>& response_ ) const
 {
     GetRecordsRequest actualRequest_;
     actualRequest_.tableName = tableName;
@@ -5302,7 +6131,8 @@ template<> GetRecordsResponse<boost::any>& GPUdb::getRecords(const std::string& 
  * @return Response object containing the result of the operation.
  * 
  */
-RawGetRecordsByColumnResponse GPUdb::getRecordsByColumnRaw(const GetRecordsByColumnRequest& request_) const
+
+RawGetRecordsByColumnResponse GPUdb::getRecordsByColumnRaw( const GetRecordsByColumnRequest& request_ ) const
 {
     RawGetRecordsByColumnResponse actualResponse_;
     submitRequest("/get/records/bycolumn", request_, actualResponse_, false);
@@ -5338,7 +6168,9 @@ RawGetRecordsByColumnResponse GPUdb::getRecordsByColumnRaw(const GetRecordsByCol
  *         passed in by reference).
  * 
  */
-RawGetRecordsByColumnResponse& GPUdb::getRecordsByColumnRaw(const GetRecordsByColumnRequest& request_, RawGetRecordsByColumnResponse& response_) const
+
+RawGetRecordsByColumnResponse& GPUdb::getRecordsByColumnRaw( const GetRecordsByColumnRequest& request_,
+                                                             RawGetRecordsByColumnResponse& response_ ) const
 {
     submitRequest("/get/records/bycolumn", request_, response_, false);
     return response_;
@@ -5370,7 +6202,8 @@ RawGetRecordsByColumnResponse& GPUdb::getRecordsByColumnRaw(const GetRecordsByCo
  * @return Response object containing the result of the operation.
  * 
  */
-GetRecordsByColumnResponse GPUdb::getRecordsByColumn(const GetRecordsByColumnRequest& request_) const
+
+GetRecordsByColumnResponse GPUdb::getRecordsByColumn( const GetRecordsByColumnRequest& request_ ) const
 {
     RawGetRecordsByColumnResponse actualResponse_;
     submitRequest("/get/records/bycolumn", request_, actualResponse_, false);
@@ -5410,7 +6243,9 @@ GetRecordsByColumnResponse GPUdb::getRecordsByColumn(const GetRecordsByColumnReq
  *         passed in by reference).
  * 
  */
-GetRecordsByColumnResponse& GPUdb::getRecordsByColumn(const GetRecordsByColumnRequest& request_, GetRecordsByColumnResponse& response_) const
+
+GetRecordsByColumnResponse& GPUdb::getRecordsByColumn( const GetRecordsByColumnRequest& request_,
+                                                       GetRecordsByColumnResponse& response_ ) const
 {
     RawGetRecordsByColumnResponse actualResponse_;
     submitRequest("/get/records/bycolumn", request_, actualResponse_, false);
@@ -5457,7 +6292,12 @@ GetRecordsByColumnResponse& GPUdb::getRecordsByColumn(const GetRecordsByColumnRe
  * @return Response object containing the result of the operation.
  * 
  */
-GetRecordsByColumnResponse GPUdb::getRecordsByColumn(const std::string& tableName, const std::vector<std::string>& columnNames, const int64_t offset, const int64_t limit, const std::map<std::string, std::string>& options) const
+
+GetRecordsByColumnResponse GPUdb::getRecordsByColumn( const std::string& tableName,
+                                                      const std::vector<std::string>& columnNames,
+                                                      const int64_t offset,
+                                                      const int64_t limit,
+                                                      const std::map<std::string, std::string>& options ) const
 {
     GetRecordsByColumnRequest actualRequest_;
     actualRequest_.tableName = tableName;
@@ -5514,7 +6354,13 @@ GetRecordsByColumnResponse GPUdb::getRecordsByColumn(const std::string& tableNam
  *         passed in by reference).
  * 
  */
-GetRecordsByColumnResponse& GPUdb::getRecordsByColumn(const std::string& tableName, const std::vector<std::string>& columnNames, const int64_t offset, const int64_t limit, const std::map<std::string, std::string>& options, GetRecordsByColumnResponse& response_) const
+
+GetRecordsByColumnResponse& GPUdb::getRecordsByColumn( const std::string& tableName,
+                                                       const std::vector<std::string>& columnNames,
+                                                       const int64_t offset,
+                                                       const int64_t limit,
+                                                       const std::map<std::string, std::string>& options,
+                                                       GetRecordsByColumnResponse& response_ ) const
 {
     GetRecordsByColumnRequest actualRequest_;
     actualRequest_.tableName = tableName;
@@ -5550,7 +6396,8 @@ GetRecordsByColumnResponse& GPUdb::getRecordsByColumn(const std::string& tableNa
  * @return Response object containing the result of the operation.
  * 
  */
-RawGetRecordsBySeriesResponse GPUdb::getRecordsBySeriesRaw(const GetRecordsBySeriesRequest& request_) const
+
+RawGetRecordsBySeriesResponse GPUdb::getRecordsBySeriesRaw( const GetRecordsBySeriesRequest& request_ ) const
 {
     RawGetRecordsBySeriesResponse actualResponse_;
     submitRequest("/get/records/byseries", request_, actualResponse_, false);
@@ -5581,7 +6428,9 @@ RawGetRecordsBySeriesResponse GPUdb::getRecordsBySeriesRaw(const GetRecordsBySer
  *         passed in by reference).
  * 
  */
-RawGetRecordsBySeriesResponse& GPUdb::getRecordsBySeriesRaw(const GetRecordsBySeriesRequest& request_, RawGetRecordsBySeriesResponse& response_) const
+
+RawGetRecordsBySeriesResponse& GPUdb::getRecordsBySeriesRaw( const GetRecordsBySeriesRequest& request_,
+                                                             RawGetRecordsBySeriesResponse& response_ ) const
 {
     submitRequest("/get/records/byseries", request_, response_, false);
     return response_;
@@ -5606,7 +6455,8 @@ RawGetRecordsBySeriesResponse& GPUdb::getRecordsBySeriesRaw(const GetRecordsBySe
  * @return Response object containing the result of the operation.
  * 
  */
-template<> GetRecordsBySeriesResponse<boost::any> GPUdb::getRecordsBySeries(const GetRecordsBySeriesRequest& request_) const
+template<> 
+GetRecordsBySeriesResponse<boost::any> GPUdb::getRecordsBySeries( const GetRecordsBySeriesRequest& request_ ) const
 {
     RawGetRecordsBySeriesResponse actualResponse_;
     submitRequest("/get/records/byseries", request_, actualResponse_, false);
@@ -5650,7 +6500,9 @@ template<> GetRecordsBySeriesResponse<boost::any> GPUdb::getRecordsBySeries(cons
  *         passed in by reference).
  * 
  */
-template<> GetRecordsBySeriesResponse<boost::any>& GPUdb::getRecordsBySeries(const GetRecordsBySeriesRequest& request_, GetRecordsBySeriesResponse<boost::any>& response_) const
+template<> 
+GetRecordsBySeriesResponse<boost::any>& GPUdb::getRecordsBySeries( const GetRecordsBySeriesRequest& request_,
+                                                                   GetRecordsBySeriesResponse<boost::any>& response_ ) const
 {
     RawGetRecordsBySeriesResponse actualResponse_;
     submitRequest("/get/records/byseries", request_, actualResponse_, false);
@@ -5706,7 +6558,12 @@ template<> GetRecordsBySeriesResponse<boost::any>& GPUdb::getRecordsBySeries(con
  * @return Response object containing the result of the operation.
  * 
  */
-template<> GetRecordsBySeriesResponse<boost::any> GPUdb::getRecordsBySeries(const std::string& tableName, const std::string& worldTableName, const int32_t offset, const int32_t limit, const std::map<std::string, std::string>& options) const
+template<> 
+GetRecordsBySeriesResponse<boost::any> GPUdb::getRecordsBySeries( const std::string& tableName,
+                                                                  const std::string& worldTableName,
+                                                                  const int32_t offset,
+                                                                  const int32_t limit,
+                                                                  const std::map<std::string, std::string>& options ) const
 {
     GetRecordsBySeriesRequest actualRequest_;
     actualRequest_.tableName = tableName;
@@ -5772,7 +6629,13 @@ template<> GetRecordsBySeriesResponse<boost::any> GPUdb::getRecordsBySeries(cons
  *         passed in by reference).
  * 
  */
-template<> GetRecordsBySeriesResponse<boost::any>& GPUdb::getRecordsBySeries(const std::string& tableName, const std::string& worldTableName, const int32_t offset, const int32_t limit, const std::map<std::string, std::string>& options, GetRecordsBySeriesResponse<boost::any>& response_) const
+template<> 
+GetRecordsBySeriesResponse<boost::any>& GPUdb::getRecordsBySeries( const std::string& tableName,
+                                                                   const std::string& worldTableName,
+                                                                   const int32_t offset,
+                                                                   const int32_t limit,
+                                                                   const std::map<std::string, std::string>& options,
+                                                                   GetRecordsBySeriesResponse<boost::any>& response_ ) const
 {
     GetRecordsBySeriesRequest actualRequest_;
     actualRequest_.tableName = tableName;
@@ -5812,7 +6675,8 @@ template<> GetRecordsBySeriesResponse<boost::any>& GPUdb::getRecordsBySeries(con
  * @return Response object containing the result of the operation.
  * 
  */
-RawGetRecordsFromCollectionResponse GPUdb::getRecordsFromCollectionRaw(const GetRecordsFromCollectionRequest& request_) const
+
+RawGetRecordsFromCollectionResponse GPUdb::getRecordsFromCollectionRaw( const GetRecordsFromCollectionRequest& request_ ) const
 {
     RawGetRecordsFromCollectionResponse actualResponse_;
     submitRequest("/get/records/fromcollection", request_, actualResponse_, false);
@@ -5837,7 +6701,9 @@ RawGetRecordsFromCollectionResponse GPUdb::getRecordsFromCollectionRaw(const Get
  *         passed in by reference).
  * 
  */
-RawGetRecordsFromCollectionResponse& GPUdb::getRecordsFromCollectionRaw(const GetRecordsFromCollectionRequest& request_, RawGetRecordsFromCollectionResponse& response_) const
+
+RawGetRecordsFromCollectionResponse& GPUdb::getRecordsFromCollectionRaw( const GetRecordsFromCollectionRequest& request_,
+                                                                         RawGetRecordsFromCollectionResponse& response_ ) const
 {
     submitRequest("/get/records/fromcollection", request_, response_, false);
     return response_;
@@ -5858,7 +6724,8 @@ RawGetRecordsFromCollectionResponse& GPUdb::getRecordsFromCollectionRaw(const Ge
  * @return Response object containing the result of the operation.
  * 
  */
-template<> GetRecordsFromCollectionResponse<boost::any> GPUdb::getRecordsFromCollection(const GetRecordsFromCollectionRequest& request_) const
+template<> 
+GetRecordsFromCollectionResponse<boost::any> GPUdb::getRecordsFromCollection( const GetRecordsFromCollectionRequest& request_ ) const
 {
     RawGetRecordsFromCollectionResponse actualResponse_;
     submitRequest("/get/records/fromcollection", request_, actualResponse_, false);
@@ -5917,7 +6784,9 @@ template<> GetRecordsFromCollectionResponse<boost::any> GPUdb::getRecordsFromCol
  *         passed in by reference).
  * 
  */
-template<> GetRecordsFromCollectionResponse<boost::any>& GPUdb::getRecordsFromCollection(const GetRecordsFromCollectionRequest& request_, GetRecordsFromCollectionResponse<boost::any>& response_) const
+template<> 
+GetRecordsFromCollectionResponse<boost::any>& GPUdb::getRecordsFromCollection( const GetRecordsFromCollectionRequest& request_,
+                                                                               GetRecordsFromCollectionResponse<boost::any>& response_ ) const
 {
     RawGetRecordsFromCollectionResponse actualResponse_;
     submitRequest("/get/records/fromcollection", request_, actualResponse_, false);
@@ -5981,7 +6850,11 @@ template<> GetRecordsFromCollectionResponse<boost::any>& GPUdb::getRecordsFromCo
  * @return Response object containing the result of the operation.
  * 
  */
-template<> GetRecordsFromCollectionResponse<boost::any> GPUdb::getRecordsFromCollection(const std::string& tableName, const int64_t offset, const int64_t limit, const std::map<std::string, std::string>& options) const
+template<> 
+GetRecordsFromCollectionResponse<boost::any> GPUdb::getRecordsFromCollection( const std::string& tableName,
+                                                                              const int64_t offset,
+                                                                              const int64_t limit,
+                                                                              const std::map<std::string, std::string>& options ) const
 {
     GetRecordsFromCollectionRequest actualRequest_;
     actualRequest_.tableName = tableName;
@@ -6054,7 +6927,12 @@ template<> GetRecordsFromCollectionResponse<boost::any> GPUdb::getRecordsFromCol
  *         passed in by reference).
  * 
  */
-template<> GetRecordsFromCollectionResponse<boost::any>& GPUdb::getRecordsFromCollection(const std::string& tableName, const int64_t offset, const int64_t limit, const std::map<std::string, std::string>& options, GetRecordsFromCollectionResponse<boost::any>& response_) const
+template<> 
+GetRecordsFromCollectionResponse<boost::any>& GPUdb::getRecordsFromCollection( const std::string& tableName,
+                                                                               const int64_t offset,
+                                                                               const int64_t limit,
+                                                                               const std::map<std::string, std::string>& options,
+                                                                               GetRecordsFromCollectionResponse<boost::any>& response_ ) const
 {
     GetRecordsFromCollectionRequest actualRequest_;
     actualRequest_.tableName = tableName;
@@ -6109,7 +6987,8 @@ template<> GetRecordsFromCollectionResponse<boost::any>& GPUdb::getRecordsFromCo
  * @return Response object containing the result of the operation.
  * 
  */
-HasTableResponse GPUdb::hasTable(const HasTableRequest& request_) const
+
+HasTableResponse GPUdb::hasTable( const HasTableRequest& request_ ) const
 {
     HasTableResponse actualResponse_;
     submitRequest("/has/table", request_, actualResponse_, false);
@@ -6129,7 +7008,9 @@ HasTableResponse GPUdb::hasTable(const HasTableRequest& request_) const
  *         passed in by reference).
  * 
  */
-HasTableResponse& GPUdb::hasTable(const HasTableRequest& request_, HasTableResponse& response_) const
+
+HasTableResponse& GPUdb::hasTable( const HasTableRequest& request_,
+                                   HasTableResponse& response_ ) const
 {
     submitRequest("/has/table", request_, response_, false);
     return response_;
@@ -6145,7 +7026,9 @@ HasTableResponse& GPUdb::hasTable(const HasTableRequest& request_, HasTableRespo
  * @return Response object containing the result of the operation.
  * 
  */
-HasTableResponse GPUdb::hasTable(const std::string& tableName, const std::map<std::string, std::string>& options) const
+
+HasTableResponse GPUdb::hasTable( const std::string& tableName,
+                                  const std::map<std::string, std::string>& options ) const
 {
     HasTableRequest actualRequest_;
     actualRequest_.tableName = tableName;
@@ -6168,7 +7051,10 @@ HasTableResponse GPUdb::hasTable(const std::string& tableName, const std::map<st
  *         passed in by reference).
  * 
  */
-HasTableResponse& GPUdb::hasTable(const std::string& tableName, const std::map<std::string, std::string>& options, HasTableResponse& response_) const
+
+HasTableResponse& GPUdb::hasTable( const std::string& tableName,
+                                   const std::map<std::string, std::string>& options,
+                                   HasTableResponse& response_ ) const
 {
     HasTableRequest actualRequest_;
     actualRequest_.tableName = tableName;
@@ -6187,7 +7073,8 @@ HasTableResponse& GPUdb::hasTable(const std::string& tableName, const std::map<s
  * @return Response object containing the result of the operation.
  * 
  */
-HasTypeResponse GPUdb::hasType(const HasTypeRequest& request_) const
+
+HasTypeResponse GPUdb::hasType( const HasTypeRequest& request_ ) const
 {
     HasTypeResponse actualResponse_;
     submitRequest("/has/type", request_, actualResponse_, false);
@@ -6207,7 +7094,9 @@ HasTypeResponse GPUdb::hasType(const HasTypeRequest& request_) const
  *         passed in by reference).
  * 
  */
-HasTypeResponse& GPUdb::hasType(const HasTypeRequest& request_, HasTypeResponse& response_) const
+
+HasTypeResponse& GPUdb::hasType( const HasTypeRequest& request_,
+                                 HasTypeResponse& response_ ) const
 {
     submitRequest("/has/type", request_, response_, false);
     return response_;
@@ -6224,7 +7113,9 @@ HasTypeResponse& GPUdb::hasType(const HasTypeRequest& request_, HasTypeResponse&
  * @return Response object containing the result of the operation.
  * 
  */
-HasTypeResponse GPUdb::hasType(const std::string& typeId, const std::map<std::string, std::string>& options) const
+
+HasTypeResponse GPUdb::hasType( const std::string& typeId,
+                                const std::map<std::string, std::string>& options ) const
 {
     HasTypeRequest actualRequest_;
     actualRequest_.typeId = typeId;
@@ -6248,7 +7139,10 @@ HasTypeResponse GPUdb::hasType(const std::string& typeId, const std::map<std::st
  *         passed in by reference).
  * 
  */
-HasTypeResponse& GPUdb::hasType(const std::string& typeId, const std::map<std::string, std::string>& options, HasTypeResponse& response_) const
+
+HasTypeResponse& GPUdb::hasType( const std::string& typeId,
+                                 const std::map<std::string, std::string>& options,
+                                 HasTypeResponse& response_ ) const
 {
     HasTypeRequest actualRequest_;
     actualRequest_.typeId = typeId;
@@ -6286,7 +7180,8 @@ HasTypeResponse& GPUdb::hasType(const std::string& typeId, const std::map<std::s
  * @return Response object containing the result of the operation.
  * 
  */
-InsertRecordsResponse GPUdb::insertRecordsRaw(const RawInsertRecordsRequest& request_) const
+
+InsertRecordsResponse GPUdb::insertRecordsRaw( const RawInsertRecordsRequest& request_ ) const
 {
     InsertRecordsResponse actualResponse_;
     submitRequest("/insert/records", request_, actualResponse_, true);
@@ -6325,7 +7220,9 @@ InsertRecordsResponse GPUdb::insertRecordsRaw(const RawInsertRecordsRequest& req
  *         passed in by reference).
  * 
  */
-InsertRecordsResponse& GPUdb::insertRecordsRaw(const RawInsertRecordsRequest& request_, InsertRecordsResponse& response_) const
+
+InsertRecordsResponse& GPUdb::insertRecordsRaw( const RawInsertRecordsRequest& request_,
+                                                InsertRecordsResponse& response_ ) const
 {
     submitRequest("/insert/records", request_, response_, true);
     return response_;
@@ -6334,7 +7231,7 @@ InsertRecordsResponse& GPUdb::insertRecordsRaw(const RawInsertRecordsRequest& re
 
 /**
  * Generates a specified number of random records and adds them to the given
- * table. There is an optional parameter that allows the user to customize the
+ * tble. There is an optional parameter that allows the user to customize the
  * ranges of the column values. It also allows the user to specify linear
  * profiles for some or all columns in which case linear values are generated
  * rather than random ones. Only individual tables are supported for this
@@ -6349,7 +7246,8 @@ InsertRecordsResponse& GPUdb::insertRecordsRaw(const RawInsertRecordsRequest& re
  * @return Response object containing the result of the operation.
  * 
  */
-InsertRecordsRandomResponse GPUdb::insertRecordsRandom(const InsertRecordsRandomRequest& request_) const
+
+InsertRecordsRandomResponse GPUdb::insertRecordsRandom( const InsertRecordsRandomRequest& request_ ) const
 {
     InsertRecordsRandomResponse actualResponse_;
     submitRequest("/insert/records/random", request_, actualResponse_, false);
@@ -6359,7 +7257,7 @@ InsertRecordsRandomResponse GPUdb::insertRecordsRandom(const InsertRecordsRandom
 
 /**
  * Generates a specified number of random records and adds them to the given
- * table. There is an optional parameter that allows the user to customize the
+ * tble. There is an optional parameter that allows the user to customize the
  * ranges of the column values. It also allows the user to specify linear
  * profiles for some or all columns in which case linear values are generated
  * rather than random ones. Only individual tables are supported for this
@@ -6377,7 +7275,9 @@ InsertRecordsRandomResponse GPUdb::insertRecordsRandom(const InsertRecordsRandom
  *         passed in by reference).
  * 
  */
-InsertRecordsRandomResponse& GPUdb::insertRecordsRandom(const InsertRecordsRandomRequest& request_, InsertRecordsRandomResponse& response_) const
+
+InsertRecordsRandomResponse& GPUdb::insertRecordsRandom( const InsertRecordsRandomRequest& request_,
+                                                         InsertRecordsRandomResponse& response_ ) const
 {
     submitRequest("/insert/records/random", request_, response_, false);
     return response_;
@@ -6386,7 +7286,7 @@ InsertRecordsRandomResponse& GPUdb::insertRecordsRandom(const InsertRecordsRando
 
 /**
  * Generates a specified number of random records and adds them to the given
- * table. There is an optional parameter that allows the user to customize the
+ * tble. There is an optional parameter that allows the user to customize the
  * ranges of the column values. It also allows the user to specify linear
  * profiles for some or all columns in which case linear values are generated
  * rather than random ones. Only individual tables are supported for this
@@ -6415,7 +7315,10 @@ InsertRecordsRandomResponse& GPUdb::insertRecordsRandom(const InsertRecordsRando
  * @return Response object containing the result of the operation.
  * 
  */
-InsertRecordsRandomResponse GPUdb::insertRecordsRandom(const std::string& tableName, const int64_t count, const std::map<std::string, std::map<std::string, double> >& options) const
+
+InsertRecordsRandomResponse GPUdb::insertRecordsRandom( const std::string& tableName,
+                                                        const int64_t count,
+                                                        const std::map<std::string, std::map<std::string, double> >& options ) const
 {
     InsertRecordsRandomRequest actualRequest_;
     actualRequest_.tableName = tableName;
@@ -6429,7 +7332,7 @@ InsertRecordsRandomResponse GPUdb::insertRecordsRandom(const std::string& tableN
 
 /**
  * Generates a specified number of random records and adds them to the given
- * table. There is an optional parameter that allows the user to customize the
+ * tble. There is an optional parameter that allows the user to customize the
  * ranges of the column values. It also allows the user to specify linear
  * profiles for some or all columns in which case linear values are generated
  * rather than random ones. Only individual tables are supported for this
@@ -6461,7 +7364,11 @@ InsertRecordsRandomResponse GPUdb::insertRecordsRandom(const std::string& tableN
  *         passed in by reference).
  * 
  */
-InsertRecordsRandomResponse& GPUdb::insertRecordsRandom(const std::string& tableName, const int64_t count, const std::map<std::string, std::map<std::string, double> >& options, InsertRecordsRandomResponse& response_) const
+
+InsertRecordsRandomResponse& GPUdb::insertRecordsRandom( const std::string& tableName,
+                                                         const int64_t count,
+                                                         const std::map<std::string, std::map<std::string, double> >& options,
+                                                         InsertRecordsRandomResponse& response_ ) const
 {
     InsertRecordsRandomRequest actualRequest_;
     actualRequest_.tableName = tableName;
@@ -6490,7 +7397,8 @@ InsertRecordsRandomResponse& GPUdb::insertRecordsRandom(const std::string& table
  * @return Response object containing the result of the operation.
  * 
  */
-InsertSymbolResponse GPUdb::insertSymbol(const InsertSymbolRequest& request_) const
+
+InsertSymbolResponse GPUdb::insertSymbol( const InsertSymbolRequest& request_ ) const
 {
     InsertSymbolResponse actualResponse_;
     submitRequest("/insert/symbol", request_, actualResponse_, false);
@@ -6519,7 +7427,9 @@ InsertSymbolResponse GPUdb::insertSymbol(const InsertSymbolRequest& request_) co
  *         passed in by reference).
  * 
  */
-InsertSymbolResponse& GPUdb::insertSymbol(const InsertSymbolRequest& request_, InsertSymbolResponse& response_) const
+
+InsertSymbolResponse& GPUdb::insertSymbol( const InsertSymbolRequest& request_,
+                                           InsertSymbolResponse& response_ ) const
 {
     submitRequest("/insert/symbol", request_, response_, false);
     return response_;
@@ -6553,7 +7463,11 @@ InsertSymbolResponse& GPUdb::insertSymbol(const InsertSymbolRequest& request_, I
  * @return Response object containing the result of the operation.
  * 
  */
-InsertSymbolResponse GPUdb::insertSymbol(const std::string& symbolId, const std::string& symbolFormat, const std::vector<uint8_t>& symbolData, const std::map<std::string, std::string>& options) const
+
+InsertSymbolResponse GPUdb::insertSymbol( const std::string& symbolId,
+                                          const std::string& symbolFormat,
+                                          const std::vector<uint8_t>& symbolData,
+                                          const std::map<std::string, std::string>& options ) const
 {
     InsertSymbolRequest actualRequest_;
     actualRequest_.symbolId = symbolId;
@@ -6596,7 +7510,12 @@ InsertSymbolResponse GPUdb::insertSymbol(const std::string& symbolId, const std:
  *         passed in by reference).
  * 
  */
-InsertSymbolResponse& GPUdb::insertSymbol(const std::string& symbolId, const std::string& symbolFormat, const std::vector<uint8_t>& symbolData, const std::map<std::string, std::string>& options, InsertSymbolResponse& response_) const
+
+InsertSymbolResponse& GPUdb::insertSymbol( const std::string& symbolId,
+                                           const std::string& symbolFormat,
+                                           const std::vector<uint8_t>& symbolData,
+                                           const std::map<std::string, std::string>& options,
+                                           InsertSymbolResponse& response_ ) const
 {
     InsertSymbolRequest actualRequest_;
     actualRequest_.symbolId = symbolId;
@@ -6622,7 +7541,8 @@ InsertSymbolResponse& GPUdb::insertSymbol(const std::string& symbolId, const std
  * @return Response object containing the result of the operation.
  * 
  */
-LockTableResponse GPUdb::lockTable(const LockTableRequest& request_) const
+
+LockTableResponse GPUdb::lockTable( const LockTableRequest& request_ ) const
 {
     LockTableResponse actualResponse_;
     submitRequest("/lock/table", request_, actualResponse_, false);
@@ -6647,7 +7567,9 @@ LockTableResponse GPUdb::lockTable(const LockTableRequest& request_) const
  *         passed in by reference).
  * 
  */
-LockTableResponse& GPUdb::lockTable(const LockTableRequest& request_, LockTableResponse& response_) const
+
+LockTableResponse& GPUdb::lockTable( const LockTableRequest& request_,
+                                     LockTableResponse& response_ ) const
 {
     submitRequest("/lock/table", request_, response_, false);
     return response_;
@@ -6673,7 +7595,10 @@ LockTableResponse& GPUdb::lockTable(const LockTableRequest& request_, LockTableR
  * @return Response object containing the result of the operation.
  * 
  */
-LockTableResponse GPUdb::lockTable(const std::string& tableName, const std::string& lockType, const std::map<std::string, std::string>& options) const
+
+LockTableResponse GPUdb::lockTable( const std::string& tableName,
+                                    const std::string& lockType,
+                                    const std::map<std::string, std::string>& options ) const
 {
     LockTableRequest actualRequest_;
     actualRequest_.tableName = tableName;
@@ -6707,7 +7632,11 @@ LockTableResponse GPUdb::lockTable(const std::string& tableName, const std::stri
  *         passed in by reference).
  * 
  */
-LockTableResponse& GPUdb::lockTable(const std::string& tableName, const std::string& lockType, const std::map<std::string, std::string>& options, LockTableResponse& response_) const
+
+LockTableResponse& GPUdb::lockTable( const std::string& tableName,
+                                     const std::string& lockType,
+                                     const std::map<std::string, std::string>& options,
+                                     LockTableResponse& response_ ) const
 {
     LockTableRequest actualRequest_;
     actualRequest_.tableName = tableName;
@@ -6729,7 +7658,8 @@ LockTableResponse& GPUdb::lockTable(const std::string& tableName, const std::str
  * @return Response object containing the result of the operation.
  * 
  */
-ShowSystemPropertiesResponse GPUdb::showSystemProperties(const ShowSystemPropertiesRequest& request_) const
+
+ShowSystemPropertiesResponse GPUdb::showSystemProperties( const ShowSystemPropertiesRequest& request_ ) const
 {
     ShowSystemPropertiesResponse actualResponse_;
     submitRequest("/show/system/properties", request_, actualResponse_, false);
@@ -6751,7 +7681,9 @@ ShowSystemPropertiesResponse GPUdb::showSystemProperties(const ShowSystemPropert
  *         passed in by reference).
  * 
  */
-ShowSystemPropertiesResponse& GPUdb::showSystemProperties(const ShowSystemPropertiesRequest& request_, ShowSystemPropertiesResponse& response_) const
+
+ShowSystemPropertiesResponse& GPUdb::showSystemProperties( const ShowSystemPropertiesRequest& request_,
+                                                           ShowSystemPropertiesResponse& response_ ) const
 {
     submitRequest("/show/system/properties", request_, response_, false);
     return response_;
@@ -6769,7 +7701,8 @@ ShowSystemPropertiesResponse& GPUdb::showSystemProperties(const ShowSystemProper
  * @return Response object containing the result of the operation.
  * 
  */
-ShowSystemPropertiesResponse GPUdb::showSystemProperties(const std::map<std::string, std::string>& options) const
+
+ShowSystemPropertiesResponse GPUdb::showSystemProperties( const std::map<std::string, std::string>& options ) const
 {
     ShowSystemPropertiesRequest actualRequest_;
     actualRequest_.options = options;
@@ -6793,7 +7726,9 @@ ShowSystemPropertiesResponse GPUdb::showSystemProperties(const std::map<std::str
  *         passed in by reference).
  * 
  */
-ShowSystemPropertiesResponse& GPUdb::showSystemProperties(const std::map<std::string, std::string>& options, ShowSystemPropertiesResponse& response_) const
+
+ShowSystemPropertiesResponse& GPUdb::showSystemProperties( const std::map<std::string, std::string>& options,
+                                                           ShowSystemPropertiesResponse& response_ ) const
 {
     ShowSystemPropertiesRequest actualRequest_;
     actualRequest_.options = options;
@@ -6812,7 +7747,8 @@ ShowSystemPropertiesResponse& GPUdb::showSystemProperties(const std::map<std::st
  * @return Response object containing the result of the operation.
  * 
  */
-ShowSystemStatusResponse GPUdb::showSystemStatus(const ShowSystemStatusRequest& request_) const
+
+ShowSystemStatusResponse GPUdb::showSystemStatus( const ShowSystemStatusRequest& request_ ) const
 {
     ShowSystemStatusResponse actualResponse_;
     submitRequest("/show/system/status", request_, actualResponse_, false);
@@ -6833,7 +7769,9 @@ ShowSystemStatusResponse GPUdb::showSystemStatus(const ShowSystemStatusRequest& 
  *         passed in by reference).
  * 
  */
-ShowSystemStatusResponse& GPUdb::showSystemStatus(const ShowSystemStatusRequest& request_, ShowSystemStatusResponse& response_) const
+
+ShowSystemStatusResponse& GPUdb::showSystemStatus( const ShowSystemStatusRequest& request_,
+                                                   ShowSystemStatusResponse& response_ ) const
 {
     submitRequest("/show/system/status", request_, response_, false);
     return response_;
@@ -6850,7 +7788,8 @@ ShowSystemStatusResponse& GPUdb::showSystemStatus(const ShowSystemStatusRequest&
  * @return Response object containing the result of the operation.
  * 
  */
-ShowSystemStatusResponse GPUdb::showSystemStatus(const std::map<std::string, std::string>& options) const
+
+ShowSystemStatusResponse GPUdb::showSystemStatus( const std::map<std::string, std::string>& options ) const
 {
     ShowSystemStatusRequest actualRequest_;
     actualRequest_.options = options;
@@ -6873,7 +7812,9 @@ ShowSystemStatusResponse GPUdb::showSystemStatus(const std::map<std::string, std
  *         passed in by reference).
  * 
  */
-ShowSystemStatusResponse& GPUdb::showSystemStatus(const std::map<std::string, std::string>& options, ShowSystemStatusResponse& response_) const
+
+ShowSystemStatusResponse& GPUdb::showSystemStatus( const std::map<std::string, std::string>& options,
+                                                   ShowSystemStatusResponse& response_ ) const
 {
     ShowSystemStatusRequest actualRequest_;
     actualRequest_.options = options;
@@ -6893,7 +7834,8 @@ ShowSystemStatusResponse& GPUdb::showSystemStatus(const std::map<std::string, st
  * @return Response object containing the result of the operation.
  * 
  */
-ShowSystemTimingResponse GPUdb::showSystemTiming(const ShowSystemTimingRequest& request_) const
+
+ShowSystemTimingResponse GPUdb::showSystemTiming( const ShowSystemTimingRequest& request_ ) const
 {
     ShowSystemTimingResponse actualResponse_;
     submitRequest("/show/system/timing", request_, actualResponse_, false);
@@ -6915,7 +7857,9 @@ ShowSystemTimingResponse GPUdb::showSystemTiming(const ShowSystemTimingRequest& 
  *         passed in by reference).
  * 
  */
-ShowSystemTimingResponse& GPUdb::showSystemTiming(const ShowSystemTimingRequest& request_, ShowSystemTimingResponse& response_) const
+
+ShowSystemTimingResponse& GPUdb::showSystemTiming( const ShowSystemTimingRequest& request_,
+                                                   ShowSystemTimingResponse& response_ ) const
 {
     submitRequest("/show/system/timing", request_, response_, false);
     return response_;
@@ -6933,7 +7877,8 @@ ShowSystemTimingResponse& GPUdb::showSystemTiming(const ShowSystemTimingRequest&
  * @return Response object containing the result of the operation.
  * 
  */
-ShowSystemTimingResponse GPUdb::showSystemTiming(const std::map<std::string, std::string>& options) const
+
+ShowSystemTimingResponse GPUdb::showSystemTiming( const std::map<std::string, std::string>& options ) const
 {
     ShowSystemTimingRequest actualRequest_;
     actualRequest_.options = options;
@@ -6957,7 +7902,9 @@ ShowSystemTimingResponse GPUdb::showSystemTiming(const std::map<std::string, std
  *         passed in by reference).
  * 
  */
-ShowSystemTimingResponse& GPUdb::showSystemTiming(const std::map<std::string, std::string>& options, ShowSystemTimingResponse& response_) const
+
+ShowSystemTimingResponse& GPUdb::showSystemTiming( const std::map<std::string, std::string>& options,
+                                                   ShowSystemTimingResponse& response_ ) const
 {
     ShowSystemTimingRequest actualRequest_;
     actualRequest_.options = options;
@@ -6986,7 +7933,8 @@ ShowSystemTimingResponse& GPUdb::showSystemTiming(const std::map<std::string, st
  * @return Response object containing the result of the operation.
  * 
  */
-ShowTableResponse GPUdb::showTable(const ShowTableRequest& request_) const
+
+ShowTableResponse GPUdb::showTable( const ShowTableRequest& request_ ) const
 {
     ShowTableResponse actualResponse_;
     submitRequest("/show/table", request_, actualResponse_, false);
@@ -7023,7 +7971,9 @@ ShowTableResponse GPUdb::showTable(const ShowTableRequest& request_) const
  *         passed in by reference).
  * 
  */
-ShowTableResponse& GPUdb::showTable(const ShowTableRequest& request_, ShowTableResponse& response_) const
+
+ShowTableResponse& GPUdb::showTable( const ShowTableRequest& request_,
+                                     ShowTableResponse& response_ ) const
 {
     submitRequest("/show/table", request_, response_, false);
 
@@ -7058,7 +8008,9 @@ ShowTableResponse& GPUdb::showTable(const ShowTableRequest& request_, ShowTableR
  * @return Response object containing the result of the operation.
  * 
  */
-ShowTableResponse GPUdb::showTable(const std::string& tableName, const std::map<std::string, std::string>& options) const
+
+ShowTableResponse GPUdb::showTable( const std::string& tableName,
+                                    const std::map<std::string, std::string>& options ) const
 {
     ShowTableRequest actualRequest_;
     actualRequest_.tableName = tableName;
@@ -7100,7 +8052,10 @@ ShowTableResponse GPUdb::showTable(const std::string& tableName, const std::map<
  *         passed in by reference).
  * 
  */
-ShowTableResponse& GPUdb::showTable(const std::string& tableName, const std::map<std::string, std::string>& options, ShowTableResponse& response_) const
+
+ShowTableResponse& GPUdb::showTable( const std::string& tableName,
+                                     const std::map<std::string, std::string>& options,
+                                     ShowTableResponse& response_ ) const
 {
     ShowTableRequest actualRequest_;
     actualRequest_.tableName = tableName;
@@ -7125,7 +8080,8 @@ ShowTableResponse& GPUdb::showTable(const std::string& tableName, const std::map
  * @return Response object containing the result of the operation.
  * 
  */
-ShowTableMetadataResponse GPUdb::showTableMetadata(const ShowTableMetadataRequest& request_) const
+
+ShowTableMetadataResponse GPUdb::showTableMetadata( const ShowTableMetadataRequest& request_ ) const
 {
     ShowTableMetadataResponse actualResponse_;
     submitRequest("/show/table/metadata", request_, actualResponse_, false);
@@ -7145,7 +8101,9 @@ ShowTableMetadataResponse GPUdb::showTableMetadata(const ShowTableMetadataReques
  *         passed in by reference).
  * 
  */
-ShowTableMetadataResponse& GPUdb::showTableMetadata(const ShowTableMetadataRequest& request_, ShowTableMetadataResponse& response_) const
+
+ShowTableMetadataResponse& GPUdb::showTableMetadata( const ShowTableMetadataRequest& request_,
+                                                     ShowTableMetadataResponse& response_ ) const
 {
     submitRequest("/show/table/metadata", request_, response_, false);
     return response_;
@@ -7162,7 +8120,9 @@ ShowTableMetadataResponse& GPUdb::showTableMetadata(const ShowTableMetadataReque
  * @return Response object containing the result of the operation.
  * 
  */
-ShowTableMetadataResponse GPUdb::showTableMetadata(const std::vector<std::string>& tableNames, const std::map<std::string, std::string>& options) const
+
+ShowTableMetadataResponse GPUdb::showTableMetadata( const std::vector<std::string>& tableNames,
+                                                    const std::map<std::string, std::string>& options ) const
 {
     ShowTableMetadataRequest actualRequest_;
     actualRequest_.tableNames = tableNames;
@@ -7186,7 +8146,10 @@ ShowTableMetadataResponse GPUdb::showTableMetadata(const std::vector<std::string
  *         passed in by reference).
  * 
  */
-ShowTableMetadataResponse& GPUdb::showTableMetadata(const std::vector<std::string>& tableNames, const std::map<std::string, std::string>& options, ShowTableMetadataResponse& response_) const
+
+ShowTableMetadataResponse& GPUdb::showTableMetadata( const std::vector<std::string>& tableNames,
+                                                     const std::map<std::string, std::string>& options,
+                                                     ShowTableMetadataResponse& response_ ) const
 {
     ShowTableMetadataRequest actualRequest_;
     actualRequest_.tableNames = tableNames;
@@ -7207,7 +8170,8 @@ ShowTableMetadataResponse& GPUdb::showTableMetadata(const std::vector<std::strin
  * @return Response object containing the result of the operation.
  * 
  */
-ShowTablePropertiesResponse GPUdb::showTableProperties(const ShowTablePropertiesRequest& request_) const
+
+ShowTablePropertiesResponse GPUdb::showTableProperties( const ShowTablePropertiesRequest& request_ ) const
 {
     ShowTablePropertiesResponse actualResponse_;
     submitRequest("/show/table/properties", request_, actualResponse_, false);
@@ -7229,7 +8193,9 @@ ShowTablePropertiesResponse GPUdb::showTableProperties(const ShowTableProperties
  *         passed in by reference).
  * 
  */
-ShowTablePropertiesResponse& GPUdb::showTableProperties(const ShowTablePropertiesRequest& request_, ShowTablePropertiesResponse& response_) const
+
+ShowTablePropertiesResponse& GPUdb::showTableProperties( const ShowTablePropertiesRequest& request_,
+                                                         ShowTablePropertiesResponse& response_ ) const
 {
     submitRequest("/show/table/properties", request_, response_, false);
     return response_;
@@ -7248,7 +8214,9 @@ ShowTablePropertiesResponse& GPUdb::showTableProperties(const ShowTablePropertie
  * @return Response object containing the result of the operation.
  * 
  */
-ShowTablePropertiesResponse GPUdb::showTableProperties(const std::vector<std::string>& tableNames, const std::map<std::string, std::string>& options) const
+
+ShowTablePropertiesResponse GPUdb::showTableProperties( const std::vector<std::string>& tableNames,
+                                                        const std::map<std::string, std::string>& options ) const
 {
     ShowTablePropertiesRequest actualRequest_;
     actualRequest_.tableNames = tableNames;
@@ -7274,7 +8242,10 @@ ShowTablePropertiesResponse GPUdb::showTableProperties(const std::vector<std::st
  *         passed in by reference).
  * 
  */
-ShowTablePropertiesResponse& GPUdb::showTableProperties(const std::vector<std::string>& tableNames, const std::map<std::string, std::string>& options, ShowTablePropertiesResponse& response_) const
+
+ShowTablePropertiesResponse& GPUdb::showTableProperties( const std::vector<std::string>& tableNames,
+                                                         const std::map<std::string, std::string>& options,
+                                                         ShowTablePropertiesResponse& response_ ) const
 {
     ShowTablePropertiesRequest actualRequest_;
     actualRequest_.tableNames = tableNames;
@@ -7297,7 +8268,8 @@ ShowTablePropertiesResponse& GPUdb::showTableProperties(const std::vector<std::s
  * @return Response object containing the result of the operation.
  * 
  */
-ShowTablesByTypeResponse GPUdb::showTablesByType(const ShowTablesByTypeRequest& request_) const
+
+ShowTablesByTypeResponse GPUdb::showTablesByType( const ShowTablesByTypeRequest& request_ ) const
 {
     ShowTablesByTypeResponse actualResponse_;
     submitRequest("/show/tables/bytype", request_, actualResponse_, false);
@@ -7321,7 +8293,9 @@ ShowTablesByTypeResponse GPUdb::showTablesByType(const ShowTablesByTypeRequest& 
  *         passed in by reference).
  * 
  */
-ShowTablesByTypeResponse& GPUdb::showTablesByType(const ShowTablesByTypeRequest& request_, ShowTablesByTypeResponse& response_) const
+
+ShowTablesByTypeResponse& GPUdb::showTablesByType( const ShowTablesByTypeRequest& request_,
+                                                   ShowTablesByTypeResponse& response_ ) const
 {
     submitRequest("/show/tables/bytype", request_, response_, false);
     return response_;
@@ -7343,7 +8317,10 @@ ShowTablesByTypeResponse& GPUdb::showTablesByType(const ShowTablesByTypeRequest&
  * @return Response object containing the result of the operation.
  * 
  */
-ShowTablesByTypeResponse GPUdb::showTablesByType(const std::string& typeId, const std::string& label, const std::map<std::string, std::string>& options) const
+
+ShowTablesByTypeResponse GPUdb::showTablesByType( const std::string& typeId,
+                                                  const std::string& label,
+                                                  const std::map<std::string, std::string>& options ) const
 {
     ShowTablesByTypeRequest actualRequest_;
     actualRequest_.typeId = typeId;
@@ -7373,7 +8350,11 @@ ShowTablesByTypeResponse GPUdb::showTablesByType(const std::string& typeId, cons
  *         passed in by reference).
  * 
  */
-ShowTablesByTypeResponse& GPUdb::showTablesByType(const std::string& typeId, const std::string& label, const std::map<std::string, std::string>& options, ShowTablesByTypeResponse& response_) const
+
+ShowTablesByTypeResponse& GPUdb::showTablesByType( const std::string& typeId,
+                                                   const std::string& label,
+                                                   const std::map<std::string, std::string>& options,
+                                                   ShowTablesByTypeResponse& response_ ) const
 {
     ShowTablesByTypeRequest actualRequest_;
     actualRequest_.typeId = typeId;
@@ -7394,7 +8375,8 @@ ShowTablesByTypeResponse& GPUdb::showTablesByType(const std::string& typeId, con
  * @return Response object containing the result of the operation.
  * 
  */
-ShowTriggersResponse GPUdb::showTriggers(const ShowTriggersRequest& request_) const
+
+ShowTriggersResponse GPUdb::showTriggers( const ShowTriggersRequest& request_ ) const
 {
     ShowTriggersResponse actualResponse_;
     submitRequest("/show/triggers", request_, actualResponse_, false);
@@ -7415,7 +8397,9 @@ ShowTriggersResponse GPUdb::showTriggers(const ShowTriggersRequest& request_) co
  *         passed in by reference).
  * 
  */
-ShowTriggersResponse& GPUdb::showTriggers(const ShowTriggersRequest& request_, ShowTriggersResponse& response_) const
+
+ShowTriggersResponse& GPUdb::showTriggers( const ShowTriggersRequest& request_,
+                                           ShowTriggersResponse& response_ ) const
 {
     submitRequest("/show/triggers", request_, response_, false);
     return response_;
@@ -7434,7 +8418,9 @@ ShowTriggersResponse& GPUdb::showTriggers(const ShowTriggersRequest& request_, S
  * @return Response object containing the result of the operation.
  * 
  */
-ShowTriggersResponse GPUdb::showTriggers(const std::vector<std::string>& triggerIds, const std::map<std::string, std::string>& options) const
+
+ShowTriggersResponse GPUdb::showTriggers( const std::vector<std::string>& triggerIds,
+                                          const std::map<std::string, std::string>& options ) const
 {
     ShowTriggersRequest actualRequest_;
     actualRequest_.triggerIds = triggerIds;
@@ -7460,7 +8446,10 @@ ShowTriggersResponse GPUdb::showTriggers(const std::vector<std::string>& trigger
  *         passed in by reference).
  * 
  */
-ShowTriggersResponse& GPUdb::showTriggers(const std::vector<std::string>& triggerIds, const std::map<std::string, std::string>& options, ShowTriggersResponse& response_) const
+
+ShowTriggersResponse& GPUdb::showTriggers( const std::vector<std::string>& triggerIds,
+                                           const std::map<std::string, std::string>& options,
+                                           ShowTriggersResponse& response_ ) const
 {
     ShowTriggersRequest actualRequest_;
     actualRequest_.triggerIds = triggerIds;
@@ -7483,7 +8472,8 @@ ShowTriggersResponse& GPUdb::showTriggers(const std::vector<std::string>& trigge
  * @return Response object containing the result of the operation.
  * 
  */
-ShowTypesResponse GPUdb::showTypes(const ShowTypesRequest& request_) const
+
+ShowTypesResponse GPUdb::showTypes( const ShowTypesRequest& request_ ) const
 {
     ShowTypesResponse actualResponse_;
     submitRequest("/show/types", request_, actualResponse_, false);
@@ -7513,7 +8503,9 @@ ShowTypesResponse GPUdb::showTypes(const ShowTypesRequest& request_) const
  *         passed in by reference).
  * 
  */
-ShowTypesResponse& GPUdb::showTypes(const ShowTypesRequest& request_, ShowTypesResponse& response_) const
+
+ShowTypesResponse& GPUdb::showTypes( const ShowTypesRequest& request_,
+                                     ShowTypesResponse& response_ ) const
 {
     submitRequest("/show/types", request_, response_, false);
 
@@ -7541,7 +8533,10 @@ ShowTypesResponse& GPUdb::showTypes(const ShowTypesRequest& request_, ShowTypesR
  * @return Response object containing the result of the operation.
  * 
  */
-ShowTypesResponse GPUdb::showTypes(const std::string& typeId, const std::string& label, const std::map<std::string, std::string>& options) const
+
+ShowTypesResponse GPUdb::showTypes( const std::string& typeId,
+                                    const std::string& label,
+                                    const std::map<std::string, std::string>& options ) const
 {
     ShowTypesRequest actualRequest_;
     actualRequest_.typeId = typeId;
@@ -7577,7 +8572,11 @@ ShowTypesResponse GPUdb::showTypes(const std::string& typeId, const std::string&
  *         passed in by reference).
  * 
  */
-ShowTypesResponse& GPUdb::showTypes(const std::string& typeId, const std::string& label, const std::map<std::string, std::string>& options, ShowTypesResponse& response_) const
+
+ShowTypesResponse& GPUdb::showTypes( const std::string& typeId,
+                                     const std::string& label,
+                                     const std::map<std::string, std::string>& options,
+                                     ShowTypesResponse& response_ ) const
 {
     ShowTypesRequest actualRequest_;
     actualRequest_.typeId = typeId;
@@ -7621,7 +8620,8 @@ ShowTypesResponse& GPUdb::showTypes(const std::string& typeId, const std::string
  * @return Response object containing the result of the operation.
  * 
  */
-UpdateRecordsResponse GPUdb::updateRecordsRaw(const RawUpdateRecordsRequest& request_) const
+
+UpdateRecordsResponse GPUdb::updateRecordsRaw( const RawUpdateRecordsRequest& request_ ) const
 {
     UpdateRecordsResponse actualResponse_;
     submitRequest("/update/records", request_, actualResponse_, true);
@@ -7659,7 +8659,9 @@ UpdateRecordsResponse GPUdb::updateRecordsRaw(const RawUpdateRecordsRequest& req
  *         passed in by reference).
  * 
  */
-UpdateRecordsResponse& GPUdb::updateRecordsRaw(const RawUpdateRecordsRequest& request_, UpdateRecordsResponse& response_) const
+
+UpdateRecordsResponse& GPUdb::updateRecordsRaw( const RawUpdateRecordsRequest& request_,
+                                                UpdateRecordsResponse& response_ ) const
 {
     submitRequest("/update/records", request_, response_, true);
     return response_;
@@ -7677,7 +8679,8 @@ UpdateRecordsResponse& GPUdb::updateRecordsRaw(const RawUpdateRecordsRequest& re
  * @return Response object containing the result of the operation.
  * 
  */
-UpdateRecordsBySeriesResponse GPUdb::updateRecordsBySeries(const UpdateRecordsBySeriesRequest& request_) const
+
+UpdateRecordsBySeriesResponse GPUdb::updateRecordsBySeries( const UpdateRecordsBySeriesRequest& request_ ) const
 {
     UpdateRecordsBySeriesResponse actualResponse_;
     submitRequest("/update/records/byseries", request_, actualResponse_, false);
@@ -7699,7 +8702,9 @@ UpdateRecordsBySeriesResponse GPUdb::updateRecordsBySeries(const UpdateRecordsBy
  *         passed in by reference).
  * 
  */
-UpdateRecordsBySeriesResponse& GPUdb::updateRecordsBySeries(const UpdateRecordsBySeriesRequest& request_, UpdateRecordsBySeriesResponse& response_) const
+
+UpdateRecordsBySeriesResponse& GPUdb::updateRecordsBySeries( const UpdateRecordsBySeriesRequest& request_,
+                                                             UpdateRecordsBySeriesResponse& response_ ) const
 {
     submitRequest("/update/records/byseries", request_, response_, false);
     return response_;
@@ -7724,7 +8729,12 @@ UpdateRecordsBySeriesResponse& GPUdb::updateRecordsBySeries(const UpdateRecordsB
  * @return Response object containing the result of the operation.
  * 
  */
-UpdateRecordsBySeriesResponse GPUdb::updateRecordsBySeries(const std::string& tableName, const std::string& worldTableName, const std::string& viewName, const std::vector<std::string>& reserved, const std::map<std::string, std::string>& options) const
+
+UpdateRecordsBySeriesResponse GPUdb::updateRecordsBySeries( const std::string& tableName,
+                                                            const std::string& worldTableName,
+                                                            const std::string& viewName,
+                                                            const std::vector<std::string>& reserved,
+                                                            const std::map<std::string, std::string>& options ) const
 {
     UpdateRecordsBySeriesRequest actualRequest_;
     actualRequest_.tableName = tableName;
@@ -7759,7 +8769,13 @@ UpdateRecordsBySeriesResponse GPUdb::updateRecordsBySeries(const std::string& ta
  *         passed in by reference).
  * 
  */
-UpdateRecordsBySeriesResponse& GPUdb::updateRecordsBySeries(const std::string& tableName, const std::string& worldTableName, const std::string& viewName, const std::vector<std::string>& reserved, const std::map<std::string, std::string>& options, UpdateRecordsBySeriesResponse& response_) const
+
+UpdateRecordsBySeriesResponse& GPUdb::updateRecordsBySeries( const std::string& tableName,
+                                                             const std::string& worldTableName,
+                                                             const std::string& viewName,
+                                                             const std::vector<std::string>& reserved,
+                                                             const std::map<std::string, std::string>& options,
+                                                             UpdateRecordsBySeriesResponse& response_ ) const
 {
     UpdateRecordsBySeriesRequest actualRequest_;
     actualRequest_.tableName = tableName;
@@ -7785,7 +8801,8 @@ UpdateRecordsBySeriesResponse& GPUdb::updateRecordsBySeries(const std::string& t
  * @return Response object containing the result of the operation.
  * 
  */
-VisualizeImageResponse GPUdb::visualizeImage(const VisualizeImageRequest& request_) const
+
+VisualizeImageResponse GPUdb::visualizeImage( const VisualizeImageRequest& request_ ) const
 {
     VisualizeImageResponse actualResponse_;
     submitRequest("/visualize/image", request_, actualResponse_, false);
@@ -7809,7 +8826,9 @@ VisualizeImageResponse GPUdb::visualizeImage(const VisualizeImageRequest& reques
  *         passed in by reference).
  * 
  */
-VisualizeImageResponse& GPUdb::visualizeImage(const VisualizeImageRequest& request_, VisualizeImageResponse& response_) const
+
+VisualizeImageResponse& GPUdb::visualizeImage( const VisualizeImageRequest& request_,
+                                               VisualizeImageResponse& response_ ) const
 {
     submitRequest("/visualize/image", request_, response_, false);
     return response_;
@@ -7847,7 +8866,22 @@ VisualizeImageResponse& GPUdb::visualizeImage(const VisualizeImageRequest& reque
  * @return Response object containing the result of the operation.
  * 
  */
-VisualizeImageResponse GPUdb::visualizeImage(const std::vector<std::string>& tableNames, const std::vector<std::string>& worldTableNames, const std::string& xColumnName, const std::string& yColumnName, const std::vector<std::vector<std::string> >& trackIds, const double minX, const double maxX, const double minY, const double maxY, const int32_t width, const int32_t height, const std::string& projection, const int64_t bgColor, const std::map<std::string, std::vector<std::string> >& styleOptions, const std::map<std::string, std::string>& options) const
+
+VisualizeImageResponse GPUdb::visualizeImage( const std::vector<std::string>& tableNames,
+                                              const std::vector<std::string>& worldTableNames,
+                                              const std::string& xColumnName,
+                                              const std::string& yColumnName,
+                                              const std::vector<std::vector<std::string> >& trackIds,
+                                              const double minX,
+                                              const double maxX,
+                                              const double minY,
+                                              const double maxY,
+                                              const int32_t width,
+                                              const int32_t height,
+                                              const std::string& projection,
+                                              const int64_t bgColor,
+                                              const std::map<std::string, std::vector<std::string> >& styleOptions,
+                                              const std::map<std::string, std::string>& options ) const
 {
     VisualizeImageRequest actualRequest_;
     actualRequest_.tableNames = tableNames;
@@ -7905,7 +8939,23 @@ VisualizeImageResponse GPUdb::visualizeImage(const std::vector<std::string>& tab
  *         passed in by reference).
  * 
  */
-VisualizeImageResponse& GPUdb::visualizeImage(const std::vector<std::string>& tableNames, const std::vector<std::string>& worldTableNames, const std::string& xColumnName, const std::string& yColumnName, const std::vector<std::vector<std::string> >& trackIds, const double minX, const double maxX, const double minY, const double maxY, const int32_t width, const int32_t height, const std::string& projection, const int64_t bgColor, const std::map<std::string, std::vector<std::string> >& styleOptions, const std::map<std::string, std::string>& options, VisualizeImageResponse& response_) const
+
+VisualizeImageResponse& GPUdb::visualizeImage( const std::vector<std::string>& tableNames,
+                                               const std::vector<std::string>& worldTableNames,
+                                               const std::string& xColumnName,
+                                               const std::string& yColumnName,
+                                               const std::vector<std::vector<std::string> >& trackIds,
+                                               const double minX,
+                                               const double maxX,
+                                               const double minY,
+                                               const double maxY,
+                                               const int32_t width,
+                                               const int32_t height,
+                                               const std::string& projection,
+                                               const int64_t bgColor,
+                                               const std::map<std::string, std::vector<std::string> >& styleOptions,
+                                               const std::map<std::string, std::string>& options,
+                                               VisualizeImageResponse& response_ ) const
 {
     VisualizeImageRequest actualRequest_;
     actualRequest_.tableNames = tableNames;
@@ -7941,8 +8991,6 @@ VisualizeImageResponse& GPUdb::visualizeImage(const std::vector<std::string>& ta
  * <p>
  * All color values must be in the format RRGGBB or AARRGGBB (to specify the
  * alpha value).
- * <p>
-
  * The image is contained in the @a imageData field.
  * 
  * @param[in] request_  Request object containing the parameters for the
@@ -7951,7 +8999,8 @@ VisualizeImageResponse& GPUdb::visualizeImage(const std::vector<std::string>& ta
  * @return Response object containing the result of the operation.
  * 
  */
-VisualizeImageClassbreakResponse GPUdb::visualizeImageClassbreak(const VisualizeImageClassbreakRequest& request_) const
+
+VisualizeImageClassbreakResponse GPUdb::visualizeImageClassbreak( const VisualizeImageClassbreakRequest& request_ ) const
 {
     VisualizeImageClassbreakResponse actualResponse_;
     submitRequest("/visualize/image/classbreak", request_, actualResponse_, false);
@@ -7972,8 +9021,6 @@ VisualizeImageClassbreakResponse GPUdb::visualizeImageClassbreak(const Visualize
  * <p>
  * All color values must be in the format RRGGBB or AARRGGBB (to specify the
  * alpha value).
- * <p>
-
  * The image is contained in the @a imageData field.
  * 
  * @param[in] request_  Request object containing the parameters for the
@@ -7985,7 +9032,9 @@ VisualizeImageClassbreakResponse GPUdb::visualizeImageClassbreak(const Visualize
  *         passed in by reference).
  * 
  */
-VisualizeImageClassbreakResponse& GPUdb::visualizeImageClassbreak(const VisualizeImageClassbreakRequest& request_, VisualizeImageClassbreakResponse& response_) const
+
+VisualizeImageClassbreakResponse& GPUdb::visualizeImageClassbreak( const VisualizeImageClassbreakRequest& request_,
+                                                                   VisualizeImageClassbreakResponse& response_ ) const
 {
     submitRequest("/visualize/image/classbreak", request_, response_, false);
     return response_;
@@ -8005,8 +9054,6 @@ VisualizeImageClassbreakResponse& GPUdb::visualizeImageClassbreak(const Visualiz
  * <p>
  * All color values must be in the format RRGGBB or AARRGGBB (to specify the
  * alpha value).
- * <p>
-
  * The image is contained in the @a imageData field.
  * 
  * @param tableNames  Name of the table containing the data for the various
@@ -8052,7 +9099,26 @@ VisualizeImageClassbreakResponse& GPUdb::visualizeImageClassbreak(const Visualiz
  * @return Response object containing the result of the operation.
  * 
  */
-VisualizeImageClassbreakResponse GPUdb::visualizeImageClassbreak(const std::vector<std::string>& tableNames, const std::vector<std::string>& worldTableNames, const std::string& xColumnName, const std::string& yColumnName, const std::vector<std::vector<std::string> >& trackIds, const std::string& cbColumnName1, const std::vector<std::string>& cbVals1, const std::vector<std::string>& cbColumnName2, const std::vector<std::vector<std::string> >& cbVals2, const double minX, const double maxX, const double minY, const double maxY, const int32_t width, const int32_t height, const std::string& projection, const int64_t bgColor, const std::map<std::string, std::vector<std::string> >& styleOptions, const std::map<std::string, std::string>& options) const
+
+VisualizeImageClassbreakResponse GPUdb::visualizeImageClassbreak( const std::vector<std::string>& tableNames,
+                                                                  const std::vector<std::string>& worldTableNames,
+                                                                  const std::string& xColumnName,
+                                                                  const std::string& yColumnName,
+                                                                  const std::vector<std::vector<std::string> >& trackIds,
+                                                                  const std::string& cbColumnName1,
+                                                                  const std::vector<std::string>& cbVals1,
+                                                                  const std::vector<std::string>& cbColumnName2,
+                                                                  const std::vector<std::vector<std::string> >& cbVals2,
+                                                                  const double minX,
+                                                                  const double maxX,
+                                                                  const double minY,
+                                                                  const double maxY,
+                                                                  const int32_t width,
+                                                                  const int32_t height,
+                                                                  const std::string& projection,
+                                                                  const int64_t bgColor,
+                                                                  const std::map<std::string, std::vector<std::string> >& styleOptions,
+                                                                  const std::map<std::string, std::string>& options ) const
 {
     VisualizeImageClassbreakRequest actualRequest_;
     actualRequest_.tableNames = tableNames;
@@ -8093,8 +9159,6 @@ VisualizeImageClassbreakResponse GPUdb::visualizeImageClassbreak(const std::vect
  * <p>
  * All color values must be in the format RRGGBB or AARRGGBB (to specify the
  * alpha value).
- * <p>
-
  * The image is contained in the @a imageData field.
  * 
  * @param tableNames  Name of the table containing the data for the various
@@ -8143,7 +9207,27 @@ VisualizeImageClassbreakResponse GPUdb::visualizeImageClassbreak(const std::vect
  *         passed in by reference).
  * 
  */
-VisualizeImageClassbreakResponse& GPUdb::visualizeImageClassbreak(const std::vector<std::string>& tableNames, const std::vector<std::string>& worldTableNames, const std::string& xColumnName, const std::string& yColumnName, const std::vector<std::vector<std::string> >& trackIds, const std::string& cbColumnName1, const std::vector<std::string>& cbVals1, const std::vector<std::string>& cbColumnName2, const std::vector<std::vector<std::string> >& cbVals2, const double minX, const double maxX, const double minY, const double maxY, const int32_t width, const int32_t height, const std::string& projection, const int64_t bgColor, const std::map<std::string, std::vector<std::string> >& styleOptions, const std::map<std::string, std::string>& options, VisualizeImageClassbreakResponse& response_) const
+
+VisualizeImageClassbreakResponse& GPUdb::visualizeImageClassbreak( const std::vector<std::string>& tableNames,
+                                                                   const std::vector<std::string>& worldTableNames,
+                                                                   const std::string& xColumnName,
+                                                                   const std::string& yColumnName,
+                                                                   const std::vector<std::vector<std::string> >& trackIds,
+                                                                   const std::string& cbColumnName1,
+                                                                   const std::vector<std::string>& cbVals1,
+                                                                   const std::vector<std::string>& cbColumnName2,
+                                                                   const std::vector<std::vector<std::string> >& cbVals2,
+                                                                   const double minX,
+                                                                   const double maxX,
+                                                                   const double minY,
+                                                                   const double maxY,
+                                                                   const int32_t width,
+                                                                   const int32_t height,
+                                                                   const std::string& projection,
+                                                                   const int64_t bgColor,
+                                                                   const std::map<std::string, std::vector<std::string> >& styleOptions,
+                                                                   const std::map<std::string, std::string>& options,
+                                                                   VisualizeImageClassbreakResponse& response_ ) const
 {
     VisualizeImageClassbreakRequest actualRequest_;
     actualRequest_.tableNames = tableNames;
@@ -8184,7 +9268,8 @@ VisualizeImageClassbreakResponse& GPUdb::visualizeImageClassbreak(const std::vec
  * @return Response object containing the result of the operation.
  * 
  */
-VisualizeImageHeatmapResponse GPUdb::visualizeImageHeatmap(const VisualizeImageHeatmapRequest& request_) const
+
+VisualizeImageHeatmapResponse GPUdb::visualizeImageHeatmap( const VisualizeImageHeatmapRequest& request_ ) const
 {
     VisualizeImageHeatmapResponse actualResponse_;
     submitRequest("/visualize/image/heatmap", request_, actualResponse_, false);
@@ -8209,7 +9294,9 @@ VisualizeImageHeatmapResponse GPUdb::visualizeImageHeatmap(const VisualizeImageH
  *         passed in by reference).
  * 
  */
-VisualizeImageHeatmapResponse& GPUdb::visualizeImageHeatmap(const VisualizeImageHeatmapRequest& request_, VisualizeImageHeatmapResponse& response_) const
+
+VisualizeImageHeatmapResponse& GPUdb::visualizeImageHeatmap( const VisualizeImageHeatmapRequest& request_,
+                                                             VisualizeImageHeatmapResponse& response_ ) const
 {
     submitRequest("/visualize/image/heatmap", request_, response_, false);
     return response_;
@@ -8243,7 +9330,20 @@ VisualizeImageHeatmapResponse& GPUdb::visualizeImageHeatmap(const VisualizeImage
  * @return Response object containing the result of the operation.
  * 
  */
-VisualizeImageHeatmapResponse GPUdb::visualizeImageHeatmap(const std::vector<std::string>& tableNames, const std::string& xColumnName, const std::string& yColumnName, const std::string& valueColumnName, const double minX, const double maxX, const double minY, const double maxY, const int32_t width, const int32_t height, const std::string& projection, const std::map<std::string, std::string>& styleOptions, const std::map<std::string, std::string>& options) const
+
+VisualizeImageHeatmapResponse GPUdb::visualizeImageHeatmap( const std::vector<std::string>& tableNames,
+                                                            const std::string& xColumnName,
+                                                            const std::string& yColumnName,
+                                                            const std::string& valueColumnName,
+                                                            const double minX,
+                                                            const double maxX,
+                                                            const double minY,
+                                                            const double maxY,
+                                                            const int32_t width,
+                                                            const int32_t height,
+                                                            const std::string& projection,
+                                                            const std::map<std::string, std::string>& styleOptions,
+                                                            const std::map<std::string, std::string>& options ) const
 {
     VisualizeImageHeatmapRequest actualRequest_;
     actualRequest_.tableNames = tableNames;
@@ -8295,7 +9395,21 @@ VisualizeImageHeatmapResponse GPUdb::visualizeImageHeatmap(const std::vector<std
  *         passed in by reference).
  * 
  */
-VisualizeImageHeatmapResponse& GPUdb::visualizeImageHeatmap(const std::vector<std::string>& tableNames, const std::string& xColumnName, const std::string& yColumnName, const std::string& valueColumnName, const double minX, const double maxX, const double minY, const double maxY, const int32_t width, const int32_t height, const std::string& projection, const std::map<std::string, std::string>& styleOptions, const std::map<std::string, std::string>& options, VisualizeImageHeatmapResponse& response_) const
+
+VisualizeImageHeatmapResponse& GPUdb::visualizeImageHeatmap( const std::vector<std::string>& tableNames,
+                                                             const std::string& xColumnName,
+                                                             const std::string& yColumnName,
+                                                             const std::string& valueColumnName,
+                                                             const double minX,
+                                                             const double maxX,
+                                                             const double minY,
+                                                             const double maxY,
+                                                             const int32_t width,
+                                                             const int32_t height,
+                                                             const std::string& projection,
+                                                             const std::map<std::string, std::string>& styleOptions,
+                                                             const std::map<std::string, std::string>& options,
+                                                             VisualizeImageHeatmapResponse& response_ ) const
 {
     VisualizeImageHeatmapRequest actualRequest_;
     actualRequest_.tableNames = tableNames;
@@ -8341,7 +9455,8 @@ VisualizeImageHeatmapResponse& GPUdb::visualizeImageHeatmap(const std::vector<st
  * @return Response object containing the result of the operation.
  * 
  */
-VisualizeImageLabelsResponse GPUdb::visualizeImageLabels(const VisualizeImageLabelsRequest& request_) const
+
+VisualizeImageLabelsResponse GPUdb::visualizeImageLabels( const VisualizeImageLabelsRequest& request_ ) const
 {
     VisualizeImageLabelsResponse actualResponse_;
     submitRequest("/visualize/image/labels", request_, actualResponse_, false);
@@ -8377,7 +9492,9 @@ VisualizeImageLabelsResponse GPUdb::visualizeImageLabels(const VisualizeImageLab
  *         passed in by reference).
  * 
  */
-VisualizeImageLabelsResponse& GPUdb::visualizeImageLabels(const VisualizeImageLabelsRequest& request_, VisualizeImageLabelsResponse& response_) const
+
+VisualizeImageLabelsResponse& GPUdb::visualizeImageLabels( const VisualizeImageLabelsRequest& request_,
+                                                           VisualizeImageLabelsResponse& response_ ) const
 {
     submitRequest("/visualize/image/labels", request_, response_, false);
     return response_;
@@ -8480,7 +9597,32 @@ VisualizeImageLabelsResponse& GPUdb::visualizeImageLabels(const VisualizeImageLa
  * @return Response object containing the result of the operation.
  * 
  */
-VisualizeImageLabelsResponse GPUdb::visualizeImageLabels(const std::string& tableName, const std::string& xColumnName, const std::string& yColumnName, const std::string& xOffset, const std::string& yOffset, const std::string& textString, const std::string& font, const std::string& textColor, const std::string& textAngle, const std::string& textScale, const std::string& drawBox, const std::string& drawLeader, const std::string& lineWidth, const std::string& lineColor, const std::string& fillColor, const std::string& leaderXColumnName, const std::string& leaderYColumnName, const double minX, const double maxX, const double minY, const double maxY, const int32_t width, const int32_t height, const std::string& projection, const std::map<std::string, std::string>& options) const
+
+VisualizeImageLabelsResponse GPUdb::visualizeImageLabels( const std::string& tableName,
+                                                          const std::string& xColumnName,
+                                                          const std::string& yColumnName,
+                                                          const std::string& xOffset,
+                                                          const std::string& yOffset,
+                                                          const std::string& textString,
+                                                          const std::string& font,
+                                                          const std::string& textColor,
+                                                          const std::string& textAngle,
+                                                          const std::string& textScale,
+                                                          const std::string& drawBox,
+                                                          const std::string& drawLeader,
+                                                          const std::string& lineWidth,
+                                                          const std::string& lineColor,
+                                                          const std::string& fillColor,
+                                                          const std::string& leaderXColumnName,
+                                                          const std::string& leaderYColumnName,
+                                                          const double minX,
+                                                          const double maxX,
+                                                          const double minY,
+                                                          const double maxY,
+                                                          const int32_t width,
+                                                          const int32_t height,
+                                                          const std::string& projection,
+                                                          const std::map<std::string, std::string>& options ) const
 {
     VisualizeImageLabelsRequest actualRequest_;
     actualRequest_.tableName = tableName;
@@ -8613,7 +9755,33 @@ VisualizeImageLabelsResponse GPUdb::visualizeImageLabels(const std::string& tabl
  *         passed in by reference).
  * 
  */
-VisualizeImageLabelsResponse& GPUdb::visualizeImageLabels(const std::string& tableName, const std::string& xColumnName, const std::string& yColumnName, const std::string& xOffset, const std::string& yOffset, const std::string& textString, const std::string& font, const std::string& textColor, const std::string& textAngle, const std::string& textScale, const std::string& drawBox, const std::string& drawLeader, const std::string& lineWidth, const std::string& lineColor, const std::string& fillColor, const std::string& leaderXColumnName, const std::string& leaderYColumnName, const double minX, const double maxX, const double minY, const double maxY, const int32_t width, const int32_t height, const std::string& projection, const std::map<std::string, std::string>& options, VisualizeImageLabelsResponse& response_) const
+
+VisualizeImageLabelsResponse& GPUdb::visualizeImageLabels( const std::string& tableName,
+                                                           const std::string& xColumnName,
+                                                           const std::string& yColumnName,
+                                                           const std::string& xOffset,
+                                                           const std::string& yOffset,
+                                                           const std::string& textString,
+                                                           const std::string& font,
+                                                           const std::string& textColor,
+                                                           const std::string& textAngle,
+                                                           const std::string& textScale,
+                                                           const std::string& drawBox,
+                                                           const std::string& drawLeader,
+                                                           const std::string& lineWidth,
+                                                           const std::string& lineColor,
+                                                           const std::string& fillColor,
+                                                           const std::string& leaderXColumnName,
+                                                           const std::string& leaderYColumnName,
+                                                           const double minX,
+                                                           const double maxX,
+                                                           const double minY,
+                                                           const double maxY,
+                                                           const int32_t width,
+                                                           const int32_t height,
+                                                           const std::string& projection,
+                                                           const std::map<std::string, std::string>& options,
+                                                           VisualizeImageLabelsResponse& response_ ) const
 {
     VisualizeImageLabelsRequest actualRequest_;
     actualRequest_.tableName = tableName;
@@ -8650,10 +9818,10 @@ VisualizeImageLabelsResponse& GPUdb::visualizeImageLabels(const std::string& tab
  * Creates raster images of data in the given table based on provided input
  * parameters. Numerous parameters are required to call this function. Some of
  * the important parameters are the attributes of the generated images (@a
- * bgColor, @a width, @{input height{), the collection of GPUdb table names on
- * which this function is to be applied, for which shapes (point, polygon,
- * tracks) the images are to be created and a user specified session key. This
- * session key is later used to fetch the generated images stored by GPUdb. The
+ * bgColor, @a width, @a height), the collection of GPUdb table names on which
+ * this function is to be applied, for which shapes (point, polygon, tracks)
+ * the images are to be created and a user specified session key. This session
+ * key is later used to fetch the generated images stored by GPUdb. The
  * operation is synchronous meaning that GPUdb will not return the request
  * until the images for all the frames of the video are fully available.
  * <p>
@@ -8674,10 +9842,6 @@ VisualizeImageLabelsResponse& GPUdb::visualizeImageLabels(const std::string& tab
  * <p>
  *     http://gpudb-ip-address:9191/wms?REQUEST=GetMap&STYLES=cached&LAYERS=MY-
  * SESSION-KEY&FRAME=19
- * <p>
-
- * <p>
-
  * The response payload provides, among other things, the number of frames
  * which were created by GPUdb.
  * 
@@ -8687,7 +9851,8 @@ VisualizeImageLabelsResponse& GPUdb::visualizeImageLabels(const std::string& tab
  * @return Response object containing the result of the operation.
  * 
  */
-VisualizeVideoResponse GPUdb::visualizeVideo(const VisualizeVideoRequest& request_) const
+
+VisualizeVideoResponse GPUdb::visualizeVideo( const VisualizeVideoRequest& request_ ) const
 {
     VisualizeVideoResponse actualResponse_;
     submitRequest("/visualize/video", request_, actualResponse_, false);
@@ -8699,10 +9864,10 @@ VisualizeVideoResponse GPUdb::visualizeVideo(const VisualizeVideoRequest& reques
  * Creates raster images of data in the given table based on provided input
  * parameters. Numerous parameters are required to call this function. Some of
  * the important parameters are the attributes of the generated images (@a
- * bgColor, @a width, @{input height{), the collection of GPUdb table names on
- * which this function is to be applied, for which shapes (point, polygon,
- * tracks) the images are to be created and a user specified session key. This
- * session key is later used to fetch the generated images stored by GPUdb. The
+ * bgColor, @a width, @a height), the collection of GPUdb table names on which
+ * this function is to be applied, for which shapes (point, polygon, tracks)
+ * the images are to be created and a user specified session key. This session
+ * key is later used to fetch the generated images stored by GPUdb. The
  * operation is synchronous meaning that GPUdb will not return the request
  * until the images for all the frames of the video are fully available.
  * <p>
@@ -8723,10 +9888,6 @@ VisualizeVideoResponse GPUdb::visualizeVideo(const VisualizeVideoRequest& reques
  * <p>
  *     http://gpudb-ip-address:9191/wms?REQUEST=GetMap&STYLES=cached&LAYERS=MY-
  * SESSION-KEY&FRAME=19
- * <p>
-
- * <p>
-
  * The response payload provides, among other things, the number of frames
  * which were created by GPUdb.
  * 
@@ -8739,7 +9900,9 @@ VisualizeVideoResponse GPUdb::visualizeVideo(const VisualizeVideoRequest& reques
  *         passed in by reference).
  * 
  */
-VisualizeVideoResponse& GPUdb::visualizeVideo(const VisualizeVideoRequest& request_, VisualizeVideoResponse& response_) const
+
+VisualizeVideoResponse& GPUdb::visualizeVideo( const VisualizeVideoRequest& request_,
+                                               VisualizeVideoResponse& response_ ) const
 {
     submitRequest("/visualize/video", request_, response_, false);
     return response_;
@@ -8750,10 +9913,10 @@ VisualizeVideoResponse& GPUdb::visualizeVideo(const VisualizeVideoRequest& reque
  * Creates raster images of data in the given table based on provided input
  * parameters. Numerous parameters are required to call this function. Some of
  * the important parameters are the attributes of the generated images (@a
- * bgColor, @a width, @{input height{), the collection of GPUdb table names on
- * which this function is to be applied, for which shapes (point, polygon,
- * tracks) the images are to be created and a user specified session key. This
- * session key is later used to fetch the generated images stored by GPUdb. The
+ * bgColor, @a width, @a height), the collection of GPUdb table names on which
+ * this function is to be applied, for which shapes (point, polygon, tracks)
+ * the images are to be created and a user specified session key. This session
+ * key is later used to fetch the generated images stored by GPUdb. The
  * operation is synchronous meaning that GPUdb will not return the request
  * until the images for all the frames of the video are fully available.
  * <p>
@@ -8774,10 +9937,6 @@ VisualizeVideoResponse& GPUdb::visualizeVideo(const VisualizeVideoRequest& reque
  * <p>
  *     http://gpudb-ip-address:9191/wms?REQUEST=GetMap&STYLES=cached&LAYERS=MY-
  * SESSION-KEY&FRAME=19
- * <p>
-
- * <p>
-
  * The response payload provides, among other things, the number of frames
  * which were created by GPUdb.
  * 
@@ -8810,7 +9969,25 @@ VisualizeVideoResponse& GPUdb::visualizeVideo(const VisualizeVideoRequest& reque
  * @return Response object containing the result of the operation.
  * 
  */
-VisualizeVideoResponse GPUdb::visualizeVideo(const std::vector<std::string>& tableNames, const std::vector<std::string>& worldTableNames, const std::vector<std::vector<std::string> >& trackIds, const std::string& xColumnName, const std::string& yColumnName, const double minX, const double maxX, const double minY, const double maxY, const int32_t width, const int32_t height, const std::string& projection, const int64_t bgColor, const std::vector<std::vector<double> >& timeIntervals, const std::string& videoStyle, const std::string& sessionKey, const std::map<std::string, std::vector<std::string> >& styleOptions, const std::map<std::string, std::string>& options) const
+
+VisualizeVideoResponse GPUdb::visualizeVideo( const std::vector<std::string>& tableNames,
+                                              const std::vector<std::string>& worldTableNames,
+                                              const std::vector<std::vector<std::string> >& trackIds,
+                                              const std::string& xColumnName,
+                                              const std::string& yColumnName,
+                                              const double minX,
+                                              const double maxX,
+                                              const double minY,
+                                              const double maxY,
+                                              const int32_t width,
+                                              const int32_t height,
+                                              const std::string& projection,
+                                              const int64_t bgColor,
+                                              const std::vector<std::vector<double> >& timeIntervals,
+                                              const std::string& videoStyle,
+                                              const std::string& sessionKey,
+                                              const std::map<std::string, std::vector<std::string> >& styleOptions,
+                                              const std::map<std::string, std::string>& options ) const
 {
     VisualizeVideoRequest actualRequest_;
     actualRequest_.tableNames = tableNames;
@@ -8841,10 +10018,10 @@ VisualizeVideoResponse GPUdb::visualizeVideo(const std::vector<std::string>& tab
  * Creates raster images of data in the given table based on provided input
  * parameters. Numerous parameters are required to call this function. Some of
  * the important parameters are the attributes of the generated images (@a
- * bgColor, @a width, @{input height{), the collection of GPUdb table names on
- * which this function is to be applied, for which shapes (point, polygon,
- * tracks) the images are to be created and a user specified session key. This
- * session key is later used to fetch the generated images stored by GPUdb. The
+ * bgColor, @a width, @a height), the collection of GPUdb table names on which
+ * this function is to be applied, for which shapes (point, polygon, tracks)
+ * the images are to be created and a user specified session key. This session
+ * key is later used to fetch the generated images stored by GPUdb. The
  * operation is synchronous meaning that GPUdb will not return the request
  * until the images for all the frames of the video are fully available.
  * <p>
@@ -8865,10 +10042,6 @@ VisualizeVideoResponse GPUdb::visualizeVideo(const std::vector<std::string>& tab
  * <p>
  *     http://gpudb-ip-address:9191/wms?REQUEST=GetMap&STYLES=cached&LAYERS=MY-
  * SESSION-KEY&FRAME=19
- * <p>
-
- * <p>
-
  * The response payload provides, among other things, the number of frames
  * which were created by GPUdb.
  * 
@@ -8904,7 +10077,26 @@ VisualizeVideoResponse GPUdb::visualizeVideo(const std::vector<std::string>& tab
  *         passed in by reference).
  * 
  */
-VisualizeVideoResponse& GPUdb::visualizeVideo(const std::vector<std::string>& tableNames, const std::vector<std::string>& worldTableNames, const std::vector<std::vector<std::string> >& trackIds, const std::string& xColumnName, const std::string& yColumnName, const double minX, const double maxX, const double minY, const double maxY, const int32_t width, const int32_t height, const std::string& projection, const int64_t bgColor, const std::vector<std::vector<double> >& timeIntervals, const std::string& videoStyle, const std::string& sessionKey, const std::map<std::string, std::vector<std::string> >& styleOptions, const std::map<std::string, std::string>& options, VisualizeVideoResponse& response_) const
+
+VisualizeVideoResponse& GPUdb::visualizeVideo( const std::vector<std::string>& tableNames,
+                                               const std::vector<std::string>& worldTableNames,
+                                               const std::vector<std::vector<std::string> >& trackIds,
+                                               const std::string& xColumnName,
+                                               const std::string& yColumnName,
+                                               const double minX,
+                                               const double maxX,
+                                               const double minY,
+                                               const double maxY,
+                                               const int32_t width,
+                                               const int32_t height,
+                                               const std::string& projection,
+                                               const int64_t bgColor,
+                                               const std::vector<std::vector<double> >& timeIntervals,
+                                               const std::string& videoStyle,
+                                               const std::string& sessionKey,
+                                               const std::map<std::string, std::vector<std::string> >& styleOptions,
+                                               const std::map<std::string, std::string>& options,
+                                               VisualizeVideoResponse& response_ ) const
 {
     VisualizeVideoRequest actualRequest_;
     actualRequest_.tableNames = tableNames;
@@ -8970,7 +10162,8 @@ VisualizeVideoResponse& GPUdb::visualizeVideo(const std::vector<std::string>& ta
  * @return Response object containing the result of the operation.
  * 
  */
-VisualizeVideoHeatmapResponse GPUdb::visualizeVideoHeatmap(const VisualizeVideoHeatmapRequest& request_) const
+
+VisualizeVideoHeatmapResponse GPUdb::visualizeVideoHeatmap( const VisualizeVideoHeatmapRequest& request_ ) const
 {
     VisualizeVideoHeatmapResponse actualResponse_;
     submitRequest("/visualize/video/heatmap", request_, actualResponse_, false);
@@ -9021,7 +10214,9 @@ VisualizeVideoHeatmapResponse GPUdb::visualizeVideoHeatmap(const VisualizeVideoH
  *         passed in by reference).
  * 
  */
-VisualizeVideoHeatmapResponse& GPUdb::visualizeVideoHeatmap(const VisualizeVideoHeatmapRequest& request_, VisualizeVideoHeatmapResponse& response_) const
+
+VisualizeVideoHeatmapResponse& GPUdb::visualizeVideoHeatmap( const VisualizeVideoHeatmapRequest& request_,
+                                                             VisualizeVideoHeatmapResponse& response_ ) const
 {
     submitRequest("/visualize/video/heatmap", request_, response_, false);
     return response_;
@@ -9084,7 +10279,22 @@ VisualizeVideoHeatmapResponse& GPUdb::visualizeVideoHeatmap(const VisualizeVideo
  * @return Response object containing the result of the operation.
  * 
  */
-VisualizeVideoHeatmapResponse GPUdb::visualizeVideoHeatmap(const std::vector<std::string>& tableNames, const std::string& xColumnName, const std::string& yColumnName, const double minX, const double maxX, const double minY, const double maxY, const std::vector<std::vector<double> >& timeIntervals, const int32_t width, const int32_t height, const std::string& projection, const std::string& videoStyle, const std::string& sessionKey, const std::map<std::string, std::string>& styleOptions, const std::map<std::string, std::string>& options) const
+
+VisualizeVideoHeatmapResponse GPUdb::visualizeVideoHeatmap( const std::vector<std::string>& tableNames,
+                                                            const std::string& xColumnName,
+                                                            const std::string& yColumnName,
+                                                            const double minX,
+                                                            const double maxX,
+                                                            const double minY,
+                                                            const double maxY,
+                                                            const std::vector<std::vector<double> >& timeIntervals,
+                                                            const int32_t width,
+                                                            const int32_t height,
+                                                            const std::string& projection,
+                                                            const std::string& videoStyle,
+                                                            const std::string& sessionKey,
+                                                            const std::map<std::string, std::string>& styleOptions,
+                                                            const std::map<std::string, std::string>& options ) const
 {
     VisualizeVideoHeatmapRequest actualRequest_;
     actualRequest_.tableNames = tableNames;
@@ -9167,7 +10377,23 @@ VisualizeVideoHeatmapResponse GPUdb::visualizeVideoHeatmap(const std::vector<std
  *         passed in by reference).
  * 
  */
-VisualizeVideoHeatmapResponse& GPUdb::visualizeVideoHeatmap(const std::vector<std::string>& tableNames, const std::string& xColumnName, const std::string& yColumnName, const double minX, const double maxX, const double minY, const double maxY, const std::vector<std::vector<double> >& timeIntervals, const int32_t width, const int32_t height, const std::string& projection, const std::string& videoStyle, const std::string& sessionKey, const std::map<std::string, std::string>& styleOptions, const std::map<std::string, std::string>& options, VisualizeVideoHeatmapResponse& response_) const
+
+VisualizeVideoHeatmapResponse& GPUdb::visualizeVideoHeatmap( const std::vector<std::string>& tableNames,
+                                                             const std::string& xColumnName,
+                                                             const std::string& yColumnName,
+                                                             const double minX,
+                                                             const double maxX,
+                                                             const double minY,
+                                                             const double maxY,
+                                                             const std::vector<std::vector<double> >& timeIntervals,
+                                                             const int32_t width,
+                                                             const int32_t height,
+                                                             const std::string& projection,
+                                                             const std::string& videoStyle,
+                                                             const std::string& sessionKey,
+                                                             const std::map<std::string, std::string>& styleOptions,
+                                                             const std::map<std::string, std::string>& options,
+                                                             VisualizeVideoHeatmapResponse& response_ ) const
 {
     VisualizeVideoHeatmapRequest actualRequest_;
     actualRequest_.tableNames = tableNames;

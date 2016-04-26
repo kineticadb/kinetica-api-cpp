@@ -291,16 +291,18 @@ ADD_LIBRARY_FULL( gpudb_api_cpp_lib
         GPUdbFunctions.hpp
         GPUdbTemplates.hpp
         Type.hpp
-	protocol/EndpointKeywords.h
+        GPUdbIngestor.hpp
+        protocol/EndpointKeywords.h
         protocol/GPUdbProtocol.h
     SOURCES
         Avro.cpp
         DynamicTableRecord.cpp
         GenericRecord.cpp
         GPUdb.cpp
+        GPUdbIngestor.cpp
         GPUdbException.cpp
         Type.cpp
-	protocol/EndpointKeywords.cpp
+        protocol/EndpointKeywords.cpp
     LINK_LIBRARIES
         ${GPUDB_API_CPP_LINK_LIBRARIES}
     PROPERTIES FOLDER "Library"
@@ -330,6 +332,26 @@ ADD_EXECUTABLE_FULL( gpudb-api-example
 
 endfunction( gpudb_api_cpp_example_TARGETS )
 
+
+# ---------------------------------------------------------------------------
+# test executable
+# ---------------------------------------------------------------------------
+
+function( gpudb_api_cpp_multihead_ingest_TARGETS )
+
+ADD_EXECUTABLE_FULL( test_multihead_ingest
+    HEADERS
+    SOURCES
+        test_multihead_ingest.cpp
+    LINK_LIBRARIES
+        gpudb_api_cpp_lib
+        ${GPUDB_API_CPP_LINK_LIBRARIES}
+    PROPERTIES COMPILE_FLAGS "-std=c++0x"
+    PROPERTIES FOLDER "Example"
+    PROPERTIES OUTPUT_NAME "test_multihead_ingest"
+)
+
+endfunction( gpudb_api_cpp_multihead_ingest_TARGETS )
 
 # ===========================================================================
 # Add the subdirectories with their projects in them

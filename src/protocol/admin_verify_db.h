@@ -3,63 +3,59 @@
  *
  *  DO NOT EDIT DIRECTLY.
  */
-#ifndef __ADMIN_OFFLINE_H__
-#define __ADMIN_OFFLINE_H__
+#ifndef __ADMIN_VERIFY_DB_H__
+#define __ADMIN_VERIFY_DB_H__
 
 namespace gpudb
 {
 
     /**
      * A set of input parameters for {@link
-     * #adminOffline(const AdminOfflineRequest&) const}.
+     * #adminVerifyDb(const AdminVerifyDbRequest&) const}.
      * <p>
-     * Take the system offline. When the system is offline, no user operations
-     * can be performed with the exception of a system shutdown.
+     * Verify database is in a consistent state.  When inconsistencies or
+     * errors are found, the verified_ok flag in the response is set to false
+     * and the list of errors found is provided in the error_list.
      */
-    struct AdminOfflineRequest
+    struct AdminVerifyDbRequest
     {
 
         /**
-         * Constructs an AdminOfflineRequest object with default parameter
+         * Constructs an AdminVerifyDbRequest object with default parameter
          * values.
          */
-        AdminOfflineRequest() :
-            offline(bool()),
+        AdminVerifyDbRequest() :
             options(std::map<std::string, std::string>())
         {
         }
 
         /**
-         * Constructs an AdminOfflineRequest object with the specified
+         * Constructs an AdminVerifyDbRequest object with the specified
          * parameters.
          * 
-         * @param[in] offline  Set to true if desired state is offline.
          * @param[in] options  Optional parameters.  Default value is an empty
          *                     std::map.
          * 
          */
-        AdminOfflineRequest(const bool offline, const std::map<std::string, std::string>& options):
-            offline(offline),
+        AdminVerifyDbRequest(const std::map<std::string, std::string>& options):
             options(options)
         {
         }
 
-        bool offline;
         std::map<std::string, std::string> options;
     };
 }
 
 namespace avro
 {
-    template<> struct codec_traits<gpudb::AdminOfflineRequest>
+    template<> struct codec_traits<gpudb::AdminVerifyDbRequest>
     {
-        static void encode(Encoder& e, const gpudb::AdminOfflineRequest& v)
+        static void encode(Encoder& e, const gpudb::AdminVerifyDbRequest& v)
         {
-            ::avro::encode(e, v.offline);
             ::avro::encode(e, v.options);
         }
 
-        static void decode(Decoder& d, gpudb::AdminOfflineRequest& v)
+        static void decode(Decoder& d, gpudb::AdminVerifyDbRequest& v)
         {
             if (::avro::ResolvingDecoder *rd = dynamic_cast< ::avro::ResolvingDecoder*>(&d))
             {
@@ -70,10 +66,6 @@ namespace avro
                     switch (*it)
                     {
                         case 0:
-                            ::avro::decode(d, v.offline);
-                            break;
-
-                        case 1:
                             ::avro::decode(d, v.options);
                             break;
 
@@ -84,7 +76,6 @@ namespace avro
             }
             else
             {
-                ::avro::decode(d, v.offline);
                 ::avro::decode(d, v.options);
             }
         }
@@ -96,37 +87,41 @@ namespace gpudb
 
     /**
      * A set of output parameters for {@link
-     * #adminOffline(const AdminOfflineRequest&) const}.
+     * #adminVerifyDb(const AdminVerifyDbRequest&) const}.
      * <p>
-     * Take the system offline. When the system is offline, no user operations
-     * can be performed with the exception of a system shutdown.
+     * Verify database is in a consistent state.  When inconsistencies or
+     * errors are found, the verified_ok flag in the response is set to false
+     * and the list of errors found is provided in the error_list.
      */
-    struct AdminOfflineResponse
+    struct AdminVerifyDbResponse
     {
 
         /**
-         * Constructs an AdminOfflineResponse object with default parameter
+         * Constructs an AdminVerifyDbResponse object with default parameter
          * values.
          */
-        AdminOfflineResponse() :
-            isOffline(bool())
+        AdminVerifyDbResponse() :
+            verifiedOk(bool()),
+            errorList(std::vector<std::string>())
         {
         }
 
-        bool isOffline;
+        bool verifiedOk;
+        std::vector<std::string> errorList;
     };
 }
 
 namespace avro
 {
-    template<> struct codec_traits<gpudb::AdminOfflineResponse>
+    template<> struct codec_traits<gpudb::AdminVerifyDbResponse>
     {
-        static void encode(Encoder& e, const gpudb::AdminOfflineResponse& v)
+        static void encode(Encoder& e, const gpudb::AdminVerifyDbResponse& v)
         {
-            ::avro::encode(e, v.isOffline);
+            ::avro::encode(e, v.verifiedOk);
+            ::avro::encode(e, v.errorList);
         }
 
-        static void decode(Decoder& d, gpudb::AdminOfflineResponse& v)
+        static void decode(Decoder& d, gpudb::AdminVerifyDbResponse& v)
         {
             if (::avro::ResolvingDecoder *rd = dynamic_cast< ::avro::ResolvingDecoder*>(&d))
             {
@@ -137,7 +132,11 @@ namespace avro
                     switch (*it)
                     {
                         case 0:
-                            ::avro::decode(d, v.isOffline);
+                            ::avro::decode(d, v.verifiedOk);
+                            break;
+
+                        case 1:
+                            ::avro::decode(d, v.errorList);
                             break;
 
                         default:
@@ -147,7 +146,8 @@ namespace avro
             }
             else
             {
-                ::avro::decode(d, v.isOffline);
+                ::avro::decode(d, v.verifiedOk);
+                ::avro::decode(d, v.errorList);
             }
         }
     };

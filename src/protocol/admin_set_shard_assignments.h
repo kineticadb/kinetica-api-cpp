@@ -26,7 +26,8 @@ namespace gpudb
             partialReassignment(bool()),
             shardAssignmentsRank(std::vector<int32_t>()),
             shardAssignmentsTom(std::vector<int32_t>()),
-            assignmentIndex(std::vector<int32_t>())
+            assignmentIndex(std::vector<int32_t>()),
+            options(std::map<std::string, std::string>())
         {
         }
 
@@ -39,14 +40,17 @@ namespace gpudb
          * @param[in] shardAssignmentsRank
          * @param[in] shardAssignmentsTom
          * @param[in] assignmentIndex
+         * @param[in] options  Optional parameters.  Default value is an empty
+         *                     std::map.
          * 
          */
-        AdminSetShardAssignmentsRequest(const int64_t version, const bool partialReassignment, const std::vector<int32_t>& shardAssignmentsRank, const std::vector<int32_t>& shardAssignmentsTom, const std::vector<int32_t>& assignmentIndex):
+        AdminSetShardAssignmentsRequest(const int64_t version, const bool partialReassignment, const std::vector<int32_t>& shardAssignmentsRank, const std::vector<int32_t>& shardAssignmentsTom, const std::vector<int32_t>& assignmentIndex, const std::map<std::string, std::string>& options):
             version(version),
             partialReassignment(partialReassignment),
             shardAssignmentsRank(shardAssignmentsRank),
             shardAssignmentsTom(shardAssignmentsTom),
-            assignmentIndex(assignmentIndex)
+            assignmentIndex(assignmentIndex),
+            options(options)
         {
         }
 
@@ -55,6 +59,7 @@ namespace gpudb
         std::vector<int32_t> shardAssignmentsRank;
         std::vector<int32_t> shardAssignmentsTom;
         std::vector<int32_t> assignmentIndex;
+        std::map<std::string, std::string> options;
     };
 }
 
@@ -69,6 +74,7 @@ namespace avro
             ::avro::encode(e, v.shardAssignmentsRank);
             ::avro::encode(e, v.shardAssignmentsTom);
             ::avro::encode(e, v.assignmentIndex);
+            ::avro::encode(e, v.options);
         }
 
         static void decode(Decoder& d, gpudb::AdminSetShardAssignmentsRequest& v)
@@ -101,6 +107,10 @@ namespace avro
                             ::avro::decode(d, v.assignmentIndex);
                             break;
 
+                        case 5:
+                            ::avro::decode(d, v.options);
+                            break;
+
                         default:
                             break;
                     }
@@ -113,6 +123,7 @@ namespace avro
                 ::avro::decode(d, v.shardAssignmentsRank);
                 ::avro::decode(d, v.shardAssignmentsTom);
                 ::avro::decode(d, v.assignmentIndex);
+                ::avro::decode(d, v.options);
             }
         }
     };

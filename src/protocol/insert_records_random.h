@@ -14,7 +14,7 @@ namespace gpudb
      * #insertRecordsRandom(const InsertRecordsRandomRequest&) const}.
      * <p>
      * Generates a specified number of random records and adds them to the
-     * given table. There is an optional parameter that allows the user to
+     * given tble. There is an optional parameter that allows the user to
      * customize the ranges of the column values. It also allows the user to
      * specify linear profiles for some or all columns in which case linear
      * values are generated rather than random ones. Only individual tables are
@@ -132,7 +132,7 @@ namespace gpudb
      * #insertRecordsRandom(const InsertRecordsRandomRequest&) const}.
      * <p>
      * Generates a specified number of random records and adds them to the
-     * given table. There is an optional parameter that allows the user to
+     * given tble. There is an optional parameter that allows the user to
      * customize the ranges of the column values. It also allows the user to
      * specify linear profiles for some or all columns in which case linear
      * values are generated rather than random ones. Only individual tables are

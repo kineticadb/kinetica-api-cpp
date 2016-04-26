@@ -25,8 +25,6 @@ namespace gpudb
      * <p>
      * All color values must be in the format RRGGBB or AARRGGBB (to specify
      * the alpha value).
-     * <p>
-
      * The image is contained in the @a imageData field.
      */
     struct VisualizeImageClassbreakRequest
@@ -322,8 +320,6 @@ namespace gpudb
      * <p>
      * All color values must be in the format RRGGBB or AARRGGBB (to specify
      * the alpha value).
-     * <p>
-
      * The image is contained in the @a imageData field.
      */
     struct VisualizeImageClassbreakResponse

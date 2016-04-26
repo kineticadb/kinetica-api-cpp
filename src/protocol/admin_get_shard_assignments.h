@@ -13,6 +13,10 @@ namespace gpudb
      * A set of input parameters for {@link
      * #adminGetShardAssignments(const AdminGetShardAssignmentsRequest&) const}.
      * <p>
+     * Returns the list of shards and the corresponding rank and tom containing
+     * the shard.  The response message contains arrays of 16384 (total number
+     * of shards in the system) rank and tom numbers corresponding to each
+     * shard.
      */
     struct AdminGetShardAssignmentsRequest
     {
@@ -22,7 +26,7 @@ namespace gpudb
          * parameter values.
          */
         AdminGetShardAssignmentsRequest() :
-            dummy(std::string())
+            options(std::map<std::string, std::string>())
         {
         }
 
@@ -30,15 +34,16 @@ namespace gpudb
          * Constructs an AdminGetShardAssignmentsRequest object with the
          * specified parameters.
          * 
-         * @param[in] dummy  Default value is an empty std::vector.
+         * @param[in] options  Optional parameters.  Default value is an empty
+         *                     std::map.
          * 
          */
-        AdminGetShardAssignmentsRequest(const std::string& dummy):
-            dummy(dummy)
+        AdminGetShardAssignmentsRequest(const std::map<std::string, std::string>& options):
+            options(options)
         {
         }
 
-        std::string dummy;
+        std::map<std::string, std::string> options;
     };
 }
 
@@ -48,7 +53,7 @@ namespace avro
     {
         static void encode(Encoder& e, const gpudb::AdminGetShardAssignmentsRequest& v)
         {
-            ::avro::encode(e, v.dummy);
+            ::avro::encode(e, v.options);
         }
 
         static void decode(Decoder& d, gpudb::AdminGetShardAssignmentsRequest& v)
@@ -62,7 +67,7 @@ namespace avro
                     switch (*it)
                     {
                         case 0:
-                            ::avro::decode(d, v.dummy);
+                            ::avro::decode(d, v.options);
                             break;
 
                         default:
@@ -72,7 +77,7 @@ namespace avro
             }
             else
             {
-                ::avro::decode(d, v.dummy);
+                ::avro::decode(d, v.options);
             }
         }
     };
@@ -85,6 +90,10 @@ namespace gpudb
      * A set of output parameters for {@link
      * #adminGetShardAssignments(const AdminGetShardAssignmentsRequest&) const}.
      * <p>
+     * Returns the list of shards and the corresponding rank and tom containing
+     * the shard.  The response message contains arrays of 16384 (total number
+     * of shards in the system) rank and tom numbers corresponding to each
+     * shard.
      */
     struct AdminGetShardAssignmentsResponse
     {

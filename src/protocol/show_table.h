@@ -133,6 +133,7 @@ namespace gpudb
             tableNames(std::vector<std::string>()),
             isCollection(std::vector<bool>()),
             isView(std::vector<bool>()),
+            isJoin(std::vector<bool>()),
             typeIds(std::vector<std::string>()),
             typeSchemas(std::vector<std::string>()),
             typeLabels(std::vector<std::string>()),
@@ -140,6 +141,7 @@ namespace gpudb
             ttls(std::vector<int32_t>()),
             sizes(std::vector<int64_t>()),
             fullSizes(std::vector<int64_t>()),
+            joinSizes(std::vector<double>()),
             totalSize(int64_t()),
             totalFullSize(int64_t())
         {
@@ -149,6 +151,7 @@ namespace gpudb
         std::vector<std::string> tableNames;
         std::vector<bool> isCollection;
         std::vector<bool> isView;
+        std::vector<bool> isJoin;
         std::vector<std::string> typeIds;
         std::vector<std::string> typeSchemas;
         std::vector<std::string> typeLabels;
@@ -156,6 +159,7 @@ namespace gpudb
         std::vector<int32_t> ttls;
         std::vector<int64_t> sizes;
         std::vector<int64_t> fullSizes;
+        std::vector<double> joinSizes;
         int64_t totalSize;
         int64_t totalFullSize;
     };
@@ -171,6 +175,7 @@ namespace avro
             ::avro::encode(e, v.tableNames);
             ::avro::encode(e, v.isCollection);
             ::avro::encode(e, v.isView);
+            ::avro::encode(e, v.isJoin);
             ::avro::encode(e, v.typeIds);
             ::avro::encode(e, v.typeSchemas);
             ::avro::encode(e, v.typeLabels);
@@ -178,6 +183,7 @@ namespace avro
             ::avro::encode(e, v.ttls);
             ::avro::encode(e, v.sizes);
             ::avro::encode(e, v.fullSizes);
+            ::avro::encode(e, v.joinSizes);
             ::avro::encode(e, v.totalSize);
             ::avro::encode(e, v.totalFullSize);
         }
@@ -209,38 +215,46 @@ namespace avro
                             break;
 
                         case 4:
-                            ::avro::decode(d, v.typeIds);
+                            ::avro::decode(d, v.isJoin);
                             break;
 
                         case 5:
-                            ::avro::decode(d, v.typeSchemas);
+                            ::avro::decode(d, v.typeIds);
                             break;
 
                         case 6:
-                            ::avro::decode(d, v.typeLabels);
+                            ::avro::decode(d, v.typeSchemas);
                             break;
 
                         case 7:
-                            ::avro::decode(d, v.properties);
+                            ::avro::decode(d, v.typeLabels);
                             break;
 
                         case 8:
-                            ::avro::decode(d, v.ttls);
+                            ::avro::decode(d, v.properties);
                             break;
 
                         case 9:
-                            ::avro::decode(d, v.sizes);
+                            ::avro::decode(d, v.ttls);
                             break;
 
                         case 10:
-                            ::avro::decode(d, v.fullSizes);
+                            ::avro::decode(d, v.sizes);
                             break;
 
                         case 11:
-                            ::avro::decode(d, v.totalSize);
+                            ::avro::decode(d, v.fullSizes);
                             break;
 
                         case 12:
+                            ::avro::decode(d, v.joinSizes);
+                            break;
+
+                        case 13:
+                            ::avro::decode(d, v.totalSize);
+                            break;
+
+                        case 14:
                             ::avro::decode(d, v.totalFullSize);
                             break;
 
@@ -255,6 +269,7 @@ namespace avro
                 ::avro::decode(d, v.tableNames);
                 ::avro::decode(d, v.isCollection);
                 ::avro::decode(d, v.isView);
+                ::avro::decode(d, v.isJoin);
                 ::avro::decode(d, v.typeIds);
                 ::avro::decode(d, v.typeSchemas);
                 ::avro::decode(d, v.typeLabels);
@@ -262,6 +277,7 @@ namespace avro
                 ::avro::decode(d, v.ttls);
                 ::avro::decode(d, v.sizes);
                 ::avro::decode(d, v.fullSizes);
+                ::avro::decode(d, v.joinSizes);
                 ::avro::decode(d, v.totalSize);
                 ::avro::decode(d, v.totalFullSize);
             }

@@ -5,7 +5,7 @@
  */
 
 
-#include "/home/mmahmud/gisfederal/gpudb-dev/gpudb-dev-v4.2.0/gpudb-dev/gpudb-generators/../gpudb-api-cpp/src/protocol/EndpointKeywords.h"
+#include "EndpointKeywords.h"
 
 #include <string>
 
@@ -42,10 +42,22 @@ namespace gpudb
     
     // Keywords for /aggregate/statistics request
     const std::string aggregate_statistics_additional_column_names     ( "additional_column_names"      );
+    const std::string aggregate_statistics_cardinality                 ( "cardinality"                  );
+    const std::string aggregate_statistics_count                       ( "count"                        );
+    const std::string aggregate_statistics_estimated_cardinality       ( "estimated_cardinality"        );
     const std::string aggregate_statistics_estimated_cardinality_method( "estimated_cardinality_method" );
     const std::string aggregate_statistics_hll_accumulator_size        ( "hll_accumulator_size"         );
     const std::string aggregate_statistics_hll_log2_num_streams        ( "hll_log2_num_streams"         );
+    const std::string aggregate_statistics_kurtosis                    ( "kurtosis"                     );
+    const std::string aggregate_statistics_max                         ( "max"                          );
+    const std::string aggregate_statistics_mean                        ( "mean"                         );
+    const std::string aggregate_statistics_min                         ( "min"                          );
+    const std::string aggregate_statistics_skew                        ( "skew"                         );
+    const std::string aggregate_statistics_stdv                        ( "stdv"                         );
+    const std::string aggregate_statistics_sum                         ( "sum"                          );
+    const std::string aggregate_statistics_variance                    ( "variance"                     );
     const std::string aggregate_statistics_weight_column_name          ( "weight_column_name"           );
+    const std::string aggregate_statistics_weighted_average            ( "weighted_average"             );
     
     // Keywords for /aggregate/statistics/byrange request
     const std::string aggregate_statistics_by_range_additional_column_names( "additional_column_names" );
@@ -92,6 +104,7 @@ namespace gpudb
     const std::string create_table_collection_name            ( "collection_name"             );
     const std::string create_table_disallow_homogeneous_tables( "disallow_homogeneous_tables" );
     const std::string create_table_false                      ( "false"                       );
+    const std::string create_table_foreign_keys               ( "foreign_keys"                );
     const std::string create_table_is_collection              ( "is_collection"               );
     const std::string create_table_is_replicated              ( "is_replicated"               );
     const std::string create_table_no_error_if_exists         ( "no_error_if_exists"          );
@@ -203,6 +216,7 @@ namespace gpudb
     const std::string insert_records_false                ( "false"                 );
     const std::string insert_records_json                 ( "json"                  );
     const std::string insert_records_return_record_ids    ( "return_record_ids"     );
+    const std::string insert_records_route_to_address     ( "route_to_address"      );
     const std::string insert_records_true                 ( "true"                  );
     const std::string insert_records_update_on_existing_pk( "update_on_existing_pk" );
     
@@ -218,6 +232,13 @@ namespace gpudb
     const std::string insert_symbol_color   ( "color"    );
     const std::string insert_symbol_svg     ( "svg"      );
     const std::string insert_symbol_svg_path( "svg_path" );
+    
+    // Keywords for /show/system/properties response
+    const std::string show_system_properties_FALSE                          ( "FALSE"                           );
+    const std::string show_system_properties_TRUE                           ( "TRUE"                            );
+    const std::string show_system_properties_conf_enable_worker_http_servers( "conf.enable_worker_http_servers" );
+    const std::string show_system_properties_conf_worker_http_server_ips    ( "conf.worker_http_server_ips"     );
+    const std::string show_system_properties_conf_worker_http_server_ports  ( "conf.worker_http_server_ports"   );
     
     // Keywords for /show/table request
     const std::string show_table_false    ( "false"     );

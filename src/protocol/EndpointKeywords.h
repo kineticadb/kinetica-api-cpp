@@ -42,10 +42,22 @@ namespace gpudb
     
     // Keywords for /aggregate/statistics request
     extern const std::string aggregate_statistics_additional_column_names;
+    extern const std::string aggregate_statistics_cardinality;
+    extern const std::string aggregate_statistics_count;
+    extern const std::string aggregate_statistics_estimated_cardinality;
     extern const std::string aggregate_statistics_estimated_cardinality_method;
     extern const std::string aggregate_statistics_hll_accumulator_size;
     extern const std::string aggregate_statistics_hll_log2_num_streams;
+    extern const std::string aggregate_statistics_kurtosis;
+    extern const std::string aggregate_statistics_max;
+    extern const std::string aggregate_statistics_mean;
+    extern const std::string aggregate_statistics_min;
+    extern const std::string aggregate_statistics_skew;
+    extern const std::string aggregate_statistics_stdv;
+    extern const std::string aggregate_statistics_sum;
+    extern const std::string aggregate_statistics_variance;
     extern const std::string aggregate_statistics_weight_column_name;
+    extern const std::string aggregate_statistics_weighted_average;
     
     // Keywords for /aggregate/statistics/byrange request
     extern const std::string aggregate_statistics_by_range_additional_column_names;
@@ -92,6 +104,7 @@ namespace gpudb
     extern const std::string create_table_collection_name;
     extern const std::string create_table_disallow_homogeneous_tables;
     extern const std::string create_table_false;
+    extern const std::string create_table_foreign_keys;
     extern const std::string create_table_is_collection;
     extern const std::string create_table_is_replicated;
     extern const std::string create_table_no_error_if_exists;
@@ -203,6 +216,7 @@ namespace gpudb
     extern const std::string insert_records_false;
     extern const std::string insert_records_json;
     extern const std::string insert_records_return_record_ids;
+    extern const std::string insert_records_route_to_address;
     extern const std::string insert_records_true;
     extern const std::string insert_records_update_on_existing_pk;
     
@@ -218,6 +232,13 @@ namespace gpudb
     extern const std::string insert_symbol_color;
     extern const std::string insert_symbol_svg;
     extern const std::string insert_symbol_svg_path;
+    
+    // Keywords for /show/system/properties response
+    extern const std::string show_system_properties_FALSE;
+    extern const std::string show_system_properties_TRUE;
+    extern const std::string show_system_properties_conf_enable_worker_http_servers;
+    extern const std::string show_system_properties_conf_worker_http_server_ips;
+    extern const std::string show_system_properties_conf_worker_http_server_ports;
     
     // Keywords for /show/table request
     extern const std::string show_table_false;

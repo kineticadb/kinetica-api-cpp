@@ -131,12 +131,10 @@ namespace gpudb
          * values.
          */
         ClearTableResponse() :
-            status(std::string()),
             tableName(std::string())
         {
         }
 
-        std::string status;
         std::string tableName;
     };
 }
@@ -147,7 +145,6 @@ namespace avro
     {
         static void encode(Encoder& e, const gpudb::ClearTableResponse& v)
         {
-            ::avro::encode(e, v.status);
             ::avro::encode(e, v.tableName);
         }
 
@@ -162,10 +159,6 @@ namespace avro
                     switch (*it)
                     {
                         case 0:
-                            ::avro::decode(d, v.status);
-                            break;
-
-                        case 1:
                             ::avro::decode(d, v.tableName);
                             break;
 
@@ -176,7 +169,6 @@ namespace avro
             }
             else
             {
-                ::avro::decode(d, v.status);
                 ::avro::decode(d, v.tableName);
             }
         }

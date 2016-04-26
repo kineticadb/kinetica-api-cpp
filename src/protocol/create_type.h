@@ -74,7 +74,14 @@ namespace gpudb
          * @param[in] label  A user-defined description string which can be
          *                   used to differentiate between tables and types
          *                   with otherwise identical schemas.
-         * @param[in] properties  Default value is an empty std::map.
+         * @param[in] properties  Each key-value pair specifies the properties
+         *                        to use for a given column where the key is
+         *                        the column name.  All keys used must be
+         *                        relevant column names for the given table.
+         *                        Specifying any property overrides the default
+         *                        properties for that column (which is based on
+         *                        the column's data type).  Default value is an
+         *                        empty std::map.
          * @param[in] options  Optional parameters.  Default value is an empty
          *                     std::map.
          * 

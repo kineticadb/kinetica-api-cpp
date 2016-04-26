@@ -16,8 +16,8 @@ namespace gpudb
      * Creates raster images of data in the given table based on provided input
      * parameters. Numerous parameters are required to call this function. Some
      * of the important parameters are the attributes of the generated images
-     * (@a bgColor, @a width, @{input height{), the collection of GPUdb table
-     * names on which this function is to be applied, for which shapes (point,
+     * (@a bgColor, @a width, @a height), the collection of GPUdb table names
+     * on which this function is to be applied, for which shapes (point,
      * polygon, tracks) the images are to be created and a user specified
      * session key. This session key is later used to fetch the generated
      * images stored by GPUdb. The operation is synchronous meaning that GPUdb
@@ -42,10 +42,6 @@ namespace gpudb
      * <p>
      *     http://gpudb-ip-address:9191/wms?REQUEST=GetMap&STYLES=cached&LAYERS
      * =MY-SESSION-KEY&FRAME=19
-     * <p>
-
-     * <p>
-
      * The response payload provides, among other things, the number of frames
      * which were created by GPUdb.
      */
@@ -305,8 +301,8 @@ namespace gpudb
      * Creates raster images of data in the given table based on provided input
      * parameters. Numerous parameters are required to call this function. Some
      * of the important parameters are the attributes of the generated images
-     * (@a bgColor, @a width, @{input height{), the collection of GPUdb table
-     * names on which this function is to be applied, for which shapes (point,
+     * (@a bgColor, @a width, @a height), the collection of GPUdb table names
+     * on which this function is to be applied, for which shapes (point,
      * polygon, tracks) the images are to be created and a user specified
      * session key. This session key is later used to fetch the generated
      * images stored by GPUdb. The operation is synchronous meaning that GPUdb
@@ -331,10 +327,6 @@ namespace gpudb
      * <p>
      *     http://gpudb-ip-address:9191/wms?REQUEST=GetMap&STYLES=cached&LAYERS
      * =MY-SESSION-KEY&FRAME=19
-     * <p>
-
-     * <p>
-
      * The response payload provides, among other things, the number of frames
      * which were created by GPUdb.
      */

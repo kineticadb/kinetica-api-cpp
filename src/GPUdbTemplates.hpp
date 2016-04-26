@@ -22,7 +22,8 @@
  * @return Response object containing the result of the operation.
  * 
  */
-template<> GetRecordsResponse<boost::any> GPUdb::getRecords(const GetRecordsRequest& request_) const;
+template<> 
+GetRecordsResponse<boost::any> GPUdb::getRecords( const GetRecordsRequest& request_ ) const;
 
 /**
  * Retrieves records from a given table, optionally filtered by an expression
@@ -45,7 +46,9 @@ template<> GetRecordsResponse<boost::any> GPUdb::getRecords(const GetRecordsRequ
  *         passed in by reference).
  * 
  */
-template<> GetRecordsResponse<boost::any>& GPUdb::getRecords(const GetRecordsRequest& request_, GetRecordsResponse<boost::any>& response_) const;
+template<> 
+GetRecordsResponse<boost::any>& GPUdb::getRecords( const GetRecordsRequest& request_,
+                                                   GetRecordsResponse<boost::any>& response_ ) const;
 
 /**
  * Retrieves records from a given table, optionally filtered by an expression
@@ -73,7 +76,11 @@ template<> GetRecordsResponse<boost::any>& GPUdb::getRecords(const GetRecordsReq
  * @return Response object containing the result of the operation.
  * 
  */
-template<> GetRecordsResponse<boost::any> GPUdb::getRecords(const std::string& tableName, const int64_t offset, const int64_t limit, const std::map<std::string, std::string>& options) const;
+template<> 
+GetRecordsResponse<boost::any> GPUdb::getRecords( const std::string& tableName,
+                                                  const int64_t offset,
+                                                  const int64_t limit,
+                                                  const std::map<std::string, std::string>& options ) const;
 
 /**
  * Retrieves records from a given table, optionally filtered by an expression
@@ -104,7 +111,12 @@ template<> GetRecordsResponse<boost::any> GPUdb::getRecords(const std::string& t
  *         passed in by reference).
  * 
  */
-template<> GetRecordsResponse<boost::any>& GPUdb::getRecords(const std::string& tableName, const int64_t offset, const int64_t limit, const std::map<std::string, std::string>& options, GetRecordsResponse<boost::any>& response_) const;
+template<> 
+GetRecordsResponse<boost::any>& GPUdb::getRecords( const std::string& tableName,
+                                                   const int64_t offset,
+                                                   const int64_t limit,
+                                                   const std::map<std::string, std::string>& options,
+                                                   GetRecordsResponse<boost::any>& response_ ) const;
 
 /**
  * Retrieves the complete series/track records from the given @a worldTableName
@@ -124,7 +136,8 @@ template<> GetRecordsResponse<boost::any>& GPUdb::getRecords(const std::string& 
  * @return Response object containing the result of the operation.
  * 
  */
-template<> GetRecordsBySeriesResponse<boost::any> GPUdb::getRecordsBySeries(const GetRecordsBySeriesRequest& request_) const;
+template<> 
+GetRecordsBySeriesResponse<boost::any> GPUdb::getRecordsBySeries( const GetRecordsBySeriesRequest& request_ ) const;
 
 /**
  * Retrieves the complete series/track records from the given @a worldTableName
@@ -149,7 +162,9 @@ template<> GetRecordsBySeriesResponse<boost::any> GPUdb::getRecordsBySeries(cons
  *         passed in by reference).
  * 
  */
-template<> GetRecordsBySeriesResponse<boost::any>& GPUdb::getRecordsBySeries(const GetRecordsBySeriesRequest& request_, GetRecordsBySeriesResponse<boost::any>& response_) const;
+template<> 
+GetRecordsBySeriesResponse<boost::any>& GPUdb::getRecordsBySeries( const GetRecordsBySeriesRequest& request_,
+                                                                   GetRecordsBySeriesResponse<boost::any>& response_ ) const;
 
 /**
  * Retrieves the complete series/track records from the given @a worldTableName
@@ -187,7 +202,12 @@ template<> GetRecordsBySeriesResponse<boost::any>& GPUdb::getRecordsBySeries(con
  * @return Response object containing the result of the operation.
  * 
  */
-template<> GetRecordsBySeriesResponse<boost::any> GPUdb::getRecordsBySeries(const std::string& tableName, const std::string& worldTableName, const int32_t offset, const int32_t limit, const std::map<std::string, std::string>& options) const;
+template<> 
+GetRecordsBySeriesResponse<boost::any> GPUdb::getRecordsBySeries( const std::string& tableName,
+                                                                  const std::string& worldTableName,
+                                                                  const int32_t offset,
+                                                                  const int32_t limit,
+                                                                  const std::map<std::string, std::string>& options ) const;
 
 /**
  * Retrieves the complete series/track records from the given @a worldTableName
@@ -228,7 +248,13 @@ template<> GetRecordsBySeriesResponse<boost::any> GPUdb::getRecordsBySeries(cons
  *         passed in by reference).
  * 
  */
-template<> GetRecordsBySeriesResponse<boost::any>& GPUdb::getRecordsBySeries(const std::string& tableName, const std::string& worldTableName, const int32_t offset, const int32_t limit, const std::map<std::string, std::string>& options, GetRecordsBySeriesResponse<boost::any>& response_) const;
+template<> 
+GetRecordsBySeriesResponse<boost::any>& GPUdb::getRecordsBySeries( const std::string& tableName,
+                                                                   const std::string& worldTableName,
+                                                                   const int32_t offset,
+                                                                   const int32_t limit,
+                                                                   const std::map<std::string, std::string>& options,
+                                                                   GetRecordsBySeriesResponse<boost::any>& response_ ) const;
 
 /**
  * Retrieves records from a collection. The operation can optionally return the
@@ -244,7 +270,8 @@ template<> GetRecordsBySeriesResponse<boost::any>& GPUdb::getRecordsBySeries(con
  * @return Response object containing the result of the operation.
  * 
  */
-template<> GetRecordsFromCollectionResponse<boost::any> GPUdb::getRecordsFromCollection(const GetRecordsFromCollectionRequest& request_) const;
+template<> 
+GetRecordsFromCollectionResponse<boost::any> GPUdb::getRecordsFromCollection( const GetRecordsFromCollectionRequest& request_ ) const;
 
 /**
  * Retrieves records from a collection. The operation can optionally return the
@@ -263,7 +290,9 @@ template<> GetRecordsFromCollectionResponse<boost::any> GPUdb::getRecordsFromCol
  *         passed in by reference).
  * 
  */
-template<> GetRecordsFromCollectionResponse<boost::any>& GPUdb::getRecordsFromCollection(const GetRecordsFromCollectionRequest& request_, GetRecordsFromCollectionResponse<boost::any>& response_) const;
+template<> 
+GetRecordsFromCollectionResponse<boost::any>& GPUdb::getRecordsFromCollection( const GetRecordsFromCollectionRequest& request_,
+                                                                               GetRecordsFromCollectionResponse<boost::any>& response_ ) const;
 
 /**
  * Retrieves records from a collection. The operation can optionally return the
@@ -288,7 +317,11 @@ template<> GetRecordsFromCollectionResponse<boost::any>& GPUdb::getRecordsFromCo
  * @return Response object containing the result of the operation.
  * 
  */
-template<> GetRecordsFromCollectionResponse<boost::any> GPUdb::getRecordsFromCollection(const std::string& tableName, const int64_t offset, const int64_t limit, const std::map<std::string, std::string>& options) const;
+template<> 
+GetRecordsFromCollectionResponse<boost::any> GPUdb::getRecordsFromCollection( const std::string& tableName,
+                                                                              const int64_t offset,
+                                                                              const int64_t limit,
+                                                                              const std::map<std::string, std::string>& options ) const;
 
 /**
  * Retrieves records from a collection. The operation can optionally return the
@@ -316,4 +349,9 @@ template<> GetRecordsFromCollectionResponse<boost::any> GPUdb::getRecordsFromCol
  *         passed in by reference).
  * 
  */
-template<> GetRecordsFromCollectionResponse<boost::any>& GPUdb::getRecordsFromCollection(const std::string& tableName, const int64_t offset, const int64_t limit, const std::map<std::string, std::string>& options, GetRecordsFromCollectionResponse<boost::any>& response_) const;
+template<> 
+GetRecordsFromCollectionResponse<boost::any>& GPUdb::getRecordsFromCollection( const std::string& tableName,
+                                                                               const int64_t offset,
+                                                                               const int64_t limit,
+                                                                               const std::map<std::string, std::string>& options,
+                                                                               GetRecordsFromCollectionResponse<boost::any>& response_ ) const;

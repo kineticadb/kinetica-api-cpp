@@ -5,6 +5,9 @@
  */
 
 /**
+ * Delete a node from the system.  To delete a node, the data is first
+ * distributed from the deleted node to all the other nodes.  Then the node is
+ * taken out of service.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -12,9 +15,13 @@
  * @return Response object containing the result of the operation.
  * 
  */
-AdminGetShardAssignmentsResponse adminGetShardAssignments(const AdminGetShardAssignmentsRequest& request_) const;
+
+AdminDeleteNodeResponse adminDeleteNode( const AdminDeleteNodeRequest& request_ ) const;
 
 /**
+ * Delete a node from the system.  To delete a node, the data is first
+ * distributed from the deleted node to all the other nodes.  Then the node is
+ * taken out of service.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -25,73 +32,38 @@ AdminGetShardAssignmentsResponse adminGetShardAssignments(const AdminGetShardAss
  *         passed in by reference).
  * 
  */
-AdminGetShardAssignmentsResponse& adminGetShardAssignments(const AdminGetShardAssignmentsRequest& request_, AdminGetShardAssignmentsResponse& response_) const;
+
+AdminDeleteNodeResponse& adminDeleteNode( const AdminDeleteNodeRequest& request_,
+                                          AdminDeleteNodeResponse& response_ ) const;
 
 /**
+ * Delete a node from the system.  To delete a node, the data is first
+ * distributed from the deleted node to all the other nodes.  Then the node is
+ * taken out of service.
  * 
- * @param dummy  Default value is an empty std::vector.
- * 
- * @return Response object containing the result of the operation.
- * 
- */
-AdminGetShardAssignmentsResponse adminGetShardAssignments(const std::string& dummy) const;
-
-/**
- * 
- * @param dummy  Default value is an empty std::vector.
- * @param[out] response_  Response object containing the results of the
- *                        operation.
- * 
- * @return Response object containing the result of the operation (initially
- *         passed in by reference).
- * 
- */
-AdminGetShardAssignmentsResponse& adminGetShardAssignments(const std::string& dummy, AdminGetShardAssignmentsResponse& response_) const;
-
-/**
- * Take the system offline. When the system is offline, no user operations can
- * be performed with the exception of a system shutdown.
- * 
- * @param[in] request_  Request object containing the parameters for the
- *                      operation.
- * 
- * @return Response object containing the result of the operation.
- * 
- */
-AdminOfflineResponse adminOffline(const AdminOfflineRequest& request_) const;
-
-/**
- * Take the system offline. When the system is offline, no user operations can
- * be performed with the exception of a system shutdown.
- * 
- * @param[in] request_  Request object containing the parameters for the
- *                      operation.
- * @param[out] response_  Response object containing the results of the
- *                        operation.
- * 
- * @return Response object containing the result of the operation (initially
- *         passed in by reference).
- * 
- */
-AdminOfflineResponse& adminOffline(const AdminOfflineRequest& request_, AdminOfflineResponse& response_) const;
-
-/**
- * Take the system offline. When the system is offline, no user operations can
- * be performed with the exception of a system shutdown.
- * 
- * @param offline  desired offline state
+ * @param rank  Rank number of the node being removed from the system.
+ * @param authorization  The password that GPUdb is configured with during
+ *                       startup. Incorrect or missing authorization code will
+ *                       result in an error.
  * @param options  Optional parameters.  Default value is an empty std::map.
  * 
  * @return Response object containing the result of the operation.
  * 
  */
-AdminOfflineResponse adminOffline(const bool offline, const std::map<std::string, std::string>& options) const;
+
+AdminDeleteNodeResponse adminDeleteNode( const int32_t rank,
+                                         const std::string& authorization,
+                                         const std::map<std::string, std::string>& options ) const;
 
 /**
- * Take the system offline. When the system is offline, no user operations can
- * be performed with the exception of a system shutdown.
+ * Delete a node from the system.  To delete a node, the data is first
+ * distributed from the deleted node to all the other nodes.  Then the node is
+ * taken out of service.
  * 
- * @param offline  desired offline state
+ * @param rank  Rank number of the node being removed from the system.
+ * @param authorization  The password that GPUdb is configured with during
+ *                       startup. Incorrect or missing authorization code will
+ *                       result in an error.
  * @param options  Optional parameters.  Default value is an empty std::map.
  * @param[out] response_  Response object containing the results of the
  *                        operation.
@@ -100,7 +72,199 @@ AdminOfflineResponse adminOffline(const bool offline, const std::map<std::string
  *         passed in by reference).
  * 
  */
-AdminOfflineResponse& adminOffline(const bool offline, const std::map<std::string, std::string>& options, AdminOfflineResponse& response_) const;
+
+AdminDeleteNodeResponse& adminDeleteNode( const int32_t rank,
+                                          const std::string& authorization,
+                                          const std::map<std::string, std::string>& options,
+                                          AdminDeleteNodeResponse& response_ ) const;
+
+/**
+ * Returns the list of shards and the corresponding rank and tom containing the
+ * shard.  The response message contains arrays of 16384 (total number of
+ * shards in the system) rank and tom numbers corresponding to each shard.
+ * 
+ * @param[in] request_  Request object containing the parameters for the
+ *                      operation.
+ * 
+ * @return Response object containing the result of the operation.
+ * 
+ */
+
+AdminGetShardAssignmentsResponse adminGetShardAssignments( const AdminGetShardAssignmentsRequest& request_ ) const;
+
+/**
+ * Returns the list of shards and the corresponding rank and tom containing the
+ * shard.  The response message contains arrays of 16384 (total number of
+ * shards in the system) rank and tom numbers corresponding to each shard.
+ * 
+ * @param[in] request_  Request object containing the parameters for the
+ *                      operation.
+ * @param[out] response_  Response object containing the results of the
+ *                        operation.
+ * 
+ * @return Response object containing the result of the operation (initially
+ *         passed in by reference).
+ * 
+ */
+
+AdminGetShardAssignmentsResponse& adminGetShardAssignments( const AdminGetShardAssignmentsRequest& request_,
+                                                            AdminGetShardAssignmentsResponse& response_ ) const;
+
+/**
+ * Returns the list of shards and the corresponding rank and tom containing the
+ * shard.  The response message contains arrays of 16384 (total number of
+ * shards in the system) rank and tom numbers corresponding to each shard.
+ * 
+ * @param options  Optional parameters.  Default value is an empty std::map.
+ * 
+ * @return Response object containing the result of the operation.
+ * 
+ */
+
+AdminGetShardAssignmentsResponse adminGetShardAssignments( const std::map<std::string, std::string>& options ) const;
+
+/**
+ * Returns the list of shards and the corresponding rank and tom containing the
+ * shard.  The response message contains arrays of 16384 (total number of
+ * shards in the system) rank and tom numbers corresponding to each shard.
+ * 
+ * @param options  Optional parameters.  Default value is an empty std::map.
+ * @param[out] response_  Response object containing the results of the
+ *                        operation.
+ * 
+ * @return Response object containing the result of the operation (initially
+ *         passed in by reference).
+ * 
+ */
+
+AdminGetShardAssignmentsResponse& adminGetShardAssignments( const std::map<std::string, std::string>& options,
+                                                            AdminGetShardAssignmentsResponse& response_ ) const;
+
+/**
+ * Take the system offline. When the system is offline, no user operations can
+ * be performed with the exception of a system shutdown.
+ * 
+ * @param[in] request_  Request object containing the parameters for the
+ *                      operation.
+ * 
+ * @return Response object containing the result of the operation.
+ * 
+ */
+
+AdminOfflineResponse adminOffline( const AdminOfflineRequest& request_ ) const;
+
+/**
+ * Take the system offline. When the system is offline, no user operations can
+ * be performed with the exception of a system shutdown.
+ * 
+ * @param[in] request_  Request object containing the parameters for the
+ *                      operation.
+ * @param[out] response_  Response object containing the results of the
+ *                        operation.
+ * 
+ * @return Response object containing the result of the operation (initially
+ *         passed in by reference).
+ * 
+ */
+
+AdminOfflineResponse& adminOffline( const AdminOfflineRequest& request_,
+                                    AdminOfflineResponse& response_ ) const;
+
+/**
+ * Take the system offline. When the system is offline, no user operations can
+ * be performed with the exception of a system shutdown.
+ * 
+ * @param offline  Set to true if desired state is offline.
+ * @param options  Optional parameters.  Default value is an empty std::map.
+ * 
+ * @return Response object containing the result of the operation.
+ * 
+ */
+
+AdminOfflineResponse adminOffline( const bool offline,
+                                   const std::map<std::string, std::string>& options ) const;
+
+/**
+ * Take the system offline. When the system is offline, no user operations can
+ * be performed with the exception of a system shutdown.
+ * 
+ * @param offline  Set to true if desired state is offline.
+ * @param options  Optional parameters.  Default value is an empty std::map.
+ * @param[out] response_  Response object containing the results of the
+ *                        operation.
+ * 
+ * @return Response object containing the result of the operation (initially
+ *         passed in by reference).
+ * 
+ */
+
+AdminOfflineResponse& adminOffline( const bool offline,
+                                    const std::map<std::string, std::string>& options,
+                                    AdminOfflineResponse& response_ ) const;
+
+/**
+ * Rebalance the database such that all the nodes contain approximately equal
+ * number of records.
+ * 
+ * @param[in] request_  Request object containing the parameters for the
+ *                      operation.
+ * 
+ * @return Response object containing the result of the operation.
+ * 
+ */
+
+AdminRebalanceResponse adminRebalance( const AdminRebalanceRequest& request_ ) const;
+
+/**
+ * Rebalance the database such that all the nodes contain approximately equal
+ * number of records.
+ * 
+ * @param[in] request_  Request object containing the parameters for the
+ *                      operation.
+ * @param[out] response_  Response object containing the results of the
+ *                        operation.
+ * 
+ * @return Response object containing the result of the operation (initially
+ *         passed in by reference).
+ * 
+ */
+
+AdminRebalanceResponse& adminRebalance( const AdminRebalanceRequest& request_,
+                                        AdminRebalanceResponse& response_ ) const;
+
+/**
+ * Rebalance the database such that all the nodes contain approximately equal
+ * number of records.
+ * 
+ * @param tableNames  Names of the tables to be rebalanced.  If array is empty,
+ *                    all tables will be rebalanced.
+ * @param options  Optional parameters.  Default value is an empty std::map.
+ * 
+ * @return Response object containing the result of the operation.
+ * 
+ */
+
+AdminRebalanceResponse adminRebalance( const std::vector<std::string>& tableNames,
+                                       const std::map<std::string, std::string>& options ) const;
+
+/**
+ * Rebalance the database such that all the nodes contain approximately equal
+ * number of records.
+ * 
+ * @param tableNames  Names of the tables to be rebalanced.  If array is empty,
+ *                    all tables will be rebalanced.
+ * @param options  Optional parameters.  Default value is an empty std::map.
+ * @param[out] response_  Response object containing the results of the
+ *                        operation.
+ * 
+ * @return Response object containing the result of the operation (initially
+ *         passed in by reference).
+ * 
+ */
+
+AdminRebalanceResponse& adminRebalance( const std::vector<std::string>& tableNames,
+                                        const std::map<std::string, std::string>& options,
+                                        AdminRebalanceResponse& response_ ) const;
 
 /**
  * 
@@ -110,7 +274,8 @@ AdminOfflineResponse& adminOffline(const bool offline, const std::map<std::strin
  * @return Response object containing the result of the operation.
  * 
  */
-AdminSetShardAssignmentsResponse adminSetShardAssignments(const AdminSetShardAssignmentsRequest& request_) const;
+
+AdminSetShardAssignmentsResponse adminSetShardAssignments( const AdminSetShardAssignmentsRequest& request_ ) const;
 
 /**
  * 
@@ -123,7 +288,9 @@ AdminSetShardAssignmentsResponse adminSetShardAssignments(const AdminSetShardAss
  *         passed in by reference).
  * 
  */
-AdminSetShardAssignmentsResponse& adminSetShardAssignments(const AdminSetShardAssignmentsRequest& request_, AdminSetShardAssignmentsResponse& response_) const;
+
+AdminSetShardAssignmentsResponse& adminSetShardAssignments( const AdminSetShardAssignmentsRequest& request_,
+                                                            AdminSetShardAssignmentsResponse& response_ ) const;
 
 /**
  * 
@@ -132,11 +299,18 @@ AdminSetShardAssignmentsResponse& adminSetShardAssignments(const AdminSetShardAs
  * @param shardAssignmentsRank
  * @param shardAssignmentsTom
  * @param assignmentIndex
+ * @param options  Optional parameters.  Default value is an empty std::map.
  * 
  * @return Response object containing the result of the operation.
  * 
  */
-AdminSetShardAssignmentsResponse adminSetShardAssignments(const int64_t version, const bool partialReassignment, const std::vector<int32_t>& shardAssignmentsRank, const std::vector<int32_t>& shardAssignmentsTom, const std::vector<int32_t>& assignmentIndex) const;
+
+AdminSetShardAssignmentsResponse adminSetShardAssignments( const int64_t version,
+                                                           const bool partialReassignment,
+                                                           const std::vector<int32_t>& shardAssignmentsRank,
+                                                           const std::vector<int32_t>& shardAssignmentsTom,
+                                                           const std::vector<int32_t>& assignmentIndex,
+                                                           const std::map<std::string, std::string>& options ) const;
 
 /**
  * 
@@ -145,6 +319,7 @@ AdminSetShardAssignmentsResponse adminSetShardAssignments(const int64_t version,
  * @param shardAssignmentsRank
  * @param shardAssignmentsTom
  * @param assignmentIndex
+ * @param options  Optional parameters.  Default value is an empty std::map.
  * @param[out] response_  Response object containing the results of the
  *                        operation.
  * 
@@ -152,7 +327,14 @@ AdminSetShardAssignmentsResponse adminSetShardAssignments(const int64_t version,
  *         passed in by reference).
  * 
  */
-AdminSetShardAssignmentsResponse& adminSetShardAssignments(const int64_t version, const bool partialReassignment, const std::vector<int32_t>& shardAssignmentsRank, const std::vector<int32_t>& shardAssignmentsTom, const std::vector<int32_t>& assignmentIndex, AdminSetShardAssignmentsResponse& response_) const;
+
+AdminSetShardAssignmentsResponse& adminSetShardAssignments( const int64_t version,
+                                                            const bool partialReassignment,
+                                                            const std::vector<int32_t>& shardAssignmentsRank,
+                                                            const std::vector<int32_t>& shardAssignmentsTom,
+                                                            const std::vector<int32_t>& assignmentIndex,
+                                                            const std::map<std::string, std::string>& options,
+                                                            AdminSetShardAssignmentsResponse& response_ ) const;
 
 /**
  * Exits the GPUdb server application. A authorization code is required (chosen
@@ -164,7 +346,8 @@ AdminSetShardAssignmentsResponse& adminSetShardAssignments(const int64_t version
  * @return Response object containing the result of the operation.
  * 
  */
-AdminShutdownResponse adminShutdown(const AdminShutdownRequest& request_) const;
+
+AdminShutdownResponse adminShutdown( const AdminShutdownRequest& request_ ) const;
 
 /**
  * Exits the GPUdb server application. A authorization code is required (chosen
@@ -179,7 +362,9 @@ AdminShutdownResponse adminShutdown(const AdminShutdownRequest& request_) const;
  *         passed in by reference).
  * 
  */
-AdminShutdownResponse& adminShutdown(const AdminShutdownRequest& request_, AdminShutdownResponse& response_) const;
+
+AdminShutdownResponse& adminShutdown( const AdminShutdownRequest& request_,
+                                      AdminShutdownResponse& response_ ) const;
 
 /**
  * Exits the GPUdb server application. A authorization code is required (chosen
@@ -194,7 +379,10 @@ AdminShutdownResponse& adminShutdown(const AdminShutdownRequest& request_, Admin
  * @return Response object containing the result of the operation.
  * 
  */
-AdminShutdownResponse adminShutdown(const std::string& exitType, const std::string& authorization, const std::map<std::string, std::string>& options) const;
+
+AdminShutdownResponse adminShutdown( const std::string& exitType,
+                                     const std::string& authorization,
+                                     const std::map<std::string, std::string>& options ) const;
 
 /**
  * Exits the GPUdb server application. A authorization code is required (chosen
@@ -212,7 +400,73 @@ AdminShutdownResponse adminShutdown(const std::string& exitType, const std::stri
  *         passed in by reference).
  * 
  */
-AdminShutdownResponse& adminShutdown(const std::string& exitType, const std::string& authorization, const std::map<std::string, std::string>& options, AdminShutdownResponse& response_) const;
+
+AdminShutdownResponse& adminShutdown( const std::string& exitType,
+                                      const std::string& authorization,
+                                      const std::map<std::string, std::string>& options,
+                                      AdminShutdownResponse& response_ ) const;
+
+/**
+ * Verify database is in a consistent state.  When inconsistencies or errors
+ * are found, the verified_ok flag in the response is set to false and the list
+ * of errors found is provided in the error_list.
+ * 
+ * @param[in] request_  Request object containing the parameters for the
+ *                      operation.
+ * 
+ * @return Response object containing the result of the operation.
+ * 
+ */
+
+AdminVerifyDbResponse adminVerifyDb( const AdminVerifyDbRequest& request_ ) const;
+
+/**
+ * Verify database is in a consistent state.  When inconsistencies or errors
+ * are found, the verified_ok flag in the response is set to false and the list
+ * of errors found is provided in the error_list.
+ * 
+ * @param[in] request_  Request object containing the parameters for the
+ *                      operation.
+ * @param[out] response_  Response object containing the results of the
+ *                        operation.
+ * 
+ * @return Response object containing the result of the operation (initially
+ *         passed in by reference).
+ * 
+ */
+
+AdminVerifyDbResponse& adminVerifyDb( const AdminVerifyDbRequest& request_,
+                                      AdminVerifyDbResponse& response_ ) const;
+
+/**
+ * Verify database is in a consistent state.  When inconsistencies or errors
+ * are found, the verified_ok flag in the response is set to false and the list
+ * of errors found is provided in the error_list.
+ * 
+ * @param options  Optional parameters.  Default value is an empty std::map.
+ * 
+ * @return Response object containing the result of the operation.
+ * 
+ */
+
+AdminVerifyDbResponse adminVerifyDb( const std::map<std::string, std::string>& options ) const;
+
+/**
+ * Verify database is in a consistent state.  When inconsistencies or errors
+ * are found, the verified_ok flag in the response is set to false and the list
+ * of errors found is provided in the error_list.
+ * 
+ * @param options  Optional parameters.  Default value is an empty std::map.
+ * @param[out] response_  Response object containing the results of the
+ *                        operation.
+ * 
+ * @return Response object containing the result of the operation (initially
+ *         passed in by reference).
+ * 
+ */
+
+AdminVerifyDbResponse& adminVerifyDb( const std::map<std::string, std::string>& options,
+                                      AdminVerifyDbResponse& response_ ) const;
 
 /**
  * Calculates and returns the convex hull for the values in a table specified
@@ -224,7 +478,8 @@ AdminShutdownResponse& adminShutdown(const std::string& exitType, const std::str
  * @return Response object containing the result of the operation.
  * 
  */
-AggregateConvexHullResponse aggregateConvexHull(const AggregateConvexHullRequest& request_) const;
+
+AggregateConvexHullResponse aggregateConvexHull( const AggregateConvexHullRequest& request_ ) const;
 
 /**
  * Calculates and returns the convex hull for the values in a table specified
@@ -239,7 +494,9 @@ AggregateConvexHullResponse aggregateConvexHull(const AggregateConvexHullRequest
  *         passed in by reference).
  * 
  */
-AggregateConvexHullResponse& aggregateConvexHull(const AggregateConvexHullRequest& request_, AggregateConvexHullResponse& response_) const;
+
+AggregateConvexHullResponse& aggregateConvexHull( const AggregateConvexHullRequest& request_,
+                                                  AggregateConvexHullResponse& response_ ) const;
 
 /**
  * Calculates and returns the convex hull for the values in a table specified
@@ -257,7 +514,11 @@ AggregateConvexHullResponse& aggregateConvexHull(const AggregateConvexHullReques
  * @return Response object containing the result of the operation.
  * 
  */
-AggregateConvexHullResponse aggregateConvexHull(const std::string& tableName, const std::string& xColumnName, const std::string& yColumnName, const std::map<std::string, std::string>& options) const;
+
+AggregateConvexHullResponse aggregateConvexHull( const std::string& tableName,
+                                                 const std::string& xColumnName,
+                                                 const std::string& yColumnName,
+                                                 const std::map<std::string, std::string>& options ) const;
 
 /**
  * Calculates and returns the convex hull for the values in a table specified
@@ -278,7 +539,12 @@ AggregateConvexHullResponse aggregateConvexHull(const std::string& tableName, co
  *         passed in by reference).
  * 
  */
-AggregateConvexHullResponse& aggregateConvexHull(const std::string& tableName, const std::string& xColumnName, const std::string& yColumnName, const std::map<std::string, std::string>& options, AggregateConvexHullResponse& response_) const;
+
+AggregateConvexHullResponse& aggregateConvexHull( const std::string& tableName,
+                                                  const std::string& xColumnName,
+                                                  const std::string& yColumnName,
+                                                  const std::map<std::string, std::string>& options,
+                                                  AggregateConvexHullResponse& response_ ) const;
 
 /**
  * Calculates unique combinations (i.e. groups) of values for the given columns
@@ -312,7 +578,8 @@ AggregateConvexHullResponse& aggregateConvexHull(const std::string& tableName, c
  * @return Response object containing the result of the operation.
  * 
  */
-RawAggregateGroupByResponse aggregateGroupByRaw(const AggregateGroupByRequest& request_) const;
+
+RawAggregateGroupByResponse aggregateGroupByRaw( const AggregateGroupByRequest& request_ ) const;
 
 /**
  * Calculates unique combinations (i.e. groups) of values for the given columns
@@ -349,7 +616,9 @@ RawAggregateGroupByResponse aggregateGroupByRaw(const AggregateGroupByRequest& r
  *         passed in by reference).
  * 
  */
-RawAggregateGroupByResponse& aggregateGroupByRaw(const AggregateGroupByRequest& request_, RawAggregateGroupByResponse& response_) const;
+
+RawAggregateGroupByResponse& aggregateGroupByRaw( const AggregateGroupByRequest& request_,
+                                                  RawAggregateGroupByResponse& response_ ) const;
 
 /**
  * Calculates unique combinations (i.e. groups) of values for the given columns
@@ -383,7 +652,8 @@ RawAggregateGroupByResponse& aggregateGroupByRaw(const AggregateGroupByRequest& 
  * @return Response object containing the result of the operation.
  * 
  */
-AggregateGroupByResponse aggregateGroupBy(const AggregateGroupByRequest& request_) const;
+
+AggregateGroupByResponse aggregateGroupBy( const AggregateGroupByRequest& request_ ) const;
 
 /**
  * Calculates unique combinations (i.e. groups) of values for the given columns
@@ -420,7 +690,9 @@ AggregateGroupByResponse aggregateGroupBy(const AggregateGroupByRequest& request
  *         passed in by reference).
  * 
  */
-AggregateGroupByResponse& aggregateGroupBy(const AggregateGroupByRequest& request_, AggregateGroupByResponse& response_) const;
+
+AggregateGroupByResponse& aggregateGroupBy( const AggregateGroupByRequest& request_,
+                                            AggregateGroupByResponse& response_ ) const;
 
 /**
  * Calculates unique combinations (i.e. groups) of values for the given columns
@@ -466,7 +738,12 @@ AggregateGroupByResponse& aggregateGroupBy(const AggregateGroupByRequest& reques
  * @return Response object containing the result of the operation.
  * 
  */
-AggregateGroupByResponse aggregateGroupBy(const std::string& tableName, const std::vector<std::string>& columnNames, const int64_t offset, const int64_t limit, const std::map<std::string, std::string>& options) const;
+
+AggregateGroupByResponse aggregateGroupBy( const std::string& tableName,
+                                           const std::vector<std::string>& columnNames,
+                                           const int64_t offset,
+                                           const int64_t limit,
+                                           const std::map<std::string, std::string>& options ) const;
 
 /**
  * Calculates unique combinations (i.e. groups) of values for the given columns
@@ -515,7 +792,13 @@ AggregateGroupByResponse aggregateGroupBy(const std::string& tableName, const st
  *         passed in by reference).
  * 
  */
-AggregateGroupByResponse& aggregateGroupBy(const std::string& tableName, const std::vector<std::string>& columnNames, const int64_t offset, const int64_t limit, const std::map<std::string, std::string>& options, AggregateGroupByResponse& response_) const;
+
+AggregateGroupByResponse& aggregateGroupBy( const std::string& tableName,
+                                            const std::vector<std::string>& columnNames,
+                                            const int64_t offset,
+                                            const int64_t limit,
+                                            const std::map<std::string, std::string>& options,
+                                            AggregateGroupByResponse& response_ ) const;
 
 /**
  * Performs a histogram calculation given a table, a column, and an interval
@@ -534,7 +817,8 @@ AggregateGroupByResponse& aggregateGroupBy(const std::string& tableName, const s
  * @return Response object containing the result of the operation.
  * 
  */
-AggregateHistogramResponse aggregateHistogram(const AggregateHistogramRequest& request_) const;
+
+AggregateHistogramResponse aggregateHistogram( const AggregateHistogramRequest& request_ ) const;
 
 /**
  * Performs a histogram calculation given a table, a column, and an interval
@@ -556,7 +840,9 @@ AggregateHistogramResponse aggregateHistogram(const AggregateHistogramRequest& r
  *         passed in by reference).
  * 
  */
-AggregateHistogramResponse& aggregateHistogram(const AggregateHistogramRequest& request_, AggregateHistogramResponse& response_) const;
+
+AggregateHistogramResponse& aggregateHistogram( const AggregateHistogramRequest& request_,
+                                                AggregateHistogramResponse& response_ ) const;
 
 /**
  * Performs a histogram calculation given a table, a column, and an interval
@@ -581,7 +867,13 @@ AggregateHistogramResponse& aggregateHistogram(const AggregateHistogramRequest& 
  * @return Response object containing the result of the operation.
  * 
  */
-AggregateHistogramResponse aggregateHistogram(const std::string& tableName, const std::string& columnName, const double start, const double end, const double interval, const std::map<std::string, std::string>& options) const;
+
+AggregateHistogramResponse aggregateHistogram( const std::string& tableName,
+                                               const std::string& columnName,
+                                               const double start,
+                                               const double end,
+                                               const double interval,
+                                               const std::map<std::string, std::string>& options ) const;
 
 /**
  * Performs a histogram calculation given a table, a column, and an interval
@@ -609,7 +901,14 @@ AggregateHistogramResponse aggregateHistogram(const std::string& tableName, cons
  *         passed in by reference).
  * 
  */
-AggregateHistogramResponse& aggregateHistogram(const std::string& tableName, const std::string& columnName, const double start, const double end, const double interval, const std::map<std::string, std::string>& options, AggregateHistogramResponse& response_) const;
+
+AggregateHistogramResponse& aggregateHistogram( const std::string& tableName,
+                                                const std::string& columnName,
+                                                const double start,
+                                                const double end,
+                                                const double interval,
+                                                const std::map<std::string, std::string>& options,
+                                                AggregateHistogramResponse& response_ ) const;
 
 /**
  * This endpoint runs the k-means algorithm - a heuristic algorithm that
@@ -627,7 +926,8 @@ AggregateHistogramResponse& aggregateHistogram(const std::string& tableName, con
  * @return Response object containing the result of the operation.
  * 
  */
-AggregateKMeansResponse aggregateKMeans(const AggregateKMeansRequest& request_) const;
+
+AggregateKMeansResponse aggregateKMeans( const AggregateKMeansRequest& request_ ) const;
 
 /**
  * This endpoint runs the k-means algorithm - a heuristic algorithm that
@@ -648,7 +948,9 @@ AggregateKMeansResponse aggregateKMeans(const AggregateKMeansRequest& request_) 
  *         passed in by reference).
  * 
  */
-AggregateKMeansResponse& aggregateKMeans(const AggregateKMeansRequest& request_, AggregateKMeansResponse& response_) const;
+
+AggregateKMeansResponse& aggregateKMeans( const AggregateKMeansRequest& request_,
+                                          AggregateKMeansResponse& response_ ) const;
 
 /**
  * This endpoint runs the k-means algorithm - a heuristic algorithm that
@@ -674,7 +976,12 @@ AggregateKMeansResponse& aggregateKMeans(const AggregateKMeansRequest& request_,
  * @return Response object containing the result of the operation.
  * 
  */
-AggregateKMeansResponse aggregateKMeans(const std::string& tableName, const std::vector<std::string>& columnNames, const int32_t k, const double tolerance, const std::map<std::string, std::string>& options) const;
+
+AggregateKMeansResponse aggregateKMeans( const std::string& tableName,
+                                         const std::vector<std::string>& columnNames,
+                                         const int32_t k,
+                                         const double tolerance,
+                                         const std::map<std::string, std::string>& options ) const;
 
 /**
  * This endpoint runs the k-means algorithm - a heuristic algorithm that
@@ -703,7 +1010,13 @@ AggregateKMeansResponse aggregateKMeans(const std::string& tableName, const std:
  *         passed in by reference).
  * 
  */
-AggregateKMeansResponse& aggregateKMeans(const std::string& tableName, const std::vector<std::string>& columnNames, const int32_t k, const double tolerance, const std::map<std::string, std::string>& options, AggregateKMeansResponse& response_) const;
+
+AggregateKMeansResponse& aggregateKMeans( const std::string& tableName,
+                                          const std::vector<std::string>& columnNames,
+                                          const int32_t k,
+                                          const double tolerance,
+                                          const std::map<std::string, std::string>& options,
+                                          AggregateKMeansResponse& response_ ) const;
 
 /**
  * Calculates and returns the minimum and maximum values of a particular column
@@ -715,7 +1028,8 @@ AggregateKMeansResponse& aggregateKMeans(const std::string& tableName, const std
  * @return Response object containing the result of the operation.
  * 
  */
-AggregateMinMaxResponse aggregateMinMax(const AggregateMinMaxRequest& request_) const;
+
+AggregateMinMaxResponse aggregateMinMax( const AggregateMinMaxRequest& request_ ) const;
 
 /**
  * Calculates and returns the minimum and maximum values of a particular column
@@ -730,7 +1044,9 @@ AggregateMinMaxResponse aggregateMinMax(const AggregateMinMaxRequest& request_) 
  *         passed in by reference).
  * 
  */
-AggregateMinMaxResponse& aggregateMinMax(const AggregateMinMaxRequest& request_, AggregateMinMaxResponse& response_) const;
+
+AggregateMinMaxResponse& aggregateMinMax( const AggregateMinMaxRequest& request_,
+                                          AggregateMinMaxResponse& response_ ) const;
 
 /**
  * Calculates and returns the minimum and maximum values of a particular column
@@ -745,7 +1061,10 @@ AggregateMinMaxResponse& aggregateMinMax(const AggregateMinMaxRequest& request_,
  * @return Response object containing the result of the operation.
  * 
  */
-AggregateMinMaxResponse aggregateMinMax(const std::string& tableName, const std::string& columnName, const std::map<std::string, std::string>& options) const;
+
+AggregateMinMaxResponse aggregateMinMax( const std::string& tableName,
+                                         const std::string& columnName,
+                                         const std::map<std::string, std::string>& options ) const;
 
 /**
  * Calculates and returns the minimum and maximum values of a particular column
@@ -763,7 +1082,11 @@ AggregateMinMaxResponse aggregateMinMax(const std::string& tableName, const std:
  *         passed in by reference).
  * 
  */
-AggregateMinMaxResponse& aggregateMinMax(const std::string& tableName, const std::string& columnName, const std::map<std::string, std::string>& options, AggregateMinMaxResponse& response_) const;
+
+AggregateMinMaxResponse& aggregateMinMax( const std::string& tableName,
+                                          const std::string& columnName,
+                                          const std::map<std::string, std::string>& options,
+                                          AggregateMinMaxResponse& response_ ) const;
 
 /**
  * Calculates the requested statistics of a given column in a given table. The
@@ -783,7 +1106,8 @@ AggregateMinMaxResponse& aggregateMinMax(const std::string& tableName, const std
  * @return Response object containing the result of the operation.
  * 
  */
-AggregateStatisticsResponse aggregateStatistics(const AggregateStatisticsRequest& request_) const;
+
+AggregateStatisticsResponse aggregateStatistics( const AggregateStatisticsRequest& request_ ) const;
 
 /**
  * Calculates the requested statistics of a given column in a given table. The
@@ -806,7 +1130,9 @@ AggregateStatisticsResponse aggregateStatistics(const AggregateStatisticsRequest
  *         passed in by reference).
  * 
  */
-AggregateStatisticsResponse& aggregateStatistics(const AggregateStatisticsRequest& request_, AggregateStatisticsResponse& response_) const;
+
+AggregateStatisticsResponse& aggregateStatistics( const AggregateStatisticsRequest& request_,
+                                                  AggregateStatisticsResponse& response_ ) const;
 
 /**
  * Calculates the requested statistics of a given column in a given table. The
@@ -831,7 +1157,11 @@ AggregateStatisticsResponse& aggregateStatistics(const AggregateStatisticsReques
  * @return Response object containing the result of the operation.
  * 
  */
-AggregateStatisticsResponse aggregateStatistics(const std::string& tableName, const std::string& columnName, const std::string& stats, const std::map<std::string, std::string>& options) const;
+
+AggregateStatisticsResponse aggregateStatistics( const std::string& tableName,
+                                                 const std::string& columnName,
+                                                 const std::string& stats,
+                                                 const std::map<std::string, std::string>& options ) const;
 
 /**
  * Calculates the requested statistics of a given column in a given table. The
@@ -859,7 +1189,12 @@ AggregateStatisticsResponse aggregateStatistics(const std::string& tableName, co
  *         passed in by reference).
  * 
  */
-AggregateStatisticsResponse& aggregateStatistics(const std::string& tableName, const std::string& columnName, const std::string& stats, const std::map<std::string, std::string>& options, AggregateStatisticsResponse& response_) const;
+
+AggregateStatisticsResponse& aggregateStatistics( const std::string& tableName,
+                                                  const std::string& columnName,
+                                                  const std::string& stats,
+                                                  const std::map<std::string, std::string>& options,
+                                                  AggregateStatisticsResponse& response_ ) const;
 
 /**
  * Divides the given set into bins and calculates statistics of the values of a
@@ -891,7 +1226,8 @@ AggregateStatisticsResponse& aggregateStatistics(const std::string& tableName, c
  * @return Response object containing the result of the operation.
  * 
  */
-AggregateStatisticsByRangeResponse aggregateStatisticsByRange(const AggregateStatisticsByRangeRequest& request_) const;
+
+AggregateStatisticsByRangeResponse aggregateStatisticsByRange( const AggregateStatisticsByRangeRequest& request_ ) const;
 
 /**
  * Divides the given set into bins and calculates statistics of the values of a
@@ -926,7 +1262,9 @@ AggregateStatisticsByRangeResponse aggregateStatisticsByRange(const AggregateSta
  *         passed in by reference).
  * 
  */
-AggregateStatisticsByRangeResponse& aggregateStatisticsByRange(const AggregateStatisticsByRangeRequest& request_, AggregateStatisticsByRangeResponse& response_) const;
+
+AggregateStatisticsByRangeResponse& aggregateStatisticsByRange( const AggregateStatisticsByRangeRequest& request_,
+                                                                AggregateStatisticsByRangeResponse& response_ ) const;
 
 /**
  * Divides the given set into bins and calculates statistics of the values of a
@@ -976,7 +1314,16 @@ AggregateStatisticsByRangeResponse& aggregateStatisticsByRange(const AggregateSt
  * @return Response object containing the result of the operation.
  * 
  */
-AggregateStatisticsByRangeResponse aggregateStatisticsByRange(const std::string& tableName, const std::string& selectExpression, const std::string& columnName, const std::string& valueColumnName, const std::string& stats, const double start, const double end, const double interval, const std::map<std::string, std::string>& options) const;
+
+AggregateStatisticsByRangeResponse aggregateStatisticsByRange( const std::string& tableName,
+                                                               const std::string& selectExpression,
+                                                               const std::string& columnName,
+                                                               const std::string& valueColumnName,
+                                                               const std::string& stats,
+                                                               const double start,
+                                                               const double end,
+                                                               const double interval,
+                                                               const std::map<std::string, std::string>& options ) const;
 
 /**
  * Divides the given set into bins and calculates statistics of the values of a
@@ -1029,7 +1376,17 @@ AggregateStatisticsByRangeResponse aggregateStatisticsByRange(const std::string&
  *         passed in by reference).
  * 
  */
-AggregateStatisticsByRangeResponse& aggregateStatisticsByRange(const std::string& tableName, const std::string& selectExpression, const std::string& columnName, const std::string& valueColumnName, const std::string& stats, const double start, const double end, const double interval, const std::map<std::string, std::string>& options, AggregateStatisticsByRangeResponse& response_) const;
+
+AggregateStatisticsByRangeResponse& aggregateStatisticsByRange( const std::string& tableName,
+                                                                const std::string& selectExpression,
+                                                                const std::string& columnName,
+                                                                const std::string& valueColumnName,
+                                                                const std::string& stats,
+                                                                const double start,
+                                                                const double end,
+                                                                const double interval,
+                                                                const std::map<std::string, std::string>& options,
+                                                                AggregateStatisticsByRangeResponse& response_ ) const;
 
 /**
  * Returns all the unique values from a particular column (specified by @a
@@ -1053,7 +1410,8 @@ AggregateStatisticsByRangeResponse& aggregateStatisticsByRange(const std::string
  * @return Response object containing the result of the operation.
  * 
  */
-RawAggregateUniqueResponse aggregateUniqueRaw(const AggregateUniqueRequest& request_) const;
+
+RawAggregateUniqueResponse aggregateUniqueRaw( const AggregateUniqueRequest& request_ ) const;
 
 /**
  * Returns all the unique values from a particular column (specified by @a
@@ -1080,7 +1438,9 @@ RawAggregateUniqueResponse aggregateUniqueRaw(const AggregateUniqueRequest& requ
  *         passed in by reference).
  * 
  */
-RawAggregateUniqueResponse& aggregateUniqueRaw(const AggregateUniqueRequest& request_, RawAggregateUniqueResponse& response_) const;
+
+RawAggregateUniqueResponse& aggregateUniqueRaw( const AggregateUniqueRequest& request_,
+                                                RawAggregateUniqueResponse& response_ ) const;
 
 /**
  * Returns all the unique values from a particular column (specified by @a
@@ -1104,7 +1464,8 @@ RawAggregateUniqueResponse& aggregateUniqueRaw(const AggregateUniqueRequest& req
  * @return Response object containing the result of the operation.
  * 
  */
-AggregateUniqueResponse aggregateUnique(const AggregateUniqueRequest& request_) const;
+
+AggregateUniqueResponse aggregateUnique( const AggregateUniqueRequest& request_ ) const;
 
 /**
  * Returns all the unique values from a particular column (specified by @a
@@ -1131,7 +1492,9 @@ AggregateUniqueResponse aggregateUnique(const AggregateUniqueRequest& request_) 
  *         passed in by reference).
  * 
  */
-AggregateUniqueResponse& aggregateUnique(const AggregateUniqueRequest& request_, AggregateUniqueResponse& response_) const;
+
+AggregateUniqueResponse& aggregateUnique( const AggregateUniqueRequest& request_,
+                                          AggregateUniqueResponse& response_ ) const;
 
 /**
  * Returns all the unique values from a particular column (specified by @a
@@ -1166,7 +1529,12 @@ AggregateUniqueResponse& aggregateUnique(const AggregateUniqueRequest& request_,
  * @return Response object containing the result of the operation.
  * 
  */
-AggregateUniqueResponse aggregateUnique(const std::string& tableName, const std::string& columnName, const int64_t offset, const int64_t limit, const std::map<std::string, std::string>& options) const;
+
+AggregateUniqueResponse aggregateUnique( const std::string& tableName,
+                                         const std::string& columnName,
+                                         const int64_t offset,
+                                         const int64_t limit,
+                                         const std::map<std::string, std::string>& options ) const;
 
 /**
  * Returns all the unique values from a particular column (specified by @a
@@ -1204,7 +1572,13 @@ AggregateUniqueResponse aggregateUnique(const std::string& tableName, const std:
  *         passed in by reference).
  * 
  */
-AggregateUniqueResponse& aggregateUnique(const std::string& tableName, const std::string& columnName, const int64_t offset, const int64_t limit, const std::map<std::string, std::string>& options, AggregateUniqueResponse& response_) const;
+
+AggregateUniqueResponse& aggregateUnique( const std::string& tableName,
+                                          const std::string& columnName,
+                                          const int64_t offset,
+                                          const int64_t limit,
+                                          const std::map<std::string, std::string>& options,
+                                          AggregateUniqueResponse& response_ ) const;
 
 /**
  * The alter_system_properties endpoint is primarily used to simplify the
@@ -1219,7 +1593,8 @@ AggregateUniqueResponse& aggregateUnique(const std::string& tableName, const std
  * @return Response object containing the result of the operation.
  * 
  */
-AlterSystemPropertiesResponse alterSystemProperties(const AlterSystemPropertiesRequest& request_) const;
+
+AlterSystemPropertiesResponse alterSystemProperties( const AlterSystemPropertiesRequest& request_ ) const;
 
 /**
  * The alter_system_properties endpoint is primarily used to simplify the
@@ -1237,7 +1612,9 @@ AlterSystemPropertiesResponse alterSystemProperties(const AlterSystemPropertiesR
  *         passed in by reference).
  * 
  */
-AlterSystemPropertiesResponse& alterSystemProperties(const AlterSystemPropertiesRequest& request_, AlterSystemPropertiesResponse& response_) const;
+
+AlterSystemPropertiesResponse& alterSystemProperties( const AlterSystemPropertiesRequest& request_,
+                                                      AlterSystemPropertiesResponse& response_ ) const;
 
 /**
  * The alter_system_properties endpoint is primarily used to simplify the
@@ -1253,7 +1630,9 @@ AlterSystemPropertiesResponse& alterSystemProperties(const AlterSystemProperties
  * @return Response object containing the result of the operation.
  * 
  */
-AlterSystemPropertiesResponse alterSystemProperties(const std::map<std::string, std::string>& propertyUpdatesMap, const std::map<std::string, std::string>& options) const;
+
+AlterSystemPropertiesResponse alterSystemProperties( const std::map<std::string, std::string>& propertyUpdatesMap,
+                                                     const std::map<std::string, std::string>& options ) const;
 
 /**
  * The alter_system_properties endpoint is primarily used to simplify the
@@ -1272,7 +1651,10 @@ AlterSystemPropertiesResponse alterSystemProperties(const std::map<std::string, 
  *         passed in by reference).
  * 
  */
-AlterSystemPropertiesResponse& alterSystemProperties(const std::map<std::string, std::string>& propertyUpdatesMap, const std::map<std::string, std::string>& options, AlterSystemPropertiesResponse& response_) const;
+
+AlterSystemPropertiesResponse& alterSystemProperties( const std::map<std::string, std::string>& propertyUpdatesMap,
+                                                      const std::map<std::string, std::string>& options,
+                                                      AlterSystemPropertiesResponse& response_ ) const;
 
 /**
  * Creates or deletes an index on a particular column in a given table.
@@ -1288,7 +1670,8 @@ AlterSystemPropertiesResponse& alterSystemProperties(const std::map<std::string,
  * @return Response object containing the result of the operation.
  * 
  */
-AlterTableResponse alterTable(const AlterTableRequest& request_) const;
+
+AlterTableResponse alterTable( const AlterTableRequest& request_ ) const;
 
 /**
  * Creates or deletes an index on a particular column in a given table.
@@ -1310,7 +1693,9 @@ AlterTableResponse alterTable(const AlterTableRequest& request_) const;
  *         passed in by reference).
  * 
  */
-AlterTableResponse& alterTable(const AlterTableRequest& request_, AlterTableResponse& response_) const;
+
+AlterTableResponse& alterTable( const AlterTableRequest& request_,
+                                AlterTableResponse& response_ ) const;
 
 /**
  * Creates or deletes an index on a particular column in a given table.
@@ -1331,7 +1716,11 @@ AlterTableResponse& alterTable(const AlterTableRequest& request_, AlterTableResp
  * @return Response object containing the result of the operation.
  * 
  */
-AlterTableResponse alterTable(const std::string& tableName, const std::string& columnName, const std::string& action, const std::map<std::string, std::string>& options) const;
+
+AlterTableResponse alterTable( const std::string& tableName,
+                               const std::string& columnName,
+                               const std::string& action,
+                               const std::map<std::string, std::string>& options ) const;
 
 /**
  * Creates or deletes an index on a particular column in a given table.
@@ -1355,7 +1744,12 @@ AlterTableResponse alterTable(const std::string& tableName, const std::string& c
  *         passed in by reference).
  * 
  */
-AlterTableResponse& alterTable(const std::string& tableName, const std::string& columnName, const std::string& action, const std::map<std::string, std::string>& options, AlterTableResponse& response_) const;
+
+AlterTableResponse& alterTable( const std::string& tableName,
+                                const std::string& columnName,
+                                const std::string& action,
+                                const std::map<std::string, std::string>& options,
+                                AlterTableResponse& response_ ) const;
 
 /**
  * Updates (adds or changes) metadata for tables. The metadata key and values
@@ -1369,7 +1763,8 @@ AlterTableResponse& alterTable(const std::string& tableName, const std::string& 
  * @return Response object containing the result of the operation.
  * 
  */
-AlterTableMetadataResponse alterTableMetadata(const AlterTableMetadataRequest& request_) const;
+
+AlterTableMetadataResponse alterTableMetadata( const AlterTableMetadataRequest& request_ ) const;
 
 /**
  * Updates (adds or changes) metadata for tables. The metadata key and values
@@ -1386,7 +1781,9 @@ AlterTableMetadataResponse alterTableMetadata(const AlterTableMetadataRequest& r
  *         passed in by reference).
  * 
  */
-AlterTableMetadataResponse& alterTableMetadata(const AlterTableMetadataRequest& request_, AlterTableMetadataResponse& response_) const;
+
+AlterTableMetadataResponse& alterTableMetadata( const AlterTableMetadataRequest& request_,
+                                                AlterTableMetadataResponse& response_ ) const;
 
 /**
  * Updates (adds or changes) metadata for tables. The metadata key and values
@@ -1407,7 +1804,10 @@ AlterTableMetadataResponse& alterTableMetadata(const AlterTableMetadataRequest& 
  * @return Response object containing the result of the operation.
  * 
  */
-AlterTableMetadataResponse alterTableMetadata(const std::vector<std::string>& tableNames, const std::map<std::string, std::string>& metadataMap, const std::map<std::string, std::string>& options) const;
+
+AlterTableMetadataResponse alterTableMetadata( const std::vector<std::string>& tableNames,
+                                               const std::map<std::string, std::string>& metadataMap,
+                                               const std::map<std::string, std::string>& options ) const;
 
 /**
  * Updates (adds or changes) metadata for tables. The metadata key and values
@@ -1431,7 +1831,11 @@ AlterTableMetadataResponse alterTableMetadata(const std::vector<std::string>& ta
  *         passed in by reference).
  * 
  */
-AlterTableMetadataResponse& alterTableMetadata(const std::vector<std::string>& tableNames, const std::map<std::string, std::string>& metadataMap, const std::map<std::string, std::string>& options, AlterTableMetadataResponse& response_) const;
+
+AlterTableMetadataResponse& alterTableMetadata( const std::vector<std::string>& tableNames,
+                                                const std::map<std::string, std::string>& metadataMap,
+                                                const std::map<std::string, std::string>& options,
+                                                AlterTableMetadataResponse& response_ ) const;
 
 /**
  * Updates properties for a group of specified tables. The user can change the
@@ -1444,7 +1848,8 @@ AlterTableMetadataResponse& alterTableMetadata(const std::vector<std::string>& t
  * @return Response object containing the result of the operation.
  * 
  */
-AlterTablePropertiesResponse alterTableProperties(const AlterTablePropertiesRequest& request_) const;
+
+AlterTablePropertiesResponse alterTableProperties( const AlterTablePropertiesRequest& request_ ) const;
 
 /**
  * Updates properties for a group of specified tables. The user can change the
@@ -1460,7 +1865,9 @@ AlterTablePropertiesResponse alterTableProperties(const AlterTablePropertiesRequ
  *         passed in by reference).
  * 
  */
-AlterTablePropertiesResponse& alterTableProperties(const AlterTablePropertiesRequest& request_, AlterTablePropertiesResponse& response_) const;
+
+AlterTablePropertiesResponse& alterTableProperties( const AlterTablePropertiesRequest& request_,
+                                                    AlterTablePropertiesResponse& response_ ) const;
 
 /**
  * Updates properties for a group of specified tables. The user can change the
@@ -1479,7 +1886,10 @@ AlterTablePropertiesResponse& alterTableProperties(const AlterTablePropertiesReq
  * @return Response object containing the result of the operation.
  * 
  */
-AlterTablePropertiesResponse alterTableProperties(const std::vector<std::string>& tableNames, const std::map<std::string, std::string>& propertiesMap, const std::map<std::string, std::string>& options) const;
+
+AlterTablePropertiesResponse alterTableProperties( const std::vector<std::string>& tableNames,
+                                                   const std::map<std::string, std::string>& propertiesMap,
+                                                   const std::map<std::string, std::string>& options ) const;
 
 /**
  * Updates properties for a group of specified tables. The user can change the
@@ -1501,7 +1911,11 @@ AlterTablePropertiesResponse alterTableProperties(const std::vector<std::string>
  *         passed in by reference).
  * 
  */
-AlterTablePropertiesResponse& alterTableProperties(const std::vector<std::string>& tableNames, const std::map<std::string, std::string>& propertiesMap, const std::map<std::string, std::string>& options, AlterTablePropertiesResponse& response_) const;
+
+AlterTablePropertiesResponse& alterTableProperties( const std::vector<std::string>& tableNames,
+                                                    const std::map<std::string, std::string>& propertiesMap,
+                                                    const std::map<std::string, std::string>& options,
+                                                    AlterTablePropertiesResponse& response_ ) const;
 
 /**
  * Clears (drops) one or all tables in the GPUdb cluster. The operation is
@@ -1516,7 +1930,8 @@ AlterTablePropertiesResponse& alterTableProperties(const std::vector<std::string
  * @return Response object containing the result of the operation.
  * 
  */
-ClearTableResponse clearTable(const ClearTableRequest& request_) const;
+
+ClearTableResponse clearTable( const ClearTableRequest& request_ ) const;
 
 /**
  * Clears (drops) one or all tables in the GPUdb cluster. The operation is
@@ -1534,7 +1949,9 @@ ClearTableResponse clearTable(const ClearTableRequest& request_) const;
  *         passed in by reference).
  * 
  */
-ClearTableResponse& clearTable(const ClearTableRequest& request_, ClearTableResponse& response_) const;
+
+ClearTableResponse& clearTable( const ClearTableRequest& request_,
+                                ClearTableResponse& response_ ) const;
 
 /**
  * Clears (drops) one or all tables in the GPUdb cluster. The operation is
@@ -1554,7 +1971,10 @@ ClearTableResponse& clearTable(const ClearTableRequest& request_, ClearTableResp
  * @return Response object containing the result of the operation.
  * 
  */
-ClearTableResponse clearTable(const std::string& tableName, const std::string& authorization, const std::map<std::string, std::string>& options) const;
+
+ClearTableResponse clearTable( const std::string& tableName,
+                               const std::string& authorization,
+                               const std::map<std::string, std::string>& options ) const;
 
 /**
  * Clears (drops) one or all tables in the GPUdb cluster. The operation is
@@ -1577,7 +1997,11 @@ ClearTableResponse clearTable(const std::string& tableName, const std::string& a
  *         passed in by reference).
  * 
  */
-ClearTableResponse& clearTable(const std::string& tableName, const std::string& authorization, const std::map<std::string, std::string>& options, ClearTableResponse& response_) const;
+
+ClearTableResponse& clearTable( const std::string& tableName,
+                                const std::string& authorization,
+                                const std::map<std::string, std::string>& options,
+                                ClearTableResponse& response_ ) const;
 
 /**
  * Deactivates a table monitor previously created with {@link
@@ -1589,7 +2013,8 @@ ClearTableResponse& clearTable(const std::string& tableName, const std::string& 
  * @return Response object containing the result of the operation.
  * 
  */
-ClearTableMonitorResponse clearTableMonitor(const ClearTableMonitorRequest& request_) const;
+
+ClearTableMonitorResponse clearTableMonitor( const ClearTableMonitorRequest& request_ ) const;
 
 /**
  * Deactivates a table monitor previously created with {@link
@@ -1604,7 +2029,9 @@ ClearTableMonitorResponse clearTableMonitor(const ClearTableMonitorRequest& requ
  *         passed in by reference).
  * 
  */
-ClearTableMonitorResponse& clearTableMonitor(const ClearTableMonitorRequest& request_, ClearTableMonitorResponse& response_) const;
+
+ClearTableMonitorResponse& clearTableMonitor( const ClearTableMonitorRequest& request_,
+                                              ClearTableMonitorResponse& response_ ) const;
 
 /**
  * Deactivates a table monitor previously created with {@link
@@ -1616,7 +2043,9 @@ ClearTableMonitorResponse& clearTableMonitor(const ClearTableMonitorRequest& req
  * @return Response object containing the result of the operation.
  * 
  */
-ClearTableMonitorResponse clearTableMonitor(const std::string& topicId, const std::map<std::string, std::string>& options) const;
+
+ClearTableMonitorResponse clearTableMonitor( const std::string& topicId,
+                                             const std::map<std::string, std::string>& options ) const;
 
 /**
  * Deactivates a table monitor previously created with {@link
@@ -1631,7 +2060,10 @@ ClearTableMonitorResponse clearTableMonitor(const std::string& topicId, const st
  *         passed in by reference).
  * 
  */
-ClearTableMonitorResponse& clearTableMonitor(const std::string& topicId, const std::map<std::string, std::string>& options, ClearTableMonitorResponse& response_) const;
+
+ClearTableMonitorResponse& clearTableMonitor( const std::string& topicId,
+                                              const std::map<std::string, std::string>& options,
+                                              ClearTableMonitorResponse& response_ ) const;
 
 /**
  * Clears or cancels the trigger identified by the specified handle. The output
@@ -1644,7 +2076,8 @@ ClearTableMonitorResponse& clearTableMonitor(const std::string& topicId, const s
  * @return Response object containing the result of the operation.
  * 
  */
-ClearTriggerResponse clearTrigger(const ClearTriggerRequest& request_) const;
+
+ClearTriggerResponse clearTrigger( const ClearTriggerRequest& request_ ) const;
 
 /**
  * Clears or cancels the trigger identified by the specified handle. The output
@@ -1660,7 +2093,9 @@ ClearTriggerResponse clearTrigger(const ClearTriggerRequest& request_) const;
  *         passed in by reference).
  * 
  */
-ClearTriggerResponse& clearTrigger(const ClearTriggerRequest& request_, ClearTriggerResponse& response_) const;
+
+ClearTriggerResponse& clearTrigger( const ClearTriggerRequest& request_,
+                                    ClearTriggerResponse& response_ ) const;
 
 /**
  * Clears or cancels the trigger identified by the specified handle. The output
@@ -1673,7 +2108,9 @@ ClearTriggerResponse& clearTrigger(const ClearTriggerRequest& request_, ClearTri
  * @return Response object containing the result of the operation.
  * 
  */
-ClearTriggerResponse clearTrigger(const std::string& triggerId, const std::map<std::string, std::string>& options) const;
+
+ClearTriggerResponse clearTrigger( const std::string& triggerId,
+                                   const std::map<std::string, std::string>& options ) const;
 
 /**
  * Clears or cancels the trigger identified by the specified handle. The output
@@ -1689,7 +2126,10 @@ ClearTriggerResponse clearTrigger(const std::string& triggerId, const std::map<s
  *         passed in by reference).
  * 
  */
-ClearTriggerResponse& clearTrigger(const std::string& triggerId, const std::map<std::string, std::string>& options, ClearTriggerResponse& response_) const;
+
+ClearTriggerResponse& clearTrigger( const std::string& triggerId,
+                                    const std::map<std::string, std::string>& options,
+                                    ClearTriggerResponse& response_ ) const;
 
 /**
  * Creates a joint_table which is a list of tables and aliases for those
@@ -1701,7 +2141,8 @@ ClearTriggerResponse& clearTrigger(const std::string& triggerId, const std::map<
  * @return Response object containing the result of the operation.
  * 
  */
-CreateJoinTableResponse createJoinTable(const CreateJoinTableRequest& request_) const;
+
+CreateJoinTableResponse createJoinTable( const CreateJoinTableRequest& request_ ) const;
 
 /**
  * Creates a joint_table which is a list of tables and aliases for those
@@ -1716,7 +2157,9 @@ CreateJoinTableResponse createJoinTable(const CreateJoinTableRequest& request_) 
  *         passed in by reference).
  * 
  */
-CreateJoinTableResponse& createJoinTable(const CreateJoinTableRequest& request_, CreateJoinTableResponse& response_) const;
+
+CreateJoinTableResponse& createJoinTable( const CreateJoinTableRequest& request_,
+                                          CreateJoinTableResponse& response_ ) const;
 
 /**
  * Creates a joint_table which is a list of tables and aliases for those
@@ -1732,7 +2175,11 @@ CreateJoinTableResponse& createJoinTable(const CreateJoinTableRequest& request_,
  * @return Response object containing the result of the operation.
  * 
  */
-CreateJoinTableResponse createJoinTable(const std::string& joinTableName, const std::vector<std::string>& tableNames, const std::vector<std::string>& aliases, const std::map<std::string, std::string>& options) const;
+
+CreateJoinTableResponse createJoinTable( const std::string& joinTableName,
+                                         const std::vector<std::string>& tableNames,
+                                         const std::vector<std::string>& aliases,
+                                         const std::map<std::string, std::string>& options ) const;
 
 /**
  * Creates a joint_table which is a list of tables and aliases for those
@@ -1751,7 +2198,12 @@ CreateJoinTableResponse createJoinTable(const std::string& joinTableName, const 
  *         passed in by reference).
  * 
  */
-CreateJoinTableResponse& createJoinTable(const std::string& joinTableName, const std::vector<std::string>& tableNames, const std::vector<std::string>& aliases, const std::map<std::string, std::string>& options, CreateJoinTableResponse& response_) const;
+
+CreateJoinTableResponse& createJoinTable( const std::string& joinTableName,
+                                          const std::vector<std::string>& tableNames,
+                                          const std::vector<std::string>& aliases,
+                                          const std::map<std::string, std::string>& options,
+                                          CreateJoinTableResponse& response_ ) const;
 
 /**
  * Creates a new table or collection in GPUdb. If a new table is being created
@@ -1769,7 +2221,8 @@ CreateJoinTableResponse& createJoinTable(const std::string& joinTableName, const
  * @return Response object containing the result of the operation.
  * 
  */
-CreateTableResponse createTable(const CreateTableRequest& request_) const;
+
+CreateTableResponse createTable( const CreateTableRequest& request_ ) const;
 
 /**
  * Creates a new table or collection in GPUdb. If a new table is being created
@@ -1791,7 +2244,9 @@ CreateTableResponse createTable(const CreateTableRequest& request_) const;
  *         passed in by reference).
  * 
  */
-CreateTableResponse& createTable(const CreateTableRequest& request_, CreateTableResponse& response_) const;
+
+CreateTableResponse& createTable( const CreateTableRequest& request_,
+                                  CreateTableResponse& response_ ) const;
 
 /**
  * Creates a new table or collection in GPUdb. If a new table is being created
@@ -1817,7 +2272,10 @@ CreateTableResponse& createTable(const CreateTableRequest& request_, CreateTable
  * @return Response object containing the result of the operation.
  * 
  */
-CreateTableResponse createTable(const std::string& tableName, const std::string& typeId, const std::map<std::string, std::string>& options) const;
+
+CreateTableResponse createTable( const std::string& tableName,
+                                 const std::string& typeId,
+                                 const std::map<std::string, std::string>& options ) const;
 
 /**
  * Creates a new table or collection in GPUdb. If a new table is being created
@@ -1846,7 +2304,11 @@ CreateTableResponse createTable(const std::string& tableName, const std::string&
  *         passed in by reference).
  * 
  */
-CreateTableResponse& createTable(const std::string& tableName, const std::string& typeId, const std::map<std::string, std::string>& options, CreateTableResponse& response_) const;
+
+CreateTableResponse& createTable( const std::string& tableName,
+                                  const std::string& typeId,
+                                  const std::map<std::string, std::string>& options,
+                                  CreateTableResponse& response_ ) const;
 
 /**
  * Creates a monitor that watches for new records inserted into a particular
@@ -1866,7 +2328,8 @@ CreateTableResponse& createTable(const std::string& tableName, const std::string
  * @return Response object containing the result of the operation.
  * 
  */
-CreateTableMonitorResponse createTableMonitor(const CreateTableMonitorRequest& request_) const;
+
+CreateTableMonitorResponse createTableMonitor( const CreateTableMonitorRequest& request_ ) const;
 
 /**
  * Creates a monitor that watches for new records inserted into a particular
@@ -1889,7 +2352,9 @@ CreateTableMonitorResponse createTableMonitor(const CreateTableMonitorRequest& r
  *         passed in by reference).
  * 
  */
-CreateTableMonitorResponse& createTableMonitor(const CreateTableMonitorRequest& request_, CreateTableMonitorResponse& response_) const;
+
+CreateTableMonitorResponse& createTableMonitor( const CreateTableMonitorRequest& request_,
+                                                CreateTableMonitorResponse& response_ ) const;
 
 /**
  * Creates a monitor that watches for new records inserted into a particular
@@ -1910,7 +2375,9 @@ CreateTableMonitorResponse& createTableMonitor(const CreateTableMonitorRequest& 
  * @return Response object containing the result of the operation.
  * 
  */
-CreateTableMonitorResponse createTableMonitor(const std::string& tableName, const std::map<std::string, std::string>& options) const;
+
+CreateTableMonitorResponse createTableMonitor( const std::string& tableName,
+                                               const std::map<std::string, std::string>& options ) const;
 
 /**
  * Creates a monitor that watches for new records inserted into a particular
@@ -1934,7 +2401,10 @@ CreateTableMonitorResponse createTableMonitor(const std::string& tableName, cons
  *         passed in by reference).
  * 
  */
-CreateTableMonitorResponse& createTableMonitor(const std::string& tableName, const std::map<std::string, std::string>& options, CreateTableMonitorResponse& response_) const;
+
+CreateTableMonitorResponse& createTableMonitor( const std::string& tableName,
+                                                const std::map<std::string, std::string>& options,
+                                                CreateTableMonitorResponse& response_ ) const;
 
 /**
  * Sets up an area  trigger mechanism for two column_names for one or more
@@ -1959,7 +2429,8 @@ CreateTableMonitorResponse& createTableMonitor(const std::string& tableName, con
  * @return Response object containing the result of the operation.
  * 
  */
-CreateTriggerByAreaResponse createTriggerByArea(const CreateTriggerByAreaRequest& request_) const;
+
+CreateTriggerByAreaResponse createTriggerByArea( const CreateTriggerByAreaRequest& request_ ) const;
 
 /**
  * Sets up an area  trigger mechanism for two column_names for one or more
@@ -1989,7 +2460,9 @@ CreateTriggerByAreaResponse createTriggerByArea(const CreateTriggerByAreaRequest
  *         passed in by reference).
  * 
  */
-CreateTriggerByAreaResponse& createTriggerByArea(const CreateTriggerByAreaRequest& request_, CreateTriggerByAreaResponse& response_) const;
+
+CreateTriggerByAreaResponse& createTriggerByArea( const CreateTriggerByAreaRequest& request_,
+                                                  CreateTriggerByAreaResponse& response_ ) const;
 
 /**
  * Sets up an area  trigger mechanism for two column_names for one or more
@@ -2029,7 +2502,14 @@ CreateTriggerByAreaResponse& createTriggerByArea(const CreateTriggerByAreaReques
  * @return Response object containing the result of the operation.
  * 
  */
-CreateTriggerByAreaResponse createTriggerByArea(const std::string& requestId, const std::vector<std::string>& tableNames, const std::string& xColumnName, const std::vector<double>& xVector, const std::string& yColumnName, const std::vector<double>& yVector, const std::map<std::string, std::string>& options) const;
+
+CreateTriggerByAreaResponse createTriggerByArea( const std::string& requestId,
+                                                 const std::vector<std::string>& tableNames,
+                                                 const std::string& xColumnName,
+                                                 const std::vector<double>& xVector,
+                                                 const std::string& yColumnName,
+                                                 const std::vector<double>& yVector,
+                                                 const std::map<std::string, std::string>& options ) const;
 
 /**
  * Sets up an area  trigger mechanism for two column_names for one or more
@@ -2072,7 +2552,15 @@ CreateTriggerByAreaResponse createTriggerByArea(const std::string& requestId, co
  *         passed in by reference).
  * 
  */
-CreateTriggerByAreaResponse& createTriggerByArea(const std::string& requestId, const std::vector<std::string>& tableNames, const std::string& xColumnName, const std::vector<double>& xVector, const std::string& yColumnName, const std::vector<double>& yVector, const std::map<std::string, std::string>& options, CreateTriggerByAreaResponse& response_) const;
+
+CreateTriggerByAreaResponse& createTriggerByArea( const std::string& requestId,
+                                                  const std::vector<std::string>& tableNames,
+                                                  const std::string& xColumnName,
+                                                  const std::vector<double>& xVector,
+                                                  const std::string& yColumnName,
+                                                  const std::vector<double>& yVector,
+                                                  const std::map<std::string, std::string>& options,
+                                                  CreateTriggerByAreaResponse& response_ ) const;
 
 /**
  * Sets up a simple range trigger for a column_name for one or more tables.
@@ -2096,7 +2584,8 @@ CreateTriggerByAreaResponse& createTriggerByArea(const std::string& requestId, c
  * @return Response object containing the result of the operation.
  * 
  */
-CreateTriggerByRangeResponse createTriggerByRange(const CreateTriggerByRangeRequest& request_) const;
+
+CreateTriggerByRangeResponse createTriggerByRange( const CreateTriggerByRangeRequest& request_ ) const;
 
 /**
  * Sets up a simple range trigger for a column_name for one or more tables.
@@ -2124,7 +2613,9 @@ CreateTriggerByRangeResponse createTriggerByRange(const CreateTriggerByRangeRequ
  *         passed in by reference).
  * 
  */
-CreateTriggerByRangeResponse& createTriggerByRange(const CreateTriggerByRangeRequest& request_, CreateTriggerByRangeResponse& response_) const;
+
+CreateTriggerByRangeResponse& createTriggerByRange( const CreateTriggerByRangeRequest& request_,
+                                                    CreateTriggerByRangeResponse& response_ ) const;
 
 /**
  * Sets up a simple range trigger for a column_name for one or more tables.
@@ -2154,7 +2645,13 @@ CreateTriggerByRangeResponse& createTriggerByRange(const CreateTriggerByRangeReq
  * @return Response object containing the result of the operation.
  * 
  */
-CreateTriggerByRangeResponse createTriggerByRange(const std::string& requestId, const std::vector<std::string>& tableNames, const std::string& columnName, const double min, const double max, const std::map<std::string, std::string>& options) const;
+
+CreateTriggerByRangeResponse createTriggerByRange( const std::string& requestId,
+                                                   const std::vector<std::string>& tableNames,
+                                                   const std::string& columnName,
+                                                   const double min,
+                                                   const double max,
+                                                   const std::map<std::string, std::string>& options ) const;
 
 /**
  * Sets up a simple range trigger for a column_name for one or more tables.
@@ -2187,7 +2684,14 @@ CreateTriggerByRangeResponse createTriggerByRange(const std::string& requestId, 
  *         passed in by reference).
  * 
  */
-CreateTriggerByRangeResponse& createTriggerByRange(const std::string& requestId, const std::vector<std::string>& tableNames, const std::string& columnName, const double min, const double max, const std::map<std::string, std::string>& options, CreateTriggerByRangeResponse& response_) const;
+
+CreateTriggerByRangeResponse& createTriggerByRange( const std::string& requestId,
+                                                    const std::vector<std::string>& tableNames,
+                                                    const std::string& columnName,
+                                                    const double min,
+                                                    const double max,
+                                                    const std::map<std::string, std::string>& options,
+                                                    CreateTriggerByRangeResponse& response_ ) const;
 
 /**
  * Creates a new type in GPUdb describing the layout or schema of a table. The
@@ -2235,7 +2739,8 @@ CreateTriggerByRangeResponse& createTriggerByRange(const std::string& requestId,
  * @return Response object containing the result of the operation.
  * 
  */
-CreateTypeResponse createType(const CreateTypeRequest& request_) const;
+
+CreateTypeResponse createType( const CreateTypeRequest& request_ ) const;
 
 /**
  * Creates a new type in GPUdb describing the layout or schema of a table. The
@@ -2286,7 +2791,9 @@ CreateTypeResponse createType(const CreateTypeRequest& request_) const;
  *         passed in by reference).
  * 
  */
-CreateTypeResponse& createType(const CreateTypeRequest& request_, CreateTypeResponse& response_) const;
+
+CreateTypeResponse& createType( const CreateTypeRequest& request_,
+                                CreateTypeResponse& response_ ) const;
 
 /**
  * Creates a new type in GPUdb describing the layout or schema of a table. The
@@ -2333,13 +2840,22 @@ CreateTypeResponse& createType(const CreateTypeRequest& request_, CreateTypeResp
  * @param label  A user-defined description string which can be used to
  *               differentiate between tables and types with otherwise
  *               identical schemas.
- * @param properties  Default value is an empty std::map.
+ * @param properties  Each key-value pair specifies the properties to use for a
+ *                    given column where the key is the column name.  All keys
+ *                    used must be relevant column names for the given table.
+ *                    Specifying any property overrides the default properties
+ *                    for that column (which is based on the column's data
+ *                    type).  Default value is an empty std::map.
  * @param options  Optional parameters.  Default value is an empty std::map.
  * 
  * @return Response object containing the result of the operation.
  * 
  */
-CreateTypeResponse createType(const std::string& typeDefinition, const std::string& label, const std::map<std::string, std::vector<std::string> >& properties, const std::map<std::string, std::string>& options) const;
+
+CreateTypeResponse createType( const std::string& typeDefinition,
+                               const std::string& label,
+                               const std::map<std::string, std::vector<std::string> >& properties,
+                               const std::map<std::string, std::string>& options ) const;
 
 /**
  * Creates a new type in GPUdb describing the layout or schema of a table. The
@@ -2386,7 +2902,12 @@ CreateTypeResponse createType(const std::string& typeDefinition, const std::stri
  * @param label  A user-defined description string which can be used to
  *               differentiate between tables and types with otherwise
  *               identical schemas.
- * @param properties  Default value is an empty std::map.
+ * @param properties  Each key-value pair specifies the properties to use for a
+ *                    given column where the key is the column name.  All keys
+ *                    used must be relevant column names for the given table.
+ *                    Specifying any property overrides the default properties
+ *                    for that column (which is based on the column's data
+ *                    type).  Default value is an empty std::map.
  * @param options  Optional parameters.  Default value is an empty std::map.
  * @param[out] response_  Response object containing the results of the
  *                        operation.
@@ -2395,7 +2916,12 @@ CreateTypeResponse createType(const std::string& typeDefinition, const std::stri
  *         passed in by reference).
  * 
  */
-CreateTypeResponse& createType(const std::string& typeDefinition, const std::string& label, const std::map<std::string, std::vector<std::string> >& properties, const std::map<std::string, std::string>& options, CreateTypeResponse& response_) const;
+
+CreateTypeResponse& createType( const std::string& typeDefinition,
+                                const std::string& label,
+                                const std::map<std::string, std::vector<std::string> >& properties,
+                                const std::map<std::string, std::string>& options,
+                                CreateTypeResponse& response_ ) const;
 
 /**
  * Deletes record(s) matching the provided criteria from the given table. The
@@ -2412,7 +2938,8 @@ CreateTypeResponse& createType(const std::string& typeDefinition, const std::str
  * @return Response object containing the result of the operation.
  * 
  */
-DeleteRecordsResponse deleteRecords(const DeleteRecordsRequest& request_) const;
+
+DeleteRecordsResponse deleteRecords( const DeleteRecordsRequest& request_ ) const;
 
 /**
  * Deletes record(s) matching the provided criteria from the given table. The
@@ -2432,30 +2959,9 @@ DeleteRecordsResponse deleteRecords(const DeleteRecordsRequest& request_) const;
  *         passed in by reference).
  * 
  */
-DeleteRecordsResponse& deleteRecords(const DeleteRecordsRequest& request_, DeleteRecordsResponse& response_) const;
 
-/**
- * Deletes record(s) matching the provided criteria from the given table. The
- * record selection criteria can either be one or more  @a expressions
- * (matching multiple records) or a single record identified by @a record_id
- * optiona.  Note that the two selection criteria are mutually exclusive.  This
- * operation cannot be run on a collection or a view.  The operation is
- * synchronous meaning that a response will not be available until the request
- * is completely processed and all the matching records are deleted.
- * 
- * @param tableName  Name of the table from which to delete records. The set
- *                   must be a currently existing table and not a collection or
- *                   a view.
- * @param expressions  A list of the actual predicates, one for each select;
- *                     format should follow the guidelines provided /filter.
- *                     Specifying one or more @a expressions is mutually
- *                     exclusive to specifying @a record_id in the @a options.
- * @param options  Optional parameters.  Default value is an empty std::map.
- * 
- * @return Response object containing the result of the operation.
- * 
- */
-DeleteRecordsResponse deleteRecords(const std::string& tableName, const std::vector<std::string>& expressions, const std::map<std::string, std::string>& options) const;
+DeleteRecordsResponse& deleteRecords( const DeleteRecordsRequest& request_,
+                                      DeleteRecordsResponse& response_ ) const;
 
 /**
  * Deletes record(s) matching the provided criteria from the given table. The
@@ -2474,6 +2980,32 @@ DeleteRecordsResponse deleteRecords(const std::string& tableName, const std::vec
  *                     Specifying one or more @a expressions is mutually
  *                     exclusive to specifying @a record_id in the @a options.
  * @param options  Optional parameters.  Default value is an empty std::map.
+ * 
+ * @return Response object containing the result of the operation.
+ * 
+ */
+
+DeleteRecordsResponse deleteRecords( const std::string& tableName,
+                                     const std::vector<std::string>& expressions,
+                                     const std::map<std::string, std::string>& options ) const;
+
+/**
+ * Deletes record(s) matching the provided criteria from the given table. The
+ * record selection criteria can either be one or more  @a expressions
+ * (matching multiple records) or a single record identified by @a record_id
+ * optiona.  Note that the two selection criteria are mutually exclusive.  This
+ * operation cannot be run on a collection or a view.  The operation is
+ * synchronous meaning that a response will not be available until the request
+ * is completely processed and all the matching records are deleted.
+ * 
+ * @param tableName  Name of the table from which to delete records. The set
+ *                   must be a currently existing table and not a collection or
+ *                   a view.
+ * @param expressions  A list of the actual predicates, one for each select;
+ *                     format should follow the guidelines provided /filter.
+ *                     Specifying one or more @a expressions is mutually
+ *                     exclusive to specifying @a record_id in the @a options.
+ * @param options  Optional parameters.  Default value is an empty std::map.
  * @param[out] response_  Response object containing the results of the
  *                        operation.
  * 
@@ -2481,7 +3013,11 @@ DeleteRecordsResponse deleteRecords(const std::string& tableName, const std::vec
  *         passed in by reference).
  * 
  */
-DeleteRecordsResponse& deleteRecords(const std::string& tableName, const std::vector<std::string>& expressions, const std::map<std::string, std::string>& options, DeleteRecordsResponse& response_) const;
+
+DeleteRecordsResponse& deleteRecords( const std::string& tableName,
+                                      const std::vector<std::string>& expressions,
+                                      const std::map<std::string, std::string>& options,
+                                      DeleteRecordsResponse& response_ ) const;
 
 /**
  * Exectues a proc in the GPUdb Node.js proc server.
@@ -2492,7 +3028,8 @@ DeleteRecordsResponse& deleteRecords(const std::string& tableName, const std::ve
  * @return Response object containing the result of the operation.
  * 
  */
-ExecuteProcResponse executeProc(const ExecuteProcRequest& request_) const;
+
+ExecuteProcResponse executeProc( const ExecuteProcRequest& request_ ) const;
 
 /**
  * Exectues a proc in the GPUdb Node.js proc server.
@@ -2506,7 +3043,9 @@ ExecuteProcResponse executeProc(const ExecuteProcRequest& request_) const;
  *         passed in by reference).
  * 
  */
-ExecuteProcResponse& executeProc(const ExecuteProcRequest& request_, ExecuteProcResponse& response_) const;
+
+ExecuteProcResponse& executeProc( const ExecuteProcRequest& request_,
+                                  ExecuteProcResponse& response_ ) const;
 
 /**
  * Exectues a proc in the GPUdb Node.js proc server.
@@ -2523,7 +3062,11 @@ ExecuteProcResponse& executeProc(const ExecuteProcRequest& request_, ExecuteProc
  * @return Response object containing the result of the operation.
  * 
  */
-ExecuteProcResponse executeProc(const std::string& name, const std::map<std::string, std::string>& params, const std::map<std::string, std::vector<uint8_t> >& binParams, const std::map<std::string, std::string>& options) const;
+
+ExecuteProcResponse executeProc( const std::string& name,
+                                 const std::map<std::string, std::string>& params,
+                                 const std::map<std::string, std::vector<uint8_t> >& binParams,
+                                 const std::map<std::string, std::string>& options ) const;
 
 /**
  * Exectues a proc in the GPUdb Node.js proc server.
@@ -2543,7 +3086,12 @@ ExecuteProcResponse executeProc(const std::string& name, const std::map<std::str
  *         passed in by reference).
  * 
  */
-ExecuteProcResponse& executeProc(const std::string& name, const std::map<std::string, std::string>& params, const std::map<std::string, std::vector<uint8_t> >& binParams, const std::map<std::string, std::string>& options, ExecuteProcResponse& response_) const;
+
+ExecuteProcResponse& executeProc( const std::string& name,
+                                  const std::map<std::string, std::string>& params,
+                                  const std::map<std::string, std::vector<uint8_t> >& binParams,
+                                  const std::map<std::string, std::string>& options,
+                                  ExecuteProcResponse& response_ ) const;
 
 /**
  * Filters data based on the specified expression.  The results are stored in a
@@ -2561,7 +3109,8 @@ ExecuteProcResponse& executeProc(const std::string& name, const std::map<std::st
  * @return Response object containing the result of the operation.
  * 
  */
-FilterResponse filter(const FilterRequest& request_) const;
+
+FilterResponse filter( const FilterRequest& request_ ) const;
 
 /**
  * Filters data based on the specified expression.  The results are stored in a
@@ -2582,7 +3131,9 @@ FilterResponse filter(const FilterRequest& request_) const;
  *         passed in by reference).
  * 
  */
-FilterResponse& filter(const FilterRequest& request_, FilterResponse& response_) const;
+
+FilterResponse& filter( const FilterRequest& request_,
+                        FilterResponse& response_ ) const;
 
 /**
  * Filters data based on the specified expression.  The results are stored in a
@@ -2611,7 +3162,11 @@ FilterResponse& filter(const FilterRequest& request_, FilterResponse& response_)
  * @return Response object containing the result of the operation.
  * 
  */
-FilterResponse filter(const std::string& tableName, const std::string& viewName, const std::string& expression, const std::map<std::string, std::string>& options) const;
+
+FilterResponse filter( const std::string& tableName,
+                       const std::string& viewName,
+                       const std::string& expression,
+                       const std::map<std::string, std::string>& options ) const;
 
 /**
  * Filters data based on the specified expression.  The results are stored in a
@@ -2643,7 +3198,12 @@ FilterResponse filter(const std::string& tableName, const std::string& viewName,
  *         passed in by reference).
  * 
  */
-FilterResponse& filter(const std::string& tableName, const std::string& viewName, const std::string& expression, const std::map<std::string, std::string>& options, FilterResponse& response_) const;
+
+FilterResponse& filter( const std::string& tableName,
+                        const std::string& viewName,
+                        const std::string& expression,
+                        const std::map<std::string, std::string>& options,
+                        FilterResponse& response_ ) const;
 
 /**
  * Calculates which objects from a table are within a named area of interest
@@ -2659,7 +3219,8 @@ FilterResponse& filter(const std::string& tableName, const std::string& viewName
  * @return Response object containing the result of the operation.
  * 
  */
-FilterByAreaResponse filterByArea(const FilterByAreaRequest& request_) const;
+
+FilterByAreaResponse filterByArea( const FilterByAreaRequest& request_ ) const;
 
 /**
  * Calculates which objects from a table are within a named area of interest
@@ -2678,7 +3239,9 @@ FilterByAreaResponse filterByArea(const FilterByAreaRequest& request_) const;
  *         passed in by reference).
  * 
  */
-FilterByAreaResponse& filterByArea(const FilterByAreaRequest& request_, FilterByAreaResponse& response_) const;
+
+FilterByAreaResponse& filterByArea( const FilterByAreaRequest& request_,
+                                    FilterByAreaResponse& response_ ) const;
 
 /**
  * Calculates which objects from a table are within a named area of interest
@@ -2709,7 +3272,14 @@ FilterByAreaResponse& filterByArea(const FilterByAreaRequest& request_, FilterBy
  * @return Response object containing the result of the operation.
  * 
  */
-FilterByAreaResponse filterByArea(const std::string& tableName, const std::string& viewName, const std::string& xColumnName, const std::vector<double>& xVector, const std::string& yColumnName, const std::vector<double>& yVector, const std::map<std::string, std::string>& options) const;
+
+FilterByAreaResponse filterByArea( const std::string& tableName,
+                                   const std::string& viewName,
+                                   const std::string& xColumnName,
+                                   const std::vector<double>& xVector,
+                                   const std::string& yColumnName,
+                                   const std::vector<double>& yVector,
+                                   const std::map<std::string, std::string>& options ) const;
 
 /**
  * Calculates which objects from a table are within a named area of interest
@@ -2743,7 +3313,15 @@ FilterByAreaResponse filterByArea(const std::string& tableName, const std::strin
  *         passed in by reference).
  * 
  */
-FilterByAreaResponse& filterByArea(const std::string& tableName, const std::string& viewName, const std::string& xColumnName, const std::vector<double>& xVector, const std::string& yColumnName, const std::vector<double>& yVector, const std::map<std::string, std::string>& options, FilterByAreaResponse& response_) const;
+
+FilterByAreaResponse& filterByArea( const std::string& tableName,
+                                    const std::string& viewName,
+                                    const std::string& xColumnName,
+                                    const std::vector<double>& xVector,
+                                    const std::string& yColumnName,
+                                    const std::vector<double>& yVector,
+                                    const std::map<std::string, std::string>& options,
+                                    FilterByAreaResponse& response_ ) const;
 
 /**
  * Calculates how many objects within the given table lie in a rectangular box.
@@ -2759,7 +3337,8 @@ FilterByAreaResponse& filterByArea(const std::string& tableName, const std::stri
  * @return Response object containing the result of the operation.
  * 
  */
-FilterByBoxResponse filterByBox(const FilterByBoxRequest& request_) const;
+
+FilterByBoxResponse filterByBox( const FilterByBoxRequest& request_ ) const;
 
 /**
  * Calculates how many objects within the given table lie in a rectangular box.
@@ -2778,7 +3357,9 @@ FilterByBoxResponse filterByBox(const FilterByBoxRequest& request_) const;
  *         passed in by reference).
  * 
  */
-FilterByBoxResponse& filterByBox(const FilterByBoxRequest& request_, FilterByBoxResponse& response_) const;
+
+FilterByBoxResponse& filterByBox( const FilterByBoxRequest& request_,
+                                  FilterByBoxResponse& response_ ) const;
 
 /**
  * Calculates how many objects within the given table lie in a rectangular box.
@@ -2813,7 +3394,16 @@ FilterByBoxResponse& filterByBox(const FilterByBoxRequest& request_, FilterByBox
  * @return Response object containing the result of the operation.
  * 
  */
-FilterByBoxResponse filterByBox(const std::string& tableName, const std::string& viewName, const std::string& xColumnName, const double minX, const double maxX, const std::string& yColumnName, const double minY, const double maxY, const std::map<std::string, std::string>& options) const;
+
+FilterByBoxResponse filterByBox( const std::string& tableName,
+                                 const std::string& viewName,
+                                 const std::string& xColumnName,
+                                 const double minX,
+                                 const double maxX,
+                                 const std::string& yColumnName,
+                                 const double minY,
+                                 const double maxY,
+                                 const std::map<std::string, std::string>& options ) const;
 
 /**
  * Calculates how many objects within the given table lie in a rectangular box.
@@ -2851,7 +3441,17 @@ FilterByBoxResponse filterByBox(const std::string& tableName, const std::string&
  *         passed in by reference).
  * 
  */
-FilterByBoxResponse& filterByBox(const std::string& tableName, const std::string& viewName, const std::string& xColumnName, const double minX, const double maxX, const std::string& yColumnName, const double minY, const double maxY, const std::map<std::string, std::string>& options, FilterByBoxResponse& response_) const;
+
+FilterByBoxResponse& filterByBox( const std::string& tableName,
+                                  const std::string& viewName,
+                                  const std::string& xColumnName,
+                                  const double minX,
+                                  const double maxX,
+                                  const std::string& yColumnName,
+                                  const double minY,
+                                  const double maxY,
+                                  const std::map<std::string, std::string>& options,
+                                  FilterByBoxResponse& response_ ) const;
 
 /**
  * Applies a geometry filter against a spatial column in a given table,
@@ -2863,7 +3463,8 @@ FilterByBoxResponse& filterByBox(const std::string& tableName, const std::string
  * @return Response object containing the result of the operation.
  * 
  */
-FilterByGeometryResponse filterByGeometry(const FilterByGeometryRequest& request_) const;
+
+FilterByGeometryResponse filterByGeometry( const FilterByGeometryRequest& request_ ) const;
 
 /**
  * Applies a geometry filter against a spatial column in a given table,
@@ -2878,7 +3479,9 @@ FilterByGeometryResponse filterByGeometry(const FilterByGeometryRequest& request
  *         passed in by reference).
  * 
  */
-FilterByGeometryResponse& filterByGeometry(const FilterByGeometryRequest& request_, FilterByGeometryResponse& response_) const;
+
+FilterByGeometryResponse& filterByGeometry( const FilterByGeometryRequest& request_,
+                                            FilterByGeometryResponse& response_ ) const;
 
 /**
  * Applies a geometry filter against a spatial column in a given table,
@@ -2901,7 +3504,13 @@ FilterByGeometryResponse& filterByGeometry(const FilterByGeometryRequest& reques
  * @return Response object containing the result of the operation.
  * 
  */
-FilterByGeometryResponse filterByGeometry(const std::string& tableName, const std::string& viewName, const std::string& columnName, const std::string& inputWkt, const std::string& operation, const std::map<std::string, std::string>& options) const;
+
+FilterByGeometryResponse filterByGeometry( const std::string& tableName,
+                                           const std::string& viewName,
+                                           const std::string& columnName,
+                                           const std::string& inputWkt,
+                                           const std::string& operation,
+                                           const std::map<std::string, std::string>& options ) const;
 
 /**
  * Applies a geometry filter against a spatial column in a given table,
@@ -2927,7 +3536,14 @@ FilterByGeometryResponse filterByGeometry(const std::string& tableName, const st
  *         passed in by reference).
  * 
  */
-FilterByGeometryResponse& filterByGeometry(const std::string& tableName, const std::string& viewName, const std::string& columnName, const std::string& inputWkt, const std::string& operation, const std::map<std::string, std::string>& options, FilterByGeometryResponse& response_) const;
+
+FilterByGeometryResponse& filterByGeometry( const std::string& tableName,
+                                            const std::string& viewName,
+                                            const std::string& columnName,
+                                            const std::string& inputWkt,
+                                            const std::string& operation,
+                                            const std::map<std::string, std::string>& options,
+                                            FilterByGeometryResponse& response_ ) const;
 
 /**
  * Calculates which records from a table have values in the given list for the
@@ -2950,7 +3566,8 @@ FilterByGeometryResponse& filterByGeometry(const std::string& tableName, const s
  * @return Response object containing the result of the operation.
  * 
  */
-FilterByListResponse filterByList(const FilterByListRequest& request_) const;
+
+FilterByListResponse filterByList( const FilterByListRequest& request_ ) const;
 
 /**
  * Calculates which records from a table have values in the given list for the
@@ -2976,7 +3593,9 @@ FilterByListResponse filterByList(const FilterByListRequest& request_) const;
  *         passed in by reference).
  * 
  */
-FilterByListResponse& filterByList(const FilterByListRequest& request_, FilterByListResponse& response_) const;
+
+FilterByListResponse& filterByList( const FilterByListRequest& request_,
+                                    FilterByListResponse& response_ ) const;
 
 /**
  * Calculates which records from a table have values in the given list for the
@@ -3008,7 +3627,11 @@ FilterByListResponse& filterByList(const FilterByListRequest& request_, FilterBy
  * @return Response object containing the result of the operation.
  * 
  */
-FilterByListResponse filterByList(const std::string& tableName, const std::string& viewName, const std::map<std::string, std::vector<std::string> >& columnValuesMap, const std::map<std::string, std::string>& options) const;
+
+FilterByListResponse filterByList( const std::string& tableName,
+                                   const std::string& viewName,
+                                   const std::map<std::string, std::vector<std::string> >& columnValuesMap,
+                                   const std::map<std::string, std::string>& options ) const;
 
 /**
  * Calculates which records from a table have values in the given list for the
@@ -3043,7 +3666,12 @@ FilterByListResponse filterByList(const std::string& tableName, const std::strin
  *         passed in by reference).
  * 
  */
-FilterByListResponse& filterByList(const std::string& tableName, const std::string& viewName, const std::map<std::string, std::vector<std::string> >& columnValuesMap, const std::map<std::string, std::string>& options, FilterByListResponse& response_) const;
+
+FilterByListResponse& filterByList( const std::string& tableName,
+                                    const std::string& viewName,
+                                    const std::map<std::string, std::vector<std::string> >& columnValuesMap,
+                                    const std::map<std::string, std::string>& options,
+                                    FilterByListResponse& response_ ) const;
 
 /**
  * Calculates which objects from a table lie within a circle with the given
@@ -3066,7 +3694,8 @@ FilterByListResponse& filterByList(const std::string& tableName, const std::stri
  * @return Response object containing the result of the operation.
  * 
  */
-FilterByRadiusResponse filterByRadius(const FilterByRadiusRequest& request_) const;
+
+FilterByRadiusResponse filterByRadius( const FilterByRadiusRequest& request_ ) const;
 
 /**
  * Calculates which objects from a table lie within a circle with the given
@@ -3092,7 +3721,9 @@ FilterByRadiusResponse filterByRadius(const FilterByRadiusRequest& request_) con
  *         passed in by reference).
  * 
  */
-FilterByRadiusResponse& filterByRadius(const FilterByRadiusRequest& request_, FilterByRadiusResponse& response_) const;
+
+FilterByRadiusResponse& filterByRadius( const FilterByRadiusRequest& request_,
+                                        FilterByRadiusResponse& response_ ) const;
 
 /**
  * Calculates which objects from a table lie within a circle with the given
@@ -3135,7 +3766,15 @@ FilterByRadiusResponse& filterByRadius(const FilterByRadiusRequest& request_, Fi
  * @return Response object containing the result of the operation.
  * 
  */
-FilterByRadiusResponse filterByRadius(const std::string& tableName, const std::string& viewName, const std::string& xColumnName, const double xCenter, const std::string& yColumnName, const double yCenter, const double radius, const std::map<std::string, std::string>& options) const;
+
+FilterByRadiusResponse filterByRadius( const std::string& tableName,
+                                       const std::string& viewName,
+                                       const std::string& xColumnName,
+                                       const double xCenter,
+                                       const std::string& yColumnName,
+                                       const double yCenter,
+                                       const double radius,
+                                       const std::map<std::string, std::string>& options ) const;
 
 /**
  * Calculates which objects from a table lie within a circle with the given
@@ -3181,7 +3820,16 @@ FilterByRadiusResponse filterByRadius(const std::string& tableName, const std::s
  *         passed in by reference).
  * 
  */
-FilterByRadiusResponse& filterByRadius(const std::string& tableName, const std::string& viewName, const std::string& xColumnName, const double xCenter, const std::string& yColumnName, const double yCenter, const double radius, const std::map<std::string, std::string>& options, FilterByRadiusResponse& response_) const;
+
+FilterByRadiusResponse& filterByRadius( const std::string& tableName,
+                                        const std::string& viewName,
+                                        const std::string& xColumnName,
+                                        const double xCenter,
+                                        const std::string& yColumnName,
+                                        const double yCenter,
+                                        const double radius,
+                                        const std::map<std::string, std::string>& options,
+                                        FilterByRadiusResponse& response_ ) const;
 
 /**
  * Calculates which objects from a table have a column that is within the given
@@ -3199,7 +3847,8 @@ FilterByRadiusResponse& filterByRadius(const std::string& tableName, const std::
  * @return Response object containing the result of the operation.
  * 
  */
-FilterByRangeResponse filterByRange(const FilterByRangeRequest& request_) const;
+
+FilterByRangeResponse filterByRange( const FilterByRangeRequest& request_ ) const;
 
 /**
  * Calculates which objects from a table have a column that is within the given
@@ -3220,7 +3869,9 @@ FilterByRangeResponse filterByRange(const FilterByRangeRequest& request_) const;
  *         passed in by reference).
  * 
  */
-FilterByRangeResponse& filterByRange(const FilterByRangeRequest& request_, FilterByRangeResponse& response_) const;
+
+FilterByRangeResponse& filterByRange( const FilterByRangeRequest& request_,
+                                      FilterByRangeResponse& response_ ) const;
 
 /**
  * Calculates which objects from a table have a column that is within the given
@@ -3247,7 +3898,13 @@ FilterByRangeResponse& filterByRange(const FilterByRangeRequest& request_, Filte
  * @return Response object containing the result of the operation.
  * 
  */
-FilterByRangeResponse filterByRange(const std::string& tableName, const std::string& viewName, const std::string& columnName, const double lowerBound, const double upperBound, const std::map<std::string, std::string>& options) const;
+
+FilterByRangeResponse filterByRange( const std::string& tableName,
+                                     const std::string& viewName,
+                                     const std::string& columnName,
+                                     const double lowerBound,
+                                     const double upperBound,
+                                     const std::map<std::string, std::string>& options ) const;
 
 /**
  * Calculates which objects from a table have a column that is within the given
@@ -3277,7 +3934,14 @@ FilterByRangeResponse filterByRange(const std::string& tableName, const std::str
  *         passed in by reference).
  * 
  */
-FilterByRangeResponse& filterByRange(const std::string& tableName, const std::string& viewName, const std::string& columnName, const double lowerBound, const double upperBound, const std::map<std::string, std::string>& options, FilterByRangeResponse& response_) const;
+
+FilterByRangeResponse& filterByRange( const std::string& tableName,
+                                      const std::string& viewName,
+                                      const std::string& columnName,
+                                      const double lowerBound,
+                                      const double upperBound,
+                                      const std::map<std::string, std::string>& options,
+                                      FilterByRangeResponse& response_ ) const;
 
 /**
  * Filters objects matching all points of the given track (works only on track
@@ -3301,7 +3965,8 @@ FilterByRangeResponse& filterByRange(const std::string& tableName, const std::st
  * @return Response object containing the result of the operation.
  * 
  */
-FilterBySeriesResponse filterBySeries(const FilterBySeriesRequest& request_) const;
+
+FilterBySeriesResponse filterBySeries( const FilterBySeriesRequest& request_ ) const;
 
 /**
  * Filters objects matching all points of the given track (works only on track
@@ -3328,7 +3993,9 @@ FilterBySeriesResponse filterBySeries(const FilterBySeriesRequest& request_) con
  *         passed in by reference).
  * 
  */
-FilterBySeriesResponse& filterBySeries(const FilterBySeriesRequest& request_, FilterBySeriesResponse& response_) const;
+
+FilterBySeriesResponse& filterBySeries( const FilterBySeriesRequest& request_,
+                                        FilterBySeriesResponse& response_ ) const;
 
 /**
  * Filters objects matching all points of the given track (works only on track
@@ -3363,7 +4030,12 @@ FilterBySeriesResponse& filterBySeries(const FilterBySeriesRequest& request_, Fi
  * @return Response object containing the result of the operation.
  * 
  */
-FilterBySeriesResponse filterBySeries(const std::string& tableName, const std::string& viewName, const std::string& trackId, const std::vector<std::string>& targetTrackIds, const std::map<std::string, std::string>& options) const;
+
+FilterBySeriesResponse filterBySeries( const std::string& tableName,
+                                       const std::string& viewName,
+                                       const std::string& trackId,
+                                       const std::vector<std::string>& targetTrackIds,
+                                       const std::map<std::string, std::string>& options ) const;
 
 /**
  * Filters objects matching all points of the given track (works only on track
@@ -3401,7 +4073,13 @@ FilterBySeriesResponse filterBySeries(const std::string& tableName, const std::s
  *         passed in by reference).
  * 
  */
-FilterBySeriesResponse& filterBySeries(const std::string& tableName, const std::string& viewName, const std::string& trackId, const std::vector<std::string>& targetTrackIds, const std::map<std::string, std::string>& options, FilterBySeriesResponse& response_) const;
+
+FilterBySeriesResponse& filterBySeries( const std::string& tableName,
+                                        const std::string& viewName,
+                                        const std::string& trackId,
+                                        const std::vector<std::string>& targetTrackIds,
+                                        const std::map<std::string, std::string>& options,
+                                        FilterBySeriesResponse& response_ ) const;
 
 /**
  * Calculates which objects from a table, collection or view match a string
@@ -3428,7 +4106,8 @@ FilterBySeriesResponse& filterBySeries(const std::string& tableName, const std::
  * @return Response object containing the result of the operation.
  * 
  */
-FilterByStringResponse filterByString(const FilterByStringRequest& request_) const;
+
+FilterByStringResponse filterByString( const FilterByStringRequest& request_ ) const;
 
 /**
  * Calculates which objects from a table, collection or view match a string
@@ -3458,7 +4137,9 @@ FilterByStringResponse filterByString(const FilterByStringRequest& request_) con
  *         passed in by reference).
  * 
  */
-FilterByStringResponse& filterByString(const FilterByStringRequest& request_, FilterByStringResponse& response_) const;
+
+FilterByStringResponse& filterByString( const FilterByStringRequest& request_,
+                                        FilterByStringResponse& response_ ) const;
 
 /**
  * Calculates which objects from a table, collection or view match a string
@@ -3495,7 +4176,13 @@ FilterByStringResponse& filterByString(const FilterByStringRequest& request_, Fi
  * @return Response object containing the result of the operation.
  * 
  */
-FilterByStringResponse filterByString(const std::string& tableName, const std::string& viewName, const std::string& expression, const std::string& mode, const std::vector<std::string>& columnNames, const std::map<std::string, std::string>& options) const;
+
+FilterByStringResponse filterByString( const std::string& tableName,
+                                       const std::string& viewName,
+                                       const std::string& expression,
+                                       const std::string& mode,
+                                       const std::vector<std::string>& columnNames,
+                                       const std::map<std::string, std::string>& options ) const;
 
 /**
  * Calculates which objects from a table, collection or view match a string
@@ -3535,7 +4222,14 @@ FilterByStringResponse filterByString(const std::string& tableName, const std::s
  *         passed in by reference).
  * 
  */
-FilterByStringResponse& filterByString(const std::string& tableName, const std::string& viewName, const std::string& expression, const std::string& mode, const std::vector<std::string>& columnNames, const std::map<std::string, std::string>& options, FilterByStringResponse& response_) const;
+
+FilterByStringResponse& filterByString( const std::string& tableName,
+                                        const std::string& viewName,
+                                        const std::string& expression,
+                                        const std::string& mode,
+                                        const std::vector<std::string>& columnNames,
+                                        const std::map<std::string, std::string>& options,
+                                        FilterByStringResponse& response_ ) const;
 
 /**
  * Filters objects in one table based on objects in another table. The user
@@ -3553,7 +4247,8 @@ FilterByStringResponse& filterByString(const std::string& tableName, const std::
  * @return Response object containing the result of the operation.
  * 
  */
-FilterByTableResponse filterByTable(const FilterByTableRequest& request_) const;
+
+FilterByTableResponse filterByTable( const FilterByTableRequest& request_ ) const;
 
 /**
  * Filters objects in one table based on objects in another table. The user
@@ -3574,7 +4269,9 @@ FilterByTableResponse filterByTable(const FilterByTableRequest& request_) const;
  *         passed in by reference).
  * 
  */
-FilterByTableResponse& filterByTable(const FilterByTableRequest& request_, FilterByTableResponse& response_) const;
+
+FilterByTableResponse& filterByTable( const FilterByTableRequest& request_,
+                                      FilterByTableResponse& response_ ) const;
 
 /**
  * Filters objects in one table based on objects in another table. The user
@@ -3606,7 +4303,13 @@ FilterByTableResponse& filterByTable(const FilterByTableRequest& request_, Filte
  * @return Response object containing the result of the operation.
  * 
  */
-FilterByTableResponse filterByTable(const std::string& tableName, const std::string& viewName, const std::string& columnName, const std::string& sourceTableName, const std::string& sourceTableColumnName, const std::map<std::string, std::string>& options) const;
+
+FilterByTableResponse filterByTable( const std::string& tableName,
+                                     const std::string& viewName,
+                                     const std::string& columnName,
+                                     const std::string& sourceTableName,
+                                     const std::string& sourceTableColumnName,
+                                     const std::map<std::string, std::string>& options ) const;
 
 /**
  * Filters objects in one table based on objects in another table. The user
@@ -3641,7 +4344,14 @@ FilterByTableResponse filterByTable(const std::string& tableName, const std::str
  *         passed in by reference).
  * 
  */
-FilterByTableResponse& filterByTable(const std::string& tableName, const std::string& viewName, const std::string& columnName, const std::string& sourceTableName, const std::string& sourceTableColumnName, const std::map<std::string, std::string>& options, FilterByTableResponse& response_) const;
+
+FilterByTableResponse& filterByTable( const std::string& tableName,
+                                      const std::string& viewName,
+                                      const std::string& columnName,
+                                      const std::string& sourceTableName,
+                                      const std::string& sourceTableColumnName,
+                                      const std::map<std::string, std::string>& options,
+                                      FilterByTableResponse& response_ ) const;
 
 /**
  * Calculates which objects from a table has a particular value for a
@@ -3659,7 +4369,8 @@ FilterByTableResponse& filterByTable(const std::string& tableName, const std::st
  * @return Response object containing the result of the operation.
  * 
  */
-FilterByValueResponse filterByValue(const FilterByValueRequest& request_) const;
+
+FilterByValueResponse filterByValue( const FilterByValueRequest& request_ ) const;
 
 /**
  * Calculates which objects from a table has a particular value for a
@@ -3680,7 +4391,9 @@ FilterByValueResponse filterByValue(const FilterByValueRequest& request_) const;
  *         passed in by reference).
  * 
  */
-FilterByValueResponse& filterByValue(const FilterByValueRequest& request_, FilterByValueResponse& response_) const;
+
+FilterByValueResponse& filterByValue( const FilterByValueRequest& request_,
+                                      FilterByValueResponse& response_ ) const;
 
 /**
  * Calculates which objects from a table has a particular value for a
@@ -3710,7 +4423,14 @@ FilterByValueResponse& filterByValue(const FilterByValueRequest& request_, Filte
  * @return Response object containing the result of the operation.
  * 
  */
-FilterByValueResponse filterByValue(const std::string& tableName, const std::string& viewName, const bool isString, const double value, const std::string& valueStr, const std::string& columnName, const std::map<std::string, std::string>& options) const;
+
+FilterByValueResponse filterByValue( const std::string& tableName,
+                                     const std::string& viewName,
+                                     const bool isString,
+                                     const double value,
+                                     const std::string& valueStr,
+                                     const std::string& columnName,
+                                     const std::map<std::string, std::string>& options ) const;
 
 /**
  * Calculates which objects from a table has a particular value for a
@@ -3743,7 +4463,15 @@ FilterByValueResponse filterByValue(const std::string& tableName, const std::str
  *         passed in by reference).
  * 
  */
-FilterByValueResponse& filterByValue(const std::string& tableName, const std::string& viewName, const bool isString, const double value, const std::string& valueStr, const std::string& columnName, const std::map<std::string, std::string>& options, FilterByValueResponse& response_) const;
+
+FilterByValueResponse& filterByValue( const std::string& tableName,
+                                      const std::string& viewName,
+                                      const bool isString,
+                                      const double value,
+                                      const std::string& valueStr,
+                                      const std::string& columnName,
+                                      const std::map<std::string, std::string>& options,
+                                      FilterByValueResponse& response_ ) const;
 
 /**
  * Retrieves records from a given table, optionally filtered by an expression
@@ -3763,7 +4491,8 @@ FilterByValueResponse& filterByValue(const std::string& tableName, const std::st
  * @return Response object containing the result of the operation.
  * 
  */
-RawGetRecordsResponse getRecordsRaw(const GetRecordsRequest& request_) const;
+
+RawGetRecordsResponse getRecordsRaw( const GetRecordsRequest& request_ ) const;
 
 /**
  * Retrieves records from a given table, optionally filtered by an expression
@@ -3786,7 +4515,9 @@ RawGetRecordsResponse getRecordsRaw(const GetRecordsRequest& request_) const;
  *         passed in by reference).
  * 
  */
-RawGetRecordsResponse& getRecordsRaw(const GetRecordsRequest& request_, RawGetRecordsResponse& response_) const;
+
+RawGetRecordsResponse& getRecordsRaw( const GetRecordsRequest& request_,
+                                      RawGetRecordsResponse& response_ ) const;
 
 /**
  * Retrieves records from a given table, optionally filtered by an expression
@@ -3808,7 +4539,8 @@ RawGetRecordsResponse& getRecordsRaw(const GetRecordsRequest& request_, RawGetRe
  * @return Response object containing the result of the operation.
  * 
  */
-template<typename TResponse> GetRecordsResponse<TResponse> getRecords(const GetRecordsRequest& request_) const
+template<typename TResponse> 
+GetRecordsResponse<TResponse> getRecords( const GetRecordsRequest& request_ ) const
 {
     RawGetRecordsResponse actualResponse_;
     submitRequest("/get/records", request_, actualResponse_, false);
@@ -3845,7 +4577,9 @@ template<typename TResponse> GetRecordsResponse<TResponse> getRecords(const GetR
  *         passed in by reference).
  * 
  */
-template<typename TResponse> GetRecordsResponse<TResponse>& getRecords(const GetRecordsRequest& request_, GetRecordsResponse<TResponse>& response_) const
+template<typename TResponse> 
+GetRecordsResponse<TResponse>& getRecords( const GetRecordsRequest& request_,
+                                           GetRecordsResponse<TResponse>& response_ ) const
 {
     RawGetRecordsResponse actualResponse_;
     submitRequest("/get/records", request_, actualResponse_, false);
@@ -3886,7 +4620,11 @@ template<typename TResponse> GetRecordsResponse<TResponse>& getRecords(const Get
  * @return Response object containing the result of the operation.
  * 
  */
-template<typename TResponse> GetRecordsResponse<TResponse> getRecords(const std::string& tableName, const int64_t offset, const int64_t limit, const std::map<std::string, std::string>& options) const
+template<typename TResponse> 
+GetRecordsResponse<TResponse> getRecords( const std::string& tableName,
+                                          const int64_t offset,
+                                          const int64_t limit,
+                                          const std::map<std::string, std::string>& options ) const
 {
     GetRecordsRequest actualRequest_;
     actualRequest_.tableName = tableName;
@@ -3936,7 +4674,12 @@ template<typename TResponse> GetRecordsResponse<TResponse> getRecords(const std:
  *         passed in by reference).
  * 
  */
-template<typename TResponse> GetRecordsResponse<TResponse>& getRecords(const std::string& tableName, const int64_t offset, const int64_t limit, const std::map<std::string, std::string>& options, GetRecordsResponse<TResponse>& response_) const
+template<typename TResponse> 
+GetRecordsResponse<TResponse>& getRecords( const std::string& tableName,
+                                           const int64_t offset,
+                                           const int64_t limit,
+                                           const std::map<std::string, std::string>& options,
+                                           GetRecordsResponse<TResponse>& response_ ) const
 {
     GetRecordsRequest actualRequest_;
     actualRequest_.tableName = tableName;
@@ -3975,7 +4718,9 @@ template<typename TResponse> GetRecordsResponse<TResponse>& getRecords(const std
  * @return Response object containing the result of the operation.
  * 
  */
-template<typename TResponse> GetRecordsResponse<TResponse> getRecords(const ::avro::ValidSchema& schema_, const GetRecordsRequest& request_) const
+template<typename TResponse> 
+GetRecordsResponse<TResponse> getRecords( const ::avro::ValidSchema& schema_,
+                                          const GetRecordsRequest& request_ ) const
 {
     RawGetRecordsResponse actualResponse_;
     submitRequest("/get/records", request_, actualResponse_, false);
@@ -4013,7 +4758,10 @@ template<typename TResponse> GetRecordsResponse<TResponse> getRecords(const ::av
  *         passed in by reference).
  * 
  */
-template<typename TResponse> GetRecordsResponse<TResponse>& getRecords(const ::avro::ValidSchema& schema_, const GetRecordsRequest& request_, GetRecordsResponse<TResponse>& response_) const
+template<typename TResponse> 
+GetRecordsResponse<TResponse>& getRecords( const ::avro::ValidSchema& schema_,
+                                           const GetRecordsRequest& request_,
+                                           GetRecordsResponse<TResponse>& response_ ) const
 {
     RawGetRecordsResponse actualResponse_;
     submitRequest("/get/records", request_, actualResponse_, false);
@@ -4055,7 +4803,12 @@ template<typename TResponse> GetRecordsResponse<TResponse>& getRecords(const ::a
  * @return Response object containing the result of the operation.
  * 
  */
-template<typename TResponse> GetRecordsResponse<TResponse> getRecords(const ::avro::ValidSchema& schema_, const std::string& tableName, const int64_t offset, const int64_t limit, const std::map<std::string, std::string>& options) const
+template<typename TResponse> 
+GetRecordsResponse<TResponse> getRecords( const ::avro::ValidSchema& schema_,
+                                          const std::string& tableName,
+                                          const int64_t offset,
+                                          const int64_t limit,
+                                          const std::map<std::string, std::string>& options ) const
 {
     GetRecordsRequest actualRequest_;
     actualRequest_.tableName = tableName;
@@ -4106,7 +4859,13 @@ template<typename TResponse> GetRecordsResponse<TResponse> getRecords(const ::av
  *         passed in by reference).
  * 
  */
-template<typename TResponse> GetRecordsResponse<TResponse>& getRecords(const ::avro::ValidSchema& schema_, const std::string& tableName, const int64_t offset, const int64_t limit, const std::map<std::string, std::string>& options, GetRecordsResponse<TResponse>& response_) const
+template<typename TResponse> 
+GetRecordsResponse<TResponse>& getRecords( const ::avro::ValidSchema& schema_,
+                                           const std::string& tableName,
+                                           const int64_t offset,
+                                           const int64_t limit,
+                                           const std::map<std::string, std::string>& options,
+                                           GetRecordsResponse<TResponse>& response_ ) const
 {
     GetRecordsRequest actualRequest_;
     actualRequest_.tableName = tableName;
@@ -4149,7 +4908,8 @@ template<typename TResponse> GetRecordsResponse<TResponse>& getRecords(const ::a
  * @return Response object containing the result of the operation.
  * 
  */
-RawGetRecordsByColumnResponse getRecordsByColumnRaw(const GetRecordsByColumnRequest& request_) const;
+
+RawGetRecordsByColumnResponse getRecordsByColumnRaw( const GetRecordsByColumnRequest& request_ ) const;
 
 /**
  * For a given table, retrieves the values of the given columns within a given
@@ -4179,7 +4939,9 @@ RawGetRecordsByColumnResponse getRecordsByColumnRaw(const GetRecordsByColumnRequ
  *         passed in by reference).
  * 
  */
-RawGetRecordsByColumnResponse& getRecordsByColumnRaw(const GetRecordsByColumnRequest& request_, RawGetRecordsByColumnResponse& response_) const;
+
+RawGetRecordsByColumnResponse& getRecordsByColumnRaw( const GetRecordsByColumnRequest& request_,
+                                                      RawGetRecordsByColumnResponse& response_ ) const;
 
 /**
  * For a given table, retrieves the values of the given columns within a given
@@ -4206,7 +4968,8 @@ RawGetRecordsByColumnResponse& getRecordsByColumnRaw(const GetRecordsByColumnReq
  * @return Response object containing the result of the operation.
  * 
  */
-GetRecordsByColumnResponse getRecordsByColumn(const GetRecordsByColumnRequest& request_) const;
+
+GetRecordsByColumnResponse getRecordsByColumn( const GetRecordsByColumnRequest& request_ ) const;
 
 /**
  * For a given table, retrieves the values of the given columns within a given
@@ -4236,7 +4999,9 @@ GetRecordsByColumnResponse getRecordsByColumn(const GetRecordsByColumnRequest& r
  *         passed in by reference).
  * 
  */
-GetRecordsByColumnResponse& getRecordsByColumn(const GetRecordsByColumnRequest& request_, GetRecordsByColumnResponse& response_) const;
+
+GetRecordsByColumnResponse& getRecordsByColumn( const GetRecordsByColumnRequest& request_,
+                                                GetRecordsByColumnResponse& response_ ) const;
 
 /**
  * For a given table, retrieves the values of the given columns within a given
@@ -4274,7 +5039,12 @@ GetRecordsByColumnResponse& getRecordsByColumn(const GetRecordsByColumnRequest& 
  * @return Response object containing the result of the operation.
  * 
  */
-GetRecordsByColumnResponse getRecordsByColumn(const std::string& tableName, const std::vector<std::string>& columnNames, const int64_t offset, const int64_t limit, const std::map<std::string, std::string>& options) const;
+
+GetRecordsByColumnResponse getRecordsByColumn( const std::string& tableName,
+                                               const std::vector<std::string>& columnNames,
+                                               const int64_t offset,
+                                               const int64_t limit,
+                                               const std::map<std::string, std::string>& options ) const;
 
 /**
  * For a given table, retrieves the values of the given columns within a given
@@ -4315,7 +5085,13 @@ GetRecordsByColumnResponse getRecordsByColumn(const std::string& tableName, cons
  *         passed in by reference).
  * 
  */
-GetRecordsByColumnResponse& getRecordsByColumn(const std::string& tableName, const std::vector<std::string>& columnNames, const int64_t offset, const int64_t limit, const std::map<std::string, std::string>& options, GetRecordsByColumnResponse& response_) const;
+
+GetRecordsByColumnResponse& getRecordsByColumn( const std::string& tableName,
+                                                const std::vector<std::string>& columnNames,
+                                                const int64_t offset,
+                                                const int64_t limit,
+                                                const std::map<std::string, std::string>& options,
+                                                GetRecordsByColumnResponse& response_ ) const;
 
 /**
  * Retrieves the complete series/track records from the given @a worldTableName
@@ -4336,7 +5112,8 @@ GetRecordsByColumnResponse& getRecordsByColumn(const std::string& tableName, con
  * @return Response object containing the result of the operation.
  * 
  */
-RawGetRecordsBySeriesResponse getRecordsBySeriesRaw(const GetRecordsBySeriesRequest& request_) const;
+
+RawGetRecordsBySeriesResponse getRecordsBySeriesRaw( const GetRecordsBySeriesRequest& request_ ) const;
 
 /**
  * Retrieves the complete series/track records from the given @a worldTableName
@@ -4361,7 +5138,9 @@ RawGetRecordsBySeriesResponse getRecordsBySeriesRaw(const GetRecordsBySeriesRequ
  *         passed in by reference).
  * 
  */
-RawGetRecordsBySeriesResponse& getRecordsBySeriesRaw(const GetRecordsBySeriesRequest& request_, RawGetRecordsBySeriesResponse& response_) const;
+
+RawGetRecordsBySeriesResponse& getRecordsBySeriesRaw( const GetRecordsBySeriesRequest& request_,
+                                                      RawGetRecordsBySeriesResponse& response_ ) const;
 
 /**
  * Retrieves the complete series/track records from the given @a worldTableName
@@ -4383,7 +5162,8 @@ RawGetRecordsBySeriesResponse& getRecordsBySeriesRaw(const GetRecordsBySeriesReq
  * @return Response object containing the result of the operation.
  * 
  */
-template<typename TResponse> GetRecordsBySeriesResponse<TResponse> getRecordsBySeries(const GetRecordsBySeriesRequest& request_) const
+template<typename TResponse> 
+GetRecordsBySeriesResponse<TResponse> getRecordsBySeries( const GetRecordsBySeriesRequest& request_ ) const
 {
     RawGetRecordsBySeriesResponse actualResponse_;
     submitRequest("/get/records/byseries", request_, actualResponse_, false);
@@ -4428,7 +5208,9 @@ template<typename TResponse> GetRecordsBySeriesResponse<TResponse> getRecordsByS
  *         passed in by reference).
  * 
  */
-template<typename TResponse> GetRecordsBySeriesResponse<TResponse>& getRecordsBySeries(const GetRecordsBySeriesRequest& request_, GetRecordsBySeriesResponse<TResponse>& response_) const
+template<typename TResponse> 
+GetRecordsBySeriesResponse<TResponse>& getRecordsBySeries( const GetRecordsBySeriesRequest& request_,
+                                                           GetRecordsBySeriesResponse<TResponse>& response_ ) const
 {
     RawGetRecordsBySeriesResponse actualResponse_;
     submitRequest("/get/records/byseries", request_, actualResponse_, false);
@@ -4485,7 +5267,12 @@ template<typename TResponse> GetRecordsBySeriesResponse<TResponse>& getRecordsBy
  * @return Response object containing the result of the operation.
  * 
  */
-template<typename TResponse> GetRecordsBySeriesResponse<TResponse> getRecordsBySeries(const std::string& tableName, const std::string& worldTableName, const int32_t offset, const int32_t limit, const std::map<std::string, std::string>& options) const
+template<typename TResponse> 
+GetRecordsBySeriesResponse<TResponse> getRecordsBySeries( const std::string& tableName,
+                                                          const std::string& worldTableName,
+                                                          const int32_t offset,
+                                                          const int32_t limit,
+                                                          const std::map<std::string, std::string>& options ) const
 {
     GetRecordsBySeriesRequest actualRequest_;
     actualRequest_.tableName = tableName;
@@ -4552,7 +5339,13 @@ template<typename TResponse> GetRecordsBySeriesResponse<TResponse> getRecordsByS
  *         passed in by reference).
  * 
  */
-template<typename TResponse> GetRecordsBySeriesResponse<TResponse>& getRecordsBySeries(const std::string& tableName, const std::string& worldTableName, const int32_t offset, const int32_t limit, const std::map<std::string, std::string>& options, GetRecordsBySeriesResponse<TResponse>& response_) const
+template<typename TResponse> 
+GetRecordsBySeriesResponse<TResponse>& getRecordsBySeries( const std::string& tableName,
+                                                           const std::string& worldTableName,
+                                                           const int32_t offset,
+                                                           const int32_t limit,
+                                                           const std::map<std::string, std::string>& options,
+                                                           GetRecordsBySeriesResponse<TResponse>& response_ ) const
 {
     GetRecordsBySeriesRequest actualRequest_;
     actualRequest_.tableName = tableName;
@@ -4600,7 +5393,9 @@ template<typename TResponse> GetRecordsBySeriesResponse<TResponse>& getRecordsBy
  * @return Response object containing the result of the operation.
  * 
  */
-template<typename TResponse> GetRecordsBySeriesResponse<TResponse> getRecordsBySeries(const ::avro::ValidSchema& schema_, const GetRecordsBySeriesRequest& request_) const
+template<typename TResponse> 
+GetRecordsBySeriesResponse<TResponse> getRecordsBySeries( const ::avro::ValidSchema& schema_,
+                                                          const GetRecordsBySeriesRequest& request_ ) const
 {
     RawGetRecordsBySeriesResponse actualResponse_;
     submitRequest("/get/records/byseries", request_, actualResponse_, false);
@@ -4646,7 +5441,10 @@ template<typename TResponse> GetRecordsBySeriesResponse<TResponse> getRecordsByS
  *         passed in by reference).
  * 
  */
-template<typename TResponse> GetRecordsBySeriesResponse<TResponse>& getRecordsBySeries(const ::avro::ValidSchema& schema_, const GetRecordsBySeriesRequest& request_, GetRecordsBySeriesResponse<TResponse>& response_) const
+template<typename TResponse> 
+GetRecordsBySeriesResponse<TResponse>& getRecordsBySeries( const ::avro::ValidSchema& schema_,
+                                                           const GetRecordsBySeriesRequest& request_,
+                                                           GetRecordsBySeriesResponse<TResponse>& response_ ) const
 {
     RawGetRecordsBySeriesResponse actualResponse_;
     submitRequest("/get/records/byseries", request_, actualResponse_, false);
@@ -4704,7 +5502,13 @@ template<typename TResponse> GetRecordsBySeriesResponse<TResponse>& getRecordsBy
  * @return Response object containing the result of the operation.
  * 
  */
-template<typename TResponse> GetRecordsBySeriesResponse<TResponse> getRecordsBySeries(const ::avro::ValidSchema& schema_, const std::string& tableName, const std::string& worldTableName, const int32_t offset, const int32_t limit, const std::map<std::string, std::string>& options) const
+template<typename TResponse> 
+GetRecordsBySeriesResponse<TResponse> getRecordsBySeries( const ::avro::ValidSchema& schema_,
+                                                          const std::string& tableName,
+                                                          const std::string& worldTableName,
+                                                          const int32_t offset,
+                                                          const int32_t limit,
+                                                          const std::map<std::string, std::string>& options ) const
 {
     GetRecordsBySeriesRequest actualRequest_;
     actualRequest_.tableName = tableName;
@@ -4772,7 +5576,14 @@ template<typename TResponse> GetRecordsBySeriesResponse<TResponse> getRecordsByS
  *         passed in by reference).
  * 
  */
-template<typename TResponse> GetRecordsBySeriesResponse<TResponse>& getRecordsBySeries(const ::avro::ValidSchema& schema_, const std::string& tableName, const std::string& worldTableName, const int32_t offset, const int32_t limit, const std::map<std::string, std::string>& options, GetRecordsBySeriesResponse<TResponse>& response_) const
+template<typename TResponse> 
+GetRecordsBySeriesResponse<TResponse>& getRecordsBySeries( const ::avro::ValidSchema& schema_,
+                                                           const std::string& tableName,
+                                                           const std::string& worldTableName,
+                                                           const int32_t offset,
+                                                           const int32_t limit,
+                                                           const std::map<std::string, std::string>& options,
+                                                           GetRecordsBySeriesResponse<TResponse>& response_ ) const
 {
     GetRecordsBySeriesRequest actualRequest_;
     actualRequest_.tableName = tableName;
@@ -4811,7 +5622,8 @@ template<typename TResponse> GetRecordsBySeriesResponse<TResponse>& getRecordsBy
  * @return Response object containing the result of the operation.
  * 
  */
-RawGetRecordsFromCollectionResponse getRecordsFromCollectionRaw(const GetRecordsFromCollectionRequest& request_) const;
+
+RawGetRecordsFromCollectionResponse getRecordsFromCollectionRaw( const GetRecordsFromCollectionRequest& request_ ) const;
 
 /**
  * Retrieves records from a collection. The operation can optionally return the
@@ -4830,7 +5642,9 @@ RawGetRecordsFromCollectionResponse getRecordsFromCollectionRaw(const GetRecords
  *         passed in by reference).
  * 
  */
-RawGetRecordsFromCollectionResponse& getRecordsFromCollectionRaw(const GetRecordsFromCollectionRequest& request_, RawGetRecordsFromCollectionResponse& response_) const;
+
+RawGetRecordsFromCollectionResponse& getRecordsFromCollectionRaw( const GetRecordsFromCollectionRequest& request_,
+                                                                  RawGetRecordsFromCollectionResponse& response_ ) const;
 
 /**
  * Retrieves records from a collection. The operation can optionally return the
@@ -4848,7 +5662,8 @@ RawGetRecordsFromCollectionResponse& getRecordsFromCollectionRaw(const GetRecord
  * @return Response object containing the result of the operation.
  * 
  */
-template<typename TResponse> GetRecordsFromCollectionResponse<TResponse> getRecordsFromCollection(const GetRecordsFromCollectionRequest& request_) const
+template<typename TResponse> 
+GetRecordsFromCollectionResponse<TResponse> getRecordsFromCollection( const GetRecordsFromCollectionRequest& request_ ) const
 {
     RawGetRecordsFromCollectionResponse actualResponse_;
     submitRequest("/get/records/fromcollection", request_, actualResponse_, false);
@@ -4881,7 +5696,9 @@ template<typename TResponse> GetRecordsFromCollectionResponse<TResponse> getReco
  *         passed in by reference).
  * 
  */
-template<typename TResponse> GetRecordsFromCollectionResponse<TResponse>& getRecordsFromCollection(const GetRecordsFromCollectionRequest& request_, GetRecordsFromCollectionResponse<TResponse>& response_) const
+template<typename TResponse> 
+GetRecordsFromCollectionResponse<TResponse>& getRecordsFromCollection( const GetRecordsFromCollectionRequest& request_,
+                                                                       GetRecordsFromCollectionResponse<TResponse>& response_ ) const
 {
     RawGetRecordsFromCollectionResponse actualResponse_;
     submitRequest("/get/records/fromcollection", request_, actualResponse_, false);
@@ -4919,7 +5736,11 @@ template<typename TResponse> GetRecordsFromCollectionResponse<TResponse>& getRec
  * @return Response object containing the result of the operation.
  * 
  */
-template<typename TResponse> GetRecordsFromCollectionResponse<TResponse> getRecordsFromCollection(const std::string& tableName, const int64_t offset, const int64_t limit, const std::map<std::string, std::string>& options) const
+template<typename TResponse> 
+GetRecordsFromCollectionResponse<TResponse> getRecordsFromCollection( const std::string& tableName,
+                                                                      const int64_t offset,
+                                                                      const int64_t limit,
+                                                                      const std::map<std::string, std::string>& options ) const
 {
     GetRecordsFromCollectionRequest actualRequest_;
     actualRequest_.tableName = tableName;
@@ -4966,7 +5787,12 @@ template<typename TResponse> GetRecordsFromCollectionResponse<TResponse> getReco
  *         passed in by reference).
  * 
  */
-template<typename TResponse> GetRecordsFromCollectionResponse<TResponse>& getRecordsFromCollection(const std::string& tableName, const int64_t offset, const int64_t limit, const std::map<std::string, std::string>& options, GetRecordsFromCollectionResponse<TResponse>& response_) const
+template<typename TResponse> 
+GetRecordsFromCollectionResponse<TResponse>& getRecordsFromCollection( const std::string& tableName,
+                                                                       const int64_t offset,
+                                                                       const int64_t limit,
+                                                                       const std::map<std::string, std::string>& options,
+                                                                       GetRecordsFromCollectionResponse<TResponse>& response_ ) const
 {
     GetRecordsFromCollectionRequest actualRequest_;
     actualRequest_.tableName = tableName;
@@ -5001,7 +5827,9 @@ template<typename TResponse> GetRecordsFromCollectionResponse<TResponse>& getRec
  * @return Response object containing the result of the operation.
  * 
  */
-template<typename TResponse> GetRecordsFromCollectionResponse<TResponse> getRecordsFromCollection(const ::avro::ValidSchema& schema_, const GetRecordsFromCollectionRequest& request_) const
+template<typename TResponse> 
+GetRecordsFromCollectionResponse<TResponse> getRecordsFromCollection( const ::avro::ValidSchema& schema_,
+                                                                      const GetRecordsFromCollectionRequest& request_ ) const
 {
     RawGetRecordsFromCollectionResponse actualResponse_;
     submitRequest("/get/records/fromcollection", request_, actualResponse_, false);
@@ -5035,7 +5863,10 @@ template<typename TResponse> GetRecordsFromCollectionResponse<TResponse> getReco
  *         passed in by reference).
  * 
  */
-template<typename TResponse> GetRecordsFromCollectionResponse<TResponse>& getRecordsFromCollection(const ::avro::ValidSchema& schema_, const GetRecordsFromCollectionRequest& request_, GetRecordsFromCollectionResponse<TResponse>& response_) const
+template<typename TResponse> 
+GetRecordsFromCollectionResponse<TResponse>& getRecordsFromCollection( const ::avro::ValidSchema& schema_,
+                                                                       const GetRecordsFromCollectionRequest& request_,
+                                                                       GetRecordsFromCollectionResponse<TResponse>& response_ ) const
 {
     RawGetRecordsFromCollectionResponse actualResponse_;
     submitRequest("/get/records/fromcollection", request_, actualResponse_, false);
@@ -5074,7 +5905,12 @@ template<typename TResponse> GetRecordsFromCollectionResponse<TResponse>& getRec
  * @return Response object containing the result of the operation.
  * 
  */
-template<typename TResponse> GetRecordsFromCollectionResponse<TResponse> getRecordsFromCollection(const ::avro::ValidSchema& schema_, const std::string& tableName, const int64_t offset, const int64_t limit, const std::map<std::string, std::string>& options) const
+template<typename TResponse> 
+GetRecordsFromCollectionResponse<TResponse> getRecordsFromCollection( const ::avro::ValidSchema& schema_,
+                                                                      const std::string& tableName,
+                                                                      const int64_t offset,
+                                                                      const int64_t limit,
+                                                                      const std::map<std::string, std::string>& options ) const
 {
     GetRecordsFromCollectionRequest actualRequest_;
     actualRequest_.tableName = tableName;
@@ -5122,7 +5958,13 @@ template<typename TResponse> GetRecordsFromCollectionResponse<TResponse> getReco
  *         passed in by reference).
  * 
  */
-template<typename TResponse> GetRecordsFromCollectionResponse<TResponse>& getRecordsFromCollection(const ::avro::ValidSchema& schema_, const std::string& tableName, const int64_t offset, const int64_t limit, const std::map<std::string, std::string>& options, GetRecordsFromCollectionResponse<TResponse>& response_) const
+template<typename TResponse> 
+GetRecordsFromCollectionResponse<TResponse>& getRecordsFromCollection( const ::avro::ValidSchema& schema_,
+                                                                       const std::string& tableName,
+                                                                       const int64_t offset,
+                                                                       const int64_t limit,
+                                                                       const std::map<std::string, std::string>& options,
+                                                                       GetRecordsFromCollectionResponse<TResponse>& response_ ) const
 {
     GetRecordsFromCollectionRequest actualRequest_;
     actualRequest_.tableName = tableName;
@@ -5149,7 +5991,8 @@ template<typename TResponse> GetRecordsFromCollectionResponse<TResponse>& getRec
  * @return Response object containing the result of the operation.
  * 
  */
-HasTableResponse hasTable(const HasTableRequest& request_) const;
+
+HasTableResponse hasTable( const HasTableRequest& request_ ) const;
 
 /**
  * Checks the existance of a table with the given name in GPUdb.
@@ -5163,7 +6006,9 @@ HasTableResponse hasTable(const HasTableRequest& request_) const;
  *         passed in by reference).
  * 
  */
-HasTableResponse& hasTable(const HasTableRequest& request_, HasTableResponse& response_) const;
+
+HasTableResponse& hasTable( const HasTableRequest& request_,
+                            HasTableResponse& response_ ) const;
 
 /**
  * Checks the existance of a table with the given name in GPUdb.
@@ -5174,7 +6019,9 @@ HasTableResponse& hasTable(const HasTableRequest& request_, HasTableResponse& re
  * @return Response object containing the result of the operation.
  * 
  */
-HasTableResponse hasTable(const std::string& tableName, const std::map<std::string, std::string>& options) const;
+
+HasTableResponse hasTable( const std::string& tableName,
+                           const std::map<std::string, std::string>& options ) const;
 
 /**
  * Checks the existance of a table with the given name in GPUdb.
@@ -5188,7 +6035,10 @@ HasTableResponse hasTable(const std::string& tableName, const std::map<std::stri
  *         passed in by reference).
  * 
  */
-HasTableResponse& hasTable(const std::string& tableName, const std::map<std::string, std::string>& options, HasTableResponse& response_) const;
+
+HasTableResponse& hasTable( const std::string& tableName,
+                            const std::map<std::string, std::string>& options,
+                            HasTableResponse& response_ ) const;
 
 /**
  * Check the existance of a type in GPUdb.
@@ -5199,7 +6049,8 @@ HasTableResponse& hasTable(const std::string& tableName, const std::map<std::str
  * @return Response object containing the result of the operation.
  * 
  */
-HasTypeResponse hasType(const HasTypeRequest& request_) const;
+
+HasTypeResponse hasType( const HasTypeRequest& request_ ) const;
 
 /**
  * Check the existance of a type in GPUdb.
@@ -5213,7 +6064,9 @@ HasTypeResponse hasType(const HasTypeRequest& request_) const;
  *         passed in by reference).
  * 
  */
-HasTypeResponse& hasType(const HasTypeRequest& request_, HasTypeResponse& response_) const;
+
+HasTypeResponse& hasType( const HasTypeRequest& request_,
+                          HasTypeResponse& response_ ) const;
 
 /**
  * Check the existance of a type in GPUdb.
@@ -5225,7 +6078,9 @@ HasTypeResponse& hasType(const HasTypeRequest& request_, HasTypeResponse& respon
  * @return Response object containing the result of the operation.
  * 
  */
-HasTypeResponse hasType(const std::string& typeId, const std::map<std::string, std::string>& options) const;
+
+HasTypeResponse hasType( const std::string& typeId,
+                         const std::map<std::string, std::string>& options ) const;
 
 /**
  * Check the existance of a type in GPUdb.
@@ -5240,7 +6095,10 @@ HasTypeResponse hasType(const std::string& typeId, const std::map<std::string, s
  *         passed in by reference).
  * 
  */
-HasTypeResponse& hasType(const std::string& typeId, const std::map<std::string, std::string>& options, HasTypeResponse& response_) const;
+
+HasTypeResponse& hasType( const std::string& typeId,
+                          const std::map<std::string, std::string>& options,
+                          HasTypeResponse& response_ ) const;
 
 /**
  * Adds multiple records to the specified table. The operation is synchronous
@@ -5270,7 +6128,8 @@ HasTypeResponse& hasType(const std::string& typeId, const std::map<std::string, 
  * @return Response object containing the result of the operation.
  * 
  */
-InsertRecordsResponse insertRecordsRaw(const RawInsertRecordsRequest& request_) const;
+
+InsertRecordsResponse insertRecordsRaw( const RawInsertRecordsRequest& request_ ) const;
 
 /**
  * Adds multiple records to the specified table. The operation is synchronous
@@ -5303,7 +6162,9 @@ InsertRecordsResponse insertRecordsRaw(const RawInsertRecordsRequest& request_) 
  *         passed in by reference).
  * 
  */
-InsertRecordsResponse& insertRecordsRaw(const RawInsertRecordsRequest& request_, InsertRecordsResponse& response_) const;
+
+InsertRecordsResponse& insertRecordsRaw( const RawInsertRecordsRequest& request_,
+                                         InsertRecordsResponse& response_ ) const;
 
 /**
  * Adds multiple records to the specified table. The operation is synchronous
@@ -5335,7 +6196,8 @@ InsertRecordsResponse& insertRecordsRaw(const RawInsertRecordsRequest& request_,
  * @return Response object containing the result of the operation.
  * 
  */
-template<typename TRequest> InsertRecordsResponse insertRecords(const InsertRecordsRequest<TRequest>& request_) const
+template<typename TRequest> 
+InsertRecordsResponse insertRecords( const InsertRecordsRequest<TRequest>& request_ ) const
 {
     RawInsertRecordsRequest actualRequest_;
     actualRequest_.tableName = request_.tableName;
@@ -5380,7 +6242,9 @@ template<typename TRequest> InsertRecordsResponse insertRecords(const InsertReco
  *         passed in by reference).
  * 
  */
-template<typename TRequest> InsertRecordsResponse& insertRecords(const InsertRecordsRequest<TRequest>& request_, InsertRecordsResponse& response_) const
+template<typename TRequest> 
+InsertRecordsResponse& insertRecords( const InsertRecordsRequest<TRequest>& request_,
+                                      InsertRecordsResponse& response_ ) const
 {
     RawInsertRecordsRequest actualRequest_;
     actualRequest_.tableName = request_.tableName;
@@ -5425,7 +6289,10 @@ template<typename TRequest> InsertRecordsResponse& insertRecords(const InsertRec
  * @return Response object containing the result of the operation.
  * 
  */
-template<typename TRequest> InsertRecordsResponse insertRecords(const std::string& tableName, const std::vector<TRequest>& data, const std::map<std::string, std::string>& options) const
+template<typename TRequest> 
+InsertRecordsResponse insertRecords( const std::string& tableName,
+                                     const std::vector<TRequest>& data,
+                                     const std::map<std::string, std::string>& options ) const
 {
     RawInsertRecordsRequest actualRequest_;
     actualRequest_.tableName = tableName;
@@ -5474,7 +6341,11 @@ template<typename TRequest> InsertRecordsResponse insertRecords(const std::strin
  *         passed in by reference).
  * 
  */
-template<typename TRequest> InsertRecordsResponse& insertRecords(const std::string& tableName, const std::vector<TRequest>& data, const std::map<std::string, std::string>& options, InsertRecordsResponse& response_) const
+template<typename TRequest> 
+InsertRecordsResponse& insertRecords( const std::string& tableName,
+                                      const std::vector<TRequest>& data,
+                                      const std::map<std::string, std::string>& options,
+                                      InsertRecordsResponse& response_ ) const
 {
     RawInsertRecordsRequest actualRequest_;
     actualRequest_.tableName = tableName;
@@ -5487,7 +6358,7 @@ template<typename TRequest> InsertRecordsResponse& insertRecords(const std::stri
 
 /**
  * Generates a specified number of random records and adds them to the given
- * table. There is an optional parameter that allows the user to customize the
+ * tble. There is an optional parameter that allows the user to customize the
  * ranges of the column values. It also allows the user to specify linear
  * profiles for some or all columns in which case linear values are generated
  * rather than random ones. Only individual tables are supported for this
@@ -5502,11 +6373,12 @@ template<typename TRequest> InsertRecordsResponse& insertRecords(const std::stri
  * @return Response object containing the result of the operation.
  * 
  */
-InsertRecordsRandomResponse insertRecordsRandom(const InsertRecordsRandomRequest& request_) const;
+
+InsertRecordsRandomResponse insertRecordsRandom( const InsertRecordsRandomRequest& request_ ) const;
 
 /**
  * Generates a specified number of random records and adds them to the given
- * table. There is an optional parameter that allows the user to customize the
+ * tble. There is an optional parameter that allows the user to customize the
  * ranges of the column values. It also allows the user to specify linear
  * profiles for some or all columns in which case linear values are generated
  * rather than random ones. Only individual tables are supported for this
@@ -5524,11 +6396,13 @@ InsertRecordsRandomResponse insertRecordsRandom(const InsertRecordsRandomRequest
  *         passed in by reference).
  * 
  */
-InsertRecordsRandomResponse& insertRecordsRandom(const InsertRecordsRandomRequest& request_, InsertRecordsRandomResponse& response_) const;
+
+InsertRecordsRandomResponse& insertRecordsRandom( const InsertRecordsRandomRequest& request_,
+                                                  InsertRecordsRandomResponse& response_ ) const;
 
 /**
  * Generates a specified number of random records and adds them to the given
- * table. There is an optional parameter that allows the user to customize the
+ * tble. There is an optional parameter that allows the user to customize the
  * ranges of the column values. It also allows the user to specify linear
  * profiles for some or all columns in which case linear values are generated
  * rather than random ones. Only individual tables are supported for this
@@ -5557,11 +6431,14 @@ InsertRecordsRandomResponse& insertRecordsRandom(const InsertRecordsRandomReques
  * @return Response object containing the result of the operation.
  * 
  */
-InsertRecordsRandomResponse insertRecordsRandom(const std::string& tableName, const int64_t count, const std::map<std::string, std::map<std::string, double> >& options) const;
+
+InsertRecordsRandomResponse insertRecordsRandom( const std::string& tableName,
+                                                 const int64_t count,
+                                                 const std::map<std::string, std::map<std::string, double> >& options ) const;
 
 /**
  * Generates a specified number of random records and adds them to the given
- * table. There is an optional parameter that allows the user to customize the
+ * tble. There is an optional parameter that allows the user to customize the
  * ranges of the column values. It also allows the user to specify linear
  * profiles for some or all columns in which case linear values are generated
  * rather than random ones. Only individual tables are supported for this
@@ -5593,7 +6470,11 @@ InsertRecordsRandomResponse insertRecordsRandom(const std::string& tableName, co
  *         passed in by reference).
  * 
  */
-InsertRecordsRandomResponse& insertRecordsRandom(const std::string& tableName, const int64_t count, const std::map<std::string, std::map<std::string, double> >& options, InsertRecordsRandomResponse& response_) const;
+
+InsertRecordsRandomResponse& insertRecordsRandom( const std::string& tableName,
+                                                  const int64_t count,
+                                                  const std::map<std::string, std::map<std::string, double> >& options,
+                                                  InsertRecordsRandomResponse& response_ ) const;
 
 /**
  * Adds a symbol or icon (i.e. an image) to represent data points when data is
@@ -5613,7 +6494,8 @@ InsertRecordsRandomResponse& insertRecordsRandom(const std::string& tableName, c
  * @return Response object containing the result of the operation.
  * 
  */
-InsertSymbolResponse insertSymbol(const InsertSymbolRequest& request_) const;
+
+InsertSymbolResponse insertSymbol( const InsertSymbolRequest& request_ ) const;
 
 /**
  * Adds a symbol or icon (i.e. an image) to represent data points when data is
@@ -5636,7 +6518,9 @@ InsertSymbolResponse insertSymbol(const InsertSymbolRequest& request_) const;
  *         passed in by reference).
  * 
  */
-InsertSymbolResponse& insertSymbol(const InsertSymbolRequest& request_, InsertSymbolResponse& response_) const;
+
+InsertSymbolResponse& insertSymbol( const InsertSymbolRequest& request_,
+                                    InsertSymbolResponse& response_ ) const;
 
 /**
  * Adds a symbol or icon (i.e. an image) to represent data points when data is
@@ -5665,7 +6549,11 @@ InsertSymbolResponse& insertSymbol(const InsertSymbolRequest& request_, InsertSy
  * @return Response object containing the result of the operation.
  * 
  */
-InsertSymbolResponse insertSymbol(const std::string& symbolId, const std::string& symbolFormat, const std::vector<uint8_t>& symbolData, const std::map<std::string, std::string>& options) const;
+
+InsertSymbolResponse insertSymbol( const std::string& symbolId,
+                                   const std::string& symbolFormat,
+                                   const std::vector<uint8_t>& symbolData,
+                                   const std::map<std::string, std::string>& options ) const;
 
 /**
  * Adds a symbol or icon (i.e. an image) to represent data points when data is
@@ -5697,7 +6585,12 @@ InsertSymbolResponse insertSymbol(const std::string& symbolId, const std::string
  *         passed in by reference).
  * 
  */
-InsertSymbolResponse& insertSymbol(const std::string& symbolId, const std::string& symbolFormat, const std::vector<uint8_t>& symbolData, const std::map<std::string, std::string>& options, InsertSymbolResponse& response_) const;
+
+InsertSymbolResponse& insertSymbol( const std::string& symbolId,
+                                    const std::string& symbolFormat,
+                                    const std::vector<uint8_t>& symbolData,
+                                    const std::map<std::string, std::string>& options,
+                                    InsertSymbolResponse& response_ ) const;
 
 /**
  * Locks a table.  By default a table has no locks and all operations are
@@ -5713,7 +6606,8 @@ InsertSymbolResponse& insertSymbol(const std::string& symbolId, const std::strin
  * @return Response object containing the result of the operation.
  * 
  */
-LockTableResponse lockTable(const LockTableRequest& request_) const;
+
+LockTableResponse lockTable( const LockTableRequest& request_ ) const;
 
 /**
  * Locks a table.  By default a table has no locks and all operations are
@@ -5732,28 +6626,9 @@ LockTableResponse lockTable(const LockTableRequest& request_) const;
  *         passed in by reference).
  * 
  */
-LockTableResponse& lockTable(const LockTableRequest& request_, LockTableResponse& response_) const;
 
-/**
- * Locks a table.  By default a table has no locks and all operations are
- * permitted.  A user may request a read-only or a write-only lock, after which
- * only read or write operations are permitted on the table until the next
- * request.  When lock_type is disable then then no operations are permitted on
- * the table.  The lock status can be queried by passing an empty string for @a
- * lockType.
- * 
- * @param tableName  Name of the table to be locked. It must be a currently
- *                   existing table and not a collection or a view.
- * @param lockType  The type of lock being applied to the table or blank to
- *                  query. Empty string returns the lock status without change
- *                  the lock status of the table.  Default value is an empty
- *                  string.
- * @param options  Optional parameters.  Default value is an empty std::map.
- * 
- * @return Response object containing the result of the operation.
- * 
- */
-LockTableResponse lockTable(const std::string& tableName, const std::string& lockType, const std::map<std::string, std::string>& options) const;
+LockTableResponse& lockTable( const LockTableRequest& request_,
+                              LockTableResponse& response_ ) const;
 
 /**
  * Locks a table.  By default a table has no locks and all operations are
@@ -5770,6 +6645,30 @@ LockTableResponse lockTable(const std::string& tableName, const std::string& loc
  *                  the lock status of the table.  Default value is an empty
  *                  string.
  * @param options  Optional parameters.  Default value is an empty std::map.
+ * 
+ * @return Response object containing the result of the operation.
+ * 
+ */
+
+LockTableResponse lockTable( const std::string& tableName,
+                             const std::string& lockType,
+                             const std::map<std::string, std::string>& options ) const;
+
+/**
+ * Locks a table.  By default a table has no locks and all operations are
+ * permitted.  A user may request a read-only or a write-only lock, after which
+ * only read or write operations are permitted on the table until the next
+ * request.  When lock_type is disable then then no operations are permitted on
+ * the table.  The lock status can be queried by passing an empty string for @a
+ * lockType.
+ * 
+ * @param tableName  Name of the table to be locked. It must be a currently
+ *                   existing table and not a collection or a view.
+ * @param lockType  The type of lock being applied to the table or blank to
+ *                  query. Empty string returns the lock status without change
+ *                  the lock status of the table.  Default value is an empty
+ *                  string.
+ * @param options  Optional parameters.  Default value is an empty std::map.
  * @param[out] response_  Response object containing the results of the
  *                        operation.
  * 
@@ -5777,7 +6676,11 @@ LockTableResponse lockTable(const std::string& tableName, const std::string& loc
  *         passed in by reference).
  * 
  */
-LockTableResponse& lockTable(const std::string& tableName, const std::string& lockType, const std::map<std::string, std::string>& options, LockTableResponse& response_) const;
+
+LockTableResponse& lockTable( const std::string& tableName,
+                              const std::string& lockType,
+                              const std::map<std::string, std::string>& options,
+                              LockTableResponse& response_ ) const;
 
 /**
  * Returns server configuration and version related information to the caller.
@@ -5790,7 +6693,8 @@ LockTableResponse& lockTable(const std::string& tableName, const std::string& lo
  * @return Response object containing the result of the operation.
  * 
  */
-ShowSystemPropertiesResponse showSystemProperties(const ShowSystemPropertiesRequest& request_) const;
+
+ShowSystemPropertiesResponse showSystemProperties( const ShowSystemPropertiesRequest& request_ ) const;
 
 /**
  * Returns server configuration and version related information to the caller.
@@ -5806,7 +6710,9 @@ ShowSystemPropertiesResponse showSystemProperties(const ShowSystemPropertiesRequ
  *         passed in by reference).
  * 
  */
-ShowSystemPropertiesResponse& showSystemProperties(const ShowSystemPropertiesRequest& request_, ShowSystemPropertiesResponse& response_) const;
+
+ShowSystemPropertiesResponse& showSystemProperties( const ShowSystemPropertiesRequest& request_,
+                                                    ShowSystemPropertiesResponse& response_ ) const;
 
 /**
  * Returns server configuration and version related information to the caller.
@@ -5819,7 +6725,8 @@ ShowSystemPropertiesResponse& showSystemProperties(const ShowSystemPropertiesReq
  * @return Response object containing the result of the operation.
  * 
  */
-ShowSystemPropertiesResponse showSystemProperties(const std::map<std::string, std::string>& options) const;
+
+ShowSystemPropertiesResponse showSystemProperties( const std::map<std::string, std::string>& options ) const;
 
 /**
  * Returns server configuration and version related information to the caller.
@@ -5835,7 +6742,9 @@ ShowSystemPropertiesResponse showSystemProperties(const std::map<std::string, st
  *         passed in by reference).
  * 
  */
-ShowSystemPropertiesResponse& showSystemProperties(const std::map<std::string, std::string>& options, ShowSystemPropertiesResponse& response_) const;
+
+ShowSystemPropertiesResponse& showSystemProperties( const std::map<std::string, std::string>& options,
+                                                    ShowSystemPropertiesResponse& response_ ) const;
 
 /**
  * Provides server configuration and health related status to the caller. The
@@ -5847,7 +6756,8 @@ ShowSystemPropertiesResponse& showSystemProperties(const std::map<std::string, s
  * @return Response object containing the result of the operation.
  * 
  */
-ShowSystemStatusResponse showSystemStatus(const ShowSystemStatusRequest& request_) const;
+
+ShowSystemStatusResponse showSystemStatus( const ShowSystemStatusRequest& request_ ) const;
 
 /**
  * Provides server configuration and health related status to the caller. The
@@ -5862,7 +6772,9 @@ ShowSystemStatusResponse showSystemStatus(const ShowSystemStatusRequest& request
  *         passed in by reference).
  * 
  */
-ShowSystemStatusResponse& showSystemStatus(const ShowSystemStatusRequest& request_, ShowSystemStatusResponse& response_) const;
+
+ShowSystemStatusResponse& showSystemStatus( const ShowSystemStatusRequest& request_,
+                                            ShowSystemStatusResponse& response_ ) const;
 
 /**
  * Provides server configuration and health related status to the caller. The
@@ -5874,7 +6786,8 @@ ShowSystemStatusResponse& showSystemStatus(const ShowSystemStatusRequest& reques
  * @return Response object containing the result of the operation.
  * 
  */
-ShowSystemStatusResponse showSystemStatus(const std::map<std::string, std::string>& options) const;
+
+ShowSystemStatusResponse showSystemStatus( const std::map<std::string, std::string>& options ) const;
 
 /**
  * Provides server configuration and health related status to the caller. The
@@ -5889,7 +6802,9 @@ ShowSystemStatusResponse showSystemStatus(const std::map<std::string, std::strin
  *         passed in by reference).
  * 
  */
-ShowSystemStatusResponse& showSystemStatus(const std::map<std::string, std::string>& options, ShowSystemStatusResponse& response_) const;
+
+ShowSystemStatusResponse& showSystemStatus( const std::map<std::string, std::string>& options,
+                                            ShowSystemStatusResponse& response_ ) const;
 
 /**
  * Returns the last 100 requests made to GPUdb along with the request timing
@@ -5902,7 +6817,8 @@ ShowSystemStatusResponse& showSystemStatus(const std::map<std::string, std::stri
  * @return Response object containing the result of the operation.
  * 
  */
-ShowSystemTimingResponse showSystemTiming(const ShowSystemTimingRequest& request_) const;
+
+ShowSystemTimingResponse showSystemTiming( const ShowSystemTimingRequest& request_ ) const;
 
 /**
  * Returns the last 100 requests made to GPUdb along with the request timing
@@ -5918,7 +6834,9 @@ ShowSystemTimingResponse showSystemTiming(const ShowSystemTimingRequest& request
  *         passed in by reference).
  * 
  */
-ShowSystemTimingResponse& showSystemTiming(const ShowSystemTimingRequest& request_, ShowSystemTimingResponse& response_) const;
+
+ShowSystemTimingResponse& showSystemTiming( const ShowSystemTimingRequest& request_,
+                                            ShowSystemTimingResponse& response_ ) const;
 
 /**
  * Returns the last 100 requests made to GPUdb along with the request timing
@@ -5931,7 +6849,8 @@ ShowSystemTimingResponse& showSystemTiming(const ShowSystemTimingRequest& reques
  * @return Response object containing the result of the operation.
  * 
  */
-ShowSystemTimingResponse showSystemTiming(const std::map<std::string, std::string>& options) const;
+
+ShowSystemTimingResponse showSystemTiming( const std::map<std::string, std::string>& options ) const;
 
 /**
  * Returns the last 100 requests made to GPUdb along with the request timing
@@ -5947,7 +6866,9 @@ ShowSystemTimingResponse showSystemTiming(const std::map<std::string, std::strin
  *         passed in by reference).
  * 
  */
-ShowSystemTimingResponse& showSystemTiming(const std::map<std::string, std::string>& options, ShowSystemTimingResponse& response_) const;
+
+ShowSystemTimingResponse& showSystemTiming( const std::map<std::string, std::string>& options,
+                                            ShowSystemTimingResponse& response_ ) const;
 
 /**
  * Retrieves detailed information about a particular GPUdb table, specified in
@@ -5969,7 +6890,8 @@ ShowSystemTimingResponse& showSystemTiming(const std::map<std::string, std::stri
  * @return Response object containing the result of the operation.
  * 
  */
-ShowTableResponse showTable(const ShowTableRequest& request_) const;
+
+ShowTableResponse showTable( const ShowTableRequest& request_ ) const;
 
 /**
  * Retrieves detailed information about a particular GPUdb table, specified in
@@ -5994,7 +6916,9 @@ ShowTableResponse showTable(const ShowTableRequest& request_) const;
  *         passed in by reference).
  * 
  */
-ShowTableResponse& showTable(const ShowTableRequest& request_, ShowTableResponse& response_) const;
+
+ShowTableResponse& showTable( const ShowTableRequest& request_,
+                              ShowTableResponse& response_ ) const;
 
 /**
  * Retrieves detailed information about a particular GPUdb table, specified in
@@ -6018,7 +6942,9 @@ ShowTableResponse& showTable(const ShowTableRequest& request_, ShowTableResponse
  * @return Response object containing the result of the operation.
  * 
  */
-ShowTableResponse showTable(const std::string& tableName, const std::map<std::string, std::string>& options) const;
+
+ShowTableResponse showTable( const std::string& tableName,
+                             const std::map<std::string, std::string>& options ) const;
 
 /**
  * Retrieves detailed information about a particular GPUdb table, specified in
@@ -6045,7 +6971,10 @@ ShowTableResponse showTable(const std::string& tableName, const std::map<std::st
  *         passed in by reference).
  * 
  */
-ShowTableResponse& showTable(const std::string& tableName, const std::map<std::string, std::string>& options, ShowTableResponse& response_) const;
+
+ShowTableResponse& showTable( const std::string& tableName,
+                              const std::map<std::string, std::string>& options,
+                              ShowTableResponse& response_ ) const;
 
 /**
  * Retrieves the user provided metadata for the specified tables.
@@ -6056,7 +6985,8 @@ ShowTableResponse& showTable(const std::string& tableName, const std::map<std::s
  * @return Response object containing the result of the operation.
  * 
  */
-ShowTableMetadataResponse showTableMetadata(const ShowTableMetadataRequest& request_) const;
+
+ShowTableMetadataResponse showTableMetadata( const ShowTableMetadataRequest& request_ ) const;
 
 /**
  * Retrieves the user provided metadata for the specified tables.
@@ -6070,7 +7000,9 @@ ShowTableMetadataResponse showTableMetadata(const ShowTableMetadataRequest& requ
  *         passed in by reference).
  * 
  */
-ShowTableMetadataResponse& showTableMetadata(const ShowTableMetadataRequest& request_, ShowTableMetadataResponse& response_) const;
+
+ShowTableMetadataResponse& showTableMetadata( const ShowTableMetadataRequest& request_,
+                                              ShowTableMetadataResponse& response_ ) const;
 
 /**
  * Retrieves the user provided metadata for the specified tables.
@@ -6082,7 +7014,9 @@ ShowTableMetadataResponse& showTableMetadata(const ShowTableMetadataRequest& req
  * @return Response object containing the result of the operation.
  * 
  */
-ShowTableMetadataResponse showTableMetadata(const std::vector<std::string>& tableNames, const std::map<std::string, std::string>& options) const;
+
+ShowTableMetadataResponse showTableMetadata( const std::vector<std::string>& tableNames,
+                                             const std::map<std::string, std::string>& options ) const;
 
 /**
  * Retrieves the user provided metadata for the specified tables.
@@ -6097,7 +7031,10 @@ ShowTableMetadataResponse showTableMetadata(const std::vector<std::string>& tabl
  *         passed in by reference).
  * 
  */
-ShowTableMetadataResponse& showTableMetadata(const std::vector<std::string>& tableNames, const std::map<std::string, std::string>& options, ShowTableMetadataResponse& response_) const;
+
+ShowTableMetadataResponse& showTableMetadata( const std::vector<std::string>& tableNames,
+                                              const std::map<std::string, std::string>& options,
+                                              ShowTableMetadataResponse& response_ ) const;
 
 /**
  * Retrieves some table properties for each of the specified tables. For each
@@ -6110,7 +7047,8 @@ ShowTableMetadataResponse& showTableMetadata(const std::vector<std::string>& tab
  * @return Response object containing the result of the operation.
  * 
  */
-ShowTablePropertiesResponse showTableProperties(const ShowTablePropertiesRequest& request_) const;
+
+ShowTablePropertiesResponse showTableProperties( const ShowTablePropertiesRequest& request_ ) const;
 
 /**
  * Retrieves some table properties for each of the specified tables. For each
@@ -6126,7 +7064,9 @@ ShowTablePropertiesResponse showTableProperties(const ShowTablePropertiesRequest
  *         passed in by reference).
  * 
  */
-ShowTablePropertiesResponse& showTableProperties(const ShowTablePropertiesRequest& request_, ShowTablePropertiesResponse& response_) const;
+
+ShowTablePropertiesResponse& showTableProperties( const ShowTablePropertiesRequest& request_,
+                                                  ShowTablePropertiesResponse& response_ ) const;
 
 /**
  * Retrieves some table properties for each of the specified tables. For each
@@ -6140,7 +7080,9 @@ ShowTablePropertiesResponse& showTableProperties(const ShowTablePropertiesReques
  * @return Response object containing the result of the operation.
  * 
  */
-ShowTablePropertiesResponse showTableProperties(const std::vector<std::string>& tableNames, const std::map<std::string, std::string>& options) const;
+
+ShowTablePropertiesResponse showTableProperties( const std::vector<std::string>& tableNames,
+                                                 const std::map<std::string, std::string>& options ) const;
 
 /**
  * Retrieves some table properties for each of the specified tables. For each
@@ -6157,7 +7099,10 @@ ShowTablePropertiesResponse showTableProperties(const std::vector<std::string>& 
  *         passed in by reference).
  * 
  */
-ShowTablePropertiesResponse& showTableProperties(const std::vector<std::string>& tableNames, const std::map<std::string, std::string>& options, ShowTablePropertiesResponse& response_) const;
+
+ShowTablePropertiesResponse& showTableProperties( const std::vector<std::string>& tableNames,
+                                                  const std::map<std::string, std::string>& options,
+                                                  ShowTablePropertiesResponse& response_ ) const;
 
 /**
  * Gets names of the tables from GPUdb based on the type information. Each
@@ -6172,7 +7117,8 @@ ShowTablePropertiesResponse& showTableProperties(const std::vector<std::string>&
  * @return Response object containing the result of the operation.
  * 
  */
-ShowTablesByTypeResponse showTablesByType(const ShowTablesByTypeRequest& request_) const;
+
+ShowTablesByTypeResponse showTablesByType( const ShowTablesByTypeRequest& request_ ) const;
 
 /**
  * Gets names of the tables from GPUdb based on the type information. Each
@@ -6190,7 +7136,9 @@ ShowTablesByTypeResponse showTablesByType(const ShowTablesByTypeRequest& request
  *         passed in by reference).
  * 
  */
-ShowTablesByTypeResponse& showTablesByType(const ShowTablesByTypeRequest& request_, ShowTablesByTypeResponse& response_) const;
+
+ShowTablesByTypeResponse& showTablesByType( const ShowTablesByTypeRequest& request_,
+                                            ShowTablesByTypeResponse& response_ ) const;
 
 /**
  * Gets names of the tables from GPUdb based on the type information. Each
@@ -6207,7 +7155,10 @@ ShowTablesByTypeResponse& showTablesByType(const ShowTablesByTypeRequest& reques
  * @return Response object containing the result of the operation.
  * 
  */
-ShowTablesByTypeResponse showTablesByType(const std::string& typeId, const std::string& label, const std::map<std::string, std::string>& options) const;
+
+ShowTablesByTypeResponse showTablesByType( const std::string& typeId,
+                                           const std::string& label,
+                                           const std::map<std::string, std::string>& options ) const;
 
 /**
  * Gets names of the tables from GPUdb based on the type information. Each
@@ -6227,7 +7178,11 @@ ShowTablesByTypeResponse showTablesByType(const std::string& typeId, const std::
  *         passed in by reference).
  * 
  */
-ShowTablesByTypeResponse& showTablesByType(const std::string& typeId, const std::string& label, const std::map<std::string, std::string>& options, ShowTablesByTypeResponse& response_) const;
+
+ShowTablesByTypeResponse& showTablesByType( const std::string& typeId,
+                                            const std::string& label,
+                                            const std::map<std::string, std::string>& options,
+                                            ShowTablesByTypeResponse& response_ ) const;
 
 /**
  * Retrieves information regarding the specified triggers or all existing
@@ -6239,7 +7194,8 @@ ShowTablesByTypeResponse& showTablesByType(const std::string& typeId, const std:
  * @return Response object containing the result of the operation.
  * 
  */
-ShowTriggersResponse showTriggers(const ShowTriggersRequest& request_) const;
+
+ShowTriggersResponse showTriggers( const ShowTriggersRequest& request_ ) const;
 
 /**
  * Retrieves information regarding the specified triggers or all existing
@@ -6254,7 +7210,9 @@ ShowTriggersResponse showTriggers(const ShowTriggersRequest& request_) const;
  *         passed in by reference).
  * 
  */
-ShowTriggersResponse& showTriggers(const ShowTriggersRequest& request_, ShowTriggersResponse& response_) const;
+
+ShowTriggersResponse& showTriggers( const ShowTriggersRequest& request_,
+                                    ShowTriggersResponse& response_ ) const;
 
 /**
  * Retrieves information regarding the specified triggers or all existing
@@ -6268,7 +7226,9 @@ ShowTriggersResponse& showTriggers(const ShowTriggersRequest& request_, ShowTrig
  * @return Response object containing the result of the operation.
  * 
  */
-ShowTriggersResponse showTriggers(const std::vector<std::string>& triggerIds, const std::map<std::string, std::string>& options) const;
+
+ShowTriggersResponse showTriggers( const std::vector<std::string>& triggerIds,
+                                   const std::map<std::string, std::string>& options ) const;
 
 /**
  * Retrieves information regarding the specified triggers or all existing
@@ -6285,7 +7245,10 @@ ShowTriggersResponse showTriggers(const std::vector<std::string>& triggerIds, co
  *         passed in by reference).
  * 
  */
-ShowTriggersResponse& showTriggers(const std::vector<std::string>& triggerIds, const std::map<std::string, std::string>& options, ShowTriggersResponse& response_) const;
+
+ShowTriggersResponse& showTriggers( const std::vector<std::string>& triggerIds,
+                                    const std::map<std::string, std::string>& options,
+                                    ShowTriggersResponse& response_ ) const;
 
 /**
  * Retrieves information for the specified data type. Given a type ID, GPUdb
@@ -6300,7 +7263,8 @@ ShowTriggersResponse& showTriggers(const std::vector<std::string>& triggerIds, c
  * @return Response object containing the result of the operation.
  * 
  */
-ShowTypesResponse showTypes(const ShowTypesRequest& request_) const;
+
+ShowTypesResponse showTypes( const ShowTypesRequest& request_ ) const;
 
 /**
  * Retrieves information for the specified data type. Given a type ID, GPUdb
@@ -6318,7 +7282,9 @@ ShowTypesResponse showTypes(const ShowTypesRequest& request_) const;
  *         passed in by reference).
  * 
  */
-ShowTypesResponse& showTypes(const ShowTypesRequest& request_, ShowTypesResponse& response_) const;
+
+ShowTypesResponse& showTypes( const ShowTypesRequest& request_,
+                              ShowTypesResponse& response_ ) const;
 
 /**
  * Retrieves information for the specified data type. Given a type ID, GPUdb
@@ -6335,7 +7301,10 @@ ShowTypesResponse& showTypes(const ShowTypesRequest& request_, ShowTypesResponse
  * @return Response object containing the result of the operation.
  * 
  */
-ShowTypesResponse showTypes(const std::string& typeId, const std::string& label, const std::map<std::string, std::string>& options) const;
+
+ShowTypesResponse showTypes( const std::string& typeId,
+                             const std::string& label,
+                             const std::map<std::string, std::string>& options ) const;
 
 /**
  * Retrieves information for the specified data type. Given a type ID, GPUdb
@@ -6355,7 +7324,11 @@ ShowTypesResponse showTypes(const std::string& typeId, const std::string& label,
  *         passed in by reference).
  * 
  */
-ShowTypesResponse& showTypes(const std::string& typeId, const std::string& label, const std::map<std::string, std::string>& options, ShowTypesResponse& response_) const;
+
+ShowTypesResponse& showTypes( const std::string& typeId,
+                              const std::string& label,
+                              const std::map<std::string, std::string>& options,
+                              ShowTypesResponse& response_ ) const;
 
 /**
  * Runs multiple predicate-based updates in a single call.  With the list of
@@ -6384,7 +7357,8 @@ ShowTypesResponse& showTypes(const std::string& typeId, const std::string& label
  * @return Response object containing the result of the operation.
  * 
  */
-UpdateRecordsResponse updateRecordsRaw(const RawUpdateRecordsRequest& request_) const;
+
+UpdateRecordsResponse updateRecordsRaw( const RawUpdateRecordsRequest& request_ ) const;
 
 /**
  * Runs multiple predicate-based updates in a single call.  With the list of
@@ -6416,7 +7390,9 @@ UpdateRecordsResponse updateRecordsRaw(const RawUpdateRecordsRequest& request_) 
  *         passed in by reference).
  * 
  */
-UpdateRecordsResponse& updateRecordsRaw(const RawUpdateRecordsRequest& request_, UpdateRecordsResponse& response_) const;
+
+UpdateRecordsResponse& updateRecordsRaw( const RawUpdateRecordsRequest& request_,
+                                         UpdateRecordsResponse& response_ ) const;
 
 /**
  * Runs multiple predicate-based updates in a single call.  With the list of
@@ -6447,7 +7423,8 @@ UpdateRecordsResponse& updateRecordsRaw(const RawUpdateRecordsRequest& request_,
  * @return Response object containing the result of the operation.
  * 
  */
-template<typename TRequest> UpdateRecordsResponse updateRecords(const UpdateRecordsRequest<TRequest>& request_) const
+template<typename TRequest> 
+UpdateRecordsResponse updateRecords( const UpdateRecordsRequest<TRequest>& request_ ) const
 {
     RawUpdateRecordsRequest actualRequest_;
     actualRequest_.tableName = request_.tableName;
@@ -6493,7 +7470,9 @@ template<typename TRequest> UpdateRecordsResponse updateRecords(const UpdateReco
  *         passed in by reference).
  * 
  */
-template<typename TRequest> UpdateRecordsResponse& updateRecords(const UpdateRecordsRequest<TRequest>& request_, UpdateRecordsResponse& response_) const
+template<typename TRequest> 
+UpdateRecordsResponse& updateRecords( const UpdateRecordsRequest<TRequest>& request_,
+                                      UpdateRecordsResponse& response_ ) const
 {
     RawUpdateRecordsRequest actualRequest_;
     actualRequest_.tableName = request_.tableName;
@@ -6549,7 +7528,12 @@ template<typename TRequest> UpdateRecordsResponse& updateRecords(const UpdateRec
  * @return Response object containing the result of the operation.
  * 
  */
-template<typename TRequest> UpdateRecordsResponse updateRecords(const std::string& tableName, const std::vector<std::string>& expressions, const std::vector<std::map<std::string, std::string> >& newValuesMaps, const std::vector<TRequest>& data, const std::map<std::string, std::string>& options) const
+template<typename TRequest> 
+UpdateRecordsResponse updateRecords( const std::string& tableName,
+                                     const std::vector<std::string>& expressions,
+                                     const std::vector<std::map<std::string, std::string> >& newValuesMaps,
+                                     const std::vector<TRequest>& data,
+                                     const std::map<std::string, std::string>& options ) const
 {
     RawUpdateRecordsRequest actualRequest_;
     actualRequest_.tableName = tableName;
@@ -6609,7 +7593,13 @@ template<typename TRequest> UpdateRecordsResponse updateRecords(const std::strin
  *         passed in by reference).
  * 
  */
-template<typename TRequest> UpdateRecordsResponse& updateRecords(const std::string& tableName, const std::vector<std::string>& expressions, const std::vector<std::map<std::string, std::string> >& newValuesMaps, const std::vector<TRequest>& data, const std::map<std::string, std::string>& options, UpdateRecordsResponse& response_) const
+template<typename TRequest> 
+UpdateRecordsResponse& updateRecords( const std::string& tableName,
+                                      const std::vector<std::string>& expressions,
+                                      const std::vector<std::map<std::string, std::string> >& newValuesMaps,
+                                      const std::vector<TRequest>& data,
+                                      const std::map<std::string, std::string>& options,
+                                      UpdateRecordsResponse& response_ ) const
 {
     RawUpdateRecordsRequest actualRequest_;
     actualRequest_.tableName = tableName;
@@ -6633,7 +7623,8 @@ template<typename TRequest> UpdateRecordsResponse& updateRecords(const std::stri
  * @return Response object containing the result of the operation.
  * 
  */
-UpdateRecordsBySeriesResponse updateRecordsBySeries(const UpdateRecordsBySeriesRequest& request_) const;
+
+UpdateRecordsBySeriesResponse updateRecordsBySeries( const UpdateRecordsBySeriesRequest& request_ ) const;
 
 /**
  * Updates the view specified by @a tableName to include full series (track)
@@ -6649,7 +7640,9 @@ UpdateRecordsBySeriesResponse updateRecordsBySeries(const UpdateRecordsBySeriesR
  *         passed in by reference).
  * 
  */
-UpdateRecordsBySeriesResponse& updateRecordsBySeries(const UpdateRecordsBySeriesRequest& request_, UpdateRecordsBySeriesResponse& response_) const;
+
+UpdateRecordsBySeriesResponse& updateRecordsBySeries( const UpdateRecordsBySeriesRequest& request_,
+                                                      UpdateRecordsBySeriesResponse& response_ ) const;
 
 /**
  * Updates the view specified by @a tableName to include full series (track)
@@ -6669,7 +7662,12 @@ UpdateRecordsBySeriesResponse& updateRecordsBySeries(const UpdateRecordsBySeries
  * @return Response object containing the result of the operation.
  * 
  */
-UpdateRecordsBySeriesResponse updateRecordsBySeries(const std::string& tableName, const std::string& worldTableName, const std::string& viewName, const std::vector<std::string>& reserved, const std::map<std::string, std::string>& options) const;
+
+UpdateRecordsBySeriesResponse updateRecordsBySeries( const std::string& tableName,
+                                                     const std::string& worldTableName,
+                                                     const std::string& viewName,
+                                                     const std::vector<std::string>& reserved,
+                                                     const std::map<std::string, std::string>& options ) const;
 
 /**
  * Updates the view specified by @a tableName to include full series (track)
@@ -6692,7 +7690,13 @@ UpdateRecordsBySeriesResponse updateRecordsBySeries(const std::string& tableName
  *         passed in by reference).
  * 
  */
-UpdateRecordsBySeriesResponse& updateRecordsBySeries(const std::string& tableName, const std::string& worldTableName, const std::string& viewName, const std::vector<std::string>& reserved, const std::map<std::string, std::string>& options, UpdateRecordsBySeriesResponse& response_) const;
+
+UpdateRecordsBySeriesResponse& updateRecordsBySeries( const std::string& tableName,
+                                                      const std::string& worldTableName,
+                                                      const std::string& viewName,
+                                                      const std::vector<std::string>& reserved,
+                                                      const std::map<std::string, std::string>& options,
+                                                      UpdateRecordsBySeriesResponse& response_ ) const;
 
 /**
  * Generates 'class break' rasterized image tiles for an area of interest using
@@ -6707,7 +7711,8 @@ UpdateRecordsBySeriesResponse& updateRecordsBySeries(const std::string& tableNam
  * @return Response object containing the result of the operation.
  * 
  */
-VisualizeImageResponse visualizeImage(const VisualizeImageRequest& request_) const;
+
+VisualizeImageResponse visualizeImage( const VisualizeImageRequest& request_ ) const;
 
 /**
  * Generates 'class break' rasterized image tiles for an area of interest using
@@ -6725,7 +7730,9 @@ VisualizeImageResponse visualizeImage(const VisualizeImageRequest& request_) con
  *         passed in by reference).
  * 
  */
-VisualizeImageResponse& visualizeImage(const VisualizeImageRequest& request_, VisualizeImageResponse& response_) const;
+
+VisualizeImageResponse& visualizeImage( const VisualizeImageRequest& request_,
+                                        VisualizeImageResponse& response_ ) const;
 
 /**
  * Generates 'class break' rasterized image tiles for an area of interest using
@@ -6758,7 +7765,22 @@ VisualizeImageResponse& visualizeImage(const VisualizeImageRequest& request_, Vi
  * @return Response object containing the result of the operation.
  * 
  */
-VisualizeImageResponse visualizeImage(const std::vector<std::string>& tableNames, const std::vector<std::string>& worldTableNames, const std::string& xColumnName, const std::string& yColumnName, const std::vector<std::vector<std::string> >& trackIds, const double minX, const double maxX, const double minY, const double maxY, const int32_t width, const int32_t height, const std::string& projection, const int64_t bgColor, const std::map<std::string, std::vector<std::string> >& styleOptions, const std::map<std::string, std::string>& options) const;
+
+VisualizeImageResponse visualizeImage( const std::vector<std::string>& tableNames,
+                                       const std::vector<std::string>& worldTableNames,
+                                       const std::string& xColumnName,
+                                       const std::string& yColumnName,
+                                       const std::vector<std::vector<std::string> >& trackIds,
+                                       const double minX,
+                                       const double maxX,
+                                       const double minY,
+                                       const double maxY,
+                                       const int32_t width,
+                                       const int32_t height,
+                                       const std::string& projection,
+                                       const int64_t bgColor,
+                                       const std::map<std::string, std::vector<std::string> >& styleOptions,
+                                       const std::map<std::string, std::string>& options ) const;
 
 /**
  * Generates 'class break' rasterized image tiles for an area of interest using
@@ -6794,7 +7816,23 @@ VisualizeImageResponse visualizeImage(const std::vector<std::string>& tableNames
  *         passed in by reference).
  * 
  */
-VisualizeImageResponse& visualizeImage(const std::vector<std::string>& tableNames, const std::vector<std::string>& worldTableNames, const std::string& xColumnName, const std::string& yColumnName, const std::vector<std::vector<std::string> >& trackIds, const double minX, const double maxX, const double minY, const double maxY, const int32_t width, const int32_t height, const std::string& projection, const int64_t bgColor, const std::map<std::string, std::vector<std::string> >& styleOptions, const std::map<std::string, std::string>& options, VisualizeImageResponse& response_) const;
+
+VisualizeImageResponse& visualizeImage( const std::vector<std::string>& tableNames,
+                                        const std::vector<std::string>& worldTableNames,
+                                        const std::string& xColumnName,
+                                        const std::string& yColumnName,
+                                        const std::vector<std::vector<std::string> >& trackIds,
+                                        const double minX,
+                                        const double maxX,
+                                        const double minY,
+                                        const double maxY,
+                                        const int32_t width,
+                                        const int32_t height,
+                                        const std::string& projection,
+                                        const int64_t bgColor,
+                                        const std::map<std::string, std::vector<std::string> >& styleOptions,
+                                        const std::map<std::string, std::string>& options,
+                                        VisualizeImageResponse& response_ ) const;
 
 /**
  * Generates 'class break' rasterized image tiles for an area of interest using
@@ -6809,8 +7847,6 @@ VisualizeImageResponse& visualizeImage(const std::vector<std::string>& tableName
  * <p>
  * All color values must be in the format RRGGBB or AARRGGBB (to specify the
  * alpha value).
- * <p>
-
  * The image is contained in the @a imageData field.
  * 
  * @param[in] request_  Request object containing the parameters for the
@@ -6819,7 +7855,8 @@ VisualizeImageResponse& visualizeImage(const std::vector<std::string>& tableName
  * @return Response object containing the result of the operation.
  * 
  */
-VisualizeImageClassbreakResponse visualizeImageClassbreak(const VisualizeImageClassbreakRequest& request_) const;
+
+VisualizeImageClassbreakResponse visualizeImageClassbreak( const VisualizeImageClassbreakRequest& request_ ) const;
 
 /**
  * Generates 'class break' rasterized image tiles for an area of interest using
@@ -6834,8 +7871,6 @@ VisualizeImageClassbreakResponse visualizeImageClassbreak(const VisualizeImageCl
  * <p>
  * All color values must be in the format RRGGBB or AARRGGBB (to specify the
  * alpha value).
- * <p>
-
  * The image is contained in the @a imageData field.
  * 
  * @param[in] request_  Request object containing the parameters for the
@@ -6847,7 +7882,9 @@ VisualizeImageClassbreakResponse visualizeImageClassbreak(const VisualizeImageCl
  *         passed in by reference).
  * 
  */
-VisualizeImageClassbreakResponse& visualizeImageClassbreak(const VisualizeImageClassbreakRequest& request_, VisualizeImageClassbreakResponse& response_) const;
+
+VisualizeImageClassbreakResponse& visualizeImageClassbreak( const VisualizeImageClassbreakRequest& request_,
+                                                            VisualizeImageClassbreakResponse& response_ ) const;
 
 /**
  * Generates 'class break' rasterized image tiles for an area of interest using
@@ -6862,8 +7899,6 @@ VisualizeImageClassbreakResponse& visualizeImageClassbreak(const VisualizeImageC
  * <p>
  * All color values must be in the format RRGGBB or AARRGGBB (to specify the
  * alpha value).
- * <p>
-
  * The image is contained in the @a imageData field.
  * 
  * @param tableNames  Name of the table containing the data for the various
@@ -6909,7 +7944,26 @@ VisualizeImageClassbreakResponse& visualizeImageClassbreak(const VisualizeImageC
  * @return Response object containing the result of the operation.
  * 
  */
-VisualizeImageClassbreakResponse visualizeImageClassbreak(const std::vector<std::string>& tableNames, const std::vector<std::string>& worldTableNames, const std::string& xColumnName, const std::string& yColumnName, const std::vector<std::vector<std::string> >& trackIds, const std::string& cbColumnName1, const std::vector<std::string>& cbVals1, const std::vector<std::string>& cbColumnName2, const std::vector<std::vector<std::string> >& cbVals2, const double minX, const double maxX, const double minY, const double maxY, const int32_t width, const int32_t height, const std::string& projection, const int64_t bgColor, const std::map<std::string, std::vector<std::string> >& styleOptions, const std::map<std::string, std::string>& options) const;
+
+VisualizeImageClassbreakResponse visualizeImageClassbreak( const std::vector<std::string>& tableNames,
+                                                           const std::vector<std::string>& worldTableNames,
+                                                           const std::string& xColumnName,
+                                                           const std::string& yColumnName,
+                                                           const std::vector<std::vector<std::string> >& trackIds,
+                                                           const std::string& cbColumnName1,
+                                                           const std::vector<std::string>& cbVals1,
+                                                           const std::vector<std::string>& cbColumnName2,
+                                                           const std::vector<std::vector<std::string> >& cbVals2,
+                                                           const double minX,
+                                                           const double maxX,
+                                                           const double minY,
+                                                           const double maxY,
+                                                           const int32_t width,
+                                                           const int32_t height,
+                                                           const std::string& projection,
+                                                           const int64_t bgColor,
+                                                           const std::map<std::string, std::vector<std::string> >& styleOptions,
+                                                           const std::map<std::string, std::string>& options ) const;
 
 /**
  * Generates 'class break' rasterized image tiles for an area of interest using
@@ -6924,8 +7978,6 @@ VisualizeImageClassbreakResponse visualizeImageClassbreak(const std::vector<std:
  * <p>
  * All color values must be in the format RRGGBB or AARRGGBB (to specify the
  * alpha value).
- * <p>
-
  * The image is contained in the @a imageData field.
  * 
  * @param tableNames  Name of the table containing the data for the various
@@ -6974,7 +8026,27 @@ VisualizeImageClassbreakResponse visualizeImageClassbreak(const std::vector<std:
  *         passed in by reference).
  * 
  */
-VisualizeImageClassbreakResponse& visualizeImageClassbreak(const std::vector<std::string>& tableNames, const std::vector<std::string>& worldTableNames, const std::string& xColumnName, const std::string& yColumnName, const std::vector<std::vector<std::string> >& trackIds, const std::string& cbColumnName1, const std::vector<std::string>& cbVals1, const std::vector<std::string>& cbColumnName2, const std::vector<std::vector<std::string> >& cbVals2, const double minX, const double maxX, const double minY, const double maxY, const int32_t width, const int32_t height, const std::string& projection, const int64_t bgColor, const std::map<std::string, std::vector<std::string> >& styleOptions, const std::map<std::string, std::string>& options, VisualizeImageClassbreakResponse& response_) const;
+
+VisualizeImageClassbreakResponse& visualizeImageClassbreak( const std::vector<std::string>& tableNames,
+                                                            const std::vector<std::string>& worldTableNames,
+                                                            const std::string& xColumnName,
+                                                            const std::string& yColumnName,
+                                                            const std::vector<std::vector<std::string> >& trackIds,
+                                                            const std::string& cbColumnName1,
+                                                            const std::vector<std::string>& cbVals1,
+                                                            const std::vector<std::string>& cbColumnName2,
+                                                            const std::vector<std::vector<std::string> >& cbVals2,
+                                                            const double minX,
+                                                            const double maxX,
+                                                            const double minY,
+                                                            const double maxY,
+                                                            const int32_t width,
+                                                            const int32_t height,
+                                                            const std::string& projection,
+                                                            const int64_t bgColor,
+                                                            const std::map<std::string, std::vector<std::string> >& styleOptions,
+                                                            const std::map<std::string, std::string>& options,
+                                                            VisualizeImageClassbreakResponse& response_ ) const;
 
 /**
  * Generates rasterized heatmap image tiles for an area of interest using the
@@ -6990,7 +8062,8 @@ VisualizeImageClassbreakResponse& visualizeImageClassbreak(const std::vector<std
  * @return Response object containing the result of the operation.
  * 
  */
-VisualizeImageHeatmapResponse visualizeImageHeatmap(const VisualizeImageHeatmapRequest& request_) const;
+
+VisualizeImageHeatmapResponse visualizeImageHeatmap( const VisualizeImageHeatmapRequest& request_ ) const;
 
 /**
  * Generates rasterized heatmap image tiles for an area of interest using the
@@ -7009,7 +8082,9 @@ VisualizeImageHeatmapResponse visualizeImageHeatmap(const VisualizeImageHeatmapR
  *         passed in by reference).
  * 
  */
-VisualizeImageHeatmapResponse& visualizeImageHeatmap(const VisualizeImageHeatmapRequest& request_, VisualizeImageHeatmapResponse& response_) const;
+
+VisualizeImageHeatmapResponse& visualizeImageHeatmap( const VisualizeImageHeatmapRequest& request_,
+                                                      VisualizeImageHeatmapResponse& response_ ) const;
 
 /**
  * Generates rasterized heatmap image tiles for an area of interest using the
@@ -7038,7 +8113,20 @@ VisualizeImageHeatmapResponse& visualizeImageHeatmap(const VisualizeImageHeatmap
  * @return Response object containing the result of the operation.
  * 
  */
-VisualizeImageHeatmapResponse visualizeImageHeatmap(const std::vector<std::string>& tableNames, const std::string& xColumnName, const std::string& yColumnName, const std::string& valueColumnName, const double minX, const double maxX, const double minY, const double maxY, const int32_t width, const int32_t height, const std::string& projection, const std::map<std::string, std::string>& styleOptions, const std::map<std::string, std::string>& options) const;
+
+VisualizeImageHeatmapResponse visualizeImageHeatmap( const std::vector<std::string>& tableNames,
+                                                     const std::string& xColumnName,
+                                                     const std::string& yColumnName,
+                                                     const std::string& valueColumnName,
+                                                     const double minX,
+                                                     const double maxX,
+                                                     const double minY,
+                                                     const double maxY,
+                                                     const int32_t width,
+                                                     const int32_t height,
+                                                     const std::string& projection,
+                                                     const std::map<std::string, std::string>& styleOptions,
+                                                     const std::map<std::string, std::string>& options ) const;
 
 /**
  * Generates rasterized heatmap image tiles for an area of interest using the
@@ -7070,7 +8158,21 @@ VisualizeImageHeatmapResponse visualizeImageHeatmap(const std::vector<std::strin
  *         passed in by reference).
  * 
  */
-VisualizeImageHeatmapResponse& visualizeImageHeatmap(const std::vector<std::string>& tableNames, const std::string& xColumnName, const std::string& yColumnName, const std::string& valueColumnName, const double minX, const double maxX, const double minY, const double maxY, const int32_t width, const int32_t height, const std::string& projection, const std::map<std::string, std::string>& styleOptions, const std::map<std::string, std::string>& options, VisualizeImageHeatmapResponse& response_) const;
+
+VisualizeImageHeatmapResponse& visualizeImageHeatmap( const std::vector<std::string>& tableNames,
+                                                      const std::string& xColumnName,
+                                                      const std::string& yColumnName,
+                                                      const std::string& valueColumnName,
+                                                      const double minX,
+                                                      const double maxX,
+                                                      const double minY,
+                                                      const double maxY,
+                                                      const int32_t width,
+                                                      const int32_t height,
+                                                      const std::string& projection,
+                                                      const std::map<std::string, std::string>& styleOptions,
+                                                      const std::map<std::string, std::string>& options,
+                                                      VisualizeImageHeatmapResponse& response_ ) const;
 
 /**
  * Generates a rasterized image tile containing text labels defined by data
@@ -7097,7 +8199,8 @@ VisualizeImageHeatmapResponse& visualizeImageHeatmap(const std::vector<std::stri
  * @return Response object containing the result of the operation.
  * 
  */
-VisualizeImageLabelsResponse visualizeImageLabels(const VisualizeImageLabelsRequest& request_) const;
+
+VisualizeImageLabelsResponse visualizeImageLabels( const VisualizeImageLabelsRequest& request_ ) const;
 
 /**
  * Generates a rasterized image tile containing text labels defined by data
@@ -7127,7 +8230,9 @@ VisualizeImageLabelsResponse visualizeImageLabels(const VisualizeImageLabelsRequ
  *         passed in by reference).
  * 
  */
-VisualizeImageLabelsResponse& visualizeImageLabels(const VisualizeImageLabelsRequest& request_, VisualizeImageLabelsResponse& response_) const;
+
+VisualizeImageLabelsResponse& visualizeImageLabels( const VisualizeImageLabelsRequest& request_,
+                                                    VisualizeImageLabelsResponse& response_ ) const;
 
 /**
  * Generates a rasterized image tile containing text labels defined by data
@@ -7225,7 +8330,32 @@ VisualizeImageLabelsResponse& visualizeImageLabels(const VisualizeImageLabelsReq
  * @return Response object containing the result of the operation.
  * 
  */
-VisualizeImageLabelsResponse visualizeImageLabels(const std::string& tableName, const std::string& xColumnName, const std::string& yColumnName, const std::string& xOffset, const std::string& yOffset, const std::string& textString, const std::string& font, const std::string& textColor, const std::string& textAngle, const std::string& textScale, const std::string& drawBox, const std::string& drawLeader, const std::string& lineWidth, const std::string& lineColor, const std::string& fillColor, const std::string& leaderXColumnName, const std::string& leaderYColumnName, const double minX, const double maxX, const double minY, const double maxY, const int32_t width, const int32_t height, const std::string& projection, const std::map<std::string, std::string>& options) const;
+
+VisualizeImageLabelsResponse visualizeImageLabels( const std::string& tableName,
+                                                   const std::string& xColumnName,
+                                                   const std::string& yColumnName,
+                                                   const std::string& xOffset,
+                                                   const std::string& yOffset,
+                                                   const std::string& textString,
+                                                   const std::string& font,
+                                                   const std::string& textColor,
+                                                   const std::string& textAngle,
+                                                   const std::string& textScale,
+                                                   const std::string& drawBox,
+                                                   const std::string& drawLeader,
+                                                   const std::string& lineWidth,
+                                                   const std::string& lineColor,
+                                                   const std::string& fillColor,
+                                                   const std::string& leaderXColumnName,
+                                                   const std::string& leaderYColumnName,
+                                                   const double minX,
+                                                   const double maxX,
+                                                   const double minY,
+                                                   const double maxY,
+                                                   const int32_t width,
+                                                   const int32_t height,
+                                                   const std::string& projection,
+                                                   const std::map<std::string, std::string>& options ) const;
 
 /**
  * Generates a rasterized image tile containing text labels defined by data
@@ -7326,16 +8456,42 @@ VisualizeImageLabelsResponse visualizeImageLabels(const std::string& tableName, 
  *         passed in by reference).
  * 
  */
-VisualizeImageLabelsResponse& visualizeImageLabels(const std::string& tableName, const std::string& xColumnName, const std::string& yColumnName, const std::string& xOffset, const std::string& yOffset, const std::string& textString, const std::string& font, const std::string& textColor, const std::string& textAngle, const std::string& textScale, const std::string& drawBox, const std::string& drawLeader, const std::string& lineWidth, const std::string& lineColor, const std::string& fillColor, const std::string& leaderXColumnName, const std::string& leaderYColumnName, const double minX, const double maxX, const double minY, const double maxY, const int32_t width, const int32_t height, const std::string& projection, const std::map<std::string, std::string>& options, VisualizeImageLabelsResponse& response_) const;
+
+VisualizeImageLabelsResponse& visualizeImageLabels( const std::string& tableName,
+                                                    const std::string& xColumnName,
+                                                    const std::string& yColumnName,
+                                                    const std::string& xOffset,
+                                                    const std::string& yOffset,
+                                                    const std::string& textString,
+                                                    const std::string& font,
+                                                    const std::string& textColor,
+                                                    const std::string& textAngle,
+                                                    const std::string& textScale,
+                                                    const std::string& drawBox,
+                                                    const std::string& drawLeader,
+                                                    const std::string& lineWidth,
+                                                    const std::string& lineColor,
+                                                    const std::string& fillColor,
+                                                    const std::string& leaderXColumnName,
+                                                    const std::string& leaderYColumnName,
+                                                    const double minX,
+                                                    const double maxX,
+                                                    const double minY,
+                                                    const double maxY,
+                                                    const int32_t width,
+                                                    const int32_t height,
+                                                    const std::string& projection,
+                                                    const std::map<std::string, std::string>& options,
+                                                    VisualizeImageLabelsResponse& response_ ) const;
 
 /**
  * Creates raster images of data in the given table based on provided input
  * parameters. Numerous parameters are required to call this function. Some of
  * the important parameters are the attributes of the generated images (@a
- * bgColor, @a width, @{input height{), the collection of GPUdb table names on
- * which this function is to be applied, for which shapes (point, polygon,
- * tracks) the images are to be created and a user specified session key. This
- * session key is later used to fetch the generated images stored by GPUdb. The
+ * bgColor, @a width, @a height), the collection of GPUdb table names on which
+ * this function is to be applied, for which shapes (point, polygon, tracks)
+ * the images are to be created and a user specified session key. This session
+ * key is later used to fetch the generated images stored by GPUdb. The
  * operation is synchronous meaning that GPUdb will not return the request
  * until the images for all the frames of the video are fully available.
  * <p>
@@ -7356,10 +8512,6 @@ VisualizeImageLabelsResponse& visualizeImageLabels(const std::string& tableName,
  * <p>
  *     http://gpudb-ip-address:9191/wms?REQUEST=GetMap&STYLES=cached&LAYERS=MY-
  * SESSION-KEY&FRAME=19
- * <p>
-
- * <p>
-
  * The response payload provides, among other things, the number of frames
  * which were created by GPUdb.
  * 
@@ -7369,16 +8521,17 @@ VisualizeImageLabelsResponse& visualizeImageLabels(const std::string& tableName,
  * @return Response object containing the result of the operation.
  * 
  */
-VisualizeVideoResponse visualizeVideo(const VisualizeVideoRequest& request_) const;
+
+VisualizeVideoResponse visualizeVideo( const VisualizeVideoRequest& request_ ) const;
 
 /**
  * Creates raster images of data in the given table based on provided input
  * parameters. Numerous parameters are required to call this function. Some of
  * the important parameters are the attributes of the generated images (@a
- * bgColor, @a width, @{input height{), the collection of GPUdb table names on
- * which this function is to be applied, for which shapes (point, polygon,
- * tracks) the images are to be created and a user specified session key. This
- * session key is later used to fetch the generated images stored by GPUdb. The
+ * bgColor, @a width, @a height), the collection of GPUdb table names on which
+ * this function is to be applied, for which shapes (point, polygon, tracks)
+ * the images are to be created and a user specified session key. This session
+ * key is later used to fetch the generated images stored by GPUdb. The
  * operation is synchronous meaning that GPUdb will not return the request
  * until the images for all the frames of the video are fully available.
  * <p>
@@ -7399,10 +8552,6 @@ VisualizeVideoResponse visualizeVideo(const VisualizeVideoRequest& request_) con
  * <p>
  *     http://gpudb-ip-address:9191/wms?REQUEST=GetMap&STYLES=cached&LAYERS=MY-
  * SESSION-KEY&FRAME=19
- * <p>
-
- * <p>
-
  * The response payload provides, among other things, the number of frames
  * which were created by GPUdb.
  * 
@@ -7415,16 +8564,18 @@ VisualizeVideoResponse visualizeVideo(const VisualizeVideoRequest& request_) con
  *         passed in by reference).
  * 
  */
-VisualizeVideoResponse& visualizeVideo(const VisualizeVideoRequest& request_, VisualizeVideoResponse& response_) const;
+
+VisualizeVideoResponse& visualizeVideo( const VisualizeVideoRequest& request_,
+                                        VisualizeVideoResponse& response_ ) const;
 
 /**
  * Creates raster images of data in the given table based on provided input
  * parameters. Numerous parameters are required to call this function. Some of
  * the important parameters are the attributes of the generated images (@a
- * bgColor, @a width, @{input height{), the collection of GPUdb table names on
- * which this function is to be applied, for which shapes (point, polygon,
- * tracks) the images are to be created and a user specified session key. This
- * session key is later used to fetch the generated images stored by GPUdb. The
+ * bgColor, @a width, @a height), the collection of GPUdb table names on which
+ * this function is to be applied, for which shapes (point, polygon, tracks)
+ * the images are to be created and a user specified session key. This session
+ * key is later used to fetch the generated images stored by GPUdb. The
  * operation is synchronous meaning that GPUdb will not return the request
  * until the images for all the frames of the video are fully available.
  * <p>
@@ -7445,10 +8596,6 @@ VisualizeVideoResponse& visualizeVideo(const VisualizeVideoRequest& request_, Vi
  * <p>
  *     http://gpudb-ip-address:9191/wms?REQUEST=GetMap&STYLES=cached&LAYERS=MY-
  * SESSION-KEY&FRAME=19
- * <p>
-
- * <p>
-
  * The response payload provides, among other things, the number of frames
  * which were created by GPUdb.
  * 
@@ -7481,16 +8628,34 @@ VisualizeVideoResponse& visualizeVideo(const VisualizeVideoRequest& request_, Vi
  * @return Response object containing the result of the operation.
  * 
  */
-VisualizeVideoResponse visualizeVideo(const std::vector<std::string>& tableNames, const std::vector<std::string>& worldTableNames, const std::vector<std::vector<std::string> >& trackIds, const std::string& xColumnName, const std::string& yColumnName, const double minX, const double maxX, const double minY, const double maxY, const int32_t width, const int32_t height, const std::string& projection, const int64_t bgColor, const std::vector<std::vector<double> >& timeIntervals, const std::string& videoStyle, const std::string& sessionKey, const std::map<std::string, std::vector<std::string> >& styleOptions, const std::map<std::string, std::string>& options) const;
+
+VisualizeVideoResponse visualizeVideo( const std::vector<std::string>& tableNames,
+                                       const std::vector<std::string>& worldTableNames,
+                                       const std::vector<std::vector<std::string> >& trackIds,
+                                       const std::string& xColumnName,
+                                       const std::string& yColumnName,
+                                       const double minX,
+                                       const double maxX,
+                                       const double minY,
+                                       const double maxY,
+                                       const int32_t width,
+                                       const int32_t height,
+                                       const std::string& projection,
+                                       const int64_t bgColor,
+                                       const std::vector<std::vector<double> >& timeIntervals,
+                                       const std::string& videoStyle,
+                                       const std::string& sessionKey,
+                                       const std::map<std::string, std::vector<std::string> >& styleOptions,
+                                       const std::map<std::string, std::string>& options ) const;
 
 /**
  * Creates raster images of data in the given table based on provided input
  * parameters. Numerous parameters are required to call this function. Some of
  * the important parameters are the attributes of the generated images (@a
- * bgColor, @a width, @{input height{), the collection of GPUdb table names on
- * which this function is to be applied, for which shapes (point, polygon,
- * tracks) the images are to be created and a user specified session key. This
- * session key is later used to fetch the generated images stored by GPUdb. The
+ * bgColor, @a width, @a height), the collection of GPUdb table names on which
+ * this function is to be applied, for which shapes (point, polygon, tracks)
+ * the images are to be created and a user specified session key. This session
+ * key is later used to fetch the generated images stored by GPUdb. The
  * operation is synchronous meaning that GPUdb will not return the request
  * until the images for all the frames of the video are fully available.
  * <p>
@@ -7511,10 +8676,6 @@ VisualizeVideoResponse visualizeVideo(const std::vector<std::string>& tableNames
  * <p>
  *     http://gpudb-ip-address:9191/wms?REQUEST=GetMap&STYLES=cached&LAYERS=MY-
  * SESSION-KEY&FRAME=19
- * <p>
-
- * <p>
-
  * The response payload provides, among other things, the number of frames
  * which were created by GPUdb.
  * 
@@ -7550,7 +8711,26 @@ VisualizeVideoResponse visualizeVideo(const std::vector<std::string>& tableNames
  *         passed in by reference).
  * 
  */
-VisualizeVideoResponse& visualizeVideo(const std::vector<std::string>& tableNames, const std::vector<std::string>& worldTableNames, const std::vector<std::vector<std::string> >& trackIds, const std::string& xColumnName, const std::string& yColumnName, const double minX, const double maxX, const double minY, const double maxY, const int32_t width, const int32_t height, const std::string& projection, const int64_t bgColor, const std::vector<std::vector<double> >& timeIntervals, const std::string& videoStyle, const std::string& sessionKey, const std::map<std::string, std::vector<std::string> >& styleOptions, const std::map<std::string, std::string>& options, VisualizeVideoResponse& response_) const;
+
+VisualizeVideoResponse& visualizeVideo( const std::vector<std::string>& tableNames,
+                                        const std::vector<std::string>& worldTableNames,
+                                        const std::vector<std::vector<std::string> >& trackIds,
+                                        const std::string& xColumnName,
+                                        const std::string& yColumnName,
+                                        const double minX,
+                                        const double maxX,
+                                        const double minY,
+                                        const double maxY,
+                                        const int32_t width,
+                                        const int32_t height,
+                                        const std::string& projection,
+                                        const int64_t bgColor,
+                                        const std::vector<std::vector<double> >& timeIntervals,
+                                        const std::string& videoStyle,
+                                        const std::string& sessionKey,
+                                        const std::map<std::string, std::vector<std::string> >& styleOptions,
+                                        const std::map<std::string, std::string>& options,
+                                        VisualizeVideoResponse& response_ ) const;
 
 /**
  * Creates raster heat-map images of table data based on input parameters.
@@ -7592,7 +8772,8 @@ VisualizeVideoResponse& visualizeVideo(const std::vector<std::string>& tableName
  * @return Response object containing the result of the operation.
  * 
  */
-VisualizeVideoHeatmapResponse visualizeVideoHeatmap(const VisualizeVideoHeatmapRequest& request_) const;
+
+VisualizeVideoHeatmapResponse visualizeVideoHeatmap( const VisualizeVideoHeatmapRequest& request_ ) const;
 
 /**
  * Creates raster heat-map images of table data based on input parameters.
@@ -7637,7 +8818,9 @@ VisualizeVideoHeatmapResponse visualizeVideoHeatmap(const VisualizeVideoHeatmapR
  *         passed in by reference).
  * 
  */
-VisualizeVideoHeatmapResponse& visualizeVideoHeatmap(const VisualizeVideoHeatmapRequest& request_, VisualizeVideoHeatmapResponse& response_) const;
+
+VisualizeVideoHeatmapResponse& visualizeVideoHeatmap( const VisualizeVideoHeatmapRequest& request_,
+                                                      VisualizeVideoHeatmapResponse& response_ ) const;
 
 /**
  * Creates raster heat-map images of table data based on input parameters.
@@ -7695,7 +8878,22 @@ VisualizeVideoHeatmapResponse& visualizeVideoHeatmap(const VisualizeVideoHeatmap
  * @return Response object containing the result of the operation.
  * 
  */
-VisualizeVideoHeatmapResponse visualizeVideoHeatmap(const std::vector<std::string>& tableNames, const std::string& xColumnName, const std::string& yColumnName, const double minX, const double maxX, const double minY, const double maxY, const std::vector<std::vector<double> >& timeIntervals, const int32_t width, const int32_t height, const std::string& projection, const std::string& videoStyle, const std::string& sessionKey, const std::map<std::string, std::string>& styleOptions, const std::map<std::string, std::string>& options) const;
+
+VisualizeVideoHeatmapResponse visualizeVideoHeatmap( const std::vector<std::string>& tableNames,
+                                                     const std::string& xColumnName,
+                                                     const std::string& yColumnName,
+                                                     const double minX,
+                                                     const double maxX,
+                                                     const double minY,
+                                                     const double maxY,
+                                                     const std::vector<std::vector<double> >& timeIntervals,
+                                                     const int32_t width,
+                                                     const int32_t height,
+                                                     const std::string& projection,
+                                                     const std::string& videoStyle,
+                                                     const std::string& sessionKey,
+                                                     const std::map<std::string, std::string>& styleOptions,
+                                                     const std::map<std::string, std::string>& options ) const;
 
 /**
  * Creates raster heat-map images of table data based on input parameters.
@@ -7756,4 +8954,20 @@ VisualizeVideoHeatmapResponse visualizeVideoHeatmap(const std::vector<std::strin
  *         passed in by reference).
  * 
  */
-VisualizeVideoHeatmapResponse& visualizeVideoHeatmap(const std::vector<std::string>& tableNames, const std::string& xColumnName, const std::string& yColumnName, const double minX, const double maxX, const double minY, const double maxY, const std::vector<std::vector<double> >& timeIntervals, const int32_t width, const int32_t height, const std::string& projection, const std::string& videoStyle, const std::string& sessionKey, const std::map<std::string, std::string>& styleOptions, const std::map<std::string, std::string>& options, VisualizeVideoHeatmapResponse& response_) const;
+
+VisualizeVideoHeatmapResponse& visualizeVideoHeatmap( const std::vector<std::string>& tableNames,
+                                                      const std::string& xColumnName,
+                                                      const std::string& yColumnName,
+                                                      const double minX,
+                                                      const double maxX,
+                                                      const double minY,
+                                                      const double maxY,
+                                                      const std::vector<std::vector<double> >& timeIntervals,
+                                                      const int32_t width,
+                                                      const int32_t height,
+                                                      const std::string& projection,
+                                                      const std::string& videoStyle,
+                                                      const std::string& sessionKey,
+                                                      const std::map<std::string, std::string>& styleOptions,
+                                                      const std::map<std::string, std::string>& options,
+                                                      VisualizeVideoHeatmapResponse& response_ ) const;
