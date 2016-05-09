@@ -1,5 +1,6 @@
-#include "Type.hpp"
-#include "GPUdb.hpp"
+#include "gpudb/Type.hpp"
+
+#include "gpudb/GPUdb.hpp"
 
 
 

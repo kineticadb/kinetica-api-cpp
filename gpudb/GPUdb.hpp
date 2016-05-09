@@ -1,7 +1,7 @@
 #ifndef __GPUDB_HPP__
 #define __GPUDB_HPP__
 
-#include "protocol/EndpointKeywords.h"
+#include "gpudb/protocol/EndpointKeywords.h"
 
 #include <boost/thread/mutex.hpp>
 
@@ -12,12 +12,12 @@ namespace gpudb
     class GPUdb;
 }
 
-#include "Avro.hpp"
-#include "GenericRecord.hpp"
-#include "GPUdbException.hpp"
-#include "Type.hpp"
-#include "DynamicTableRecord.hpp"
-#include "protocol/GPUdbProtocol.h"
+#include "gpudb/Avro.hpp"
+#include "gpudb/GenericRecord.hpp"
+#include "gpudb/GPUdbException.hpp"
+#include "gpudb/Type.hpp"
+#include "gpudb/DynamicTableRecord.hpp"
+#include "gpudb/protocol/GPUdbProtocol.h"
 
 namespace gpudb
 {

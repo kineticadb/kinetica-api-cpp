@@ -1,6 +1,6 @@
 #include "GPUdbIngestor.hpp"
 
-#include "GPUdb.hpp"
+#include "gpudb/GPUdb.hpp"
 
 #include <cstring>
 #include <map>

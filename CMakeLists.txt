@@ -62,7 +62,7 @@ EXECUTE_PROCESS(COMMAND "date" OUTPUT_VARIABLE GPUDB_API_CPP_CMAKE_BUILD_DATE_ST
 string(STRIP "${GPUDB_API_CPP_CMAKE_BUILD_DATE_STRING}" GPUDB_API_CPP_CMAKE_BUILD_DATE_STRING)
 
 # Get the version info from the C++ API version file
-file(READ "${CMAKE_SOURCE_DIR}/src/VERSION" API_CPP_VERSION_STR)
+file(READ "${CMAKE_SOURCE_DIR}/gpudb/VERSION" API_CPP_VERSION_STR)
 
 string(REGEX MATCH "MAJOR[ \t]*=[ \t]*([0-9]+)"    _dummy ${API_CPP_VERSION_STR} )
 set(API_CPP_VERSION_MAJOR   ${CMAKE_MATCH_1} CACHE INTERNAL "" FORCE)
@@ -106,7 +106,6 @@ set( DOXYGEN_STRIP_FROM_INC_PATH "${GPUDB_API_CPP_ROOT_DIR}" )
 set( DOXYGEN_INPUT               "${GPUDB_API_CPP_ROOT_DIR}" )
 set( DOXYGEN_FILE_PATTERNS       "*.h *.hpp" )
 set( DOXYGEN_PREDEFINED          "" )
-set( LAYOUT_FILES                'DoxygenLayout.xml' )
 
 MESSAGE(STATUS "*")
 ADD_DOXYGEN( doxygen
@@ -158,6 +157,7 @@ endif()
 # Include and Link directories and libs.
 
 set(GPUDB_API_CPP_INCLUDE_DIRS
+    ${CMAKE_SOURCE_DIR}
     ${GPUDB_API_CPP_LIBS_DIR}/include
     ${Boost_INCLUDE_DIRS}
 )
@@ -357,7 +357,7 @@ endfunction( gpudb_api_cpp_multihead_ingest_TARGETS )
 # Add the subdirectories with their projects in them
 # ===========================================================================
 
-add_subdirectory(src)
+add_subdirectory(gpudb)
 add_subdirectory(example)
 
 MESSAGE(STATUS "*")

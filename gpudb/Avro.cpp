@@ -1,4 +1,5 @@
 #include "Avro.hpp"
+
 #include <boost/thread/thread.hpp>
 
 namespace gpudb

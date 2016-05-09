@@ -1,6 +1,8 @@
 #include "DynamicTableRecord.hpp"
-#include "Avro.hpp"
-#include "GPUdbException.hpp"
+
+#include "gpudb/Avro.hpp"
+#include "gpudb/GPUdbException.hpp"
+
 #include <avro/Exception.hh>
 #include <boost/lexical_cast.hpp>
 

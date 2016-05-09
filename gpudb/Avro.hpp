@@ -1,7 +1,8 @@
 #ifndef __GPUDB__AVRO_HPP__
 #define __GPUDB__AVRO_HPP__
 
-#include "GPUdbException.hpp"
+#include "gpudb/GPUdbException.hpp"
+
 #include <avro/Compiler.hh>
 #include <avro/Generic.hh>
 #include <avro/Schema.hh>
