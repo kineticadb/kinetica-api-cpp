@@ -68,7 +68,7 @@ namespace gpudb
          *                              value is an empty string.
          * @param[in] columnName  Name of the binning-column used to divide the
          *                        set samples into bins.
-         * @param[in] valueColumnName  Optional Name of the column for which
+         * @param[in] valueColumnName  Name of the value-column for which
          *                             statistics are to be computed.
          * @param[in] stats  A string of comma separated list of the statistics
          *                   to calculate, e.g. 'sum,mean'. Available

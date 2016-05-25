@@ -1,4 +1,5 @@
-#include "../src/GPUdb.hpp"
+#include "gpudb/GPUdb.hpp"
+
 #include <boost/lexical_cast.hpp>
 
 int main(int argc, char* argv[])
@@ -107,10 +108,10 @@ int main(int argc, char* argv[])
                 std::cout << record.value<float>(j) << "\t";
                 break;
             case ::avro::AVRO_INT:
-                std::cout << record.value<int>(j) << "\t";
+                std::cout << record.value<int32_t>(j) << "\t";
                 break;
             case ::avro::AVRO_LONG:
-                std::cout << record.value<long>(j) << "\t";
+                std::cout << record.value<int64_t>(j) << "\t";
                 break;
             case ::avro::AVRO_STRING:
                 std::cout << record.value<std::string>(j) << "\t";
@@ -134,7 +135,7 @@ int main(int argc, char* argv[])
 
     for (size_t i = 0; i < gsoResponse.data.size(); ++i)
     {
-        gpudb::GenericRecord& record = gsoResponse.data[i];
+        const gpudb::GenericRecord& record = gsoResponse.data[i];
         std::cout << record.asString("TRACKID")
                 << " " << record.asLong("TIMESTAMP")
                 << " " << record.asDouble("x")

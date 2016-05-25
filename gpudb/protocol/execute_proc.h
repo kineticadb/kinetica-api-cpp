@@ -13,7 +13,7 @@ namespace gpudb
      * A set of input parameters for {@link
      * #executeProc(const ExecuteProcRequest&) const}.
      * <p>
-     * Exectues a proc in the GPUdb Node.js proc server.
+     * Executes a proc in the GPUdb Node.js proc server.
      */
     struct ExecuteProcRequest
     {
@@ -121,7 +121,7 @@ namespace gpudb
      * A set of output parameters for {@link
      * #executeProc(const ExecuteProcRequest&) const}.
      * <p>
-     * Exectues a proc in the GPUdb Node.js proc server.
+     * Executes a proc in the GPUdb Node.js proc server.
      */
     struct ExecuteProcResponse
     {

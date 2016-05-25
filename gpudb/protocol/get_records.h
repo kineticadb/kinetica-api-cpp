@@ -24,6 +24,9 @@ namespace gpudb
      * (or the underlying table in case of a view) is updated (records are
      * inserted, deleted or modified) the records retrieved may differ between
      * calls based on the updates applied.
+     * <p>
+     * Note that when using the Java API, it is not possible to retrieve
+     * records from join tables using this operation.
      */
     struct GetRecordsRequest
     {
@@ -182,6 +185,9 @@ namespace gpudb
      * (or the underlying table in case of a view) is updated (records are
      * inserted, deleted or modified) the records retrieved may differ between
      * calls based on the updates applied.
+     * <p>
+     * Note that when using the Java API, it is not possible to retrieve
+     * records from join tables using this operation.
      */
     struct RawGetRecordsResponse
     {
@@ -195,7 +201,9 @@ namespace gpudb
             typeName(std::string()),
             typeSchema(std::string()),
             recordsBinary(std::vector<std::vector<uint8_t> >()),
-            recordsJson(std::vector<std::string>())
+            recordsJson(std::vector<std::string>()),
+            totalNumberOfRecords(int64_t()),
+            hasMoreRecords(bool())
         {
         }
 
@@ -204,6 +212,8 @@ namespace gpudb
         std::string typeSchema;
         std::vector<std::vector<uint8_t> > recordsBinary;
         std::vector<std::string> recordsJson;
+        int64_t totalNumberOfRecords;
+        bool hasMoreRecords;
     };
 }
 
@@ -218,6 +228,8 @@ namespace avro
             ::avro::encode(e, v.typeSchema);
             ::avro::encode(e, v.recordsBinary);
             ::avro::encode(e, v.recordsJson);
+            ::avro::encode(e, v.totalNumberOfRecords);
+            ::avro::encode(e, v.hasMoreRecords);
         }
 
         static void decode(Decoder& d, gpudb::RawGetRecordsResponse& v)
@@ -250,6 +262,14 @@ namespace avro
                             ::avro::decode(d, v.recordsJson);
                             break;
 
+                        case 5:
+                            ::avro::decode(d, v.totalNumberOfRecords);
+                            break;
+
+                        case 6:
+                            ::avro::decode(d, v.hasMoreRecords);
+                            break;
+
                         default:
                             break;
                     }
@@ -262,6 +282,8 @@ namespace avro
                 ::avro::decode(d, v.typeSchema);
                 ::avro::decode(d, v.recordsBinary);
                 ::avro::decode(d, v.recordsJson);
+                ::avro::decode(d, v.totalNumberOfRecords);
+                ::avro::decode(d, v.hasMoreRecords);
             }
         }
     };
@@ -285,6 +307,9 @@ namespace gpudb
      * (or the underlying table in case of a view) is updated (records are
      * inserted, deleted or modified) the records retrieved may differ between
      * calls based on the updates applied.
+     * <p>
+     * Note that when using the Java API, it is not possible to retrieve
+     * records from join tables using this operation.
      * 
      * @param <T>  The type of object being processed.
      * 
@@ -300,7 +325,9 @@ namespace gpudb
             tableName(std::string()),
             typeName(std::string()),
             typeSchema(std::string()),
-            data(std::vector<T>())
+            data(std::vector<T>()),
+            totalNumberOfRecords(int64_t()),
+            hasMoreRecords(bool())
         {
         }
 
@@ -308,6 +335,8 @@ namespace gpudb
         std::string typeName;
         std::string typeSchema;
         std::vector<T> data;
+        int64_t totalNumberOfRecords;
+        bool hasMoreRecords;
     };
 }
 

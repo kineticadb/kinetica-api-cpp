@@ -1,17 +1,16 @@
-=================
-|               |
-| GPUdb C++ API |
-|               |
-=================
+GPUdb C++ API
+=============
 
 The gpudb-api-cpp project contains the source code of the C++ GPUdb API.
 
-The documentation can be found at http://www.gpudb.com/docs/5/index.html.  The
+The documentation can be found at http://www.gpudb.com/docs/5.2/index.html.  The
 C++ specific documentation can be found at:
 
-* http://www.gpudb.com/docs/5/user/cpp_guide.html
-* http://www.gpudb.com/docs/5/api/c++/annotated.html
+*   http://www.gpudb.com/docs/5.2/tutorial/cpp_guide.html
+*   http://www.gpudb.com/docs/5.2/api/c++/annotated.html
 
+For the client-side API changes, please refer to CHANGELOG.md, and for GPUdb
+function changes, please refer to CHANGELOG-FUNCTIONS.md.
 
 Instructions to build the GPUdb CPP API on Linux
 ================================================
@@ -26,7 +25,7 @@ Requirements
 -   Third-party libraries (see below for building instructions)
 
 
-Thirdparty Tools and Libraries
+Third-party Tools and Libraries
 -------------------------------
 
 -   Install these programs and libraries from the Linux distribution packages.
@@ -47,20 +46,32 @@ Thirdparty Tools and Libraries
             install the newer boost148-* libraries into the
             /usr/include/boost148/ and /usr/lib64/boost148/ directories.
             See below about how to configure the GPUdb CPP API CMake build to detect
-            and use an alternative boost install.
--   Build these libraries from the source archives in the thirdparty/ directory.
-    -   Use the thirdparty/build-thirdparty-libs.sh script to build them
-        for your distribution and architecture.
+            and use an alternate boost install.
+-   Build the libraries from the source archives in the thirdparty/ directory.
+    -   The `thirdparty/build-thirdparty-libs.sh` script builds
+        Apache Avro and Google Snappy in the directory 'thirdparty/build' and
+        installs them to 'thirdparty/install'.
+    -   Run the script without arguments, unless you need to specify the boost root
+        as shown below.
     -   Apache Avro serialization library v1.7.7, https://avro.apache.org/index.html
-        -   Note that Avro depends on a valid Boost development library.
+        -   Note that Avro depends on a valid Boost development library, see above.
+        -   If you need to specify an alternate location of the boost headers
+            and libraries you will need to set the environment variable 
+            GPUDB_AVRO_CMAKE_FLAGS before running `build-thirdparty-libs.sh`.
+            -   Oftentimes the cmake BOOST_ROOT flag is enough, but if not,
+                you will need to completely specify the location of boost.
+            -   Ex. GPUDB_AVRO_CMAKE_FLAGS="-DBOOST_ROOT=/path/to/boost/install" ./build-thirdparty-libs.sh
+            -   Ex. GPUDB_AVRO_CMAKE_FLAGS="-DBoost_NO_BOOST_CMAKE=TRUE -DBOOST_INCLUDEDIR=/usr/include/boost148 -DBOOST_LIBRARYDIR=/usr/lib64/boost148/" ./build-thirdparty-libs.sh
     -   Snappy compression library v1.1.3, https://github.com/google/snappy
+        -   The snappy library should not need any configuration.
+    -   Simply delete the 'thirdparty/build' and 'thirdparty/install' 
+        directories if you need to recreate them.
 
 
 CMake Build Instructions
 ------------------------
 
--   There are four CMake build types:
-    'Debug, RelWithDebInfo, Release, MinSizeRel'
+-   There are four CMake build types: 'Debug, RelWithDebInfo, Release, MinSizeRel'
     -   The default RelWithDebInfo build offers good performance while providing
         debug information.
     -   Note that 'RelWithDebInfo' can be converted to 'Release' by
@@ -76,7 +87,7 @@ CMake Build Instructions
     -   You cannot rename this directory after running cmake, create a new one.
     -   Ex. `$ mkdir build-RelWithDebInfo`
 -   The most common CMake settings to change will be these: (defaults shown below)
-    -   `-DGPUDB_API_CPP_LIBS_DIR=$PWD/thirdparty/install`
+    -   `-DGPUDB_API_CPP_LIBS_DIR=/path/to/gpudb-api-cpp/thirdparty/install`
         -   Specify the root of the built and installed thirdparty libs.
         -   If you followed the directions to build the thirdparty libaries above
             you should not have to specify this directory.
@@ -91,7 +102,7 @@ CMake Build Instructions
         -   Which doesn't attempt to autofind boost and explicitly specifies the include and lib directories.
 -   Change into the newly created and appropriately named
     `build-RelWithDebInfo` directory.
--   Run cmake in the build directory, specifying any required options and the 
+-   Run cmake in the build directory, specifying any extra options and the 
     root of the source directory.
     -   Ex. `$ cmake ../`
     -   Run the same cmake command a second time to ensure things are setup correctly.
@@ -105,12 +116,12 @@ CMake Build Instructions
         -   Create a new build dir if build options are drasticly different.
 -   Note that the embedded executable build time and version is ONLY updated when cmake is run.
 -   To build the executables; run `$ make -j8` where `8` would be the number of processors on your machine.
--   The executables are created in the build's subdirectory 'bin/RelWithDebInfo'.
+-   The executables are created in the build subdirectory 'bin/RelWithDebInfo'.
 -   There are a variety of make targets, run `$ make help` to view them.
 
 
-Editing and Building GPUdb with QTCreator
------------------------------------------
+Editing and Building GPUdb API C++ with QTCreator
+-------------------------------------------------
 
 -   The CMake build automatically generates the necessary QTCreator project files.
 -   Run `$ qtcreator build-RelWithDebInfo/qtcreator-gpudb-api-cpp.creator`
@@ -121,5 +132,4 @@ Editing and Building GPUdb with QTCreator
         'Make arguments' text box.
 -   The hammer in the lower left is the build button...
 -   Fixing a 'Could not initialize GLX', an OpenGL crash error when starting QTCreator
-    -   `$ qtcreator -noload Welcome qtcreator-gaiadb-cluster.creator`
-
+    -   `$ qtcreator -noload Welcome qtcreator-gpudb-api-cpp.creator`

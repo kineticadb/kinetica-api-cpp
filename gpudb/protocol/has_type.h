@@ -13,7 +13,7 @@ namespace gpudb
      * A set of input parameters for {@link
      * #hasType(const HasTypeRequest&) const}.
      * <p>
-     * Check the existance of a type in GPUdb.
+     * Check the existence of a type in GPUdb.
      */
     struct HasTypeRequest
     {
@@ -96,7 +96,7 @@ namespace gpudb
      * A set of output parameters for {@link
      * #hasType(const HasTypeRequest&) const}.
      * <p>
-     * Check the existance of a type in GPUdb.
+     * Check the existence of a type in GPUdb.
      */
     struct HasTypeResponse
     {

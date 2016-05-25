@@ -13,7 +13,7 @@ namespace gpudb
      * A set of input parameters for {@link
      * #createTriggerByArea(const CreateTriggerByAreaRequest&) const}.
      * <p>
-     * Sets up an area  trigger mechanism for two column_names for one or more
+     * Sets up an area trigger mechanism for two column_names for one or more
      * tables. (This function is essentially the two-dimensional version of
      * {@link
      * #createTriggerByRange(const CreateTriggerByRangeRequest&) const}.)
@@ -174,7 +174,7 @@ namespace gpudb
      * A set of output parameters for {@link
      * #createTriggerByArea(const CreateTriggerByAreaRequest&) const}.
      * <p>
-     * Sets up an area  trigger mechanism for two column_names for one or more
+     * Sets up an area trigger mechanism for two column_names for one or more
      * tables. (This function is essentially the two-dimensional version of
      * {@link
      * #createTriggerByRange(const CreateTriggerByRangeRequest&) const}.)

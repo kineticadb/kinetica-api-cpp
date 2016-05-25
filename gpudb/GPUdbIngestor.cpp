@@ -1,4 +1,4 @@
-#include "GPUdbIngestor.hpp"
+#include "gpudb/GPUdbIngestor.hpp"
 
 #include "gpudb/GPUdb.hpp"
 

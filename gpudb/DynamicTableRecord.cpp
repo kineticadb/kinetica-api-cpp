@@ -1,4 +1,4 @@
-#include "DynamicTableRecord.hpp"
+#include "gpudb/DynamicTableRecord.hpp"
 
 #include "gpudb/Avro.hpp"
 #include "gpudb/GPUdbException.hpp"

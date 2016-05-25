@@ -6,7 +6,7 @@
 
 
 // GPUdb Version
-const std::string GPUdb::api_version( "5.0.0.0" );
+const std::string GPUdb::api_version( "5.2.0.0" );
 
 
 
@@ -913,6 +913,8 @@ AggregateGroupByResponse GPUdb::aggregateGroupBy( const AggregateGroupByRequest&
     AggregateGroupByResponse response_;
     response_.responseSchemaStr = actualResponse_.responseSchemaStr;
     gpudb::DynamicTableRecord::transpose( actualResponse_.responseSchemaStr, actualResponse_.binaryEncodedResponse, response_.data );
+    response_.totalNumberOfRecords = actualResponse_.totalNumberOfRecords;
+    response_.hasMoreRecords = actualResponse_.hasMoreRecords;
     return response_;
 }
 
@@ -960,6 +962,8 @@ AggregateGroupByResponse& GPUdb::aggregateGroupBy( const AggregateGroupByRequest
     submitRequest("/aggregate/groupby", request_, actualResponse_, false);
     response_.responseSchemaStr = actualResponse_.responseSchemaStr;
     gpudb::DynamicTableRecord::transpose( actualResponse_.responseSchemaStr, actualResponse_.binaryEncodedResponse, response_.data );
+    response_.totalNumberOfRecords = actualResponse_.totalNumberOfRecords;
+    response_.hasMoreRecords = actualResponse_.hasMoreRecords;
     return response_;
 }
 
@@ -1026,6 +1030,8 @@ AggregateGroupByResponse GPUdb::aggregateGroupBy( const std::string& tableName,
     AggregateGroupByResponse response_;
     response_.responseSchemaStr = actualResponse_.responseSchemaStr;
     gpudb::DynamicTableRecord::transpose( actualResponse_.responseSchemaStr, actualResponse_.binaryEncodedResponse, response_.data );
+    response_.totalNumberOfRecords = actualResponse_.totalNumberOfRecords;
+    response_.hasMoreRecords = actualResponse_.hasMoreRecords;
     return response_;
 }
 
@@ -1095,6 +1101,8 @@ AggregateGroupByResponse& GPUdb::aggregateGroupBy( const std::string& tableName,
     submitRequest("/aggregate/groupby", actualRequest_, actualResponse_, false);
     response_.responseSchemaStr = actualResponse_.responseSchemaStr;
     gpudb::DynamicTableRecord::transpose( actualResponse_.responseSchemaStr, actualResponse_.binaryEncodedResponse, response_.data );
+    response_.totalNumberOfRecords = actualResponse_.totalNumberOfRecords;
+    response_.hasMoreRecords = actualResponse_.hasMoreRecords;
     return response_;
 }
 
@@ -1488,16 +1496,29 @@ AggregateMinMaxResponse& GPUdb::aggregateMinMax( const std::string& tableName,
 
 
 /**
- * Calculates the requested statistics of a given column in a given table. The
- * available statistics are count (number of total objects), mean, stdv
+ * Calculates the requested statistics of a given column in a given table.
+ * <p>
+ * The available statistics are count (number of total objects), mean, stdv
  * (standard deviation), variance, skew, kurtosis, sum, min, max,
- * weighted_average, cardinality (unique count) and estimated cardinality.
+ * weighted_average, cardinality (unique count), estimated cardinality,
+ * percentile and percentile_rank.
+ * <p>
  * Estimated cardinality is calculated by using the hyperloglog approximation
- * technique. The weighted average statistic requires a weight_attribute to be
- * specified in @a options. The weighted average is then defined as the sum of
- * the products of @a columnName times the weight attribute divided by the sum
- * of the weight attribute. The response includes a list of the statistics
- * requested along with the count of the number of items in the given set.
+ * technique.
+ * <p>
+ * Percentiles and percentile_ranks are approximate and are calculated using
+ * the t-digest algorithm. They must include the desired
+ * percentile/percentile_rank. To compute multiple percentiles each value must
+ * be specified separately (i.e.
+ * 'percentile(75.0),percentile(99.0),percentile_rank(1234.56),percentile_rank(-5)').
+ * <p>
+ * The weighted average statistic requires a weight_attribute to be specified
+ * in @a options. The weighted average is then defined as the sum of the
+ * products of @a columnName times the weight attribute divided by the sum of
+ * the weight attribute.
+ * <p>
+ * The response includes a list of the statistics requested along with the
+ * count of the number of items in the given set.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -1515,16 +1536,29 @@ AggregateStatisticsResponse GPUdb::aggregateStatistics( const AggregateStatistic
 
 
 /**
- * Calculates the requested statistics of a given column in a given table. The
- * available statistics are count (number of total objects), mean, stdv
+ * Calculates the requested statistics of a given column in a given table.
+ * <p>
+ * The available statistics are count (number of total objects), mean, stdv
  * (standard deviation), variance, skew, kurtosis, sum, min, max,
- * weighted_average, cardinality (unique count) and estimated cardinality.
+ * weighted_average, cardinality (unique count), estimated cardinality,
+ * percentile and percentile_rank.
+ * <p>
  * Estimated cardinality is calculated by using the hyperloglog approximation
- * technique. The weighted average statistic requires a weight_attribute to be
- * specified in @a options. The weighted average is then defined as the sum of
- * the products of @a columnName times the weight attribute divided by the sum
- * of the weight attribute. The response includes a list of the statistics
- * requested along with the count of the number of items in the given set.
+ * technique.
+ * <p>
+ * Percentiles and percentile_ranks are approximate and are calculated using
+ * the t-digest algorithm. They must include the desired
+ * percentile/percentile_rank. To compute multiple percentiles each value must
+ * be specified separately (i.e.
+ * 'percentile(75.0),percentile(99.0),percentile_rank(1234.56),percentile_rank(-5)').
+ * <p>
+ * The weighted average statistic requires a weight_attribute to be specified
+ * in @a options. The weighted average is then defined as the sum of the
+ * products of @a columnName times the weight attribute divided by the sum of
+ * the weight attribute.
+ * <p>
+ * The response includes a list of the statistics requested along with the
+ * count of the number of items in the given set.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -1545,16 +1579,29 @@ AggregateStatisticsResponse& GPUdb::aggregateStatistics( const AggregateStatisti
 
 
 /**
- * Calculates the requested statistics of a given column in a given table. The
- * available statistics are count (number of total objects), mean, stdv
+ * Calculates the requested statistics of a given column in a given table.
+ * <p>
+ * The available statistics are count (number of total objects), mean, stdv
  * (standard deviation), variance, skew, kurtosis, sum, min, max,
- * weighted_average, cardinality (unique count) and estimated cardinality.
+ * weighted_average, cardinality (unique count), estimated cardinality,
+ * percentile and percentile_rank.
+ * <p>
  * Estimated cardinality is calculated by using the hyperloglog approximation
- * technique. The weighted average statistic requires a weight_attribute to be
- * specified in @a options. The weighted average is then defined as the sum of
- * the products of @a columnName times the weight attribute divided by the sum
- * of the weight attribute. The response includes a list of the statistics
- * requested along with the count of the number of items in the given set.
+ * technique.
+ * <p>
+ * Percentiles and percentile_ranks are approximate and are calculated using
+ * the t-digest algorithm. They must include the desired
+ * percentile/percentile_rank. To compute multiple percentiles each value must
+ * be specified separately (i.e.
+ * 'percentile(75.0),percentile(99.0),percentile_rank(1234.56),percentile_rank(-5)').
+ * <p>
+ * The weighted average statistic requires a weight_attribute to be specified
+ * in @a options. The weighted average is then defined as the sum of the
+ * products of @a columnName times the weight attribute divided by the sum of
+ * the weight attribute.
+ * <p>
+ * The response includes a list of the statistics requested along with the
+ * count of the number of items in the given set.
  * 
  * @param tableName  Name of the table on which the statistics operation will
  *                   be performed.
@@ -1585,16 +1632,29 @@ AggregateStatisticsResponse GPUdb::aggregateStatistics( const std::string& table
 
 
 /**
- * Calculates the requested statistics of a given column in a given table. The
- * available statistics are count (number of total objects), mean, stdv
+ * Calculates the requested statistics of a given column in a given table.
+ * <p>
+ * The available statistics are count (number of total objects), mean, stdv
  * (standard deviation), variance, skew, kurtosis, sum, min, max,
- * weighted_average, cardinality (unique count) and estimated cardinality.
+ * weighted_average, cardinality (unique count), estimated cardinality,
+ * percentile and percentile_rank.
+ * <p>
  * Estimated cardinality is calculated by using the hyperloglog approximation
- * technique. The weighted average statistic requires a weight_attribute to be
- * specified in @a options. The weighted average is then defined as the sum of
- * the products of @a columnName times the weight attribute divided by the sum
- * of the weight attribute. The response includes a list of the statistics
- * requested along with the count of the number of items in the given set.
+ * technique.
+ * <p>
+ * Percentiles and percentile_ranks are approximate and are calculated using
+ * the t-digest algorithm. They must include the desired
+ * percentile/percentile_rank. To compute multiple percentiles each value must
+ * be specified separately (i.e.
+ * 'percentile(75.0),percentile(99.0),percentile_rank(1234.56),percentile_rank(-5)').
+ * <p>
+ * The weighted average statistic requires a weight_attribute to be specified
+ * in @a options. The weighted average is then defined as the sum of the
+ * products of @a columnName times the weight attribute divided by the sum of
+ * the weight attribute.
+ * <p>
+ * The response includes a list of the statistics requested along with the
+ * count of the number of items in the given set.
  * 
  * @param tableName  Name of the table on which the statistics operation will
  *                   be performed.
@@ -1740,8 +1800,8 @@ AggregateStatisticsByRangeResponse& GPUdb::aggregateStatisticsByRange( const Agg
  *                          string.
  * @param columnName  Name of the binning-column used to divide the set samples
  *                    into bins.
- * @param valueColumnName  Optional Name of the column for which statistics are
- *                         to be computed.
+ * @param valueColumnName  Name of the value-column for which statistics are to
+ *                         be computed.
  * @param stats  A string of comma separated list of the statistics to
  *               calculate, e.g. 'sum,mean'. Available statistics: mean, stdv
  *               (standard deviation), variance, skew, kurtosis, sum.
@@ -1815,8 +1875,8 @@ AggregateStatisticsByRangeResponse GPUdb::aggregateStatisticsByRange( const std:
  *                          string.
  * @param columnName  Name of the binning-column used to divide the set samples
  *                    into bins.
- * @param valueColumnName  Optional Name of the column for which statistics are
- *                         to be computed.
+ * @param valueColumnName  Name of the value-column for which statistics are to
+ *                         be computed.
  * @param stats  A string of comma separated list of the statistics to
  *               calculate, e.g. 'sum,mean'. Available statistics: mean, stdv
  *               (standard deviation), variance, skew, kurtosis, sum.
@@ -1957,6 +2017,7 @@ AggregateUniqueResponse GPUdb::aggregateUnique( const AggregateUniqueRequest& re
     response_.tableName = actualResponse_.tableName;
     response_.responseSchemaStr = actualResponse_.responseSchemaStr;
     gpudb::DynamicTableRecord::transpose( actualResponse_.responseSchemaStr, actualResponse_.binaryEncodedResponse, response_.data );
+    response_.hasMoreRecords = actualResponse_.hasMoreRecords;
     return response_;
 }
 
@@ -1995,6 +2056,7 @@ AggregateUniqueResponse& GPUdb::aggregateUnique( const AggregateUniqueRequest& r
     response_.tableName = actualResponse_.tableName;
     response_.responseSchemaStr = actualResponse_.responseSchemaStr;
     gpudb::DynamicTableRecord::transpose( actualResponse_.responseSchemaStr, actualResponse_.binaryEncodedResponse, response_.data );
+    response_.hasMoreRecords = actualResponse_.hasMoreRecords;
     return response_;
 }
 
@@ -2051,6 +2113,7 @@ AggregateUniqueResponse GPUdb::aggregateUnique( const std::string& tableName,
     response_.tableName = actualResponse_.tableName;
     response_.responseSchemaStr = actualResponse_.responseSchemaStr;
     gpudb::DynamicTableRecord::transpose( actualResponse_.responseSchemaStr, actualResponse_.binaryEncodedResponse, response_.data );
+    response_.hasMoreRecords = actualResponse_.hasMoreRecords;
     return response_;
 }
 
@@ -2110,6 +2173,7 @@ AggregateUniqueResponse& GPUdb::aggregateUnique( const std::string& tableName,
     response_.tableName = actualResponse_.tableName;
     response_.responseSchemaStr = actualResponse_.responseSchemaStr;
     gpudb::DynamicTableRecord::transpose( actualResponse_.responseSchemaStr, actualResponse_.binaryEncodedResponse, response_.data );
+    response_.hasMoreRecords = actualResponse_.hasMoreRecords;
     return response_;
 }
 
@@ -2219,12 +2283,26 @@ AlterSystemPropertiesResponse& GPUdb::alterSystemProperties( const std::map<std:
 
 
 /**
- * Creates or deletes an index on a particular column in a given table.
- * Creating an index can speed up certain search queries (such as {@link
+ * Apply various modifications to a table or collection. Available
+ * modifications include:
+ * <p>
+ *      Cereating or deleting an index on a particular column. This can speed
+ * up certain search queries (such as {@link
  * #getRecordsRaw(const GetRecordsRequest&) const}, {@link
  * #deleteRecords(const DeleteRecordsRequest&) const}, {@link
  * #updateRecordsRaw(const RawUpdateRecordsRequest&) const}) when using
  * expressions containing equality or relational operators on indexed columns.
+ * This only applies to child tables.
+ * <p>
+ *      Making a table protected or not. Protected tables need the admin
+ * password to be sent in a {@link
+ * #clearTable(const ClearTableRequest&) const} to delete the table. This
+ * can be applied to child tables or collections or views.
+ * <p>
+ *      Setting the ttl (time-to-live). This can be applied to child tables or
+ * collections or views.
+ * <p>
+ *      Allowing homogeneous child tables. This only applies to collections.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -2242,15 +2320,29 @@ AlterTableResponse GPUdb::alterTable( const AlterTableRequest& request_ ) const
 
 
 /**
- * Creates or deletes an index on a particular column in a given table.
- * Creating an index can speed up certain search queries (such as {@link
+ * Apply various modifications to a table or collection. Available
+ * modifications include:
+ * <p>
+ *      Cereating or deleting an index on a particular column. This can speed
+ * up certain search queries (such as {@link
  * #getRecordsRaw(const GetRecordsRequest&,RawGetRecordsResponse&) const},
  * {@link
  * #deleteRecords(const DeleteRecordsRequest&,DeleteRecordsResponse&) const},
  * {@link
  * #updateRecordsRaw(const RawUpdateRecordsRequest&,UpdateRecordsResponse&) const})
  * when using expressions containing equality or relational operators on
- * indexed columns.
+ * indexed columns. This only applies to child tables.
+ * <p>
+ *      Making a table protected or not. Protected tables need the admin
+ * password to be sent in a {@link
+ * #clearTable(const ClearTableRequest&,ClearTableResponse&) const} to
+ * delete the table. This can be applied to child tables or collections or
+ * views.
+ * <p>
+ *      Setting the ttl (time-to-live). This can be applied to child tables or
+ * collections or views.
+ * <p>
+ *      Allowing homogeneous child tables. This only applies to collections.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -2271,19 +2363,34 @@ AlterTableResponse& GPUdb::alterTable( const AlterTableRequest& request_,
 
 
 /**
- * Creates or deletes an index on a particular column in a given table.
- * Creating an index can speed up certain search queries (such as {@link
+ * Apply various modifications to a table or collection. Available
+ * modifications include:
+ * <p>
+ *      Cereating or deleting an index on a particular column. This can speed
+ * up certain search queries (such as {@link
  * #getRecordsRaw(const GetRecordsRequest&) const}, {@link
  * #deleteRecords(const std::string&,const std::vector<std::string>&,const std::map<std::string, std::string>&) const},
  * {@link #updateRecordsRaw(const RawUpdateRecordsRequest&) const}) when
  * using expressions containing equality or relational operators on indexed
- * columns.
+ * columns. This only applies to child tables.
+ * <p>
+ *      Making a table protected or not. Protected tables need the admin
+ * password to be sent in a {@link
+ * #clearTable(const std::string&,const std::string&,const std::map<std::string, std::string>&) const}
+ * to delete the table. This can be applied to child tables or collections or
+ * views.
+ * <p>
+ *      Setting the ttl (time-to-live). This can be applied to child tables or
+ * collections or views.
+ * <p>
+ *      Allowing homogeneous child tables. This only applies to collections.
  * 
  * @param tableName  Table on which the operation will be performed. Must be a
- *                   valid table in GPUdb.  This can not be a collection.
- * @param columnName  Name of the column on which the index will be created or
- *                    deleted (can be empty when @a action = @a list).
- * @param action  Kind of index operation being performed on the table
+ *                   valid table or collection in GPUdb.
+ * @param action  Modification operation to be applied to the table or
+ *                collection
+ * @param value  The value of the modification. May be a column name, 'true' or
+ *               'false', or a time-to-live depending on @a action.
  * @param options  Optional parameters.  Default value is an empty std::map.
  * 
  * @return Response object containing the result of the operation.
@@ -2291,14 +2398,14 @@ AlterTableResponse& GPUdb::alterTable( const AlterTableRequest& request_,
  */
 
 AlterTableResponse GPUdb::alterTable( const std::string& tableName,
-                                      const std::string& columnName,
                                       const std::string& action,
+                                      const std::string& value,
                                       const std::map<std::string, std::string>& options ) const
 {
     AlterTableRequest actualRequest_;
     actualRequest_.tableName = tableName;
-    actualRequest_.columnName = columnName;
     actualRequest_.action = action;
+    actualRequest_.value = value;
     actualRequest_.options = options;
     AlterTableResponse actualResponse_;
     submitRequest("/alter/table", actualRequest_, actualResponse_, false);
@@ -2307,19 +2414,34 @@ AlterTableResponse GPUdb::alterTable( const std::string& tableName,
 
 
 /**
- * Creates or deletes an index on a particular column in a given table.
- * Creating an index can speed up certain search queries (such as {@link
+ * Apply various modifications to a table or collection. Available
+ * modifications include:
+ * <p>
+ *      Cereating or deleting an index on a particular column. This can speed
+ * up certain search queries (such as {@link
  * #getRecordsRaw(const GetRecordsRequest&) const}, {@link
  * #deleteRecords(const std::string&,const std::vector<std::string>&,const std::map<std::string, std::string>&,DeleteRecordsResponse&) const},
  * {@link #updateRecordsRaw(const RawUpdateRecordsRequest&) const}) when
  * using expressions containing equality or relational operators on indexed
- * columns.
+ * columns. This only applies to child tables.
+ * <p>
+ *      Making a table protected or not. Protected tables need the admin
+ * password to be sent in a {@link
+ * #clearTable(const std::string&,const std::string&,const std::map<std::string, std::string>&,ClearTableResponse&) const}
+ * to delete the table. This can be applied to child tables or collections or
+ * views.
+ * <p>
+ *      Setting the ttl (time-to-live). This can be applied to child tables or
+ * collections or views.
+ * <p>
+ *      Allowing homogeneous child tables. This only applies to collections.
  * 
  * @param tableName  Table on which the operation will be performed. Must be a
- *                   valid table in GPUdb.  This can not be a collection.
- * @param columnName  Name of the column on which the index will be created or
- *                    deleted (can be empty when @a action = @a list).
- * @param action  Kind of index operation being performed on the table
+ *                   valid table or collection in GPUdb.
+ * @param action  Modification operation to be applied to the table or
+ *                collection
+ * @param value  The value of the modification. May be a column name, 'true' or
+ *               'false', or a time-to-live depending on @a action.
  * @param options  Optional parameters.  Default value is an empty std::map.
  * @param[out] response_  Response object containing the results of the
  *                        operation.
@@ -2330,15 +2452,15 @@ AlterTableResponse GPUdb::alterTable( const std::string& tableName,
  */
 
 AlterTableResponse& GPUdb::alterTable( const std::string& tableName,
-                                       const std::string& columnName,
                                        const std::string& action,
+                                       const std::string& value,
                                        const std::map<std::string, std::string>& options,
                                        AlterTableResponse& response_ ) const
 {
     AlterTableRequest actualRequest_;
     actualRequest_.tableName = tableName;
-    actualRequest_.columnName = columnName;
     actualRequest_.action = action;
+    actualRequest_.value = value;
     actualRequest_.options = options;
     submitRequest("/alter/table", actualRequest_, response_, false);
     return response_;
@@ -2457,116 +2579,6 @@ AlterTableMetadataResponse& GPUdb::alterTableMetadata( const std::vector<std::st
     actualRequest_.metadataMap = metadataMap;
     actualRequest_.options = options;
     submitRequest("/alter/table/metadata", actualRequest_, response_, false);
-    return response_;
-}
-
-
-/**
- * Updates properties for a group of specified tables. The user can change the
- * protected-ness of the tables and allow or disallow duplicate child tables if
- * they are all collections.
- * 
- * @param[in] request_  Request object containing the parameters for the
- *                      operation.
- * 
- * @return Response object containing the result of the operation.
- * 
- */
-
-AlterTablePropertiesResponse GPUdb::alterTableProperties( const AlterTablePropertiesRequest& request_ ) const
-{
-    AlterTablePropertiesResponse actualResponse_;
-    submitRequest("/alter/table/properties", request_, actualResponse_, false);
-    return actualResponse_;
-}
-
-
-/**
- * Updates properties for a group of specified tables. The user can change the
- * protected-ness of the tables and allow or disallow duplicate child tables if
- * they are all collections.
- * 
- * @param[in] request_  Request object containing the parameters for the
- *                      operation.
- * @param[out] response_  Response object containing the results of the
- *                        operation.
- * 
- * @return Response object containing the result of the operation (initially
- *         passed in by reference).
- * 
- */
-
-AlterTablePropertiesResponse& GPUdb::alterTableProperties( const AlterTablePropertiesRequest& request_,
-                                                           AlterTablePropertiesResponse& response_ ) const
-{
-    submitRequest("/alter/table/properties", request_, response_, false);
-    return response_;
-}
-
-
-/**
- * Updates properties for a group of specified tables. The user can change the
- * protected-ness of the tables and allow or disallow duplicate child tables if
- * they are all collections.
- * 
- * @param tableNames  Names of the tables whose properties will be updated. All
- *                    provided must exist in GPUdb or an error will be
- *                    returned.
- * @param propertiesMap  Map containing the properties of the tables to be
- *                       updated. Only one map can be specified per function
- *                       call so the changes to the tables will be identical.
- *                       Default value is an empty std::map.
- * @param options  Optional parameters.  Default value is an empty std::map.
- * 
- * @return Response object containing the result of the operation.
- * 
- */
-
-AlterTablePropertiesResponse GPUdb::alterTableProperties( const std::vector<std::string>& tableNames,
-                                                          const std::map<std::string, std::string>& propertiesMap,
-                                                          const std::map<std::string, std::string>& options ) const
-{
-    AlterTablePropertiesRequest actualRequest_;
-    actualRequest_.tableNames = tableNames;
-    actualRequest_.propertiesMap = propertiesMap;
-    actualRequest_.options = options;
-    AlterTablePropertiesResponse actualResponse_;
-    submitRequest("/alter/table/properties", actualRequest_, actualResponse_, false);
-    return actualResponse_;
-}
-
-
-/**
- * Updates properties for a group of specified tables. The user can change the
- * protected-ness of the tables and allow or disallow duplicate child tables if
- * they are all collections.
- * 
- * @param tableNames  Names of the tables whose properties will be updated. All
- *                    provided must exist in GPUdb or an error will be
- *                    returned.
- * @param propertiesMap  Map containing the properties of the tables to be
- *                       updated. Only one map can be specified per function
- *                       call so the changes to the tables will be identical.
- *                       Default value is an empty std::map.
- * @param options  Optional parameters.  Default value is an empty std::map.
- * @param[out] response_  Response object containing the results of the
- *                        operation.
- * 
- * @return Response object containing the result of the operation (initially
- *         passed in by reference).
- * 
- */
-
-AlterTablePropertiesResponse& GPUdb::alterTableProperties( const std::vector<std::string>& tableNames,
-                                                           const std::map<std::string, std::string>& propertiesMap,
-                                                           const std::map<std::string, std::string>& options,
-                                                           AlterTablePropertiesResponse& response_ ) const
-{
-    AlterTablePropertiesRequest actualRequest_;
-    actualRequest_.tableNames = tableNames;
-    actualRequest_.propertiesMap = propertiesMap;
-    actualRequest_.options = options;
-    submitRequest("/alter/table/properties", actualRequest_, response_, false);
     return response_;
 }
 
@@ -2919,8 +2931,15 @@ CreateJoinTableResponse& GPUdb::createJoinTable( const CreateJoinTableRequest& r
  * @param joinTableName  Name of the join_table to be created. Must not be the
  *                       name of a currently existing GPUdb table or
  *                       join_table. Cannot be an empty string.
- * @param tableNames  The list of table names making up the joined set
+ * @param tableNames  The list of table names making up the joined set.
+ *                    Corresponds to SQL statement from clause
  * @param aliases  The list of aliases for each of the corresponding tables.
+ * @param expression  An optional expression GPUdb uses to filter the join-
+ *                    table being created.  Corresponds to SQL select statement
+ *                    where clause. For details see <a
+ *                    href="../../concepts/index.html#expressions"
+ *                    target="_top">concepts</a>.  Default value is an empty
+ *                    string.
  * @param options  Optional parameters.  Default value is an empty std::map.
  * 
  * @return Response object containing the result of the operation.
@@ -2930,12 +2949,14 @@ CreateJoinTableResponse& GPUdb::createJoinTable( const CreateJoinTableRequest& r
 CreateJoinTableResponse GPUdb::createJoinTable( const std::string& joinTableName,
                                                 const std::vector<std::string>& tableNames,
                                                 const std::vector<std::string>& aliases,
+                                                const std::string& expression,
                                                 const std::map<std::string, std::string>& options ) const
 {
     CreateJoinTableRequest actualRequest_;
     actualRequest_.joinTableName = joinTableName;
     actualRequest_.tableNames = tableNames;
     actualRequest_.aliases = aliases;
+    actualRequest_.expression = expression;
     actualRequest_.options = options;
     CreateJoinTableResponse actualResponse_;
     submitRequest("/create/jointable", actualRequest_, actualResponse_, false);
@@ -2950,8 +2971,15 @@ CreateJoinTableResponse GPUdb::createJoinTable( const std::string& joinTableName
  * @param joinTableName  Name of the join_table to be created. Must not be the
  *                       name of a currently existing GPUdb table or
  *                       join_table. Cannot be an empty string.
- * @param tableNames  The list of table names making up the joined set
+ * @param tableNames  The list of table names making up the joined set.
+ *                    Corresponds to SQL statement from clause
  * @param aliases  The list of aliases for each of the corresponding tables.
+ * @param expression  An optional expression GPUdb uses to filter the join-
+ *                    table being created.  Corresponds to SQL select statement
+ *                    where clause. For details see <a
+ *                    href="../../concepts/index.html#expressions"
+ *                    target="_top">concepts</a>.  Default value is an empty
+ *                    string.
  * @param options  Optional parameters.  Default value is an empty std::map.
  * @param[out] response_  Response object containing the results of the
  *                        operation.
@@ -2964,6 +2992,7 @@ CreateJoinTableResponse GPUdb::createJoinTable( const std::string& joinTableName
 CreateJoinTableResponse& GPUdb::createJoinTable( const std::string& joinTableName,
                                                  const std::vector<std::string>& tableNames,
                                                  const std::vector<std::string>& aliases,
+                                                 const std::string& expression,
                                                  const std::map<std::string, std::string>& options,
                                                  CreateJoinTableResponse& response_ ) const
 {
@@ -2971,6 +3000,7 @@ CreateJoinTableResponse& GPUdb::createJoinTable( const std::string& joinTableNam
     actualRequest_.joinTableName = joinTableName;
     actualRequest_.tableNames = tableNames;
     actualRequest_.aliases = aliases;
+    actualRequest_.expression = expression;
     actualRequest_.options = options;
     submitRequest("/create/jointable", actualRequest_, response_, false);
     return response_;
@@ -3046,7 +3076,10 @@ CreateTableResponse& GPUdb::createTable( const CreateTableRequest& request_,
  *                   currently existing GPUdb table of a different type.  Error
  *                   for requests with existing table of the same name and type
  *                   id may be suppressed by using the @a no_error_if_exists
- *                   option.  Cannot be an empty string.
+ *                   option.  Cannot be an empty string.  Valid characters are
+ *                   'A-Za-z0-9_-(){}[] .:' (excluding the single quote), with
+ *                   the first character being one of 'A-Za-z0-9_'.  The
+ *                   maximum length is 256 characters.
  * @param typeId  ID of a currently registered type in GPUdb. All objects added
  *                to the newly created table will be of this type.  Must be an
  *                empty string if the *is_collection* is 'true'.
@@ -3085,7 +3118,10 @@ CreateTableResponse GPUdb::createTable( const std::string& tableName,
  *                   currently existing GPUdb table of a different type.  Error
  *                   for requests with existing table of the same name and type
  *                   id may be suppressed by using the @a no_error_if_exists
- *                   option.  Cannot be an empty string.
+ *                   option.  Cannot be an empty string.  Valid characters are
+ *                   'A-Za-z0-9_-(){}[] .:' (excluding the single quote), with
+ *                   the first character being one of 'A-Za-z0-9_'.  The
+ *                   maximum length is 256 characters.
  * @param typeId  ID of a currently registered type in GPUdb. All objects added
  *                to the newly created table will be of this type.  Must be an
  *                empty string if the *is_collection* is 'true'.
@@ -3237,7 +3273,7 @@ CreateTableMonitorResponse& GPUdb::createTableMonitor( const std::string& tableN
 
 
 /**
- * Sets up an area  trigger mechanism for two column_names for one or more
+ * Sets up an area trigger mechanism for two column_names for one or more
  * tables. (This function is essentially the two-dimensional version of {@link
  * #createTriggerByRange(const CreateTriggerByRangeRequest&) const}.) Once
  * the trigger has been activated, any record added to the listed tables(s) via
@@ -3269,7 +3305,7 @@ CreateTriggerByAreaResponse GPUdb::createTriggerByArea( const CreateTriggerByAre
 
 
 /**
- * Sets up an area  trigger mechanism for two column_names for one or more
+ * Sets up an area trigger mechanism for two column_names for one or more
  * tables. (This function is essentially the two-dimensional version of {@link
  * #createTriggerByRange(const CreateTriggerByRangeRequest&,CreateTriggerByRangeResponse&) const}.)
  * Once the trigger has been activated, any record added to the listed
@@ -3306,7 +3342,7 @@ CreateTriggerByAreaResponse& GPUdb::createTriggerByArea( const CreateTriggerByAr
 
 
 /**
- * Sets up an area  trigger mechanism for two column_names for one or more
+ * Sets up an area trigger mechanism for two column_names for one or more
  * tables. (This function is essentially the two-dimensional version of {@link
  * #createTriggerByRange(const std::string&,const std::vector<std::string>&,const std::string&,const double,const double,const std::map<std::string, std::string>&) const}.)
  * Once the trigger has been activated, any record added to the listed
@@ -3367,7 +3403,7 @@ CreateTriggerByAreaResponse GPUdb::createTriggerByArea( const std::string& reque
 
 
 /**
- * Sets up an area  trigger mechanism for two column_names for one or more
+ * Sets up an area trigger mechanism for two column_names for one or more
  * tables. (This function is essentially the two-dimensional version of {@link
  * #createTriggerByRange(const std::string&,const std::vector<std::string>&,const std::string&,const double,const double,const std::map<std::string, std::string>&,CreateTriggerByRangeResponse&) const}.)
  * Once the trigger has been activated, any record added to the listed
@@ -3990,7 +4026,7 @@ DeleteRecordsResponse& GPUdb::deleteRecords( const std::string& tableName,
 
 
 /**
- * Exectues a proc in the GPUdb Node.js proc server.
+ * Executes a proc in the GPUdb Node.js proc server.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -4008,7 +4044,7 @@ ExecuteProcResponse GPUdb::executeProc( const ExecuteProcRequest& request_ ) con
 
 
 /**
- * Exectues a proc in the GPUdb Node.js proc server.
+ * Executes a proc in the GPUdb Node.js proc server.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -4029,7 +4065,7 @@ ExecuteProcResponse& GPUdb::executeProc( const ExecuteProcRequest& request_,
 
 
 /**
- * Exectues a proc in the GPUdb Node.js proc server.
+ * Executes a proc in the GPUdb Node.js proc server.
  * 
  * @param name  Name of the proc to execute.
  * @param params  A map containing string parameters to pass to the proc. Each
@@ -4061,7 +4097,7 @@ ExecuteProcResponse GPUdb::executeProc( const std::string& name,
 
 
 /**
- * Exectues a proc in the GPUdb Node.js proc server.
+ * Executes a proc in the GPUdb Node.js proc server.
  * 
  * @param name  Name of the proc to execute.
  * @param params  A map containing string parameters to pass to the proc. Each
@@ -5886,6 +5922,9 @@ FilterByValueResponse& GPUdb::filterByValue( const std::string& tableName,
  * the underlying table in case of a view) is updated (records are inserted,
  * deleted or modified) the records retrieved may differ between calls based on
  * the updates applied.
+ * <p>
+ * Note that when using the Java API, it is not possible to retrieve records
+ * from join tables using this operation.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -5913,6 +5952,9 @@ RawGetRecordsResponse GPUdb::getRecordsRaw( const GetRecordsRequest& request_ ) 
  * the underlying table in case of a view) is updated (records are inserted,
  * deleted or modified) the records retrieved may differ between calls based on
  * the updates applied.
+ * <p>
+ * Note that when using the Java API, it is not possible to retrieve records
+ * from join tables using this operation.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -5943,6 +5985,9 @@ RawGetRecordsResponse& GPUdb::getRecordsRaw( const GetRecordsRequest& request_,
  * the underlying table in case of a view) is updated (records are inserted,
  * deleted or modified) the records retrieved may differ between calls based on
  * the updates applied.
+ * <p>
+ * Note that when using the Java API, it is not possible to retrieve records
+ * from join tables using this operation.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -5962,6 +6007,8 @@ GetRecordsResponse<boost::any> GPUdb::getRecords( const GetRecordsRequest& reque
     avro::DecoderPtr dataDecoder_ = getDecoder(actualResponse_.typeName);
     dataDecoder_->resizeVector(response_.data, actualResponse_.recordsBinary.size());
     dataDecoder_->decode(&response_.data[0], &actualResponse_.recordsBinary[0], actualResponse_.recordsBinary.size(), this->threadCount, this->executor);
+    response_.totalNumberOfRecords = actualResponse_.totalNumberOfRecords;
+    response_.hasMoreRecords = actualResponse_.hasMoreRecords;
     return response_;
 }
 
@@ -5977,6 +6024,9 @@ GetRecordsResponse<boost::any> GPUdb::getRecords( const GetRecordsRequest& reque
  * the underlying table in case of a view) is updated (records are inserted,
  * deleted or modified) the records retrieved may differ between calls based on
  * the updates applied.
+ * <p>
+ * Note that when using the Java API, it is not possible to retrieve records
+ * from join tables using this operation.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -5999,6 +6049,8 @@ GetRecordsResponse<boost::any>& GPUdb::getRecords( const GetRecordsRequest& requ
     avro::DecoderPtr dataDecoder_ = getDecoder(actualResponse_.typeName);
     dataDecoder_->resizeVector(response_.data, actualResponse_.recordsBinary.size());
     dataDecoder_->decode(&response_.data[0], &actualResponse_.recordsBinary[0], actualResponse_.recordsBinary.size(), this->threadCount, this->executor);
+    response_.totalNumberOfRecords = actualResponse_.totalNumberOfRecords;
+    response_.hasMoreRecords = actualResponse_.hasMoreRecords;
     return response_;
 }
 
@@ -6014,6 +6066,9 @@ GetRecordsResponse<boost::any>& GPUdb::getRecords( const GetRecordsRequest& requ
  * the underlying table in case of a view) is updated (records are inserted,
  * deleted or modified) the records retrieved may differ between calls based on
  * the updates applied.
+ * <p>
+ * Note that when using the Java API, it is not possible to retrieve records
+ * from join tables using this operation.
  * 
  * @param tableName  Name of the table from which the records will be fetched.
  *                   Must be a table, view or homogeneous collection.
@@ -6049,6 +6104,8 @@ GetRecordsResponse<boost::any> GPUdb::getRecords( const std::string& tableName,
     avro::DecoderPtr dataDecoder_ = getDecoder(actualResponse_.typeName);
     dataDecoder_->resizeVector(response_.data, actualResponse_.recordsBinary.size());
     dataDecoder_->decode(&response_.data[0], &actualResponse_.recordsBinary[0], actualResponse_.recordsBinary.size(), this->threadCount, this->executor);
+    response_.totalNumberOfRecords = actualResponse_.totalNumberOfRecords;
+    response_.hasMoreRecords = actualResponse_.hasMoreRecords;
     return response_;
 }
 
@@ -6064,6 +6121,9 @@ GetRecordsResponse<boost::any> GPUdb::getRecords( const std::string& tableName,
  * the underlying table in case of a view) is updated (records are inserted,
  * deleted or modified) the records retrieved may differ between calls based on
  * the updates applied.
+ * <p>
+ * Note that when using the Java API, it is not possible to retrieve records
+ * from join tables using this operation.
  * 
  * @param tableName  Name of the table from which the records will be fetched.
  *                   Must be a table, view or homogeneous collection.
@@ -6102,6 +6162,8 @@ GetRecordsResponse<boost::any>& GPUdb::getRecords( const std::string& tableName,
     avro::DecoderPtr dataDecoder_ = getDecoder(actualResponse_.typeName);
     dataDecoder_->resizeVector(response_.data, actualResponse_.recordsBinary.size());
     dataDecoder_->decode(&response_.data[0], &actualResponse_.recordsBinary[0], actualResponse_.recordsBinary.size(), this->threadCount, this->executor);
+    response_.totalNumberOfRecords = actualResponse_.totalNumberOfRecords;
+    response_.hasMoreRecords = actualResponse_.hasMoreRecords;
     return response_;
 }
 
@@ -6211,6 +6273,8 @@ GetRecordsByColumnResponse GPUdb::getRecordsByColumn( const GetRecordsByColumnRe
     response_.tableName = actualResponse_.tableName;
     response_.responseSchemaStr = actualResponse_.responseSchemaStr;
     gpudb::DynamicTableRecord::transpose( actualResponse_.responseSchemaStr, actualResponse_.binaryEncodedResponse, response_.data );
+    response_.totalNumberOfRecords = actualResponse_.totalNumberOfRecords;
+    response_.hasMoreRecords = actualResponse_.hasMoreRecords;
     return response_;
 }
 
@@ -6252,6 +6316,8 @@ GetRecordsByColumnResponse& GPUdb::getRecordsByColumn( const GetRecordsByColumnR
     response_.tableName = actualResponse_.tableName;
     response_.responseSchemaStr = actualResponse_.responseSchemaStr;
     gpudb::DynamicTableRecord::transpose( actualResponse_.responseSchemaStr, actualResponse_.binaryEncodedResponse, response_.data );
+    response_.totalNumberOfRecords = actualResponse_.totalNumberOfRecords;
+    response_.hasMoreRecords = actualResponse_.hasMoreRecords;
     return response_;
 }
 
@@ -6311,6 +6377,8 @@ GetRecordsByColumnResponse GPUdb::getRecordsByColumn( const std::string& tableNa
     response_.tableName = actualResponse_.tableName;
     response_.responseSchemaStr = actualResponse_.responseSchemaStr;
     gpudb::DynamicTableRecord::transpose( actualResponse_.responseSchemaStr, actualResponse_.binaryEncodedResponse, response_.data );
+    response_.totalNumberOfRecords = actualResponse_.totalNumberOfRecords;
+    response_.hasMoreRecords = actualResponse_.hasMoreRecords;
     return response_;
 }
 
@@ -6373,6 +6441,8 @@ GetRecordsByColumnResponse& GPUdb::getRecordsByColumn( const std::string& tableN
     response_.tableName = actualResponse_.tableName;
     response_.responseSchemaStr = actualResponse_.responseSchemaStr;
     gpudb::DynamicTableRecord::transpose( actualResponse_.responseSchemaStr, actualResponse_.binaryEncodedResponse, response_.data );
+    response_.totalNumberOfRecords = actualResponse_.totalNumberOfRecords;
+    response_.hasMoreRecords = actualResponse_.hasMoreRecords;
     return response_;
 }
 
@@ -6668,6 +6738,9 @@ GetRecordsBySeriesResponse<boost::any>& GPUdb::getRecordsBySeries( const std::st
  * <p>
  * This operation supports paging through the data via the @a offset and @a
  * limit parameters.
+ * <p>
+ * Note that when using the Java API, it is not possible to retrieve records
+ * from join tables using this operation.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -6691,6 +6764,9 @@ RawGetRecordsFromCollectionResponse GPUdb::getRecordsFromCollectionRaw( const Ge
  * <p>
  * This operation supports paging through the data via the @a offset and @a
  * limit parameters.
+ * <p>
+ * Note that when using the Java API, it is not possible to retrieve records
+ * from join tables using this operation.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -6717,6 +6793,9 @@ RawGetRecordsFromCollectionResponse& GPUdb::getRecordsFromCollectionRaw( const G
  * <p>
  * This operation supports paging through the data via the @a offset and @a
  * limit parameters.
+ * <p>
+ * Note that when using the Java API, it is not possible to retrieve records
+ * from join tables using this operation.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -6774,6 +6853,9 @@ GetRecordsFromCollectionResponse<boost::any> GPUdb::getRecordsFromCollection( co
  * <p>
  * This operation supports paging through the data via the @a offset and @a
  * limit parameters.
+ * <p>
+ * Note that when using the Java API, it is not possible to retrieve records
+ * from join tables using this operation.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -6834,6 +6916,9 @@ GetRecordsFromCollectionResponse<boost::any>& GPUdb::getRecordsFromCollection( c
  * <p>
  * This operation supports paging through the data via the @a offset and @a
  * limit parameters.
+ * <p>
+ * Note that when using the Java API, it is not possible to retrieve records
+ * from join tables using this operation.
  * 
  * @param tableName  Name of the collection or table from which records are to
  *                   be retrieved. Must be an existing GPUdb collection or
@@ -6908,6 +6993,9 @@ GetRecordsFromCollectionResponse<boost::any> GPUdb::getRecordsFromCollection( co
  * <p>
  * This operation supports paging through the data via the @a offset and @a
  * limit parameters.
+ * <p>
+ * Note that when using the Java API, it is not possible to retrieve records
+ * from join tables using this operation.
  * 
  * @param tableName  Name of the collection or table from which records are to
  *                   be retrieved. Must be an existing GPUdb collection or
@@ -6979,7 +7067,7 @@ GetRecordsFromCollectionResponse<boost::any>& GPUdb::getRecordsFromCollection( c
 
 
 /**
- * Checks the existance of a table with the given name in GPUdb.
+ * Checks the existence of a table with the given name in GPUdb.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -6997,7 +7085,7 @@ HasTableResponse GPUdb::hasTable( const HasTableRequest& request_ ) const
 
 
 /**
- * Checks the existance of a table with the given name in GPUdb.
+ * Checks the existence of a table with the given name in GPUdb.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -7018,9 +7106,9 @@ HasTableResponse& GPUdb::hasTable( const HasTableRequest& request_,
 
 
 /**
- * Checks the existance of a table with the given name in GPUdb.
+ * Checks the existence of a table with the given name in GPUdb.
  * 
- * @param tableName  Name of the table to check for existance.
+ * @param tableName  Name of the table to check for existence.
  * @param options  Optional parameters.  Default value is an empty std::map.
  * 
  * @return Response object containing the result of the operation.
@@ -7040,9 +7128,9 @@ HasTableResponse GPUdb::hasTable( const std::string& tableName,
 
 
 /**
- * Checks the existance of a table with the given name in GPUdb.
+ * Checks the existence of a table with the given name in GPUdb.
  * 
- * @param tableName  Name of the table to check for existance.
+ * @param tableName  Name of the table to check for existence.
  * @param options  Optional parameters.  Default value is an empty std::map.
  * @param[out] response_  Response object containing the results of the
  *                        operation.
@@ -7065,7 +7153,7 @@ HasTableResponse& GPUdb::hasTable( const std::string& tableName,
 
 
 /**
- * Check the existance of a type in GPUdb.
+ * Check the existence of a type in GPUdb.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -7083,7 +7171,7 @@ HasTypeResponse GPUdb::hasType( const HasTypeRequest& request_ ) const
 
 
 /**
- * Check the existance of a type in GPUdb.
+ * Check the existence of a type in GPUdb.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -7104,7 +7192,7 @@ HasTypeResponse& GPUdb::hasType( const HasTypeRequest& request_,
 
 
 /**
- * Check the existance of a type in GPUdb.
+ * Check the existence of a type in GPUdb.
  * 
  * @param typeId  Id of the type returned by GPUdb in response to /create/type
  *                request.
@@ -7127,7 +7215,7 @@ HasTypeResponse GPUdb::hasType( const std::string& typeId,
 
 
 /**
- * Check the existance of a type in GPUdb.
+ * Check the existence of a type in GPUdb.
  * 
  * @param typeId  Id of the type returned by GPUdb in response to /create/type
  *                request.
@@ -7231,7 +7319,7 @@ InsertRecordsResponse& GPUdb::insertRecordsRaw( const RawInsertRecordsRequest& r
 
 /**
  * Generates a specified number of random records and adds them to the given
- * tble. There is an optional parameter that allows the user to customize the
+ * table. There is an optional parameter that allows the user to customize the
  * ranges of the column values. It also allows the user to specify linear
  * profiles for some or all columns in which case linear values are generated
  * rather than random ones. Only individual tables are supported for this
@@ -7257,7 +7345,7 @@ InsertRecordsRandomResponse GPUdb::insertRecordsRandom( const InsertRecordsRando
 
 /**
  * Generates a specified number of random records and adds them to the given
- * tble. There is an optional parameter that allows the user to customize the
+ * table. There is an optional parameter that allows the user to customize the
  * ranges of the column values. It also allows the user to specify linear
  * profiles for some or all columns in which case linear values are generated
  * rather than random ones. Only individual tables are supported for this
@@ -7286,7 +7374,7 @@ InsertRecordsRandomResponse& GPUdb::insertRecordsRandom( const InsertRecordsRand
 
 /**
  * Generates a specified number of random records and adds them to the given
- * tble. There is an optional parameter that allows the user to customize the
+ * table. There is an optional parameter that allows the user to customize the
  * ranges of the column values. It also allows the user to specify linear
  * profiles for some or all columns in which case linear values are generated
  * rather than random ones. Only individual tables are supported for this
@@ -7332,7 +7420,7 @@ InsertRecordsRandomResponse GPUdb::insertRecordsRandom( const std::string& table
 
 /**
  * Generates a specified number of random records and adds them to the given
- * tble. There is an optional parameter that allows the user to customize the
+ * table. There is an optional parameter that allows the user to customize the
  * ranges of the column values. It also allows the user to specify linear
  * profiles for some or all columns in which case linear values are generated
  * rather than random ones. Only individual tables are supported for this
@@ -7695,8 +7783,7 @@ ShowSystemPropertiesResponse& GPUdb::showSystemProperties( const ShowSystemPrope
  * The GPUdb Admin tool uses it to present server related information to the
  * user.
  * 
- * @param options  Optional parameters, currently unused.  Default value is an
- *                 empty std::map.
+ * @param options  Optional parameters.  Default value is an empty std::map.
  * 
  * @return Response object containing the result of the operation.
  * 
@@ -7717,8 +7804,7 @@ ShowSystemPropertiesResponse GPUdb::showSystemProperties( const std::map<std::st
  * The GPUdb Admin tool uses it to present server related information to the
  * user.
  * 
- * @param options  Optional parameters, currently unused.  Default value is an
- *                 empty std::map.
+ * @param options  Optional parameters.  Default value is an empty std::map.
  * @param[out] response_  Response object containing the results of the
  *                        operation.
  * 
@@ -7917,15 +8003,29 @@ ShowSystemTimingResponse& GPUdb::showSystemTiming( const std::map<std::string, s
  * Retrieves detailed information about a particular GPUdb table, specified in
  * @a tableName. If the supplied @a tableName is a collection, the call returns
  * a list of tables contained in the collection, and for each table it returns
- * the type ids, type schemas, type labels, semantic types, and ttls. If the
- * option 'get_sizes' is set to 'true' then  the sizes (objects and elements)
- * of each table are returned (in @a sizes and @a fullSizes), along with the
- * total number of objects in the requested table (in @a totalSize and @a
- * totalFullSize).
+ * the description, type id, schema, type label, type propertiess, and
+ * additional information including TTL. If @a tableName is empty it will
+ * return all top-level tables including all collections and top-level child
+ * tables (i.e. tables with no parent).
+ * <p>
+ *     If the option 'get_sizes' is set to 'true' then the sizes (objects and
+ * elements) of each table are returned (in @a sizes and @a fullSizes), along
+ * with the total number of objects in the requested table (in @a totalSize and
+ * @a totalFullSize).
+ * <p>
+ *     If the option 'show_children' is set to 'false' then for a collection it
+ * only returns information about the collection itself, not about the child
+ * tables. If 'show_children' is set to 'true' then it will return information
+ * about each of the children.
+ * <p>
+ *     Running with 'show_children' = 'true' on a child table will return an
+ * error.
+ * <p>
+ *     Running with 'show_children' = 'false' with @a tableName empty will
+ * return an error.
  * <p>
  * If the requested table is blank, then information is returned about all top-
- * level tables including collections. In this case @a isCollection indicates
- * which of the returned table names are collections.
+ * level tables including collections.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -7952,15 +8052,29 @@ ShowTableResponse GPUdb::showTable( const ShowTableRequest& request_ ) const
  * Retrieves detailed information about a particular GPUdb table, specified in
  * @a tableName. If the supplied @a tableName is a collection, the call returns
  * a list of tables contained in the collection, and for each table it returns
- * the type ids, type schemas, type labels, semantic types, and ttls. If the
- * option 'get_sizes' is set to 'true' then  the sizes (objects and elements)
- * of each table are returned (in @a sizes and @a fullSizes), along with the
- * total number of objects in the requested table (in @a totalSize and @a
- * totalFullSize).
+ * the description, type id, schema, type label, type propertiess, and
+ * additional information including TTL. If @a tableName is empty it will
+ * return all top-level tables including all collections and top-level child
+ * tables (i.e. tables with no parent).
+ * <p>
+ *     If the option 'get_sizes' is set to 'true' then the sizes (objects and
+ * elements) of each table are returned (in @a sizes and @a fullSizes), along
+ * with the total number of objects in the requested table (in @a totalSize and
+ * @a totalFullSize).
+ * <p>
+ *     If the option 'show_children' is set to 'false' then for a collection it
+ * only returns information about the collection itself, not about the child
+ * tables. If 'show_children' is set to 'true' then it will return information
+ * about each of the children.
+ * <p>
+ *     Running with 'show_children' = 'true' on a child table will return an
+ * error.
+ * <p>
+ *     Running with 'show_children' = 'false' with @a tableName empty will
+ * return an error.
  * <p>
  * If the requested table is blank, then information is returned about all top-
- * level tables including collections. In this case @a isCollection indicates
- * which of the returned table names are collections.
+ * level tables including collections.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -7990,15 +8104,29 @@ ShowTableResponse& GPUdb::showTable( const ShowTableRequest& request_,
  * Retrieves detailed information about a particular GPUdb table, specified in
  * @a tableName. If the supplied @a tableName is a collection, the call returns
  * a list of tables contained in the collection, and for each table it returns
- * the type ids, type schemas, type labels, semantic types, and ttls. If the
- * option 'get_sizes' is set to 'true' then  the sizes (objects and elements)
- * of each table are returned (in @a sizes and @a fullSizes), along with the
- * total number of objects in the requested table (in @a totalSize and @a
- * totalFullSize).
+ * the description, type id, schema, type label, type propertiess, and
+ * additional information including TTL. If @a tableName is empty it will
+ * return all top-level tables including all collections and top-level child
+ * tables (i.e. tables with no parent).
+ * <p>
+ *     If the option 'get_sizes' is set to 'true' then the sizes (objects and
+ * elements) of each table are returned (in @a sizes and @a fullSizes), along
+ * with the total number of objects in the requested table (in @a totalSize and
+ * @a totalFullSize).
+ * <p>
+ *     If the option 'show_children' is set to 'false' then for a collection it
+ * only returns information about the collection itself, not about the child
+ * tables. If 'show_children' is set to 'true' then it will return information
+ * about each of the children.
+ * <p>
+ *     Running with 'show_children' = 'true' on a child table will return an
+ * error.
+ * <p>
+ *     Running with 'show_children' = 'false' with @a tableName empty will
+ * return an error.
  * <p>
  * If the requested table is blank, then information is returned about all top-
- * level tables including collections. In this case @a isCollection indicates
- * which of the returned table names are collections.
+ * level tables including collections.
  * 
  * @param tableName  Name of the table for which to retrieve the information.
  *                   If blank then information about all collections and top-
@@ -8031,15 +8159,29 @@ ShowTableResponse GPUdb::showTable( const std::string& tableName,
  * Retrieves detailed information about a particular GPUdb table, specified in
  * @a tableName. If the supplied @a tableName is a collection, the call returns
  * a list of tables contained in the collection, and for each table it returns
- * the type ids, type schemas, type labels, semantic types, and ttls. If the
- * option 'get_sizes' is set to 'true' then  the sizes (objects and elements)
- * of each table are returned (in @a sizes and @a fullSizes), along with the
- * total number of objects in the requested table (in @a totalSize and @a
- * totalFullSize).
+ * the description, type id, schema, type label, type propertiess, and
+ * additional information including TTL. If @a tableName is empty it will
+ * return all top-level tables including all collections and top-level child
+ * tables (i.e. tables with no parent).
+ * <p>
+ *     If the option 'get_sizes' is set to 'true' then the sizes (objects and
+ * elements) of each table are returned (in @a sizes and @a fullSizes), along
+ * with the total number of objects in the requested table (in @a totalSize and
+ * @a totalFullSize).
+ * <p>
+ *     If the option 'show_children' is set to 'false' then for a collection it
+ * only returns information about the collection itself, not about the child
+ * tables. If 'show_children' is set to 'true' then it will return information
+ * about each of the children.
+ * <p>
+ *     Running with 'show_children' = 'true' on a child table will return an
+ * error.
+ * <p>
+ *     Running with 'show_children' = 'false' with @a tableName empty will
+ * return an error.
  * <p>
  * If the requested table is blank, then information is returned about all top-
- * level tables including collections. In this case @a isCollection indicates
- * which of the returned table names are collections.
+ * level tables including collections.
  * 
  * @param tableName  Name of the table for which to retrieve the information.
  *                   If blank then information about all collections and top-
@@ -8155,102 +8297,6 @@ ShowTableMetadataResponse& GPUdb::showTableMetadata( const std::vector<std::stri
     actualRequest_.tableNames = tableNames;
     actualRequest_.options = options;
     submitRequest("/show/table/metadata", actualRequest_, response_, false);
-    return response_;
-}
-
-
-/**
- * Retrieves some table properties for each of the specified tables. For each
- * valid table, it returns whether it is a protected table and also if it
- * allows duplicate child tables if it happens to be a collection.
- * 
- * @param[in] request_  Request object containing the parameters for the
- *                      operation.
- * 
- * @return Response object containing the result of the operation.
- * 
- */
-
-ShowTablePropertiesResponse GPUdb::showTableProperties( const ShowTablePropertiesRequest& request_ ) const
-{
-    ShowTablePropertiesResponse actualResponse_;
-    submitRequest("/show/table/properties", request_, actualResponse_, false);
-    return actualResponse_;
-}
-
-
-/**
- * Retrieves some table properties for each of the specified tables. For each
- * valid table, it returns whether it is a protected table and also if it
- * allows duplicate child tables if it happens to be a collection.
- * 
- * @param[in] request_  Request object containing the parameters for the
- *                      operation.
- * @param[out] response_  Response object containing the results of the
- *                        operation.
- * 
- * @return Response object containing the result of the operation (initially
- *         passed in by reference).
- * 
- */
-
-ShowTablePropertiesResponse& GPUdb::showTableProperties( const ShowTablePropertiesRequest& request_,
-                                                         ShowTablePropertiesResponse& response_ ) const
-{
-    submitRequest("/show/table/properties", request_, response_, false);
-    return response_;
-}
-
-
-/**
- * Retrieves some table properties for each of the specified tables. For each
- * valid table, it returns whether it is a protected table and also if it
- * allows duplicate child tables if it happens to be a collection.
- * 
- * @param tableNames  Tables whose properties will be fetched. All provided
- *                    tables must exist in GPUdb, or GPUdb returns an error.
- * @param options  Optional parameters.  Default value is an empty std::map.
- * 
- * @return Response object containing the result of the operation.
- * 
- */
-
-ShowTablePropertiesResponse GPUdb::showTableProperties( const std::vector<std::string>& tableNames,
-                                                        const std::map<std::string, std::string>& options ) const
-{
-    ShowTablePropertiesRequest actualRequest_;
-    actualRequest_.tableNames = tableNames;
-    actualRequest_.options = options;
-    ShowTablePropertiesResponse actualResponse_;
-    submitRequest("/show/table/properties", actualRequest_, actualResponse_, false);
-    return actualResponse_;
-}
-
-
-/**
- * Retrieves some table properties for each of the specified tables. For each
- * valid table, it returns whether it is a protected table and also if it
- * allows duplicate child tables if it happens to be a collection.
- * 
- * @param tableNames  Tables whose properties will be fetched. All provided
- *                    tables must exist in GPUdb, or GPUdb returns an error.
- * @param options  Optional parameters.  Default value is an empty std::map.
- * @param[out] response_  Response object containing the results of the
- *                        operation.
- * 
- * @return Response object containing the result of the operation (initially
- *         passed in by reference).
- * 
- */
-
-ShowTablePropertiesResponse& GPUdb::showTableProperties( const std::vector<std::string>& tableNames,
-                                                         const std::map<std::string, std::string>& options,
-                                                         ShowTablePropertiesResponse& response_ ) const
-{
-    ShowTablePropertiesRequest actualRequest_;
-    actualRequest_.tableNames = tableNames;
-    actualRequest_.options = options;
-    submitRequest("/show/table/properties", actualRequest_, response_, false);
     return response_;
 }
 
@@ -8789,8 +8835,8 @@ UpdateRecordsBySeriesResponse& GPUdb::updateRecordsBySeries( const std::string& 
 
 
 /**
- * Generates 'class break' rasterized image tiles for an area of interest using
- * the given tables and the provided parameters.
+ * Generates rasterized image tiles for an area of interest using the given
+ * tables and the provided parameters.
  * <p>
  * All color values must be in the format RRGGBB or AARRGGBB (to specify the
  * alpha value).
@@ -8811,8 +8857,8 @@ VisualizeImageResponse GPUdb::visualizeImage( const VisualizeImageRequest& reque
 
 
 /**
- * Generates 'class break' rasterized image tiles for an area of interest using
- * the given tables and the provided parameters.
+ * Generates rasterized image tiles for an area of interest using the given
+ * tables and the provided parameters.
  * <p>
  * All color values must be in the format RRGGBB or AARRGGBB (to specify the
  * alpha value).
@@ -8836,8 +8882,8 @@ VisualizeImageResponse& GPUdb::visualizeImage( const VisualizeImageRequest& requ
 
 
 /**
- * Generates 'class break' rasterized image tiles for an area of interest using
- * the given tables and the provided parameters.
+ * Generates rasterized image tiles for an area of interest using the given
+ * tables and the provided parameters.
  * <p>
  * All color values must be in the format RRGGBB or AARRGGBB (to specify the
  * alpha value).
@@ -8906,8 +8952,8 @@ VisualizeImageResponse GPUdb::visualizeImage( const std::vector<std::string>& ta
 
 
 /**
- * Generates 'class break' rasterized image tiles for an area of interest using
- * the given tables and the provided parameters.
+ * Generates rasterized image tiles for an area of interest using the given
+ * tables and the provided parameters.
  * <p>
  * All color values must be in the format RRGGBB or AARRGGBB (to specify the
  * alpha value).

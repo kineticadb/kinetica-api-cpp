@@ -244,13 +244,17 @@ namespace gpudb
         RawAggregateGroupByResponse() :
             responseSchemaStr(std::string()),
             binaryEncodedResponse(std::vector<uint8_t>()),
-            jsonEncodedResponse(std::string())
+            jsonEncodedResponse(std::string()),
+            totalNumberOfRecords(int64_t()),
+            hasMoreRecords(bool())
         {
         }
 
         std::string responseSchemaStr;
         std::vector<uint8_t> binaryEncodedResponse;
         std::string jsonEncodedResponse;
+        int64_t totalNumberOfRecords;
+        bool hasMoreRecords;
     };
 }
 
@@ -263,6 +267,8 @@ namespace avro
             ::avro::encode(e, v.responseSchemaStr);
             ::avro::encode(e, v.binaryEncodedResponse);
             ::avro::encode(e, v.jsonEncodedResponse);
+            ::avro::encode(e, v.totalNumberOfRecords);
+            ::avro::encode(e, v.hasMoreRecords);
         }
 
         static void decode(Decoder& d, gpudb::RawAggregateGroupByResponse& v)
@@ -287,6 +293,14 @@ namespace avro
                             ::avro::decode(d, v.jsonEncodedResponse);
                             break;
 
+                        case 3:
+                            ::avro::decode(d, v.totalNumberOfRecords);
+                            break;
+
+                        case 4:
+                            ::avro::decode(d, v.hasMoreRecords);
+                            break;
+
                         default:
                             break;
                     }
@@ -297,6 +311,8 @@ namespace avro
                 ::avro::decode(d, v.responseSchemaStr);
                 ::avro::decode(d, v.binaryEncodedResponse);
                 ::avro::decode(d, v.jsonEncodedResponse);
+                ::avro::decode(d, v.totalNumberOfRecords);
+                ::avro::decode(d, v.hasMoreRecords);
             }
         }
     };
@@ -343,12 +359,16 @@ namespace gpudb
          */
         AggregateGroupByResponse() :
             responseSchemaStr(std::string()),
-            data(std::vector<gpudb::DynamicTableRecord>())
+            data(std::vector<gpudb::DynamicTableRecord>()),
+            totalNumberOfRecords(int64_t()),
+            hasMoreRecords(bool())
         {
         }
 
         std::string responseSchemaStr;
         std::vector<gpudb::DynamicTableRecord> data;
+        int64_t totalNumberOfRecords;
+        bool hasMoreRecords;
     };
 }
 

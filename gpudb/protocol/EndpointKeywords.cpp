@@ -52,6 +52,8 @@ namespace gpudb
     const std::string aggregate_statistics_max                         ( "max"                          );
     const std::string aggregate_statistics_mean                        ( "mean"                         );
     const std::string aggregate_statistics_min                         ( "min"                          );
+    const std::string aggregate_statistics_percentile                  ( "percentile"                   );
+    const std::string aggregate_statistics_percentile_rank             ( "percentile_rank"              );
     const std::string aggregate_statistics_skew                        ( "skew"                         );
     const std::string aggregate_statistics_stdv                        ( "stdv"                         );
     const std::string aggregate_statistics_sum                         ( "sum"                          );
@@ -81,6 +83,7 @@ namespace gpudb
     const std::string alter_system_properties_concurrent_kernel_execution  ( "concurrent_kernel_execution"   );
     const std::string alter_system_properties_flush_to_disk                ( "flush_to_disk"                 );
     const std::string alter_system_properties_kernel_omp_threads           ( "kernel_omp_threads"            );
+    const std::string alter_system_properties_max_get_records_size         ( "max_get_records_size"          );
     const std::string alter_system_properties_network_speed                ( "network_speed"                 );
     const std::string alter_system_properties_print_communicator_statistics( "print_communicator_statistics" );
     const std::string alter_system_properties_request_timeout              ( "request_timeout"               );
@@ -88,16 +91,14 @@ namespace gpudb
     const std::string alter_system_properties_sm_omp_threads               ( "sm_omp_threads"                );
     
     // Keywords for /alter/table request
-    const std::string alter_table_create( "create" );
-    const std::string alter_table_delete( "delete" );
-    const std::string alter_table_list  ( "list"   );
+    const std::string alter_table_allow_homogeneous_tables( "allow_homogeneous_tables" );
+    const std::string alter_table_create_index            ( "create_index"             );
+    const std::string alter_table_delete_index            ( "delete_index"             );
+    const std::string alter_table_protected               ( "protected"                );
+    const std::string alter_table_ttl                     ( "ttl"                      );
     
-    // Keywords for /alter/table/properties request
-    const std::string alter_table_properties_allow_homogenous_tables( "allow_homogenous_tables" );
-    const std::string alter_table_properties_false                  ( "false"                   );
-    const std::string alter_table_properties_protected              ( "protected"               );
-    const std::string alter_table_properties_table_ttl              ( "table_ttl"               );
-    const std::string alter_table_properties_true                   ( "true"                    );
+    // Keywords for /create/jointable request
+    const std::string create_join_table_max_query_dimensions( "max_query_dimensions" );
     
     // Keywords for /create/table request
     const std::string create_table_chunk_size                 ( "chunk_size"                  );
@@ -233,6 +234,9 @@ namespace gpudb
     const std::string insert_symbol_svg     ( "svg"      );
     const std::string insert_symbol_svg_path( "svg_path" );
     
+    // Keywords for /show/system/properties request
+    const std::string show_system_properties_properties( "properties" );
+    
     // Keywords for /show/system/properties response
     const std::string show_system_properties_FALSE                          ( "FALSE"                           );
     const std::string show_system_properties_TRUE                           ( "TRUE"                            );
@@ -241,17 +245,24 @@ namespace gpudb
     const std::string show_system_properties_conf_worker_http_server_ports  ( "conf.worker_http_server_ports"   );
     
     // Keywords for /show/table request
-    const std::string show_table_false    ( "false"     );
-    const std::string show_table_get_sizes( "get_sizes" );
-    const std::string show_table_true     ( "true"      );
+    const std::string show_table_get_sizes    ( "get_sizes"     );
+    const std::string show_table_show_children( "show_children" );
     
-    // Keywords for /show/table/properties response
-    const std::string show_table_properties_allow_homogenous_tables( "allow_homogenous_tables" );
-    const std::string show_table_properties_false                  ( "false"                   );
-    const std::string show_table_properties_protected              ( "protected"               );
-    const std::string show_table_properties_remaining_table_ttl    ( "remaining_table_ttl"     );
-    const std::string show_table_properties_table_ttl              ( "table_ttl"               );
-    const std::string show_table_properties_true                   ( "true"                    );
+    // Keywords for /show/table response
+    const std::string show_table_COLLECTION             ( "COLLECTION"              );
+    const std::string show_table_JOIN                   ( "JOIN"                    );
+    const std::string show_table_REPLICATED             ( "REPLICATED"              );
+    const std::string show_table_VIEW                   ( "VIEW"                    );
+    const std::string show_table_allow_homogenous_tables( "allow_homogenous_tables" );
+    const std::string show_table_attribute_indexes      ( "attribute_indexes"       );
+    const std::string show_table_foreign_keys           ( "foreign_keys"            );
+    const std::string show_table_protected              ( "protected"               );
+    const std::string show_table_remaining_table_ttl    ( "remaining_table_ttl"     );
+    const std::string show_table_table_ttl              ( "table_ttl"               );
+    
+    // Keywords for /show/table request and response
+    const std::string show_table_false( "false" );
+    const std::string show_table_true ( "true"  );
     
     // Keywords for /update/records request
     const std::string update_records_binary               ( "binary"                );

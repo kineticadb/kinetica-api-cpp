@@ -13,13 +13,27 @@ namespace gpudb
      * A set of input parameters for {@link
      * #alterTable(const AlterTableRequest&) const}.
      * <p>
-     * Creates or deletes an index on a particular column in a given table.
-     * Creating an index can speed up certain search queries (such as {@link
+     * Apply various modifications to a table or collection. Available
+     * modifications include:
+     * <p>
+     *      Cereating or deleting an index on a particular column. This can
+     * speed up certain search queries (such as {@link
      * #getRecordsRaw(const GetRecordsRequest&) const}, {@link
      * #deleteRecords(const DeleteRecordsRequest&) const}, {@link
      * #updateRecordsRaw(const RawUpdateRecordsRequest&) const}) when using
      * expressions containing equality or relational operators on indexed
-     * columns.
+     * columns. This only applies to child tables.
+     * <p>
+     *      Making a table protected or not. Protected tables need the admin
+     * password to be sent in a {@link
+     * #clearTable(const ClearTableRequest&) const} to delete the table.
+     * This can be applied to child tables or collections or views.
+     * <p>
+     *      Setting the ttl (time-to-live). This can be applied to child tables
+     * or collections or views.
+     * <p>
+     *      Allowing homogeneous child tables. This only applies to
+     * collections.
      */
     struct AlterTableRequest
     {
@@ -30,8 +44,8 @@ namespace gpudb
          */
         AlterTableRequest() :
             tableName(std::string()),
-            columnName(std::string()),
             action(std::string()),
+            value(std::string()),
             options(std::map<std::string, std::string>())
         {
         }
@@ -41,28 +55,28 @@ namespace gpudb
          * parameters.
          * 
          * @param[in] tableName  Table on which the operation will be
-         *                       performed. Must be a valid table in GPUdb.
-         *                       This can not be a collection.
-         * @param[in] columnName  Name of the column on which the index will be
-         *                        created or deleted (can be empty when @a
-         *                        action = @a list).
-         * @param[in] action  Kind of index operation being performed on the
-         *                    table
+         *                       performed. Must be a valid table or collection
+         *                       in GPUdb.
+         * @param[in] action  Modification operation to be applied to the table
+         *                    or collection
+         * @param[in] value  The value of the modification. May be a column
+         *                   name, 'true' or 'false', or a time-to-live
+         *                   depending on @a action.
          * @param[in] options  Optional parameters.  Default value is an empty
          *                     std::map.
          * 
          */
-        AlterTableRequest(const std::string& tableName, const std::string& columnName, const std::string& action, const std::map<std::string, std::string>& options):
+        AlterTableRequest(const std::string& tableName, const std::string& action, const std::string& value, const std::map<std::string, std::string>& options):
             tableName(tableName),
-            columnName(columnName),
             action(action),
+            value(value),
             options(options)
         {
         }
 
         std::string tableName;
-        std::string columnName;
         std::string action;
+        std::string value;
         std::map<std::string, std::string> options;
     };
 }
@@ -74,8 +88,8 @@ namespace avro
         static void encode(Encoder& e, const gpudb::AlterTableRequest& v)
         {
             ::avro::encode(e, v.tableName);
-            ::avro::encode(e, v.columnName);
             ::avro::encode(e, v.action);
+            ::avro::encode(e, v.value);
             ::avro::encode(e, v.options);
         }
 
@@ -94,11 +108,11 @@ namespace avro
                             break;
 
                         case 1:
-                            ::avro::decode(d, v.columnName);
+                            ::avro::decode(d, v.action);
                             break;
 
                         case 2:
-                            ::avro::decode(d, v.action);
+                            ::avro::decode(d, v.value);
                             break;
 
                         case 3:
@@ -113,8 +127,8 @@ namespace avro
             else
             {
                 ::avro::decode(d, v.tableName);
-                ::avro::decode(d, v.columnName);
                 ::avro::decode(d, v.action);
+                ::avro::decode(d, v.value);
                 ::avro::decode(d, v.options);
             }
         }
@@ -128,13 +142,27 @@ namespace gpudb
      * A set of output parameters for {@link
      * #alterTable(const AlterTableRequest&) const}.
      * <p>
-     * Creates or deletes an index on a particular column in a given table.
-     * Creating an index can speed up certain search queries (such as {@link
+     * Apply various modifications to a table or collection. Available
+     * modifications include:
+     * <p>
+     *      Cereating or deleting an index on a particular column. This can
+     * speed up certain search queries (such as {@link
      * #getRecordsRaw(const GetRecordsRequest&) const}, {@link
      * #deleteRecords(const DeleteRecordsRequest&) const}, {@link
      * #updateRecordsRaw(const RawUpdateRecordsRequest&) const}) when using
      * expressions containing equality or relational operators on indexed
-     * columns.
+     * columns. This only applies to child tables.
+     * <p>
+     *      Making a table protected or not. Protected tables need the admin
+     * password to be sent in a {@link
+     * #clearTable(const ClearTableRequest&) const} to delete the table.
+     * This can be applied to child tables or collections or views.
+     * <p>
+     *      Setting the ttl (time-to-live). This can be applied to child tables
+     * or collections or views.
+     * <p>
+     *      Allowing homogeneous child tables. This only applies to
+     * collections.
      */
     struct AlterTableResponse
     {
@@ -144,11 +172,15 @@ namespace gpudb
          * values.
          */
         AlterTableResponse() :
-            status(std::string())
+            tableName(std::string()),
+            action(std::string()),
+            value(std::string())
         {
         }
 
-        std::string status;
+        std::string tableName;
+        std::string action;
+        std::string value;
     };
 }
 
@@ -158,7 +190,9 @@ namespace avro
     {
         static void encode(Encoder& e, const gpudb::AlterTableResponse& v)
         {
-            ::avro::encode(e, v.status);
+            ::avro::encode(e, v.tableName);
+            ::avro::encode(e, v.action);
+            ::avro::encode(e, v.value);
         }
 
         static void decode(Decoder& d, gpudb::AlterTableResponse& v)
@@ -172,7 +206,15 @@ namespace avro
                     switch (*it)
                     {
                         case 0:
-                            ::avro::decode(d, v.status);
+                            ::avro::decode(d, v.tableName);
+                            break;
+
+                        case 1:
+                            ::avro::decode(d, v.action);
+                            break;
+
+                        case 2:
+                            ::avro::decode(d, v.value);
                             break;
 
                         default:
@@ -182,7 +224,9 @@ namespace avro
             }
             else
             {
-                ::avro::decode(d, v.status);
+                ::avro::decode(d, v.tableName);
+                ::avro::decode(d, v.action);
+                ::avro::decode(d, v.value);
             }
         }
     };

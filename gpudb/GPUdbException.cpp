@@ -1,4 +1,4 @@
-#include "GPUdbException.hpp"
+#include "gpudb/GPUdbException.hpp"
 
 namespace gpudb
 {

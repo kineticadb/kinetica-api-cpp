@@ -1,4 +1,5 @@
-#include "GPUdb.hpp"
+#include "gpudb/GPUdb.hpp"
+
 #include <boost/asio.hpp>
 #include <boost/lexical_cast.hpp>
 #include <snappy.h>
@@ -481,5 +482,5 @@ namespace gpudb {
         return *this;
     }
 
-    #include "GPUdbFunctions.cpp"
+    #include "gpudb/GPUdbFunctions.cpp"
 }

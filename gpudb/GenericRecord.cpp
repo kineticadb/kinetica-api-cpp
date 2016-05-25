@@ -1,4 +1,4 @@
-#include "GenericRecord.hpp"
+#include "gpudb/GenericRecord.hpp"
 
 namespace gpudb
 {

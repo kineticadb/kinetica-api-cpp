@@ -1,4 +1,4 @@
-#include "Avro.hpp"
+#include "gpudb/Avro.hpp"
 
 #include <boost/thread/thread.hpp>
 

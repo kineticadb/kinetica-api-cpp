@@ -1,5 +1,5 @@
-#include "../src/GPUdb.hpp"
-#include "../src/GPUdbIngestor.hpp"
+#include "gpudb/GPUdb.hpp"
+#include "gpudb/GPUdbIngestor.hpp"
 
 
 int main(int argc, char* argv[])

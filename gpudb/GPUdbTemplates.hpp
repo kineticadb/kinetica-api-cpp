@@ -15,6 +15,9 @@
  * the underlying table in case of a view) is updated (records are inserted,
  * deleted or modified) the records retrieved may differ between calls based on
  * the updates applied.
+ * <p>
+ * Note that when using the Java API, it is not possible to retrieve records
+ * from join tables using this operation.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -36,6 +39,9 @@ GetRecordsResponse<boost::any> GPUdb::getRecords( const GetRecordsRequest& reque
  * the underlying table in case of a view) is updated (records are inserted,
  * deleted or modified) the records retrieved may differ between calls based on
  * the updates applied.
+ * <p>
+ * Note that when using the Java API, it is not possible to retrieve records
+ * from join tables using this operation.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -61,6 +67,9 @@ GetRecordsResponse<boost::any>& GPUdb::getRecords( const GetRecordsRequest& requ
  * the underlying table in case of a view) is updated (records are inserted,
  * deleted or modified) the records retrieved may differ between calls based on
  * the updates applied.
+ * <p>
+ * Note that when using the Java API, it is not possible to retrieve records
+ * from join tables using this operation.
  * 
  * @param tableName  Name of the table from which the records will be fetched.
  *                   Must be a table, view or homogeneous collection.
@@ -93,6 +102,9 @@ GetRecordsResponse<boost::any> GPUdb::getRecords( const std::string& tableName,
  * the underlying table in case of a view) is updated (records are inserted,
  * deleted or modified) the records retrieved may differ between calls based on
  * the updates applied.
+ * <p>
+ * Note that when using the Java API, it is not possible to retrieve records
+ * from join tables using this operation.
  * 
  * @param tableName  Name of the table from which the records will be fetched.
  *                   Must be a table, view or homogeneous collection.
@@ -263,6 +275,9 @@ GetRecordsBySeriesResponse<boost::any>& GPUdb::getRecordsBySeries( const std::st
  * <p>
  * This operation supports paging through the data via the @a offset and @a
  * limit parameters.
+ * <p>
+ * Note that when using the Java API, it is not possible to retrieve records
+ * from join tables using this operation.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -280,6 +295,9 @@ GetRecordsFromCollectionResponse<boost::any> GPUdb::getRecordsFromCollection( co
  * <p>
  * This operation supports paging through the data via the @a offset and @a
  * limit parameters.
+ * <p>
+ * Note that when using the Java API, it is not possible to retrieve records
+ * from join tables using this operation.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -301,6 +319,9 @@ GetRecordsFromCollectionResponse<boost::any>& GPUdb::getRecordsFromCollection( c
  * <p>
  * This operation supports paging through the data via the @a offset and @a
  * limit parameters.
+ * <p>
+ * Note that when using the Java API, it is not possible to retrieve records
+ * from join tables using this operation.
  * 
  * @param tableName  Name of the collection or table from which records are to
  *                   be retrieved. Must be an existing GPUdb collection or
@@ -330,6 +351,9 @@ GetRecordsFromCollectionResponse<boost::any> GPUdb::getRecordsFromCollection( co
  * <p>
  * This operation supports paging through the data via the @a offset and @a
  * limit parameters.
+ * <p>
+ * Note that when using the Java API, it is not possible to retrieve records
+ * from join tables using this operation.
  * 
  * @param tableName  Name of the collection or table from which records are to
  *                   be retrieved. Must be an existing GPUdb collection or

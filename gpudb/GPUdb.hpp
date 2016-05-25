@@ -71,7 +71,7 @@ namespace gpudb
                 return response;
             }
 
-            #include "GPUdbFunctions.hpp"
+            #include "gpudb/GPUdbFunctions.hpp"
 
             void addKnownType(const std::string& typeId, const avro::DecoderPtr& decoder);
 
@@ -129,7 +129,7 @@ namespace gpudb
             void setDecoderIfMissing(const std::string& typeId, const std::string& schemaString) const;
     };
 
-    #include "GPUdbTemplates.hpp"
+    #include "gpudb/GPUdbTemplates.hpp"
 }
 
 #endif

@@ -13,8 +13,8 @@ namespace gpudb
      * A set of input parameters for {@link
      * #visualizeImage(const VisualizeImageRequest&) const}.
      * <p>
-     * Generates 'class break' rasterized image tiles for an area of interest
-     * using the given tables and the provided parameters.
+     * Generates rasterized image tiles for an area of interest using the given
+     * tables and the provided parameters.
      * <p>
      * All color values must be in the format RRGGBB or AARRGGBB (to specify
      * the alpha value).
@@ -239,8 +239,8 @@ namespace gpudb
      * A set of output parameters for {@link
      * #visualizeImage(const VisualizeImageRequest&) const}.
      * <p>
-     * Generates 'class break' rasterized image tiles for an area of interest
-     * using the given tables and the provided parameters.
+     * Generates rasterized image tiles for an area of interest using the given
+     * tables and the provided parameters.
      * <p>
      * All color values must be in the format RRGGBB or AARRGGBB (to specify
      * the alpha value).

@@ -27,6 +27,7 @@ namespace gpudb
             joinTableName(std::string()),
             tableNames(std::vector<std::string>()),
             aliases(std::vector<std::string>()),
+            expression(std::string()),
             options(std::map<std::string, std::string>())
         {
         }
@@ -40,17 +41,26 @@ namespace gpudb
          *                           GPUdb table or join_table. Cannot be an
          *                           empty string.
          * @param[in] tableNames  The list of table names making up the joined
-         *                        set
+         *                        set.  Corresponds to SQL statement from
+         *                        clause
          * @param[in] aliases  The list of aliases for each of the
          *                     corresponding tables.
+         * @param[in] expression  An optional expression GPUdb uses to filter
+         *                        the join-table being created.  Corresponds to
+         *                        SQL select statement where clause. For
+         *                        details see <a
+         *                        href="../../concepts/index.html#expressions"
+         *                        target="_top">concepts</a>.  Default value is
+         *                        an empty string.
          * @param[in] options  Optional parameters.  Default value is an empty
          *                     std::map.
          * 
          */
-        CreateJoinTableRequest(const std::string& joinTableName, const std::vector<std::string>& tableNames, const std::vector<std::string>& aliases, const std::map<std::string, std::string>& options):
+        CreateJoinTableRequest(const std::string& joinTableName, const std::vector<std::string>& tableNames, const std::vector<std::string>& aliases, const std::string& expression, const std::map<std::string, std::string>& options):
             joinTableName(joinTableName),
             tableNames(tableNames),
             aliases(aliases),
+            expression(expression),
             options(options)
         {
         }
@@ -58,6 +68,7 @@ namespace gpudb
         std::string joinTableName;
         std::vector<std::string> tableNames;
         std::vector<std::string> aliases;
+        std::string expression;
         std::map<std::string, std::string> options;
     };
 }
@@ -71,6 +82,7 @@ namespace avro
             ::avro::encode(e, v.joinTableName);
             ::avro::encode(e, v.tableNames);
             ::avro::encode(e, v.aliases);
+            ::avro::encode(e, v.expression);
             ::avro::encode(e, v.options);
         }
 
@@ -97,6 +109,10 @@ namespace avro
                             break;
 
                         case 3:
+                            ::avro::decode(d, v.expression);
+                            break;
+
+                        case 4:
                             ::avro::decode(d, v.options);
                             break;
 
@@ -110,6 +126,7 @@ namespace avro
                 ::avro::decode(d, v.joinTableName);
                 ::avro::decode(d, v.tableNames);
                 ::avro::decode(d, v.aliases);
+                ::avro::decode(d, v.expression);
                 ::avro::decode(d, v.options);
             }
         }
@@ -134,11 +151,13 @@ namespace gpudb
          * values.
          */
         CreateJoinTableResponse() :
-            joinTableName(std::string())
+            joinTableName(std::string()),
+            count(int64_t())
         {
         }
 
         std::string joinTableName;
+        int64_t count;
     };
 }
 
@@ -149,6 +168,7 @@ namespace avro
         static void encode(Encoder& e, const gpudb::CreateJoinTableResponse& v)
         {
             ::avro::encode(e, v.joinTableName);
+            ::avro::encode(e, v.count);
         }
 
         static void decode(Decoder& d, gpudb::CreateJoinTableResponse& v)
@@ -165,6 +185,10 @@ namespace avro
                             ::avro::decode(d, v.joinTableName);
                             break;
 
+                        case 1:
+                            ::avro::decode(d, v.count);
+                            break;
+
                         default:
                             break;
                     }
@@ -173,6 +197,7 @@ namespace avro
             else
             {
                 ::avro::decode(d, v.joinTableName);
+                ::avro::decode(d, v.count);
             }
         }
     };

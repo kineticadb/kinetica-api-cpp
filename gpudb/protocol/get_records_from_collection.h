@@ -19,6 +19,9 @@ namespace gpudb
      * <p>
      * This operation supports paging through the data via the @a offset and @a
      * limit parameters.
+     * <p>
+     * Note that when using the Java API, it is not possible to retrieve
+     * records from join tables using this operation.
      */
     struct GetRecordsFromCollectionRequest
     {
@@ -176,6 +179,9 @@ namespace gpudb
      * <p>
      * This operation supports paging through the data via the @a offset and @a
      * limit parameters.
+     * <p>
+     * Note that when using the Java API, it is not possible to retrieve
+     * records from join tables using this operation.
      */
     struct RawGetRecordsFromCollectionResponse
     {
@@ -274,6 +280,9 @@ namespace gpudb
      * <p>
      * This operation supports paging through the data via the @a offset and @a
      * limit parameters.
+     * <p>
+     * Note that when using the Java API, it is not possible to retrieve
+     * records from join tables using this operation.
      * 
      * @param <T>  The type of object being processed.
      * 

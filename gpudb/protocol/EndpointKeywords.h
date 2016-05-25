@@ -52,6 +52,8 @@ namespace gpudb
     extern const std::string aggregate_statistics_max;
     extern const std::string aggregate_statistics_mean;
     extern const std::string aggregate_statistics_min;
+    extern const std::string aggregate_statistics_percentile;
+    extern const std::string aggregate_statistics_percentile_rank;
     extern const std::string aggregate_statistics_skew;
     extern const std::string aggregate_statistics_stdv;
     extern const std::string aggregate_statistics_sum;
@@ -81,6 +83,7 @@ namespace gpudb
     extern const std::string alter_system_properties_concurrent_kernel_execution;
     extern const std::string alter_system_properties_flush_to_disk;
     extern const std::string alter_system_properties_kernel_omp_threads;
+    extern const std::string alter_system_properties_max_get_records_size;
     extern const std::string alter_system_properties_network_speed;
     extern const std::string alter_system_properties_print_communicator_statistics;
     extern const std::string alter_system_properties_request_timeout;
@@ -88,16 +91,14 @@ namespace gpudb
     extern const std::string alter_system_properties_sm_omp_threads;
     
     // Keywords for /alter/table request
-    extern const std::string alter_table_create;
-    extern const std::string alter_table_delete;
-    extern const std::string alter_table_list;
+    extern const std::string alter_table_allow_homogeneous_tables;
+    extern const std::string alter_table_create_index;
+    extern const std::string alter_table_delete_index;
+    extern const std::string alter_table_protected;
+    extern const std::string alter_table_ttl;
     
-    // Keywords for /alter/table/properties request
-    extern const std::string alter_table_properties_allow_homogenous_tables;
-    extern const std::string alter_table_properties_false;
-    extern const std::string alter_table_properties_protected;
-    extern const std::string alter_table_properties_table_ttl;
-    extern const std::string alter_table_properties_true;
+    // Keywords for /create/jointable request
+    extern const std::string create_join_table_max_query_dimensions;
     
     // Keywords for /create/table request
     extern const std::string create_table_chunk_size;
@@ -233,6 +234,9 @@ namespace gpudb
     extern const std::string insert_symbol_svg;
     extern const std::string insert_symbol_svg_path;
     
+    // Keywords for /show/system/properties request
+    extern const std::string show_system_properties_properties;
+    
     // Keywords for /show/system/properties response
     extern const std::string show_system_properties_FALSE;
     extern const std::string show_system_properties_TRUE;
@@ -241,17 +245,24 @@ namespace gpudb
     extern const std::string show_system_properties_conf_worker_http_server_ports;
     
     // Keywords for /show/table request
-    extern const std::string show_table_false;
     extern const std::string show_table_get_sizes;
-    extern const std::string show_table_true;
+    extern const std::string show_table_show_children;
     
-    // Keywords for /show/table/properties response
-    extern const std::string show_table_properties_allow_homogenous_tables;
-    extern const std::string show_table_properties_false;
-    extern const std::string show_table_properties_protected;
-    extern const std::string show_table_properties_remaining_table_ttl;
-    extern const std::string show_table_properties_table_ttl;
-    extern const std::string show_table_properties_true;
+    // Keywords for /show/table response
+    extern const std::string show_table_COLLECTION;
+    extern const std::string show_table_JOIN;
+    extern const std::string show_table_REPLICATED;
+    extern const std::string show_table_VIEW;
+    extern const std::string show_table_allow_homogenous_tables;
+    extern const std::string show_table_attribute_indexes;
+    extern const std::string show_table_foreign_keys;
+    extern const std::string show_table_protected;
+    extern const std::string show_table_remaining_table_ttl;
+    extern const std::string show_table_table_ttl;
+    
+    // Keywords for /show/table request and response
+    extern const std::string show_table_false;
+    extern const std::string show_table_true;
     
     // Keywords for /update/records request
     extern const std::string update_records_binary;

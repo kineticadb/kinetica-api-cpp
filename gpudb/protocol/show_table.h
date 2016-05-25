@@ -16,15 +16,29 @@ namespace gpudb
      * Retrieves detailed information about a particular GPUdb table, specified
      * in @a tableName. If the supplied @a tableName is a collection, the call
      * returns a list of tables contained in the collection, and for each table
-     * it returns the type ids, type schemas, type labels, semantic types, and
-     * ttls. If the option 'get_sizes' is set to 'true' then  the sizes
-     * (objects and elements) of each table are returned (in @a sizes and @a
-     * fullSizes), along with the total number of objects in the requested
-     * table (in @a totalSize and @a totalFullSize).
+     * it returns the description, type id, schema, type label, type
+     * propertiess, and additional information including TTL. If @a tableName
+     * is empty it will return all top-level tables including all collections
+     * and top-level child tables (i.e. tables with no parent).
+     * <p>
+     *     If the option 'get_sizes' is set to 'true' then the sizes (objects
+     * and elements) of each table are returned (in @a sizes and @a fullSizes),
+     * along with the total number of objects in the requested table (in @a
+     * totalSize and @a totalFullSize).
+     * <p>
+     *     If the option 'show_children' is set to 'false' then for a
+     * collection it only returns information about the collection itself, not
+     * about the child tables. If 'show_children' is set to 'true' then it will
+     * return information about each of the children.
+     * <p>
+     *     Running with 'show_children' = 'true' on a child table will return
+     * an error.
+     * <p>
+     *     Running with 'show_children' = 'false' with @a tableName empty will
+     * return an error.
      * <p>
      * If the requested table is blank, then information is returned about all
-     * top-level tables including collections. In this case @a isCollection
-     * indicates which of the returned table names are collections.
+     * top-level tables including collections.
      */
     struct ShowTableRequest
     {
@@ -112,15 +126,29 @@ namespace gpudb
      * Retrieves detailed information about a particular GPUdb table, specified
      * in @a tableName. If the supplied @a tableName is a collection, the call
      * returns a list of tables contained in the collection, and for each table
-     * it returns the type ids, type schemas, type labels, semantic types, and
-     * ttls. If the option 'get_sizes' is set to 'true' then  the sizes
-     * (objects and elements) of each table are returned (in @a sizes and @a
-     * fullSizes), along with the total number of objects in the requested
-     * table (in @a totalSize and @a totalFullSize).
+     * it returns the description, type id, schema, type label, type
+     * propertiess, and additional information including TTL. If @a tableName
+     * is empty it will return all top-level tables including all collections
+     * and top-level child tables (i.e. tables with no parent).
+     * <p>
+     *     If the option 'get_sizes' is set to 'true' then the sizes (objects
+     * and elements) of each table are returned (in @a sizes and @a fullSizes),
+     * along with the total number of objects in the requested table (in @a
+     * totalSize and @a totalFullSize).
+     * <p>
+     *     If the option 'show_children' is set to 'false' then for a
+     * collection it only returns information about the collection itself, not
+     * about the child tables. If 'show_children' is set to 'true' then it will
+     * return information about each of the children.
+     * <p>
+     *     Running with 'show_children' = 'true' on a child table will return
+     * an error.
+     * <p>
+     *     Running with 'show_children' = 'false' with @a tableName empty will
+     * return an error.
      * <p>
      * If the requested table is blank, then information is returned about all
-     * top-level tables including collections. In this case @a isCollection
-     * indicates which of the returned table names are collections.
+     * top-level tables including collections.
      */
     struct ShowTableResponse
     {
@@ -131,14 +159,12 @@ namespace gpudb
         ShowTableResponse() :
             tableName(std::string()),
             tableNames(std::vector<std::string>()),
-            isCollection(std::vector<bool>()),
-            isView(std::vector<bool>()),
-            isJoin(std::vector<bool>()),
+            tableDescriptions(std::vector<std::vector<std::string> >()),
             typeIds(std::vector<std::string>()),
             typeSchemas(std::vector<std::string>()),
             typeLabels(std::vector<std::string>()),
             properties(std::vector<std::map<std::string, std::vector<std::string> > >()),
-            ttls(std::vector<int32_t>()),
+            additionalInfo(std::vector<std::map<std::string, std::string> >()),
             sizes(std::vector<int64_t>()),
             fullSizes(std::vector<int64_t>()),
             joinSizes(std::vector<double>()),
@@ -149,14 +175,12 @@ namespace gpudb
 
         std::string tableName;
         std::vector<std::string> tableNames;
-        std::vector<bool> isCollection;
-        std::vector<bool> isView;
-        std::vector<bool> isJoin;
+        std::vector<std::vector<std::string> > tableDescriptions;
         std::vector<std::string> typeIds;
         std::vector<std::string> typeSchemas;
         std::vector<std::string> typeLabels;
         std::vector<std::map<std::string, std::vector<std::string> > > properties;
-        std::vector<int32_t> ttls;
+        std::vector<std::map<std::string, std::string> > additionalInfo;
         std::vector<int64_t> sizes;
         std::vector<int64_t> fullSizes;
         std::vector<double> joinSizes;
@@ -173,14 +197,12 @@ namespace avro
         {
             ::avro::encode(e, v.tableName);
             ::avro::encode(e, v.tableNames);
-            ::avro::encode(e, v.isCollection);
-            ::avro::encode(e, v.isView);
-            ::avro::encode(e, v.isJoin);
+            ::avro::encode(e, v.tableDescriptions);
             ::avro::encode(e, v.typeIds);
             ::avro::encode(e, v.typeSchemas);
             ::avro::encode(e, v.typeLabels);
             ::avro::encode(e, v.properties);
-            ::avro::encode(e, v.ttls);
+            ::avro::encode(e, v.additionalInfo);
             ::avro::encode(e, v.sizes);
             ::avro::encode(e, v.fullSizes);
             ::avro::encode(e, v.joinSizes);
@@ -207,54 +229,46 @@ namespace avro
                             break;
 
                         case 2:
-                            ::avro::decode(d, v.isCollection);
+                            ::avro::decode(d, v.tableDescriptions);
                             break;
 
                         case 3:
-                            ::avro::decode(d, v.isView);
-                            break;
-
-                        case 4:
-                            ::avro::decode(d, v.isJoin);
-                            break;
-
-                        case 5:
                             ::avro::decode(d, v.typeIds);
                             break;
 
-                        case 6:
+                        case 4:
                             ::avro::decode(d, v.typeSchemas);
                             break;
 
-                        case 7:
+                        case 5:
                             ::avro::decode(d, v.typeLabels);
                             break;
 
-                        case 8:
+                        case 6:
                             ::avro::decode(d, v.properties);
                             break;
 
-                        case 9:
-                            ::avro::decode(d, v.ttls);
+                        case 7:
+                            ::avro::decode(d, v.additionalInfo);
                             break;
 
-                        case 10:
+                        case 8:
                             ::avro::decode(d, v.sizes);
                             break;
 
-                        case 11:
+                        case 9:
                             ::avro::decode(d, v.fullSizes);
                             break;
 
-                        case 12:
+                        case 10:
                             ::avro::decode(d, v.joinSizes);
                             break;
 
-                        case 13:
+                        case 11:
                             ::avro::decode(d, v.totalSize);
                             break;
 
-                        case 14:
+                        case 12:
                             ::avro::decode(d, v.totalFullSize);
                             break;
 
@@ -267,14 +281,12 @@ namespace avro
             {
                 ::avro::decode(d, v.tableName);
                 ::avro::decode(d, v.tableNames);
-                ::avro::decode(d, v.isCollection);
-                ::avro::decode(d, v.isView);
-                ::avro::decode(d, v.isJoin);
+                ::avro::decode(d, v.tableDescriptions);
                 ::avro::decode(d, v.typeIds);
                 ::avro::decode(d, v.typeSchemas);
                 ::avro::decode(d, v.typeLabels);
                 ::avro::decode(d, v.properties);
-                ::avro::decode(d, v.ttls);
+                ::avro::decode(d, v.additionalInfo);
                 ::avro::decode(d, v.sizes);
                 ::avro::decode(d, v.fullSizes);
                 ::avro::decode(d, v.joinSizes);
