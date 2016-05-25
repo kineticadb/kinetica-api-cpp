@@ -6,7 +6,7 @@ The gpudb-api-cpp project contains the source code of the C++ GPUdb API.
 The documentation can be found at http://www.gpudb.com/docs/5.2/index.html.  The
 C++ specific documentation can be found at:
 
-*   http://www.gpudb.com/docs/5.2/tutorial/cpp_guide.html
+*   http://www.gpudb.com/docs/5.2/tutorials/cpp_guide.html
 *   http://www.gpudb.com/docs/5.2/api/c++/annotated.html
 
 For the client-side API changes, please refer to CHANGELOG.md, and for GPUdb
