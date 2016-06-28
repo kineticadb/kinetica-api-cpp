@@ -22,10 +22,10 @@ int main(int argc, char* argv[])
     // Create some test data
 
     std::vector<gpudb::Type::Column> columns;
-    columns.push_back(gpudb::Type::Column("TRACKID", avro::AVRO_STRING));
-    columns.push_back(gpudb::Type::Column("TIMESTAMP", avro::AVRO_LONG));
-    columns.push_back(gpudb::Type::Column("x", avro::AVRO_DOUBLE));
-    columns.push_back(gpudb::Type::Column("y", avro::AVRO_DOUBLE));
+    columns.push_back(gpudb::Type::Column("TRACKID", gpudb::Type::Column::STRING));
+    columns.push_back(gpudb::Type::Column("TIMESTAMP", gpudb::Type::Column::LONG));
+    columns.push_back(gpudb::Type::Column("x", gpudb::Type::Column::DOUBLE));
+    columns.push_back(gpudb::Type::Column("y", gpudb::Type::Column::DOUBLE));
     gpudb::Type newType = gpudb::Type("Test", columns);
     std::string typeId = newType.create(gpudb);
     std::string table_name = "Test";
@@ -42,7 +42,7 @@ int main(int argc, char* argv[])
         {
             for (double y = -90.0; y <= 90.0; y += 1.0)
             {
-                gpudb::GenericRecord record(newType.getSchema());
+                gpudb::GenericRecord record(newType);
                 record.asString("TRACKID") = boost::lexical_cast<std::string>(x);
                 record.asLong("TIMESTAMP") = t++;
                 record.asDouble("x") = x;
@@ -87,33 +87,34 @@ int main(int argc, char* argv[])
     for (size_t i = 0; i < gbResponse.data.size(); ++i)
     {
         gpudb::DynamicTableRecord& record = gbResponse.data[i];
+        const gpudb::Type& type = record.getType();
         if (i == 0)
         {
-            std::cout << "Number of fields : " << record.getFieldCount() << std::endl;
-            for (size_t j = 0; j < record.getFieldCount(); ++j)
+            std::cout << "Number of fields : " << type.getColumnCount() << std::endl;
+            for (size_t j = 0; j < type.getColumnCount(); ++j)
             {
-                std::cout << record.getFieldName(j) << "\t";
+                std::cout << type.getColumn(j).getName() << "\t";
             }
             std::cout << std::endl;
         }
 
-        for (size_t j=0;j<record.getFieldCount();++j)
+        for (size_t j=0;j<type.getColumnCount();++j)
         {
-            switch(record.getFieldType(j))
+            switch(type.getColumn(j).getType())
             {
-            case ::avro::AVRO_DOUBLE:
+            case gpudb::Type::Column::DOUBLE:
                 std::cout << record.value<double>(j) << "\t";
                 break;
-            case ::avro::AVRO_FLOAT:
+            case gpudb::Type::Column::FLOAT:
                 std::cout << record.value<float>(j) << "\t";
                 break;
-            case ::avro::AVRO_INT:
+            case gpudb::Type::Column::INT:
                 std::cout << record.value<int32_t>(j) << "\t";
                 break;
-            case ::avro::AVRO_LONG:
+            case gpudb::Type::Column::LONG:
                 std::cout << record.value<int64_t>(j) << "\t";
                 break;
-            case ::avro::AVRO_STRING:
+            case gpudb::Type::Column::STRING:
                 std::cout << record.value<std::string>(j) << "\t";
                 break;
             default:
@@ -131,7 +132,7 @@ int main(int argc, char* argv[])
     std::string table_view_name = "TestResult";
     gpudb.filter(table_name, table_view_name, "x > 89", options);
 
-    gpudb::GetRecordsResponse<gpudb::GenericRecord> gsoResponse = gpudb.getRecords<gpudb::GenericRecord>(newType.getSchema(), table_view_name, 0, 10, options);
+    gpudb::GetRecordsResponse<gpudb::GenericRecord> gsoResponse = gpudb.getRecords<gpudb::GenericRecord>(newType, table_view_name, 0, 10, options);
 
     for (size_t i = 0; i < gsoResponse.data.size(); ++i)
     {

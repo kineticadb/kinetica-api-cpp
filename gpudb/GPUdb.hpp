@@ -5,18 +5,16 @@
 
 #include <boost/thread/mutex.hpp>
 
-
-
 namespace gpudb
 {
     class GPUdb;
 }
 
 #include "gpudb/Avro.hpp"
+#include "gpudb/DynamicTableRecord.hpp"
 #include "gpudb/GenericRecord.hpp"
 #include "gpudb/GPUdbException.hpp"
 #include "gpudb/Type.hpp"
-#include "gpudb/DynamicTableRecord.hpp"
 #include "gpudb/protocol/GPUdbProtocol.h"
 
 namespace gpudb
@@ -126,7 +124,7 @@ namespace gpudb
 
             void submitRequestRaw(const std::string& endpoint, const std::vector<uint8_t>& request, GpudbResponse& response, const bool enableCompression) const;
             avro::DecoderPtr getDecoder(const std::string& typeId) const;
-            void setDecoderIfMissing(const std::string& typeId, const std::string& schemaString) const;
+            void setDecoderIfMissing(const std::string& typeId, const std::string& label, const std::string& schemaString, const std::map<std::string, std::vector<std::string> >& properties) const;
     };
 
     #include "gpudb/GPUdbTemplates.hpp"

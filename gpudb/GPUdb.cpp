@@ -236,8 +236,8 @@ namespace gpudb {
             throw GPUdbException("Unable to obtain type information for type " + typeId + ".");
         }
 
-        ::avro::ValidSchema schema = ::avro::compileJsonSchemaFromString(response.typeSchemas[0]);
-        avro::DecoderPtr decoder = avro::createDecoder<GenericRecord>(schema);
+        Type type(response.labels[0], response.typeSchemas[0], response.properties[0]);
+        avro::DecoderPtr decoder = avro::createDecoder<GenericRecord>(type);
         boost::mutex::scoped_lock lock(knownTypesMutex);
 
         if (knownTypes.find(typeId) != knownTypes.end())
@@ -284,8 +284,16 @@ namespace gpudb {
         return username;
     }
 
-    void GPUdb::setDecoderIfMissing(const std::string& typeId, const std::string& schemaString) const
+    void GPUdb::setDecoderIfMissing(const std::string& typeId, const std::string& label, const std::string& schemaString, const std::map<std::string, std::vector<std::string> >& properties) const
     {
+        // If the table is a collection, it does not have a proper type so
+        // ignore it
+
+        if (typeId == "<collection>")
+        {
+            return;
+        }
+
         {
             boost::mutex::scoped_lock lock(knownTypesMutex);
 
@@ -295,8 +303,8 @@ namespace gpudb {
             }
         }
 
-        ::avro::ValidSchema schema = ::avro::compileJsonSchemaFromString(schemaString);
-        avro::DecoderPtr decoder = avro::createDecoder<GenericRecord>(schema);
+        Type type(label, schemaString, properties);
+        avro::DecoderPtr decoder = avro::createDecoder<GenericRecord>(type);
         boost::mutex::scoped_lock lock(knownTypesMutex);
 
         if (knownTypes.find(typeId) != knownTypes.end())

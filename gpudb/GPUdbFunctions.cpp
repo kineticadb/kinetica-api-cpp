@@ -3684,7 +3684,10 @@ CreateTypeResponse GPUdb::createType( const CreateTypeRequest& request_ ) const
 {
     CreateTypeResponse actualResponse_;
     submitRequest("/create/type", request_, actualResponse_, false);
-    setDecoderIfMissing(actualResponse_.typeId, actualResponse_.typeDefinition);
+    setDecoderIfMissing( actualResponse_.typeId,
+                         actualResponse_.label,
+                         actualResponse_.typeDefinition,
+                         actualResponse_.properties );
     return actualResponse_;
 }
 
@@ -3743,7 +3746,10 @@ CreateTypeResponse& GPUdb::createType( const CreateTypeRequest& request_,
                                        CreateTypeResponse& response_ ) const
 {
     submitRequest("/create/type", request_, response_, false);
-    setDecoderIfMissing(response_.typeId, response_.typeDefinition);
+    setDecoderIfMissing( response_.typeId,
+                         response_.label,
+                         response_.typeDefinition,
+                         response_.properties );
     return response_;
 }
 
@@ -3817,7 +3823,10 @@ CreateTypeResponse GPUdb::createType( const std::string& typeDefinition,
     actualRequest_.options = options;
     CreateTypeResponse actualResponse_;
     submitRequest("/create/type", actualRequest_, actualResponse_, false);
-    setDecoderIfMissing(actualResponse_.typeId, actualResponse_.typeDefinition);
+    setDecoderIfMissing( actualResponse_.typeId,
+                         actualResponse_.label,
+                         actualResponse_.typeDefinition,
+                         actualResponse_.properties );
     return actualResponse_;
 }
 
@@ -3894,7 +3903,10 @@ CreateTypeResponse& GPUdb::createType( const std::string& typeDefinition,
     actualRequest_.properties = properties;
     actualRequest_.options = options;
     submitRequest("/create/type", actualRequest_, response_, false);
-    setDecoderIfMissing(response_.typeId, response_.typeDefinition);
+    setDecoderIfMissing( response_.typeId,
+                         response_.label,
+                         response_.typeDefinition,
+                         response_.properties );
     return response_;
 }
 
@@ -8039,9 +8051,13 @@ ShowTableResponse GPUdb::showTable( const ShowTableRequest& request_ ) const
     ShowTableResponse actualResponse_;
     submitRequest("/show/table", request_, actualResponse_, false);
 
-    for (std::vector<std::string>::size_type i_ = 0; i_ < actualResponse_.typeIds.size(); ++i_)
+    std::vector<std::string>::size_type i_;
+    for ( i_ = 0; i_ < actualResponse_.typeIds.size(); ++i_)
     {
-        setDecoderIfMissing(actualResponse_.typeIds[i_], actualResponse_.typeSchemas[i_]);
+        setDecoderIfMissing( actualResponse_.typeIds[i_],
+                             actualResponse_.typeLabels[i_],
+                             actualResponse_.typeSchemas[i_],
+                             actualResponse_.properties[i_] );
     }
 
     return actualResponse_;
@@ -8091,9 +8107,13 @@ ShowTableResponse& GPUdb::showTable( const ShowTableRequest& request_,
 {
     submitRequest("/show/table", request_, response_, false);
 
-    for (std::vector<std::string>::size_type i_ = 0; i_ < response_.typeIds.size(); ++i_)
+    std::vector<std::string>::size_type i_;
+    for ( i_ = 0; i_ < response_.typeIds.size(); ++i_)
     {
-        setDecoderIfMissing(response_.typeIds[i_], response_.typeSchemas[i_]);
+        setDecoderIfMissing( response_.typeIds[i_],
+                             response_.typeLabels[i_],
+                             response_.typeSchemas[i_],
+                             response_.properties[i_] );
     }
 
     return response_;
@@ -8146,9 +8166,13 @@ ShowTableResponse GPUdb::showTable( const std::string& tableName,
     ShowTableResponse actualResponse_;
     submitRequest("/show/table", actualRequest_, actualResponse_, false);
 
-    for (std::vector<std::string>::size_type i_ = 0; i_ < actualResponse_.typeIds.size(); ++i_)
+    std::vector<std::string>::size_type i_;
+    for ( i_ = 0; i_ < actualResponse_.typeIds.size(); ++i_)
     {
-        setDecoderIfMissing(actualResponse_.typeIds[i_], actualResponse_.typeSchemas[i_]);
+        setDecoderIfMissing( actualResponse_.typeIds[i_],
+                             actualResponse_.typeLabels[i_],
+                             actualResponse_.typeSchemas[i_],
+                             actualResponse_.properties[i_] );
     }
 
     return actualResponse_;
@@ -8204,9 +8228,13 @@ ShowTableResponse& GPUdb::showTable( const std::string& tableName,
     actualRequest_.options = options;
     submitRequest("/show/table", actualRequest_, response_, false);
 
-    for (std::vector<std::string>::size_type i_ = 0; i_ < response_.typeIds.size(); ++i_)
+    std::vector<std::string>::size_type i_;
+    for ( i_ = 0; i_ < response_.typeIds.size(); ++i_)
     {
-        setDecoderIfMissing(response_.typeIds[i_], response_.typeSchemas[i_]);
+        setDecoderIfMissing( response_.typeIds[i_],
+                             response_.typeLabels[i_],
+                             response_.typeSchemas[i_],
+                             response_.properties[i_] );
     }
 
     return response_;
@@ -8524,9 +8552,13 @@ ShowTypesResponse GPUdb::showTypes( const ShowTypesRequest& request_ ) const
     ShowTypesResponse actualResponse_;
     submitRequest("/show/types", request_, actualResponse_, false);
 
-    for (std::vector<std::string>::size_type i_ = 0; i_ < actualResponse_.typeIds.size(); ++i_)
+    std::vector<std::string>::size_type i_;
+    for ( i_ = 0; i_ < actualResponse_.typeIds.size(); ++i_)
     {
-        setDecoderIfMissing(actualResponse_.typeIds[i_], actualResponse_.typeSchemas[i_]);
+        setDecoderIfMissing( actualResponse_.typeIds[i_],
+                             actualResponse_.labels[i_],
+                             actualResponse_.typeSchemas[i_],
+                             actualResponse_.properties[i_] );
     }
 
     return actualResponse_;
@@ -8555,9 +8587,13 @@ ShowTypesResponse& GPUdb::showTypes( const ShowTypesRequest& request_,
 {
     submitRequest("/show/types", request_, response_, false);
 
-    for (std::vector<std::string>::size_type i_ = 0; i_ < response_.typeIds.size(); ++i_)
+    std::vector<std::string>::size_type i_;
+    for ( i_ = 0; i_ < response_.typeIds.size(); ++i_)
     {
-        setDecoderIfMissing(response_.typeIds[i_], response_.typeSchemas[i_]);
+        setDecoderIfMissing( response_.typeIds[i_],
+                             response_.labels[i_],
+                             response_.typeSchemas[i_],
+                             response_.properties[i_] );
     }
 
     return response_;
@@ -8591,9 +8627,13 @@ ShowTypesResponse GPUdb::showTypes( const std::string& typeId,
     ShowTypesResponse actualResponse_;
     submitRequest("/show/types", actualRequest_, actualResponse_, false);
 
-    for (std::vector<std::string>::size_type i_ = 0; i_ < actualResponse_.typeIds.size(); ++i_)
+    std::vector<std::string>::size_type i_;
+    for ( i_ = 0; i_ < actualResponse_.typeIds.size(); ++i_)
     {
-        setDecoderIfMissing(actualResponse_.typeIds[i_], actualResponse_.typeSchemas[i_]);
+        setDecoderIfMissing( actualResponse_.typeIds[i_],
+                             actualResponse_.labels[i_],
+                             actualResponse_.typeSchemas[i_],
+                             actualResponse_.properties[i_] );
     }
 
     return actualResponse_;
@@ -8630,9 +8670,13 @@ ShowTypesResponse& GPUdb::showTypes( const std::string& typeId,
     actualRequest_.options = options;
     submitRequest("/show/types", actualRequest_, response_, false);
 
-    for (std::vector<std::string>::size_type i_ = 0; i_ < response_.typeIds.size(); ++i_)
+    std::vector<std::string>::size_type i_;
+    for ( i_ = 0; i_ < response_.typeIds.size(); ++i_)
     {
-        setDecoderIfMissing(response_.typeIds[i_], response_.typeSchemas[i_]);
+        setDecoderIfMissing( response_.typeIds[i_],
+                             response_.labels[i_],
+                             response_.typeSchemas[i_],
+                             response_.properties[i_] );
     }
 
     return response_;

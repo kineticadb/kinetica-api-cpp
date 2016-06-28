@@ -4817,6 +4817,24 @@ GetRecordsResponse<TResponse> getRecords( const ::avro::ValidSchema& schema_,
 }
 
 
+template<typename TResponse> 
+GetRecordsResponse<TResponse> getRecords( const Type& type_,
+                                          const GetRecordsRequest& request_ ) const
+{
+    RawGetRecordsResponse actualResponse_;
+    submitRequest("/get/records", request_, actualResponse_, false);
+    GetRecordsResponse<TResponse> response_;
+    response_.tableName = actualResponse_.tableName;
+    response_.typeName = actualResponse_.typeName;
+    response_.typeSchema = actualResponse_.typeSchema;
+    response_.data.resize(actualResponse_.recordsBinary.size(), TResponse(type_));
+    avro::decode(&response_.data[0], &actualResponse_.recordsBinary[0], actualResponse_.recordsBinary.size(), this->threadCount, this->executor);
+    response_.totalNumberOfRecords = actualResponse_.totalNumberOfRecords;
+    response_.hasMoreRecords = actualResponse_.hasMoreRecords;
+    return response_;
+}
+
+
 /**
  * Retrieves records from a given table, optionally filtered by an expression
  * and/or sorted by a column. This operation can only be performed on tables or
@@ -4855,6 +4873,24 @@ GetRecordsResponse<TResponse>& getRecords( const ::avro::ValidSchema& schema_,
     response_.typeName = actualResponse_.typeName;
     response_.typeSchema = actualResponse_.typeSchema;
     response_.data.resize(actualResponse_.recordsBinary.size(), TResponse(schema_));
+    avro::decode(&response_.data[0], &actualResponse_.recordsBinary[0], actualResponse_.recordsBinary.size(), this->threadCount, this->executor);
+    response_.totalNumberOfRecords = actualResponse_.totalNumberOfRecords;
+    response_.hasMoreRecords = actualResponse_.hasMoreRecords;
+    return response_;
+}
+
+
+template<typename TResponse> 
+GetRecordsResponse<TResponse>& getRecords( const Type& type_,
+                                           const GetRecordsRequest& request_,
+                                           GetRecordsResponse<TResponse>& response_ ) const
+{
+    RawGetRecordsResponse actualResponse_;
+    submitRequest("/get/records", request_, actualResponse_, false);
+    response_.tableName = actualResponse_.tableName;
+    response_.typeName = actualResponse_.typeName;
+    response_.typeSchema = actualResponse_.typeSchema;
+    response_.data.resize(actualResponse_.recordsBinary.size(), TResponse(type_));
     avro::decode(&response_.data[0], &actualResponse_.recordsBinary[0], actualResponse_.recordsBinary.size(), this->threadCount, this->executor);
     response_.totalNumberOfRecords = actualResponse_.totalNumberOfRecords;
     response_.hasMoreRecords = actualResponse_.hasMoreRecords;
@@ -4920,6 +4956,32 @@ GetRecordsResponse<TResponse> getRecords( const ::avro::ValidSchema& schema_,
 }
 
 
+template<typename TResponse> 
+GetRecordsResponse<TResponse> getRecords( const Type& type_,
+                                          const std::string& tableName,
+                                          const int64_t offset,
+                                          const int64_t limit,
+                                          const std::map<std::string, std::string>& options ) const
+{
+    GetRecordsRequest actualRequest_;
+    actualRequest_.tableName = tableName;
+    actualRequest_.offset = offset;
+    actualRequest_.limit = limit;
+    actualRequest_.options = options;
+    RawGetRecordsResponse actualResponse_;
+    submitRequest("/get/records", actualRequest_, actualResponse_, false);
+    GetRecordsResponse<TResponse> response_;
+    response_.tableName = actualResponse_.tableName;
+    response_.typeName = actualResponse_.typeName;
+    response_.typeSchema = actualResponse_.typeSchema;
+    response_.data.resize(actualResponse_.recordsBinary.size(), TResponse(type_));
+    avro::decode(&response_.data[0], &actualResponse_.recordsBinary[0], actualResponse_.recordsBinary.size(), this->threadCount, this->executor);
+    response_.totalNumberOfRecords = actualResponse_.totalNumberOfRecords;
+    response_.hasMoreRecords = actualResponse_.hasMoreRecords;
+    return response_;
+}
+
+
 /**
  * Retrieves records from a given table, optionally filtered by an expression
  * and/or sorted by a column. This operation can only be performed on tables or
@@ -4974,6 +5036,32 @@ GetRecordsResponse<TResponse>& getRecords( const ::avro::ValidSchema& schema_,
     response_.typeName = actualResponse_.typeName;
     response_.typeSchema = actualResponse_.typeSchema;
     response_.data.resize(actualResponse_.recordsBinary.size(), TResponse(schema_));
+    avro::decode(&response_.data[0], &actualResponse_.recordsBinary[0], actualResponse_.recordsBinary.size(), this->threadCount, this->executor);
+    response_.totalNumberOfRecords = actualResponse_.totalNumberOfRecords;
+    response_.hasMoreRecords = actualResponse_.hasMoreRecords;
+    return response_;
+}
+
+
+template<typename TResponse> 
+GetRecordsResponse<TResponse>& getRecords( const Type& type_,
+                                           const std::string& tableName,
+                                           const int64_t offset,
+                                           const int64_t limit,
+                                           const std::map<std::string, std::string>& options,
+                                           GetRecordsResponse<TResponse>& response_ ) const
+{
+    GetRecordsRequest actualRequest_;
+    actualRequest_.tableName = tableName;
+    actualRequest_.offset = offset;
+    actualRequest_.limit = limit;
+    actualRequest_.options = options;
+    RawGetRecordsResponse actualResponse_;
+    submitRequest("/get/records", actualRequest_, actualResponse_, false);
+    response_.tableName = actualResponse_.tableName;
+    response_.typeName = actualResponse_.typeName;
+    response_.typeSchema = actualResponse_.typeSchema;
+    response_.data.resize(actualResponse_.recordsBinary.size(), TResponse(type_));
     avro::decode(&response_.data[0], &actualResponse_.recordsBinary[0], actualResponse_.recordsBinary.size(), this->threadCount, this->executor);
     response_.totalNumberOfRecords = actualResponse_.totalNumberOfRecords;
     response_.hasMoreRecords = actualResponse_.hasMoreRecords;
@@ -5513,6 +5601,28 @@ GetRecordsBySeriesResponse<TResponse> getRecordsBySeries( const ::avro::ValidSch
 }
 
 
+template<typename TResponse> 
+GetRecordsBySeriesResponse<TResponse> getRecordsBySeries( const Type& type_,
+                                                          const GetRecordsBySeriesRequest& request_ ) const
+{
+    RawGetRecordsBySeriesResponse actualResponse_;
+    submitRequest("/get/records/byseries", request_, actualResponse_, false);
+    GetRecordsBySeriesResponse<TResponse> response_;
+    response_.tableNames = actualResponse_.tableNames;
+    response_.typeNames = actualResponse_.typeNames;
+    response_.typeSchemas = actualResponse_.typeSchemas;
+    response_.data.resize(actualResponse_.listRecordsBinary.size(), std::vector<TResponse>());
+
+    for (std::vector<std::vector<std::vector<uint8_t> > >::size_type i_ = 0; i_ < actualResponse_.listRecordsBinary.size(); ++i_)
+    {
+        response_.data[i_].resize(actualResponse_.listRecordsBinary[i_].size(), TResponse(type_));
+        avro::decode(&response_.data[i_][0], &actualResponse_.listRecordsBinary[i_][0], actualResponse_.listRecordsBinary[i_].size(), this->threadCount, this->executor);
+    }
+
+    return response_;
+}
+
+
 /**
  * Retrieves the complete series/track records from the given @a worldTableName
  * based on the partial track informaton contained in the @a tableName.
@@ -5554,6 +5664,28 @@ GetRecordsBySeriesResponse<TResponse>& getRecordsBySeries( const ::avro::ValidSc
     for (std::vector<std::vector<std::vector<uint8_t> > >::size_type i_ = 0; i_ < actualResponse_.listRecordsBinary.size(); ++i_)
     {
         response_.data[i_].resize(actualResponse_.listRecordsBinary[i_].size(), TResponse(schema_));
+        avro::decode(&response_.data[i_][0], &actualResponse_.listRecordsBinary[i_][0], actualResponse_.listRecordsBinary[i_].size(), this->threadCount, this->executor);
+    }
+
+    return response_;
+}
+
+
+template<typename TResponse> 
+GetRecordsBySeriesResponse<TResponse>& getRecordsBySeries( const Type& type_,
+                                                           const GetRecordsBySeriesRequest& request_,
+                                                           GetRecordsBySeriesResponse<TResponse>& response_ ) const
+{
+    RawGetRecordsBySeriesResponse actualResponse_;
+    submitRequest("/get/records/byseries", request_, actualResponse_, false);
+    response_.tableNames = actualResponse_.tableNames;
+    response_.typeNames = actualResponse_.typeNames;
+    response_.typeSchemas = actualResponse_.typeSchemas;
+    response_.data.resize(actualResponse_.listRecordsBinary.size(), std::vector<TResponse>());
+
+    for (std::vector<std::vector<std::vector<uint8_t> > >::size_type i_ = 0; i_ < actualResponse_.listRecordsBinary.size(); ++i_)
+    {
+        response_.data[i_].resize(actualResponse_.listRecordsBinary[i_].size(), TResponse(type_));
         avro::decode(&response_.data[i_][0], &actualResponse_.listRecordsBinary[i_][0], actualResponse_.listRecordsBinary[i_].size(), this->threadCount, this->executor);
     }
 
@@ -5632,6 +5764,38 @@ GetRecordsBySeriesResponse<TResponse> getRecordsBySeries( const ::avro::ValidSch
 }
 
 
+template<typename TResponse> 
+GetRecordsBySeriesResponse<TResponse> getRecordsBySeries( const Type& type_,
+                                                          const std::string& tableName,
+                                                          const std::string& worldTableName,
+                                                          const int32_t offset,
+                                                          const int32_t limit,
+                                                          const std::map<std::string, std::string>& options ) const
+{
+    GetRecordsBySeriesRequest actualRequest_;
+    actualRequest_.tableName = tableName;
+    actualRequest_.worldTableName = worldTableName;
+    actualRequest_.offset = offset;
+    actualRequest_.limit = limit;
+    actualRequest_.options = options;
+    RawGetRecordsBySeriesResponse actualResponse_;
+    submitRequest("/get/records/byseries", actualRequest_, actualResponse_, false);
+    GetRecordsBySeriesResponse<TResponse> response_;
+    response_.tableNames = actualResponse_.tableNames;
+    response_.typeNames = actualResponse_.typeNames;
+    response_.typeSchemas = actualResponse_.typeSchemas;
+    response_.data.resize(actualResponse_.listRecordsBinary.size(), std::vector<TResponse>());
+
+    for (std::vector<std::vector<std::vector<uint8_t> > >::size_type i_ = 0; i_ < actualResponse_.listRecordsBinary.size(); ++i_)
+    {
+        response_.data[i_].resize(actualResponse_.listRecordsBinary[i_].size(), TResponse(type_));
+        avro::decode(&response_.data[i_][0], &actualResponse_.listRecordsBinary[i_][0], actualResponse_.listRecordsBinary[i_].size(), this->threadCount, this->executor);
+    }
+
+    return response_;
+}
+
+
 /**
  * Retrieves the complete series/track records from the given @a worldTableName
  * based on the partial track informaton contained in the @a tableName.
@@ -5699,6 +5863,38 @@ GetRecordsBySeriesResponse<TResponse>& getRecordsBySeries( const ::avro::ValidSc
     for (std::vector<std::vector<std::vector<uint8_t> > >::size_type i_ = 0; i_ < actualResponse_.listRecordsBinary.size(); ++i_)
     {
         response_.data[i_].resize(actualResponse_.listRecordsBinary[i_].size(), TResponse(schema_));
+        avro::decode(&response_.data[i_][0], &actualResponse_.listRecordsBinary[i_][0], actualResponse_.listRecordsBinary[i_].size(), this->threadCount, this->executor);
+    }
+
+    return response_;
+}
+
+
+template<typename TResponse> 
+GetRecordsBySeriesResponse<TResponse>& getRecordsBySeries( const Type& type_,
+                                                           const std::string& tableName,
+                                                           const std::string& worldTableName,
+                                                           const int32_t offset,
+                                                           const int32_t limit,
+                                                           const std::map<std::string, std::string>& options,
+                                                           GetRecordsBySeriesResponse<TResponse>& response_ ) const
+{
+    GetRecordsBySeriesRequest actualRequest_;
+    actualRequest_.tableName = tableName;
+    actualRequest_.worldTableName = worldTableName;
+    actualRequest_.offset = offset;
+    actualRequest_.limit = limit;
+    actualRequest_.options = options;
+    RawGetRecordsBySeriesResponse actualResponse_;
+    submitRequest("/get/records/byseries", actualRequest_, actualResponse_, false);
+    response_.tableNames = actualResponse_.tableNames;
+    response_.typeNames = actualResponse_.typeNames;
+    response_.typeSchemas = actualResponse_.typeSchemas;
+    response_.data.resize(actualResponse_.listRecordsBinary.size(), std::vector<TResponse>());
+
+    for (std::vector<std::vector<std::vector<uint8_t> > >::size_type i_ = 0; i_ < actualResponse_.listRecordsBinary.size(); ++i_)
+    {
+        response_.data[i_].resize(actualResponse_.listRecordsBinary[i_].size(), TResponse(type_));
         avro::decode(&response_.data[i_][0], &actualResponse_.listRecordsBinary[i_][0], actualResponse_.listRecordsBinary[i_].size(), this->threadCount, this->executor);
     }
 
@@ -5962,6 +6158,22 @@ GetRecordsFromCollectionResponse<TResponse> getRecordsFromCollection( const ::av
 }
 
 
+template<typename TResponse> 
+GetRecordsFromCollectionResponse<TResponse> getRecordsFromCollection( const Type& type_,
+                                                                      const GetRecordsFromCollectionRequest& request_ ) const
+{
+    RawGetRecordsFromCollectionResponse actualResponse_;
+    submitRequest("/get/records/fromcollection", request_, actualResponse_, false);
+    GetRecordsFromCollectionResponse<TResponse> response_;
+    response_.tableName = actualResponse_.tableName;
+    response_.typeNames = actualResponse_.typeNames;
+    response_.data.resize(actualResponse_.recordsBinary.size(), TResponse(type_));
+    avro::decode(&response_.data[0], &actualResponse_.recordsBinary[0], actualResponse_.recordsBinary.size(), this->threadCount, this->executor);
+    response_.recordIds = actualResponse_.recordIds;
+    return response_;
+}
+
+
 /**
  * Retrieves records from a collection. The operation can optionally return the
  * record IDs which can be used in certain queries such as {@link
@@ -5995,6 +6207,22 @@ GetRecordsFromCollectionResponse<TResponse>& getRecordsFromCollection( const ::a
     response_.tableName = actualResponse_.tableName;
     response_.typeNames = actualResponse_.typeNames;
     response_.data.resize(actualResponse_.recordsBinary.size(), TResponse(schema_));
+    avro::decode(&response_.data[0], &actualResponse_.recordsBinary[0], actualResponse_.recordsBinary.size(), this->threadCount, this->executor);
+    response_.recordIds = actualResponse_.recordIds;
+    return response_;
+}
+
+
+template<typename TResponse> 
+GetRecordsFromCollectionResponse<TResponse>& getRecordsFromCollection( const Type& type_,
+                                                                       const GetRecordsFromCollectionRequest& request_,
+                                                                       GetRecordsFromCollectionResponse<TResponse>& response_ ) const
+{
+    RawGetRecordsFromCollectionResponse actualResponse_;
+    submitRequest("/get/records/fromcollection", request_, actualResponse_, false);
+    response_.tableName = actualResponse_.tableName;
+    response_.typeNames = actualResponse_.typeNames;
+    response_.data.resize(actualResponse_.recordsBinary.size(), TResponse(type_));
     avro::decode(&response_.data[0], &actualResponse_.recordsBinary[0], actualResponse_.recordsBinary.size(), this->threadCount, this->executor);
     response_.recordIds = actualResponse_.recordIds;
     return response_;
@@ -6054,6 +6282,30 @@ GetRecordsFromCollectionResponse<TResponse> getRecordsFromCollection( const ::av
 }
 
 
+template<typename TResponse> 
+GetRecordsFromCollectionResponse<TResponse> getRecordsFromCollection( const Type& type_,
+                                                                      const std::string& tableName,
+                                                                      const int64_t offset,
+                                                                      const int64_t limit,
+                                                                      const std::map<std::string, std::string>& options ) const
+{
+    GetRecordsFromCollectionRequest actualRequest_;
+    actualRequest_.tableName = tableName;
+    actualRequest_.offset = offset;
+    actualRequest_.limit = limit;
+    actualRequest_.options = options;
+    RawGetRecordsFromCollectionResponse actualResponse_;
+    submitRequest("/get/records/fromcollection", actualRequest_, actualResponse_, false);
+    GetRecordsFromCollectionResponse<TResponse> response_;
+    response_.tableName = actualResponse_.tableName;
+    response_.typeNames = actualResponse_.typeNames;
+    response_.data.resize(actualResponse_.recordsBinary.size(), TResponse(type_));
+    avro::decode(&response_.data[0], &actualResponse_.recordsBinary[0], actualResponse_.recordsBinary.size(), this->threadCount, this->executor);
+    response_.recordIds = actualResponse_.recordIds;
+    return response_;
+}
+
+
 /**
  * Retrieves records from a collection. The operation can optionally return the
  * record IDs which can be used in certain queries such as {@link
@@ -6104,6 +6356,30 @@ GetRecordsFromCollectionResponse<TResponse>& getRecordsFromCollection( const ::a
     response_.tableName = actualResponse_.tableName;
     response_.typeNames = actualResponse_.typeNames;
     response_.data.resize(actualResponse_.recordsBinary.size(), TResponse(schema_));
+    avro::decode(&response_.data[0], &actualResponse_.recordsBinary[0], actualResponse_.recordsBinary.size(), this->threadCount, this->executor);
+    response_.recordIds = actualResponse_.recordIds;
+    return response_;
+}
+
+
+template<typename TResponse> 
+GetRecordsFromCollectionResponse<TResponse>& getRecordsFromCollection( const Type& type_,
+                                                                       const std::string& tableName,
+                                                                       const int64_t offset,
+                                                                       const int64_t limit,
+                                                                       const std::map<std::string, std::string>& options,
+                                                                       GetRecordsFromCollectionResponse<TResponse>& response_ ) const
+{
+    GetRecordsFromCollectionRequest actualRequest_;
+    actualRequest_.tableName = tableName;
+    actualRequest_.offset = offset;
+    actualRequest_.limit = limit;
+    actualRequest_.options = options;
+    RawGetRecordsFromCollectionResponse actualResponse_;
+    submitRequest("/get/records/fromcollection", actualRequest_, actualResponse_, false);
+    response_.tableName = actualResponse_.tableName;
+    response_.typeNames = actualResponse_.typeNames;
+    response_.data.resize(actualResponse_.recordsBinary.size(), TResponse(type_));
     avro::decode(&response_.data[0], &actualResponse_.recordsBinary[0], actualResponse_.recordsBinary.size(), this->threadCount, this->executor);
     response_.recordIds = actualResponse_.recordIds;
     return response_;
