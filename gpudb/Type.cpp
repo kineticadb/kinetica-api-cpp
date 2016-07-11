@@ -184,17 +184,60 @@ namespace gpudb
 
     std::string Type::create(const GPUdb& gpudb) const
     {
-        std::ostringstream stream;
-        schema.toJson(stream);
+        boost::property_tree::ptree root;
+        root.put("type", "record");
+        root.put("name", "type_name");
+        boost::property_tree::ptree fields;
         std::map<std::string, std::vector<std::string> > properties;
 
         for (std::vector<Type::Column>::const_iterator it = columns.begin(); it != columns.end(); ++it)
         {
-            properties[it->getName()] = it->getProperties();
+            boost::property_tree::ptree field;
+            field.put("name", it->getName());
+
+            switch (it->getType())
+            {
+                case Column::BYTES:
+                    field.put("type", "bytes");
+                    break;
+
+                case Column::DOUBLE:
+                    field.put("type", "double");
+                    break;
+
+                case Column::FLOAT:
+                    field.put("type", "float");
+                    break;
+
+                case Column::INT:
+                    field.put("type", "int");
+                    break;
+
+                case Column::LONG:
+                    field.put("type", "long");
+                    break;
+
+                case Column::STRING:
+                    field.put("type", "string");
+                    break;
+
+                default:
+                    throw std::invalid_argument("Column " + it->getName() + " must be of type BYTES, DOUBLE, FLOAT, INT, LONG or STRING.");
+            }
+
+            fields.push_back(std::make_pair("", field));
+
+            if (!it->getProperties().empty())
+            {
+                properties[it->getName()] = it->getProperties();
+            }
         }
 
+        root.add_child("fields", fields);
+        std::ostringstream schemaStream;
+        boost::property_tree::write_json(schemaStream, root);
         CreateTypeResponse response;
-        return gpudb.createType(stream.str(), label, properties, std::map<std::string, std::string>(), response).typeId;
+        return gpudb.createType(schemaStream.str(), label, properties, std::map<std::string, std::string>(), response).typeId;
     }
 
     void Type::createFromSchema(const std::string& typeSchema, const std::map<std::string, std::vector<std::string> >& properties)
