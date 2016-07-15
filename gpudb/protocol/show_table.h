@@ -17,9 +17,9 @@ namespace gpudb
      * in @a tableName. If the supplied @a tableName is a collection, the call
      * returns a list of tables contained in the collection, and for each table
      * it returns the description, type id, schema, type label, type
-     * propertiess, and additional information including TTL. If @a tableName
-     * is empty it will return all top-level tables including all collections
-     * and top-level child tables (i.e. tables with no parent).
+     * properties, and additional information including TTL. If @a tableName is
+     * empty it will return all top-level tables including all collections and
+     * top-level child tables (i.e. tables with no parent).
      * <p>
      *     If the option 'get_sizes' is set to 'true' then the sizes (objects
      * and elements) of each table are returned (in @a sizes and @a fullSizes),
@@ -127,9 +127,9 @@ namespace gpudb
      * in @a tableName. If the supplied @a tableName is a collection, the call
      * returns a list of tables contained in the collection, and for each table
      * it returns the description, type id, schema, type label, type
-     * propertiess, and additional information including TTL. If @a tableName
-     * is empty it will return all top-level tables including all collections
-     * and top-level child tables (i.e. tables with no parent).
+     * properties, and additional information including TTL. If @a tableName is
+     * empty it will return all top-level tables including all collections and
+     * top-level child tables (i.e. tables with no parent).
      * <p>
      *     If the option 'get_sizes' is set to 'true' then the sizes (objects
      * and elements) of each table are returned (in @a sizes and @a fullSizes),

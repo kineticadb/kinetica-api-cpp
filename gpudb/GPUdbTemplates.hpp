@@ -132,7 +132,7 @@ GetRecordsResponse<boost::any>& GPUdb::getRecords( const std::string& tableName,
 
 /**
  * Retrieves the complete series/track records from the given @a worldTableName
- * based on the partial track informaton contained in the @a tableName.
+ * based on the partial track information contained in the @a tableName.
  * <p>
  * This operation supports paging through the data via the @a offset and @a
  * limit parameters.
@@ -153,7 +153,7 @@ GetRecordsBySeriesResponse<boost::any> GPUdb::getRecordsBySeries( const GetRecor
 
 /**
  * Retrieves the complete series/track records from the given @a worldTableName
- * based on the partial track informaton contained in the @a tableName.
+ * based on the partial track information contained in the @a tableName.
  * <p>
  * This operation supports paging through the data via the @a offset and @a
  * limit parameters.
@@ -180,7 +180,7 @@ GetRecordsBySeriesResponse<boost::any>& GPUdb::getRecordsBySeries( const GetReco
 
 /**
  * Retrieves the complete series/track records from the given @a worldTableName
- * based on the partial track informaton contained in the @a tableName.
+ * based on the partial track information contained in the @a tableName.
  * <p>
  * This operation supports paging through the data via the @a offset and @a
  * limit parameters.
@@ -223,7 +223,7 @@ GetRecordsBySeriesResponse<boost::any> GPUdb::getRecordsBySeries( const std::str
 
 /**
  * Retrieves the complete series/track records from the given @a worldTableName
- * based on the partial track informaton contained in the @a tableName.
+ * based on the partial track information contained in the @a tableName.
  * <p>
  * This operation supports paging through the data via the @a offset and @a
  * limit parameters.

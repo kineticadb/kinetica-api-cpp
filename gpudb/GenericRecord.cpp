@@ -2,21 +2,15 @@
 
 namespace gpudb
 {
-    GenericRecord::GenericRecord(const ::avro::ValidSchema& schema) :
-        schema(schema)
+    GenericRecord::GenericRecord(const Type& type) :
+        type(type)
     {
-        ::avro::NodePtr root = schema.root();
+        size_t count = type.getColumnCount();
+        values.reserve(count);
 
-        if (root->type() != ::avro::AVRO_RECORD)
+        for (size_t i = 0; i < count; ++i)
         {
-            throw std::invalid_argument("Schema must be of type record.");
-        }
-
-        values.reserve(root->leaves());
-
-        for (size_t i = 0; i < root->leaves(); ++i)
-        {
-            switch (root->leafAt(i)->type())
+            switch (type.getColumn(i).getType())
             {
                 case ::avro::AVRO_BYTES:
                     values.push_back(std::vector<uint8_t>());
@@ -43,9 +37,19 @@ namespace gpudb
                     break;
 
                 default:
-                    throw std::invalid_argument("Field " + root->nameAt(i) + " must be of type AVRO_BYTES, AVRO_DOUBLE, AVRO_FLOAT, AVRO_INT, AVRO_LONG or AVRO_STRING.");
+                    throw std::invalid_argument("Column " + type.getColumn(i).getName() + " must be of type AVRO_BYTES, AVRO_DOUBLE, AVRO_FLOAT, AVRO_INT, AVRO_LONG or AVRO_STRING.");
             }
         }
+    }
+
+    const Type& GenericRecord::getType() const
+    {
+        return type;
+    }
+
+    const ::avro::ValidSchema& GenericRecord::getSchema() const
+    {
+        return type.getSchema();
     }
 
     std::vector<uint8_t>& GenericRecord::asBytes(const size_t index)
@@ -60,26 +64,12 @@ namespace gpudb
 
     std::vector<uint8_t>& GenericRecord::asBytes(const std::string& name)
     {
-        size_t index = 0;
-
-        if (!schema.root()->nameIndex(name, index))
-        {
-            throw ::avro::Exception("Invalid field name: " + name);
-        }
-
-        return *boost::any_cast<std::vector<uint8_t> >(&values[index]);
+        return *boost::any_cast<std::vector<uint8_t> >(&values[type.getColumnIndex(name)]);
     }
 
     const std::vector<uint8_t>& GenericRecord::asBytes(const std::string& name) const
     {
-        size_t index = 0;
-
-        if (!schema.root()->nameIndex(name, index))
-        {
-            throw ::avro::Exception("Invalid field name: " + name);
-        }
-
-        return *boost::any_cast<std::vector<uint8_t> >(&values[index]);
+        return *boost::any_cast<std::vector<uint8_t> >(&values[type.getColumnIndex(name)]);
     }
 
     double& GenericRecord::asDouble(const size_t index)
@@ -94,26 +84,12 @@ namespace gpudb
 
     double& GenericRecord::asDouble(const std::string& name)
     {
-        size_t index = 0;
-
-        if (!schema.root()->nameIndex(name, index))
-        {
-            throw ::avro::Exception("Invalid field name: " + name);
-        }
-
-        return *boost::any_cast<double>(&values[index]);
+        return *boost::any_cast<double>(&values[type.getColumnIndex(name)]);
     }
 
     const double& GenericRecord::asDouble(const std::string& name) const
     {
-        size_t index = 0;
-
-        if (!schema.root()->nameIndex(name, index))
-        {
-            throw ::avro::Exception("Invalid field name: " + name);
-        }
-
-        return *boost::any_cast<double>(&values[index]);
+        return *boost::any_cast<double>(&values[type.getColumnIndex(name)]);
     }
 
     float& GenericRecord::asFloat(const size_t index)
@@ -128,26 +104,12 @@ namespace gpudb
 
     float& GenericRecord::asFloat(const std::string& name)
     {
-        size_t index = 0;
-
-        if (!schema.root()->nameIndex(name, index))
-        {
-            throw ::avro::Exception("Invalid field name: " + name);
-        }
-
-        return *boost::any_cast<float>(&values[index]);
+        return *boost::any_cast<float>(&values[type.getColumnIndex(name)]);
     }
 
     const float& GenericRecord::asFloat(const std::string& name) const
     {
-        size_t index = 0;
-
-        if (!schema.root()->nameIndex(name, index))
-        {
-            throw ::avro::Exception("Invalid field name: " + name);
-        }
-
-        return *boost::any_cast<float>(&values[index]);
+        return *boost::any_cast<float>(&values[type.getColumnIndex(name)]);
     }
 
     int32_t& GenericRecord::asInt(const size_t index)
@@ -162,26 +124,12 @@ namespace gpudb
 
     int32_t& GenericRecord::asInt(const std::string& name)
     {
-        size_t index = 0;
-
-        if (!schema.root()->nameIndex(name, index))
-        {
-            throw ::avro::Exception("Invalid field name: " + name);
-        }
-
-        return *boost::any_cast<int32_t>(&values[index]);
+        return *boost::any_cast<int32_t>(&values[type.getColumnIndex(name)]);
     }
 
     const int32_t& GenericRecord::asInt(const std::string& name) const
     {
-        size_t index = 0;
-
-        if (!schema.root()->nameIndex(name, index))
-        {
-            throw ::avro::Exception("Invalid field name: " + name);
-        }
-
-        return *boost::any_cast<int32_t>(&values[index]);
+        return *boost::any_cast<int32_t>(&values[type.getColumnIndex(name)]);
     }
 
     int64_t& GenericRecord::asLong(const size_t index)
@@ -196,26 +144,12 @@ namespace gpudb
 
     int64_t& GenericRecord::asLong(const std::string& name)
     {
-        size_t index = 0;
-
-        if (!schema.root()->nameIndex(name, index))
-        {
-            throw ::avro::Exception("Invalid field name: " + name);
-        }
-
-        return *boost::any_cast<int64_t>(&values[index]);
+        return *boost::any_cast<int64_t>(&values[type.getColumnIndex(name)]);
     }
 
     const int64_t& GenericRecord::asLong(const std::string& name) const
     {
-        size_t index = 0;
-
-        if (!schema.root()->nameIndex(name, index))
-        {
-            throw ::avro::Exception("Invalid field name: " + name);
-        }
-
-        return *boost::any_cast<int64_t>(&values[index]);
+        return *boost::any_cast<int64_t>(&values[type.getColumnIndex(name)]);
     }
 
     std::string& GenericRecord::asString(const size_t index)
@@ -230,63 +164,12 @@ namespace gpudb
 
     std::string& GenericRecord::asString(const std::string& name)
     {
-        size_t index = 0;
-
-        if (!schema.root()->nameIndex(name, index))
-        {
-            throw ::avro::Exception("Invalid field name: " + name);
-        }
-
-        return *boost::any_cast<std::string>(&values[index]);
+        return *boost::any_cast<std::string>(&values[type.getColumnIndex(name)]);
     }
 
     const std::string& GenericRecord::asString(const std::string& name) const
     {
-        size_t index = 0;
-
-        if (!schema.root()->nameIndex(name, index))
-        {
-            throw ::avro::Exception("Invalid field name: " + name);
-        }
-
-        return *boost::any_cast<std::string>(&values[index]);
-    }
-
-    size_t GenericRecord::getFieldCount() const
-    {
-        return values.size();
-    }
-
-    size_t GenericRecord::getFieldIndex(const std::string& name) const
-    {
-        size_t index = 0;
-        
-        if (!schema.root()->nameIndex(name, index))
-        {
-            throw ::avro::Exception("Invalid field name: " + name);
-        }
-        
-        return index;
-    }
-
-    const std::string& GenericRecord::getFieldName(const size_t index) const
-    {
-        return schema.root()->nameAt(index);
-    }
-
-    ::avro::Type GenericRecord::getFieldType(const size_t index) const
-    {
-        return schema.root()->leafAt(index)->type();
-    }
-
-    ::avro::Type GenericRecord::getFieldType(const std::string& name) const
-    {
-        return schema.root()->leafAt(getFieldIndex(name))->type();
-    }
-
-    const ::avro::ValidSchema& GenericRecord::getSchema() const
-    {
-        return schema;
+        return *boost::any_cast<std::string>(&values[type.getColumnIndex(name)]);
     }
 }
 

@@ -1,6 +1,8 @@
 #ifndef __GPUDB__GENERICRECORD_HPP__
 #define __GPUDB__GENERICRECORD_HPP__
 
+#include "gpudb/Type.hpp"
+
 #include <avro/Schema.hh>
 #include <avro/Specific.hh>
 
@@ -9,13 +11,9 @@ namespace gpudb
     class GenericRecord
     {
         public:
-            GenericRecord(const ::avro::ValidSchema& schema);
+            GenericRecord(const Type& type);
+            const Type& getType() const;
             const ::avro::ValidSchema& getSchema() const;
-            size_t getFieldCount() const;
-            size_t getFieldIndex(const std::string& name) const;
-            const std::string& getFieldName(const size_t index) const;
-            ::avro::Type getFieldType(const size_t index) const;
-            ::avro::Type getFieldType(const std::string& name) const;
 
             template<typename T> T& value(const size_t index)
             {
@@ -29,26 +27,12 @@ namespace gpudb
 
             template<typename T> T& value(const std::string& name)
             {
-                size_t index = 0;
-
-                if (!schema.root()->nameIndex(name, index))
-                {
-                    throw ::avro::Exception("Invalid field name: " + name);
-                }
-
-                return boost::any_cast<T>(values[index]);
+                return boost::any_cast<T>(values[type.getColumnIndex(name)]);
             }
 
             template<typename T> const T& value(const std::string& name) const
             {
-                size_t index = 0;
-
-                if (!schema.root()->nameIndex(name, index))
-                {
-                    throw ::avro::Exception("Invalid field name: " + name);
-                }
-
-                return boost::any_cast<T>(values[index]);
+                return boost::any_cast<T>(values[type.getColumnIndex(name)]);
             }
 
             std::vector<uint8_t>& asBytes(const size_t index);
@@ -77,7 +61,7 @@ namespace gpudb
             const std::string& asString(const std::string& name) const;
 
         private:
-            ::avro::ValidSchema schema;
+            Type type;
             std::vector<boost::any> values;
     };
 }

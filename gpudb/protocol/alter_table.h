@@ -16,7 +16,7 @@ namespace gpudb
      * Apply various modifications to a table or collection. Available
      * modifications include:
      * <p>
-     *      Cereating or deleting an index on a particular column. This can
+     *      Creating or deleting an index on a particular column. This can
      * speed up certain search queries (such as {@link
      * #getRecordsRaw(const GetRecordsRequest&) const}, {@link
      * #deleteRecords(const DeleteRecordsRequest&) const}, {@link
@@ -145,7 +145,7 @@ namespace gpudb
      * Apply various modifications to a table or collection. Available
      * modifications include:
      * <p>
-     *      Cereating or deleting an index on a particular column. This can
+     *      Creating or deleting an index on a particular column. This can
      * speed up certain search queries (such as {@link
      * #getRecordsRaw(const GetRecordsRequest&) const}, {@link
      * #deleteRecords(const DeleteRecordsRequest&) const}, {@link

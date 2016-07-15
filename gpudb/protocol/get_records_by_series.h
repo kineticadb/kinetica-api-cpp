@@ -14,8 +14,8 @@ namespace gpudb
      * #getRecordsBySeriesRaw(const GetRecordsBySeriesRequest&) const}.
      * <p>
      * Retrieves the complete series/track records from the given @a
-     * worldTableName based on the partial track informaton contained in the @a
-     * tableName.
+     * worldTableName based on the partial track information contained in the
+     * @a tableName.
      * <p>
      * This operation supports paging through the data via the @a offset and @a
      * limit parameters.
@@ -203,8 +203,8 @@ namespace gpudb
      * #getRecordsBySeriesRaw(const GetRecordsBySeriesRequest&) const}.
      * <p>
      * Retrieves the complete series/track records from the given @a
-     * worldTableName based on the partial track informaton contained in the @a
-     * tableName.
+     * worldTableName based on the partial track information contained in the
+     * @a tableName.
      * <p>
      * This operation supports paging through the data via the @a offset and @a
      * limit parameters.
@@ -307,8 +307,8 @@ namespace gpudb
      * #getRecordsBySeries(const GetRecordsBySeriesRequest&) const}.
      * <p>
      * Retrieves the complete series/track records from the given @a
-     * worldTableName based on the partial track informaton contained in the @a
-     * tableName.
+     * worldTableName based on the partial track information contained in the
+     * @a tableName.
      * <p>
      * This operation supports paging through the data via the @a offset and @a
      * limit parameters.

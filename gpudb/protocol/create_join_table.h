@@ -28,6 +28,7 @@ namespace gpudb
             tableNames(std::vector<std::string>()),
             aliases(std::vector<std::string>()),
             expression(std::string()),
+            expressions(std::vector<std::string>()),
             options(std::map<std::string, std::string>())
         {
         }
@@ -52,15 +53,23 @@ namespace gpudb
          *                        href="../../concepts/index.html#expressions"
          *                        target="_top">concepts</a>.  Default value is
          *                        an empty string.
+         * @param[in] expressions  An optional list of expression GPUdb uses to
+         *                         filter the join-table being created.
+         *                         Corresponds to SQL select statement where
+         *                         clause. For details see <a
+         *                         href="../../concepts/index.html#expressions"
+         *                         target="_top">concepts</a>.  Default value
+         *                         is an empty std::vector.
          * @param[in] options  Optional parameters.  Default value is an empty
          *                     std::map.
          * 
          */
-        CreateJoinTableRequest(const std::string& joinTableName, const std::vector<std::string>& tableNames, const std::vector<std::string>& aliases, const std::string& expression, const std::map<std::string, std::string>& options):
+        CreateJoinTableRequest(const std::string& joinTableName, const std::vector<std::string>& tableNames, const std::vector<std::string>& aliases, const std::string& expression, const std::vector<std::string>& expressions, const std::map<std::string, std::string>& options):
             joinTableName(joinTableName),
             tableNames(tableNames),
             aliases(aliases),
             expression(expression),
+            expressions(expressions),
             options(options)
         {
         }
@@ -69,6 +78,7 @@ namespace gpudb
         std::vector<std::string> tableNames;
         std::vector<std::string> aliases;
         std::string expression;
+        std::vector<std::string> expressions;
         std::map<std::string, std::string> options;
     };
 }
@@ -83,6 +93,7 @@ namespace avro
             ::avro::encode(e, v.tableNames);
             ::avro::encode(e, v.aliases);
             ::avro::encode(e, v.expression);
+            ::avro::encode(e, v.expressions);
             ::avro::encode(e, v.options);
         }
 
@@ -113,6 +124,10 @@ namespace avro
                             break;
 
                         case 4:
+                            ::avro::decode(d, v.expressions);
+                            break;
+
+                        case 5:
                             ::avro::decode(d, v.options);
                             break;
 
@@ -127,6 +142,7 @@ namespace avro
                 ::avro::decode(d, v.tableNames);
                 ::avro::decode(d, v.aliases);
                 ::avro::decode(d, v.expression);
+                ::avro::decode(d, v.expressions);
                 ::avro::decode(d, v.options);
             }
         }

@@ -17,17 +17,18 @@ namespace gpudb
     const std::string admin_offline_true ( "true"  );
     
     // Keywords for /aggregate/groupby request
-    const std::string aggregate_group_by_ascending ( "ascending"  );
-    const std::string aggregate_group_by_binary    ( "binary"     );
-    const std::string aggregate_group_by_descending( "descending" );
-    const std::string aggregate_group_by_expression( "expression" );
-    const std::string aggregate_group_by_having    ( "having"     );
-    const std::string aggregate_group_by_join_from ( "join_from"  );
-    const std::string aggregate_group_by_json      ( "json"       );
-    const std::string aggregate_group_by_key       ( "key"        );
-    const std::string aggregate_group_by_sort_by   ( "sort_by"    );
-    const std::string aggregate_group_by_sort_order( "sort_order" );
-    const std::string aggregate_group_by_value     ( "value"      );
+    const std::string aggregate_group_by_ascending   ( "ascending"    );
+    const std::string aggregate_group_by_binary      ( "binary"       );
+    const std::string aggregate_group_by_descending  ( "descending"   );
+    const std::string aggregate_group_by_expression  ( "expression"   );
+    const std::string aggregate_group_by_having      ( "having"       );
+    const std::string aggregate_group_by_join_from   ( "join_from"    );
+    const std::string aggregate_group_by_json        ( "json"         );
+    const std::string aggregate_group_by_key         ( "key"          );
+    const std::string aggregate_group_by_result_table( "result_table" );
+    const std::string aggregate_group_by_sort_by     ( "sort_by"      );
+    const std::string aggregate_group_by_sort_order  ( "sort_order"   );
+    const std::string aggregate_group_by_value       ( "value"        );
     
     // Keywords for /aggregate/histogram request
     const std::string aggregate_histogram_do_copy_if         ( "do_copy_if"          );
@@ -68,12 +69,13 @@ namespace gpudb
     const std::string aggregate_statistics_by_range_weight_column_name     ( "weight_column_name"      );
     
     // Keywords for /aggregate/unique request
-    const std::string aggregate_unique_ascending ( "ascending"  );
-    const std::string aggregate_unique_binary    ( "binary"     );
-    const std::string aggregate_unique_descending( "descending" );
-    const std::string aggregate_unique_expression( "expression" );
-    const std::string aggregate_unique_json      ( "json"       );
-    const std::string aggregate_unique_sort_order( "sort_order" );
+    const std::string aggregate_unique_ascending   ( "ascending"    );
+    const std::string aggregate_unique_binary      ( "binary"       );
+    const std::string aggregate_unique_descending  ( "descending"   );
+    const std::string aggregate_unique_expression  ( "expression"   );
+    const std::string aggregate_unique_json        ( "json"         );
+    const std::string aggregate_unique_result_table( "result_table" );
+    const std::string aggregate_unique_sort_order  ( "sort_order"   );
     
     // Keywords for /alter/system/properties request
     const std::string alter_system_properties_bulk_add_test                ( "bulk_add_test"                 );
@@ -98,7 +100,15 @@ namespace gpudb
     const std::string alter_table_ttl                     ( "ttl"                      );
     
     // Keywords for /create/jointable request
+    const std::string create_join_table_full_refresh        ( "full_refresh"         );
+    const std::string create_join_table_manual              ( "manual"               );
     const std::string create_join_table_max_query_dimensions( "max_query_dimensions" );
+    const std::string create_join_table_no_refresh          ( "no_refresh"           );
+    const std::string create_join_table_on_insert           ( "on_insert"            );
+    const std::string create_join_table_on_query            ( "on_query"             );
+    const std::string create_join_table_optimize_lookups    ( "optimize_lookups"     );
+    const std::string create_join_table_refresh             ( "refresh"              );
+    const std::string create_join_table_refresh_method      ( "refresh_method"       );
     
     // Keywords for /create/table request
     const std::string create_table_chunk_size                 ( "chunk_size"                  );
@@ -108,25 +118,27 @@ namespace gpudb
     const std::string create_table_foreign_keys               ( "foreign_keys"                );
     const std::string create_table_is_collection              ( "is_collection"               );
     const std::string create_table_is_replicated              ( "is_replicated"               );
+    const std::string create_table_is_result_table            ( "is_result_table"             );
     const std::string create_table_no_error_if_exists         ( "no_error_if_exists"          );
     const std::string create_table_true                       ( "true"                        );
     
     // Keywords for /create/type request
-    const std::string create_type_char1         ( "char1"          );
-    const std::string create_type_char16        ( "char16"         );
-    const std::string create_type_char2         ( "char2"          );
-    const std::string create_type_char4         ( "char4"          );
-    const std::string create_type_char8         ( "char8"          );
-    const std::string create_type_data          ( "data"           );
-    const std::string create_type_disk_optimized( "disk_optimized" );
-    const std::string create_type_int16         ( "int16"          );
-    const std::string create_type_int8          ( "int8"           );
-    const std::string create_type_ipv4          ( "ipv4"           );
-    const std::string create_type_primary_key   ( "primary_key"    );
-    const std::string create_type_shard_key     ( "shard_key"      );
-    const std::string create_type_store_only    ( "store_only"     );
-    const std::string create_type_text_search   ( "text_search"    );
-    const std::string create_type_timestamp     ( "timestamp"      );
+    const std::string create_type_char1          ( "char1"           );
+    const std::string create_type_char16         ( "char16"          );
+    const std::string create_type_char2          ( "char2"           );
+    const std::string create_type_char4          ( "char4"           );
+    const std::string create_type_char8          ( "char8"           );
+    const std::string create_type_data           ( "data"            );
+    const std::string create_type_disk_optimized ( "disk_optimized"  );
+    const std::string create_type_int16          ( "int16"           );
+    const std::string create_type_int8           ( "int8"            );
+    const std::string create_type_ipv4           ( "ipv4"            );
+    const std::string create_type_is_result_table( "is_result_table" );
+    const std::string create_type_primary_key    ( "primary_key"     );
+    const std::string create_type_shard_key      ( "shard_key"       );
+    const std::string create_type_store_only     ( "store_only"      );
+    const std::string create_type_text_search    ( "text_search"     );
+    const std::string create_type_timestamp      ( "timestamp"       );
     
     // Keywords for /delete/records request
     const std::string delete_records_global_expression( "global_expression" );

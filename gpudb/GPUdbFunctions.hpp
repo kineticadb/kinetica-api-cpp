@@ -547,29 +547,22 @@ AggregateConvexHullResponse& aggregateConvexHull( const std::string& tableName,
                                                   AggregateConvexHullResponse& response_ ) const;
 
 /**
- * Calculates unique combinations (i.e. groups) of values for the given columns
- * in a given table/view/collection and computes aggregates on each unique
+ * Calculates unique combinations (groups) of values for the given columns in a
+ * given table/view/collection and computes aggregates on each unique
  * combination. This is somewhat analogous to an SQL-style SELECT...GROUP BY.
  * Any column(s) can be grouped on, but only non-string (i.e. numeric) columns
- * may be used for computing aggregates.
- * <p>
- * The results can be paged via the @a offset and @a limit parameters. For
- * example, to get 10 groups with the largest counts the inputs would be:
- * limit=10, options={"sort_order":"descending", "sort_by":"value"}.
- * <p>
- * @a options can be used to customize behavior of this call e.g. filtering or
- * sorting the results.
- * <p>
- * To group by 'x' and 'y' and compute the number of objects within each group,
- * use column_names=['x','y','count(*)'].  To also compute the sum of 'z' over
- * each group, use column_names=['x','y','count(*)','sum(z)'].
- * <p>
+ * may be used for computing aggregates. The results can be paged via the @a
+ * offset and @a limit parameters. For example, to get 10 groups with the
+ * largest counts the inputs would be: limit=10,
+ * options={"sort_order":"descending", "sort_by":"value"}. @a options can be
+ * used to customize behavior of this call e.g. filtering or sorting the
+ * results. To group by 'x' and 'y' and compute the number of objects within
+ * each group, use column_names=['x','y','count(*)'].  To also compute the sum
+ * of 'z' over each group, use column_names=['x','y','count(*)','sum(z)'].
  * Available aggregation functions are: 'count(*)', 'sum', 'min', 'max', 'avg',
  * 'mean', 'stddev', 'stddev_pop', 'stddev_samp', 'var', 'var_pop' and
- * 'var_samp'.
- * <p>
- * The response is returned as a dynamic schema. For details see: <a
- * href="../../concepts/index.html#dynamic-schemas" target="_top">dynamic
+ * 'var_samp'. The response is returned as a dynamic schema. For details see:
+ * <a href="../../concepts/index.html#dynamic-schemas" target="_top">dynamic
  * schemas documentation</a>.
  * 
  * @param[in] request_  Request object containing the parameters for the
@@ -582,29 +575,22 @@ AggregateConvexHullResponse& aggregateConvexHull( const std::string& tableName,
 RawAggregateGroupByResponse aggregateGroupByRaw( const AggregateGroupByRequest& request_ ) const;
 
 /**
- * Calculates unique combinations (i.e. groups) of values for the given columns
- * in a given table/view/collection and computes aggregates on each unique
+ * Calculates unique combinations (groups) of values for the given columns in a
+ * given table/view/collection and computes aggregates on each unique
  * combination. This is somewhat analogous to an SQL-style SELECT...GROUP BY.
  * Any column(s) can be grouped on, but only non-string (i.e. numeric) columns
- * may be used for computing aggregates.
- * <p>
- * The results can be paged via the @a offset and @a limit parameters. For
- * example, to get 10 groups with the largest counts the inputs would be:
- * limit=10, options={"sort_order":"descending", "sort_by":"value"}.
- * <p>
- * @a options can be used to customize behavior of this call e.g. filtering or
- * sorting the results.
- * <p>
- * To group by 'x' and 'y' and compute the number of objects within each group,
- * use column_names=['x','y','count(*)'].  To also compute the sum of 'z' over
- * each group, use column_names=['x','y','count(*)','sum(z)'].
- * <p>
+ * may be used for computing aggregates. The results can be paged via the @a
+ * offset and @a limit parameters. For example, to get 10 groups with the
+ * largest counts the inputs would be: limit=10,
+ * options={"sort_order":"descending", "sort_by":"value"}. @a options can be
+ * used to customize behavior of this call e.g. filtering or sorting the
+ * results. To group by 'x' and 'y' and compute the number of objects within
+ * each group, use column_names=['x','y','count(*)'].  To also compute the sum
+ * of 'z' over each group, use column_names=['x','y','count(*)','sum(z)'].
  * Available aggregation functions are: 'count(*)', 'sum', 'min', 'max', 'avg',
  * 'mean', 'stddev', 'stddev_pop', 'stddev_samp', 'var', 'var_pop' and
- * 'var_samp'.
- * <p>
- * The response is returned as a dynamic schema. For details see: <a
- * href="../../concepts/index.html#dynamic-schemas" target="_top">dynamic
+ * 'var_samp'. The response is returned as a dynamic schema. For details see:
+ * <a href="../../concepts/index.html#dynamic-schemas" target="_top">dynamic
  * schemas documentation</a>.
  * 
  * @param[in] request_  Request object containing the parameters for the
@@ -621,29 +607,22 @@ RawAggregateGroupByResponse& aggregateGroupByRaw( const AggregateGroupByRequest&
                                                   RawAggregateGroupByResponse& response_ ) const;
 
 /**
- * Calculates unique combinations (i.e. groups) of values for the given columns
- * in a given table/view/collection and computes aggregates on each unique
+ * Calculates unique combinations (groups) of values for the given columns in a
+ * given table/view/collection and computes aggregates on each unique
  * combination. This is somewhat analogous to an SQL-style SELECT...GROUP BY.
  * Any column(s) can be grouped on, but only non-string (i.e. numeric) columns
- * may be used for computing aggregates.
- * <p>
- * The results can be paged via the @a offset and @a limit parameters. For
- * example, to get 10 groups with the largest counts the inputs would be:
- * limit=10, options={"sort_order":"descending", "sort_by":"value"}.
- * <p>
- * @a options can be used to customize behavior of this call e.g. filtering or
- * sorting the results.
- * <p>
- * To group by 'x' and 'y' and compute the number of objects within each group,
- * use column_names=['x','y','count(*)'].  To also compute the sum of 'z' over
- * each group, use column_names=['x','y','count(*)','sum(z)'].
- * <p>
+ * may be used for computing aggregates. The results can be paged via the @a
+ * offset and @a limit parameters. For example, to get 10 groups with the
+ * largest counts the inputs would be: limit=10,
+ * options={"sort_order":"descending", "sort_by":"value"}. @a options can be
+ * used to customize behavior of this call e.g. filtering or sorting the
+ * results. To group by 'x' and 'y' and compute the number of objects within
+ * each group, use column_names=['x','y','count(*)'].  To also compute the sum
+ * of 'z' over each group, use column_names=['x','y','count(*)','sum(z)'].
  * Available aggregation functions are: 'count(*)', 'sum', 'min', 'max', 'avg',
  * 'mean', 'stddev', 'stddev_pop', 'stddev_samp', 'var', 'var_pop' and
- * 'var_samp'.
- * <p>
- * The response is returned as a dynamic schema. For details see: <a
- * href="../../concepts/index.html#dynamic-schemas" target="_top">dynamic
+ * 'var_samp'. The response is returned as a dynamic schema. For details see:
+ * <a href="../../concepts/index.html#dynamic-schemas" target="_top">dynamic
  * schemas documentation</a>.
  * 
  * @param[in] request_  Request object containing the parameters for the
@@ -656,29 +635,22 @@ RawAggregateGroupByResponse& aggregateGroupByRaw( const AggregateGroupByRequest&
 AggregateGroupByResponse aggregateGroupBy( const AggregateGroupByRequest& request_ ) const;
 
 /**
- * Calculates unique combinations (i.e. groups) of values for the given columns
- * in a given table/view/collection and computes aggregates on each unique
+ * Calculates unique combinations (groups) of values for the given columns in a
+ * given table/view/collection and computes aggregates on each unique
  * combination. This is somewhat analogous to an SQL-style SELECT...GROUP BY.
  * Any column(s) can be grouped on, but only non-string (i.e. numeric) columns
- * may be used for computing aggregates.
- * <p>
- * The results can be paged via the @a offset and @a limit parameters. For
- * example, to get 10 groups with the largest counts the inputs would be:
- * limit=10, options={"sort_order":"descending", "sort_by":"value"}.
- * <p>
- * @a options can be used to customize behavior of this call e.g. filtering or
- * sorting the results.
- * <p>
- * To group by 'x' and 'y' and compute the number of objects within each group,
- * use column_names=['x','y','count(*)'].  To also compute the sum of 'z' over
- * each group, use column_names=['x','y','count(*)','sum(z)'].
- * <p>
+ * may be used for computing aggregates. The results can be paged via the @a
+ * offset and @a limit parameters. For example, to get 10 groups with the
+ * largest counts the inputs would be: limit=10,
+ * options={"sort_order":"descending", "sort_by":"value"}. @a options can be
+ * used to customize behavior of this call e.g. filtering or sorting the
+ * results. To group by 'x' and 'y' and compute the number of objects within
+ * each group, use column_names=['x','y','count(*)'].  To also compute the sum
+ * of 'z' over each group, use column_names=['x','y','count(*)','sum(z)'].
  * Available aggregation functions are: 'count(*)', 'sum', 'min', 'max', 'avg',
  * 'mean', 'stddev', 'stddev_pop', 'stddev_samp', 'var', 'var_pop' and
- * 'var_samp'.
- * <p>
- * The response is returned as a dynamic schema. For details see: <a
- * href="../../concepts/index.html#dynamic-schemas" target="_top">dynamic
+ * 'var_samp'. The response is returned as a dynamic schema. For details see:
+ * <a href="../../concepts/index.html#dynamic-schemas" target="_top">dynamic
  * schemas documentation</a>.
  * 
  * @param[in] request_  Request object containing the parameters for the
@@ -695,29 +667,22 @@ AggregateGroupByResponse& aggregateGroupBy( const AggregateGroupByRequest& reque
                                             AggregateGroupByResponse& response_ ) const;
 
 /**
- * Calculates unique combinations (i.e. groups) of values for the given columns
- * in a given table/view/collection and computes aggregates on each unique
+ * Calculates unique combinations (groups) of values for the given columns in a
+ * given table/view/collection and computes aggregates on each unique
  * combination. This is somewhat analogous to an SQL-style SELECT...GROUP BY.
  * Any column(s) can be grouped on, but only non-string (i.e. numeric) columns
- * may be used for computing aggregates.
- * <p>
- * The results can be paged via the @a offset and @a limit parameters. For
- * example, to get 10 groups with the largest counts the inputs would be:
- * limit=10, options={"sort_order":"descending", "sort_by":"value"}.
- * <p>
- * @a options can be used to customize behavior of this call e.g. filtering or
- * sorting the results.
- * <p>
- * To group by 'x' and 'y' and compute the number of objects within each group,
- * use column_names=['x','y','count(*)'].  To also compute the sum of 'z' over
- * each group, use column_names=['x','y','count(*)','sum(z)'].
- * <p>
+ * may be used for computing aggregates. The results can be paged via the @a
+ * offset and @a limit parameters. For example, to get 10 groups with the
+ * largest counts the inputs would be: limit=10,
+ * options={"sort_order":"descending", "sort_by":"value"}. @a options can be
+ * used to customize behavior of this call e.g. filtering or sorting the
+ * results. To group by 'x' and 'y' and compute the number of objects within
+ * each group, use column_names=['x','y','count(*)'].  To also compute the sum
+ * of 'z' over each group, use column_names=['x','y','count(*)','sum(z)'].
  * Available aggregation functions are: 'count(*)', 'sum', 'min', 'max', 'avg',
  * 'mean', 'stddev', 'stddev_pop', 'stddev_samp', 'var', 'var_pop' and
- * 'var_samp'.
- * <p>
- * The response is returned as a dynamic schema. For details see: <a
- * href="../../concepts/index.html#dynamic-schemas" target="_top">dynamic
+ * 'var_samp'. The response is returned as a dynamic schema. For details see:
+ * <a href="../../concepts/index.html#dynamic-schemas" target="_top">dynamic
  * schemas documentation</a>.
  * 
  * @param tableName  Name of the table on which the operation will be
@@ -746,29 +711,22 @@ AggregateGroupByResponse aggregateGroupBy( const std::string& tableName,
                                            const std::map<std::string, std::string>& options ) const;
 
 /**
- * Calculates unique combinations (i.e. groups) of values for the given columns
- * in a given table/view/collection and computes aggregates on each unique
+ * Calculates unique combinations (groups) of values for the given columns in a
+ * given table/view/collection and computes aggregates on each unique
  * combination. This is somewhat analogous to an SQL-style SELECT...GROUP BY.
  * Any column(s) can be grouped on, but only non-string (i.e. numeric) columns
- * may be used for computing aggregates.
- * <p>
- * The results can be paged via the @a offset and @a limit parameters. For
- * example, to get 10 groups with the largest counts the inputs would be:
- * limit=10, options={"sort_order":"descending", "sort_by":"value"}.
- * <p>
- * @a options can be used to customize behavior of this call e.g. filtering or
- * sorting the results.
- * <p>
- * To group by 'x' and 'y' and compute the number of objects within each group,
- * use column_names=['x','y','count(*)'].  To also compute the sum of 'z' over
- * each group, use column_names=['x','y','count(*)','sum(z)'].
- * <p>
+ * may be used for computing aggregates. The results can be paged via the @a
+ * offset and @a limit parameters. For example, to get 10 groups with the
+ * largest counts the inputs would be: limit=10,
+ * options={"sort_order":"descending", "sort_by":"value"}. @a options can be
+ * used to customize behavior of this call e.g. filtering or sorting the
+ * results. To group by 'x' and 'y' and compute the number of objects within
+ * each group, use column_names=['x','y','count(*)'].  To also compute the sum
+ * of 'z' over each group, use column_names=['x','y','count(*)','sum(z)'].
  * Available aggregation functions are: 'count(*)', 'sum', 'min', 'max', 'avg',
  * 'mean', 'stddev', 'stddev_pop', 'stddev_samp', 'var', 'var_pop' and
- * 'var_samp'.
- * <p>
- * The response is returned as a dynamic schema. For details see: <a
- * href="../../concepts/index.html#dynamic-schemas" target="_top">dynamic
+ * 'var_samp'. The response is returned as a dynamic schema. For details see:
+ * <a href="../../concepts/index.html#dynamic-schemas" target="_top">dynamic
  * schemas documentation</a>.
  * 
  * @param tableName  Name of the table on which the operation will be
@@ -1634,7 +1592,7 @@ AggregateUniqueResponse& aggregateUnique( const std::string& tableName,
 
 /**
  * The alter_system_properties endpoint is primarily used to simplify the
- * testing of gpudb and is not expected to be used during normal execution.
+ * testing of GPUdb and is not expected to be used during normal execution.
  * Commands are given through the properties_update_map whose keys are commands
  * and values are strings representing integer values (for example '8000') or
  * boolean values ('true' or 'false').
@@ -1650,7 +1608,7 @@ AlterSystemPropertiesResponse alterSystemProperties( const AlterSystemProperties
 
 /**
  * The alter_system_properties endpoint is primarily used to simplify the
- * testing of gpudb and is not expected to be used during normal execution.
+ * testing of GPUdb and is not expected to be used during normal execution.
  * Commands are given through the properties_update_map whose keys are commands
  * and values are strings representing integer values (for example '8000') or
  * boolean values ('true' or 'false').
@@ -1670,7 +1628,7 @@ AlterSystemPropertiesResponse& alterSystemProperties( const AlterSystemPropertie
 
 /**
  * The alter_system_properties endpoint is primarily used to simplify the
- * testing of gpudb and is not expected to be used during normal execution.
+ * testing of GPUdb and is not expected to be used during normal execution.
  * Commands are given through the properties_update_map whose keys are commands
  * and values are strings representing integer values (for example '8000') or
  * boolean values ('true' or 'false').
@@ -1688,7 +1646,7 @@ AlterSystemPropertiesResponse alterSystemProperties( const std::map<std::string,
 
 /**
  * The alter_system_properties endpoint is primarily used to simplify the
- * testing of gpudb and is not expected to be used during normal execution.
+ * testing of GPUdb and is not expected to be used during normal execution.
  * Commands are given through the properties_update_map whose keys are commands
  * and values are strings representing integer values (for example '8000') or
  * boolean values ('true' or 'false').
@@ -1712,8 +1670,8 @@ AlterSystemPropertiesResponse& alterSystemProperties( const std::map<std::string
  * Apply various modifications to a table or collection. Available
  * modifications include:
  * <p>
- *      Cereating or deleting an index on a particular column. This can speed
- * up certain search queries (such as {@link
+ *      Creating or deleting an index on a particular column. This can speed up
+ * certain search queries (such as {@link
  * #getRecordsRaw(const GetRecordsRequest&) const}, {@link
  * #deleteRecords(const DeleteRecordsRequest&) const}, {@link
  * #updateRecordsRaw(const RawUpdateRecordsRequest&) const}) when using
@@ -1743,8 +1701,8 @@ AlterTableResponse alterTable( const AlterTableRequest& request_ ) const;
  * Apply various modifications to a table or collection. Available
  * modifications include:
  * <p>
- *      Cereating or deleting an index on a particular column. This can speed
- * up certain search queries (such as {@link
+ *      Creating or deleting an index on a particular column. This can speed up
+ * certain search queries (such as {@link
  * #getRecordsRaw(const GetRecordsRequest&,RawGetRecordsResponse&) const},
  * {@link
  * #deleteRecords(const DeleteRecordsRequest&,DeleteRecordsResponse&) const},
@@ -1781,8 +1739,8 @@ AlterTableResponse& alterTable( const AlterTableRequest& request_,
  * Apply various modifications to a table or collection. Available
  * modifications include:
  * <p>
- *      Cereating or deleting an index on a particular column. This can speed
- * up certain search queries (such as {@link
+ *      Creating or deleting an index on a particular column. This can speed up
+ * certain search queries (such as {@link
  * #getRecordsRaw(const GetRecordsRequest&) const}, {@link
  * #deleteRecords(const std::string&,const std::vector<std::string>&,const std::map<std::string, std::string>&) const},
  * {@link #updateRecordsRaw(const RawUpdateRecordsRequest&) const}) when
@@ -1821,8 +1779,8 @@ AlterTableResponse alterTable( const std::string& tableName,
  * Apply various modifications to a table or collection. Available
  * modifications include:
  * <p>
- *      Cereating or deleting an index on a particular column. This can speed
- * up certain search queries (such as {@link
+ *      Creating or deleting an index on a particular column. This can speed up
+ * certain search queries (such as {@link
  * #getRecordsRaw(const GetRecordsRequest&) const}, {@link
  * #deleteRecords(const std::string&,const std::vector<std::string>&,const std::map<std::string, std::string>&,DeleteRecordsResponse&) const},
  * {@link #updateRecordsRaw(const RawUpdateRecordsRequest&) const}) when
@@ -2207,6 +2165,12 @@ CreateJoinTableResponse& createJoinTable( const CreateJoinTableRequest& request_
  *                    href="../../concepts/index.html#expressions"
  *                    target="_top">concepts</a>.  Default value is an empty
  *                    string.
+ * @param expressions  An optional list of expression GPUdb uses to filter the
+ *                     join-table being created.  Corresponds to SQL select
+ *                     statement where clause. For details see <a
+ *                     href="../../concepts/index.html#expressions"
+ *                     target="_top">concepts</a>.  Default value is an empty
+ *                     std::vector.
  * @param options  Optional parameters.  Default value is an empty std::map.
  * 
  * @return Response object containing the result of the operation.
@@ -2217,6 +2181,7 @@ CreateJoinTableResponse createJoinTable( const std::string& joinTableName,
                                          const std::vector<std::string>& tableNames,
                                          const std::vector<std::string>& aliases,
                                          const std::string& expression,
+                                         const std::vector<std::string>& expressions,
                                          const std::map<std::string, std::string>& options ) const;
 
 /**
@@ -2235,6 +2200,12 @@ CreateJoinTableResponse createJoinTable( const std::string& joinTableName,
  *                    href="../../concepts/index.html#expressions"
  *                    target="_top">concepts</a>.  Default value is an empty
  *                    string.
+ * @param expressions  An optional list of expression GPUdb uses to filter the
+ *                     join-table being created.  Corresponds to SQL select
+ *                     statement where clause. For details see <a
+ *                     href="../../concepts/index.html#expressions"
+ *                     target="_top">concepts</a>.  Default value is an empty
+ *                     std::vector.
  * @param options  Optional parameters.  Default value is an empty std::map.
  * @param[out] response_  Response object containing the results of the
  *                        operation.
@@ -2248,6 +2219,7 @@ CreateJoinTableResponse& createJoinTable( const std::string& joinTableName,
                                           const std::vector<std::string>& tableNames,
                                           const std::vector<std::string>& aliases,
                                           const std::string& expression,
+                                          const std::vector<std::string>& expressions,
                                           const std::map<std::string, std::string>& options,
                                           CreateJoinTableResponse& response_ ) const;
 
@@ -2979,7 +2951,7 @@ CreateTypeResponse& createType( const std::string& typeDefinition,
  * Deletes record(s) matching the provided criteria from the given table. The
  * record selection criteria can either be one or more  @a expressions
  * (matching multiple records) or a single record identified by @a record_id
- * optiona.  Note that the two selection criteria are mutually exclusive.  This
+ * options.  Note that the two selection criteria are mutually exclusive.  This
  * operation cannot be run on a collection or a view.  The operation is
  * synchronous meaning that a response will not be available until the request
  * is completely processed and all the matching records are deleted.
@@ -2997,7 +2969,7 @@ DeleteRecordsResponse deleteRecords( const DeleteRecordsRequest& request_ ) cons
  * Deletes record(s) matching the provided criteria from the given table. The
  * record selection criteria can either be one or more  @a expressions
  * (matching multiple records) or a single record identified by @a record_id
- * optiona.  Note that the two selection criteria are mutually exclusive.  This
+ * options.  Note that the two selection criteria are mutually exclusive.  This
  * operation cannot be run on a collection or a view.  The operation is
  * synchronous meaning that a response will not be available until the request
  * is completely processed and all the matching records are deleted.
@@ -3019,7 +2991,7 @@ DeleteRecordsResponse& deleteRecords( const DeleteRecordsRequest& request_,
  * Deletes record(s) matching the provided criteria from the given table. The
  * record selection criteria can either be one or more  @a expressions
  * (matching multiple records) or a single record identified by @a record_id
- * optiona.  Note that the two selection criteria are mutually exclusive.  This
+ * options.  Note that the two selection criteria are mutually exclusive.  This
  * operation cannot be run on a collection or a view.  The operation is
  * synchronous meaning that a response will not be available until the request
  * is completely processed and all the matching records are deleted.
@@ -3045,7 +3017,7 @@ DeleteRecordsResponse deleteRecords( const std::string& tableName,
  * Deletes record(s) matching the provided criteria from the given table. The
  * record selection criteria can either be one or more  @a expressions
  * (matching multiple records) or a single record identified by @a record_id
- * optiona.  Note that the two selection criteria are mutually exclusive.  This
+ * options.  Note that the two selection criteria are mutually exclusive.  This
  * operation cannot be run on a collection or a view.  The operation is
  * synchronous meaning that a response will not be available until the request
  * is completely processed and all the matching records are deleted.
@@ -4834,6 +4806,48 @@ GetRecordsResponse<TResponse> getRecords( const ::avro::ValidSchema& schema_,
  * 
  * @tparam <TResponse>  The type of object being retrieved.
  * 
+ * @param[in] type_  Type object used for decoding returned objects.
+ * @param[in] request_  Request object containing the parameters for the
+ *                      operation.
+ * 
+ * @return Response object containing the result of the operation.
+ * 
+ */
+template<typename TResponse> 
+GetRecordsResponse<TResponse> getRecords( const Type& type_,
+                                          const GetRecordsRequest& request_ ) const
+{
+    RawGetRecordsResponse actualResponse_;
+    submitRequest("/get/records", request_, actualResponse_, false);
+    GetRecordsResponse<TResponse> response_;
+    response_.tableName = actualResponse_.tableName;
+    response_.typeName = actualResponse_.typeName;
+    response_.typeSchema = actualResponse_.typeSchema;
+    response_.data.resize(actualResponse_.recordsBinary.size(), TResponse(type_));
+    avro::decode(&response_.data[0], &actualResponse_.recordsBinary[0], actualResponse_.recordsBinary.size(), this->threadCount, this->executor);
+    response_.totalNumberOfRecords = actualResponse_.totalNumberOfRecords;
+    response_.hasMoreRecords = actualResponse_.hasMoreRecords;
+    return response_;
+}
+
+
+/**
+ * Retrieves records from a given table, optionally filtered by an expression
+ * and/or sorted by a column. This operation can only be performed on tables or
+ * on homogeneous collection (collections whose children all have the same
+ * type). Records can be returned encoded as binary or json.
+ * <p>
+ * This operation supports paging through the data via the @a offset and @a
+ * limit parameters. Note that when paging through a table, if the table (or
+ * the underlying table in case of a view) is updated (records are inserted,
+ * deleted or modified) the records retrieved may differ between calls based on
+ * the updates applied.
+ * <p>
+ * Note that when using the Java API, it is not possible to retrieve records
+ * from join tables using this operation.
+ * 
+ * @tparam <TResponse>  The type of object being retrieved.
+ * 
  * @param[in] schema_  Avro schema object used for decoding returned objects.
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -4855,6 +4869,51 @@ GetRecordsResponse<TResponse>& getRecords( const ::avro::ValidSchema& schema_,
     response_.typeName = actualResponse_.typeName;
     response_.typeSchema = actualResponse_.typeSchema;
     response_.data.resize(actualResponse_.recordsBinary.size(), TResponse(schema_));
+    avro::decode(&response_.data[0], &actualResponse_.recordsBinary[0], actualResponse_.recordsBinary.size(), this->threadCount, this->executor);
+    response_.totalNumberOfRecords = actualResponse_.totalNumberOfRecords;
+    response_.hasMoreRecords = actualResponse_.hasMoreRecords;
+    return response_;
+}
+
+
+/**
+ * Retrieves records from a given table, optionally filtered by an expression
+ * and/or sorted by a column. This operation can only be performed on tables or
+ * on homogeneous collection (collections whose children all have the same
+ * type). Records can be returned encoded as binary or json.
+ * <p>
+ * This operation supports paging through the data via the @a offset and @a
+ * limit parameters. Note that when paging through a table, if the table (or
+ * the underlying table in case of a view) is updated (records are inserted,
+ * deleted or modified) the records retrieved may differ between calls based on
+ * the updates applied.
+ * <p>
+ * Note that when using the Java API, it is not possible to retrieve records
+ * from join tables using this operation.
+ * 
+ * @tparam <TResponse>  The type of object being retrieved.
+ * 
+ * @param[in] type_  Type object used for decoding returned objects.
+ * @param[in] request_  Request object containing the parameters for the
+ *                      operation.
+ * @param[out] response_  Response object containing the results of the
+ *                        operation.
+ * 
+ * @return Response object containing the result of the operation (initially
+ *         passed in by reference).
+ * 
+ */
+template<typename TResponse> 
+GetRecordsResponse<TResponse>& getRecords( const Type& type_,
+                                           const GetRecordsRequest& request_,
+                                           GetRecordsResponse<TResponse>& response_ ) const
+{
+    RawGetRecordsResponse actualResponse_;
+    submitRequest("/get/records", request_, actualResponse_, false);
+    response_.tableName = actualResponse_.tableName;
+    response_.typeName = actualResponse_.typeName;
+    response_.typeSchema = actualResponse_.typeSchema;
+    response_.data.resize(actualResponse_.recordsBinary.size(), TResponse(type_));
     avro::decode(&response_.data[0], &actualResponse_.recordsBinary[0], actualResponse_.recordsBinary.size(), this->threadCount, this->executor);
     response_.totalNumberOfRecords = actualResponse_.totalNumberOfRecords;
     response_.hasMoreRecords = actualResponse_.hasMoreRecords;
@@ -4937,6 +4996,64 @@ GetRecordsResponse<TResponse> getRecords( const ::avro::ValidSchema& schema_,
  * 
  * @tparam <TResponse>  The type of object being retrieved.
  * 
+ * @param[in] type_  Type object used for decoding returned objects.
+ * @param tableName  Name of the table from which the records will be fetched.
+ *                   Must be a table, view or homogeneous collection.
+ * @param offset  A positive integer indicating the number of initial results
+ *                to skip (this can be useful for paging through the results).
+ *                Default value is 0. The minimum allowed value is 0. The
+ *                maximum allowed value is MAX_INT.
+ * @param limit  A positive integer indicating the maximum number of results to
+ *               be returned. Or END_OF_SET (-9999) to indicate that the max
+ *               number of results should be returned.  Default value is 10000.
+ * @param options  Default value is an empty std::map.
+ * 
+ * @return Response object containing the result of the operation.
+ * 
+ */
+template<typename TResponse> 
+GetRecordsResponse<TResponse> getRecords( const Type& type_,
+                                          const std::string& tableName,
+                                          const int64_t offset,
+                                          const int64_t limit,
+                                          const std::map<std::string, std::string>& options ) const
+{
+    GetRecordsRequest actualRequest_;
+    actualRequest_.tableName = tableName;
+    actualRequest_.offset = offset;
+    actualRequest_.limit = limit;
+    actualRequest_.options = options;
+    RawGetRecordsResponse actualResponse_;
+    submitRequest("/get/records", actualRequest_, actualResponse_, false);
+    GetRecordsResponse<TResponse> response_;
+    response_.tableName = actualResponse_.tableName;
+    response_.typeName = actualResponse_.typeName;
+    response_.typeSchema = actualResponse_.typeSchema;
+    response_.data.resize(actualResponse_.recordsBinary.size(), TResponse(type_));
+    avro::decode(&response_.data[0], &actualResponse_.recordsBinary[0], actualResponse_.recordsBinary.size(), this->threadCount, this->executor);
+    response_.totalNumberOfRecords = actualResponse_.totalNumberOfRecords;
+    response_.hasMoreRecords = actualResponse_.hasMoreRecords;
+    return response_;
+}
+
+
+/**
+ * Retrieves records from a given table, optionally filtered by an expression
+ * and/or sorted by a column. This operation can only be performed on tables or
+ * on homogeneous collection (collections whose children all have the same
+ * type). Records can be returned encoded as binary or json.
+ * <p>
+ * This operation supports paging through the data via the @a offset and @a
+ * limit parameters. Note that when paging through a table, if the table (or
+ * the underlying table in case of a view) is updated (records are inserted,
+ * deleted or modified) the records retrieved may differ between calls based on
+ * the updates applied.
+ * <p>
+ * Note that when using the Java API, it is not possible to retrieve records
+ * from join tables using this operation.
+ * 
+ * @tparam <TResponse>  The type of object being retrieved.
+ * 
  * @param[in] schema_  Avro schema object used for decoding returned objects.
  * @param tableName  Name of the table from which the records will be fetched.
  *                   Must be a table, view or homogeneous collection.
@@ -4974,6 +5091,67 @@ GetRecordsResponse<TResponse>& getRecords( const ::avro::ValidSchema& schema_,
     response_.typeName = actualResponse_.typeName;
     response_.typeSchema = actualResponse_.typeSchema;
     response_.data.resize(actualResponse_.recordsBinary.size(), TResponse(schema_));
+    avro::decode(&response_.data[0], &actualResponse_.recordsBinary[0], actualResponse_.recordsBinary.size(), this->threadCount, this->executor);
+    response_.totalNumberOfRecords = actualResponse_.totalNumberOfRecords;
+    response_.hasMoreRecords = actualResponse_.hasMoreRecords;
+    return response_;
+}
+
+
+/**
+ * Retrieves records from a given table, optionally filtered by an expression
+ * and/or sorted by a column. This operation can only be performed on tables or
+ * on homogeneous collection (collections whose children all have the same
+ * type). Records can be returned encoded as binary or json.
+ * <p>
+ * This operation supports paging through the data via the @a offset and @a
+ * limit parameters. Note that when paging through a table, if the table (or
+ * the underlying table in case of a view) is updated (records are inserted,
+ * deleted or modified) the records retrieved may differ between calls based on
+ * the updates applied.
+ * <p>
+ * Note that when using the Java API, it is not possible to retrieve records
+ * from join tables using this operation.
+ * 
+ * @tparam <TResponse>  The type of object being retrieved.
+ * 
+ * @param[in] type_  Type object used for decoding returned objects.
+ * @param tableName  Name of the table from which the records will be fetched.
+ *                   Must be a table, view or homogeneous collection.
+ * @param offset  A positive integer indicating the number of initial results
+ *                to skip (this can be useful for paging through the results).
+ *                Default value is 0. The minimum allowed value is 0. The
+ *                maximum allowed value is MAX_INT.
+ * @param limit  A positive integer indicating the maximum number of results to
+ *               be returned. Or END_OF_SET (-9999) to indicate that the max
+ *               number of results should be returned.  Default value is 10000.
+ * @param options  Default value is an empty std::map.
+ * @param[out] response_  Response object containing the results of the
+ *                        operation.
+ * 
+ * @return Response object containing the result of the operation (initially
+ *         passed in by reference).
+ * 
+ */
+template<typename TResponse> 
+GetRecordsResponse<TResponse>& getRecords( const Type& type_,
+                                           const std::string& tableName,
+                                           const int64_t offset,
+                                           const int64_t limit,
+                                           const std::map<std::string, std::string>& options,
+                                           GetRecordsResponse<TResponse>& response_ ) const
+{
+    GetRecordsRequest actualRequest_;
+    actualRequest_.tableName = tableName;
+    actualRequest_.offset = offset;
+    actualRequest_.limit = limit;
+    actualRequest_.options = options;
+    RawGetRecordsResponse actualResponse_;
+    submitRequest("/get/records", actualRequest_, actualResponse_, false);
+    response_.tableName = actualResponse_.tableName;
+    response_.typeName = actualResponse_.typeName;
+    response_.typeSchema = actualResponse_.typeSchema;
+    response_.data.resize(actualResponse_.recordsBinary.size(), TResponse(type_));
     avro::decode(&response_.data[0], &actualResponse_.recordsBinary[0], actualResponse_.recordsBinary.size(), this->threadCount, this->executor);
     response_.totalNumberOfRecords = actualResponse_.totalNumberOfRecords;
     response_.hasMoreRecords = actualResponse_.hasMoreRecords;
@@ -5193,7 +5371,7 @@ GetRecordsByColumnResponse& getRecordsByColumn( const std::string& tableName,
 
 /**
  * Retrieves the complete series/track records from the given @a worldTableName
- * based on the partial track informaton contained in the @a tableName.
+ * based on the partial track information contained in the @a tableName.
  * <p>
  * This operation supports paging through the data via the @a offset and @a
  * limit parameters.
@@ -5215,7 +5393,7 @@ RawGetRecordsBySeriesResponse getRecordsBySeriesRaw( const GetRecordsBySeriesReq
 
 /**
  * Retrieves the complete series/track records from the given @a worldTableName
- * based on the partial track informaton contained in the @a tableName.
+ * based on the partial track information contained in the @a tableName.
  * <p>
  * This operation supports paging through the data via the @a offset and @a
  * limit parameters.
@@ -5242,7 +5420,7 @@ RawGetRecordsBySeriesResponse& getRecordsBySeriesRaw( const GetRecordsBySeriesRe
 
 /**
  * Retrieves the complete series/track records from the given @a worldTableName
- * based on the partial track informaton contained in the @a tableName.
+ * based on the partial track information contained in the @a tableName.
  * <p>
  * This operation supports paging through the data via the @a offset and @a
  * limit parameters.
@@ -5283,7 +5461,7 @@ GetRecordsBySeriesResponse<TResponse> getRecordsBySeries( const GetRecordsBySeri
 
 /**
  * Retrieves the complete series/track records from the given @a worldTableName
- * based on the partial track informaton contained in the @a tableName.
+ * based on the partial track information contained in the @a tableName.
  * <p>
  * This operation supports paging through the data via the @a offset and @a
  * limit parameters.
@@ -5329,7 +5507,7 @@ GetRecordsBySeriesResponse<TResponse>& getRecordsBySeries( const GetRecordsBySer
 
 /**
  * Retrieves the complete series/track records from the given @a worldTableName
- * based on the partial track informaton contained in the @a tableName.
+ * based on the partial track information contained in the @a tableName.
  * <p>
  * This operation supports paging through the data via the @a offset and @a
  * limit parameters.
@@ -5398,7 +5576,7 @@ GetRecordsBySeriesResponse<TResponse> getRecordsBySeries( const std::string& tab
 
 /**
  * Retrieves the complete series/track records from the given @a worldTableName
- * based on the partial track informaton contained in the @a tableName.
+ * based on the partial track information contained in the @a tableName.
  * <p>
  * This operation supports paging through the data via the @a offset and @a
  * limit parameters.
@@ -5470,7 +5648,7 @@ GetRecordsBySeriesResponse<TResponse>& getRecordsBySeries( const std::string& ta
 
 /**
  * Retrieves the complete series/track records from the given @a worldTableName
- * based on the partial track informaton contained in the @a tableName.
+ * based on the partial track information contained in the @a tableName.
  * <p>
  * This operation supports paging through the data via the @a offset and @a
  * limit parameters.
@@ -5515,7 +5693,51 @@ GetRecordsBySeriesResponse<TResponse> getRecordsBySeries( const ::avro::ValidSch
 
 /**
  * Retrieves the complete series/track records from the given @a worldTableName
- * based on the partial track informaton contained in the @a tableName.
+ * based on the partial track information contained in the @a tableName.
+ * <p>
+ * This operation supports paging through the data via the @a offset and @a
+ * limit parameters.
+ * <p>
+ * In contrast to {@link
+ * #getRecords(const Type&,const GetRecordsRequest&) const} this returns
+ * records grouped by series/track. So if @a offset is 0 and @a limit is 5 this
+ * operation would return the first 5 series/tracks in @a tableName. Each
+ * series/track will be returned sorted by their TIMESTAMP column.
+ * 
+ * @tparam <TResponse>  The type of object being retrieved.
+ * 
+ * @param[in] type_  Type object used for decoding returned objects.
+ * @param[in] request_  Request object containing the parameters for the
+ *                      operation.
+ * 
+ * @return Response object containing the result of the operation.
+ * 
+ */
+template<typename TResponse> 
+GetRecordsBySeriesResponse<TResponse> getRecordsBySeries( const Type& type_,
+                                                          const GetRecordsBySeriesRequest& request_ ) const
+{
+    RawGetRecordsBySeriesResponse actualResponse_;
+    submitRequest("/get/records/byseries", request_, actualResponse_, false);
+    GetRecordsBySeriesResponse<TResponse> response_;
+    response_.tableNames = actualResponse_.tableNames;
+    response_.typeNames = actualResponse_.typeNames;
+    response_.typeSchemas = actualResponse_.typeSchemas;
+    response_.data.resize(actualResponse_.listRecordsBinary.size(), std::vector<TResponse>());
+
+    for (std::vector<std::vector<std::vector<uint8_t> > >::size_type i_ = 0; i_ < actualResponse_.listRecordsBinary.size(); ++i_)
+    {
+        response_.data[i_].resize(actualResponse_.listRecordsBinary[i_].size(), TResponse(type_));
+        avro::decode(&response_.data[i_][0], &actualResponse_.listRecordsBinary[i_][0], actualResponse_.listRecordsBinary[i_].size(), this->threadCount, this->executor);
+    }
+
+    return response_;
+}
+
+
+/**
+ * Retrieves the complete series/track records from the given @a worldTableName
+ * based on the partial track information contained in the @a tableName.
  * <p>
  * This operation supports paging through the data via the @a offset and @a
  * limit parameters.
@@ -5563,7 +5785,55 @@ GetRecordsBySeriesResponse<TResponse>& getRecordsBySeries( const ::avro::ValidSc
 
 /**
  * Retrieves the complete series/track records from the given @a worldTableName
- * based on the partial track informaton contained in the @a tableName.
+ * based on the partial track information contained in the @a tableName.
+ * <p>
+ * This operation supports paging through the data via the @a offset and @a
+ * limit parameters.
+ * <p>
+ * In contrast to {@link
+ * #getRecords(const Type&,const GetRecordsRequest&,GetRecordsResponse<TResponse>&) const}
+ * this returns records grouped by series/track. So if @a offset is 0 and @a
+ * limit is 5 this operation would return the first 5 series/tracks in @a
+ * tableName. Each series/track will be returned sorted by their TIMESTAMP
+ * column.
+ * 
+ * @tparam <TResponse>  The type of object being retrieved.
+ * 
+ * @param[in] type_  Type object used for decoding returned objects.
+ * @param[in] request_  Request object containing the parameters for the
+ *                      operation.
+ * @param[out] response_  Response object containing the results of the
+ *                        operation.
+ * 
+ * @return Response object containing the result of the operation (initially
+ *         passed in by reference).
+ * 
+ */
+template<typename TResponse> 
+GetRecordsBySeriesResponse<TResponse>& getRecordsBySeries( const Type& type_,
+                                                           const GetRecordsBySeriesRequest& request_,
+                                                           GetRecordsBySeriesResponse<TResponse>& response_ ) const
+{
+    RawGetRecordsBySeriesResponse actualResponse_;
+    submitRequest("/get/records/byseries", request_, actualResponse_, false);
+    response_.tableNames = actualResponse_.tableNames;
+    response_.typeNames = actualResponse_.typeNames;
+    response_.typeSchemas = actualResponse_.typeSchemas;
+    response_.data.resize(actualResponse_.listRecordsBinary.size(), std::vector<TResponse>());
+
+    for (std::vector<std::vector<std::vector<uint8_t> > >::size_type i_ = 0; i_ < actualResponse_.listRecordsBinary.size(); ++i_)
+    {
+        response_.data[i_].resize(actualResponse_.listRecordsBinary[i_].size(), TResponse(type_));
+        avro::decode(&response_.data[i_][0], &actualResponse_.listRecordsBinary[i_][0], actualResponse_.listRecordsBinary[i_].size(), this->threadCount, this->executor);
+    }
+
+    return response_;
+}
+
+
+/**
+ * Retrieves the complete series/track records from the given @a worldTableName
+ * based on the partial track information contained in the @a tableName.
  * <p>
  * This operation supports paging through the data via the @a offset and @a
  * limit parameters.
@@ -5634,7 +5904,78 @@ GetRecordsBySeriesResponse<TResponse> getRecordsBySeries( const ::avro::ValidSch
 
 /**
  * Retrieves the complete series/track records from the given @a worldTableName
- * based on the partial track informaton contained in the @a tableName.
+ * based on the partial track information contained in the @a tableName.
+ * <p>
+ * This operation supports paging through the data via the @a offset and @a
+ * limit parameters.
+ * <p>
+ * In contrast to {@link
+ * #getRecords(const Type&,const std::string&,const int64_t,const int64_t,const std::map<std::string, std::string>&) const}
+ * this returns records grouped by series/track. So if @a offset is 0 and @a
+ * limit is 5 this operation would return the first 5 series/tracks in @a
+ * tableName. Each series/track will be returned sorted by their TIMESTAMP
+ * column.
+ * 
+ * @tparam <TResponse>  The type of object being retrieved.
+ * 
+ * @param[in] type_  Type object used for decoding returned objects.
+ * @param tableName  Name of the collection/table/view for which series/tracks
+ *                   will be fetched.
+ * @param worldTableName  Name of the table containing the complete
+ *                        series/track information to be returned for the
+ *                        tracks present in the @a tableName. Typically this is
+ *                        used when retrieving series/tracks from a view (which
+ *                        contains partial series/tracks) but the user wants to
+ *                        retrieve the entire original series/tracks. Can be
+ *                        blank.
+ * @param offset  A positive integer indicating the number of initial
+ *                series/tracks to skip (useful for paging through the
+ *                results).  Default value is 0. The minimum allowed value is
+ *                0. The maximum allowed value is MAX_INT.
+ * @param limit  A positive integer indicating the maximum number of
+ *               series/tracks to be returned. Or END_OF_SET (-9999) to
+ *               indicate that the max number of results should be returned.
+ *               Default value is 10000.
+ * @param options  Optional parameters.  Default value is an empty std::map.
+ * 
+ * @return Response object containing the result of the operation.
+ * 
+ */
+template<typename TResponse> 
+GetRecordsBySeriesResponse<TResponse> getRecordsBySeries( const Type& type_,
+                                                          const std::string& tableName,
+                                                          const std::string& worldTableName,
+                                                          const int32_t offset,
+                                                          const int32_t limit,
+                                                          const std::map<std::string, std::string>& options ) const
+{
+    GetRecordsBySeriesRequest actualRequest_;
+    actualRequest_.tableName = tableName;
+    actualRequest_.worldTableName = worldTableName;
+    actualRequest_.offset = offset;
+    actualRequest_.limit = limit;
+    actualRequest_.options = options;
+    RawGetRecordsBySeriesResponse actualResponse_;
+    submitRequest("/get/records/byseries", actualRequest_, actualResponse_, false);
+    GetRecordsBySeriesResponse<TResponse> response_;
+    response_.tableNames = actualResponse_.tableNames;
+    response_.typeNames = actualResponse_.typeNames;
+    response_.typeSchemas = actualResponse_.typeSchemas;
+    response_.data.resize(actualResponse_.listRecordsBinary.size(), std::vector<TResponse>());
+
+    for (std::vector<std::vector<std::vector<uint8_t> > >::size_type i_ = 0; i_ < actualResponse_.listRecordsBinary.size(); ++i_)
+    {
+        response_.data[i_].resize(actualResponse_.listRecordsBinary[i_].size(), TResponse(type_));
+        avro::decode(&response_.data[i_][0], &actualResponse_.listRecordsBinary[i_][0], actualResponse_.listRecordsBinary[i_].size(), this->threadCount, this->executor);
+    }
+
+    return response_;
+}
+
+
+/**
+ * Retrieves the complete series/track records from the given @a worldTableName
+ * based on the partial track information contained in the @a tableName.
  * <p>
  * This operation supports paging through the data via the @a offset and @a
  * limit parameters.
@@ -5699,6 +6040,80 @@ GetRecordsBySeriesResponse<TResponse>& getRecordsBySeries( const ::avro::ValidSc
     for (std::vector<std::vector<std::vector<uint8_t> > >::size_type i_ = 0; i_ < actualResponse_.listRecordsBinary.size(); ++i_)
     {
         response_.data[i_].resize(actualResponse_.listRecordsBinary[i_].size(), TResponse(schema_));
+        avro::decode(&response_.data[i_][0], &actualResponse_.listRecordsBinary[i_][0], actualResponse_.listRecordsBinary[i_].size(), this->threadCount, this->executor);
+    }
+
+    return response_;
+}
+
+
+/**
+ * Retrieves the complete series/track records from the given @a worldTableName
+ * based on the partial track information contained in the @a tableName.
+ * <p>
+ * This operation supports paging through the data via the @a offset and @a
+ * limit parameters.
+ * <p>
+ * In contrast to {@link
+ * #getRecords(const Type&,const std::string&,const int64_t,const int64_t,const std::map<std::string, std::string>&,GetRecordsResponse<TResponse>&) const}
+ * this returns records grouped by series/track. So if @a offset is 0 and @a
+ * limit is 5 this operation would return the first 5 series/tracks in @a
+ * tableName. Each series/track will be returned sorted by their TIMESTAMP
+ * column.
+ * 
+ * @tparam <TResponse>  The type of object being retrieved.
+ * 
+ * @param[in] type_  Type object used for decoding returned objects.
+ * @param tableName  Name of the collection/table/view for which series/tracks
+ *                   will be fetched.
+ * @param worldTableName  Name of the table containing the complete
+ *                        series/track information to be returned for the
+ *                        tracks present in the @a tableName. Typically this is
+ *                        used when retrieving series/tracks from a view (which
+ *                        contains partial series/tracks) but the user wants to
+ *                        retrieve the entire original series/tracks. Can be
+ *                        blank.
+ * @param offset  A positive integer indicating the number of initial
+ *                series/tracks to skip (useful for paging through the
+ *                results).  Default value is 0. The minimum allowed value is
+ *                0. The maximum allowed value is MAX_INT.
+ * @param limit  A positive integer indicating the maximum number of
+ *               series/tracks to be returned. Or END_OF_SET (-9999) to
+ *               indicate that the max number of results should be returned.
+ *               Default value is 10000.
+ * @param options  Optional parameters.  Default value is an empty std::map.
+ * @param[out] response_  Response object containing the results of the
+ *                        operation.
+ * 
+ * @return Response object containing the result of the operation (initially
+ *         passed in by reference).
+ * 
+ */
+template<typename TResponse> 
+GetRecordsBySeriesResponse<TResponse>& getRecordsBySeries( const Type& type_,
+                                                           const std::string& tableName,
+                                                           const std::string& worldTableName,
+                                                           const int32_t offset,
+                                                           const int32_t limit,
+                                                           const std::map<std::string, std::string>& options,
+                                                           GetRecordsBySeriesResponse<TResponse>& response_ ) const
+{
+    GetRecordsBySeriesRequest actualRequest_;
+    actualRequest_.tableName = tableName;
+    actualRequest_.worldTableName = worldTableName;
+    actualRequest_.offset = offset;
+    actualRequest_.limit = limit;
+    actualRequest_.options = options;
+    RawGetRecordsBySeriesResponse actualResponse_;
+    submitRequest("/get/records/byseries", actualRequest_, actualResponse_, false);
+    response_.tableNames = actualResponse_.tableNames;
+    response_.typeNames = actualResponse_.typeNames;
+    response_.typeSchemas = actualResponse_.typeSchemas;
+    response_.data.resize(actualResponse_.listRecordsBinary.size(), std::vector<TResponse>());
+
+    for (std::vector<std::vector<std::vector<uint8_t> > >::size_type i_ = 0; i_ < actualResponse_.listRecordsBinary.size(); ++i_)
+    {
+        response_.data[i_].resize(actualResponse_.listRecordsBinary[i_].size(), TResponse(type_));
         avro::decode(&response_.data[i_][0], &actualResponse_.listRecordsBinary[i_][0], actualResponse_.listRecordsBinary[i_].size(), this->threadCount, this->executor);
     }
 
@@ -5975,6 +6390,42 @@ GetRecordsFromCollectionResponse<TResponse> getRecordsFromCollection( const ::av
  * 
  * @tparam <TResponse>  The type of object being retrieved.
  * 
+ * @param[in] type_  Type object used for decoding returned objects.
+ * @param[in] request_  Request object containing the parameters for the
+ *                      operation.
+ * 
+ * @return Response object containing the result of the operation.
+ * 
+ */
+template<typename TResponse> 
+GetRecordsFromCollectionResponse<TResponse> getRecordsFromCollection( const Type& type_,
+                                                                      const GetRecordsFromCollectionRequest& request_ ) const
+{
+    RawGetRecordsFromCollectionResponse actualResponse_;
+    submitRequest("/get/records/fromcollection", request_, actualResponse_, false);
+    GetRecordsFromCollectionResponse<TResponse> response_;
+    response_.tableName = actualResponse_.tableName;
+    response_.typeNames = actualResponse_.typeNames;
+    response_.data.resize(actualResponse_.recordsBinary.size(), TResponse(type_));
+    avro::decode(&response_.data[0], &actualResponse_.recordsBinary[0], actualResponse_.recordsBinary.size(), this->threadCount, this->executor);
+    response_.recordIds = actualResponse_.recordIds;
+    return response_;
+}
+
+
+/**
+ * Retrieves records from a collection. The operation can optionally return the
+ * record IDs which can be used in certain queries such as {@link
+ * #deleteRecords(const DeleteRecordsRequest&) const}.
+ * <p>
+ * This operation supports paging through the data via the @a offset and @a
+ * limit parameters.
+ * <p>
+ * Note that when using the Java API, it is not possible to retrieve records
+ * from join tables using this operation.
+ * 
+ * @tparam <TResponse>  The type of object being retrieved.
+ * 
  * @param[in] schema_  Avro schema object used for decoding returned objects.
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -5995,6 +6446,45 @@ GetRecordsFromCollectionResponse<TResponse>& getRecordsFromCollection( const ::a
     response_.tableName = actualResponse_.tableName;
     response_.typeNames = actualResponse_.typeNames;
     response_.data.resize(actualResponse_.recordsBinary.size(), TResponse(schema_));
+    avro::decode(&response_.data[0], &actualResponse_.recordsBinary[0], actualResponse_.recordsBinary.size(), this->threadCount, this->executor);
+    response_.recordIds = actualResponse_.recordIds;
+    return response_;
+}
+
+
+/**
+ * Retrieves records from a collection. The operation can optionally return the
+ * record IDs which can be used in certain queries such as {@link
+ * #deleteRecords(const DeleteRecordsRequest&) const}.
+ * <p>
+ * This operation supports paging through the data via the @a offset and @a
+ * limit parameters.
+ * <p>
+ * Note that when using the Java API, it is not possible to retrieve records
+ * from join tables using this operation.
+ * 
+ * @tparam <TResponse>  The type of object being retrieved.
+ * 
+ * @param[in] type_  Type object used for decoding returned objects.
+ * @param[in] request_  Request object containing the parameters for the
+ *                      operation.
+ * @param[out] response_  Response object containing the results of the
+ *                        operation.
+ * 
+ * @return Response object containing the result of the operation (initially
+ *         passed in by reference).
+ * 
+ */
+template<typename TResponse> 
+GetRecordsFromCollectionResponse<TResponse>& getRecordsFromCollection( const Type& type_,
+                                                                       const GetRecordsFromCollectionRequest& request_,
+                                                                       GetRecordsFromCollectionResponse<TResponse>& response_ ) const
+{
+    RawGetRecordsFromCollectionResponse actualResponse_;
+    submitRequest("/get/records/fromcollection", request_, actualResponse_, false);
+    response_.tableName = actualResponse_.tableName;
+    response_.typeNames = actualResponse_.typeNames;
+    response_.data.resize(actualResponse_.recordsBinary.size(), TResponse(type_));
     avro::decode(&response_.data[0], &actualResponse_.recordsBinary[0], actualResponse_.recordsBinary.size(), this->threadCount, this->executor);
     response_.recordIds = actualResponse_.recordIds;
     return response_;
@@ -6067,6 +6557,59 @@ GetRecordsFromCollectionResponse<TResponse> getRecordsFromCollection( const ::av
  * 
  * @tparam <TResponse>  The type of object being retrieved.
  * 
+ * @param[in] type_  Type object used for decoding returned objects.
+ * @param tableName  Name of the collection or table from which records are to
+ *                   be retrieved. Must be an existing GPUdb collection or
+ *                   table.
+ * @param offset  A positive integer indicating the number of initial results
+ *                to skip (this can be useful for paging through the results).
+ *                Default value is 0. The minimum allowed value is 0. The
+ *                maximum allowed value is MAX_INT.
+ * @param limit  A positive integer indicating the maximum number of results to
+ *               be returned, or END_OF_SET (-9999) to indicate that the max
+ *               number of results should be returned.  Default value is 10000.
+ * @param options  Default value is an empty std::map.
+ * 
+ * @return Response object containing the result of the operation.
+ * 
+ */
+template<typename TResponse> 
+GetRecordsFromCollectionResponse<TResponse> getRecordsFromCollection( const Type& type_,
+                                                                      const std::string& tableName,
+                                                                      const int64_t offset,
+                                                                      const int64_t limit,
+                                                                      const std::map<std::string, std::string>& options ) const
+{
+    GetRecordsFromCollectionRequest actualRequest_;
+    actualRequest_.tableName = tableName;
+    actualRequest_.offset = offset;
+    actualRequest_.limit = limit;
+    actualRequest_.options = options;
+    RawGetRecordsFromCollectionResponse actualResponse_;
+    submitRequest("/get/records/fromcollection", actualRequest_, actualResponse_, false);
+    GetRecordsFromCollectionResponse<TResponse> response_;
+    response_.tableName = actualResponse_.tableName;
+    response_.typeNames = actualResponse_.typeNames;
+    response_.data.resize(actualResponse_.recordsBinary.size(), TResponse(type_));
+    avro::decode(&response_.data[0], &actualResponse_.recordsBinary[0], actualResponse_.recordsBinary.size(), this->threadCount, this->executor);
+    response_.recordIds = actualResponse_.recordIds;
+    return response_;
+}
+
+
+/**
+ * Retrieves records from a collection. The operation can optionally return the
+ * record IDs which can be used in certain queries such as {@link
+ * #deleteRecords(const std::string&,const std::vector<std::string>&,const std::map<std::string, std::string>&) const}.
+ * <p>
+ * This operation supports paging through the data via the @a offset and @a
+ * limit parameters.
+ * <p>
+ * Note that when using the Java API, it is not possible to retrieve records
+ * from join tables using this operation.
+ * 
+ * @tparam <TResponse>  The type of object being retrieved.
+ * 
  * @param[in] schema_  Avro schema object used for decoding returned objects.
  * @param tableName  Name of the collection or table from which records are to
  *                   be retrieved. Must be an existing GPUdb collection or
@@ -6104,6 +6647,62 @@ GetRecordsFromCollectionResponse<TResponse>& getRecordsFromCollection( const ::a
     response_.tableName = actualResponse_.tableName;
     response_.typeNames = actualResponse_.typeNames;
     response_.data.resize(actualResponse_.recordsBinary.size(), TResponse(schema_));
+    avro::decode(&response_.data[0], &actualResponse_.recordsBinary[0], actualResponse_.recordsBinary.size(), this->threadCount, this->executor);
+    response_.recordIds = actualResponse_.recordIds;
+    return response_;
+}
+
+
+/**
+ * Retrieves records from a collection. The operation can optionally return the
+ * record IDs which can be used in certain queries such as {@link
+ * #deleteRecords(const std::string&,const std::vector<std::string>&,const std::map<std::string, std::string>&) const}.
+ * <p>
+ * This operation supports paging through the data via the @a offset and @a
+ * limit parameters.
+ * <p>
+ * Note that when using the Java API, it is not possible to retrieve records
+ * from join tables using this operation.
+ * 
+ * @tparam <TResponse>  The type of object being retrieved.
+ * 
+ * @param[in] type_  Type object used for decoding returned objects.
+ * @param tableName  Name of the collection or table from which records are to
+ *                   be retrieved. Must be an existing GPUdb collection or
+ *                   table.
+ * @param offset  A positive integer indicating the number of initial results
+ *                to skip (this can be useful for paging through the results).
+ *                Default value is 0. The minimum allowed value is 0. The
+ *                maximum allowed value is MAX_INT.
+ * @param limit  A positive integer indicating the maximum number of results to
+ *               be returned, or END_OF_SET (-9999) to indicate that the max
+ *               number of results should be returned.  Default value is 10000.
+ * @param options  Default value is an empty std::map.
+ * @param[out] response_  Response object containing the results of the
+ *                        operation.
+ * 
+ * @return Response object containing the result of the operation (initially
+ *         passed in by reference).
+ * 
+ */
+template<typename TResponse> 
+GetRecordsFromCollectionResponse<TResponse>& getRecordsFromCollection( const Type& type_,
+                                                                       const std::string& tableName,
+                                                                       const int64_t offset,
+                                                                       const int64_t limit,
+                                                                       const std::map<std::string, std::string>& options,
+                                                                       GetRecordsFromCollectionResponse<TResponse>& response_ ) const
+{
+    GetRecordsFromCollectionRequest actualRequest_;
+    actualRequest_.tableName = tableName;
+    actualRequest_.offset = offset;
+    actualRequest_.limit = limit;
+    actualRequest_.options = options;
+    RawGetRecordsFromCollectionResponse actualResponse_;
+    submitRequest("/get/records/fromcollection", actualRequest_, actualResponse_, false);
+    response_.tableName = actualResponse_.tableName;
+    response_.typeNames = actualResponse_.typeNames;
+    response_.data.resize(actualResponse_.recordsBinary.size(), TResponse(type_));
     avro::decode(&response_.data[0], &actualResponse_.recordsBinary[0], actualResponse_.recordsBinary.size(), this->threadCount, this->executor);
     response_.recordIds = actualResponse_.recordIds;
     return response_;
@@ -7000,7 +7599,7 @@ ShowSystemTimingResponse& showSystemTiming( const std::map<std::string, std::str
  * Retrieves detailed information about a particular GPUdb table, specified in
  * @a tableName. If the supplied @a tableName is a collection, the call returns
  * a list of tables contained in the collection, and for each table it returns
- * the description, type id, schema, type label, type propertiess, and
+ * the description, type id, schema, type label, type properties, and
  * additional information including TTL. If @a tableName is empty it will
  * return all top-level tables including all collections and top-level child
  * tables (i.e. tables with no parent).
@@ -7037,7 +7636,7 @@ ShowTableResponse showTable( const ShowTableRequest& request_ ) const;
  * Retrieves detailed information about a particular GPUdb table, specified in
  * @a tableName. If the supplied @a tableName is a collection, the call returns
  * a list of tables contained in the collection, and for each table it returns
- * the description, type id, schema, type label, type propertiess, and
+ * the description, type id, schema, type label, type properties, and
  * additional information including TTL. If @a tableName is empty it will
  * return all top-level tables including all collections and top-level child
  * tables (i.e. tables with no parent).
@@ -7078,7 +7677,7 @@ ShowTableResponse& showTable( const ShowTableRequest& request_,
  * Retrieves detailed information about a particular GPUdb table, specified in
  * @a tableName. If the supplied @a tableName is a collection, the call returns
  * a list of tables contained in the collection, and for each table it returns
- * the description, type id, schema, type label, type propertiess, and
+ * the description, type id, schema, type label, type properties, and
  * additional information including TTL. If @a tableName is empty it will
  * return all top-level tables including all collections and top-level child
  * tables (i.e. tables with no parent).
@@ -7118,7 +7717,7 @@ ShowTableResponse showTable( const std::string& tableName,
  * Retrieves detailed information about a particular GPUdb table, specified in
  * @a tableName. If the supplied @a tableName is a collection, the call returns
  * a list of tables contained in the collection, and for each table it returns
- * the description, type id, schema, type label, type propertiess, and
+ * the description, type id, schema, type label, type properties, and
  * additional information including TTL. If @a tableName is empty it will
  * return all top-level tables including all collections and top-level child
  * tables (i.e. tables with no parent).
@@ -8027,7 +8626,7 @@ VisualizeImageClassbreakResponse& visualizeImageClassbreak( const VisualizeImage
  * @param cbColumnName1  Name of the column for the first class break.
  * @param cbVals1  Comma separated list of values or ranges (e.g.
  *                 '0:5,5:10,15:30').
- * @param cbColumnName2  Optional comma seperated list of valid column names.
+ * @param cbColumnName2  Optional comma separated list of valid column names.
  *                       An empty string implies not using more than one column
  *                       for the class break. For a non-empty list, there needs
  *                       to be as many entries in the list as there are classes
@@ -8106,7 +8705,7 @@ VisualizeImageClassbreakResponse visualizeImageClassbreak( const std::vector<std
  * @param cbColumnName1  Name of the column for the first class break.
  * @param cbVals1  Comma separated list of values or ranges (e.g.
  *                 '0:5,5:10,15:30').
- * @param cbColumnName2  Optional comma seperated list of valid column names.
+ * @param cbColumnName2  Optional comma separated list of valid column names.
  *                       An empty string implies not using more than one column
  *                       for the class break. For a non-empty list, there needs
  *                       to be as many entries in the list as there are classes

@@ -2,6 +2,7 @@
 #define __GPUDB__AVRO_HPP__
 
 #include "gpudb/GPUdbException.hpp"
+#include "gpudb/Type.hpp"
 
 #include <avro/Compiler.hh>
 #include <avro/Generic.hh>
@@ -98,6 +99,12 @@ namespace gpudb
         template<typename T> std::vector<T>& decode(const ::avro::ValidSchema& schema, std::vector<T>& objects, const std::vector<std::vector<uint8_t> >& encodedObjects, const size_t threadCount = 1, const ExecutorPtr executor = ExecutorPtr())
         {
             objects.resize(encodedObjects.size(), T(schema));
+            decode(&objects[0], &encodedObjects[0], encodedObjects.size(), threadCount, executor);
+        }
+
+        template<typename T> std::vector<T>& decode(const Type& type, std::vector<T>& objects, const std::vector<std::vector<uint8_t> >& encodedObjects, const size_t threadCount = 1, const ExecutorPtr executor = ExecutorPtr())
+        {
+            objects.resize(encodedObjects.size(), T(type));
             decode(&objects[0], &encodedObjects[0], encodedObjects.size(), threadCount, executor);
         }
 
@@ -249,10 +256,10 @@ namespace gpudb
 
         typedef boost::shared_ptr<Decoder> DecoderPtr;
 
-        template<typename T> class GenericDecoder : public Decoder
+        template<typename T> class GenericSchemaDecoder : public Decoder
         {
             public:
-                GenericDecoder(const ::avro::ValidSchema& schema) :
+                GenericSchemaDecoder(const ::avro::ValidSchema& schema) :
                     schema(schema)
                 {
                 }
@@ -275,12 +282,12 @@ namespace gpudb
             private:
                 ::avro::ValidSchema schema;
         };
-
+/*
         template<typename T> DecoderPtr createDecoder(const std::string& schemaString)
         {
             try
             {
-                return boost::make_shared<GenericDecoder<T> >(::avro::compileJsonSchemaFromString(schemaString));
+                return boost::make_shared<GenericSchemaDecoder<T> >(::avro::compileJsonSchemaFromString(schemaString));
             }
             catch (const std::exception& ex)
             {
@@ -290,7 +297,39 @@ namespace gpudb
 
         template<typename T> DecoderPtr createDecoder(const ::avro::ValidSchema& schema)
         {
-            return boost::make_shared<GenericDecoder<T> >(schema);
+            return boost::make_shared<GenericSchemaDecoder<T> >(schema);
+        }
+*/
+        template<typename T> class GenericTypeDecoder : public Decoder
+        {
+            public:
+                GenericTypeDecoder(const Type& type) :
+                    type(type)
+                {
+                }
+
+                virtual void decode(boost::any* objects, const std::vector<uint8_t>* encodedObjects, const size_t count, const size_t threadCount = 1, const ExecutorPtr executor = ExecutorPtr()) const
+                {
+                    avro::decodeAny<T>(objects, encodedObjects, count, threadCount, executor);
+                }
+
+                virtual void initObject(boost::any& object) const
+                {
+                    object = T(type);
+                }
+
+                virtual void resizeVector(std::vector<boost::any>& vector, const size_t size) const
+                {
+                    vector.resize(size, T(type));
+                }
+
+            private:
+                Type type;
+        };
+
+        template<typename T> DecoderPtr createDecoder(const Type& type)
+        {
+            return boost::make_shared<GenericTypeDecoder<T> >(type);
         }
 
         template<typename T> class SpecificDecoder : public Decoder

@@ -2,18 +2,20 @@
 
 #include "gpudb/GPUdb.hpp"
 
-
+#include <boost/lexical_cast.hpp>
+#include <boost/property_tree/ptree.hpp>
+#include <boost/property_tree/json_parser.hpp>
 
 namespace gpudb
 {
-    Type::Column::Column(const std::string& name, const ::avro::Type type) :
+    Type::Column::Column(const std::string& name, const ColumnType type) :
         name(name),
         type(type)
     {
         validate();
     }
 
-    Type::Column::Column(const std::string& name, const ::avro::Type type, const std::vector<std::string>& properties) :
+    Type::Column::Column(const std::string& name, const ColumnType type, const std::vector<std::string>& properties) :
         name(name),
         type(type),
         properties(properties)
@@ -26,7 +28,7 @@ namespace gpudb
         return name;
     }
 
-    ::avro::Type Type::Column::getType() const
+    Type::Column::ColumnType Type::Column::getType() const
     {
         return type;
     }
@@ -45,106 +47,23 @@ namespace gpudb
 
         switch (type)
         {
-            case ::avro::AVRO_BYTES:
-            case ::avro::AVRO_DOUBLE:
-            case ::avro::AVRO_FLOAT:
-            case ::avro::AVRO_INT:
-            case ::avro::AVRO_LONG:
-            case ::avro::AVRO_STRING:
+            case BYTES:
+            case DOUBLE:
+            case FLOAT:
+            case INT:
+            case LONG:
+            case STRING:
                 break;
 
             default:
-                throw std::invalid_argument("Column " + name + " must be of type AVRO_BYTES, AVRO_DOUBLE, AVRO_FLOAT, AVRO_INT, AVRO_LONG or AVRO_STRING.");
-        }
-    }
-
-    Type::Type(const std::string& label, const std::vector<Type::Column>& columns) :
-        label(label),
-        columns(columns)
-    {
-        if (columns.empty())
-        {
-            throw std::invalid_argument("At least one column must be specified.");
+                throw std::invalid_argument("Column " + name + " must be of type BYTES, DOUBLE, FLOAT, INT, LONG or STRING.");
         }
 
-        ::avro::RecordSchema recordSchema("type_name");
-
-        for (std::vector<Type::Column>::const_iterator it = columns.begin(); it != columns.end(); ++it)
+        for (std::vector<std::string>::const_iterator it = properties.begin(); it != properties.end(); ++it)
         {
-            switch (it->getType())
+            if (it->empty())
             {
-                case ::avro::AVRO_BYTES:
-                    recordSchema.addField(it->getName(), ::avro::BytesSchema());
-                    break;
-
-                case ::avro::AVRO_DOUBLE:
-                    recordSchema.addField(it->getName(), ::avro::DoubleSchema());
-                    break;
-
-                case ::avro::AVRO_FLOAT:
-                    recordSchema.addField(it->getName(), ::avro::FloatSchema());
-                    break;
-
-                case ::avro::AVRO_INT:
-                    recordSchema.addField(it->getName(), ::avro::IntSchema());
-                    break;
-
-                case ::avro::AVRO_LONG:
-                    recordSchema.addField(it->getName(), ::avro::LongSchema());
-                    break;
-
-                case ::avro::AVRO_STRING:
-                    recordSchema.addField(it->getName(), ::avro::StringSchema());
-                    break;
-
-                default:
-                    throw std::invalid_argument("Column " + it->getName() + " must be of type AVRO_BYTES, AVRO_DOUBLE, AVRO_FLOAT, AVRO_INT, AVRO_LONG or AVRO_STRING.");
-            }
-        }
-
-        schema.setSchema(recordSchema);
-    }
-
-    Type::Type(const std::string& label, const std::string& typeSchema, const std::map<std::string, std::vector<std::string> >& properties) :
-        label(label)
-    {
-        schema = ::avro::compileJsonSchemaFromString(typeSchema);
-        ::avro::NodePtr root = schema.root();
-
-        if (root->type() != ::avro::AVRO_RECORD)
-        {
-            throw std::invalid_argument("Schema must be of type record.");
-        }
-
-        size_t count = root->leaves();
-
-        for (size_t i = 0; i < count; ++i)
-        {
-            const std::string& name = root->nameAt(i);
-            ::avro::Type type = root->leafAt(i)->type();
-            std::map<std::string, std::vector<std::string> >::const_iterator columnProperties = properties.find(name);
-
-            switch (type)
-            {
-                case ::avro::AVRO_BYTES:
-                case ::avro::AVRO_DOUBLE:
-                case ::avro::AVRO_FLOAT:
-                case ::avro::AVRO_INT:
-                case ::avro::AVRO_LONG:
-                case ::avro::AVRO_STRING:
-                    break;
-
-                default:
-                    throw std::invalid_argument("Field " + name + " must be of type AVRO_BYTES, AVRO_DOUBLE, AVRO_FLOAT, AVRO_INT, AVRO_LONG or AVRO_STRING.");
-            }
-
-            if (columnProperties == properties.end())
-            {
-                columns.push_back(Column(name, type));
-            }
-            else
-            {
-                columns.push_back(Column(name, type, columnProperties->second));
+                throw std::invalid_argument("Properties must not be empty.");
             }
         }
     }
@@ -187,14 +106,75 @@ namespace gpudb
         return Type(response.labels[0], response.typeSchemas[0], response.properties[0]);
     }
 
-    const std::vector<Type::Column>& Type::getColumns() const
+    Type::Type(const std::vector<Type::Column>& columns) :
+        columns(columns)
     {
-        return columns;
+        validate();
+        createSchema();
+    }
+
+    Type::Type(const std::string& label, const std::vector<Type::Column>& columns) :
+        label(label),
+        columns(columns)
+    {
+        validate();
+        createSchema();
+    }
+
+    Type::Type(const std::string& typeSchema)
+    {
+        std::map<std::string, std::vector<std::string> > properties;
+        createFromSchema(typeSchema, properties);
+        createSchema();
+    }
+
+    Type::Type(const std::string& label, const std::string& typeSchema, const std::map<std::string, std::vector<std::string> >& properties) :
+        label(label)
+    {
+        createFromSchema(typeSchema, properties);
+        createSchema();
     }
 
     const std::string& Type::getLabel() const
     {
         return label;
+    }
+
+    const std::vector<Type::Column>& Type::getColumns() const
+    {
+        return columns;
+    }
+
+    const Type::Column& Type::getColumn(size_t index) const
+    {
+        return columns.at(index);
+    }
+
+    const Type::Column& Type::getColumn(const std::string& name) const
+    {
+        return columns[getColumnIndex(name)];
+    }
+
+    size_t Type::getColumnCount() const
+    {
+        return columns.size();
+    }
+
+    size_t Type::getColumnIndex(const std::string& name) const
+    {
+        std::map<std::string, size_t>::const_iterator column = columnMap.find(name);
+
+        if (column == columnMap.end())
+        {
+            throw std::out_of_range("Column " + name + " does not exist.");
+        }
+
+        return column->second;
+    }
+
+    bool Type::hasColumn(const std::string& name) const
+    {
+        return columnMap.find(name) != columnMap.end();
     }
 
     const ::avro::ValidSchema& Type::getSchema() const
@@ -204,16 +184,281 @@ namespace gpudb
 
     std::string Type::create(const GPUdb& gpudb) const
     {
-        std::ostringstream stream;
-        schema.toJson(stream);
+        boost::property_tree::ptree root;
+        root.put("type", "record");
+        root.put("name", "type_name");
+        boost::property_tree::ptree fields;
         std::map<std::string, std::vector<std::string> > properties;
 
         for (std::vector<Type::Column>::const_iterator it = columns.begin(); it != columns.end(); ++it)
         {
-            properties[it->getName()] = it->getProperties();
+            boost::property_tree::ptree field;
+            field.put("name", it->getName());
+
+            switch (it->getType())
+            {
+                case Column::BYTES:
+                    field.put("type", "bytes");
+                    break;
+
+                case Column::DOUBLE:
+                    field.put("type", "double");
+                    break;
+
+                case Column::FLOAT:
+                    field.put("type", "float");
+                    break;
+
+                case Column::INT:
+                    field.put("type", "int");
+                    break;
+
+                case Column::LONG:
+                    field.put("type", "long");
+                    break;
+
+                case Column::STRING:
+                    field.put("type", "string");
+                    break;
+
+                default:
+                    throw std::invalid_argument("Column " + it->getName() + " must be of type BYTES, DOUBLE, FLOAT, INT, LONG or STRING.");
+            }
+
+            fields.push_back(std::make_pair("", field));
+
+            if (!it->getProperties().empty())
+            {
+                properties[it->getName()] = it->getProperties();
+            }
         }
 
+        root.add_child("fields", fields);
+        std::ostringstream schemaStream;
+        boost::property_tree::write_json(schemaStream, root);
         CreateTypeResponse response;
-        return gpudb.createType(stream.str(), label, properties, std::map<std::string, std::string>(), response).typeId;
+        return gpudb.createType(schemaStream.str(), label, properties, std::map<std::string, std::string>(), response).typeId;
+    }
+
+    void Type::createFromSchema(const std::string& typeSchema, const std::map<std::string, std::vector<std::string> >& properties)
+    {
+        std::stringstream schemaStream;
+        schemaStream << typeSchema;
+        boost::property_tree::ptree root;
+
+        try
+        {
+            boost::property_tree::read_json(schemaStream, root);
+        }
+        catch (const std::exception& ex)
+        {
+            throw GPUdbException("Schema is invalid: " + std::string(ex.what()));
+        }
+
+        boost::optional<std::string> rootType = root.get_optional<std::string>("type");
+
+        if (!rootType || *rootType != "record")
+        {
+            throw GPUdbException("Schema must be of type record.");
+        }
+
+        boost::optional<boost::property_tree::ptree&> fields = root.get_child_optional("fields");
+
+        if (!fields || fields->empty())
+        {
+            throw GPUdbException("Schema has no fields.");
+        }
+
+        for (boost::property_tree::ptree::const_iterator field = fields->begin(); field != fields->end(); ++field)
+        {
+            if (field->second.empty())
+            {
+                throw GPUdbException("Schema has invalid field.");
+            }
+
+            boost::optional<std::string> fieldName = field->second.get_optional<std::string>("name");
+
+            if (!fieldName)
+            {
+                throw GPUdbException("Schema has unnamed field.");
+            }
+
+            for (std::vector<Column>::const_iterator column = columns.begin(); column != columns.end(); ++column)
+            {
+                if (column->getName() == *fieldName)
+                {
+                    throw GPUdbException("Duplicate field name " + *fieldName + ".");
+                }
+            }
+
+            boost::optional<std::string> fieldType = field->second.get_optional<std::string>("type");
+
+            if (!fieldType)
+            {
+                throw GPUdbException("Field " + *fieldName + " has no type.");
+            }
+
+            Column::ColumnType columnType;
+
+            if (*fieldType == "bytes")
+            {
+                columnType = Column::BYTES;
+            }
+            else if (*fieldType == "double")
+            {
+                columnType = Column::DOUBLE;
+            }
+            else if (*fieldType == "float")
+            {
+                columnType = Column::FLOAT;
+            }
+            else if (*fieldType == "int")
+            {
+                columnType = Column::INT;
+            }
+            else if (*fieldType == "long")
+            {
+                columnType = Column::LONG;
+            }
+            else if (*fieldType == "string")
+            {
+                columnType = Column::STRING;
+            }
+            else
+            {
+                throw GPUdbException("Field " + *fieldName + " must be of type bytes, double, float, int, long or string.");
+            }
+
+            std::map<std::string, std::vector<std::string> >::const_iterator columnProperties = properties.find(*fieldName);
+
+            if (columnProperties == properties.end())
+            {
+                columns.push_back(Column(*fieldName, columnType));
+            }
+            else
+            {
+                columns.push_back(Column(*fieldName, columnType, columnProperties->second));
+            }
+        }
+
+        for (size_t i = 0; i < columns.size(); ++i)
+        {
+            columnMap[columns[i].getName()] = i;
+        }
+    }
+
+    void Type::validate()
+    {
+        if (columns.empty())
+        {
+            throw std::invalid_argument("At least one column must be specified.");
+        }
+
+        for (size_t i = 0; i < columns.size(); ++i)
+        {
+            if (columnMap.find(columns[i].getName()) != columnMap.end())
+            {
+                throw std::invalid_argument("Duplicate column name " + columns[i].getName() + " specified.");
+            }
+
+            columnMap[columns[i].getName()] = i;
+        }
+    }
+
+    void Type::createSchema()
+    {
+        ::avro::RecordSchema recordSchema("type_name");
+        std::vector<std::string> fields;
+
+        for (size_t i = 0; i < columns.size(); ++i)
+        {
+            std::string baseFieldName = columns[i].getName();
+
+            for (size_t j = 0; j < baseFieldName.size(); ++j)
+            {
+                char c = baseFieldName[j];
+
+                if (!(j > 0 && c >= '0' && c <= '9')
+                        && !(c >= 'A' && c <= 'Z')
+                        && !(c >= 'a' && c <= 'z')
+                        && c != '_')
+                {
+                    baseFieldName[j] = '_';
+                }
+            }
+
+            std::string fieldName;
+
+            for (size_t n = 1; ; ++n)
+            {
+                fieldName = baseFieldName + (n > 1 ? "_" + boost::lexical_cast<std::string>(n) : "");
+                bool found = false;
+
+                for (size_t j = 0; j < columns.size(); ++j)
+                {
+                    if (j == i)
+                    {
+                        continue;
+                    }
+
+                    if (columns[j].getName() == fieldName)
+                    {
+                        found = true;
+                        break;
+                    }
+                }
+
+                if (!found)
+                {
+                    for (size_t j = 0; j < fields.size(); ++j)
+                    {
+                        if (fields[j] == fieldName)
+                        {
+                            found = true;
+                            break;
+                        }
+                    }
+                }
+
+                if (!found)
+                {
+                    break;
+                }
+            }
+
+            fields.push_back(fieldName);
+
+            switch (columns[i].getType())
+            {
+                case Column::BYTES:
+                    recordSchema.addField(fieldName, ::avro::BytesSchema());
+                    break;
+
+                case Column::DOUBLE:
+                    recordSchema.addField(fieldName, ::avro::DoubleSchema());
+                    break;
+
+                case Column::FLOAT:
+                    recordSchema.addField(fieldName, ::avro::FloatSchema());
+                    break;
+
+                case Column::INT:
+                    recordSchema.addField(fieldName, ::avro::IntSchema());
+                    break;
+
+                case Column::LONG:
+                    recordSchema.addField(fieldName, ::avro::LongSchema());
+                    break;
+
+                case Column::STRING:
+                    recordSchema.addField(fieldName, ::avro::StringSchema());
+                    break;
+
+                default:
+                    throw std::invalid_argument("Column " + columns[i].getName() + " must be of type BYTES, DOUBLE, FLOAT, INT, LONG or STRING.");
+            }
+        }
+
+        schema.setSchema(recordSchema);
     }
 }

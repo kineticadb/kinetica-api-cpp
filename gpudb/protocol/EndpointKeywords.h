@@ -25,6 +25,7 @@ namespace gpudb
     extern const std::string aggregate_group_by_join_from;
     extern const std::string aggregate_group_by_json;
     extern const std::string aggregate_group_by_key;
+    extern const std::string aggregate_group_by_result_table;
     extern const std::string aggregate_group_by_sort_by;
     extern const std::string aggregate_group_by_sort_order;
     extern const std::string aggregate_group_by_value;
@@ -73,6 +74,7 @@ namespace gpudb
     extern const std::string aggregate_unique_descending;
     extern const std::string aggregate_unique_expression;
     extern const std::string aggregate_unique_json;
+    extern const std::string aggregate_unique_result_table;
     extern const std::string aggregate_unique_sort_order;
     
     // Keywords for /alter/system/properties request
@@ -98,7 +100,15 @@ namespace gpudb
     extern const std::string alter_table_ttl;
     
     // Keywords for /create/jointable request
+    extern const std::string create_join_table_full_refresh;
+    extern const std::string create_join_table_manual;
     extern const std::string create_join_table_max_query_dimensions;
+    extern const std::string create_join_table_no_refresh;
+    extern const std::string create_join_table_on_insert;
+    extern const std::string create_join_table_on_query;
+    extern const std::string create_join_table_optimize_lookups;
+    extern const std::string create_join_table_refresh;
+    extern const std::string create_join_table_refresh_method;
     
     // Keywords for /create/table request
     extern const std::string create_table_chunk_size;
@@ -108,6 +118,7 @@ namespace gpudb
     extern const std::string create_table_foreign_keys;
     extern const std::string create_table_is_collection;
     extern const std::string create_table_is_replicated;
+    extern const std::string create_table_is_result_table;
     extern const std::string create_table_no_error_if_exists;
     extern const std::string create_table_true;
     
@@ -122,6 +133,7 @@ namespace gpudb
     extern const std::string create_type_int16;
     extern const std::string create_type_int8;
     extern const std::string create_type_ipv4;
+    extern const std::string create_type_is_result_table;
     extern const std::string create_type_primary_key;
     extern const std::string create_type_shard_key;
     extern const std::string create_type_store_only;
