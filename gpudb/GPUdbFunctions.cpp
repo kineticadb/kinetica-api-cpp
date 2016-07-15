@@ -789,29 +789,22 @@ AggregateConvexHullResponse& GPUdb::aggregateConvexHull( const std::string& tabl
 
 
 /**
- * Calculates unique combinations (i.e. groups) of values for the given columns
- * in a given table/view/collection and computes aggregates on each unique
+ * Calculates unique combinations (groups) of values for the given columns in a
+ * given table/view/collection and computes aggregates on each unique
  * combination. This is somewhat analogous to an SQL-style SELECT...GROUP BY.
  * Any column(s) can be grouped on, but only non-string (i.e. numeric) columns
- * may be used for computing aggregates.
- * <p>
- * The results can be paged via the @a offset and @a limit parameters. For
- * example, to get 10 groups with the largest counts the inputs would be:
- * limit=10, options={"sort_order":"descending", "sort_by":"value"}.
- * <p>
- * @a options can be used to customize behavior of this call e.g. filtering or
- * sorting the results.
- * <p>
- * To group by 'x' and 'y' and compute the number of objects within each group,
- * use column_names=['x','y','count(*)'].  To also compute the sum of 'z' over
- * each group, use column_names=['x','y','count(*)','sum(z)'].
- * <p>
+ * may be used for computing aggregates. The results can be paged via the @a
+ * offset and @a limit parameters. For example, to get 10 groups with the
+ * largest counts the inputs would be: limit=10,
+ * options={"sort_order":"descending", "sort_by":"value"}. @a options can be
+ * used to customize behavior of this call e.g. filtering or sorting the
+ * results. To group by 'x' and 'y' and compute the number of objects within
+ * each group, use column_names=['x','y','count(*)'].  To also compute the sum
+ * of 'z' over each group, use column_names=['x','y','count(*)','sum(z)'].
  * Available aggregation functions are: 'count(*)', 'sum', 'min', 'max', 'avg',
  * 'mean', 'stddev', 'stddev_pop', 'stddev_samp', 'var', 'var_pop' and
- * 'var_samp'.
- * <p>
- * The response is returned as a dynamic schema. For details see: <a
- * href="../../concepts/index.html#dynamic-schemas" target="_top">dynamic
+ * 'var_samp'. The response is returned as a dynamic schema. For details see:
+ * <a href="../../concepts/index.html#dynamic-schemas" target="_top">dynamic
  * schemas documentation</a>.
  * 
  * @param[in] request_  Request object containing the parameters for the
@@ -830,29 +823,22 @@ RawAggregateGroupByResponse GPUdb::aggregateGroupByRaw( const AggregateGroupByRe
 
 
 /**
- * Calculates unique combinations (i.e. groups) of values for the given columns
- * in a given table/view/collection and computes aggregates on each unique
+ * Calculates unique combinations (groups) of values for the given columns in a
+ * given table/view/collection and computes aggregates on each unique
  * combination. This is somewhat analogous to an SQL-style SELECT...GROUP BY.
  * Any column(s) can be grouped on, but only non-string (i.e. numeric) columns
- * may be used for computing aggregates.
- * <p>
- * The results can be paged via the @a offset and @a limit parameters. For
- * example, to get 10 groups with the largest counts the inputs would be:
- * limit=10, options={"sort_order":"descending", "sort_by":"value"}.
- * <p>
- * @a options can be used to customize behavior of this call e.g. filtering or
- * sorting the results.
- * <p>
- * To group by 'x' and 'y' and compute the number of objects within each group,
- * use column_names=['x','y','count(*)'].  To also compute the sum of 'z' over
- * each group, use column_names=['x','y','count(*)','sum(z)'].
- * <p>
+ * may be used for computing aggregates. The results can be paged via the @a
+ * offset and @a limit parameters. For example, to get 10 groups with the
+ * largest counts the inputs would be: limit=10,
+ * options={"sort_order":"descending", "sort_by":"value"}. @a options can be
+ * used to customize behavior of this call e.g. filtering or sorting the
+ * results. To group by 'x' and 'y' and compute the number of objects within
+ * each group, use column_names=['x','y','count(*)'].  To also compute the sum
+ * of 'z' over each group, use column_names=['x','y','count(*)','sum(z)'].
  * Available aggregation functions are: 'count(*)', 'sum', 'min', 'max', 'avg',
  * 'mean', 'stddev', 'stddev_pop', 'stddev_samp', 'var', 'var_pop' and
- * 'var_samp'.
- * <p>
- * The response is returned as a dynamic schema. For details see: <a
- * href="../../concepts/index.html#dynamic-schemas" target="_top">dynamic
+ * 'var_samp'. The response is returned as a dynamic schema. For details see:
+ * <a href="../../concepts/index.html#dynamic-schemas" target="_top">dynamic
  * schemas documentation</a>.
  * 
  * @param[in] request_  Request object containing the parameters for the
@@ -874,29 +860,22 @@ RawAggregateGroupByResponse& GPUdb::aggregateGroupByRaw( const AggregateGroupByR
 
 
 /**
- * Calculates unique combinations (i.e. groups) of values for the given columns
- * in a given table/view/collection and computes aggregates on each unique
+ * Calculates unique combinations (groups) of values for the given columns in a
+ * given table/view/collection and computes aggregates on each unique
  * combination. This is somewhat analogous to an SQL-style SELECT...GROUP BY.
  * Any column(s) can be grouped on, but only non-string (i.e. numeric) columns
- * may be used for computing aggregates.
- * <p>
- * The results can be paged via the @a offset and @a limit parameters. For
- * example, to get 10 groups with the largest counts the inputs would be:
- * limit=10, options={"sort_order":"descending", "sort_by":"value"}.
- * <p>
- * @a options can be used to customize behavior of this call e.g. filtering or
- * sorting the results.
- * <p>
- * To group by 'x' and 'y' and compute the number of objects within each group,
- * use column_names=['x','y','count(*)'].  To also compute the sum of 'z' over
- * each group, use column_names=['x','y','count(*)','sum(z)'].
- * <p>
+ * may be used for computing aggregates. The results can be paged via the @a
+ * offset and @a limit parameters. For example, to get 10 groups with the
+ * largest counts the inputs would be: limit=10,
+ * options={"sort_order":"descending", "sort_by":"value"}. @a options can be
+ * used to customize behavior of this call e.g. filtering or sorting the
+ * results. To group by 'x' and 'y' and compute the number of objects within
+ * each group, use column_names=['x','y','count(*)'].  To also compute the sum
+ * of 'z' over each group, use column_names=['x','y','count(*)','sum(z)'].
  * Available aggregation functions are: 'count(*)', 'sum', 'min', 'max', 'avg',
  * 'mean', 'stddev', 'stddev_pop', 'stddev_samp', 'var', 'var_pop' and
- * 'var_samp'.
- * <p>
- * The response is returned as a dynamic schema. For details see: <a
- * href="../../concepts/index.html#dynamic-schemas" target="_top">dynamic
+ * 'var_samp'. The response is returned as a dynamic schema. For details see:
+ * <a href="../../concepts/index.html#dynamic-schemas" target="_top">dynamic
  * schemas documentation</a>.
  * 
  * @param[in] request_  Request object containing the parameters for the
@@ -920,29 +899,22 @@ AggregateGroupByResponse GPUdb::aggregateGroupBy( const AggregateGroupByRequest&
 
 
 /**
- * Calculates unique combinations (i.e. groups) of values for the given columns
- * in a given table/view/collection and computes aggregates on each unique
+ * Calculates unique combinations (groups) of values for the given columns in a
+ * given table/view/collection and computes aggregates on each unique
  * combination. This is somewhat analogous to an SQL-style SELECT...GROUP BY.
  * Any column(s) can be grouped on, but only non-string (i.e. numeric) columns
- * may be used for computing aggregates.
- * <p>
- * The results can be paged via the @a offset and @a limit parameters. For
- * example, to get 10 groups with the largest counts the inputs would be:
- * limit=10, options={"sort_order":"descending", "sort_by":"value"}.
- * <p>
- * @a options can be used to customize behavior of this call e.g. filtering or
- * sorting the results.
- * <p>
- * To group by 'x' and 'y' and compute the number of objects within each group,
- * use column_names=['x','y','count(*)'].  To also compute the sum of 'z' over
- * each group, use column_names=['x','y','count(*)','sum(z)'].
- * <p>
+ * may be used for computing aggregates. The results can be paged via the @a
+ * offset and @a limit parameters. For example, to get 10 groups with the
+ * largest counts the inputs would be: limit=10,
+ * options={"sort_order":"descending", "sort_by":"value"}. @a options can be
+ * used to customize behavior of this call e.g. filtering or sorting the
+ * results. To group by 'x' and 'y' and compute the number of objects within
+ * each group, use column_names=['x','y','count(*)'].  To also compute the sum
+ * of 'z' over each group, use column_names=['x','y','count(*)','sum(z)'].
  * Available aggregation functions are: 'count(*)', 'sum', 'min', 'max', 'avg',
  * 'mean', 'stddev', 'stddev_pop', 'stddev_samp', 'var', 'var_pop' and
- * 'var_samp'.
- * <p>
- * The response is returned as a dynamic schema. For details see: <a
- * href="../../concepts/index.html#dynamic-schemas" target="_top">dynamic
+ * 'var_samp'. The response is returned as a dynamic schema. For details see:
+ * <a href="../../concepts/index.html#dynamic-schemas" target="_top">dynamic
  * schemas documentation</a>.
  * 
  * @param[in] request_  Request object containing the parameters for the
@@ -969,29 +941,22 @@ AggregateGroupByResponse& GPUdb::aggregateGroupBy( const AggregateGroupByRequest
 
 
 /**
- * Calculates unique combinations (i.e. groups) of values for the given columns
- * in a given table/view/collection and computes aggregates on each unique
+ * Calculates unique combinations (groups) of values for the given columns in a
+ * given table/view/collection and computes aggregates on each unique
  * combination. This is somewhat analogous to an SQL-style SELECT...GROUP BY.
  * Any column(s) can be grouped on, but only non-string (i.e. numeric) columns
- * may be used for computing aggregates.
- * <p>
- * The results can be paged via the @a offset and @a limit parameters. For
- * example, to get 10 groups with the largest counts the inputs would be:
- * limit=10, options={"sort_order":"descending", "sort_by":"value"}.
- * <p>
- * @a options can be used to customize behavior of this call e.g. filtering or
- * sorting the results.
- * <p>
- * To group by 'x' and 'y' and compute the number of objects within each group,
- * use column_names=['x','y','count(*)'].  To also compute the sum of 'z' over
- * each group, use column_names=['x','y','count(*)','sum(z)'].
- * <p>
+ * may be used for computing aggregates. The results can be paged via the @a
+ * offset and @a limit parameters. For example, to get 10 groups with the
+ * largest counts the inputs would be: limit=10,
+ * options={"sort_order":"descending", "sort_by":"value"}. @a options can be
+ * used to customize behavior of this call e.g. filtering or sorting the
+ * results. To group by 'x' and 'y' and compute the number of objects within
+ * each group, use column_names=['x','y','count(*)'].  To also compute the sum
+ * of 'z' over each group, use column_names=['x','y','count(*)','sum(z)'].
  * Available aggregation functions are: 'count(*)', 'sum', 'min', 'max', 'avg',
  * 'mean', 'stddev', 'stddev_pop', 'stddev_samp', 'var', 'var_pop' and
- * 'var_samp'.
- * <p>
- * The response is returned as a dynamic schema. For details see: <a
- * href="../../concepts/index.html#dynamic-schemas" target="_top">dynamic
+ * 'var_samp'. The response is returned as a dynamic schema. For details see:
+ * <a href="../../concepts/index.html#dynamic-schemas" target="_top">dynamic
  * schemas documentation</a>.
  * 
  * @param tableName  Name of the table on which the operation will be
@@ -1037,29 +1002,22 @@ AggregateGroupByResponse GPUdb::aggregateGroupBy( const std::string& tableName,
 
 
 /**
- * Calculates unique combinations (i.e. groups) of values for the given columns
- * in a given table/view/collection and computes aggregates on each unique
+ * Calculates unique combinations (groups) of values for the given columns in a
+ * given table/view/collection and computes aggregates on each unique
  * combination. This is somewhat analogous to an SQL-style SELECT...GROUP BY.
  * Any column(s) can be grouped on, but only non-string (i.e. numeric) columns
- * may be used for computing aggregates.
- * <p>
- * The results can be paged via the @a offset and @a limit parameters. For
- * example, to get 10 groups with the largest counts the inputs would be:
- * limit=10, options={"sort_order":"descending", "sort_by":"value"}.
- * <p>
- * @a options can be used to customize behavior of this call e.g. filtering or
- * sorting the results.
- * <p>
- * To group by 'x' and 'y' and compute the number of objects within each group,
- * use column_names=['x','y','count(*)'].  To also compute the sum of 'z' over
- * each group, use column_names=['x','y','count(*)','sum(z)'].
- * <p>
+ * may be used for computing aggregates. The results can be paged via the @a
+ * offset and @a limit parameters. For example, to get 10 groups with the
+ * largest counts the inputs would be: limit=10,
+ * options={"sort_order":"descending", "sort_by":"value"}. @a options can be
+ * used to customize behavior of this call e.g. filtering or sorting the
+ * results. To group by 'x' and 'y' and compute the number of objects within
+ * each group, use column_names=['x','y','count(*)'].  To also compute the sum
+ * of 'z' over each group, use column_names=['x','y','count(*)','sum(z)'].
  * Available aggregation functions are: 'count(*)', 'sum', 'min', 'max', 'avg',
  * 'mean', 'stddev', 'stddev_pop', 'stddev_samp', 'var', 'var_pop' and
- * 'var_samp'.
- * <p>
- * The response is returned as a dynamic schema. For details see: <a
- * href="../../concepts/index.html#dynamic-schemas" target="_top">dynamic
+ * 'var_samp'. The response is returned as a dynamic schema. For details see:
+ * <a href="../../concepts/index.html#dynamic-schemas" target="_top">dynamic
  * schemas documentation</a>.
  * 
  * @param tableName  Name of the table on which the operation will be
@@ -2180,7 +2138,7 @@ AggregateUniqueResponse& GPUdb::aggregateUnique( const std::string& tableName,
 
 /**
  * The alter_system_properties endpoint is primarily used to simplify the
- * testing of gpudb and is not expected to be used during normal execution.
+ * testing of GPUdb and is not expected to be used during normal execution.
  * Commands are given through the properties_update_map whose keys are commands
  * and values are strings representing integer values (for example '8000') or
  * boolean values ('true' or 'false').
@@ -2202,7 +2160,7 @@ AlterSystemPropertiesResponse GPUdb::alterSystemProperties( const AlterSystemPro
 
 /**
  * The alter_system_properties endpoint is primarily used to simplify the
- * testing of gpudb and is not expected to be used during normal execution.
+ * testing of GPUdb and is not expected to be used during normal execution.
  * Commands are given through the properties_update_map whose keys are commands
  * and values are strings representing integer values (for example '8000') or
  * boolean values ('true' or 'false').
@@ -2227,7 +2185,7 @@ AlterSystemPropertiesResponse& GPUdb::alterSystemProperties( const AlterSystemPr
 
 /**
  * The alter_system_properties endpoint is primarily used to simplify the
- * testing of gpudb and is not expected to be used during normal execution.
+ * testing of GPUdb and is not expected to be used during normal execution.
  * Commands are given through the properties_update_map whose keys are commands
  * and values are strings representing integer values (for example '8000') or
  * boolean values ('true' or 'false').
@@ -2254,7 +2212,7 @@ AlterSystemPropertiesResponse GPUdb::alterSystemProperties( const std::map<std::
 
 /**
  * The alter_system_properties endpoint is primarily used to simplify the
- * testing of gpudb and is not expected to be used during normal execution.
+ * testing of GPUdb and is not expected to be used during normal execution.
  * Commands are given through the properties_update_map whose keys are commands
  * and values are strings representing integer values (for example '8000') or
  * boolean values ('true' or 'false').
@@ -2286,8 +2244,8 @@ AlterSystemPropertiesResponse& GPUdb::alterSystemProperties( const std::map<std:
  * Apply various modifications to a table or collection. Available
  * modifications include:
  * <p>
- *      Cereating or deleting an index on a particular column. This can speed
- * up certain search queries (such as {@link
+ *      Creating or deleting an index on a particular column. This can speed up
+ * certain search queries (such as {@link
  * #getRecordsRaw(const GetRecordsRequest&) const}, {@link
  * #deleteRecords(const DeleteRecordsRequest&) const}, {@link
  * #updateRecordsRaw(const RawUpdateRecordsRequest&) const}) when using
@@ -2323,8 +2281,8 @@ AlterTableResponse GPUdb::alterTable( const AlterTableRequest& request_ ) const
  * Apply various modifications to a table or collection. Available
  * modifications include:
  * <p>
- *      Cereating or deleting an index on a particular column. This can speed
- * up certain search queries (such as {@link
+ *      Creating or deleting an index on a particular column. This can speed up
+ * certain search queries (such as {@link
  * #getRecordsRaw(const GetRecordsRequest&,RawGetRecordsResponse&) const},
  * {@link
  * #deleteRecords(const DeleteRecordsRequest&,DeleteRecordsResponse&) const},
@@ -2366,8 +2324,8 @@ AlterTableResponse& GPUdb::alterTable( const AlterTableRequest& request_,
  * Apply various modifications to a table or collection. Available
  * modifications include:
  * <p>
- *      Cereating or deleting an index on a particular column. This can speed
- * up certain search queries (such as {@link
+ *      Creating or deleting an index on a particular column. This can speed up
+ * certain search queries (such as {@link
  * #getRecordsRaw(const GetRecordsRequest&) const}, {@link
  * #deleteRecords(const std::string&,const std::vector<std::string>&,const std::map<std::string, std::string>&) const},
  * {@link #updateRecordsRaw(const RawUpdateRecordsRequest&) const}) when
@@ -2417,8 +2375,8 @@ AlterTableResponse GPUdb::alterTable( const std::string& tableName,
  * Apply various modifications to a table or collection. Available
  * modifications include:
  * <p>
- *      Cereating or deleting an index on a particular column. This can speed
- * up certain search queries (such as {@link
+ *      Creating or deleting an index on a particular column. This can speed up
+ * certain search queries (such as {@link
  * #getRecordsRaw(const GetRecordsRequest&) const}, {@link
  * #deleteRecords(const std::string&,const std::vector<std::string>&,const std::map<std::string, std::string>&,DeleteRecordsResponse&) const},
  * {@link #updateRecordsRaw(const RawUpdateRecordsRequest&) const}) when
@@ -2940,6 +2898,12 @@ CreateJoinTableResponse& GPUdb::createJoinTable( const CreateJoinTableRequest& r
  *                    href="../../concepts/index.html#expressions"
  *                    target="_top">concepts</a>.  Default value is an empty
  *                    string.
+ * @param expressions  An optional list of expression GPUdb uses to filter the
+ *                     join-table being created.  Corresponds to SQL select
+ *                     statement where clause. For details see <a
+ *                     href="../../concepts/index.html#expressions"
+ *                     target="_top">concepts</a>.  Default value is an empty
+ *                     std::vector.
  * @param options  Optional parameters.  Default value is an empty std::map.
  * 
  * @return Response object containing the result of the operation.
@@ -2950,6 +2914,7 @@ CreateJoinTableResponse GPUdb::createJoinTable( const std::string& joinTableName
                                                 const std::vector<std::string>& tableNames,
                                                 const std::vector<std::string>& aliases,
                                                 const std::string& expression,
+                                                const std::vector<std::string>& expressions,
                                                 const std::map<std::string, std::string>& options ) const
 {
     CreateJoinTableRequest actualRequest_;
@@ -2957,6 +2922,7 @@ CreateJoinTableResponse GPUdb::createJoinTable( const std::string& joinTableName
     actualRequest_.tableNames = tableNames;
     actualRequest_.aliases = aliases;
     actualRequest_.expression = expression;
+    actualRequest_.expressions = expressions;
     actualRequest_.options = options;
     CreateJoinTableResponse actualResponse_;
     submitRequest("/create/jointable", actualRequest_, actualResponse_, false);
@@ -2980,6 +2946,12 @@ CreateJoinTableResponse GPUdb::createJoinTable( const std::string& joinTableName
  *                    href="../../concepts/index.html#expressions"
  *                    target="_top">concepts</a>.  Default value is an empty
  *                    string.
+ * @param expressions  An optional list of expression GPUdb uses to filter the
+ *                     join-table being created.  Corresponds to SQL select
+ *                     statement where clause. For details see <a
+ *                     href="../../concepts/index.html#expressions"
+ *                     target="_top">concepts</a>.  Default value is an empty
+ *                     std::vector.
  * @param options  Optional parameters.  Default value is an empty std::map.
  * @param[out] response_  Response object containing the results of the
  *                        operation.
@@ -2993,6 +2965,7 @@ CreateJoinTableResponse& GPUdb::createJoinTable( const std::string& joinTableNam
                                                  const std::vector<std::string>& tableNames,
                                                  const std::vector<std::string>& aliases,
                                                  const std::string& expression,
+                                                 const std::vector<std::string>& expressions,
                                                  const std::map<std::string, std::string>& options,
                                                  CreateJoinTableResponse& response_ ) const
 {
@@ -3001,6 +2974,7 @@ CreateJoinTableResponse& GPUdb::createJoinTable( const std::string& joinTableNam
     actualRequest_.tableNames = tableNames;
     actualRequest_.aliases = aliases;
     actualRequest_.expression = expression;
+    actualRequest_.expressions = expressions;
     actualRequest_.options = options;
     submitRequest("/create/jointable", actualRequest_, response_, false);
     return response_;
@@ -3915,7 +3889,7 @@ CreateTypeResponse& GPUdb::createType( const std::string& typeDefinition,
  * Deletes record(s) matching the provided criteria from the given table. The
  * record selection criteria can either be one or more  @a expressions
  * (matching multiple records) or a single record identified by @a record_id
- * optiona.  Note that the two selection criteria are mutually exclusive.  This
+ * options.  Note that the two selection criteria are mutually exclusive.  This
  * operation cannot be run on a collection or a view.  The operation is
  * synchronous meaning that a response will not be available until the request
  * is completely processed and all the matching records are deleted.
@@ -3939,7 +3913,7 @@ DeleteRecordsResponse GPUdb::deleteRecords( const DeleteRecordsRequest& request_
  * Deletes record(s) matching the provided criteria from the given table. The
  * record selection criteria can either be one or more  @a expressions
  * (matching multiple records) or a single record identified by @a record_id
- * optiona.  Note that the two selection criteria are mutually exclusive.  This
+ * options.  Note that the two selection criteria are mutually exclusive.  This
  * operation cannot be run on a collection or a view.  The operation is
  * synchronous meaning that a response will not be available until the request
  * is completely processed and all the matching records are deleted.
@@ -3966,7 +3940,7 @@ DeleteRecordsResponse& GPUdb::deleteRecords( const DeleteRecordsRequest& request
  * Deletes record(s) matching the provided criteria from the given table. The
  * record selection criteria can either be one or more  @a expressions
  * (matching multiple records) or a single record identified by @a record_id
- * optiona.  Note that the two selection criteria are mutually exclusive.  This
+ * options.  Note that the two selection criteria are mutually exclusive.  This
  * operation cannot be run on a collection or a view.  The operation is
  * synchronous meaning that a response will not be available until the request
  * is completely processed and all the matching records are deleted.
@@ -4002,7 +3976,7 @@ DeleteRecordsResponse GPUdb::deleteRecords( const std::string& tableName,
  * Deletes record(s) matching the provided criteria from the given table. The
  * record selection criteria can either be one or more  @a expressions
  * (matching multiple records) or a single record identified by @a record_id
- * optiona.  Note that the two selection criteria are mutually exclusive.  This
+ * options.  Note that the two selection criteria are mutually exclusive.  This
  * operation cannot be run on a collection or a view.  The operation is
  * synchronous meaning that a response will not be available until the request
  * is completely processed and all the matching records are deleted.
@@ -6461,7 +6435,7 @@ GetRecordsByColumnResponse& GPUdb::getRecordsByColumn( const std::string& tableN
 
 /**
  * Retrieves the complete series/track records from the given @a worldTableName
- * based on the partial track informaton contained in the @a tableName.
+ * based on the partial track information contained in the @a tableName.
  * <p>
  * This operation supports paging through the data via the @a offset and @a
  * limit parameters.
@@ -6489,7 +6463,7 @@ RawGetRecordsBySeriesResponse GPUdb::getRecordsBySeriesRaw( const GetRecordsBySe
 
 /**
  * Retrieves the complete series/track records from the given @a worldTableName
- * based on the partial track informaton contained in the @a tableName.
+ * based on the partial track information contained in the @a tableName.
  * <p>
  * This operation supports paging through the data via the @a offset and @a
  * limit parameters.
@@ -6521,7 +6495,7 @@ RawGetRecordsBySeriesResponse& GPUdb::getRecordsBySeriesRaw( const GetRecordsByS
 
 /**
  * Retrieves the complete series/track records from the given @a worldTableName
- * based on the partial track informaton contained in the @a tableName.
+ * based on the partial track information contained in the @a tableName.
  * <p>
  * This operation supports paging through the data via the @a offset and @a
  * limit parameters.
@@ -6561,7 +6535,7 @@ GetRecordsBySeriesResponse<boost::any> GPUdb::getRecordsBySeries( const GetRecor
 
 /**
  * Retrieves the complete series/track records from the given @a worldTableName
- * based on the partial track informaton contained in the @a tableName.
+ * based on the partial track information contained in the @a tableName.
  * <p>
  * This operation supports paging through the data via the @a offset and @a
  * limit parameters.
@@ -6606,7 +6580,7 @@ GetRecordsBySeriesResponse<boost::any>& GPUdb::getRecordsBySeries( const GetReco
 
 /**
  * Retrieves the complete series/track records from the given @a worldTableName
- * based on the partial track informaton contained in the @a tableName.
+ * based on the partial track information contained in the @a tableName.
  * <p>
  * This operation supports paging through the data via the @a offset and @a
  * limit parameters.
@@ -6674,7 +6648,7 @@ GetRecordsBySeriesResponse<boost::any> GPUdb::getRecordsBySeries( const std::str
 
 /**
  * Retrieves the complete series/track records from the given @a worldTableName
- * based on the partial track informaton contained in the @a tableName.
+ * based on the partial track information contained in the @a tableName.
  * <p>
  * This operation supports paging through the data via the @a offset and @a
  * limit parameters.
@@ -8015,7 +7989,7 @@ ShowSystemTimingResponse& GPUdb::showSystemTiming( const std::map<std::string, s
  * Retrieves detailed information about a particular GPUdb table, specified in
  * @a tableName. If the supplied @a tableName is a collection, the call returns
  * a list of tables contained in the collection, and for each table it returns
- * the description, type id, schema, type label, type propertiess, and
+ * the description, type id, schema, type label, type properties, and
  * additional information including TTL. If @a tableName is empty it will
  * return all top-level tables including all collections and top-level child
  * tables (i.e. tables with no parent).
@@ -8068,7 +8042,7 @@ ShowTableResponse GPUdb::showTable( const ShowTableRequest& request_ ) const
  * Retrieves detailed information about a particular GPUdb table, specified in
  * @a tableName. If the supplied @a tableName is a collection, the call returns
  * a list of tables contained in the collection, and for each table it returns
- * the description, type id, schema, type label, type propertiess, and
+ * the description, type id, schema, type label, type properties, and
  * additional information including TTL. If @a tableName is empty it will
  * return all top-level tables including all collections and top-level child
  * tables (i.e. tables with no parent).
@@ -8124,7 +8098,7 @@ ShowTableResponse& GPUdb::showTable( const ShowTableRequest& request_,
  * Retrieves detailed information about a particular GPUdb table, specified in
  * @a tableName. If the supplied @a tableName is a collection, the call returns
  * a list of tables contained in the collection, and for each table it returns
- * the description, type id, schema, type label, type propertiess, and
+ * the description, type id, schema, type label, type properties, and
  * additional information including TTL. If @a tableName is empty it will
  * return all top-level tables including all collections and top-level child
  * tables (i.e. tables with no parent).
@@ -8183,7 +8157,7 @@ ShowTableResponse GPUdb::showTable( const std::string& tableName,
  * Retrieves detailed information about a particular GPUdb table, specified in
  * @a tableName. If the supplied @a tableName is a collection, the call returns
  * a list of tables contained in the collection, and for each table it returns
- * the description, type id, schema, type label, type propertiess, and
+ * the description, type id, schema, type label, type properties, and
  * additional information including TTL. If @a tableName is empty it will
  * return all top-level tables including all collections and top-level child
  * tables (i.e. tables with no parent).
@@ -9158,7 +9132,7 @@ VisualizeImageClassbreakResponse& GPUdb::visualizeImageClassbreak( const Visuali
  * @param cbColumnName1  Name of the column for the first class break.
  * @param cbVals1  Comma separated list of values or ranges (e.g.
  *                 '0:5,5:10,15:30').
- * @param cbColumnName2  Optional comma seperated list of valid column names.
+ * @param cbColumnName2  Optional comma separated list of valid column names.
  *                       An empty string implies not using more than one column
  *                       for the class break. For a non-empty list, there needs
  *                       to be as many entries in the list as there are classes
@@ -9263,7 +9237,7 @@ VisualizeImageClassbreakResponse GPUdb::visualizeImageClassbreak( const std::vec
  * @param cbColumnName1  Name of the column for the first class break.
  * @param cbVals1  Comma separated list of values or ranges (e.g.
  *                 '0:5,5:10,15:30').
- * @param cbColumnName2  Optional comma seperated list of valid column names.
+ * @param cbColumnName2  Optional comma separated list of valid column names.
  *                       An empty string implies not using more than one column
  *                       for the class break. For a non-empty list, there needs
  *                       to be as many entries in the list as there are classes

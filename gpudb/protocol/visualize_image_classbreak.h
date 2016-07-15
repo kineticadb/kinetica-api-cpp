@@ -77,7 +77,7 @@ namespace gpudb
          *                           break.
          * @param[in] cbVals1  Comma separated list of values or ranges (e.g.
          *                     '0:5,5:10,15:30').
-         * @param[in] cbColumnName2  Optional comma seperated list of valid
+         * @param[in] cbColumnName2  Optional comma separated list of valid
          *                           column names. An empty string implies not
          *                           using more than one column for the class
          *                           break. For a non-empty list, there needs

@@ -15,28 +15,22 @@ namespace gpudb
      * A set of input parameters for {@link
      * #aggregateGroupByRaw(const AggregateGroupByRequest&) const}.
      * <p>
-     * Calculates unique combinations (i.e. groups) of values for the given
-     * columns in a given table/view/collection and computes aggregates on each
-     * unique combination. This is somewhat analogous to an SQL-style
-     * SELECT...GROUP BY. Any column(s) can be grouped on, but only non-string
-     * (i.e. numeric) columns may be used for computing aggregates.
-     * <p>
-     * The results can be paged via the @a offset and @a limit parameters. For
-     * example, to get 10 groups with the largest counts the inputs would be:
-     * limit=10, options={"sort_order":"descending", "sort_by":"value"}.
-     * <p>
-     * @a options can be used to customize behavior of this call e.g. filtering
-     * or sorting the results.
-     * <p>
-     * To group by 'x' and 'y' and compute the number of objects within each
-     * group, use column_names=['x','y','count(*)'].  To also compute the sum
-     * of 'z' over each group, use column_names=['x','y','count(*)','sum(z)'].
-     * <p>
-     * Available aggregation functions are: 'count(*)', 'sum', 'min', 'max',
-     * 'avg', 'mean', 'stddev', 'stddev_pop', 'stddev_samp', 'var', 'var_pop'
-     * and 'var_samp'.
-     * <p>
-     * The response is returned as a dynamic schema. For details see: <a
+     * Calculates unique combinations (groups) of values for the given columns
+     * in a given table/view/collection and computes aggregates on each unique
+     * combination. This is somewhat analogous to an SQL-style SELECT...GROUP
+     * BY. Any column(s) can be grouped on, but only non-string (i.e. numeric)
+     * columns may be used for computing aggregates. The results can be paged
+     * via the @a offset and @a limit parameters. For example, to get 10 groups
+     * with the largest counts the inputs would be: limit=10,
+     * options={"sort_order":"descending", "sort_by":"value"}. @a options can
+     * be used to customize behavior of this call e.g. filtering or sorting the
+     * results. To group by 'x' and 'y' and compute the number of objects
+     * within each group, use column_names=['x','y','count(*)'].  To also
+     * compute the sum of 'z' over each group, use
+     * column_names=['x','y','count(*)','sum(z)']. Available aggregation
+     * functions are: 'count(*)', 'sum', 'min', 'max', 'avg', 'mean', 'stddev',
+     * 'stddev_pop', 'stddev_samp', 'var', 'var_pop' and 'var_samp'. The
+     * response is returned as a dynamic schema. For details see: <a
      * href="../../concepts/index.html#dynamic-schemas" target="_top">dynamic
      * schemas documentation</a>.
      */
@@ -209,28 +203,22 @@ namespace gpudb
      * A set of output parameters for {@link
      * #aggregateGroupByRaw(const AggregateGroupByRequest&) const}.
      * <p>
-     * Calculates unique combinations (i.e. groups) of values for the given
-     * columns in a given table/view/collection and computes aggregates on each
-     * unique combination. This is somewhat analogous to an SQL-style
-     * SELECT...GROUP BY. Any column(s) can be grouped on, but only non-string
-     * (i.e. numeric) columns may be used for computing aggregates.
-     * <p>
-     * The results can be paged via the @a offset and @a limit parameters. For
-     * example, to get 10 groups with the largest counts the inputs would be:
-     * limit=10, options={"sort_order":"descending", "sort_by":"value"}.
-     * <p>
-     * @a options can be used to customize behavior of this call e.g. filtering
-     * or sorting the results.
-     * <p>
-     * To group by 'x' and 'y' and compute the number of objects within each
-     * group, use column_names=['x','y','count(*)'].  To also compute the sum
-     * of 'z' over each group, use column_names=['x','y','count(*)','sum(z)'].
-     * <p>
-     * Available aggregation functions are: 'count(*)', 'sum', 'min', 'max',
-     * 'avg', 'mean', 'stddev', 'stddev_pop', 'stddev_samp', 'var', 'var_pop'
-     * and 'var_samp'.
-     * <p>
-     * The response is returned as a dynamic schema. For details see: <a
+     * Calculates unique combinations (groups) of values for the given columns
+     * in a given table/view/collection and computes aggregates on each unique
+     * combination. This is somewhat analogous to an SQL-style SELECT...GROUP
+     * BY. Any column(s) can be grouped on, but only non-string (i.e. numeric)
+     * columns may be used for computing aggregates. The results can be paged
+     * via the @a offset and @a limit parameters. For example, to get 10 groups
+     * with the largest counts the inputs would be: limit=10,
+     * options={"sort_order":"descending", "sort_by":"value"}. @a options can
+     * be used to customize behavior of this call e.g. filtering or sorting the
+     * results. To group by 'x' and 'y' and compute the number of objects
+     * within each group, use column_names=['x','y','count(*)'].  To also
+     * compute the sum of 'z' over each group, use
+     * column_names=['x','y','count(*)','sum(z)']. Available aggregation
+     * functions are: 'count(*)', 'sum', 'min', 'max', 'avg', 'mean', 'stddev',
+     * 'stddev_pop', 'stddev_samp', 'var', 'var_pop' and 'var_samp'. The
+     * response is returned as a dynamic schema. For details see: <a
      * href="../../concepts/index.html#dynamic-schemas" target="_top">dynamic
      * schemas documentation</a>.
      */
@@ -325,28 +313,22 @@ namespace gpudb
      * A set of output parameters for {@link
      * #aggregateGroupBy(const AggregateGroupByRequest&) const}.
      * <p>
-     * Calculates unique combinations (i.e. groups) of values for the given
-     * columns in a given table/view/collection and computes aggregates on each
-     * unique combination. This is somewhat analogous to an SQL-style
-     * SELECT...GROUP BY. Any column(s) can be grouped on, but only non-string
-     * (i.e. numeric) columns may be used for computing aggregates.
-     * <p>
-     * The results can be paged via the @a offset and @a limit parameters. For
-     * example, to get 10 groups with the largest counts the inputs would be:
-     * limit=10, options={"sort_order":"descending", "sort_by":"value"}.
-     * <p>
-     * @a options can be used to customize behavior of this call e.g. filtering
-     * or sorting the results.
-     * <p>
-     * To group by 'x' and 'y' and compute the number of objects within each
-     * group, use column_names=['x','y','count(*)'].  To also compute the sum
-     * of 'z' over each group, use column_names=['x','y','count(*)','sum(z)'].
-     * <p>
-     * Available aggregation functions are: 'count(*)', 'sum', 'min', 'max',
-     * 'avg', 'mean', 'stddev', 'stddev_pop', 'stddev_samp', 'var', 'var_pop'
-     * and 'var_samp'.
-     * <p>
-     * The response is returned as a dynamic schema. For details see: <a
+     * Calculates unique combinations (groups) of values for the given columns
+     * in a given table/view/collection and computes aggregates on each unique
+     * combination. This is somewhat analogous to an SQL-style SELECT...GROUP
+     * BY. Any column(s) can be grouped on, but only non-string (i.e. numeric)
+     * columns may be used for computing aggregates. The results can be paged
+     * via the @a offset and @a limit parameters. For example, to get 10 groups
+     * with the largest counts the inputs would be: limit=10,
+     * options={"sort_order":"descending", "sort_by":"value"}. @a options can
+     * be used to customize behavior of this call e.g. filtering or sorting the
+     * results. To group by 'x' and 'y' and compute the number of objects
+     * within each group, use column_names=['x','y','count(*)'].  To also
+     * compute the sum of 'z' over each group, use
+     * column_names=['x','y','count(*)','sum(z)']. Available aggregation
+     * functions are: 'count(*)', 'sum', 'min', 'max', 'avg', 'mean', 'stddev',
+     * 'stddev_pop', 'stddev_samp', 'var', 'var_pop' and 'var_samp'. The
+     * response is returned as a dynamic schema. For details see: <a
      * href="../../concepts/index.html#dynamic-schemas" target="_top">dynamic
      * schemas documentation</a>.
      */

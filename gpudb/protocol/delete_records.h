@@ -16,7 +16,7 @@ namespace gpudb
      * Deletes record(s) matching the provided criteria from the given table.
      * The record selection criteria can either be one or more  @a expressions
      * (matching multiple records) or a single record identified by @a
-     * record_id optiona.  Note that the two selection criteria are mutually
+     * record_id options.  Note that the two selection criteria are mutually
      * exclusive.  This operation cannot be run on a collection or a view.  The
      * operation is synchronous meaning that a response will not be available
      * until the request is completely processed and all the matching records
@@ -124,7 +124,7 @@ namespace gpudb
      * Deletes record(s) matching the provided criteria from the given table.
      * The record selection criteria can either be one or more  @a expressions
      * (matching multiple records) or a single record identified by @a
-     * record_id optiona.  Note that the two selection criteria are mutually
+     * record_id options.  Note that the two selection criteria are mutually
      * exclusive.  This operation cannot be run on a collection or a view.  The
      * operation is synchronous meaning that a response will not be available
      * until the request is completely processed and all the matching records
