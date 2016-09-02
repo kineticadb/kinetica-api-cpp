@@ -6,24 +6,24 @@
 #ifndef __VISUALIZE_IMAGE_HEATMAP_H__
 #define __VISUALIZE_IMAGE_HEATMAP_H__
 
+    /**
+     * @private
+     */
+
 namespace gpudb
 {
 
     /**
+     * @private
      * A set of input parameters for {@link
      * #visualizeImageHeatmap(const VisualizeImageHeatmapRequest&) const}.
      * <p>
-     * Generates rasterized heatmap image tiles for an area of interest using
-     * the given tables and the provided parameters.
-     * <p>
-     * All color values must be in the format RRGGBB or AARRGGBB (to specify
-     * the alpha value).
-     * The heatmap image is contained in the @a imageData field.
      */
     struct VisualizeImageHeatmapRequest
     {
 
         /**
+         * @private
          * Constructs a VisualizeImageHeatmapRequest object with default
          * parameter values.
          */
@@ -45,27 +45,23 @@ namespace gpudb
         }
 
         /**
+         * @private
          * Constructs a VisualizeImageHeatmapRequest object with the specified
          * parameters.
          * 
-         * @param[in] tableNames  Name of the table containing the data for the
-         *                        various layers to be rendered.
-         * @param[in] xColumnName  Name of the column containing the x
-         *                         coordinates.
-         * @param[in] yColumnName  Name of the column containing the y
-         *                         coordinates.
+         * @param[in] tableNames
+         * @param[in] xColumnName
+         * @param[in] yColumnName
          * @param[in] valueColumnName
-         * @param[in] minX  Lower bound for the x values.
-         * @param[in] maxX  Upper bound for the x values.
-         * @param[in] minY  Lower bound for the y values.
-         * @param[in] maxY  Upper bound for the y values.
-         * @param[in] width  Width of the generated image.
-         * @param[in] height  Height of the generated image.
-         * @param[in] projection  Spatial Reference System (i.e. EPSG Code).
-         *                        Default value is 'PLATE_CARREE'.
-         * @param[in] styleOptions  Various style related options.
-         * @param[in] options  Optional parameters.  Default value is an empty
-         *                     std::map.
+         * @param[in] minX
+         * @param[in] maxX
+         * @param[in] minY
+         * @param[in] maxY
+         * @param[in] width
+         * @param[in] height
+         * @param[in] projection
+         * @param[in] styleOptions
+         * @param[in] options
          * 
          */
         VisualizeImageHeatmapRequest(const std::vector<std::string>& tableNames, const std::string& xColumnName, const std::string& yColumnName, const std::string& valueColumnName, const double minX, const double maxX, const double minY, const double maxY, const int32_t width, const int32_t height, const std::string& projection, const std::map<std::string, std::string>& styleOptions, const std::map<std::string, std::string>& options):
@@ -85,6 +81,10 @@ namespace gpudb
         {
         }
 
+    /**
+     * @private
+     */
+
         std::vector<std::string> tableNames;
         std::string xColumnName;
         std::string yColumnName;
@@ -100,6 +100,10 @@ namespace gpudb
         std::map<std::string, std::string> options;
     };
 }
+
+    /**
+     * @private
+     */
 
 namespace avro
 {
@@ -209,24 +213,24 @@ namespace avro
     };
 }
 
+    /**
+     * @private
+     */
+
 namespace gpudb
 {
 
     /**
+     * @private
      * A set of output parameters for {@link
      * #visualizeImageHeatmap(const VisualizeImageHeatmapRequest&) const}.
      * <p>
-     * Generates rasterized heatmap image tiles for an area of interest using
-     * the given tables and the provided parameters.
-     * <p>
-     * All color values must be in the format RRGGBB or AARRGGBB (to specify
-     * the alpha value).
-     * The heatmap image is contained in the @a imageData field.
      */
     struct VisualizeImageHeatmapResponse
     {
 
         /**
+         * @private
          * Constructs a VisualizeImageHeatmapResponse object with default
          * parameter values.
          */
@@ -238,12 +242,20 @@ namespace gpudb
         {
         }
 
+    /**
+     * @private
+     */
+
         int32_t width;
         int32_t height;
         int64_t bgColor;
         std::vector<uint8_t> imageData;
     };
 }
+
+    /**
+     * @private
+     */
 
 namespace avro
 {

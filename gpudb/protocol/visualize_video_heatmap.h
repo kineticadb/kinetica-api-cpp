@@ -6,51 +6,24 @@
 #ifndef __VISUALIZE_VIDEO_HEATMAP_H__
 #define __VISUALIZE_VIDEO_HEATMAP_H__
 
+    /**
+     * @private
+     */
+
 namespace gpudb
 {
 
     /**
+     * @private
      * A set of input parameters for {@link
      * #visualizeVideoHeatmap(const VisualizeVideoHeatmapRequest&) const}.
      * <p>
-     * Creates raster heat-map images of table data based on input parameters.
-     * Numerous parameters are required to call this function. Some of the
-     * important parameters are the attributes of the generated images (@a
-     * bg_color, @a width, @a height), the collection of GPUdb table names on
-     * which this function is to be applied and a user specified session key.
-     * This session key is later used to fetch the generated images stored by
-     * GPUdb. The operation is synchronous meaning that GPUdb will not return
-     * the request until all the images are fully available.
-     * <p>
-     * Once the request has been processed then the generated video frames are
-     * available for download via WMS using STYLES=cached. In this request the
-     * LAYERS parameter should be populated with the session key passed in @a
-     * sessionKey of the visualize video request and the FRAME parameter
-     * indicates which 0-based frame of the video should be returned. All other
-     * WMS parameters are ignored for this mode.
-     * <p>
-     * For instance, if a 20 frame video with the session key 'MY-SESSION-KEY'
-     * was generated, the first frame could be retrieved with the URL::
-     * <p>
-     *      http://<gpudb-ip-
-     * address>:9191/wms?REQUEST=GetMap&STYLES=cached&LAYERS=MY-SESSION-
-     * KEY&FRAME=0
-     * <p>
-     * and the last frame could be retrieved with::
-     * <p>
-     *     http://gpudb-ip-address:9191/wms?REQUEST=GetMap&STYLES=cached&LAYERS
-     * =MY-SESSION-KEY&FRAME=19
-     * <p>
-
-     * <p>
-
-     * The response payload provides among other things the number of frames
-     * which were created by GPUdb.
      */
     struct VisualizeVideoHeatmapRequest
     {
 
         /**
+         * @private
          * Constructs a VisualizeVideoHeatmapRequest object with default
          * parameter values.
          */
@@ -74,30 +47,25 @@ namespace gpudb
         }
 
         /**
+         * @private
          * Constructs a VisualizeVideoHeatmapRequest object with the specified
          * parameters.
          * 
-         * @param[in] tableNames  Names of the tables containing the data for
-         *                        various layers of the resulting video
-         * @param[in] xColumnName  Name of the column containing the x
-         *                         coordinates.
-         * @param[in] yColumnName  Name of the column containing the y
-         *                         coordinates.
-         * @param[in] minX  Lower bound for the x values.
-         * @param[in] maxX  Upper bound for the x values.
-         * @param[in] minY  Lower bound for the y values.
-         * @param[in] maxY  Upper bound for the y values.
+         * @param[in] tableNames
+         * @param[in] xColumnName
+         * @param[in] yColumnName
+         * @param[in] minX
+         * @param[in] maxX
+         * @param[in] minY
+         * @param[in] maxY
          * @param[in] timeIntervals
-         * @param[in] width  Width of the generated video.
-         * @param[in] height  Height of the generated video.
-         * @param[in] projection  Spatial Reference System (i.e. EPSG Code).
-         *                        Default value is 'PLATE_CARREE'.
+         * @param[in] width
+         * @param[in] height
+         * @param[in] projection
          * @param[in] videoStyle
-         * @param[in] sessionKey  User Provided session key that is later used
-         *                        to retrieve the generated video from the WMS.
-         * @param[in] styleOptions  Various style related options.
-         * @param[in] options  Optional parameters.  Default value is an empty
-         *                     std::map.
+         * @param[in] sessionKey
+         * @param[in] styleOptions
+         * @param[in] options
          * 
          */
         VisualizeVideoHeatmapRequest(const std::vector<std::string>& tableNames, const std::string& xColumnName, const std::string& yColumnName, const double minX, const double maxX, const double minY, const double maxY, const std::vector<std::vector<double> >& timeIntervals, const int32_t width, const int32_t height, const std::string& projection, const std::string& videoStyle, const std::string& sessionKey, const std::map<std::string, std::string>& styleOptions, const std::map<std::string, std::string>& options):
@@ -119,6 +87,10 @@ namespace gpudb
         {
         }
 
+    /**
+     * @private
+     */
+
         std::vector<std::string> tableNames;
         std::string xColumnName;
         std::string yColumnName;
@@ -136,6 +108,10 @@ namespace gpudb
         std::map<std::string, std::string> options;
     };
 }
+
+    /**
+     * @private
+     */
 
 namespace avro
 {
@@ -257,51 +233,24 @@ namespace avro
     };
 }
 
+    /**
+     * @private
+     */
+
 namespace gpudb
 {
 
     /**
+     * @private
      * A set of output parameters for {@link
      * #visualizeVideoHeatmap(const VisualizeVideoHeatmapRequest&) const}.
      * <p>
-     * Creates raster heat-map images of table data based on input parameters.
-     * Numerous parameters are required to call this function. Some of the
-     * important parameters are the attributes of the generated images (@a
-     * bg_color, @a width, @a height), the collection of GPUdb table names on
-     * which this function is to be applied and a user specified session key.
-     * This session key is later used to fetch the generated images stored by
-     * GPUdb. The operation is synchronous meaning that GPUdb will not return
-     * the request until all the images are fully available.
-     * <p>
-     * Once the request has been processed then the generated video frames are
-     * available for download via WMS using STYLES=cached. In this request the
-     * LAYERS parameter should be populated with the session key passed in @a
-     * sessionKey of the visualize video request and the FRAME parameter
-     * indicates which 0-based frame of the video should be returned. All other
-     * WMS parameters are ignored for this mode.
-     * <p>
-     * For instance, if a 20 frame video with the session key 'MY-SESSION-KEY'
-     * was generated, the first frame could be retrieved with the URL::
-     * <p>
-     *      http://<gpudb-ip-
-     * address>:9191/wms?REQUEST=GetMap&STYLES=cached&LAYERS=MY-SESSION-
-     * KEY&FRAME=0
-     * <p>
-     * and the last frame could be retrieved with::
-     * <p>
-     *     http://gpudb-ip-address:9191/wms?REQUEST=GetMap&STYLES=cached&LAYERS
-     * =MY-SESSION-KEY&FRAME=19
-     * <p>
-
-     * <p>
-
-     * The response payload provides among other things the number of frames
-     * which were created by GPUdb.
      */
     struct VisualizeVideoHeatmapResponse
     {
 
         /**
+         * @private
          * Constructs a VisualizeVideoHeatmapResponse object with default
          * parameter values.
          */
@@ -315,6 +264,10 @@ namespace gpudb
         {
         }
 
+    /**
+     * @private
+     */
+
         double width;
         double height;
         int64_t bgColor;
@@ -323,6 +276,10 @@ namespace gpudb
         std::vector<std::vector<uint8_t> > data;
     };
 }
+
+    /**
+     * @private
+     */
 
 namespace avro
 {

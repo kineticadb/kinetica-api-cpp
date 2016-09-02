@@ -82,6 +82,12 @@ namespace gpudb
          *                      start+interval``*``(i+1)).
          * @param[in] options  Map of optional parameters:  Default value is an
          *                     empty std::map.
+         * <ul>
+         *     <li>additional_column_names: A list of comma separated value-column names over which statistics can be accumulated along with the primary value_column.  
+         *     <li>bin_values: A list of comma separated binning-column values. Values that match the nth bin_values value are placed in the nth bin.  
+         *     <li>weight_column_name: Name of the column used as weighting column for the weighted_average statistic.  
+         *     <li>order_column_name: Name of the column used for candlestick charting techniques.  
+         * </ul>
          * 
          */
         AggregateStatisticsByRangeRequest(const std::string& tableName, const std::string& selectExpression, const std::string& columnName, const std::string& valueColumnName, const std::string& stats, const double start, const double end, const double interval, const std::map<std::string, std::string>& options):

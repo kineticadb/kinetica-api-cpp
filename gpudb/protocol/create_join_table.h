@@ -13,8 +13,9 @@ namespace gpudb
      * A set of input parameters for {@link
      * #createJoinTable(const CreateJoinTableRequest&) const}.
      * <p>
-     * Creates a joint_table which is a list of tables and aliases for those
-     * tables.
+     * Creates a table that is the result of a SQL JOIN.  For details see: <a
+     * href="../../concepts/index.html#joins" target="_top">join concept
+     * documentation</a>.
      */
     struct CreateJoinTableRequest
     {
@@ -37,31 +38,38 @@ namespace gpudb
          * Constructs a CreateJoinTableRequest object with the specified
          * parameters.
          * 
-         * @param[in] joinTableName  Name of the join_table to be created. Must
+         * @param[in] joinTableName  Name of the join table to be created. Must
          *                           not be the name of a currently existing
-         *                           GPUdb table or join_table. Cannot be an
+         *                           GPUdb table or join table. Cannot be an
          *                           empty string.
          * @param[in] tableNames  The list of table names making up the joined
-         *                        set.  Corresponds to SQL statement from
+         *                        set.  Corresponds to a SQL statement FROM
          *                        clause
          * @param[in] aliases  The list of aliases for each of the
          *                     corresponding tables.
-         * @param[in] expression  An optional expression GPUdb uses to filter
-         *                        the join-table being created.  Corresponds to
-         *                        SQL select statement where clause. For
-         *                        details see <a
+         * @param[in] expression  An optional expression GPUdb uses to combine
+         *                        and filter the joined set.  Corresponds to a
+         *                        SQL statement WHERE clause. For details see:
+         *                        <a
          *                        href="../../concepts/index.html#expressions"
-         *                        target="_top">concepts</a>.  Default value is
-         *                        an empty string.
-         * @param[in] expressions  An optional list of expression GPUdb uses to
-         *                         filter the join-table being created.
-         *                         Corresponds to SQL select statement where
-         *                         clause. For details see <a
+         *                        target="_top">expressions</a>.  Default value
+         *                        is an empty string.
+         * @param[in] expressions  An optional list of expressions GPUdb uses
+         *                         to combine and filter the joined set.
+         *                         Corresponds to a SQL statement WHERE clause.
+         *                         For details see: <a
          *                         href="../../concepts/index.html#expressions"
-         *                         target="_top">concepts</a>.  Default value
-         *                         is an empty std::vector.
+         *                         target="_top">expressions</a>.  Default
+         *                         value is an empty std::vector.
          * @param[in] options  Optional parameters.  Default value is an empty
          *                     std::map.
+         * <ul>
+         *     <li>collection_name: Name of a collection in GPUdb to which the join table is to be assigned as a child table. If empty, then the join table will be a top level table.  Default value is an empty string. 
+         *     <li>max_query_dimensions: The maximum number of tables in a joined table that can be accessed by a query and are not equated by a foreign-key to primary-key equality predicate  
+         *     <li>optimize_lookups: Use the applied filters to precalculate the lookup table to get data from the primary key sets  
+         *     <li>refresh_method: Method by which the join table can be refreshed when underlying member tables have changed.  Default value is 'manual'. 
+         *     <li>refresh: Do a manual refresh of the join table if it exists - throws an error otherwise  Default value is 'no_refresh'. 
+         * </ul>
          * 
          */
         CreateJoinTableRequest(const std::string& joinTableName, const std::vector<std::string>& tableNames, const std::vector<std::string>& aliases, const std::string& expression, const std::vector<std::string>& expressions, const std::map<std::string, std::string>& options):
@@ -156,8 +164,9 @@ namespace gpudb
      * A set of output parameters for {@link
      * #createJoinTable(const CreateJoinTableRequest&) const}.
      * <p>
-     * Creates a joint_table which is a list of tables and aliases for those
-     * tables.
+     * Creates a table that is the result of a SQL JOIN.  For details see: <a
+     * href="../../concepts/index.html#joins" target="_top">join concept
+     * documentation</a>.
      */
     struct CreateJoinTableResponse
     {

@@ -58,6 +58,14 @@ namespace gpudb
          *                    *is_collection* is 'true'.
          * @param[in] options  Optional parameters.  Default value is an empty
          *                     std::map.
+         * <ul>
+         *     <li>no_error_if_exists: If @a true, prevents an error from occurring if the table already exists and is of the given type.  If a table with the same ID but a different type exists, it is still an error.  Default value is 'false'. values:TRUE, FALSE
+         *     <li>collection_name: Name of a collection in GPUdb to which the newly created table is to be assigned as a child table. If empty, then the newly created table will be a top level table. If the collection does not allow duplicate children, then this table creation request will fail if there is an existing child table with the same type id specified in this request.  Default value is an empty string. 
+         *     <li>is_collection: Indicates whether the new table to be created will be a collection. If false, the created table will be a top level table.  Default value is 'false'. values:TRUE, FALSE
+         *     <li>disallow_homogeneous_tables: For a collection, indicates whether multiple children of exactly the same data type will be allowed.  Default value is 'false'. values:TRUE, FALSE
+         *     <li>is_replicated: For a Table, this is an indication to GPUdb to replicate the table to all the ranks. This is only required when the table will be used to join with other tables in a query.  Default value is 'false'. values:TRUE, FALSE
+         *     <li>foreign_keys: Semicolon-separated list of foreign key constraints, of the format 'my_field references primary_table(primary_key_field)'.  Default value is an empty string. 
+         * </ul>
          * 
          */
         CreateTableRequest(const std::string& tableName, const std::string& typeId, const std::map<std::string, std::string>& options):

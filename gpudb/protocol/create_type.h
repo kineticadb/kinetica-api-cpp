@@ -84,6 +84,8 @@ namespace gpudb
          *                        empty std::map.
          * @param[in] options  Optional parameters.  Default value is an empty
          *                     std::map.
+         * <ul>
+         * </ul>
          * 
          */
         CreateTypeRequest(const std::string& typeDefinition, const std::string& label, const std::map<std::string, std::vector<std::string> >& properties, const std::map<std::string, std::string>& options):

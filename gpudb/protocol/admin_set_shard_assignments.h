@@ -6,10 +6,15 @@
 #ifndef __ADMIN_SET_SHARD_ASSIGNMENTS_H__
 #define __ADMIN_SET_SHARD_ASSIGNMENTS_H__
 
+    /**
+     * @private
+     */
+
 namespace gpudb
 {
 
     /**
+     * @private
      * A set of input parameters for {@link
      * #adminSetShardAssignments(const AdminSetShardAssignmentsRequest&) const}.
      * <p>
@@ -18,6 +23,7 @@ namespace gpudb
     {
 
         /**
+         * @private
          * Constructs an AdminSetShardAssignmentsRequest object with default
          * parameter values.
          */
@@ -32,6 +38,7 @@ namespace gpudb
         }
 
         /**
+         * @private
          * Constructs an AdminSetShardAssignmentsRequest object with the
          * specified parameters.
          * 
@@ -40,8 +47,7 @@ namespace gpudb
          * @param[in] shardAssignmentsRank
          * @param[in] shardAssignmentsTom
          * @param[in] assignmentIndex
-         * @param[in] options  Optional parameters.  Default value is an empty
-         *                     std::map.
+         * @param[in] options
          * 
          */
         AdminSetShardAssignmentsRequest(const int64_t version, const bool partialReassignment, const std::vector<int32_t>& shardAssignmentsRank, const std::vector<int32_t>& shardAssignmentsTom, const std::vector<int32_t>& assignmentIndex, const std::map<std::string, std::string>& options):
@@ -54,6 +60,10 @@ namespace gpudb
         {
         }
 
+    /**
+     * @private
+     */
+
         int64_t version;
         bool partialReassignment;
         std::vector<int32_t> shardAssignmentsRank;
@@ -62,6 +72,10 @@ namespace gpudb
         std::map<std::string, std::string> options;
     };
 }
+
+    /**
+     * @private
+     */
 
 namespace avro
 {
@@ -129,10 +143,15 @@ namespace avro
     };
 }
 
+    /**
+     * @private
+     */
+
 namespace gpudb
 {
 
     /**
+     * @private
      * A set of output parameters for {@link
      * #adminSetShardAssignments(const AdminSetShardAssignmentsRequest&) const}.
      * <p>
@@ -141,6 +160,7 @@ namespace gpudb
     {
 
         /**
+         * @private
          * Constructs an AdminSetShardAssignmentsResponse object with default
          * parameter values.
          */
@@ -149,9 +169,17 @@ namespace gpudb
         {
         }
 
+    /**
+     * @private
+     */
+
         int64_t version;
     };
 }
+
+    /**
+     * @private
+     */
 
 namespace avro
 {

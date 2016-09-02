@@ -29,10 +29,14 @@ namespace gpudb
      * compute the sum of 'z' over each group, use
      * column_names=['x','y','count(*)','sum(z)']. Available aggregation
      * functions are: 'count(*)', 'sum', 'min', 'max', 'avg', 'mean', 'stddev',
-     * 'stddev_pop', 'stddev_samp', 'var', 'var_pop' and 'var_samp'. The
-     * response is returned as a dynamic schema. For details see: <a
-     * href="../../concepts/index.html#dynamic-schemas" target="_top">dynamic
-     * schemas documentation</a>.
+     * 'stddev_pop', 'stddev_samp', 'var', 'var_pop', 'var_samp' and
+     * 'count_distinct'. Note that 'count_distinct' can only be used if there
+     * are no provided grouping columns. The response is returned as a dynamic
+     * schema. For details see: <a href="../../concepts/index.html#dynamic-
+     * schemas" target="_top">dynamic schemas documentation</a>. If the
+     * 'result_table' option is provided then the results are stored in a table
+     * with the name given in the option and the results are not returned in
+     * the response.
      */
     struct AggregateGroupByRequest
     {
@@ -73,6 +77,13 @@ namespace gpudb
          *                   returned.  Default value is 1000.
          * @param[in] options  Optional parameters.  Default value is an empty
          *                     std::map.
+         * <ul>
+         *     <li>expression: Filter expression to apply to the table prior to computing the aggregate group by.  
+         *     <li>having: Filter expression to apply to the aggregated results.  
+         *     <li>sort_order: String indicating how the returned values should be sorted - ascending or descending.  Default value is 'ascending'. values:ASCENDING, DESCENDING
+         *     <li>sort_by: String determining how the results are sorted.  Default value is 'key'. values:KEY, VALUE
+         *     <li>result_table: The name of the table used to store the results. If present no results are returned in the response.  
+         * </ul>
          * 
          */
         AggregateGroupByRequest(const std::string& tableName, const std::vector<std::string>& columnNames, const int64_t offset, const int64_t limit, const std::map<std::string, std::string>& options):
@@ -109,6 +120,13 @@ namespace gpudb
          *                      Default value is 'binary'.
          * @param[in] options  Optional parameters.  Default value is an empty
          *                     std::map.
+         * <ul>
+         *     <li>expression: Filter expression to apply to the table prior to computing the aggregate group by.  
+         *     <li>having: Filter expression to apply to the aggregated results.  
+         *     <li>sort_order: String indicating how the returned values should be sorted - ascending or descending.  Default value is 'ascending'. values:ASCENDING, DESCENDING
+         *     <li>sort_by: String determining how the results are sorted.  Default value is 'key'. values:KEY, VALUE
+         *     <li>result_table: The name of the table used to store the results. If present no results are returned in the response.  
+         * </ul>
          * 
          */
         AggregateGroupByRequest(const std::string& tableName, const std::vector<std::string>& columnNames, const int64_t offset, const int64_t limit, const std::string& encoding, const std::map<std::string, std::string>& options):
@@ -217,10 +235,14 @@ namespace gpudb
      * compute the sum of 'z' over each group, use
      * column_names=['x','y','count(*)','sum(z)']. Available aggregation
      * functions are: 'count(*)', 'sum', 'min', 'max', 'avg', 'mean', 'stddev',
-     * 'stddev_pop', 'stddev_samp', 'var', 'var_pop' and 'var_samp'. The
-     * response is returned as a dynamic schema. For details see: <a
-     * href="../../concepts/index.html#dynamic-schemas" target="_top">dynamic
-     * schemas documentation</a>.
+     * 'stddev_pop', 'stddev_samp', 'var', 'var_pop', 'var_samp' and
+     * 'count_distinct'. Note that 'count_distinct' can only be used if there
+     * are no provided grouping columns. The response is returned as a dynamic
+     * schema. For details see: <a href="../../concepts/index.html#dynamic-
+     * schemas" target="_top">dynamic schemas documentation</a>. If the
+     * 'result_table' option is provided then the results are stored in a table
+     * with the name given in the option and the results are not returned in
+     * the response.
      */
     struct RawAggregateGroupByResponse
     {
@@ -327,10 +349,14 @@ namespace gpudb
      * compute the sum of 'z' over each group, use
      * column_names=['x','y','count(*)','sum(z)']. Available aggregation
      * functions are: 'count(*)', 'sum', 'min', 'max', 'avg', 'mean', 'stddev',
-     * 'stddev_pop', 'stddev_samp', 'var', 'var_pop' and 'var_samp'. The
-     * response is returned as a dynamic schema. For details see: <a
-     * href="../../concepts/index.html#dynamic-schemas" target="_top">dynamic
-     * schemas documentation</a>.
+     * 'stddev_pop', 'stddev_samp', 'var', 'var_pop', 'var_samp' and
+     * 'count_distinct'. Note that 'count_distinct' can only be used if there
+     * are no provided grouping columns. The response is returned as a dynamic
+     * schema. For details see: <a href="../../concepts/index.html#dynamic-
+     * schemas" target="_top">dynamic schemas documentation</a>. If the
+     * 'result_table' option is provided then the results are stored in a table
+     * with the name given in the option and the results are not returned in
+     * the response.
      */
     struct AggregateGroupByResponse
     {

@@ -58,7 +58,8 @@ int main(int argc, char* argv[])
     std::vector<std::string> aliases;
     aliases.push_back("A");
     aliases.push_back("B");
-    gpudb.createJoinTable("JoinTestC", joinTables, aliases, "A.A = B.B", options);
+    std::vector<std::string> expressions;
+    gpudb.createJoinTable("JoinTestC", joinTables, aliases, "A.A = B.B", expressions, options);
 
     std::vector<std::string> columnNames;
     columnNames.push_back("A.A");

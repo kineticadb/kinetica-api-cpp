@@ -6,37 +6,24 @@
 #ifndef __VISUALIZE_IMAGE_LABELS_H__
 #define __VISUALIZE_IMAGE_LABELS_H__
 
+    /**
+     * @private
+     */
+
 namespace gpudb
 {
 
     /**
+     * @private
      * A set of input parameters for {@link
      * #visualizeImageLabels(const VisualizeImageLabelsRequest&) const}.
      * <p>
-     * Generates a rasterized image tile containing text labels defined by data
-     * contained in the given table, suitable for overlaying onto a feature
-     * image tile covering the same area (for example one generated using
-     * {@link #visualizeImage(const VisualizeImageRequest&) const}).
-     * <p>
-     * All color values must be integers encoded in the format RRGGBB or
-     * AARRGGBB (to specify the alpha value) when represented in hexadecimal;
-     * although note that literal color values must be specified in base 10,
-     * not hexadecimal.
-     * <p>
-     * Fonts are specified as strings of the form 'FAMILY STYLE-OPTIONS SIZE',
-     * where FAMILY is the font family, STYLE-OPTIONS is a whitespace separated
-     * list of words defining style, variant, weight, stretch, or gravity, and
-     * SIZE is a decimal number (size in points) or optionally followed by the
-     * unit modifier 'px' for absolute size. All three sub-fields are optional;
-     * default values will be used for omitted sub-fields. (For example,
-     * 'Helvetica Bold Italic 10' specifies Helvetica, Bold and Italic, 10
-     * points.) A substitute font will be used if a requested font is not
-     * installed.
      */
     struct VisualizeImageLabelsRequest
     {
 
         /**
+         * @private
          * Constructs a VisualizeImageLabelsRequest object with default
          * parameter values.
          */
@@ -70,100 +57,35 @@ namespace gpudb
         }
 
         /**
+         * @private
          * Constructs a VisualizeImageLabelsRequest object with the specified
          * parameters.
          * 
-         * @param[in] tableName  Name of the table containing the data defining
-         *                       the labels to render.
-         * @param[in] xColumnName  Name of the column containing the x
-         *                         coordinates of the center points of the
-         *                         labels.
-         * @param[in] yColumnName  Name of the column containing the y
-         *                         coordinates of the center points of the
-         *                         labels.
-         * @param[in] xOffset  Either the name of an integer column, or a
-         *                     single literal integer value, defining the
-         *                     number of output pixels by which the labels will
-         *                     be offset horizontally from their specified x
-         *                     coordinates. If blank, an offset of 0 will be
-         *                     used.
-         * @param[in] yOffset  Either the name of an integer column, or a
-         *                     single literal integer value, defining the
-         *                     number of output pixels by which the labels will
-         *                     be offset vertically from their specified y
-         *                     coordinates. If blank, an offset of 0 will be
-         *                     used.
-         * @param[in] textString  Either the name of a string column, or a
-         *                        single literal string value (enclosed in
-         *                        double quotes), defining the text for the
-         *                        labels.
-         * @param[in] font  Either the name of a string column, or a single
-         *                  literal string value (enclosed in double quotes),
-         *                  defining the fonts for the labels.
-         * @param[in] textColor  Either the name of an integer column, or a
-         *                       single literal integer value, defining the
-         *                       text color for the labels. If blank, opaque
-         *                       black will be used.
-         * @param[in] textAngle  Either the name of a numeric column, or a
-         *                       single literal numeric value, defining the
-         *                       angle of clockwise rotation (in degrees) for
-         *                       the labels. If blank, an angle of 0 will be
-         *                       used.
-         * @param[in] textScale  Either the name of a numeric column, or a
-         *                       single literal numeric value, defining the
-         *                       scaling factor for the labels. (1 is normal
-         *                       size, 0.5 is half size, 2 is double size,
-         *                       etc.) If blank, a scaling factor of 1 will be
-         *                       used.
-         * @param[in] drawBox  Either the name of an integer column, or a
-         *                     single literal integer value, defining a Boolean
-         *                     flag indicating whether boxes will be drawn
-         *                     around the labels. If blank, no boxes will be
-         *                     drawn.
-         * @param[in] drawLeader  Either the name of an integer column, or a
-         *                        single literal integer value, defining a
-         *                        Boolean flag indicating whether leader lines
-         *                        will be drawn from the labels to points
-         *                        specified using @a leaderXColumnName and @a
-         *                        leaderYColumnName. If blank, no leader lines
-         *                        will be drawn.
-         * @param[in] lineWidth  Either the name of a numeric column, or a
-         *                       single literal numeric value, defining the
-         *                       line width in output pixels for the labels'
-         *                       boxes and leader lines. If blank, a line width
-         *                       of 1 will be used.
-         * @param[in] lineColor  Either the name of an integer column, or a
-         *                       single literal integer value, defining the
-         *                       line color for the labels' boxes and leader
-         *                       lines. If blank, opaque black will be used.
-         * @param[in] fillColor  Either the name of an integer column, or a
-         *                       single literal integer value, defining the
-         *                       fill color for the labels' boxes. If blank,
-         *                       the boxes will not be filled.
-         * @param[in] leaderXColumnName  Name of the column containing the x
-         *                               coordinates of the points to which the
-         *                               labels' leader lines will be drawn.
-         *                               May be left blank if no leader lines
-         *                               are to be drawn.
-         * @param[in] leaderYColumnName  Name of the column containing the y
-         *                               coordinates of the points to which the
-         *                               labels' leader lines will be drawn.
-         *                               May be left blank if no leader lines
-         *                               are to be drawn.
-         * @param[in] minX  Lower bound for the x coordinates of labels to
-         *                  include in the image.
-         * @param[in] maxX  Upper bound for the x coordinates of labels to
-         *                  include in the image.
-         * @param[in] minY  Lower bound for the y coordinates of labels to
-         *                  include in the image.
-         * @param[in] maxY  Upper bound for the y coordinates of labels to
-         *                  include in the image.
-         * @param[in] width  Width of the generated image.
-         * @param[in] height  Height of the generated image.
-         * @param[in] projection  Spatial Reference System (i.e. EPSG Code).
-         *                        Default value is 'PLATE_CARREE'.
-         * @param[in] options  Optional parameters.  Default value is an empty
-         *                     std::map.
+         * @param[in] tableName
+         * @param[in] xColumnName
+         * @param[in] yColumnName
+         * @param[in] xOffset
+         * @param[in] yOffset
+         * @param[in] textString
+         * @param[in] font
+         * @param[in] textColor
+         * @param[in] textAngle
+         * @param[in] textScale
+         * @param[in] drawBox
+         * @param[in] drawLeader
+         * @param[in] lineWidth
+         * @param[in] lineColor
+         * @param[in] fillColor
+         * @param[in] leaderXColumnName
+         * @param[in] leaderYColumnName
+         * @param[in] minX
+         * @param[in] maxX
+         * @param[in] minY
+         * @param[in] maxY
+         * @param[in] width
+         * @param[in] height
+         * @param[in] projection
+         * @param[in] options
          * 
          */
         VisualizeImageLabelsRequest(const std::string& tableName, const std::string& xColumnName, const std::string& yColumnName, const std::string& xOffset, const std::string& yOffset, const std::string& textString, const std::string& font, const std::string& textColor, const std::string& textAngle, const std::string& textScale, const std::string& drawBox, const std::string& drawLeader, const std::string& lineWidth, const std::string& lineColor, const std::string& fillColor, const std::string& leaderXColumnName, const std::string& leaderYColumnName, const double minX, const double maxX, const double minY, const double maxY, const int32_t width, const int32_t height, const std::string& projection, const std::map<std::string, std::string>& options):
@@ -195,6 +117,10 @@ namespace gpudb
         {
         }
 
+    /**
+     * @private
+     */
+
         std::string tableName;
         std::string xColumnName;
         std::string yColumnName;
@@ -222,6 +148,10 @@ namespace gpudb
         std::map<std::string, std::string> options;
     };
 }
+
+    /**
+     * @private
+     */
 
 namespace avro
 {
@@ -403,37 +333,24 @@ namespace avro
     };
 }
 
+    /**
+     * @private
+     */
+
 namespace gpudb
 {
 
     /**
+     * @private
      * A set of output parameters for {@link
      * #visualizeImageLabels(const VisualizeImageLabelsRequest&) const}.
      * <p>
-     * Generates a rasterized image tile containing text labels defined by data
-     * contained in the given table, suitable for overlaying onto a feature
-     * image tile covering the same area (for example one generated using
-     * {@link #visualizeImage(const VisualizeImageRequest&) const}).
-     * <p>
-     * All color values must be integers encoded in the format RRGGBB or
-     * AARRGGBB (to specify the alpha value) when represented in hexadecimal;
-     * although note that literal color values must be specified in base 10,
-     * not hexadecimal.
-     * <p>
-     * Fonts are specified as strings of the form 'FAMILY STYLE-OPTIONS SIZE',
-     * where FAMILY is the font family, STYLE-OPTIONS is a whitespace separated
-     * list of words defining style, variant, weight, stretch, or gravity, and
-     * SIZE is a decimal number (size in points) or optionally followed by the
-     * unit modifier 'px' for absolute size. All three sub-fields are optional;
-     * default values will be used for omitted sub-fields. (For example,
-     * 'Helvetica Bold Italic 10' specifies Helvetica, Bold and Italic, 10
-     * points.) A substitute font will be used if a requested font is not
-     * installed.
      */
     struct VisualizeImageLabelsResponse
     {
 
         /**
+         * @private
          * Constructs a VisualizeImageLabelsResponse object with default
          * parameter values.
          */
@@ -445,12 +362,20 @@ namespace gpudb
         {
         }
 
+    /**
+     * @private
+     */
+
         double width;
         double height;
         int64_t bgColor;
         std::vector<uint8_t> imageData;
     };
 }
+
+    /**
+     * @private
+     */
 
 namespace avro
 {
