@@ -99,7 +99,11 @@ namespace gpudb
     extern const std::string alter_table_protected;
     extern const std::string alter_table_ttl;
     
+    // Keywords for /alter/user request
+    extern const std::string alter_user_set_password;
+    
     // Keywords for /create/jointable request
+    extern const std::string create_join_table_collection_name;
     extern const std::string create_join_table_full_refresh;
     extern const std::string create_join_table_manual;
     extern const std::string create_join_table_max_query_dimensions;
@@ -124,9 +128,13 @@ namespace gpudb
     
     // Keywords for /create/type request
     extern const std::string create_type_char1;
+    extern const std::string create_type_char128;
     extern const std::string create_type_char16;
     extern const std::string create_type_char2;
+    extern const std::string create_type_char256;
+    extern const std::string create_type_char32;
     extern const std::string create_type_char4;
+    extern const std::string create_type_char64;
     extern const std::string create_type_char8;
     extern const std::string create_type_data;
     extern const std::string create_type_disk_optimized;
@@ -139,6 +147,9 @@ namespace gpudb
     extern const std::string create_type_store_only;
     extern const std::string create_type_text_search;
     extern const std::string create_type_timestamp;
+    
+    // Keywords for /create/union request
+    extern const std::string create_union_collection_name;
     
     // Keywords for /delete/records request
     extern const std::string delete_records_global_expression;
@@ -216,6 +227,18 @@ namespace gpudb
     extern const std::string get_records_from_collection_return_record_ids;
     extern const std::string get_records_from_collection_true;
     
+    // Keywords for /grant/permission/system request
+    extern const std::string grant_permission_system_system_admin;
+    extern const std::string grant_permission_system_system_read;
+    extern const std::string grant_permission_system_system_write;
+    
+    // Keywords for /grant/permission/table request
+    extern const std::string grant_permission_table_table_admin;
+    extern const std::string grant_permission_table_table_delete;
+    extern const std::string grant_permission_table_table_insert;
+    extern const std::string grant_permission_table_table_read;
+    extern const std::string grant_permission_table_table_update;
+    
     // Keywords for /has/table response
     extern const std::string has_table_false;
     extern const std::string has_table_true;
@@ -245,6 +268,18 @@ namespace gpudb
     extern const std::string insert_symbol_color;
     extern const std::string insert_symbol_svg;
     extern const std::string insert_symbol_svg_path;
+    
+    // Keywords for /revoke/permission/system request
+    extern const std::string revoke_permission_system_system_admin;
+    extern const std::string revoke_permission_system_system_read;
+    extern const std::string revoke_permission_system_system_write;
+    
+    // Keywords for /revoke/permission/table request
+    extern const std::string revoke_permission_table_table_admin;
+    extern const std::string revoke_permission_table_table_delete;
+    extern const std::string revoke_permission_table_table_insert;
+    extern const std::string revoke_permission_table_table_read;
+    extern const std::string revoke_permission_table_table_update;
     
     // Keywords for /show/system/properties request
     extern const std::string show_system_properties_properties;

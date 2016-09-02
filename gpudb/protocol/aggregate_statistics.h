@@ -64,6 +64,10 @@ namespace gpudb
          *                   calculate, e.g. "sum,mean".
          * @param[in] options  Optional parameters.  Default value is an empty
          *                     std::map.
+         * <ul>
+         *     <li>additional_column_names: A list of comma separated column names over which statistics can be accumulated along with the primary column.  
+         *     <li>weight_column_name: Name of column used as weighting attribute for the weighted average statistic.  
+         * </ul>
          * 
          */
         AggregateStatisticsRequest(const std::string& tableName, const std::string& columnName, const std::string& stats, const std::map<std::string, std::string>& options):

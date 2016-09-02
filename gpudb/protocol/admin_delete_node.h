@@ -6,21 +6,24 @@
 #ifndef __ADMIN_DELETE_NODE_H__
 #define __ADMIN_DELETE_NODE_H__
 
+    /**
+     * @private
+     */
+
 namespace gpudb
 {
 
     /**
+     * @private
      * A set of input parameters for {@link
      * #adminDeleteNode(const AdminDeleteNodeRequest&) const}.
      * <p>
-     * Delete a node from the system.  To delete a node, the data is first
-     * distributed from the deleted node to all the other nodes.  Then the node
-     * is taken out of service.
      */
     struct AdminDeleteNodeRequest
     {
 
         /**
+         * @private
          * Constructs an AdminDeleteNodeRequest object with default parameter
          * values.
          */
@@ -32,17 +35,13 @@ namespace gpudb
         }
 
         /**
+         * @private
          * Constructs an AdminDeleteNodeRequest object with the specified
          * parameters.
          * 
-         * @param[in] rank  Rank number of the node being removed from the
-         *                  system.
-         * @param[in] authorization  The password that GPUdb is configured with
-         *                           during startup. Incorrect or missing
-         *                           authorization code will result in an
-         *                           error.
-         * @param[in] options  Optional parameters.  Default value is an empty
-         *                     std::map.
+         * @param[in] rank
+         * @param[in] authorization
+         * @param[in] options
          * 
          */
         AdminDeleteNodeRequest(const int32_t rank, const std::string& authorization, const std::map<std::string, std::string>& options):
@@ -52,11 +51,19 @@ namespace gpudb
         {
         }
 
+    /**
+     * @private
+     */
+
         int32_t rank;
         std::string authorization;
         std::map<std::string, std::string> options;
     };
 }
+
+    /**
+     * @private
+     */
 
 namespace avro
 {
@@ -106,21 +113,24 @@ namespace avro
     };
 }
 
+    /**
+     * @private
+     */
+
 namespace gpudb
 {
 
     /**
+     * @private
      * A set of output parameters for {@link
      * #adminDeleteNode(const AdminDeleteNodeRequest&) const}.
      * <p>
-     * Delete a node from the system.  To delete a node, the data is first
-     * distributed from the deleted node to all the other nodes.  Then the node
-     * is taken out of service.
      */
     struct AdminDeleteNodeResponse
     {
 
         /**
+         * @private
          * Constructs an AdminDeleteNodeResponse object with default parameter
          * values.
          */
@@ -130,10 +140,18 @@ namespace gpudb
         {
         }
 
+    /**
+     * @private
+     */
+
         int32_t rank;
         std::vector<std::string> message;
     };
 }
+
+    /**
+     * @private
+     */
 
 namespace avro
 {

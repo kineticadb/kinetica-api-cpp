@@ -177,7 +177,55 @@ namespace gpudb {
                     throw GPUdbException("Field " + root->nameAt(i) + " must be of type bytes, double, float, int, long or string.");
             }
 
-            columns.push_back(Type::Column(expressions[i].value<std::string>(), static_cast<Type::Column::ColumnType>(leaf->leafAt(0)->type())));
+            if (data->value< ::avro::GenericRecord>().fieldAt(i).value< ::avro::GenericArray>().value().size() != recordCount)
+            {
+                throw GPUdbException("Fields must all have the same number of elements.");
+            }
+
+            std::string name = expressions[i].value<std::string>();
+
+            for (size_t j = 0; j < i; ++j)
+            {
+                if (name == columns[j].getName())
+                {
+                    for (size_t n = 2; ; ++n)
+                    {
+                        std::string tempName = name + "_" + boost::lexical_cast<std::string>(n);
+                        bool found = false;
+
+                        for (size_t k = 0; k < i; ++k)
+                        {
+                            if (tempName == columns[k].getName())
+                            {
+                                found = true;
+                                break;
+                            }
+                        }
+
+                        if (!found)
+                        {
+                            for (size_t k = i + 1; k < fieldCount; ++k)
+                            {
+                                if (tempName == expressions[k].value<std::string>())
+                                {
+                                    found = true;
+                                    break;
+                                }
+                            }
+                        }
+
+                        if (!found)
+                        {
+                            name = tempName;
+                            break;
+                        }
+                    }
+
+                    break;
+                }
+            }
+
+            columns.push_back(Type::Column(name, static_cast<Type::Column::ColumnType>(leaf->leafAt(0)->type())));
         }
 
         boost::shared_ptr<Type> type = boost::make_shared<Type>(Type(columns));

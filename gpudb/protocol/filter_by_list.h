@@ -60,6 +60,9 @@ namespace gpudb
          *                             column in the table
          * @param[in] options  Optional parameters.  Default value is an empty
          *                     std::map.
+         * <ul>
+         *     <li>filter_mode: String indicating the filter mode, either 'in_list' or 'not_in_list'.  Default value is 'in_list'. 
+         * </ul>
          * 
          */
         FilterByListRequest(const std::string& tableName, const std::string& viewName, const std::map<std::string, std::vector<std::string> >& columnValuesMap, const std::map<std::string, std::string>& options):

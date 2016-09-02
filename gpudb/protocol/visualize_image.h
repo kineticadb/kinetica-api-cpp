@@ -6,23 +6,24 @@
 #ifndef __VISUALIZE_IMAGE_H__
 #define __VISUALIZE_IMAGE_H__
 
+    /**
+     * @private
+     */
+
 namespace gpudb
 {
 
     /**
+     * @private
      * A set of input parameters for {@link
      * #visualizeImage(const VisualizeImageRequest&) const}.
      * <p>
-     * Generates rasterized image tiles for an area of interest using the given
-     * tables and the provided parameters.
-     * <p>
-     * All color values must be in the format RRGGBB or AARRGGBB (to specify
-     * the alpha value).
      */
     struct VisualizeImageRequest
     {
 
         /**
+         * @private
          * Constructs a VisualizeImageRequest object with default parameter
          * values.
          */
@@ -46,33 +47,25 @@ namespace gpudb
         }
 
         /**
+         * @private
          * Constructs a VisualizeImageRequest object with the specified
          * parameters.
          * 
-         * @param[in] tableNames  Name of the table containing the data for the
-         *                        various layers to be rendered.
-         * @param[in] worldTableNames  Optional name of the tables containing
-         *                             the data for the entire track when the
-         *                             @a tableNames contains only part of the
-         *                             track data, but the entire track has to
-         *                             be rendered.
-         * @param[in] xColumnName  Name of the column containing the x
-         *                         coordinates.
-         * @param[in] yColumnName  Name of the column containing the y
-         *                         coordinates.
-         * @param[in] trackIds  Tracks from the @a tableNames to be rendered.
-         * @param[in] minX  Lower bound for the x values.
-         * @param[in] maxX  Upper bound for the x values.
-         * @param[in] minY  Lower bound for the y values.
-         * @param[in] maxY  Upper bound for the y values.
-         * @param[in] width  Width of the generated image.
-         * @param[in] height  Height of the generated image.
-         * @param[in] projection  Spatial Reference System (i.e. EPSG Code).
-         *                        Default value is 'PLATE_CARREE'.
-         * @param[in] bgColor  Background color of the generated image
-         * @param[in] styleOptions  Styling options for the image.
-         * @param[in] options  Optional parameters.  Default value is an empty
-         *                     std::map.
+         * @param[in] tableNames
+         * @param[in] worldTableNames
+         * @param[in] xColumnName
+         * @param[in] yColumnName
+         * @param[in] trackIds
+         * @param[in] minX
+         * @param[in] maxX
+         * @param[in] minY
+         * @param[in] maxY
+         * @param[in] width
+         * @param[in] height
+         * @param[in] projection
+         * @param[in] bgColor
+         * @param[in] styleOptions
+         * @param[in] options
          * 
          */
         VisualizeImageRequest(const std::vector<std::string>& tableNames, const std::vector<std::string>& worldTableNames, const std::string& xColumnName, const std::string& yColumnName, const std::vector<std::vector<std::string> >& trackIds, const double minX, const double maxX, const double minY, const double maxY, const int32_t width, const int32_t height, const std::string& projection, const int64_t bgColor, const std::map<std::string, std::vector<std::string> >& styleOptions, const std::map<std::string, std::string>& options):
@@ -94,6 +87,10 @@ namespace gpudb
         {
         }
 
+    /**
+     * @private
+     */
+
         std::vector<std::string> tableNames;
         std::vector<std::string> worldTableNames;
         std::string xColumnName;
@@ -111,6 +108,10 @@ namespace gpudb
         std::map<std::string, std::string> options;
     };
 }
+
+    /**
+     * @private
+     */
 
 namespace avro
 {
@@ -232,23 +233,24 @@ namespace avro
     };
 }
 
+    /**
+     * @private
+     */
+
 namespace gpudb
 {
 
     /**
+     * @private
      * A set of output parameters for {@link
      * #visualizeImage(const VisualizeImageRequest&) const}.
      * <p>
-     * Generates rasterized image tiles for an area of interest using the given
-     * tables and the provided parameters.
-     * <p>
-     * All color values must be in the format RRGGBB or AARRGGBB (to specify
-     * the alpha value).
      */
     struct VisualizeImageResponse
     {
 
         /**
+         * @private
          * Constructs a VisualizeImageResponse object with default parameter
          * values.
          */
@@ -260,12 +262,20 @@ namespace gpudb
         {
         }
 
+    /**
+     * @private
+     */
+
         double width;
         double height;
         int64_t bgColor;
         std::vector<uint8_t> imageData;
     };
 }
+
+    /**
+     * @private
+     */
 
 namespace avro
 {

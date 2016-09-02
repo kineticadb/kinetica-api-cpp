@@ -28,7 +28,9 @@ namespace gpudb
      * <p>
      * The response is returned as a dynamic schema. For details see: <a
      * href="../../concepts/index.html#dynamic-schemas" target="_top">dynamic
-     * schemas documentation</a>.
+     * schemas documentation</a>. If the 'result_table' option is provided then
+     * the results are stored in a table with the name given in the option and
+     * the results are not returned in the response.
      */
     struct AggregateUniqueRequest
     {
@@ -66,6 +68,11 @@ namespace gpudb
          *                   be returned.  Default value is 10000.
          * @param[in] options  Optional parameters.  Default value is an empty
          *                     std::map.
+         * <ul>
+         *     <li>expression: Optional filter expression to apply to the table.  
+         *     <li>sort_order: String indicating how the returned values should be sorted.  Default value is 'ascending'. 
+         *     <li>result_table: The name of the table used to store the results. If present no results are returned in the response.  
+         * </ul>
          * 
          */
         AggregateUniqueRequest(const std::string& tableName, const std::string& columnName, const int64_t offset, const int64_t limit, const std::map<std::string, std::string>& options):
@@ -99,6 +106,11 @@ namespace gpudb
          *                      Default value is 'binary'.
          * @param[in] options  Optional parameters.  Default value is an empty
          *                     std::map.
+         * <ul>
+         *     <li>expression: Optional filter expression to apply to the table.  
+         *     <li>sort_order: String indicating how the returned values should be sorted.  Default value is 'ascending'. 
+         *     <li>result_table: The name of the table used to store the results. If present no results are returned in the response.  
+         * </ul>
          * 
          */
         AggregateUniqueRequest(const std::string& tableName, const std::string& columnName, const int64_t offset, const int64_t limit, const std::string& encoding, const std::map<std::string, std::string>& options):
@@ -206,7 +218,9 @@ namespace gpudb
      * <p>
      * The response is returned as a dynamic schema. For details see: <a
      * href="../../concepts/index.html#dynamic-schemas" target="_top">dynamic
-     * schemas documentation</a>.
+     * schemas documentation</a>. If the 'result_table' option is provided then
+     * the results are stored in a table with the name given in the option and
+     * the results are not returned in the response.
      */
     struct RawAggregateUniqueResponse
     {
@@ -312,7 +326,9 @@ namespace gpudb
      * <p>
      * The response is returned as a dynamic schema. For details see: <a
      * href="../../concepts/index.html#dynamic-schemas" target="_top">dynamic
-     * schemas documentation</a>.
+     * schemas documentation</a>. If the 'result_table' option is provided then
+     * the results are stored in a table with the name given in the option and
+     * the results are not returned in the response.
      */
     struct AggregateUniqueResponse
     {

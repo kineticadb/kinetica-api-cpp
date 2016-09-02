@@ -29,7 +29,7 @@ namespace gpudb
      *     If the option 'show_children' is set to 'false' then for a
      * collection it only returns information about the collection itself, not
      * about the child tables. If 'show_children' is set to 'true' then it will
-     * return information about each of the children.
+     * return information about each of the children, but not the collection.
      * <p>
      *     Running with 'show_children' = 'true' on a child table will return
      * an error.
@@ -61,6 +61,10 @@ namespace gpudb
          *                       returned.
          * @param[in] options  Optional parameters.  Default value is an empty
          *                     std::map.
+         * <ul>
+         *     <li>get_sizes: If 'true' then the table sizes will be returned; otherwise they will be returned blank.  Default value is 'false'. values:TRUE, FALSE
+         *     <li>show_children: If @a tableName is a collection, then 'true' will return information about the children of the collection, and 'false' will return information about the collection itself. If @a tableName is a child table, 'show_children' must be 'false'. If @a tableName is empty then 'show_children' must be 'true'.  Default value is 'true'. values:TRUE, FALSE
+         * </ul>
          * 
          */
         ShowTableRequest(const std::string& tableName, const std::map<std::string, std::string>& options):
@@ -139,7 +143,7 @@ namespace gpudb
      *     If the option 'show_children' is set to 'false' then for a
      * collection it only returns information about the collection itself, not
      * about the child tables. If 'show_children' is set to 'true' then it will
-     * return information about each of the children.
+     * return information about each of the children, but not the collection.
      * <p>
      *     Running with 'show_children' = 'true' on a child table will return
      * an error.

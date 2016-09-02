@@ -56,6 +56,9 @@ namespace gpudb
          *                   to indicate that the max number of results should
          *                   be returned.  Default value is 10000.
          * @param[in] options  Default value is an empty std::map.
+         * <ul>
+         *     <li>return_record_ids: If 'true' then return GPUdb's internal record id along with each returned record. Default is 'false'.  Default value is 'false'. values:TRUE, FALSE
+         * </ul>
          * 
          */
         GetRecordsFromCollectionRequest(const std::string& tableName, const int64_t offset, const int64_t limit, const std::map<std::string, std::string>& options):
@@ -87,6 +90,9 @@ namespace gpudb
          *                      either 'binary' or 'json'.  Default value is
          *                      'binary'.
          * @param[in] options  Default value is an empty std::map.
+         * <ul>
+         *     <li>return_record_ids: If 'true' then return GPUdb's internal record id along with each returned record. Default is 'false'.  Default value is 'false'. values:TRUE, FALSE
+         * </ul>
          * 
          */
         GetRecordsFromCollectionRequest(const std::string& tableName, const int64_t offset, const int64_t limit, const std::string& encoding, const std::map<std::string, std::string>& options):

@@ -62,6 +62,11 @@ namespace gpudb
          *                  is @a json.
          * @param[in] options  Optional parameters.  Default value is an empty
          *                     std::map.
+         * <ul>
+         *     <li>update_on_existing_pk: If the table has a /create/type, then if the value is 'true' then if any of the records being added have the same primary key as existing records, the existing records are replaced (i.e. *updated*) with the given records. If 'false' and if the records being added have the same primary key as existing records, the given records with existing primary keys are ignored (the existing records are left unchanged).  It is quite possible that in this case some of the given records will be inserted and some (those having existing primary keys) will be ignored (or updated). If the specified table does not have a primary key column then this optional parameter is ignored.  Default value is 'false'. values:TRUE, FALSE
+         *     <li>return_record_ids: If 'true' then return GPUdb's internal record id along for each inserted record. Default is 'false'.  Default value is 'false'. values:TRUE, FALSE
+         *     <li>route_to_address: Route to a specific rank/tom. Option not suitable for tables using primary/shard keys  
+         * </ul>
          * 
          */
         RawInsertRecordsRequest(const std::string& tableName, const std::vector<std::vector<uint8_t> >& list, const std::map<std::string, std::string>& options):
@@ -91,6 +96,11 @@ namespace gpudb
          *                          Default value is 'binary'.
          * @param[in] options  Optional parameters.  Default value is an empty
          *                     std::map.
+         * <ul>
+         *     <li>update_on_existing_pk: If the table has a /create/type, then if the value is 'true' then if any of the records being added have the same primary key as existing records, the existing records are replaced (i.e. *updated*) with the given records. If 'false' and if the records being added have the same primary key as existing records, the given records with existing primary keys are ignored (the existing records are left unchanged).  It is quite possible that in this case some of the given records will be inserted and some (those having existing primary keys) will be ignored (or updated). If the specified table does not have a primary key column then this optional parameter is ignored.  Default value is 'false'. values:TRUE, FALSE
+         *     <li>return_record_ids: If 'true' then return GPUdb's internal record id along for each inserted record. Default is 'false'.  Default value is 'false'. values:TRUE, FALSE
+         *     <li>route_to_address: Route to a specific rank/tom. Option not suitable for tables using primary/shard keys  
+         * </ul>
          * 
          */
         RawInsertRecordsRequest(const std::string& tableName, const std::vector<std::vector<uint8_t> >& list, const std::vector<std::string>& listStr, const std::string& listEncoding, const std::map<std::string, std::string>& options):
@@ -227,6 +237,11 @@ namespace gpudb
          *                  is @a json.
          * @param[in] options  Optional parameters.  Default value is an empty
          *                     std::map.
+         * <ul>
+         *     <li>update_on_existing_pk: If the table has a /create/type, then if the value is 'true' then if any of the records being added have the same primary key as existing records, the existing records are replaced (i.e. *updated*) with the given records. If 'false' and if the records being added have the same primary key as existing records, the given records with existing primary keys are ignored (the existing records are left unchanged).  It is quite possible that in this case some of the given records will be inserted and some (those having existing primary keys) will be ignored (or updated). If the specified table does not have a primary key column then this optional parameter is ignored.  Default value is 'false'. values:TRUE, FALSE
+         *     <li>return_record_ids: If 'true' then return GPUdb's internal record id along for each inserted record. Default is 'false'.  Default value is 'false'. values:TRUE, FALSE
+         *     <li>route_to_address: Route to a specific rank/tom. Option not suitable for tables using primary/shard keys  
+         * </ul>
          * 
          */
         InsertRecordsRequest(const std::string& tableName, const std::vector<T>& data, const std::map<std::string, std::string>& options):

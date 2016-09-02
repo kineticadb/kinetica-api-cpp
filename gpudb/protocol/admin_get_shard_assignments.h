@@ -6,22 +6,24 @@
 #ifndef __ADMIN_GET_SHARD_ASSIGNMENTS_H__
 #define __ADMIN_GET_SHARD_ASSIGNMENTS_H__
 
+    /**
+     * @private
+     */
+
 namespace gpudb
 {
 
     /**
+     * @private
      * A set of input parameters for {@link
      * #adminGetShardAssignments(const AdminGetShardAssignmentsRequest&) const}.
      * <p>
-     * Returns the list of shards and the corresponding rank and tom containing
-     * the shard.  The response message contains arrays of 16384 (total number
-     * of shards in the system) rank and tom numbers corresponding to each
-     * shard.
      */
     struct AdminGetShardAssignmentsRequest
     {
 
         /**
+         * @private
          * Constructs an AdminGetShardAssignmentsRequest object with default
          * parameter values.
          */
@@ -31,11 +33,11 @@ namespace gpudb
         }
 
         /**
+         * @private
          * Constructs an AdminGetShardAssignmentsRequest object with the
          * specified parameters.
          * 
-         * @param[in] options  Optional parameters.  Default value is an empty
-         *                     std::map.
+         * @param[in] options
          * 
          */
         AdminGetShardAssignmentsRequest(const std::map<std::string, std::string>& options):
@@ -43,9 +45,17 @@ namespace gpudb
         {
         }
 
+    /**
+     * @private
+     */
+
         std::map<std::string, std::string> options;
     };
 }
+
+    /**
+     * @private
+     */
 
 namespace avro
 {
@@ -83,22 +93,24 @@ namespace avro
     };
 }
 
+    /**
+     * @private
+     */
+
 namespace gpudb
 {
 
     /**
+     * @private
      * A set of output parameters for {@link
      * #adminGetShardAssignments(const AdminGetShardAssignmentsRequest&) const}.
      * <p>
-     * Returns the list of shards and the corresponding rank and tom containing
-     * the shard.  The response message contains arrays of 16384 (total number
-     * of shards in the system) rank and tom numbers corresponding to each
-     * shard.
      */
     struct AdminGetShardAssignmentsResponse
     {
 
         /**
+         * @private
          * Constructs an AdminGetShardAssignmentsResponse object with default
          * parameter values.
          */
@@ -109,11 +121,19 @@ namespace gpudb
         {
         }
 
+    /**
+     * @private
+     */
+
         int64_t version;
         std::vector<int32_t> shardAssignmentsRank;
         std::vector<int32_t> shardAssignmentsTom;
     };
 }
+
+    /**
+     * @private
+     */
 
 namespace avro
 {

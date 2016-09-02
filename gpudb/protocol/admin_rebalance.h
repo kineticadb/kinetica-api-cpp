@@ -6,20 +6,24 @@
 #ifndef __ADMIN_REBALANCE_H__
 #define __ADMIN_REBALANCE_H__
 
+    /**
+     * @private
+     */
+
 namespace gpudb
 {
 
     /**
+     * @private
      * A set of input parameters for {@link
      * #adminRebalance(const AdminRebalanceRequest&) const}.
      * <p>
-     * Rebalance the database such that all the nodes contain approximately
-     * equal number of records.
      */
     struct AdminRebalanceRequest
     {
 
         /**
+         * @private
          * Constructs an AdminRebalanceRequest object with default parameter
          * values.
          */
@@ -30,14 +34,12 @@ namespace gpudb
         }
 
         /**
+         * @private
          * Constructs an AdminRebalanceRequest object with the specified
          * parameters.
          * 
-         * @param[in] tableNames  Names of the tables to be rebalanced.  If
-         *                        array is empty, all tables will be
-         *                        rebalanced.
-         * @param[in] options  Optional parameters.  Default value is an empty
-         *                     std::map.
+         * @param[in] tableNames
+         * @param[in] options
          * 
          */
         AdminRebalanceRequest(const std::vector<std::string>& tableNames, const std::map<std::string, std::string>& options):
@@ -46,10 +48,18 @@ namespace gpudb
         {
         }
 
+    /**
+     * @private
+     */
+
         std::vector<std::string> tableNames;
         std::map<std::string, std::string> options;
     };
 }
+
+    /**
+     * @private
+     */
 
 namespace avro
 {
@@ -93,20 +103,24 @@ namespace avro
     };
 }
 
+    /**
+     * @private
+     */
+
 namespace gpudb
 {
 
     /**
+     * @private
      * A set of output parameters for {@link
      * #adminRebalance(const AdminRebalanceRequest&) const}.
      * <p>
-     * Rebalance the database such that all the nodes contain approximately
-     * equal number of records.
      */
     struct AdminRebalanceResponse
     {
 
         /**
+         * @private
          * Constructs an AdminRebalanceResponse object with default parameter
          * values.
          */
@@ -116,10 +130,18 @@ namespace gpudb
         {
         }
 
+    /**
+     * @private
+     */
+
         std::vector<std::string> tableNames;
         std::vector<std::string> message;
     };
 }
+
+    /**
+     * @private
+     */
 
 namespace avro
 {

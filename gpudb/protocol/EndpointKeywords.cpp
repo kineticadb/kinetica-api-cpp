@@ -99,7 +99,11 @@ namespace gpudb
     const std::string alter_table_protected               ( "protected"                );
     const std::string alter_table_ttl                     ( "ttl"                      );
     
+    // Keywords for /alter/user request
+    const std::string alter_user_set_password( "set_password" );
+    
     // Keywords for /create/jointable request
+    const std::string create_join_table_collection_name     ( "collection_name"      );
     const std::string create_join_table_full_refresh        ( "full_refresh"         );
     const std::string create_join_table_manual              ( "manual"               );
     const std::string create_join_table_max_query_dimensions( "max_query_dimensions" );
@@ -124,9 +128,13 @@ namespace gpudb
     
     // Keywords for /create/type request
     const std::string create_type_char1          ( "char1"           );
+    const std::string create_type_char128        ( "char128"         );
     const std::string create_type_char16         ( "char16"          );
     const std::string create_type_char2          ( "char2"           );
+    const std::string create_type_char256        ( "char256"         );
+    const std::string create_type_char32         ( "char32"          );
     const std::string create_type_char4          ( "char4"           );
+    const std::string create_type_char64         ( "char64"          );
     const std::string create_type_char8          ( "char8"           );
     const std::string create_type_data           ( "data"            );
     const std::string create_type_disk_optimized ( "disk_optimized"  );
@@ -139,6 +147,9 @@ namespace gpudb
     const std::string create_type_store_only     ( "store_only"      );
     const std::string create_type_text_search    ( "text_search"     );
     const std::string create_type_timestamp      ( "timestamp"       );
+    
+    // Keywords for /create/union request
+    const std::string create_union_collection_name( "collection_name" );
     
     // Keywords for /delete/records request
     const std::string delete_records_global_expression( "global_expression" );
@@ -216,6 +227,18 @@ namespace gpudb
     const std::string get_records_from_collection_return_record_ids( "return_record_ids" );
     const std::string get_records_from_collection_true             ( "true"              );
     
+    // Keywords for /grant/permission/system request
+    const std::string grant_permission_system_system_admin( "system_admin" );
+    const std::string grant_permission_system_system_read ( "system_read"  );
+    const std::string grant_permission_system_system_write( "system_write" );
+    
+    // Keywords for /grant/permission/table request
+    const std::string grant_permission_table_table_admin ( "table_admin"  );
+    const std::string grant_permission_table_table_delete( "table_delete" );
+    const std::string grant_permission_table_table_insert( "table_insert" );
+    const std::string grant_permission_table_table_read  ( "table_read"   );
+    const std::string grant_permission_table_table_update( "table_update" );
+    
     // Keywords for /has/table response
     const std::string has_table_false( "false" );
     const std::string has_table_true ( "true"  );
@@ -245,6 +268,18 @@ namespace gpudb
     const std::string insert_symbol_color   ( "color"    );
     const std::string insert_symbol_svg     ( "svg"      );
     const std::string insert_symbol_svg_path( "svg_path" );
+    
+    // Keywords for /revoke/permission/system request
+    const std::string revoke_permission_system_system_admin( "system_admin" );
+    const std::string revoke_permission_system_system_read ( "system_read"  );
+    const std::string revoke_permission_system_system_write( "system_write" );
+    
+    // Keywords for /revoke/permission/table request
+    const std::string revoke_permission_table_table_admin ( "table_admin"  );
+    const std::string revoke_permission_table_table_delete( "table_delete" );
+    const std::string revoke_permission_table_table_insert( "table_insert" );
+    const std::string revoke_permission_table_table_read  ( "table_read"   );
+    const std::string revoke_permission_table_table_update( "table_update" );
     
     // Keywords for /show/system/properties request
     const std::string show_system_properties_properties( "properties" );

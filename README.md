@@ -133,3 +133,4 @@ Editing and Building GPUdb API C++ with QTCreator
 -   The hammer in the lower left is the build button...
 -   Fixing a 'Could not initialize GLX', an OpenGL crash error when starting QTCreator
     -   `$ qtcreator -noload Welcome qtcreator-gpudb-api-cpp.creator`
+

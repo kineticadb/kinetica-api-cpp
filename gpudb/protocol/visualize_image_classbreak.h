@@ -6,31 +6,24 @@
 #ifndef __VISUALIZE_IMAGE_CLASSBREAK_H__
 #define __VISUALIZE_IMAGE_CLASSBREAK_H__
 
+    /**
+     * @private
+     */
+
 namespace gpudb
 {
 
     /**
+     * @private
      * A set of input parameters for {@link
      * #visualizeImageClassbreak(const VisualizeImageClassbreakRequest&) const}.
      * <p>
-     * Generates 'class break' rasterized image tiles for an area of interest
-     * using the given tables and the provided parameters.
-     * <p>
-     * A class break rendering is where data from one or more GPUdb tables is
-     * rasterized with styling applied on a per-class basis. GPUdb supports
-     * class breaks based on one or more data columns. Distinct values (for
-     * strings) or ranges (for numeric attributes) must be provided in the
-     * cb_column_name1/cb_vals1 and cb_column_name2/cb_vals2 parameters. The
-     * styling parameters must be specified for each class.
-     * <p>
-     * All color values must be in the format RRGGBB or AARRGGBB (to specify
-     * the alpha value).
-     * The image is contained in the @a imageData field.
      */
     struct VisualizeImageClassbreakRequest
     {
 
         /**
+         * @private
          * Constructs a VisualizeImageClassbreakRequest object with default
          * parameter values.
          */
@@ -58,58 +51,29 @@ namespace gpudb
         }
 
         /**
+         * @private
          * Constructs a VisualizeImageClassbreakRequest object with the
          * specified parameters.
          * 
-         * @param[in] tableNames  Name of the table containing the data for the
-         *                        various layers to be rendered.
-         * @param[in] worldTableNames  Optional name of the tables containing
-         *                             the data for the entire track when the
-         *                             @a tableNames contains only part of the
-         *                             track data, but the entire track has to
-         *                             be rendered.
-         * @param[in] xColumnName  Name of the column containing the x
-         *                         coordinates.
-         * @param[in] yColumnName  Name of the column containing the y
-         *                         coordinates.
-         * @param[in] trackIds  Tracks from the @a tableNames to be rendered.
-         * @param[in] cbColumnName1  Name of the column for the first class
-         *                           break.
-         * @param[in] cbVals1  Comma separated list of values or ranges (e.g.
-         *                     '0:5,5:10,15:30').
-         * @param[in] cbColumnName2  Optional comma separated list of valid
-         *                           column names. An empty string implies not
-         *                           using more than one column for the class
-         *                           break. For a non-empty list, there needs
-         *                           to be as many entries in the list as there
-         *                           are classes for the first column (@a
-         *                           cbColumnName1). However, the column names
-         *                           can be empty to indicate that for the
-         *                           corresponding class of the first
-         *                           attribute, no secondary class break will
-         *                           be applied. All the column names in this
-         *                           list must be different from the first
-         *                           column @a cbColumnName1. For example,
-         *                           'col2,col3,col2'.
-         * @param[in] cbVals2  Comma separated list of []-enclosed lists of
-         *                     values or ranges; e.g.
-         *                     '[0:5,5:10],[of,on,so],[-50:-20]'. Each square
-         *                     bracket enclosed list describes the secondary
-         *                     classes for the respective attribute in @a
-         *                     cbColumnName2 and the respective class in @a
-         *                     cbColumnName1 / @a cbVals1.
-         * @param[in] minX  Lower bound for the x values.
-         * @param[in] maxX  Upper bound for the x values.
-         * @param[in] minY  Lower bound for the y values.
-         * @param[in] maxY  Upper bound for the y values.
-         * @param[in] width  Width of the generated image.
-         * @param[in] height  Height of the generated image.
-         * @param[in] projection  Spatial Reference System (i.e. EPSG Code).
-         *                        Default value is 'PLATE_CARREE'.
-         * @param[in] bgColor  Background color of the generated image.
-         * @param[in] styleOptions  Styling options for the image.
-         * @param[in] options  Optional parameters.  Default value is an empty
-         *                     std::map.
+         * @param[in] tableNames
+         * @param[in] worldTableNames
+         * @param[in] xColumnName
+         * @param[in] yColumnName
+         * @param[in] trackIds
+         * @param[in] cbColumnName1
+         * @param[in] cbVals1
+         * @param[in] cbColumnName2
+         * @param[in] cbVals2
+         * @param[in] minX
+         * @param[in] maxX
+         * @param[in] minY
+         * @param[in] maxY
+         * @param[in] width
+         * @param[in] height
+         * @param[in] projection
+         * @param[in] bgColor
+         * @param[in] styleOptions
+         * @param[in] options
          * 
          */
         VisualizeImageClassbreakRequest(const std::vector<std::string>& tableNames, const std::vector<std::string>& worldTableNames, const std::string& xColumnName, const std::string& yColumnName, const std::vector<std::vector<std::string> >& trackIds, const std::string& cbColumnName1, const std::vector<std::string>& cbVals1, const std::vector<std::string>& cbColumnName2, const std::vector<std::vector<std::string> >& cbVals2, const double minX, const double maxX, const double minY, const double maxY, const int32_t width, const int32_t height, const std::string& projection, const int64_t bgColor, const std::map<std::string, std::vector<std::string> >& styleOptions, const std::map<std::string, std::string>& options):
@@ -135,6 +99,10 @@ namespace gpudb
         {
         }
 
+    /**
+     * @private
+     */
+
         std::vector<std::string> tableNames;
         std::vector<std::string> worldTableNames;
         std::string xColumnName;
@@ -156,6 +124,10 @@ namespace gpudb
         std::map<std::string, std::string> options;
     };
 }
+
+    /**
+     * @private
+     */
 
 namespace avro
 {
@@ -301,31 +273,24 @@ namespace avro
     };
 }
 
+    /**
+     * @private
+     */
+
 namespace gpudb
 {
 
     /**
+     * @private
      * A set of output parameters for {@link
      * #visualizeImageClassbreak(const VisualizeImageClassbreakRequest&) const}.
      * <p>
-     * Generates 'class break' rasterized image tiles for an area of interest
-     * using the given tables and the provided parameters.
-     * <p>
-     * A class break rendering is where data from one or more GPUdb tables is
-     * rasterized with styling applied on a per-class basis. GPUdb supports
-     * class breaks based on one or more data columns. Distinct values (for
-     * strings) or ranges (for numeric attributes) must be provided in the
-     * cb_column_name1/cb_vals1 and cb_column_name2/cb_vals2 parameters. The
-     * styling parameters must be specified for each class.
-     * <p>
-     * All color values must be in the format RRGGBB or AARRGGBB (to specify
-     * the alpha value).
-     * The image is contained in the @a imageData field.
      */
     struct VisualizeImageClassbreakResponse
     {
 
         /**
+         * @private
          * Constructs a VisualizeImageClassbreakResponse object with default
          * parameter values.
          */
@@ -337,12 +302,20 @@ namespace gpudb
         {
         }
 
+    /**
+     * @private
+     */
+
         double width;
         double height;
         int64_t bgColor;
         std::vector<uint8_t> imageData;
     };
 }
+
+    /**
+     * @private
+     */
 
 namespace avro
 {

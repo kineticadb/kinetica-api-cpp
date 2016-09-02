@@ -61,6 +61,11 @@ namespace gpudb
          *                     column.  Below follows a more detailed
          *                     description of the map:  Default value is an
          *                     empty std::map.
+         * <ul>
+         *     <li>all: This key indicates that the specifications relayed in the internal map are to be applied to all columns of the records.  
+         *     <li>attr_name: Set the following parameters for the column specified by the key. This overrides any parameter set by @a all.  
+         *     <li>track_length: This key-map pair is only valid for track type data sets (GPUdb throws an error otherwise).  
+         * </ul>
          * 
          */
         InsertRecordsRandomRequest(const std::string& tableName, const int64_t count, const std::map<std::string, std::map<std::string, double> >& options):

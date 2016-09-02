@@ -81,6 +81,11 @@ GetRecordsResponse<boost::any>& GPUdb::getRecords( const GetRecordsRequest& requ
  *               be returned. Or END_OF_SET (-9999) to indicate that the max
  *               number of results should be returned.  Default value is 10000.
  * @param options  Default value is an empty std::map.
+         * <ul>
+         *     <li>expression: Optional filter expression to apply to the table.  
+         *     <li>sort_by: Optional column that the data should be sorted by. Empty by default (i.e. no sorting is applied).  
+         *     <li>sort_order: String indicating how the returned values should be sorted - ascending or descending. Ignored if 'sort_by' option is not specified.  Default value is 'ascending'. values:ASCENDING, DESCENDING
+         * </ul>
  * 
  * @return Response object containing the result of the operation.
  * 
@@ -116,6 +121,11 @@ GetRecordsResponse<boost::any> GPUdb::getRecords( const std::string& tableName,
  *               be returned. Or END_OF_SET (-9999) to indicate that the max
  *               number of results should be returned.  Default value is 10000.
  * @param options  Default value is an empty std::map.
+         * <ul>
+         *     <li>expression: Optional filter expression to apply to the table.  
+         *     <li>sort_by: Optional column that the data should be sorted by. Empty by default (i.e. no sorting is applied).  
+         *     <li>sort_order: String indicating how the returned values should be sorted - ascending or descending. Ignored if 'sort_by' option is not specified.  Default value is 'ascending'. values:ASCENDING, DESCENDING
+         * </ul>
  * @param[out] response_  Response object containing the results of the
  *                        operation.
  * 
@@ -334,6 +344,9 @@ GetRecordsFromCollectionResponse<boost::any>& GPUdb::getRecordsFromCollection( c
  *               be returned, or END_OF_SET (-9999) to indicate that the max
  *               number of results should be returned.  Default value is 10000.
  * @param options  Default value is an empty std::map.
+         * <ul>
+         *     <li>return_record_ids: If 'true' then return GPUdb's internal record id along with each returned record. Default is 'false'.  Default value is 'false'. values:TRUE, FALSE
+         * </ul>
  * 
  * @return Response object containing the result of the operation.
  * 
@@ -366,6 +379,9 @@ GetRecordsFromCollectionResponse<boost::any> GPUdb::getRecordsFromCollection( co
  *               be returned, or END_OF_SET (-9999) to indicate that the max
  *               number of results should be returned.  Default value is 10000.
  * @param options  Default value is an empty std::map.
+         * <ul>
+         *     <li>return_record_ids: If 'true' then return GPUdb's internal record id along with each returned record. Default is 'false'.  Default value is 'false'. values:TRUE, FALSE
+         * </ul>
  * @param[out] response_  Response object containing the results of the
  *                        operation.
  * 
