@@ -9,7 +9,7 @@ GPUDB_CORE_LIBS_DIR := /opt/gpudb-core-libs
 all: gpudb-api-example gpudb-join-example
 
 gpudb-api-example: gpudb-api-example.cpp
-	g++ -o gpudb-api-example gpudb-api-example.cpp ../gpudb/Avro.cpp ../gpudb/GPUdb.cpp ../gpudb/GPUdbException.cpp ../gpudb/Type.cpp ../gpudb/DynamicTableRecord.cpp ../gpudb/GenericRecord.cpp -I${GPUDB_CORE_LIBS_DIR}/include/ -I.. -L${GPUDB_CORE_LIBS_DIR}/lib/ -lavrocpp -lboost_system -lboost_thread -lsnappy -Wall -m64 -Wl,-rpath=${GPUDB_CORE_LIBS_DIR}/lib/
+	g++ -o gpudb-api-example gpudb-api-example.cpp ../gpudb/Avro.cpp ../gpudb/GPUdb.cpp ../gpudb/GPUdbException.cpp ../gpudb/Type.cpp ../gpudb/GenericRecord.cpp -I${GPUDB_CORE_LIBS_DIR}/include/ -I.. -L${GPUDB_CORE_LIBS_DIR}/lib/ -lavrocpp -lboost_system -lboost_thread -lsnappy -Wall -m64 -Wl,-rpath=${GPUDB_CORE_LIBS_DIR}/lib/
 
 gpudb-join-example: gpudb-join-example.cpp
-	g++ -o gpudb-join-example gpudb-join-example.cpp ../gpudb/Avro.cpp ../gpudb/GPUdb.cpp ../gpudb/GPUdbException.cpp ../gpudb/Type.cpp ../gpudb/DynamicTableRecord.cpp ../gpudb/GenericRecord.cpp -I${GPUDB_CORE_LIBS_DIR}/include/ -I.. -L${GPUDB_CORE_LIBS_DIR}/lib/ -lavrocpp -lboost_system -lboost_thread -lsnappy -Wall -m64 -Wl,-rpath=${GPUDB_CORE_LIBS_DIR}/lib/
+	g++ -o gpudb-join-example gpudb-join-example.cpp ../gpudb/Avro.cpp ../gpudb/GPUdb.cpp ../gpudb/GPUdbException.cpp ../gpudb/Type.cpp ../gpudb/GenericRecord.cpp -I${GPUDB_CORE_LIBS_DIR}/include/ -I.. -L${GPUDB_CORE_LIBS_DIR}/lib/ -lavrocpp -lboost_system -lboost_thread -lsnappy -Wall -m64 -Wl,-rpath=${GPUDB_CORE_LIBS_DIR}/lib/

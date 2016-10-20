@@ -153,7 +153,6 @@ namespace gpudb {
         username(options.getUsername()),
         password(options.getPassword()),
         authorization((!options.getUsername().empty() || !options.getPassword().empty()) ? base64Encode(options.getUsername() + ":" + options.getPassword()) : ""),
-        userAuth(options.getUserAuth()),
         useSnappy(options.getUseSnappy()),
         threadCount(options.getThreadCount()),
         executor(options.getExecutor())
@@ -274,11 +273,6 @@ namespace gpudb {
         return useSnappy;
     }
 
-    std::string GPUdb::getUserAuth() const
-    {
-        return userAuth;
-    }
-
     std::string GPUdb::getUsername() const
     {
         return username;
@@ -328,11 +322,6 @@ namespace gpudb {
             boost::asio::streambuf requestStreamBuffer;
             std::ostream requestStream(&requestStreamBuffer);
             requestStream << "POST " << path << endpoint << " HTTP/1.0\r\n";
-
-            if (!userAuth.empty())
-            {
-                requestStream << "GPUdb-User-Auth: " << userAuth << "\r\n";
-            }
 
             if (!authorization.empty())
             {
@@ -439,11 +428,6 @@ namespace gpudb {
         return useSnappy;
     }
 
-    std::string GPUdb::Options::getUserAuth() const
-    {
-        return userAuth;
-    }
-
     std::string GPUdb::Options::getUsername() const
     {
         return username;
@@ -475,12 +459,6 @@ namespace gpudb {
     GPUdb::Options& GPUdb::Options::setUseSnappy(const bool value)
     {
         useSnappy = value;
-        return *this;
-    }
-
-    GPUdb::Options& GPUdb::Options::setUserAuth(const std::string& value)
-    {
-        userAuth = value;
         return *this;
     }
 

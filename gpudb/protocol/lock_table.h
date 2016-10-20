@@ -13,12 +13,13 @@ namespace gpudb
      * A set of input parameters for {@link
      * #lockTable(const LockTableRequest&) const}.
      * <p>
-     * Locks a table.  By default a table has no locks and all operations are
-     * permitted.  A user may request a read-only or a write-only lock, after
-     * which only read or write operations are permitted on the table until the
-     * next request.  When lock_type is disable then then no operations are
-     * permitted on the table.  The lock status can be queried by passing an
-     * empty string for @a lockType.
+     * Locks a table.  By default a table has a @a lockType of @a unlock,
+     * indicating all operations are permitted.  A user may request a @a read-
+     * only or a @a write-only lock, after which only read or write operations,
+     * respectively, are permitted on the table until the lock is removed.
+     * When @a lockType is @a disable then no operations are permitted on the
+     * table.  The lock status can be queried by setting  @a lockType to @a
+     * status.
      */
     struct LockTableRequest
     {
@@ -39,10 +40,10 @@ namespace gpudb
          * @param[in] tableName  Name of the table to be locked. It must be a
          *                       currently existing table and not a collection
          *                       or a view.
-         * @param[in] lockType  The type of lock being applied to the table or
-         *                      blank to query. Empty string returns the lock
-         *                      status without change the lock status of the
-         *                      table.  Default value is an empty string.
+         * @param[in] lockType  The type of lock being applied to the table.
+         *                      Setting it to 'status' will return the current
+         *                      lock status of the table without changing it.
+         *                      Default value is 'status'.
          * @param[in] options  Optional parameters.  Default value is an empty
          *                     std::map.
          * 
@@ -115,12 +116,13 @@ namespace gpudb
      * A set of output parameters for {@link
      * #lockTable(const LockTableRequest&) const}.
      * <p>
-     * Locks a table.  By default a table has no locks and all operations are
-     * permitted.  A user may request a read-only or a write-only lock, after
-     * which only read or write operations are permitted on the table until the
-     * next request.  When lock_type is disable then then no operations are
-     * permitted on the table.  The lock status can be queried by passing an
-     * empty string for @a lockType.
+     * Locks a table.  By default a table has a @a lockType of @a unlock,
+     * indicating all operations are permitted.  A user may request a @a read-
+     * only or a @a write-only lock, after which only read or write operations,
+     * respectively, are permitted on the table until the lock is removed.
+     * When @a lockType is @a disable then no operations are permitted on the
+     * table.  The lock status can be queried by setting  @a lockType to @a
+     * status.
      */
     struct LockTableResponse
     {

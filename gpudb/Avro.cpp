@@ -28,14 +28,14 @@ namespace gpudb
             errors.resize(tasks.size(), "");
             boost::thread_group threads;
 
-            for (size_t i = 0; i < tasks.size(); i++)
+            for (size_t i = 0; i < tasks.size(); ++i)
             {
                 threads.create_thread(boost::bind(&runTask, &tasks[i], &errors[i]));
             }
 
             threads.join_all();
 
-            for (size_t i = 0; i < tasks.size(); i++)
+            for (size_t i = 0; i < tasks.size(); ++i)
             {
                 if (!errors[i].empty())
                 {

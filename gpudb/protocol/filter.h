@@ -55,8 +55,6 @@ namespace gpudb
          *                        target="_top">concepts</a>.
          * @param[in] options  Optional parameters.  Default value is an empty
          *                     std::map.
-         * <ul>
-         * </ul>
          * 
          */
         FilterRequest(const std::string& tableName, const std::string& viewName, const std::string& expression, const std::map<std::string, std::string>& options):

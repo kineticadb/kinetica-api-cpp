@@ -13,9 +13,7 @@ namespace gpudb
      * A set of input parameters for {@link
      * #adminShutdown(const AdminShutdownRequest&) const}.
      * <p>
-     * Exits the GPUdb server application. A authorization code is required
-     * (chosen at the time of GPUdb configuration) to successfully complete
-     * this request.
+     * Exits the GPUdb server application.
      */
     struct AdminShutdownRequest
     {
@@ -37,10 +35,8 @@ namespace gpudb
          * 
          * @param[in] exitType  Reserved for future use. User can pass an empty
          *                      string.
-         * @param[in] authorization  The password that GPUdb is configured with
-         *                           during startup. Incorrect or missing
-         *                           authorization code will result in an
-         *                           error.
+         * @param[in] authorization  No longer used. User can pass an empty
+         *                           string.
          * @param[in] options  Optional parameters.  Default value is an empty
          *                     std::map.
          * 
@@ -113,9 +109,7 @@ namespace gpudb
      * A set of output parameters for {@link
      * #adminShutdown(const AdminShutdownRequest&) const}.
      * <p>
-     * Exits the GPUdb server application. A authorization code is required
-     * (chosen at the time of GPUdb configuration) to successfully complete
-     * this request.
+     * Exits the GPUdb server application.
      */
     struct AdminShutdownResponse
     {

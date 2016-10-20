@@ -13,7 +13,9 @@ namespace gpudb
      * A set of input parameters for {@link
      * #showSecurity(const ShowSecurityRequest&) const}.
      * <p>
-     * Shows security information relating to users and/or roles.
+     * Shows security information relating to users and/or roles. If the caller
+     * is not a system administrator, only information relating to the caller
+     * and their roles is returned.
      */
     struct ShowSecurityRequest
     {
@@ -99,7 +101,9 @@ namespace gpudb
      * A set of output parameters for {@link
      * #showSecurity(const ShowSecurityRequest&) const}.
      * <p>
-     * Shows security information relating to users and/or roles.
+     * Shows security information relating to users and/or roles. If the caller
+     * is not a system administrator, only information relating to the caller
+     * and their roles is returned.
      */
     struct ShowSecurityResponse
     {

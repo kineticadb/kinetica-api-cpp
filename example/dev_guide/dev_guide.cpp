@@ -105,7 +105,7 @@ int main(int argc, char *argv[])
         std::cout << "Schema " << aggrUniq_resp.responseSchemaStr << std::endl;
         for (size_t i = 0 ; i < aggrUniq_resp.data.size(); ++i )
         {
-            const gpudb::DynamicTableRecord& record = aggrUniq_resp.data[i];
+            const gpudb::GenericRecord& record = aggrUniq_resp.data[i];
 
             // already know the returned column and its type ; just print it.
             assert (record.getFieldCount() == 1);
@@ -120,7 +120,7 @@ int main(int argc, char *argv[])
         std::cout << "Schema " << aggrGB_resp.responseSchemaStr << std::endl;
         for (size_t i = 0 ; i < aggrGB_resp.data.size(); ++i )
         {
-            const gpudb::DynamicTableRecord& record = aggrGB_resp.data[i];
+            const gpudb::GenericRecord& record = aggrGB_resp.data[i];
 
             assert (record.getFieldCount() == 2);
             std::cout << '"' << record.value<std::string>(0) << '"';
@@ -137,7 +137,7 @@ int main(int argc, char *argv[])
         std::cout << "Schema " << aggrGB_resp.responseSchemaStr << std::endl;
 
         // Parse the group by response.
-        const gpudb::DynamicTableRecord& rec1 = aggrGB_resp.data[0];
+        const gpudb::GenericRecord& rec1 = aggrGB_resp.data[0];
         for (size_t j = 0 ; j < rec1.getFieldCount() ; j++)
         {
             std::cout << rec1.getExpression(j) << '\t';
@@ -147,7 +147,7 @@ int main(int argc, char *argv[])
         // print the values from the response
         for (size_t i = 0 ; i < aggrGB_resp.data.size(); ++i )
         {
-            const gpudb::DynamicTableRecord& record = aggrGB_resp.data[i];
+            const gpudb::GenericRecord& record = aggrGB_resp.data[i];
             assert (record.getFieldCount() == col_names.size());
 
             for (size_t j = 0 ; j < record.getFieldCount() ; j++)
@@ -189,7 +189,7 @@ int main(int argc, char *argv[])
         std::cout << "Unique values in group_id column " << aggrGB_resp.data.size() << std::endl;
         std::cout << "Schema " << aggrGB_resp.responseSchemaStr << std::endl;
 
-        const gpudb::DynamicTableRecord& rec2 = aggrGB_resp.data[0];
+        const gpudb::GenericRecord& rec2 = aggrGB_resp.data[0];
         for (size_t j = 0 ; j < rec2.getFieldCount() ; j++)
         {
             std::cout << rec2.getExpression(j) << '\t';
@@ -198,7 +198,7 @@ int main(int argc, char *argv[])
 
         for (size_t i = 0 ; i < aggrGB_resp.data.size(); ++i )
         {
-            const gpudb::DynamicTableRecord& record = aggrGB_resp.data[i];
+            const gpudb::GenericRecord& record = aggrGB_resp.data[i];
             assert (record.getFieldCount() == col_names.size());
 
             for (size_t j = 0 ; j < record.getFieldCount() ; j++)

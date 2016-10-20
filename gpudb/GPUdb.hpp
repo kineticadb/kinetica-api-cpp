@@ -11,7 +11,6 @@ namespace gpudb
 }
 
 #include "gpudb/Avro.hpp"
-#include "gpudb/DynamicTableRecord.hpp"
 #include "gpudb/GenericRecord.hpp"
 #include "gpudb/GPUdbException.hpp"
 #include "gpudb/Type.hpp"
@@ -28,13 +27,11 @@ namespace gpudb
                     Options();
                     std::string getUsername() const;
                     std::string getPassword() const;
-                    std::string getUserAuth() const;
                     bool getUseSnappy() const;
                     size_t getThreadCount() const;
                     avro::ExecutorPtr getExecutor() const;
                     Options& setUsername(const std::string& value);
                     Options& setPassword(const std::string& value);
-                    Options& setUserAuth(const std::string& value);
                     Options& setUseSnappy(const bool value);
                     Options& setThreadCount(const size_t value);
                     Options& setExecutor(const avro::ExecutorPtr value);
@@ -42,22 +39,22 @@ namespace gpudb
                 private:
                     std::string username;
                     std::string password;
-                    std::string userAuth;
                     bool useSnappy;
                     size_t threadCount;
                     avro::ExecutorPtr executor;
             };
 
+            static const int64_t END_OF_SET = -9999;
+
+            static inline std::string getApiVersion() { return GPUdb::API_VERSION; }
+
             GPUdb(const std::string& url, const Options& options = Options());
             std::string getUrl() const;
             std::string getUsername() const;
             std::string getPassword() const;
-            std::string getUserAuth() const;
             bool getUseSnappy() const;
             size_t getThreadCount() const;
             avro::ExecutorPtr getExecutor() const;
-
-            static inline std::string get_version_info() { return GPUdb::api_version; }
 
             template<typename TRequest, typename TResponse> TResponse& submitRequest(const std::string& endpoint, const TRequest& request, TResponse& response, const bool enableCompression = false) const
             {
@@ -106,7 +103,8 @@ namespace gpudb
             }
 
         private:
-            static const std::string api_version;
+            static const std::string API_VERSION;
+
             std::string url;
             std::string host;
             std::string service;
@@ -115,7 +113,6 @@ namespace gpudb
             std::string username;
             std::string password;
             std::string authorization;
-            std::string userAuth;
             bool useSnappy;
             size_t threadCount;
             avro::ExecutorPtr executor;

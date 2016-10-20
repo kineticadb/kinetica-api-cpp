@@ -6,7 +6,7 @@
 #ifndef __GET_RECORDS_BY_COLUMN_H__
 #define __GET_RECORDS_BY_COLUMN_H__
 
-#include "../DynamicTableRecord.hpp"
+#include "../GenericRecord.hpp"
 
 namespace gpudb
 {
@@ -354,7 +354,7 @@ namespace gpudb
         GetRecordsByColumnResponse() :
             tableName(std::string()),
             responseSchemaStr(std::string()),
-            data(std::vector<gpudb::DynamicTableRecord>()),
+            data(std::vector<gpudb::GenericRecord>()),
             totalNumberOfRecords(int64_t()),
             hasMoreRecords(bool())
         {
@@ -362,7 +362,7 @@ namespace gpudb
 
         std::string tableName;
         std::string responseSchemaStr;
-        std::vector<gpudb::DynamicTableRecord> data;
+        std::vector<gpudb::GenericRecord> data;
         int64_t totalNumberOfRecords;
         bool hasMoreRecords;
     };
