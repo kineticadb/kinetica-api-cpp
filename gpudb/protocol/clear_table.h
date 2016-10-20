@@ -16,9 +16,7 @@ namespace gpudb
      * Clears (drops) one or all tables in the GPUdb cluster. The operation is
      * synchronous meaning that the table will be cleared before the function
      * returns. The response payload returns the status of the operation along
-     * with the name of the table that was cleared. For protected tables, this
-     * function requires an administrator password without which the operation
-     * will fail.
+     * with the name of the table that was cleared.
      */
     struct ClearTableRequest
     {
@@ -40,10 +38,8 @@ namespace gpudb
          *                       existing GPUdb table. Empty string clears all
          *                       available tables in GPUdb.  Default value is
          *                       an empty string.
-         * @param[in] authorization  Administrator password needed for clearing
-         *                           protected tables. For unprotected tables
-         *                           the string can be left blank.  Default
-         *                           value is an empty string.
+         * @param[in] authorization  No longer used. User can pass an empty
+         *                           string.  Default value is an empty string.
          * @param[in] options  Optional parameters.  Default value is an empty
          *                     std::map.
          * 
@@ -119,9 +115,7 @@ namespace gpudb
      * Clears (drops) one or all tables in the GPUdb cluster. The operation is
      * synchronous meaning that the table will be cleared before the function
      * returns. The response payload returns the status of the operation along
-     * with the name of the table that was cleared. For protected tables, this
-     * function requires an administrator password without which the operation
-     * will fail.
+     * with the name of the table that was cleared.
      */
     struct ClearTableResponse
     {

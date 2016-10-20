@@ -260,7 +260,7 @@ namespace gpudb
         {
             public:
                 GenericSchemaDecoder(const ::avro::ValidSchema& schema) :
-                    schema(schema)
+                    m_schema(schema)
                 {
                 }
 
@@ -271,18 +271,18 @@ namespace gpudb
 
                 virtual void initObject(boost::any& object) const
                 {
-                    object = T(schema);
+                    object = T(m_schema);
                 }
 
                 virtual void resizeVector(std::vector<boost::any>& vector, const size_t size) const
                 {
-                    vector.resize(size, T(schema));
+                    vector.resize(size, T(m_schema));
                 }
 
             private:
-                ::avro::ValidSchema schema;
+                ::avro::ValidSchema m_schema;
         };
-/*
+
         template<typename T> DecoderPtr createDecoder(const std::string& schemaString)
         {
             try
@@ -299,12 +299,12 @@ namespace gpudb
         {
             return boost::make_shared<GenericSchemaDecoder<T> >(schema);
         }
-*/
+
         template<typename T> class GenericTypeDecoder : public Decoder
         {
             public:
                 GenericTypeDecoder(const Type& type) :
-                    type(type)
+                    m_type(type)
                 {
                 }
 
@@ -315,16 +315,16 @@ namespace gpudb
 
                 virtual void initObject(boost::any& object) const
                 {
-                    object = T(type);
+                    object = T(m_type);
                 }
 
                 virtual void resizeVector(std::vector<boost::any>& vector, const size_t size) const
                 {
-                    vector.resize(size, T(type));
+                    vector.resize(size, T(m_type));
                 }
 
             private:
-                Type type;
+                Type m_type;
         };
 
         template<typename T> DecoderPtr createDecoder(const Type& type)
@@ -356,6 +356,40 @@ namespace gpudb
             return boost::make_shared<SpecificDecoder<T> >();
         }
     }
+}
+
+namespace avro
+{
+    template<typename T> struct codec_traits<boost::optional<T> >
+    {
+        static void encode(Encoder& e, const boost::optional<T>& v)
+        {
+            if (v)
+            {
+                e.encodeUnionIndex(0);
+                ::avro::encode(e, *v);
+            }
+            else
+            {
+                e.encodeUnionIndex(1);
+                e.encodeNull();
+            }
+        }
+
+        static void decode(Decoder& d, boost::optional<T>& v)
+        {
+            if (d.decodeUnionIndex() == 0)
+            {
+                v = T();
+                ::avro::decode(d, *v);
+            }
+            else
+            {
+                v = boost::none;
+                d.decodeNull();
+            }
+        }
+    };
 }
 
 #endif

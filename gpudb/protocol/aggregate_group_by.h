@@ -6,7 +6,7 @@
 #ifndef __AGGREGATE_GROUP_BY_H__
 #define __AGGREGATE_GROUP_BY_H__
 
-#include "../DynamicTableRecord.hpp"
+#include "../GenericRecord.hpp"
 
 namespace gpudb
 {
@@ -29,9 +29,8 @@ namespace gpudb
      * compute the sum of 'z' over each group, use
      * column_names=['x','y','count(*)','sum(z)']. Available aggregation
      * functions are: 'count(*)', 'sum', 'min', 'max', 'avg', 'mean', 'stddev',
-     * 'stddev_pop', 'stddev_samp', 'var', 'var_pop', 'var_samp' and
-     * 'count_distinct'. Note that 'count_distinct' can only be used if there
-     * are no provided grouping columns. The response is returned as a dynamic
+     * 'stddev_pop', 'stddev_samp', 'var', 'var_pop', 'var_samp', 'arg_min',
+     * 'arg_max' and 'count_distinct'. The response is returned as a dynamic
      * schema. For details see: <a href="../../concepts/index.html#dynamic-
      * schemas" target="_top">dynamic schemas documentation</a>. If the
      * 'result_table' option is provided then the results are stored in a table
@@ -235,9 +234,8 @@ namespace gpudb
      * compute the sum of 'z' over each group, use
      * column_names=['x','y','count(*)','sum(z)']. Available aggregation
      * functions are: 'count(*)', 'sum', 'min', 'max', 'avg', 'mean', 'stddev',
-     * 'stddev_pop', 'stddev_samp', 'var', 'var_pop', 'var_samp' and
-     * 'count_distinct'. Note that 'count_distinct' can only be used if there
-     * are no provided grouping columns. The response is returned as a dynamic
+     * 'stddev_pop', 'stddev_samp', 'var', 'var_pop', 'var_samp', 'arg_min',
+     * 'arg_max' and 'count_distinct'. The response is returned as a dynamic
      * schema. For details see: <a href="../../concepts/index.html#dynamic-
      * schemas" target="_top">dynamic schemas documentation</a>. If the
      * 'result_table' option is provided then the results are stored in a table
@@ -349,9 +347,8 @@ namespace gpudb
      * compute the sum of 'z' over each group, use
      * column_names=['x','y','count(*)','sum(z)']. Available aggregation
      * functions are: 'count(*)', 'sum', 'min', 'max', 'avg', 'mean', 'stddev',
-     * 'stddev_pop', 'stddev_samp', 'var', 'var_pop', 'var_samp' and
-     * 'count_distinct'. Note that 'count_distinct' can only be used if there
-     * are no provided grouping columns. The response is returned as a dynamic
+     * 'stddev_pop', 'stddev_samp', 'var', 'var_pop', 'var_samp', 'arg_min',
+     * 'arg_max' and 'count_distinct'. The response is returned as a dynamic
      * schema. For details see: <a href="../../concepts/index.html#dynamic-
      * schemas" target="_top">dynamic schemas documentation</a>. If the
      * 'result_table' option is provided then the results are stored in a table
@@ -367,14 +364,14 @@ namespace gpudb
          */
         AggregateGroupByResponse() :
             responseSchemaStr(std::string()),
-            data(std::vector<gpudb::DynamicTableRecord>()),
+            data(std::vector<gpudb::GenericRecord>()),
             totalNumberOfRecords(int64_t()),
             hasMoreRecords(bool())
         {
         }
 
         std::string responseSchemaStr;
-        std::vector<gpudb::DynamicTableRecord> data;
+        std::vector<gpudb::GenericRecord> data;
         int64_t totalNumberOfRecords;
         bool hasMoreRecords;
     };

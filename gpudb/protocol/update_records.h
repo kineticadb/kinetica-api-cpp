@@ -82,7 +82,7 @@ namespace gpudb
          *     <li>global_expression: An optional global expression to reduce the search space of the predicates listed in @a expressions.  Default value is an empty string. 
          *     <li>bypass_safety_checks: When set to 'true', all predicates are available for primary key updates.  Keep in mind that it is possible to destroy data in this case, since a single predicate may match multiple objects (potentially all of records of a table), and then updating all of those records to have the same primary key will, due to the primary key uniqueness constraints, effectively delete all but one of those updated records.  Default value is 'false'. values:TRUE, FALSE
          *     <li>update_on_existing_pk: Can be used to customize behavior when the updated primary key value already exists, as described in /insert/records.  Default value is 'false'. values:TRUE, FALSE
-         *     <li>record_id: ID of a single record to be updated (returned in the call to /insert/records or /get/records/fromcollection.  
+         *     <li>record_id: ID of a single record to be updated (returned in the call to /insert/records or /get/records/fromcollection).  
          * </ul>
          * 
          */
@@ -136,7 +136,7 @@ namespace gpudb
          *     <li>global_expression: An optional global expression to reduce the search space of the predicates listed in @a expressions.  Default value is an empty string. 
          *     <li>bypass_safety_checks: When set to 'true', all predicates are available for primary key updates.  Keep in mind that it is possible to destroy data in this case, since a single predicate may match multiple objects (potentially all of records of a table), and then updating all of those records to have the same primary key will, due to the primary key uniqueness constraints, effectively delete all but one of those updated records.  Default value is 'false'. values:TRUE, FALSE
          *     <li>update_on_existing_pk: Can be used to customize behavior when the updated primary key value already exists, as described in /insert/records.  Default value is 'false'. values:TRUE, FALSE
-         *     <li>record_id: ID of a single record to be updated (returned in the call to /insert/records or /get/records/fromcollection.  
+         *     <li>record_id: ID of a single record to be updated (returned in the call to /insert/records or /get/records/fromcollection).  
          * </ul>
          * 
          */
@@ -308,7 +308,7 @@ namespace gpudb
          *     <li>global_expression: An optional global expression to reduce the search space of the predicates listed in @a expressions.  Default value is an empty string. 
          *     <li>bypass_safety_checks: When set to 'true', all predicates are available for primary key updates.  Keep in mind that it is possible to destroy data in this case, since a single predicate may match multiple objects (potentially all of records of a table), and then updating all of those records to have the same primary key will, due to the primary key uniqueness constraints, effectively delete all but one of those updated records.  Default value is 'false'. values:TRUE, FALSE
          *     <li>update_on_existing_pk: Can be used to customize behavior when the updated primary key value already exists, as described in /insert/records.  Default value is 'false'. values:TRUE, FALSE
-         *     <li>record_id: ID of a single record to be updated (returned in the call to /insert/records or /get/records/fromcollection.  
+         *     <li>record_id: ID of a single record to be updated (returned in the call to /insert/records or /get/records/fromcollection).  
          * </ul>
          * 
          */

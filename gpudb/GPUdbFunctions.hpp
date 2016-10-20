@@ -315,8 +315,7 @@ AdminSetShardAssignmentsResponse& adminSetShardAssignments( const int64_t versio
                                                             AdminSetShardAssignmentsResponse& response_ ) const;
 
 /**
- * Exits the GPUdb server application. A authorization code is required (chosen
- * at the time of GPUdb configuration) to successfully complete this request.
+ * Exits the GPUdb server application.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -328,8 +327,7 @@ AdminSetShardAssignmentsResponse& adminSetShardAssignments( const int64_t versio
 AdminShutdownResponse adminShutdown( const AdminShutdownRequest& request_ ) const;
 
 /**
- * Exits the GPUdb server application. A authorization code is required (chosen
- * at the time of GPUdb configuration) to successfully complete this request.
+ * Exits the GPUdb server application.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -345,13 +343,10 @@ AdminShutdownResponse& adminShutdown( const AdminShutdownRequest& request_,
                                       AdminShutdownResponse& response_ ) const;
 
 /**
- * Exits the GPUdb server application. A authorization code is required (chosen
- * at the time of GPUdb configuration) to successfully complete this request.
+ * Exits the GPUdb server application.
  * 
  * @param exitType  Reserved for future use. User can pass an empty string.
- * @param authorization  The password that GPUdb is configured with during
- *                       startup. Incorrect or missing authorization code will
- *                       result in an error.
+ * @param authorization  No longer used. User can pass an empty string.
  * @param options  Optional parameters.  Default value is an empty std::map.
  * 
  * @return Response object containing the result of the operation.
@@ -363,13 +358,10 @@ AdminShutdownResponse adminShutdown( const std::string& exitType,
                                      const std::map<std::string, std::string>& options ) const;
 
 /**
- * Exits the GPUdb server application. A authorization code is required (chosen
- * at the time of GPUdb configuration) to successfully complete this request.
+ * Exits the GPUdb server application.
  * 
  * @param exitType  Reserved for future use. User can pass an empty string.
- * @param authorization  The password that GPUdb is configured with during
- *                       startup. Incorrect or missing authorization code will
- *                       result in an error.
+ * @param authorization  No longer used. User can pass an empty string.
  * @param options  Optional parameters.  Default value is an empty std::map.
  * @param[out] response_  Response object containing the results of the
  *                        operation.
@@ -538,13 +530,13 @@ AggregateConvexHullResponse& aggregateConvexHull( const std::string& tableName,
  * each group, use column_names=['x','y','count(*)'].  To also compute the sum
  * of 'z' over each group, use column_names=['x','y','count(*)','sum(z)'].
  * Available aggregation functions are: 'count(*)', 'sum', 'min', 'max', 'avg',
- * 'mean', 'stddev', 'stddev_pop', 'stddev_samp', 'var', 'var_pop', 'var_samp'
- * and 'count_distinct'. Note that 'count_distinct' can only be used if there
- * are no provided grouping columns. The response is returned as a dynamic
- * schema. For details see: <a href="../../concepts/index.html#dynamic-schemas"
- * target="_top">dynamic schemas documentation</a>. If the 'result_table'
- * option is provided then the results are stored in a table with the name
- * given in the option and the results are not returned in the response.
+ * 'mean', 'stddev', 'stddev_pop', 'stddev_samp', 'var', 'var_pop', 'var_samp',
+ * 'arg_min', 'arg_max' and 'count_distinct'. The response is returned as a
+ * dynamic schema. For details see: <a href="../../concepts/index.html#dynamic-
+ * schemas" target="_top">dynamic schemas documentation</a>. If the
+ * 'result_table' option is provided then the results are stored in a table
+ * with the name given in the option and the results are not returned in the
+ * response.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -569,13 +561,13 @@ RawAggregateGroupByResponse aggregateGroupByRaw( const AggregateGroupByRequest& 
  * each group, use column_names=['x','y','count(*)'].  To also compute the sum
  * of 'z' over each group, use column_names=['x','y','count(*)','sum(z)'].
  * Available aggregation functions are: 'count(*)', 'sum', 'min', 'max', 'avg',
- * 'mean', 'stddev', 'stddev_pop', 'stddev_samp', 'var', 'var_pop', 'var_samp'
- * and 'count_distinct'. Note that 'count_distinct' can only be used if there
- * are no provided grouping columns. The response is returned as a dynamic
- * schema. For details see: <a href="../../concepts/index.html#dynamic-schemas"
- * target="_top">dynamic schemas documentation</a>. If the 'result_table'
- * option is provided then the results are stored in a table with the name
- * given in the option and the results are not returned in the response.
+ * 'mean', 'stddev', 'stddev_pop', 'stddev_samp', 'var', 'var_pop', 'var_samp',
+ * 'arg_min', 'arg_max' and 'count_distinct'. The response is returned as a
+ * dynamic schema. For details see: <a href="../../concepts/index.html#dynamic-
+ * schemas" target="_top">dynamic schemas documentation</a>. If the
+ * 'result_table' option is provided then the results are stored in a table
+ * with the name given in the option and the results are not returned in the
+ * response.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -604,13 +596,13 @@ RawAggregateGroupByResponse& aggregateGroupByRaw( const AggregateGroupByRequest&
  * each group, use column_names=['x','y','count(*)'].  To also compute the sum
  * of 'z' over each group, use column_names=['x','y','count(*)','sum(z)'].
  * Available aggregation functions are: 'count(*)', 'sum', 'min', 'max', 'avg',
- * 'mean', 'stddev', 'stddev_pop', 'stddev_samp', 'var', 'var_pop', 'var_samp'
- * and 'count_distinct'. Note that 'count_distinct' can only be used if there
- * are no provided grouping columns. The response is returned as a dynamic
- * schema. For details see: <a href="../../concepts/index.html#dynamic-schemas"
- * target="_top">dynamic schemas documentation</a>. If the 'result_table'
- * option is provided then the results are stored in a table with the name
- * given in the option and the results are not returned in the response.
+ * 'mean', 'stddev', 'stddev_pop', 'stddev_samp', 'var', 'var_pop', 'var_samp',
+ * 'arg_min', 'arg_max' and 'count_distinct'. The response is returned as a
+ * dynamic schema. For details see: <a href="../../concepts/index.html#dynamic-
+ * schemas" target="_top">dynamic schemas documentation</a>. If the
+ * 'result_table' option is provided then the results are stored in a table
+ * with the name given in the option and the results are not returned in the
+ * response.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -635,13 +627,13 @@ AggregateGroupByResponse aggregateGroupBy( const AggregateGroupByRequest& reques
  * each group, use column_names=['x','y','count(*)'].  To also compute the sum
  * of 'z' over each group, use column_names=['x','y','count(*)','sum(z)'].
  * Available aggregation functions are: 'count(*)', 'sum', 'min', 'max', 'avg',
- * 'mean', 'stddev', 'stddev_pop', 'stddev_samp', 'var', 'var_pop', 'var_samp'
- * and 'count_distinct'. Note that 'count_distinct' can only be used if there
- * are no provided grouping columns. The response is returned as a dynamic
- * schema. For details see: <a href="../../concepts/index.html#dynamic-schemas"
- * target="_top">dynamic schemas documentation</a>. If the 'result_table'
- * option is provided then the results are stored in a table with the name
- * given in the option and the results are not returned in the response.
+ * 'mean', 'stddev', 'stddev_pop', 'stddev_samp', 'var', 'var_pop', 'var_samp',
+ * 'arg_min', 'arg_max' and 'count_distinct'. The response is returned as a
+ * dynamic schema. For details see: <a href="../../concepts/index.html#dynamic-
+ * schemas" target="_top">dynamic schemas documentation</a>. If the
+ * 'result_table' option is provided then the results are stored in a table
+ * with the name given in the option and the results are not returned in the
+ * response.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -670,13 +662,13 @@ AggregateGroupByResponse& aggregateGroupBy( const AggregateGroupByRequest& reque
  * each group, use column_names=['x','y','count(*)'].  To also compute the sum
  * of 'z' over each group, use column_names=['x','y','count(*)','sum(z)'].
  * Available aggregation functions are: 'count(*)', 'sum', 'min', 'max', 'avg',
- * 'mean', 'stddev', 'stddev_pop', 'stddev_samp', 'var', 'var_pop', 'var_samp'
- * and 'count_distinct'. Note that 'count_distinct' can only be used if there
- * are no provided grouping columns. The response is returned as a dynamic
- * schema. For details see: <a href="../../concepts/index.html#dynamic-schemas"
- * target="_top">dynamic schemas documentation</a>. If the 'result_table'
- * option is provided then the results are stored in a table with the name
- * given in the option and the results are not returned in the response.
+ * 'mean', 'stddev', 'stddev_pop', 'stddev_samp', 'var', 'var_pop', 'var_samp',
+ * 'arg_min', 'arg_max' and 'count_distinct'. The response is returned as a
+ * dynamic schema. For details see: <a href="../../concepts/index.html#dynamic-
+ * schemas" target="_top">dynamic schemas documentation</a>. If the
+ * 'result_table' option is provided then the results are stored in a table
+ * with the name given in the option and the results are not returned in the
+ * response.
  * 
  * @param tableName  Name of the table on which the operation will be
  *                   performed. Must be a valid table/view/collection in GPUdb.
@@ -724,13 +716,13 @@ AggregateGroupByResponse aggregateGroupBy( const std::string& tableName,
  * each group, use column_names=['x','y','count(*)'].  To also compute the sum
  * of 'z' over each group, use column_names=['x','y','count(*)','sum(z)'].
  * Available aggregation functions are: 'count(*)', 'sum', 'min', 'max', 'avg',
- * 'mean', 'stddev', 'stddev_pop', 'stddev_samp', 'var', 'var_pop', 'var_samp'
- * and 'count_distinct'. Note that 'count_distinct' can only be used if there
- * are no provided grouping columns. The response is returned as a dynamic
- * schema. For details see: <a href="../../concepts/index.html#dynamic-schemas"
- * target="_top">dynamic schemas documentation</a>. If the 'result_table'
- * option is provided then the results are stored in a table with the name
- * given in the option and the results are not returned in the response.
+ * 'mean', 'stddev', 'stddev_pop', 'stddev_samp', 'var', 'var_pop', 'var_samp',
+ * 'arg_min', 'arg_max' and 'count_distinct'. The response is returned as a
+ * dynamic schema. For details see: <a href="../../concepts/index.html#dynamic-
+ * schemas" target="_top">dynamic schemas documentation</a>. If the
+ * 'result_table' option is provided then the results are stored in a table
+ * with the name given in the option and the results are not returned in the
+ * response.
  * 
  * @param tableName  Name of the table on which the operation will be
  *                   performed. Must be a valid table/view/collection in GPUdb.
@@ -2043,8 +2035,7 @@ AlterUserResponse& alterUser( const std::string& name,
  * Clears (drops) one or all tables in the GPUdb cluster. The operation is
  * synchronous meaning that the table will be cleared before the function
  * returns. The response payload returns the status of the operation along with
- * the name of the table that was cleared. For protected tables, this function
- * requires an administrator password without which the operation will fail.
+ * the name of the table that was cleared.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -2059,8 +2050,7 @@ ClearTableResponse clearTable( const ClearTableRequest& request_ ) const;
  * Clears (drops) one or all tables in the GPUdb cluster. The operation is
  * synchronous meaning that the table will be cleared before the function
  * returns. The response payload returns the status of the operation along with
- * the name of the table that was cleared. For protected tables, this function
- * requires an administrator password without which the operation will fail.
+ * the name of the table that was cleared.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -2079,15 +2069,13 @@ ClearTableResponse& clearTable( const ClearTableRequest& request_,
  * Clears (drops) one or all tables in the GPUdb cluster. The operation is
  * synchronous meaning that the table will be cleared before the function
  * returns. The response payload returns the status of the operation along with
- * the name of the table that was cleared. For protected tables, this function
- * requires an administrator password without which the operation will fail.
+ * the name of the table that was cleared.
  * 
  * @param tableName  Name of the table to be cleared. Must be an existing GPUdb
  *                   table. Empty string clears all available tables in GPUdb.
  *                   Default value is an empty string.
- * @param authorization  Administrator password needed for clearing protected
- *                       tables. For unprotected tables the string can be left
- *                       blank.  Default value is an empty string.
+ * @param authorization  No longer used. User can pass an empty string.
+ *                       Default value is an empty string.
  * @param options  Optional parameters.  Default value is an empty std::map.
  * 
  * @return Response object containing the result of the operation.
@@ -2102,15 +2090,13 @@ ClearTableResponse clearTable( const std::string& tableName,
  * Clears (drops) one or all tables in the GPUdb cluster. The operation is
  * synchronous meaning that the table will be cleared before the function
  * returns. The response payload returns the status of the operation along with
- * the name of the table that was cleared. For protected tables, this function
- * requires an administrator password without which the operation will fail.
+ * the name of the table that was cleared.
  * 
  * @param tableName  Name of the table to be cleared. Must be an existing GPUdb
  *                   table. Empty string clears all available tables in GPUdb.
  *                   Default value is an empty string.
- * @param authorization  Administrator password needed for clearing protected
- *                       tables. For unprotected tables the string can be left
- *                       blank.  Default value is an empty string.
+ * @param authorization  No longer used. User can pass an empty string.
+ *                       Default value is an empty string.
  * @param options  Optional parameters.  Default value is an empty std::map.
  * @param[out] response_  Response object containing the results of the
  *                        operation.
@@ -3103,8 +3089,6 @@ CreateTypeResponse& createType( const CreateTypeRequest& request_,
  *                    for that column (which is based on the column's data
  *                    type).  Default value is an empty std::map.
  * @param options  Optional parameters.  Default value is an empty std::map.
-         * <ul>
-         * </ul>
  * 
  * @return Response object containing the result of the operation.
  * 
@@ -3167,8 +3151,6 @@ CreateTypeResponse createType( const std::string& typeDefinition,
  *                    for that column (which is based on the column's data
  *                    type).  Default value is an empty std::map.
  * @param options  Optional parameters.  Default value is an empty std::map.
-         * <ul>
-         * </ul>
  * @param[out] response_  Response object containing the results of the
  *                        operation.
  * 
@@ -3762,8 +3744,6 @@ FilterResponse& filter( const FilterRequest& request_,
  *                    href="../../concepts/index.html#expressions"
  *                    target="_top">concepts</a>.
  * @param options  Optional parameters.  Default value is an empty std::map.
-         * <ul>
-         * </ul>
  * 
  * @return Response object containing the result of the operation.
  * 
@@ -3797,8 +3777,6 @@ FilterResponse filter( const std::string& tableName,
  *                    href="../../concepts/index.html#expressions"
  *                    target="_top">concepts</a>.
  * @param options  Optional parameters.  Default value is an empty std::map.
-         * <ul>
-         * </ul>
  * @param[out] response_  Response object containing the results of the
  *                        operation.
  * 
@@ -4708,18 +4686,22 @@ FilterBySeriesResponse& filterBySeries( const std::string& tableName,
 /**
  * Calculates which objects from a table, collection or view match a string
  * expression for the given string columns. The 'mode' may be:
- * <p>
- *     'search' for full text search query with wildcards and boolean
- * operators, e.g. '(bob* OR sue) AND NOT jane'. Note that for this mode, no
- * column can be specified in @a columnNames; GPUdb will search through all
- * string columns of the table that have text search enabled. Also, the first
- * character of the regular expression cannot be a wildcard (* or ?).
- * <p>
- * * 'equals' for an exact whole-string match
- * * 'contains' for a partial substring match (not accelerated)
- * * 'starts_with' to find strings that start with the given expression (not
- * accelerated)
- * * 'regex' - to use a full regular expression search (not accelerated)
+
+ * * search : full text search query with wildcards and boolean operators, e.g.
+ * '(bob* OR sue) AND NOT jane'. Note that for this mode, no column can be
+ * specified in @a columnNames; GPUdb will search through all string columns of
+ * the table that have text search enabled. Also, the first character of the
+ * regular expression cannot be a wildcard (* or ?).
+ * * equals: exact whole-string match (accelerated)
+ * * contains: partial substring match (not accelerated).  If the column is a
+ * string type (non-charN) and the number of records is too large, it will
+ * return 0.
+ * * starts_with: strings that start with the given expression (not
+ * accelerated), If the column is a string type (non-charN) and the number of
+ * records is too large, it will return 0.
+ * * regex: full regular expression search (not accelerated). If the column is
+ * a string type (non-charN) and the number of records is too large, it will
+ * return 0.
  * <p>
  * The options 'case_sensitive' can be used to modify the behavior for all
  * modes except 'search'
@@ -4736,18 +4718,22 @@ FilterByStringResponse filterByString( const FilterByStringRequest& request_ ) c
 /**
  * Calculates which objects from a table, collection or view match a string
  * expression for the given string columns. The 'mode' may be:
- * <p>
- *     'search' for full text search query with wildcards and boolean
- * operators, e.g. '(bob* OR sue) AND NOT jane'. Note that for this mode, no
- * column can be specified in @a columnNames; GPUdb will search through all
- * string columns of the table that have text search enabled. Also, the first
- * character of the regular expression cannot be a wildcard (* or ?).
- * <p>
- * * 'equals' for an exact whole-string match
- * * 'contains' for a partial substring match (not accelerated)
- * * 'starts_with' to find strings that start with the given expression (not
- * accelerated)
- * * 'regex' - to use a full regular expression search (not accelerated)
+
+ * * search : full text search query with wildcards and boolean operators, e.g.
+ * '(bob* OR sue) AND NOT jane'. Note that for this mode, no column can be
+ * specified in @a columnNames; GPUdb will search through all string columns of
+ * the table that have text search enabled. Also, the first character of the
+ * regular expression cannot be a wildcard (* or ?).
+ * * equals: exact whole-string match (accelerated)
+ * * contains: partial substring match (not accelerated).  If the column is a
+ * string type (non-charN) and the number of records is too large, it will
+ * return 0.
+ * * starts_with: strings that start with the given expression (not
+ * accelerated), If the column is a string type (non-charN) and the number of
+ * records is too large, it will return 0.
+ * * regex: full regular expression search (not accelerated). If the column is
+ * a string type (non-charN) and the number of records is too large, it will
+ * return 0.
  * <p>
  * The options 'case_sensitive' can be used to modify the behavior for all
  * modes except 'search'
@@ -4768,18 +4754,22 @@ FilterByStringResponse& filterByString( const FilterByStringRequest& request_,
 /**
  * Calculates which objects from a table, collection or view match a string
  * expression for the given string columns. The 'mode' may be:
- * <p>
- *     'search' for full text search query with wildcards and boolean
- * operators, e.g. '(bob* OR sue) AND NOT jane'. Note that for this mode, no
- * column can be specified in @a columnNames; GPUdb will search through all
- * string columns of the table that have text search enabled. Also, the first
- * character of the regular expression cannot be a wildcard (* or ?).
- * <p>
- * * 'equals' for an exact whole-string match
- * * 'contains' for a partial substring match (not accelerated)
- * * 'starts_with' to find strings that start with the given expression (not
- * accelerated)
- * * 'regex' - to use a full regular expression search (not accelerated)
+
+ * * search : full text search query with wildcards and boolean operators, e.g.
+ * '(bob* OR sue) AND NOT jane'. Note that for this mode, no column can be
+ * specified in @a columnNames; GPUdb will search through all string columns of
+ * the table that have text search enabled. Also, the first character of the
+ * regular expression cannot be a wildcard (* or ?).
+ * * equals: exact whole-string match (accelerated)
+ * * contains: partial substring match (not accelerated).  If the column is a
+ * string type (non-charN) and the number of records is too large, it will
+ * return 0.
+ * * starts_with: strings that start with the given expression (not
+ * accelerated), If the column is a string type (non-charN) and the number of
+ * records is too large, it will return 0.
+ * * regex: full regular expression search (not accelerated). If the column is
+ * a string type (non-charN) and the number of records is too large, it will
+ * return 0.
  * <p>
  * The options 'case_sensitive' can be used to modify the behavior for all
  * modes except 'search'
@@ -4814,18 +4804,22 @@ FilterByStringResponse filterByString( const std::string& tableName,
 /**
  * Calculates which objects from a table, collection or view match a string
  * expression for the given string columns. The 'mode' may be:
- * <p>
- *     'search' for full text search query with wildcards and boolean
- * operators, e.g. '(bob* OR sue) AND NOT jane'. Note that for this mode, no
- * column can be specified in @a columnNames; GPUdb will search through all
- * string columns of the table that have text search enabled. Also, the first
- * character of the regular expression cannot be a wildcard (* or ?).
- * <p>
- * * 'equals' for an exact whole-string match
- * * 'contains' for a partial substring match (not accelerated)
- * * 'starts_with' to find strings that start with the given expression (not
- * accelerated)
- * * 'regex' - to use a full regular expression search (not accelerated)
+
+ * * search : full text search query with wildcards and boolean operators, e.g.
+ * '(bob* OR sue) AND NOT jane'. Note that for this mode, no column can be
+ * specified in @a columnNames; GPUdb will search through all string columns of
+ * the table that have text search enabled. Also, the first character of the
+ * regular expression cannot be a wildcard (* or ?).
+ * * equals: exact whole-string match (accelerated)
+ * * contains: partial substring match (not accelerated).  If the column is a
+ * string type (non-charN) and the number of records is too large, it will
+ * return 0.
+ * * starts_with: strings that start with the given expression (not
+ * accelerated), If the column is a string type (non-charN) and the number of
+ * records is too large, it will return 0.
+ * * regex: full regular expression search (not accelerated). If the column is
+ * a string type (non-charN) and the number of records is too large, it will
+ * return 0.
  * <p>
  * The options 'case_sensitive' can be used to modify the behavior for all
  * modes except 'search'
@@ -8220,12 +8214,12 @@ InsertSymbolResponse& insertSymbol( const std::string& symbolId,
                                     InsertSymbolResponse& response_ ) const;
 
 /**
- * Locks a table.  By default a table has no locks and all operations are
- * permitted.  A user may request a read-only or a write-only lock, after which
- * only read or write operations are permitted on the table until the next
- * request.  When lock_type is disable then then no operations are permitted on
- * the table.  The lock status can be queried by passing an empty string for @a
- * lockType.
+ * Locks a table.  By default a table has a @a lockType of @a unlock,
+ * indicating all operations are permitted.  A user may request a @a read-only
+ * or a @a write-only lock, after which only read or write operations,
+ * respectively, are permitted on the table until the lock is removed.  When @a
+ * lockType is @a disable then no operations are permitted on the table.  The
+ * lock status can be queried by setting  @a lockType to @a status.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -8237,12 +8231,12 @@ InsertSymbolResponse& insertSymbol( const std::string& symbolId,
 LockTableResponse lockTable( const LockTableRequest& request_ ) const;
 
 /**
- * Locks a table.  By default a table has no locks and all operations are
- * permitted.  A user may request a read-only or a write-only lock, after which
- * only read or write operations are permitted on the table until the next
- * request.  When lock_type is disable then then no operations are permitted on
- * the table.  The lock status can be queried by passing an empty string for @a
- * lockType.
+ * Locks a table.  By default a table has a @a lockType of @a unlock,
+ * indicating all operations are permitted.  A user may request a @a read-only
+ * or a @a write-only lock, after which only read or write operations,
+ * respectively, are permitted on the table until the lock is removed.  When @a
+ * lockType is @a disable then no operations are permitted on the table.  The
+ * lock status can be queried by setting  @a lockType to @a status.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -8258,19 +8252,18 @@ LockTableResponse& lockTable( const LockTableRequest& request_,
                               LockTableResponse& response_ ) const;
 
 /**
- * Locks a table.  By default a table has no locks and all operations are
- * permitted.  A user may request a read-only or a write-only lock, after which
- * only read or write operations are permitted on the table until the next
- * request.  When lock_type is disable then then no operations are permitted on
- * the table.  The lock status can be queried by passing an empty string for @a
- * lockType.
+ * Locks a table.  By default a table has a @a lockType of @a unlock,
+ * indicating all operations are permitted.  A user may request a @a read-only
+ * or a @a write-only lock, after which only read or write operations,
+ * respectively, are permitted on the table until the lock is removed.  When @a
+ * lockType is @a disable then no operations are permitted on the table.  The
+ * lock status can be queried by setting  @a lockType to @a status.
  * 
  * @param tableName  Name of the table to be locked. It must be a currently
  *                   existing table and not a collection or a view.
- * @param lockType  The type of lock being applied to the table or blank to
- *                  query. Empty string returns the lock status without change
- *                  the lock status of the table.  Default value is an empty
- *                  string.
+ * @param lockType  The type of lock being applied to the table. Setting it to
+ *                  'status' will return the current lock status of the table
+ *                  without changing it.  Default value is 'status'.
  * @param options  Optional parameters.  Default value is an empty std::map.
  * 
  * @return Response object containing the result of the operation.
@@ -8282,19 +8275,18 @@ LockTableResponse lockTable( const std::string& tableName,
                              const std::map<std::string, std::string>& options ) const;
 
 /**
- * Locks a table.  By default a table has no locks and all operations are
- * permitted.  A user may request a read-only or a write-only lock, after which
- * only read or write operations are permitted on the table until the next
- * request.  When lock_type is disable then then no operations are permitted on
- * the table.  The lock status can be queried by passing an empty string for @a
- * lockType.
+ * Locks a table.  By default a table has a @a lockType of @a unlock,
+ * indicating all operations are permitted.  A user may request a @a read-only
+ * or a @a write-only lock, after which only read or write operations,
+ * respectively, are permitted on the table until the lock is removed.  When @a
+ * lockType is @a disable then no operations are permitted on the table.  The
+ * lock status can be queried by setting  @a lockType to @a status.
  * 
  * @param tableName  Name of the table to be locked. It must be a currently
  *                   existing table and not a collection or a view.
- * @param lockType  The type of lock being applied to the table or blank to
- *                  query. Empty string returns the lock status without change
- *                  the lock status of the table.  Default value is an empty
- *                  string.
+ * @param lockType  The type of lock being applied to the table. Setting it to
+ *                  'status' will return the current lock status of the table
+ *                  without changing it.  Default value is 'status'.
  * @param options  Optional parameters.  Default value is an empty std::map.
  * @param[out] response_  Response object containing the results of the
  *                        operation.
@@ -8510,7 +8502,9 @@ RevokeRoleResponse& revokeRole( const std::string& role,
                                 RevokeRoleResponse& response_ ) const;
 
 /**
- * Shows security information relating to users and/or roles.
+ * Shows security information relating to users and/or roles. If the caller is
+ * not a system administrator, only information relating to the caller and
+ * their roles is returned.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -8522,7 +8516,9 @@ RevokeRoleResponse& revokeRole( const std::string& role,
 ShowSecurityResponse showSecurity( const ShowSecurityRequest& request_ ) const;
 
 /**
- * Shows security information relating to users and/or roles.
+ * Shows security information relating to users and/or roles. If the caller is
+ * not a system administrator, only information relating to the caller and
+ * their roles is returned.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -8538,7 +8534,9 @@ ShowSecurityResponse& showSecurity( const ShowSecurityRequest& request_,
                                     ShowSecurityResponse& response_ ) const;
 
 /**
- * Shows security information relating to users and/or roles.
+ * Shows security information relating to users and/or roles. If the caller is
+ * not a system administrator, only information relating to the caller and
+ * their roles is returned.
  * 
  * @param names  A list of names of users and/or roles about which security
  *               information is requested. If none are provided, information
@@ -8553,7 +8551,9 @@ ShowSecurityResponse showSecurity( const std::vector<std::string>& names,
                                    const std::map<std::string, std::string>& options ) const;
 
 /**
- * Shows security information relating to users and/or roles.
+ * Shows security information relating to users and/or roles. If the caller is
+ * not a system administrator, only information relating to the caller and
+ * their roles is returned.
  * 
  * @param names  A list of names of users and/or roles about which security
  *               information is requested. If none are provided, information
@@ -9417,7 +9417,7 @@ UpdateRecordsResponse& updateRecords( const UpdateRecordsRequest<TRequest>& requ
          *     <li>global_expression: An optional global expression to reduce the search space of the predicates listed in @a expressions.  Default value is an empty string. 
          *     <li>bypass_safety_checks: When set to 'true', all predicates are available for primary key updates.  Keep in mind that it is possible to destroy data in this case, since a single predicate may match multiple objects (potentially all of records of a table), and then updating all of those records to have the same primary key will, due to the primary key uniqueness constraints, effectively delete all but one of those updated records.  Default value is 'false'. values:TRUE, FALSE
          *     <li>update_on_existing_pk: Can be used to customize behavior when the updated primary key value already exists, as described in /insert/records.  Default value is 'false'. values:TRUE, FALSE
-         *     <li>record_id: ID of a single record to be updated (returned in the call to /insert/records or /get/records/fromcollection.  
+         *     <li>record_id: ID of a single record to be updated (returned in the call to /insert/records or /get/records/fromcollection).  
          * </ul>
  * 
  * @return Response object containing the result of the operation.
@@ -9485,7 +9485,7 @@ UpdateRecordsResponse updateRecords( const std::string& tableName,
          *     <li>global_expression: An optional global expression to reduce the search space of the predicates listed in @a expressions.  Default value is an empty string. 
          *     <li>bypass_safety_checks: When set to 'true', all predicates are available for primary key updates.  Keep in mind that it is possible to destroy data in this case, since a single predicate may match multiple objects (potentially all of records of a table), and then updating all of those records to have the same primary key will, due to the primary key uniqueness constraints, effectively delete all but one of those updated records.  Default value is 'false'. values:TRUE, FALSE
          *     <li>update_on_existing_pk: Can be used to customize behavior when the updated primary key value already exists, as described in /insert/records.  Default value is 'false'. values:TRUE, FALSE
-         *     <li>record_id: ID of a single record to be updated (returned in the call to /insert/records or /get/records/fromcollection.  
+         *     <li>record_id: ID of a single record to be updated (returned in the call to /insert/records or /get/records/fromcollection).  
          * </ul>
  * @param[out] response_  Response object containing the results of the
  *                        operation.

@@ -15,18 +15,22 @@ namespace gpudb
      * <p>
      * Calculates which objects from a table, collection or view match a string
      * expression for the given string columns. The 'mode' may be:
-     * <p>
-     *     'search' for full text search query with wildcards and boolean
-     * operators, e.g. '(bob* OR sue) AND NOT jane'. Note that for this mode,
-     * no column can be specified in @a columnNames; GPUdb will search through
-     * all string columns of the table that have text search enabled. Also, the
-     * first character of the regular expression cannot be a wildcard (* or ?).
-     * <p>
-     * * 'equals' for an exact whole-string match
-     * * 'contains' for a partial substring match (not accelerated)
-     * * 'starts_with' to find strings that start with the given expression
-     * (not accelerated)
-     * * 'regex' - to use a full regular expression search (not accelerated)
+
+     * * search : full text search query with wildcards and boolean operators,
+     * e.g. '(bob* OR sue) AND NOT jane'. Note that for this mode, no column
+     * can be specified in @a columnNames; GPUdb will search through all string
+     * columns of the table that have text search enabled. Also, the first
+     * character of the regular expression cannot be a wildcard (* or ?).
+     * * equals: exact whole-string match (accelerated)
+     * * contains: partial substring match (not accelerated).  If the column is
+     * a string type (non-charN) and the number of records is too large, it
+     * will return 0.
+     * * starts_with: strings that start with the given expression (not
+     * accelerated), If the column is a string type (non-charN) and the number
+     * of records is too large, it will return 0.
+     * * regex: full regular expression search (not accelerated). If the column
+     * is a string type (non-charN) and the number of records is too large, it
+     * will return 0.
      * <p>
      * The options 'case_sensitive' can be used to modify the behavior for all
      * modes except 'search'
@@ -166,18 +170,22 @@ namespace gpudb
      * <p>
      * Calculates which objects from a table, collection or view match a string
      * expression for the given string columns. The 'mode' may be:
-     * <p>
-     *     'search' for full text search query with wildcards and boolean
-     * operators, e.g. '(bob* OR sue) AND NOT jane'. Note that for this mode,
-     * no column can be specified in @a columnNames; GPUdb will search through
-     * all string columns of the table that have text search enabled. Also, the
-     * first character of the regular expression cannot be a wildcard (* or ?).
-     * <p>
-     * * 'equals' for an exact whole-string match
-     * * 'contains' for a partial substring match (not accelerated)
-     * * 'starts_with' to find strings that start with the given expression
-     * (not accelerated)
-     * * 'regex' - to use a full regular expression search (not accelerated)
+
+     * * search : full text search query with wildcards and boolean operators,
+     * e.g. '(bob* OR sue) AND NOT jane'. Note that for this mode, no column
+     * can be specified in @a columnNames; GPUdb will search through all string
+     * columns of the table that have text search enabled. Also, the first
+     * character of the regular expression cannot be a wildcard (* or ?).
+     * * equals: exact whole-string match (accelerated)
+     * * contains: partial substring match (not accelerated).  If the column is
+     * a string type (non-charN) and the number of records is too large, it
+     * will return 0.
+     * * starts_with: strings that start with the given expression (not
+     * accelerated), If the column is a string type (non-charN) and the number
+     * of records is too large, it will return 0.
+     * * regex: full regular expression search (not accelerated). If the column
+     * is a string type (non-charN) and the number of records is too large, it
+     * will return 0.
      * <p>
      * The options 'case_sensitive' can be used to modify the behavior for all
      * modes except 'search'

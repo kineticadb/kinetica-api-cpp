@@ -22,7 +22,6 @@ namespace gpudb
     const std::string aggregate_group_by_descending  ( "descending"   );
     const std::string aggregate_group_by_expression  ( "expression"   );
     const std::string aggregate_group_by_having      ( "having"       );
-    const std::string aggregate_group_by_join_from   ( "join_from"    );
     const std::string aggregate_group_by_json        ( "json"         );
     const std::string aggregate_group_by_key         ( "key"          );
     const std::string aggregate_group_by_result_table( "result_table" );
@@ -31,10 +30,7 @@ namespace gpudb
     const std::string aggregate_group_by_value       ( "value"        );
     
     // Keywords for /aggregate/histogram request
-    const std::string aggregate_histogram_do_copy_if         ( "do_copy_if"          );
-    const std::string aggregate_histogram_do_start_end_filter( "do_start_end_filter" );
-    const std::string aggregate_histogram_use_cache          ( "use_cache"           );
-    const std::string aggregate_histogram_value_column       ( "value_column"        );
+    const std::string aggregate_histogram_value_column( "value_column" );
     
     // Keywords for /aggregate/kmeans request
     const std::string aggregate_k_means_max_iters( "max_iters" );
@@ -42,25 +38,22 @@ namespace gpudb
     const std::string aggregate_k_means_whiten   ( "whiten"    );
     
     // Keywords for /aggregate/statistics request
-    const std::string aggregate_statistics_additional_column_names     ( "additional_column_names"      );
-    const std::string aggregate_statistics_cardinality                 ( "cardinality"                  );
-    const std::string aggregate_statistics_count                       ( "count"                        );
-    const std::string aggregate_statistics_estimated_cardinality       ( "estimated_cardinality"        );
-    const std::string aggregate_statistics_estimated_cardinality_method( "estimated_cardinality_method" );
-    const std::string aggregate_statistics_hll_accumulator_size        ( "hll_accumulator_size"         );
-    const std::string aggregate_statistics_hll_log2_num_streams        ( "hll_log2_num_streams"         );
-    const std::string aggregate_statistics_kurtosis                    ( "kurtosis"                     );
-    const std::string aggregate_statistics_max                         ( "max"                          );
-    const std::string aggregate_statistics_mean                        ( "mean"                         );
-    const std::string aggregate_statistics_min                         ( "min"                          );
-    const std::string aggregate_statistics_percentile                  ( "percentile"                   );
-    const std::string aggregate_statistics_percentile_rank             ( "percentile_rank"              );
-    const std::string aggregate_statistics_skew                        ( "skew"                         );
-    const std::string aggregate_statistics_stdv                        ( "stdv"                         );
-    const std::string aggregate_statistics_sum                         ( "sum"                          );
-    const std::string aggregate_statistics_variance                    ( "variance"                     );
-    const std::string aggregate_statistics_weight_column_name          ( "weight_column_name"           );
-    const std::string aggregate_statistics_weighted_average            ( "weighted_average"             );
+    const std::string aggregate_statistics_additional_column_names( "additional_column_names" );
+    const std::string aggregate_statistics_cardinality            ( "cardinality"             );
+    const std::string aggregate_statistics_count                  ( "count"                   );
+    const std::string aggregate_statistics_estimated_cardinality  ( "estimated_cardinality"   );
+    const std::string aggregate_statistics_kurtosis               ( "kurtosis"                );
+    const std::string aggregate_statistics_max                    ( "max"                     );
+    const std::string aggregate_statistics_mean                   ( "mean"                    );
+    const std::string aggregate_statistics_min                    ( "min"                     );
+    const std::string aggregate_statistics_percentile             ( "percentile"              );
+    const std::string aggregate_statistics_percentile_rank        ( "percentile_rank"         );
+    const std::string aggregate_statistics_skew                   ( "skew"                    );
+    const std::string aggregate_statistics_stdv                   ( "stdv"                    );
+    const std::string aggregate_statistics_sum                    ( "sum"                     );
+    const std::string aggregate_statistics_variance               ( "variance"                );
+    const std::string aggregate_statistics_weight_column_name     ( "weight_column_name"      );
+    const std::string aggregate_statistics_weighted_average       ( "weighted_average"        );
     
     // Keywords for /aggregate/statistics/byrange request
     const std::string aggregate_statistics_by_range_additional_column_names( "additional_column_names" );
@@ -78,19 +71,18 @@ namespace gpudb
     const std::string aggregate_unique_sort_order  ( "sort_order"   );
     
     // Keywords for /alter/system/properties request
-    const std::string alter_system_properties_bulk_add_test                ( "bulk_add_test"                 );
-    const std::string alter_system_properties_chunk_size                   ( "chunk_size"                    );
-    const std::string alter_system_properties_clear_cache                  ( "clear_cache"                   );
-    const std::string alter_system_properties_communicator_test            ( "communicator_test"             );
-    const std::string alter_system_properties_concurrent_kernel_execution  ( "concurrent_kernel_execution"   );
-    const std::string alter_system_properties_flush_to_disk                ( "flush_to_disk"                 );
-    const std::string alter_system_properties_kernel_omp_threads           ( "kernel_omp_threads"            );
-    const std::string alter_system_properties_max_get_records_size         ( "max_get_records_size"          );
-    const std::string alter_system_properties_network_speed                ( "network_speed"                 );
-    const std::string alter_system_properties_print_communicator_statistics( "print_communicator_statistics" );
-    const std::string alter_system_properties_request_timeout              ( "request_timeout"               );
-    const std::string alter_system_properties_set_message_timers_enabled   ( "set_message_timers_enabled"    );
-    const std::string alter_system_properties_sm_omp_threads               ( "sm_omp_threads"                );
+    const std::string alter_system_properties_bulk_add_test              ( "bulk_add_test"               );
+    const std::string alter_system_properties_chunk_size                 ( "chunk_size"                  );
+    const std::string alter_system_properties_clear_cache                ( "clear_cache"                 );
+    const std::string alter_system_properties_communicator_test          ( "communicator_test"           );
+    const std::string alter_system_properties_concurrent_kernel_execution( "concurrent_kernel_execution" );
+    const std::string alter_system_properties_flush_to_disk              ( "flush_to_disk"               );
+    const std::string alter_system_properties_kernel_omp_threads         ( "kernel_omp_threads"          );
+    const std::string alter_system_properties_max_get_records_size       ( "max_get_records_size"        );
+    const std::string alter_system_properties_network_speed              ( "network_speed"               );
+    const std::string alter_system_properties_request_timeout            ( "request_timeout"             );
+    const std::string alter_system_properties_set_message_timers_enabled ( "set_message_timers_enabled"  );
+    const std::string alter_system_properties_sm_omp_threads             ( "sm_omp_threads"              );
     
     // Keywords for /alter/table request
     const std::string alter_table_allow_homogeneous_tables( "allow_homogeneous_tables" );
@@ -115,38 +107,35 @@ namespace gpudb
     const std::string create_join_table_refresh_method      ( "refresh_method"       );
     
     // Keywords for /create/table request
-    const std::string create_table_chunk_size                 ( "chunk_size"                  );
     const std::string create_table_collection_name            ( "collection_name"             );
     const std::string create_table_disallow_homogeneous_tables( "disallow_homogeneous_tables" );
     const std::string create_table_false                      ( "false"                       );
     const std::string create_table_foreign_keys               ( "foreign_keys"                );
     const std::string create_table_is_collection              ( "is_collection"               );
     const std::string create_table_is_replicated              ( "is_replicated"               );
-    const std::string create_table_is_result_table            ( "is_result_table"             );
     const std::string create_table_no_error_if_exists         ( "no_error_if_exists"          );
     const std::string create_table_true                       ( "true"                        );
     
     // Keywords for /create/type request
-    const std::string create_type_char1          ( "char1"           );
-    const std::string create_type_char128        ( "char128"         );
-    const std::string create_type_char16         ( "char16"          );
-    const std::string create_type_char2          ( "char2"           );
-    const std::string create_type_char256        ( "char256"         );
-    const std::string create_type_char32         ( "char32"          );
-    const std::string create_type_char4          ( "char4"           );
-    const std::string create_type_char64         ( "char64"          );
-    const std::string create_type_char8          ( "char8"           );
-    const std::string create_type_data           ( "data"            );
-    const std::string create_type_disk_optimized ( "disk_optimized"  );
-    const std::string create_type_int16          ( "int16"           );
-    const std::string create_type_int8           ( "int8"            );
-    const std::string create_type_ipv4           ( "ipv4"            );
-    const std::string create_type_is_result_table( "is_result_table" );
-    const std::string create_type_primary_key    ( "primary_key"     );
-    const std::string create_type_shard_key      ( "shard_key"       );
-    const std::string create_type_store_only     ( "store_only"      );
-    const std::string create_type_text_search    ( "text_search"     );
-    const std::string create_type_timestamp      ( "timestamp"       );
+    const std::string create_type_char1         ( "char1"          );
+    const std::string create_type_char128       ( "char128"        );
+    const std::string create_type_char16        ( "char16"         );
+    const std::string create_type_char2         ( "char2"          );
+    const std::string create_type_char256       ( "char256"        );
+    const std::string create_type_char32        ( "char32"         );
+    const std::string create_type_char4         ( "char4"          );
+    const std::string create_type_char64        ( "char64"         );
+    const std::string create_type_char8         ( "char8"          );
+    const std::string create_type_data          ( "data"           );
+    const std::string create_type_disk_optimized( "disk_optimized" );
+    const std::string create_type_int16         ( "int16"          );
+    const std::string create_type_int8          ( "int8"           );
+    const std::string create_type_ipv4          ( "ipv4"           );
+    const std::string create_type_primary_key   ( "primary_key"    );
+    const std::string create_type_shard_key     ( "shard_key"      );
+    const std::string create_type_store_only    ( "store_only"     );
+    const std::string create_type_text_search   ( "text_search"    );
+    const std::string create_type_timestamp     ( "timestamp"      );
     
     // Keywords for /create/union request
     const std::string create_union_collection_name( "collection_name" );
@@ -154,9 +143,6 @@ namespace gpudb
     // Keywords for /delete/records request
     const std::string delete_records_global_expression( "global_expression" );
     const std::string delete_records_record_id        ( "record_id"         );
-    
-    // Keywords for /filter request
-    const std::string filter_join_type( "join_type" );
     
     // Keywords for /filter/bygeometry request
     const std::string filter_by_geometry_contains  ( "contains"   );
@@ -191,27 +177,19 @@ namespace gpudb
     const std::string filter_by_string_true          ( "true"           );
     
     // Keywords for /get/records request
-    const std::string get_records_ascending         ( "ascending"          );
-    const std::string get_records_binary            ( "binary"             );
-    const std::string get_records_descending        ( "descending"         );
-    const std::string get_records_expression        ( "expression"         );
-    const std::string get_records_json              ( "json"               );
-    const std::string get_records_max_bin_count     ( "max_bin_count"      );
-    const std::string get_records_min_interval      ( "min_interval"       );
-    const std::string get_records_num_bins          ( "num_bins"           );
-    const std::string get_records_sort_algorithm    ( "sort_algorithm"     );
-    const std::string get_records_sort_by           ( "sort_by"            );
-    const std::string get_records_sort_order        ( "sort_order"         );
-    const std::string get_records_too_big           ( "too_big"            );
-    const std::string get_records_too_many_requested( "too_many_requested" );
+    const std::string get_records_ascending ( "ascending"  );
+    const std::string get_records_binary    ( "binary"     );
+    const std::string get_records_descending( "descending" );
+    const std::string get_records_expression( "expression" );
+    const std::string get_records_json      ( "json"       );
+    const std::string get_records_sort_by   ( "sort_by"    );
+    const std::string get_records_sort_order( "sort_order" );
     
     // Keywords for /get/records/bycolumn request
-    const std::string get_records_by_column_aliases   ( "aliases"    );
     const std::string get_records_by_column_ascending ( "ascending"  );
     const std::string get_records_by_column_binary    ( "binary"     );
     const std::string get_records_by_column_descending( "descending" );
     const std::string get_records_by_column_expression( "expression" );
-    const std::string get_records_by_column_from      ( "from"       );
     const std::string get_records_by_column_json      ( "json"       );
     const std::string get_records_by_column_sort_by   ( "sort_by"    );
     const std::string get_records_by_column_sort_order( "sort_order" );
@@ -269,6 +247,13 @@ namespace gpudb
     const std::string insert_symbol_svg     ( "svg"      );
     const std::string insert_symbol_svg_path( "svg_path" );
     
+    // Keywords for /lock/table request
+    const std::string lock_table_disable   ( "disable"    );
+    const std::string lock_table_read_only ( "read-only"  );
+    const std::string lock_table_status    ( "status"     );
+    const std::string lock_table_unlock    ( "unlock"     );
+    const std::string lock_table_write_only( "write-only" );
+    
     // Keywords for /revoke/permission/system request
     const std::string revoke_permission_system_system_admin( "system_admin" );
     const std::string revoke_permission_system_system_read ( "system_read"  );
@@ -280,6 +265,11 @@ namespace gpudb
     const std::string revoke_permission_table_table_insert( "table_insert" );
     const std::string revoke_permission_table_table_read  ( "table_read"   );
     const std::string revoke_permission_table_table_update( "table_update" );
+    
+    // Keywords for /show/security response
+    const std::string show_security_external_user( "external_user" );
+    const std::string show_security_internal_user( "internal_user" );
+    const std::string show_security_role         ( "role"          );
     
     // Keywords for /show/system/properties request
     const std::string show_system_properties_properties( "properties" );

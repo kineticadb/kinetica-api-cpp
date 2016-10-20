@@ -6,7 +6,7 @@
 #ifndef __AGGREGATE_UNIQUE_H__
 #define __AGGREGATE_UNIQUE_H__
 
-#include "../DynamicTableRecord.hpp"
+#include "../GenericRecord.hpp"
 
 namespace gpudb
 {
@@ -340,14 +340,14 @@ namespace gpudb
         AggregateUniqueResponse() :
             tableName(std::string()),
             responseSchemaStr(std::string()),
-            data(std::vector<gpudb::DynamicTableRecord>()),
+            data(std::vector<gpudb::GenericRecord>()),
             hasMoreRecords(bool())
         {
         }
 
         std::string tableName;
         std::string responseSchemaStr;
-        std::vector<gpudb::DynamicTableRecord> data;
+        std::vector<gpudb::GenericRecord> data;
         bool hasMoreRecords;
     };
 }

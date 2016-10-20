@@ -284,7 +284,6 @@ function( gpudb_api_cpp_lib_TARGETS )
 ADD_LIBRARY_FULL( gpudb_api_cpp_lib
     HEADERS
         Avro.hpp
-        DynamicTableRecord.hpp
         GenericRecord.hpp
         GPUdbException.hpp
         GPUdb.hpp
@@ -296,7 +295,6 @@ ADD_LIBRARY_FULL( gpudb_api_cpp_lib
         protocol/GPUdbProtocol.h
     SOURCES
         Avro.cpp
-        DynamicTableRecord.cpp
         GenericRecord.cpp
         GPUdb.cpp
         GPUdbIngestor.cpp

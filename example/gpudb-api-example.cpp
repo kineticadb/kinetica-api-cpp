@@ -17,7 +17,7 @@ int main(int argc, char* argv[])
     std::map<std::string, std::string> options;
 
     // Get the version information
-    std::cout << "GPUdb C++ Client Version: " << gpudb.get_version_info() << std::endl;
+    std::cout << "GPUdb C++ Client Version: " << gpudb.getApiVersion() << std::endl;
 
     // Create some test data
 
@@ -86,7 +86,7 @@ int main(int argc, char* argv[])
 
     for (size_t i = 0; i < gbResponse.data.size(); ++i)
     {
-        gpudb::DynamicTableRecord& record = gbResponse.data[i];
+        gpudb::GenericRecord& record = gbResponse.data[i];
         const gpudb::Type& type = record.getType();
         if (i == 0)
         {
@@ -170,7 +170,7 @@ int main(int argc, char* argv[])
 
     for (size_t i = 0; i < grbcResponse.data.size(); ++i)
     {
-        gpudb::DynamicTableRecord& record = grbcResponse.data[i];
+        gpudb::GenericRecord& record = grbcResponse.data[i];
         std::cout << record.asString("TRACKID")
                 << " " << record.asLong("TIMESTAMP")
                 << " " << record.asDouble("x")
