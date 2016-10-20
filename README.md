@@ -1,19 +1,19 @@
-GPUdb C++ API
-=============
+Kinetica C++ API
+================
 
-The gpudb-api-cpp project contains the source code of the C++ GPUdb API.
+This project contains the source code of the C++ Kinetica API.
 
-The documentation can be found at http://www.gpudb.com/docs/5.2/index.html.  The
+The documentation can be found at http://www.kinetica.com/docs/5.2/index.html.  The
 C++ specific documentation can be found at:
 
-*   http://www.gpudb.com/docs/5.2/tutorials/cpp_guide.html
-*   http://www.gpudb.com/docs/5.2/api/c++/annotated.html
+*   http://www.kinetica.com/docs/5.2/tutorials/cpp_guide.html
+*   http://www.kinetica.com/docs/5.2/api/c++/annotated.html
 
 For the client-side API changes, please refer to CHANGELOG.md, and for GPUdb
 function changes, please refer to CHANGELOG-FUNCTIONS.md.
 
-Instructions to build the GPUdb CPP API on Linux
-================================================
+Instructions to build the Kinetica CPP API on Linux
+===================================================
 
 Please completely read this set of instructions thoroughly before starting.
 
