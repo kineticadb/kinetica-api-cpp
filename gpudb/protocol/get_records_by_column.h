@@ -69,12 +69,20 @@ namespace gpudb
          *                   default is 10000). Or END_OF_column (-9999) to
          *                   indicate that the max number of results should be
          *                   returned.
-         * @param[in] options  Default value is an empty std::map.
-         * <ul>
-         *     <li>expression: Optional filter expression to apply to the table.  
-         *     <li>sort_by: Optional column that the data should be sorted by. Empty by default (i.e. no sorting is applied).  
-         *     <li>sort_order: String indicating how the returned values should be sorted - ascending or descending. Default is 'ascending'. Ignored if 'sort_by' option is not specified.  Default value is 'ascending'. values:ASCENDING, DESCENDING
-         * </ul>
+         * @param[in] options
+         *                     <ul>
+         *                             <li> expression: Optional filter
+         *                     expression to apply to the table.
+         *                             <li> sort_by: Optional column that the
+         *                     data should be sorted by. Empty by default (i.e.
+         *                     no sorting is applied).
+         *                             <li> sort_order: String indicating how
+         *                     the returned values should be sorted - ascending
+         *                     or descending. Default is 'ascending'. Ignored
+         *                     if 'sort_by' option is not specified. Values:
+         *                     'ascending', 'descending'.
+         *                     </ul>
+         *                       Default value is an empty std::map.
          * 
          */
         GetRecordsByColumnRequest(const std::string& tableName, const std::vector<std::string>& columnNames, const int64_t offset, const int64_t limit, const std::map<std::string, std::string>& options):
@@ -107,14 +115,23 @@ namespace gpudb
          *                   indicate that the max number of results should be
          *                   returned.
          * @param[in] encoding  Specifies the encoding for returned records;
-         *                      either 'binary' or 'json'.  Default value is
-         *                      'binary'.
-         * @param[in] options  Default value is an empty std::map.
-         * <ul>
-         *     <li>expression: Optional filter expression to apply to the table.  
-         *     <li>sort_by: Optional column that the data should be sorted by. Empty by default (i.e. no sorting is applied).  
-         *     <li>sort_order: String indicating how the returned values should be sorted - ascending or descending. Default is 'ascending'. Ignored if 'sort_by' option is not specified.  Default value is 'ascending'. values:ASCENDING, DESCENDING
-         * </ul>
+         *                      either 'binary' or 'json'. Values: 'binary',
+         *                      'json'.
+         *                        Default value is 'binary'.
+         * @param[in] options
+         *                     <ul>
+         *                             <li> expression: Optional filter
+         *                     expression to apply to the table.
+         *                             <li> sort_by: Optional column that the
+         *                     data should be sorted by. Empty by default (i.e.
+         *                     no sorting is applied).
+         *                             <li> sort_order: String indicating how
+         *                     the returned values should be sorted - ascending
+         *                     or descending. Default is 'ascending'. Ignored
+         *                     if 'sort_by' option is not specified. Values:
+         *                     'ascending', 'descending'.
+         *                     </ul>
+         *                       Default value is an empty std::map.
          * 
          */
         GetRecordsByColumnRequest(const std::string& tableName, const std::vector<std::string>& columnNames, const int64_t offset, const int64_t limit, const std::string& encoding, const std::map<std::string, std::string>& options):

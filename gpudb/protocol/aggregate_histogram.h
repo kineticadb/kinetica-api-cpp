@@ -56,11 +56,14 @@ namespace gpudb
          *                 inclusive.
          * @param[in] interval  The size of each bin within the start and end
          *                      parameters.
-         * @param[in] options  Optional parameters.  Default value is an empty
-         *                     std::map.
-         * <ul>
-         *     <li>value_column: The name of the column GPUdb will use when calculating the bin values (values are summed).  The column must be a numerical type (int, double, long, float).  
-         * </ul>
+         * @param[in] options  Optional parameters.
+         *                     <ul>
+         *                             <li> value_column: The name of the
+         *                     column GPUdb will use when calculating the bin
+         *                     values (values are summed).  The column must be
+         *                     a numerical type (int, double, long, float).
+         *                     </ul>
+         *                       Default value is an empty std::map.
          * 
          */
         AggregateHistogramRequest(const std::string& tableName, const std::string& columnName, const double start, const double end, const double interval, const std::map<std::string, std::string>& options):

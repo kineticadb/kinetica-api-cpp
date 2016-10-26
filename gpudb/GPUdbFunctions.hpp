@@ -154,7 +154,8 @@ AdminOfflineResponse& adminOffline( const AdminOfflineRequest& request_,
  * Take the system offline. When the system is offline, no user operations can
  * be performed with the exception of a system shutdown.
  * 
- * @param offline  Set to true if desired state is offline.
+ * @param offline  Set to true if desired state is offline. Values: 'true',
+ *                 'false'.
  * @param options  Optional parameters.  Default value is an empty std::map.
  * 
  * @return Response object containing the result of the operation.
@@ -168,7 +169,8 @@ AdminOfflineResponse adminOffline( const bool offline,
  * Take the system offline. When the system is offline, no user operations can
  * be performed with the exception of a system shutdown.
  * 
- * @param offline  Set to true if desired state is offline.
+ * @param offline  Set to true if desired state is offline. Values: 'true',
+ *                 'false'.
  * @param options  Optional parameters.  Default value is an empty std::map.
  * @param[out] response_  Response object containing the results of the
  *                        operation.
@@ -532,11 +534,11 @@ AggregateConvexHullResponse& aggregateConvexHull( const std::string& tableName,
  * Available aggregation functions are: 'count(*)', 'sum', 'min', 'max', 'avg',
  * 'mean', 'stddev', 'stddev_pop', 'stddev_samp', 'var', 'var_pop', 'var_samp',
  * 'arg_min', 'arg_max' and 'count_distinct'. The response is returned as a
- * dynamic schema. For details see: <a href="../../concepts/index.html#dynamic-
- * schemas" target="_top">dynamic schemas documentation</a>. If the
- * 'result_table' option is provided then the results are stored in a table
- * with the name given in the option and the results are not returned in the
- * response.
+ * dynamic schema. For details see: <a
+ * href="../../concepts/index.html#dynamic-schemas" target="_top">dynamic
+ * schemas documentation</a>. If the 'result_table' option is provided then the
+ * results are stored in a table with the name given in the option and the
+ * results are not returned in the response.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -563,11 +565,11 @@ RawAggregateGroupByResponse aggregateGroupByRaw( const AggregateGroupByRequest& 
  * Available aggregation functions are: 'count(*)', 'sum', 'min', 'max', 'avg',
  * 'mean', 'stddev', 'stddev_pop', 'stddev_samp', 'var', 'var_pop', 'var_samp',
  * 'arg_min', 'arg_max' and 'count_distinct'. The response is returned as a
- * dynamic schema. For details see: <a href="../../concepts/index.html#dynamic-
- * schemas" target="_top">dynamic schemas documentation</a>. If the
- * 'result_table' option is provided then the results are stored in a table
- * with the name given in the option and the results are not returned in the
- * response.
+ * dynamic schema. For details see: <a
+ * href="../../concepts/index.html#dynamic-schemas" target="_top">dynamic
+ * schemas documentation</a>. If the 'result_table' option is provided then the
+ * results are stored in a table with the name given in the option and the
+ * results are not returned in the response.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -598,11 +600,11 @@ RawAggregateGroupByResponse& aggregateGroupByRaw( const AggregateGroupByRequest&
  * Available aggregation functions are: 'count(*)', 'sum', 'min', 'max', 'avg',
  * 'mean', 'stddev', 'stddev_pop', 'stddev_samp', 'var', 'var_pop', 'var_samp',
  * 'arg_min', 'arg_max' and 'count_distinct'. The response is returned as a
- * dynamic schema. For details see: <a href="../../concepts/index.html#dynamic-
- * schemas" target="_top">dynamic schemas documentation</a>. If the
- * 'result_table' option is provided then the results are stored in a table
- * with the name given in the option and the results are not returned in the
- * response.
+ * dynamic schema. For details see: <a
+ * href="../../concepts/index.html#dynamic-schemas" target="_top">dynamic
+ * schemas documentation</a>. If the 'result_table' option is provided then the
+ * results are stored in a table with the name given in the option and the
+ * results are not returned in the response.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -629,11 +631,11 @@ AggregateGroupByResponse aggregateGroupBy( const AggregateGroupByRequest& reques
  * Available aggregation functions are: 'count(*)', 'sum', 'min', 'max', 'avg',
  * 'mean', 'stddev', 'stddev_pop', 'stddev_samp', 'var', 'var_pop', 'var_samp',
  * 'arg_min', 'arg_max' and 'count_distinct'. The response is returned as a
- * dynamic schema. For details see: <a href="../../concepts/index.html#dynamic-
- * schemas" target="_top">dynamic schemas documentation</a>. If the
- * 'result_table' option is provided then the results are stored in a table
- * with the name given in the option and the results are not returned in the
- * response.
+ * dynamic schema. For details see: <a
+ * href="../../concepts/index.html#dynamic-schemas" target="_top">dynamic
+ * schemas documentation</a>. If the 'result_table' option is provided then the
+ * results are stored in a table with the name given in the option and the
+ * results are not returned in the response.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -664,11 +666,11 @@ AggregateGroupByResponse& aggregateGroupBy( const AggregateGroupByRequest& reque
  * Available aggregation functions are: 'count(*)', 'sum', 'min', 'max', 'avg',
  * 'mean', 'stddev', 'stddev_pop', 'stddev_samp', 'var', 'var_pop', 'var_samp',
  * 'arg_min', 'arg_max' and 'count_distinct'. The response is returned as a
- * dynamic schema. For details see: <a href="../../concepts/index.html#dynamic-
- * schemas" target="_top">dynamic schemas documentation</a>. If the
- * 'result_table' option is provided then the results are stored in a table
- * with the name given in the option and the results are not returned in the
- * response.
+ * dynamic schema. For details see: <a
+ * href="../../concepts/index.html#dynamic-schemas" target="_top">dynamic
+ * schemas documentation</a>. If the 'result_table' option is provided then the
+ * results are stored in a table with the name given in the option and the
+ * results are not returned in the response.
  * 
  * @param tableName  Name of the table on which the operation will be
  *                   performed. Must be a valid table/view/collection in GPUdb.
@@ -683,14 +685,22 @@ AggregateGroupByResponse& aggregateGroupBy( const AggregateGroupByRequest& reque
  * @param limit  A positive integer indicating the maximum number of results to
  *               be returned Or END_OF_SET (-9999) to indicate that the max
  *               number of results should be returned.  Default value is 1000.
- * @param options  Optional parameters.  Default value is an empty std::map.
-         * <ul>
-         *     <li>expression: Filter expression to apply to the table prior to computing the aggregate group by.  
-         *     <li>having: Filter expression to apply to the aggregated results.  
-         *     <li>sort_order: String indicating how the returned values should be sorted - ascending or descending.  Default value is 'ascending'. values:ASCENDING, DESCENDING
-         *     <li>sort_by: String determining how the results are sorted.  Default value is 'key'. values:KEY, VALUE
-         *     <li>result_table: The name of the table used to store the results. If present no results are returned in the response.  
-         * </ul>
+ * @param options  Optional parameters.
+ *                 <ul>
+ *                         <li> expression: Filter expression to apply to the
+ *                 table prior to computing the aggregate group by.
+ *                         <li> having: Filter expression to apply to the
+ *                 aggregated results.
+ *                         <li> sort_order: String indicating how the returned
+ *                 values should be sorted - ascending or descending. Values:
+ *                 'ascending', 'descending'.
+ *                         <li> sort_by: String determining how the results are
+ *                 sorted. Values: 'key', 'value'.
+ *                         <li> result_table: The name of the table used to
+ *                 store the results. If present no results are returned in the
+ *                 response.
+ *                 </ul>
+ *                   Default value is an empty std::map.
  * 
  * @return Response object containing the result of the operation.
  * 
@@ -718,11 +728,11 @@ AggregateGroupByResponse aggregateGroupBy( const std::string& tableName,
  * Available aggregation functions are: 'count(*)', 'sum', 'min', 'max', 'avg',
  * 'mean', 'stddev', 'stddev_pop', 'stddev_samp', 'var', 'var_pop', 'var_samp',
  * 'arg_min', 'arg_max' and 'count_distinct'. The response is returned as a
- * dynamic schema. For details see: <a href="../../concepts/index.html#dynamic-
- * schemas" target="_top">dynamic schemas documentation</a>. If the
- * 'result_table' option is provided then the results are stored in a table
- * with the name given in the option and the results are not returned in the
- * response.
+ * dynamic schema. For details see: <a
+ * href="../../concepts/index.html#dynamic-schemas" target="_top">dynamic
+ * schemas documentation</a>. If the 'result_table' option is provided then the
+ * results are stored in a table with the name given in the option and the
+ * results are not returned in the response.
  * 
  * @param tableName  Name of the table on which the operation will be
  *                   performed. Must be a valid table/view/collection in GPUdb.
@@ -737,14 +747,22 @@ AggregateGroupByResponse aggregateGroupBy( const std::string& tableName,
  * @param limit  A positive integer indicating the maximum number of results to
  *               be returned Or END_OF_SET (-9999) to indicate that the max
  *               number of results should be returned.  Default value is 1000.
- * @param options  Optional parameters.  Default value is an empty std::map.
-         * <ul>
-         *     <li>expression: Filter expression to apply to the table prior to computing the aggregate group by.  
-         *     <li>having: Filter expression to apply to the aggregated results.  
-         *     <li>sort_order: String indicating how the returned values should be sorted - ascending or descending.  Default value is 'ascending'. values:ASCENDING, DESCENDING
-         *     <li>sort_by: String determining how the results are sorted.  Default value is 'key'. values:KEY, VALUE
-         *     <li>result_table: The name of the table used to store the results. If present no results are returned in the response.  
-         * </ul>
+ * @param options  Optional parameters.
+ *                 <ul>
+ *                         <li> expression: Filter expression to apply to the
+ *                 table prior to computing the aggregate group by.
+ *                         <li> having: Filter expression to apply to the
+ *                 aggregated results.
+ *                         <li> sort_order: String indicating how the returned
+ *                 values should be sorted - ascending or descending. Values:
+ *                 'ascending', 'descending'.
+ *                         <li> sort_by: String determining how the results are
+ *                 sorted. Values: 'key', 'value'.
+ *                         <li> result_table: The name of the table used to
+ *                 store the results. If present no results are returned in the
+ *                 response.
+ *                 </ul>
+ *                   Default value is an empty std::map.
  * @param[out] response_  Response object containing the results of the
  *                        operation.
  * 
@@ -764,12 +782,12 @@ AggregateGroupByResponse& aggregateGroupBy( const std::string& tableName,
  * Performs a histogram calculation given a table, a column, and an interval
  * function. The @a interval is used to produce bins of that size and the
  * result, computed over the records falling within each bin, is returned.  For
- * each bin, the start value is inclusive, but the end value is exclusive--
- * except for the very last bin for which the end value is also inclusive.  The
- * value returned for each bin is the number of records in it, except when a
- * column name is provided as a *value_column* in @a options.  In this latter
- * case the sum of the values corresponding to the *value_column* is used as
- * the result instead.
+ * each bin, the start value is inclusive, but the end value is
+ * exclusive--except for the very last bin for which the end value is also
+ * inclusive.  The value returned for each bin is the number of records in it,
+ * except when a column name is provided as a *value_column* in @a options.  In
+ * this latter case the sum of the values corresponding to the *value_column*
+ * is used as the result instead.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -784,12 +802,12 @@ AggregateHistogramResponse aggregateHistogram( const AggregateHistogramRequest& 
  * Performs a histogram calculation given a table, a column, and an interval
  * function. The @a interval is used to produce bins of that size and the
  * result, computed over the records falling within each bin, is returned.  For
- * each bin, the start value is inclusive, but the end value is exclusive--
- * except for the very last bin for which the end value is also inclusive.  The
- * value returned for each bin is the number of records in it, except when a
- * column name is provided as a *value_column* in @a options.  In this latter
- * case the sum of the values corresponding to the *value_column* is used as
- * the result instead.
+ * each bin, the start value is inclusive, but the end value is
+ * exclusive--except for the very last bin for which the end value is also
+ * inclusive.  The value returned for each bin is the number of records in it,
+ * except when a column name is provided as a *value_column* in @a options.  In
+ * this latter case the sum of the values corresponding to the *value_column*
+ * is used as the result instead.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -808,12 +826,12 @@ AggregateHistogramResponse& aggregateHistogram( const AggregateHistogramRequest&
  * Performs a histogram calculation given a table, a column, and an interval
  * function. The @a interval is used to produce bins of that size and the
  * result, computed over the records falling within each bin, is returned.  For
- * each bin, the start value is inclusive, but the end value is exclusive--
- * except for the very last bin for which the end value is also inclusive.  The
- * value returned for each bin is the number of records in it, except when a
- * column name is provided as a *value_column* in @a options.  In this latter
- * case the sum of the values corresponding to the *value_column* is used as
- * the result instead.
+ * each bin, the start value is inclusive, but the end value is
+ * exclusive--except for the very last bin for which the end value is also
+ * inclusive.  The value returned for each bin is the number of records in it,
+ * except when a column name is provided as a *value_column* in @a options.  In
+ * this latter case the sum of the values corresponding to the *value_column*
+ * is used as the result instead.
  * 
  * @param tableName  Name of the table on which the operation will be
  *                   performed. Must be a valid table or collection in GPUdb.
@@ -822,10 +840,14 @@ AggregateHistogramResponse& aggregateHistogram( const AggregateHistogramRequest&
  * @param start  Lower end value of the histogram interval, inclusive.
  * @param end  Upper end value of the histogram interval, inclusive.
  * @param interval  The size of each bin within the start and end parameters.
- * @param options  Optional parameters.  Default value is an empty std::map.
-         * <ul>
-         *     <li>value_column: The name of the column GPUdb will use when calculating the bin values (values are summed).  The column must be a numerical type (int, double, long, float).  
-         * </ul>
+ * @param options  Optional parameters.
+ *                 <ul>
+ *                         <li> value_column: The name of the column GPUdb will
+ *                 use when calculating the bin values (values are summed).
+ *                 The column must be a numerical type (int, double, long,
+ *                 float).
+ *                 </ul>
+ *                   Default value is an empty std::map.
  * 
  * @return Response object containing the result of the operation.
  * 
@@ -842,12 +864,12 @@ AggregateHistogramResponse aggregateHistogram( const std::string& tableName,
  * Performs a histogram calculation given a table, a column, and an interval
  * function. The @a interval is used to produce bins of that size and the
  * result, computed over the records falling within each bin, is returned.  For
- * each bin, the start value is inclusive, but the end value is exclusive--
- * except for the very last bin for which the end value is also inclusive.  The
- * value returned for each bin is the number of records in it, except when a
- * column name is provided as a *value_column* in @a options.  In this latter
- * case the sum of the values corresponding to the *value_column* is used as
- * the result instead.
+ * each bin, the start value is inclusive, but the end value is
+ * exclusive--except for the very last bin for which the end value is also
+ * inclusive.  The value returned for each bin is the number of records in it,
+ * except when a column name is provided as a *value_column* in @a options.  In
+ * this latter case the sum of the values corresponding to the *value_column*
+ * is used as the result instead.
  * 
  * @param tableName  Name of the table on which the operation will be
  *                   performed. Must be a valid table or collection in GPUdb.
@@ -856,10 +878,14 @@ AggregateHistogramResponse aggregateHistogram( const std::string& tableName,
  * @param start  Lower end value of the histogram interval, inclusive.
  * @param end  Upper end value of the histogram interval, inclusive.
  * @param interval  The size of each bin within the start and end parameters.
- * @param options  Optional parameters.  Default value is an empty std::map.
-         * <ul>
-         *     <li>value_column: The name of the column GPUdb will use when calculating the bin values (values are summed).  The column must be a numerical type (int, double, long, float).  
-         * </ul>
+ * @param options  Optional parameters.
+ *                 <ul>
+ *                         <li> value_column: The name of the column GPUdb will
+ *                 use when calculating the bin values (values are summed).
+ *                 The column must be a numerical type (int, double, long,
+ *                 float).
+ *                 </ul>
+ *                   Default value is an empty std::map.
  * @param[out] response_  Response object containing the results of the
  *                        operation.
  * 
@@ -937,12 +963,17 @@ AggregateKMeansResponse& aggregateKMeans( const AggregateKMeansRequest& request_
  * @param k  The number of mean points to be determined by the algorithm.
  * @param tolerance  Stop iterating when the distances between successive
  *                   points is less than the given tolerance.
- * @param options  Optional parameters.  Default value is an empty std::map.
-         * <ul>
-         *     <li>whiten: When set to 1 each of the columns is first normalized by its stdv - default is not to whiten.  
-         *     <li>max_iters: Number of times to try to hit the tolerance limit before giving up - default is 10.  
-         *     <li>num_tries: Number of times to run the k-means algorithm with a different randomly selected starting points - helps avoid local minimum. Default is 1.  
-         * </ul>
+ * @param options  Optional parameters.
+ *                 <ul>
+ *                         <li> whiten: When set to 1 each of the columns is
+ *                 first normalized by its stdv - default is not to whiten.
+ *                         <li> max_iters: Number of times to try to hit the
+ *                 tolerance limit before giving up - default is 10.
+ *                         <li> num_tries: Number of times to run the k-means
+ *                 algorithm with a different randomly selected starting points
+ *                 - helps avoid local minimum. Default is 1.
+ *                 </ul>
+ *                   Default value is an empty std::map.
  * 
  * @return Response object containing the result of the operation.
  * 
@@ -973,12 +1004,17 @@ AggregateKMeansResponse aggregateKMeans( const std::string& tableName,
  * @param k  The number of mean points to be determined by the algorithm.
  * @param tolerance  Stop iterating when the distances between successive
  *                   points is less than the given tolerance.
- * @param options  Optional parameters.  Default value is an empty std::map.
-         * <ul>
-         *     <li>whiten: When set to 1 each of the columns is first normalized by its stdv - default is not to whiten.  
-         *     <li>max_iters: Number of times to try to hit the tolerance limit before giving up - default is 10.  
-         *     <li>num_tries: Number of times to run the k-means algorithm with a different randomly selected starting points - helps avoid local minimum. Default is 1.  
-         * </ul>
+ * @param options  Optional parameters.
+ *                 <ul>
+ *                         <li> whiten: When set to 1 each of the columns is
+ *                 first normalized by its stdv - default is not to whiten.
+ *                         <li> max_iters: Number of times to try to hit the
+ *                 tolerance limit before giving up - default is 10.
+ *                         <li> num_tries: Number of times to run the k-means
+ *                 algorithm with a different randomly selected starting points
+ *                 - helps avoid local minimum. Default is 1.
+ *                 </ul>
+ *                   Default value is an empty std::map.
  * @param[out] response_  Response object containing the results of the
  *                        operation.
  * 
@@ -1166,12 +1202,19 @@ AggregateStatisticsResponse& aggregateStatistics( const AggregateStatisticsReque
  * @param columnName  Name of the column for which the statistics are to be
  *                    calculated.
  * @param stats  Comma separated list of the statistics to calculate, e.g.
- *               "sum,mean".
- * @param options  Optional parameters.  Default value is an empty std::map.
-         * <ul>
-         *     <li>additional_column_names: A list of comma separated column names over which statistics can be accumulated along with the primary column.  
-         *     <li>weight_column_name: Name of column used as weighting attribute for the weighted average statistic.  
-         * </ul>
+ *               "sum,mean". Values: 'count', 'mean', 'stdv', 'variance',
+ *               'skew', 'kurtosis', 'sum', 'min', 'max', 'weighted_average',
+ *               'cardinality', 'estimated_cardinality', 'percentile',
+ *               'percentile_rank'.
+ * @param options  Optional parameters.
+ *                 <ul>
+ *                         <li> additional_column_names: A list of comma
+ *                 separated column names over which statistics can be
+ *                 accumulated along with the primary column.
+ *                         <li> weight_column_name: Name of column used as
+ *                 weighting attribute for the weighted average statistic.
+ *                 </ul>
+ *                   Default value is an empty std::map.
  * 
  * @return Response object containing the result of the operation.
  * 
@@ -1212,12 +1255,19 @@ AggregateStatisticsResponse aggregateStatistics( const std::string& tableName,
  * @param columnName  Name of the column for which the statistics are to be
  *                    calculated.
  * @param stats  Comma separated list of the statistics to calculate, e.g.
- *               "sum,mean".
- * @param options  Optional parameters.  Default value is an empty std::map.
-         * <ul>
-         *     <li>additional_column_names: A list of comma separated column names over which statistics can be accumulated along with the primary column.  
-         *     <li>weight_column_name: Name of column used as weighting attribute for the weighted average statistic.  
-         * </ul>
+ *               "sum,mean". Values: 'count', 'mean', 'stdv', 'variance',
+ *               'skew', 'kurtosis', 'sum', 'min', 'max', 'weighted_average',
+ *               'cardinality', 'estimated_cardinality', 'percentile',
+ *               'percentile_rank'.
+ * @param options  Optional parameters.
+ *                 <ul>
+ *                         <li> additional_column_names: A list of comma
+ *                 separated column names over which statistics can be
+ *                 accumulated along with the primary column.
+ *                         <li> weight_column_name: Name of column used as
+ *                 weighting attribute for the weighted average statistic.
+ *                 </ul>
+ *                   Default value is an empty std::map.
  * @param[out] response_  Response object containing the results of the
  *                        operation.
  * 
@@ -1247,8 +1297,8 @@ AggregateStatisticsResponse& aggregateStatistics( const std::string& tableName,
  * <p>
  * There are two methods for binning the set members. In the first, which can
  * be used for numeric valued binning-columns, a min, max and interval are
- * specified. The number of bins, nbins, is the integer upper bound of (max-
- * min)/interval. Values that fall in the range
+ * specified. The number of bins, nbins, is the integer upper bound of
+ * (max-min)/interval. Values that fall in the range
  * [min+n\*interval,min+(n+1)\*interval) are placed in the nth bin where n
  * ranges from 0..nbin-2. The final bin is [min+(nbin-1)\*interval,max]. In the
  * second method, @a options bin_values specifies a list of binning column
@@ -1280,8 +1330,8 @@ AggregateStatisticsByRangeResponse aggregateStatisticsByRange( const AggregateSt
  * <p>
  * There are two methods for binning the set members. In the first, which can
  * be used for numeric valued binning-columns, a min, max and interval are
- * specified. The number of bins, nbins, is the integer upper bound of (max-
- * min)/interval. Values that fall in the range
+ * specified. The number of bins, nbins, is the integer upper bound of
+ * (max-min)/interval. Values that fall in the range
  * [min+n\*interval,min+(n+1)\*interval) are placed in the nth bin where n
  * ranges from 0..nbin-2. The final bin is [min+(nbin-1)\*interval,max]. In the
  * second method, @a options bin_values specifies a list of binning column
@@ -1317,8 +1367,8 @@ AggregateStatisticsByRangeResponse& aggregateStatisticsByRange( const AggregateS
  * <p>
  * There are two methods for binning the set members. In the first, which can
  * be used for numeric valued binning-columns, a min, max and interval are
- * specified. The number of bins, nbins, is the integer upper bound of (max-
- * min)/interval. Values that fall in the range
+ * specified. The number of bins, nbins, is the integer upper bound of
+ * (max-min)/interval. Values that fall in the range
  * [min+n\*interval,min+(n+1)\*interval) are placed in the nth bin where n
  * ranges from 0..nbin-2. The final bin is [min+(nbin-1)\*interval,max]. In the
  * second method, @a options bin_values specifies a list of binning column
@@ -1344,14 +1394,20 @@ AggregateStatisticsByRangeResponse& aggregateStatisticsByRange( const AggregateS
  * @param interval  The interval of a bin. Set members fall into bin i if the
  *                  binning-column falls in the range [start+interval``*``i,
  *                  start+interval``*``(i+1)).
- * @param options  Map of optional parameters:  Default value is an empty
- *                 std::map.
-         * <ul>
-         *     <li>additional_column_names: A list of comma separated value-column names over which statistics can be accumulated along with the primary value_column.  
-         *     <li>bin_values: A list of comma separated binning-column values. Values that match the nth bin_values value are placed in the nth bin.  
-         *     <li>weight_column_name: Name of the column used as weighting column for the weighted_average statistic.  
-         *     <li>order_column_name: Name of the column used for candlestick charting techniques.  
-         * </ul>
+ * @param options  Map of optional parameters:
+ *                 <ul>
+ *                         <li> additional_column_names: A list of comma
+ *                 separated value-column names over which statistics can be
+ *                 accumulated along with the primary value_column.
+ *                         <li> bin_values: A list of comma separated
+ *                 binning-column values. Values that match the nth bin_values
+ *                 value are placed in the nth bin.
+ *                         <li> weight_column_name: Name of the column used as
+ *                 weighting column for the weighted_average statistic.
+ *                         <li> order_column_name: Name of the column used for
+ *                 candlestick charting techniques.
+ *                 </ul>
+ *                   Default value is an empty std::map.
  * 
  * @return Response object containing the result of the operation.
  * 
@@ -1382,8 +1438,8 @@ AggregateStatisticsByRangeResponse aggregateStatisticsByRange( const std::string
  * <p>
  * There are two methods for binning the set members. In the first, which can
  * be used for numeric valued binning-columns, a min, max and interval are
- * specified. The number of bins, nbins, is the integer upper bound of (max-
- * min)/interval. Values that fall in the range
+ * specified. The number of bins, nbins, is the integer upper bound of
+ * (max-min)/interval. Values that fall in the range
  * [min+n\*interval,min+(n+1)\*interval) are placed in the nth bin where n
  * ranges from 0..nbin-2. The final bin is [min+(nbin-1)\*interval,max]. In the
  * second method, @a options bin_values specifies a list of binning column
@@ -1409,14 +1465,20 @@ AggregateStatisticsByRangeResponse aggregateStatisticsByRange( const std::string
  * @param interval  The interval of a bin. Set members fall into bin i if the
  *                  binning-column falls in the range [start+interval``*``i,
  *                  start+interval``*``(i+1)).
- * @param options  Map of optional parameters:  Default value is an empty
- *                 std::map.
-         * <ul>
-         *     <li>additional_column_names: A list of comma separated value-column names over which statistics can be accumulated along with the primary value_column.  
-         *     <li>bin_values: A list of comma separated binning-column values. Values that match the nth bin_values value are placed in the nth bin.  
-         *     <li>weight_column_name: Name of the column used as weighting column for the weighted_average statistic.  
-         *     <li>order_column_name: Name of the column used for candlestick charting techniques.  
-         * </ul>
+ * @param options  Map of optional parameters:
+ *                 <ul>
+ *                         <li> additional_column_names: A list of comma
+ *                 separated value-column names over which statistics can be
+ *                 accumulated along with the primary value_column.
+ *                         <li> bin_values: A list of comma separated
+ *                 binning-column values. Values that match the nth bin_values
+ *                 value are placed in the nth bin.
+ *                         <li> weight_column_name: Name of the column used as
+ *                 weighting column for the weighted_average statistic.
+ *                         <li> order_column_name: Name of the column used for
+ *                 candlestick charting techniques.
+ *                 </ul>
+ *                   Default value is an empty std::map.
  * @param[out] response_  Response object containing the results of the
  *                        operation.
  * 
@@ -1582,12 +1644,17 @@ AggregateUniqueResponse& aggregateUnique( const AggregateUniqueRequest& request_
  * @param limit  A positive integer indicating the maximum number of results to
  *               be returned. Or END_OF_SET (-9999) to indicate that the max
  *               number of results should be returned.  Default value is 10000.
- * @param options  Optional parameters.  Default value is an empty std::map.
-         * <ul>
-         *     <li>expression: Optional filter expression to apply to the table.  
-         *     <li>sort_order: String indicating how the returned values should be sorted.  Default value is 'ascending'. 
-         *     <li>result_table: The name of the table used to store the results. If present no results are returned in the response.  
-         * </ul>
+ * @param options  Optional parameters.
+ *                 <ul>
+ *                         <li> expression: Optional filter expression to apply
+ *                 to the table.
+ *                         <li> sort_order: String indicating how the returned
+ *                 values should be sorted. Values: 'ascending', 'descending'.
+ *                         <li> result_table: The name of the table used to
+ *                 store the results. If present no results are returned in the
+ *                 response.
+ *                 </ul>
+ *                   Default value is an empty std::map.
  * 
  * @return Response object containing the result of the operation.
  * 
@@ -1629,12 +1696,17 @@ AggregateUniqueResponse aggregateUnique( const std::string& tableName,
  * @param limit  A positive integer indicating the maximum number of results to
  *               be returned. Or END_OF_SET (-9999) to indicate that the max
  *               number of results should be returned.  Default value is 10000.
- * @param options  Optional parameters.  Default value is an empty std::map.
-         * <ul>
-         *     <li>expression: Optional filter expression to apply to the table.  
-         *     <li>sort_order: String indicating how the returned values should be sorted.  Default value is 'ascending'. 
-         *     <li>result_table: The name of the table used to store the results. If present no results are returned in the response.  
-         * </ul>
+ * @param options  Optional parameters.
+ *                 <ul>
+ *                         <li> expression: Optional filter expression to apply
+ *                 to the table.
+ *                         <li> sort_order: String indicating how the returned
+ *                 values should be sorted. Values: 'ascending', 'descending'.
+ *                         <li> result_table: The name of the table used to
+ *                 store the results. If present no results are returned in the
+ *                 response.
+ *                 </ul>
+ *                   Default value is an empty std::map.
  * @param[out] response_  Response object containing the results of the
  *                        operation.
  * 
@@ -1695,6 +1767,61 @@ AlterSystemPropertiesResponse& alterSystemProperties( const AlterSystemPropertie
  * 
  * @param propertyUpdatesMap  Map containing the properties of the system to be
  *                            updated. Error if empty.
+ *                            <ul>
+ *                                    <li> sm_omp_threads: Set the number of
+ *                            sm_omp_threads to the specified integer value.
+ *                                    <li> kernel_omp_threads: Set the number
+ *                            of kernel_omp_threads to the specified integer
+ *                            value.
+ *                                    <li> concurrent_kernel_execution: Enables
+ *                            concurrent kernel execution if the value is
+ *                            'true' and disables it if the value is 'false'.
+ *                                    <li> chunk_size: Sets the chunk size of
+ *                            all new sets to the specified integer value.
+ *                                    <li> flush_to_disk: Flushes any changes
+ *                            to any tables to the persistent store.  These
+ *                            changes include updates to the vector store,
+ *                            object store, and text search store, Value string
+ *                            is ignored
+ *                                    <li> clear_cache: Clears cached results.
+ *                            Useful to allow repeated timing of endpoints.
+ *                            Value string is ignored
+ *                                    <li> communicator_test: Invoke the
+ *                            communicator test and report timing results.
+ *                            Value string is is a comma separated list of
+ *                            <key>=<value> expressions.  Expressions are:
+ *                            num_transactions = <num> where <num> is the
+ *                            number of request reply transactions to invoke
+ *                            per test; message_size = <bytes> where bytes is
+ *                            the size of the messages to send in bytes;
+ *                            check_values = <enabled> where if enabled is true
+ *                            the value of the messages received are verified.
+ *                                    <li> set_message_timers_enabled: Enables
+ *                            the communicator test to collect additional
+ *                            timing statistics when the value string is
+ *                            'true'. Disables the collection when the value
+ *                            string is 'false'
+ *                                    <li> bulk_add_test: Invoke the bulk_add
+ *                            test and report timing results. Value string is
+ *                            ignored.
+ *                                    <li> network_speed: Invoke the network
+ *                            speed test and report timing results. Value
+ *                            string is a comma separated list of <key>=<value>
+ *                            expressions.  Expressions are: seconds = <time>
+ *                            where time is the time in seconds to run the
+ *                            test; data_size = <size> where <size> is the size
+ *                            in bytes of the block to be transferred; threads
+ *                            = <number of threads>; to_ranks = <comma
+ *                            separated list of ranks> where the list of ranks
+ *                            is the ranks that rank 0 will send data to and
+ *                            get data from. If to_ranks is unspecified then
+ *                            all worker ranks are used.
+ *                                    <li> request_timeout: Number of minutes
+ *                            after which /filter/* and /aggregate/* queries
+ *                            will timeout.
+ *                                    <li> max_get_records_size: set
+ *                            max_get_records_size. default 20000
+ *                            </ul>
  * @param options  Optional parameters.  Default value is an empty std::map.
  * 
  * @return Response object containing the result of the operation.
@@ -1713,6 +1840,61 @@ AlterSystemPropertiesResponse alterSystemProperties( const std::map<std::string,
  * 
  * @param propertyUpdatesMap  Map containing the properties of the system to be
  *                            updated. Error if empty.
+ *                            <ul>
+ *                                    <li> sm_omp_threads: Set the number of
+ *                            sm_omp_threads to the specified integer value.
+ *                                    <li> kernel_omp_threads: Set the number
+ *                            of kernel_omp_threads to the specified integer
+ *                            value.
+ *                                    <li> concurrent_kernel_execution: Enables
+ *                            concurrent kernel execution if the value is
+ *                            'true' and disables it if the value is 'false'.
+ *                                    <li> chunk_size: Sets the chunk size of
+ *                            all new sets to the specified integer value.
+ *                                    <li> flush_to_disk: Flushes any changes
+ *                            to any tables to the persistent store.  These
+ *                            changes include updates to the vector store,
+ *                            object store, and text search store, Value string
+ *                            is ignored
+ *                                    <li> clear_cache: Clears cached results.
+ *                            Useful to allow repeated timing of endpoints.
+ *                            Value string is ignored
+ *                                    <li> communicator_test: Invoke the
+ *                            communicator test and report timing results.
+ *                            Value string is is a comma separated list of
+ *                            <key>=<value> expressions.  Expressions are:
+ *                            num_transactions = <num> where <num> is the
+ *                            number of request reply transactions to invoke
+ *                            per test; message_size = <bytes> where bytes is
+ *                            the size of the messages to send in bytes;
+ *                            check_values = <enabled> where if enabled is true
+ *                            the value of the messages received are verified.
+ *                                    <li> set_message_timers_enabled: Enables
+ *                            the communicator test to collect additional
+ *                            timing statistics when the value string is
+ *                            'true'. Disables the collection when the value
+ *                            string is 'false'
+ *                                    <li> bulk_add_test: Invoke the bulk_add
+ *                            test and report timing results. Value string is
+ *                            ignored.
+ *                                    <li> network_speed: Invoke the network
+ *                            speed test and report timing results. Value
+ *                            string is a comma separated list of <key>=<value>
+ *                            expressions.  Expressions are: seconds = <time>
+ *                            where time is the time in seconds to run the
+ *                            test; data_size = <size> where <size> is the size
+ *                            in bytes of the block to be transferred; threads
+ *                            = <number of threads>; to_ranks = <comma
+ *                            separated list of ranks> where the list of ranks
+ *                            is the ranks that rank 0 will send data to and
+ *                            get data from. If to_ranks is unspecified then
+ *                            all worker ranks are used.
+ *                                    <li> request_timeout: Number of minutes
+ *                            after which /filter/* and /aggregate/* queries
+ *                            will timeout.
+ *                                    <li> max_get_records_size: set
+ *                            max_get_records_size. default 20000
+ *                            </ul>
  * @param options  Optional parameters.  Default value is an empty std::map.
  * @param[out] response_  Response object containing the results of the
  *                        operation.
@@ -1821,7 +2003,8 @@ AlterTableResponse& alterTable( const AlterTableRequest& request_,
  * @param tableName  Table on which the operation will be performed. Must be a
  *                   valid table or collection in GPUdb.
  * @param action  Modification operation to be applied to the table or
- *                collection
+ *                collection Values: 'create_index', 'delete_index',
+ *                'allow_homogeneous_tables', 'protected', 'ttl'.
  * @param value  The value of the modification. May be a column name, 'true' or
  *               'false', or a time-to-live depending on @a action.
  * @param options  Optional parameters.  Default value is an empty std::map.
@@ -1861,7 +2044,8 @@ AlterTableResponse alterTable( const std::string& tableName,
  * @param tableName  Table on which the operation will be performed. Must be a
  *                   valid table or collection in GPUdb.
  * @param action  Modification operation to be applied to the table or
- *                collection
+ *                collection Values: 'create_index', 'delete_index',
+ *                'allow_homogeneous_tables', 'protected', 'ttl'.
  * @param value  The value of the modification. May be a column name, 'true' or
  *               'false', or a time-to-live depending on @a action.
  * @param options  Optional parameters.  Default value is an empty std::map.
@@ -1997,7 +2181,8 @@ AlterUserResponse& alterUser( const AlterUserRequest& request_,
  * Alters a user.
  * 
  * @param name  Name of the user to be altered. Must be an existing user.
- * @param action  Modification operation to be applied to the user.
+ * @param action  Modification operation to be applied to the user. Values:
+ *                'set_password'.
  * @param value  The value of the modification, depending on @a action.
  * @param options  Optional parameters.
  * 
@@ -2014,7 +2199,8 @@ AlterUserResponse alterUser( const std::string& name,
  * Alters a user.
  * 
  * @param name  Name of the user to be altered. Must be an existing user.
- * @param action  Modification operation to be applied to the user.
+ * @param action  Modification operation to be applied to the user. Values:
+ *                'set_password'.
  * @param value  The value of the modification, depending on @a action.
  * @param options  Optional parameters.
  * @param[out] response_  Response object containing the results of the
@@ -2294,14 +2480,26 @@ CreateJoinTableResponse& createJoinTable( const CreateJoinTableRequest& request_
  *                     href="../../concepts/index.html#expressions"
  *                     target="_top">expressions</a>.  Default value is an
  *                     empty std::vector.
- * @param options  Optional parameters.  Default value is an empty std::map.
-         * <ul>
-         *     <li>collection_name: Name of a collection in GPUdb to which the join table is to be assigned as a child table. If empty, then the join table will be a top level table.  Default value is an empty string. 
-         *     <li>max_query_dimensions: The maximum number of tables in a joined table that can be accessed by a query and are not equated by a foreign-key to primary-key equality predicate  
-         *     <li>optimize_lookups: Use the applied filters to precalculate the lookup table to get data from the primary key sets  
-         *     <li>refresh_method: Method by which the join table can be refreshed when underlying member tables have changed.  Default value is 'manual'. 
-         *     <li>refresh: Do a manual refresh of the join table if it exists - throws an error otherwise  Default value is 'no_refresh'. 
-         * </ul>
+ * @param options  Optional parameters.
+ *                 <ul>
+ *                         <li> collection_name: Name of a collection in GPUdb
+ *                 to which the join table is to be assigned as a child table.
+ *                 If empty, then the join table will be a top level table.
+ *                         <li> max_query_dimensions: The maximum number of
+ *                 tables in a joined table that can be accessed by a query and
+ *                 are not equated by a foreign-key to primary-key equality
+ *                 predicate
+ *                         <li> optimize_lookups: Use the applied filters to
+ *                 precalculate the lookup table to get data from the primary
+ *                 key sets
+ *                         <li> refresh_method: Method by which the join table
+ *                 can be refreshed when underlying member tables have changed.
+ *                 Values: 'manual', 'on_query', 'on_insert'.
+ *                         <li> refresh: Do a manual refresh of the join table
+ *                 if it exists - throws an error otherwise Values:
+ *                 'no_refresh', 'refresh', 'full_refresh'.
+ *                 </ul>
+ *                   Default value is an empty std::map.
  * 
  * @return Response object containing the result of the operation.
  * 
@@ -2337,14 +2535,26 @@ CreateJoinTableResponse createJoinTable( const std::string& joinTableName,
  *                     href="../../concepts/index.html#expressions"
  *                     target="_top">expressions</a>.  Default value is an
  *                     empty std::vector.
- * @param options  Optional parameters.  Default value is an empty std::map.
-         * <ul>
-         *     <li>collection_name: Name of a collection in GPUdb to which the join table is to be assigned as a child table. If empty, then the join table will be a top level table.  Default value is an empty string. 
-         *     <li>max_query_dimensions: The maximum number of tables in a joined table that can be accessed by a query and are not equated by a foreign-key to primary-key equality predicate  
-         *     <li>optimize_lookups: Use the applied filters to precalculate the lookup table to get data from the primary key sets  
-         *     <li>refresh_method: Method by which the join table can be refreshed when underlying member tables have changed.  Default value is 'manual'. 
-         *     <li>refresh: Do a manual refresh of the join table if it exists - throws an error otherwise  Default value is 'no_refresh'. 
-         * </ul>
+ * @param options  Optional parameters.
+ *                 <ul>
+ *                         <li> collection_name: Name of a collection in GPUdb
+ *                 to which the join table is to be assigned as a child table.
+ *                 If empty, then the join table will be a top level table.
+ *                         <li> max_query_dimensions: The maximum number of
+ *                 tables in a joined table that can be accessed by a query and
+ *                 are not equated by a foreign-key to primary-key equality
+ *                 predicate
+ *                         <li> optimize_lookups: Use the applied filters to
+ *                 precalculate the lookup table to get data from the primary
+ *                 key sets
+ *                         <li> refresh_method: Method by which the join table
+ *                 can be refreshed when underlying member tables have changed.
+ *                 Values: 'manual', 'on_query', 'on_insert'.
+ *                         <li> refresh: Do a manual refresh of the join table
+ *                 if it exists - throws an error otherwise Values:
+ *                 'no_refresh', 'refresh', 'full_refresh'.
+ *                 </ul>
+ *                   Default value is an empty std::map.
  * @param[out] response_  Response object containing the results of the
  *                        operation.
  * 
@@ -2490,15 +2700,34 @@ CreateTableResponse& createTable( const CreateTableRequest& request_,
  * @param typeId  ID of a currently registered type in GPUdb. All objects added
  *                to the newly created table will be of this type.  Must be an
  *                empty string if the *is_collection* is 'true'.
- * @param options  Optional parameters.  Default value is an empty std::map.
-         * <ul>
-         *     <li>no_error_if_exists: If @a true, prevents an error from occurring if the table already exists and is of the given type.  If a table with the same ID but a different type exists, it is still an error.  Default value is 'false'. values:TRUE, FALSE
-         *     <li>collection_name: Name of a collection in GPUdb to which the newly created table is to be assigned as a child table. If empty, then the newly created table will be a top level table. If the collection does not allow duplicate children, then this table creation request will fail if there is an existing child table with the same type id specified in this request.  Default value is an empty string. 
-         *     <li>is_collection: Indicates whether the new table to be created will be a collection. If false, the created table will be a top level table.  Default value is 'false'. values:TRUE, FALSE
-         *     <li>disallow_homogeneous_tables: For a collection, indicates whether multiple children of exactly the same data type will be allowed.  Default value is 'false'. values:TRUE, FALSE
-         *     <li>is_replicated: For a Table, this is an indication to GPUdb to replicate the table to all the ranks. This is only required when the table will be used to join with other tables in a query.  Default value is 'false'. values:TRUE, FALSE
-         *     <li>foreign_keys: Semicolon-separated list of foreign key constraints, of the format 'my_field references primary_table(primary_key_field)'.  Default value is an empty string. 
-         * </ul>
+ * @param options  Optional parameters.
+ *                 <ul>
+ *                         <li> no_error_if_exists: If @a true, prevents an
+ *                 error from occurring if the table already exists and is of
+ *                 the given type.  If a table with the same ID but a different
+ *                 type exists, it is still an error. Values: 'true', 'false'.
+ *                         <li> collection_name: Name of a collection in GPUdb
+ *                 to which the newly created table is to be assigned as a
+ *                 child table. If empty, then the newly created table will be
+ *                 a top level table. If the collection does not allow
+ *                 duplicate children, then this table creation request will
+ *                 fail if there is an existing child table with the same type
+ *                 id specified in this request.
+ *                         <li> is_collection: Indicates whether the new table
+ *                 to be created will be a collection. If false, the created
+ *                 table will be a top level table. Values: 'true', 'false'.
+ *                         <li> disallow_homogeneous_tables: For a collection,
+ *                 indicates whether multiple children of exactly the same data
+ *                 type will be allowed. Values: 'true', 'false'.
+ *                         <li> is_replicated: For a Table, this is an
+ *                 indication to GPUdb to replicate the table to all the ranks.
+ *                 This is only required when the table will be used to join
+ *                 with other tables in a query. Values: 'true', 'false'.
+ *                         <li> foreign_keys: Semicolon-separated list of
+ *                 foreign key constraints, of the format 'my_field references
+ *                 primary_table(primary_key_field)'.
+ *                 </ul>
+ *                   Default value is an empty std::map.
  * 
  * @return Response object containing the result of the operation.
  * 
@@ -2530,15 +2759,34 @@ CreateTableResponse createTable( const std::string& tableName,
  * @param typeId  ID of a currently registered type in GPUdb. All objects added
  *                to the newly created table will be of this type.  Must be an
  *                empty string if the *is_collection* is 'true'.
- * @param options  Optional parameters.  Default value is an empty std::map.
-         * <ul>
-         *     <li>no_error_if_exists: If @a true, prevents an error from occurring if the table already exists and is of the given type.  If a table with the same ID but a different type exists, it is still an error.  Default value is 'false'. values:TRUE, FALSE
-         *     <li>collection_name: Name of a collection in GPUdb to which the newly created table is to be assigned as a child table. If empty, then the newly created table will be a top level table. If the collection does not allow duplicate children, then this table creation request will fail if there is an existing child table with the same type id specified in this request.  Default value is an empty string. 
-         *     <li>is_collection: Indicates whether the new table to be created will be a collection. If false, the created table will be a top level table.  Default value is 'false'. values:TRUE, FALSE
-         *     <li>disallow_homogeneous_tables: For a collection, indicates whether multiple children of exactly the same data type will be allowed.  Default value is 'false'. values:TRUE, FALSE
-         *     <li>is_replicated: For a Table, this is an indication to GPUdb to replicate the table to all the ranks. This is only required when the table will be used to join with other tables in a query.  Default value is 'false'. values:TRUE, FALSE
-         *     <li>foreign_keys: Semicolon-separated list of foreign key constraints, of the format 'my_field references primary_table(primary_key_field)'.  Default value is an empty string. 
-         * </ul>
+ * @param options  Optional parameters.
+ *                 <ul>
+ *                         <li> no_error_if_exists: If @a true, prevents an
+ *                 error from occurring if the table already exists and is of
+ *                 the given type.  If a table with the same ID but a different
+ *                 type exists, it is still an error. Values: 'true', 'false'.
+ *                         <li> collection_name: Name of a collection in GPUdb
+ *                 to which the newly created table is to be assigned as a
+ *                 child table. If empty, then the newly created table will be
+ *                 a top level table. If the collection does not allow
+ *                 duplicate children, then this table creation request will
+ *                 fail if there is an existing child table with the same type
+ *                 id specified in this request.
+ *                         <li> is_collection: Indicates whether the new table
+ *                 to be created will be a collection. If false, the created
+ *                 table will be a top level table. Values: 'true', 'false'.
+ *                         <li> disallow_homogeneous_tables: For a collection,
+ *                 indicates whether multiple children of exactly the same data
+ *                 type will be allowed. Values: 'true', 'false'.
+ *                         <li> is_replicated: For a Table, this is an
+ *                 indication to GPUdb to replicate the table to all the ranks.
+ *                 This is only required when the table will be used to join
+ *                 with other tables in a query. Values: 'true', 'false'.
+ *                         <li> foreign_keys: Semicolon-separated list of
+ *                 foreign key constraints, of the format 'my_field references
+ *                 primary_table(primary_key_field)'.
+ *                 </ul>
+ *                   Default value is an empty std::map.
  * @param[out] response_  Response object containing the results of the
  *                        operation.
  * 
@@ -3204,10 +3452,13 @@ CreateUnionResponse& createUnion( const CreateUnionRequest& request_,
  *                          input tables.
  * @param outputColumnNames  The list of names of the columns to be stored in
  *                           the union.
- * @param options  Optional parameters.  Default value is an empty std::map.
-         * <ul>
-         *     <li>collection_name: Name of a collection in GPUdb to which the union is to be assigned as a child table. If empty, then the union will be a top level table.  Default value is an empty string. 
-         * </ul>
+ * @param options  Optional parameters.
+ *                 <ul>
+ *                         <li> collection_name: Name of a collection in GPUdb
+ *                 to which the union is to be assigned as a child table. If
+ *                 empty, then the union will be a top level table.
+ *                 </ul>
+ *                   Default value is an empty std::map.
  * 
  * @return Response object containing the result of the operation.
  * 
@@ -3230,10 +3481,13 @@ CreateUnionResponse createUnion( const std::string& tableName,
  *                          input tables.
  * @param outputColumnNames  The list of names of the columns to be stored in
  *                           the union.
- * @param options  Optional parameters.  Default value is an empty std::map.
-         * <ul>
-         *     <li>collection_name: Name of a collection in GPUdb to which the union is to be assigned as a child table. If empty, then the union will be a top level table.  Default value is an empty string. 
-         * </ul>
+ * @param options  Optional parameters.
+ *                 <ul>
+ *                         <li> collection_name: Name of a collection in GPUdb
+ *                 to which the union is to be assigned as a child table. If
+ *                 empty, then the union will be a top level table.
+ *                 </ul>
+ *                   Default value is an empty std::map.
  * @param[out] response_  Response object containing the results of the
  *                        operation.
  * 
@@ -3441,11 +3695,16 @@ DeleteRecordsResponse& deleteRecords( const DeleteRecordsRequest& request_,
  *                     format should follow the guidelines provided /filter.
  *                     Specifying one or more @a expressions is mutually
  *                     exclusive to specifying @a record_id in the @a options.
- * @param options  Optional parameters.  Default value is an empty std::map.
-         * <ul>
-         *     <li>global_expression: An optional global expression to reduce the search space of the @a expressions.  Default value is an empty string. 
-         *     <li>record_id: A record id identifying a single record, obtained at the time of /insert/records or by calling /get/records/fromcollection with the *return_record_ids* option.  
-         * </ul>
+ * @param options  Optional parameters.
+ *                 <ul>
+ *                         <li> global_expression: An optional global
+ *                 expression to reduce the search space of the @a expressions.
+ *                         <li> record_id: A record id identifying a single
+ *                 record, obtained at the time of /insert/records or by
+ *                 calling /get/records/fromcollection with the
+ *                 *return_record_ids* option.
+ *                 </ul>
+ *                   Default value is an empty std::map.
  * 
  * @return Response object containing the result of the operation.
  * 
@@ -3471,11 +3730,16 @@ DeleteRecordsResponse deleteRecords( const std::string& tableName,
  *                     format should follow the guidelines provided /filter.
  *                     Specifying one or more @a expressions is mutually
  *                     exclusive to specifying @a record_id in the @a options.
- * @param options  Optional parameters.  Default value is an empty std::map.
-         * <ul>
-         *     <li>global_expression: An optional global expression to reduce the search space of the @a expressions.  Default value is an empty string. 
-         *     <li>record_id: A record id identifying a single record, obtained at the time of /insert/records or by calling /get/records/fromcollection with the *return_record_ids* option.  
-         * </ul>
+ * @param options  Optional parameters.
+ *                 <ul>
+ *                         <li> global_expression: An optional global
+ *                 expression to reduce the search space of the @a expressions.
+ *                         <li> record_id: A record id identifying a single
+ *                 record, obtained at the time of /insert/records or by
+ *                 calling /get/records/fromcollection with the
+ *                 *return_record_ids* option.
+ *                 </ul>
+ *                   Default value is an empty std::map.
  * @param[out] response_  Response object containing the results of the
  *                        operation.
  * 
@@ -4040,8 +4304,9 @@ FilterByBoxResponse& filterByBox( const std::string& tableName,
                                   FilterByBoxResponse& response_ ) const;
 
 /**
- * Applies a geometry filter against a spatial column in a given table,
- * collection or view. The filtering geometry is provided by @a inputWkt.
+ * Applies a geometry filter against a spatial column named WKT in a given
+ * table, collection or view. The filtering geometry is provided by @a
+ * inputWkt.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -4053,8 +4318,9 @@ FilterByBoxResponse& filterByBox( const std::string& tableName,
 FilterByGeometryResponse filterByGeometry( const FilterByGeometryRequest& request_ ) const;
 
 /**
- * Applies a geometry filter against a spatial column in a given table,
- * collection or view. The filtering geometry is provided by @a inputWkt.
+ * Applies a geometry filter against a spatial column named WKT in a given
+ * table, collection or view. The filtering geometry is provided by @a
+ * inputWkt.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -4070,21 +4336,24 @@ FilterByGeometryResponse& filterByGeometry( const FilterByGeometryRequest& reque
                                             FilterByGeometryResponse& response_ ) const;
 
 /**
- * Applies a geometry filter against a spatial column in a given table,
- * collection or view. The filtering geometry is provided by @a inputWkt.
+ * Applies a geometry filter against a spatial column named WKT in a given
+ * table, collection or view. The filtering geometry is provided by @a
+ * inputWkt.
  * 
- * @param tableName  Name of the table on which the filter by spatial operation
- *                   will be performed.  Must be an existing table, collection
- *                   or view in GPUdb.
+ * @param tableName  Name of the table on which the filter by geometry will be
+ *                   performed.  Must be an existing table, collection or view
+ *                   containing a column named WKT.
  * @param viewName  If provided, then this will be the name of the view
  *                  containing the results. Must not be an already existing
  *                  collection, table or view.  Default value is an empty
  *                  string.
- * @param columnName  Name of the column to be used in the filter. Must be a
- *                    spatial column. Typically this will be 'WKT'
+ * @param columnName  Name of the column to be used in the filter. Must be
+ *                    'WKT'
  * @param inputWkt  A geometry in WKT format that will be used to filter the
- *                  objects in @a tableName  Default value is an empty string.
- * @param operation  The geometric filtering operation to perform
+ *                  objects in @a tableName.  Default value is an empty string.
+ * @param operation  The geometric filtering operation to perform Values:
+ *                   'contains', 'crosses', 'disjoint', 'equals', 'intersects',
+ *                   'overlaps', 'touches', 'within'.
  * @param options  Optional parameters.  Default value is an empty std::map.
  * 
  * @return Response object containing the result of the operation.
@@ -4099,21 +4368,24 @@ FilterByGeometryResponse filterByGeometry( const std::string& tableName,
                                            const std::map<std::string, std::string>& options ) const;
 
 /**
- * Applies a geometry filter against a spatial column in a given table,
- * collection or view. The filtering geometry is provided by @a inputWkt.
+ * Applies a geometry filter against a spatial column named WKT in a given
+ * table, collection or view. The filtering geometry is provided by @a
+ * inputWkt.
  * 
- * @param tableName  Name of the table on which the filter by spatial operation
- *                   will be performed.  Must be an existing table, collection
- *                   or view in GPUdb.
+ * @param tableName  Name of the table on which the filter by geometry will be
+ *                   performed.  Must be an existing table, collection or view
+ *                   containing a column named WKT.
  * @param viewName  If provided, then this will be the name of the view
  *                  containing the results. Must not be an already existing
  *                  collection, table or view.  Default value is an empty
  *                  string.
- * @param columnName  Name of the column to be used in the filter. Must be a
- *                    spatial column. Typically this will be 'WKT'
+ * @param columnName  Name of the column to be used in the filter. Must be
+ *                    'WKT'
  * @param inputWkt  A geometry in WKT format that will be used to filter the
- *                  objects in @a tableName  Default value is an empty string.
- * @param operation  The geometric filtering operation to perform
+ *                  objects in @a tableName.  Default value is an empty string.
+ * @param operation  The geometric filtering operation to perform Values:
+ *                   'contains', 'crosses', 'disjoint', 'equals', 'intersects',
+ *                   'overlaps', 'touches', 'within'.
  * @param options  Optional parameters.  Default value is an empty std::map.
  * @param[out] response_  Response object containing the results of the
  *                        operation.
@@ -4208,10 +4480,13 @@ FilterByListResponse& filterByList( const FilterByListRequest& request_,
  *                  string.
  * @param columnValuesMap  List of values for the corresponding column in the
  *                         table
- * @param options  Optional parameters.  Default value is an empty std::map.
-         * <ul>
-         *     <li>filter_mode: String indicating the filter mode, either 'in_list' or 'not_in_list'.  Default value is 'in_list'. 
-         * </ul>
+ * @param options  Optional parameters.
+ *                 <ul>
+ *                         <li> filter_mode: String indicating the filter mode,
+ *                 either 'in_list' or 'not_in_list'. Values: 'in_list',
+ *                 'not_in_list'.
+ *                 </ul>
+ *                   Default value is an empty std::map.
  * 
  * @return Response object containing the result of the operation.
  * 
@@ -4247,10 +4522,13 @@ FilterByListResponse filterByList( const std::string& tableName,
  *                  string.
  * @param columnValuesMap  List of values for the corresponding column in the
  *                         table
- * @param options  Optional parameters.  Default value is an empty std::map.
-         * <ul>
-         *     <li>filter_mode: String indicating the filter mode, either 'in_list' or 'not_in_list'.  Default value is 'in_list'. 
-         * </ul>
+ * @param options  Optional parameters.
+ *                 <ul>
+ *                         <li> filter_mode: String indicating the filter mode,
+ *                 either 'in_list' or 'not_in_list'. Values: 'in_list',
+ *                 'not_in_list'.
+ *                 </ul>
+ *                   Default value is an empty std::map.
  * @param[out] response_  Response object containing the results of the
  *                        operation.
  * 
@@ -4538,15 +4816,15 @@ FilterByRangeResponse& filterByRange( const std::string& tableName,
 /**
  * Filters objects matching all points of the given track (works only on track
  * type data).  It allows users to specify a particular track to find all other
- * points in the table that fall within specified ranges-spatial and temporal-
- * of all points of the given track. Additionally, the user can specify another
- * track to see if the two intersect (or go close to each other within the
- * specified ranges). The user also has the flexibility of using different
- * metrics for the spatial distance calculation: Euclidean (flat geometry) or
- * Great Circle (spherical geometry to approximate the Earth's surface
- * distances). The filtered points are stored in a newly created result set.
- * The return value of the function is the number of points in the resultant
- * set (view).
+ * points in the table that fall within specified ranges-spatial and
+ * temporal-of all points of the given track. Additionally, the user can
+ * specify another track to see if the two intersect (or go close to each other
+ * within the specified ranges). The user also has the flexibility of using
+ * different metrics for the spatial distance calculation: Euclidean (flat
+ * geometry) or Great Circle (spherical geometry to approximate the Earth's
+ * surface distances). The filtered points are stored in a newly created result
+ * set. The return value of the function is the number of points in the
+ * resultant set (view).
  * <p>
  * This operation is synchronous meaning that GPUdb will not return a response
  * until all the objects are fully available.
@@ -4563,15 +4841,15 @@ FilterBySeriesResponse filterBySeries( const FilterBySeriesRequest& request_ ) c
 /**
  * Filters objects matching all points of the given track (works only on track
  * type data).  It allows users to specify a particular track to find all other
- * points in the table that fall within specified ranges-spatial and temporal-
- * of all points of the given track. Additionally, the user can specify another
- * track to see if the two intersect (or go close to each other within the
- * specified ranges). The user also has the flexibility of using different
- * metrics for the spatial distance calculation: Euclidean (flat geometry) or
- * Great Circle (spherical geometry to approximate the Earth's surface
- * distances). The filtered points are stored in a newly created result set.
- * The return value of the function is the number of points in the resultant
- * set (view).
+ * points in the table that fall within specified ranges-spatial and
+ * temporal-of all points of the given track. Additionally, the user can
+ * specify another track to see if the two intersect (or go close to each other
+ * within the specified ranges). The user also has the flexibility of using
+ * different metrics for the spatial distance calculation: Euclidean (flat
+ * geometry) or Great Circle (spherical geometry to approximate the Earth's
+ * surface distances). The filtered points are stored in a newly created result
+ * set. The return value of the function is the number of points in the
+ * resultant set (view).
  * <p>
  * This operation is synchronous meaning that GPUdb will not return a response
  * until all the objects are fully available.
@@ -4592,15 +4870,15 @@ FilterBySeriesResponse& filterBySeries( const FilterBySeriesRequest& request_,
 /**
  * Filters objects matching all points of the given track (works only on track
  * type data).  It allows users to specify a particular track to find all other
- * points in the table that fall within specified ranges-spatial and temporal-
- * of all points of the given track. Additionally, the user can specify another
- * track to see if the two intersect (or go close to each other within the
- * specified ranges). The user also has the flexibility of using different
- * metrics for the spatial distance calculation: Euclidean (flat geometry) or
- * Great Circle (spherical geometry to approximate the Earth's surface
- * distances). The filtered points are stored in a newly created result set.
- * The return value of the function is the number of points in the resultant
- * set (view).
+ * points in the table that fall within specified ranges-spatial and
+ * temporal-of all points of the given track. Additionally, the user can
+ * specify another track to see if the two intersect (or go close to each other
+ * within the specified ranges). The user also has the flexibility of using
+ * different metrics for the spatial distance calculation: Euclidean (flat
+ * geometry) or Great Circle (spherical geometry to approximate the Earth's
+ * surface distances). The filtered points are stored in a newly created result
+ * set. The return value of the function is the number of points in the
+ * resultant set (view).
  * <p>
  * This operation is synchronous meaning that GPUdb will not return a response
  * until all the objects are fully available.
@@ -4617,12 +4895,24 @@ FilterBySeriesResponse& filterBySeries( const FilterBySeriesRequest& request_,
  * @param targetTrackIds  Up to one track ID to intersect with the "filter"
  *                        track. If any provided, it must be an valid track ID
  *                        within the given set.
- * @param options  Optional parameters.  Default value is an empty std::map.
-         * <ul>
-         *     <li>spatial_radius: A positive number passed as a string representing the radius of the search area centered around each track point's geospatial coordinates. The value is interpreted in meters. Required parameter.  The minimum allowed value is 0. 
-         *     <li>time_radius: A positive number passed as a string representing the maximum allowable time difference between the timestamps of a filtered object and the given track's points. The value is interpreted in seconds. Required parameter.  The minimum allowed value is 0. 
-         *     <li>spatial_distance_metric: A string representing the coordinate system to use for the spatial search criteria. Acceptable values are 'euclidean' and 'great_circle'. Optional parameter; default is 'euclidean'.  values:EUCLIDEAN, GREAT_CIRCLE
-         * </ul>
+ * @param options  Optional parameters.
+ *                 <ul>
+ *                         <li> spatial_radius: A positive number passed as a
+ *                 string representing the radius of the search area centered
+ *                 around each track point's geospatial coordinates. The value
+ *                 is interpreted in meters. Required parameter.
+ *                         <li> time_radius: A positive number passed as a
+ *                 string representing the maximum allowable time difference
+ *                 between the timestamps of a filtered object and the given
+ *                 track's points. The value is interpreted in seconds.
+ *                 Required parameter.
+ *                         <li> spatial_distance_metric: A string representing
+ *                 the coordinate system to use for the spatial search
+ *                 criteria. Acceptable values are 'euclidean' and
+ *                 'great_circle'. Optional parameter; default is 'euclidean'.
+ *                 Values: 'euclidean', 'great_circle'.
+ *                 </ul>
+ *                   Default value is an empty std::map.
  * 
  * @return Response object containing the result of the operation.
  * 
@@ -4637,15 +4927,15 @@ FilterBySeriesResponse filterBySeries( const std::string& tableName,
 /**
  * Filters objects matching all points of the given track (works only on track
  * type data).  It allows users to specify a particular track to find all other
- * points in the table that fall within specified ranges-spatial and temporal-
- * of all points of the given track. Additionally, the user can specify another
- * track to see if the two intersect (or go close to each other within the
- * specified ranges). The user also has the flexibility of using different
- * metrics for the spatial distance calculation: Euclidean (flat geometry) or
- * Great Circle (spherical geometry to approximate the Earth's surface
- * distances). The filtered points are stored in a newly created result set.
- * The return value of the function is the number of points in the resultant
- * set (view).
+ * points in the table that fall within specified ranges-spatial and
+ * temporal-of all points of the given track. Additionally, the user can
+ * specify another track to see if the two intersect (or go close to each other
+ * within the specified ranges). The user also has the flexibility of using
+ * different metrics for the spatial distance calculation: Euclidean (flat
+ * geometry) or Great Circle (spherical geometry to approximate the Earth's
+ * surface distances). The filtered points are stored in a newly created result
+ * set. The return value of the function is the number of points in the
+ * resultant set (view).
  * <p>
  * This operation is synchronous meaning that GPUdb will not return a response
  * until all the objects are fully available.
@@ -4662,12 +4952,24 @@ FilterBySeriesResponse filterBySeries( const std::string& tableName,
  * @param targetTrackIds  Up to one track ID to intersect with the "filter"
  *                        track. If any provided, it must be an valid track ID
  *                        within the given set.
- * @param options  Optional parameters.  Default value is an empty std::map.
-         * <ul>
-         *     <li>spatial_radius: A positive number passed as a string representing the radius of the search area centered around each track point's geospatial coordinates. The value is interpreted in meters. Required parameter.  The minimum allowed value is 0. 
-         *     <li>time_radius: A positive number passed as a string representing the maximum allowable time difference between the timestamps of a filtered object and the given track's points. The value is interpreted in seconds. Required parameter.  The minimum allowed value is 0. 
-         *     <li>spatial_distance_metric: A string representing the coordinate system to use for the spatial search criteria. Acceptable values are 'euclidean' and 'great_circle'. Optional parameter; default is 'euclidean'.  values:EUCLIDEAN, GREAT_CIRCLE
-         * </ul>
+ * @param options  Optional parameters.
+ *                 <ul>
+ *                         <li> spatial_radius: A positive number passed as a
+ *                 string representing the radius of the search area centered
+ *                 around each track point's geospatial coordinates. The value
+ *                 is interpreted in meters. Required parameter.
+ *                         <li> time_radius: A positive number passed as a
+ *                 string representing the maximum allowable time difference
+ *                 between the timestamps of a filtered object and the given
+ *                 track's points. The value is interpreted in seconds.
+ *                 Required parameter.
+ *                         <li> spatial_distance_metric: A string representing
+ *                 the coordinate system to use for the spatial search
+ *                 criteria. Acceptable values are 'euclidean' and
+ *                 'great_circle'. Optional parameter; default is 'euclidean'.
+ *                 Values: 'euclidean', 'great_circle'.
+ *                 </ul>
+ *                   Default value is an empty std::map.
  * @param[out] response_  Response object containing the results of the
  *                        operation.
  * 
@@ -4783,12 +5085,16 @@ FilterByStringResponse& filterByString( const FilterByStringRequest& request_,
  *                  string.
  * @param expression  The expression with which to filter the table.
  * @param mode  The string filtering mode to apply. See above for details.
+ *              Values: 'search', 'equals', 'contains', 'starts_with', 'regex'.
  * @param columnNames  List of columns on which to apply the filter. Ignored
  *                     for 'search' mode.
- * @param options  Optional parameters.  Default value is an empty std::map.
-         * <ul>
-         *     <li>case_sensitive: If 'false' then string filtering will ignore case. Does not apply to 'search' mode.  Default value is 'true'. values:TRUE, FALSE
-         * </ul>
+ * @param options  Optional parameters.
+ *                 <ul>
+ *                         <li> case_sensitive: If 'false' then string
+ *                 filtering will ignore case. Does not apply to 'search' mode.
+ *                 Values: 'true', 'false'.
+ *                 </ul>
+ *                   Default value is an empty std::map.
  * 
  * @return Response object containing the result of the operation.
  * 
@@ -4833,12 +5139,16 @@ FilterByStringResponse filterByString( const std::string& tableName,
  *                  string.
  * @param expression  The expression with which to filter the table.
  * @param mode  The string filtering mode to apply. See above for details.
+ *              Values: 'search', 'equals', 'contains', 'starts_with', 'regex'.
  * @param columnNames  List of columns on which to apply the filter. Ignored
  *                     for 'search' mode.
- * @param options  Optional parameters.  Default value is an empty std::map.
-         * <ul>
-         *     <li>case_sensitive: If 'false' then string filtering will ignore case. Does not apply to 'search' mode.  Default value is 'true'. values:TRUE, FALSE
-         * </ul>
+ * @param options  Optional parameters.
+ *                 <ul>
+ *                         <li> case_sensitive: If 'false' then string
+ *                 filtering will ignore case. Does not apply to 'search' mode.
+ *                 Values: 'true', 'false'.
+ *                 </ul>
+ *                   Default value is an empty std::map.
  * @param[out] response_  Response object containing the results of the
  *                        operation.
  * 
@@ -5258,12 +5568,18 @@ GetRecordsResponse<TResponse>& getRecords( const GetRecordsRequest& request_,
  * @param limit  A positive integer indicating the maximum number of results to
  *               be returned. Or END_OF_SET (-9999) to indicate that the max
  *               number of results should be returned.  Default value is 10000.
- * @param options  Default value is an empty std::map.
-         * <ul>
-         *     <li>expression: Optional filter expression to apply to the table.  
-         *     <li>sort_by: Optional column that the data should be sorted by. Empty by default (i.e. no sorting is applied).  
-         *     <li>sort_order: String indicating how the returned values should be sorted - ascending or descending. Ignored if 'sort_by' option is not specified.  Default value is 'ascending'. values:ASCENDING, DESCENDING
-         * </ul>
+ * @param options
+ *                 <ul>
+ *                         <li> expression: Optional filter expression to apply
+ *                 to the table.
+ *                         <li> sort_by: Optional column that the data should
+ *                 be sorted by. Empty by default (i.e. no sorting is applied).
+ *                         <li> sort_order: String indicating how the returned
+ *                 values should be sorted - ascending or descending. Ignored
+ *                 if 'sort_by' option is not specified. Values: 'ascending',
+ *                 'descending'.
+ *                 </ul>
+ *                   Default value is an empty std::map.
  * 
  * @return Response object containing the result of the operation.
  * 
@@ -5319,12 +5635,18 @@ GetRecordsResponse<TResponse> getRecords( const std::string& tableName,
  * @param limit  A positive integer indicating the maximum number of results to
  *               be returned. Or END_OF_SET (-9999) to indicate that the max
  *               number of results should be returned.  Default value is 10000.
- * @param options  Default value is an empty std::map.
-         * <ul>
-         *     <li>expression: Optional filter expression to apply to the table.  
-         *     <li>sort_by: Optional column that the data should be sorted by. Empty by default (i.e. no sorting is applied).  
-         *     <li>sort_order: String indicating how the returned values should be sorted - ascending or descending. Ignored if 'sort_by' option is not specified.  Default value is 'ascending'. values:ASCENDING, DESCENDING
-         * </ul>
+ * @param options
+ *                 <ul>
+ *                         <li> expression: Optional filter expression to apply
+ *                 to the table.
+ *                         <li> sort_by: Optional column that the data should
+ *                 be sorted by. Empty by default (i.e. no sorting is applied).
+ *                         <li> sort_order: String indicating how the returned
+ *                 values should be sorted - ascending or descending. Ignored
+ *                 if 'sort_by' option is not specified. Values: 'ascending',
+ *                 'descending'.
+ *                 </ul>
+ *                   Default value is an empty std::map.
  * @param[out] response_  Response object containing the results of the
  *                        operation.
  * 
@@ -5558,12 +5880,18 @@ GetRecordsResponse<TResponse>& getRecords( const Type& type_,
  * @param limit  A positive integer indicating the maximum number of results to
  *               be returned. Or END_OF_SET (-9999) to indicate that the max
  *               number of results should be returned.  Default value is 10000.
- * @param options  Default value is an empty std::map.
-         * <ul>
-         *     <li>expression: Optional filter expression to apply to the table.  
-         *     <li>sort_by: Optional column that the data should be sorted by. Empty by default (i.e. no sorting is applied).  
-         *     <li>sort_order: String indicating how the returned values should be sorted - ascending or descending. Ignored if 'sort_by' option is not specified.  Default value is 'ascending'. values:ASCENDING, DESCENDING
-         * </ul>
+ * @param options
+ *                 <ul>
+ *                         <li> expression: Optional filter expression to apply
+ *                 to the table.
+ *                         <li> sort_by: Optional column that the data should
+ *                 be sorted by. Empty by default (i.e. no sorting is applied).
+ *                         <li> sort_order: String indicating how the returned
+ *                 values should be sorted - ascending or descending. Ignored
+ *                 if 'sort_by' option is not specified. Values: 'ascending',
+ *                 'descending'.
+ *                 </ul>
+ *                   Default value is an empty std::map.
  * 
  * @return Response object containing the result of the operation.
  * 
@@ -5621,12 +5949,18 @@ GetRecordsResponse<TResponse> getRecords( const ::avro::ValidSchema& schema_,
  * @param limit  A positive integer indicating the maximum number of results to
  *               be returned. Or END_OF_SET (-9999) to indicate that the max
  *               number of results should be returned.  Default value is 10000.
- * @param options  Default value is an empty std::map.
-         * <ul>
-         *     <li>expression: Optional filter expression to apply to the table.  
-         *     <li>sort_by: Optional column that the data should be sorted by. Empty by default (i.e. no sorting is applied).  
-         *     <li>sort_order: String indicating how the returned values should be sorted - ascending or descending. Ignored if 'sort_by' option is not specified.  Default value is 'ascending'. values:ASCENDING, DESCENDING
-         * </ul>
+ * @param options
+ *                 <ul>
+ *                         <li> expression: Optional filter expression to apply
+ *                 to the table.
+ *                         <li> sort_by: Optional column that the data should
+ *                 be sorted by. Empty by default (i.e. no sorting is applied).
+ *                         <li> sort_order: String indicating how the returned
+ *                 values should be sorted - ascending or descending. Ignored
+ *                 if 'sort_by' option is not specified. Values: 'ascending',
+ *                 'descending'.
+ *                 </ul>
+ *                   Default value is an empty std::map.
  * 
  * @return Response object containing the result of the operation.
  * 
@@ -5684,12 +6018,18 @@ GetRecordsResponse<TResponse> getRecords( const Type& type_,
  * @param limit  A positive integer indicating the maximum number of results to
  *               be returned. Or END_OF_SET (-9999) to indicate that the max
  *               number of results should be returned.  Default value is 10000.
- * @param options  Default value is an empty std::map.
-         * <ul>
-         *     <li>expression: Optional filter expression to apply to the table.  
-         *     <li>sort_by: Optional column that the data should be sorted by. Empty by default (i.e. no sorting is applied).  
-         *     <li>sort_order: String indicating how the returned values should be sorted - ascending or descending. Ignored if 'sort_by' option is not specified.  Default value is 'ascending'. values:ASCENDING, DESCENDING
-         * </ul>
+ * @param options
+ *                 <ul>
+ *                         <li> expression: Optional filter expression to apply
+ *                 to the table.
+ *                         <li> sort_by: Optional column that the data should
+ *                 be sorted by. Empty by default (i.e. no sorting is applied).
+ *                         <li> sort_order: String indicating how the returned
+ *                 values should be sorted - ascending or descending. Ignored
+ *                 if 'sort_by' option is not specified. Values: 'ascending',
+ *                 'descending'.
+ *                 </ul>
+ *                   Default value is an empty std::map.
  * @param[out] response_  Response object containing the results of the
  *                        operation.
  * 
@@ -5750,12 +6090,18 @@ GetRecordsResponse<TResponse>& getRecords( const ::avro::ValidSchema& schema_,
  * @param limit  A positive integer indicating the maximum number of results to
  *               be returned. Or END_OF_SET (-9999) to indicate that the max
  *               number of results should be returned.  Default value is 10000.
- * @param options  Default value is an empty std::map.
-         * <ul>
-         *     <li>expression: Optional filter expression to apply to the table.  
-         *     <li>sort_by: Optional column that the data should be sorted by. Empty by default (i.e. no sorting is applied).  
-         *     <li>sort_order: String indicating how the returned values should be sorted - ascending or descending. Ignored if 'sort_by' option is not specified.  Default value is 'ascending'. values:ASCENDING, DESCENDING
-         * </ul>
+ * @param options
+ *                 <ul>
+ *                         <li> expression: Optional filter expression to apply
+ *                 to the table.
+ *                         <li> sort_by: Optional column that the data should
+ *                 be sorted by. Empty by default (i.e. no sorting is applied).
+ *                         <li> sort_order: String indicating how the returned
+ *                 values should be sorted - ascending or descending. Ignored
+ *                 if 'sort_by' option is not specified. Values: 'ascending',
+ *                 'descending'.
+ *                 </ul>
+ *                   Default value is an empty std::map.
  * @param[out] response_  Response object containing the results of the
  *                        operation.
  * 
@@ -5940,12 +6286,18 @@ GetRecordsByColumnResponse& getRecordsByColumn( const GetRecordsByColumnRequest&
  *               be returned (if not provided the default is 10000). Or
  *               END_OF_column (-9999) to indicate that the max number of
  *               results should be returned.
- * @param options  Default value is an empty std::map.
-         * <ul>
-         *     <li>expression: Optional filter expression to apply to the table.  
-         *     <li>sort_by: Optional column that the data should be sorted by. Empty by default (i.e. no sorting is applied).  
-         *     <li>sort_order: String indicating how the returned values should be sorted - ascending or descending. Default is 'ascending'. Ignored if 'sort_by' option is not specified.  Default value is 'ascending'. values:ASCENDING, DESCENDING
-         * </ul>
+ * @param options
+ *                 <ul>
+ *                         <li> expression: Optional filter expression to apply
+ *                 to the table.
+ *                         <li> sort_by: Optional column that the data should
+ *                 be sorted by. Empty by default (i.e. no sorting is applied).
+ *                         <li> sort_order: String indicating how the returned
+ *                 values should be sorted - ascending or descending. Default
+ *                 is 'ascending'. Ignored if 'sort_by' option is not
+ *                 specified. Values: 'ascending', 'descending'.
+ *                 </ul>
+ *                   Default value is an empty std::map.
  * 
  * @return Response object containing the result of the operation.
  * 
@@ -5988,12 +6340,18 @@ GetRecordsByColumnResponse getRecordsByColumn( const std::string& tableName,
  *               be returned (if not provided the default is 10000). Or
  *               END_OF_column (-9999) to indicate that the max number of
  *               results should be returned.
- * @param options  Default value is an empty std::map.
-         * <ul>
-         *     <li>expression: Optional filter expression to apply to the table.  
-         *     <li>sort_by: Optional column that the data should be sorted by. Empty by default (i.e. no sorting is applied).  
-         *     <li>sort_order: String indicating how the returned values should be sorted - ascending or descending. Default is 'ascending'. Ignored if 'sort_by' option is not specified.  Default value is 'ascending'. values:ASCENDING, DESCENDING
-         * </ul>
+ * @param options
+ *                 <ul>
+ *                         <li> expression: Optional filter expression to apply
+ *                 to the table.
+ *                         <li> sort_by: Optional column that the data should
+ *                 be sorted by. Empty by default (i.e. no sorting is applied).
+ *                         <li> sort_order: String indicating how the returned
+ *                 values should be sorted - ascending or descending. Default
+ *                 is 'ascending'. Ignored if 'sort_by' option is not
+ *                 specified. Values: 'ascending', 'descending'.
+ *                 </ul>
+ *                   Default value is an empty std::map.
  * @param[out] response_  Response object containing the results of the
  *                        operation.
  * 
@@ -6899,10 +7257,13 @@ GetRecordsFromCollectionResponse<TResponse>& getRecordsFromCollection( const Get
  * @param limit  A positive integer indicating the maximum number of results to
  *               be returned, or END_OF_SET (-9999) to indicate that the max
  *               number of results should be returned.  Default value is 10000.
- * @param options  Default value is an empty std::map.
-         * <ul>
-         *     <li>return_record_ids: If 'true' then return GPUdb's internal record id along with each returned record. Default is 'false'.  Default value is 'false'. values:TRUE, FALSE
-         * </ul>
+ * @param options
+ *                 <ul>
+ *                         <li> return_record_ids: If 'true' then return
+ *                 GPUdb's internal record id along with each returned record.
+ *                 Default is 'false'. Values: 'true', 'false'.
+ *                 </ul>
+ *                   Default value is an empty std::map.
  * 
  * @return Response object containing the result of the operation.
  * 
@@ -6953,10 +7314,13 @@ GetRecordsFromCollectionResponse<TResponse> getRecordsFromCollection( const std:
  * @param limit  A positive integer indicating the maximum number of results to
  *               be returned, or END_OF_SET (-9999) to indicate that the max
  *               number of results should be returned.  Default value is 10000.
- * @param options  Default value is an empty std::map.
-         * <ul>
-         *     <li>return_record_ids: If 'true' then return GPUdb's internal record id along with each returned record. Default is 'false'.  Default value is 'false'. values:TRUE, FALSE
-         * </ul>
+ * @param options
+ *                 <ul>
+ *                         <li> return_record_ids: If 'true' then return
+ *                 GPUdb's internal record id along with each returned record.
+ *                 Default is 'false'. Values: 'true', 'false'.
+ *                 </ul>
+ *                   Default value is an empty std::map.
  * @param[out] response_  Response object containing the results of the
  *                        operation.
  * 
@@ -7161,10 +7525,13 @@ GetRecordsFromCollectionResponse<TResponse>& getRecordsFromCollection( const Typ
  * @param limit  A positive integer indicating the maximum number of results to
  *               be returned, or END_OF_SET (-9999) to indicate that the max
  *               number of results should be returned.  Default value is 10000.
- * @param options  Default value is an empty std::map.
-         * <ul>
-         *     <li>return_record_ids: If 'true' then return GPUdb's internal record id along with each returned record. Default is 'false'.  Default value is 'false'. values:TRUE, FALSE
-         * </ul>
+ * @param options
+ *                 <ul>
+ *                         <li> return_record_ids: If 'true' then return
+ *                 GPUdb's internal record id along with each returned record.
+ *                 Default is 'false'. Values: 'true', 'false'.
+ *                 </ul>
+ *                   Default value is an empty std::map.
  * 
  * @return Response object containing the result of the operation.
  * 
@@ -7217,10 +7584,13 @@ GetRecordsFromCollectionResponse<TResponse> getRecordsFromCollection( const ::av
  * @param limit  A positive integer indicating the maximum number of results to
  *               be returned, or END_OF_SET (-9999) to indicate that the max
  *               number of results should be returned.  Default value is 10000.
- * @param options  Default value is an empty std::map.
-         * <ul>
-         *     <li>return_record_ids: If 'true' then return GPUdb's internal record id along with each returned record. Default is 'false'.  Default value is 'false'. values:TRUE, FALSE
-         * </ul>
+ * @param options
+ *                 <ul>
+ *                         <li> return_record_ids: If 'true' then return
+ *                 GPUdb's internal record id along with each returned record.
+ *                 Default is 'false'. Values: 'true', 'false'.
+ *                 </ul>
+ *                   Default value is an empty std::map.
  * 
  * @return Response object containing the result of the operation.
  * 
@@ -7273,10 +7643,13 @@ GetRecordsFromCollectionResponse<TResponse> getRecordsFromCollection( const Type
  * @param limit  A positive integer indicating the maximum number of results to
  *               be returned, or END_OF_SET (-9999) to indicate that the max
  *               number of results should be returned.  Default value is 10000.
- * @param options  Default value is an empty std::map.
-         * <ul>
-         *     <li>return_record_ids: If 'true' then return GPUdb's internal record id along with each returned record. Default is 'false'.  Default value is 'false'. values:TRUE, FALSE
-         * </ul>
+ * @param options
+ *                 <ul>
+ *                         <li> return_record_ids: If 'true' then return
+ *                 GPUdb's internal record id along with each returned record.
+ *                 Default is 'false'. Values: 'true', 'false'.
+ *                 </ul>
+ *                   Default value is an empty std::map.
  * @param[out] response_  Response object containing the results of the
  *                        operation.
  * 
@@ -7332,10 +7705,13 @@ GetRecordsFromCollectionResponse<TResponse>& getRecordsFromCollection( const ::a
  * @param limit  A positive integer indicating the maximum number of results to
  *               be returned, or END_OF_SET (-9999) to indicate that the max
  *               number of results should be returned.  Default value is 10000.
- * @param options  Default value is an empty std::map.
-         * <ul>
-         *     <li>return_record_ids: If 'true' then return GPUdb's internal record id along with each returned record. Default is 'false'.  Default value is 'false'. values:TRUE, FALSE
-         * </ul>
+ * @param options
+ *                 <ul>
+ *                         <li> return_record_ids: If 'true' then return
+ *                 GPUdb's internal record id along with each returned record.
+ *                 Default is 'false'. Values: 'true', 'false'.
+ *                 </ul>
+ *                   Default value is an empty std::map.
  * @param[out] response_  Response object containing the results of the
  *                        operation.
  * 
@@ -7400,7 +7776,8 @@ GrantPermissionSystemResponse& grantPermissionSystem( const GrantPermissionSyste
  * 
  * @param name  Name of the user or role to which the permission will be
  *              granted. Must be an existing user or role.
- * @param permission  Permission to grant to the user or role.
+ * @param permission  Permission to grant to the user or role. Values:
+ *                    'system_admin', 'system_write', 'system_read'.
  * @param options  Optional parameters.
  * 
  * @return Response object containing the result of the operation.
@@ -7416,7 +7793,8 @@ GrantPermissionSystemResponse grantPermissionSystem( const std::string& name,
  * 
  * @param name  Name of the user or role to which the permission will be
  *              granted. Must be an existing user or role.
- * @param permission  Permission to grant to the user or role.
+ * @param permission  Permission to grant to the user or role. Values:
+ *                    'system_admin', 'system_write', 'system_read'.
  * @param options  Optional parameters.
  * @param[out] response_  Response object containing the results of the
  *                        operation.
@@ -7464,7 +7842,9 @@ GrantPermissionTableResponse& grantPermissionTable( const GrantPermissionTableRe
  * 
  * @param name  Name of the user or role to which the permission will be
  *              granted. Must be an existing user or role.
- * @param permission  Permission to grant to the user or role.
+ * @param permission  Permission to grant to the user or role. Values:
+ *                    'table_admin', 'table_insert', 'table_update',
+ *                    'table_delete', 'table_read'.
  * @param tableName  Name of the table to which the permission grants access.
  *                   Must be an existing table, collection, or view. If a
  *                   collection, the permission also applies to tables and
@@ -7488,7 +7868,9 @@ GrantPermissionTableResponse grantPermissionTable( const std::string& name,
  * 
  * @param name  Name of the user or role to which the permission will be
  *              granted. Must be an existing user or role.
- * @param permission  Permission to grant to the user or role.
+ * @param permission  Permission to grant to the user or role. Values:
+ *                    'table_admin', 'table_insert', 'table_update',
+ *                    'table_delete', 'table_read'.
  * @param tableName  Name of the table to which the permission grants access.
  *                   Must be an existing table, collection, or view. If a
  *                   collection, the permission also applies to tables and
@@ -7879,12 +8261,28 @@ InsertRecordsResponse& insertRecords( const InsertRecordsRequest<TRequest>& requ
  * @param data  An array of binary-encoded data for the records to be added.
  *              All records must be of the same type as that of the table.
  *              Empty array if @a listEncoding is @a json.
- * @param options  Optional parameters.  Default value is an empty std::map.
-         * <ul>
-         *     <li>update_on_existing_pk: If the table has a /create/type, then if the value is 'true' then if any of the records being added have the same primary key as existing records, the existing records are replaced (i.e. *updated*) with the given records. If 'false' and if the records being added have the same primary key as existing records, the given records with existing primary keys are ignored (the existing records are left unchanged).  It is quite possible that in this case some of the given records will be inserted and some (those having existing primary keys) will be ignored (or updated). If the specified table does not have a primary key column then this optional parameter is ignored.  Default value is 'false'. values:TRUE, FALSE
-         *     <li>return_record_ids: If 'true' then return GPUdb's internal record id along for each inserted record. Default is 'false'.  Default value is 'false'. values:TRUE, FALSE
-         *     <li>route_to_address: Route to a specific rank/tom. Option not suitable for tables using primary/shard keys  
-         * </ul>
+ * @param options  Optional parameters.
+ *                 <ul>
+ *                         <li> update_on_existing_pk: If the table has a
+ *                 /create/type, then if the value is 'true' then if any of the
+ *                 records being added have the same primary key as existing
+ *                 records, the existing records are replaced (i.e. *updated*)
+ *                 with the given records. If 'false' and if the records being
+ *                 added have the same primary key as existing records, the
+ *                 given records with existing primary keys are ignored (the
+ *                 existing records are left unchanged).  It is quite possible
+ *                 that in this case some of the given records will be inserted
+ *                 and some (those having existing primary keys) will be
+ *                 ignored (or updated). If the specified table does not have a
+ *                 primary key column then this optional parameter is ignored.
+ *                 Values: 'true', 'false'.
+ *                         <li> return_record_ids: If 'true' then return
+ *                 GPUdb's internal record id along for each inserted record.
+ *                 Default is 'false'. Values: 'true', 'false'.
+ *                         <li> route_to_address: Route to a specific rank/tom.
+ *                 Option not suitable for tables using primary/shard keys
+ *                 </ul>
+ *                   Default value is an empty std::map.
  * 
  * @return Response object containing the result of the operation.
  * 
@@ -7933,12 +8331,28 @@ InsertRecordsResponse insertRecords( const std::string& tableName,
  * @param data  An array of binary-encoded data for the records to be added.
  *              All records must be of the same type as that of the table.
  *              Empty array if @a listEncoding is @a json.
- * @param options  Optional parameters.  Default value is an empty std::map.
-         * <ul>
-         *     <li>update_on_existing_pk: If the table has a /create/type, then if the value is 'true' then if any of the records being added have the same primary key as existing records, the existing records are replaced (i.e. *updated*) with the given records. If 'false' and if the records being added have the same primary key as existing records, the given records with existing primary keys are ignored (the existing records are left unchanged).  It is quite possible that in this case some of the given records will be inserted and some (those having existing primary keys) will be ignored (or updated). If the specified table does not have a primary key column then this optional parameter is ignored.  Default value is 'false'. values:TRUE, FALSE
-         *     <li>return_record_ids: If 'true' then return GPUdb's internal record id along for each inserted record. Default is 'false'.  Default value is 'false'. values:TRUE, FALSE
-         *     <li>route_to_address: Route to a specific rank/tom. Option not suitable for tables using primary/shard keys  
-         * </ul>
+ * @param options  Optional parameters.
+ *                 <ul>
+ *                         <li> update_on_existing_pk: If the table has a
+ *                 /create/type, then if the value is 'true' then if any of the
+ *                 records being added have the same primary key as existing
+ *                 records, the existing records are replaced (i.e. *updated*)
+ *                 with the given records. If 'false' and if the records being
+ *                 added have the same primary key as existing records, the
+ *                 given records with existing primary keys are ignored (the
+ *                 existing records are left unchanged).  It is quite possible
+ *                 that in this case some of the given records will be inserted
+ *                 and some (those having existing primary keys) will be
+ *                 ignored (or updated). If the specified table does not have a
+ *                 primary key column then this optional parameter is ignored.
+ *                 Values: 'true', 'false'.
+ *                         <li> return_record_ids: If 'true' then return
+ *                 GPUdb's internal record id along for each inserted record.
+ *                 Default is 'false'. Values: 'true', 'false'.
+ *                         <li> route_to_address: Route to a specific rank/tom.
+ *                 Option not suitable for tables using primary/shard keys
+ *                 </ul>
+ *                   Default value is an empty std::map.
  * @param[out] response_  Response object containing the results of the
  *                        operation.
  * 
@@ -8031,12 +8445,114 @@ InsertRecordsRandomResponse& insertRecordsRandom( const InsertRecordsRandomReque
  *                 specified are: *min*, *max*, and *interval*.  These
  *                 parameters take on different meanings depending on the type
  *                 of the column.  Below follows a more detailed description of
- *                 the map:  Default value is an empty std::map.
-         * <ul>
-         *     <li>all: This key indicates that the specifications relayed in the internal map are to be applied to all columns of the records.  
-         *     <li>attr_name: Set the following parameters for the column specified by the key. This overrides any parameter set by @a all.  
-         *     <li>track_length: This key-map pair is only valid for track type data sets (GPUdb throws an error otherwise).  
-         * </ul>
+ *                 the map:
+ *                 <ul>
+ *                         <li> all: This key indicates that the specifications
+ *                 relayed in the internal map are to be applied to all columns
+ *                 of the records.
+ *                 <ul>
+ *                         <li> min: For numerical columns, the minimum of the
+ *                 generated values is set to this value.  Default is -99999.
+ *                 For point, shape, and track semantic types, min for numeric
+ *                 'x' and 'y' columns needs to be within [-180, 180] and [-90,
+ *                 90], respectively. The default minimum possible values for
+ *                 these columns in such cases are -180.0 and -90.0. For the
+ *                 'TIMESTAMP' column, the default minimum corresponds to Jan
+ *                 1, 2010.
+ *                 For string columns, the minimum length of the randomly
+ *                 generated strings is set to this value (default is 1). If
+ *                 both minimum and maximum are provided, minimum must be less
+ *                 than or equal to max. Value needs to be within [1, 200].
+ *                 If the min is outside the accepted ranges for strings
+ *                 columns and 'x' and 'y' columns for point/shape/track types,
+ *                 then those parameters will not be set; however, GPUdb will
+ *                 not throw an error in such a case. It is the responsibility
+ *                 of the user to use the @a all parameter judiciously.
+ *                         <li> max: For numerical columns, the maximum of the
+ *                 generated values is set to this value. Default is 99999. For
+ *                 point, shape, and track semantic types, max for numeric 'x'
+ *                 and 'y' columns needs to be within [-180, 180] and [-90,
+ *                 90], respectively. The default minimum possible values for
+ *                 these columns in such cases are 180.0 and 90.0.
+ *                 For string columns, the maximum length of the randomly
+ *                 generated strings is set to this value (default is 200). If
+ *                 both minimum and maximum are provided, *max* must be greater
+ *                 than or equal to *min*. Value needs to be within [1, 200].
+ *                 If the *max* is outside the accepted ranges for strings
+ *                 columns and 'x' and 'y' columns for point/shape/track types,
+ *                 then those parameters will not be set; however, GPUdb will
+ *                 not throw an error in such a case. It is the responsibility
+ *                 of the user to use the @a all parameter judiciously.
+ *                         <li> interval: If specified, then generate values
+ *                 for all columns linearly and evenly spaced with the given
+ *                 interval value starting at the minimum value (instead of
+ *                 generating random data). *Any provided max value is
+ *                 disregarded.*  For string-type columns, the interval value
+ *                 is ignored but the string values would be generated
+ *                 following the pattern: 'attrname_creationIndex#', i.e. the
+ *                 column name suffixed with an underscore and a running
+ *                 counter (starting at 0).
+ *                 </ul>
+ *                         <li> attr_name: Set the following parameters for the
+ *                 column specified by the key. This overrides any parameter
+ *                 set by @a all.
+ *                 <ul>
+ *                         <li> min: For numerical columns, the minimum of the
+ *                 generated values is set to this value.  Default is -99999.
+ *                 For point, shape, and track semantic types, min for numeric
+ *                 'x' and 'y' columns needs to be within [-180, 180] and [-90,
+ *                 90], respectively. The default minimum possible values for
+ *                 these columns in such cases are -180.0 and -90.0. For the
+ *                 'TIMESTAMP' column, the default minimum corresponds to Jan
+ *                 1, 2010.
+ *                 For string columns, the minimum length of the randomly
+ *                 generated strings is set to this value (default is 1). If
+ *                 both minimum and maximum are provided, minimum must be less
+ *                 than or equal to max. Value needs to be within [1, 200].
+ *                 If the min is outside the accepted ranges for strings
+ *                 columns and 'x' and 'y' columns for point/shape/track types,
+ *                 then those parameters will not be set; however, GPUdb will
+ *                 not throw an error in such a case. It is the responsibility
+ *                 of the user to use the @a all parameter judiciously.
+ *                         <li> max: For numerical columns, the maximum of the
+ *                 generated values is set to this value. Default is 99999. For
+ *                 point, shape, and track semantic types, max for numeric 'x'
+ *                 and 'y' columns needs to be within [-180, 180] and [-90,
+ *                 90], respectively. The default minimum possible values for
+ *                 these columns in such cases are 180.0 and 90.0.
+ *                 For string columns, the maximum length of the randomly
+ *                 generated strings is set to this value (default is 200). If
+ *                 both minimum and maximum are provided, *max* must be greater
+ *                 than or equal to *min*. Value needs to be within [1, 200].
+ *                 If the *max* is outside the accepted ranges for strings
+ *                 columns and 'x' and 'y' columns for point/shape/track types,
+ *                 then those parameters will not be set; however, GPUdb will
+ *                 not throw an error in such a case. It is the responsibility
+ *                 of the user to use the @a all parameter judiciously.
+ *                         <li> interval: If specified, then generate values
+ *                 for all columns linearly and evenly spaced with the given
+ *                 interval value starting at the minimum value (instead of
+ *                 generating random data). *Any provided max value is
+ *                 disregarded.*  For string-type columns, the interval value
+ *                 is ignored but the string values would be generated
+ *                 following the pattern: 'attrname_creationIndex#', i.e. the
+ *                 column name suffixed with an underscore and a running
+ *                 counter (starting at 0).
+ *                 </ul>
+ *                         <li> track_length: This key-map pair is only valid
+ *                 for track type data sets (GPUdb throws an error otherwise).
+ *                 <ul>
+ *                         <li> min: Minimum possible length for generated
+ *                 series; default is 100 records per series. Must be an
+ *                 integral value within the range [1, 500]. If both min and
+ *                 max are specified, min must be less than or equal to max.
+ *                         <li> max: Maximum possible length for generated
+ *                 series; default is 500 records per series. Must be an
+ *                 integral value within the range [1, 500]. If both min and
+ *                 max are specified, max must be greater than or equal to min.
+ *                 </ul>
+ *                 </ul>
+ *                   Default value is an empty std::map.
  * 
  * @return Response object containing the result of the operation.
  * 
@@ -8072,12 +8588,114 @@ InsertRecordsRandomResponse insertRecordsRandom( const std::string& tableName,
  *                 specified are: *min*, *max*, and *interval*.  These
  *                 parameters take on different meanings depending on the type
  *                 of the column.  Below follows a more detailed description of
- *                 the map:  Default value is an empty std::map.
-         * <ul>
-         *     <li>all: This key indicates that the specifications relayed in the internal map are to be applied to all columns of the records.  
-         *     <li>attr_name: Set the following parameters for the column specified by the key. This overrides any parameter set by @a all.  
-         *     <li>track_length: This key-map pair is only valid for track type data sets (GPUdb throws an error otherwise).  
-         * </ul>
+ *                 the map:
+ *                 <ul>
+ *                         <li> all: This key indicates that the specifications
+ *                 relayed in the internal map are to be applied to all columns
+ *                 of the records.
+ *                 <ul>
+ *                         <li> min: For numerical columns, the minimum of the
+ *                 generated values is set to this value.  Default is -99999.
+ *                 For point, shape, and track semantic types, min for numeric
+ *                 'x' and 'y' columns needs to be within [-180, 180] and [-90,
+ *                 90], respectively. The default minimum possible values for
+ *                 these columns in such cases are -180.0 and -90.0. For the
+ *                 'TIMESTAMP' column, the default minimum corresponds to Jan
+ *                 1, 2010.
+ *                 For string columns, the minimum length of the randomly
+ *                 generated strings is set to this value (default is 1). If
+ *                 both minimum and maximum are provided, minimum must be less
+ *                 than or equal to max. Value needs to be within [1, 200].
+ *                 If the min is outside the accepted ranges for strings
+ *                 columns and 'x' and 'y' columns for point/shape/track types,
+ *                 then those parameters will not be set; however, GPUdb will
+ *                 not throw an error in such a case. It is the responsibility
+ *                 of the user to use the @a all parameter judiciously.
+ *                         <li> max: For numerical columns, the maximum of the
+ *                 generated values is set to this value. Default is 99999. For
+ *                 point, shape, and track semantic types, max for numeric 'x'
+ *                 and 'y' columns needs to be within [-180, 180] and [-90,
+ *                 90], respectively. The default minimum possible values for
+ *                 these columns in such cases are 180.0 and 90.0.
+ *                 For string columns, the maximum length of the randomly
+ *                 generated strings is set to this value (default is 200). If
+ *                 both minimum and maximum are provided, *max* must be greater
+ *                 than or equal to *min*. Value needs to be within [1, 200].
+ *                 If the *max* is outside the accepted ranges for strings
+ *                 columns and 'x' and 'y' columns for point/shape/track types,
+ *                 then those parameters will not be set; however, GPUdb will
+ *                 not throw an error in such a case. It is the responsibility
+ *                 of the user to use the @a all parameter judiciously.
+ *                         <li> interval: If specified, then generate values
+ *                 for all columns linearly and evenly spaced with the given
+ *                 interval value starting at the minimum value (instead of
+ *                 generating random data). *Any provided max value is
+ *                 disregarded.*  For string-type columns, the interval value
+ *                 is ignored but the string values would be generated
+ *                 following the pattern: 'attrname_creationIndex#', i.e. the
+ *                 column name suffixed with an underscore and a running
+ *                 counter (starting at 0).
+ *                 </ul>
+ *                         <li> attr_name: Set the following parameters for the
+ *                 column specified by the key. This overrides any parameter
+ *                 set by @a all.
+ *                 <ul>
+ *                         <li> min: For numerical columns, the minimum of the
+ *                 generated values is set to this value.  Default is -99999.
+ *                 For point, shape, and track semantic types, min for numeric
+ *                 'x' and 'y' columns needs to be within [-180, 180] and [-90,
+ *                 90], respectively. The default minimum possible values for
+ *                 these columns in such cases are -180.0 and -90.0. For the
+ *                 'TIMESTAMP' column, the default minimum corresponds to Jan
+ *                 1, 2010.
+ *                 For string columns, the minimum length of the randomly
+ *                 generated strings is set to this value (default is 1). If
+ *                 both minimum and maximum are provided, minimum must be less
+ *                 than or equal to max. Value needs to be within [1, 200].
+ *                 If the min is outside the accepted ranges for strings
+ *                 columns and 'x' and 'y' columns for point/shape/track types,
+ *                 then those parameters will not be set; however, GPUdb will
+ *                 not throw an error in such a case. It is the responsibility
+ *                 of the user to use the @a all parameter judiciously.
+ *                         <li> max: For numerical columns, the maximum of the
+ *                 generated values is set to this value. Default is 99999. For
+ *                 point, shape, and track semantic types, max for numeric 'x'
+ *                 and 'y' columns needs to be within [-180, 180] and [-90,
+ *                 90], respectively. The default minimum possible values for
+ *                 these columns in such cases are 180.0 and 90.0.
+ *                 For string columns, the maximum length of the randomly
+ *                 generated strings is set to this value (default is 200). If
+ *                 both minimum and maximum are provided, *max* must be greater
+ *                 than or equal to *min*. Value needs to be within [1, 200].
+ *                 If the *max* is outside the accepted ranges for strings
+ *                 columns and 'x' and 'y' columns for point/shape/track types,
+ *                 then those parameters will not be set; however, GPUdb will
+ *                 not throw an error in such a case. It is the responsibility
+ *                 of the user to use the @a all parameter judiciously.
+ *                         <li> interval: If specified, then generate values
+ *                 for all columns linearly and evenly spaced with the given
+ *                 interval value starting at the minimum value (instead of
+ *                 generating random data). *Any provided max value is
+ *                 disregarded.*  For string-type columns, the interval value
+ *                 is ignored but the string values would be generated
+ *                 following the pattern: 'attrname_creationIndex#', i.e. the
+ *                 column name suffixed with an underscore and a running
+ *                 counter (starting at 0).
+ *                 </ul>
+ *                         <li> track_length: This key-map pair is only valid
+ *                 for track type data sets (GPUdb throws an error otherwise).
+ *                 <ul>
+ *                         <li> min: Minimum possible length for generated
+ *                 series; default is 100 records per series. Must be an
+ *                 integral value within the range [1, 500]. If both min and
+ *                 max are specified, min must be less than or equal to max.
+ *                         <li> max: Maximum possible length for generated
+ *                 series; default is 500 records per series. Must be an
+ *                 integral value within the range [1, 500]. If both min and
+ *                 max are specified, max must be greater than or equal to min.
+ *                 </ul>
+ *                 </ul>
+ *                   Default value is an empty std::map.
  * @param[out] response_  Response object containing the results of the
  *                        operation.
  * 
@@ -8153,16 +8771,22 @@ InsertSymbolResponse& insertSymbol( const InsertSymbolRequest& request_,
  *                  should be in the 'SYMBOLCODE' column for objects using this
  *                  symbol
  * @param symbolFormat  Specifies the symbol format. Must be either 'svg' or
- *                      'svg_path'.
+ *                      'svg_path'. Values: 'svg', 'svg_path'.
  * @param symbolData  The actual symbol data. If @a symbolFormat is 'svg' then
  *                    this should be the raw bytes representing an svg file. If
  *                    @a symbolFormat is svg path then this should be an svg
  *                    path string, for example:
  *                    'M25.979,12.896,5.979,12.896,5.979,19.562,25.979,19.562z'
- * @param options  Optional parameters.  Default value is an empty std::map.
-         * <ul>
-         *     <li>color: If @a symbolFormat is 'svg' this is ignored. If @a symbolFormat is 'svg_path' then this option specifies the color (in RRGGBB hex format) of the path. For example, to have the path rendered in red, used 'FF0000'. If 'color' is not provided then '00FF00' (i.e. green) is used by default.  
-         * </ul>
+ * @param options  Optional parameters.
+ *                 <ul>
+ *                         <li> color: If @a symbolFormat is 'svg' this is
+ *                 ignored. If @a symbolFormat is 'svg_path' then this option
+ *                 specifies the color (in RRGGBB hex format) of the path. For
+ *                 example, to have the path rendered in red, used 'FF0000'. If
+ *                 'color' is not provided then '00FF00' (i.e. green) is used
+ *                 by default.
+ *                 </ul>
+ *                   Default value is an empty std::map.
  * 
  * @return Response object containing the result of the operation.
  * 
@@ -8189,16 +8813,22 @@ InsertSymbolResponse insertSymbol( const std::string& symbolId,
  *                  should be in the 'SYMBOLCODE' column for objects using this
  *                  symbol
  * @param symbolFormat  Specifies the symbol format. Must be either 'svg' or
- *                      'svg_path'.
+ *                      'svg_path'. Values: 'svg', 'svg_path'.
  * @param symbolData  The actual symbol data. If @a symbolFormat is 'svg' then
  *                    this should be the raw bytes representing an svg file. If
  *                    @a symbolFormat is svg path then this should be an svg
  *                    path string, for example:
  *                    'M25.979,12.896,5.979,12.896,5.979,19.562,25.979,19.562z'
- * @param options  Optional parameters.  Default value is an empty std::map.
-         * <ul>
-         *     <li>color: If @a symbolFormat is 'svg' this is ignored. If @a symbolFormat is 'svg_path' then this option specifies the color (in RRGGBB hex format) of the path. For example, to have the path rendered in red, used 'FF0000'. If 'color' is not provided then '00FF00' (i.e. green) is used by default.  
-         * </ul>
+ * @param options  Optional parameters.
+ *                 <ul>
+ *                         <li> color: If @a symbolFormat is 'svg' this is
+ *                 ignored. If @a symbolFormat is 'svg_path' then this option
+ *                 specifies the color (in RRGGBB hex format) of the path. For
+ *                 example, to have the path rendered in red, used 'FF0000'. If
+ *                 'color' is not provided then '00FF00' (i.e. green) is used
+ *                 by default.
+ *                 </ul>
+ *                   Default value is an empty std::map.
  * @param[out] response_  Response object containing the results of the
  *                        operation.
  * 
@@ -8214,12 +8844,13 @@ InsertSymbolResponse& insertSymbol( const std::string& symbolId,
                                     InsertSymbolResponse& response_ ) const;
 
 /**
- * Locks a table.  By default a table has a @a lockType of @a unlock,
- * indicating all operations are permitted.  A user may request a @a read-only
- * or a @a write-only lock, after which only read or write operations,
- * respectively, are permitted on the table until the lock is removed.  When @a
- * lockType is @a disable then no operations are permitted on the table.  The
- * lock status can be queried by setting  @a lockType to @a status.
+ * Manages global access to a table's data.  By default a table has a @a
+ * lockType of @a unlock, indicating all operations are permitted.  A user may
+ * request a @a read-only or a @a write-only lock, after which only read or
+ * write operations, respectively, are permitted on the table until the lock is
+ * removed.  When @a lockType is @a disable then no operations are permitted on
+ * the table.  The lock status can be queried by setting @a lockType to @a
+ * status.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -8231,12 +8862,13 @@ InsertSymbolResponse& insertSymbol( const std::string& symbolId,
 LockTableResponse lockTable( const LockTableRequest& request_ ) const;
 
 /**
- * Locks a table.  By default a table has a @a lockType of @a unlock,
- * indicating all operations are permitted.  A user may request a @a read-only
- * or a @a write-only lock, after which only read or write operations,
- * respectively, are permitted on the table until the lock is removed.  When @a
- * lockType is @a disable then no operations are permitted on the table.  The
- * lock status can be queried by setting  @a lockType to @a status.
+ * Manages global access to a table's data.  By default a table has a @a
+ * lockType of @a unlock, indicating all operations are permitted.  A user may
+ * request a @a read-only or a @a write-only lock, after which only read or
+ * write operations, respectively, are permitted on the table until the lock is
+ * removed.  When @a lockType is @a disable then no operations are permitted on
+ * the table.  The lock status can be queried by setting @a lockType to @a
+ * status.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -8252,18 +8884,21 @@ LockTableResponse& lockTable( const LockTableRequest& request_,
                               LockTableResponse& response_ ) const;
 
 /**
- * Locks a table.  By default a table has a @a lockType of @a unlock,
- * indicating all operations are permitted.  A user may request a @a read-only
- * or a @a write-only lock, after which only read or write operations,
- * respectively, are permitted on the table until the lock is removed.  When @a
- * lockType is @a disable then no operations are permitted on the table.  The
- * lock status can be queried by setting  @a lockType to @a status.
+ * Manages global access to a table's data.  By default a table has a @a
+ * lockType of @a unlock, indicating all operations are permitted.  A user may
+ * request a @a read-only or a @a write-only lock, after which only read or
+ * write operations, respectively, are permitted on the table until the lock is
+ * removed.  When @a lockType is @a disable then no operations are permitted on
+ * the table.  The lock status can be queried by setting @a lockType to @a
+ * status.
  * 
  * @param tableName  Name of the table to be locked. It must be a currently
- *                   existing table and not a collection or a view.
+ *                   existing table, collection, or view.
  * @param lockType  The type of lock being applied to the table. Setting it to
- *                  'status' will return the current lock status of the table
- *                  without changing it.  Default value is 'status'.
+ *                  @a status will return the current lock status of the table
+ *                  without changing it. Values: 'status', 'disable',
+ *                  'read-only', 'write-only', 'unlock'.
+ *                    Default value is 'status'.
  * @param options  Optional parameters.  Default value is an empty std::map.
  * 
  * @return Response object containing the result of the operation.
@@ -8275,18 +8910,21 @@ LockTableResponse lockTable( const std::string& tableName,
                              const std::map<std::string, std::string>& options ) const;
 
 /**
- * Locks a table.  By default a table has a @a lockType of @a unlock,
- * indicating all operations are permitted.  A user may request a @a read-only
- * or a @a write-only lock, after which only read or write operations,
- * respectively, are permitted on the table until the lock is removed.  When @a
- * lockType is @a disable then no operations are permitted on the table.  The
- * lock status can be queried by setting  @a lockType to @a status.
+ * Manages global access to a table's data.  By default a table has a @a
+ * lockType of @a unlock, indicating all operations are permitted.  A user may
+ * request a @a read-only or a @a write-only lock, after which only read or
+ * write operations, respectively, are permitted on the table until the lock is
+ * removed.  When @a lockType is @a disable then no operations are permitted on
+ * the table.  The lock status can be queried by setting @a lockType to @a
+ * status.
  * 
  * @param tableName  Name of the table to be locked. It must be a currently
- *                   existing table and not a collection or a view.
+ *                   existing table, collection, or view.
  * @param lockType  The type of lock being applied to the table. Setting it to
- *                  'status' will return the current lock status of the table
- *                  without changing it.  Default value is 'status'.
+ *                  @a status will return the current lock status of the table
+ *                  without changing it. Values: 'status', 'disable',
+ *                  'read-only', 'write-only', 'unlock'.
+ *                    Default value is 'status'.
  * @param options  Optional parameters.  Default value is an empty std::map.
  * @param[out] response_  Response object containing the results of the
  *                        operation.
@@ -8334,7 +8972,8 @@ RevokePermissionSystemResponse& revokePermissionSystem( const RevokePermissionSy
  * 
  * @param name  Name of the user or role from which the permission will be
  *              revoked. Must be an existing user or role.
- * @param permission  Permission to revoke from the user or role.
+ * @param permission  Permission to revoke from the user or role. Values:
+ *                    'system_admin', 'system_write', 'system_read'.
  * @param options  Optional parameters.
  * 
  * @return Response object containing the result of the operation.
@@ -8350,7 +8989,8 @@ RevokePermissionSystemResponse revokePermissionSystem( const std::string& name,
  * 
  * @param name  Name of the user or role from which the permission will be
  *              revoked. Must be an existing user or role.
- * @param permission  Permission to revoke from the user or role.
+ * @param permission  Permission to revoke from the user or role. Values:
+ *                    'system_admin', 'system_write', 'system_read'.
  * @param options  Optional parameters.
  * @param[out] response_  Response object containing the results of the
  *                        operation.
@@ -8398,7 +9038,9 @@ RevokePermissionTableResponse& revokePermissionTable( const RevokePermissionTabl
  * 
  * @param name  Name of the user or role from which the permission will be
  *              revoked. Must be an existing user or role.
- * @param permission  Permission to revoke from the user or role.
+ * @param permission  Permission to revoke from the user or role. Values:
+ *                    'table_admin', 'table_insert', 'table_update',
+ *                    'table_delete', 'table_read'.
  * @param tableName  Name of the table to which the permission grants access.
  *                   Must be an existing table, collection, or view.
  * @param options  Optional parameters.
@@ -8417,7 +9059,9 @@ RevokePermissionTableResponse revokePermissionTable( const std::string& name,
  * 
  * @param name  Name of the user or role from which the permission will be
  *              revoked. Must be an existing user or role.
- * @param permission  Permission to revoke from the user or role.
+ * @param permission  Permission to revoke from the user or role. Values:
+ *                    'table_admin', 'table_insert', 'table_update',
+ *                    'table_delete', 'table_read'.
  * @param tableName  Name of the table to which the permission grants access.
  *                   Must be an existing table, collection, or view.
  * @param options  Optional parameters.
@@ -8608,10 +9252,13 @@ ShowSystemPropertiesResponse& showSystemProperties( const ShowSystemPropertiesRe
  * The GPUdb Admin tool uses it to present server related information to the
  * user.
  * 
- * @param options  Optional parameters.  Default value is an empty std::map.
-         * <ul>
-         *     <li>properties: A list of comma separated names of properties requested. If not specified, all properties will be returned.  
-         * </ul>
+ * @param options  Optional parameters.
+ *                 <ul>
+ *                         <li> properties: A list of comma separated names of
+ *                 properties requested. If not specified, all properties will
+ *                 be returned.
+ *                 </ul>
+ *                   Default value is an empty std::map.
  * 
  * @return Response object containing the result of the operation.
  * 
@@ -8624,10 +9271,13 @@ ShowSystemPropertiesResponse showSystemProperties( const std::map<std::string, s
  * The GPUdb Admin tool uses it to present server related information to the
  * user.
  * 
- * @param options  Optional parameters.  Default value is an empty std::map.
-         * <ul>
-         *     <li>properties: A list of comma separated names of properties requested. If not specified, all properties will be returned.  
-         * </ul>
+ * @param options  Optional parameters.
+ *                 <ul>
+ *                         <li> properties: A list of comma separated names of
+ *                 properties requested. If not specified, all properties will
+ *                 be returned.
+ *                 </ul>
+ *                   Default value is an empty std::map.
  * @param[out] response_  Response object containing the results of the
  *                        operation.
  * 
@@ -8788,8 +9438,8 @@ ShowSystemTimingResponse& showSystemTiming( const std::map<std::string, std::str
  *     Running with 'show_children' = 'false' with @a tableName empty will
  * return an error.
  * <p>
- * If the requested table is blank, then information is returned about all top-
- * level tables including collections.
+ * If the requested table is blank, then information is returned about all
+ * top-level tables including collections.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -8825,8 +9475,8 @@ ShowTableResponse showTable( const ShowTableRequest& request_ ) const;
  *     Running with 'show_children' = 'false' with @a tableName empty will
  * return an error.
  * <p>
- * If the requested table is blank, then information is returned about all top-
- * level tables including collections.
+ * If the requested table is blank, then information is returned about all
+ * top-level tables including collections.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -8866,17 +9516,26 @@ ShowTableResponse& showTable( const ShowTableRequest& request_,
  *     Running with 'show_children' = 'false' with @a tableName empty will
  * return an error.
  * <p>
- * If the requested table is blank, then information is returned about all top-
- * level tables including collections.
+ * If the requested table is blank, then information is returned about all
+ * top-level tables including collections.
  * 
  * @param tableName  Name of the table for which to retrieve the information.
- *                   If blank then information about all collections and top-
- *                   level tables is returned.
- * @param options  Optional parameters.  Default value is an empty std::map.
-         * <ul>
-         *     <li>get_sizes: If 'true' then the table sizes will be returned; otherwise they will be returned blank.  Default value is 'false'. values:TRUE, FALSE
-         *     <li>show_children: If @a tableName is a collection, then 'true' will return information about the children of the collection, and 'false' will return information about the collection itself. If @a tableName is a child table, 'show_children' must be 'false'. If @a tableName is empty then 'show_children' must be 'true'.  Default value is 'true'. values:TRUE, FALSE
-         * </ul>
+ *                   If blank then information about all collections and
+ *                   top-level tables is returned.
+ * @param options  Optional parameters.
+ *                 <ul>
+ *                         <li> get_sizes: If 'true' then the table sizes will
+ *                 be returned; otherwise they will be returned blank. Values:
+ *                 'true', 'false'.
+ *                         <li> show_children: If @a tableName is a collection,
+ *                 then 'true' will return information about the children of
+ *                 the collection, and 'false' will return information about
+ *                 the collection itself. If @a tableName is a child table,
+ *                 'show_children' must be 'false'. If @a tableName is empty
+ *                 then 'show_children' must be 'true'. Values: 'true',
+ *                 'false'.
+ *                 </ul>
+ *                   Default value is an empty std::map.
  * 
  * @return Response object containing the result of the operation.
  * 
@@ -8910,17 +9569,26 @@ ShowTableResponse showTable( const std::string& tableName,
  *     Running with 'show_children' = 'false' with @a tableName empty will
  * return an error.
  * <p>
- * If the requested table is blank, then information is returned about all top-
- * level tables including collections.
+ * If the requested table is blank, then information is returned about all
+ * top-level tables including collections.
  * 
  * @param tableName  Name of the table for which to retrieve the information.
- *                   If blank then information about all collections and top-
- *                   level tables is returned.
- * @param options  Optional parameters.  Default value is an empty std::map.
-         * <ul>
-         *     <li>get_sizes: If 'true' then the table sizes will be returned; otherwise they will be returned blank.  Default value is 'false'. values:TRUE, FALSE
-         *     <li>show_children: If @a tableName is a collection, then 'true' will return information about the children of the collection, and 'false' will return information about the collection itself. If @a tableName is a child table, 'show_children' must be 'false'. If @a tableName is empty then 'show_children' must be 'true'.  Default value is 'true'. values:TRUE, FALSE
-         * </ul>
+ *                   If blank then information about all collections and
+ *                   top-level tables is returned.
+ * @param options  Optional parameters.
+ *                 <ul>
+ *                         <li> get_sizes: If 'true' then the table sizes will
+ *                 be returned; otherwise they will be returned blank. Values:
+ *                 'true', 'false'.
+ *                         <li> show_children: If @a tableName is a collection,
+ *                 then 'true' will return information about the children of
+ *                 the collection, and 'false' will return information about
+ *                 the collection itself. If @a tableName is a child table,
+ *                 'show_children' must be 'false'. If @a tableName is empty
+ *                 then 'show_children' must be 'true'. Values: 'true',
+ *                 'false'.
+ *                 </ul>
+ *                   Default value is an empty std::map.
  * @param[out] response_  Response object containing the results of the
  *                        operation.
  * 
@@ -9412,13 +10080,27 @@ UpdateRecordsResponse& updateRecords( const UpdateRecordsRequest<TRequest>& requ
  *              yield a matching record to be updated, then the corresponding
  *              element from this list will be added to the table.  Default
  *              value is an empty std::vector.
- * @param options  Optional parameters.  Default value is an empty std::map.
-         * <ul>
-         *     <li>global_expression: An optional global expression to reduce the search space of the predicates listed in @a expressions.  Default value is an empty string. 
-         *     <li>bypass_safety_checks: When set to 'true', all predicates are available for primary key updates.  Keep in mind that it is possible to destroy data in this case, since a single predicate may match multiple objects (potentially all of records of a table), and then updating all of those records to have the same primary key will, due to the primary key uniqueness constraints, effectively delete all but one of those updated records.  Default value is 'false'. values:TRUE, FALSE
-         *     <li>update_on_existing_pk: Can be used to customize behavior when the updated primary key value already exists, as described in /insert/records.  Default value is 'false'. values:TRUE, FALSE
-         *     <li>record_id: ID of a single record to be updated (returned in the call to /insert/records or /get/records/fromcollection).  
-         * </ul>
+ * @param options  Optional parameters.
+ *                 <ul>
+ *                         <li> global_expression: An optional global
+ *                 expression to reduce the search space of the predicates
+ *                 listed in @a expressions.
+ *                         <li> bypass_safety_checks: When set to 'true', all
+ *                 predicates are available for primary key updates.  Keep in
+ *                 mind that it is possible to destroy data in this case, since
+ *                 a single predicate may match multiple objects (potentially
+ *                 all of records of a table), and then updating all of those
+ *                 records to have the same primary key will, due to the
+ *                 primary key uniqueness constraints, effectively delete all
+ *                 but one of those updated records. Values: 'true', 'false'.
+ *                         <li> update_on_existing_pk: Can be used to customize
+ *                 behavior when the updated primary key value already exists,
+ *                 as described in /insert/records. Values: 'true', 'false'.
+ *                         <li> record_id: ID of a single record to be updated
+ *                 (returned in the call to /insert/records or
+ *                 /get/records/fromcollection).
+ *                 </ul>
+ *                   Default value is an empty std::map.
  * 
  * @return Response object containing the result of the operation.
  * 
@@ -9480,13 +10162,27 @@ UpdateRecordsResponse updateRecords( const std::string& tableName,
  *              yield a matching record to be updated, then the corresponding
  *              element from this list will be added to the table.  Default
  *              value is an empty std::vector.
- * @param options  Optional parameters.  Default value is an empty std::map.
-         * <ul>
-         *     <li>global_expression: An optional global expression to reduce the search space of the predicates listed in @a expressions.  Default value is an empty string. 
-         *     <li>bypass_safety_checks: When set to 'true', all predicates are available for primary key updates.  Keep in mind that it is possible to destroy data in this case, since a single predicate may match multiple objects (potentially all of records of a table), and then updating all of those records to have the same primary key will, due to the primary key uniqueness constraints, effectively delete all but one of those updated records.  Default value is 'false'. values:TRUE, FALSE
-         *     <li>update_on_existing_pk: Can be used to customize behavior when the updated primary key value already exists, as described in /insert/records.  Default value is 'false'. values:TRUE, FALSE
-         *     <li>record_id: ID of a single record to be updated (returned in the call to /insert/records or /get/records/fromcollection).  
-         * </ul>
+ * @param options  Optional parameters.
+ *                 <ul>
+ *                         <li> global_expression: An optional global
+ *                 expression to reduce the search space of the predicates
+ *                 listed in @a expressions.
+ *                         <li> bypass_safety_checks: When set to 'true', all
+ *                 predicates are available for primary key updates.  Keep in
+ *                 mind that it is possible to destroy data in this case, since
+ *                 a single predicate may match multiple objects (potentially
+ *                 all of records of a table), and then updating all of those
+ *                 records to have the same primary key will, due to the
+ *                 primary key uniqueness constraints, effectively delete all
+ *                 but one of those updated records. Values: 'true', 'false'.
+ *                         <li> update_on_existing_pk: Can be used to customize
+ *                 behavior when the updated primary key value already exists,
+ *                 as described in /insert/records. Values: 'true', 'false'.
+ *                         <li> record_id: ID of a single record to be updated
+ *                 (returned in the call to /insert/records or
+ *                 /get/records/fromcollection).
+ *                 </ul>
+ *                   Default value is an empty std::map.
  * @param[out] response_  Response object containing the results of the
  *                        operation.
  * 
@@ -9641,9 +10337,37 @@ VisualizeImageResponse& visualizeImage( const VisualizeImageRequest& request_,
  * @param maxY
  * @param width
  * @param height
- * @param projection
+ * @param projection  Values: 'EPSG:4326', 'PLATE_CARREE', '900913',
+ *                    'EPSG:900913', '102100', 'EPSG:102100', '3857',
+ *                    'EPSG:3857', 'WEB_MERCATOR'.
  * @param bgColor
  * @param styleOptions
+ *                      <ul>
+ *                              <li> do_points: Values: 'true', 'false'.
+ *                              <li> do_shapes: Values: 'true', 'false'.
+ *                              <li> do_tracks: Values: 'true', 'false'.
+ *                              <li> do_symbology: Values: 'true', 'false'.
+ *                              <li> pointcolors:
+ *                              <li> pointsizes:
+ *                              <li> pointshapes: Values: 'none', 'circle',
+ *                      'square', 'diamond', 'hollowcircle', 'hollowsquare',
+ *                      'hollowdiamond', 'SYMBOLCODE'.
+ *                              <li> shapelinewidths:
+ *                              <li> shapelinecolors:
+ *                              <li> shapefillcolors:
+ *                              <li> tracklinewidths:
+ *                              <li> tracklinecolors:
+ *                              <li> trackmarkersizes:
+ *                              <li> trackmarkercolors:
+ *                              <li> trackmarkershapes: Values: 'none',
+ *                      'circle', 'square', 'diamond', 'hollowcircle',
+ *                      'hollowsquare', 'hollowdiamond', 'SYMBOLCODE'.
+ *                              <li> trackheadcolors:
+ *                              <li> trackheadsizes:
+ *                              <li> trackheadshapes: Values: 'none', 'circle',
+ *                      'square', 'diamond', 'hollowcircle', 'hollowsquare',
+ *                      'hollowdiamond', 'SYMBOLCODE'.
+ *                      </ul>
  * @param options
  * 
  * @return Response object containing the result of the operation.
@@ -9680,9 +10404,37 @@ VisualizeImageResponse visualizeImage( const std::vector<std::string>& tableName
  * @param maxY
  * @param width
  * @param height
- * @param projection
+ * @param projection  Values: 'EPSG:4326', 'PLATE_CARREE', '900913',
+ *                    'EPSG:900913', '102100', 'EPSG:102100', '3857',
+ *                    'EPSG:3857', 'WEB_MERCATOR'.
  * @param bgColor
  * @param styleOptions
+ *                      <ul>
+ *                              <li> do_points: Values: 'true', 'false'.
+ *                              <li> do_shapes: Values: 'true', 'false'.
+ *                              <li> do_tracks: Values: 'true', 'false'.
+ *                              <li> do_symbology: Values: 'true', 'false'.
+ *                              <li> pointcolors:
+ *                              <li> pointsizes:
+ *                              <li> pointshapes: Values: 'none', 'circle',
+ *                      'square', 'diamond', 'hollowcircle', 'hollowsquare',
+ *                      'hollowdiamond', 'SYMBOLCODE'.
+ *                              <li> shapelinewidths:
+ *                              <li> shapelinecolors:
+ *                              <li> shapefillcolors:
+ *                              <li> tracklinewidths:
+ *                              <li> tracklinecolors:
+ *                              <li> trackmarkersizes:
+ *                              <li> trackmarkercolors:
+ *                              <li> trackmarkershapes: Values: 'none',
+ *                      'circle', 'square', 'diamond', 'hollowcircle',
+ *                      'hollowsquare', 'hollowdiamond', 'SYMBOLCODE'.
+ *                              <li> trackheadcolors:
+ *                              <li> trackheadsizes:
+ *                              <li> trackheadshapes: Values: 'none', 'circle',
+ *                      'square', 'diamond', 'hollowcircle', 'hollowsquare',
+ *                      'hollowdiamond', 'SYMBOLCODE'.
+ *                      </ul>
  * @param options
  * @param[out] response_  Response object containing the results of the
  *                        operation.
@@ -9755,9 +10507,37 @@ VisualizeImageClassbreakResponse& visualizeImageClassbreak( const VisualizeImage
  * @param maxY
  * @param width
  * @param height
- * @param projection
+ * @param projection  Values: 'EPSG:4326', 'PLATE_CARREE', '900913',
+ *                    'EPSG:900913', '102100', 'EPSG:102100', '3857',
+ *                    'EPSG:3857', 'WEB_MERCATOR'.
  * @param bgColor
  * @param styleOptions
+ *                      <ul>
+ *                              <li> do_points: Values: 'true', 'false'.
+ *                              <li> do_shapes: Values: 'true', 'false'.
+ *                              <li> do_tracks: Values: 'true', 'false'.
+ *                              <li> do_symbology: Values: 'true', 'false'.
+ *                              <li> pointcolors:
+ *                              <li> pointsizes:
+ *                              <li> pointshapes: Values: 'none', 'circle',
+ *                      'square', 'diamond', 'hollowcircle', 'hollowsquare',
+ *                      'hollowdiamond', 'SYMBOLCODE'.
+ *                              <li> shapelinewidths:
+ *                              <li> shapelinecolors:
+ *                              <li> shapefillcolors:
+ *                              <li> tracklinewidths:
+ *                              <li> tracklinecolors:
+ *                              <li> trackmarkersizes:
+ *                              <li> trackmarkercolors:
+ *                              <li> trackmarkershapes: Values: 'none',
+ *                      'circle', 'square', 'diamond', 'hollowcircle',
+ *                      'hollowsquare', 'hollowdiamond', 'SYMBOLCODE'.
+ *                              <li> trackheadcolors:
+ *                              <li> trackheadsizes:
+ *                              <li> trackheadshapes: Values: 'none', 'circle',
+ *                      'square', 'diamond', 'hollowcircle', 'hollowsquare',
+ *                      'hollowdiamond', 'SYMBOLCODE'.
+ *                      </ul>
  * @param options
  * 
  * @return Response object containing the result of the operation.
@@ -9802,9 +10582,37 @@ VisualizeImageClassbreakResponse visualizeImageClassbreak( const std::vector<std
  * @param maxY
  * @param width
  * @param height
- * @param projection
+ * @param projection  Values: 'EPSG:4326', 'PLATE_CARREE', '900913',
+ *                    'EPSG:900913', '102100', 'EPSG:102100', '3857',
+ *                    'EPSG:3857', 'WEB_MERCATOR'.
  * @param bgColor
  * @param styleOptions
+ *                      <ul>
+ *                              <li> do_points: Values: 'true', 'false'.
+ *                              <li> do_shapes: Values: 'true', 'false'.
+ *                              <li> do_tracks: Values: 'true', 'false'.
+ *                              <li> do_symbology: Values: 'true', 'false'.
+ *                              <li> pointcolors:
+ *                              <li> pointsizes:
+ *                              <li> pointshapes: Values: 'none', 'circle',
+ *                      'square', 'diamond', 'hollowcircle', 'hollowsquare',
+ *                      'hollowdiamond', 'SYMBOLCODE'.
+ *                              <li> shapelinewidths:
+ *                              <li> shapelinecolors:
+ *                              <li> shapefillcolors:
+ *                              <li> tracklinewidths:
+ *                              <li> tracklinecolors:
+ *                              <li> trackmarkersizes:
+ *                              <li> trackmarkercolors:
+ *                              <li> trackmarkershapes: Values: 'none',
+ *                      'circle', 'square', 'diamond', 'hollowcircle',
+ *                      'hollowsquare', 'hollowdiamond', 'SYMBOLCODE'.
+ *                              <li> trackheadcolors:
+ *                              <li> trackheadsizes:
+ *                              <li> trackheadshapes: Values: 'none', 'circle',
+ *                      'square', 'diamond', 'hollowcircle', 'hollowsquare',
+ *                      'hollowdiamond', 'SYMBOLCODE'.
+ *                      </ul>
  * @param options
  * @param[out] response_  Response object containing the results of the
  *                        operation.
@@ -9876,8 +10684,19 @@ VisualizeImageHeatmapResponse& visualizeImageHeatmap( const VisualizeImageHeatma
  * @param maxY
  * @param width
  * @param height
- * @param projection
+ * @param projection  Values: 'EPSG:4326', 'PLATE_CARREE', '900913',
+ *                    'EPSG:900913', '102100', 'EPSG:102100', '3857',
+ *                    'EPSG:3857', 'WEB_MERCATOR'.
  * @param styleOptions
+ *                      <ul>
+ *                              <li> colormap: Values: 'jet', 'hot', 'hsv',
+ *                      'gray', 'blues', 'greens', 'greys', 'oranges',
+ *                      'purples', 'reds', 'viridis'.
+ *                              <li> blur_radius:
+ *                              <li> bg_color:
+ *                              <li> gradient_start_color:
+ *                              <li> gradient_end_color:
+ *                      </ul>
  * @param options
  * 
  * @return Response object containing the result of the operation.
@@ -9911,8 +10730,19 @@ VisualizeImageHeatmapResponse visualizeImageHeatmap( const std::vector<std::stri
  * @param maxY
  * @param width
  * @param height
- * @param projection
+ * @param projection  Values: 'EPSG:4326', 'PLATE_CARREE', '900913',
+ *                    'EPSG:900913', '102100', 'EPSG:102100', '3857',
+ *                    'EPSG:3857', 'WEB_MERCATOR'.
  * @param styleOptions
+ *                      <ul>
+ *                              <li> colormap: Values: 'jet', 'hot', 'hsv',
+ *                      'gray', 'blues', 'greens', 'greys', 'oranges',
+ *                      'purples', 'reds', 'viridis'.
+ *                              <li> blur_radius:
+ *                              <li> bg_color:
+ *                              <li> gradient_start_color:
+ *                              <li> gradient_end_color:
+ *                      </ul>
  * @param options
  * @param[out] response_  Response object containing the results of the
  *                        operation.
@@ -9991,7 +10821,9 @@ VisualizeImageLabelsResponse& visualizeImageLabels( const VisualizeImageLabelsRe
  * @param maxY
  * @param width
  * @param height
- * @param projection
+ * @param projection  Values: 'EPSG:4326', 'PLATE_CARREE', '900913',
+ *                    'EPSG:900913', '102100', 'EPSG:102100', '3857',
+ *                    'EPSG:3857', 'WEB_MERCATOR'.
  * @param options
  * 
  * @return Response object containing the result of the operation.
@@ -10050,7 +10882,9 @@ VisualizeImageLabelsResponse visualizeImageLabels( const std::string& tableName,
  * @param maxY
  * @param width
  * @param height
- * @param projection
+ * @param projection  Values: 'EPSG:4326', 'PLATE_CARREE', '900913',
+ *                    'EPSG:900913', '102100', 'EPSG:102100', '3857',
+ *                    'EPSG:3857', 'WEB_MERCATOR'.
  * @param options
  * @param[out] response_  Response object containing the results of the
  *                        operation.
@@ -10108,13 +10942,11 @@ VisualizeImageLabelsResponse& visualizeImageLabels( const std::string& tableName
  * For instance, if a 20 frame video with the session key 'MY-SESSION-KEY' was
  * generated, the first frame could be retrieved with the URL::
  * <p>
- *      http://<gpudb-ip-address>:9191/wms?REQUEST=GetMap&STYLES=cached&LAYERS
- * =MY-SESSION-KEY&FRAME=0
+ * http://<gpudb-ip-address>:9191/wms?REQUEST=GetMap&STYLES=cached&LAYERS=MY-SESSION-KEY&FRAME=0
  * <p>
  * and the last frame could be retrieved with::
  * <p>
- *     http://gpudb-ip-address:9191/wms?REQUEST=GetMap&STYLES=cached&LAYERS=MY-
- * SESSION-KEY&FRAME=19
+ * http://gpudb-ip-address:9191/wms?REQUEST=GetMap&STYLES=cached&LAYERS=MY-SESSION-KEY&FRAME=19
  * The response payload provides, among other things, the number of frames
  * which were created by GPUdb.
  * 
@@ -10148,13 +10980,11 @@ VisualizeVideoResponse visualizeVideo( const VisualizeVideoRequest& request_ ) c
  * For instance, if a 20 frame video with the session key 'MY-SESSION-KEY' was
  * generated, the first frame could be retrieved with the URL::
  * <p>
- *      http://<gpudb-ip-address>:9191/wms?REQUEST=GetMap&STYLES=cached&LAYERS
- * =MY-SESSION-KEY&FRAME=0
+ * http://<gpudb-ip-address>:9191/wms?REQUEST=GetMap&STYLES=cached&LAYERS=MY-SESSION-KEY&FRAME=0
  * <p>
  * and the last frame could be retrieved with::
  * <p>
- *     http://gpudb-ip-address:9191/wms?REQUEST=GetMap&STYLES=cached&LAYERS=MY-
- * SESSION-KEY&FRAME=19
+ * http://gpudb-ip-address:9191/wms?REQUEST=GetMap&STYLES=cached&LAYERS=MY-SESSION-KEY&FRAME=19
  * The response payload provides, among other things, the number of frames
  * which were created by GPUdb.
  * 
@@ -10192,13 +11022,11 @@ VisualizeVideoResponse& visualizeVideo( const VisualizeVideoRequest& request_,
  * For instance, if a 20 frame video with the session key 'MY-SESSION-KEY' was
  * generated, the first frame could be retrieved with the URL::
  * <p>
- *      http://<gpudb-ip-address>:9191/wms?REQUEST=GetMap&STYLES=cached&LAYERS
- * =MY-SESSION-KEY&FRAME=0
+ * http://<gpudb-ip-address>:9191/wms?REQUEST=GetMap&STYLES=cached&LAYERS=MY-SESSION-KEY&FRAME=0
  * <p>
  * and the last frame could be retrieved with::
  * <p>
- *     http://gpudb-ip-address:9191/wms?REQUEST=GetMap&STYLES=cached&LAYERS=MY-
- * SESSION-KEY&FRAME=19
+ * http://gpudb-ip-address:9191/wms?REQUEST=GetMap&STYLES=cached&LAYERS=MY-SESSION-KEY&FRAME=19
  * The response payload provides, among other things, the number of frames
  * which were created by GPUdb.
  * 
@@ -10218,14 +11046,56 @@ VisualizeVideoResponse& visualizeVideo( const VisualizeVideoRequest& request_,
  * @param maxY  Upper bound for the y values.
  * @param width  Width of the generated image.
  * @param height  Height of the generated image.
- * @param projection  Spatial Reference System (i.e. EPSG Code).  Default value
- *                    is 'PLATE_CARREE'.
+ * @param projection  Spatial Reference System (i.e. EPSG Code). Values:
+ *                    'EPSG:4326', 'PLATE_CARREE', '900913', 'EPSG:900913',
+ *                    '102100', 'EPSG:102100', '3857', 'EPSG:3857',
+ *                    'WEB_MERCATOR'.
+ *                      Default value is 'PLATE_CARREE'.
  * @param bgColor  Background color of the generated image.
  * @param timeIntervals
  * @param videoStyle
  * @param sessionKey  User Provided session key that is later used to retrieve
  *                    the generated video from the WMS.
  * @param styleOptions  Styling options for the image.
+ *                      <ul>
+ *                              <li> do_points: Rasterize point data toggle.
+ *                      Values: 'true', 'false'.
+ *                              <li> do_shapes: Rasterize shapes toggle.
+ *                      Values: 'true', 'false'.
+ *                              <li> do_tracks: Rasterize tracks toggle.
+ *                      Values: 'true', 'false'.
+ *                              <li> pointcolors: RGB color value in hex for
+ *                      the points.
+ *                              <li> pointsizes: Size of points.
+ *                              <li> pointshapes: Shape of the point. Values:
+ *                      'none', 'circle', 'square', 'diamond', 'hollowcircle',
+ *                      'hollowsquare', 'hollowdiamond', 'SYMBOLCODE'.
+ *                              <li> shapelinewidths: Width of the lines.
+ *                              <li> shapelinecolors: RGB color values in hex
+ *                      for the line.
+ *                              <li> shapefillcolors: RGB color values in hex
+ *                      for the fill color of the shapes. Use '-1' for no fill.
+ *                              <li> tracklinewidths: Width of the track lines.
+ *                      '0' implies do not draw track lines.
+ *                              <li> tracklinecolors: RGB color values for the
+ *                      track lines.
+ *                              <li> trackmarkersizes: Size of the track point
+ *                      markers.
+ *                              <li> trackmarkercolors: Color of the track
+ *                      point markers.
+ *                              <li> trackmarkershapes: Shape of track point
+ *                      markers. Values: 'none', 'circle', 'square', 'diamond',
+ *                      'hollowcircle', 'hollowsquare', 'hollowdiamond',
+ *                      'SYMBOLCODE'.
+ *                              <li> trackheadcolors: Color of track head
+ *                      markers.
+ *                              <li> trackheadsizes: Size of track head
+ *                      markers.
+ *                              <li> trackheadshapes: Shape of track head
+ *                      markers. Values: 'none', 'circle', 'square', 'diamond',
+ *                      'hollowcircle', 'hollowsquare', 'hollowdiamond',
+ *                      'SYMBOLCODE'.
+ *                      </ul>
  * @param options  Optional parameters.  Default value is an empty std::map.
  * 
  * @return Response object containing the result of the operation.
@@ -10272,13 +11142,11 @@ VisualizeVideoResponse visualizeVideo( const std::vector<std::string>& tableName
  * For instance, if a 20 frame video with the session key 'MY-SESSION-KEY' was
  * generated, the first frame could be retrieved with the URL::
  * <p>
- *      http://<gpudb-ip-address>:9191/wms?REQUEST=GetMap&STYLES=cached&LAYERS
- * =MY-SESSION-KEY&FRAME=0
+ * http://<gpudb-ip-address>:9191/wms?REQUEST=GetMap&STYLES=cached&LAYERS=MY-SESSION-KEY&FRAME=0
  * <p>
  * and the last frame could be retrieved with::
  * <p>
- *     http://gpudb-ip-address:9191/wms?REQUEST=GetMap&STYLES=cached&LAYERS=MY-
- * SESSION-KEY&FRAME=19
+ * http://gpudb-ip-address:9191/wms?REQUEST=GetMap&STYLES=cached&LAYERS=MY-SESSION-KEY&FRAME=19
  * The response payload provides, among other things, the number of frames
  * which were created by GPUdb.
  * 
@@ -10298,14 +11166,56 @@ VisualizeVideoResponse visualizeVideo( const std::vector<std::string>& tableName
  * @param maxY  Upper bound for the y values.
  * @param width  Width of the generated image.
  * @param height  Height of the generated image.
- * @param projection  Spatial Reference System (i.e. EPSG Code).  Default value
- *                    is 'PLATE_CARREE'.
+ * @param projection  Spatial Reference System (i.e. EPSG Code). Values:
+ *                    'EPSG:4326', 'PLATE_CARREE', '900913', 'EPSG:900913',
+ *                    '102100', 'EPSG:102100', '3857', 'EPSG:3857',
+ *                    'WEB_MERCATOR'.
+ *                      Default value is 'PLATE_CARREE'.
  * @param bgColor  Background color of the generated image.
  * @param timeIntervals
  * @param videoStyle
  * @param sessionKey  User Provided session key that is later used to retrieve
  *                    the generated video from the WMS.
  * @param styleOptions  Styling options for the image.
+ *                      <ul>
+ *                              <li> do_points: Rasterize point data toggle.
+ *                      Values: 'true', 'false'.
+ *                              <li> do_shapes: Rasterize shapes toggle.
+ *                      Values: 'true', 'false'.
+ *                              <li> do_tracks: Rasterize tracks toggle.
+ *                      Values: 'true', 'false'.
+ *                              <li> pointcolors: RGB color value in hex for
+ *                      the points.
+ *                              <li> pointsizes: Size of points.
+ *                              <li> pointshapes: Shape of the point. Values:
+ *                      'none', 'circle', 'square', 'diamond', 'hollowcircle',
+ *                      'hollowsquare', 'hollowdiamond', 'SYMBOLCODE'.
+ *                              <li> shapelinewidths: Width of the lines.
+ *                              <li> shapelinecolors: RGB color values in hex
+ *                      for the line.
+ *                              <li> shapefillcolors: RGB color values in hex
+ *                      for the fill color of the shapes. Use '-1' for no fill.
+ *                              <li> tracklinewidths: Width of the track lines.
+ *                      '0' implies do not draw track lines.
+ *                              <li> tracklinecolors: RGB color values for the
+ *                      track lines.
+ *                              <li> trackmarkersizes: Size of the track point
+ *                      markers.
+ *                              <li> trackmarkercolors: Color of the track
+ *                      point markers.
+ *                              <li> trackmarkershapes: Shape of track point
+ *                      markers. Values: 'none', 'circle', 'square', 'diamond',
+ *                      'hollowcircle', 'hollowsquare', 'hollowdiamond',
+ *                      'SYMBOLCODE'.
+ *                              <li> trackheadcolors: Color of track head
+ *                      markers.
+ *                              <li> trackheadsizes: Size of track head
+ *                      markers.
+ *                              <li> trackheadshapes: Shape of track head
+ *                      markers. Values: 'none', 'circle', 'square', 'diamond',
+ *                      'hollowcircle', 'hollowsquare', 'hollowdiamond',
+ *                      'SYMBOLCODE'.
+ *                      </ul>
  * @param options  Optional parameters.  Default value is an empty std::map.
  * @param[out] response_  Response object containing the results of the
  *                        operation.
@@ -10376,10 +11286,21 @@ VisualizeVideoHeatmapResponse& visualizeVideoHeatmap( const VisualizeVideoHeatma
  * @param timeIntervals
  * @param width
  * @param height
- * @param projection
+ * @param projection  Values: 'EPSG:4326', 'PLATE_CARREE', '900913',
+ *                    'EPSG:900913', '102100', 'EPSG:102100', '3857',
+ *                    'EPSG:3857', 'WEB_MERCATOR'.
  * @param videoStyle
  * @param sessionKey
  * @param styleOptions
+ *                      <ul>
+ *                              <li> colormap: Values: 'jet', 'hot', 'hsv',
+ *                      'gray', 'blues', 'greens', 'greys', 'oranges',
+ *                      'purples', 'reds'.
+ *                              <li> blur_radius:
+ *                              <li> bg_color:
+ *                              <li> gradient_start_color:
+ *                              <li> gradient_end_color:
+ *                      </ul>
  * @param options
  * 
  * @return Response object containing the result of the operation.
@@ -10415,10 +11336,21 @@ VisualizeVideoHeatmapResponse visualizeVideoHeatmap( const std::vector<std::stri
  * @param timeIntervals
  * @param width
  * @param height
- * @param projection
+ * @param projection  Values: 'EPSG:4326', 'PLATE_CARREE', '900913',
+ *                    'EPSG:900913', '102100', 'EPSG:102100', '3857',
+ *                    'EPSG:3857', 'WEB_MERCATOR'.
  * @param videoStyle
  * @param sessionKey
  * @param styleOptions
+ *                      <ul>
+ *                              <li> colormap: Values: 'jet', 'hot', 'hsv',
+ *                      'gray', 'blues', 'greens', 'greys', 'oranges',
+ *                      'purples', 'reds'.
+ *                              <li> blur_radius:
+ *                              <li> bg_color:
+ *                              <li> gradient_start_color:
+ *                              <li> gradient_end_color:
+ *                      </ul>
  * @param options
  * @param[out] response_  Response object containing the results of the
  *                        operation.

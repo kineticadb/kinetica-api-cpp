@@ -1,6 +1,7 @@
 #include "gpudb/GPUdb.hpp"
 
 #include <boost/lexical_cast.hpp>
+#include <boost/optional/optional_io.hpp>
 
 int main(int argc, char* argv[])
 {
@@ -103,19 +104,13 @@ int main(int argc, char* argv[])
             switch(type.getColumn(j).getType())
             {
             case gpudb::Type::Column::DOUBLE:
-                std::cout << record.value<double>(j) << "\t";
-                break;
-            case gpudb::Type::Column::FLOAT:
-                std::cout << record.value<float>(j) << "\t";
-                break;
-            case gpudb::Type::Column::INT:
-                std::cout << record.value<int32_t>(j) << "\t";
+                if (type.getColumn(j).isNullable())
+                    std::cout << record.value<boost::optional<double> >(j) << "\t";
+                else
+                    std::cout << record.value<double>(j) << "\t";
                 break;
             case gpudb::Type::Column::LONG:
                 std::cout << record.value<int64_t>(j) << "\t";
-                break;
-            case gpudb::Type::Column::STRING:
-                std::cout << record.value<std::string>(j) << "\t";
                 break;
             default:
                 std::cout << "<unable to print result>" << "\t";

@@ -45,11 +45,14 @@ namespace gpudb
          *                              corresponding input tables.
          * @param[in] outputColumnNames  The list of names of the columns to be
          *                               stored in the union.
-         * @param[in] options  Optional parameters.  Default value is an empty
-         *                     std::map.
-         * <ul>
-         *     <li>collection_name: Name of a collection in GPUdb to which the union is to be assigned as a child table. If empty, then the union will be a top level table.  Default value is an empty string. 
-         * </ul>
+         * @param[in] options  Optional parameters.
+         *                     <ul>
+         *                             <li> collection_name: Name of a
+         *                     collection in GPUdb to which the union is to be
+         *                     assigned as a child table. If empty, then the
+         *                     union will be a top level table.
+         *                     </ul>
+         *                       Default value is an empty std::map.
          * 
          */
         CreateUnionRequest(const std::string& tableName, const std::vector<std::string>& tableNames, const std::vector<std::vector<std::string> >& inputColumnNames, const std::vector<std::string>& outputColumnNames, const std::map<std::string, std::string>& options):

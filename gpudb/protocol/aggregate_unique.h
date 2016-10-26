@@ -66,13 +66,18 @@ namespace gpudb
          *                   of results to be returned. Or END_OF_SET (-9999)
          *                   to indicate that the max number of results should
          *                   be returned.  Default value is 10000.
-         * @param[in] options  Optional parameters.  Default value is an empty
-         *                     std::map.
-         * <ul>
-         *     <li>expression: Optional filter expression to apply to the table.  
-         *     <li>sort_order: String indicating how the returned values should be sorted.  Default value is 'ascending'. 
-         *     <li>result_table: The name of the table used to store the results. If present no results are returned in the response.  
-         * </ul>
+         * @param[in] options  Optional parameters.
+         *                     <ul>
+         *                             <li> expression: Optional filter
+         *                     expression to apply to the table.
+         *                             <li> sort_order: String indicating how
+         *                     the returned values should be sorted. Values:
+         *                     'ascending', 'descending'.
+         *                             <li> result_table: The name of the table
+         *                     used to store the results. If present no results
+         *                     are returned in the response.
+         *                     </ul>
+         *                       Default value is an empty std::map.
          * 
          */
         AggregateUniqueRequest(const std::string& tableName, const std::string& columnName, const int64_t offset, const int64_t limit, const std::map<std::string, std::string>& options):
@@ -103,14 +108,20 @@ namespace gpudb
          *                   to indicate that the max number of results should
          *                   be returned.  Default value is 10000.
          * @param[in] encoding  Specifies the encoding for returned records.
-         *                      Default value is 'binary'.
-         * @param[in] options  Optional parameters.  Default value is an empty
-         *                     std::map.
-         * <ul>
-         *     <li>expression: Optional filter expression to apply to the table.  
-         *     <li>sort_order: String indicating how the returned values should be sorted.  Default value is 'ascending'. 
-         *     <li>result_table: The name of the table used to store the results. If present no results are returned in the response.  
-         * </ul>
+         *                      Values: 'binary', 'json'.
+         *                        Default value is 'binary'.
+         * @param[in] options  Optional parameters.
+         *                     <ul>
+         *                             <li> expression: Optional filter
+         *                     expression to apply to the table.
+         *                             <li> sort_order: String indicating how
+         *                     the returned values should be sorted. Values:
+         *                     'ascending', 'descending'.
+         *                             <li> result_table: The name of the table
+         *                     used to store the results. If present no results
+         *                     are returned in the response.
+         *                     </ul>
+         *                       Default value is an empty std::map.
          * 
          */
         AggregateUniqueRequest(const std::string& tableName, const std::string& columnName, const int64_t offset, const int64_t limit, const std::string& encoding, const std::map<std::string, std::string>& options):

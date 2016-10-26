@@ -36,6 +36,8 @@ namespace gpudb
          * @param[in] name  Name of the user or role to which the permission
          *                  will be granted. Must be an existing user or role.
          * @param[in] permission  Permission to grant to the user or role.
+         *                        Values: 'system_admin', 'system_write',
+         *                        'system_read'.
          * @param[in] options  Optional parameters.
          * 
          */

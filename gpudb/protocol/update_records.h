@@ -76,14 +76,31 @@ namespace gpudb
          *                             from this list will be added to the
          *                             table.  Default value is an empty
          *                             std::vector.
-         * @param[in] options  Optional parameters.  Default value is an empty
-         *                     std::map.
-         * <ul>
-         *     <li>global_expression: An optional global expression to reduce the search space of the predicates listed in @a expressions.  Default value is an empty string. 
-         *     <li>bypass_safety_checks: When set to 'true', all predicates are available for primary key updates.  Keep in mind that it is possible to destroy data in this case, since a single predicate may match multiple objects (potentially all of records of a table), and then updating all of those records to have the same primary key will, due to the primary key uniqueness constraints, effectively delete all but one of those updated records.  Default value is 'false'. values:TRUE, FALSE
-         *     <li>update_on_existing_pk: Can be used to customize behavior when the updated primary key value already exists, as described in /insert/records.  Default value is 'false'. values:TRUE, FALSE
-         *     <li>record_id: ID of a single record to be updated (returned in the call to /insert/records or /get/records/fromcollection).  
-         * </ul>
+         * @param[in] options  Optional parameters.
+         *                     <ul>
+         *                             <li> global_expression: An optional
+         *                     global expression to reduce the search space of
+         *                     the predicates listed in @a expressions.
+         *                             <li> bypass_safety_checks: When set to
+         *                     'true', all predicates are available for primary
+         *                     key updates.  Keep in mind that it is possible
+         *                     to destroy data in this case, since a single
+         *                     predicate may match multiple objects
+         *                     (potentially all of records of a table), and
+         *                     then updating all of those records to have the
+         *                     same primary key will, due to the primary key
+         *                     uniqueness constraints, effectively delete all
+         *                     but one of those updated records. Values:
+         *                     'true', 'false'.
+         *                             <li> update_on_existing_pk: Can be used
+         *                     to customize behavior when the updated primary
+         *                     key value already exists, as described in
+         *                     /insert/records. Values: 'true', 'false'.
+         *                             <li> record_id: ID of a single record to
+         *                     be updated (returned in the call to
+         *                     /insert/records or /get/records/fromcollection).
+         *                     </ul>
+         *                       Default value is an empty std::map.
          * 
          */
         RawUpdateRecordsRequest(const std::string& tableName, const std::vector<std::string>& expressions, const std::vector<std::map<std::string, std::string> >& newValuesMaps, const std::vector<std::vector<uint8_t> >& recordsToInsert, const std::map<std::string, std::string>& options):
@@ -129,15 +146,33 @@ namespace gpudb
          *                                an empty std::vector.
          * @param[in] recordEncoding  Identifies which of @a recordsToInsert
          *                            and @a recordsToInsertStr should be used.
-         *                            Default value is 'binary'.
-         * @param[in] options  Optional parameters.  Default value is an empty
-         *                     std::map.
-         * <ul>
-         *     <li>global_expression: An optional global expression to reduce the search space of the predicates listed in @a expressions.  Default value is an empty string. 
-         *     <li>bypass_safety_checks: When set to 'true', all predicates are available for primary key updates.  Keep in mind that it is possible to destroy data in this case, since a single predicate may match multiple objects (potentially all of records of a table), and then updating all of those records to have the same primary key will, due to the primary key uniqueness constraints, effectively delete all but one of those updated records.  Default value is 'false'. values:TRUE, FALSE
-         *     <li>update_on_existing_pk: Can be used to customize behavior when the updated primary key value already exists, as described in /insert/records.  Default value is 'false'. values:TRUE, FALSE
-         *     <li>record_id: ID of a single record to be updated (returned in the call to /insert/records or /get/records/fromcollection).  
-         * </ul>
+         *                            Values: 'binary', 'json'.
+         *                              Default value is 'binary'.
+         * @param[in] options  Optional parameters.
+         *                     <ul>
+         *                             <li> global_expression: An optional
+         *                     global expression to reduce the search space of
+         *                     the predicates listed in @a expressions.
+         *                             <li> bypass_safety_checks: When set to
+         *                     'true', all predicates are available for primary
+         *                     key updates.  Keep in mind that it is possible
+         *                     to destroy data in this case, since a single
+         *                     predicate may match multiple objects
+         *                     (potentially all of records of a table), and
+         *                     then updating all of those records to have the
+         *                     same primary key will, due to the primary key
+         *                     uniqueness constraints, effectively delete all
+         *                     but one of those updated records. Values:
+         *                     'true', 'false'.
+         *                             <li> update_on_existing_pk: Can be used
+         *                     to customize behavior when the updated primary
+         *                     key value already exists, as described in
+         *                     /insert/records. Values: 'true', 'false'.
+         *                             <li> record_id: ID of a single record to
+         *                     be updated (returned in the call to
+         *                     /insert/records or /get/records/fromcollection).
+         *                     </ul>
+         *                       Default value is an empty std::map.
          * 
          */
         RawUpdateRecordsRequest(const std::string& tableName, const std::vector<std::string>& expressions, const std::vector<std::map<std::string, std::string> >& newValuesMaps, const std::vector<std::vector<uint8_t> >& recordsToInsert, const std::vector<std::string>& recordsToInsertStr, const std::string& recordEncoding, const std::map<std::string, std::string>& options):
@@ -302,14 +337,31 @@ namespace gpudb
          *                  be updated, then the corresponding element from
          *                  this list will be added to the table.  Default
          *                  value is an empty std::vector.
-         * @param[in] options  Optional parameters.  Default value is an empty
-         *                     std::map.
-         * <ul>
-         *     <li>global_expression: An optional global expression to reduce the search space of the predicates listed in @a expressions.  Default value is an empty string. 
-         *     <li>bypass_safety_checks: When set to 'true', all predicates are available for primary key updates.  Keep in mind that it is possible to destroy data in this case, since a single predicate may match multiple objects (potentially all of records of a table), and then updating all of those records to have the same primary key will, due to the primary key uniqueness constraints, effectively delete all but one of those updated records.  Default value is 'false'. values:TRUE, FALSE
-         *     <li>update_on_existing_pk: Can be used to customize behavior when the updated primary key value already exists, as described in /insert/records.  Default value is 'false'. values:TRUE, FALSE
-         *     <li>record_id: ID of a single record to be updated (returned in the call to /insert/records or /get/records/fromcollection).  
-         * </ul>
+         * @param[in] options  Optional parameters.
+         *                     <ul>
+         *                             <li> global_expression: An optional
+         *                     global expression to reduce the search space of
+         *                     the predicates listed in @a expressions.
+         *                             <li> bypass_safety_checks: When set to
+         *                     'true', all predicates are available for primary
+         *                     key updates.  Keep in mind that it is possible
+         *                     to destroy data in this case, since a single
+         *                     predicate may match multiple objects
+         *                     (potentially all of records of a table), and
+         *                     then updating all of those records to have the
+         *                     same primary key will, due to the primary key
+         *                     uniqueness constraints, effectively delete all
+         *                     but one of those updated records. Values:
+         *                     'true', 'false'.
+         *                             <li> update_on_existing_pk: Can be used
+         *                     to customize behavior when the updated primary
+         *                     key value already exists, as described in
+         *                     /insert/records. Values: 'true', 'false'.
+         *                             <li> record_id: ID of a single record to
+         *                     be updated (returned in the call to
+         *                     /insert/records or /get/records/fromcollection).
+         *                     </ul>
+         *                       Default value is an empty std::map.
          * 
          */
         UpdateRecordsRequest(const std::string& tableName, const std::vector<std::string>& expressions, const std::vector<std::map<std::string, std::string> >& newValuesMaps, const std::vector<T>& data, const std::map<std::string, std::string>& options):

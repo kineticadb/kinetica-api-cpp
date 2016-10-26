@@ -62,8 +62,8 @@ namespace gpudb
          * @param[in] xCenter  Value of the longitude of the center. Must be
          *                     within [-180.0, 180.0].  The minimum allowed
          *                     value is -180. The maximum allowed value is 180.
-         * @param[in] yColumnName  Name of the column to be used for the y
-         *                         -coordinate-the latitude-of the center.
+         * @param[in] yColumnName  Name of the column to be used for the
+         *                         y-coordinate-the latitude-of the center.
          * @param[in] yCenter  Value of the latitude of the center. Must be
          *                     within [-90.0, 90.0].  The minimum allowed value
          *                     is -90. The maximum allowed value is 90.
