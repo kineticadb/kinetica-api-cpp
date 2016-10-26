@@ -104,8 +104,9 @@ namespace gpudb
          *                   (-9999) to indicate that the max number of results
          *                   should be returned.  Default value is 10000.
          * @param[in] encoding  Specifies the encoding for returned records;
-         *                      either 'binary' or 'json'.  Default value is
-         *                      'binary'.
+         *                      either 'binary' or 'json'. Values: 'binary',
+         *                      'json'.
+         *                        Default value is 'binary'.
          * @param[in] options  Optional parameters.  Default value is an empty
          *                     std::map.
          * 

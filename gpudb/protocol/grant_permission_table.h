@@ -38,6 +38,8 @@ namespace gpudb
          * @param[in] name  Name of the user or role to which the permission
          *                  will be granted. Must be an existing user or role.
          * @param[in] permission  Permission to grant to the user or role.
+         *                        Values: 'table_admin', 'table_insert',
+         *                        'table_update', 'table_delete', 'table_read'.
          * @param[in] tableName  Name of the table to which the permission
          *                       grants access. Must be an existing table,
          *                       collection, or view. If a collection, the

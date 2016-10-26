@@ -34,14 +34,11 @@ namespace gpudb
      * For instance, if a 20 frame video with the session key 'MY-SESSION-KEY'
      * was generated, the first frame could be retrieved with the URL::
      * <p>
-     *      http://<gpudb-ip-
-     * address>:9191/wms?REQUEST=GetMap&STYLES=cached&LAYERS=MY-SESSION-
-     * KEY&FRAME=0
+     * http://<gpudb-ip-address>:9191/wms?REQUEST=GetMap&STYLES=cached&LAYERS=MY-SESSION-KEY&FRAME=0
      * <p>
      * and the last frame could be retrieved with::
      * <p>
-     *     http://gpudb-ip-address:9191/wms?REQUEST=GetMap&STYLES=cached&LAYERS
-     * =MY-SESSION-KEY&FRAME=19
+     * http://gpudb-ip-address:9191/wms?REQUEST=GetMap&STYLES=cached&LAYERS=MY-SESSION-KEY&FRAME=19
      * The response payload provides, among other things, the number of frames
      * which were created by GPUdb.
      */
@@ -99,13 +96,62 @@ namespace gpudb
          * @param[in] width  Width of the generated image.
          * @param[in] height  Height of the generated image.
          * @param[in] projection  Spatial Reference System (i.e. EPSG Code).
-         *                        Default value is 'PLATE_CARREE'.
+         *                        Values: 'EPSG:4326', 'PLATE_CARREE',
+         *                        '900913', 'EPSG:900913', '102100',
+         *                        'EPSG:102100', '3857', 'EPSG:3857',
+         *                        'WEB_MERCATOR'.
+         *                          Default value is 'PLATE_CARREE'.
          * @param[in] bgColor  Background color of the generated image.
          * @param[in] timeIntervals
          * @param[in] videoStyle
          * @param[in] sessionKey  User Provided session key that is later used
          *                        to retrieve the generated video from the WMS.
          * @param[in] styleOptions  Styling options for the image.
+         *                          <ul>
+         *                                  <li> do_points: Rasterize point
+         *                          data toggle. Values: 'true', 'false'.
+         *                                  <li> do_shapes: Rasterize shapes
+         *                          toggle. Values: 'true', 'false'.
+         *                                  <li> do_tracks: Rasterize tracks
+         *                          toggle. Values: 'true', 'false'.
+         *                                  <li> pointcolors: RGB color value
+         *                          in hex for the points.
+         *                                  <li> pointsizes: Size of points.
+         *                                  <li> pointshapes: Shape of the
+         *                          point. Values: 'none', 'circle', 'square',
+         *                          'diamond', 'hollowcircle', 'hollowsquare',
+         *                          'hollowdiamond', 'SYMBOLCODE'.
+         *                                  <li> shapelinewidths: Width of the
+         *                          lines.
+         *                                  <li> shapelinecolors: RGB color
+         *                          values in hex for the line.
+         *                                  <li> shapefillcolors: RGB color
+         *                          values in hex for the fill color of the
+         *                          shapes. Use '-1' for no fill.
+         *                                  <li> tracklinewidths: Width of the
+         *                          track lines. '0' implies do not draw track
+         *                          lines.
+         *                                  <li> tracklinecolors: RGB color
+         *                          values for the track lines.
+         *                                  <li> trackmarkersizes: Size of the
+         *                          track point markers.
+         *                                  <li> trackmarkercolors: Color of
+         *                          the track point markers.
+         *                                  <li> trackmarkershapes: Shape of
+         *                          track point markers. Values: 'none',
+         *                          'circle', 'square', 'diamond',
+         *                          'hollowcircle', 'hollowsquare',
+         *                          'hollowdiamond', 'SYMBOLCODE'.
+         *                                  <li> trackheadcolors: Color of
+         *                          track head markers.
+         *                                  <li> trackheadsizes: Size of track
+         *                          head markers.
+         *                                  <li> trackheadshapes: Shape of
+         *                          track head markers. Values: 'none',
+         *                          'circle', 'square', 'diamond',
+         *                          'hollowcircle', 'hollowsquare',
+         *                          'hollowdiamond', 'SYMBOLCODE'.
+         *                          </ul>
          * @param[in] options  Optional parameters.  Default value is an empty
          *                     std::map.
          * 
@@ -319,14 +365,11 @@ namespace gpudb
      * For instance, if a 20 frame video with the session key 'MY-SESSION-KEY'
      * was generated, the first frame could be retrieved with the URL::
      * <p>
-     *      http://<gpudb-ip-
-     * address>:9191/wms?REQUEST=GetMap&STYLES=cached&LAYERS=MY-SESSION-
-     * KEY&FRAME=0
+     * http://<gpudb-ip-address>:9191/wms?REQUEST=GetMap&STYLES=cached&LAYERS=MY-SESSION-KEY&FRAME=0
      * <p>
      * and the last frame could be retrieved with::
      * <p>
-     *     http://gpudb-ip-address:9191/wms?REQUEST=GetMap&STYLES=cached&LAYERS
-     * =MY-SESSION-KEY&FRAME=19
+     * http://gpudb-ip-address:9191/wms?REQUEST=GetMap&STYLES=cached&LAYERS=MY-SESSION-KEY&FRAME=19
      * The response payload provides, among other things, the number of frames
      * which were created by GPUdb.
      */

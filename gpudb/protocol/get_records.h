@@ -58,12 +58,20 @@ namespace gpudb
          *                   of results to be returned. Or END_OF_SET (-9999)
          *                   to indicate that the max number of results should
          *                   be returned.  Default value is 10000.
-         * @param[in] options  Default value is an empty std::map.
-         * <ul>
-         *     <li>expression: Optional filter expression to apply to the table.  
-         *     <li>sort_by: Optional column that the data should be sorted by. Empty by default (i.e. no sorting is applied).  
-         *     <li>sort_order: String indicating how the returned values should be sorted - ascending or descending. Ignored if 'sort_by' option is not specified.  Default value is 'ascending'. values:ASCENDING, DESCENDING
-         * </ul>
+         * @param[in] options
+         *                     <ul>
+         *                             <li> expression: Optional filter
+         *                     expression to apply to the table.
+         *                             <li> sort_by: Optional column that the
+         *                     data should be sorted by. Empty by default (i.e.
+         *                     no sorting is applied).
+         *                             <li> sort_order: String indicating how
+         *                     the returned values should be sorted - ascending
+         *                     or descending. Ignored if 'sort_by' option is
+         *                     not specified. Values: 'ascending',
+         *                     'descending'.
+         *                     </ul>
+         *                       Default value is an empty std::map.
          * 
          */
         GetRecordsRequest(const std::string& tableName, const int64_t offset, const int64_t limit, const std::map<std::string, std::string>& options):
@@ -91,13 +99,22 @@ namespace gpudb
          *                   to indicate that the max number of results should
          *                   be returned.  Default value is 10000.
          * @param[in] encoding  Specifies the encoding for returned records.
-         *                      Default value is 'binary'.
-         * @param[in] options  Default value is an empty std::map.
-         * <ul>
-         *     <li>expression: Optional filter expression to apply to the table.  
-         *     <li>sort_by: Optional column that the data should be sorted by. Empty by default (i.e. no sorting is applied).  
-         *     <li>sort_order: String indicating how the returned values should be sorted - ascending or descending. Ignored if 'sort_by' option is not specified.  Default value is 'ascending'. values:ASCENDING, DESCENDING
-         * </ul>
+         *                      Values: 'binary', 'json'.
+         *                        Default value is 'binary'.
+         * @param[in] options
+         *                     <ul>
+         *                             <li> expression: Optional filter
+         *                     expression to apply to the table.
+         *                             <li> sort_by: Optional column that the
+         *                     data should be sorted by. Empty by default (i.e.
+         *                     no sorting is applied).
+         *                             <li> sort_order: String indicating how
+         *                     the returned values should be sorted - ascending
+         *                     or descending. Ignored if 'sort_by' option is
+         *                     not specified. Values: 'ascending',
+         *                     'descending'.
+         *                     </ul>
+         *                       Default value is an empty std::map.
          * 
          */
         GetRecordsRequest(const std::string& tableName, const int64_t offset, const int64_t limit, const std::string& encoding, const std::map<std::string, std::string>& options):

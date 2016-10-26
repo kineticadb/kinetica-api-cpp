@@ -61,10 +61,22 @@ namespace gpudb
          * @param[in] timeIntervals
          * @param[in] width
          * @param[in] height
-         * @param[in] projection
+         * @param[in] projection  Values: 'EPSG:4326', 'PLATE_CARREE',
+         *                        '900913', 'EPSG:900913', '102100',
+         *                        'EPSG:102100', '3857', 'EPSG:3857',
+         *                        'WEB_MERCATOR'.
          * @param[in] videoStyle
          * @param[in] sessionKey
          * @param[in] styleOptions
+         *                          <ul>
+         *                                  <li> colormap: Values: 'jet',
+         *                          'hot', 'hsv', 'gray', 'blues', 'greens',
+         *                          'greys', 'oranges', 'purples', 'reds'.
+         *                                  <li> blur_radius:
+         *                                  <li> bg_color:
+         *                                  <li> gradient_start_color:
+         *                                  <li> gradient_end_color:
+         *                          </ul>
          * @param[in] options
          * 
          */

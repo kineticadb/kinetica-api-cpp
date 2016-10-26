@@ -59,12 +59,21 @@ namespace gpudb
          *                       information. If blank then information about
          *                       all collections and top-level tables is
          *                       returned.
-         * @param[in] options  Optional parameters.  Default value is an empty
-         *                     std::map.
-         * <ul>
-         *     <li>get_sizes: If 'true' then the table sizes will be returned; otherwise they will be returned blank.  Default value is 'false'. values:TRUE, FALSE
-         *     <li>show_children: If @a tableName is a collection, then 'true' will return information about the children of the collection, and 'false' will return information about the collection itself. If @a tableName is a child table, 'show_children' must be 'false'. If @a tableName is empty then 'show_children' must be 'true'.  Default value is 'true'. values:TRUE, FALSE
-         * </ul>
+         * @param[in] options  Optional parameters.
+         *                     <ul>
+         *                             <li> get_sizes: If 'true' then the table
+         *                     sizes will be returned; otherwise they will be
+         *                     returned blank. Values: 'true', 'false'.
+         *                             <li> show_children: If @a tableName is a
+         *                     collection, then 'true' will return information
+         *                     about the children of the collection, and
+         *                     'false' will return information about the
+         *                     collection itself. If @a tableName is a child
+         *                     table, 'show_children' must be 'false'. If @a
+         *                     tableName is empty then 'show_children' must be
+         *                     'true'. Values: 'true', 'false'.
+         *                     </ul>
+         *                       Default value is an empty std::map.
          * 
          */
         ShowTableRequest(const std::string& tableName, const std::map<std::string, std::string>& options):

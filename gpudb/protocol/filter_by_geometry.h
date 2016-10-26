@@ -13,8 +13,9 @@ namespace gpudb
      * A set of input parameters for {@link
      * #filterByGeometry(const FilterByGeometryRequest&) const}.
      * <p>
-     * Applies a geometry filter against a spatial column in a given table,
-     * collection or view. The filtering geometry is provided by @a inputWkt.
+     * Applies a geometry filter against a spatial column named WKT in a given
+     * table, collection or view. The filtering geometry is provided by @a
+     * inputWkt.
      */
     struct FilterByGeometryRequest
     {
@@ -38,20 +39,22 @@ namespace gpudb
          * parameters.
          * 
          * @param[in] tableName  Name of the table on which the filter by
-         *                       spatial operation will be performed.  Must be
-         *                       an existing table, collection or view in
-         *                       GPUdb.
+         *                       geometry will be performed.  Must be an
+         *                       existing table, collection or view containing
+         *                       a column named WKT.
          * @param[in] viewName  If provided, then this will be the name of the
          *                      view containing the results. Must not be an
          *                      already existing collection, table or view.
          *                      Default value is an empty string.
          * @param[in] columnName  Name of the column to be used in the filter.
-         *                        Must be a spatial column. Typically this will
-         *                        be 'WKT'
+         *                        Must be 'WKT'
          * @param[in] inputWkt  A geometry in WKT format that will be used to
-         *                      filter the objects in @a tableName  Default
+         *                      filter the objects in @a tableName.  Default
          *                      value is an empty string.
          * @param[in] operation  The geometric filtering operation to perform
+         *                       Values: 'contains', 'crosses', 'disjoint',
+         *                       'equals', 'intersects', 'overlaps', 'touches',
+         *                       'within'.
          * @param[in] options  Optional parameters.  Default value is an empty
          *                     std::map.
          * 
@@ -148,8 +151,9 @@ namespace gpudb
      * A set of output parameters for {@link
      * #filterByGeometry(const FilterByGeometryRequest&) const}.
      * <p>
-     * Applies a geometry filter against a spatial column in a given table,
-     * collection or view. The filtering geometry is provided by @a inputWkt.
+     * Applies a geometry filter against a spatial column named WKT in a given
+     * table, collection or view. The filtering geometry is provided by @a
+     * inputWkt.
      */
     struct FilterByGeometryResponse
     {

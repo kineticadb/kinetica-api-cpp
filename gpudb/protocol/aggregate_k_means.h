@@ -56,13 +56,20 @@ namespace gpudb
          * @param[in] tolerance  Stop iterating when the distances between
          *                       successive points is less than the given
          *                       tolerance.
-         * @param[in] options  Optional parameters.  Default value is an empty
-         *                     std::map.
-         * <ul>
-         *     <li>whiten: When set to 1 each of the columns is first normalized by its stdv - default is not to whiten.  
-         *     <li>max_iters: Number of times to try to hit the tolerance limit before giving up - default is 10.  
-         *     <li>num_tries: Number of times to run the k-means algorithm with a different randomly selected starting points - helps avoid local minimum. Default is 1.  
-         * </ul>
+         * @param[in] options  Optional parameters.
+         *                     <ul>
+         *                             <li> whiten: When set to 1 each of the
+         *                     columns is first normalized by its stdv -
+         *                     default is not to whiten.
+         *                             <li> max_iters: Number of times to try
+         *                     to hit the tolerance limit before giving up -
+         *                     default is 10.
+         *                             <li> num_tries: Number of times to run
+         *                     the k-means algorithm with a different randomly
+         *                     selected starting points - helps avoid local
+         *                     minimum. Default is 1.
+         *                     </ul>
+         *                       Default value is an empty std::map.
          * 
          */
         AggregateKMeansRequest(const std::string& tableName, const std::vector<std::string>& columnNames, const int32_t k, const double tolerance, const std::map<std::string, std::string>& options):

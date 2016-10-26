@@ -84,7 +84,10 @@ namespace gpudb
          * @param[in] maxY
          * @param[in] width
          * @param[in] height
-         * @param[in] projection
+         * @param[in] projection  Values: 'EPSG:4326', 'PLATE_CARREE',
+         *                        '900913', 'EPSG:900913', '102100',
+         *                        'EPSG:102100', '3857', 'EPSG:3857',
+         *                        'WEB_MERCATOR'.
          * @param[in] options
          * 
          */

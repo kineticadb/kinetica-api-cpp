@@ -62,9 +62,45 @@ namespace gpudb
          * @param[in] maxY
          * @param[in] width
          * @param[in] height
-         * @param[in] projection
+         * @param[in] projection  Values: 'EPSG:4326', 'PLATE_CARREE',
+         *                        '900913', 'EPSG:900913', '102100',
+         *                        'EPSG:102100', '3857', 'EPSG:3857',
+         *                        'WEB_MERCATOR'.
          * @param[in] bgColor
          * @param[in] styleOptions
+         *                          <ul>
+         *                                  <li> do_points: Values: 'true',
+         *                          'false'.
+         *                                  <li> do_shapes: Values: 'true',
+         *                          'false'.
+         *                                  <li> do_tracks: Values: 'true',
+         *                          'false'.
+         *                                  <li> do_symbology: Values: 'true',
+         *                          'false'.
+         *                                  <li> pointcolors:
+         *                                  <li> pointsizes:
+         *                                  <li> pointshapes: Values: 'none',
+         *                          'circle', 'square', 'diamond',
+         *                          'hollowcircle', 'hollowsquare',
+         *                          'hollowdiamond', 'SYMBOLCODE'.
+         *                                  <li> shapelinewidths:
+         *                                  <li> shapelinecolors:
+         *                                  <li> shapefillcolors:
+         *                                  <li> tracklinewidths:
+         *                                  <li> tracklinecolors:
+         *                                  <li> trackmarkersizes:
+         *                                  <li> trackmarkercolors:
+         *                                  <li> trackmarkershapes: Values:
+         *                          'none', 'circle', 'square', 'diamond',
+         *                          'hollowcircle', 'hollowsquare',
+         *                          'hollowdiamond', 'SYMBOLCODE'.
+         *                                  <li> trackheadcolors:
+         *                                  <li> trackheadsizes:
+         *                                  <li> trackheadshapes: Values:
+         *                          'none', 'circle', 'square', 'diamond',
+         *                          'hollowcircle', 'hollowsquare',
+         *                          'hollowdiamond', 'SYMBOLCODE'.
+         *                          </ul>
          * @param[in] options
          * 
          */

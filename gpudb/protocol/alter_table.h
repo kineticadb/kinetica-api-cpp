@@ -58,7 +58,9 @@ namespace gpudb
          *                       performed. Must be a valid table or collection
          *                       in GPUdb.
          * @param[in] action  Modification operation to be applied to the table
-         *                    or collection
+         *                    or collection Values: 'create_index',
+         *                    'delete_index', 'allow_homogeneous_tables',
+         *                    'protected', 'ttl'.
          * @param[in] value  The value of the modification. May be a column
          *                   name, 'true' or 'false', or a time-to-live
          *                   depending on @a action.
