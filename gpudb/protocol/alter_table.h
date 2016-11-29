@@ -22,18 +22,17 @@ namespace gpudb
      * #deleteRecords(const DeleteRecordsRequest&) const}, {@link
      * #updateRecordsRaw(const RawUpdateRecordsRequest&) const}) when using
      * expressions containing equality or relational operators on indexed
-     * columns. This only applies to child tables.
+     * columns. This only applies to tables.
      * <p>
-     *      Making a table protected or not. Protected tables need the admin
-     * password to be sent in a {@link
-     * #clearTable(const ClearTableRequest&) const} to delete the table.
-     * This can be applied to child tables or collections or views.
+     *      Setting the time-to-live (TTL). This can be applied to tables,
+     * views, or collections.  When applied to collections, every table & view
+     * within the collection will have its TTL set to the given value.
      * <p>
-     *      Setting the ttl (time-to-live). This can be applied to child tables
-     * or collections or views.
+     *      Making a table protected or not. Protected tables have their TTLs
+     * set to not automatically expire. This can be applied to tables, views,
+     * and collections.
      * <p>
-     *      Allowing homogeneous child tables. This only applies to
-     * collections.
+     *      Allowing homogeneous tables within a collection.
      */
     struct AlterTableRequest
     {
@@ -55,15 +54,14 @@ namespace gpudb
          * parameters.
          * 
          * @param[in] tableName  Table on which the operation will be
-         *                       performed. Must be a valid table or collection
-         *                       in GPUdb.
-         * @param[in] action  Modification operation to be applied to the table
-         *                    or collection Values: 'create_index',
-         *                    'delete_index', 'allow_homogeneous_tables',
-         *                    'protected', 'ttl'.
+         *                       performed. Must be a valid table, view, or
+         *                       collection in GPUdb.
+         * @param[in] action  Modification operation to be applied Values:
+         *                    'create_index', 'delete_index',
+         *                    'allow_homogeneous_tables', 'protected', 'ttl'.
          * @param[in] value  The value of the modification. May be a column
-         *                   name, 'true' or 'false', or a time-to-live
-         *                   depending on @a action.
+         *                   name, 'true' or 'false', or a TTL depending on @a
+         *                   action.
          * @param[in] options  Optional parameters.  Default value is an empty
          *                     std::map.
          * 
@@ -153,18 +151,17 @@ namespace gpudb
      * #deleteRecords(const DeleteRecordsRequest&) const}, {@link
      * #updateRecordsRaw(const RawUpdateRecordsRequest&) const}) when using
      * expressions containing equality or relational operators on indexed
-     * columns. This only applies to child tables.
+     * columns. This only applies to tables.
      * <p>
-     *      Making a table protected or not. Protected tables need the admin
-     * password to be sent in a {@link
-     * #clearTable(const ClearTableRequest&) const} to delete the table.
-     * This can be applied to child tables or collections or views.
+     *      Setting the time-to-live (TTL). This can be applied to tables,
+     * views, or collections.  When applied to collections, every table & view
+     * within the collection will have its TTL set to the given value.
      * <p>
-     *      Setting the ttl (time-to-live). This can be applied to child tables
-     * or collections or views.
+     *      Making a table protected or not. Protected tables have their TTLs
+     * set to not automatically expire. This can be applied to tables, views,
+     * and collections.
      * <p>
-     *      Allowing homogeneous child tables. This only applies to
-     * collections.
+     *      Allowing homogeneous tables within a collection.
      */
     struct AlterTableResponse
     {

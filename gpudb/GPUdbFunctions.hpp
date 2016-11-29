@@ -1918,17 +1918,17 @@ AlterSystemPropertiesResponse& alterSystemProperties( const std::map<std::string
  * #deleteRecords(const DeleteRecordsRequest&) const}, {@link
  * #updateRecordsRaw(const RawUpdateRecordsRequest&) const}) when using
  * expressions containing equality or relational operators on indexed columns.
- * This only applies to child tables.
+ * This only applies to tables.
  * <p>
- *      Making a table protected or not. Protected tables need the admin
- * password to be sent in a {@link
- * #clearTable(const ClearTableRequest&) const} to delete the table. This
- * can be applied to child tables or collections or views.
+ *      Setting the time-to-live (TTL). This can be applied to tables, views,
+ * or collections.  When applied to collections, every table & view within the
+ * collection will have its TTL set to the given value.
  * <p>
- *      Setting the ttl (time-to-live). This can be applied to child tables or
- * collections or views.
+ *      Making a table protected or not. Protected tables have their TTLs set
+ * to not automatically expire. This can be applied to tables, views, and
+ * collections.
  * <p>
- *      Allowing homogeneous child tables. This only applies to collections.
+ *      Allowing homogeneous tables within a collection.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -1951,18 +1951,17 @@ AlterTableResponse alterTable( const AlterTableRequest& request_ ) const;
  * {@link
  * #updateRecordsRaw(const RawUpdateRecordsRequest&,UpdateRecordsResponse&) const})
  * when using expressions containing equality or relational operators on
- * indexed columns. This only applies to child tables.
+ * indexed columns. This only applies to tables.
  * <p>
- *      Making a table protected or not. Protected tables need the admin
- * password to be sent in a {@link
- * #clearTable(const ClearTableRequest&,ClearTableResponse&) const} to
- * delete the table. This can be applied to child tables or collections or
- * views.
+ *      Setting the time-to-live (TTL). This can be applied to tables, views,
+ * or collections.  When applied to collections, every table & view within the
+ * collection will have its TTL set to the given value.
  * <p>
- *      Setting the ttl (time-to-live). This can be applied to child tables or
- * collections or views.
+ *      Making a table protected or not. Protected tables have their TTLs set
+ * to not automatically expire. This can be applied to tables, views, and
+ * collections.
  * <p>
- *      Allowing homogeneous child tables. This only applies to collections.
+ *      Allowing homogeneous tables within a collection.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -1987,26 +1986,25 @@ AlterTableResponse& alterTable( const AlterTableRequest& request_,
  * #deleteRecords(const std::string&,const std::vector<std::string>&,const std::map<std::string, std::string>&) const},
  * {@link #updateRecordsRaw(const RawUpdateRecordsRequest&) const}) when
  * using expressions containing equality or relational operators on indexed
- * columns. This only applies to child tables.
+ * columns. This only applies to tables.
  * <p>
- *      Making a table protected or not. Protected tables need the admin
- * password to be sent in a {@link
- * #clearTable(const std::string&,const std::string&,const std::map<std::string, std::string>&) const}
- * to delete the table. This can be applied to child tables or collections or
- * views.
+ *      Setting the time-to-live (TTL). This can be applied to tables, views,
+ * or collections.  When applied to collections, every table & view within the
+ * collection will have its TTL set to the given value.
  * <p>
- *      Setting the ttl (time-to-live). This can be applied to child tables or
- * collections or views.
+ *      Making a table protected or not. Protected tables have their TTLs set
+ * to not automatically expire. This can be applied to tables, views, and
+ * collections.
  * <p>
- *      Allowing homogeneous child tables. This only applies to collections.
+ *      Allowing homogeneous tables within a collection.
  * 
  * @param tableName  Table on which the operation will be performed. Must be a
- *                   valid table or collection in GPUdb.
- * @param action  Modification operation to be applied to the table or
- *                collection Values: 'create_index', 'delete_index',
- *                'allow_homogeneous_tables', 'protected', 'ttl'.
+ *                   valid table, view, or collection in GPUdb.
+ * @param action  Modification operation to be applied Values: 'create_index',
+ *                'delete_index', 'allow_homogeneous_tables', 'protected',
+ *                'ttl'.
  * @param value  The value of the modification. May be a column name, 'true' or
- *               'false', or a time-to-live depending on @a action.
+ *               'false', or a TTL depending on @a action.
  * @param options  Optional parameters.  Default value is an empty std::map.
  * 
  * @return Response object containing the result of the operation.
@@ -2028,26 +2026,25 @@ AlterTableResponse alterTable( const std::string& tableName,
  * #deleteRecords(const std::string&,const std::vector<std::string>&,const std::map<std::string, std::string>&,DeleteRecordsResponse&) const},
  * {@link #updateRecordsRaw(const RawUpdateRecordsRequest&) const}) when
  * using expressions containing equality or relational operators on indexed
- * columns. This only applies to child tables.
+ * columns. This only applies to tables.
  * <p>
- *      Making a table protected or not. Protected tables need the admin
- * password to be sent in a {@link
- * #clearTable(const std::string&,const std::string&,const std::map<std::string, std::string>&,ClearTableResponse&) const}
- * to delete the table. This can be applied to child tables or collections or
- * views.
+ *      Setting the time-to-live (TTL). This can be applied to tables, views,
+ * or collections.  When applied to collections, every table & view within the
+ * collection will have its TTL set to the given value.
  * <p>
- *      Setting the ttl (time-to-live). This can be applied to child tables or
- * collections or views.
+ *      Making a table protected or not. Protected tables have their TTLs set
+ * to not automatically expire. This can be applied to tables, views, and
+ * collections.
  * <p>
- *      Allowing homogeneous child tables. This only applies to collections.
+ *      Allowing homogeneous tables within a collection.
  * 
  * @param tableName  Table on which the operation will be performed. Must be a
- *                   valid table or collection in GPUdb.
- * @param action  Modification operation to be applied to the table or
- *                collection Values: 'create_index', 'delete_index',
- *                'allow_homogeneous_tables', 'protected', 'ttl'.
+ *                   valid table, view, or collection in GPUdb.
+ * @param action  Modification operation to be applied Values: 'create_index',
+ *                'delete_index', 'allow_homogeneous_tables', 'protected',
+ *                'ttl'.
  * @param value  The value of the modification. May be a column name, 'true' or
- *               'false', or a time-to-live depending on @a action.
+ *               'false', or a TTL depending on @a action.
  * @param options  Optional parameters.  Default value is an empty std::map.
  * @param[out] response_  Response object containing the results of the
  *                        operation.
@@ -2466,14 +2463,12 @@ CreateJoinTableResponse& createJoinTable( const CreateJoinTableRequest& request_
  *                       name of a currently existing GPUdb table or join
  *                       table. Cannot be an empty string.
  * @param tableNames  The list of table names making up the joined set.
- *                    Corresponds to a SQL statement FROM clause
- * @param aliases  The list of aliases for each of the corresponding tables.
- * @param expression  An optional expression GPUdb uses to combine and filter
- *                    the joined set.  Corresponds to a SQL statement WHERE
- *                    clause. For details see: <a
- *                    href="../../concepts/index.html#expressions"
- *                    target="_top">expressions</a>.  Default value is an empty
- *                    string.
+ *                    Corresponds to a SQL statement FROM clause  Default value
+ *                    is an empty std::vector.
+ * @param columnNames  The list of columns to be selected from the input table
+ *                     names. Empty list says to select all the column names.
+ *                     Empty list is the default.  Default value is an empty
+ *                     std::vector.
  * @param expressions  An optional list of expressions GPUdb uses to combine
  *                     and filter the joined set.  Corresponds to a SQL
  *                     statement WHERE clause. For details see: <a
@@ -2482,9 +2477,9 @@ CreateJoinTableResponse& createJoinTable( const CreateJoinTableRequest& request_
  *                     empty std::vector.
  * @param options  Optional parameters.
  *                 <ul>
- *                         <li> collection_name: Name of a collection in GPUdb
- *                 to which the join table is to be assigned as a child table.
- *                 If empty, then the join table will be a top level table.
+ *                         <li> collection_name: Name of a collection which is
+ *                 to contain the join table. If empty, then the join table
+ *                 will be a top-level table.
  *                         <li> max_query_dimensions: The maximum number of
  *                 tables in a joined table that can be accessed by a query and
  *                 are not equated by a foreign-key to primary-key equality
@@ -2507,8 +2502,7 @@ CreateJoinTableResponse& createJoinTable( const CreateJoinTableRequest& request_
 
 CreateJoinTableResponse createJoinTable( const std::string& joinTableName,
                                          const std::vector<std::string>& tableNames,
-                                         const std::vector<std::string>& aliases,
-                                         const std::string& expression,
+                                         const std::vector<std::string>& columnNames,
                                          const std::vector<std::string>& expressions,
                                          const std::map<std::string, std::string>& options ) const;
 
@@ -2521,14 +2515,12 @@ CreateJoinTableResponse createJoinTable( const std::string& joinTableName,
  *                       name of a currently existing GPUdb table or join
  *                       table. Cannot be an empty string.
  * @param tableNames  The list of table names making up the joined set.
- *                    Corresponds to a SQL statement FROM clause
- * @param aliases  The list of aliases for each of the corresponding tables.
- * @param expression  An optional expression GPUdb uses to combine and filter
- *                    the joined set.  Corresponds to a SQL statement WHERE
- *                    clause. For details see: <a
- *                    href="../../concepts/index.html#expressions"
- *                    target="_top">expressions</a>.  Default value is an empty
- *                    string.
+ *                    Corresponds to a SQL statement FROM clause  Default value
+ *                    is an empty std::vector.
+ * @param columnNames  The list of columns to be selected from the input table
+ *                     names. Empty list says to select all the column names.
+ *                     Empty list is the default.  Default value is an empty
+ *                     std::vector.
  * @param expressions  An optional list of expressions GPUdb uses to combine
  *                     and filter the joined set.  Corresponds to a SQL
  *                     statement WHERE clause. For details see: <a
@@ -2537,9 +2529,9 @@ CreateJoinTableResponse createJoinTable( const std::string& joinTableName,
  *                     empty std::vector.
  * @param options  Optional parameters.
  *                 <ul>
- *                         <li> collection_name: Name of a collection in GPUdb
- *                 to which the join table is to be assigned as a child table.
- *                 If empty, then the join table will be a top level table.
+ *                         <li> collection_name: Name of a collection which is
+ *                 to contain the join table. If empty, then the join table
+ *                 will be a top-level table.
  *                         <li> max_query_dimensions: The maximum number of
  *                 tables in a joined table that can be accessed by a query and
  *                 are not equated by a foreign-key to primary-key equality
@@ -2565,8 +2557,7 @@ CreateJoinTableResponse createJoinTable( const std::string& joinTableName,
 
 CreateJoinTableResponse& createJoinTable( const std::string& joinTableName,
                                           const std::vector<std::string>& tableNames,
-                                          const std::vector<std::string>& aliases,
-                                          const std::string& expression,
+                                          const std::vector<std::string>& columnNames,
                                           const std::vector<std::string>& expressions,
                                           const std::map<std::string, std::string>& options,
                                           CreateJoinTableResponse& response_ ) const;
@@ -2706,26 +2697,25 @@ CreateTableResponse& createTable( const CreateTableRequest& request_,
  *                 error from occurring if the table already exists and is of
  *                 the given type.  If a table with the same ID but a different
  *                 type exists, it is still an error. Values: 'true', 'false'.
- *                         <li> collection_name: Name of a collection in GPUdb
- *                 to which the newly created table is to be assigned as a
- *                 child table. If empty, then the newly created table will be
- *                 a top level table. If the collection does not allow
- *                 duplicate children, then this table creation request will
- *                 fail if there is an existing child table with the same type
- *                 id specified in this request.
+ *                         <li> collection_name: Name of a collection which is
+ *                 to contain the newly created table. If empty, then the newly
+ *                 created table will be a top-level table. If the collection
+ *                 does not allow duplicate types and it contains a table of
+ *                 the same type as the given one, then this table creation
+ *                 request will fail.
  *                         <li> is_collection: Indicates whether the new table
- *                 to be created will be a collection. If false, the created
- *                 table will be a top level table. Values: 'true', 'false'.
+ *                 to be created will be a collection. Values: 'true', 'false'.
  *                         <li> disallow_homogeneous_tables: For a collection,
- *                 indicates whether multiple children of exactly the same data
- *                 type will be allowed. Values: 'true', 'false'.
- *                         <li> is_replicated: For a Table, this is an
- *                 indication to GPUdb to replicate the table to all the ranks.
- *                 This is only required when the table will be used to join
- *                 with other tables in a query. Values: 'true', 'false'.
+ *                 indicates whether the collection prohibits containment of
+ *                 multiple tables of exactly the same data type. Values:
+ *                 'true', 'false'.
+ *                         <li> is_replicated: For a table, indicates whether
+ *                 the table is to be replicated to all the database ranks.
+ *                 This may be necessary when the table is to be joined with
+ *                 other tables in a query. Values: 'true', 'false'.
  *                         <li> foreign_keys: Semicolon-separated list of
- *                 foreign key constraints, of the format 'my_field references
- *                 primary_table(primary_key_field)'.
+ *                 foreign key constraints, of the format 'source_column
+ *                 references target_table(primary_key_column)'.
  *                 </ul>
  *                   Default value is an empty std::map.
  * 
@@ -2765,26 +2755,25 @@ CreateTableResponse createTable( const std::string& tableName,
  *                 error from occurring if the table already exists and is of
  *                 the given type.  If a table with the same ID but a different
  *                 type exists, it is still an error. Values: 'true', 'false'.
- *                         <li> collection_name: Name of a collection in GPUdb
- *                 to which the newly created table is to be assigned as a
- *                 child table. If empty, then the newly created table will be
- *                 a top level table. If the collection does not allow
- *                 duplicate children, then this table creation request will
- *                 fail if there is an existing child table with the same type
- *                 id specified in this request.
+ *                         <li> collection_name: Name of a collection which is
+ *                 to contain the newly created table. If empty, then the newly
+ *                 created table will be a top-level table. If the collection
+ *                 does not allow duplicate types and it contains a table of
+ *                 the same type as the given one, then this table creation
+ *                 request will fail.
  *                         <li> is_collection: Indicates whether the new table
- *                 to be created will be a collection. If false, the created
- *                 table will be a top level table. Values: 'true', 'false'.
+ *                 to be created will be a collection. Values: 'true', 'false'.
  *                         <li> disallow_homogeneous_tables: For a collection,
- *                 indicates whether multiple children of exactly the same data
- *                 type will be allowed. Values: 'true', 'false'.
- *                         <li> is_replicated: For a Table, this is an
- *                 indication to GPUdb to replicate the table to all the ranks.
- *                 This is only required when the table will be used to join
- *                 with other tables in a query. Values: 'true', 'false'.
+ *                 indicates whether the collection prohibits containment of
+ *                 multiple tables of exactly the same data type. Values:
+ *                 'true', 'false'.
+ *                         <li> is_replicated: For a table, indicates whether
+ *                 the table is to be replicated to all the database ranks.
+ *                 This may be necessary when the table is to be joined with
+ *                 other tables in a query. Values: 'true', 'false'.
  *                         <li> foreign_keys: Semicolon-separated list of
- *                 foreign key constraints, of the format 'my_field references
- *                 primary_table(primary_key_field)'.
+ *                 foreign key constraints, of the format 'source_column
+ *                 references target_table(primary_key_column)'.
  *                 </ul>
  *                   Default value is an empty std::map.
  * @param[out] response_  Response object containing the results of the
@@ -3454,9 +3443,13 @@ CreateUnionResponse& createUnion( const CreateUnionRequest& request_,
  *                           the union.
  * @param options  Optional parameters.
  *                 <ul>
- *                         <li> collection_name: Name of a collection in GPUdb
- *                 to which the union is to be assigned as a child table. If
- *                 empty, then the union will be a top level table.
+ *                         <li> collection_name: Name of a collection which is
+ *                 to contain the union. If empty, then the union will be a
+ *                 top-level table.
+ *                         <li> mode: If 'merge_views' then this operation will
+ *                 merge (i.e. union) the provided views. All 'table_names'
+ *                 must be views from the same underlying base table. Values:
+ *                 'normal', 'merge_views'.
  *                 </ul>
  *                   Default value is an empty std::map.
  * 
@@ -3483,9 +3476,13 @@ CreateUnionResponse createUnion( const std::string& tableName,
  *                           the union.
  * @param options  Optional parameters.
  *                 <ul>
- *                         <li> collection_name: Name of a collection in GPUdb
- *                 to which the union is to be assigned as a child table. If
- *                 empty, then the union will be a top level table.
+ *                         <li> collection_name: Name of a collection which is
+ *                 to contain the union. If empty, then the union will be a
+ *                 top-level table.
+ *                         <li> mode: If 'merge_views' then this operation will
+ *                 merge (i.e. union) the provided views. All 'table_names'
+ *                 must be views from the same underlying base table. Values:
+ *                 'normal', 'merge_views'.
  *                 </ul>
  *                   Default value is an empty std::map.
  * @param[out] response_  Response object containing the results of the
@@ -5232,7 +5229,27 @@ FilterByTableResponse& filterByTable( const FilterByTableRequest& request_,
  *                               whose values will be used as the filter for
  *                               table @a tableName. Must match the type of the
  *                               @a columnName.
- * @param options  Optional parameters.  Default value is an empty std::map.
+ * @param options  Optional parameters.
+ *                 <ul>
+ *                         <li> filter_mode: String indicating the filter mode,
+ *                 either 'in_table' or 'not_in_table'. Values: 'in_table',
+ *                 'not_in_table'.
+ *                         <li> mode: Mode - should be either 'spatial' or
+ *                 'normal'. Values: 'normal', 'spatial'.
+ *                         <li> buffer: Buffer size, in meters. Only relevant
+ *                 for 'spatial' mode.
+ *                         <li> buffer_method: Method used to buffer polygons.
+ *                 Only relevant for 'spatial' mode. Values: 'normal', 'geos'.
+ *                         <li> max_partition_size: Maximum number of points in
+ *                 a partition. Only relevant for 'spatial' mode.
+ *                         <li> max_partition_score: Maximum number of points *
+ *                 edges in a partition. Only relevant for 'spatial' mode.
+ *                         <li> x_column_name: Name of column containing x
+ *                 value of point being filtered in spatial mode.
+ *                         <li> y_column_name: Name of column containing x
+ *                 value of point being filtered in spatial mode.
+ *                 </ul>
+ *                   Default value is an empty std::map.
  * 
  * @return Response object containing the result of the operation.
  * 
@@ -5270,7 +5287,27 @@ FilterByTableResponse filterByTable( const std::string& tableName,
  *                               whose values will be used as the filter for
  *                               table @a tableName. Must match the type of the
  *                               @a columnName.
- * @param options  Optional parameters.  Default value is an empty std::map.
+ * @param options  Optional parameters.
+ *                 <ul>
+ *                         <li> filter_mode: String indicating the filter mode,
+ *                 either 'in_table' or 'not_in_table'. Values: 'in_table',
+ *                 'not_in_table'.
+ *                         <li> mode: Mode - should be either 'spatial' or
+ *                 'normal'. Values: 'normal', 'spatial'.
+ *                         <li> buffer: Buffer size, in meters. Only relevant
+ *                 for 'spatial' mode.
+ *                         <li> buffer_method: Method used to buffer polygons.
+ *                 Only relevant for 'spatial' mode. Values: 'normal', 'geos'.
+ *                         <li> max_partition_size: Maximum number of points in
+ *                 a partition. Only relevant for 'spatial' mode.
+ *                         <li> max_partition_score: Maximum number of points *
+ *                 edges in a partition. Only relevant for 'spatial' mode.
+ *                         <li> x_column_name: Name of column containing x
+ *                 value of point being filtered in spatial mode.
+ *                         <li> y_column_name: Name of column containing x
+ *                 value of point being filtered in spatial mode.
+ *                 </ul>
+ *                   Default value is an empty std::map.
  * @param[out] response_  Response object containing the results of the
  *                        operation.
  * 
@@ -5409,8 +5446,8 @@ FilterByValueResponse& filterByValue( const std::string& tableName,
 
 /**
  * Retrieves records from a given table, optionally filtered by an expression
- * and/or sorted by a column. This operation can only be performed on tables or
- * on homogeneous collection (collections whose children all have the same
+ * and/or sorted by a column. This operation can be performed on tables, views,
+ * or on homogeneous collections (collections containing tables of all the same
  * type). Records can be returned encoded as binary or json.
  * <p>
  * This operation supports paging through the data via the @a offset and @a
@@ -5433,8 +5470,8 @@ RawGetRecordsResponse getRecordsRaw( const GetRecordsRequest& request_ ) const;
 
 /**
  * Retrieves records from a given table, optionally filtered by an expression
- * and/or sorted by a column. This operation can only be performed on tables or
- * on homogeneous collection (collections whose children all have the same
+ * and/or sorted by a column. This operation can be performed on tables, views,
+ * or on homogeneous collections (collections containing tables of all the same
  * type). Records can be returned encoded as binary or json.
  * <p>
  * This operation supports paging through the data via the @a offset and @a
@@ -5461,8 +5498,8 @@ RawGetRecordsResponse& getRecordsRaw( const GetRecordsRequest& request_,
 
 /**
  * Retrieves records from a given table, optionally filtered by an expression
- * and/or sorted by a column. This operation can only be performed on tables or
- * on homogeneous collection (collections whose children all have the same
+ * and/or sorted by a column. This operation can be performed on tables, views,
+ * or on homogeneous collections (collections containing tables of all the same
  * type). Records can be returned encoded as binary or json.
  * <p>
  * This operation supports paging through the data via the @a offset and @a
@@ -5501,8 +5538,8 @@ GetRecordsResponse<TResponse> getRecords( const GetRecordsRequest& request_ ) co
 
 /**
  * Retrieves records from a given table, optionally filtered by an expression
- * and/or sorted by a column. This operation can only be performed on tables or
- * on homogeneous collection (collections whose children all have the same
+ * and/or sorted by a column. This operation can be performed on tables, views,
+ * or on homogeneous collections (collections containing tables of all the same
  * type). Records can be returned encoded as binary or json.
  * <p>
  * This operation supports paging through the data via the @a offset and @a
@@ -5544,8 +5581,8 @@ GetRecordsResponse<TResponse>& getRecords( const GetRecordsRequest& request_,
 
 /**
  * Retrieves records from a given table, optionally filtered by an expression
- * and/or sorted by a column. This operation can only be performed on tables or
- * on homogeneous collection (collections whose children all have the same
+ * and/or sorted by a column. This operation can be performed on tables, views,
+ * or on homogeneous collections (collections containing tables of all the same
  * type). Records can be returned encoded as binary or json.
  * <p>
  * This operation supports paging through the data via the @a offset and @a
@@ -5611,8 +5648,8 @@ GetRecordsResponse<TResponse> getRecords( const std::string& tableName,
 
 /**
  * Retrieves records from a given table, optionally filtered by an expression
- * and/or sorted by a column. This operation can only be performed on tables or
- * on homogeneous collection (collections whose children all have the same
+ * and/or sorted by a column. This operation can be performed on tables, views,
+ * or on homogeneous collections (collections containing tables of all the same
  * type). Records can be returned encoded as binary or json.
  * <p>
  * This operation supports paging through the data via the @a offset and @a
@@ -5681,8 +5718,8 @@ GetRecordsResponse<TResponse>& getRecords( const std::string& tableName,
 
 /**
  * Retrieves records from a given table, optionally filtered by an expression
- * and/or sorted by a column. This operation can only be performed on tables or
- * on homogeneous collection (collections whose children all have the same
+ * and/or sorted by a column. This operation can be performed on tables, views,
+ * or on homogeneous collections (collections containing tables of all the same
  * type). Records can be returned encoded as binary or json.
  * <p>
  * This operation supports paging through the data via the @a offset and @a
@@ -5723,8 +5760,8 @@ GetRecordsResponse<TResponse> getRecords( const ::avro::ValidSchema& schema_,
 
 /**
  * Retrieves records from a given table, optionally filtered by an expression
- * and/or sorted by a column. This operation can only be performed on tables or
- * on homogeneous collection (collections whose children all have the same
+ * and/or sorted by a column. This operation can be performed on tables, views,
+ * or on homogeneous collections (collections containing tables of all the same
  * type). Records can be returned encoded as binary or json.
  * <p>
  * This operation supports paging through the data via the @a offset and @a
@@ -5765,8 +5802,8 @@ GetRecordsResponse<TResponse> getRecords( const Type& type_,
 
 /**
  * Retrieves records from a given table, optionally filtered by an expression
- * and/or sorted by a column. This operation can only be performed on tables or
- * on homogeneous collection (collections whose children all have the same
+ * and/or sorted by a column. This operation can be performed on tables, views,
+ * or on homogeneous collections (collections containing tables of all the same
  * type). Records can be returned encoded as binary or json.
  * <p>
  * This operation supports paging through the data via the @a offset and @a
@@ -5810,8 +5847,8 @@ GetRecordsResponse<TResponse>& getRecords( const ::avro::ValidSchema& schema_,
 
 /**
  * Retrieves records from a given table, optionally filtered by an expression
- * and/or sorted by a column. This operation can only be performed on tables or
- * on homogeneous collection (collections whose children all have the same
+ * and/or sorted by a column. This operation can be performed on tables, views,
+ * or on homogeneous collections (collections containing tables of all the same
  * type). Records can be returned encoded as binary or json.
  * <p>
  * This operation supports paging through the data via the @a offset and @a
@@ -5855,8 +5892,8 @@ GetRecordsResponse<TResponse>& getRecords( const Type& type_,
 
 /**
  * Retrieves records from a given table, optionally filtered by an expression
- * and/or sorted by a column. This operation can only be performed on tables or
- * on homogeneous collection (collections whose children all have the same
+ * and/or sorted by a column. This operation can be performed on tables, views,
+ * or on homogeneous collections (collections containing tables of all the same
  * type). Records can be returned encoded as binary or json.
  * <p>
  * This operation supports paging through the data via the @a offset and @a
@@ -5924,8 +5961,8 @@ GetRecordsResponse<TResponse> getRecords( const ::avro::ValidSchema& schema_,
 
 /**
  * Retrieves records from a given table, optionally filtered by an expression
- * and/or sorted by a column. This operation can only be performed on tables or
- * on homogeneous collection (collections whose children all have the same
+ * and/or sorted by a column. This operation can be performed on tables, views,
+ * or on homogeneous collections (collections containing tables of all the same
  * type). Records can be returned encoded as binary or json.
  * <p>
  * This operation supports paging through the data via the @a offset and @a
@@ -5993,8 +6030,8 @@ GetRecordsResponse<TResponse> getRecords( const Type& type_,
 
 /**
  * Retrieves records from a given table, optionally filtered by an expression
- * and/or sorted by a column. This operation can only be performed on tables or
- * on homogeneous collection (collections whose children all have the same
+ * and/or sorted by a column. This operation can be performed on tables, views,
+ * or on homogeneous collections (collections containing tables of all the same
  * type). Records can be returned encoded as binary or json.
  * <p>
  * This operation supports paging through the data via the @a offset and @a
@@ -6065,8 +6102,8 @@ GetRecordsResponse<TResponse>& getRecords( const ::avro::ValidSchema& schema_,
 
 /**
  * Retrieves records from a given table, optionally filtered by an expression
- * and/or sorted by a column. This operation can only be performed on tables or
- * on homogeneous collection (collections whose children all have the same
+ * and/or sorted by a column. This operation can be performed on tables, views,
+ * or on homogeneous collections (collections containing tables of all the same
  * type). Records can be returned encoded as binary or json.
  * <p>
  * This operation supports paging through the data via the @a offset and @a
@@ -6283,9 +6320,9 @@ GetRecordsByColumnResponse& getRecordsByColumn( const GetRecordsByColumnRequest&
  *                The minimum allowed value is 0. The maximum allowed value is
  *                MAX_INT.
  * @param limit  A positive integer indicating the maximum number of results to
- *               be returned (if not provided the default is 10000). Or
- *               END_OF_column (-9999) to indicate that the max number of
- *               results should be returned.
+ *               be returned (if not provided the default is 10000), or
+ *               END_OF_SET (-9999) to indicate that the maximum number of
+ *               results allowed by the server should be returned.
  * @param options
  *                 <ul>
  *                         <li> expression: Optional filter expression to apply
@@ -6337,9 +6374,9 @@ GetRecordsByColumnResponse getRecordsByColumn( const std::string& tableName,
  *                The minimum allowed value is 0. The maximum allowed value is
  *                MAX_INT.
  * @param limit  A positive integer indicating the maximum number of results to
- *               be returned (if not provided the default is 10000). Or
- *               END_OF_column (-9999) to indicate that the max number of
- *               results should be returned.
+ *               be returned (if not provided the default is 10000), or
+ *               END_OF_SET (-9999) to indicate that the maximum number of
+ *               results allowed by the server should be returned.
  * @param options
  *                 <ul>
  *                         <li> expression: Optional filter expression to apply
@@ -7248,8 +7285,7 @@ GetRecordsFromCollectionResponse<TResponse>& getRecordsFromCollection( const Get
  * @tparam <TResponse>  The type of object being retrieved.
  * 
  * @param tableName  Name of the collection or table from which records are to
- *                   be retrieved. Must be an existing GPUdb collection or
- *                   table.
+ *                   be retrieved. Must be an existing collection or table.
  * @param offset  A positive integer indicating the number of initial results
  *                to skip (this can be useful for paging through the results).
  *                Default value is 0. The minimum allowed value is 0. The
@@ -7305,8 +7341,7 @@ GetRecordsFromCollectionResponse<TResponse> getRecordsFromCollection( const std:
  * @tparam <TResponse>  The type of object being retrieved.
  * 
  * @param tableName  Name of the collection or table from which records are to
- *                   be retrieved. Must be an existing GPUdb collection or
- *                   table.
+ *                   be retrieved. Must be an existing collection or table.
  * @param offset  A positive integer indicating the number of initial results
  *                to skip (this can be useful for paging through the results).
  *                Default value is 0. The minimum allowed value is 0. The
@@ -7516,8 +7551,7 @@ GetRecordsFromCollectionResponse<TResponse>& getRecordsFromCollection( const Typ
  * 
  * @param[in] schema_  Avro schema object used for decoding returned objects.
  * @param tableName  Name of the collection or table from which records are to
- *                   be retrieved. Must be an existing GPUdb collection or
- *                   table.
+ *                   be retrieved. Must be an existing collection or table.
  * @param offset  A positive integer indicating the number of initial results
  *                to skip (this can be useful for paging through the results).
  *                Default value is 0. The minimum allowed value is 0. The
@@ -7575,8 +7609,7 @@ GetRecordsFromCollectionResponse<TResponse> getRecordsFromCollection( const ::av
  * 
  * @param[in] type_  Type object used for decoding returned objects.
  * @param tableName  Name of the collection or table from which records are to
- *                   be retrieved. Must be an existing GPUdb collection or
- *                   table.
+ *                   be retrieved. Must be an existing collection or table.
  * @param offset  A positive integer indicating the number of initial results
  *                to skip (this can be useful for paging through the results).
  *                Default value is 0. The minimum allowed value is 0. The
@@ -7634,8 +7667,7 @@ GetRecordsFromCollectionResponse<TResponse> getRecordsFromCollection( const Type
  * 
  * @param[in] schema_  Avro schema object used for decoding returned objects.
  * @param tableName  Name of the collection or table from which records are to
- *                   be retrieved. Must be an existing GPUdb collection or
- *                   table.
+ *                   be retrieved. Must be an existing collection or table.
  * @param offset  A positive integer indicating the number of initial results
  *                to skip (this can be useful for paging through the results).
  *                Default value is 0. The minimum allowed value is 0. The
@@ -7696,8 +7728,7 @@ GetRecordsFromCollectionResponse<TResponse>& getRecordsFromCollection( const ::a
  * 
  * @param[in] type_  Type object used for decoding returned objects.
  * @param tableName  Name of the collection or table from which records are to
- *                   be retrieved. Must be an existing GPUdb collection or
- *                   table.
+ *                   be retrieved. Must be an existing collection or table.
  * @param offset  A positive integer indicating the number of initial results
  *                to skip (this can be useful for paging through the results).
  *                Default value is 0. The minimum allowed value is 0. The
@@ -10108,7 +10139,7 @@ UpdateRecordsResponse& updateRecords( const UpdateRecordsRequest<TRequest>& requ
 template<typename TRequest> 
 UpdateRecordsResponse updateRecords( const std::string& tableName,
                                      const std::vector<std::string>& expressions,
-                                     const std::vector<std::map<std::string, std::string> >& newValuesMaps,
+                                     const std::vector<std::map<std::string, boost::optional<std::string> > >& newValuesMaps,
                                      const std::vector<TRequest>& data,
                                      const std::map<std::string, std::string>& options ) const
 {
@@ -10193,7 +10224,7 @@ UpdateRecordsResponse updateRecords( const std::string& tableName,
 template<typename TRequest> 
 UpdateRecordsResponse& updateRecords( const std::string& tableName,
                                       const std::vector<std::string>& expressions,
-                                      const std::vector<std::map<std::string, std::string> >& newValuesMaps,
+                                      const std::vector<std::map<std::string, boost::optional<std::string> > >& newValuesMaps,
                                       const std::vector<TRequest>& data,
                                       const std::map<std::string, std::string>& options,
                                       UpdateRecordsResponse& response_ ) const

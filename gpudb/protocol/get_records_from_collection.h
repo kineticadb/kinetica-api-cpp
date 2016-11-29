@@ -45,7 +45,7 @@ namespace gpudb
          * 
          * @param[in] tableName  Name of the collection or table from which
          *                       records are to be retrieved. Must be an
-         *                       existing GPUdb collection or table.
+         *                       existing collection or table.
          * @param[in] offset  A positive integer indicating the number of
          *                    initial results to skip (this can be useful for
          *                    paging through the results).  Default value is 0.
@@ -80,7 +80,7 @@ namespace gpudb
          * 
          * @param[in] tableName  Name of the collection or table from which
          *                       records are to be retrieved. Must be an
-         *                       existing GPUdb collection or table.
+         *                       existing collection or table.
          * @param[in] offset  A positive integer indicating the number of
          *                    initial results to skip (this can be useful for
          *                    paging through the results).  Default value is 0.

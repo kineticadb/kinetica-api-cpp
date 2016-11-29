@@ -62,8 +62,34 @@ namespace gpudb
          *                                   be used as the filter for table @a
          *                                   tableName. Must match the type of
          *                                   the @a columnName.
-         * @param[in] options  Optional parameters.  Default value is an empty
-         *                     std::map.
+         * @param[in] options  Optional parameters.
+         *                     <ul>
+         *                             <li> filter_mode: String indicating the
+         *                     filter mode, either 'in_table' or
+         *                     'not_in_table'. Values: 'in_table',
+         *                     'not_in_table'.
+         *                             <li> mode: Mode - should be either
+         *                     'spatial' or 'normal'. Values: 'normal',
+         *                     'spatial'.
+         *                             <li> buffer: Buffer size, in meters.
+         *                     Only relevant for 'spatial' mode.
+         *                             <li> buffer_method: Method used to
+         *                     buffer polygons.  Only relevant for 'spatial'
+         *                     mode. Values: 'normal', 'geos'.
+         *                             <li> max_partition_size: Maximum number
+         *                     of points in a partition. Only relevant for
+         *                     'spatial' mode.
+         *                             <li> max_partition_score: Maximum number
+         *                     of points * edges in a partition. Only relevant
+         *                     for 'spatial' mode.
+         *                             <li> x_column_name: Name of column
+         *                     containing x value of point being filtered in
+         *                     spatial mode.
+         *                             <li> y_column_name: Name of column
+         *                     containing x value of point being filtered in
+         *                     spatial mode.
+         *                     </ul>
+         *                       Default value is an empty std::map.
          * 
          */
         FilterByTableRequest(const std::string& tableName, const std::string& viewName, const std::string& columnName, const std::string& sourceTableName, const std::string& sourceTableColumnName, const std::map<std::string, std::string>& options):

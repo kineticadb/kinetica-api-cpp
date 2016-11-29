@@ -44,7 +44,7 @@ namespace gpudb
         RawUpdateRecordsRequest() :
             tableName(std::string()),
             expressions(std::vector<std::string>()),
-            newValuesMaps(std::vector<std::map<std::string, std::string> >()),
+            newValuesMaps(std::vector<std::map<std::string, boost::optional<std::string> > >()),
             recordsToInsert(std::vector<std::vector<uint8_t> >()),
             recordsToInsertStr(std::vector<std::string>()),
             recordEncoding(std::string("binary")),
@@ -103,7 +103,7 @@ namespace gpudb
          *                       Default value is an empty std::map.
          * 
          */
-        RawUpdateRecordsRequest(const std::string& tableName, const std::vector<std::string>& expressions, const std::vector<std::map<std::string, std::string> >& newValuesMaps, const std::vector<std::vector<uint8_t> >& recordsToInsert, const std::map<std::string, std::string>& options):
+        RawUpdateRecordsRequest(const std::string& tableName, const std::vector<std::string>& expressions, const std::vector<std::map<std::string, boost::optional<std::string> > >& newValuesMaps, const std::vector<std::vector<uint8_t> >& recordsToInsert, const std::map<std::string, std::string>& options):
             tableName(tableName),
             expressions(expressions),
             newValuesMaps(newValuesMaps),
@@ -175,7 +175,7 @@ namespace gpudb
          *                       Default value is an empty std::map.
          * 
          */
-        RawUpdateRecordsRequest(const std::string& tableName, const std::vector<std::string>& expressions, const std::vector<std::map<std::string, std::string> >& newValuesMaps, const std::vector<std::vector<uint8_t> >& recordsToInsert, const std::vector<std::string>& recordsToInsertStr, const std::string& recordEncoding, const std::map<std::string, std::string>& options):
+        RawUpdateRecordsRequest(const std::string& tableName, const std::vector<std::string>& expressions, const std::vector<std::map<std::string, boost::optional<std::string> > >& newValuesMaps, const std::vector<std::vector<uint8_t> >& recordsToInsert, const std::vector<std::string>& recordsToInsertStr, const std::string& recordEncoding, const std::map<std::string, std::string>& options):
             tableName(tableName),
             expressions(expressions),
             newValuesMaps(newValuesMaps),
@@ -188,7 +188,7 @@ namespace gpudb
 
         std::string tableName;
         std::vector<std::string> expressions;
-        std::vector<std::map<std::string, std::string> > newValuesMaps;
+        std::vector<std::map<std::string, boost::optional<std::string> > > newValuesMaps;
         std::vector<std::vector<uint8_t> > recordsToInsert;
         std::vector<std::string> recordsToInsertStr;
         std::string recordEncoding;
@@ -309,7 +309,7 @@ namespace gpudb
         UpdateRecordsRequest() :
             tableName(std::string()),
             expressions(std::vector<std::string>()),
-            newValuesMaps(std::vector<std::map<std::string, std::string> >()),
+            newValuesMaps(std::vector<std::map<std::string, boost::optional<std::string> > >()),
             data(std::vector<T>()),
             options(std::map<std::string, std::string>())
         {
@@ -364,7 +364,7 @@ namespace gpudb
          *                       Default value is an empty std::map.
          * 
          */
-        UpdateRecordsRequest(const std::string& tableName, const std::vector<std::string>& expressions, const std::vector<std::map<std::string, std::string> >& newValuesMaps, const std::vector<T>& data, const std::map<std::string, std::string>& options):
+        UpdateRecordsRequest(const std::string& tableName, const std::vector<std::string>& expressions, const std::vector<std::map<std::string, boost::optional<std::string> > >& newValuesMaps, const std::vector<T>& data, const std::map<std::string, std::string>& options):
             tableName(tableName),
             expressions(expressions),
             newValuesMaps(newValuesMaps),
@@ -375,7 +375,7 @@ namespace gpudb
 
         std::string tableName;
         std::vector<std::string> expressions;
-        std::vector<std::map<std::string, std::string> > newValuesMaps;
+        std::vector<std::map<std::string, boost::optional<std::string> > > newValuesMaps;
         std::vector<T> data;
         std::map<std::string, std::string> options;
     };

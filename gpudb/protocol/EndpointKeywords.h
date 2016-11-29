@@ -139,6 +139,11 @@ namespace gpudb
     
     // Keywords for /create/union request
     extern const std::string create_union_collection_name;
+    extern const std::string create_union_false;
+    extern const std::string create_union_merge_views;
+    extern const std::string create_union_mode;
+    extern const std::string create_union_normal;
+    extern const std::string create_union_true;
     
     // Keywords for /delete/records request
     extern const std::string delete_records_global_expression;
@@ -175,6 +180,21 @@ namespace gpudb
     extern const std::string filter_by_string_search;
     extern const std::string filter_by_string_starts_with;
     extern const std::string filter_by_string_true;
+    
+    // Keywords for /filter/bytable request
+    extern const std::string filter_by_table_buffer;
+    extern const std::string filter_by_table_buffer_method;
+    extern const std::string filter_by_table_filter_mode;
+    extern const std::string filter_by_table_geos;
+    extern const std::string filter_by_table_in_table;
+    extern const std::string filter_by_table_max_partition_score;
+    extern const std::string filter_by_table_max_partition_size;
+    extern const std::string filter_by_table_mode;
+    extern const std::string filter_by_table_normal;
+    extern const std::string filter_by_table_not_in_table;
+    extern const std::string filter_by_table_spatial;
+    extern const std::string filter_by_table_x_column_name;
+    extern const std::string filter_by_table_y_column_name;
     
     // Keywords for /get/records request
     extern const std::string get_records_ascending;

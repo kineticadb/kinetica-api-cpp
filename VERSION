@@ -2,7 +2,7 @@
 #--------------------------------
 
 MAJOR = 5
-MINOR = 2
+MINOR = 4
 REVISION = 0
 ABI_VERSION = 0
 

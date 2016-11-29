@@ -6,8 +6,8 @@
 
 /**
  * Retrieves records from a given table, optionally filtered by an expression
- * and/or sorted by a column. This operation can only be performed on tables or
- * on homogeneous collection (collections whose children all have the same
+ * and/or sorted by a column. This operation can be performed on tables, views,
+ * or on homogeneous collections (collections containing tables of all the same
  * type). Records can be returned encoded as binary or json.
  * <p>
  * This operation supports paging through the data via the @a offset and @a
@@ -30,8 +30,8 @@ GetRecordsResponse<boost::any> GPUdb::getRecords( const GetRecordsRequest& reque
 
 /**
  * Retrieves records from a given table, optionally filtered by an expression
- * and/or sorted by a column. This operation can only be performed on tables or
- * on homogeneous collection (collections whose children all have the same
+ * and/or sorted by a column. This operation can be performed on tables, views,
+ * or on homogeneous collections (collections containing tables of all the same
  * type). Records can be returned encoded as binary or json.
  * <p>
  * This operation supports paging through the data via the @a offset and @a
@@ -58,8 +58,8 @@ GetRecordsResponse<boost::any>& GPUdb::getRecords( const GetRecordsRequest& requ
 
 /**
  * Retrieves records from a given table, optionally filtered by an expression
- * and/or sorted by a column. This operation can only be performed on tables or
- * on homogeneous collection (collections whose children all have the same
+ * and/or sorted by a column. This operation can be performed on tables, views,
+ * or on homogeneous collections (collections containing tables of all the same
  * type). Records can be returned encoded as binary or json.
  * <p>
  * This operation supports paging through the data via the @a offset and @a
@@ -104,8 +104,8 @@ GetRecordsResponse<boost::any> GPUdb::getRecords( const std::string& tableName,
 
 /**
  * Retrieves records from a given table, optionally filtered by an expression
- * and/or sorted by a column. This operation can only be performed on tables or
- * on homogeneous collection (collections whose children all have the same
+ * and/or sorted by a column. This operation can be performed on tables, views,
+ * or on homogeneous collections (collections containing tables of all the same
  * type). Records can be returned encoded as binary or json.
  * <p>
  * This operation supports paging through the data via the @a offset and @a
@@ -346,8 +346,7 @@ GetRecordsFromCollectionResponse<boost::any>& GPUdb::getRecordsFromCollection( c
  * from join tables using this operation.
  * 
  * @param tableName  Name of the collection or table from which records are to
- *                   be retrieved. Must be an existing GPUdb collection or
- *                   table.
+ *                   be retrieved. Must be an existing collection or table.
  * @param offset  A positive integer indicating the number of initial results
  *                to skip (this can be useful for paging through the results).
  *                Default value is 0. The minimum allowed value is 0. The
@@ -384,8 +383,7 @@ GetRecordsFromCollectionResponse<boost::any> GPUdb::getRecordsFromCollection( co
  * from join tables using this operation.
  * 
  * @param tableName  Name of the collection or table from which records are to
- *                   be retrieved. Must be an existing GPUdb collection or
- *                   table.
+ *                   be retrieved. Must be an existing collection or table.
  * @param offset  A positive integer indicating the number of initial results
  *                to skip (this can be useful for paging through the results).
  *                Default value is 0. The minimum allowed value is 0. The

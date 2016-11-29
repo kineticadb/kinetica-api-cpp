@@ -65,31 +65,29 @@ namespace gpudb
          *                     exists, it is still an error. Values: 'true',
          *                     'false'.
          *                             <li> collection_name: Name of a
-         *                     collection in GPUdb to which the newly created
-         *                     table is to be assigned as a child table. If
-         *                     empty, then the newly created table will be a
-         *                     top level table. If the collection does not
-         *                     allow duplicate children, then this table
-         *                     creation request will fail if there is an
-         *                     existing child table with the same type id
-         *                     specified in this request.
+         *                     collection which is to contain the newly created
+         *                     table. If empty, then the newly created table
+         *                     will be a top-level table. If the collection
+         *                     does not allow duplicate types and it contains a
+         *                     table of the same type as the given one, then
+         *                     this table creation request will fail.
          *                             <li> is_collection: Indicates whether
          *                     the new table to be created will be a
-         *                     collection. If false, the created table will be
-         *                     a top level table. Values: 'true', 'false'.
+         *                     collection. Values: 'true', 'false'.
          *                             <li> disallow_homogeneous_tables: For a
-         *                     collection, indicates whether multiple children
-         *                     of exactly the same data type will be allowed.
-         *                     Values: 'true', 'false'.
-         *                             <li> is_replicated: For a Table, this is
-         *                     an indication to GPUdb to replicate the table to
-         *                     all the ranks. This is only required when the
-         *                     table will be used to join with other tables in
-         *                     a query. Values: 'true', 'false'.
+         *                     collection, indicates whether the collection
+         *                     prohibits containment of multiple tables of
+         *                     exactly the same data type. Values: 'true',
+         *                     'false'.
+         *                             <li> is_replicated: For a table,
+         *                     indicates whether the table is to be replicated
+         *                     to all the database ranks. This may be necessary
+         *                     when the table is to be joined with other tables
+         *                     in a query. Values: 'true', 'false'.
          *                             <li> foreign_keys: Semicolon-separated
          *                     list of foreign key constraints, of the format
-         *                     'my_field references
-         *                     primary_table(primary_key_field)'.
+         *                     'source_column references
+         *                     target_table(primary_key_column)'.
          *                     </ul>
          *                       Default value is an empty std::map.
          * 

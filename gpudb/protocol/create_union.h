@@ -48,9 +48,13 @@ namespace gpudb
          * @param[in] options  Optional parameters.
          *                     <ul>
          *                             <li> collection_name: Name of a
-         *                     collection in GPUdb to which the union is to be
-         *                     assigned as a child table. If empty, then the
-         *                     union will be a top level table.
+         *                     collection which is to contain the union. If
+         *                     empty, then the union will be a top-level table.
+         *                             <li> mode: If 'merge_views' then this
+         *                     operation will merge (i.e. union) the provided
+         *                     views. All 'table_names' must be views from the
+         *                     same underlying base table. Values: 'normal',
+         *                     'merge_views'.
          *                     </ul>
          *                       Default value is an empty std::map.
          * 

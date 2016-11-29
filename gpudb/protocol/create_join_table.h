@@ -27,8 +27,7 @@ namespace gpudb
         CreateJoinTableRequest() :
             joinTableName(std::string()),
             tableNames(std::vector<std::string>()),
-            aliases(std::vector<std::string>()),
-            expression(std::string()),
+            columnNames(std::vector<std::string>()),
             expressions(std::vector<std::string>()),
             options(std::map<std::string, std::string>())
         {
@@ -44,16 +43,13 @@ namespace gpudb
          *                           empty string.
          * @param[in] tableNames  The list of table names making up the joined
          *                        set.  Corresponds to a SQL statement FROM
-         *                        clause
-         * @param[in] aliases  The list of aliases for each of the
-         *                     corresponding tables.
-         * @param[in] expression  An optional expression GPUdb uses to combine
-         *                        and filter the joined set.  Corresponds to a
-         *                        SQL statement WHERE clause. For details see:
-         *                        <a
-         *                        href="../../concepts/index.html#expressions"
-         *                        target="_top">expressions</a>.  Default value
-         *                        is an empty string.
+         *                        clause  Default value is an empty
+         *                        std::vector.
+         * @param[in] columnNames  The list of columns to be selected from the
+         *                         input table names. Empty list says to select
+         *                         all the column names.  Empty list is the
+         *                         default.  Default value is an empty
+         *                         std::vector.
          * @param[in] expressions  An optional list of expressions GPUdb uses
          *                         to combine and filter the joined set.
          *                         Corresponds to a SQL statement WHERE clause.
@@ -64,9 +60,9 @@ namespace gpudb
          * @param[in] options  Optional parameters.
          *                     <ul>
          *                             <li> collection_name: Name of a
-         *                     collection in GPUdb to which the join table is
-         *                     to be assigned as a child table. If empty, then
-         *                     the join table will be a top level table.
+         *                     collection which is to contain the join table.
+         *                     If empty, then the join table will be a
+         *                     top-level table.
          *                             <li> max_query_dimensions: The maximum
          *                     number of tables in a joined table that can be
          *                     accessed by a query and are not equated by a
@@ -86,11 +82,10 @@ namespace gpudb
          *                       Default value is an empty std::map.
          * 
          */
-        CreateJoinTableRequest(const std::string& joinTableName, const std::vector<std::string>& tableNames, const std::vector<std::string>& aliases, const std::string& expression, const std::vector<std::string>& expressions, const std::map<std::string, std::string>& options):
+        CreateJoinTableRequest(const std::string& joinTableName, const std::vector<std::string>& tableNames, const std::vector<std::string>& columnNames, const std::vector<std::string>& expressions, const std::map<std::string, std::string>& options):
             joinTableName(joinTableName),
             tableNames(tableNames),
-            aliases(aliases),
-            expression(expression),
+            columnNames(columnNames),
             expressions(expressions),
             options(options)
         {
@@ -98,8 +93,7 @@ namespace gpudb
 
         std::string joinTableName;
         std::vector<std::string> tableNames;
-        std::vector<std::string> aliases;
-        std::string expression;
+        std::vector<std::string> columnNames;
         std::vector<std::string> expressions;
         std::map<std::string, std::string> options;
     };
@@ -113,8 +107,7 @@ namespace avro
         {
             ::avro::encode(e, v.joinTableName);
             ::avro::encode(e, v.tableNames);
-            ::avro::encode(e, v.aliases);
-            ::avro::encode(e, v.expression);
+            ::avro::encode(e, v.columnNames);
             ::avro::encode(e, v.expressions);
             ::avro::encode(e, v.options);
         }
@@ -138,18 +131,14 @@ namespace avro
                             break;
 
                         case 2:
-                            ::avro::decode(d, v.aliases);
+                            ::avro::decode(d, v.columnNames);
                             break;
 
                         case 3:
-                            ::avro::decode(d, v.expression);
-                            break;
-
-                        case 4:
                             ::avro::decode(d, v.expressions);
                             break;
 
-                        case 5:
+                        case 4:
                             ::avro::decode(d, v.options);
                             break;
 
@@ -162,8 +151,7 @@ namespace avro
             {
                 ::avro::decode(d, v.joinTableName);
                 ::avro::decode(d, v.tableNames);
-                ::avro::decode(d, v.aliases);
-                ::avro::decode(d, v.expression);
+                ::avro::decode(d, v.columnNames);
                 ::avro::decode(d, v.expressions);
                 ::avro::decode(d, v.options);
             }

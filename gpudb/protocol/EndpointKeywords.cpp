@@ -139,6 +139,11 @@ namespace gpudb
     
     // Keywords for /create/union request
     const std::string create_union_collection_name( "collection_name" );
+    const std::string create_union_false          ( "false"           );
+    const std::string create_union_merge_views    ( "merge_views"     );
+    const std::string create_union_mode           ( "mode"            );
+    const std::string create_union_normal         ( "normal"          );
+    const std::string create_union_true           ( "true"            );
     
     // Keywords for /delete/records request
     const std::string delete_records_global_expression( "global_expression" );
@@ -175,6 +180,21 @@ namespace gpudb
     const std::string filter_by_string_search        ( "search"         );
     const std::string filter_by_string_starts_with   ( "starts_with"    );
     const std::string filter_by_string_true          ( "true"           );
+    
+    // Keywords for /filter/bytable request
+    const std::string filter_by_table_buffer             ( "buffer"              );
+    const std::string filter_by_table_buffer_method      ( "buffer_method"       );
+    const std::string filter_by_table_filter_mode        ( "filter_mode"         );
+    const std::string filter_by_table_geos               ( "geos"                );
+    const std::string filter_by_table_in_table           ( "in_table"            );
+    const std::string filter_by_table_max_partition_score( "max_partition_score" );
+    const std::string filter_by_table_max_partition_size ( "max_partition_size"  );
+    const std::string filter_by_table_mode               ( "mode"                );
+    const std::string filter_by_table_normal             ( "normal"              );
+    const std::string filter_by_table_not_in_table       ( "not_in_table"        );
+    const std::string filter_by_table_spatial            ( "spatial"             );
+    const std::string filter_by_table_x_column_name      ( "x_column_name"       );
+    const std::string filter_by_table_y_column_name      ( "y_column_name"       );
     
     // Keywords for /get/records request
     const std::string get_records_ascending ( "ascending"  );
