@@ -13,7 +13,10 @@ namespace gpudb
      * A set of input parameters for {@link
      * #createUnion(const CreateUnionRequest&) const}.
      * <p>
-     * Creates a table that is the union of one or more existing tables.
+     * Creates a table that is the concatenation of one or more existing
+     * tables. It is equivalent to the SQL UNION ALL operator.  Non-charN
+     * 'string' and 'bytes' column types cannot be included in a union, neither
+     * can columns with the property 'store_only'.
      */
     struct CreateUnionRequest
     {
@@ -143,7 +146,10 @@ namespace gpudb
      * A set of output parameters for {@link
      * #createUnion(const CreateUnionRequest&) const}.
      * <p>
-     * Creates a table that is the union of one or more existing tables.
+     * Creates a table that is the concatenation of one or more existing
+     * tables. It is equivalent to the SQL UNION ALL operator.  Non-charN
+     * 'string' and 'bytes' column types cannot be included in a union, neither
+     * can columns with the property 'store_only'.
      */
     struct CreateUnionResponse
     {

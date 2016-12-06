@@ -13,32 +13,22 @@ namespace gpudb
      * A set of input parameters for {@link
      * #showTable(const ShowTableRequest&) const}.
      * <p>
-     * Retrieves detailed information about a particular GPUdb table, specified
-     * in @a tableName. If the supplied @a tableName is a collection, the call
-     * returns a list of tables contained in the collection, and for each table
-     * it returns the description, type id, schema, type label, type
-     * properties, and additional information including TTL. If @a tableName is
-     * empty it will return all top-level tables including all collections and
-     * top-level child tables (i.e. tables with no parent).
+     * Retrieves detailed information about a table, view, or collection,
+     * specified in @a tableName. If the supplied @a tableName is a collection,
+     * the call can return information about either the collection itself or
+     * the tables and views it contains. If @a tableName is empty, information
+     * about all collections and top-level tables and views can be returned.
      * <p>
-     *     If the option 'get_sizes' is set to 'true' then the sizes (objects
+     * If the option @a get_sizes is set to @a true, then the sizes (objects
      * and elements) of each table are returned (in @a sizes and @a fullSizes),
      * along with the total number of objects in the requested table (in @a
      * totalSize and @a totalFullSize).
      * <p>
-     *     If the option 'show_children' is set to 'false' then for a
-     * collection it only returns information about the collection itself, not
-     * about the child tables. If 'show_children' is set to 'true' then it will
-     * return information about each of the children, but not the collection.
-     * <p>
-     *     Running with 'show_children' = 'true' on a child table will return
-     * an error.
-     * <p>
-     *     Running with 'show_children' = 'false' with @a tableName empty will
-     * return an error.
-     * <p>
-     * If the requested table is blank, then information is returned about all
-     * top-level tables including collections.
+     * For a collection, setting the @a show_children option to @a false
+     * returns only information about the collection itself; setting @a
+     * show_children to @a true returns a list of tables and views contained in
+     * the collection, along with their description, type id, schema, type
+     * label, type properties, and additional information including TTL.
      */
     struct ShowTableRequest
     {
@@ -56,22 +46,22 @@ namespace gpudb
          * Constructs a ShowTableRequest object with the specified parameters.
          * 
          * @param[in] tableName  Name of the table for which to retrieve the
-         *                       information. If blank then information about
-         *                       all collections and top-level tables is
-         *                       returned.
+         *                       information. If blank, then information about
+         *                       all collections and top-level tables and views
+         *                       is returned.
          * @param[in] options  Optional parameters.
          *                     <ul>
-         *                             <li> get_sizes: If 'true' then the table
-         *                     sizes will be returned; otherwise they will be
-         *                     returned blank. Values: 'true', 'false'.
+         *                             <li> get_sizes: If @a true then the
+         *                     table sizes will be returned; blank, otherwise.
+         *                     Values: 'true', 'false'.
          *                             <li> show_children: If @a tableName is a
-         *                     collection, then 'true' will return information
-         *                     about the children of the collection, and
-         *                     'false' will return information about the
-         *                     collection itself. If @a tableName is a child
-         *                     table, 'show_children' must be 'false'. If @a
-         *                     tableName is empty then 'show_children' must be
-         *                     'true'. Values: 'true', 'false'.
+         *                     collection, then @a true will return information
+         *                     about the children of the collection, and @a
+         *                     false will return information about the
+         *                     collection itself. If @a tableName is a table or
+         *                     view, @a show_children must be @a false. If @a
+         *                     tableName is empty, then @a show_children must
+         *                     be @a true. Values: 'true', 'false'.
          *                     </ul>
          *                       Default value is an empty std::map.
          * 
@@ -136,32 +126,22 @@ namespace gpudb
      * A set of output parameters for {@link
      * #showTable(const ShowTableRequest&) const}.
      * <p>
-     * Retrieves detailed information about a particular GPUdb table, specified
-     * in @a tableName. If the supplied @a tableName is a collection, the call
-     * returns a list of tables contained in the collection, and for each table
-     * it returns the description, type id, schema, type label, type
-     * properties, and additional information including TTL. If @a tableName is
-     * empty it will return all top-level tables including all collections and
-     * top-level child tables (i.e. tables with no parent).
+     * Retrieves detailed information about a table, view, or collection,
+     * specified in @a tableName. If the supplied @a tableName is a collection,
+     * the call can return information about either the collection itself or
+     * the tables and views it contains. If @a tableName is empty, information
+     * about all collections and top-level tables and views can be returned.
      * <p>
-     *     If the option 'get_sizes' is set to 'true' then the sizes (objects
+     * If the option @a get_sizes is set to @a true, then the sizes (objects
      * and elements) of each table are returned (in @a sizes and @a fullSizes),
      * along with the total number of objects in the requested table (in @a
      * totalSize and @a totalFullSize).
      * <p>
-     *     If the option 'show_children' is set to 'false' then for a
-     * collection it only returns information about the collection itself, not
-     * about the child tables. If 'show_children' is set to 'true' then it will
-     * return information about each of the children, but not the collection.
-     * <p>
-     *     Running with 'show_children' = 'true' on a child table will return
-     * an error.
-     * <p>
-     *     Running with 'show_children' = 'false' with @a tableName empty will
-     * return an error.
-     * <p>
-     * If the requested table is blank, then information is returned about all
-     * top-level tables including collections.
+     * For a collection, setting the @a show_children option to @a false
+     * returns only information about the collection itself; setting @a
+     * show_children to @a true returns a list of tables and views contained in
+     * the collection, along with their description, type id, schema, type
+     * label, type properties, and additional information including TTL.
      */
     struct ShowTableResponse
     {

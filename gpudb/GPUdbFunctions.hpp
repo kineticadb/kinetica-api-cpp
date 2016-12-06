@@ -2563,6 +2563,160 @@ CreateJoinTableResponse& createJoinTable( const std::string& joinTableName,
                                           CreateJoinTableResponse& response_ ) const;
 
 /**
+ * @private
+ * 
+ * @param[in] request_  Request object containing the parameters for the
+ *                      operation.
+ * 
+ * @return Response object containing the result of the operation.
+ * 
+ */
+
+CreateProcResponse createProc( const CreateProcRequest& request_ ) const;
+
+/**
+ * @private
+ * 
+ * @param[in] request_  Request object containing the parameters for the
+ *                      operation.
+ * @param[out] response_  Response object containing the results of the
+ *                        operation.
+ * 
+ * @return Response object containing the result of the operation (initially
+ *         passed in by reference).
+ * 
+ */
+
+CreateProcResponse& createProc( const CreateProcRequest& request_,
+                                CreateProcResponse& response_ ) const;
+
+/**
+ * @private
+ * 
+ * @param procName
+ * @param files
+ * @param command
+ * @param args
+ * @param options
+ *                 <ul>
+ *                         <li> nondistributed: Values: 'true', 'false'.
+ *                 </ul>
+ * 
+ * @return Response object containing the result of the operation.
+ * 
+ */
+
+CreateProcResponse createProc( const std::string& procName,
+                               const std::map<std::string, std::vector<uint8_t> >& files,
+                               const std::string& command,
+                               const std::vector<std::string>& args,
+                               const std::map<std::string, std::string>& options ) const;
+
+/**
+ * @private
+ * 
+ * @param procName
+ * @param files
+ * @param command
+ * @param args
+ * @param options
+ *                 <ul>
+ *                         <li> nondistributed: Values: 'true', 'false'.
+ *                 </ul>
+ * @param[out] response_  Response object containing the results of the
+ *                        operation.
+ * 
+ * @return Response object containing the result of the operation (initially
+ *         passed in by reference).
+ * 
+ */
+
+CreateProcResponse& createProc( const std::string& procName,
+                                const std::map<std::string, std::vector<uint8_t> >& files,
+                                const std::string& command,
+                                const std::vector<std::string>& args,
+                                const std::map<std::string, std::string>& options,
+                                CreateProcResponse& response_ ) const;
+
+/**
+ * @private
+ * 
+ * @param[in] request_  Request object containing the parameters for the
+ *                      operation.
+ * 
+ * @return Response object containing the result of the operation.
+ * 
+ */
+
+CreateProjectionResponse createProjection( const CreateProjectionRequest& request_ ) const;
+
+/**
+ * @private
+ * 
+ * @param[in] request_  Request object containing the parameters for the
+ *                      operation.
+ * @param[out] response_  Response object containing the results of the
+ *                        operation.
+ * 
+ * @return Response object containing the result of the operation (initially
+ *         passed in by reference).
+ * 
+ */
+
+CreateProjectionResponse& createProjection( const CreateProjectionRequest& request_,
+                                            CreateProjectionResponse& response_ ) const;
+
+/**
+ * @private
+ * 
+ * @param tableName
+ * @param projectionName
+ * @param columnNames
+ * @param options
+ *                 <ul>
+ *                         <li> collection_name:
+ *                         <li> expression:
+ *                         <li> limit:
+ *                         <li> order_by:
+ *                 </ul>
+ * 
+ * @return Response object containing the result of the operation.
+ * 
+ */
+
+CreateProjectionResponse createProjection( const std::string& tableName,
+                                           const std::string& projectionName,
+                                           const std::vector<std::string>& columnNames,
+                                           const std::map<std::string, std::string>& options ) const;
+
+/**
+ * @private
+ * 
+ * @param tableName
+ * @param projectionName
+ * @param columnNames
+ * @param options
+ *                 <ul>
+ *                         <li> collection_name:
+ *                         <li> expression:
+ *                         <li> limit:
+ *                         <li> order_by:
+ *                 </ul>
+ * @param[out] response_  Response object containing the results of the
+ *                        operation.
+ * 
+ * @return Response object containing the result of the operation (initially
+ *         passed in by reference).
+ * 
+ */
+
+CreateProjectionResponse& createProjection( const std::string& tableName,
+                                            const std::string& projectionName,
+                                            const std::vector<std::string>& columnNames,
+                                            const std::map<std::string, std::string>& options,
+                                            CreateProjectionResponse& response_ ) const;
+
+/**
  * Creates a new role.
  * 
  * @param[in] request_  Request object containing the parameters for the
@@ -3403,7 +3557,10 @@ CreateTypeResponse& createType( const std::string& typeDefinition,
                                 CreateTypeResponse& response_ ) const;
 
 /**
- * Creates a table that is the union of one or more existing tables.
+ * Creates a table that is the concatenation of one or more existing tables. It
+ * is equivalent to the SQL UNION ALL operator.  Non-charN 'string' and 'bytes'
+ * column types cannot be included in a union, neither can columns with the
+ * property 'store_only'.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -3415,7 +3572,10 @@ CreateTypeResponse& createType( const std::string& typeDefinition,
 CreateUnionResponse createUnion( const CreateUnionRequest& request_ ) const;
 
 /**
- * Creates a table that is the union of one or more existing tables.
+ * Creates a table that is the concatenation of one or more existing tables. It
+ * is equivalent to the SQL UNION ALL operator.  Non-charN 'string' and 'bytes'
+ * column types cannot be included in a union, neither can columns with the
+ * property 'store_only'.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -3431,7 +3591,10 @@ CreateUnionResponse& createUnion( const CreateUnionRequest& request_,
                                   CreateUnionResponse& response_ ) const;
 
 /**
- * Creates a table that is the union of one or more existing tables.
+ * Creates a table that is the concatenation of one or more existing tables. It
+ * is equivalent to the SQL UNION ALL operator.  Non-charN 'string' and 'bytes'
+ * column types cannot be included in a union, neither can columns with the
+ * property 'store_only'.
  * 
  * @param tableName  Name of the table to be created. Must not be the name of a
  *                   currently existing GPUdb table. Cannot be an empty string.
@@ -3464,7 +3627,10 @@ CreateUnionResponse createUnion( const std::string& tableName,
                                  const std::map<std::string, std::string>& options ) const;
 
 /**
- * Creates a table that is the union of one or more existing tables.
+ * Creates a table that is the concatenation of one or more existing tables. It
+ * is equivalent to the SQL UNION ALL operator.  Non-charN 'string' and 'bytes'
+ * column types cannot be included in a union, neither can columns with the
+ * property 'store_only'.
  * 
  * @param tableName  Name of the table to be created. Must not be the name of a
  *                   currently existing GPUdb table. Cannot be an empty string.
@@ -3635,6 +3801,64 @@ CreateUserInternalResponse& createUserInternal( const std::string& name,
                                                 const std::string& password,
                                                 const std::map<std::string, std::string>& options,
                                                 CreateUserInternalResponse& response_ ) const;
+
+/**
+ * @private
+ * 
+ * @param[in] request_  Request object containing the parameters for the
+ *                      operation.
+ * 
+ * @return Response object containing the result of the operation.
+ * 
+ */
+
+DeleteProcResponse deleteProc( const DeleteProcRequest& request_ ) const;
+
+/**
+ * @private
+ * 
+ * @param[in] request_  Request object containing the parameters for the
+ *                      operation.
+ * @param[out] response_  Response object containing the results of the
+ *                        operation.
+ * 
+ * @return Response object containing the result of the operation (initially
+ *         passed in by reference).
+ * 
+ */
+
+DeleteProcResponse& deleteProc( const DeleteProcRequest& request_,
+                                DeleteProcResponse& response_ ) const;
+
+/**
+ * @private
+ * 
+ * @param procName
+ * @param options
+ * 
+ * @return Response object containing the result of the operation.
+ * 
+ */
+
+DeleteProcResponse deleteProc( const std::string& procName,
+                               const std::map<std::string, std::string>& options ) const;
+
+/**
+ * @private
+ * 
+ * @param procName
+ * @param options
+ * @param[out] response_  Response object containing the results of the
+ *                        operation.
+ * 
+ * @return Response object containing the result of the operation (initially
+ *         passed in by reference).
+ * 
+ */
+
+DeleteProcResponse& deleteProc( const std::string& procName,
+                                const std::map<std::string, std::string>& options,
+                                DeleteProcResponse& response_ ) const;
 
 /**
  * Deletes record(s) matching the provided criteria from the given table. The
@@ -3867,7 +4091,7 @@ DeleteUserResponse& deleteUser( const std::string& name,
                                 DeleteUserResponse& response_ ) const;
 
 /**
- * Executes a proc in the GPUdb Node.js proc server.
+ * @private
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -3879,7 +4103,7 @@ DeleteUserResponse& deleteUser( const std::string& name,
 ExecuteProcResponse executeProc( const ExecuteProcRequest& request_ ) const;
 
 /**
- * Executes a proc in the GPUdb Node.js proc server.
+ * @private
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -3895,37 +4119,38 @@ ExecuteProcResponse& executeProc( const ExecuteProcRequest& request_,
                                   ExecuteProcResponse& response_ ) const;
 
 /**
- * Executes a proc in the GPUdb Node.js proc server.
+ * @private
  * 
- * @param name  Name of the proc to execute.
- * @param params  A map containing string parameters to pass to the proc. Each
- *                key/value pair specifies the name of a parameter and its
- *                value.
- * @param binParams  A map containing binary parameters to pass to the proc.
- *                   Each key/value pair specifies the name of a parameter and
- *                   its value.
- * @param options  Optional parameters.  Default value is an empty std::map.
+ * @param procName
+ * @param params
+ * @param binParams
+ * @param inputTableNames
+ * @param inputColumnNames
+ * @param outputTableNames
+ * @param options
  * 
  * @return Response object containing the result of the operation.
  * 
  */
 
-ExecuteProcResponse executeProc( const std::string& name,
+ExecuteProcResponse executeProc( const std::string& procName,
                                  const std::map<std::string, std::string>& params,
                                  const std::map<std::string, std::vector<uint8_t> >& binParams,
+                                 const std::vector<std::string>& inputTableNames,
+                                 const std::map<std::string, std::vector<std::string> >& inputColumnNames,
+                                 const std::vector<std::string>& outputTableNames,
                                  const std::map<std::string, std::string>& options ) const;
 
 /**
- * Executes a proc in the GPUdb Node.js proc server.
+ * @private
  * 
- * @param name  Name of the proc to execute.
- * @param params  A map containing string parameters to pass to the proc. Each
- *                key/value pair specifies the name of a parameter and its
- *                value.
- * @param binParams  A map containing binary parameters to pass to the proc.
- *                   Each key/value pair specifies the name of a parameter and
- *                   its value.
- * @param options  Optional parameters.  Default value is an empty std::map.
+ * @param procName
+ * @param params
+ * @param binParams
+ * @param inputTableNames
+ * @param inputColumnNames
+ * @param outputTableNames
+ * @param options
  * @param[out] response_  Response object containing the results of the
  *                        operation.
  * 
@@ -3934,9 +4159,12 @@ ExecuteProcResponse executeProc( const std::string& name,
  * 
  */
 
-ExecuteProcResponse& executeProc( const std::string& name,
+ExecuteProcResponse& executeProc( const std::string& procName,
                                   const std::map<std::string, std::string>& params,
                                   const std::map<std::string, std::vector<uint8_t> >& binParams,
+                                  const std::vector<std::string>& inputTableNames,
+                                  const std::map<std::string, std::vector<std::string> >& inputColumnNames,
+                                  const std::vector<std::string>& outputTableNames,
                                   const std::map<std::string, std::string>& options,
                                   ExecuteProcResponse& response_ ) const;
 
@@ -4983,14 +5211,57 @@ FilterBySeriesResponse& filterBySeries( const std::string& tableName,
                                         FilterBySeriesResponse& response_ ) const;
 
 /**
- * Calculates which objects from a table, collection or view match a string
+ * Calculates which objects from a table, collection, or view match a string
  * expression for the given string columns. The 'mode' may be:
 
  * * search : full text search query with wildcards and boolean operators, e.g.
  * '(bob* OR sue) AND NOT jane'. Note that for this mode, no column can be
  * specified in @a columnNames; GPUdb will search through all string columns of
- * the table that have text search enabled. Also, the first character of the
- * regular expression cannot be a wildcard (* or ?).
+ * the table that have text search enabled. Also, the first character of a
+ * search term cannot be a wildcard (* or ?), and search terms cannot be any of
+ * the following:  "a", "an", "and", "are", "as", "at", "be", "but", "by",
+ * "for", "if", "in", "into", "is", "it", "no", "not", "of", "on", "or",
+ * "such", "that", "the", "their", "then", "there", "these", "they", "this",
+ * "to", "was", "will", "with".
+ *     Search query types:
+ *         * Multiple search terms
+ *             ex. perfect union - will match any record containing "perfect",
+ * "union", or both.
+ *         * Exact phrases
+ *             ex. "Perfect Union" - will only match the exact phrase "Perfect
+ * Union"
+ *         * Boolean (NOT, AND, OR, parentheses. OR assumed if no operator
+ * specified)
+ *             ex. justice AND tranquility - will match only those records
+ * containing both justice and tranquility
+ *         * XOR (specified with -)
+ *             ex. justice - peace - will match records containing "justice" or
+ * "peace", but not both
+ *         * Zero or more char wildcard - (specified with *)
+ *             ex, est*is* - will match any records containing a word that
+ * starts with "est" and ends with "sh", such as "establish", "establishable",
+ * and "establishment"
+ *         * Exactly one char wildcard - (specified with ?)
+ *             ex. est???is* - will only match strings that start with "est",
+ * followed by exactly three letters, followed by "is", followed by one more
+ * letter.  This would only match "establish"
+ *         * Fuzzy search (term~)
+ *             ex. rear~ will match rear,fear,bear,read,etc.
+ *         * Proximity - match two words within a specified distance of
+ * eachother
+ *             ex. "Union Tranquility"~10 will match any record that has the
+ * words Union and Tranquility within 10 words of eachother
+ *         * Range - inclusive [<term1> TO <term2>] and exclusive {<term1> TO
+ * <term2>}.  Note: This is a string search, so numbers will be seen as a
+ * string of numeric characters, not as a number.  Ex. 2 > 123
+ *             ex. [100 TO 200] will find all strings between 100 and 200
+ * inclusive.
+ *             ex. {alpha to beta} will find all strings between alpha and
+ * beta, but not the words alpha or beta
+ *         * escaping special characters - Special characters are escaped with
+ * a backslash(\), special characters are: + - && || ! ( ) { } [ ] ^ " ~ * ? :
+ * \
+ * <p>
  * * equals: exact whole-string match (accelerated)
  * * contains: partial substring match (not accelerated).  If the column is a
  * string type (non-charN) and the number of records is too large, it will
@@ -5015,14 +5286,57 @@ FilterBySeriesResponse& filterBySeries( const std::string& tableName,
 FilterByStringResponse filterByString( const FilterByStringRequest& request_ ) const;
 
 /**
- * Calculates which objects from a table, collection or view match a string
+ * Calculates which objects from a table, collection, or view match a string
  * expression for the given string columns. The 'mode' may be:
 
  * * search : full text search query with wildcards and boolean operators, e.g.
  * '(bob* OR sue) AND NOT jane'. Note that for this mode, no column can be
  * specified in @a columnNames; GPUdb will search through all string columns of
- * the table that have text search enabled. Also, the first character of the
- * regular expression cannot be a wildcard (* or ?).
+ * the table that have text search enabled. Also, the first character of a
+ * search term cannot be a wildcard (* or ?), and search terms cannot be any of
+ * the following:  "a", "an", "and", "are", "as", "at", "be", "but", "by",
+ * "for", "if", "in", "into", "is", "it", "no", "not", "of", "on", "or",
+ * "such", "that", "the", "their", "then", "there", "these", "they", "this",
+ * "to", "was", "will", "with".
+ *     Search query types:
+ *         * Multiple search terms
+ *             ex. perfect union - will match any record containing "perfect",
+ * "union", or both.
+ *         * Exact phrases
+ *             ex. "Perfect Union" - will only match the exact phrase "Perfect
+ * Union"
+ *         * Boolean (NOT, AND, OR, parentheses. OR assumed if no operator
+ * specified)
+ *             ex. justice AND tranquility - will match only those records
+ * containing both justice and tranquility
+ *         * XOR (specified with -)
+ *             ex. justice - peace - will match records containing "justice" or
+ * "peace", but not both
+ *         * Zero or more char wildcard - (specified with *)
+ *             ex, est*is* - will match any records containing a word that
+ * starts with "est" and ends with "sh", such as "establish", "establishable",
+ * and "establishment"
+ *         * Exactly one char wildcard - (specified with ?)
+ *             ex. est???is* - will only match strings that start with "est",
+ * followed by exactly three letters, followed by "is", followed by one more
+ * letter.  This would only match "establish"
+ *         * Fuzzy search (term~)
+ *             ex. rear~ will match rear,fear,bear,read,etc.
+ *         * Proximity - match two words within a specified distance of
+ * eachother
+ *             ex. "Union Tranquility"~10 will match any record that has the
+ * words Union and Tranquility within 10 words of eachother
+ *         * Range - inclusive [<term1> TO <term2>] and exclusive {<term1> TO
+ * <term2>}.  Note: This is a string search, so numbers will be seen as a
+ * string of numeric characters, not as a number.  Ex. 2 > 123
+ *             ex. [100 TO 200] will find all strings between 100 and 200
+ * inclusive.
+ *             ex. {alpha to beta} will find all strings between alpha and
+ * beta, but not the words alpha or beta
+ *         * escaping special characters - Special characters are escaped with
+ * a backslash(\), special characters are: + - && || ! ( ) { } [ ] ^ " ~ * ? :
+ * \
+ * <p>
  * * equals: exact whole-string match (accelerated)
  * * contains: partial substring match (not accelerated).  If the column is a
  * string type (non-charN) and the number of records is too large, it will
@@ -5051,14 +5365,57 @@ FilterByStringResponse& filterByString( const FilterByStringRequest& request_,
                                         FilterByStringResponse& response_ ) const;
 
 /**
- * Calculates which objects from a table, collection or view match a string
+ * Calculates which objects from a table, collection, or view match a string
  * expression for the given string columns. The 'mode' may be:
 
  * * search : full text search query with wildcards and boolean operators, e.g.
  * '(bob* OR sue) AND NOT jane'. Note that for this mode, no column can be
  * specified in @a columnNames; GPUdb will search through all string columns of
- * the table that have text search enabled. Also, the first character of the
- * regular expression cannot be a wildcard (* or ?).
+ * the table that have text search enabled. Also, the first character of a
+ * search term cannot be a wildcard (* or ?), and search terms cannot be any of
+ * the following:  "a", "an", "and", "are", "as", "at", "be", "but", "by",
+ * "for", "if", "in", "into", "is", "it", "no", "not", "of", "on", "or",
+ * "such", "that", "the", "their", "then", "there", "these", "they", "this",
+ * "to", "was", "will", "with".
+ *     Search query types:
+ *         * Multiple search terms
+ *             ex. perfect union - will match any record containing "perfect",
+ * "union", or both.
+ *         * Exact phrases
+ *             ex. "Perfect Union" - will only match the exact phrase "Perfect
+ * Union"
+ *         * Boolean (NOT, AND, OR, parentheses. OR assumed if no operator
+ * specified)
+ *             ex. justice AND tranquility - will match only those records
+ * containing both justice and tranquility
+ *         * XOR (specified with -)
+ *             ex. justice - peace - will match records containing "justice" or
+ * "peace", but not both
+ *         * Zero or more char wildcard - (specified with *)
+ *             ex, est*is* - will match any records containing a word that
+ * starts with "est" and ends with "sh", such as "establish", "establishable",
+ * and "establishment"
+ *         * Exactly one char wildcard - (specified with ?)
+ *             ex. est???is* - will only match strings that start with "est",
+ * followed by exactly three letters, followed by "is", followed by one more
+ * letter.  This would only match "establish"
+ *         * Fuzzy search (term~)
+ *             ex. rear~ will match rear,fear,bear,read,etc.
+ *         * Proximity - match two words within a specified distance of
+ * eachother
+ *             ex. "Union Tranquility"~10 will match any record that has the
+ * words Union and Tranquility within 10 words of eachother
+ *         * Range - inclusive [<term1> TO <term2>] and exclusive {<term1> TO
+ * <term2>}.  Note: This is a string search, so numbers will be seen as a
+ * string of numeric characters, not as a number.  Ex. 2 > 123
+ *             ex. [100 TO 200] will find all strings between 100 and 200
+ * inclusive.
+ *             ex. {alpha to beta} will find all strings between alpha and
+ * beta, but not the words alpha or beta
+ *         * escaping special characters - Special characters are escaped with
+ * a backslash(\), special characters are: + - && || ! ( ) { } [ ] ^ " ~ * ? :
+ * \
+ * <p>
  * * equals: exact whole-string match (accelerated)
  * * contains: partial substring match (not accelerated).  If the column is a
  * string type (non-charN) and the number of records is too large, it will
@@ -5105,14 +5462,57 @@ FilterByStringResponse filterByString( const std::string& tableName,
                                        const std::map<std::string, std::string>& options ) const;
 
 /**
- * Calculates which objects from a table, collection or view match a string
+ * Calculates which objects from a table, collection, or view match a string
  * expression for the given string columns. The 'mode' may be:
 
  * * search : full text search query with wildcards and boolean operators, e.g.
  * '(bob* OR sue) AND NOT jane'. Note that for this mode, no column can be
  * specified in @a columnNames; GPUdb will search through all string columns of
- * the table that have text search enabled. Also, the first character of the
- * regular expression cannot be a wildcard (* or ?).
+ * the table that have text search enabled. Also, the first character of a
+ * search term cannot be a wildcard (* or ?), and search terms cannot be any of
+ * the following:  "a", "an", "and", "are", "as", "at", "be", "but", "by",
+ * "for", "if", "in", "into", "is", "it", "no", "not", "of", "on", "or",
+ * "such", "that", "the", "their", "then", "there", "these", "they", "this",
+ * "to", "was", "will", "with".
+ *     Search query types:
+ *         * Multiple search terms
+ *             ex. perfect union - will match any record containing "perfect",
+ * "union", or both.
+ *         * Exact phrases
+ *             ex. "Perfect Union" - will only match the exact phrase "Perfect
+ * Union"
+ *         * Boolean (NOT, AND, OR, parentheses. OR assumed if no operator
+ * specified)
+ *             ex. justice AND tranquility - will match only those records
+ * containing both justice and tranquility
+ *         * XOR (specified with -)
+ *             ex. justice - peace - will match records containing "justice" or
+ * "peace", but not both
+ *         * Zero or more char wildcard - (specified with *)
+ *             ex, est*is* - will match any records containing a word that
+ * starts with "est" and ends with "sh", such as "establish", "establishable",
+ * and "establishment"
+ *         * Exactly one char wildcard - (specified with ?)
+ *             ex. est???is* - will only match strings that start with "est",
+ * followed by exactly three letters, followed by "is", followed by one more
+ * letter.  This would only match "establish"
+ *         * Fuzzy search (term~)
+ *             ex. rear~ will match rear,fear,bear,read,etc.
+ *         * Proximity - match two words within a specified distance of
+ * eachother
+ *             ex. "Union Tranquility"~10 will match any record that has the
+ * words Union and Tranquility within 10 words of eachother
+ *         * Range - inclusive [<term1> TO <term2>] and exclusive {<term1> TO
+ * <term2>}.  Note: This is a string search, so numbers will be seen as a
+ * string of numeric characters, not as a number.  Ex. 2 > 123
+ *             ex. [100 TO 200] will find all strings between 100 and 200
+ * inclusive.
+ *             ex. {alpha to beta} will find all strings between alpha and
+ * beta, but not the words alpha or beta
+ *         * escaping special characters - Special characters are escaped with
+ * a backslash(\), special characters are: + - && || ! ( ) { } [ ] ^ " ~ * ? :
+ * \
+ * <p>
  * * equals: exact whole-string match (accelerated)
  * * contains: partial substring match (not accelerated).  If the column is a
  * string type (non-charN) and the number of records is too large, it will
@@ -8875,6 +9275,64 @@ InsertSymbolResponse& insertSymbol( const std::string& symbolId,
                                     InsertSymbolResponse& response_ ) const;
 
 /**
+ * @private
+ * 
+ * @param[in] request_  Request object containing the parameters for the
+ *                      operation.
+ * 
+ * @return Response object containing the result of the operation.
+ * 
+ */
+
+KillProcResponse killProc( const KillProcRequest& request_ ) const;
+
+/**
+ * @private
+ * 
+ * @param[in] request_  Request object containing the parameters for the
+ *                      operation.
+ * @param[out] response_  Response object containing the results of the
+ *                        operation.
+ * 
+ * @return Response object containing the result of the operation (initially
+ *         passed in by reference).
+ * 
+ */
+
+KillProcResponse& killProc( const KillProcRequest& request_,
+                            KillProcResponse& response_ ) const;
+
+/**
+ * @private
+ * 
+ * @param runId
+ * @param options
+ * 
+ * @return Response object containing the result of the operation.
+ * 
+ */
+
+KillProcResponse killProc( const std::string& runId,
+                           const std::map<std::string, std::string>& options ) const;
+
+/**
+ * @private
+ * 
+ * @param runId
+ * @param options
+ * @param[out] response_  Response object containing the results of the
+ *                        operation.
+ * 
+ * @return Response object containing the result of the operation (initially
+ *         passed in by reference).
+ * 
+ */
+
+KillProcResponse& killProc( const std::string& runId,
+                            const std::map<std::string, std::string>& options,
+                            KillProcResponse& response_ ) const;
+
+/**
  * Manages global access to a table's data.  By default a table has a @a
  * lockType of @a unlock, indicating all operations are permitted.  A user may
  * request a @a read-only or a @a write-only lock, after which only read or
@@ -9177,6 +9635,134 @@ RevokeRoleResponse& revokeRole( const std::string& role,
                                 RevokeRoleResponse& response_ ) const;
 
 /**
+ * @private
+ * 
+ * @param[in] request_  Request object containing the parameters for the
+ *                      operation.
+ * 
+ * @return Response object containing the result of the operation.
+ * 
+ */
+
+ShowProcResponse showProc( const ShowProcRequest& request_ ) const;
+
+/**
+ * @private
+ * 
+ * @param[in] request_  Request object containing the parameters for the
+ *                      operation.
+ * @param[out] response_  Response object containing the results of the
+ *                        operation.
+ * 
+ * @return Response object containing the result of the operation (initially
+ *         passed in by reference).
+ * 
+ */
+
+ShowProcResponse& showProc( const ShowProcRequest& request_,
+                            ShowProcResponse& response_ ) const;
+
+/**
+ * @private
+ * 
+ * @param procName
+ * @param options
+ *                 <ul>
+ *                         <li> include_files: Values: 'true', 'false'.
+ *                 </ul>
+ * 
+ * @return Response object containing the result of the operation.
+ * 
+ */
+
+ShowProcResponse showProc( const std::string& procName,
+                           const std::map<std::string, std::string>& options ) const;
+
+/**
+ * @private
+ * 
+ * @param procName
+ * @param options
+ *                 <ul>
+ *                         <li> include_files: Values: 'true', 'false'.
+ *                 </ul>
+ * @param[out] response_  Response object containing the results of the
+ *                        operation.
+ * 
+ * @return Response object containing the result of the operation (initially
+ *         passed in by reference).
+ * 
+ */
+
+ShowProcResponse& showProc( const std::string& procName,
+                            const std::map<std::string, std::string>& options,
+                            ShowProcResponse& response_ ) const;
+
+/**
+ * @private
+ * 
+ * @param[in] request_  Request object containing the parameters for the
+ *                      operation.
+ * 
+ * @return Response object containing the result of the operation.
+ * 
+ */
+
+ShowProcStatusResponse showProcStatus( const ShowProcStatusRequest& request_ ) const;
+
+/**
+ * @private
+ * 
+ * @param[in] request_  Request object containing the parameters for the
+ *                      operation.
+ * @param[out] response_  Response object containing the results of the
+ *                        operation.
+ * 
+ * @return Response object containing the result of the operation (initially
+ *         passed in by reference).
+ * 
+ */
+
+ShowProcStatusResponse& showProcStatus( const ShowProcStatusRequest& request_,
+                                        ShowProcStatusResponse& response_ ) const;
+
+/**
+ * @private
+ * 
+ * @param runId
+ * @param options
+ *                 <ul>
+ *                         <li> clear_complete: Values: 'true', 'false'.
+ *                 </ul>
+ * 
+ * @return Response object containing the result of the operation.
+ * 
+ */
+
+ShowProcStatusResponse showProcStatus( const std::string& runId,
+                                       const std::map<std::string, std::string>& options ) const;
+
+/**
+ * @private
+ * 
+ * @param runId
+ * @param options
+ *                 <ul>
+ *                         <li> clear_complete: Values: 'true', 'false'.
+ *                 </ul>
+ * @param[out] response_  Response object containing the results of the
+ *                        operation.
+ * 
+ * @return Response object containing the result of the operation (initially
+ *         passed in by reference).
+ * 
+ */
+
+ShowProcStatusResponse& showProcStatus( const std::string& runId,
+                                        const std::map<std::string, std::string>& options,
+                                        ShowProcStatusResponse& response_ ) const;
+
+/**
  * Shows security information relating to users and/or roles. If the caller is
  * not a system administrator, only information relating to the caller and
  * their roles is returned.
@@ -9445,32 +10031,22 @@ ShowSystemTimingResponse& showSystemTiming( const std::map<std::string, std::str
                                             ShowSystemTimingResponse& response_ ) const;
 
 /**
- * Retrieves detailed information about a particular GPUdb table, specified in
- * @a tableName. If the supplied @a tableName is a collection, the call returns
- * a list of tables contained in the collection, and for each table it returns
- * the description, type id, schema, type label, type properties, and
- * additional information including TTL. If @a tableName is empty it will
- * return all top-level tables including all collections and top-level child
- * tables (i.e. tables with no parent).
+ * Retrieves detailed information about a table, view, or collection, specified
+ * in @a tableName. If the supplied @a tableName is a collection, the call can
+ * return information about either the collection itself or the tables and
+ * views it contains. If @a tableName is empty, information about all
+ * collections and top-level tables and views can be returned.
  * <p>
- *     If the option 'get_sizes' is set to 'true' then the sizes (objects and
+ * If the option @a get_sizes is set to @a true, then the sizes (objects and
  * elements) of each table are returned (in @a sizes and @a fullSizes), along
  * with the total number of objects in the requested table (in @a totalSize and
  * @a totalFullSize).
  * <p>
- *     If the option 'show_children' is set to 'false' then for a collection it
- * only returns information about the collection itself, not about the child
- * tables. If 'show_children' is set to 'true' then it will return information
- * about each of the children, but not the collection.
- * <p>
- *     Running with 'show_children' = 'true' on a child table will return an
- * error.
- * <p>
- *     Running with 'show_children' = 'false' with @a tableName empty will
- * return an error.
- * <p>
- * If the requested table is blank, then information is returned about all
- * top-level tables including collections.
+ * For a collection, setting the @a show_children option to @a false returns
+ * only information about the collection itself; setting @a show_children to @a
+ * true returns a list of tables and views contained in the collection, along
+ * with their description, type id, schema, type label, type properties, and
+ * additional information including TTL.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -9482,32 +10058,22 @@ ShowSystemTimingResponse& showSystemTiming( const std::map<std::string, std::str
 ShowTableResponse showTable( const ShowTableRequest& request_ ) const;
 
 /**
- * Retrieves detailed information about a particular GPUdb table, specified in
- * @a tableName. If the supplied @a tableName is a collection, the call returns
- * a list of tables contained in the collection, and for each table it returns
- * the description, type id, schema, type label, type properties, and
- * additional information including TTL. If @a tableName is empty it will
- * return all top-level tables including all collections and top-level child
- * tables (i.e. tables with no parent).
+ * Retrieves detailed information about a table, view, or collection, specified
+ * in @a tableName. If the supplied @a tableName is a collection, the call can
+ * return information about either the collection itself or the tables and
+ * views it contains. If @a tableName is empty, information about all
+ * collections and top-level tables and views can be returned.
  * <p>
- *     If the option 'get_sizes' is set to 'true' then the sizes (objects and
+ * If the option @a get_sizes is set to @a true, then the sizes (objects and
  * elements) of each table are returned (in @a sizes and @a fullSizes), along
  * with the total number of objects in the requested table (in @a totalSize and
  * @a totalFullSize).
  * <p>
- *     If the option 'show_children' is set to 'false' then for a collection it
- * only returns information about the collection itself, not about the child
- * tables. If 'show_children' is set to 'true' then it will return information
- * about each of the children, but not the collection.
- * <p>
- *     Running with 'show_children' = 'true' on a child table will return an
- * error.
- * <p>
- *     Running with 'show_children' = 'false' with @a tableName empty will
- * return an error.
- * <p>
- * If the requested table is blank, then information is returned about all
- * top-level tables including collections.
+ * For a collection, setting the @a show_children option to @a false returns
+ * only information about the collection itself; setting @a show_children to @a
+ * true returns a list of tables and views contained in the collection, along
+ * with their description, type id, schema, type label, type properties, and
+ * additional information including TTL.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -9523,47 +10089,36 @@ ShowTableResponse& showTable( const ShowTableRequest& request_,
                               ShowTableResponse& response_ ) const;
 
 /**
- * Retrieves detailed information about a particular GPUdb table, specified in
- * @a tableName. If the supplied @a tableName is a collection, the call returns
- * a list of tables contained in the collection, and for each table it returns
- * the description, type id, schema, type label, type properties, and
- * additional information including TTL. If @a tableName is empty it will
- * return all top-level tables including all collections and top-level child
- * tables (i.e. tables with no parent).
+ * Retrieves detailed information about a table, view, or collection, specified
+ * in @a tableName. If the supplied @a tableName is a collection, the call can
+ * return information about either the collection itself or the tables and
+ * views it contains. If @a tableName is empty, information about all
+ * collections and top-level tables and views can be returned.
  * <p>
- *     If the option 'get_sizes' is set to 'true' then the sizes (objects and
+ * If the option @a get_sizes is set to @a true, then the sizes (objects and
  * elements) of each table are returned (in @a sizes and @a fullSizes), along
  * with the total number of objects in the requested table (in @a totalSize and
  * @a totalFullSize).
  * <p>
- *     If the option 'show_children' is set to 'false' then for a collection it
- * only returns information about the collection itself, not about the child
- * tables. If 'show_children' is set to 'true' then it will return information
- * about each of the children, but not the collection.
- * <p>
- *     Running with 'show_children' = 'true' on a child table will return an
- * error.
- * <p>
- *     Running with 'show_children' = 'false' with @a tableName empty will
- * return an error.
- * <p>
- * If the requested table is blank, then information is returned about all
- * top-level tables including collections.
+ * For a collection, setting the @a show_children option to @a false returns
+ * only information about the collection itself; setting @a show_children to @a
+ * true returns a list of tables and views contained in the collection, along
+ * with their description, type id, schema, type label, type properties, and
+ * additional information including TTL.
  * 
  * @param tableName  Name of the table for which to retrieve the information.
- *                   If blank then information about all collections and
- *                   top-level tables is returned.
+ *                   If blank, then information about all collections and
+ *                   top-level tables and views is returned.
  * @param options  Optional parameters.
  *                 <ul>
- *                         <li> get_sizes: If 'true' then the table sizes will
- *                 be returned; otherwise they will be returned blank. Values:
- *                 'true', 'false'.
+ *                         <li> get_sizes: If @a true then the table sizes will
+ *                 be returned; blank, otherwise. Values: 'true', 'false'.
  *                         <li> show_children: If @a tableName is a collection,
- *                 then 'true' will return information about the children of
- *                 the collection, and 'false' will return information about
- *                 the collection itself. If @a tableName is a child table,
- *                 'show_children' must be 'false'. If @a tableName is empty
- *                 then 'show_children' must be 'true'. Values: 'true',
+ *                 then @a true will return information about the children of
+ *                 the collection, and @a false will return information about
+ *                 the collection itself. If @a tableName is a table or view,
+ *                 @a show_children must be @a false. If @a tableName is empty,
+ *                 then @a show_children must be @a true. Values: 'true',
  *                 'false'.
  *                 </ul>
  *                   Default value is an empty std::map.
@@ -9576,47 +10131,36 @@ ShowTableResponse showTable( const std::string& tableName,
                              const std::map<std::string, std::string>& options ) const;
 
 /**
- * Retrieves detailed information about a particular GPUdb table, specified in
- * @a tableName. If the supplied @a tableName is a collection, the call returns
- * a list of tables contained in the collection, and for each table it returns
- * the description, type id, schema, type label, type properties, and
- * additional information including TTL. If @a tableName is empty it will
- * return all top-level tables including all collections and top-level child
- * tables (i.e. tables with no parent).
+ * Retrieves detailed information about a table, view, or collection, specified
+ * in @a tableName. If the supplied @a tableName is a collection, the call can
+ * return information about either the collection itself or the tables and
+ * views it contains. If @a tableName is empty, information about all
+ * collections and top-level tables and views can be returned.
  * <p>
- *     If the option 'get_sizes' is set to 'true' then the sizes (objects and
+ * If the option @a get_sizes is set to @a true, then the sizes (objects and
  * elements) of each table are returned (in @a sizes and @a fullSizes), along
  * with the total number of objects in the requested table (in @a totalSize and
  * @a totalFullSize).
  * <p>
- *     If the option 'show_children' is set to 'false' then for a collection it
- * only returns information about the collection itself, not about the child
- * tables. If 'show_children' is set to 'true' then it will return information
- * about each of the children, but not the collection.
- * <p>
- *     Running with 'show_children' = 'true' on a child table will return an
- * error.
- * <p>
- *     Running with 'show_children' = 'false' with @a tableName empty will
- * return an error.
- * <p>
- * If the requested table is blank, then information is returned about all
- * top-level tables including collections.
+ * For a collection, setting the @a show_children option to @a false returns
+ * only information about the collection itself; setting @a show_children to @a
+ * true returns a list of tables and views contained in the collection, along
+ * with their description, type id, schema, type label, type properties, and
+ * additional information including TTL.
  * 
  * @param tableName  Name of the table for which to retrieve the information.
- *                   If blank then information about all collections and
- *                   top-level tables is returned.
+ *                   If blank, then information about all collections and
+ *                   top-level tables and views is returned.
  * @param options  Optional parameters.
  *                 <ul>
- *                         <li> get_sizes: If 'true' then the table sizes will
- *                 be returned; otherwise they will be returned blank. Values:
- *                 'true', 'false'.
+ *                         <li> get_sizes: If @a true then the table sizes will
+ *                 be returned; blank, otherwise. Values: 'true', 'false'.
  *                         <li> show_children: If @a tableName is a collection,
- *                 then 'true' will return information about the children of
- *                 the collection, and 'false' will return information about
- *                 the collection itself. If @a tableName is a child table,
- *                 'show_children' must be 'false'. If @a tableName is empty
- *                 then 'show_children' must be 'true'. Values: 'true',
+ *                 then @a true will return information about the children of
+ *                 the collection, and @a false will return information about
+ *                 the collection itself. If @a tableName is a table or view,
+ *                 @a show_children must be @a false. If @a tableName is empty,
+ *                 then @a show_children must be @a true. Values: 'true',
  *                 'false'.
  *                 </ul>
  *                   Default value is an empty std::map.

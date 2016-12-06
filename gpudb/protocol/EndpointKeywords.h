@@ -106,6 +106,19 @@ namespace gpudb
     extern const std::string create_join_table_refresh;
     extern const std::string create_join_table_refresh_method;
     
+    // Keywords for /create/proc request
+    extern const std::string create_proc_false;
+    extern const std::string create_proc_nondistributed;
+    extern const std::string create_proc_true;
+    
+    // Keywords for /create/projection request
+    extern const std::string create_projection_collection_name;
+    extern const std::string create_projection_expression;
+    extern const std::string create_projection_false;
+    extern const std::string create_projection_limit;
+    extern const std::string create_projection_order_by;
+    extern const std::string create_projection_true;
+    
     // Keywords for /create/table request
     extern const std::string create_table_collection_name;
     extern const std::string create_table_disallow_homogeneous_tables;
@@ -285,6 +298,27 @@ namespace gpudb
     extern const std::string revoke_permission_table_table_insert;
     extern const std::string revoke_permission_table_table_read;
     extern const std::string revoke_permission_table_table_update;
+    
+    // Keywords for /show/proc request
+    extern const std::string show_proc_include_files;
+    
+    // Keywords for /show/proc response
+    extern const std::string show_proc_nondistributed;
+    
+    // Keywords for /show/proc request and response
+    extern const std::string show_proc_false;
+    extern const std::string show_proc_true;
+    
+    // Keywords for /show/proc/status request
+    extern const std::string show_proc_status_clear_complete;
+    extern const std::string show_proc_status_false;
+    extern const std::string show_proc_status_true;
+    
+    // Keywords for /show/proc/status response
+    extern const std::string show_proc_status_complete;
+    extern const std::string show_proc_status_error;
+    extern const std::string show_proc_status_killed;
+    extern const std::string show_proc_status_running;
     
     // Keywords for /show/security response
     extern const std::string show_security_external_user;

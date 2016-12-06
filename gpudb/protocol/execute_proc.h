@@ -6,59 +6,80 @@
 #ifndef __EXECUTE_PROC_H__
 #define __EXECUTE_PROC_H__
 
+    /**
+     * @private
+     */
+
 namespace gpudb
 {
 
     /**
+     * @private
      * A set of input parameters for {@link
      * #executeProc(const ExecuteProcRequest&) const}.
      * <p>
-     * Executes a proc in the GPUdb Node.js proc server.
      */
     struct ExecuteProcRequest
     {
 
         /**
+         * @private
          * Constructs an ExecuteProcRequest object with default parameter
          * values.
          */
         ExecuteProcRequest() :
-            name(std::string()),
+            procName(std::string()),
             params(std::map<std::string, std::string>()),
             binParams(std::map<std::string, std::vector<uint8_t> >()),
+            inputTableNames(std::vector<std::string>()),
+            inputColumnNames(std::map<std::string, std::vector<std::string> >()),
+            outputTableNames(std::vector<std::string>()),
             options(std::map<std::string, std::string>())
         {
         }
 
         /**
+         * @private
          * Constructs an ExecuteProcRequest object with the specified
          * parameters.
          * 
-         * @param[in] name  Name of the proc to execute.
-         * @param[in] params  A map containing string parameters to pass to the
-         *                    proc. Each key/value pair specifies the name of a
-         *                    parameter and its value.
-         * @param[in] binParams  A map containing binary parameters to pass to
-         *                       the proc. Each key/value pair specifies the
-         *                       name of a parameter and its value.
-         * @param[in] options  Optional parameters.  Default value is an empty
-         *                     std::map.
+         * @param[in] procName
+         * @param[in] params
+         * @param[in] binParams
+         * @param[in] inputTableNames
+         * @param[in] inputColumnNames
+         * @param[in] outputTableNames
+         * @param[in] options
          * 
          */
-        ExecuteProcRequest(const std::string& name, const std::map<std::string, std::string>& params, const std::map<std::string, std::vector<uint8_t> >& binParams, const std::map<std::string, std::string>& options):
-            name(name),
+        ExecuteProcRequest(const std::string& procName, const std::map<std::string, std::string>& params, const std::map<std::string, std::vector<uint8_t> >& binParams, const std::vector<std::string>& inputTableNames, const std::map<std::string, std::vector<std::string> >& inputColumnNames, const std::vector<std::string>& outputTableNames, const std::map<std::string, std::string>& options):
+            procName(procName),
             params(params),
             binParams(binParams),
+            inputTableNames(inputTableNames),
+            inputColumnNames(inputColumnNames),
+            outputTableNames(outputTableNames),
             options(options)
         {
         }
 
-        std::string name;
+    /**
+     * @private
+     */
+
+        std::string procName;
         std::map<std::string, std::string> params;
         std::map<std::string, std::vector<uint8_t> > binParams;
+        std::vector<std::string> inputTableNames;
+        std::map<std::string, std::vector<std::string> > inputColumnNames;
+        std::vector<std::string> outputTableNames;
         std::map<std::string, std::string> options;
     };
 }
+
+    /**
+     * @private
+     */
 
 namespace avro
 {
@@ -66,9 +87,12 @@ namespace avro
     {
         static void encode(Encoder& e, const gpudb::ExecuteProcRequest& v)
         {
-            ::avro::encode(e, v.name);
+            ::avro::encode(e, v.procName);
             ::avro::encode(e, v.params);
             ::avro::encode(e, v.binParams);
+            ::avro::encode(e, v.inputTableNames);
+            ::avro::encode(e, v.inputColumnNames);
+            ::avro::encode(e, v.outputTableNames);
             ::avro::encode(e, v.options);
         }
 
@@ -83,7 +107,7 @@ namespace avro
                     switch (*it)
                     {
                         case 0:
-                            ::avro::decode(d, v.name);
+                            ::avro::decode(d, v.procName);
                             break;
 
                         case 1:
@@ -95,6 +119,18 @@ namespace avro
                             break;
 
                         case 3:
+                            ::avro::decode(d, v.inputTableNames);
+                            break;
+
+                        case 4:
+                            ::avro::decode(d, v.inputColumnNames);
+                            break;
+
+                        case 5:
+                            ::avro::decode(d, v.outputTableNames);
+                            break;
+
+                        case 6:
                             ::avro::decode(d, v.options);
                             break;
 
@@ -105,41 +141,55 @@ namespace avro
             }
             else
             {
-                ::avro::decode(d, v.name);
+                ::avro::decode(d, v.procName);
                 ::avro::decode(d, v.params);
                 ::avro::decode(d, v.binParams);
+                ::avro::decode(d, v.inputTableNames);
+                ::avro::decode(d, v.inputColumnNames);
+                ::avro::decode(d, v.outputTableNames);
                 ::avro::decode(d, v.options);
             }
         }
     };
 }
 
+    /**
+     * @private
+     */
+
 namespace gpudb
 {
 
     /**
+     * @private
      * A set of output parameters for {@link
      * #executeProc(const ExecuteProcRequest&) const}.
      * <p>
-     * Executes a proc in the GPUdb Node.js proc server.
      */
     struct ExecuteProcResponse
     {
 
         /**
+         * @private
          * Constructs an ExecuteProcResponse object with default parameter
          * values.
          */
         ExecuteProcResponse() :
-            results(std::map<std::string, std::string>()),
-            binResults(std::map<std::string, std::vector<uint8_t> >())
+            runId(std::string())
         {
         }
 
-        std::map<std::string, std::string> results;
-        std::map<std::string, std::vector<uint8_t> > binResults;
+    /**
+     * @private
+     */
+
+        std::string runId;
     };
 }
+
+    /**
+     * @private
+     */
 
 namespace avro
 {
@@ -147,8 +197,7 @@ namespace avro
     {
         static void encode(Encoder& e, const gpudb::ExecuteProcResponse& v)
         {
-            ::avro::encode(e, v.results);
-            ::avro::encode(e, v.binResults);
+            ::avro::encode(e, v.runId);
         }
 
         static void decode(Decoder& d, gpudb::ExecuteProcResponse& v)
@@ -162,11 +211,7 @@ namespace avro
                     switch (*it)
                     {
                         case 0:
-                            ::avro::decode(d, v.results);
-                            break;
-
-                        case 1:
-                            ::avro::decode(d, v.binResults);
+                            ::avro::decode(d, v.runId);
                             break;
 
                         default:
@@ -176,8 +221,7 @@ namespace avro
             }
             else
             {
-                ::avro::decode(d, v.results);
-                ::avro::decode(d, v.binResults);
+                ::avro::decode(d, v.runId);
             }
         }
     };

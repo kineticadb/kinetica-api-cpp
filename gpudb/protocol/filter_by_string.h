@@ -13,14 +13,57 @@ namespace gpudb
      * A set of input parameters for {@link
      * #filterByString(const FilterByStringRequest&) const}.
      * <p>
-     * Calculates which objects from a table, collection or view match a string
-     * expression for the given string columns. The 'mode' may be:
+     * Calculates which objects from a table, collection, or view match a
+     * string expression for the given string columns. The 'mode' may be:
 
      * * search : full text search query with wildcards and boolean operators,
      * e.g. '(bob* OR sue) AND NOT jane'. Note that for this mode, no column
      * can be specified in @a columnNames; GPUdb will search through all string
      * columns of the table that have text search enabled. Also, the first
-     * character of the regular expression cannot be a wildcard (* or ?).
+     * character of a search term cannot be a wildcard (* or ?), and search
+     * terms cannot be any of the following:  "a", "an", "and", "are", "as",
+     * "at", "be", "but", "by", "for", "if", "in", "into", "is", "it", "no",
+     * "not", "of", "on", "or", "such", "that", "the", "their", "then",
+     * "there", "these", "they", "this", "to", "was", "will", "with".
+     *     Search query types:
+     *         * Multiple search terms
+     *             ex. perfect union - will match any record containing
+     * "perfect", "union", or both.
+     *         * Exact phrases
+     *             ex. "Perfect Union" - will only match the exact phrase
+     * "Perfect Union"
+     *         * Boolean (NOT, AND, OR, parentheses. OR assumed if no operator
+     * specified)
+     *             ex. justice AND tranquility - will match only those records
+     * containing both justice and tranquility
+     *         * XOR (specified with -)
+     *             ex. justice - peace - will match records containing
+     * "justice" or "peace", but not both
+     *         * Zero or more char wildcard - (specified with *)
+     *             ex, est*is* - will match any records containing a word that
+     * starts with "est" and ends with "sh", such as "establish",
+     * "establishable", and "establishment"
+     *         * Exactly one char wildcard - (specified with ?)
+     *             ex. est???is* - will only match strings that start with
+     * "est", followed by exactly three letters, followed by "is", followed by
+     * one more letter.  This would only match "establish"
+     *         * Fuzzy search (term~)
+     *             ex. rear~ will match rear,fear,bear,read,etc.
+     *         * Proximity - match two words within a specified distance of
+     * eachother
+     *             ex. "Union Tranquility"~10 will match any record that has
+     * the words Union and Tranquility within 10 words of eachother
+     *         * Range - inclusive [<term1> TO <term2>] and exclusive {<term1>
+     * TO <term2>}.  Note: This is a string search, so numbers will be seen as
+     * a string of numeric characters, not as a number.  Ex. 2 > 123
+     *             ex. [100 TO 200] will find all strings between 100 and 200
+     * inclusive.
+     *             ex. {alpha to beta} will find all strings between alpha and
+     * beta, but not the words alpha or beta
+     *         * escaping special characters - Special characters are escaped
+     * with a backslash(\), special characters are: + - && || ! ( ) { } [ ] ^ "
+     * ~ * ? : \
+     * <p>
      * * equals: exact whole-string match (accelerated)
      * * contains: partial substring match (not accelerated).  If the column is
      * a string type (non-charN) and the number of records is too large, it
@@ -171,14 +214,57 @@ namespace gpudb
      * A set of output parameters for {@link
      * #filterByString(const FilterByStringRequest&) const}.
      * <p>
-     * Calculates which objects from a table, collection or view match a string
-     * expression for the given string columns. The 'mode' may be:
+     * Calculates which objects from a table, collection, or view match a
+     * string expression for the given string columns. The 'mode' may be:
 
      * * search : full text search query with wildcards and boolean operators,
      * e.g. '(bob* OR sue) AND NOT jane'. Note that for this mode, no column
      * can be specified in @a columnNames; GPUdb will search through all string
      * columns of the table that have text search enabled. Also, the first
-     * character of the regular expression cannot be a wildcard (* or ?).
+     * character of a search term cannot be a wildcard (* or ?), and search
+     * terms cannot be any of the following:  "a", "an", "and", "are", "as",
+     * "at", "be", "but", "by", "for", "if", "in", "into", "is", "it", "no",
+     * "not", "of", "on", "or", "such", "that", "the", "their", "then",
+     * "there", "these", "they", "this", "to", "was", "will", "with".
+     *     Search query types:
+     *         * Multiple search terms
+     *             ex. perfect union - will match any record containing
+     * "perfect", "union", or both.
+     *         * Exact phrases
+     *             ex. "Perfect Union" - will only match the exact phrase
+     * "Perfect Union"
+     *         * Boolean (NOT, AND, OR, parentheses. OR assumed if no operator
+     * specified)
+     *             ex. justice AND tranquility - will match only those records
+     * containing both justice and tranquility
+     *         * XOR (specified with -)
+     *             ex. justice - peace - will match records containing
+     * "justice" or "peace", but not both
+     *         * Zero or more char wildcard - (specified with *)
+     *             ex, est*is* - will match any records containing a word that
+     * starts with "est" and ends with "sh", such as "establish",
+     * "establishable", and "establishment"
+     *         * Exactly one char wildcard - (specified with ?)
+     *             ex. est???is* - will only match strings that start with
+     * "est", followed by exactly three letters, followed by "is", followed by
+     * one more letter.  This would only match "establish"
+     *         * Fuzzy search (term~)
+     *             ex. rear~ will match rear,fear,bear,read,etc.
+     *         * Proximity - match two words within a specified distance of
+     * eachother
+     *             ex. "Union Tranquility"~10 will match any record that has
+     * the words Union and Tranquility within 10 words of eachother
+     *         * Range - inclusive [<term1> TO <term2>] and exclusive {<term1>
+     * TO <term2>}.  Note: This is a string search, so numbers will be seen as
+     * a string of numeric characters, not as a number.  Ex. 2 > 123
+     *             ex. [100 TO 200] will find all strings between 100 and 200
+     * inclusive.
+     *             ex. {alpha to beta} will find all strings between alpha and
+     * beta, but not the words alpha or beta
+     *         * escaping special characters - Special characters are escaped
+     * with a backslash(\), special characters are: + - && || ! ( ) { } [ ] ^ "
+     * ~ * ? : \
+     * <p>
      * * equals: exact whole-string match (accelerated)
      * * contains: partial substring match (not accelerated).  If the column is
      * a string type (non-charN) and the number of records is too large, it

@@ -106,6 +106,19 @@ namespace gpudb
     const std::string create_join_table_refresh             ( "refresh"              );
     const std::string create_join_table_refresh_method      ( "refresh_method"       );
     
+    // Keywords for /create/proc request
+    const std::string create_proc_false         ( "false"          );
+    const std::string create_proc_nondistributed( "nondistributed" );
+    const std::string create_proc_true          ( "true"           );
+    
+    // Keywords for /create/projection request
+    const std::string create_projection_collection_name( "collection_name" );
+    const std::string create_projection_expression     ( "expression"      );
+    const std::string create_projection_false          ( "false"           );
+    const std::string create_projection_limit          ( "limit"           );
+    const std::string create_projection_order_by       ( "order_by"        );
+    const std::string create_projection_true           ( "true"            );
+    
     // Keywords for /create/table request
     const std::string create_table_collection_name            ( "collection_name"             );
     const std::string create_table_disallow_homogeneous_tables( "disallow_homogeneous_tables" );
@@ -285,6 +298,27 @@ namespace gpudb
     const std::string revoke_permission_table_table_insert( "table_insert" );
     const std::string revoke_permission_table_table_read  ( "table_read"   );
     const std::string revoke_permission_table_table_update( "table_update" );
+    
+    // Keywords for /show/proc request
+    const std::string show_proc_include_files( "include_files" );
+    
+    // Keywords for /show/proc response
+    const std::string show_proc_nondistributed( "nondistributed" );
+    
+    // Keywords for /show/proc request and response
+    const std::string show_proc_false( "false" );
+    const std::string show_proc_true ( "true"  );
+    
+    // Keywords for /show/proc/status request
+    const std::string show_proc_status_clear_complete( "clear_complete" );
+    const std::string show_proc_status_false         ( "false"          );
+    const std::string show_proc_status_true          ( "true"           );
+    
+    // Keywords for /show/proc/status response
+    const std::string show_proc_status_complete( "complete" );
+    const std::string show_proc_status_error   ( "error"    );
+    const std::string show_proc_status_killed  ( "killed"   );
+    const std::string show_proc_status_running ( "running"  );
     
     // Keywords for /show/security response
     const std::string show_security_external_user( "external_user" );
