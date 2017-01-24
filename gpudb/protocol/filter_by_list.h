@@ -47,31 +47,31 @@ namespace gpudb
          * Constructs a FilterByListRequest object with the specified
          * parameters.
          * 
-         * @param[in] tableName  Name of the table to filter.  This may be the
-         *                       ID of a collection, table or a result set (for
-         *                       chaining queries).  Collections may be
-         *                       filtered only if all tables within the
-         *                       collection have the same type ID.
-         * @param[in] viewName  If provided, then this will be the name of the
-         *                      view containing the results. Must not be an
-         *                      already existing collection, table or view.
-         *                      Default value is an empty string.
-         * @param[in] columnValuesMap  List of values for the corresponding
-         *                             column in the table
-         * @param[in] options  Optional parameters.
-         *                     <ul>
-         *                             <li> filter_mode: String indicating the
-         *                     filter mode, either 'in_list' or 'not_in_list'.
-         *                     Values: 'in_list', 'not_in_list'.
-         *                     </ul>
-         *                       Default value is an empty std::map.
+         * @param[in] tableName_  Name of the table to filter.  This may be the
+         *                        ID of a collection, table or a result set
+         *                        (for chaining queries).  Collections may be
+         *                        filtered only if all tables within the
+         *                        collection have the same type ID.
+         * @param[in] viewName_  If provided, then this will be the name of the
+         *                       view containing the results. Must not be an
+         *                       already existing collection, table or view.
+         *                       Default value is an empty string.
+         * @param[in] columnValuesMap_  List of values for the corresponding
+         *                              column in the table
+         * @param[in] options_  Optional parameters.
+         *                      <ul>
+         *                              <li> filter_mode: String indicating the
+         *                      filter mode, either 'in_list' or 'not_in_list'.
+         *                      Values: 'in_list', 'not_in_list'.
+         *                      </ul>
+         *                        Default value is an empty std::map.
          * 
          */
-        FilterByListRequest(const std::string& tableName, const std::string& viewName, const std::map<std::string, std::vector<std::string> >& columnValuesMap, const std::map<std::string, std::string>& options):
-            tableName(tableName),
-            viewName(viewName),
-            columnValuesMap(columnValuesMap),
-            options(options)
+        FilterByListRequest(const std::string& tableName_, const std::string& viewName_, const std::map<std::string, std::vector<std::string> >& columnValuesMap_, const std::map<std::string, std::string>& options_):
+            tableName( tableName_ ),
+            viewName( viewName_ ),
+            columnValuesMap( columnValuesMap_ ),
+            options( options_ )
         {
         }
 

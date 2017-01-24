@@ -43,35 +43,35 @@ namespace gpudb
          * Constructs a FilterByAreaRequest object with the specified
          * parameters.
          * 
-         * @param[in] tableName  Name of the table to filter.  This may be the
-         *                       name of a collection, a table or a view (when
-         *                       chaining queries).  Collections may be
-         *                       filtered only if all tables within the
-         *                       collection have the same type ID.
-         * @param[in] viewName  If provided, then this will be the name of the
-         *                      view containing the results. Must not be an
-         *                      already existing collection, table or view.
-         *                      Default value is an empty string.
-         * @param[in] xColumnName  Name of the column containing the x values
-         *                         to be filtered.
-         * @param[in] xVector  List of x coordinates of the vertices of the
-         *                     polygon representing the area to be filtered.
-         * @param[in] yColumnName  Name of the column containing the y values
-         *                         to be filtered.
-         * @param[in] yVector  List of y coordinates of the vertices of the
-         *                     polygon representing the area to be filtered.
-         * @param[in] options  Optional parameters.  Default value is an empty
-         *                     std::map.
+         * @param[in] tableName_  Name of the table to filter.  This may be the
+         *                        name of a collection, a table or a view (when
+         *                        chaining queries).  Collections may be
+         *                        filtered only if all tables within the
+         *                        collection have the same type ID.
+         * @param[in] viewName_  If provided, then this will be the name of the
+         *                       view containing the results. Must not be an
+         *                       already existing collection, table or view.
+         *                       Default value is an empty string.
+         * @param[in] xColumnName_  Name of the column containing the x values
+         *                          to be filtered.
+         * @param[in] xVector_  List of x coordinates of the vertices of the
+         *                      polygon representing the area to be filtered.
+         * @param[in] yColumnName_  Name of the column containing the y values
+         *                          to be filtered.
+         * @param[in] yVector_  List of y coordinates of the vertices of the
+         *                      polygon representing the area to be filtered.
+         * @param[in] options_  Optional parameters.  Default value is an empty
+         *                      std::map.
          * 
          */
-        FilterByAreaRequest(const std::string& tableName, const std::string& viewName, const std::string& xColumnName, const std::vector<double>& xVector, const std::string& yColumnName, const std::vector<double>& yVector, const std::map<std::string, std::string>& options):
-            tableName(tableName),
-            viewName(viewName),
-            xColumnName(xColumnName),
-            xVector(xVector),
-            yColumnName(yColumnName),
-            yVector(yVector),
-            options(options)
+        FilterByAreaRequest(const std::string& tableName_, const std::string& viewName_, const std::string& xColumnName_, const std::vector<double>& xVector_, const std::string& yColumnName_, const std::vector<double>& yVector_, const std::map<std::string, std::string>& options_):
+            tableName( tableName_ ),
+            viewName( viewName_ ),
+            xColumnName( xColumnName_ ),
+            xVector( xVector_ ),
+            yColumnName( yColumnName_ ),
+            yVector( yVector_ ),
+            options( options_ )
         {
         }
 

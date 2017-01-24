@@ -44,10 +44,10 @@ int main(int argc, char* argv[])
             for (double y = -90.0; y <= 90.0; y += 1.0)
             {
                 gpudb::GenericRecord record(newType);
-                record.asString("TRACKID") = boost::lexical_cast<std::string>(x);
-                record.asLong("TIMESTAMP") = t++;
-                record.asDouble("x") = x;
-                record.asDouble("y") = y;
+                record.stringValue("TRACKID") = boost::lexical_cast<std::string>(x);
+                record.longValue("TIMESTAMP") = t++;
+                record.doubleValue("x") = x;
+                record.doubleValue("y") = y;
                 data.push_back(record);
             }
         }
@@ -101,21 +101,7 @@ int main(int argc, char* argv[])
 
         for (size_t j=0;j<type.getColumnCount();++j)
         {
-            switch(type.getColumn(j).getType())
-            {
-            case gpudb::Type::Column::DOUBLE:
-                if (type.getColumn(j).isNullable())
-                    std::cout << record.value<boost::optional<double> >(j) << "\t";
-                else
-                    std::cout << record.value<double>(j) << "\t";
-                break;
-            case gpudb::Type::Column::LONG:
-                std::cout << record.value<int64_t>(j) << "\t";
-                break;
-            default:
-                std::cout << "<unable to print result>" << "\t";
-                break;
-            }
+            std::cout << record.toString(j) << "\t";
         }
         std::cout << std::endl;
     }
@@ -132,10 +118,10 @@ int main(int argc, char* argv[])
     for (size_t i = 0; i < gsoResponse.data.size(); ++i)
     {
         const gpudb::GenericRecord& record = gsoResponse.data[i];
-        std::cout << record.asString("TRACKID")
-                << " " << record.asLong("TIMESTAMP")
-                << " " << record.asDouble("x")
-                << " " << record.asDouble("y")
+        std::cout << record.toString("TRACKID")
+                << " " << record.toString("TIMESTAMP")
+                << " " << record.toString("x")
+                << " " << record.toString("y")
                 << std::endl;
     }
 
@@ -146,10 +132,10 @@ int main(int argc, char* argv[])
     for (size_t i = 0; i < gsoResponse2.data.size(); ++i)
     {
         gpudb::GenericRecord record = boost::any_cast<gpudb::GenericRecord>(gsoResponse2.data[i]);
-        std::cout << record.asString("TRACKID")
-                << " " << record.asLong("TIMESTAMP")
-                << " " << record.asDouble("x")
-                << " " << record.asDouble("y")
+        std::cout << record.toString("TRACKID")
+                << " " << record.toString("TIMESTAMP")
+                << " " << record.toString("x")
+                << " " << record.toString("y")
                 << std::endl;
     }
 
@@ -166,10 +152,10 @@ int main(int argc, char* argv[])
     for (size_t i = 0; i < grbcResponse.data.size(); ++i)
     {
         gpudb::GenericRecord& record = grbcResponse.data[i];
-        std::cout << record.asString("TRACKID")
-                << " " << record.asLong("TIMESTAMP")
-                << " " << record.asDouble("x")
-                << " " << record.asDouble("y")
+        std::cout << record.toString("TRACKID")
+                << " " << record.toString("TIMESTAMP")
+                << " " << record.toString("x")
+                << " " << record.toString("y")
                 << std::endl;
     }
 

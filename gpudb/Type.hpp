@@ -1,6 +1,8 @@
 #ifndef __GPUDB__TYPE_HPP__
 #define __GPUDB__TYPE_HPP__
 
+#include "ColumnProperties.h"
+
 #include <avro/Schema.hh>
 
 namespace gpudb

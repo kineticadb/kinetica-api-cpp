@@ -30,15 +30,15 @@ namespace gpudb
         /**
          * Constructs a HasTypeRequest object with the specified parameters.
          * 
-         * @param[in] typeId  Id of the type returned by GPUdb in response to
-         *                    /create/type request.
-         * @param[in] options  Optional parameters.  Default value is an empty
-         *                     std::map.
+         * @param[in] typeId_  Id of the type returned by GPUdb in response to
+         *                     /create/type request.
+         * @param[in] options_  Optional parameters.  Default value is an empty
+         *                      std::map.
          * 
          */
-        HasTypeRequest(const std::string& typeId, const std::map<std::string, std::string>& options):
-            typeId(typeId),
-            options(options)
+        HasTypeRequest(const std::string& typeId_, const std::map<std::string, std::string>& options_):
+            typeId( typeId_ ),
+            options( options_ )
         {
         }
 

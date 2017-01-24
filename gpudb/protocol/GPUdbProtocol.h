@@ -66,6 +66,7 @@
 #include "grant_permission_system.h"
 #include "grant_permission_table.h"
 #include "grant_role.h"
+#include "has_proc.h"
 #include "has_table.h"
 #include "has_type.h"
 #include "insert_records.h"

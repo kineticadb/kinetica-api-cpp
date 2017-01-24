@@ -51,51 +51,51 @@ namespace gpudb
          * Constructs a VisualizeVideoHeatmapRequest object with the specified
          * parameters.
          * 
-         * @param[in] tableNames
-         * @param[in] xColumnName
-         * @param[in] yColumnName
-         * @param[in] minX
-         * @param[in] maxX
-         * @param[in] minY
-         * @param[in] maxY
-         * @param[in] timeIntervals
-         * @param[in] width
-         * @param[in] height
-         * @param[in] projection  Values: 'EPSG:4326', 'PLATE_CARREE',
-         *                        '900913', 'EPSG:900913', '102100',
-         *                        'EPSG:102100', '3857', 'EPSG:3857',
-         *                        'WEB_MERCATOR'.
-         * @param[in] videoStyle
-         * @param[in] sessionKey
-         * @param[in] styleOptions
-         *                          <ul>
-         *                                  <li> colormap: Values: 'jet',
-         *                          'hot', 'hsv', 'gray', 'blues', 'greens',
-         *                          'greys', 'oranges', 'purples', 'reds'.
-         *                                  <li> blur_radius:
-         *                                  <li> bg_color:
-         *                                  <li> gradient_start_color:
-         *                                  <li> gradient_end_color:
-         *                          </ul>
-         * @param[in] options
+         * @param[in] tableNames_
+         * @param[in] xColumnName_
+         * @param[in] yColumnName_
+         * @param[in] minX_
+         * @param[in] maxX_
+         * @param[in] minY_
+         * @param[in] maxY_
+         * @param[in] timeIntervals_
+         * @param[in] width_
+         * @param[in] height_
+         * @param[in] projection_  Values: 'EPSG:4326', 'PLATE_CARREE',
+         *                         '900913', 'EPSG:900913', '102100',
+         *                         'EPSG:102100', '3857', 'EPSG:3857',
+         *                         'WEB_MERCATOR'.
+         * @param[in] videoStyle_
+         * @param[in] sessionKey_
+         * @param[in] styleOptions_
+         *                           <ul>
+         *                                   <li> colormap: Values: 'jet',
+         *                           'hot', 'hsv', 'gray', 'blues', 'greens',
+         *                           'greys', 'oranges', 'purples', 'reds'.
+         *                                   <li> blur_radius:
+         *                                   <li> bg_color:
+         *                                   <li> gradient_start_color:
+         *                                   <li> gradient_end_color:
+         *                           </ul>
+         * @param[in] options_
          * 
          */
-        VisualizeVideoHeatmapRequest(const std::vector<std::string>& tableNames, const std::string& xColumnName, const std::string& yColumnName, const double minX, const double maxX, const double minY, const double maxY, const std::vector<std::vector<double> >& timeIntervals, const int32_t width, const int32_t height, const std::string& projection, const std::string& videoStyle, const std::string& sessionKey, const std::map<std::string, std::string>& styleOptions, const std::map<std::string, std::string>& options):
-            tableNames(tableNames),
-            xColumnName(xColumnName),
-            yColumnName(yColumnName),
-            minX(minX),
-            maxX(maxX),
-            minY(minY),
-            maxY(maxY),
-            timeIntervals(timeIntervals),
-            width(width),
-            height(height),
-            projection(projection),
-            videoStyle(videoStyle),
-            sessionKey(sessionKey),
-            styleOptions(styleOptions),
-            options(options)
+        VisualizeVideoHeatmapRequest(const std::vector<std::string>& tableNames_, const std::string& xColumnName_, const std::string& yColumnName_, const double minX_, const double maxX_, const double minY_, const double maxY_, const std::vector<std::vector<double> >& timeIntervals_, const int32_t width_, const int32_t height_, const std::string& projection_, const std::string& videoStyle_, const std::string& sessionKey_, const std::map<std::string, std::string>& styleOptions_, const std::map<std::string, std::string>& options_):
+            tableNames( tableNames_ ),
+            xColumnName( xColumnName_ ),
+            yColumnName( yColumnName_ ),
+            minX( minX_ ),
+            maxX( maxX_ ),
+            minY( minY_ ),
+            maxY( maxY_ ),
+            timeIntervals( timeIntervals_ ),
+            width( width_ ),
+            height( height_ ),
+            projection( projection_ ),
+            videoStyle( videoStyle_ ),
+            sessionKey( sessionKey_ ),
+            styleOptions( styleOptions_ ),
+            options( options_ )
         {
         }
 

@@ -34,22 +34,23 @@ namespace gpudb
          * Constructs a RevokePermissionTableRequest object with the specified
          * parameters.
          * 
-         * @param[in] name  Name of the user or role from which the permission
-         *                  will be revoked. Must be an existing user or role.
-         * @param[in] permission  Permission to revoke from the user or role.
-         *                        Values: 'table_admin', 'table_insert',
-         *                        'table_update', 'table_delete', 'table_read'.
-         * @param[in] tableName  Name of the table to which the permission
-         *                       grants access. Must be an existing table,
-         *                       collection, or view.
-         * @param[in] options  Optional parameters.
+         * @param[in] name_  Name of the user or role from which the permission
+         *                   will be revoked. Must be an existing user or role.
+         * @param[in] permission_  Permission to revoke from the user or role.
+         *                         Values: 'table_admin', 'table_insert',
+         *                         'table_update', 'table_delete',
+         *                         'table_read'.
+         * @param[in] tableName_  Name of the table to which the permission
+         *                        grants access. Must be an existing table,
+         *                        collection, or view.
+         * @param[in] options_  Optional parameters.
          * 
          */
-        RevokePermissionTableRequest(const std::string& name, const std::string& permission, const std::string& tableName, const std::map<std::string, std::string>& options):
-            name(name),
-            permission(permission),
-            tableName(tableName),
-            options(options)
+        RevokePermissionTableRequest(const std::string& name_, const std::string& permission_, const std::string& tableName_, const std::map<std::string, std::string>& options_):
+            name( name_ ),
+            permission( permission_ ),
+            tableName( tableName_ ),
+            options( options_ )
         {
         }
 

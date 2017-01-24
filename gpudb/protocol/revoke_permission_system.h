@@ -33,18 +33,18 @@ namespace gpudb
          * Constructs a RevokePermissionSystemRequest object with the specified
          * parameters.
          * 
-         * @param[in] name  Name of the user or role from which the permission
-         *                  will be revoked. Must be an existing user or role.
-         * @param[in] permission  Permission to revoke from the user or role.
-         *                        Values: 'system_admin', 'system_write',
-         *                        'system_read'.
-         * @param[in] options  Optional parameters.
+         * @param[in] name_  Name of the user or role from which the permission
+         *                   will be revoked. Must be an existing user or role.
+         * @param[in] permission_  Permission to revoke from the user or role.
+         *                         Values: 'system_admin', 'system_write',
+         *                         'system_read'.
+         * @param[in] options_  Optional parameters.
          * 
          */
-        RevokePermissionSystemRequest(const std::string& name, const std::string& permission, const std::map<std::string, std::string>& options):
-            name(name),
-            permission(permission),
-            options(options)
+        RevokePermissionSystemRequest(const std::string& name_, const std::string& permission_, const std::map<std::string, std::string>& options_):
+            name( name_ ),
+            permission( permission_ ),
+            options( options_ )
         {
         }
 

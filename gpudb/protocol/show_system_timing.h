@@ -33,12 +33,12 @@ namespace gpudb
          * Constructs a ShowSystemTimingRequest object with the specified
          * parameters.
          * 
-         * @param[in] options  Optional parameters, currently unused.  Default
-         *                     value is an empty std::map.
+         * @param[in] options_  Optional parameters, currently unused.  Default
+         *                      value is an empty std::map.
          * 
          */
-        ShowSystemTimingRequest(const std::map<std::string, std::string>& options):
-            options(options)
+        ShowSystemTimingRequest(const std::map<std::string, std::string>& options_):
+            options( options_ )
         {
         }
 

@@ -75,106 +75,107 @@ namespace gpudb
          * Constructs a VisualizeVideoRequest object with the specified
          * parameters.
          * 
-         * @param[in] tableNames  Names of the tables containing the data for
-         *                        various layers of the resulting video.
-         * @param[in] worldTableNames  Optional name of the tables containing
-         *                             the data for the entire track when the
-         *                             @a tableNames contains only part of the
-         *                             track data, but the entire track has to
-         *                             be rendered. The number of tables should
-         *                             match the number of tables in the @a
-         *                             tableNames
-         * @param[in] trackIds  Tracks from the @a tableNames to be rendered.
-         * @param[in] xColumnName  Name of the column containing the x
-         *                         coordinates.
-         * @param[in] yColumnName  Name of the column containing the y
-         *                         coordinates.
-         * @param[in] minX  Lower bound for the x values.
-         * @param[in] maxX  Upper bound for the x values.
-         * @param[in] minY  Lower bound for the y values.
-         * @param[in] maxY  Upper bound for the y values.
-         * @param[in] width  Width of the generated image.
-         * @param[in] height  Height of the generated image.
-         * @param[in] projection  Spatial Reference System (i.e. EPSG Code).
-         *                        Values: 'EPSG:4326', 'PLATE_CARREE',
-         *                        '900913', 'EPSG:900913', '102100',
-         *                        'EPSG:102100', '3857', 'EPSG:3857',
-         *                        'WEB_MERCATOR'.
-         *                          Default value is 'PLATE_CARREE'.
-         * @param[in] bgColor  Background color of the generated image.
-         * @param[in] timeIntervals
-         * @param[in] videoStyle
-         * @param[in] sessionKey  User Provided session key that is later used
-         *                        to retrieve the generated video from the WMS.
-         * @param[in] styleOptions  Styling options for the image.
-         *                          <ul>
-         *                                  <li> do_points: Rasterize point
-         *                          data toggle. Values: 'true', 'false'.
-         *                                  <li> do_shapes: Rasterize shapes
-         *                          toggle. Values: 'true', 'false'.
-         *                                  <li> do_tracks: Rasterize tracks
-         *                          toggle. Values: 'true', 'false'.
-         *                                  <li> pointcolors: RGB color value
-         *                          in hex for the points.
-         *                                  <li> pointsizes: Size of points.
-         *                                  <li> pointshapes: Shape of the
-         *                          point. Values: 'none', 'circle', 'square',
-         *                          'diamond', 'hollowcircle', 'hollowsquare',
-         *                          'hollowdiamond', 'SYMBOLCODE'.
-         *                                  <li> shapelinewidths: Width of the
-         *                          lines.
-         *                                  <li> shapelinecolors: RGB color
-         *                          values in hex for the line.
-         *                                  <li> shapefillcolors: RGB color
-         *                          values in hex for the fill color of the
-         *                          shapes. Use '-1' for no fill.
-         *                                  <li> tracklinewidths: Width of the
-         *                          track lines. '0' implies do not draw track
-         *                          lines.
-         *                                  <li> tracklinecolors: RGB color
-         *                          values for the track lines.
-         *                                  <li> trackmarkersizes: Size of the
-         *                          track point markers.
-         *                                  <li> trackmarkercolors: Color of
-         *                          the track point markers.
-         *                                  <li> trackmarkershapes: Shape of
-         *                          track point markers. Values: 'none',
-         *                          'circle', 'square', 'diamond',
-         *                          'hollowcircle', 'hollowsquare',
-         *                          'hollowdiamond', 'SYMBOLCODE'.
-         *                                  <li> trackheadcolors: Color of
-         *                          track head markers.
-         *                                  <li> trackheadsizes: Size of track
-         *                          head markers.
-         *                                  <li> trackheadshapes: Shape of
-         *                          track head markers. Values: 'none',
-         *                          'circle', 'square', 'diamond',
-         *                          'hollowcircle', 'hollowsquare',
-         *                          'hollowdiamond', 'SYMBOLCODE'.
-         *                          </ul>
-         * @param[in] options  Optional parameters.  Default value is an empty
-         *                     std::map.
+         * @param[in] tableNames_  Names of the tables containing the data for
+         *                         various layers of the resulting video.
+         * @param[in] worldTableNames_  Optional name of the tables containing
+         *                              the data for the entire track when the
+         *                              @a tableNames contains only part of the
+         *                              track data, but the entire track has to
+         *                              be rendered. The number of tables
+         *                              should match the number of tables in
+         *                              the @a tableNames
+         * @param[in] trackIds_  Tracks from the @a tableNames to be rendered.
+         * @param[in] xColumnName_  Name of the column containing the x
+         *                          coordinates.
+         * @param[in] yColumnName_  Name of the column containing the y
+         *                          coordinates.
+         * @param[in] minX_  Lower bound for the x values.
+         * @param[in] maxX_  Upper bound for the x values.
+         * @param[in] minY_  Lower bound for the y values.
+         * @param[in] maxY_  Upper bound for the y values.
+         * @param[in] width_  Width of the generated image.
+         * @param[in] height_  Height of the generated image.
+         * @param[in] projection_  Spatial Reference System (i.e. EPSG Code).
+         *                         Values: 'EPSG:4326', 'PLATE_CARREE',
+         *                         '900913', 'EPSG:900913', '102100',
+         *                         'EPSG:102100', '3857', 'EPSG:3857',
+         *                         'WEB_MERCATOR'.
+         *                           Default value is 'PLATE_CARREE'.
+         * @param[in] bgColor_  Background color of the generated image.
+         * @param[in] timeIntervals_
+         * @param[in] videoStyle_
+         * @param[in] sessionKey_  User Provided session key that is later used
+         *                         to retrieve the generated video from the
+         *                         WMS.
+         * @param[in] styleOptions_  Styling options for the image.
+         *                           <ul>
+         *                                   <li> do_points: Rasterize point
+         *                           data toggle. Values: 'true', 'false'.
+         *                                   <li> do_shapes: Rasterize shapes
+         *                           toggle. Values: 'true', 'false'.
+         *                                   <li> do_tracks: Rasterize tracks
+         *                           toggle. Values: 'true', 'false'.
+         *                                   <li> pointcolors: RGB color value
+         *                           in hex for the points.
+         *                                   <li> pointsizes: Size of points.
+         *                                   <li> pointshapes: Shape of the
+         *                           point. Values: 'none', 'circle', 'square',
+         *                           'diamond', 'hollowcircle', 'hollowsquare',
+         *                           'hollowdiamond', 'SYMBOLCODE'.
+         *                                   <li> shapelinewidths: Width of the
+         *                           lines.
+         *                                   <li> shapelinecolors: RGB color
+         *                           values in hex for the line.
+         *                                   <li> shapefillcolors: RGB color
+         *                           values in hex for the fill color of the
+         *                           shapes. Use '-1' for no fill.
+         *                                   <li> tracklinewidths: Width of the
+         *                           track lines. '0' implies do not draw track
+         *                           lines.
+         *                                   <li> tracklinecolors: RGB color
+         *                           values for the track lines.
+         *                                   <li> trackmarkersizes: Size of the
+         *                           track point markers.
+         *                                   <li> trackmarkercolors: Color of
+         *                           the track point markers.
+         *                                   <li> trackmarkershapes: Shape of
+         *                           track point markers. Values: 'none',
+         *                           'circle', 'square', 'diamond',
+         *                           'hollowcircle', 'hollowsquare',
+         *                           'hollowdiamond', 'SYMBOLCODE'.
+         *                                   <li> trackheadcolors: Color of
+         *                           track head markers.
+         *                                   <li> trackheadsizes: Size of track
+         *                           head markers.
+         *                                   <li> trackheadshapes: Shape of
+         *                           track head markers. Values: 'none',
+         *                           'circle', 'square', 'diamond',
+         *                           'hollowcircle', 'hollowsquare',
+         *                           'hollowdiamond', 'SYMBOLCODE'.
+         *                           </ul>
+         * @param[in] options_  Optional parameters.  Default value is an empty
+         *                      std::map.
          * 
          */
-        VisualizeVideoRequest(const std::vector<std::string>& tableNames, const std::vector<std::string>& worldTableNames, const std::vector<std::vector<std::string> >& trackIds, const std::string& xColumnName, const std::string& yColumnName, const double minX, const double maxX, const double minY, const double maxY, const int32_t width, const int32_t height, const std::string& projection, const int64_t bgColor, const std::vector<std::vector<double> >& timeIntervals, const std::string& videoStyle, const std::string& sessionKey, const std::map<std::string, std::vector<std::string> >& styleOptions, const std::map<std::string, std::string>& options):
-            tableNames(tableNames),
-            worldTableNames(worldTableNames),
-            trackIds(trackIds),
-            xColumnName(xColumnName),
-            yColumnName(yColumnName),
-            minX(minX),
-            maxX(maxX),
-            minY(minY),
-            maxY(maxY),
-            width(width),
-            height(height),
-            projection(projection),
-            bgColor(bgColor),
-            timeIntervals(timeIntervals),
-            videoStyle(videoStyle),
-            sessionKey(sessionKey),
-            styleOptions(styleOptions),
-            options(options)
+        VisualizeVideoRequest(const std::vector<std::string>& tableNames_, const std::vector<std::string>& worldTableNames_, const std::vector<std::vector<std::string> >& trackIds_, const std::string& xColumnName_, const std::string& yColumnName_, const double minX_, const double maxX_, const double minY_, const double maxY_, const int32_t width_, const int32_t height_, const std::string& projection_, const int64_t bgColor_, const std::vector<std::vector<double> >& timeIntervals_, const std::string& videoStyle_, const std::string& sessionKey_, const std::map<std::string, std::vector<std::string> >& styleOptions_, const std::map<std::string, std::string>& options_):
+            tableNames( tableNames_ ),
+            worldTableNames( worldTableNames_ ),
+            trackIds( trackIds_ ),
+            xColumnName( xColumnName_ ),
+            yColumnName( yColumnName_ ),
+            minX( minX_ ),
+            maxX( maxX_ ),
+            minY( minY_ ),
+            maxY( maxY_ ),
+            width( width_ ),
+            height( height_ ),
+            projection( projection_ ),
+            bgColor( bgColor_ ),
+            timeIntervals( timeIntervals_ ),
+            videoStyle( videoStyle_ ),
+            sessionKey( sessionKey_ ),
+            styleOptions( styleOptions_ ),
+            options( options_ )
         {
         }
 

@@ -53,35 +53,35 @@ namespace gpudb
          * Constructs a CreateTriggerByAreaRequest object with the specified
          * parameters.
          * 
-         * @param[in] requestId  ID for the trigger to be activated.
-         * @param[in] tableNames  Names of the tables on which the trigger will
-         *                        be activated and maintained.
-         * @param[in] xColumnName  Name of a numeric column on which the
-         *                         trigger is activated. Usually 'x' for
-         *                         geospatial data points.
-         * @param[in] xVector  The respective coordinate values for the region
-         *                     on which the trigger is activated. This usually
-         *                     translates to the x-coordinates of a geospatial
-         *                     region.
-         * @param[in] yColumnName  Name of a second numeric column on which the
-         *                         trigger is activated. Usually 'y' for
-         *                         geospatial data points.
-         * @param[in] yVector  The respective coordinate values for the region
-         *                     on which the trigger is activated. This usually
-         *                     translates to the y-coordinates of a geospatial
-         *                     region. Must be the same length as xvals.
-         * @param[in] options  Optional parameters.  Default value is an empty
-         *                     std::map.
+         * @param[in] requestId_  ID for the trigger to be activated.
+         * @param[in] tableNames_  Names of the tables on which the trigger
+         *                         will be activated and maintained.
+         * @param[in] xColumnName_  Name of a numeric column on which the
+         *                          trigger is activated. Usually 'x' for
+         *                          geospatial data points.
+         * @param[in] xVector_  The respective coordinate values for the region
+         *                      on which the trigger is activated. This usually
+         *                      translates to the x-coordinates of a geospatial
+         *                      region.
+         * @param[in] yColumnName_  Name of a second numeric column on which
+         *                          the trigger is activated. Usually 'y' for
+         *                          geospatial data points.
+         * @param[in] yVector_  The respective coordinate values for the region
+         *                      on which the trigger is activated. This usually
+         *                      translates to the y-coordinates of a geospatial
+         *                      region. Must be the same length as xvals.
+         * @param[in] options_  Optional parameters.  Default value is an empty
+         *                      std::map.
          * 
          */
-        CreateTriggerByAreaRequest(const std::string& requestId, const std::vector<std::string>& tableNames, const std::string& xColumnName, const std::vector<double>& xVector, const std::string& yColumnName, const std::vector<double>& yVector, const std::map<std::string, std::string>& options):
-            requestId(requestId),
-            tableNames(tableNames),
-            xColumnName(xColumnName),
-            xVector(xVector),
-            yColumnName(yColumnName),
-            yVector(yVector),
-            options(options)
+        CreateTriggerByAreaRequest(const std::string& requestId_, const std::vector<std::string>& tableNames_, const std::string& xColumnName_, const std::vector<double>& xVector_, const std::string& yColumnName_, const std::vector<double>& yVector_, const std::map<std::string, std::string>& options_):
+            requestId( requestId_ ),
+            tableNames( tableNames_ ),
+            xColumnName( xColumnName_ ),
+            xVector( xVector_ ),
+            yColumnName( yColumnName_ ),
+            yVector( yVector_ ),
+            options( options_ )
         {
         }
 

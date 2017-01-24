@@ -34,19 +34,19 @@ namespace gpudb
          * Constructs a CreateUserInternalRequest object with the specified
          * parameters.
          * 
-         * @param[in] name  Name of the user to be created. Must contain only
-         *                  lowercase letters, digits, and underscores, and
-         *                  cannot begin with a digit. Must not be the same
-         *                  name as an existing user or role in GPUdb.
-         * @param[in] password  Initial password of the user to be created. May
-         *                      be an empty string for no password.
-         * @param[in] options  Optional parameters.
+         * @param[in] name_  Name of the user to be created. Must contain only
+         *                   lowercase letters, digits, and underscores, and
+         *                   cannot begin with a digit. Must not be the same
+         *                   name as an existing user or role in GPUdb.
+         * @param[in] password_  Initial password of the user to be created.
+         *                       May be an empty string for no password.
+         * @param[in] options_  Optional parameters.
          * 
          */
-        CreateUserInternalRequest(const std::string& name, const std::string& password, const std::map<std::string, std::string>& options):
-            name(name),
-            password(password),
-            options(options)
+        CreateUserInternalRequest(const std::string& name_, const std::string& password_, const std::map<std::string, std::string>& options_):
+            name( name_ ),
+            password( password_ ),
+            options( options_ )
         {
         }
 

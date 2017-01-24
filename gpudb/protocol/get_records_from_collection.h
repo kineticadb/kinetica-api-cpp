@@ -43,34 +43,34 @@ namespace gpudb
          * Constructs a GetRecordsFromCollectionRequest object with the
          * specified parameters.
          * 
-         * @param[in] tableName  Name of the collection or table from which
-         *                       records are to be retrieved. Must be an
-         *                       existing collection or table.
-         * @param[in] offset  A positive integer indicating the number of
-         *                    initial results to skip (this can be useful for
-         *                    paging through the results).  Default value is 0.
-         *                    The minimum allowed value is 0. The maximum
-         *                    allowed value is MAX_INT.
-         * @param[in] limit  A positive integer indicating the maximum number
-         *                   of results to be returned, or END_OF_SET (-9999)
-         *                   to indicate that the max number of results should
-         *                   be returned.  Default value is 10000.
-         * @param[in] options
-         *                     <ul>
-         *                             <li> return_record_ids: If 'true' then
-         *                     return GPUdb's internal record id along with
-         *                     each returned record. Default is 'false'.
-         *                     Values: 'true', 'false'.
-         *                     </ul>
-         *                       Default value is an empty std::map.
+         * @param[in] tableName_  Name of the collection or table from which
+         *                        records are to be retrieved. Must be an
+         *                        existing collection or table.
+         * @param[in] offset_  A positive integer indicating the number of
+         *                     initial results to skip (this can be useful for
+         *                     paging through the results).  Default value is
+         *                     0. The minimum allowed value is 0. The maximum
+         *                     allowed value is MAX_INT.
+         * @param[in] limit_  A positive integer indicating the maximum number
+         *                    of results to be returned, or END_OF_SET (-9999)
+         *                    to indicate that the max number of results should
+         *                    be returned.  Default value is 10000.
+         * @param[in] options_
+         *                      <ul>
+         *                              <li> return_record_ids: If 'true' then
+         *                      return GPUdb's internal record id along with
+         *                      each returned record. Default is 'false'.
+         *                      Values: 'true', 'false'.
+         *                      </ul>
+         *                        Default value is an empty std::map.
          * 
          */
-        GetRecordsFromCollectionRequest(const std::string& tableName, const int64_t offset, const int64_t limit, const std::map<std::string, std::string>& options):
-            tableName(tableName),
-            offset(offset),
-            limit(limit),
-            encoding("binary"),
-            options(options)
+        GetRecordsFromCollectionRequest(const std::string& tableName_, const int64_t offset_, const int64_t limit_, const std::map<std::string, std::string>& options_):
+            tableName( tableName_ ),
+            offset( offset_ ),
+            limit( limit_ ),
+            encoding( "binary" ),
+            options( options_ )
         {
         }
 
@@ -78,38 +78,38 @@ namespace gpudb
          * Constructs a GetRecordsFromCollectionRequest object with the
          * specified parameters.
          * 
-         * @param[in] tableName  Name of the collection or table from which
-         *                       records are to be retrieved. Must be an
-         *                       existing collection or table.
-         * @param[in] offset  A positive integer indicating the number of
-         *                    initial results to skip (this can be useful for
-         *                    paging through the results).  Default value is 0.
-         *                    The minimum allowed value is 0. The maximum
-         *                    allowed value is MAX_INT.
-         * @param[in] limit  A positive integer indicating the maximum number
-         *                   of results to be returned, or END_OF_SET (-9999)
-         *                   to indicate that the max number of results should
-         *                   be returned.  Default value is 10000.
-         * @param[in] encoding  Specifies the encoding for returned records;
-         *                      either 'binary' or 'json'. Values: 'binary',
-         *                      'json'.
-         *                        Default value is 'binary'.
-         * @param[in] options
-         *                     <ul>
-         *                             <li> return_record_ids: If 'true' then
-         *                     return GPUdb's internal record id along with
-         *                     each returned record. Default is 'false'.
-         *                     Values: 'true', 'false'.
-         *                     </ul>
-         *                       Default value is an empty std::map.
+         * @param[in] tableName_  Name of the collection or table from which
+         *                        records are to be retrieved. Must be an
+         *                        existing collection or table.
+         * @param[in] offset_  A positive integer indicating the number of
+         *                     initial results to skip (this can be useful for
+         *                     paging through the results).  Default value is
+         *                     0. The minimum allowed value is 0. The maximum
+         *                     allowed value is MAX_INT.
+         * @param[in] limit_  A positive integer indicating the maximum number
+         *                    of results to be returned, or END_OF_SET (-9999)
+         *                    to indicate that the max number of results should
+         *                    be returned.  Default value is 10000.
+         * @param[in] encoding_  Specifies the encoding for returned records;
+         *                       either 'binary' or 'json'. Values: 'binary',
+         *                       'json'.
+         *                         Default value is 'binary'.
+         * @param[in] options_
+         *                      <ul>
+         *                              <li> return_record_ids: If 'true' then
+         *                      return GPUdb's internal record id along with
+         *                      each returned record. Default is 'false'.
+         *                      Values: 'true', 'false'.
+         *                      </ul>
+         *                        Default value is an empty std::map.
          * 
          */
-        GetRecordsFromCollectionRequest(const std::string& tableName, const int64_t offset, const int64_t limit, const std::string& encoding, const std::map<std::string, std::string>& options):
-            tableName(tableName),
-            offset(offset),
-            limit(limit),
-            encoding(encoding),
-            options(options)
+        GetRecordsFromCollectionRequest(const std::string& tableName_, const int64_t offset_, const int64_t limit_, const std::string& encoding_, const std::map<std::string, std::string>& options_):
+            tableName( tableName_ ),
+            offset( offset_ ),
+            limit( limit_ ),
+            encoding( encoding_ ),
+            options( options_ )
         {
         }
 

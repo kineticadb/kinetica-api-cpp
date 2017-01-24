@@ -13,15 +13,17 @@ namespace gpudb
      * A set of input parameters for {@link
      * #createTable(const CreateTableRequest&) const}.
      * <p>
-     * Creates a new table or collection in GPUdb. If a new table is being
-     * created then type of the table is given by @a typeId which must the be
-     * the type id of a currently registered type (i.e. one created via {@link
+     * Creates a new table or collection. If a new table is being created, the
+     * type of the table is given by @a typeId, which must the be the ID of a
+     * currently registered type (i.e. one created via {@link
      * #createType(const CreateTypeRequest&) const}). The table will be
-     * created inside a collection if the option *collection_name* is
-     * specified. If that collection does not already exist then it will be
-     * created. To create a new, empty collection specify the collection name
-     * in @a tableName, leave @a typeId blank, and set the *is_collection*
-     * option to 'true'.
+     * created inside a collection if the option @a collection_name is
+     * specified. If that collection does not already exist, it will be
+     * created.
+
+     * To create a new collection, specify the name of the collection in @a
+     * tableName and set the @a is_collection option to @a true; @a typeId will
+     * be ignored.
      */
     struct CreateTableRequest
     {
@@ -41,61 +43,63 @@ namespace gpudb
          * Constructs a CreateTableRequest object with the specified
          * parameters.
          * 
-         * @param[in] tableName  Name of the table to be created. Must not be
-         *                       the name of a currently existing GPUdb table
-         *                       of a different type.  Error for requests with
-         *                       existing table of the same name and type id
-         *                       may be suppressed by using the @a
-         *                       no_error_if_exists option.  Cannot be an empty
-         *                       string.  Valid characters are
-         *                       'A-Za-z0-9_-(){}[] .:' (excluding the single
-         *                       quote), with the first character being one of
-         *                       'A-Za-z0-9_'.  The maximum length is 256
-         *                       characters.
-         * @param[in] typeId  ID of a currently registered type in GPUdb. All
-         *                    objects added to the newly created table will be
-         *                    of this type.  Must be an empty string if the
-         *                    *is_collection* is 'true'.
-         * @param[in] options  Optional parameters.
-         *                     <ul>
-         *                             <li> no_error_if_exists: If @a true,
-         *                     prevents an error from occurring if the table
-         *                     already exists and is of the given type.  If a
-         *                     table with the same ID but a different type
-         *                     exists, it is still an error. Values: 'true',
-         *                     'false'.
-         *                             <li> collection_name: Name of a
-         *                     collection which is to contain the newly created
-         *                     table. If empty, then the newly created table
-         *                     will be a top-level table. If the collection
-         *                     does not allow duplicate types and it contains a
-         *                     table of the same type as the given one, then
-         *                     this table creation request will fail.
-         *                             <li> is_collection: Indicates whether
-         *                     the new table to be created will be a
-         *                     collection. Values: 'true', 'false'.
-         *                             <li> disallow_homogeneous_tables: For a
-         *                     collection, indicates whether the collection
-         *                     prohibits containment of multiple tables of
-         *                     exactly the same data type. Values: 'true',
-         *                     'false'.
-         *                             <li> is_replicated: For a table,
-         *                     indicates whether the table is to be replicated
-         *                     to all the database ranks. This may be necessary
-         *                     when the table is to be joined with other tables
-         *                     in a query. Values: 'true', 'false'.
-         *                             <li> foreign_keys: Semicolon-separated
-         *                     list of foreign key constraints, of the format
-         *                     'source_column references
-         *                     target_table(primary_key_column)'.
-         *                     </ul>
-         *                       Default value is an empty std::map.
+         * @param[in] tableName_  Name of the table to be created. Must not be
+         *                        the name of a currently existing table of a
+         *                        different type.  Error for requests with
+         *                        existing table of the same name and type id
+         *                        may be suppressed by using the @a
+         *                        no_error_if_exists option.  Cannot be an
+         *                        empty string.  Valid characters are
+         *                        alphanumeric or any of '_-(){}[] .:'
+         *                        (excluding the single quotes), with the first
+         *                        character being alphanumeric or an
+         *                        underscore.  The maximum length is 256
+         *                        characters.
+         * @param[in] typeId_  ID of a currently registered type. All objects
+         *                     added to the newly created table will be of this
+         *                     type.  Ignored if @a is_collection is @a true.
+         * @param[in] options_  Optional parameters.
+         *                      <ul>
+         *                              <li> no_error_if_exists: If @a true,
+         *                      prevents an error from occurring if the table
+         *                      already exists and is of the given type.  If a
+         *                      table with the same ID but a different type
+         *                      exists, it is still an error. Values: 'true',
+         *                      'false'.
+         *                              <li> collection_name: Name of a
+         *                      collection which is to contain the newly
+         *                      created table. If empty, then the newly created
+         *                      table will be a top-level table. If the
+         *                      collection does not allow duplicate types and
+         *                      it contains a table of the same type as the
+         *                      given one, then this table creation request
+         *                      will fail.
+         *                              <li> is_collection: Indicates whether
+         *                      the new table to be created will be a
+         *                      collection. Values: 'true', 'false'.
+         *                              <li> disallow_homogeneous_tables: For a
+         *                      collection, indicates whether the collection
+         *                      prohibits containment of multiple tables of
+         *                      exactly the same data type. Values: 'true',
+         *                      'false'.
+         *                              <li> is_replicated: For a table,
+         *                      indicates whether the table is to be replicated
+         *                      to all the database ranks. This may be
+         *                      necessary when the table is to be joined with
+         *                      other tables in a query. Values: 'true',
+         *                      'false'.
+         *                              <li> foreign_keys: Semicolon-separated
+         *                      list of foreign key constraints, of the format
+         *                      'source_column references
+         *                      target_table(primary_key_column)'.
+         *                      </ul>
+         *                        Default value is an empty std::map.
          * 
          */
-        CreateTableRequest(const std::string& tableName, const std::string& typeId, const std::map<std::string, std::string>& options):
-            tableName(tableName),
-            typeId(typeId),
-            options(options)
+        CreateTableRequest(const std::string& tableName_, const std::string& typeId_, const std::map<std::string, std::string>& options_):
+            tableName( tableName_ ),
+            typeId( typeId_ ),
+            options( options_ )
         {
         }
 
@@ -160,15 +164,17 @@ namespace gpudb
      * A set of output parameters for {@link
      * #createTable(const CreateTableRequest&) const}.
      * <p>
-     * Creates a new table or collection in GPUdb. If a new table is being
-     * created then type of the table is given by @a typeId which must the be
-     * the type id of a currently registered type (i.e. one created via {@link
+     * Creates a new table or collection. If a new table is being created, the
+     * type of the table is given by @a typeId, which must the be the ID of a
+     * currently registered type (i.e. one created via {@link
      * #createType(const CreateTypeRequest&) const}). The table will be
-     * created inside a collection if the option *collection_name* is
-     * specified. If that collection does not already exist then it will be
-     * created. To create a new, empty collection specify the collection name
-     * in @a tableName, leave @a typeId blank, and set the *is_collection*
-     * option to 'true'.
+     * created inside a collection if the option @a collection_name is
+     * specified. If that collection does not already exist, it will be
+     * created.
+
+     * To create a new collection, specify the name of the collection in @a
+     * tableName and set the @a is_collection option to @a true; @a typeId will
+     * be ignored.
      */
     struct CreateTableResponse
     {

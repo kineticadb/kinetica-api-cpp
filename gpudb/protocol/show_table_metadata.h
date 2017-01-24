@@ -32,16 +32,16 @@ namespace gpudb
          * Constructs a ShowTableMetadataRequest object with the specified
          * parameters.
          * 
-         * @param[in] tableNames  Tables whose metadata will be fetched. All
-         *                        provided tables must exist in GPUdb, or GPUdb
-         *                        returns an error.
-         * @param[in] options  Optional parameters.  Default value is an empty
-         *                     std::map.
+         * @param[in] tableNames_  Tables whose metadata will be fetched. All
+         *                         provided tables must exist in GPUdb, or
+         *                         GPUdb returns an error.
+         * @param[in] options_  Optional parameters.  Default value is an empty
+         *                      std::map.
          * 
          */
-        ShowTableMetadataRequest(const std::vector<std::string>& tableNames, const std::map<std::string, std::string>& options):
-            tableNames(tableNames),
-            options(options)
+        ShowTableMetadataRequest(const std::vector<std::string>& tableNames_, const std::map<std::string, std::string>& options_):
+            tableNames( tableNames_ ),
+            options( options_ )
         {
         }
 

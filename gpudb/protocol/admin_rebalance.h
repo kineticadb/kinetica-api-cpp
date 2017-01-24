@@ -38,13 +38,13 @@ namespace gpudb
          * Constructs an AdminRebalanceRequest object with the specified
          * parameters.
          * 
-         * @param[in] tableNames
-         * @param[in] options
+         * @param[in] tableNames_
+         * @param[in] options_
          * 
          */
-        AdminRebalanceRequest(const std::vector<std::string>& tableNames, const std::map<std::string, std::string>& options):
-            tableNames(tableNames),
-            options(options)
+        AdminRebalanceRequest(const std::vector<std::string>& tableNames_, const std::map<std::string, std::string>& options_):
+            tableNames( tableNames_ ),
+            options( options_ )
         {
         }
 

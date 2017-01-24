@@ -33,18 +33,18 @@ namespace gpudb
          * Constructs a GrantPermissionSystemRequest object with the specified
          * parameters.
          * 
-         * @param[in] name  Name of the user or role to which the permission
-         *                  will be granted. Must be an existing user or role.
-         * @param[in] permission  Permission to grant to the user or role.
-         *                        Values: 'system_admin', 'system_write',
-         *                        'system_read'.
-         * @param[in] options  Optional parameters.
+         * @param[in] name_  Name of the user or role to which the permission
+         *                   will be granted. Must be an existing user or role.
+         * @param[in] permission_  Permission to grant to the user or role.
+         *                         Values: 'system_admin', 'system_write',
+         *                         'system_read'.
+         * @param[in] options_  Optional parameters.
          * 
          */
-        GrantPermissionSystemRequest(const std::string& name, const std::string& permission, const std::map<std::string, std::string>& options):
-            name(name),
-            permission(permission),
-            options(options)
+        GrantPermissionSystemRequest(const std::string& name_, const std::string& permission_, const std::map<std::string, std::string>& options_):
+            name( name_ ),
+            permission( permission_ ),
+            options( options_ )
         {
         }
 

@@ -69,28 +69,28 @@ namespace gpudb
         /**
          * Constructs a CreateTypeRequest object with the specified parameters.
          * 
-         * @param[in] typeDefinition  a JSON string describing the columns of
-         *                            the type to be registered.
-         * @param[in] label  A user-defined description string which can be
-         *                   used to differentiate between tables and types
-         *                   with otherwise identical schemas.
-         * @param[in] properties  Each key-value pair specifies the properties
-         *                        to use for a given column where the key is
-         *                        the column name.  All keys used must be
-         *                        relevant column names for the given table.
-         *                        Specifying any property overrides the default
-         *                        properties for that column (which is based on
-         *                        the column's data type).  Default value is an
-         *                        empty std::map.
-         * @param[in] options  Optional parameters.  Default value is an empty
-         *                     std::map.
+         * @param[in] typeDefinition_  a JSON string describing the columns of
+         *                             the type to be registered.
+         * @param[in] label_  A user-defined description string which can be
+         *                    used to differentiate between tables and types
+         *                    with otherwise identical schemas.
+         * @param[in] properties_  Each key-value pair specifies the properties
+         *                         to use for a given column where the key is
+         *                         the column name.  All keys used must be
+         *                         relevant column names for the given table.
+         *                         Specifying any property overrides the
+         *                         default properties for that column (which is
+         *                         based on the column's data type).  Default
+         *                         value is an empty std::map.
+         * @param[in] options_  Optional parameters.  Default value is an empty
+         *                      std::map.
          * 
          */
-        CreateTypeRequest(const std::string& typeDefinition, const std::string& label, const std::map<std::string, std::vector<std::string> >& properties, const std::map<std::string, std::string>& options):
-            typeDefinition(typeDefinition),
-            label(label),
-            properties(properties),
-            options(options)
+        CreateTypeRequest(const std::string& typeDefinition_, const std::string& label_, const std::map<std::string, std::vector<std::string> >& properties_, const std::map<std::string, std::string>& options_):
+            typeDefinition( typeDefinition_ ),
+            label( label_ ),
+            properties( properties_ ),
+            options( options_ )
         {
         }
 

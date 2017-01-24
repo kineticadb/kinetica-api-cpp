@@ -6,24 +6,19 @@
 #ifndef __SHOW_PROC_H__
 #define __SHOW_PROC_H__
 
-    /**
-     * @private
-     */
-
 namespace gpudb
 {
 
     /**
-     * @private
      * A set of input parameters for {@link
      * #showProc(const ShowProcRequest&) const}.
      * <p>
+     * Shows information about a proc.
      */
     struct ShowProcRequest
     {
 
         /**
-         * @private
          * Constructs a ShowProcRequest object with default parameter values.
          */
         ShowProcRequest() :
@@ -33,35 +28,33 @@ namespace gpudb
         }
 
         /**
-         * @private
          * Constructs a ShowProcRequest object with the specified parameters.
          * 
-         * @param[in] procName
-         * @param[in] options
-         *                     <ul>
-         *                             <li> include_files: Values: 'true',
-         *                     'false'.
-         *                     </ul>
+         * @param[in] procName_  Name of the proc to show information about. If
+         *                       specified, must be the name of a currently
+         *                       existing proc. If not specified, information
+         *                       about all procs will be returned.  Default
+         *                       value is an empty string.
+         * @param[in] options_  Optional parameters.
+         *                      <ul>
+         *                              <li> include_files: If set to @a true,
+         *                      the files that make up the proc will be
+         *                      returned. If set to @a false, the files will
+         *                      not be returned. Values: 'true', 'false'.
+         *                      </ul>
+         *                        Default value is an empty std::map.
          * 
          */
-        ShowProcRequest(const std::string& procName, const std::map<std::string, std::string>& options):
-            procName(procName),
-            options(options)
+        ShowProcRequest(const std::string& procName_, const std::map<std::string, std::string>& options_):
+            procName( procName_ ),
+            options( options_ )
         {
         }
-
-    /**
-     * @private
-     */
 
         std::string procName;
         std::map<std::string, std::string> options;
     };
 }
-
-    /**
-     * @private
-     */
 
 namespace avro
 {
@@ -105,50 +98,39 @@ namespace avro
     };
 }
 
-    /**
-     * @private
-     */
-
 namespace gpudb
 {
 
     /**
-     * @private
      * A set of output parameters for {@link
      * #showProc(const ShowProcRequest&) const}.
      * <p>
+     * Shows information about a proc.
      */
     struct ShowProcResponse
     {
 
         /**
-         * @private
          * Constructs a ShowProcResponse object with default parameter values.
          */
         ShowProcResponse() :
             procNames(std::vector<std::string>()),
+            executionModes(std::vector<std::string>()),
             files(std::vector<std::map<std::string, std::vector<uint8_t> > >()),
             commands(std::vector<std::string>()),
             args(std::vector<std::vector<std::string> >()),
-            additionalInfo(std::vector<std::map<std::string, std::string> >())
+            options(std::vector<std::map<std::string, std::string> >())
         {
         }
 
-    /**
-     * @private
-     */
-
         std::vector<std::string> procNames;
+        std::vector<std::string> executionModes;
         std::vector<std::map<std::string, std::vector<uint8_t> > > files;
         std::vector<std::string> commands;
         std::vector<std::vector<std::string> > args;
-        std::vector<std::map<std::string, std::string> > additionalInfo;
+        std::vector<std::map<std::string, std::string> > options;
     };
 }
-
-    /**
-     * @private
-     */
 
 namespace avro
 {
@@ -157,10 +139,11 @@ namespace avro
         static void encode(Encoder& e, const gpudb::ShowProcResponse& v)
         {
             ::avro::encode(e, v.procNames);
+            ::avro::encode(e, v.executionModes);
             ::avro::encode(e, v.files);
             ::avro::encode(e, v.commands);
             ::avro::encode(e, v.args);
-            ::avro::encode(e, v.additionalInfo);
+            ::avro::encode(e, v.options);
         }
 
         static void decode(Decoder& d, gpudb::ShowProcResponse& v)
@@ -178,19 +161,23 @@ namespace avro
                             break;
 
                         case 1:
-                            ::avro::decode(d, v.files);
+                            ::avro::decode(d, v.executionModes);
                             break;
 
                         case 2:
-                            ::avro::decode(d, v.commands);
+                            ::avro::decode(d, v.files);
                             break;
 
                         case 3:
-                            ::avro::decode(d, v.args);
+                            ::avro::decode(d, v.commands);
                             break;
 
                         case 4:
-                            ::avro::decode(d, v.additionalInfo);
+                            ::avro::decode(d, v.args);
+                            break;
+
+                        case 5:
+                            ::avro::decode(d, v.options);
                             break;
 
                         default:
@@ -201,10 +188,11 @@ namespace avro
             else
             {
                 ::avro::decode(d, v.procNames);
+                ::avro::decode(d, v.executionModes);
                 ::avro::decode(d, v.files);
                 ::avro::decode(d, v.commands);
                 ::avro::decode(d, v.args);
-                ::avro::decode(d, v.additionalInfo);
+                ::avro::decode(d, v.options);
             }
         }
     };

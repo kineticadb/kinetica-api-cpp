@@ -1,6 +1,12 @@
 GPUdb C++ API Changelog
 =======================
 
+Version 6.0.0 - 2017-01-24
+--------------------------
+
+-   Added string constants for column properties
+
+
 Version 5.2.0 - 2016-10-12
 --------------------------
 

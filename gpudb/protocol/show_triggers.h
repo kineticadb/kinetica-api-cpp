@@ -33,16 +33,17 @@ namespace gpudb
          * Constructs a ShowTriggersRequest object with the specified
          * parameters.
          * 
-         * @param[in] triggerIds  List of IDs of the triggers whose information
-         *                        to be retrieved. Empty list means retrieve
-         *                        information on all active triggers.
-         * @param[in] options  Optional parameters.  Default value is an empty
-         *                     std::map.
+         * @param[in] triggerIds_  List of IDs of the triggers whose
+         *                         information to be retrieved. Empty list
+         *                         means retrieve information on all active
+         *                         triggers.
+         * @param[in] options_  Optional parameters.  Default value is an empty
+         *                      std::map.
          * 
          */
-        ShowTriggersRequest(const std::vector<std::string>& triggerIds, const std::map<std::string, std::string>& options):
-            triggerIds(triggerIds),
-            options(options)
+        ShowTriggersRequest(const std::vector<std::string>& triggerIds_, const std::map<std::string, std::string>& options_):
+            triggerIds( triggerIds_ ),
+            options( options_ )
         {
         }
 

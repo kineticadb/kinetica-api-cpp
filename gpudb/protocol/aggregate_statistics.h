@@ -56,34 +56,34 @@ namespace gpudb
          * Constructs an AggregateStatisticsRequest object with the specified
          * parameters.
          * 
-         * @param[in] tableName  Name of the table on which the statistics
-         *                       operation will be performed.
-         * @param[in] columnName  Name of the column for which the statistics
-         *                        are to be calculated.
-         * @param[in] stats  Comma separated list of the statistics to
-         *                   calculate, e.g. "sum,mean". Values: 'count',
-         *                   'mean', 'stdv', 'variance', 'skew', 'kurtosis',
-         *                   'sum', 'min', 'max', 'weighted_average',
-         *                   'cardinality', 'estimated_cardinality',
-         *                   'percentile', 'percentile_rank'.
-         * @param[in] options  Optional parameters.
-         *                     <ul>
-         *                             <li> additional_column_names: A list of
-         *                     comma separated column names over which
-         *                     statistics can be accumulated along with the
-         *                     primary column.
-         *                             <li> weight_column_name: Name of column
-         *                     used as weighting attribute for the weighted
-         *                     average statistic.
-         *                     </ul>
-         *                       Default value is an empty std::map.
+         * @param[in] tableName_  Name of the table on which the statistics
+         *                        operation will be performed.
+         * @param[in] columnName_  Name of the column for which the statistics
+         *                         are to be calculated.
+         * @param[in] stats_  Comma separated list of the statistics to
+         *                    calculate, e.g. "sum,mean". Values: 'count',
+         *                    'mean', 'stdv', 'variance', 'skew', 'kurtosis',
+         *                    'sum', 'min', 'max', 'weighted_average',
+         *                    'cardinality', 'estimated_cardinality',
+         *                    'percentile', 'percentile_rank'.
+         * @param[in] options_  Optional parameters.
+         *                      <ul>
+         *                              <li> additional_column_names: A list of
+         *                      comma separated column names over which
+         *                      statistics can be accumulated along with the
+         *                      primary column.
+         *                              <li> weight_column_name: Name of column
+         *                      used as weighting attribute for the weighted
+         *                      average statistic.
+         *                      </ul>
+         *                        Default value is an empty std::map.
          * 
          */
-        AggregateStatisticsRequest(const std::string& tableName, const std::string& columnName, const std::string& stats, const std::map<std::string, std::string>& options):
-            tableName(tableName),
-            columnName(columnName),
-            stats(stats),
-            options(options)
+        AggregateStatisticsRequest(const std::string& tableName_, const std::string& columnName_, const std::string& stats_, const std::map<std::string, std::string>& options_):
+            tableName( tableName_ ),
+            columnName( columnName_ ),
+            stats( stats_ ),
+            options( options_ )
         {
         }
 

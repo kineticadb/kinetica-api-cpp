@@ -34,20 +34,21 @@ namespace gpudb
         /**
          * Constructs a ClearTableRequest object with the specified parameters.
          * 
-         * @param[in] tableName  Name of the table to be cleared. Must be an
-         *                       existing GPUdb table. Empty string clears all
-         *                       available tables in GPUdb.  Default value is
-         *                       an empty string.
-         * @param[in] authorization  No longer used. User can pass an empty
-         *                           string.  Default value is an empty string.
-         * @param[in] options  Optional parameters.  Default value is an empty
-         *                     std::map.
+         * @param[in] tableName_  Name of the table to be cleared. Must be an
+         *                        existing GPUdb table. Empty string clears all
+         *                        available tables in GPUdb.  Default value is
+         *                        an empty string.
+         * @param[in] authorization_  No longer used. User can pass an empty
+         *                            string.  Default value is an empty
+         *                            string.
+         * @param[in] options_  Optional parameters.  Default value is an empty
+         *                      std::map.
          * 
          */
-        ClearTableRequest(const std::string& tableName, const std::string& authorization, const std::map<std::string, std::string>& options):
-            tableName(tableName),
-            authorization(authorization),
-            options(options)
+        ClearTableRequest(const std::string& tableName_, const std::string& authorization_, const std::map<std::string, std::string>& options_):
+            tableName( tableName_ ),
+            authorization( authorization_ ),
+            options( options_ )
         {
         }
 

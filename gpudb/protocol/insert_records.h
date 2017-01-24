@@ -16,23 +16,29 @@ namespace gpudb
      * Adds multiple records to the specified table. The operation is
      * synchronous meaning that GPUdb will not return a response until all the
      * records are fully inserted and available. The response payload provides
-     * unique identifier for each added record along with counts of the number
-     * of records actually inserted and/or updated.
+     * the counts of the number of records actually inserted and/or updated,
+     * and can provide the unique identifier of each added record.
      * <p>
-     * @a options can be used to customize this function's behavior. The only
-     * parameter available is @a update_on_existing_pk. The value can be either
-     * 'true' or 'false'. If the table has a {@link
+     * The @a options parameter can be used to customize this function's
+     * behavior.  The @a update_on_existing_pk option specifies the primary-key
+     * collision policy.  If the table has a {@link
      * #createType(const CreateTypeRequest&) const primary key} and if @a
-     * update_on_existing_pk is 'true' then if any of the records being added
+     * update_on_existing_pk is @a true, then if any of the records being added
      * have the same primary key as existing records, the existing records are
-     * replaced (i.e. *updated*) with the given records. If @a
-     * update_on_existing_pk is false and if the records being added have the
-     * same primary key as existing records, the given records with existing
-     * primary keys are ignored (the existing records are left unchanged). It
-     * is quite possible that in this case some of the given records will be
-     * inserted and some (those having existing primary keys) will be ignored
-     * (or updated). If the specified table does not have a primary key column
-     * then the @a update_on_existing_pk option is ignored.
+     * replaced (i.e. updated) with the given records.  If @a
+     * update_on_existing_pk is @a false and if the records being added have
+     * the same primary key as existing records, they are ignored (the existing
+     * records are left unchanged).  It is quite possible that in this case
+     * some of the given records will be inserted and some (those having
+     * existing primary keys) will be ignored (or updated).  If the specified
+     * table does not have a primary key column, then the @a
+     * update_on_existing_pk option is ignored.
+     * <p>
+     * The @a return_record_ids option indicates that the database should
+     * return the unique identifiers of inserted records.
+     * <p>
+     * The @a route_to_address option directs that inserted records should be
+     * targeted for a particular database node.
      */
     struct RawInsertRecordsRequest
     {
@@ -54,47 +60,46 @@ namespace gpudb
          * Constructs a RawInsertRecordsRequest object with the specified
          * parameters.
          * 
-         * @param[in] tableName  Table to which the records are to be added.
-         *                       Must be an existing table.
-         * @param[in] list  An array of binary-encoded data for the records to
-         *                  be added. All records must be of the same type as
-         *                  that of the table. Empty array if @a listEncoding
-         *                  is @a json.
-         * @param[in] options  Optional parameters.
-         *                     <ul>
-         *                             <li> update_on_existing_pk: If the table
-         *                     has a /create/type, then if the value is 'true'
-         *                     then if any of the records being added have the
-         *                     same primary key as existing records, the
-         *                     existing records are replaced (i.e. *updated*)
-         *                     with the given records. If 'false' and if the
-         *                     records being added have the same primary key as
-         *                     existing records, the given records with
-         *                     existing primary keys are ignored (the existing
-         *                     records are left unchanged).  It is quite
-         *                     possible that in this case some of the given
-         *                     records will be inserted and some (those having
-         *                     existing primary keys) will be ignored (or
-         *                     updated). If the specified table does not have a
-         *                     primary key column then this optional parameter
-         *                     is ignored. Values: 'true', 'false'.
-         *                             <li> return_record_ids: If 'true' then
-         *                     return GPUdb's internal record id along for each
-         *                     inserted record. Default is 'false'. Values:
-         *                     'true', 'false'.
-         *                             <li> route_to_address: Route to a
-         *                     specific rank/tom. Option not suitable for
-         *                     tables using primary/shard keys
-         *                     </ul>
-         *                       Default value is an empty std::map.
+         * @param[in] tableName_  Table to which the records are to be added.
+         *                        Must be an existing table.
+         * @param[in] list_  An array of binary-encoded data for the records to
+         *                   be added. All records must be of the same type as
+         *                   that of the table. Empty array if @a listEncoding
+         *                   is @a json.
+         * @param[in] options_  Optional parameters.
+         *                      <ul>
+         *                              <li> update_on_existing_pk: If the
+         *                      table has a /create/type, then if the value is
+         *                      @a true then if any of the records being added
+         *                      have the same primary key as existing records,
+         *                      the existing records are replaced (i.e.
+         *                      updated) with the given records. If @a false,
+         *                      and if the records being added have the same
+         *                      primary key as existing records, they are
+         *                      ignored (the existing records are left
+         *                      unchanged).  It is quite possible that in this
+         *                      case some of the given records will be inserted
+         *                      and some (those having existing primary keys)
+         *                      will be ignored (or updated). If the specified
+         *                      table does not have a primary key column then
+         *                      this optional parameter is ignored. Values:
+         *                      'true', 'false'.
+         *                              <li> return_record_ids: If @a true then
+         *                      return GPUdb's internal record id along for
+         *                      each inserted record. Values: 'true', 'false'.
+         *                              <li> route_to_address: Route to a
+         *                      specific rank/tom. Option not suitable for
+         *                      tables using primary/shard keys
+         *                      </ul>
+         *                        Default value is an empty std::map.
          * 
          */
-        RawInsertRecordsRequest(const std::string& tableName, const std::vector<std::vector<uint8_t> >& list, const std::map<std::string, std::string>& options):
-            tableName(tableName),
-            list(list),
-            listStr(std::vector<std::string>()),
-            listEncoding("binary"),
-            options(options)
+        RawInsertRecordsRequest(const std::string& tableName_, const std::vector<std::vector<uint8_t> >& list_, const std::map<std::string, std::string>& options_):
+            tableName( tableName_ ),
+            list( list_ ),
+            listStr( std::vector<std::string>() ),
+            listEncoding( "binary" ),
+            options( options_ )
         {
         }
 
@@ -102,54 +107,53 @@ namespace gpudb
          * Constructs a RawInsertRecordsRequest object with the specified
          * parameters.
          * 
-         * @param[in] tableName  Table to which the records are to be added.
-         *                       Must be an existing table.
-         * @param[in] list  An array of binary-encoded data for the records to
-         *                  be added. All records must be of the same type as
-         *                  that of the table. Empty array if @a listEncoding
-         *                  is @a json.
-         * @param[in] listStr  An array of JSON encoded data for the records to
-         *                     be added. All records must be of the same type
-         *                     as that of the table. Empty array if @a
-         *                     listEncoding is @a binary.
-         * @param[in] listEncoding  The encoding of the records to be inserted.
-         *                          Values: 'binary', 'json'.
-         *                            Default value is 'binary'.
-         * @param[in] options  Optional parameters.
-         *                     <ul>
-         *                             <li> update_on_existing_pk: If the table
-         *                     has a /create/type, then if the value is 'true'
-         *                     then if any of the records being added have the
-         *                     same primary key as existing records, the
-         *                     existing records are replaced (i.e. *updated*)
-         *                     with the given records. If 'false' and if the
-         *                     records being added have the same primary key as
-         *                     existing records, the given records with
-         *                     existing primary keys are ignored (the existing
-         *                     records are left unchanged).  It is quite
-         *                     possible that in this case some of the given
-         *                     records will be inserted and some (those having
-         *                     existing primary keys) will be ignored (or
-         *                     updated). If the specified table does not have a
-         *                     primary key column then this optional parameter
-         *                     is ignored. Values: 'true', 'false'.
-         *                             <li> return_record_ids: If 'true' then
-         *                     return GPUdb's internal record id along for each
-         *                     inserted record. Default is 'false'. Values:
-         *                     'true', 'false'.
-         *                             <li> route_to_address: Route to a
-         *                     specific rank/tom. Option not suitable for
-         *                     tables using primary/shard keys
-         *                     </ul>
-         *                       Default value is an empty std::map.
+         * @param[in] tableName_  Table to which the records are to be added.
+         *                        Must be an existing table.
+         * @param[in] list_  An array of binary-encoded data for the records to
+         *                   be added. All records must be of the same type as
+         *                   that of the table. Empty array if @a listEncoding
+         *                   is @a json.
+         * @param[in] listStr_  An array of JSON encoded data for the records
+         *                      to be added. All records must be of the same
+         *                      type as that of the table. Empty array if @a
+         *                      listEncoding is @a binary.
+         * @param[in] listEncoding_  The encoding of the records to be
+         *                           inserted. Values: 'binary', 'json'.
+         *                             Default value is 'binary'.
+         * @param[in] options_  Optional parameters.
+         *                      <ul>
+         *                              <li> update_on_existing_pk: If the
+         *                      table has a /create/type, then if the value is
+         *                      @a true then if any of the records being added
+         *                      have the same primary key as existing records,
+         *                      the existing records are replaced (i.e.
+         *                      updated) with the given records. If @a false,
+         *                      and if the records being added have the same
+         *                      primary key as existing records, they are
+         *                      ignored (the existing records are left
+         *                      unchanged).  It is quite possible that in this
+         *                      case some of the given records will be inserted
+         *                      and some (those having existing primary keys)
+         *                      will be ignored (or updated). If the specified
+         *                      table does not have a primary key column then
+         *                      this optional parameter is ignored. Values:
+         *                      'true', 'false'.
+         *                              <li> return_record_ids: If @a true then
+         *                      return GPUdb's internal record id along for
+         *                      each inserted record. Values: 'true', 'false'.
+         *                              <li> route_to_address: Route to a
+         *                      specific rank/tom. Option not suitable for
+         *                      tables using primary/shard keys
+         *                      </ul>
+         *                        Default value is an empty std::map.
          * 
          */
-        RawInsertRecordsRequest(const std::string& tableName, const std::vector<std::vector<uint8_t> >& list, const std::vector<std::string>& listStr, const std::string& listEncoding, const std::map<std::string, std::string>& options):
-            tableName(tableName),
-            list(list),
-            listStr(listStr),
-            listEncoding(listEncoding),
-            options(options)
+        RawInsertRecordsRequest(const std::string& tableName_, const std::vector<std::vector<uint8_t> >& list_, const std::vector<std::string>& listStr_, const std::string& listEncoding_, const std::map<std::string, std::string>& options_):
+            tableName( tableName_ ),
+            list( list_ ),
+            listStr( listStr_ ),
+            listEncoding( listEncoding_ ),
+            options( options_ )
         {
         }
 
@@ -231,23 +235,29 @@ namespace gpudb
      * Adds multiple records to the specified table. The operation is
      * synchronous meaning that GPUdb will not return a response until all the
      * records are fully inserted and available. The response payload provides
-     * unique identifier for each added record along with counts of the number
-     * of records actually inserted and/or updated.
+     * the counts of the number of records actually inserted and/or updated,
+     * and can provide the unique identifier of each added record.
      * <p>
-     * @a options can be used to customize this function's behavior. The only
-     * parameter available is @a update_on_existing_pk. The value can be either
-     * 'true' or 'false'. If the table has a {@link
+     * The @a options parameter can be used to customize this function's
+     * behavior.  The @a update_on_existing_pk option specifies the primary-key
+     * collision policy.  If the table has a {@link
      * #createType(const std::string&,const std::string&,const std::map<std::string, std::vector<std::string> >&,const std::map<std::string, std::string>&) const
-     * primary key} and if @a update_on_existing_pk is 'true' then if any of
+     * primary key} and if @a update_on_existing_pk is @a true, then if any of
      * the records being added have the same primary key as existing records,
-     * the existing records are replaced (i.e. *updated*) with the given
-     * records. If @a update_on_existing_pk is false and if the records being
-     * added have the same primary key as existing records, the given records
-     * with existing primary keys are ignored (the existing records are left
-     * unchanged). It is quite possible that in this case some of the given
-     * records will be inserted and some (those having existing primary keys)
-     * will be ignored (or updated). If the specified table does not have a
-     * primary key column then the @a update_on_existing_pk option is ignored.
+     * the existing records are replaced (i.e. updated) with the given records.
+     * If @a update_on_existing_pk is @a false and if the records being added
+     * have the same primary key as existing records, they are ignored (the
+     * existing records are left unchanged).  It is quite possible that in this
+     * case some of the given records will be inserted and some (those having
+     * existing primary keys) will be ignored (or updated).  If the specified
+     * table does not have a primary key column, then the @a
+     * update_on_existing_pk option is ignored.
+     * <p>
+     * The @a return_record_ids option indicates that the database should
+     * return the unique identifiers of inserted records.
+     * <p>
+     * The @a route_to_address option directs that inserted records should be
+     * targeted for a particular database node.
      * 
      * @param <T>  The type of object being processed.
      * 
@@ -270,45 +280,44 @@ namespace gpudb
          * Constructs an InsertRecordsRequest object with the specified
          * parameters.
          * 
-         * @param[in] tableName  Table to which the records are to be added.
-         *                       Must be an existing table.
-         * @param[in] data  An array of binary-encoded data for the records to
-         *                  be added. All records must be of the same type as
-         *                  that of the table. Empty array if @a listEncoding
-         *                  is @a json.
-         * @param[in] options  Optional parameters.
-         *                     <ul>
-         *                             <li> update_on_existing_pk: If the table
-         *                     has a /create/type, then if the value is 'true'
-         *                     then if any of the records being added have the
-         *                     same primary key as existing records, the
-         *                     existing records are replaced (i.e. *updated*)
-         *                     with the given records. If 'false' and if the
-         *                     records being added have the same primary key as
-         *                     existing records, the given records with
-         *                     existing primary keys are ignored (the existing
-         *                     records are left unchanged).  It is quite
-         *                     possible that in this case some of the given
-         *                     records will be inserted and some (those having
-         *                     existing primary keys) will be ignored (or
-         *                     updated). If the specified table does not have a
-         *                     primary key column then this optional parameter
-         *                     is ignored. Values: 'true', 'false'.
-         *                             <li> return_record_ids: If 'true' then
-         *                     return GPUdb's internal record id along for each
-         *                     inserted record. Default is 'false'. Values:
-         *                     'true', 'false'.
-         *                             <li> route_to_address: Route to a
-         *                     specific rank/tom. Option not suitable for
-         *                     tables using primary/shard keys
-         *                     </ul>
-         *                       Default value is an empty std::map.
+         * @param[in] tableName_  Table to which the records are to be added.
+         *                        Must be an existing table.
+         * @param[in] data_  An array of binary-encoded data for the records to
+         *                   be added. All records must be of the same type as
+         *                   that of the table. Empty array if @a listEncoding
+         *                   is @a json.
+         * @param[in] options_  Optional parameters.
+         *                      <ul>
+         *                              <li> update_on_existing_pk: If the
+         *                      table has a /create/type, then if the value is
+         *                      @a true then if any of the records being added
+         *                      have the same primary key as existing records,
+         *                      the existing records are replaced (i.e.
+         *                      updated) with the given records. If @a false,
+         *                      and if the records being added have the same
+         *                      primary key as existing records, they are
+         *                      ignored (the existing records are left
+         *                      unchanged).  It is quite possible that in this
+         *                      case some of the given records will be inserted
+         *                      and some (those having existing primary keys)
+         *                      will be ignored (or updated). If the specified
+         *                      table does not have a primary key column then
+         *                      this optional parameter is ignored. Values:
+         *                      'true', 'false'.
+         *                              <li> return_record_ids: If @a true then
+         *                      return GPUdb's internal record id along for
+         *                      each inserted record. Values: 'true', 'false'.
+         *                              <li> route_to_address: Route to a
+         *                      specific rank/tom. Option not suitable for
+         *                      tables using primary/shard keys
+         *                      </ul>
+         *                        Default value is an empty std::map.
          * 
          */
-        InsertRecordsRequest(const std::string& tableName, const std::vector<T>& data, const std::map<std::string, std::string>& options):
-            tableName(tableName),
-            data(data),
-            options(options)
+        InsertRecordsRequest(const std::string& tableName_, const std::vector<T>& data_, const std::map<std::string, std::string>& options_):
+            tableName( tableName_ ),
+            data( data_ ),
+            options( options_ )
         {
         }
 
@@ -328,23 +337,29 @@ namespace gpudb
      * Adds multiple records to the specified table. The operation is
      * synchronous meaning that GPUdb will not return a response until all the
      * records are fully inserted and available. The response payload provides
-     * unique identifier for each added record along with counts of the number
-     * of records actually inserted and/or updated.
+     * the counts of the number of records actually inserted and/or updated,
+     * and can provide the unique identifier of each added record.
      * <p>
-     * @a options can be used to customize this function's behavior. The only
-     * parameter available is @a update_on_existing_pk. The value can be either
-     * 'true' or 'false'. If the table has a {@link
+     * The @a options parameter can be used to customize this function's
+     * behavior.  The @a update_on_existing_pk option specifies the primary-key
+     * collision policy.  If the table has a {@link
      * #createType(const CreateTypeRequest&) const primary key} and if @a
-     * update_on_existing_pk is 'true' then if any of the records being added
+     * update_on_existing_pk is @a true, then if any of the records being added
      * have the same primary key as existing records, the existing records are
-     * replaced (i.e. *updated*) with the given records. If @a
-     * update_on_existing_pk is false and if the records being added have the
-     * same primary key as existing records, the given records with existing
-     * primary keys are ignored (the existing records are left unchanged). It
-     * is quite possible that in this case some of the given records will be
-     * inserted and some (those having existing primary keys) will be ignored
-     * (or updated). If the specified table does not have a primary key column
-     * then the @a update_on_existing_pk option is ignored.
+     * replaced (i.e. updated) with the given records.  If @a
+     * update_on_existing_pk is @a false and if the records being added have
+     * the same primary key as existing records, they are ignored (the existing
+     * records are left unchanged).  It is quite possible that in this case
+     * some of the given records will be inserted and some (those having
+     * existing primary keys) will be ignored (or updated).  If the specified
+     * table does not have a primary key column, then the @a
+     * update_on_existing_pk option is ignored.
+     * <p>
+     * The @a return_record_ids option indicates that the database should
+     * return the unique identifiers of inserted records.
+     * <p>
+     * The @a route_to_address option directs that inserted records should be
+     * targeted for a particular database node.
      */
     struct InsertRecordsResponse
     {

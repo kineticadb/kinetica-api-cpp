@@ -38,36 +38,38 @@ namespace gpudb
          * Constructs a CreateUnionRequest object with the specified
          * parameters.
          * 
-         * @param[in] tableName  Name of the table to be created. Must not be
-         *                       the name of a currently existing GPUdb table.
-         *                       Cannot be an empty string.
-         * @param[in] tableNames  The list of table names making up the union.
-         *                        Must contain the names of one or more
-         *                        existing tables.
-         * @param[in] inputColumnNames  The list of columns from each of the
-         *                              corresponding input tables.
-         * @param[in] outputColumnNames  The list of names of the columns to be
-         *                               stored in the union.
-         * @param[in] options  Optional parameters.
-         *                     <ul>
-         *                             <li> collection_name: Name of a
-         *                     collection which is to contain the union. If
-         *                     empty, then the union will be a top-level table.
-         *                             <li> mode: If 'merge_views' then this
-         *                     operation will merge (i.e. union) the provided
-         *                     views. All 'table_names' must be views from the
-         *                     same underlying base table. Values: 'normal',
-         *                     'merge_views'.
-         *                     </ul>
-         *                       Default value is an empty std::map.
+         * @param[in] tableName_  Name of the table to be created. Must not be
+         *                        the name of a currently existing GPUdb table.
+         *                        Cannot be an empty string.
+         * @param[in] tableNames_  The list of table names making up the union.
+         *                         Must contain the names of one or more
+         *                         existing tables.
+         * @param[in] inputColumnNames_  The list of columns from each of the
+         *                               corresponding input tables.
+         * @param[in] outputColumnNames_  The list of names of the columns to
+         *                                be stored in the union.
+         * @param[in] options_  Optional parameters.
+         *                      <ul>
+         *                              <li> collection_name: Name of a
+         *                      collection which is to contain the union. If
+         *                      empty, then the union will be a top-level
+         *                      table.
+         *                              <li> mode: If 'merge_views' then this
+         *                      operation will merge (i.e. union) the provided
+         *                      views. All 'table_names' must be views from the
+         *                      same underlying base table. Values:
+         *                      'union_all', 'union', 'union_distinct',
+         *                      'except', 'intersect', 'merge_views'.
+         *                      </ul>
+         *                        Default value is an empty std::map.
          * 
          */
-        CreateUnionRequest(const std::string& tableName, const std::vector<std::string>& tableNames, const std::vector<std::vector<std::string> >& inputColumnNames, const std::vector<std::string>& outputColumnNames, const std::map<std::string, std::string>& options):
-            tableName(tableName),
-            tableNames(tableNames),
-            inputColumnNames(inputColumnNames),
-            outputColumnNames(outputColumnNames),
-            options(options)
+        CreateUnionRequest(const std::string& tableName_, const std::vector<std::string>& tableNames_, const std::vector<std::vector<std::string> >& inputColumnNames_, const std::vector<std::string>& outputColumnNames_, const std::map<std::string, std::string>& options_):
+            tableName( tableName_ ),
+            tableNames( tableNames_ ),
+            inputColumnNames( inputColumnNames_ ),
+            outputColumnNames( outputColumnNames_ ),
+            options( options_ )
         {
         }
 

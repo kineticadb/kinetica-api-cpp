@@ -49,48 +49,48 @@ namespace gpudb
          * Constructs a VisualizeImageHeatmapRequest object with the specified
          * parameters.
          * 
-         * @param[in] tableNames
-         * @param[in] xColumnName
-         * @param[in] yColumnName
-         * @param[in] valueColumnName
-         * @param[in] minX
-         * @param[in] maxX
-         * @param[in] minY
-         * @param[in] maxY
-         * @param[in] width
-         * @param[in] height
-         * @param[in] projection  Values: 'EPSG:4326', 'PLATE_CARREE',
-         *                        '900913', 'EPSG:900913', '102100',
-         *                        'EPSG:102100', '3857', 'EPSG:3857',
-         *                        'WEB_MERCATOR'.
-         * @param[in] styleOptions
-         *                          <ul>
-         *                                  <li> colormap: Values: 'jet',
-         *                          'hot', 'hsv', 'gray', 'blues', 'greens',
-         *                          'greys', 'oranges', 'purples', 'reds',
-         *                          'viridis'.
-         *                                  <li> blur_radius:
-         *                                  <li> bg_color:
-         *                                  <li> gradient_start_color:
-         *                                  <li> gradient_end_color:
-         *                          </ul>
-         * @param[in] options
+         * @param[in] tableNames_
+         * @param[in] xColumnName_
+         * @param[in] yColumnName_
+         * @param[in] valueColumnName_
+         * @param[in] minX_
+         * @param[in] maxX_
+         * @param[in] minY_
+         * @param[in] maxY_
+         * @param[in] width_
+         * @param[in] height_
+         * @param[in] projection_  Values: 'EPSG:4326', 'PLATE_CARREE',
+         *                         '900913', 'EPSG:900913', '102100',
+         *                         'EPSG:102100', '3857', 'EPSG:3857',
+         *                         'WEB_MERCATOR'.
+         * @param[in] styleOptions_
+         *                           <ul>
+         *                                   <li> colormap: Values: 'jet',
+         *                           'hot', 'hsv', 'gray', 'blues', 'greens',
+         *                           'greys', 'oranges', 'purples', 'reds',
+         *                           'viridis'.
+         *                                   <li> blur_radius:
+         *                                   <li> bg_color:
+         *                                   <li> gradient_start_color:
+         *                                   <li> gradient_end_color:
+         *                           </ul>
+         * @param[in] options_
          * 
          */
-        VisualizeImageHeatmapRequest(const std::vector<std::string>& tableNames, const std::string& xColumnName, const std::string& yColumnName, const std::string& valueColumnName, const double minX, const double maxX, const double minY, const double maxY, const int32_t width, const int32_t height, const std::string& projection, const std::map<std::string, std::string>& styleOptions, const std::map<std::string, std::string>& options):
-            tableNames(tableNames),
-            xColumnName(xColumnName),
-            yColumnName(yColumnName),
-            valueColumnName(valueColumnName),
-            minX(minX),
-            maxX(maxX),
-            minY(minY),
-            maxY(maxY),
-            width(width),
-            height(height),
-            projection(projection),
-            styleOptions(styleOptions),
-            options(options)
+        VisualizeImageHeatmapRequest(const std::vector<std::string>& tableNames_, const std::string& xColumnName_, const std::string& yColumnName_, const std::string& valueColumnName_, const double minX_, const double maxX_, const double minY_, const double maxY_, const int32_t width_, const int32_t height_, const std::string& projection_, const std::map<std::string, std::string>& styleOptions_, const std::map<std::string, std::string>& options_):
+            tableNames( tableNames_ ),
+            xColumnName( xColumnName_ ),
+            yColumnName( yColumnName_ ),
+            valueColumnName( valueColumnName_ ),
+            minX( minX_ ),
+            maxX( maxX_ ),
+            minY( minY_ ),
+            maxY( maxY_ ),
+            width( width_ ),
+            height( height_ ),
+            projection( projection_ ),
+            styleOptions( styleOptions_ ),
+            options( options_ )
         {
         }
 

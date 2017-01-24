@@ -140,7 +140,7 @@ namespace gpudb {
             path.push_back(url[i]);
         }
 
-        if (path[path.length() - 1] == '/')
+        if (!path.empty() && path[path.length() - 1] == '/')
         {
             path.resize(path.length() - 1);
         }

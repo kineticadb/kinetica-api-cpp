@@ -34,14 +34,14 @@ namespace gpudb
          * Constructs a ClearTriggerRequest object with the specified
          * parameters.
          * 
-         * @param[in] triggerId  ID for the trigger to be deactivated.
-         * @param[in] options  Optional parameters.  Default value is an empty
-         *                     std::map.
+         * @param[in] triggerId_  ID for the trigger to be deactivated.
+         * @param[in] options_  Optional parameters.  Default value is an empty
+         *                      std::map.
          * 
          */
-        ClearTriggerRequest(const std::string& triggerId, const std::map<std::string, std::string>& options):
-            triggerId(triggerId),
-            options(options)
+        ClearTriggerRequest(const std::string& triggerId_, const std::map<std::string, std::string>& options_):
+            triggerId( triggerId_ ),
+            options( options_ )
         {
         }
 

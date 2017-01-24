@@ -34,16 +34,16 @@ namespace gpudb
          * Constructs a ShowSecurityRequest object with the specified
          * parameters.
          * 
-         * @param[in] names  A list of names of users and/or roles about which
-         *                   security information is requested. If none are
-         *                   provided, information about all users and roles
-         *                   will be returned.
-         * @param[in] options  Optional parameters.
+         * @param[in] names_  A list of names of users and/or roles about which
+         *                    security information is requested. If none are
+         *                    provided, information about all users and roles
+         *                    will be returned.
+         * @param[in] options_  Optional parameters.
          * 
          */
-        ShowSecurityRequest(const std::vector<std::string>& names, const std::map<std::string, std::string>& options):
-            names(names),
-            options(options)
+        ShowSecurityRequest(const std::vector<std::string>& names_, const std::map<std::string, std::string>& options_):
+            names( names_ ),
+            options( options_ )
         {
         }
 

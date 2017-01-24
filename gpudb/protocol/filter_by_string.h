@@ -99,36 +99,37 @@ namespace gpudb
          * Constructs a FilterByStringRequest object with the specified
          * parameters.
          * 
-         * @param[in] tableName  Name of the table on which the filter
-         *                       operation will be performed.  Must be a valid
-         *                       GPUdb table, collection or view.
-         * @param[in] viewName  If provided, then this will be the name of the
-         *                      view containing the results. Must not be an
-         *                      already existing collection, table or view.
-         *                      Default value is an empty string.
-         * @param[in] expression  The expression with which to filter the
-         *                        table.
-         * @param[in] mode  The string filtering mode to apply. See above for
-         *                  details. Values: 'search', 'equals', 'contains',
-         *                  'starts_with', 'regex'.
-         * @param[in] columnNames  List of columns on which to apply the
-         *                         filter. Ignored for 'search' mode.
-         * @param[in] options  Optional parameters.
-         *                     <ul>
-         *                             <li> case_sensitive: If 'false' then
-         *                     string filtering will ignore case. Does not
-         *                     apply to 'search' mode. Values: 'true', 'false'.
-         *                     </ul>
-         *                       Default value is an empty std::map.
+         * @param[in] tableName_  Name of the table on which the filter
+         *                        operation will be performed.  Must be a valid
+         *                        GPUdb table, collection or view.
+         * @param[in] viewName_  If provided, then this will be the name of the
+         *                       view containing the results. Must not be an
+         *                       already existing collection, table or view.
+         *                       Default value is an empty string.
+         * @param[in] expression_  The expression with which to filter the
+         *                         table.
+         * @param[in] mode_  The string filtering mode to apply. See above for
+         *                   details. Values: 'search', 'equals', 'contains',
+         *                   'starts_with', 'regex'.
+         * @param[in] columnNames_  List of columns on which to apply the
+         *                          filter. Ignored for 'search' mode.
+         * @param[in] options_  Optional parameters.
+         *                      <ul>
+         *                              <li> case_sensitive: If 'false' then
+         *                      string filtering will ignore case. Does not
+         *                      apply to 'search' mode. Values: 'true',
+         *                      'false'.
+         *                      </ul>
+         *                        Default value is an empty std::map.
          * 
          */
-        FilterByStringRequest(const std::string& tableName, const std::string& viewName, const std::string& expression, const std::string& mode, const std::vector<std::string>& columnNames, const std::map<std::string, std::string>& options):
-            tableName(tableName),
-            viewName(viewName),
-            expression(expression),
-            mode(mode),
-            columnNames(columnNames),
-            options(options)
+        FilterByStringRequest(const std::string& tableName_, const std::string& viewName_, const std::string& expression_, const std::string& mode_, const std::vector<std::string>& columnNames_, const std::map<std::string, std::string>& options_):
+            tableName( tableName_ ),
+            viewName( viewName_ ),
+            expression( expression_ ),
+            mode( mode_ ),
+            columnNames( columnNames_ ),
+            options( options_ )
         {
         }
 

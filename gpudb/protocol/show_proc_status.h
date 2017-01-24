@@ -6,24 +6,23 @@
 #ifndef __SHOW_PROC_STATUS_H__
 #define __SHOW_PROC_STATUS_H__
 
-    /**
-     * @private
-     */
-
 namespace gpudb
 {
 
     /**
-     * @private
      * A set of input parameters for {@link
      * #showProcStatus(const ShowProcStatusRequest&) const}.
      * <p>
+     * Shows the statuses of running or completed proc instances. Results are
+     * grouped by run ID (as returned from {@link
+     * #executeProc(const ExecuteProcRequest&) const}) and data segment ID
+     * (each invocation of the proc command on a data segment is assigned a
+     * data segment ID).
      */
     struct ShowProcStatusRequest
     {
 
         /**
-         * @private
          * Constructs a ShowProcStatusRequest object with default parameter
          * values.
          */
@@ -34,36 +33,36 @@ namespace gpudb
         }
 
         /**
-         * @private
          * Constructs a ShowProcStatusRequest object with the specified
          * parameters.
          * 
-         * @param[in] runId
-         * @param[in] options
-         *                     <ul>
-         *                             <li> clear_complete: Values: 'true',
-         *                     'false'.
-         *                     </ul>
+         * @param[in] runId_  The run ID of a specific running or completed
+         *                    proc instance for which the status will be
+         *                    returned. If the run ID is not found, nothing
+         *                    will be returned. If not specified, the statuses
+         *                    of all running and completed proc instances will
+         *                    be returned.  Default value is an empty string.
+         * @param[in] options_  Optional parameters.
+         *                      <ul>
+         *                              <li> clear_complete: If set to @a true,
+         *                      if a proc instance has completed (either
+         *                      successfully or unsuccessfully) then its status
+         *                      will be cleared and no longer returned in
+         *                      subsequent calls. Values: 'true', 'false'.
+         *                      </ul>
+         *                        Default value is an empty std::map.
          * 
          */
-        ShowProcStatusRequest(const std::string& runId, const std::map<std::string, std::string>& options):
-            runId(runId),
-            options(options)
+        ShowProcStatusRequest(const std::string& runId_, const std::map<std::string, std::string>& options_):
+            runId( runId_ ),
+            options( options_ )
         {
         }
-
-    /**
-     * @private
-     */
 
         std::string runId;
         std::map<std::string, std::string> options;
     };
 }
-
-    /**
-     * @private
-     */
 
 namespace avro
 {
@@ -107,24 +106,23 @@ namespace avro
     };
 }
 
-    /**
-     * @private
-     */
-
 namespace gpudb
 {
 
     /**
-     * @private
      * A set of output parameters for {@link
      * #showProcStatus(const ShowProcStatusRequest&) const}.
      * <p>
+     * Shows the statuses of running or completed proc instances. Results are
+     * grouped by run ID (as returned from {@link
+     * #executeProc(const ExecuteProcRequest&) const}) and data segment ID
+     * (each invocation of the proc command on a data segment is assigned a
+     * data segment ID).
      */
     struct ShowProcStatusResponse
     {
 
         /**
-         * @private
          * Constructs a ShowProcStatusResponse object with default parameter
          * values.
          */
@@ -135,17 +133,15 @@ namespace gpudb
             inputTableNames(std::map<std::string, std::vector<std::string> >()),
             inputColumnNames(std::map<std::string, std::map<std::string, std::vector<std::string> > >()),
             outputTableNames(std::map<std::string, std::vector<std::string> >()),
+            options(std::map<std::string, std::map<std::string, std::string> >()),
             overallStatuses(std::map<std::string, std::string>()),
             statuses(std::map<std::string, std::map<std::string, std::string> >()),
             messages(std::map<std::string, std::map<std::string, std::string> >()),
             results(std::map<std::string, std::map<std::string, std::map<std::string, std::string> > >()),
-            binResults(std::map<std::string, std::map<std::string, std::map<std::string, std::vector<uint8_t> > > >())
+            binResults(std::map<std::string, std::map<std::string, std::map<std::string, std::vector<uint8_t> > > >()),
+            timings(std::map<std::string, std::map<std::string, std::map<std::string, int64_t> > >())
         {
         }
-
-    /**
-     * @private
-     */
 
         std::map<std::string, std::string> procNames;
         std::map<std::string, std::map<std::string, std::string> > params;
@@ -153,17 +149,15 @@ namespace gpudb
         std::map<std::string, std::vector<std::string> > inputTableNames;
         std::map<std::string, std::map<std::string, std::vector<std::string> > > inputColumnNames;
         std::map<std::string, std::vector<std::string> > outputTableNames;
+        std::map<std::string, std::map<std::string, std::string> > options;
         std::map<std::string, std::string> overallStatuses;
         std::map<std::string, std::map<std::string, std::string> > statuses;
         std::map<std::string, std::map<std::string, std::string> > messages;
         std::map<std::string, std::map<std::string, std::map<std::string, std::string> > > results;
         std::map<std::string, std::map<std::string, std::map<std::string, std::vector<uint8_t> > > > binResults;
+        std::map<std::string, std::map<std::string, std::map<std::string, int64_t> > > timings;
     };
 }
-
-    /**
-     * @private
-     */
 
 namespace avro
 {
@@ -177,11 +171,13 @@ namespace avro
             ::avro::encode(e, v.inputTableNames);
             ::avro::encode(e, v.inputColumnNames);
             ::avro::encode(e, v.outputTableNames);
+            ::avro::encode(e, v.options);
             ::avro::encode(e, v.overallStatuses);
             ::avro::encode(e, v.statuses);
             ::avro::encode(e, v.messages);
             ::avro::encode(e, v.results);
             ::avro::encode(e, v.binResults);
+            ::avro::encode(e, v.timings);
         }
 
         static void decode(Decoder& d, gpudb::ShowProcStatusResponse& v)
@@ -219,23 +215,31 @@ namespace avro
                             break;
 
                         case 6:
-                            ::avro::decode(d, v.overallStatuses);
+                            ::avro::decode(d, v.options);
                             break;
 
                         case 7:
-                            ::avro::decode(d, v.statuses);
+                            ::avro::decode(d, v.overallStatuses);
                             break;
 
                         case 8:
-                            ::avro::decode(d, v.messages);
+                            ::avro::decode(d, v.statuses);
                             break;
 
                         case 9:
-                            ::avro::decode(d, v.results);
+                            ::avro::decode(d, v.messages);
                             break;
 
                         case 10:
+                            ::avro::decode(d, v.results);
+                            break;
+
+                        case 11:
                             ::avro::decode(d, v.binResults);
+                            break;
+
+                        case 12:
+                            ::avro::decode(d, v.timings);
                             break;
 
                         default:
@@ -251,11 +255,13 @@ namespace avro
                 ::avro::decode(d, v.inputTableNames);
                 ::avro::decode(d, v.inputColumnNames);
                 ::avro::decode(d, v.outputTableNames);
+                ::avro::decode(d, v.options);
                 ::avro::decode(d, v.overallStatuses);
                 ::avro::decode(d, v.statuses);
                 ::avro::decode(d, v.messages);
                 ::avro::decode(d, v.results);
                 ::avro::decode(d, v.binResults);
+                ::avro::decode(d, v.timings);
             }
         }
     };

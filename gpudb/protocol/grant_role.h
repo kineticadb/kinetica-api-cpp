@@ -31,18 +31,18 @@ namespace gpudb
         /**
          * Constructs a GrantRoleRequest object with the specified parameters.
          * 
-         * @param[in] role  Name of the role in which membership will be
-         *                  granted. Must be an existing role.
-         * @param[in] member  Name of the user or role that will be granted
-         *                    membership in @a role. Must be an existing user
-         *                    or role.
-         * @param[in] options  Optional parameters.
+         * @param[in] role_  Name of the role in which membership will be
+         *                   granted. Must be an existing role.
+         * @param[in] member_  Name of the user or role that will be granted
+         *                     membership in @a role. Must be an existing user
+         *                     or role.
+         * @param[in] options_  Optional parameters.
          * 
          */
-        GrantRoleRequest(const std::string& role, const std::string& member, const std::map<std::string, std::string>& options):
-            role(role),
-            member(member),
-            options(options)
+        GrantRoleRequest(const std::string& role_, const std::string& member_, const std::map<std::string, std::string>& options_):
+            role( role_ ),
+            member( member_ ),
+            options( options_ )
         {
         }
 

@@ -30,14 +30,14 @@ namespace gpudb
         /**
          * Constructs a HasTableRequest object with the specified parameters.
          * 
-         * @param[in] tableName  Name of the table to check for existence.
-         * @param[in] options  Optional parameters.  Default value is an empty
-         *                     std::map.
+         * @param[in] tableName_  Name of the table to check for existence.
+         * @param[in] options_  Optional parameters.  Default value is an empty
+         *                      std::map.
          * 
          */
-        HasTableRequest(const std::string& tableName, const std::map<std::string, std::string>& options):
-            tableName(tableName),
-            options(options)
+        HasTableRequest(const std::string& tableName_, const std::map<std::string, std::string>& options_):
+            tableName( tableName_ ),
+            options( options_ )
         {
         }
 

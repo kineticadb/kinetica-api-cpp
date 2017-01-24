@@ -47,36 +47,38 @@ namespace gpudb
          * Constructs a GetRecordsBySeriesRequest object with the specified
          * parameters.
          * 
-         * @param[in] tableName  Name of the collection/table/view for which
-         *                       series/tracks will be fetched.
-         * @param[in] worldTableName  Name of the table containing the complete
-         *                            series/track information to be returned
-         *                            for the tracks present in the @a
-         *                            tableName. Typically this is used when
-         *                            retrieving series/tracks from a view
-         *                            (which contains partial series/tracks)
-         *                            but the user wants to retrieve the entire
-         *                            original series/tracks. Can be blank.
-         * @param[in] offset  A positive integer indicating the number of
-         *                    initial series/tracks to skip (useful for paging
-         *                    through the results).  Default value is 0. The
-         *                    minimum allowed value is 0. The maximum allowed
-         *                    value is MAX_INT.
-         * @param[in] limit  A positive integer indicating the maximum number
-         *                   of series/tracks to be returned. Or END_OF_SET
-         *                   (-9999) to indicate that the max number of results
-         *                   should be returned.  Default value is 10000.
-         * @param[in] options  Optional parameters.  Default value is an empty
-         *                     std::map.
+         * @param[in] tableName_  Name of the collection/table/view for which
+         *                        series/tracks will be fetched.
+         * @param[in] worldTableName_  Name of the table containing the
+         *                             complete series/track information to be
+         *                             returned for the tracks present in the
+         *                             @a tableName. Typically this is used
+         *                             when retrieving series/tracks from a
+         *                             view (which contains partial
+         *                             series/tracks) but the user wants to
+         *                             retrieve the entire original
+         *                             series/tracks. Can be blank.
+         * @param[in] offset_  A positive integer indicating the number of
+         *                     initial series/tracks to skip (useful for paging
+         *                     through the results).  Default value is 0. The
+         *                     minimum allowed value is 0. The maximum allowed
+         *                     value is MAX_INT.
+         * @param[in] limit_  A positive integer indicating the maximum number
+         *                    of series/tracks to be returned. Or END_OF_SET
+         *                    (-9999) to indicate that the max number of
+         *                    results should be returned.  Default value is
+         *                    10000.
+         * @param[in] options_  Optional parameters.  Default value is an empty
+         *                      std::map.
          * 
          */
-        GetRecordsBySeriesRequest(const std::string& tableName, const std::string& worldTableName, const int32_t offset, const int32_t limit, const std::map<std::string, std::string>& options):
-            tableName(tableName),
-            worldTableName(worldTableName),
-            offset(offset),
-            limit(limit),
-            encoding("binary"),
-            options(options)
+        GetRecordsBySeriesRequest(const std::string& tableName_, const std::string& worldTableName_, const int32_t offset_, const int32_t limit_, const std::map<std::string, std::string>& options_):
+            tableName( tableName_ ),
+            worldTableName( worldTableName_ ),
+            offset( offset_ ),
+            limit( limit_ ),
+            encoding( "binary" ),
+            options( options_ )
         {
         }
 
@@ -84,40 +86,42 @@ namespace gpudb
          * Constructs a GetRecordsBySeriesRequest object with the specified
          * parameters.
          * 
-         * @param[in] tableName  Name of the collection/table/view for which
-         *                       series/tracks will be fetched.
-         * @param[in] worldTableName  Name of the table containing the complete
-         *                            series/track information to be returned
-         *                            for the tracks present in the @a
-         *                            tableName. Typically this is used when
-         *                            retrieving series/tracks from a view
-         *                            (which contains partial series/tracks)
-         *                            but the user wants to retrieve the entire
-         *                            original series/tracks. Can be blank.
-         * @param[in] offset  A positive integer indicating the number of
-         *                    initial series/tracks to skip (useful for paging
-         *                    through the results).  Default value is 0. The
-         *                    minimum allowed value is 0. The maximum allowed
-         *                    value is MAX_INT.
-         * @param[in] limit  A positive integer indicating the maximum number
-         *                   of series/tracks to be returned. Or END_OF_SET
-         *                   (-9999) to indicate that the max number of results
-         *                   should be returned.  Default value is 10000.
-         * @param[in] encoding  Specifies the encoding for returned records;
-         *                      either 'binary' or 'json'. Values: 'binary',
-         *                      'json'.
-         *                        Default value is 'binary'.
-         * @param[in] options  Optional parameters.  Default value is an empty
-         *                     std::map.
+         * @param[in] tableName_  Name of the collection/table/view for which
+         *                        series/tracks will be fetched.
+         * @param[in] worldTableName_  Name of the table containing the
+         *                             complete series/track information to be
+         *                             returned for the tracks present in the
+         *                             @a tableName. Typically this is used
+         *                             when retrieving series/tracks from a
+         *                             view (which contains partial
+         *                             series/tracks) but the user wants to
+         *                             retrieve the entire original
+         *                             series/tracks. Can be blank.
+         * @param[in] offset_  A positive integer indicating the number of
+         *                     initial series/tracks to skip (useful for paging
+         *                     through the results).  Default value is 0. The
+         *                     minimum allowed value is 0. The maximum allowed
+         *                     value is MAX_INT.
+         * @param[in] limit_  A positive integer indicating the maximum number
+         *                    of series/tracks to be returned. Or END_OF_SET
+         *                    (-9999) to indicate that the max number of
+         *                    results should be returned.  Default value is
+         *                    10000.
+         * @param[in] encoding_  Specifies the encoding for returned records;
+         *                       either 'binary' or 'json'. Values: 'binary',
+         *                       'json'.
+         *                         Default value is 'binary'.
+         * @param[in] options_  Optional parameters.  Default value is an empty
+         *                      std::map.
          * 
          */
-        GetRecordsBySeriesRequest(const std::string& tableName, const std::string& worldTableName, const int32_t offset, const int32_t limit, const std::string& encoding, const std::map<std::string, std::string>& options):
-            tableName(tableName),
-            worldTableName(worldTableName),
-            offset(offset),
-            limit(limit),
-            encoding(encoding),
-            options(options)
+        GetRecordsBySeriesRequest(const std::string& tableName_, const std::string& worldTableName_, const int32_t offset_, const int32_t limit_, const std::string& encoding_, const std::map<std::string, std::string>& options_):
+            tableName( tableName_ ),
+            worldTableName( worldTableName_ ),
+            offset( offset_ ),
+            limit( limit_ ),
+            encoding( encoding_ ),
+            options( options_ )
         {
         }
 

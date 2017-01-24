@@ -279,11 +279,12 @@ ADD_QTCREATOR_PROJECT( "gpudb-api-cpp" )
 # gpudb-api-cpp library
 # ---------------------------------------------------------------------------
 
-function( gpudb_api_cpp_lib_TARGETS )
+function( gpudb_api_cpp_lib_TARGETS STATIC_OR_SHARED )
 
-ADD_LIBRARY_FULL( gpudb_api_cpp_lib
+ADD_LIBRARY_FULL( gpudb_api_cpp_lib_${STATIC_OR_SHARED} ${STATIC_OR_SHARED}
     HEADERS
         Avro.hpp
+        ColumnProperties.h
         GenericRecord.hpp
         GPUdbException.hpp
         GPUdb.hpp
@@ -295,6 +296,7 @@ ADD_LIBRARY_FULL( gpudb_api_cpp_lib
         protocol/GPUdbProtocol.h
     SOURCES
         Avro.cpp
+        ColumnProperties.cpp
         GenericRecord.cpp
         GPUdb.cpp
         GPUdbIngestor.cpp
@@ -321,7 +323,7 @@ ADD_EXECUTABLE_FULL( gpudb-api-example
     SOURCES
         gpudb-api-example.cpp
     LINK_LIBRARIES
-        gpudb_api_cpp_lib
+        gpudb_api_cpp_lib_STATIC
         ${GPUDB_API_CPP_LINK_LIBRARIES}
     PROPERTIES COMPILE_FLAGS "-std=c++0x"
     PROPERTIES FOLDER "Example"
@@ -342,7 +344,7 @@ ADD_EXECUTABLE_FULL( test_multihead_ingest
     SOURCES
         test_multihead_ingest.cpp
     LINK_LIBRARIES
-        gpudb_api_cpp_lib
+        gpudb_api_cpp_lib_STATIC
         ${GPUDB_API_CPP_LINK_LIBRARIES}
     PROPERTIES COMPILE_FLAGS "-std=c++0x"
     PROPERTIES FOLDER "Example"

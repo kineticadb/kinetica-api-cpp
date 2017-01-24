@@ -3,64 +3,60 @@
  *
  *  DO NOT EDIT DIRECTLY.
  */
-#ifndef __KILL_PROC_H__
-#define __KILL_PROC_H__
+#ifndef __HAS_PROC_H__
+#define __HAS_PROC_H__
 
 namespace gpudb
 {
 
     /**
      * A set of input parameters for {@link
-     * #killProc(const KillProcRequest&) const}.
+     * #hasProc(const HasProcRequest&) const}.
      * <p>
-     * Kills a running proc instance.
+     * Checks the existence of a proc with the given name.
      */
-    struct KillProcRequest
+    struct HasProcRequest
     {
 
         /**
-         * Constructs a KillProcRequest object with default parameter values.
+         * Constructs a HasProcRequest object with default parameter values.
          */
-        KillProcRequest() :
-            runId(std::string()),
+        HasProcRequest() :
+            procName(std::string()),
             options(std::map<std::string, std::string>())
         {
         }
 
         /**
-         * Constructs a KillProcRequest object with the specified parameters.
+         * Constructs a HasProcRequest object with the specified parameters.
          * 
-         * @param[in] runId_  The run ID of the running proc instance. If the
-         *                    run ID is not found or the proc instance has
-         *                    already completed, this does nothing. If not
-         *                    specified, all running proc instances will be
-         *                    killed.  Default value is an empty string.
+         * @param[in] procName_  Name of the proc to check for existence.
          * @param[in] options_  Optional parameters.  Default value is an empty
          *                      std::map.
          * 
          */
-        KillProcRequest(const std::string& runId_, const std::map<std::string, std::string>& options_):
-            runId( runId_ ),
+        HasProcRequest(const std::string& procName_, const std::map<std::string, std::string>& options_):
+            procName( procName_ ),
             options( options_ )
         {
         }
 
-        std::string runId;
+        std::string procName;
         std::map<std::string, std::string> options;
     };
 }
 
 namespace avro
 {
-    template<> struct codec_traits<gpudb::KillProcRequest>
+    template<> struct codec_traits<gpudb::HasProcRequest>
     {
-        static void encode(Encoder& e, const gpudb::KillProcRequest& v)
+        static void encode(Encoder& e, const gpudb::HasProcRequest& v)
         {
-            ::avro::encode(e, v.runId);
+            ::avro::encode(e, v.procName);
             ::avro::encode(e, v.options);
         }
 
-        static void decode(Decoder& d, gpudb::KillProcRequest& v)
+        static void decode(Decoder& d, gpudb::HasProcRequest& v)
         {
             if (::avro::ResolvingDecoder *rd = dynamic_cast< ::avro::ResolvingDecoder*>(&d))
             {
@@ -71,7 +67,7 @@ namespace avro
                     switch (*it)
                     {
                         case 0:
-                            ::avro::decode(d, v.runId);
+                            ::avro::decode(d, v.procName);
                             break;
 
                         case 1:
@@ -85,7 +81,7 @@ namespace avro
             }
             else
             {
-                ::avro::decode(d, v.runId);
+                ::avro::decode(d, v.procName);
                 ::avro::decode(d, v.options);
             }
         }
@@ -97,35 +93,38 @@ namespace gpudb
 
     /**
      * A set of output parameters for {@link
-     * #killProc(const KillProcRequest&) const}.
+     * #hasProc(const HasProcRequest&) const}.
      * <p>
-     * Kills a running proc instance.
+     * Checks the existence of a proc with the given name.
      */
-    struct KillProcResponse
+    struct HasProcResponse
     {
 
         /**
-         * Constructs a KillProcResponse object with default parameter values.
+         * Constructs a HasProcResponse object with default parameter values.
          */
-        KillProcResponse() :
-            runIds(std::vector<std::string>())
+        HasProcResponse() :
+            procName(std::string()),
+            procExists(bool())
         {
         }
 
-        std::vector<std::string> runIds;
+        std::string procName;
+        bool procExists;
     };
 }
 
 namespace avro
 {
-    template<> struct codec_traits<gpudb::KillProcResponse>
+    template<> struct codec_traits<gpudb::HasProcResponse>
     {
-        static void encode(Encoder& e, const gpudb::KillProcResponse& v)
+        static void encode(Encoder& e, const gpudb::HasProcResponse& v)
         {
-            ::avro::encode(e, v.runIds);
+            ::avro::encode(e, v.procName);
+            ::avro::encode(e, v.procExists);
         }
 
-        static void decode(Decoder& d, gpudb::KillProcResponse& v)
+        static void decode(Decoder& d, gpudb::HasProcResponse& v)
         {
             if (::avro::ResolvingDecoder *rd = dynamic_cast< ::avro::ResolvingDecoder*>(&d))
             {
@@ -136,7 +135,11 @@ namespace avro
                     switch (*it)
                     {
                         case 0:
-                            ::avro::decode(d, v.runIds);
+                            ::avro::decode(d, v.procName);
+                            break;
+
+                        case 1:
+                            ::avro::decode(d, v.procExists);
                             break;
 
                         default:
@@ -146,7 +149,8 @@ namespace avro
             }
             else
             {
-                ::avro::decode(d, v.runIds);
+                ::avro::decode(d, v.procName);
+                ::avro::decode(d, v.procExists);
             }
         }
     };

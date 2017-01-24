@@ -37,22 +37,23 @@ namespace gpudb
         /**
          * Constructs a LockTableRequest object with the specified parameters.
          * 
-         * @param[in] tableName  Name of the table to be locked. It must be a
-         *                       currently existing table, collection, or view.
-         * @param[in] lockType  The type of lock being applied to the table.
-         *                      Setting it to @a status will return the current
-         *                      lock status of the table without changing it.
-         *                      Values: 'status', 'disable', 'read-only',
-         *                      'write-only', 'unlock'.
-         *                        Default value is 'status'.
-         * @param[in] options  Optional parameters.  Default value is an empty
-         *                     std::map.
+         * @param[in] tableName_  Name of the table to be locked. It must be a
+         *                        currently existing table, collection, or
+         *                        view.
+         * @param[in] lockType_  The type of lock being applied to the table.
+         *                       Setting it to @a status will return the
+         *                       current lock status of the table without
+         *                       changing it. Values: 'status', 'disable',
+         *                       'read-only', 'write-only', 'unlock'.
+         *                         Default value is 'status'.
+         * @param[in] options_  Optional parameters.  Default value is an empty
+         *                      std::map.
          * 
          */
-        LockTableRequest(const std::string& tableName, const std::string& lockType, const std::map<std::string, std::string>& options):
-            tableName(tableName),
-            lockType(lockType),
-            options(options)
+        LockTableRequest(const std::string& tableName_, const std::string& lockType_, const std::map<std::string, std::string>& options_):
+            tableName( tableName_ ),
+            lockType( lockType_ ),
+            options( options_ )
         {
         }
 

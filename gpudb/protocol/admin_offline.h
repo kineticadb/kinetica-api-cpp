@@ -33,15 +33,15 @@ namespace gpudb
          * Constructs an AdminOfflineRequest object with the specified
          * parameters.
          * 
-         * @param[in] offline  Set to true if desired state is offline. Values:
-         *                     'true', 'false'.
-         * @param[in] options  Optional parameters.  Default value is an empty
-         *                     std::map.
+         * @param[in] offline_  Set to true if desired state is offline.
+         *                      Values: 'true', 'false'.
+         * @param[in] options_  Optional parameters.  Default value is an empty
+         *                      std::map.
          * 
          */
-        AdminOfflineRequest(const bool offline, const std::map<std::string, std::string>& options):
-            offline(offline),
-            options(options)
+        AdminOfflineRequest(const bool offline_, const std::map<std::string, std::string>& options_):
+            offline( offline_ ),
+            options( options_ )
         {
         }
 

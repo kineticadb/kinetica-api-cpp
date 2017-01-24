@@ -30,14 +30,14 @@ namespace gpudb
         /**
          * Constructs a DeleteUserRequest object with the specified parameters.
          * 
-         * @param[in] name  Name of the user to be deleted. Must be an existing
-         *                  user.
-         * @param[in] options  Optional parameters.
+         * @param[in] name_  Name of the user to be deleted. Must be an
+         *                   existing user.
+         * @param[in] options_  Optional parameters.
          * 
          */
-        DeleteUserRequest(const std::string& name, const std::map<std::string, std::string>& options):
-            name(name),
-            options(options)
+        DeleteUserRequest(const std::string& name_, const std::map<std::string, std::string>& options_):
+            name( name_ ),
+            options( options_ )
         {
         }
 

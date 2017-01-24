@@ -43,41 +43,41 @@ namespace gpudb
          * Constructs an AggregateKMeansRequest object with the specified
          * parameters.
          * 
-         * @param[in] tableName  Name of the table on which the operation will
-         *                       be performed. Must be a valid table or
-         *                       collection in GPUdb.
-         * @param[in] columnNames  List of column names on which the operation
-         *                         would be performed. If n columns are
-         *                         provided then each of the k result points
-         *                         will have n dimensions corresponding to the
-         *                         n columns.
-         * @param[in] k  The number of mean points to be determined by the
-         *               algorithm.
-         * @param[in] tolerance  Stop iterating when the distances between
-         *                       successive points is less than the given
-         *                       tolerance.
-         * @param[in] options  Optional parameters.
-         *                     <ul>
-         *                             <li> whiten: When set to 1 each of the
-         *                     columns is first normalized by its stdv -
-         *                     default is not to whiten.
-         *                             <li> max_iters: Number of times to try
-         *                     to hit the tolerance limit before giving up -
-         *                     default is 10.
-         *                             <li> num_tries: Number of times to run
-         *                     the k-means algorithm with a different randomly
-         *                     selected starting points - helps avoid local
-         *                     minimum. Default is 1.
-         *                     </ul>
-         *                       Default value is an empty std::map.
+         * @param[in] tableName_  Name of the table on which the operation will
+         *                        be performed. Must be a valid table or
+         *                        collection in GPUdb.
+         * @param[in] columnNames_  List of column names on which the operation
+         *                          would be performed. If n columns are
+         *                          provided then each of the k result points
+         *                          will have n dimensions corresponding to the
+         *                          n columns.
+         * @param[in] k_  The number of mean points to be determined by the
+         *                algorithm.
+         * @param[in] tolerance_  Stop iterating when the distances between
+         *                        successive points is less than the given
+         *                        tolerance.
+         * @param[in] options_  Optional parameters.
+         *                      <ul>
+         *                              <li> whiten: When set to 1 each of the
+         *                      columns is first normalized by its stdv -
+         *                      default is not to whiten.
+         *                              <li> max_iters: Number of times to try
+         *                      to hit the tolerance limit before giving up -
+         *                      default is 10.
+         *                              <li> num_tries: Number of times to run
+         *                      the k-means algorithm with a different randomly
+         *                      selected starting points - helps avoid local
+         *                      minimum. Default is 1.
+         *                      </ul>
+         *                        Default value is an empty std::map.
          * 
          */
-        AggregateKMeansRequest(const std::string& tableName, const std::vector<std::string>& columnNames, const int32_t k, const double tolerance, const std::map<std::string, std::string>& options):
-            tableName(tableName),
-            columnNames(columnNames),
-            k(k),
-            tolerance(tolerance),
-            options(options)
+        AggregateKMeansRequest(const std::string& tableName_, const std::vector<std::string>& columnNames_, const int32_t k_, const double tolerance_, const std::map<std::string, std::string>& options_):
+            tableName( tableName_ ),
+            columnNames( columnNames_ ),
+            k( k_ ),
+            tolerance( tolerance_ ),
+            options( options_ )
         {
         }
 

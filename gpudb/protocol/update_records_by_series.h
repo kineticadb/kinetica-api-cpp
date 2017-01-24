@@ -37,25 +37,25 @@ namespace gpudb
          * Constructs an UpdateRecordsBySeriesRequest object with the specified
          * parameters.
          * 
-         * @param[in] tableName  Name of the view on which the update operation
-         *                       will be performed. Must be a valid view in
-         *                       GPUdb.
-         * @param[in] worldTableName  Name of the table containing the complete
-         *                            series (track) information.
-         * @param[in] viewName  Optional name of the view containing the series
-         *                      (tracks) which have to be updated.  Default
-         *                      value is an empty string.
-         * @param[in] reserved  Default value is an empty std::vector.
-         * @param[in] options  Optional parameters.  Default value is an empty
-         *                     std::map.
+         * @param[in] tableName_  Name of the view on which the update
+         *                        operation will be performed. Must be a valid
+         *                        view in GPUdb.
+         * @param[in] worldTableName_  Name of the table containing the
+         *                             complete series (track) information.
+         * @param[in] viewName_  Optional name of the view containing the
+         *                       series (tracks) which have to be updated.
+         *                       Default value is an empty string.
+         * @param[in] reserved_  Default value is an empty std::vector.
+         * @param[in] options_  Optional parameters.  Default value is an empty
+         *                      std::map.
          * 
          */
-        UpdateRecordsBySeriesRequest(const std::string& tableName, const std::string& worldTableName, const std::string& viewName, const std::vector<std::string>& reserved, const std::map<std::string, std::string>& options):
-            tableName(tableName),
-            worldTableName(worldTableName),
-            viewName(viewName),
-            reserved(reserved),
-            options(options)
+        UpdateRecordsBySeriesRequest(const std::string& tableName_, const std::string& worldTableName_, const std::string& viewName_, const std::vector<std::string>& reserved_, const std::map<std::string, std::string>& options_):
+            tableName( tableName_ ),
+            worldTableName( worldTableName_ ),
+            viewName( viewName_ ),
+            reserved( reserved_ ),
+            options( options_ )
         {
         }
 

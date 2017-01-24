@@ -15,7 +15,7 @@ namespace gpudb
     // Keywords for /admin/offline request
     extern const std::string admin_offline_false;
     extern const std::string admin_offline_true;
-    
+
     // Keywords for /aggregate/groupby request
     extern const std::string aggregate_group_by_ascending;
     extern const std::string aggregate_group_by_binary;
@@ -28,15 +28,15 @@ namespace gpudb
     extern const std::string aggregate_group_by_sort_by;
     extern const std::string aggregate_group_by_sort_order;
     extern const std::string aggregate_group_by_value;
-    
+
     // Keywords for /aggregate/histogram request
     extern const std::string aggregate_histogram_value_column;
-    
+
     // Keywords for /aggregate/kmeans request
     extern const std::string aggregate_k_means_max_iters;
     extern const std::string aggregate_k_means_num_tries;
     extern const std::string aggregate_k_means_whiten;
-    
+
     // Keywords for /aggregate/statistics request
     extern const std::string aggregate_statistics_additional_column_names;
     extern const std::string aggregate_statistics_cardinality;
@@ -54,13 +54,13 @@ namespace gpudb
     extern const std::string aggregate_statistics_variance;
     extern const std::string aggregate_statistics_weight_column_name;
     extern const std::string aggregate_statistics_weighted_average;
-    
+
     // Keywords for /aggregate/statistics/byrange request
     extern const std::string aggregate_statistics_by_range_additional_column_names;
     extern const std::string aggregate_statistics_by_range_bin_values;
     extern const std::string aggregate_statistics_by_range_order_column_name;
     extern const std::string aggregate_statistics_by_range_weight_column_name;
-    
+
     // Keywords for /aggregate/unique request
     extern const std::string aggregate_unique_ascending;
     extern const std::string aggregate_unique_binary;
@@ -69,7 +69,7 @@ namespace gpudb
     extern const std::string aggregate_unique_json;
     extern const std::string aggregate_unique_result_table;
     extern const std::string aggregate_unique_sort_order;
-    
+
     // Keywords for /alter/system/properties request
     extern const std::string alter_system_properties_bulk_add_test;
     extern const std::string alter_system_properties_chunk_size;
@@ -83,17 +83,29 @@ namespace gpudb
     extern const std::string alter_system_properties_request_timeout;
     extern const std::string alter_system_properties_set_message_timers_enabled;
     extern const std::string alter_system_properties_sm_omp_threads;
-    
+
     // Keywords for /alter/table request
+    extern const std::string alter_table_add_column;
     extern const std::string alter_table_allow_homogeneous_tables;
+    extern const std::string alter_table_change_column;
+    extern const std::string alter_table_column_default_value;
+    extern const std::string alter_table_column_properties;
+    extern const std::string alter_table_column_type;
+    extern const std::string alter_table_copy_values_from_column;
     extern const std::string alter_table_create_index;
+    extern const std::string alter_table_delete_column;
     extern const std::string alter_table_delete_index;
+    extern const std::string alter_table_false;
     extern const std::string alter_table_protected;
+    extern const std::string alter_table_rename_column;
+    extern const std::string alter_table_rename_table;
+    extern const std::string alter_table_true;
     extern const std::string alter_table_ttl;
-    
+    extern const std::string alter_table_validate_change_column;
+
     // Keywords for /alter/user request
     extern const std::string alter_user_set_password;
-    
+
     // Keywords for /create/jointable request
     extern const std::string create_join_table_collection_name;
     extern const std::string create_join_table_full_refresh;
@@ -105,12 +117,11 @@ namespace gpudb
     extern const std::string create_join_table_optimize_lookups;
     extern const std::string create_join_table_refresh;
     extern const std::string create_join_table_refresh_method;
-    
+
     // Keywords for /create/proc request
-    extern const std::string create_proc_false;
+    extern const std::string create_proc_distributed;
     extern const std::string create_proc_nondistributed;
-    extern const std::string create_proc_true;
-    
+
     // Keywords for /create/projection request
     extern const std::string create_projection_collection_name;
     extern const std::string create_projection_expression;
@@ -118,7 +129,7 @@ namespace gpudb
     extern const std::string create_projection_limit;
     extern const std::string create_projection_order_by;
     extern const std::string create_projection_true;
-    
+
     // Keywords for /create/table request
     extern const std::string create_table_collection_name;
     extern const std::string create_table_disallow_homogeneous_tables;
@@ -128,7 +139,7 @@ namespace gpudb
     extern const std::string create_table_is_replicated;
     extern const std::string create_table_no_error_if_exists;
     extern const std::string create_table_true;
-    
+
     // Keywords for /create/type request
     extern const std::string create_type_char1;
     extern const std::string create_type_char128;
@@ -149,19 +160,27 @@ namespace gpudb
     extern const std::string create_type_store_only;
     extern const std::string create_type_text_search;
     extern const std::string create_type_timestamp;
-    
+
     // Keywords for /create/union request
     extern const std::string create_union_collection_name;
+    extern const std::string create_union_except;
     extern const std::string create_union_false;
+    extern const std::string create_union_intersect;
     extern const std::string create_union_merge_views;
     extern const std::string create_union_mode;
-    extern const std::string create_union_normal;
     extern const std::string create_union_true;
-    
+    extern const std::string create_union_union;
+    extern const std::string create_union_union_all;
+    extern const std::string create_union_union_distinct;
+
     // Keywords for /delete/records request
     extern const std::string delete_records_global_expression;
     extern const std::string delete_records_record_id;
-    
+
+    // Keywords for /execute/proc request
+    extern const std::string execute_proc_cache_input;
+    extern const std::string execute_proc_use_cached_input;
+
     // Keywords for /filter/bygeometry request
     extern const std::string filter_by_geometry_contains;
     extern const std::string filter_by_geometry_crosses;
@@ -171,19 +190,19 @@ namespace gpudb
     extern const std::string filter_by_geometry_overlaps;
     extern const std::string filter_by_geometry_touches;
     extern const std::string filter_by_geometry_within;
-    
+
     // Keywords for /filter/bylist request
     extern const std::string filter_by_list_filter_mode;
     extern const std::string filter_by_list_in_list;
     extern const std::string filter_by_list_not_in_list;
-    
+
     // Keywords for /filter/byseries request
     extern const std::string filter_by_series_euclidean;
     extern const std::string filter_by_series_great_circle;
     extern const std::string filter_by_series_spatial_distance_metric;
     extern const std::string filter_by_series_spatial_radius;
     extern const std::string filter_by_series_time_radius;
-    
+
     // Keywords for /filter/bystring request
     extern const std::string filter_by_string_case_sensitive;
     extern const std::string filter_by_string_contains;
@@ -193,7 +212,7 @@ namespace gpudb
     extern const std::string filter_by_string_search;
     extern const std::string filter_by_string_starts_with;
     extern const std::string filter_by_string_true;
-    
+
     // Keywords for /filter/bytable request
     extern const std::string filter_by_table_buffer;
     extern const std::string filter_by_table_buffer_method;
@@ -208,7 +227,7 @@ namespace gpudb
     extern const std::string filter_by_table_spatial;
     extern const std::string filter_by_table_x_column_name;
     extern const std::string filter_by_table_y_column_name;
-    
+
     // Keywords for /get/records request
     extern const std::string get_records_ascending;
     extern const std::string get_records_binary;
@@ -217,7 +236,7 @@ namespace gpudb
     extern const std::string get_records_json;
     extern const std::string get_records_sort_by;
     extern const std::string get_records_sort_order;
-    
+
     // Keywords for /get/records/bycolumn request
     extern const std::string get_records_by_column_ascending;
     extern const std::string get_records_by_column_binary;
@@ -226,38 +245,42 @@ namespace gpudb
     extern const std::string get_records_by_column_json;
     extern const std::string get_records_by_column_sort_by;
     extern const std::string get_records_by_column_sort_order;
-    
+
     // Keywords for /get/records/byseries request
     extern const std::string get_records_by_series_binary;
     extern const std::string get_records_by_series_json;
-    
+
     // Keywords for /get/records/fromcollection request
     extern const std::string get_records_from_collection_binary;
     extern const std::string get_records_from_collection_false;
     extern const std::string get_records_from_collection_json;
     extern const std::string get_records_from_collection_return_record_ids;
     extern const std::string get_records_from_collection_true;
-    
+
     // Keywords for /grant/permission/system request
     extern const std::string grant_permission_system_system_admin;
     extern const std::string grant_permission_system_system_read;
     extern const std::string grant_permission_system_system_write;
-    
+
     // Keywords for /grant/permission/table request
     extern const std::string grant_permission_table_table_admin;
     extern const std::string grant_permission_table_table_delete;
     extern const std::string grant_permission_table_table_insert;
     extern const std::string grant_permission_table_table_read;
     extern const std::string grant_permission_table_table_update;
-    
+
+    // Keywords for /has/proc response
+    extern const std::string has_proc_false;
+    extern const std::string has_proc_true;
+
     // Keywords for /has/table response
     extern const std::string has_table_false;
     extern const std::string has_table_true;
-    
+
     // Keywords for /has/type response
     extern const std::string has_type_false;
     extern const std::string has_type_true;
-    
+
     // Keywords for /insert/records request
     extern const std::string insert_records_binary;
     extern const std::string insert_records_false;
@@ -266,7 +289,7 @@ namespace gpudb
     extern const std::string insert_records_route_to_address;
     extern const std::string insert_records_true;
     extern const std::string insert_records_update_on_existing_pk;
-    
+
     // Keywords for /insert/records/random request
     extern const std::string insert_records_random_all;
     extern const std::string insert_records_random_attr_name;
@@ -274,87 +297,87 @@ namespace gpudb
     extern const std::string insert_records_random_max;
     extern const std::string insert_records_random_min;
     extern const std::string insert_records_random_track_length;
-    
+
     // Keywords for /insert/symbol request
     extern const std::string insert_symbol_color;
     extern const std::string insert_symbol_svg;
     extern const std::string insert_symbol_svg_path;
-    
+
     // Keywords for /lock/table request
     extern const std::string lock_table_disable;
     extern const std::string lock_table_read_only;
     extern const std::string lock_table_status;
     extern const std::string lock_table_unlock;
     extern const std::string lock_table_write_only;
-    
+
     // Keywords for /revoke/permission/system request
     extern const std::string revoke_permission_system_system_admin;
     extern const std::string revoke_permission_system_system_read;
     extern const std::string revoke_permission_system_system_write;
-    
+
     // Keywords for /revoke/permission/table request
     extern const std::string revoke_permission_table_table_admin;
     extern const std::string revoke_permission_table_table_delete;
     extern const std::string revoke_permission_table_table_insert;
     extern const std::string revoke_permission_table_table_read;
     extern const std::string revoke_permission_table_table_update;
-    
+
     // Keywords for /show/proc request
-    extern const std::string show_proc_include_files;
-    
-    // Keywords for /show/proc response
-    extern const std::string show_proc_nondistributed;
-    
-    // Keywords for /show/proc request and response
     extern const std::string show_proc_false;
+    extern const std::string show_proc_include_files;
     extern const std::string show_proc_true;
-    
+
+    // Keywords for /show/proc response
+    extern const std::string show_proc_distributed;
+    extern const std::string show_proc_nondistributed;
+
     // Keywords for /show/proc/status request
     extern const std::string show_proc_status_clear_complete;
     extern const std::string show_proc_status_false;
     extern const std::string show_proc_status_true;
-    
+
     // Keywords for /show/proc/status response
     extern const std::string show_proc_status_complete;
     extern const std::string show_proc_status_error;
     extern const std::string show_proc_status_killed;
     extern const std::string show_proc_status_running;
-    
+
     // Keywords for /show/security response
     extern const std::string show_security_external_user;
     extern const std::string show_security_internal_user;
     extern const std::string show_security_role;
-    
+
     // Keywords for /show/system/properties request
     extern const std::string show_system_properties_properties;
-    
+
     // Keywords for /show/system/properties response
     extern const std::string show_system_properties_FALSE;
     extern const std::string show_system_properties_TRUE;
     extern const std::string show_system_properties_conf_enable_worker_http_servers;
     extern const std::string show_system_properties_conf_worker_http_server_ips;
     extern const std::string show_system_properties_conf_worker_http_server_ports;
-    
+
     // Keywords for /show/table request
     extern const std::string show_table_get_sizes;
     extern const std::string show_table_show_children;
-    
+
     // Keywords for /show/table response
     extern const std::string show_table_COLLECTION;
     extern const std::string show_table_JOIN;
     extern const std::string show_table_REPLICATED;
+    extern const std::string show_table_RESULT_TABLE;
     extern const std::string show_table_VIEW;
-    extern const std::string show_table_allow_homogenous_tables;
+    extern const std::string show_table_allow_homogeneous_tables;
     extern const std::string show_table_attribute_indexes;
     extern const std::string show_table_foreign_keys;
     extern const std::string show_table_protected;
     extern const std::string show_table_remaining_table_ttl;
     extern const std::string show_table_table_ttl;
-    
+
     // Keywords for /show/table request and response
     extern const std::string show_table_false;
     extern const std::string show_table_true;
-    
+
     // Keywords for /update/records request
     extern const std::string update_records_binary;
     extern const std::string update_records_bypass_safety_checks;
@@ -364,7 +387,7 @@ namespace gpudb
     extern const std::string update_records_record_id;
     extern const std::string update_records_true;
     extern const std::string update_records_update_on_existing_pk;
-    
+
     // Keywords for /visualize/image request
     extern const std::string visualize_image_102100;
     extern const std::string visualize_image_3857;
@@ -403,7 +426,7 @@ namespace gpudb
     extern const std::string visualize_image_trackmarkershapes;
     extern const std::string visualize_image_trackmarkersizes;
     extern const std::string visualize_image_true;
-    
+
     // Keywords for /visualize/image/classbreak request
     extern const std::string visualize_image_classbreak_102100;
     extern const std::string visualize_image_classbreak_3857;
@@ -442,7 +465,7 @@ namespace gpudb
     extern const std::string visualize_image_classbreak_trackmarkershapes;
     extern const std::string visualize_image_classbreak_trackmarkersizes;
     extern const std::string visualize_image_classbreak_true;
-    
+
     // Keywords for /visualize/image/heatmap request
     extern const std::string visualize_image_heatmap_102100;
     extern const std::string visualize_image_heatmap_3857;
@@ -469,7 +492,7 @@ namespace gpudb
     extern const std::string visualize_image_heatmap_purples;
     extern const std::string visualize_image_heatmap_reds;
     extern const std::string visualize_image_heatmap_viridis;
-    
+
     // Keywords for /visualize/image/labels request
     extern const std::string visualize_image_labels_102100;
     extern const std::string visualize_image_labels_3857;
@@ -480,7 +503,7 @@ namespace gpudb
     extern const std::string visualize_image_labels_EPSG_900913;
     extern const std::string visualize_image_labels_PLATE_CARREE;
     extern const std::string visualize_image_labels_WEB_MERCATOR;
-    
+
     // Keywords for /visualize/video request
     extern const std::string visualize_video_102100;
     extern const std::string visualize_video_3857;
@@ -518,7 +541,7 @@ namespace gpudb
     extern const std::string visualize_video_trackmarkershapes;
     extern const std::string visualize_video_trackmarkersizes;
     extern const std::string visualize_video_true;
-    
+
     // Keywords for /visualize/video/heatmap request
     extern const std::string visualize_video_heatmap_102100;
     extern const std::string visualize_video_heatmap_3857;
@@ -544,7 +567,7 @@ namespace gpudb
     extern const std::string visualize_video_heatmap_oranges;
     extern const std::string visualize_video_heatmap_purples;
     extern const std::string visualize_video_heatmap_reds;
-    
+
 
 }
 

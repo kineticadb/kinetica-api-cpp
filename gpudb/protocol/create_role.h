@@ -30,16 +30,16 @@ namespace gpudb
         /**
          * Constructs a CreateRoleRequest object with the specified parameters.
          * 
-         * @param[in] name  Name of the role to be created. Must contain only
-         *                  lowercase letters, digits, and underscores, and
-         *                  cannot begin with a digit. Must not be the same
-         *                  name as an existing user or role in GPUdb.
-         * @param[in] options  Optional parameters.
+         * @param[in] name_  Name of the role to be created. Must contain only
+         *                   lowercase letters, digits, and underscores, and
+         *                   cannot begin with a digit. Must not be the same
+         *                   name as an existing user or role in GPUdb.
+         * @param[in] options_  Optional parameters.
          * 
          */
-        CreateRoleRequest(const std::string& name, const std::map<std::string, std::string>& options):
-            name(name),
-            options(options)
+        CreateRoleRequest(const std::string& name_, const std::map<std::string, std::string>& options_):
+            name( name_ ),
+            options( options_ )
         {
         }
 

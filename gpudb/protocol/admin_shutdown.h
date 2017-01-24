@@ -33,18 +33,18 @@ namespace gpudb
          * Constructs an AdminShutdownRequest object with the specified
          * parameters.
          * 
-         * @param[in] exitType  Reserved for future use. User can pass an empty
-         *                      string.
-         * @param[in] authorization  No longer used. User can pass an empty
-         *                           string.
-         * @param[in] options  Optional parameters.  Default value is an empty
-         *                     std::map.
+         * @param[in] exitType_  Reserved for future use. User can pass an
+         *                       empty string.
+         * @param[in] authorization_  No longer used. User can pass an empty
+         *                            string.
+         * @param[in] options_  Optional parameters.  Default value is an empty
+         *                      std::map.
          * 
          */
-        AdminShutdownRequest(const std::string& exitType, const std::string& authorization, const std::map<std::string, std::string>& options):
-            exitType(exitType),
-            authorization(authorization),
-            options(options)
+        AdminShutdownRequest(const std::string& exitType_, const std::string& authorization_, const std::map<std::string, std::string>& options_):
+            exitType( exitType_ ),
+            authorization( authorization_ ),
+            options( options_ )
         {
         }
 

@@ -61,62 +61,62 @@ namespace gpudb
          * Constructs a VisualizeImageLabelsRequest object with the specified
          * parameters.
          * 
-         * @param[in] tableName
-         * @param[in] xColumnName
-         * @param[in] yColumnName
-         * @param[in] xOffset
-         * @param[in] yOffset
-         * @param[in] textString
-         * @param[in] font
-         * @param[in] textColor
-         * @param[in] textAngle
-         * @param[in] textScale
-         * @param[in] drawBox
-         * @param[in] drawLeader
-         * @param[in] lineWidth
-         * @param[in] lineColor
-         * @param[in] fillColor
-         * @param[in] leaderXColumnName
-         * @param[in] leaderYColumnName
-         * @param[in] minX
-         * @param[in] maxX
-         * @param[in] minY
-         * @param[in] maxY
-         * @param[in] width
-         * @param[in] height
-         * @param[in] projection  Values: 'EPSG:4326', 'PLATE_CARREE',
-         *                        '900913', 'EPSG:900913', '102100',
-         *                        'EPSG:102100', '3857', 'EPSG:3857',
-         *                        'WEB_MERCATOR'.
-         * @param[in] options
+         * @param[in] tableName_
+         * @param[in] xColumnName_
+         * @param[in] yColumnName_
+         * @param[in] xOffset_
+         * @param[in] yOffset_
+         * @param[in] textString_
+         * @param[in] font_
+         * @param[in] textColor_
+         * @param[in] textAngle_
+         * @param[in] textScale_
+         * @param[in] drawBox_
+         * @param[in] drawLeader_
+         * @param[in] lineWidth_
+         * @param[in] lineColor_
+         * @param[in] fillColor_
+         * @param[in] leaderXColumnName_
+         * @param[in] leaderYColumnName_
+         * @param[in] minX_
+         * @param[in] maxX_
+         * @param[in] minY_
+         * @param[in] maxY_
+         * @param[in] width_
+         * @param[in] height_
+         * @param[in] projection_  Values: 'EPSG:4326', 'PLATE_CARREE',
+         *                         '900913', 'EPSG:900913', '102100',
+         *                         'EPSG:102100', '3857', 'EPSG:3857',
+         *                         'WEB_MERCATOR'.
+         * @param[in] options_
          * 
          */
-        VisualizeImageLabelsRequest(const std::string& tableName, const std::string& xColumnName, const std::string& yColumnName, const std::string& xOffset, const std::string& yOffset, const std::string& textString, const std::string& font, const std::string& textColor, const std::string& textAngle, const std::string& textScale, const std::string& drawBox, const std::string& drawLeader, const std::string& lineWidth, const std::string& lineColor, const std::string& fillColor, const std::string& leaderXColumnName, const std::string& leaderYColumnName, const double minX, const double maxX, const double minY, const double maxY, const int32_t width, const int32_t height, const std::string& projection, const std::map<std::string, std::string>& options):
-            tableName(tableName),
-            xColumnName(xColumnName),
-            yColumnName(yColumnName),
-            xOffset(xOffset),
-            yOffset(yOffset),
-            textString(textString),
-            font(font),
-            textColor(textColor),
-            textAngle(textAngle),
-            textScale(textScale),
-            drawBox(drawBox),
-            drawLeader(drawLeader),
-            lineWidth(lineWidth),
-            lineColor(lineColor),
-            fillColor(fillColor),
-            leaderXColumnName(leaderXColumnName),
-            leaderYColumnName(leaderYColumnName),
-            minX(minX),
-            maxX(maxX),
-            minY(minY),
-            maxY(maxY),
-            width(width),
-            height(height),
-            projection(projection),
-            options(options)
+        VisualizeImageLabelsRequest(const std::string& tableName_, const std::string& xColumnName_, const std::string& yColumnName_, const std::string& xOffset_, const std::string& yOffset_, const std::string& textString_, const std::string& font_, const std::string& textColor_, const std::string& textAngle_, const std::string& textScale_, const std::string& drawBox_, const std::string& drawLeader_, const std::string& lineWidth_, const std::string& lineColor_, const std::string& fillColor_, const std::string& leaderXColumnName_, const std::string& leaderYColumnName_, const double minX_, const double maxX_, const double minY_, const double maxY_, const int32_t width_, const int32_t height_, const std::string& projection_, const std::map<std::string, std::string>& options_):
+            tableName( tableName_ ),
+            xColumnName( xColumnName_ ),
+            yColumnName( yColumnName_ ),
+            xOffset( xOffset_ ),
+            yOffset( yOffset_ ),
+            textString( textString_ ),
+            font( font_ ),
+            textColor( textColor_ ),
+            textAngle( textAngle_ ),
+            textScale( textScale_ ),
+            drawBox( drawBox_ ),
+            drawLeader( drawLeader_ ),
+            lineWidth( lineWidth_ ),
+            lineColor( lineColor_ ),
+            fillColor( fillColor_ ),
+            leaderXColumnName( leaderXColumnName_ ),
+            leaderYColumnName( leaderYColumnName_ ),
+            minX( minX_ ),
+            maxX( maxX_ ),
+            minY( minY_ ),
+            maxY( maxY_ ),
+            width( width_ ),
+            height( height_ ),
+            projection( projection_ ),
+            options( options_ )
         {
         }
 

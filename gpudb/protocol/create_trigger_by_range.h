@@ -49,23 +49,23 @@ namespace gpudb
          * Constructs a CreateTriggerByRangeRequest object with the specified
          * parameters.
          * 
-         * @param[in] requestId  ID for the trigger request.
-         * @param[in] tableNames  Tables on which the trigger will be active.
-         * @param[in] columnName  Name of a numeric column_name on which the
-         *                        trigger is activated.
-         * @param[in] min  The lower bound (inclusive) for the trigger range.
-         * @param[in] max  The upper bound (inclusive) for the trigger range.
-         * @param[in] options  Optional parameters.  Default value is an empty
-         *                     std::map.
+         * @param[in] requestId_  ID for the trigger request.
+         * @param[in] tableNames_  Tables on which the trigger will be active.
+         * @param[in] columnName_  Name of a numeric column_name on which the
+         *                         trigger is activated.
+         * @param[in] min_  The lower bound (inclusive) for the trigger range.
+         * @param[in] max_  The upper bound (inclusive) for the trigger range.
+         * @param[in] options_  Optional parameters.  Default value is an empty
+         *                      std::map.
          * 
          */
-        CreateTriggerByRangeRequest(const std::string& requestId, const std::vector<std::string>& tableNames, const std::string& columnName, const double min, const double max, const std::map<std::string, std::string>& options):
-            requestId(requestId),
-            tableNames(tableNames),
-            columnName(columnName),
-            min(min),
-            max(max),
-            options(options)
+        CreateTriggerByRangeRequest(const std::string& requestId_, const std::vector<std::string>& tableNames_, const std::string& columnName_, const double min_, const double max_, const std::map<std::string, std::string>& options_):
+            requestId( requestId_ ),
+            tableNames( tableNames_ ),
+            columnName( columnName_ ),
+            min( min_ ),
+            max( max_ ),
+            options( options_ )
         {
         }
 

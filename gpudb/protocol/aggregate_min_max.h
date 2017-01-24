@@ -34,19 +34,19 @@ namespace gpudb
          * Constructs an AggregateMinMaxRequest object with the specified
          * parameters.
          * 
-         * @param[in] tableName  Name of the table on which the operation will
-         *                       be performed. Must be a valid table in GPUdb.
-         * @param[in] columnName  Name of a column or an expression of one or
-         *                        more column on which the min-max will be
-         *                        calculated.
-         * @param[in] options  Optional parameters.  Default value is an empty
-         *                     std::map.
+         * @param[in] tableName_  Name of the table on which the operation will
+         *                        be performed. Must be a valid table in GPUdb.
+         * @param[in] columnName_  Name of a column or an expression of one or
+         *                         more column on which the min-max will be
+         *                         calculated.
+         * @param[in] options_  Optional parameters.  Default value is an empty
+         *                      std::map.
          * 
          */
-        AggregateMinMaxRequest(const std::string& tableName, const std::string& columnName, const std::map<std::string, std::string>& options):
-            tableName(tableName),
-            columnName(columnName),
-            options(options)
+        AggregateMinMaxRequest(const std::string& tableName_, const std::string& columnName_, const std::map<std::string, std::string>& options_):
+            tableName( tableName_ ),
+            columnName( columnName_ ),
+            options( options_ )
         {
         }
 

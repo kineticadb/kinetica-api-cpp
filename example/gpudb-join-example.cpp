@@ -32,7 +32,7 @@ int main(int argc, char* argv[])
 
 	for (int ii = 0; ii < 10; ii++) {
 		gpudb::GenericRecord aRecord(aType);
-		aRecord.asInt("A") = ii;
+		aRecord.intValue("A") = ii;
 		data.push_back(aRecord);
 	}
 
@@ -47,30 +47,31 @@ int main(int argc, char* argv[])
 
 	for (int ii = 0; ii < 20; ii++) {
 		gpudb::GenericRecord bRecord(bType);
-		bRecord.asInt("B") = ii;
+		bRecord.intValue("B") = ii;
 		data.push_back(bRecord);
 	}
     gpudb.insertRecords("JoinTestB", data, options);
 
     std::vector<std::string> joinTables;
-    joinTables.push_back("JoinTestA");
-    joinTables.push_back("JoinTestB");
-    std::vector<std::string> aliases;
-    aliases.push_back("A");
-    aliases.push_back("B");
-    std::vector<std::string> expressions;
-    gpudb.createJoinTable("JoinTestC", joinTables, aliases, "A.A = B.B", expressions, options);
-
+    joinTables.push_back("JoinTestA as A");
+    joinTables.push_back("JoinTestB as B");
     std::vector<std::string> columnNames;
-    columnNames.push_back("A.A");
-    columnNames.push_back("B.B");
+    columnNames.push_back("A.A as A");
+    columnNames.push_back("B.B as B");
+    std::vector<std::string> expressions;
+    expressions.push_back("A = B");
+    gpudb.createJoinTable("JoinTestC", joinTables, columnNames, expressions, options);
+
+    columnNames.clear();
+    columnNames.push_back("A");
+    columnNames.push_back("B");
     gpudb::GetRecordsByColumnResponse grbcResponse = gpudb.getRecordsByColumn("JoinTestC", columnNames, 0, 10, options);
 
     for (size_t i = 0; i < grbcResponse.data.size(); ++i)
     {
         gpudb::GenericRecord& record = grbcResponse.data[i];
-        std::cout << record.asInt("A.A")
-                << " " << record.asInt("B.B")
+        std::cout << record.toString("A")
+                << " " << record.toString("B")
                 << std::endl;
     }
 

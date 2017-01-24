@@ -37,11 +37,11 @@ namespace gpudb
          * Constructs an AdminGetShardAssignmentsRequest object with the
          * specified parameters.
          * 
-         * @param[in] options
+         * @param[in] options_
          * 
          */
-        AdminGetShardAssignmentsRequest(const std::map<std::string, std::string>& options):
-            options(options)
+        AdminGetShardAssignmentsRequest(const std::map<std::string, std::string>& options_):
+            options( options_ )
         {
         }
 

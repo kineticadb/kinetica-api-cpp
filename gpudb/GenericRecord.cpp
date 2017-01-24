@@ -3,8 +3,26 @@
 #include "gpudb/Avro.hpp"
 #include "gpudb/GPUdbException.hpp"
 
+#include <iomanip>
+
 #include <avro/Compiler.hh>
 #include <boost/lexical_cast.hpp>
+
+namespace
+{
+    void toString(const std::vector<uint8_t>& value, std::string& result)
+    {
+        std::ostringstream oss;
+        oss << std::hex << std::setfill('0');
+
+        for (size_t i = 0; i < value.size(); ++i)
+        {
+            oss << std::setw(2) << (unsigned)value[i];
+        }
+
+        result = oss.str();
+    }
+}
 
 namespace gpudb
 {
@@ -32,25 +50,548 @@ namespace gpudb
         return m_type.getSchema();
     }
 
+    #define DEFINE_VALUE_REF(T, TN) \
+        T& GenericRecord::TN##Value(const size_t index) \
+        { \
+            return value<T>(index); \
+        } \
+        \
+        const T& GenericRecord::TN##Value(const size_t index) const \
+        { \
+            return value<T>(index); \
+        } \
+        \
+        T& GenericRecord::TN##Value(const std::string& name) \
+        { \
+            return value<T>(name); \
+        } \
+        \
+        const T& GenericRecord::TN##Value(const std::string& name) const \
+        { \
+            return value<T>(name); \
+        }
+
+    DEFINE_VALUE_REF(std::vector<uint8_t>, bytes)
+    DEFINE_VALUE_REF(double, double)
+    DEFINE_VALUE_REF(float, float)
+    DEFINE_VALUE_REF(int32_t, int)
+    DEFINE_VALUE_REF(int64_t, long)
+    DEFINE_VALUE_REF(std::string, string)
+    DEFINE_VALUE_REF(boost::optional<std::vector<uint8_t> >, nullableBytes)
+    DEFINE_VALUE_REF(boost::optional<double>, nullableDouble)
+    DEFINE_VALUE_REF(boost::optional<float>, nullableFloat)
+    DEFINE_VALUE_REF(boost::optional<int32_t>, nullableInt)
+    DEFINE_VALUE_REF(boost::optional<int64_t>, nullableLong)
+    DEFINE_VALUE_REF(boost::optional<std::string>, nullableString)
+
+    bool GenericRecord::isNull(const size_t index) const
+    {
+        const Type::Column& column = m_type.getColumn(index);
+
+        if (!column.isNullable())
+        {
+            return false;
+        }
+
+        switch (column.getType())
+        {
+            case Type::Column::BYTES: return !value<boost::optional<std::vector<uint8_t> > >(index);
+            case Type::Column::DOUBLE: return !value<boost::optional<double> >(index);
+            case Type::Column::FLOAT: return !value<boost::optional<float> >(index);
+            case Type::Column::INT: return !value<boost::optional<int32_t> >(index);
+            case Type::Column::LONG: return !value<boost::optional<int64_t> >(index);
+            case Type::Column::STRING: return !value<boost::optional<std::string> >(index);
+            default: throw std::bad_cast();
+        }
+    }
+
+    bool GenericRecord::isNull(const std::string& name) const
+    {
+        return isNull(m_type.getColumnIndex(name));
+    }
+
+    void GenericRecord::getAsBytes(const size_t index, std::vector<uint8_t>& result) const
+    {
+        const Type::Column& column = m_type.getColumn(index);
+
+        switch (column.getType())
+        {
+            case Type::Column::BYTES:
+                result = column.isNullable()
+                    ? *value<boost::optional<std::vector<uint8_t> > >(index)
+                    : value<std::vector<uint8_t> >(index);
+                break;
+
+            default:
+                throw std::bad_cast();
+        }
+    }
+
+    void GenericRecord::getAsBytes(const std::string& name, std::vector<uint8_t>& result) const
+    {
+        getAsBytes(m_type.getColumnIndex(name), result);
+    }
+
+    std::vector<uint8_t> GenericRecord::getAsBytes(const size_t index) const
+    {
+        std::vector<uint8_t> result;
+        getAsBytes(index, result);
+        return result;
+    }
+
+    std::vector<uint8_t> GenericRecord::getAsBytes(const std::string& name) const
+    {
+        std::vector<uint8_t> result;
+        getAsBytes(name, result);
+        return result;
+    }
+
+    #define CASE_CAST_TO_NON_NULLABLE(CT, CTN, T, CF) \
+        case Type::Column::CTN: \
+            if (column.isNullable()) \
+            { \
+                const boost::optional<CT>& temp = value<boost::optional<CT> >(index); \
+                \
+                if (temp) \
+                { \
+                    result = CF<T>(*temp); \
+                } \
+                else \
+                { \
+                    throw std::bad_cast(); \
+                } \
+            } \
+            else \
+            { \
+                result = CF<T>(value<CT>(index)); \
+            } \
+            \
+            break;
+
+    #define DEFINE_NON_NULLABLE_ACCESSORS(T, TN, CF, SCF) \
+        void GenericRecord::getAs##TN(const size_t index, T& result) const \
+        { \
+            const Type::Column& column = m_type.getColumn(index); \
+            \
+            switch (column.getType()) \
+            { \
+                CASE_CAST_TO_NON_NULLABLE(double, DOUBLE, T, CF) \
+                CASE_CAST_TO_NON_NULLABLE(float, FLOAT, T, CF) \
+                CASE_CAST_TO_NON_NULLABLE(int32_t, INT, T, CF) \
+                CASE_CAST_TO_NON_NULLABLE(int64_t, LONG, T, CF) \
+                CASE_CAST_TO_NON_NULLABLE(std::string, STRING, T, SCF) \
+                default: throw std::bad_cast(); \
+            } \
+        } \
+        \
+        void GenericRecord::getAs##TN(const std::string& name, T& result) const \
+        { \
+            getAs##TN(m_type.getColumnIndex(name), result); \
+        } \
+        \
+        T GenericRecord::getAs##TN(const size_t index) const \
+        { \
+            T result; \
+            getAs##TN(index, result); \
+            return result; \
+        } \
+        \
+        T GenericRecord::getAs##TN(const std::string& name) const \
+        { \
+            T result; \
+            getAs##TN(name, result); \
+            return result; \
+        }
+
+    DEFINE_NON_NULLABLE_ACCESSORS(double, Double, static_cast, boost::lexical_cast)
+    DEFINE_NON_NULLABLE_ACCESSORS(float, Float, static_cast, boost::lexical_cast)
+    DEFINE_NON_NULLABLE_ACCESSORS(int32_t, Int, static_cast, boost::lexical_cast)
+    DEFINE_NON_NULLABLE_ACCESSORS(int64_t, Long, static_cast, boost::lexical_cast)
+    DEFINE_NON_NULLABLE_ACCESSORS(std::string, String, boost::lexical_cast, static_cast)
+
+    void GenericRecord::getAsNullableBytes(const size_t index, boost::optional<std::vector<uint8_t> >& result) const
+    {
+        const Type::Column& column = m_type.getColumn(index);
+
+        switch (column.getType())
+        {
+            case Type::Column::BYTES:
+                if (column.isNullable())
+                {
+                    result = value<boost::optional<std::vector<uint8_t> > >(index);
+                }
+                else
+                {
+                    result = value<std::vector<uint8_t> >(index);
+                }
+
+                break;
+
+            default:
+                throw std::bad_cast();
+        }
+    }
+
+    void GenericRecord::getAsNullableBytes(const std::string& name, boost::optional<std::vector<uint8_t> >& result) const
+    {
+        getAsNullableBytes(m_type.getColumnIndex(name), result);
+    }
+
+    boost::optional<std::vector<uint8_t> > GenericRecord::getAsNullableBytes(const size_t index) const
+    {
+        boost::optional<std::vector<uint8_t> > result;
+        getAsNullableBytes(index, result);
+        return result;
+    }
+
+    boost::optional<std::vector<uint8_t> > GenericRecord::getAsNullableBytes(const std::string& name) const
+    {
+        boost::optional<std::vector<uint8_t> > result;
+        getAsNullableBytes(name, result);
+        return result;
+    }
+
+    #define CASE_CAST_TO_NULLABLE(CT, CTN, T, CF) \
+        case Type::Column::CTN: \
+        { \
+            if (column.isNullable()) \
+            { \
+                const boost::optional<CT>& temp = value<boost::optional<CT> >(index); \
+                \
+                if (temp) \
+                { \
+                    result = CF<T>(*temp); \
+                } \
+                else \
+                { \
+                    result = boost::none; \
+                } \
+            } \
+            else \
+            { \
+                result = CF<T>(value<CT>(index)); \
+            } \
+            \
+            break; \
+        }
+
+    #define DEFINE_NULLABLE_ACCESSORS(T, TN, CF, SCF) \
+        void GenericRecord::getAsNullable##TN(const size_t index, boost::optional<T>& result) const \
+        { \
+            const Type::Column& column = m_type.getColumn(index); \
+            \
+            switch (column.getType()) \
+            { \
+                CASE_CAST_TO_NULLABLE(double, DOUBLE, T, CF) \
+                CASE_CAST_TO_NULLABLE(float, FLOAT, T, CF) \
+                CASE_CAST_TO_NULLABLE(int32_t, INT, T, CF) \
+                CASE_CAST_TO_NULLABLE(int64_t, LONG, T, CF) \
+                CASE_CAST_TO_NULLABLE(std::string, STRING, T, SCF) \
+                default: throw std::bad_cast(); \
+            } \
+        } \
+        \
+        void GenericRecord::getAsNullable##TN(const std::string& name, boost::optional<T>& result) const \
+        { \
+            getAsNullable##TN(m_type.getColumnIndex(name), result); \
+        } \
+        \
+        boost::optional<T> GenericRecord::getAsNullable##TN(const size_t index) const \
+        { \
+            boost::optional<T> result; \
+            getAsNullable##TN(index, result); \
+            return result; \
+        } \
+        \
+        boost::optional<T> GenericRecord::getAsNullable##TN(const std::string& name) const \
+        { \
+            boost::optional<T> result; \
+            getAsNullable##TN(name, result); \
+            return result; \
+        }
+
+    DEFINE_NULLABLE_ACCESSORS(double, Double, static_cast, boost::lexical_cast)
+    DEFINE_NULLABLE_ACCESSORS(float, Float, static_cast, boost::lexical_cast)
+    DEFINE_NULLABLE_ACCESSORS(int32_t, Int, static_cast, boost::lexical_cast)
+    DEFINE_NULLABLE_ACCESSORS(int64_t, Long, static_cast, boost::lexical_cast)
+    DEFINE_NULLABLE_ACCESSORS(std::string, String, boost::lexical_cast, static_cast)
+
+    void GenericRecord::setNull(const size_t index)
+    {
+        const Type::Column& column = m_type.getColumn(index);
+
+        if (!column.isNullable())
+        {
+            throw std::bad_cast();
+        }
+
+        switch (column.getType())
+        {
+            case Type::Column::BYTES: value<boost::optional<std::vector<uint8_t> > >(index) = boost::none; break;
+            case Type::Column::DOUBLE: value<boost::optional<double> >(index) = boost::none; break;
+            case Type::Column::FLOAT: value<boost::optional<float> >(index) = boost::none; break;
+            case Type::Column::INT: value<boost::optional<int32_t> >(index) = boost::none; break;
+            case Type::Column::LONG: value<boost::optional<int64_t> >(index) = boost::none; break;
+            case Type::Column::STRING: value<boost::optional<std::string> >(index) = boost::none; break;
+        }
+    }
+
+    void GenericRecord::setNull(const std::string& name)
+    {
+        setNull(m_type.getColumnIndex(name));
+    }
+
+    void GenericRecord::setAsBytes(const size_t index, const std::vector<uint8_t>& newValue)
+    {
+        const Type::Column& column = m_type.getColumn(index);
+
+        switch (column.getType())
+        {
+            case Type::Column::BYTES:
+                if (column.isNullable())
+                {
+                    value<boost::optional<std::vector<uint8_t> > >(index) = newValue;
+                }
+                else
+                {
+                    value<std::vector<uint8_t> >(index) = newValue;
+                }
+
+                break;
+
+            default:
+                throw std::bad_cast();
+        }
+    }
+
+    void GenericRecord::setAsBytes(const std::string& name, const std::vector<uint8_t>& newValue)
+    {
+        setAsBytes(m_type.getColumnIndex(name), newValue);
+    }
+
+    #define CASE_SET_NON_NULLABLE(CT, CTN, CF) \
+        case Type::Column::CTN: \
+            if (column.isNullable()) \
+            { \
+                value<boost::optional<CT> >(index) = CF<CT>(newValue); \
+            } \
+            else \
+            { \
+                value<CT>(index) = CF<CT>(newValue); \
+            } \
+            \
+            break;
+
+    #define DEFINE_NON_NULLABLE_MUTATORS(T, TN, CF, SCF) \
+        void GenericRecord::setAs##TN(const size_t index, const T& newValue) \
+        { \
+            const Type::Column& column = m_type.getColumn(index); \
+            \
+            switch (column.getType()) \
+            { \
+                CASE_SET_NON_NULLABLE(double, DOUBLE, CF) \
+                CASE_SET_NON_NULLABLE(float, FLOAT, CF) \
+                CASE_SET_NON_NULLABLE(int32_t, INT, CF) \
+                CASE_SET_NON_NULLABLE(int64_t, LONG, CF) \
+                CASE_SET_NON_NULLABLE(std::string, STRING, SCF) \
+                default: throw std::bad_cast(); \
+            } \
+        } \
+        \
+        void GenericRecord::setAs##TN(const std::string& name, const T& newValue) \
+        { \
+            setAs##TN(m_type.getColumnIndex(name), newValue); \
+        }
+
+    DEFINE_NON_NULLABLE_MUTATORS(double, Double, static_cast, boost::lexical_cast)
+    DEFINE_NON_NULLABLE_MUTATORS(float, Float, static_cast, boost::lexical_cast)
+    DEFINE_NON_NULLABLE_MUTATORS(int32_t, Int, static_cast, boost::lexical_cast)
+    DEFINE_NON_NULLABLE_MUTATORS(int64_t, Long, static_cast, boost::lexical_cast)
+    DEFINE_NON_NULLABLE_MUTATORS(std::string, String, boost::lexical_cast, static_cast)
+
+    void GenericRecord::setAsNullableBytes(const size_t index, const boost::optional<std::vector<uint8_t> >& newValue)
+    {
+        const Type::Column& column = m_type.getColumn(index);
+
+        switch (column.getType())
+        {
+            case Type::Column::BYTES:
+                if (column.isNullable())
+                {
+                    value<boost::optional<std::vector<uint8_t> > >(index) = newValue;
+                }
+                else
+                {
+                    if (newValue)
+                    {
+                        value<std::vector<uint8_t> >(index) = *newValue;
+                    }
+                    else
+                    {
+                        throw std::bad_cast();
+                    }
+                }
+
+            default:
+                throw std::bad_cast();
+        }
+    }
+
+    #define CASE_SET_NULLABLE(CT, CTN, CF) \
+        case Type::Column::CTN: \
+            if (column.isNullable()) \
+            { \
+                if (newValue) \
+                { \
+                    value<boost::optional<CT> >(index) = CF<CT>(*newValue); \
+                } \
+                else \
+                { \
+                    value<boost::optional<CT> >(index) = boost::none; \
+                } \
+            } \
+            else \
+            { \
+                if (newValue) \
+                { \
+                    value<CT>(index) = CF<CT>(*newValue); \
+                } \
+                else \
+                { \
+                    throw std::bad_cast(); \
+                } \
+            } \
+            \
+            break;
+
+    #define DEFINE_NULLABLE_MUTATORS(T, TN, CF, SCF) \
+        void GenericRecord::setAsNullable##TN(const size_t index, const boost::optional<T>& newValue) \
+        { \
+            const Type::Column& column = m_type.getColumn(index); \
+            \
+            switch (column.getType()) \
+            { \
+                CASE_SET_NULLABLE(double, DOUBLE, CF) \
+                CASE_SET_NULLABLE(float, FLOAT, CF) \
+                CASE_SET_NULLABLE(int32_t, INT, CF) \
+                CASE_SET_NULLABLE(int64_t, LONG, CF) \
+                CASE_SET_NULLABLE(std::string, STRING, SCF) \
+                default: throw std::bad_cast(); \
+            } \
+        } \
+        \
+        void GenericRecord::setAsNullable##TN(const std::string& name, const boost::optional<T>& newValue) \
+        { \
+            setAsNullable##TN(m_type.getColumnIndex(name), newValue); \
+        }
+
+    DEFINE_NULLABLE_MUTATORS(double, Double, static_cast, boost::lexical_cast)
+    DEFINE_NULLABLE_MUTATORS(float, Float, static_cast, boost::lexical_cast)
+    DEFINE_NULLABLE_MUTATORS(int32_t, Int, static_cast, boost::lexical_cast)
+    DEFINE_NULLABLE_MUTATORS(int64_t, Long, static_cast, boost::lexical_cast)
+    DEFINE_NULLABLE_MUTATORS(std::string, String, boost::lexical_cast, static_cast)
+
+    #define CASE_TO_STRING(CT, CTN, SCF) \
+        case Type::Column::CTN: \
+        { \
+            if (column.isNullable()) \
+            { \
+                const boost::optional<CT>& temp = value<boost::optional<CT> >(index); \
+                \
+                if (temp) \
+                { \
+                    result = SCF<std::string>(*temp); \
+                } \
+                else \
+                { \
+                    result = ""; \
+                } \
+            } \
+            else \
+            { \
+                result = SCF<std::string>(value<CT>(index)); \
+            } \
+            \
+            break; \
+        }
+
+    void GenericRecord::toString(const size_t index, std::string& result) const
+    {
+        const Type::Column& column = m_type.getColumn(index);
+
+        switch (column.getType())
+        {
+            case Type::Column::BYTES:
+            {
+                if (column.isNullable())
+                {
+                    const boost::optional<std::vector<uint8_t> >& temp = value<boost::optional<std::vector<uint8_t> > >(index);
+
+                    if (temp)
+                    {
+                        ::toString(*temp, result);
+                    }
+                    else
+                    {
+                        result = "";
+                    }
+                }
+                else
+                {
+                    ::toString(value<std::vector<uint8_t> >(index), result);
+                }
+
+                break;
+            }
+
+            CASE_TO_STRING(double, DOUBLE, boost::lexical_cast)
+            CASE_TO_STRING(float, FLOAT, boost::lexical_cast)
+            CASE_TO_STRING(int32_t, INT, boost::lexical_cast)
+            CASE_TO_STRING(int64_t, LONG, boost::lexical_cast)
+            CASE_TO_STRING(std::string, STRING, static_cast)
+        }
+    }
+
+    void GenericRecord::toString(const std::string& name, std::string& result) const
+    {
+        toString(m_type.getColumnIndex(name), result);
+    }
+
+    std::string GenericRecord::toString(const size_t index) const
+    {
+        std::string result;
+        toString(index, result);
+        return result;
+    }
+
+    std::string GenericRecord::toString(const std::string& name) const
+    {
+        std::string result;
+        toString(name, result);
+        return result;
+    }
+
+    // -- Deprecated -----------------------------------------------------------
+
     #define DEFINE_ACCESSORS(T, TN) \
         T& GenericRecord::as##TN(const size_t index) \
         { \
-            return *boost::any_cast<T>(&m_values[index]); \
+            return value<T>(index); \
         } \
         \
         const T& GenericRecord::as##TN(const size_t index) const \
         { \
-            return *boost::any_cast<T>(&m_values[index]); \
+            return value<T>(index); \
         } \
         \
         T& GenericRecord::as##TN(const std::string& name) \
         { \
-            return *boost::any_cast<T>(&m_values[m_type.getColumnIndex(name)]); \
+            return value<T>(name); \
         } \
         \
         const T& GenericRecord::as##TN(const std::string& name) const \
         { \
-            return *boost::any_cast<T>(&m_values[m_type.getColumnIndex(name)]); \
+            return value<T>(name); \
         }
 
     DEFINE_ACCESSORS(std::vector<uint8_t>, Bytes)
@@ -65,6 +606,8 @@ namespace gpudb
     DEFINE_ACCESSORS(boost::optional<int64_t>, NullableLong)
     DEFINE_ACCESSORS(std::string, String)
     DEFINE_ACCESSORS(boost::optional<std::string>, NullableString)
+
+    //--------------------------------------------------------------------------
 
     #define DECODE_VALUE(T) { \
         if (isNullable) \
@@ -290,7 +833,7 @@ namespace gpudb
             {
                 if (nullable.empty())
                 {
-                    nullable.push_back("nullable");
+                    nullable.push_back(ColumnProperty::NULLABLE);
                 }
 
                 columns.push_back(Type::Column(expressions[i], columnType.first, nullable));

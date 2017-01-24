@@ -55,83 +55,83 @@ namespace gpudb
          * Constructs a VisualizeImageClassbreakRequest object with the
          * specified parameters.
          * 
-         * @param[in] tableNames
-         * @param[in] worldTableNames
-         * @param[in] xColumnName
-         * @param[in] yColumnName
-         * @param[in] trackIds
-         * @param[in] cbColumnName1
-         * @param[in] cbVals1
-         * @param[in] cbColumnName2
-         * @param[in] cbVals2
-         * @param[in] minX
-         * @param[in] maxX
-         * @param[in] minY
-         * @param[in] maxY
-         * @param[in] width
-         * @param[in] height
-         * @param[in] projection  Values: 'EPSG:4326', 'PLATE_CARREE',
-         *                        '900913', 'EPSG:900913', '102100',
-         *                        'EPSG:102100', '3857', 'EPSG:3857',
-         *                        'WEB_MERCATOR'.
-         * @param[in] bgColor
-         * @param[in] styleOptions
-         *                          <ul>
-         *                                  <li> do_points: Values: 'true',
-         *                          'false'.
-         *                                  <li> do_shapes: Values: 'true',
-         *                          'false'.
-         *                                  <li> do_tracks: Values: 'true',
-         *                          'false'.
-         *                                  <li> do_symbology: Values: 'true',
-         *                          'false'.
-         *                                  <li> pointcolors:
-         *                                  <li> pointsizes:
-         *                                  <li> pointshapes: Values: 'none',
-         *                          'circle', 'square', 'diamond',
-         *                          'hollowcircle', 'hollowsquare',
-         *                          'hollowdiamond', 'SYMBOLCODE'.
-         *                                  <li> shapelinewidths:
-         *                                  <li> shapelinecolors:
-         *                                  <li> shapefillcolors:
-         *                                  <li> tracklinewidths:
-         *                                  <li> tracklinecolors:
-         *                                  <li> trackmarkersizes:
-         *                                  <li> trackmarkercolors:
-         *                                  <li> trackmarkershapes: Values:
-         *                          'none', 'circle', 'square', 'diamond',
-         *                          'hollowcircle', 'hollowsquare',
-         *                          'hollowdiamond', 'SYMBOLCODE'.
-         *                                  <li> trackheadcolors:
-         *                                  <li> trackheadsizes:
-         *                                  <li> trackheadshapes: Values:
-         *                          'none', 'circle', 'square', 'diamond',
-         *                          'hollowcircle', 'hollowsquare',
-         *                          'hollowdiamond', 'SYMBOLCODE'.
-         *                          </ul>
-         * @param[in] options
+         * @param[in] tableNames_
+         * @param[in] worldTableNames_
+         * @param[in] xColumnName_
+         * @param[in] yColumnName_
+         * @param[in] trackIds_
+         * @param[in] cbColumnName1_
+         * @param[in] cbVals1_
+         * @param[in] cbColumnName2_
+         * @param[in] cbVals2_
+         * @param[in] minX_
+         * @param[in] maxX_
+         * @param[in] minY_
+         * @param[in] maxY_
+         * @param[in] width_
+         * @param[in] height_
+         * @param[in] projection_  Values: 'EPSG:4326', 'PLATE_CARREE',
+         *                         '900913', 'EPSG:900913', '102100',
+         *                         'EPSG:102100', '3857', 'EPSG:3857',
+         *                         'WEB_MERCATOR'.
+         * @param[in] bgColor_
+         * @param[in] styleOptions_
+         *                           <ul>
+         *                                   <li> do_points: Values: 'true',
+         *                           'false'.
+         *                                   <li> do_shapes: Values: 'true',
+         *                           'false'.
+         *                                   <li> do_tracks: Values: 'true',
+         *                           'false'.
+         *                                   <li> do_symbology: Values: 'true',
+         *                           'false'.
+         *                                   <li> pointcolors:
+         *                                   <li> pointsizes:
+         *                                   <li> pointshapes: Values: 'none',
+         *                           'circle', 'square', 'diamond',
+         *                           'hollowcircle', 'hollowsquare',
+         *                           'hollowdiamond', 'SYMBOLCODE'.
+         *                                   <li> shapelinewidths:
+         *                                   <li> shapelinecolors:
+         *                                   <li> shapefillcolors:
+         *                                   <li> tracklinewidths:
+         *                                   <li> tracklinecolors:
+         *                                   <li> trackmarkersizes:
+         *                                   <li> trackmarkercolors:
+         *                                   <li> trackmarkershapes: Values:
+         *                           'none', 'circle', 'square', 'diamond',
+         *                           'hollowcircle', 'hollowsquare',
+         *                           'hollowdiamond', 'SYMBOLCODE'.
+         *                                   <li> trackheadcolors:
+         *                                   <li> trackheadsizes:
+         *                                   <li> trackheadshapes: Values:
+         *                           'none', 'circle', 'square', 'diamond',
+         *                           'hollowcircle', 'hollowsquare',
+         *                           'hollowdiamond', 'SYMBOLCODE'.
+         *                           </ul>
+         * @param[in] options_
          * 
          */
-        VisualizeImageClassbreakRequest(const std::vector<std::string>& tableNames, const std::vector<std::string>& worldTableNames, const std::string& xColumnName, const std::string& yColumnName, const std::vector<std::vector<std::string> >& trackIds, const std::string& cbColumnName1, const std::vector<std::string>& cbVals1, const std::vector<std::string>& cbColumnName2, const std::vector<std::vector<std::string> >& cbVals2, const double minX, const double maxX, const double minY, const double maxY, const int32_t width, const int32_t height, const std::string& projection, const int64_t bgColor, const std::map<std::string, std::vector<std::string> >& styleOptions, const std::map<std::string, std::string>& options):
-            tableNames(tableNames),
-            worldTableNames(worldTableNames),
-            xColumnName(xColumnName),
-            yColumnName(yColumnName),
-            trackIds(trackIds),
-            cbColumnName1(cbColumnName1),
-            cbVals1(cbVals1),
-            cbColumnName2(cbColumnName2),
-            cbVals2(cbVals2),
-            minX(minX),
-            maxX(maxX),
-            minY(minY),
-            maxY(maxY),
-            width(width),
-            height(height),
-            projection(projection),
-            bgColor(bgColor),
-            styleOptions(styleOptions),
-            options(options)
+        VisualizeImageClassbreakRequest(const std::vector<std::string>& tableNames_, const std::vector<std::string>& worldTableNames_, const std::string& xColumnName_, const std::string& yColumnName_, const std::vector<std::vector<std::string> >& trackIds_, const std::string& cbColumnName1_, const std::vector<std::string>& cbVals1_, const std::vector<std::string>& cbColumnName2_, const std::vector<std::vector<std::string> >& cbVals2_, const double minX_, const double maxX_, const double minY_, const double maxY_, const int32_t width_, const int32_t height_, const std::string& projection_, const int64_t bgColor_, const std::map<std::string, std::vector<std::string> >& styleOptions_, const std::map<std::string, std::string>& options_):
+            tableNames( tableNames_ ),
+            worldTableNames( worldTableNames_ ),
+            xColumnName( xColumnName_ ),
+            yColumnName( yColumnName_ ),
+            trackIds( trackIds_ ),
+            cbColumnName1( cbColumnName1_ ),
+            cbVals1( cbVals1_ ),
+            cbColumnName2( cbColumnName2_ ),
+            cbVals2( cbVals2_ ),
+            minX( minX_ ),
+            maxX( maxX_ ),
+            minY( minY_ ),
+            maxY( maxY_ ),
+            width( width_ ),
+            height( height_ ),
+            projection( projection_ ),
+            bgColor( bgColor_ ),
+            styleOptions( styleOptions_ ),
+            options( options_ )
         {
         }
 

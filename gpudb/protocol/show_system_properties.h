@@ -33,17 +33,17 @@ namespace gpudb
          * Constructs a ShowSystemPropertiesRequest object with the specified
          * parameters.
          * 
-         * @param[in] options  Optional parameters.
-         *                     <ul>
-         *                             <li> properties: A list of comma
-         *                     separated names of properties requested. If not
-         *                     specified, all properties will be returned.
-         *                     </ul>
-         *                       Default value is an empty std::map.
+         * @param[in] options_  Optional parameters.
+         *                      <ul>
+         *                              <li> properties: A list of comma
+         *                      separated names of properties requested. If not
+         *                      specified, all properties will be returned.
+         *                      </ul>
+         *                        Default value is an empty std::map.
          * 
          */
-        ShowSystemPropertiesRequest(const std::map<std::string, std::string>& options):
-            options(options)
+        ShowSystemPropertiesRequest(const std::map<std::string, std::string>& options_):
+            options( options_ )
         {
         }
 

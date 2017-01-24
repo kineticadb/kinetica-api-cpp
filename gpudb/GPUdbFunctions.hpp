@@ -697,8 +697,12 @@ AggregateGroupByResponse& aggregateGroupBy( const AggregateGroupByRequest& reque
  *                         <li> sort_by: String determining how the results are
  *                 sorted. Values: 'key', 'value'.
  *                         <li> result_table: The name of the table used to
- *                 store the results. If present no results are returned in the
- *                 response.
+ *                 store the results. Column names (group-by and aggregate
+ *                 fields) need to be given aliases e.g. ["FChar256 as
+ *                 fchar256", "sum(FDouble) as sfd"].  If present, no results
+ *                 are returned in the response.  This option is not available
+ *                 if one of the grouping attributes is an unrestricted string
+ *                 (i.e.; not charN) type.
  *                 </ul>
  *                   Default value is an empty std::map.
  * 
@@ -759,8 +763,12 @@ AggregateGroupByResponse aggregateGroupBy( const std::string& tableName,
  *                         <li> sort_by: String determining how the results are
  *                 sorted. Values: 'key', 'value'.
  *                         <li> result_table: The name of the table used to
- *                 store the results. If present no results are returned in the
- *                 response.
+ *                 store the results. Column names (group-by and aggregate
+ *                 fields) need to be given aliases e.g. ["FChar256 as
+ *                 fchar256", "sum(FDouble) as sfd"].  If present, no results
+ *                 are returned in the response.  This option is not available
+ *                 if one of the grouping attributes is an unrestricted string
+ *                 (i.e.; not charN) type.
  *                 </ul>
  *                   Default value is an empty std::map.
  * @param[out] response_  Response object containing the results of the
@@ -1817,7 +1825,7 @@ AlterSystemPropertiesResponse& alterSystemProperties( const AlterSystemPropertie
  *                            get data from. If to_ranks is unspecified then
  *                            all worker ranks are used.
  *                                    <li> request_timeout: Number of minutes
- *                            after which /filter/* and /aggregate/* queries
+ *                            after which /filter/ * and /aggregate/ * queries
  *                            will timeout.
  *                                    <li> max_get_records_size: set
  *                            max_get_records_size. default 20000
@@ -1890,7 +1898,7 @@ AlterSystemPropertiesResponse alterSystemProperties( const std::map<std::string,
  *                            get data from. If to_ranks is unspecified then
  *                            all worker ranks are used.
  *                                    <li> request_timeout: Number of minutes
- *                            after which /filter/* and /aggregate/* queries
+ *                            after which /filter/ * and /aggregate/ * queries
  *                            will timeout.
  *                                    <li> max_get_records_size: set
  *                            max_get_records_size. default 20000
@@ -2002,10 +2010,34 @@ AlterTableResponse& alterTable( const AlterTableRequest& request_,
  *                   valid table, view, or collection in GPUdb.
  * @param action  Modification operation to be applied Values: 'create_index',
  *                'delete_index', 'allow_homogeneous_tables', 'protected',
- *                'ttl'.
+ *                'ttl', 'add_column', 'delete_column', 'change_column',
+ *                'rename_table'.
  * @param value  The value of the modification. May be a column name, 'true' or
  *               'false', or a TTL depending on @a action.
- * @param options  Optional parameters.  Default value is an empty std::map.
+ * @param options  Optional parameters.
+ *                 <ul>
+ *                         <li> column_default_value: when adding a column: set
+ *                 a default value, for existing data.
+ *                         <li> column_properties: when adding or changing a
+ *                 column: set the column properties (strings, separated by a
+ *                 comma: data, store_only, text_search, char8, int8 etc).
+ *                         <li> column_type: when adding or changing a column:
+ *                 set the column type (strings, separated by a comma: int,
+ *                 double, string, null etc).
+ *                         <li> validate_change_column: Validate the type
+ *                 change before applying column_change request. Default is
+ *                 true (if option is missing). If True, then validate all
+ *                 values. A value too large (or too long) for the new type
+ *                 will prevent any change. If False, then when a value is too
+ *                 large or long, it will be trancated. Values: 'true',
+ *                 'false'.
+ *                         <li> copy_values_from_column: when adding or
+ *                 changing a column: enter column name - from where to copy
+ *                 values.
+ *                         <li> rename_column: new column name (using
+ *                 change_column).
+ *                 </ul>
+ *                   Default value is an empty std::map.
  * 
  * @return Response object containing the result of the operation.
  * 
@@ -2042,10 +2074,34 @@ AlterTableResponse alterTable( const std::string& tableName,
  *                   valid table, view, or collection in GPUdb.
  * @param action  Modification operation to be applied Values: 'create_index',
  *                'delete_index', 'allow_homogeneous_tables', 'protected',
- *                'ttl'.
+ *                'ttl', 'add_column', 'delete_column', 'change_column',
+ *                'rename_table'.
  * @param value  The value of the modification. May be a column name, 'true' or
  *               'false', or a TTL depending on @a action.
- * @param options  Optional parameters.  Default value is an empty std::map.
+ * @param options  Optional parameters.
+ *                 <ul>
+ *                         <li> column_default_value: when adding a column: set
+ *                 a default value, for existing data.
+ *                         <li> column_properties: when adding or changing a
+ *                 column: set the column properties (strings, separated by a
+ *                 comma: data, store_only, text_search, char8, int8 etc).
+ *                         <li> column_type: when adding or changing a column:
+ *                 set the column type (strings, separated by a comma: int,
+ *                 double, string, null etc).
+ *                         <li> validate_change_column: Validate the type
+ *                 change before applying column_change request. Default is
+ *                 true (if option is missing). If True, then validate all
+ *                 values. A value too large (or too long) for the new type
+ *                 will prevent any change. If False, then when a value is too
+ *                 large or long, it will be trancated. Values: 'true',
+ *                 'false'.
+ *                         <li> copy_values_from_column: when adding or
+ *                 changing a column: enter column name - from where to copy
+ *                 values.
+ *                         <li> rename_column: new column name (using
+ *                 change_column).
+ *                 </ul>
+ *                   Default value is an empty std::map.
  * @param[out] response_  Response object containing the results of the
  *                        operation.
  * 
@@ -2563,7 +2619,7 @@ CreateJoinTableResponse& createJoinTable( const std::string& joinTableName,
                                           CreateJoinTableResponse& response_ ) const;
 
 /**
- * @private
+ * Creates a proc.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -2575,7 +2631,7 @@ CreateJoinTableResponse& createJoinTable( const std::string& joinTableName,
 CreateProcResponse createProc( const CreateProcRequest& request_ ) const;
 
 /**
- * @private
+ * Creates a proc.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -2591,38 +2647,75 @@ CreateProcResponse& createProc( const CreateProcRequest& request_,
                                 CreateProcResponse& response_ ) const;
 
 /**
- * @private
+ * Creates a proc.
  * 
- * @param procName
- * @param files
- * @param command
- * @param args
- * @param options
- *                 <ul>
- *                         <li> nondistributed: Values: 'true', 'false'.
- *                 </ul>
+ * @param procName  Name of the proc to be created. Must not be the name of a
+ *                  currently existing proc.
+ * @param executionMode  The execution mode of the proc. Values: 'distributed',
+ *                       'nondistributed'.
+ *                         Default value is 'distributed'.
+ * @param files  A map of the files that make up the proc. The keys of the map
+ *               are file names, and the values are the binary contents of the
+ *               files. The file names may include subdirectory names (e.g.
+ *               'subdir/file') but must not resolve to a directory above the
+ *               root for the proc.  Default value is an empty std::map.
+ * @param command  The command (excluding arguments) that will be invoked when
+ *                 the proc is executed. It will be invoked from the directory
+ *                 containing the proc @a files and may be any command that can
+ *                 be resolved from that directory. It need not refer to a file
+ *                 actually in that directory; for example, it could be 'java'
+ *                 if the proc is a Java application; however, any necessary
+ *                 external programs must be preinstalled on every GPUdb node.
+ *                 If the command refers to a file in that directory, it must
+ *                 be preceded with './' as per Linux convention. If not
+ *                 specified, and exactly one file is provided in @a files,
+ *                 that file will be invoked.  Default value is an empty
+ *                 string.
+ * @param args  An array of command-line arguments that will be passed to @a
+ *              command when the proc is executed.  Default value is an empty
+ *              std::vector.
+ * @param options  Optional parameters.  Default value is an empty std::map.
  * 
  * @return Response object containing the result of the operation.
  * 
  */
 
 CreateProcResponse createProc( const std::string& procName,
+                               const std::string& executionMode,
                                const std::map<std::string, std::vector<uint8_t> >& files,
                                const std::string& command,
                                const std::vector<std::string>& args,
                                const std::map<std::string, std::string>& options ) const;
 
 /**
- * @private
+ * Creates a proc.
  * 
- * @param procName
- * @param files
- * @param command
- * @param args
- * @param options
- *                 <ul>
- *                         <li> nondistributed: Values: 'true', 'false'.
- *                 </ul>
+ * @param procName  Name of the proc to be created. Must not be the name of a
+ *                  currently existing proc.
+ * @param executionMode  The execution mode of the proc. Values: 'distributed',
+ *                       'nondistributed'.
+ *                         Default value is 'distributed'.
+ * @param files  A map of the files that make up the proc. The keys of the map
+ *               are file names, and the values are the binary contents of the
+ *               files. The file names may include subdirectory names (e.g.
+ *               'subdir/file') but must not resolve to a directory above the
+ *               root for the proc.  Default value is an empty std::map.
+ * @param command  The command (excluding arguments) that will be invoked when
+ *                 the proc is executed. It will be invoked from the directory
+ *                 containing the proc @a files and may be any command that can
+ *                 be resolved from that directory. It need not refer to a file
+ *                 actually in that directory; for example, it could be 'java'
+ *                 if the proc is a Java application; however, any necessary
+ *                 external programs must be preinstalled on every GPUdb node.
+ *                 If the command refers to a file in that directory, it must
+ *                 be preceded with './' as per Linux convention. If not
+ *                 specified, and exactly one file is provided in @a files,
+ *                 that file will be invoked.  Default value is an empty
+ *                 string.
+ * @param args  An array of command-line arguments that will be passed to @a
+ *              command when the proc is executed.  Default value is an empty
+ *              std::vector.
+ * @param options  Optional parameters.  Default value is an empty std::map.
  * @param[out] response_  Response object containing the results of the
  *                        operation.
  * 
@@ -2632,6 +2725,7 @@ CreateProcResponse createProc( const std::string& procName,
  */
 
 CreateProcResponse& createProc( const std::string& procName,
+                                const std::string& executionMode,
                                 const std::map<std::string, std::vector<uint8_t> >& files,
                                 const std::string& command,
                                 const std::vector<std::string>& args,
@@ -2781,14 +2875,16 @@ CreateRoleResponse& createRole( const std::string& name,
                                 CreateRoleResponse& response_ ) const;
 
 /**
- * Creates a new table or collection in GPUdb. If a new table is being created
- * then type of the table is given by @a typeId which must the be the type id
- * of a currently registered type (i.e. one created via {@link
+ * Creates a new table or collection. If a new table is being created, the type
+ * of the table is given by @a typeId, which must the be the ID of a currently
+ * registered type (i.e. one created via {@link
  * #createType(const CreateTypeRequest&) const}). The table will be created
- * inside a collection if the option *collection_name* is specified. If that
- * collection does not already exist then it will be created. To create a new,
- * empty collection specify the collection name in @a tableName, leave @a
- * typeId blank, and set the *is_collection* option to 'true'.
+ * inside a collection if the option @a collection_name is specified. If that
+ * collection does not already exist, it will be created.
+
+ * To create a new collection, specify the name of the collection in @a
+ * tableName and set the @a is_collection option to @a true; @a typeId will be
+ * ignored.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -2800,15 +2896,16 @@ CreateRoleResponse& createRole( const std::string& name,
 CreateTableResponse createTable( const CreateTableRequest& request_ ) const;
 
 /**
- * Creates a new table or collection in GPUdb. If a new table is being created
- * then type of the table is given by @a typeId which must the be the type id
- * of a currently registered type (i.e. one created via {@link
+ * Creates a new table or collection. If a new table is being created, the type
+ * of the table is given by @a typeId, which must the be the ID of a currently
+ * registered type (i.e. one created via {@link
  * #createType(const CreateTypeRequest&,CreateTypeResponse&) const}). The
- * table will be created inside a collection if the option *collection_name* is
- * specified. If that collection does not already exist then it will be
- * created. To create a new, empty collection specify the collection name in @a
- * tableName, leave @a typeId blank, and set the *is_collection* option to
- * 'true'.
+ * table will be created inside a collection if the option @a collection_name
+ * is specified. If that collection does not already exist, it will be created.
+
+ * To create a new collection, specify the name of the collection in @a
+ * tableName and set the @a is_collection option to @a true; @a typeId will be
+ * ignored.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -2824,27 +2921,29 @@ CreateTableResponse& createTable( const CreateTableRequest& request_,
                                   CreateTableResponse& response_ ) const;
 
 /**
- * Creates a new table or collection in GPUdb. If a new table is being created
- * then type of the table is given by @a typeId which must the be the type id
- * of a currently registered type (i.e. one created via {@link
+ * Creates a new table or collection. If a new table is being created, the type
+ * of the table is given by @a typeId, which must the be the ID of a currently
+ * registered type (i.e. one created via {@link
  * #createType(const std::string&,const std::string&,const std::map<std::string, std::vector<std::string> >&,const std::map<std::string, std::string>&) const}).
- * The table will be created inside a collection if the option
- * *collection_name* is specified. If that collection does not already exist
- * then it will be created. To create a new, empty collection specify the
- * collection name in @a tableName, leave @a typeId blank, and set the
- * *is_collection* option to 'true'.
+ * The table will be created inside a collection if the option @a
+ * collection_name is specified. If that collection does not already exist, it
+ * will be created.
+
+ * To create a new collection, specify the name of the collection in @a
+ * tableName and set the @a is_collection option to @a true; @a typeId will be
+ * ignored.
  * 
  * @param tableName  Name of the table to be created. Must not be the name of a
- *                   currently existing GPUdb table of a different type.  Error
- *                   for requests with existing table of the same name and type
- *                   id may be suppressed by using the @a no_error_if_exists
+ *                   currently existing table of a different type.  Error for
+ *                   requests with existing table of the same name and type id
+ *                   may be suppressed by using the @a no_error_if_exists
  *                   option.  Cannot be an empty string.  Valid characters are
- *                   'A-Za-z0-9_-(){}[] .:' (excluding the single quote), with
- *                   the first character being one of 'A-Za-z0-9_'.  The
- *                   maximum length is 256 characters.
- * @param typeId  ID of a currently registered type in GPUdb. All objects added
- *                to the newly created table will be of this type.  Must be an
- *                empty string if the *is_collection* is 'true'.
+ *                   alphanumeric or any of '_-(){}[] .:' (excluding the single
+ *                   quotes), with the first character being alphanumeric or an
+ *                   underscore.  The maximum length is 256 characters.
+ * @param typeId  ID of a currently registered type. All objects added to the
+ *                newly created table will be of this type.  Ignored if @a
+ *                is_collection is @a true.
  * @param options  Optional parameters.
  *                 <ul>
  *                         <li> no_error_if_exists: If @a true, prevents an
@@ -2882,27 +2981,29 @@ CreateTableResponse createTable( const std::string& tableName,
                                  const std::map<std::string, std::string>& options ) const;
 
 /**
- * Creates a new table or collection in GPUdb. If a new table is being created
- * then type of the table is given by @a typeId which must the be the type id
- * of a currently registered type (i.e. one created via {@link
+ * Creates a new table or collection. If a new table is being created, the type
+ * of the table is given by @a typeId, which must the be the ID of a currently
+ * registered type (i.e. one created via {@link
  * #createType(const std::string&,const std::string&,const std::map<std::string, std::vector<std::string> >&,const std::map<std::string, std::string>&,CreateTypeResponse&) const}).
- * The table will be created inside a collection if the option
- * *collection_name* is specified. If that collection does not already exist
- * then it will be created. To create a new, empty collection specify the
- * collection name in @a tableName, leave @a typeId blank, and set the
- * *is_collection* option to 'true'.
+ * The table will be created inside a collection if the option @a
+ * collection_name is specified. If that collection does not already exist, it
+ * will be created.
+
+ * To create a new collection, specify the name of the collection in @a
+ * tableName and set the @a is_collection option to @a true; @a typeId will be
+ * ignored.
  * 
  * @param tableName  Name of the table to be created. Must not be the name of a
- *                   currently existing GPUdb table of a different type.  Error
- *                   for requests with existing table of the same name and type
- *                   id may be suppressed by using the @a no_error_if_exists
+ *                   currently existing table of a different type.  Error for
+ *                   requests with existing table of the same name and type id
+ *                   may be suppressed by using the @a no_error_if_exists
  *                   option.  Cannot be an empty string.  Valid characters are
- *                   'A-Za-z0-9_-(){}[] .:' (excluding the single quote), with
- *                   the first character being one of 'A-Za-z0-9_'.  The
- *                   maximum length is 256 characters.
- * @param typeId  ID of a currently registered type in GPUdb. All objects added
- *                to the newly created table will be of this type.  Must be an
- *                empty string if the *is_collection* is 'true'.
+ *                   alphanumeric or any of '_-(){}[] .:' (excluding the single
+ *                   quotes), with the first character being alphanumeric or an
+ *                   underscore.  The maximum length is 256 characters.
+ * @param typeId  ID of a currently registered type. All objects added to the
+ *                newly created table will be of this type.  Ignored if @a
+ *                is_collection is @a true.
  * @param options  Optional parameters.
  *                 <ul>
  *                         <li> no_error_if_exists: If @a true, prevents an
@@ -3612,7 +3713,8 @@ CreateUnionResponse& createUnion( const CreateUnionRequest& request_,
  *                         <li> mode: If 'merge_views' then this operation will
  *                 merge (i.e. union) the provided views. All 'table_names'
  *                 must be views from the same underlying base table. Values:
- *                 'normal', 'merge_views'.
+ *                 'union_all', 'union', 'union_distinct', 'except',
+ *                 'intersect', 'merge_views'.
  *                 </ul>
  *                   Default value is an empty std::map.
  * 
@@ -3648,7 +3750,8 @@ CreateUnionResponse createUnion( const std::string& tableName,
  *                         <li> mode: If 'merge_views' then this operation will
  *                 merge (i.e. union) the provided views. All 'table_names'
  *                 must be views from the same underlying base table. Values:
- *                 'normal', 'merge_views'.
+ *                 'union_all', 'union', 'union_distinct', 'except',
+ *                 'intersect', 'merge_views'.
  *                 </ul>
  *                   Default value is an empty std::map.
  * @param[out] response_  Response object containing the results of the
@@ -3803,7 +3906,7 @@ CreateUserInternalResponse& createUserInternal( const std::string& name,
                                                 CreateUserInternalResponse& response_ ) const;
 
 /**
- * @private
+ * Deletes a proc. Any currently running instances of the proc will be killed.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -3815,7 +3918,7 @@ CreateUserInternalResponse& createUserInternal( const std::string& name,
 DeleteProcResponse deleteProc( const DeleteProcRequest& request_ ) const;
 
 /**
- * @private
+ * Deletes a proc. Any currently running instances of the proc will be killed.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -3831,10 +3934,11 @@ DeleteProcResponse& deleteProc( const DeleteProcRequest& request_,
                                 DeleteProcResponse& response_ ) const;
 
 /**
- * @private
+ * Deletes a proc. Any currently running instances of the proc will be killed.
  * 
- * @param procName
- * @param options
+ * @param procName  Name of the proc to be deleted. Must be the name of a
+ *                  currently existing proc.
+ * @param options  Optional parameters.  Default value is an empty std::map.
  * 
  * @return Response object containing the result of the operation.
  * 
@@ -3844,10 +3948,11 @@ DeleteProcResponse deleteProc( const std::string& procName,
                                const std::map<std::string, std::string>& options ) const;
 
 /**
- * @private
+ * Deletes a proc. Any currently running instances of the proc will be killed.
  * 
- * @param procName
- * @param options
+ * @param procName  Name of the proc to be deleted. Must be the name of a
+ *                  currently existing proc.
+ * @param options  Optional parameters.  Default value is an empty std::map.
  * @param[out] response_  Response object containing the results of the
  *                        operation.
  * 
@@ -4091,7 +4196,8 @@ DeleteUserResponse& deleteUser( const std::string& name,
                                 DeleteUserResponse& response_ ) const;
 
 /**
- * @private
+ * Executes a proc. This endpoint is asynchronous and does not wait for the
+ * proc to complete before returning.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -4103,7 +4209,8 @@ DeleteUserResponse& deleteUser( const std::string& name,
 ExecuteProcResponse executeProc( const ExecuteProcRequest& request_ ) const;
 
 /**
- * @private
+ * Executes a proc. This endpoint is asynchronous and does not wait for the
+ * proc to complete before returning.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -4119,15 +4226,60 @@ ExecuteProcResponse& executeProc( const ExecuteProcRequest& request_,
                                   ExecuteProcResponse& response_ ) const;
 
 /**
- * @private
+ * Executes a proc. This endpoint is asynchronous and does not wait for the
+ * proc to complete before returning.
  * 
- * @param procName
- * @param params
- * @param binParams
- * @param inputTableNames
- * @param inputColumnNames
- * @param outputTableNames
- * @param options
+ * @param procName  Name of the proc to execute. Must be the name of a
+ *                  currently existing proc.
+ * @param params  A map containing named parameters to pass to the proc. Each
+ *                key/value pair specifies the name of a parameter and its
+ *                value.  Default value is an empty std::map.
+ * @param binParams  A map containing named binary parameters to pass to the
+ *                   proc. Each key/value pair specifies the name of a
+ *                   parameter and its value.  Default value is an empty
+ *                   std::map.
+ * @param inputTableNames  Names of the tables containing data to be passed to
+ *                         the proc. Each name specified must be the name of a
+ *                         currently existing table. If no table names are
+ *                         specified, no data will be passed to the proc.
+ *                         Default value is an empty std::vector.
+ * @param inputColumnNames  Map of table names from @a inputTableNames to lists
+ *                          of names of columns from those tables that will be
+ *                          passed to the proc. Each column name specified must
+ *                          be the name of an existing column in the
+ *                          corresponding table. If a table name from @a
+ *                          inputTableNames is not included, all columns from
+ *                          that table will be passed to the proc.  Default
+ *                          value is an empty std::map.
+ * @param outputTableNames  Names of the tables to which output data from the
+ *                          proc will be written. If a specified table does not
+ *                          exist, it will automatically be created with the
+ *                          same schema as the corresponding table (by order)
+ *                          from @a inputTableNames, excluding any primary and
+ *                          shard keys. If no table names are specified, no
+ *                          output data can be returned from the proc.  Default
+ *                          value is an empty std::vector.
+ * @param options  Optional parameters.
+ *                 <ul>
+ *                         <li> cache_input: A comma-delimited list of table
+ *                 names from @a inputTableNames from which input data will be
+ *                 cached for use in subsequent calls to /execute/proc with the
+ *                 @a use_cached_input option. Cached input data will be
+ *                 retained until the proc status is cleared with the
+ *                 /show/proc/status option of /show/proc/status and all proc
+ *                 instances using the cached data have completed.
+ *                         <li> use_cached_input: A comma-delimited list of run
+ *                 IDs (as returned from prior calls to /execute/proc) of
+ *                 running or completed proc instances from which input data
+ *                 cached using the @a cache_input option will be used. Cached
+ *                 input data will not be used for any tables specified in @a
+ *                 inputTableNames, but data from all other tables cached for
+ *                 the specified run IDs will be passed to the proc. If the
+ *                 same table was cached for multiple specified run IDs, the
+ *                 cached data from the first run ID specified in the list that
+ *                 includes that table will be used.
+ *                 </ul>
+ *                   Default value is an empty std::map.
  * 
  * @return Response object containing the result of the operation.
  * 
@@ -4142,15 +4294,60 @@ ExecuteProcResponse executeProc( const std::string& procName,
                                  const std::map<std::string, std::string>& options ) const;
 
 /**
- * @private
+ * Executes a proc. This endpoint is asynchronous and does not wait for the
+ * proc to complete before returning.
  * 
- * @param procName
- * @param params
- * @param binParams
- * @param inputTableNames
- * @param inputColumnNames
- * @param outputTableNames
- * @param options
+ * @param procName  Name of the proc to execute. Must be the name of a
+ *                  currently existing proc.
+ * @param params  A map containing named parameters to pass to the proc. Each
+ *                key/value pair specifies the name of a parameter and its
+ *                value.  Default value is an empty std::map.
+ * @param binParams  A map containing named binary parameters to pass to the
+ *                   proc. Each key/value pair specifies the name of a
+ *                   parameter and its value.  Default value is an empty
+ *                   std::map.
+ * @param inputTableNames  Names of the tables containing data to be passed to
+ *                         the proc. Each name specified must be the name of a
+ *                         currently existing table. If no table names are
+ *                         specified, no data will be passed to the proc.
+ *                         Default value is an empty std::vector.
+ * @param inputColumnNames  Map of table names from @a inputTableNames to lists
+ *                          of names of columns from those tables that will be
+ *                          passed to the proc. Each column name specified must
+ *                          be the name of an existing column in the
+ *                          corresponding table. If a table name from @a
+ *                          inputTableNames is not included, all columns from
+ *                          that table will be passed to the proc.  Default
+ *                          value is an empty std::map.
+ * @param outputTableNames  Names of the tables to which output data from the
+ *                          proc will be written. If a specified table does not
+ *                          exist, it will automatically be created with the
+ *                          same schema as the corresponding table (by order)
+ *                          from @a inputTableNames, excluding any primary and
+ *                          shard keys. If no table names are specified, no
+ *                          output data can be returned from the proc.  Default
+ *                          value is an empty std::vector.
+ * @param options  Optional parameters.
+ *                 <ul>
+ *                         <li> cache_input: A comma-delimited list of table
+ *                 names from @a inputTableNames from which input data will be
+ *                 cached for use in subsequent calls to /execute/proc with the
+ *                 @a use_cached_input option. Cached input data will be
+ *                 retained until the proc status is cleared with the
+ *                 /show/proc/status option of /show/proc/status and all proc
+ *                 instances using the cached data have completed.
+ *                         <li> use_cached_input: A comma-delimited list of run
+ *                 IDs (as returned from prior calls to /execute/proc) of
+ *                 running or completed proc instances from which input data
+ *                 cached using the @a cache_input option will be used. Cached
+ *                 input data will not be used for any tables specified in @a
+ *                 inputTableNames, but data from all other tables cached for
+ *                 the specified run IDs will be passed to the proc. If the
+ *                 same table was cached for multiple specified run IDs, the
+ *                 cached data from the first run ID specified in the list that
+ *                 includes that table will be used.
+ *                 </ul>
+ *                   Default value is an empty std::map.
  * @param[out] response_  Response object containing the results of the
  *                        operation.
  * 
@@ -8391,6 +8588,64 @@ GrantRoleResponse& grantRole( const std::string& role,
                               GrantRoleResponse& response_ ) const;
 
 /**
+ * Checks the existence of a proc with the given name.
+ * 
+ * @param[in] request_  Request object containing the parameters for the
+ *                      operation.
+ * 
+ * @return Response object containing the result of the operation.
+ * 
+ */
+
+HasProcResponse hasProc( const HasProcRequest& request_ ) const;
+
+/**
+ * Checks the existence of a proc with the given name.
+ * 
+ * @param[in] request_  Request object containing the parameters for the
+ *                      operation.
+ * @param[out] response_  Response object containing the results of the
+ *                        operation.
+ * 
+ * @return Response object containing the result of the operation (initially
+ *         passed in by reference).
+ * 
+ */
+
+HasProcResponse& hasProc( const HasProcRequest& request_,
+                          HasProcResponse& response_ ) const;
+
+/**
+ * Checks the existence of a proc with the given name.
+ * 
+ * @param procName  Name of the proc to check for existence.
+ * @param options  Optional parameters.  Default value is an empty std::map.
+ * 
+ * @return Response object containing the result of the operation.
+ * 
+ */
+
+HasProcResponse hasProc( const std::string& procName,
+                         const std::map<std::string, std::string>& options ) const;
+
+/**
+ * Checks the existence of a proc with the given name.
+ * 
+ * @param procName  Name of the proc to check for existence.
+ * @param options  Optional parameters.  Default value is an empty std::map.
+ * @param[out] response_  Response object containing the results of the
+ *                        operation.
+ * 
+ * @return Response object containing the result of the operation (initially
+ *         passed in by reference).
+ * 
+ */
+
+HasProcResponse& hasProc( const std::string& procName,
+                          const std::map<std::string, std::string>& options,
+                          HasProcResponse& response_ ) const;
+
+/**
  * Checks the existence of a table with the given name in GPUdb.
  * 
  * @param[in] request_  Request object containing the parameters for the
@@ -8511,24 +8766,29 @@ HasTypeResponse& hasType( const std::string& typeId,
 /**
  * Adds multiple records to the specified table. The operation is synchronous
  * meaning that GPUdb will not return a response until all the records are
- * fully inserted and available. The response payload provides unique
- * identifier for each added record along with counts of the number of records
- * actually inserted and/or updated.
+ * fully inserted and available. The response payload provides the counts of
+ * the number of records actually inserted and/or updated, and can provide the
+ * unique identifier of each added record.
  * <p>
- * @a options can be used to customize this function's behavior. The only
- * parameter available is @a update_on_existing_pk. The value can be either
- * 'true' or 'false'. If the table has a {@link
+ * The @a options parameter can be used to customize this function's behavior.
+ * The @a update_on_existing_pk option specifies the primary-key collision
+ * policy.  If the table has a {@link
  * #createType(const CreateTypeRequest&) const primary key} and if @a
- * update_on_existing_pk is 'true' then if any of the records being added have
- * the same primary key as existing records, the existing records are replaced
- * (i.e. *updated*) with the given records. If @a update_on_existing_pk is
- * false and if the records being added have the same primary key as existing
- * records, the given records with existing primary keys are ignored (the
- * existing records are left unchanged). It is quite possible that in this case
- * some of the given records will be inserted and some (those having existing
- * primary keys) will be ignored (or updated). If the specified table does not
- * have a primary key column then the @a update_on_existing_pk option is
- * ignored.
+ * update_on_existing_pk is @a true, then if any of the records being added
+ * have the same primary key as existing records, the existing records are
+ * replaced (i.e. updated) with the given records.  If @a update_on_existing_pk
+ * is @a false and if the records being added have the same primary key as
+ * existing records, they are ignored (the existing records are left
+ * unchanged).  It is quite possible that in this case some of the given
+ * records will be inserted and some (those having existing primary keys) will
+ * be ignored (or updated).  If the specified table does not have a primary key
+ * column, then the @a update_on_existing_pk option is ignored.
+ * <p>
+ * The @a return_record_ids option indicates that the database should return
+ * the unique identifiers of inserted records.
+ * <p>
+ * The @a route_to_address option directs that inserted records should be
+ * targeted for a particular database node.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -8542,24 +8802,29 @@ InsertRecordsResponse insertRecordsRaw( const RawInsertRecordsRequest& request_ 
 /**
  * Adds multiple records to the specified table. The operation is synchronous
  * meaning that GPUdb will not return a response until all the records are
- * fully inserted and available. The response payload provides unique
- * identifier for each added record along with counts of the number of records
- * actually inserted and/or updated.
+ * fully inserted and available. The response payload provides the counts of
+ * the number of records actually inserted and/or updated, and can provide the
+ * unique identifier of each added record.
  * <p>
- * @a options can be used to customize this function's behavior. The only
- * parameter available is @a update_on_existing_pk. The value can be either
- * 'true' or 'false'. If the table has a {@link
+ * The @a options parameter can be used to customize this function's behavior.
+ * The @a update_on_existing_pk option specifies the primary-key collision
+ * policy.  If the table has a {@link
  * #createType(const CreateTypeRequest&,CreateTypeResponse&) const primary
- * key} and if @a update_on_existing_pk is 'true' then if any of the records
+ * key} and if @a update_on_existing_pk is @a true, then if any of the records
  * being added have the same primary key as existing records, the existing
- * records are replaced (i.e. *updated*) with the given records. If @a
- * update_on_existing_pk is false and if the records being added have the same
- * primary key as existing records, the given records with existing primary
- * keys are ignored (the existing records are left unchanged). It is quite
- * possible that in this case some of the given records will be inserted and
- * some (those having existing primary keys) will be ignored (or updated). If
- * the specified table does not have a primary key column then the @a
- * update_on_existing_pk option is ignored.
+ * records are replaced (i.e. updated) with the given records.  If @a
+ * update_on_existing_pk is @a false and if the records being added have the
+ * same primary key as existing records, they are ignored (the existing records
+ * are left unchanged).  It is quite possible that in this case some of the
+ * given records will be inserted and some (those having existing primary keys)
+ * will be ignored (or updated).  If the specified table does not have a
+ * primary key column, then the @a update_on_existing_pk option is ignored.
+ * <p>
+ * The @a return_record_ids option indicates that the database should return
+ * the unique identifiers of inserted records.
+ * <p>
+ * The @a route_to_address option directs that inserted records should be
+ * targeted for a particular database node.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -8577,24 +8842,29 @@ InsertRecordsResponse& insertRecordsRaw( const RawInsertRecordsRequest& request_
 /**
  * Adds multiple records to the specified table. The operation is synchronous
  * meaning that GPUdb will not return a response until all the records are
- * fully inserted and available. The response payload provides unique
- * identifier for each added record along with counts of the number of records
- * actually inserted and/or updated.
+ * fully inserted and available. The response payload provides the counts of
+ * the number of records actually inserted and/or updated, and can provide the
+ * unique identifier of each added record.
  * <p>
- * @a options can be used to customize this function's behavior. The only
- * parameter available is @a update_on_existing_pk. The value can be either
- * 'true' or 'false'. If the table has a {@link
+ * The @a options parameter can be used to customize this function's behavior.
+ * The @a update_on_existing_pk option specifies the primary-key collision
+ * policy.  If the table has a {@link
  * #createType(const CreateTypeRequest&) const primary key} and if @a
- * update_on_existing_pk is 'true' then if any of the records being added have
- * the same primary key as existing records, the existing records are replaced
- * (i.e. *updated*) with the given records. If @a update_on_existing_pk is
- * false and if the records being added have the same primary key as existing
- * records, the given records with existing primary keys are ignored (the
- * existing records are left unchanged). It is quite possible that in this case
- * some of the given records will be inserted and some (those having existing
- * primary keys) will be ignored (or updated). If the specified table does not
- * have a primary key column then the @a update_on_existing_pk option is
- * ignored.
+ * update_on_existing_pk is @a true, then if any of the records being added
+ * have the same primary key as existing records, the existing records are
+ * replaced (i.e. updated) with the given records.  If @a update_on_existing_pk
+ * is @a false and if the records being added have the same primary key as
+ * existing records, they are ignored (the existing records are left
+ * unchanged).  It is quite possible that in this case some of the given
+ * records will be inserted and some (those having existing primary keys) will
+ * be ignored (or updated).  If the specified table does not have a primary key
+ * column, then the @a update_on_existing_pk option is ignored.
+ * <p>
+ * The @a return_record_ids option indicates that the database should return
+ * the unique identifiers of inserted records.
+ * <p>
+ * The @a route_to_address option directs that inserted records should be
+ * targeted for a particular database node.
  * 
  * @tparam <TRequest>  The type of object being added.
  * 
@@ -8620,24 +8890,29 @@ InsertRecordsResponse insertRecords( const InsertRecordsRequest<TRequest>& reque
 /**
  * Adds multiple records to the specified table. The operation is synchronous
  * meaning that GPUdb will not return a response until all the records are
- * fully inserted and available. The response payload provides unique
- * identifier for each added record along with counts of the number of records
- * actually inserted and/or updated.
+ * fully inserted and available. The response payload provides the counts of
+ * the number of records actually inserted and/or updated, and can provide the
+ * unique identifier of each added record.
  * <p>
- * @a options can be used to customize this function's behavior. The only
- * parameter available is @a update_on_existing_pk. The value can be either
- * 'true' or 'false'. If the table has a {@link
+ * The @a options parameter can be used to customize this function's behavior.
+ * The @a update_on_existing_pk option specifies the primary-key collision
+ * policy.  If the table has a {@link
  * #createType(const CreateTypeRequest&,CreateTypeResponse&) const primary
- * key} and if @a update_on_existing_pk is 'true' then if any of the records
+ * key} and if @a update_on_existing_pk is @a true, then if any of the records
  * being added have the same primary key as existing records, the existing
- * records are replaced (i.e. *updated*) with the given records. If @a
- * update_on_existing_pk is false and if the records being added have the same
- * primary key as existing records, the given records with existing primary
- * keys are ignored (the existing records are left unchanged). It is quite
- * possible that in this case some of the given records will be inserted and
- * some (those having existing primary keys) will be ignored (or updated). If
- * the specified table does not have a primary key column then the @a
- * update_on_existing_pk option is ignored.
+ * records are replaced (i.e. updated) with the given records.  If @a
+ * update_on_existing_pk is @a false and if the records being added have the
+ * same primary key as existing records, they are ignored (the existing records
+ * are left unchanged).  It is quite possible that in this case some of the
+ * given records will be inserted and some (those having existing primary keys)
+ * will be ignored (or updated).  If the specified table does not have a
+ * primary key column, then the @a update_on_existing_pk option is ignored.
+ * <p>
+ * The @a return_record_ids option indicates that the database should return
+ * the unique identifiers of inserted records.
+ * <p>
+ * The @a route_to_address option directs that inserted records should be
+ * targeted for a particular database node.
  * 
  * @tparam <TRequest>  The type of object being added.
  * 
@@ -8666,24 +8941,29 @@ InsertRecordsResponse& insertRecords( const InsertRecordsRequest<TRequest>& requ
 /**
  * Adds multiple records to the specified table. The operation is synchronous
  * meaning that GPUdb will not return a response until all the records are
- * fully inserted and available. The response payload provides unique
- * identifier for each added record along with counts of the number of records
- * actually inserted and/or updated.
+ * fully inserted and available. The response payload provides the counts of
+ * the number of records actually inserted and/or updated, and can provide the
+ * unique identifier of each added record.
  * <p>
- * @a options can be used to customize this function's behavior. The only
- * parameter available is @a update_on_existing_pk. The value can be either
- * 'true' or 'false'. If the table has a {@link
+ * The @a options parameter can be used to customize this function's behavior.
+ * The @a update_on_existing_pk option specifies the primary-key collision
+ * policy.  If the table has a {@link
  * #createType(const std::string&,const std::string&,const std::map<std::string, std::vector<std::string> >&,const std::map<std::string, std::string>&) const
- * primary key} and if @a update_on_existing_pk is 'true' then if any of the
+ * primary key} and if @a update_on_existing_pk is @a true, then if any of the
  * records being added have the same primary key as existing records, the
- * existing records are replaced (i.e. *updated*) with the given records. If @a
- * update_on_existing_pk is false and if the records being added have the same
- * primary key as existing records, the given records with existing primary
- * keys are ignored (the existing records are left unchanged). It is quite
- * possible that in this case some of the given records will be inserted and
- * some (those having existing primary keys) will be ignored (or updated). If
- * the specified table does not have a primary key column then the @a
- * update_on_existing_pk option is ignored.
+ * existing records are replaced (i.e. updated) with the given records.  If @a
+ * update_on_existing_pk is @a false and if the records being added have the
+ * same primary key as existing records, they are ignored (the existing records
+ * are left unchanged).  It is quite possible that in this case some of the
+ * given records will be inserted and some (those having existing primary keys)
+ * will be ignored (or updated).  If the specified table does not have a
+ * primary key column, then the @a update_on_existing_pk option is ignored.
+ * <p>
+ * The @a return_record_ids option indicates that the database should return
+ * the unique identifiers of inserted records.
+ * <p>
+ * The @a route_to_address option directs that inserted records should be
+ * targeted for a particular database node.
  * 
  * @tparam <TRequest>  The type of object being added.
  * 
@@ -8695,21 +8975,20 @@ InsertRecordsResponse& insertRecords( const InsertRecordsRequest<TRequest>& requ
  * @param options  Optional parameters.
  *                 <ul>
  *                         <li> update_on_existing_pk: If the table has a
- *                 /create/type, then if the value is 'true' then if any of the
+ *                 /create/type, then if the value is @a true then if any of
+ *                 the records being added have the same primary key as
+ *                 existing records, the existing records are replaced (i.e.
+ *                 updated) with the given records. If @a false, and if the
  *                 records being added have the same primary key as existing
- *                 records, the existing records are replaced (i.e. *updated*)
- *                 with the given records. If 'false' and if the records being
- *                 added have the same primary key as existing records, the
- *                 given records with existing primary keys are ignored (the
- *                 existing records are left unchanged).  It is quite possible
- *                 that in this case some of the given records will be inserted
- *                 and some (those having existing primary keys) will be
- *                 ignored (or updated). If the specified table does not have a
- *                 primary key column then this optional parameter is ignored.
- *                 Values: 'true', 'false'.
- *                         <li> return_record_ids: If 'true' then return
+ *                 records, they are ignored (the existing records are left
+ *                 unchanged).  It is quite possible that in this case some of
+ *                 the given records will be inserted and some (those having
+ *                 existing primary keys) will be ignored (or updated). If the
+ *                 specified table does not have a primary key column then this
+ *                 optional parameter is ignored. Values: 'true', 'false'.
+ *                         <li> return_record_ids: If @a true then return
  *                 GPUdb's internal record id along for each inserted record.
- *                 Default is 'false'. Values: 'true', 'false'.
+ *                 Values: 'true', 'false'.
  *                         <li> route_to_address: Route to a specific rank/tom.
  *                 Option not suitable for tables using primary/shard keys
  *                 </ul>
@@ -8736,24 +9015,29 @@ InsertRecordsResponse insertRecords( const std::string& tableName,
 /**
  * Adds multiple records to the specified table. The operation is synchronous
  * meaning that GPUdb will not return a response until all the records are
- * fully inserted and available. The response payload provides unique
- * identifier for each added record along with counts of the number of records
- * actually inserted and/or updated.
+ * fully inserted and available. The response payload provides the counts of
+ * the number of records actually inserted and/or updated, and can provide the
+ * unique identifier of each added record.
  * <p>
- * @a options can be used to customize this function's behavior. The only
- * parameter available is @a update_on_existing_pk. The value can be either
- * 'true' or 'false'. If the table has a {@link
+ * The @a options parameter can be used to customize this function's behavior.
+ * The @a update_on_existing_pk option specifies the primary-key collision
+ * policy.  If the table has a {@link
  * #createType(const std::string&,const std::string&,const std::map<std::string, std::vector<std::string> >&,const std::map<std::string, std::string>&,CreateTypeResponse&) const
- * primary key} and if @a update_on_existing_pk is 'true' then if any of the
+ * primary key} and if @a update_on_existing_pk is @a true, then if any of the
  * records being added have the same primary key as existing records, the
- * existing records are replaced (i.e. *updated*) with the given records. If @a
- * update_on_existing_pk is false and if the records being added have the same
- * primary key as existing records, the given records with existing primary
- * keys are ignored (the existing records are left unchanged). It is quite
- * possible that in this case some of the given records will be inserted and
- * some (those having existing primary keys) will be ignored (or updated). If
- * the specified table does not have a primary key column then the @a
- * update_on_existing_pk option is ignored.
+ * existing records are replaced (i.e. updated) with the given records.  If @a
+ * update_on_existing_pk is @a false and if the records being added have the
+ * same primary key as existing records, they are ignored (the existing records
+ * are left unchanged).  It is quite possible that in this case some of the
+ * given records will be inserted and some (those having existing primary keys)
+ * will be ignored (or updated).  If the specified table does not have a
+ * primary key column, then the @a update_on_existing_pk option is ignored.
+ * <p>
+ * The @a return_record_ids option indicates that the database should return
+ * the unique identifiers of inserted records.
+ * <p>
+ * The @a route_to_address option directs that inserted records should be
+ * targeted for a particular database node.
  * 
  * @tparam <TRequest>  The type of object being added.
  * 
@@ -8765,21 +9049,20 @@ InsertRecordsResponse insertRecords( const std::string& tableName,
  * @param options  Optional parameters.
  *                 <ul>
  *                         <li> update_on_existing_pk: If the table has a
- *                 /create/type, then if the value is 'true' then if any of the
+ *                 /create/type, then if the value is @a true then if any of
+ *                 the records being added have the same primary key as
+ *                 existing records, the existing records are replaced (i.e.
+ *                 updated) with the given records. If @a false, and if the
  *                 records being added have the same primary key as existing
- *                 records, the existing records are replaced (i.e. *updated*)
- *                 with the given records. If 'false' and if the records being
- *                 added have the same primary key as existing records, the
- *                 given records with existing primary keys are ignored (the
- *                 existing records are left unchanged).  It is quite possible
- *                 that in this case some of the given records will be inserted
- *                 and some (those having existing primary keys) will be
- *                 ignored (or updated). If the specified table does not have a
- *                 primary key column then this optional parameter is ignored.
- *                 Values: 'true', 'false'.
- *                         <li> return_record_ids: If 'true' then return
+ *                 records, they are ignored (the existing records are left
+ *                 unchanged).  It is quite possible that in this case some of
+ *                 the given records will be inserted and some (those having
+ *                 existing primary keys) will be ignored (or updated). If the
+ *                 specified table does not have a primary key column then this
+ *                 optional parameter is ignored. Values: 'true', 'false'.
+ *                         <li> return_record_ids: If @a true then return
  *                 GPUdb's internal record id along for each inserted record.
- *                 Default is 'false'. Values: 'true', 'false'.
+ *                 Values: 'true', 'false'.
  *                         <li> route_to_address: Route to a specific rank/tom.
  *                 Option not suitable for tables using primary/shard keys
  *                 </ul>
@@ -9275,7 +9558,7 @@ InsertSymbolResponse& insertSymbol( const std::string& symbolId,
                                     InsertSymbolResponse& response_ ) const;
 
 /**
- * @private
+ * Kills a running proc instance.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -9287,7 +9570,7 @@ InsertSymbolResponse& insertSymbol( const std::string& symbolId,
 KillProcResponse killProc( const KillProcRequest& request_ ) const;
 
 /**
- * @private
+ * Kills a running proc instance.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -9303,10 +9586,13 @@ KillProcResponse& killProc( const KillProcRequest& request_,
                             KillProcResponse& response_ ) const;
 
 /**
- * @private
+ * Kills a running proc instance.
  * 
- * @param runId
- * @param options
+ * @param runId  The run ID of the running proc instance. If the run ID is not
+ *               found or the proc instance has already completed, this does
+ *               nothing. If not specified, all running proc instances will be
+ *               killed.  Default value is an empty string.
+ * @param options  Optional parameters.  Default value is an empty std::map.
  * 
  * @return Response object containing the result of the operation.
  * 
@@ -9316,10 +9602,13 @@ KillProcResponse killProc( const std::string& runId,
                            const std::map<std::string, std::string>& options ) const;
 
 /**
- * @private
+ * Kills a running proc instance.
  * 
- * @param runId
- * @param options
+ * @param runId  The run ID of the running proc instance. If the run ID is not
+ *               found or the proc instance has already completed, this does
+ *               nothing. If not specified, all running proc instances will be
+ *               killed.  Default value is an empty string.
+ * @param options  Optional parameters.  Default value is an empty std::map.
  * @param[out] response_  Response object containing the results of the
  *                        operation.
  * 
@@ -9635,7 +9924,7 @@ RevokeRoleResponse& revokeRole( const std::string& role,
                                 RevokeRoleResponse& response_ ) const;
 
 /**
- * @private
+ * Shows information about a proc.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -9647,7 +9936,7 @@ RevokeRoleResponse& revokeRole( const std::string& role,
 ShowProcResponse showProc( const ShowProcRequest& request_ ) const;
 
 /**
- * @private
+ * Shows information about a proc.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -9663,13 +9952,19 @@ ShowProcResponse& showProc( const ShowProcRequest& request_,
                             ShowProcResponse& response_ ) const;
 
 /**
- * @private
+ * Shows information about a proc.
  * 
- * @param procName
- * @param options
+ * @param procName  Name of the proc to show information about. If specified,
+ *                  must be the name of a currently existing proc. If not
+ *                  specified, information about all procs will be returned.
+ *                  Default value is an empty string.
+ * @param options  Optional parameters.
  *                 <ul>
- *                         <li> include_files: Values: 'true', 'false'.
+ *                         <li> include_files: If set to @a true, the files
+ *                 that make up the proc will be returned. If set to @a false,
+ *                 the files will not be returned. Values: 'true', 'false'.
  *                 </ul>
+ *                   Default value is an empty std::map.
  * 
  * @return Response object containing the result of the operation.
  * 
@@ -9679,13 +9974,19 @@ ShowProcResponse showProc( const std::string& procName,
                            const std::map<std::string, std::string>& options ) const;
 
 /**
- * @private
+ * Shows information about a proc.
  * 
- * @param procName
- * @param options
+ * @param procName  Name of the proc to show information about. If specified,
+ *                  must be the name of a currently existing proc. If not
+ *                  specified, information about all procs will be returned.
+ *                  Default value is an empty string.
+ * @param options  Optional parameters.
  *                 <ul>
- *                         <li> include_files: Values: 'true', 'false'.
+ *                         <li> include_files: If set to @a true, the files
+ *                 that make up the proc will be returned. If set to @a false,
+ *                 the files will not be returned. Values: 'true', 'false'.
  *                 </ul>
+ *                   Default value is an empty std::map.
  * @param[out] response_  Response object containing the results of the
  *                        operation.
  * 
@@ -9699,7 +10000,11 @@ ShowProcResponse& showProc( const std::string& procName,
                             ShowProcResponse& response_ ) const;
 
 /**
- * @private
+ * Shows the statuses of running or completed proc instances. Results are
+ * grouped by run ID (as returned from {@link
+ * #executeProc(const ExecuteProcRequest&) const}) and data segment ID
+ * (each invocation of the proc command on a data segment is assigned a data
+ * segment ID).
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -9711,7 +10016,11 @@ ShowProcResponse& showProc( const std::string& procName,
 ShowProcStatusResponse showProcStatus( const ShowProcStatusRequest& request_ ) const;
 
 /**
- * @private
+ * Shows the statuses of running or completed proc instances. Results are
+ * grouped by run ID (as returned from {@link
+ * #executeProc(const ExecuteProcRequest&,ExecuteProcResponse&) const}) and
+ * data segment ID (each invocation of the proc command on a data segment is
+ * assigned a data segment ID).
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -9727,13 +10036,26 @@ ShowProcStatusResponse& showProcStatus( const ShowProcStatusRequest& request_,
                                         ShowProcStatusResponse& response_ ) const;
 
 /**
- * @private
+ * Shows the statuses of running or completed proc instances. Results are
+ * grouped by run ID (as returned from {@link
+ * #executeProc(const std::string&,const std::map<std::string, std::string>&,const std::map<std::string, std::vector<uint8_t> >&,const std::vector<std::string>&,const std::map<std::string, std::vector<std::string> >&,const std::vector<std::string>&,const std::map<std::string, std::string>&) const})
+ * and data segment ID (each invocation of the proc command on a data segment
+ * is assigned a data segment ID).
  * 
- * @param runId
- * @param options
+ * @param runId  The run ID of a specific running or completed proc instance
+ *               for which the status will be returned. If the run ID is not
+ *               found, nothing will be returned. If not specified, the
+ *               statuses of all running and completed proc instances will be
+ *               returned.  Default value is an empty string.
+ * @param options  Optional parameters.
  *                 <ul>
- *                         <li> clear_complete: Values: 'true', 'false'.
+ *                         <li> clear_complete: If set to @a true, if a proc
+ *                 instance has completed (either successfully or
+ *                 unsuccessfully) then its status will be cleared and no
+ *                 longer returned in subsequent calls. Values: 'true',
+ *                 'false'.
  *                 </ul>
+ *                   Default value is an empty std::map.
  * 
  * @return Response object containing the result of the operation.
  * 
@@ -9743,13 +10065,26 @@ ShowProcStatusResponse showProcStatus( const std::string& runId,
                                        const std::map<std::string, std::string>& options ) const;
 
 /**
- * @private
+ * Shows the statuses of running or completed proc instances. Results are
+ * grouped by run ID (as returned from {@link
+ * #executeProc(const std::string&,const std::map<std::string, std::string>&,const std::map<std::string, std::vector<uint8_t> >&,const std::vector<std::string>&,const std::map<std::string, std::vector<std::string> >&,const std::vector<std::string>&,const std::map<std::string, std::string>&,ExecuteProcResponse&) const})
+ * and data segment ID (each invocation of the proc command on a data segment
+ * is assigned a data segment ID).
  * 
- * @param runId
- * @param options
+ * @param runId  The run ID of a specific running or completed proc instance
+ *               for which the status will be returned. If the run ID is not
+ *               found, nothing will be returned. If not specified, the
+ *               statuses of all running and completed proc instances will be
+ *               returned.  Default value is an empty string.
+ * @param options  Optional parameters.
  *                 <ul>
- *                         <li> clear_complete: Values: 'true', 'false'.
+ *                         <li> clear_complete: If set to @a true, if a proc
+ *                 instance has completed (either successfully or
+ *                 unsuccessfully) then its status will be cleared and no
+ *                 longer returned in subsequent calls. Values: 'true',
+ *                 'false'.
  *                 </ul>
+ *                   Default value is an empty std::map.
  * @param[out] response_  Response object containing the results of the
  *                        operation.
  * 

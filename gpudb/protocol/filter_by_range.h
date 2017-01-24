@@ -44,29 +44,29 @@ namespace gpudb
          * Constructs a FilterByRangeRequest object with the specified
          * parameters.
          * 
-         * @param[in] tableName  Name of the table on which the filter by range
-         *                       operation will be performed.  Must be a valid
-         *                       GPUdb table.
-         * @param[in] viewName  If provided, then this will be the name of the
-         *                      view containing the results. Must not be an
-         *                      already existing collection, table or view.
-         *                      Default value is an empty string.
-         * @param[in] columnName  Name of a column or an expression of one or
-         *                        more columns on which the operation would be
-         *                        applied.
-         * @param[in] lowerBound  Value of the lower bound (inclusive).
-         * @param[in] upperBound  Value of the upper bound (inclusive).
-         * @param[in] options  Optional parameters.  Default value is an empty
-         *                     std::map.
+         * @param[in] tableName_  Name of the table on which the filter by
+         *                        range operation will be performed.  Must be a
+         *                        valid GPUdb table.
+         * @param[in] viewName_  If provided, then this will be the name of the
+         *                       view containing the results. Must not be an
+         *                       already existing collection, table or view.
+         *                       Default value is an empty string.
+         * @param[in] columnName_  Name of a column or an expression of one or
+         *                         more columns on which the operation would be
+         *                         applied.
+         * @param[in] lowerBound_  Value of the lower bound (inclusive).
+         * @param[in] upperBound_  Value of the upper bound (inclusive).
+         * @param[in] options_  Optional parameters.  Default value is an empty
+         *                      std::map.
          * 
          */
-        FilterByRangeRequest(const std::string& tableName, const std::string& viewName, const std::string& columnName, const double lowerBound, const double upperBound, const std::map<std::string, std::string>& options):
-            tableName(tableName),
-            viewName(viewName),
-            columnName(columnName),
-            lowerBound(lowerBound),
-            upperBound(upperBound),
-            options(options)
+        FilterByRangeRequest(const std::string& tableName_, const std::string& viewName_, const std::string& columnName_, const double lowerBound_, const double upperBound_, const std::map<std::string, std::string>& options_):
+            tableName( tableName_ ),
+            viewName( viewName_ ),
+            columnName( columnName_ ),
+            lowerBound( lowerBound_ ),
+            upperBound( upperBound_ ),
+            options( options_ )
         {
         }
 

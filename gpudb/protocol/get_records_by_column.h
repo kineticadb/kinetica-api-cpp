@@ -54,44 +54,45 @@ namespace gpudb
          * Constructs a GetRecordsByColumnRequest object with the specified
          * parameters.
          * 
-         * @param[in] tableName  Name of the table on which this operation will
-         *                       be performed. The table cannot be a parent
-         *                       set.
-         * @param[in] columnNames  The list of column values to retrieve.
-         *                         Columns annotated as store only cannot be
-         *                         retrieved.
-         * @param[in] offset  A positive integer indicating the number of
-         *                    initial results to skip (this can be useful for
-         *                    paging through the results).  The minimum allowed
-         *                    value is 0. The maximum allowed value is MAX_INT.
-         * @param[in] limit  A positive integer indicating the maximum number
-         *                   of results to be returned (if not provided the
-         *                   default is 10000), or END_OF_SET (-9999) to
-         *                   indicate that the maximum number of results
-         *                   allowed by the server should be returned.
-         * @param[in] options
-         *                     <ul>
-         *                             <li> expression: Optional filter
-         *                     expression to apply to the table.
-         *                             <li> sort_by: Optional column that the
-         *                     data should be sorted by. Empty by default (i.e.
-         *                     no sorting is applied).
-         *                             <li> sort_order: String indicating how
-         *                     the returned values should be sorted - ascending
-         *                     or descending. Default is 'ascending'. Ignored
-         *                     if 'sort_by' option is not specified. Values:
-         *                     'ascending', 'descending'.
-         *                     </ul>
-         *                       Default value is an empty std::map.
+         * @param[in] tableName_  Name of the table on which this operation
+         *                        will be performed. The table cannot be a
+         *                        parent set.
+         * @param[in] columnNames_  The list of column values to retrieve.
+         *                          Columns annotated as store only cannot be
+         *                          retrieved.
+         * @param[in] offset_  A positive integer indicating the number of
+         *                     initial results to skip (this can be useful for
+         *                     paging through the results).  The minimum
+         *                     allowed value is 0. The maximum allowed value is
+         *                     MAX_INT.
+         * @param[in] limit_  A positive integer indicating the maximum number
+         *                    of results to be returned (if not provided the
+         *                    default is 10000), or END_OF_SET (-9999) to
+         *                    indicate that the maximum number of results
+         *                    allowed by the server should be returned.
+         * @param[in] options_
+         *                      <ul>
+         *                              <li> expression: Optional filter
+         *                      expression to apply to the table.
+         *                              <li> sort_by: Optional column that the
+         *                      data should be sorted by. Empty by default
+         *                      (i.e. no sorting is applied).
+         *                              <li> sort_order: String indicating how
+         *                      the returned values should be sorted -
+         *                      ascending or descending. Default is
+         *                      'ascending'. Ignored if 'sort_by' option is not
+         *                      specified. Values: 'ascending', 'descending'.
+         *                      </ul>
+         *                        Default value is an empty std::map.
          * 
          */
-        GetRecordsByColumnRequest(const std::string& tableName, const std::vector<std::string>& columnNames, const int64_t offset, const int64_t limit, const std::map<std::string, std::string>& options):
-            tableName(tableName),
-            columnNames(columnNames),
-            offset(offset),
-            limit(limit),
-            encoding("binary"),
-            options(options)
+        GetRecordsByColumnRequest(const std::string& tableName_, const std::vector<std::string>& columnNames_, const int64_t offset_, const int64_t limit_, const std::map<std::string, std::string>& options_):
+            tableName( tableName_ ),
+            columnNames( columnNames_ ),
+            offset( offset_ ),
+            limit( limit_ ),
+            encoding( "binary" ),
+            options( options_ )
         {
         }
 
@@ -99,48 +100,49 @@ namespace gpudb
          * Constructs a GetRecordsByColumnRequest object with the specified
          * parameters.
          * 
-         * @param[in] tableName  Name of the table on which this operation will
-         *                       be performed. The table cannot be a parent
-         *                       set.
-         * @param[in] columnNames  The list of column values to retrieve.
-         *                         Columns annotated as store only cannot be
-         *                         retrieved.
-         * @param[in] offset  A positive integer indicating the number of
-         *                    initial results to skip (this can be useful for
-         *                    paging through the results).  The minimum allowed
-         *                    value is 0. The maximum allowed value is MAX_INT.
-         * @param[in] limit  A positive integer indicating the maximum number
-         *                   of results to be returned (if not provided the
-         *                   default is 10000), or END_OF_SET (-9999) to
-         *                   indicate that the maximum number of results
-         *                   allowed by the server should be returned.
-         * @param[in] encoding  Specifies the encoding for returned records;
-         *                      either 'binary' or 'json'. Values: 'binary',
-         *                      'json'.
-         *                        Default value is 'binary'.
-         * @param[in] options
-         *                     <ul>
-         *                             <li> expression: Optional filter
-         *                     expression to apply to the table.
-         *                             <li> sort_by: Optional column that the
-         *                     data should be sorted by. Empty by default (i.e.
-         *                     no sorting is applied).
-         *                             <li> sort_order: String indicating how
-         *                     the returned values should be sorted - ascending
-         *                     or descending. Default is 'ascending'. Ignored
-         *                     if 'sort_by' option is not specified. Values:
-         *                     'ascending', 'descending'.
-         *                     </ul>
-         *                       Default value is an empty std::map.
+         * @param[in] tableName_  Name of the table on which this operation
+         *                        will be performed. The table cannot be a
+         *                        parent set.
+         * @param[in] columnNames_  The list of column values to retrieve.
+         *                          Columns annotated as store only cannot be
+         *                          retrieved.
+         * @param[in] offset_  A positive integer indicating the number of
+         *                     initial results to skip (this can be useful for
+         *                     paging through the results).  The minimum
+         *                     allowed value is 0. The maximum allowed value is
+         *                     MAX_INT.
+         * @param[in] limit_  A positive integer indicating the maximum number
+         *                    of results to be returned (if not provided the
+         *                    default is 10000), or END_OF_SET (-9999) to
+         *                    indicate that the maximum number of results
+         *                    allowed by the server should be returned.
+         * @param[in] encoding_  Specifies the encoding for returned records;
+         *                       either 'binary' or 'json'. Values: 'binary',
+         *                       'json'.
+         *                         Default value is 'binary'.
+         * @param[in] options_
+         *                      <ul>
+         *                              <li> expression: Optional filter
+         *                      expression to apply to the table.
+         *                              <li> sort_by: Optional column that the
+         *                      data should be sorted by. Empty by default
+         *                      (i.e. no sorting is applied).
+         *                              <li> sort_order: String indicating how
+         *                      the returned values should be sorted -
+         *                      ascending or descending. Default is
+         *                      'ascending'. Ignored if 'sort_by' option is not
+         *                      specified. Values: 'ascending', 'descending'.
+         *                      </ul>
+         *                        Default value is an empty std::map.
          * 
          */
-        GetRecordsByColumnRequest(const std::string& tableName, const std::vector<std::string>& columnNames, const int64_t offset, const int64_t limit, const std::string& encoding, const std::map<std::string, std::string>& options):
-            tableName(tableName),
-            columnNames(columnNames),
-            offset(offset),
-            limit(limit),
-            encoding(encoding),
-            options(options)
+        GetRecordsByColumnRequest(const std::string& tableName_, const std::vector<std::string>& columnNames_, const int64_t offset_, const int64_t limit_, const std::string& encoding_, const std::map<std::string, std::string>& options_):
+            tableName( tableName_ ),
+            columnNames( columnNames_ ),
+            offset( offset_ ),
+            limit( limit_ ),
+            encoding( encoding_ ),
+            options( options_ )
         {
         }
 

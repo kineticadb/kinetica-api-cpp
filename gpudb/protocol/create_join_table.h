@@ -37,57 +37,57 @@ namespace gpudb
          * Constructs a CreateJoinTableRequest object with the specified
          * parameters.
          * 
-         * @param[in] joinTableName  Name of the join table to be created. Must
-         *                           not be the name of a currently existing
-         *                           GPUdb table or join table. Cannot be an
-         *                           empty string.
-         * @param[in] tableNames  The list of table names making up the joined
-         *                        set.  Corresponds to a SQL statement FROM
-         *                        clause  Default value is an empty
-         *                        std::vector.
-         * @param[in] columnNames  The list of columns to be selected from the
-         *                         input table names. Empty list says to select
-         *                         all the column names.  Empty list is the
-         *                         default.  Default value is an empty
+         * @param[in] joinTableName_  Name of the join table to be created.
+         *                            Must not be the name of a currently
+         *                            existing GPUdb table or join table.
+         *                            Cannot be an empty string.
+         * @param[in] tableNames_  The list of table names making up the joined
+         *                         set.  Corresponds to a SQL statement FROM
+         *                         clause  Default value is an empty
          *                         std::vector.
-         * @param[in] expressions  An optional list of expressions GPUdb uses
-         *                         to combine and filter the joined set.
-         *                         Corresponds to a SQL statement WHERE clause.
-         *                         For details see: <a
-         *                         href="../../concepts/index.html#expressions"
-         *                         target="_top">expressions</a>.  Default
-         *                         value is an empty std::vector.
-         * @param[in] options  Optional parameters.
-         *                     <ul>
-         *                             <li> collection_name: Name of a
-         *                     collection which is to contain the join table.
-         *                     If empty, then the join table will be a
-         *                     top-level table.
-         *                             <li> max_query_dimensions: The maximum
-         *                     number of tables in a joined table that can be
-         *                     accessed by a query and are not equated by a
-         *                     foreign-key to primary-key equality predicate
-         *                             <li> optimize_lookups: Use the applied
-         *                     filters to precalculate the lookup table to get
-         *                     data from the primary key sets
-         *                             <li> refresh_method: Method by which the
-         *                     join table can be refreshed when underlying
-         *                     member tables have changed. Values: 'manual',
-         *                     'on_query', 'on_insert'.
-         *                             <li> refresh: Do a manual refresh of the
-         *                     join table if it exists - throws an error
-         *                     otherwise Values: 'no_refresh', 'refresh',
-         *                     'full_refresh'.
-         *                     </ul>
-         *                       Default value is an empty std::map.
+         * @param[in] columnNames_  The list of columns to be selected from the
+         *                          input table names. Empty list says to
+         *                          select all the column names.  Empty list is
+         *                          the default.  Default value is an empty
+         *                          std::vector.
+         * @param[in] expressions_  An optional list of expressions GPUdb uses
+         *                          to combine and filter the joined set.
+         *                          Corresponds to a SQL statement WHERE
+         *                          clause. For details see: <a
+         *                          href="../../concepts/index.html#expressions"
+         *                          target="_top">expressions</a>.  Default
+         *                          value is an empty std::vector.
+         * @param[in] options_  Optional parameters.
+         *                      <ul>
+         *                              <li> collection_name: Name of a
+         *                      collection which is to contain the join table.
+         *                      If empty, then the join table will be a
+         *                      top-level table.
+         *                              <li> max_query_dimensions: The maximum
+         *                      number of tables in a joined table that can be
+         *                      accessed by a query and are not equated by a
+         *                      foreign-key to primary-key equality predicate
+         *                              <li> optimize_lookups: Use the applied
+         *                      filters to precalculate the lookup table to get
+         *                      data from the primary key sets
+         *                              <li> refresh_method: Method by which
+         *                      the join table can be refreshed when underlying
+         *                      member tables have changed. Values: 'manual',
+         *                      'on_query', 'on_insert'.
+         *                              <li> refresh: Do a manual refresh of
+         *                      the join table if it exists - throws an error
+         *                      otherwise Values: 'no_refresh', 'refresh',
+         *                      'full_refresh'.
+         *                      </ul>
+         *                        Default value is an empty std::map.
          * 
          */
-        CreateJoinTableRequest(const std::string& joinTableName, const std::vector<std::string>& tableNames, const std::vector<std::string>& columnNames, const std::vector<std::string>& expressions, const std::map<std::string, std::string>& options):
-            joinTableName(joinTableName),
-            tableNames(tableNames),
-            columnNames(columnNames),
-            expressions(expressions),
-            options(options)
+        CreateJoinTableRequest(const std::string& joinTableName_, const std::vector<std::string>& tableNames_, const std::vector<std::string>& columnNames_, const std::vector<std::string>& expressions_, const std::map<std::string, std::string>& options_):
+            joinTableName( joinTableName_ ),
+            tableNames( tableNames_ ),
+            columnNames( columnNames_ ),
+            expressions( expressions_ ),
+            options( options_ )
         {
         }
 

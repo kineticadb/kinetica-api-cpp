@@ -74,7 +74,7 @@ namespace gpudb
                 throw std::invalid_argument("Properties must not be empty.");
             }
 
-            if (!m_isNullable && *it == "nullable")
+            if (!m_isNullable && *it == ColumnProperty::NULLABLE)
             {
                 m_isNullable = true;
             }

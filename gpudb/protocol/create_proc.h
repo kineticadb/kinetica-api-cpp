@@ -6,28 +6,24 @@
 #ifndef __CREATE_PROC_H__
 #define __CREATE_PROC_H__
 
-    /**
-     * @private
-     */
-
 namespace gpudb
 {
 
     /**
-     * @private
      * A set of input parameters for {@link
      * #createProc(const CreateProcRequest&) const}.
      * <p>
+     * Creates a proc.
      */
     struct CreateProcRequest
     {
 
         /**
-         * @private
          * Constructs a CreateProcRequest object with default parameter values.
          */
         CreateProcRequest() :
             procName(std::string()),
+            executionMode(std::string()),
             files(std::map<std::string, std::vector<uint8_t> >()),
             command(std::string()),
             args(std::vector<std::string>()),
@@ -36,44 +32,60 @@ namespace gpudb
         }
 
         /**
-         * @private
          * Constructs a CreateProcRequest object with the specified parameters.
          * 
-         * @param[in] procName
-         * @param[in] files
-         * @param[in] command
-         * @param[in] args
-         * @param[in] options
-         *                     <ul>
-         *                             <li> nondistributed: Values: 'true',
-         *                     'false'.
-         *                     </ul>
+         * @param[in] procName_  Name of the proc to be created. Must not be
+         *                       the name of a currently existing proc.
+         * @param[in] executionMode_  The execution mode of the proc. Values:
+         *                            'distributed', 'nondistributed'.
+         *                              Default value is 'distributed'.
+         * @param[in] files_  A map of the files that make up the proc. The
+         *                    keys of the map are file names, and the values
+         *                    are the binary contents of the files. The file
+         *                    names may include subdirectory names (e.g.
+         *                    'subdir/file') but must not resolve to a
+         *                    directory above the root for the proc.  Default
+         *                    value is an empty std::map.
+         * @param[in] command_  The command (excluding arguments) that will be
+         *                      invoked when the proc is executed. It will be
+         *                      invoked from the directory containing the proc
+         *                      @a files and may be any command that can be
+         *                      resolved from that directory. It need not refer
+         *                      to a file actually in that directory; for
+         *                      example, it could be 'java' if the proc is a
+         *                      Java application; however, any necessary
+         *                      external programs must be preinstalled on every
+         *                      GPUdb node. If the command refers to a file in
+         *                      that directory, it must be preceded with './'
+         *                      as per Linux convention. If not specified, and
+         *                      exactly one file is provided in @a files, that
+         *                      file will be invoked.  Default value is an
+         *                      empty string.
+         * @param[in] args_  An array of command-line arguments that will be
+         *                   passed to @a command when the proc is executed.
+         *                   Default value is an empty std::vector.
+         * @param[in] options_  Optional parameters.  Default value is an empty
+         *                      std::map.
          * 
          */
-        CreateProcRequest(const std::string& procName, const std::map<std::string, std::vector<uint8_t> >& files, const std::string& command, const std::vector<std::string>& args, const std::map<std::string, std::string>& options):
-            procName(procName),
-            files(files),
-            command(command),
-            args(args),
-            options(options)
+        CreateProcRequest(const std::string& procName_, const std::string& executionMode_, const std::map<std::string, std::vector<uint8_t> >& files_, const std::string& command_, const std::vector<std::string>& args_, const std::map<std::string, std::string>& options_):
+            procName( procName_ ),
+            executionMode( executionMode_ ),
+            files( files_ ),
+            command( command_ ),
+            args( args_ ),
+            options( options_ )
         {
         }
 
-    /**
-     * @private
-     */
-
         std::string procName;
+        std::string executionMode;
         std::map<std::string, std::vector<uint8_t> > files;
         std::string command;
         std::vector<std::string> args;
         std::map<std::string, std::string> options;
     };
 }
-
-    /**
-     * @private
-     */
 
 namespace avro
 {
@@ -82,6 +94,7 @@ namespace avro
         static void encode(Encoder& e, const gpudb::CreateProcRequest& v)
         {
             ::avro::encode(e, v.procName);
+            ::avro::encode(e, v.executionMode);
             ::avro::encode(e, v.files);
             ::avro::encode(e, v.command);
             ::avro::encode(e, v.args);
@@ -103,18 +116,22 @@ namespace avro
                             break;
 
                         case 1:
-                            ::avro::decode(d, v.files);
+                            ::avro::decode(d, v.executionMode);
                             break;
 
                         case 2:
-                            ::avro::decode(d, v.command);
+                            ::avro::decode(d, v.files);
                             break;
 
                         case 3:
-                            ::avro::decode(d, v.args);
+                            ::avro::decode(d, v.command);
                             break;
 
                         case 4:
+                            ::avro::decode(d, v.args);
+                            break;
+
+                        case 5:
                             ::avro::decode(d, v.options);
                             break;
 
@@ -126,6 +143,7 @@ namespace avro
             else
             {
                 ::avro::decode(d, v.procName);
+                ::avro::decode(d, v.executionMode);
                 ::avro::decode(d, v.files);
                 ::avro::decode(d, v.command);
                 ::avro::decode(d, v.args);
@@ -135,24 +153,19 @@ namespace avro
     };
 }
 
-    /**
-     * @private
-     */
-
 namespace gpudb
 {
 
     /**
-     * @private
      * A set of output parameters for {@link
      * #createProc(const CreateProcRequest&) const}.
      * <p>
+     * Creates a proc.
      */
     struct CreateProcResponse
     {
 
         /**
-         * @private
          * Constructs a CreateProcResponse object with default parameter
          * values.
          */
@@ -161,17 +174,9 @@ namespace gpudb
         {
         }
 
-    /**
-     * @private
-     */
-
         std::string procName;
     };
 }
-
-    /**
-     * @private
-     */
 
 namespace avro
 {

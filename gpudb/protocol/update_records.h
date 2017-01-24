@@ -56,61 +56,63 @@ namespace gpudb
          * Constructs a RawUpdateRecordsRequest object with the specified
          * parameters.
          * 
-         * @param[in] tableName  Table to be updated. Must be a currently
-         *                       existing table and not a collection or view.
-         * @param[in] expressions  A list of the actual predicates, one for
-         *                         each update; format should follow the
-         *                         guidelines /filter.
-         * @param[in] newValuesMaps  List of new values for the matching
-         *                           records.  Each element is a map with (key,
-         *                           value) pairs where the keys are the names
-         *                           of the columns whose values are to be
-         *                           updated; the values are the new values.
-         *                           The number of elements in the list should
-         *                           match the length of @a expressions.
-         * @param[in] recordsToInsert  An *optional* list of new binary-avro
-         *                             encoded records to insert, one for each
-         *                             update.  If one of @a expressions does
-         *                             not yield a matching record to be
-         *                             updated, then the corresponding element
-         *                             from this list will be added to the
-         *                             table.  Default value is an empty
-         *                             std::vector.
-         * @param[in] options  Optional parameters.
-         *                     <ul>
-         *                             <li> global_expression: An optional
-         *                     global expression to reduce the search space of
-         *                     the predicates listed in @a expressions.
-         *                             <li> bypass_safety_checks: When set to
-         *                     'true', all predicates are available for primary
-         *                     key updates.  Keep in mind that it is possible
-         *                     to destroy data in this case, since a single
-         *                     predicate may match multiple objects
-         *                     (potentially all of records of a table), and
-         *                     then updating all of those records to have the
-         *                     same primary key will, due to the primary key
-         *                     uniqueness constraints, effectively delete all
-         *                     but one of those updated records. Values:
-         *                     'true', 'false'.
-         *                             <li> update_on_existing_pk: Can be used
-         *                     to customize behavior when the updated primary
-         *                     key value already exists, as described in
-         *                     /insert/records. Values: 'true', 'false'.
-         *                             <li> record_id: ID of a single record to
-         *                     be updated (returned in the call to
-         *                     /insert/records or /get/records/fromcollection).
-         *                     </ul>
-         *                       Default value is an empty std::map.
+         * @param[in] tableName_  Table to be updated. Must be a currently
+         *                        existing table and not a collection or view.
+         * @param[in] expressions_  A list of the actual predicates, one for
+         *                          each update; format should follow the
+         *                          guidelines /filter.
+         * @param[in] newValuesMaps_  List of new values for the matching
+         *                            records.  Each element is a map with
+         *                            (key, value) pairs where the keys are the
+         *                            names of the columns whose values are to
+         *                            be updated; the values are the new
+         *                            values.  The number of elements in the
+         *                            list should match the length of @a
+         *                            expressions.
+         * @param[in] recordsToInsert_  An *optional* list of new binary-avro
+         *                              encoded records to insert, one for each
+         *                              update.  If one of @a expressions does
+         *                              not yield a matching record to be
+         *                              updated, then the corresponding element
+         *                              from this list will be added to the
+         *                              table.  Default value is an empty
+         *                              std::vector.
+         * @param[in] options_  Optional parameters.
+         *                      <ul>
+         *                              <li> global_expression: An optional
+         *                      global expression to reduce the search space of
+         *                      the predicates listed in @a expressions.
+         *                              <li> bypass_safety_checks: When set to
+         *                      'true', all predicates are available for
+         *                      primary key updates.  Keep in mind that it is
+         *                      possible to destroy data in this case, since a
+         *                      single predicate may match multiple objects
+         *                      (potentially all of records of a table), and
+         *                      then updating all of those records to have the
+         *                      same primary key will, due to the primary key
+         *                      uniqueness constraints, effectively delete all
+         *                      but one of those updated records. Values:
+         *                      'true', 'false'.
+         *                              <li> update_on_existing_pk: Can be used
+         *                      to customize behavior when the updated primary
+         *                      key value already exists, as described in
+         *                      /insert/records. Values: 'true', 'false'.
+         *                              <li> record_id: ID of a single record
+         *                      to be updated (returned in the call to
+         *                      /insert/records or
+         *                      /get/records/fromcollection).
+         *                      </ul>
+         *                        Default value is an empty std::map.
          * 
          */
-        RawUpdateRecordsRequest(const std::string& tableName, const std::vector<std::string>& expressions, const std::vector<std::map<std::string, boost::optional<std::string> > >& newValuesMaps, const std::vector<std::vector<uint8_t> >& recordsToInsert, const std::map<std::string, std::string>& options):
-            tableName(tableName),
-            expressions(expressions),
-            newValuesMaps(newValuesMaps),
-            recordsToInsert(recordsToInsert),
-            recordsToInsertStr(std::vector<std::string>()),
-            recordEncoding("binary"),
-            options(options)
+        RawUpdateRecordsRequest(const std::string& tableName_, const std::vector<std::string>& expressions_, const std::vector<std::map<std::string, boost::optional<std::string> > >& newValuesMaps_, const std::vector<std::vector<uint8_t> >& recordsToInsert_, const std::map<std::string, std::string>& options_):
+            tableName( tableName_ ),
+            expressions( expressions_ ),
+            newValuesMaps( newValuesMaps_ ),
+            recordsToInsert( recordsToInsert_ ),
+            recordsToInsertStr( std::vector<std::string>() ),
+            recordEncoding( "binary" ),
+            options( options_ )
         {
         }
 
@@ -118,71 +120,73 @@ namespace gpudb
          * Constructs a RawUpdateRecordsRequest object with the specified
          * parameters.
          * 
-         * @param[in] tableName  Table to be updated. Must be a currently
-         *                       existing table and not a collection or view.
-         * @param[in] expressions  A list of the actual predicates, one for
-         *                         each update; format should follow the
-         *                         guidelines /filter.
-         * @param[in] newValuesMaps  List of new values for the matching
-         *                           records.  Each element is a map with (key,
-         *                           value) pairs where the keys are the names
-         *                           of the columns whose values are to be
-         *                           updated; the values are the new values.
-         *                           The number of elements in the list should
-         *                           match the length of @a expressions.
-         * @param[in] recordsToInsert  An *optional* list of new binary-avro
-         *                             encoded records to insert, one for each
-         *                             update.  If one of @a expressions does
-         *                             not yield a matching record to be
-         *                             updated, then the corresponding element
-         *                             from this list will be added to the
-         *                             table.  Default value is an empty
-         *                             std::vector.
-         * @param[in] recordsToInsertStr  An optional list of new json-avro
-         *                                encoded objects to insert, one for
-         *                                each update, to be added to the set
-         *                                if the particular update did not
-         *                                affect any objects.  Default value is
-         *                                an empty std::vector.
-         * @param[in] recordEncoding  Identifies which of @a recordsToInsert
-         *                            and @a recordsToInsertStr should be used.
-         *                            Values: 'binary', 'json'.
-         *                              Default value is 'binary'.
-         * @param[in] options  Optional parameters.
-         *                     <ul>
-         *                             <li> global_expression: An optional
-         *                     global expression to reduce the search space of
-         *                     the predicates listed in @a expressions.
-         *                             <li> bypass_safety_checks: When set to
-         *                     'true', all predicates are available for primary
-         *                     key updates.  Keep in mind that it is possible
-         *                     to destroy data in this case, since a single
-         *                     predicate may match multiple objects
-         *                     (potentially all of records of a table), and
-         *                     then updating all of those records to have the
-         *                     same primary key will, due to the primary key
-         *                     uniqueness constraints, effectively delete all
-         *                     but one of those updated records. Values:
-         *                     'true', 'false'.
-         *                             <li> update_on_existing_pk: Can be used
-         *                     to customize behavior when the updated primary
-         *                     key value already exists, as described in
-         *                     /insert/records. Values: 'true', 'false'.
-         *                             <li> record_id: ID of a single record to
-         *                     be updated (returned in the call to
-         *                     /insert/records or /get/records/fromcollection).
-         *                     </ul>
-         *                       Default value is an empty std::map.
+         * @param[in] tableName_  Table to be updated. Must be a currently
+         *                        existing table and not a collection or view.
+         * @param[in] expressions_  A list of the actual predicates, one for
+         *                          each update; format should follow the
+         *                          guidelines /filter.
+         * @param[in] newValuesMaps_  List of new values for the matching
+         *                            records.  Each element is a map with
+         *                            (key, value) pairs where the keys are the
+         *                            names of the columns whose values are to
+         *                            be updated; the values are the new
+         *                            values.  The number of elements in the
+         *                            list should match the length of @a
+         *                            expressions.
+         * @param[in] recordsToInsert_  An *optional* list of new binary-avro
+         *                              encoded records to insert, one for each
+         *                              update.  If one of @a expressions does
+         *                              not yield a matching record to be
+         *                              updated, then the corresponding element
+         *                              from this list will be added to the
+         *                              table.  Default value is an empty
+         *                              std::vector.
+         * @param[in] recordsToInsertStr_  An optional list of new json-avro
+         *                                 encoded objects to insert, one for
+         *                                 each update, to be added to the set
+         *                                 if the particular update did not
+         *                                 affect any objects.  Default value
+         *                                 is an empty std::vector.
+         * @param[in] recordEncoding_  Identifies which of @a recordsToInsert
+         *                             and @a recordsToInsertStr should be
+         *                             used. Values: 'binary', 'json'.
+         *                               Default value is 'binary'.
+         * @param[in] options_  Optional parameters.
+         *                      <ul>
+         *                              <li> global_expression: An optional
+         *                      global expression to reduce the search space of
+         *                      the predicates listed in @a expressions.
+         *                              <li> bypass_safety_checks: When set to
+         *                      'true', all predicates are available for
+         *                      primary key updates.  Keep in mind that it is
+         *                      possible to destroy data in this case, since a
+         *                      single predicate may match multiple objects
+         *                      (potentially all of records of a table), and
+         *                      then updating all of those records to have the
+         *                      same primary key will, due to the primary key
+         *                      uniqueness constraints, effectively delete all
+         *                      but one of those updated records. Values:
+         *                      'true', 'false'.
+         *                              <li> update_on_existing_pk: Can be used
+         *                      to customize behavior when the updated primary
+         *                      key value already exists, as described in
+         *                      /insert/records. Values: 'true', 'false'.
+         *                              <li> record_id: ID of a single record
+         *                      to be updated (returned in the call to
+         *                      /insert/records or
+         *                      /get/records/fromcollection).
+         *                      </ul>
+         *                        Default value is an empty std::map.
          * 
          */
-        RawUpdateRecordsRequest(const std::string& tableName, const std::vector<std::string>& expressions, const std::vector<std::map<std::string, boost::optional<std::string> > >& newValuesMaps, const std::vector<std::vector<uint8_t> >& recordsToInsert, const std::vector<std::string>& recordsToInsertStr, const std::string& recordEncoding, const std::map<std::string, std::string>& options):
-            tableName(tableName),
-            expressions(expressions),
-            newValuesMaps(newValuesMaps),
-            recordsToInsert(recordsToInsert),
-            recordsToInsertStr(recordsToInsertStr),
-            recordEncoding(recordEncoding),
-            options(options)
+        RawUpdateRecordsRequest(const std::string& tableName_, const std::vector<std::string>& expressions_, const std::vector<std::map<std::string, boost::optional<std::string> > >& newValuesMaps_, const std::vector<std::vector<uint8_t> >& recordsToInsert_, const std::vector<std::string>& recordsToInsertStr_, const std::string& recordEncoding_, const std::map<std::string, std::string>& options_):
+            tableName( tableName_ ),
+            expressions( expressions_ ),
+            newValuesMaps( newValuesMaps_ ),
+            recordsToInsert( recordsToInsert_ ),
+            recordsToInsertStr( recordsToInsertStr_ ),
+            recordEncoding( recordEncoding_ ),
+            options( options_ )
         {
         }
 
@@ -319,57 +323,59 @@ namespace gpudb
          * Constructs an UpdateRecordsRequest object with the specified
          * parameters.
          * 
-         * @param[in] tableName  Table to be updated. Must be a currently
-         *                       existing table and not a collection or view.
-         * @param[in] expressions  A list of the actual predicates, one for
-         *                         each update; format should follow the
-         *                         guidelines /filter.
-         * @param[in] newValuesMaps  List of new values for the matching
-         *                           records.  Each element is a map with (key,
-         *                           value) pairs where the keys are the names
-         *                           of the columns whose values are to be
-         *                           updated; the values are the new values.
-         *                           The number of elements in the list should
-         *                           match the length of @a expressions.
-         * @param[in] data  An *optional* list of new binary-avro encoded
-         *                  records to insert, one for each update.  If one of
-         *                  @a expressions does not yield a matching record to
-         *                  be updated, then the corresponding element from
-         *                  this list will be added to the table.  Default
-         *                  value is an empty std::vector.
-         * @param[in] options  Optional parameters.
-         *                     <ul>
-         *                             <li> global_expression: An optional
-         *                     global expression to reduce the search space of
-         *                     the predicates listed in @a expressions.
-         *                             <li> bypass_safety_checks: When set to
-         *                     'true', all predicates are available for primary
-         *                     key updates.  Keep in mind that it is possible
-         *                     to destroy data in this case, since a single
-         *                     predicate may match multiple objects
-         *                     (potentially all of records of a table), and
-         *                     then updating all of those records to have the
-         *                     same primary key will, due to the primary key
-         *                     uniqueness constraints, effectively delete all
-         *                     but one of those updated records. Values:
-         *                     'true', 'false'.
-         *                             <li> update_on_existing_pk: Can be used
-         *                     to customize behavior when the updated primary
-         *                     key value already exists, as described in
-         *                     /insert/records. Values: 'true', 'false'.
-         *                             <li> record_id: ID of a single record to
-         *                     be updated (returned in the call to
-         *                     /insert/records or /get/records/fromcollection).
-         *                     </ul>
-         *                       Default value is an empty std::map.
+         * @param[in] tableName_  Table to be updated. Must be a currently
+         *                        existing table and not a collection or view.
+         * @param[in] expressions_  A list of the actual predicates, one for
+         *                          each update; format should follow the
+         *                          guidelines /filter.
+         * @param[in] newValuesMaps_  List of new values for the matching
+         *                            records.  Each element is a map with
+         *                            (key, value) pairs where the keys are the
+         *                            names of the columns whose values are to
+         *                            be updated; the values are the new
+         *                            values.  The number of elements in the
+         *                            list should match the length of @a
+         *                            expressions.
+         * @param[in] data_  An *optional* list of new binary-avro encoded
+         *                   records to insert, one for each update.  If one of
+         *                   @a expressions does not yield a matching record to
+         *                   be updated, then the corresponding element from
+         *                   this list will be added to the table.  Default
+         *                   value is an empty std::vector.
+         * @param[in] options_  Optional parameters.
+         *                      <ul>
+         *                              <li> global_expression: An optional
+         *                      global expression to reduce the search space of
+         *                      the predicates listed in @a expressions.
+         *                              <li> bypass_safety_checks: When set to
+         *                      'true', all predicates are available for
+         *                      primary key updates.  Keep in mind that it is
+         *                      possible to destroy data in this case, since a
+         *                      single predicate may match multiple objects
+         *                      (potentially all of records of a table), and
+         *                      then updating all of those records to have the
+         *                      same primary key will, due to the primary key
+         *                      uniqueness constraints, effectively delete all
+         *                      but one of those updated records. Values:
+         *                      'true', 'false'.
+         *                              <li> update_on_existing_pk: Can be used
+         *                      to customize behavior when the updated primary
+         *                      key value already exists, as described in
+         *                      /insert/records. Values: 'true', 'false'.
+         *                              <li> record_id: ID of a single record
+         *                      to be updated (returned in the call to
+         *                      /insert/records or
+         *                      /get/records/fromcollection).
+         *                      </ul>
+         *                        Default value is an empty std::map.
          * 
          */
-        UpdateRecordsRequest(const std::string& tableName, const std::vector<std::string>& expressions, const std::vector<std::map<std::string, boost::optional<std::string> > >& newValuesMaps, const std::vector<T>& data, const std::map<std::string, std::string>& options):
-            tableName(tableName),
-            expressions(expressions),
-            newValuesMaps(newValuesMaps),
-            data(data),
-            options(options)
+        UpdateRecordsRequest(const std::string& tableName_, const std::vector<std::string>& expressions_, const std::vector<std::map<std::string, boost::optional<std::string> > >& newValuesMaps_, const std::vector<T>& data_, const std::map<std::string, std::string>& options_):
+            tableName( tableName_ ),
+            expressions( expressions_ ),
+            newValuesMaps( newValuesMaps_ ),
+            data( data_ ),
+            options( options_ )
         {
         }
 

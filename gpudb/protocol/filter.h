@@ -40,28 +40,28 @@ namespace gpudb
         /**
          * Constructs a FilterRequest object with the specified parameters.
          * 
-         * @param[in] tableName  Name of the table to filter.  This may be the
-         *                       ID of a collection, table or a result set (for
-         *                       chaining queries).  Collections may be
-         *                       filtered only if all tables within the
-         *                       collection have the same type ID.
-         * @param[in] viewName  If provided, then this will be the name of the
-         *                      view containing the results. Must not be an
-         *                      already existing collection, table or view .
-         *                      Default value is an empty string.
-         * @param[in] expression  The select expression GPUdb uses to filter
-         *                        the specified table.  For details see <a
-         *                        href="../../concepts/index.html#expressions"
-         *                        target="_top">concepts</a>.
-         * @param[in] options  Optional parameters.  Default value is an empty
-         *                     std::map.
+         * @param[in] tableName_  Name of the table to filter.  This may be the
+         *                        ID of a collection, table or a result set
+         *                        (for chaining queries).  Collections may be
+         *                        filtered only if all tables within the
+         *                        collection have the same type ID.
+         * @param[in] viewName_  If provided, then this will be the name of the
+         *                       view containing the results. Must not be an
+         *                       already existing collection, table or view .
+         *                       Default value is an empty string.
+         * @param[in] expression_  The select expression GPUdb uses to filter
+         *                         the specified table.  For details see <a
+         *                         href="../../concepts/index.html#expressions"
+         *                         target="_top">concepts</a>.
+         * @param[in] options_  Optional parameters.  Default value is an empty
+         *                      std::map.
          * 
          */
-        FilterRequest(const std::string& tableName, const std::string& viewName, const std::string& expression, const std::map<std::string, std::string>& options):
-            tableName(tableName),
-            viewName(viewName),
-            expression(expression),
-            options(options)
+        FilterRequest(const std::string& tableName_, const std::string& viewName_, const std::string& expression_, const std::map<std::string, std::string>& options_):
+            tableName( tableName_ ),
+            viewName( viewName_ ),
+            expression( expression_ ),
+            options( options_ )
         {
         }
 

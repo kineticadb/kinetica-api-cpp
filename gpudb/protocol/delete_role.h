@@ -30,14 +30,14 @@ namespace gpudb
         /**
          * Constructs a DeleteRoleRequest object with the specified parameters.
          * 
-         * @param[in] name  Name of the role to be deleted. Must be an existing
-         *                  role.
-         * @param[in] options  Optional parameters.
+         * @param[in] name_  Name of the role to be deleted. Must be an
+         *                   existing role.
+         * @param[in] options_  Optional parameters.
          * 
          */
-        DeleteRoleRequest(const std::string& name, const std::map<std::string, std::string>& options):
-            name(name),
-            options(options)
+        DeleteRoleRequest(const std::string& name_, const std::map<std::string, std::string>& options_):
+            name( name_ ),
+            options( options_ )
         {
         }
 

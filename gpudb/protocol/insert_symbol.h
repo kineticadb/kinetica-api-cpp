@@ -43,36 +43,36 @@ namespace gpudb
          * Constructs an InsertSymbolRequest object with the specified
          * parameters.
          * 
-         * @param[in] symbolId  The id of the symbol being added. This is the
-         *                      same id that should be in the 'SYMBOLCODE'
-         *                      column for objects using this symbol
-         * @param[in] symbolFormat  Specifies the symbol format. Must be either
-         *                          'svg' or 'svg_path'. Values: 'svg',
-         *                          'svg_path'.
-         * @param[in] symbolData  The actual symbol data. If @a symbolFormat is
-         *                        'svg' then this should be the raw bytes
-         *                        representing an svg file. If @a symbolFormat
-         *                        is svg path then this should be an svg path
-         *                        string, for example:
-         *                        'M25.979,12.896,5.979,12.896,5.979,19.562,25.979,19.562z'
-         * @param[in] options  Optional parameters.
-         *                     <ul>
-         *                             <li> color: If @a symbolFormat is 'svg'
-         *                     this is ignored. If @a symbolFormat is
-         *                     'svg_path' then this option specifies the color
-         *                     (in RRGGBB hex format) of the path. For example,
-         *                     to have the path rendered in red, used 'FF0000'.
-         *                     If 'color' is not provided then '00FF00' (i.e.
-         *                     green) is used by default.
-         *                     </ul>
-         *                       Default value is an empty std::map.
+         * @param[in] symbolId_  The id of the symbol being added. This is the
+         *                       same id that should be in the 'SYMBOLCODE'
+         *                       column for objects using this symbol
+         * @param[in] symbolFormat_  Specifies the symbol format. Must be
+         *                           either 'svg' or 'svg_path'. Values: 'svg',
+         *                           'svg_path'.
+         * @param[in] symbolData_  The actual symbol data. If @a symbolFormat
+         *                         is 'svg' then this should be the raw bytes
+         *                         representing an svg file. If @a symbolFormat
+         *                         is svg path then this should be an svg path
+         *                         string, for example:
+         *                         'M25.979,12.896,5.979,12.896,5.979,19.562,25.979,19.562z'
+         * @param[in] options_  Optional parameters.
+         *                      <ul>
+         *                              <li> color: If @a symbolFormat is 'svg'
+         *                      this is ignored. If @a symbolFormat is
+         *                      'svg_path' then this option specifies the color
+         *                      (in RRGGBB hex format) of the path. For
+         *                      example, to have the path rendered in red, used
+         *                      'FF0000'. If 'color' is not provided then
+         *                      '00FF00' (i.e. green) is used by default.
+         *                      </ul>
+         *                        Default value is an empty std::map.
          * 
          */
-        InsertSymbolRequest(const std::string& symbolId, const std::string& symbolFormat, const std::vector<uint8_t>& symbolData, const std::map<std::string, std::string>& options):
-            symbolId(symbolId),
-            symbolFormat(symbolFormat),
-            symbolData(symbolData),
-            options(options)
+        InsertSymbolRequest(const std::string& symbolId_, const std::string& symbolFormat_, const std::vector<uint8_t>& symbolData_, const std::map<std::string, std::string>& options_):
+            symbolId( symbolId_ ),
+            symbolFormat( symbolFormat_ ),
+            symbolData( symbolData_ ),
+            options( options_ )
         {
         }
 

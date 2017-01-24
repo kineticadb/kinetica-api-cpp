@@ -42,21 +42,21 @@ namespace gpudb
          * Constructs an AdminSetShardAssignmentsRequest object with the
          * specified parameters.
          * 
-         * @param[in] version
-         * @param[in] partialReassignment
-         * @param[in] shardAssignmentsRank
-         * @param[in] shardAssignmentsTom
-         * @param[in] assignmentIndex
-         * @param[in] options
+         * @param[in] version_
+         * @param[in] partialReassignment_
+         * @param[in] shardAssignmentsRank_
+         * @param[in] shardAssignmentsTom_
+         * @param[in] assignmentIndex_
+         * @param[in] options_
          * 
          */
-        AdminSetShardAssignmentsRequest(const int64_t version, const bool partialReassignment, const std::vector<int32_t>& shardAssignmentsRank, const std::vector<int32_t>& shardAssignmentsTom, const std::vector<int32_t>& assignmentIndex, const std::map<std::string, std::string>& options):
-            version(version),
-            partialReassignment(partialReassignment),
-            shardAssignmentsRank(shardAssignmentsRank),
-            shardAssignmentsTom(shardAssignmentsTom),
-            assignmentIndex(assignmentIndex),
-            options(options)
+        AdminSetShardAssignmentsRequest(const int64_t version_, const bool partialReassignment_, const std::vector<int32_t>& shardAssignmentsRank_, const std::vector<int32_t>& shardAssignmentsTom_, const std::vector<int32_t>& assignmentIndex_, const std::map<std::string, std::string>& options_):
+            version( version_ ),
+            partialReassignment( partialReassignment_ ),
+            shardAssignmentsRank( shardAssignmentsRank_ ),
+            shardAssignmentsTom( shardAssignmentsTom_ ),
+            assignmentIndex( assignmentIndex_ ),
+            options( options_ )
         {
         }
 

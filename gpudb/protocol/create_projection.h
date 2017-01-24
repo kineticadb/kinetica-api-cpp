@@ -40,23 +40,23 @@ namespace gpudb
          * Constructs a CreateProjectionRequest object with the specified
          * parameters.
          * 
-         * @param[in] tableName
-         * @param[in] projectionName
-         * @param[in] columnNames
-         * @param[in] options
-         *                     <ul>
-         *                             <li> collection_name:
-         *                             <li> expression:
-         *                             <li> limit:
-         *                             <li> order_by:
-         *                     </ul>
+         * @param[in] tableName_
+         * @param[in] projectionName_
+         * @param[in] columnNames_
+         * @param[in] options_
+         *                      <ul>
+         *                              <li> collection_name:
+         *                              <li> expression:
+         *                              <li> limit:
+         *                              <li> order_by:
+         *                      </ul>
          * 
          */
-        CreateProjectionRequest(const std::string& tableName, const std::string& projectionName, const std::vector<std::string>& columnNames, const std::map<std::string, std::string>& options):
-            tableName(tableName),
-            projectionName(projectionName),
-            columnNames(columnNames),
-            options(options)
+        CreateProjectionRequest(const std::string& tableName_, const std::string& projectionName_, const std::vector<std::string>& columnNames_, const std::map<std::string, std::string>& options_):
+            tableName( tableName_ ),
+            projectionName( projectionName_ ),
+            columnNames( columnNames_ ),
+            options( options_ )
         {
         }
 

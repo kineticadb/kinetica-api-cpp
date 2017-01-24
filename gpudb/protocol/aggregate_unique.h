@@ -53,40 +53,41 @@ namespace gpudb
          * Constructs an AggregateUniqueRequest object with the specified
          * parameters.
          * 
-         * @param[in] tableName  Name of the table on which the operation will
-         *                       be performed. Must be a valid table in GPUdb.
-         * @param[in] columnName  Name of the column or an expression
-         *                        containing one or more column names on which
-         *                        the unique function would be applied.
-         * @param[in] offset  A positive integer indicating the number of
-         *                    initial results to skip (this can be useful for
-         *                    paging through the results).  The minimum allowed
-         *                    value is 0. The maximum allowed value is MAX_INT.
-         * @param[in] limit  A positive integer indicating the maximum number
-         *                   of results to be returned. Or END_OF_SET (-9999)
-         *                   to indicate that the max number of results should
-         *                   be returned.  Default value is 10000.
-         * @param[in] options  Optional parameters.
-         *                     <ul>
-         *                             <li> expression: Optional filter
-         *                     expression to apply to the table.
-         *                             <li> sort_order: String indicating how
-         *                     the returned values should be sorted. Values:
-         *                     'ascending', 'descending'.
-         *                             <li> result_table: The name of the table
-         *                     used to store the results. If present no results
-         *                     are returned in the response.
-         *                     </ul>
-         *                       Default value is an empty std::map.
+         * @param[in] tableName_  Name of the table on which the operation will
+         *                        be performed. Must be a valid table in GPUdb.
+         * @param[in] columnName_  Name of the column or an expression
+         *                         containing one or more column names on which
+         *                         the unique function would be applied.
+         * @param[in] offset_  A positive integer indicating the number of
+         *                     initial results to skip (this can be useful for
+         *                     paging through the results).  The minimum
+         *                     allowed value is 0. The maximum allowed value is
+         *                     MAX_INT.
+         * @param[in] limit_  A positive integer indicating the maximum number
+         *                    of results to be returned. Or END_OF_SET (-9999)
+         *                    to indicate that the max number of results should
+         *                    be returned.  Default value is 10000.
+         * @param[in] options_  Optional parameters.
+         *                      <ul>
+         *                              <li> expression: Optional filter
+         *                      expression to apply to the table.
+         *                              <li> sort_order: String indicating how
+         *                      the returned values should be sorted. Values:
+         *                      'ascending', 'descending'.
+         *                              <li> result_table: The name of the
+         *                      table used to store the results. If present no
+         *                      results are returned in the response.
+         *                      </ul>
+         *                        Default value is an empty std::map.
          * 
          */
-        AggregateUniqueRequest(const std::string& tableName, const std::string& columnName, const int64_t offset, const int64_t limit, const std::map<std::string, std::string>& options):
-            tableName(tableName),
-            columnName(columnName),
-            offset(offset),
-            limit(limit),
-            encoding("binary"),
-            options(options)
+        AggregateUniqueRequest(const std::string& tableName_, const std::string& columnName_, const int64_t offset_, const int64_t limit_, const std::map<std::string, std::string>& options_):
+            tableName( tableName_ ),
+            columnName( columnName_ ),
+            offset( offset_ ),
+            limit( limit_ ),
+            encoding( "binary" ),
+            options( options_ )
         {
         }
 
@@ -94,43 +95,44 @@ namespace gpudb
          * Constructs an AggregateUniqueRequest object with the specified
          * parameters.
          * 
-         * @param[in] tableName  Name of the table on which the operation will
-         *                       be performed. Must be a valid table in GPUdb.
-         * @param[in] columnName  Name of the column or an expression
-         *                        containing one or more column names on which
-         *                        the unique function would be applied.
-         * @param[in] offset  A positive integer indicating the number of
-         *                    initial results to skip (this can be useful for
-         *                    paging through the results).  The minimum allowed
-         *                    value is 0. The maximum allowed value is MAX_INT.
-         * @param[in] limit  A positive integer indicating the maximum number
-         *                   of results to be returned. Or END_OF_SET (-9999)
-         *                   to indicate that the max number of results should
-         *                   be returned.  Default value is 10000.
-         * @param[in] encoding  Specifies the encoding for returned records.
-         *                      Values: 'binary', 'json'.
-         *                        Default value is 'binary'.
-         * @param[in] options  Optional parameters.
-         *                     <ul>
-         *                             <li> expression: Optional filter
-         *                     expression to apply to the table.
-         *                             <li> sort_order: String indicating how
-         *                     the returned values should be sorted. Values:
-         *                     'ascending', 'descending'.
-         *                             <li> result_table: The name of the table
-         *                     used to store the results. If present no results
-         *                     are returned in the response.
-         *                     </ul>
-         *                       Default value is an empty std::map.
+         * @param[in] tableName_  Name of the table on which the operation will
+         *                        be performed. Must be a valid table in GPUdb.
+         * @param[in] columnName_  Name of the column or an expression
+         *                         containing one or more column names on which
+         *                         the unique function would be applied.
+         * @param[in] offset_  A positive integer indicating the number of
+         *                     initial results to skip (this can be useful for
+         *                     paging through the results).  The minimum
+         *                     allowed value is 0. The maximum allowed value is
+         *                     MAX_INT.
+         * @param[in] limit_  A positive integer indicating the maximum number
+         *                    of results to be returned. Or END_OF_SET (-9999)
+         *                    to indicate that the max number of results should
+         *                    be returned.  Default value is 10000.
+         * @param[in] encoding_  Specifies the encoding for returned records.
+         *                       Values: 'binary', 'json'.
+         *                         Default value is 'binary'.
+         * @param[in] options_  Optional parameters.
+         *                      <ul>
+         *                              <li> expression: Optional filter
+         *                      expression to apply to the table.
+         *                              <li> sort_order: String indicating how
+         *                      the returned values should be sorted. Values:
+         *                      'ascending', 'descending'.
+         *                              <li> result_table: The name of the
+         *                      table used to store the results. If present no
+         *                      results are returned in the response.
+         *                      </ul>
+         *                        Default value is an empty std::map.
          * 
          */
-        AggregateUniqueRequest(const std::string& tableName, const std::string& columnName, const int64_t offset, const int64_t limit, const std::string& encoding, const std::map<std::string, std::string>& options):
-            tableName(tableName),
-            columnName(columnName),
-            offset(offset),
-            limit(limit),
-            encoding(encoding),
-            options(options)
+        AggregateUniqueRequest(const std::string& tableName_, const std::string& columnName_, const int64_t offset_, const int64_t limit_, const std::string& encoding_, const std::map<std::string, std::string>& options_):
+            tableName( tableName_ ),
+            columnName( columnName_ ),
+            offset( offset_ ),
+            limit( limit_ ),
+            encoding( encoding_ ),
+            options( options_ )
         {
         }
 

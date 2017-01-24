@@ -45,30 +45,31 @@ namespace gpudb
         /**
          * Constructs a ShowTableRequest object with the specified parameters.
          * 
-         * @param[in] tableName  Name of the table for which to retrieve the
-         *                       information. If blank, then information about
-         *                       all collections and top-level tables and views
-         *                       is returned.
-         * @param[in] options  Optional parameters.
-         *                     <ul>
-         *                             <li> get_sizes: If @a true then the
-         *                     table sizes will be returned; blank, otherwise.
-         *                     Values: 'true', 'false'.
-         *                             <li> show_children: If @a tableName is a
-         *                     collection, then @a true will return information
-         *                     about the children of the collection, and @a
-         *                     false will return information about the
-         *                     collection itself. If @a tableName is a table or
-         *                     view, @a show_children must be @a false. If @a
-         *                     tableName is empty, then @a show_children must
-         *                     be @a true. Values: 'true', 'false'.
-         *                     </ul>
-         *                       Default value is an empty std::map.
+         * @param[in] tableName_  Name of the table for which to retrieve the
+         *                        information. If blank, then information about
+         *                        all collections and top-level tables and
+         *                        views is returned.
+         * @param[in] options_  Optional parameters.
+         *                      <ul>
+         *                              <li> get_sizes: If @a true then the
+         *                      table sizes will be returned; blank, otherwise.
+         *                      Values: 'true', 'false'.
+         *                              <li> show_children: If @a tableName is
+         *                      a collection, then @a true will return
+         *                      information about the children of the
+         *                      collection, and @a false will return
+         *                      information about the collection itself. If @a
+         *                      tableName is a table or view, @a show_children
+         *                      must be @a false. If @a tableName is empty,
+         *                      then @a show_children must be @a true. Values:
+         *                      'true', 'false'.
+         *                      </ul>
+         *                        Default value is an empty std::map.
          * 
          */
-        ShowTableRequest(const std::string& tableName, const std::map<std::string, std::string>& options):
-            tableName(tableName),
-            options(options)
+        ShowTableRequest(const std::string& tableName_, const std::map<std::string, std::string>& options_):
+            tableName( tableName_ ),
+            options( options_ )
         {
         }
 

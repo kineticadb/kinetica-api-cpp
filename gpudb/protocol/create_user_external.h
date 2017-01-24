@@ -33,16 +33,16 @@ namespace gpudb
          * Constructs a CreateUserExternalRequest object with the specified
          * parameters.
          * 
-         * @param[in] name  Name of the user to be created. Must exactly match
-         *                  the user's name in the external LDAP, prefixed with
-         *                  a @. Must not be the same name as an existing user
-         *                  in GPUdb.
-         * @param[in] options  Optional parameters.
+         * @param[in] name_  Name of the user to be created. Must exactly match
+         *                   the user's name in the external LDAP, prefixed
+         *                   with a @. Must not be the same name as an existing
+         *                   user in GPUdb.
+         * @param[in] options_  Optional parameters.
          * 
          */
-        CreateUserExternalRequest(const std::string& name, const std::map<std::string, std::string>& options):
-            name(name),
-            options(options)
+        CreateUserExternalRequest(const std::string& name_, const std::map<std::string, std::string>& options_):
+            name( name_ ),
+            options( options_ )
         {
         }
 

@@ -38,34 +38,34 @@ namespace gpudb
          * Constructs a FilterByGeometryRequest object with the specified
          * parameters.
          * 
-         * @param[in] tableName  Name of the table on which the filter by
-         *                       geometry will be performed.  Must be an
-         *                       existing table, collection or view containing
-         *                       a column named WKT.
-         * @param[in] viewName  If provided, then this will be the name of the
-         *                      view containing the results. Must not be an
-         *                      already existing collection, table or view.
-         *                      Default value is an empty string.
-         * @param[in] columnName  Name of the column to be used in the filter.
-         *                        Must be 'WKT'
-         * @param[in] inputWkt  A geometry in WKT format that will be used to
-         *                      filter the objects in @a tableName.  Default
-         *                      value is an empty string.
-         * @param[in] operation  The geometric filtering operation to perform
-         *                       Values: 'contains', 'crosses', 'disjoint',
-         *                       'equals', 'intersects', 'overlaps', 'touches',
-         *                       'within'.
-         * @param[in] options  Optional parameters.  Default value is an empty
-         *                     std::map.
+         * @param[in] tableName_  Name of the table on which the filter by
+         *                        geometry will be performed.  Must be an
+         *                        existing table, collection or view containing
+         *                        a column named WKT.
+         * @param[in] viewName_  If provided, then this will be the name of the
+         *                       view containing the results. Must not be an
+         *                       already existing collection, table or view.
+         *                       Default value is an empty string.
+         * @param[in] columnName_  Name of the column to be used in the filter.
+         *                         Must be 'WKT'
+         * @param[in] inputWkt_  A geometry in WKT format that will be used to
+         *                       filter the objects in @a tableName.  Default
+         *                       value is an empty string.
+         * @param[in] operation_  The geometric filtering operation to perform
+         *                        Values: 'contains', 'crosses', 'disjoint',
+         *                        'equals', 'intersects', 'overlaps',
+         *                        'touches', 'within'.
+         * @param[in] options_  Optional parameters.  Default value is an empty
+         *                      std::map.
          * 
          */
-        FilterByGeometryRequest(const std::string& tableName, const std::string& viewName, const std::string& columnName, const std::string& inputWkt, const std::string& operation, const std::map<std::string, std::string>& options):
-            tableName(tableName),
-            viewName(viewName),
-            columnName(columnName),
-            inputWkt(inputWkt),
-            operation(operation),
-            options(options)
+        FilterByGeometryRequest(const std::string& tableName_, const std::string& viewName_, const std::string& columnName_, const std::string& inputWkt_, const std::string& operation_, const std::map<std::string, std::string>& options_):
+            tableName( tableName_ ),
+            viewName( viewName_ ),
+            columnName( columnName_ ),
+            inputWkt( inputWkt_ ),
+            operation( operation_ ),
+            options( options_ )
         {
         }
 

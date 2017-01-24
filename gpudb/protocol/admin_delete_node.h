@@ -39,15 +39,15 @@ namespace gpudb
          * Constructs an AdminDeleteNodeRequest object with the specified
          * parameters.
          * 
-         * @param[in] rank
-         * @param[in] authorization
-         * @param[in] options
+         * @param[in] rank_
+         * @param[in] authorization_
+         * @param[in] options_
          * 
          */
-        AdminDeleteNodeRequest(const int32_t rank, const std::string& authorization, const std::map<std::string, std::string>& options):
-            rank(rank),
-            authorization(authorization),
-            options(options)
+        AdminDeleteNodeRequest(const int32_t rank_, const std::string& authorization_, const std::map<std::string, std::string>& options_):
+            rank( rank_ ),
+            authorization( authorization_ ),
+            options( options_ )
         {
         }
 

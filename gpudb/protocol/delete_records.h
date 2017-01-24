@@ -40,33 +40,33 @@ namespace gpudb
          * Constructs a DeleteRecordsRequest object with the specified
          * parameters.
          * 
-         * @param[in] tableName  Name of the table from which to delete
-         *                       records. The set must be a currently existing
-         *                       table and not a collection or a view.
-         * @param[in] expressions  A list of the actual predicates, one for
-         *                         each select; format should follow the
-         *                         guidelines provided /filter. Specifying one
-         *                         or more @a expressions is mutually exclusive
-         *                         to specifying @a record_id in the @a
-         *                         options.
-         * @param[in] options  Optional parameters.
-         *                     <ul>
-         *                             <li> global_expression: An optional
-         *                     global expression to reduce the search space of
-         *                     the @a expressions.
-         *                             <li> record_id: A record id identifying
-         *                     a single record, obtained at the time of
-         *                     /insert/records or by calling
-         *                     /get/records/fromcollection with the
-         *                     *return_record_ids* option.
-         *                     </ul>
-         *                       Default value is an empty std::map.
+         * @param[in] tableName_  Name of the table from which to delete
+         *                        records. The set must be a currently existing
+         *                        table and not a collection or a view.
+         * @param[in] expressions_  A list of the actual predicates, one for
+         *                          each select; format should follow the
+         *                          guidelines provided /filter. Specifying one
+         *                          or more @a expressions is mutually
+         *                          exclusive to specifying @a record_id in the
+         *                          @a options.
+         * @param[in] options_  Optional parameters.
+         *                      <ul>
+         *                              <li> global_expression: An optional
+         *                      global expression to reduce the search space of
+         *                      the @a expressions.
+         *                              <li> record_id: A record id identifying
+         *                      a single record, obtained at the time of
+         *                      /insert/records or by calling
+         *                      /get/records/fromcollection with the
+         *                      *return_record_ids* option.
+         *                      </ul>
+         *                        Default value is an empty std::map.
          * 
          */
-        DeleteRecordsRequest(const std::string& tableName, const std::vector<std::string>& expressions, const std::map<std::string, std::string>& options):
-            tableName(tableName),
-            expressions(expressions),
-            options(options)
+        DeleteRecordsRequest(const std::string& tableName_, const std::vector<std::string>& expressions_, const std::map<std::string, std::string>& options_):
+            tableName( tableName_ ),
+            expressions( expressions_ ),
+            options( options_ )
         {
         }
 

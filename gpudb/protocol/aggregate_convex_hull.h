@@ -35,24 +35,24 @@ namespace gpudb
          * Constructs an AggregateConvexHullRequest object with the specified
          * parameters.
          * 
-         * @param[in] tableName  Name of Table on which the operation will be
-         *                       performed. Must be a valid table in GPUdb.  It
-         *                       can not be a collection.
-         * @param[in] xColumnName  Name of the column containing the x
-         *                         coordinates of the points for the operation
-         *                         being performed.
-         * @param[in] yColumnName  Name of the column containing the y
-         *                         coordinates of the points for the operation
-         *                         being performed.
-         * @param[in] options  Optional parameters.  Default value is an empty
-         *                     std::map.
+         * @param[in] tableName_  Name of Table on which the operation will be
+         *                        performed. Must be a valid table in GPUdb.
+         *                        It can not be a collection.
+         * @param[in] xColumnName_  Name of the column containing the x
+         *                          coordinates of the points for the operation
+         *                          being performed.
+         * @param[in] yColumnName_  Name of the column containing the y
+         *                          coordinates of the points for the operation
+         *                          being performed.
+         * @param[in] options_  Optional parameters.  Default value is an empty
+         *                      std::map.
          * 
          */
-        AggregateConvexHullRequest(const std::string& tableName, const std::string& xColumnName, const std::string& yColumnName, const std::map<std::string, std::string>& options):
-            tableName(tableName),
-            xColumnName(xColumnName),
-            yColumnName(yColumnName),
-            options(options)
+        AggregateConvexHullRequest(const std::string& tableName_, const std::string& xColumnName_, const std::string& yColumnName_, const std::map<std::string, std::string>& options_):
+            tableName( tableName_ ),
+            xColumnName( xColumnName_ ),
+            yColumnName( yColumnName_ ),
+            options( options_ )
         {
         }
 

@@ -33,14 +33,14 @@ namespace gpudb
          * Constructs a ClearTableMonitorRequest object with the specified
          * parameters.
          * 
-         * @param[in] topicId  The topic ID returned by /create/tablemonitor.
-         * @param[in] options  Optional parameters.  Default value is an empty
-         *                     std::map.
+         * @param[in] topicId_  The topic ID returned by /create/tablemonitor.
+         * @param[in] options_  Optional parameters.  Default value is an empty
+         *                      std::map.
          * 
          */
-        ClearTableMonitorRequest(const std::string& topicId, const std::map<std::string, std::string>& options):
-            topicId(topicId),
-            options(options)
+        ClearTableMonitorRequest(const std::string& topicId_, const std::map<std::string, std::string>& options_):
+            topicId( topicId_ ),
+            options( options_ )
         {
         }
 

@@ -6,24 +6,20 @@
 #ifndef __DELETE_PROC_H__
 #define __DELETE_PROC_H__
 
-    /**
-     * @private
-     */
-
 namespace gpudb
 {
 
     /**
-     * @private
      * A set of input parameters for {@link
      * #deleteProc(const DeleteProcRequest&) const}.
      * <p>
+     * Deletes a proc. Any currently running instances of the proc will be
+     * killed.
      */
     struct DeleteProcRequest
     {
 
         /**
-         * @private
          * Constructs a DeleteProcRequest object with default parameter values.
          */
         DeleteProcRequest() :
@@ -33,31 +29,24 @@ namespace gpudb
         }
 
         /**
-         * @private
          * Constructs a DeleteProcRequest object with the specified parameters.
          * 
-         * @param[in] procName
-         * @param[in] options
+         * @param[in] procName_  Name of the proc to be deleted. Must be the
+         *                       name of a currently existing proc.
+         * @param[in] options_  Optional parameters.  Default value is an empty
+         *                      std::map.
          * 
          */
-        DeleteProcRequest(const std::string& procName, const std::map<std::string, std::string>& options):
-            procName(procName),
-            options(options)
+        DeleteProcRequest(const std::string& procName_, const std::map<std::string, std::string>& options_):
+            procName( procName_ ),
+            options( options_ )
         {
         }
-
-    /**
-     * @private
-     */
 
         std::string procName;
         std::map<std::string, std::string> options;
     };
 }
-
-    /**
-     * @private
-     */
 
 namespace avro
 {
@@ -101,24 +90,20 @@ namespace avro
     };
 }
 
-    /**
-     * @private
-     */
-
 namespace gpudb
 {
 
     /**
-     * @private
      * A set of output parameters for {@link
      * #deleteProc(const DeleteProcRequest&) const}.
      * <p>
+     * Deletes a proc. Any currently running instances of the proc will be
+     * killed.
      */
     struct DeleteProcResponse
     {
 
         /**
-         * @private
          * Constructs a DeleteProcResponse object with default parameter
          * values.
          */
@@ -127,17 +112,9 @@ namespace gpudb
         {
         }
 
-    /**
-     * @private
-     */
-
         std::string procName;
     };
 }
-
-    /**
-     * @private
-     */
 
 namespace avro
 {

@@ -48,50 +48,50 @@ namespace gpudb
          * Constructs a FilterBySeriesRequest object with the specified
          * parameters.
          * 
-         * @param[in] tableName  Name of the table on which the filter by track
-         *                       operation will be performed. Must be a
-         *                       currently existing table with track semantic
-         *                       type.
-         * @param[in] viewName  If provided, then this will be the name of the
-         *                      view containing the results. Must not be an
-         *                      already existing collection, table or view.
-         *                      Default value is an empty string.
-         * @param[in] trackId  The ID of the track which will act as the
-         *                     filtering points. Must be an existing track
-         *                     within the given table.
-         * @param[in] targetTrackIds  Up to one track ID to intersect with the
-         *                            "filter" track. If any provided, it must
-         *                            be an valid track ID within the given
-         *                            set.
-         * @param[in] options  Optional parameters.
-         *                     <ul>
-         *                             <li> spatial_radius: A positive number
-         *                     passed as a string representing the radius of
-         *                     the search area centered around each track
-         *                     point's geospatial coordinates. The value is
-         *                     interpreted in meters. Required parameter.
-         *                             <li> time_radius: A positive number
-         *                     passed as a string representing the maximum
-         *                     allowable time difference between the timestamps
-         *                     of a filtered object and the given track's
-         *                     points. The value is interpreted in seconds.
-         *                     Required parameter.
-         *                             <li> spatial_distance_metric: A string
-         *                     representing the coordinate system to use for
-         *                     the spatial search criteria. Acceptable values
-         *                     are 'euclidean' and 'great_circle'. Optional
-         *                     parameter; default is 'euclidean'. Values:
-         *                     'euclidean', 'great_circle'.
-         *                     </ul>
-         *                       Default value is an empty std::map.
+         * @param[in] tableName_  Name of the table on which the filter by
+         *                        track operation will be performed. Must be a
+         *                        currently existing table with track semantic
+         *                        type.
+         * @param[in] viewName_  If provided, then this will be the name of the
+         *                       view containing the results. Must not be an
+         *                       already existing collection, table or view.
+         *                       Default value is an empty string.
+         * @param[in] trackId_  The ID of the track which will act as the
+         *                      filtering points. Must be an existing track
+         *                      within the given table.
+         * @param[in] targetTrackIds_  Up to one track ID to intersect with the
+         *                             "filter" track. If any provided, it must
+         *                             be an valid track ID within the given
+         *                             set.
+         * @param[in] options_  Optional parameters.
+         *                      <ul>
+         *                              <li> spatial_radius: A positive number
+         *                      passed as a string representing the radius of
+         *                      the search area centered around each track
+         *                      point's geospatial coordinates. The value is
+         *                      interpreted in meters. Required parameter.
+         *                              <li> time_radius: A positive number
+         *                      passed as a string representing the maximum
+         *                      allowable time difference between the
+         *                      timestamps of a filtered object and the given
+         *                      track's points. The value is interpreted in
+         *                      seconds. Required parameter.
+         *                              <li> spatial_distance_metric: A string
+         *                      representing the coordinate system to use for
+         *                      the spatial search criteria. Acceptable values
+         *                      are 'euclidean' and 'great_circle'. Optional
+         *                      parameter; default is 'euclidean'. Values:
+         *                      'euclidean', 'great_circle'.
+         *                      </ul>
+         *                        Default value is an empty std::map.
          * 
          */
-        FilterBySeriesRequest(const std::string& tableName, const std::string& viewName, const std::string& trackId, const std::vector<std::string>& targetTrackIds, const std::map<std::string, std::string>& options):
-            tableName(tableName),
-            viewName(viewName),
-            trackId(trackId),
-            targetTrackIds(targetTrackIds),
-            options(options)
+        FilterBySeriesRequest(const std::string& tableName_, const std::string& viewName_, const std::string& trackId_, const std::vector<std::string>& targetTrackIds_, const std::map<std::string, std::string>& options_):
+            tableName( tableName_ ),
+            viewName( viewName_ ),
+            trackId( trackId_ ),
+            targetTrackIds( targetTrackIds_ ),
+            options( options_ )
         {
         }
 

@@ -50,41 +50,43 @@ namespace gpudb
          * Constructs a FilterByRadiusRequest object with the specified
          * parameters.
          * 
-         * @param[in] tableName  Name of the table on which the filter by
-         *                       radius operation will be performed.  Must be
-         *                       an existing table in GPUdb.
-         * @param[in] viewName  If provided, then this will be the name of the
-         *                      view containing the results. Must not be an
-         *                      already existing collection, table or view.
-         *                      Default value is an empty string.
-         * @param[in] xColumnName  Name of the column to be used for the
-         *                         x-coordinate (the longitude) of the center.
-         * @param[in] xCenter  Value of the longitude of the center. Must be
-         *                     within [-180.0, 180.0].  The minimum allowed
-         *                     value is -180. The maximum allowed value is 180.
-         * @param[in] yColumnName  Name of the column to be used for the
-         *                         y-coordinate-the latitude-of the center.
-         * @param[in] yCenter  Value of the latitude of the center. Must be
-         *                     within [-90.0, 90.0].  The minimum allowed value
-         *                     is -90. The maximum allowed value is 90.
-         * @param[in] radius  The radius of the circle within which the search
-         *                    will be performed. Must be a non-zero positive
-         *                    value. It is in meters; so, for example, a value
-         *                    of '42000' means 42 km.  The minimum allowed
-         *                    value is 0. The maximum allowed value is MAX_INT.
-         * @param[in] options  Optional parameters.  Default value is an empty
-         *                     std::map.
+         * @param[in] tableName_  Name of the table on which the filter by
+         *                        radius operation will be performed.  Must be
+         *                        an existing table in GPUdb.
+         * @param[in] viewName_  If provided, then this will be the name of the
+         *                       view containing the results. Must not be an
+         *                       already existing collection, table or view.
+         *                       Default value is an empty string.
+         * @param[in] xColumnName_  Name of the column to be used for the
+         *                          x-coordinate (the longitude) of the center.
+         * @param[in] xCenter_  Value of the longitude of the center. Must be
+         *                      within [-180.0, 180.0].  The minimum allowed
+         *                      value is -180. The maximum allowed value is
+         *                      180.
+         * @param[in] yColumnName_  Name of the column to be used for the
+         *                          y-coordinate-the latitude-of the center.
+         * @param[in] yCenter_  Value of the latitude of the center. Must be
+         *                      within [-90.0, 90.0].  The minimum allowed
+         *                      value is -90. The maximum allowed value is 90.
+         * @param[in] radius_  The radius of the circle within which the search
+         *                     will be performed. Must be a non-zero positive
+         *                     value. It is in meters; so, for example, a value
+         *                     of '42000' means 42 km.  The minimum allowed
+         *                     value is 0. The maximum allowed value is
+         *                     MAX_INT.
+         * @param[in] options_  Optional parameters.  Default value is an empty
+         *                      std::map.
          * 
          */
-        FilterByRadiusRequest(const std::string& tableName, const std::string& viewName, const std::string& xColumnName, const double xCenter, const std::string& yColumnName, const double yCenter, const double radius, const std::map<std::string, std::string>& options):
-            tableName(tableName),
-            viewName(viewName),
-            xColumnName(xColumnName),
-            xCenter(xCenter),
-            yColumnName(yColumnName),
-            yCenter(yCenter),
-            radius(radius),
-            options(options)
+        FilterByRadiusRequest(const std::string& tableName_, const std::string& viewName_, const std::string& xColumnName_, const double xCenter_, const std::string& yColumnName_, const double yCenter_, const double radius_, const std::map<std::string, std::string>& options_):
+            tableName( tableName_ ),
+            viewName( viewName_ ),
+            xColumnName( xColumnName_ ),
+            xCenter( xCenter_ ),
+            yColumnName( yColumnName_ ),
+            yCenter( yCenter_ ),
+            radius( radius_ ),
+            options( options_ )
         {
         }
 

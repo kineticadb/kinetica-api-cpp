@@ -53,24 +53,52 @@ namespace gpudb
          * Constructs an AlterTableRequest object with the specified
          * parameters.
          * 
-         * @param[in] tableName  Table on which the operation will be
-         *                       performed. Must be a valid table, view, or
-         *                       collection in GPUdb.
-         * @param[in] action  Modification operation to be applied Values:
-         *                    'create_index', 'delete_index',
-         *                    'allow_homogeneous_tables', 'protected', 'ttl'.
-         * @param[in] value  The value of the modification. May be a column
-         *                   name, 'true' or 'false', or a TTL depending on @a
-         *                   action.
-         * @param[in] options  Optional parameters.  Default value is an empty
-         *                     std::map.
+         * @param[in] tableName_  Table on which the operation will be
+         *                        performed. Must be a valid table, view, or
+         *                        collection in GPUdb.
+         * @param[in] action_  Modification operation to be applied Values:
+         *                     'create_index', 'delete_index',
+         *                     'allow_homogeneous_tables', 'protected', 'ttl',
+         *                     'add_column', 'delete_column', 'change_column',
+         *                     'rename_table'.
+         * @param[in] value_  The value of the modification. May be a column
+         *                    name, 'true' or 'false', or a TTL depending on @a
+         *                    action.
+         * @param[in] options_  Optional parameters.
+         *                      <ul>
+         *                              <li> column_default_value: when adding
+         *                      a column: set a default value, for existing
+         *                      data.
+         *                              <li> column_properties: when adding or
+         *                      changing a column: set the column properties
+         *                      (strings, separated by a comma: data,
+         *                      store_only, text_search, char8, int8 etc).
+         *                              <li> column_type: when adding or
+         *                      changing a column: set the column type
+         *                      (strings, separated by a comma: int, double,
+         *                      string, null etc).
+         *                              <li> validate_change_column: Validate
+         *                      the type change before applying column_change
+         *                      request. Default is true (if option is
+         *                      missing). If True, then validate all values. A
+         *                      value too large (or too long) for the new type
+         *                      will prevent any change. If False, then when a
+         *                      value is too large or long, it will be
+         *                      trancated. Values: 'true', 'false'.
+         *                              <li> copy_values_from_column: when
+         *                      adding or changing a column: enter column name
+         *                      - from where to copy values.
+         *                              <li> rename_column: new column name
+         *                      (using change_column).
+         *                      </ul>
+         *                        Default value is an empty std::map.
          * 
          */
-        AlterTableRequest(const std::string& tableName, const std::string& action, const std::string& value, const std::map<std::string, std::string>& options):
-            tableName(tableName),
-            action(action),
-            value(value),
-            options(options)
+        AlterTableRequest(const std::string& tableName_, const std::string& action_, const std::string& value_, const std::map<std::string, std::string>& options_):
+            tableName( tableName_ ),
+            action( action_ ),
+            value( value_ ),
+            options( options_ )
         {
         }
 

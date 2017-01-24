@@ -37,18 +37,18 @@ namespace gpudb
          * Constructs a ShowTablesByTypeRequest object with the specified
          * parameters.
          * 
-         * @param[in] typeId  Type id returned by a call to /create/type.
-         * @param[in] label  Optional user supplied label which can be used
-         *                   instead of the type_id to retrieve all tables with
-         *                   the given label.
-         * @param[in] options  Optional parameters.  Default value is an empty
-         *                     std::map.
+         * @param[in] typeId_  Type id returned by a call to /create/type.
+         * @param[in] label_  Optional user supplied label which can be used
+         *                    instead of the type_id to retrieve all tables
+         *                    with the given label.
+         * @param[in] options_  Optional parameters.  Default value is an empty
+         *                      std::map.
          * 
          */
-        ShowTablesByTypeRequest(const std::string& typeId, const std::string& label, const std::map<std::string, std::string>& options):
-            typeId(typeId),
-            label(label),
-            options(options)
+        ShowTablesByTypeRequest(const std::string& typeId_, const std::string& label_, const std::map<std::string, std::string>& options_):
+            typeId( typeId_ ),
+            label( label_ ),
+            options( options_ )
         {
         }
 

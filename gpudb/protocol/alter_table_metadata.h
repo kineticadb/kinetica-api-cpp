@@ -36,24 +36,24 @@ namespace gpudb
          * Constructs an AlterTableMetadataRequest object with the specified
          * parameters.
          * 
-         * @param[in] tableNames  Names of the tables whose metadata will be
-         *                        updated. All specified tables must exist in
-         *                        GPUdb, or GPUdb will return an error.
-         * @param[in] metadataMap  A map which contains the metadata of the
-         *                         tables that are to be updated. Note that
-         *                         only one map is provided for all the tables;
-         *                         so the change will be applied to every
-         *                         table. If the provided map is empty, then
-         *                         all existing metadata for the table(s) will
-         *                         be cleared.
-         * @param[in] options  Optional parameters.  Default value is an empty
-         *                     std::map.
+         * @param[in] tableNames_  Names of the tables whose metadata will be
+         *                         updated. All specified tables must exist in
+         *                         GPUdb, or GPUdb will return an error.
+         * @param[in] metadataMap_  A map which contains the metadata of the
+         *                          tables that are to be updated. Note that
+         *                          only one map is provided for all the
+         *                          tables; so the change will be applied to
+         *                          every table. If the provided map is empty,
+         *                          then all existing metadata for the table(s)
+         *                          will be cleared.
+         * @param[in] options_  Optional parameters.  Default value is an empty
+         *                      std::map.
          * 
          */
-        AlterTableMetadataRequest(const std::vector<std::string>& tableNames, const std::map<std::string, std::string>& metadataMap, const std::map<std::string, std::string>& options):
-            tableNames(tableNames),
-            metadataMap(metadataMap),
-            options(options)
+        AlterTableMetadataRequest(const std::vector<std::string>& tableNames_, const std::map<std::string, std::string>& metadataMap_, const std::map<std::string, std::string>& options_):
+            tableNames( tableNames_ ),
+            metadataMap( metadataMap_ ),
+            options( options_ )
         {
         }
 

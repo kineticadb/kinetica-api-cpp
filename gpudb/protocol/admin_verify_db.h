@@ -33,12 +33,12 @@ namespace gpudb
          * Constructs an AdminVerifyDbRequest object with the specified
          * parameters.
          * 
-         * @param[in] options  Optional parameters.  Default value is an empty
-         *                     std::map.
+         * @param[in] options_  Optional parameters.  Default value is an empty
+         *                      std::map.
          * 
          */
-        AdminVerifyDbRequest(const std::map<std::string, std::string>& options):
-            options(options)
+        AdminVerifyDbRequest(const std::map<std::string, std::string>& options_):
+            options( options_ )
         {
         }
 

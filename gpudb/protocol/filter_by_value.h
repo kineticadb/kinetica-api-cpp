@@ -45,32 +45,32 @@ namespace gpudb
          * Constructs a FilterByValueRequest object with the specified
          * parameters.
          * 
-         * @param[in] tableName  Name of an existing GPUdb table on which to
-         *                       perform the calculation.
-         * @param[in] viewName  If provided, then this will be the name of the
-         *                      view containing the results. Must not be an
-         *                      already existing collection, table or view.
-         *                      Default value is an empty string.
-         * @param[in] isString  Indicates whether the value being searched for
-         *                      is string or numeric.
-         * @param[in] value  The value to search for.  Default value is 0.
-         * @param[in] valueStr  The string value to search for.  Default value
-         *                      is an empty string.
-         * @param[in] columnName  Name of a column or an expression of one or
-         *                        more columns on which the filter by value
-         *                        would be applied.
-         * @param[in] options  Optional parameters.  Default value is an empty
-         *                     std::map.
+         * @param[in] tableName_  Name of an existing GPUdb table on which to
+         *                        perform the calculation.
+         * @param[in] viewName_  If provided, then this will be the name of the
+         *                       view containing the results. Must not be an
+         *                       already existing collection, table or view.
+         *                       Default value is an empty string.
+         * @param[in] isString_  Indicates whether the value being searched for
+         *                       is string or numeric.
+         * @param[in] value_  The value to search for.  Default value is 0.
+         * @param[in] valueStr_  The string value to search for.  Default value
+         *                       is an empty string.
+         * @param[in] columnName_  Name of a column or an expression of one or
+         *                         more columns on which the filter by value
+         *                         would be applied.
+         * @param[in] options_  Optional parameters.  Default value is an empty
+         *                      std::map.
          * 
          */
-        FilterByValueRequest(const std::string& tableName, const std::string& viewName, const bool isString, const double value, const std::string& valueStr, const std::string& columnName, const std::map<std::string, std::string>& options):
-            tableName(tableName),
-            viewName(viewName),
-            isString(isString),
-            value(value),
-            valueStr(valueStr),
-            columnName(columnName),
-            options(options)
+        FilterByValueRequest(const std::string& tableName_, const std::string& viewName_, const bool isString_, const double value_, const std::string& valueStr_, const std::string& columnName_, const std::map<std::string, std::string>& options_):
+            tableName( tableName_ ),
+            viewName( viewName_ ),
+            isString( isString_ ),
+            value( value_ ),
+            valueStr( valueStr_ ),
+            columnName( columnName_ ),
+            options( options_ )
         {
         }
 
