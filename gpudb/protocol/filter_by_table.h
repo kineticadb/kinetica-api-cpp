@@ -19,9 +19,9 @@ namespace gpudb
      * which the filter will be created); the column names need not be the
      * same. If a @a viewName is specified, then the filtered objects will then
      * be put in a newly created view. The operation is synchronous, meaning
-     * that GPUdb will not return until all objects are fully available in the
-     * result view. The return value contains the count (i.e. the size) of the
-     * resulting view.
+     * that a response will not be returned until all objects are fully
+     * available in the result view. The return value contains the count (i.e.
+     * the size) of the resulting view.
      */
     struct FilterByTableRequest
     {
@@ -45,7 +45,7 @@ namespace gpudb
          * parameters.
          * 
          * @param[in] tableName_  Name of the table whose data will be
-         *                        filtered. Must be an existing table in GPUdb.
+         *                        filtered. Must be an existing table.
          * @param[in] viewName_  If provided, then this will be the name of the
          *                       view containing the results. Must not be an
          *                       already existing collection, table or view.
@@ -55,8 +55,7 @@ namespace gpudb
          *                         by @a tableName.
          * @param[in] sourceTableName_  Name of the table whose data will be
          *                              compared against in the table called @a
-         *                              tableName. Must be an existing table in
-         *                              GPUdb.
+         *                              tableName. Must be an existing table.
          * @param[in] sourceTableColumnName_  Name of the column in the @a
          *                                    sourceTableName whose values will
          *                                    be used as the filter for table
@@ -190,9 +189,9 @@ namespace gpudb
      * which the filter will be created); the column names need not be the
      * same. If a @a viewName is specified, then the filtered objects will then
      * be put in a newly created view. The operation is synchronous, meaning
-     * that GPUdb will not return until all objects are fully available in the
-     * result view. The return value contains the count (i.e. the size) of the
-     * resulting view.
+     * that a response will not be returned until all objects are fully
+     * available in the result view. The return value contains the count (i.e.
+     * the size) of the resulting view.
      */
     struct FilterByTableResponse
     {

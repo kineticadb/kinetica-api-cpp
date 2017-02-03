@@ -16,8 +16,8 @@ namespace gpudb
      * Calculates which objects from a table has a particular value for a
      * particular column. The input parameters provide a way to specify either
      * a String or a Double valued column and a desired value for the column on
-     * which the filter is performed. The operation is synchronous meaning that
-     * GPUdb will not return a response until all the objects are fully
+     * which the filter is performed. The operation is synchronous, meaning
+     * that a response will not be returned until all the objects are fully
      * available. The response payload provides the count of the resulting set.
      * A new result view which satisfies the input filter restriction
      * specification is also created with a view name passed in as part of the
@@ -45,8 +45,8 @@ namespace gpudb
          * Constructs a FilterByValueRequest object with the specified
          * parameters.
          * 
-         * @param[in] tableName_  Name of an existing GPUdb table on which to
-         *                        perform the calculation.
+         * @param[in] tableName_  Name of an existing table on which to perform
+         *                        the calculation.
          * @param[in] viewName_  If provided, then this will be the name of the
          *                       view containing the results. Must not be an
          *                       already existing collection, table or view.
@@ -166,8 +166,8 @@ namespace gpudb
      * Calculates which objects from a table has a particular value for a
      * particular column. The input parameters provide a way to specify either
      * a String or a Double valued column and a desired value for the column on
-     * which the filter is performed. The operation is synchronous meaning that
-     * GPUdb will not return a response until all the objects are fully
+     * which the filter is performed. The operation is synchronous, meaning
+     * that a response will not be returned until all the objects are fully
      * available. The response payload provides the count of the resulting set.
      * A new result view which satisfies the input filter restriction
      * specification is also created with a view name passed in as part of the

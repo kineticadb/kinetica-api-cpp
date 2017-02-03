@@ -36,8 +36,8 @@ namespace gpudb
          * parameters.
          * 
          * @param[in] tableName_  Name of Table on which the operation will be
-         *                        performed. Must be a valid table in GPUdb.
-         *                        It can not be a collection.
+         *                        performed. Must be an existing table.  It can
+         *                        not be a collection.
          * @param[in] xColumnName_  Name of the column containing the x
          *                          coordinates of the points for the operation
          *                          being performed.

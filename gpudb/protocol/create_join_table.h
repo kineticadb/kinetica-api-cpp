@@ -39,8 +39,8 @@ namespace gpudb
          * 
          * @param[in] joinTableName_  Name of the join table to be created.
          *                            Must not be the name of a currently
-         *                            existing GPUdb table or join table.
-         *                            Cannot be an empty string.
+         *                            existing table or join table. Cannot be
+         *                            an empty string.
          * @param[in] tableNames_  The list of table names making up the joined
          *                         set.  Corresponds to a SQL statement FROM
          *                         clause  Default value is an empty
@@ -50,10 +50,10 @@ namespace gpudb
          *                          select all the column names.  Empty list is
          *                          the default.  Default value is an empty
          *                          std::vector.
-         * @param[in] expressions_  An optional list of expressions GPUdb uses
-         *                          to combine and filter the joined set.
-         *                          Corresponds to a SQL statement WHERE
-         *                          clause. For details see: <a
+         * @param[in] expressions_  An optional list of expressions to combine
+         *                          and filter the joined set.  Corresponds to
+         *                          a SQL statement WHERE clause. For details
+         *                          see: <a
          *                          href="../../concepts/index.html#expressions"
          *                          target="_top">expressions</a>.  Default
          *                          value is an empty std::vector.

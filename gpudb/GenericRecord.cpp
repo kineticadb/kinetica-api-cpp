@@ -571,44 +571,6 @@ namespace gpudb
         return result;
     }
 
-    // -- Deprecated -----------------------------------------------------------
-
-    #define DEFINE_ACCESSORS(T, TN) \
-        T& GenericRecord::as##TN(const size_t index) \
-        { \
-            return value<T>(index); \
-        } \
-        \
-        const T& GenericRecord::as##TN(const size_t index) const \
-        { \
-            return value<T>(index); \
-        } \
-        \
-        T& GenericRecord::as##TN(const std::string& name) \
-        { \
-            return value<T>(name); \
-        } \
-        \
-        const T& GenericRecord::as##TN(const std::string& name) const \
-        { \
-            return value<T>(name); \
-        }
-
-    DEFINE_ACCESSORS(std::vector<uint8_t>, Bytes)
-    DEFINE_ACCESSORS(boost::optional<std::vector<uint8_t> >, NullableBytes)
-    DEFINE_ACCESSORS(double, Double)
-    DEFINE_ACCESSORS(boost::optional<double>, NullableDouble)
-    DEFINE_ACCESSORS(float, Float)
-    DEFINE_ACCESSORS(boost::optional<float>, NullableFloat)
-    DEFINE_ACCESSORS(int32_t, Int)
-    DEFINE_ACCESSORS(boost::optional<int32_t>, NullableInt)
-    DEFINE_ACCESSORS(int64_t, Long)
-    DEFINE_ACCESSORS(boost::optional<int64_t>, NullableLong)
-    DEFINE_ACCESSORS(std::string, String)
-    DEFINE_ACCESSORS(boost::optional<std::string>, NullableString)
-
-    //--------------------------------------------------------------------------
-
     #define DECODE_VALUE(T) { \
         if (isNullable) \
         { \
@@ -681,7 +643,7 @@ namespace gpudb
             throw GPUdbException("Schema must be of type record.");
         }
 
-        size_t fieldCount = root->leaves() - 1;
+        size_t fieldCount = root->leaves() - 2;
         std::vector<std::pair<Type::Column::ColumnType, bool> > columnTypes;
         columnTypes.reserve(fieldCount);
 
@@ -730,6 +692,8 @@ namespace gpudb
 
         std::vector<std::string> expressions;
         expressions.reserve(fieldCount);
+        std::vector<std::string> types;
+        types.reserve(fieldCount);
 
         try
         {
@@ -774,6 +738,13 @@ namespace gpudb
             {
                 throw GPUdbException("Every field must have a corresponding expression.");
             }
+
+            ::avro::decode(*decoder, types);
+
+            if (expressions.size() < fieldCount)
+            {
+                throw GPUdbException("Every field must have a corresponding type.");
+            }
         }
         catch (const std::exception& ex)
         {
@@ -782,7 +753,6 @@ namespace gpudb
 
         std::vector<Type::Column> columns;
         columns.reserve(fieldCount);
-        std::vector<std::string> nullable;
 
         for (size_t i = 0; i < fieldCount; ++i)
         {
@@ -828,20 +798,35 @@ namespace gpudb
             }
 
             const std::pair<Type::Column::ColumnType, bool>& columnType = columnTypes[i];
+            const std::string& type = types[i];
+            std::vector<std::string> columnProperties;
 
             if (columnType.second)
             {
-                if (nullable.empty())
-                {
-                    nullable.push_back(ColumnProperty::NULLABLE);
-                }
+                columnProperties.push_back(ColumnProperty::NULLABLE);
+            }
 
-                columns.push_back(Type::Column(expressions[i], columnType.first, nullable));
-            }
-            else
+            if (type == ColumnProperty::CHAR1
+                || type == ColumnProperty::CHAR2
+                || type == ColumnProperty::CHAR4
+                || type == ColumnProperty::CHAR8
+                || type == ColumnProperty::CHAR16
+                || type == ColumnProperty::CHAR32
+                || type == ColumnProperty::CHAR64
+                || type == ColumnProperty::CHAR128
+                || type == ColumnProperty::CHAR256
+                || type == ColumnProperty::DATE
+                || type == ColumnProperty::DECIMAL
+                || type == ColumnProperty::INT8
+                || type == ColumnProperty::INT16
+                || type == ColumnProperty::IPV4
+                || type == ColumnProperty::TIME
+                || type == ColumnProperty::TIMESTAMP)
             {
-                columns.push_back(Type::Column(expressions[i], columnType.first));
+                columnProperties.push_back(type);
             }
+
+            columns.push_back(Type::Column(expressions[i], columnType.first, columnProperties));
         }
 
         Type type(columns);

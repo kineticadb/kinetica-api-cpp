@@ -13,11 +13,11 @@ namespace gpudb
      * A set of input parameters for {@link
      * #showTablesByType(const ShowTablesByTypeRequest&) const}.
      * <p>
-     * Gets names of the tables from GPUdb based on the type information. Each
-     * table in GPUdb has a particular type. This type is made out of the type
-     * label, schema of the table and the semantic type of the table. This
-     * function allows a look up of the existing tables based on full or
-     * partial type information. The operation is synchronous.
+     * Gets names of the tables whose type matches the given criteria. Each
+     * table has a particular type. This type is made out of the type label,
+     * schema of the table, and the semantic type of the table. This function
+     * allows a look up of the existing tables based on full or partial type
+     * information. The operation is synchronous.
      */
     struct ShowTablesByTypeRequest
     {
@@ -113,11 +113,11 @@ namespace gpudb
      * A set of output parameters for {@link
      * #showTablesByType(const ShowTablesByTypeRequest&) const}.
      * <p>
-     * Gets names of the tables from GPUdb based on the type information. Each
-     * table in GPUdb has a particular type. This type is made out of the type
-     * label, schema of the table and the semantic type of the table. This
-     * function allows a look up of the existing tables based on full or
-     * partial type information. The operation is synchronous.
+     * Gets names of the tables whose type matches the given criteria. Each
+     * table has a particular type. This type is made out of the type label,
+     * schema of the table, and the semantic type of the table. This function
+     * allows a look up of the existing tables based on full or partial type
+     * information. The operation is synchronous.
      */
     struct ShowTablesByTypeResponse
     {

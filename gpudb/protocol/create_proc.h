@@ -13,7 +13,11 @@ namespace gpudb
      * A set of input parameters for {@link
      * #createProc(const CreateProcRequest&) const}.
      * <p>
-     * Creates a proc.
+     * Creates an instance (proc) of the user-defined function (UDF) specified
+     * by the given command, options, and files, and makes it available for
+     * execution.  For details on UDFs, see: <a
+     * href="../../concepts/index.html#user-defined-functions"
+     * target="_top">User-Defined Functions</a>
      */
     struct CreateProcRequest
     {
@@ -55,11 +59,11 @@ namespace gpudb
          *                      example, it could be 'java' if the proc is a
          *                      Java application; however, any necessary
          *                      external programs must be preinstalled on every
-         *                      GPUdb node. If the command refers to a file in
-         *                      that directory, it must be preceded with './'
-         *                      as per Linux convention. If not specified, and
-         *                      exactly one file is provided in @a files, that
-         *                      file will be invoked.  Default value is an
+         *                      database node. If the command refers to a file
+         *                      in that directory, it must be preceded with
+         *                      './' as per Linux convention. If not specified,
+         *                      and exactly one file is provided in @a files,
+         *                      that file will be invoked.  Default value is an
          *                      empty string.
          * @param[in] args_  An array of command-line arguments that will be
          *                   passed to @a command when the proc is executed.
@@ -160,7 +164,11 @@ namespace gpudb
      * A set of output parameters for {@link
      * #createProc(const CreateProcRequest&) const}.
      * <p>
-     * Creates a proc.
+     * Creates an instance (proc) of the user-defined function (UDF) specified
+     * by the given command, options, and files, and makes it available for
+     * execution.  For details on UDFs, see: <a
+     * href="../../concepts/index.html#user-defined-functions"
+     * target="_top">User-Defined Functions</a>
      */
     struct CreateProcResponse
     {

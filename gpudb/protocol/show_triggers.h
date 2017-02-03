@@ -14,7 +14,7 @@ namespace gpudb
      * #showTriggers(const ShowTriggersRequest&) const}.
      * <p>
      * Retrieves information regarding the specified triggers or all existing
-     * triggers currently active within GPUdb.
+     * triggers currently active.
      */
     struct ShowTriggersRequest
     {
@@ -102,7 +102,7 @@ namespace gpudb
      * #showTriggers(const ShowTriggersRequest&) const}.
      * <p>
      * Retrieves information regarding the specified triggers or all existing
-     * triggers currently active within GPUdb.
+     * triggers currently active.
      */
     struct ShowTriggersResponse
     {

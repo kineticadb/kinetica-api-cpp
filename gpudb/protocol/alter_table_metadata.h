@@ -37,8 +37,8 @@ namespace gpudb
          * parameters.
          * 
          * @param[in] tableNames_  Names of the tables whose metadata will be
-         *                         updated. All specified tables must exist in
-         *                         GPUdb, or GPUdb will return an error.
+         *                         updated. All specified tables must exist, or
+         *                         an error will be returned.
          * @param[in] metadataMap_  A map which contains the metadata of the
          *                          tables that are to be updated. Note that
          *                          only one map is provided for all the

@@ -6,24 +6,21 @@
 #ifndef __CREATE_PROJECTION_H__
 #define __CREATE_PROJECTION_H__
 
-    /**
-     * @private
-     */
-
 namespace gpudb
 {
 
     /**
-     * @private
      * A set of input parameters for {@link
      * #createProjection(const CreateProjectionRequest&) const}.
      * <p>
+     * Creates a new projection of an existing table. A projection represents a
+     * subset of the columns (potentially including derived columns) of a
+     * table.
      */
     struct CreateProjectionRequest
     {
 
         /**
-         * @private
          * Constructs a CreateProjectionRequest object with default parameter
          * values.
          */
@@ -36,20 +33,39 @@ namespace gpudb
         }
 
         /**
-         * @private
          * Constructs a CreateProjectionRequest object with the specified
          * parameters.
          * 
-         * @param[in] tableName_
-         * @param[in] projectionName_
-         * @param[in] columnNames_
-         * @param[in] options_
+         * @param[in] tableName_  Name of the existing table on which the
+         *                        projection is to be applied.
+         * @param[in] projectionName_  Name of the projection to be created.
+         *                             Must not be the name of a currently
+         *                             existing table. Cannot be an empty
+         *                             string. Valid characters are
+         *                             'A-Za-z0-9_-(){}[] .:' (excluding the
+         *                             single quote), with the first character
+         *                             being one of 'A-Za-z0-9_'. The maximum
+         *                             length is 256 characters.
+         * @param[in] columnNames_  List of columns from @a tableName to be
+         *                          included in the projection. Can include
+         *                          derived columns. Can be specified as
+         *                          aliased via the syntax '<column_name> as
+         *                          <alias>.
+         * @param[in] options_  Optional parameters.
          *                      <ul>
-         *                              <li> collection_name:
-         *                              <li> expression:
-         *                              <li> limit:
-         *                              <li> order_by:
+         *                              <li> collection_name: Name of a
+         *                      collection to which the projection is to be
+         *                      assigned as a child.
+         *                              <li> expression: An optional filter
+         *                      expression to be applied to the source table
+         *                      prior to the projection.
+         *                              <li> limit: The number of records to
+         *                      keep.
+         *                              <li> order_by: Comma-separated list of
+         *                      the columns to be sorted by; i.e 'timestamp
+         *                      asc, x desc'.
          *                      </ul>
+         *                        Default value is an empty std::map.
          * 
          */
         CreateProjectionRequest(const std::string& tableName_, const std::string& projectionName_, const std::vector<std::string>& columnNames_, const std::map<std::string, std::string>& options_):
@@ -60,20 +76,12 @@ namespace gpudb
         {
         }
 
-    /**
-     * @private
-     */
-
         std::string tableName;
         std::string projectionName;
         std::vector<std::string> columnNames;
         std::map<std::string, std::string> options;
     };
 }
-
-    /**
-     * @private
-     */
 
 namespace avro
 {
@@ -129,24 +137,21 @@ namespace avro
     };
 }
 
-    /**
-     * @private
-     */
-
 namespace gpudb
 {
 
     /**
-     * @private
      * A set of output parameters for {@link
      * #createProjection(const CreateProjectionRequest&) const}.
      * <p>
+     * Creates a new projection of an existing table. A projection represents a
+     * subset of the columns (potentially including derived columns) of a
+     * table.
      */
     struct CreateProjectionResponse
     {
 
         /**
-         * @private
          * Constructs a CreateProjectionResponse object with default parameter
          * values.
          */
@@ -155,17 +160,9 @@ namespace gpudb
         {
         }
 
-    /**
-     * @private
-     */
-
         std::string projectionName;
     };
 }
-
-    /**
-     * @private
-     */
 
 namespace avro
 {

@@ -13,7 +13,7 @@ namespace gpudb
      * A set of input parameters for {@link
      * #adminShutdown(const AdminShutdownRequest&) const}.
      * <p>
-     * Exits the GPUdb server application.
+     * Exits the database server application.
      */
     struct AdminShutdownRequest
     {
@@ -109,7 +109,7 @@ namespace gpudb
      * A set of output parameters for {@link
      * #adminShutdown(const AdminShutdownRequest&) const}.
      * <p>
-     * Exits the GPUdb server application.
+     * Exits the database server application.
      */
     struct AdminShutdownResponse
     {

@@ -13,7 +13,7 @@ namespace gpudb
      * A set of input parameters for {@link
      * #hasTable(const HasTableRequest&) const}.
      * <p>
-     * Checks the existence of a table with the given name in GPUdb.
+     * Checks for the existence of a table with the given name.
      */
     struct HasTableRequest
     {
@@ -95,7 +95,7 @@ namespace gpudb
      * A set of output parameters for {@link
      * #hasTable(const HasTableRequest&) const}.
      * <p>
-     * Checks the existence of a table with the given name in GPUdb.
+     * Checks for the existence of a table with the given name.
      */
     struct HasTableResponse
     {

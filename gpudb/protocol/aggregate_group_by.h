@@ -59,8 +59,8 @@ namespace gpudb
          * parameters.
          * 
          * @param[in] tableName_  Name of the table on which the operation will
-         *                        be performed. Must be a valid
-         *                        table/view/collection in GPUdb.
+         *                        be performed. Must be an existing
+         *                        table/view/collection.
          * @param[in] columnNames_  List of one or more column names,
          *                          expressions, and aggregate expressions.
          *                          Must include at least one 'grouping' column
@@ -117,8 +117,8 @@ namespace gpudb
          * parameters.
          * 
          * @param[in] tableName_  Name of the table on which the operation will
-         *                        be performed. Must be a valid
-         *                        table/view/collection in GPUdb.
+         *                        be performed. Must be an existing
+         *                        table/view/collection.
          * @param[in] columnNames_  List of one or more column names,
          *                          expressions, and aggregate expressions.
          *                          Must include at least one 'grouping' column

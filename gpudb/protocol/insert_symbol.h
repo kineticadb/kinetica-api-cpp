@@ -21,8 +21,8 @@ namespace gpudb
      * 'SYMBOLCODE' (along with 'x' or 'y' for example). Then when the table is
      * rendered (via <a href="../rest/wms_rest.html" target="_top">WMS</a> or
      * {@link #visualizeImage(const VisualizeImageRequest&) const}) if the
-     * 'dosymbology' parameter is 'true' then GPUdb uses the value of the
-     * 'SYMBOLCODE' column to pick the symbol displayed for each point.
+     * 'dosymbology' parameter is 'true' then the value of the 'SYMBOLCODE'
+     * column is used to pick the symbol displayed for each point.
      */
     struct InsertSymbolRequest
     {
@@ -152,8 +152,8 @@ namespace gpudb
      * 'SYMBOLCODE' (along with 'x' or 'y' for example). Then when the table is
      * rendered (via <a href="../rest/wms_rest.html" target="_top">WMS</a> or
      * {@link #visualizeImage(const VisualizeImageRequest&) const}) if the
-     * 'dosymbology' parameter is 'true' then GPUdb uses the value of the
-     * 'SYMBOLCODE' column to pick the symbol displayed for each point.
+     * 'dosymbology' parameter is 'true' then the value of the 'SYMBOLCODE'
+     * column is used to pick the symbol displayed for each point.
      */
     struct InsertSymbolResponse
     {

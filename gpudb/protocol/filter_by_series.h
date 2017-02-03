@@ -25,8 +25,8 @@ namespace gpudb
      * points are stored in a newly created result set. The return value of the
      * function is the number of points in the resultant set (view).
      * <p>
-     * This operation is synchronous meaning that GPUdb will not return a
-     * response until all the objects are fully available.
+     * This operation is synchronous, meaning that a response will not be
+     * returned until all the objects are fully available.
      */
     struct FilterBySeriesRequest
     {
@@ -182,8 +182,8 @@ namespace gpudb
      * points are stored in a newly created result set. The return value of the
      * function is the number of points in the resultant set (view).
      * <p>
-     * This operation is synchronous meaning that GPUdb will not return a
-     * response until all the objects are fully available.
+     * This operation is synchronous, meaning that a response will not be
+     * returned until all the objects are fully available.
      */
     struct FilterBySeriesResponse
     {

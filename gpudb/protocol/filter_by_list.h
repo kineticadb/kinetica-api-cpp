@@ -14,12 +14,11 @@ namespace gpudb
      * #filterByList(const FilterByListRequest&) const}.
      * <p>
      * Calculates which records from a table have values in the given list for
-     * the corresponding column. The operation is synchronous meaning that
-     * GPUdb will not return a response until all the objects are fully
-     * available. The response payload provides the count of the resulting set.
-     * A new resultant set (view) which satisfies the input filter
-     * specification is also created if a @a viewName is passed in as part of
-     * the request.
+     * the corresponding column. The operation is synchronous, meaning that a
+     * response will not be returned until all the objects are fully available.
+     * The response payload provides the count of the resulting set. A new
+     * resultant set (view) which satisfies the input filter specification is
+     * also created if a @a viewName is passed in as part of the request.
      * <p>
      * For example, if a type definition has the columns 'x' and 'y', then a
      * filter by list query with the column map {"x":["10.1", "2.3"],
@@ -144,12 +143,11 @@ namespace gpudb
      * #filterByList(const FilterByListRequest&) const}.
      * <p>
      * Calculates which records from a table have values in the given list for
-     * the corresponding column. The operation is synchronous meaning that
-     * GPUdb will not return a response until all the objects are fully
-     * available. The response payload provides the count of the resulting set.
-     * A new resultant set (view) which satisfies the input filter
-     * specification is also created if a @a viewName is passed in as part of
-     * the request.
+     * the corresponding column. The operation is synchronous, meaning that a
+     * response will not be returned until all the objects are fully available.
+     * The response payload provides the count of the resulting set. A new
+     * resultant set (view) which satisfies the input filter specification is
+     * also created if a @a viewName is passed in as part of the request.
      * <p>
      * For example, if a type definition has the columns 'x' and 'y', then a
      * filter by list query with the column map {"x":["10.1", "2.3"],

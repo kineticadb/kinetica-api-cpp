@@ -317,7 +317,7 @@ AdminSetShardAssignmentsResponse& adminSetShardAssignments( const int64_t versio
                                                             AdminSetShardAssignmentsResponse& response_ ) const;
 
 /**
- * Exits the GPUdb server application.
+ * Exits the database server application.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -329,7 +329,7 @@ AdminSetShardAssignmentsResponse& adminSetShardAssignments( const int64_t versio
 AdminShutdownResponse adminShutdown( const AdminShutdownRequest& request_ ) const;
 
 /**
- * Exits the GPUdb server application.
+ * Exits the database server application.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -345,7 +345,7 @@ AdminShutdownResponse& adminShutdown( const AdminShutdownRequest& request_,
                                       AdminShutdownResponse& response_ ) const;
 
 /**
- * Exits the GPUdb server application.
+ * Exits the database server application.
  * 
  * @param exitType  Reserved for future use. User can pass an empty string.
  * @param authorization  No longer used. User can pass an empty string.
@@ -360,7 +360,7 @@ AdminShutdownResponse adminShutdown( const std::string& exitType,
                                      const std::map<std::string, std::string>& options ) const;
 
 /**
- * Exits the GPUdb server application.
+ * Exits the database server application.
  * 
  * @param exitType  Reserved for future use. User can pass an empty string.
  * @param authorization  No longer used. User can pass an empty string.
@@ -475,8 +475,7 @@ AggregateConvexHullResponse& aggregateConvexHull( const AggregateConvexHullReque
  * by @a tableName.
  * 
  * @param tableName  Name of Table on which the operation will be performed.
- *                   Must be a valid table in GPUdb.  It can not be a
- *                   collection.
+ *                   Must be an existing table.  It can not be a collection.
  * @param xColumnName  Name of the column containing the x coordinates of the
  *                     points for the operation being performed.
  * @param yColumnName  Name of the column containing the y coordinates of the
@@ -497,8 +496,7 @@ AggregateConvexHullResponse aggregateConvexHull( const std::string& tableName,
  * by @a tableName.
  * 
  * @param tableName  Name of Table on which the operation will be performed.
- *                   Must be a valid table in GPUdb.  It can not be a
- *                   collection.
+ *                   Must be an existing table.  It can not be a collection.
  * @param xColumnName  Name of the column containing the x coordinates of the
  *                     points for the operation being performed.
  * @param yColumnName  Name of the column containing the y coordinates of the
@@ -673,7 +671,7 @@ AggregateGroupByResponse& aggregateGroupBy( const AggregateGroupByRequest& reque
  * results are not returned in the response.
  * 
  * @param tableName  Name of the table on which the operation will be
- *                   performed. Must be a valid table/view/collection in GPUdb.
+ *                   performed. Must be an existing table/view/collection.
  * @param columnNames  List of one or more column names, expressions, and
  *                     aggregate expressions. Must include at least one
  *                     'grouping' column or expression.  If no aggregate is
@@ -739,7 +737,7 @@ AggregateGroupByResponse aggregateGroupBy( const std::string& tableName,
  * results are not returned in the response.
  * 
  * @param tableName  Name of the table on which the operation will be
- *                   performed. Must be a valid table/view/collection in GPUdb.
+ *                   performed. Must be an existing table/view/collection.
  * @param columnNames  List of one or more column names, expressions, and
  *                     aggregate expressions. Must include at least one
  *                     'grouping' column or expression.  If no aggregate is
@@ -842,7 +840,7 @@ AggregateHistogramResponse& aggregateHistogram( const AggregateHistogramRequest&
  * is used as the result instead.
  * 
  * @param tableName  Name of the table on which the operation will be
- *                   performed. Must be a valid table or collection in GPUdb.
+ *                   performed. Must be an existing table or collection.
  * @param columnName  Name of a column or an expression of one or more column
  *                    names over which the histogram will be calculated.
  * @param start  Lower end value of the histogram interval, inclusive.
@@ -850,10 +848,9 @@ AggregateHistogramResponse& aggregateHistogram( const AggregateHistogramRequest&
  * @param interval  The size of each bin within the start and end parameters.
  * @param options  Optional parameters.
  *                 <ul>
- *                         <li> value_column: The name of the column GPUdb will
- *                 use when calculating the bin values (values are summed).
- *                 The column must be a numerical type (int, double, long,
- *                 float).
+ *                         <li> value_column: The name of the column to use
+ *                 when calculating the bin values (values are summed).  The
+ *                 column must be a numerical type (int, double, long, float).
  *                 </ul>
  *                   Default value is an empty std::map.
  * 
@@ -880,7 +877,7 @@ AggregateHistogramResponse aggregateHistogram( const std::string& tableName,
  * is used as the result instead.
  * 
  * @param tableName  Name of the table on which the operation will be
- *                   performed. Must be a valid table or collection in GPUdb.
+ *                   performed. Must be an existing table or collection.
  * @param columnName  Name of a column or an expression of one or more column
  *                    names over which the histogram will be calculated.
  * @param start  Lower end value of the histogram interval, inclusive.
@@ -888,10 +885,9 @@ AggregateHistogramResponse aggregateHistogram( const std::string& tableName,
  * @param interval  The size of each bin within the start and end parameters.
  * @param options  Optional parameters.
  *                 <ul>
- *                         <li> value_column: The name of the column GPUdb will
- *                 use when calculating the bin values (values are summed).
- *                 The column must be a numerical type (int, double, long,
- *                 float).
+ *                         <li> value_column: The name of the column to use
+ *                 when calculating the bin values (values are summed).  The
+ *                 column must be a numerical type (int, double, long, float).
  *                 </ul>
  *                   Default value is an empty std::map.
  * @param[out] response_  Response object containing the results of the
@@ -963,7 +959,7 @@ AggregateKMeansResponse& aggregateKMeans( const AggregateKMeansRequest& request_
  * parameters and options are provided to control the heuristic search.
  * 
  * @param tableName  Name of the table on which the operation will be
- *                   performed. Must be a valid table or collection in GPUdb.
+ *                   performed. Must be an existing table or collection.
  * @param columnNames  List of column names on which the operation would be
  *                     performed. If n columns are provided then each of the k
  *                     result points will have n dimensions corresponding to
@@ -1004,7 +1000,7 @@ AggregateKMeansResponse aggregateKMeans( const std::string& tableName,
  * parameters and options are provided to control the heuristic search.
  * 
  * @param tableName  Name of the table on which the operation will be
- *                   performed. Must be a valid table or collection in GPUdb.
+ *                   performed. Must be an existing table or collection.
  * @param columnNames  List of column names on which the operation would be
  *                     performed. If n columns are provided then each of the k
  *                     result points will have n dimensions corresponding to
@@ -1073,7 +1069,7 @@ AggregateMinMaxResponse& aggregateMinMax( const AggregateMinMaxRequest& request_
  * in a table.
  * 
  * @param tableName  Name of the table on which the operation will be
- *                   performed. Must be a valid table in GPUdb.
+ *                   performed. Must be an existing table.
  * @param columnName  Name of a column or an expression of one or more column
  *                    on which the min-max will be calculated.
  * @param options  Optional parameters.  Default value is an empty std::map.
@@ -1091,7 +1087,7 @@ AggregateMinMaxResponse aggregateMinMax( const std::string& tableName,
  * in a table.
  * 
  * @param tableName  Name of the table on which the operation will be
- *                   performed. Must be a valid table in GPUdb.
+ *                   performed. Must be an existing table.
  * @param columnName  Name of a column or an expression of one or more column
  *                    on which the min-max will be calculated.
  * @param options  Optional parameters.  Default value is an empty std::map.
@@ -1641,7 +1637,7 @@ AggregateUniqueResponse& aggregateUnique( const AggregateUniqueRequest& request_
  * results are not returned in the response.
  * 
  * @param tableName  Name of the table on which the operation will be
- *                   performed. Must be a valid table in GPUdb.
+ *                   performed. Must be an existing table.
  * @param columnName  Name of the column or an expression containing one or
  *                    more column names on which the unique function would be
  *                    applied.
@@ -1693,7 +1689,7 @@ AggregateUniqueResponse aggregateUnique( const std::string& tableName,
  * results are not returned in the response.
  * 
  * @param tableName  Name of the table on which the operation will be
- *                   performed. Must be a valid table in GPUdb.
+ *                   performed. Must be an existing table.
  * @param columnName  Name of the column or an expression containing one or
  *                    more column names on which the unique function would be
  *                    applied.
@@ -1732,10 +1728,10 @@ AggregateUniqueResponse& aggregateUnique( const std::string& tableName,
 
 /**
  * The alter_system_properties endpoint is primarily used to simplify the
- * testing of GPUdb and is not expected to be used during normal execution.
- * Commands are given through the properties_update_map whose keys are commands
- * and values are strings representing integer values (for example '8000') or
- * boolean values ('true' or 'false').
+ * testing of the system and is not expected to be used during normal
+ * execution.  Commands are given through the properties_update_map whose keys
+ * are commands and values are strings representing integer values (for example
+ * '8000') or boolean values ('true' or 'false').
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -1748,10 +1744,10 @@ AlterSystemPropertiesResponse alterSystemProperties( const AlterSystemProperties
 
 /**
  * The alter_system_properties endpoint is primarily used to simplify the
- * testing of GPUdb and is not expected to be used during normal execution.
- * Commands are given through the properties_update_map whose keys are commands
- * and values are strings representing integer values (for example '8000') or
- * boolean values ('true' or 'false').
+ * testing of the system and is not expected to be used during normal
+ * execution.  Commands are given through the properties_update_map whose keys
+ * are commands and values are strings representing integer values (for example
+ * '8000') or boolean values ('true' or 'false').
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -1768,10 +1764,10 @@ AlterSystemPropertiesResponse& alterSystemProperties( const AlterSystemPropertie
 
 /**
  * The alter_system_properties endpoint is primarily used to simplify the
- * testing of GPUdb and is not expected to be used during normal execution.
- * Commands are given through the properties_update_map whose keys are commands
- * and values are strings representing integer values (for example '8000') or
- * boolean values ('true' or 'false').
+ * testing of the system and is not expected to be used during normal
+ * execution.  Commands are given through the properties_update_map whose keys
+ * are commands and values are strings representing integer values (for example
+ * '8000') or boolean values ('true' or 'false').
  * 
  * @param propertyUpdatesMap  Map containing the properties of the system to be
  *                            updated. Error if empty.
@@ -1841,10 +1837,10 @@ AlterSystemPropertiesResponse alterSystemProperties( const std::map<std::string,
 
 /**
  * The alter_system_properties endpoint is primarily used to simplify the
- * testing of GPUdb and is not expected to be used during normal execution.
- * Commands are given through the properties_update_map whose keys are commands
- * and values are strings representing integer values (for example '8000') or
- * boolean values ('true' or 'false').
+ * testing of the system and is not expected to be used during normal
+ * execution.  Commands are given through the properties_update_map whose keys
+ * are commands and values are strings representing integer values (for example
+ * '8000') or boolean values ('true' or 'false').
  * 
  * @param propertyUpdatesMap  Map containing the properties of the system to be
  *                            updated. Error if empty.
@@ -2006,8 +2002,8 @@ AlterTableResponse& alterTable( const AlterTableRequest& request_,
  * <p>
  *      Allowing homogeneous tables within a collection.
  * 
- * @param tableName  Table on which the operation will be performed. Must be a
- *                   valid table, view, or collection in GPUdb.
+ * @param tableName  Table on which the operation will be performed. Must be an
+ *                   existing table, view, or collection.
  * @param action  Modification operation to be applied Values: 'create_index',
  *                'delete_index', 'allow_homogeneous_tables', 'protected',
  *                'ttl', 'add_column', 'delete_column', 'change_column',
@@ -2070,8 +2066,8 @@ AlterTableResponse alterTable( const std::string& tableName,
  * <p>
  *      Allowing homogeneous tables within a collection.
  * 
- * @param tableName  Table on which the operation will be performed. Must be a
- *                   valid table, view, or collection in GPUdb.
+ * @param tableName  Table on which the operation will be performed. Must be an
+ *                   existing table, view, or collection.
  * @param action  Modification operation to be applied Values: 'create_index',
  *                'delete_index', 'allow_homogeneous_tables', 'protected',
  *                'ttl', 'add_column', 'delete_column', 'change_column',
@@ -2157,8 +2153,8 @@ AlterTableMetadataResponse& alterTableMetadata( const AlterTableMetadataRequest&
  * the table, table creation timestamp etc.
  * 
  * @param tableNames  Names of the tables whose metadata will be updated. All
- *                    specified tables must exist in GPUdb, or GPUdb will
- *                    return an error.
+ *                    specified tables must exist, or an error will be
+ *                    returned.
  * @param metadataMap  A map which contains the metadata of the tables that are
  *                     to be updated. Note that only one map is provided for
  *                     all the tables; so the change will be applied to every
@@ -2181,8 +2177,8 @@ AlterTableMetadataResponse alterTableMetadata( const std::vector<std::string>& t
  * the table, table creation timestamp etc.
  * 
  * @param tableNames  Names of the tables whose metadata will be updated. All
- *                    specified tables must exist in GPUdb, or GPUdb will
- *                    return an error.
+ *                    specified tables must exist, or an error will be
+ *                    returned.
  * @param metadataMap  A map which contains the metadata of the tables that are
  *                     to be updated. Note that only one map is provided for
  *                     all the tables; so the change will be applied to every
@@ -2271,7 +2267,7 @@ AlterUserResponse& alterUser( const std::string& name,
                               AlterUserResponse& response_ ) const;
 
 /**
- * Clears (drops) one or all tables in the GPUdb cluster. The operation is
+ * Clears (drops) one or all tables in the database cluster. The operation is
  * synchronous meaning that the table will be cleared before the function
  * returns. The response payload returns the status of the operation along with
  * the name of the table that was cleared.
@@ -2286,7 +2282,7 @@ AlterUserResponse& alterUser( const std::string& name,
 ClearTableResponse clearTable( const ClearTableRequest& request_ ) const;
 
 /**
- * Clears (drops) one or all tables in the GPUdb cluster. The operation is
+ * Clears (drops) one or all tables in the database cluster. The operation is
  * synchronous meaning that the table will be cleared before the function
  * returns. The response payload returns the status of the operation along with
  * the name of the table that was cleared.
@@ -2305,14 +2301,14 @@ ClearTableResponse& clearTable( const ClearTableRequest& request_,
                                 ClearTableResponse& response_ ) const;
 
 /**
- * Clears (drops) one or all tables in the GPUdb cluster. The operation is
+ * Clears (drops) one or all tables in the database cluster. The operation is
  * synchronous meaning that the table will be cleared before the function
  * returns. The response payload returns the status of the operation along with
  * the name of the table that was cleared.
  * 
- * @param tableName  Name of the table to be cleared. Must be an existing GPUdb
- *                   table. Empty string clears all available tables in GPUdb.
- *                   Default value is an empty string.
+ * @param tableName  Name of the table to be cleared. Must be an existing
+ *                   table. Empty string clears all available tables.  Default
+ *                   value is an empty string.
  * @param authorization  No longer used. User can pass an empty string.
  *                       Default value is an empty string.
  * @param options  Optional parameters.  Default value is an empty std::map.
@@ -2326,14 +2322,14 @@ ClearTableResponse clearTable( const std::string& tableName,
                                const std::map<std::string, std::string>& options ) const;
 
 /**
- * Clears (drops) one or all tables in the GPUdb cluster. The operation is
+ * Clears (drops) one or all tables in the database cluster. The operation is
  * synchronous meaning that the table will be cleared before the function
  * returns. The response payload returns the status of the operation along with
  * the name of the table that was cleared.
  * 
- * @param tableName  Name of the table to be cleared. Must be an existing GPUdb
- *                   table. Empty string clears all available tables in GPUdb.
- *                   Default value is an empty string.
+ * @param tableName  Name of the table to be cleared. Must be an existing
+ *                   table. Empty string clears all available tables.  Default
+ *                   value is an empty string.
  * @param authorization  No longer used. User can pass an empty string.
  *                       Default value is an empty string.
  * @param options  Optional parameters.  Default value is an empty std::map.
@@ -2516,8 +2512,8 @@ CreateJoinTableResponse& createJoinTable( const CreateJoinTableRequest& request_
  * documentation</a>.
  * 
  * @param joinTableName  Name of the join table to be created. Must not be the
- *                       name of a currently existing GPUdb table or join
- *                       table. Cannot be an empty string.
+ *                       name of a currently existing table or join table.
+ *                       Cannot be an empty string.
  * @param tableNames  The list of table names making up the joined set.
  *                    Corresponds to a SQL statement FROM clause  Default value
  *                    is an empty std::vector.
@@ -2525,9 +2521,9 @@ CreateJoinTableResponse& createJoinTable( const CreateJoinTableRequest& request_
  *                     names. Empty list says to select all the column names.
  *                     Empty list is the default.  Default value is an empty
  *                     std::vector.
- * @param expressions  An optional list of expressions GPUdb uses to combine
- *                     and filter the joined set.  Corresponds to a SQL
- *                     statement WHERE clause. For details see: <a
+ * @param expressions  An optional list of expressions to combine and filter
+ *                     the joined set.  Corresponds to a SQL statement WHERE
+ *                     clause. For details see: <a
  *                     href="../../concepts/index.html#expressions"
  *                     target="_top">expressions</a>.  Default value is an
  *                     empty std::vector.
@@ -2568,8 +2564,8 @@ CreateJoinTableResponse createJoinTable( const std::string& joinTableName,
  * documentation</a>.
  * 
  * @param joinTableName  Name of the join table to be created. Must not be the
- *                       name of a currently existing GPUdb table or join
- *                       table. Cannot be an empty string.
+ *                       name of a currently existing table or join table.
+ *                       Cannot be an empty string.
  * @param tableNames  The list of table names making up the joined set.
  *                    Corresponds to a SQL statement FROM clause  Default value
  *                    is an empty std::vector.
@@ -2577,9 +2573,9 @@ CreateJoinTableResponse createJoinTable( const std::string& joinTableName,
  *                     names. Empty list says to select all the column names.
  *                     Empty list is the default.  Default value is an empty
  *                     std::vector.
- * @param expressions  An optional list of expressions GPUdb uses to combine
- *                     and filter the joined set.  Corresponds to a SQL
- *                     statement WHERE clause. For details see: <a
+ * @param expressions  An optional list of expressions to combine and filter
+ *                     the joined set.  Corresponds to a SQL statement WHERE
+ *                     clause. For details see: <a
  *                     href="../../concepts/index.html#expressions"
  *                     target="_top">expressions</a>.  Default value is an
  *                     empty std::vector.
@@ -2619,7 +2615,11 @@ CreateJoinTableResponse& createJoinTable( const std::string& joinTableName,
                                           CreateJoinTableResponse& response_ ) const;
 
 /**
- * Creates a proc.
+ * Creates an instance (proc) of the user-defined function (UDF) specified by
+ * the given command, options, and files, and makes it available for execution.
+ * For details on UDFs, see: <a
+ * href="../../concepts/index.html#user-defined-functions"
+ * target="_top">User-Defined Functions</a>
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -2631,7 +2631,11 @@ CreateJoinTableResponse& createJoinTable( const std::string& joinTableName,
 CreateProcResponse createProc( const CreateProcRequest& request_ ) const;
 
 /**
- * Creates a proc.
+ * Creates an instance (proc) of the user-defined function (UDF) specified by
+ * the given command, options, and files, and makes it available for execution.
+ * For details on UDFs, see: <a
+ * href="../../concepts/index.html#user-defined-functions"
+ * target="_top">User-Defined Functions</a>
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -2647,7 +2651,11 @@ CreateProcResponse& createProc( const CreateProcRequest& request_,
                                 CreateProcResponse& response_ ) const;
 
 /**
- * Creates a proc.
+ * Creates an instance (proc) of the user-defined function (UDF) specified by
+ * the given command, options, and files, and makes it available for execution.
+ * For details on UDFs, see: <a
+ * href="../../concepts/index.html#user-defined-functions"
+ * target="_top">User-Defined Functions</a>
  * 
  * @param procName  Name of the proc to be created. Must not be the name of a
  *                  currently existing proc.
@@ -2665,9 +2673,9 @@ CreateProcResponse& createProc( const CreateProcRequest& request_,
  *                 be resolved from that directory. It need not refer to a file
  *                 actually in that directory; for example, it could be 'java'
  *                 if the proc is a Java application; however, any necessary
- *                 external programs must be preinstalled on every GPUdb node.
- *                 If the command refers to a file in that directory, it must
- *                 be preceded with './' as per Linux convention. If not
+ *                 external programs must be preinstalled on every database
+ *                 node. If the command refers to a file in that directory, it
+ *                 must be preceded with './' as per Linux convention. If not
  *                 specified, and exactly one file is provided in @a files,
  *                 that file will be invoked.  Default value is an empty
  *                 string.
@@ -2688,7 +2696,11 @@ CreateProcResponse createProc( const std::string& procName,
                                const std::map<std::string, std::string>& options ) const;
 
 /**
- * Creates a proc.
+ * Creates an instance (proc) of the user-defined function (UDF) specified by
+ * the given command, options, and files, and makes it available for execution.
+ * For details on UDFs, see: <a
+ * href="../../concepts/index.html#user-defined-functions"
+ * target="_top">User-Defined Functions</a>
  * 
  * @param procName  Name of the proc to be created. Must not be the name of a
  *                  currently existing proc.
@@ -2706,9 +2718,9 @@ CreateProcResponse createProc( const std::string& procName,
  *                 be resolved from that directory. It need not refer to a file
  *                 actually in that directory; for example, it could be 'java'
  *                 if the proc is a Java application; however, any necessary
- *                 external programs must be preinstalled on every GPUdb node.
- *                 If the command refers to a file in that directory, it must
- *                 be preceded with './' as per Linux convention. If not
+ *                 external programs must be preinstalled on every database
+ *                 node. If the command refers to a file in that directory, it
+ *                 must be preceded with './' as per Linux convention. If not
  *                 specified, and exactly one file is provided in @a files,
  *                 that file will be invoked.  Default value is an empty
  *                 string.
@@ -2733,7 +2745,8 @@ CreateProcResponse& createProc( const std::string& procName,
                                 CreateProcResponse& response_ ) const;
 
 /**
- * @private
+ * Creates a new projection of an existing table. A projection represents a
+ * subset of the columns (potentially including derived columns) of a table.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -2745,7 +2758,8 @@ CreateProcResponse& createProc( const std::string& procName,
 CreateProjectionResponse createProjection( const CreateProjectionRequest& request_ ) const;
 
 /**
- * @private
+ * Creates a new projection of an existing table. A projection represents a
+ * subset of the columns (potentially including derived columns) of a table.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -2761,18 +2775,32 @@ CreateProjectionResponse& createProjection( const CreateProjectionRequest& reque
                                             CreateProjectionResponse& response_ ) const;
 
 /**
- * @private
+ * Creates a new projection of an existing table. A projection represents a
+ * subset of the columns (potentially including derived columns) of a table.
  * 
- * @param tableName
- * @param projectionName
- * @param columnNames
- * @param options
+ * @param tableName  Name of the existing table on which the projection is to
+ *                   be applied.
+ * @param projectionName  Name of the projection to be created. Must not be the
+ *                        name of a currently existing table. Cannot be an
+ *                        empty string. Valid characters are 'A-Za-z0-9_-(){}[]
+ *                        .:' (excluding the single quote), with the first
+ *                        character being one of 'A-Za-z0-9_'. The maximum
+ *                        length is 256 characters.
+ * @param columnNames  List of columns from @a tableName to be included in the
+ *                     projection. Can include derived columns. Can be
+ *                     specified as aliased via the syntax '<column_name> as
+ *                     <alias>.
+ * @param options  Optional parameters.
  *                 <ul>
- *                         <li> collection_name:
- *                         <li> expression:
- *                         <li> limit:
- *                         <li> order_by:
+ *                         <li> collection_name: Name of a collection to which
+ *                 the projection is to be assigned as a child.
+ *                         <li> expression: An optional filter expression to be
+ *                 applied to the source table prior to the projection.
+ *                         <li> limit: The number of records to keep.
+ *                         <li> order_by: Comma-separated list of the columns
+ *                 to be sorted by; i.e 'timestamp asc, x desc'.
  *                 </ul>
+ *                   Default value is an empty std::map.
  * 
  * @return Response object containing the result of the operation.
  * 
@@ -2784,18 +2812,32 @@ CreateProjectionResponse createProjection( const std::string& tableName,
                                            const std::map<std::string, std::string>& options ) const;
 
 /**
- * @private
+ * Creates a new projection of an existing table. A projection represents a
+ * subset of the columns (potentially including derived columns) of a table.
  * 
- * @param tableName
- * @param projectionName
- * @param columnNames
- * @param options
+ * @param tableName  Name of the existing table on which the projection is to
+ *                   be applied.
+ * @param projectionName  Name of the projection to be created. Must not be the
+ *                        name of a currently existing table. Cannot be an
+ *                        empty string. Valid characters are 'A-Za-z0-9_-(){}[]
+ *                        .:' (excluding the single quote), with the first
+ *                        character being one of 'A-Za-z0-9_'. The maximum
+ *                        length is 256 characters.
+ * @param columnNames  List of columns from @a tableName to be included in the
+ *                     projection. Can include derived columns. Can be
+ *                     specified as aliased via the syntax '<column_name> as
+ *                     <alias>.
+ * @param options  Optional parameters.
  *                 <ul>
- *                         <li> collection_name:
- *                         <li> expression:
- *                         <li> limit:
- *                         <li> order_by:
+ *                         <li> collection_name: Name of a collection to which
+ *                 the projection is to be assigned as a child.
+ *                         <li> expression: An optional filter expression to be
+ *                 applied to the source table prior to the projection.
+ *                         <li> limit: The number of records to keep.
+ *                         <li> order_by: Comma-separated list of the columns
+ *                 to be sorted by; i.e 'timestamp asc, x desc'.
  *                 </ul>
+ *                   Default value is an empty std::map.
  * @param[out] response_  Response object containing the results of the
  *                        operation.
  * 
@@ -2843,8 +2885,7 @@ CreateRoleResponse& createRole( const CreateRoleRequest& request_,
  * 
  * @param name  Name of the role to be created. Must contain only lowercase
  *              letters, digits, and underscores, and cannot begin with a
- *              digit. Must not be the same name as an existing user or role in
- *              GPUdb.
+ *              digit. Must not be the same name as an existing user or role.
  * @param options  Optional parameters.
  * 
  * @return Response object containing the result of the operation.
@@ -2859,8 +2900,7 @@ CreateRoleResponse createRole( const std::string& name,
  * 
  * @param name  Name of the role to be created. Must contain only lowercase
  *              letters, digits, and underscores, and cannot begin with a
- *              digit. Must not be the same name as an existing user or role in
- *              GPUdb.
+ *              digit. Must not be the same name as an existing user or role.
  * @param options  Optional parameters.
  * @param[out] response_  Response object containing the results of the
  *                        operation.
@@ -3048,9 +3088,9 @@ CreateTableResponse& createTable( const std::string& tableName,
  * Creates a monitor that watches for new records inserted into a particular
  * table (identified by @a tableName) and forwards copies to subscribers via
  * ZMQ. After this call completes, subscribe to the returned @a topicId on the
- * GPUdb ZMQ table monitor port (default 9002). Each time an insert operation
- * on the table completes, a multipart message is published for that topic; the
- * first part contains only the topic ID, and each subsequent part contains one
+ * ZMQ table monitor port (default 9002). Each time an insert operation on the
+ * table completes, a multipart message is published for that topic; the first
+ * part contains only the topic ID, and each subsequent part contains one
  * binary-encoded Avro object that was inserted. The monitor will continue to
  * run (regardless of whether or not there are any subscribers) until
  * deactivated with {@link
@@ -3069,9 +3109,9 @@ CreateTableMonitorResponse createTableMonitor( const CreateTableMonitorRequest& 
  * Creates a monitor that watches for new records inserted into a particular
  * table (identified by @a tableName) and forwards copies to subscribers via
  * ZMQ. After this call completes, subscribe to the returned @a topicId on the
- * GPUdb ZMQ table monitor port (default 9002). Each time an insert operation
- * on the table completes, a multipart message is published for that topic; the
- * first part contains only the topic ID, and each subsequent part contains one
+ * ZMQ table monitor port (default 9002). Each time an insert operation on the
+ * table completes, a multipart message is published for that topic; the first
+ * part contains only the topic ID, and each subsequent part contains one
  * binary-encoded Avro object that was inserted. The monitor will continue to
  * run (regardless of whether or not there are any subscribers) until
  * deactivated with {@link
@@ -3094,9 +3134,9 @@ CreateTableMonitorResponse& createTableMonitor( const CreateTableMonitorRequest&
  * Creates a monitor that watches for new records inserted into a particular
  * table (identified by @a tableName) and forwards copies to subscribers via
  * ZMQ. After this call completes, subscribe to the returned @a topicId on the
- * GPUdb ZMQ table monitor port (default 9002). Each time an insert operation
- * on the table completes, a multipart message is published for that topic; the
- * first part contains only the topic ID, and each subsequent part contains one
+ * ZMQ table monitor port (default 9002). Each time an insert operation on the
+ * table completes, a multipart message is published for that topic; the first
+ * part contains only the topic ID, and each subsequent part contains one
  * binary-encoded Avro object that was inserted. The monitor will continue to
  * run (regardless of whether or not there are any subscribers) until
  * deactivated with {@link
@@ -3117,9 +3157,9 @@ CreateTableMonitorResponse createTableMonitor( const std::string& tableName,
  * Creates a monitor that watches for new records inserted into a particular
  * table (identified by @a tableName) and forwards copies to subscribers via
  * ZMQ. After this call completes, subscribe to the returned @a topicId on the
- * GPUdb ZMQ table monitor port (default 9002). Each time an insert operation
- * on the table completes, a multipart message is published for that topic; the
- * first part contains only the topic ID, and each subsequent part contains one
+ * ZMQ table monitor port (default 9002). Each time an insert operation on the
+ * table completes, a multipart message is published for that topic; the first
+ * part contains only the topic ID, and each subsequent part contains one
  * binary-encoded Avro object that was inserted. The monitor will continue to
  * run (regardless of whether or not there are any subscribers) until
  * deactivated with {@link
@@ -3147,9 +3187,9 @@ CreateTableMonitorResponse& createTableMonitor( const std::string& tableName,
  * the trigger has been activated, any record added to the listed tables(s) via
  * {@link #insertRecordsRaw(const RawInsertRecordsRequest&) const} with the
  * chosen columns' values falling within the specified region will trip the
- * trigger. All such records will be queued at GPUdb's trigger port-by default
- * '9001' but can also be obtained via {@link
- * #showSystemStatus(const ShowSystemStatusRequest&) const}-for any
+ * trigger. All such records will be queued at the trigger port (by default
+ * '9001', but able to be retrieved via {@link
+ * #showSystemStatus(const ShowSystemStatusRequest&) const}) for any
  * listening client to collect. Active triggers can be cancelled by using the
  * {@link #clearTrigger(const ClearTriggerRequest&) const} endpoint or by
  * clearing all relevant tables.
@@ -3174,11 +3214,11 @@ CreateTriggerByAreaResponse createTriggerByArea( const CreateTriggerByAreaReques
  * tables(s) via {@link
  * #insertRecordsRaw(const RawInsertRecordsRequest&,InsertRecordsResponse&) const}
  * with the chosen columns' values falling within the specified region will
- * trip the trigger. All such records will be queued at GPUdb's trigger port-by
- * default '9001' but can also be obtained via {@link
- * #showSystemStatus(const ShowSystemStatusRequest&,ShowSystemStatusResponse&) const}-for
- * any listening client to collect. Active triggers can be cancelled by using
- * the {@link
+ * trip the trigger. All such records will be queued at the trigger port (by
+ * default '9001', but able to be retrieved via {@link
+ * #showSystemStatus(const ShowSystemStatusRequest&,ShowSystemStatusResponse&) const})
+ * for any listening client to collect. Active triggers can be cancelled by
+ * using the {@link
  * #clearTrigger(const ClearTriggerRequest&,ClearTriggerResponse&) const}
  * endpoint or by clearing all relevant tables.
  * <p>
@@ -3206,11 +3246,11 @@ CreateTriggerByAreaResponse& createTriggerByArea( const CreateTriggerByAreaReque
  * tables(s) via {@link
  * #insertRecordsRaw(const RawInsertRecordsRequest&) const} with the chosen
  * columns' values falling within the specified region will trip the trigger.
- * All such records will be queued at GPUdb's trigger port-by default '9001'
- * but can also be obtained via {@link
- * #showSystemStatus(const std::map<std::string, std::string>&) const}-for
- * any listening client to collect. Active triggers can be cancelled by using
- * the {@link
+ * All such records will be queued at the trigger port (by default '9001', but
+ * able to be retrieved via {@link
+ * #showSystemStatus(const std::map<std::string, std::string>&) const})
+ * for any listening client to collect. Active triggers can be cancelled by
+ * using the {@link
  * #clearTrigger(const std::string&,const std::map<std::string, std::string>&) const}
  * endpoint or by clearing all relevant tables.
  * <p>
@@ -3253,11 +3293,11 @@ CreateTriggerByAreaResponse createTriggerByArea( const std::string& requestId,
  * tables(s) via {@link
  * #insertRecordsRaw(const RawInsertRecordsRequest&) const} with the chosen
  * columns' values falling within the specified region will trip the trigger.
- * All such records will be queued at GPUdb's trigger port-by default '9001'
- * but can also be obtained via {@link
- * #showSystemStatus(const std::map<std::string, std::string>&,ShowSystemStatusResponse&) const}-for
- * any listening client to collect. Active triggers can be cancelled by using
- * the {@link
+ * All such records will be queued at the trigger port (by default '9001', but
+ * able to be retrieved via {@link
+ * #showSystemStatus(const std::map<std::string, std::string>&,ShowSystemStatusResponse&) const})
+ * for any listening client to collect. Active triggers can be cancelled by
+ * using the {@link
  * #clearTrigger(const std::string&,const std::map<std::string, std::string>&,ClearTriggerResponse&) const}
  * endpoint or by clearing all relevant tables.
  * <p>
@@ -3302,9 +3342,9 @@ CreateTriggerByAreaResponse& createTriggerByArea( const std::string& requestId,
  * tables(s) via {@link
  * #insertRecordsRaw(const RawInsertRecordsRequest&) const} with the chosen
  * column_name's value falling within the specified range will trip the
- * trigger. All such records will be queued at GPUdb's trigger port-by default
- * '9001' but can also be obtained via {@link
- * #showSystemStatus(const ShowSystemStatusRequest&) const}-for any
+ * trigger. All such records will be queued at the trigger port (by default
+ * '9001', but able to be retrieved via {@link
+ * #showSystemStatus(const ShowSystemStatusRequest&) const}) for any
  * listening client to collect. Active triggers can be cancelled by using the
  * {@link #clearTrigger(const ClearTriggerRequest&) const} endpoint or by
  * clearing all relevant tables.
@@ -3327,11 +3367,11 @@ CreateTriggerByRangeResponse createTriggerByRange( const CreateTriggerByRangeReq
  * tables(s) via {@link
  * #insertRecordsRaw(const RawInsertRecordsRequest&,InsertRecordsResponse&) const}
  * with the chosen column_name's value falling within the specified range will
- * trip the trigger. All such records will be queued at GPUdb's trigger port-by
- * default '9001' but can also be obtained via {@link
- * #showSystemStatus(const ShowSystemStatusRequest&,ShowSystemStatusResponse&) const}-for
- * any listening client to collect. Active triggers can be cancelled by using
- * the {@link
+ * trip the trigger. All such records will be queued at the trigger port (by
+ * default '9001', but able to be retrieved via {@link
+ * #showSystemStatus(const ShowSystemStatusRequest&,ShowSystemStatusResponse&) const})
+ * for any listening client to collect. Active triggers can be cancelled by
+ * using the {@link
  * #clearTrigger(const ClearTriggerRequest&,ClearTriggerResponse&) const}
  * endpoint or by clearing all relevant tables.
  * <p>
@@ -3357,11 +3397,11 @@ CreateTriggerByRangeResponse& createTriggerByRange( const CreateTriggerByRangeRe
  * tables(s) via {@link
  * #insertRecordsRaw(const RawInsertRecordsRequest&) const} with the chosen
  * column_name's value falling within the specified range will trip the
- * trigger. All such records will be queued at GPUdb's trigger port-by default
- * '9001' but can also be obtained via {@link
- * #showSystemStatus(const std::map<std::string, std::string>&) const}-for
- * any listening client to collect. Active triggers can be cancelled by using
- * the {@link
+ * trigger. All such records will be queued at the trigger port (by default
+ * '9001', but able to be retrieved via {@link
+ * #showSystemStatus(const std::map<std::string, std::string>&) const})
+ * for any listening client to collect. Active triggers can be cancelled by
+ * using the {@link
  * #clearTrigger(const std::string&,const std::map<std::string, std::string>&) const}
  * endpoint or by clearing all relevant tables.
  * <p>
@@ -3393,11 +3433,11 @@ CreateTriggerByRangeResponse createTriggerByRange( const std::string& requestId,
  * tables(s) via {@link
  * #insertRecordsRaw(const RawInsertRecordsRequest&) const} with the chosen
  * column_name's value falling within the specified range will trip the
- * trigger. All such records will be queued at GPUdb's trigger port-by default
- * '9001' but can also be obtained via {@link
- * #showSystemStatus(const std::map<std::string, std::string>&,ShowSystemStatusResponse&) const}-for
- * any listening client to collect. Active triggers can be cancelled by using
- * the {@link
+ * trigger. All such records will be queued at the trigger port (by default
+ * '9001', but able to be retrieved via {@link
+ * #showSystemStatus(const std::map<std::string, std::string>&,ShowSystemStatusResponse&) const})
+ * for any listening client to collect. Active triggers can be cancelled by
+ * using the {@link
  * #clearTrigger(const std::string&,const std::map<std::string, std::string>&,ClearTriggerResponse&) const}
  * endpoint or by clearing all relevant tables.
  * <p>
@@ -3428,8 +3468,8 @@ CreateTriggerByRangeResponse& createTriggerByRange( const std::string& requestId
                                                     CreateTriggerByRangeResponse& response_ ) const;
 
 /**
- * Creates a new type in GPUdb describing the layout or schema of a table. The
- * type definition is a JSON string describing the fields (i.e. columns) of the
+ * Creates a new type describing the layout or schema of a table. The type
+ * definition is a JSON string describing the fields (i.e. columns) of the
  * type. Each field consists of a name and a data type. Supported data types
  * are: double, float, int, long, string, and bytes. In addition one or more
  * properties can be specified for each column which customize the memory usage
@@ -3439,8 +3479,8 @@ CreateTriggerByRangeResponse& createTriggerByRange( const std::string& requestId
  * and @a store_only.
  * <p>
  * To set a *primary key* on one or more columns include the property
- * 'primary_key' on the desired column_names. If a primary key is specified
- * then GPUdb enforces a uniqueness constraint in that only a single object can
+ * 'primary_key' on the desired column_names. If a primary key is specified,
+ * then a uniqueness constraint is enforced, in that only a single object can
  * exist with a given primary key. When {@link
  * #insertRecordsRaw(const RawInsertRecordsRequest&) const inserting} data
  * into a table with a primary key, depending on the parameters in the request,
@@ -3477,8 +3517,8 @@ CreateTriggerByRangeResponse& createTriggerByRange( const std::string& requestId
 CreateTypeResponse createType( const CreateTypeRequest& request_ ) const;
 
 /**
- * Creates a new type in GPUdb describing the layout or schema of a table. The
- * type definition is a JSON string describing the fields (i.e. columns) of the
+ * Creates a new type describing the layout or schema of a table. The type
+ * definition is a JSON string describing the fields (i.e. columns) of the
  * type. Each field consists of a name and a data type. Supported data types
  * are: double, float, int, long, string, and bytes. In addition one or more
  * properties can be specified for each column which customize the memory usage
@@ -3488,8 +3528,8 @@ CreateTypeResponse createType( const CreateTypeRequest& request_ ) const;
  * and @a store_only.
  * <p>
  * To set a *primary key* on one or more columns include the property
- * 'primary_key' on the desired column_names. If a primary key is specified
- * then GPUdb enforces a uniqueness constraint in that only a single object can
+ * 'primary_key' on the desired column_names. If a primary key is specified,
+ * then a uniqueness constraint is enforced, in that only a single object can
  * exist with a given primary key. When {@link
  * #insertRecordsRaw(const RawInsertRecordsRequest&,InsertRecordsResponse&) const
  * inserting} data into a table with a primary key, depending on the parameters
@@ -3530,8 +3570,8 @@ CreateTypeResponse& createType( const CreateTypeRequest& request_,
                                 CreateTypeResponse& response_ ) const;
 
 /**
- * Creates a new type in GPUdb describing the layout or schema of a table. The
- * type definition is a JSON string describing the fields (i.e. columns) of the
+ * Creates a new type describing the layout or schema of a table. The type
+ * definition is a JSON string describing the fields (i.e. columns) of the
  * type. Each field consists of a name and a data type. Supported data types
  * are: double, float, int, long, string, and bytes. In addition one or more
  * properties can be specified for each column which customize the memory usage
@@ -3541,8 +3581,8 @@ CreateTypeResponse& createType( const CreateTypeRequest& request_,
  * and @a store_only.
  * <p>
  * To set a *primary key* on one or more columns include the property
- * 'primary_key' on the desired column_names. If a primary key is specified
- * then GPUdb enforces a uniqueness constraint in that only a single object can
+ * 'primary_key' on the desired column_names. If a primary key is specified,
+ * then a uniqueness constraint is enforced, in that only a single object can
  * exist with a given primary key. When {@link
  * #insertRecordsRaw(const RawInsertRecordsRequest&) const inserting} data
  * into a table with a primary key, depending on the parameters in the request,
@@ -3592,8 +3632,8 @@ CreateTypeResponse createType( const std::string& typeDefinition,
                                const std::map<std::string, std::string>& options ) const;
 
 /**
- * Creates a new type in GPUdb describing the layout or schema of a table. The
- * type definition is a JSON string describing the fields (i.e. columns) of the
+ * Creates a new type describing the layout or schema of a table. The type
+ * definition is a JSON string describing the fields (i.e. columns) of the
  * type. Each field consists of a name and a data type. Supported data types
  * are: double, float, int, long, string, and bytes. In addition one or more
  * properties can be specified for each column which customize the memory usage
@@ -3603,8 +3643,8 @@ CreateTypeResponse createType( const std::string& typeDefinition,
  * and @a store_only.
  * <p>
  * To set a *primary key* on one or more columns include the property
- * 'primary_key' on the desired column_names. If a primary key is specified
- * then GPUdb enforces a uniqueness constraint in that only a single object can
+ * 'primary_key' on the desired column_names. If a primary key is specified,
+ * then a uniqueness constraint is enforced, in that only a single object can
  * exist with a given primary key. When {@link
  * #insertRecordsRaw(const RawInsertRecordsRequest&) const inserting} data
  * into a table with a primary key, depending on the parameters in the request,
@@ -3698,7 +3738,7 @@ CreateUnionResponse& createUnion( const CreateUnionRequest& request_,
  * property 'store_only'.
  * 
  * @param tableName  Name of the table to be created. Must not be the name of a
- *                   currently existing GPUdb table. Cannot be an empty string.
+ *                   currently existing table. Cannot be an empty string.
  * @param tableNames  The list of table names making up the union. Must contain
  *                    the names of one or more existing tables.
  * @param inputColumnNames  The list of columns from each of the corresponding
@@ -3735,7 +3775,7 @@ CreateUnionResponse createUnion( const std::string& tableName,
  * property 'store_only'.
  * 
  * @param tableName  Name of the table to be created. Must not be the name of a
- *                   currently existing GPUdb table. Cannot be an empty string.
+ *                   currently existing table. Cannot be an empty string.
  * @param tableNames  The list of table names making up the union. Must contain
  *                    the names of one or more existing tables.
  * @param inputColumnNames  The list of columns from each of the corresponding
@@ -3805,7 +3845,7 @@ CreateUserExternalResponse& createUserExternal( const CreateUserExternalRequest&
  * 
  * @param name  Name of the user to be created. Must exactly match the user's
  *              name in the external LDAP, prefixed with a @. Must not be the
- *              same name as an existing user in GPUdb.
+ *              same name as an existing user.
  * @param options  Optional parameters.
  * 
  * @return Response object containing the result of the operation.
@@ -3821,7 +3861,7 @@ CreateUserExternalResponse createUserExternal( const std::string& name,
  * 
  * @param name  Name of the user to be created. Must exactly match the user's
  *              name in the external LDAP, prefixed with a @. Must not be the
- *              same name as an existing user in GPUdb.
+ *              same name as an existing user.
  * @param options  Optional parameters.
  * @param[out] response_  Response object containing the results of the
  *                        operation.
@@ -3836,7 +3876,8 @@ CreateUserExternalResponse& createUserExternal( const std::string& name,
                                                 CreateUserExternalResponse& response_ ) const;
 
 /**
- * Creates a new internal user (a user whose credentials are managed by GPUdb).
+ * Creates a new internal user (a user whose credentials are managed by the
+ * database system).
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -3848,7 +3889,8 @@ CreateUserExternalResponse& createUserExternal( const std::string& name,
 CreateUserInternalResponse createUserInternal( const CreateUserInternalRequest& request_ ) const;
 
 /**
- * Creates a new internal user (a user whose credentials are managed by GPUdb).
+ * Creates a new internal user (a user whose credentials are managed by the
+ * database system).
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -3864,12 +3906,12 @@ CreateUserInternalResponse& createUserInternal( const CreateUserInternalRequest&
                                                 CreateUserInternalResponse& response_ ) const;
 
 /**
- * Creates a new internal user (a user whose credentials are managed by GPUdb).
+ * Creates a new internal user (a user whose credentials are managed by the
+ * database system).
  * 
  * @param name  Name of the user to be created. Must contain only lowercase
  *              letters, digits, and underscores, and cannot begin with a
- *              digit. Must not be the same name as an existing user or role in
- *              GPUdb.
+ *              digit. Must not be the same name as an existing user or role.
  * @param password  Initial password of the user to be created. May be an empty
  *                  string for no password.
  * @param options  Optional parameters.
@@ -3883,12 +3925,12 @@ CreateUserInternalResponse createUserInternal( const std::string& name,
                                                const std::map<std::string, std::string>& options ) const;
 
 /**
- * Creates a new internal user (a user whose credentials are managed by GPUdb).
+ * Creates a new internal user (a user whose credentials are managed by the
+ * database system).
  * 
  * @param name  Name of the user to be created. Must contain only lowercase
  *              letters, digits, and underscores, and cannot begin with a
- *              digit. Must not be the same name as an existing user or role in
- *              GPUdb.
+ *              digit. Must not be the same name as an existing user or role.
  * @param password  Initial password of the user to be created. May be an empty
  *                  string for no password.
  * @param options  Optional parameters.
@@ -4425,8 +4467,8 @@ FilterResponse& filter( const FilterRequest& request_,
  *                  containing the results. Must not be an already existing
  *                  collection, table or view .  Default value is an empty
  *                  string.
- * @param expression  The select expression GPUdb uses to filter the specified
- *                    table.  For details see <a
+ * @param expression  The select expression to filter the specified table.  For
+ *                    details see <a
  *                    href="../../concepts/index.html#expressions"
  *                    target="_top">concepts</a>.
  * @param options  Optional parameters.  Default value is an empty std::map.
@@ -4458,8 +4500,8 @@ FilterResponse filter( const std::string& tableName,
  *                  containing the results. Must not be an already existing
  *                  collection, table or view .  Default value is an empty
  *                  string.
- * @param expression  The select expression GPUdb uses to filter the specified
- *                    table.  For details see <a
+ * @param expression  The select expression to filter the specified table.  For
+ *                    details see <a
  *                    href="../../concepts/index.html#expressions"
  *                    target="_top">concepts</a>.
  * @param options  Optional parameters.  Default value is an empty std::map.
@@ -4479,8 +4521,8 @@ FilterResponse& filter( const std::string& tableName,
 
 /**
  * Calculates which objects from a table are within a named area of interest
- * (NAI/polygon). The operation is synchronous meaning that GPUdb will not
- * return the request until all the matching objects are fully available. The
+ * (NAI/polygon). The operation is synchronous, meaning that a response will
+ * not be returned until all the matching objects are fully available. The
  * response payload provides the count of the resulting set. A new resultant
  * set (view) which satisfies the input NAI restriction specification is
  * created with the name @a viewName passed in as part of the input.
@@ -4496,8 +4538,8 @@ FilterByAreaResponse filterByArea( const FilterByAreaRequest& request_ ) const;
 
 /**
  * Calculates which objects from a table are within a named area of interest
- * (NAI/polygon). The operation is synchronous meaning that GPUdb will not
- * return the request until all the matching objects are fully available. The
+ * (NAI/polygon). The operation is synchronous, meaning that a response will
+ * not be returned until all the matching objects are fully available. The
  * response payload provides the count of the resulting set. A new resultant
  * set (view) which satisfies the input NAI restriction specification is
  * created with the name @a viewName passed in as part of the input.
@@ -4517,8 +4559,8 @@ FilterByAreaResponse& filterByArea( const FilterByAreaRequest& request_,
 
 /**
  * Calculates which objects from a table are within a named area of interest
- * (NAI/polygon). The operation is synchronous meaning that GPUdb will not
- * return the request until all the matching objects are fully available. The
+ * (NAI/polygon). The operation is synchronous, meaning that a response will
+ * not be returned until all the matching objects are fully available. The
  * response payload provides the count of the resulting set. A new resultant
  * set (view) which satisfies the input NAI restriction specification is
  * created with the name @a viewName passed in as part of the input.
@@ -4555,8 +4597,8 @@ FilterByAreaResponse filterByArea( const std::string& tableName,
 
 /**
  * Calculates which objects from a table are within a named area of interest
- * (NAI/polygon). The operation is synchronous meaning that GPUdb will not
- * return the request until all the matching objects are fully available. The
+ * (NAI/polygon). The operation is synchronous, meaning that a response will
+ * not be returned until all the matching objects are fully available. The
  * response payload provides the count of the resulting set. A new resultant
  * set (view) which satisfies the input NAI restriction specification is
  * created with the name @a viewName passed in as part of the input.
@@ -4597,7 +4639,7 @@ FilterByAreaResponse& filterByArea( const std::string& tableName,
 
 /**
  * Calculates how many objects within the given table lie in a rectangular box.
- * The operation is synchronous meaning that GPUdb will not return the request
+ * The operation is synchronous, meaning that a response will not be returned
  * until all the objects are fully available. The response payload provides the
  * count of the resulting set. A new resultant set which satisfies the input
  * NAI restriction specification is also created when a @a viewName is passed
@@ -4614,7 +4656,7 @@ FilterByBoxResponse filterByBox( const FilterByBoxRequest& request_ ) const;
 
 /**
  * Calculates how many objects within the given table lie in a rectangular box.
- * The operation is synchronous meaning that GPUdb will not return the request
+ * The operation is synchronous, meaning that a response will not be returned
  * until all the objects are fully available. The response payload provides the
  * count of the resulting set. A new resultant set which satisfies the input
  * NAI restriction specification is also created when a @a viewName is passed
@@ -4635,18 +4677,18 @@ FilterByBoxResponse& filterByBox( const FilterByBoxRequest& request_,
 
 /**
  * Calculates how many objects within the given table lie in a rectangular box.
- * The operation is synchronous meaning that GPUdb will not return the request
+ * The operation is synchronous, meaning that a response will not be returned
  * until all the objects are fully available. The response payload provides the
  * count of the resulting set. A new resultant set which satisfies the input
  * NAI restriction specification is also created when a @a viewName is passed
  * in as part of the input payload.
  * 
  * @param tableName  Name of the table on which the bounding box operation will
- *                   be performed. Must be a valid table in GPUdb.
+ *                   be performed. Must be an existing table.
  * @param viewName  Optional name of the result view that will be created
  *                  containing the results of the query. Must not be an already
- *                  existing collection, table or view in GPUdb.  Default value
- *                  is an empty string.
+ *                  existing collection, table or view.  Default value is an
+ *                  empty string.
  * @param xColumnName  Name of the column on which to perform the bounding box
  *                     query. If the table's data type is not a shape type,
  *                     must be a valid numeric column.
@@ -4679,18 +4721,18 @@ FilterByBoxResponse filterByBox( const std::string& tableName,
 
 /**
  * Calculates how many objects within the given table lie in a rectangular box.
- * The operation is synchronous meaning that GPUdb will not return the request
+ * The operation is synchronous, meaning that a response will not be returned
  * until all the objects are fully available. The response payload provides the
  * count of the resulting set. A new resultant set which satisfies the input
  * NAI restriction specification is also created when a @a viewName is passed
  * in as part of the input payload.
  * 
  * @param tableName  Name of the table on which the bounding box operation will
- *                   be performed. Must be a valid table in GPUdb.
+ *                   be performed. Must be an existing table.
  * @param viewName  Optional name of the result view that will be created
  *                  containing the results of the query. Must not be an already
- *                  existing collection, table or view in GPUdb.  Default value
- *                  is an empty string.
+ *                  existing collection, table or view.  Default value is an
+ *                  empty string.
  * @param xColumnName  Name of the column on which to perform the bounding box
  *                     query. If the table's data type is not a shape type,
  *                     must be a valid numeric column.
@@ -4827,11 +4869,11 @@ FilterByGeometryResponse& filterByGeometry( const std::string& tableName,
 
 /**
  * Calculates which records from a table have values in the given list for the
- * corresponding column. The operation is synchronous meaning that GPUdb will
- * not return a response until all the objects are fully available. The
- * response payload provides the count of the resulting set. A new resultant
- * set (view) which satisfies the input filter specification is also created if
- * a @a viewName is passed in as part of the request.
+ * corresponding column. The operation is synchronous, meaning that a response
+ * will not be returned until all the objects are fully available. The response
+ * payload provides the count of the resulting set. A new resultant set (view)
+ * which satisfies the input filter specification is also created if a @a
+ * viewName is passed in as part of the request.
  * <p>
  * For example, if a type definition has the columns 'x' and 'y', then a filter
  * by list query with the column map {"x":["10.1", "2.3"], "y":["0.0", "-31.5",
@@ -4851,11 +4893,11 @@ FilterByListResponse filterByList( const FilterByListRequest& request_ ) const;
 
 /**
  * Calculates which records from a table have values in the given list for the
- * corresponding column. The operation is synchronous meaning that GPUdb will
- * not return a response until all the objects are fully available. The
- * response payload provides the count of the resulting set. A new resultant
- * set (view) which satisfies the input filter specification is also created if
- * a @a viewName is passed in as part of the request.
+ * corresponding column. The operation is synchronous, meaning that a response
+ * will not be returned until all the objects are fully available. The response
+ * payload provides the count of the resulting set. A new resultant set (view)
+ * which satisfies the input filter specification is also created if a @a
+ * viewName is passed in as part of the request.
  * <p>
  * For example, if a type definition has the columns 'x' and 'y', then a filter
  * by list query with the column map {"x":["10.1", "2.3"], "y":["0.0", "-31.5",
@@ -4879,11 +4921,11 @@ FilterByListResponse& filterByList( const FilterByListRequest& request_,
 
 /**
  * Calculates which records from a table have values in the given list for the
- * corresponding column. The operation is synchronous meaning that GPUdb will
- * not return a response until all the objects are fully available. The
- * response payload provides the count of the resulting set. A new resultant
- * set (view) which satisfies the input filter specification is also created if
- * a @a viewName is passed in as part of the request.
+ * corresponding column. The operation is synchronous, meaning that a response
+ * will not be returned until all the objects are fully available. The response
+ * payload provides the count of the resulting set. A new resultant set (view)
+ * which satisfies the input filter specification is also created if a @a
+ * viewName is passed in as part of the request.
  * <p>
  * For example, if a type definition has the columns 'x' and 'y', then a filter
  * by list query with the column map {"x":["10.1", "2.3"], "y":["0.0", "-31.5",
@@ -4921,11 +4963,11 @@ FilterByListResponse filterByList( const std::string& tableName,
 
 /**
  * Calculates which records from a table have values in the given list for the
- * corresponding column. The operation is synchronous meaning that GPUdb will
- * not return a response until all the objects are fully available. The
- * response payload provides the count of the resulting set. A new resultant
- * set (view) which satisfies the input filter specification is also created if
- * a @a viewName is passed in as part of the request.
+ * corresponding column. The operation is synchronous, meaning that a response
+ * will not be returned until all the objects are fully available. The response
+ * payload provides the count of the resulting set. A new resultant set (view)
+ * which satisfies the input filter specification is also created if a @a
+ * viewName is passed in as part of the request.
  * <p>
  * For example, if a type definition has the columns 'x' and 'y', then a filter
  * by list query with the column map {"x":["10.1", "2.3"], "y":["0.0", "-31.5",
@@ -4967,12 +5009,12 @@ FilterByListResponse& filterByList( const std::string& tableName,
 
 /**
  * Calculates which objects from a table lie within a circle with the given
- * radius and center point (i.e. circular NAI). The operation is synchronous
- * meaning that GPUdb will not return a response until all the objects are
- * fully available. The response payload provides the count of the resulting
- * set. A new resultant set (view) which satisfies the input circular NAI
- * restriction specification is also created if a @a viewName is passed in as
- * part of the request.
+ * radius and center point (i.e. circular NAI). The operation is synchronous,
+ * meaning that a response will not be returned until all the objects are fully
+ * available. The response payload provides the count of the resulting set. A
+ * new resultant set (view) which satisfies the input circular NAI restriction
+ * specification is also created if a @a viewName is passed in as part of the
+ * request.
  * <p>
  * For track data, all track points that lie within the circle plus one point
  * on either side of the circle (if the track goes beyond the circle) will be
@@ -4991,12 +5033,12 @@ FilterByRadiusResponse filterByRadius( const FilterByRadiusRequest& request_ ) c
 
 /**
  * Calculates which objects from a table lie within a circle with the given
- * radius and center point (i.e. circular NAI). The operation is synchronous
- * meaning that GPUdb will not return a response until all the objects are
- * fully available. The response payload provides the count of the resulting
- * set. A new resultant set (view) which satisfies the input circular NAI
- * restriction specification is also created if a @a viewName is passed in as
- * part of the request.
+ * radius and center point (i.e. circular NAI). The operation is synchronous,
+ * meaning that a response will not be returned until all the objects are fully
+ * available. The response payload provides the count of the resulting set. A
+ * new resultant set (view) which satisfies the input circular NAI restriction
+ * specification is also created if a @a viewName is passed in as part of the
+ * request.
  * <p>
  * For track data, all track points that lie within the circle plus one point
  * on either side of the circle (if the track goes beyond the circle) will be
@@ -5019,12 +5061,12 @@ FilterByRadiusResponse& filterByRadius( const FilterByRadiusRequest& request_,
 
 /**
  * Calculates which objects from a table lie within a circle with the given
- * radius and center point (i.e. circular NAI). The operation is synchronous
- * meaning that GPUdb will not return a response until all the objects are
- * fully available. The response payload provides the count of the resulting
- * set. A new resultant set (view) which satisfies the input circular NAI
- * restriction specification is also created if a @a viewName is passed in as
- * part of the request.
+ * radius and center point (i.e. circular NAI). The operation is synchronous,
+ * meaning that a response will not be returned until all the objects are fully
+ * available. The response payload provides the count of the resulting set. A
+ * new resultant set (view) which satisfies the input circular NAI restriction
+ * specification is also created if a @a viewName is passed in as part of the
+ * request.
  * <p>
  * For track data, all track points that lie within the circle plus one point
  * on either side of the circle (if the track goes beyond the circle) will be
@@ -5033,7 +5075,7 @@ FilterByRadiusResponse& filterByRadius( const FilterByRadiusRequest& request_,
  * polygon fall within the circle).
  * 
  * @param tableName  Name of the table on which the filter by radius operation
- *                   will be performed.  Must be an existing table in GPUdb.
+ *                   will be performed.  Must be an existing table.
  * @param viewName  If provided, then this will be the name of the view
  *                  containing the results. Must not be an already existing
  *                  collection, table or view.  Default value is an empty
@@ -5070,12 +5112,12 @@ FilterByRadiusResponse filterByRadius( const std::string& tableName,
 
 /**
  * Calculates which objects from a table lie within a circle with the given
- * radius and center point (i.e. circular NAI). The operation is synchronous
- * meaning that GPUdb will not return a response until all the objects are
- * fully available. The response payload provides the count of the resulting
- * set. A new resultant set (view) which satisfies the input circular NAI
- * restriction specification is also created if a @a viewName is passed in as
- * part of the request.
+ * radius and center point (i.e. circular NAI). The operation is synchronous,
+ * meaning that a response will not be returned until all the objects are fully
+ * available. The response payload provides the count of the resulting set. A
+ * new resultant set (view) which satisfies the input circular NAI restriction
+ * specification is also created if a @a viewName is passed in as part of the
+ * request.
  * <p>
  * For track data, all track points that lie within the circle plus one point
  * on either side of the circle (if the track goes beyond the circle) will be
@@ -5084,7 +5126,7 @@ FilterByRadiusResponse filterByRadius( const std::string& tableName,
  * polygon fall within the circle).
  * 
  * @param tableName  Name of the table on which the filter by radius operation
- *                   will be performed.  Must be an existing table in GPUdb.
+ *                   will be performed.  Must be an existing table.
  * @param viewName  If provided, then this will be the name of the view
  *                  containing the results. Must not be an already existing
  *                  collection, table or view.  Default value is an empty
@@ -5176,7 +5218,7 @@ FilterByRangeResponse& filterByRange( const FilterByRangeRequest& request_,
  * bounds (which may not include all the track points of any given track).
  * 
  * @param tableName  Name of the table on which the filter by range operation
- *                   will be performed.  Must be a valid GPUdb table.
+ *                   will be performed.  Must be an existing table.
  * @param viewName  If provided, then this will be the name of the view
  *                  containing the results. Must not be an already existing
  *                  collection, table or view.  Default value is an empty
@@ -5209,7 +5251,7 @@ FilterByRangeResponse filterByRange( const std::string& tableName,
  * bounds (which may not include all the track points of any given track).
  * 
  * @param tableName  Name of the table on which the filter by range operation
- *                   will be performed.  Must be a valid GPUdb table.
+ *                   will be performed.  Must be an existing table.
  * @param viewName  If provided, then this will be the name of the view
  *                  containing the results. Must not be an already existing
  *                  collection, table or view.  Default value is an empty
@@ -5248,7 +5290,7 @@ FilterByRangeResponse& filterByRange( const std::string& tableName,
  * set. The return value of the function is the number of points in the
  * resultant set (view).
  * <p>
- * This operation is synchronous meaning that GPUdb will not return a response
+ * This operation is synchronous, meaning that a response will not be returned
  * until all the objects are fully available.
  * 
  * @param[in] request_  Request object containing the parameters for the
@@ -5273,7 +5315,7 @@ FilterBySeriesResponse filterBySeries( const FilterBySeriesRequest& request_ ) c
  * set. The return value of the function is the number of points in the
  * resultant set (view).
  * <p>
- * This operation is synchronous meaning that GPUdb will not return a response
+ * This operation is synchronous, meaning that a response will not be returned
  * until all the objects are fully available.
  * 
  * @param[in] request_  Request object containing the parameters for the
@@ -5302,7 +5344,7 @@ FilterBySeriesResponse& filterBySeries( const FilterBySeriesRequest& request_,
  * set. The return value of the function is the number of points in the
  * resultant set (view).
  * <p>
- * This operation is synchronous meaning that GPUdb will not return a response
+ * This operation is synchronous, meaning that a response will not be returned
  * until all the objects are fully available.
  * 
  * @param tableName  Name of the table on which the filter by track operation
@@ -5359,7 +5401,7 @@ FilterBySeriesResponse filterBySeries( const std::string& tableName,
  * set. The return value of the function is the number of points in the
  * resultant set (view).
  * <p>
- * This operation is synchronous meaning that GPUdb will not return a response
+ * This operation is synchronous, meaning that a response will not be returned
  * until all the objects are fully available.
  * 
  * @param tableName  Name of the table on which the filter by track operation
@@ -5413,13 +5455,13 @@ FilterBySeriesResponse& filterBySeries( const std::string& tableName,
 
  * * search : full text search query with wildcards and boolean operators, e.g.
  * '(bob* OR sue) AND NOT jane'. Note that for this mode, no column can be
- * specified in @a columnNames; GPUdb will search through all string columns of
- * the table that have text search enabled. Also, the first character of a
- * search term cannot be a wildcard (* or ?), and search terms cannot be any of
- * the following:  "a", "an", "and", "are", "as", "at", "be", "but", "by",
- * "for", "if", "in", "into", "is", "it", "no", "not", "of", "on", "or",
- * "such", "that", "the", "their", "then", "there", "these", "they", "this",
- * "to", "was", "will", "with".
+ * specified in @a columnNames; all string columns of the table that have text
+ * search enabled will be searched. Also, the first character of a search term
+ * cannot be a wildcard (* or ?), and search terms cannot be any of the
+ * following:  "a", "an", "and", "are", "as", "at", "be", "but", "by", "for",
+ * "if", "in", "into", "is", "it", "no", "not", "of", "on", "or", "such",
+ * "that", "the", "their", "then", "there", "these", "they", "this", "to",
+ * "was", "will", "with".
  *     Search query types:
  *         * Multiple search terms
  *             ex. perfect union - will match any record containing "perfect",
@@ -5488,13 +5530,13 @@ FilterByStringResponse filterByString( const FilterByStringRequest& request_ ) c
 
  * * search : full text search query with wildcards and boolean operators, e.g.
  * '(bob* OR sue) AND NOT jane'. Note that for this mode, no column can be
- * specified in @a columnNames; GPUdb will search through all string columns of
- * the table that have text search enabled. Also, the first character of a
- * search term cannot be a wildcard (* or ?), and search terms cannot be any of
- * the following:  "a", "an", "and", "are", "as", "at", "be", "but", "by",
- * "for", "if", "in", "into", "is", "it", "no", "not", "of", "on", "or",
- * "such", "that", "the", "their", "then", "there", "these", "they", "this",
- * "to", "was", "will", "with".
+ * specified in @a columnNames; all string columns of the table that have text
+ * search enabled will be searched. Also, the first character of a search term
+ * cannot be a wildcard (* or ?), and search terms cannot be any of the
+ * following:  "a", "an", "and", "are", "as", "at", "be", "but", "by", "for",
+ * "if", "in", "into", "is", "it", "no", "not", "of", "on", "or", "such",
+ * "that", "the", "their", "then", "there", "these", "they", "this", "to",
+ * "was", "will", "with".
  *     Search query types:
  *         * Multiple search terms
  *             ex. perfect union - will match any record containing "perfect",
@@ -5567,13 +5609,13 @@ FilterByStringResponse& filterByString( const FilterByStringRequest& request_,
 
  * * search : full text search query with wildcards and boolean operators, e.g.
  * '(bob* OR sue) AND NOT jane'. Note that for this mode, no column can be
- * specified in @a columnNames; GPUdb will search through all string columns of
- * the table that have text search enabled. Also, the first character of a
- * search term cannot be a wildcard (* or ?), and search terms cannot be any of
- * the following:  "a", "an", "and", "are", "as", "at", "be", "but", "by",
- * "for", "if", "in", "into", "is", "it", "no", "not", "of", "on", "or",
- * "such", "that", "the", "their", "then", "there", "these", "they", "this",
- * "to", "was", "will", "with".
+ * specified in @a columnNames; all string columns of the table that have text
+ * search enabled will be searched. Also, the first character of a search term
+ * cannot be a wildcard (* or ?), and search terms cannot be any of the
+ * following:  "a", "an", "and", "are", "as", "at", "be", "but", "by", "for",
+ * "if", "in", "into", "is", "it", "no", "not", "of", "on", "or", "such",
+ * "that", "the", "their", "then", "there", "these", "they", "this", "to",
+ * "was", "will", "with".
  *     Search query types:
  *         * Multiple search terms
  *             ex. perfect union - will match any record containing "perfect",
@@ -5628,8 +5670,7 @@ FilterByStringResponse& filterByString( const FilterByStringRequest& request_,
  * modes except 'search'
  * 
  * @param tableName  Name of the table on which the filter operation will be
- *                   performed.  Must be a valid GPUdb table, collection or
- *                   view.
+ *                   performed.  Must be an existing table, collection or view.
  * @param viewName  If provided, then this will be the name of the view
  *                  containing the results. Must not be an already existing
  *                  collection, table or view.  Default value is an empty
@@ -5664,13 +5705,13 @@ FilterByStringResponse filterByString( const std::string& tableName,
 
  * * search : full text search query with wildcards and boolean operators, e.g.
  * '(bob* OR sue) AND NOT jane'. Note that for this mode, no column can be
- * specified in @a columnNames; GPUdb will search through all string columns of
- * the table that have text search enabled. Also, the first character of a
- * search term cannot be a wildcard (* or ?), and search terms cannot be any of
- * the following:  "a", "an", "and", "are", "as", "at", "be", "but", "by",
- * "for", "if", "in", "into", "is", "it", "no", "not", "of", "on", "or",
- * "such", "that", "the", "their", "then", "there", "these", "they", "this",
- * "to", "was", "will", "with".
+ * specified in @a columnNames; all string columns of the table that have text
+ * search enabled will be searched. Also, the first character of a search term
+ * cannot be a wildcard (* or ?), and search terms cannot be any of the
+ * following:  "a", "an", "and", "are", "as", "at", "be", "but", "by", "for",
+ * "if", "in", "into", "is", "it", "no", "not", "of", "on", "or", "such",
+ * "that", "the", "their", "then", "there", "these", "they", "this", "to",
+ * "was", "will", "with".
  *     Search query types:
  *         * Multiple search terms
  *             ex. perfect union - will match any record containing "perfect",
@@ -5725,8 +5766,7 @@ FilterByStringResponse filterByString( const std::string& tableName,
  * modes except 'search'
  * 
  * @param tableName  Name of the table on which the filter operation will be
- *                   performed.  Must be a valid GPUdb table, collection or
- *                   view.
+ *                   performed.  Must be an existing table, collection or view.
  * @param viewName  If provided, then this will be the name of the view
  *                  containing the results. Must not be an already existing
  *                  collection, table or view.  Default value is an empty
@@ -5765,9 +5805,10 @@ FilterByStringResponse& filterByString( const std::string& tableName,
  * table from which objects will be filtered and the source table based on
  * which the filter will be created); the column names need not be the same. If
  * a @a viewName is specified, then the filtered objects will then be put in a
- * newly created view. The operation is synchronous, meaning that GPUdb will
- * not return until all objects are fully available in the result view. The
- * return value contains the count (i.e. the size) of the resulting view.
+ * newly created view. The operation is synchronous, meaning that a response
+ * will not be returned until all objects are fully available in the result
+ * view. The return value contains the count (i.e. the size) of the resulting
+ * view.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -5784,9 +5825,10 @@ FilterByTableResponse filterByTable( const FilterByTableRequest& request_ ) cons
  * table from which objects will be filtered and the source table based on
  * which the filter will be created); the column names need not be the same. If
  * a @a viewName is specified, then the filtered objects will then be put in a
- * newly created view. The operation is synchronous, meaning that GPUdb will
- * not return until all objects are fully available in the result view. The
- * return value contains the count (i.e. the size) of the resulting view.
+ * newly created view. The operation is synchronous, meaning that a response
+ * will not be returned until all objects are fully available in the result
+ * view. The return value contains the count (i.e. the size) of the resulting
+ * view.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -5807,12 +5849,13 @@ FilterByTableResponse& filterByTable( const FilterByTableRequest& request_,
  * table from which objects will be filtered and the source table based on
  * which the filter will be created); the column names need not be the same. If
  * a @a viewName is specified, then the filtered objects will then be put in a
- * newly created view. The operation is synchronous, meaning that GPUdb will
- * not return until all objects are fully available in the result view. The
- * return value contains the count (i.e. the size) of the resulting view.
+ * newly created view. The operation is synchronous, meaning that a response
+ * will not be returned until all objects are fully available in the result
+ * view. The return value contains the count (i.e. the size) of the resulting
+ * view.
  * 
  * @param tableName  Name of the table whose data will be filtered. Must be an
- *                   existing table in GPUdb.
+ *                   existing table.
  * @param viewName  If provided, then this will be the name of the view
  *                  containing the results. Must not be an already existing
  *                  collection, table or view.  Default value is an empty
@@ -5821,7 +5864,7 @@ FilterByTableResponse& filterByTable( const FilterByTableRequest& request_,
  *                    filtered from the table designated by @a tableName.
  * @param sourceTableName  Name of the table whose data will be compared
  *                         against in the table called @a tableName. Must be an
- *                         existing table in GPUdb.
+ *                         existing table.
  * @param sourceTableColumnName  Name of the column in the @a sourceTableName
  *                               whose values will be used as the filter for
  *                               table @a tableName. Must match the type of the
@@ -5865,12 +5908,13 @@ FilterByTableResponse filterByTable( const std::string& tableName,
  * table from which objects will be filtered and the source table based on
  * which the filter will be created); the column names need not be the same. If
  * a @a viewName is specified, then the filtered objects will then be put in a
- * newly created view. The operation is synchronous, meaning that GPUdb will
- * not return until all objects are fully available in the result view. The
- * return value contains the count (i.e. the size) of the resulting view.
+ * newly created view. The operation is synchronous, meaning that a response
+ * will not be returned until all objects are fully available in the result
+ * view. The return value contains the count (i.e. the size) of the resulting
+ * view.
  * 
  * @param tableName  Name of the table whose data will be filtered. Must be an
- *                   existing table in GPUdb.
+ *                   existing table.
  * @param viewName  If provided, then this will be the name of the view
  *                  containing the results. Must not be an already existing
  *                  collection, table or view.  Default value is an empty
@@ -5879,7 +5923,7 @@ FilterByTableResponse filterByTable( const std::string& tableName,
  *                    filtered from the table designated by @a tableName.
  * @param sourceTableName  Name of the table whose data will be compared
  *                         against in the table called @a tableName. Must be an
- *                         existing table in GPUdb.
+ *                         existing table.
  * @param sourceTableColumnName  Name of the column in the @a sourceTableName
  *                               whose values will be used as the filter for
  *                               table @a tableName. Must match the type of the
@@ -5925,8 +5969,8 @@ FilterByTableResponse& filterByTable( const std::string& tableName,
  * Calculates which objects from a table has a particular value for a
  * particular column. The input parameters provide a way to specify either a
  * String or a Double valued column and a desired value for the column on which
- * the filter is performed. The operation is synchronous meaning that GPUdb
- * will not return a response until all the objects are fully available. The
+ * the filter is performed. The operation is synchronous, meaning that a
+ * response will not be returned until all the objects are fully available. The
  * response payload provides the count of the resulting set. A new result view
  * which satisfies the input filter restriction specification is also created
  * with a view name passed in as part of the input payload.
@@ -5944,8 +5988,8 @@ FilterByValueResponse filterByValue( const FilterByValueRequest& request_ ) cons
  * Calculates which objects from a table has a particular value for a
  * particular column. The input parameters provide a way to specify either a
  * String or a Double valued column and a desired value for the column on which
- * the filter is performed. The operation is synchronous meaning that GPUdb
- * will not return a response until all the objects are fully available. The
+ * the filter is performed. The operation is synchronous, meaning that a
+ * response will not be returned until all the objects are fully available. The
  * response payload provides the count of the resulting set. A new result view
  * which satisfies the input filter restriction specification is also created
  * with a view name passed in as part of the input payload.
@@ -5967,13 +6011,13 @@ FilterByValueResponse& filterByValue( const FilterByValueRequest& request_,
  * Calculates which objects from a table has a particular value for a
  * particular column. The input parameters provide a way to specify either a
  * String or a Double valued column and a desired value for the column on which
- * the filter is performed. The operation is synchronous meaning that GPUdb
- * will not return a response until all the objects are fully available. The
+ * the filter is performed. The operation is synchronous, meaning that a
+ * response will not be returned until all the objects are fully available. The
  * response payload provides the count of the resulting set. A new result view
  * which satisfies the input filter restriction specification is also created
  * with a view name passed in as part of the input payload.
  * 
- * @param tableName  Name of an existing GPUdb table on which to perform the
+ * @param tableName  Name of an existing table on which to perform the
  *                   calculation.
  * @param viewName  If provided, then this will be the name of the view
  *                  containing the results. Must not be an already existing
@@ -6004,13 +6048,13 @@ FilterByValueResponse filterByValue( const std::string& tableName,
  * Calculates which objects from a table has a particular value for a
  * particular column. The input parameters provide a way to specify either a
  * String or a Double valued column and a desired value for the column on which
- * the filter is performed. The operation is synchronous meaning that GPUdb
- * will not return a response until all the objects are fully available. The
+ * the filter is performed. The operation is synchronous, meaning that a
+ * response will not be returned until all the objects are fully available. The
  * response payload provides the count of the resulting set. A new result view
  * which satisfies the input filter restriction specification is also created
  * with a view name passed in as part of the input payload.
  * 
- * @param tableName  Name of an existing GPUdb table on which to perform the
+ * @param tableName  Name of an existing table on which to perform the
  *                   calculation.
  * @param viewName  If provided, then this will be the name of the view
  *                  containing the results. Must not be an already existing
@@ -7892,9 +7936,9 @@ GetRecordsFromCollectionResponse<TResponse>& getRecordsFromCollection( const Get
  *               number of results should be returned.  Default value is 10000.
  * @param options
  *                 <ul>
- *                         <li> return_record_ids: If 'true' then return
- *                 GPUdb's internal record id along with each returned record.
- *                 Default is 'false'. Values: 'true', 'false'.
+ *                         <li> return_record_ids: If 'true' then return the
+ *                 internal record ID along with each returned record. Default
+ *                 is 'false'. Values: 'true', 'false'.
  *                 </ul>
  *                   Default value is an empty std::map.
  * 
@@ -7948,9 +7992,9 @@ GetRecordsFromCollectionResponse<TResponse> getRecordsFromCollection( const std:
  *               number of results should be returned.  Default value is 10000.
  * @param options
  *                 <ul>
- *                         <li> return_record_ids: If 'true' then return
- *                 GPUdb's internal record id along with each returned record.
- *                 Default is 'false'. Values: 'true', 'false'.
+ *                         <li> return_record_ids: If 'true' then return the
+ *                 internal record ID along with each returned record. Default
+ *                 is 'false'. Values: 'true', 'false'.
  *                 </ul>
  *                   Default value is an empty std::map.
  * @param[out] response_  Response object containing the results of the
@@ -8158,9 +8202,9 @@ GetRecordsFromCollectionResponse<TResponse>& getRecordsFromCollection( const Typ
  *               number of results should be returned.  Default value is 10000.
  * @param options
  *                 <ul>
- *                         <li> return_record_ids: If 'true' then return
- *                 GPUdb's internal record id along with each returned record.
- *                 Default is 'false'. Values: 'true', 'false'.
+ *                         <li> return_record_ids: If 'true' then return the
+ *                 internal record ID along with each returned record. Default
+ *                 is 'false'. Values: 'true', 'false'.
  *                 </ul>
  *                   Default value is an empty std::map.
  * 
@@ -8216,9 +8260,9 @@ GetRecordsFromCollectionResponse<TResponse> getRecordsFromCollection( const ::av
  *               number of results should be returned.  Default value is 10000.
  * @param options
  *                 <ul>
- *                         <li> return_record_ids: If 'true' then return
- *                 GPUdb's internal record id along with each returned record.
- *                 Default is 'false'. Values: 'true', 'false'.
+ *                         <li> return_record_ids: If 'true' then return the
+ *                 internal record ID along with each returned record. Default
+ *                 is 'false'. Values: 'true', 'false'.
  *                 </ul>
  *                   Default value is an empty std::map.
  * 
@@ -8274,9 +8318,9 @@ GetRecordsFromCollectionResponse<TResponse> getRecordsFromCollection( const Type
  *               number of results should be returned.  Default value is 10000.
  * @param options
  *                 <ul>
- *                         <li> return_record_ids: If 'true' then return
- *                 GPUdb's internal record id along with each returned record.
- *                 Default is 'false'. Values: 'true', 'false'.
+ *                         <li> return_record_ids: If 'true' then return the
+ *                 internal record ID along with each returned record. Default
+ *                 is 'false'. Values: 'true', 'false'.
  *                 </ul>
  *                   Default value is an empty std::map.
  * @param[out] response_  Response object containing the results of the
@@ -8335,9 +8379,9 @@ GetRecordsFromCollectionResponse<TResponse>& getRecordsFromCollection( const ::a
  *               number of results should be returned.  Default value is 10000.
  * @param options
  *                 <ul>
- *                         <li> return_record_ids: If 'true' then return
- *                 GPUdb's internal record id along with each returned record.
- *                 Default is 'false'. Values: 'true', 'false'.
+ *                         <li> return_record_ids: If 'true' then return the
+ *                 internal record ID along with each returned record. Default
+ *                 is 'false'. Values: 'true', 'false'.
  *                 </ul>
  *                   Default value is an empty std::map.
  * @param[out] response_  Response object containing the results of the
@@ -8646,7 +8690,7 @@ HasProcResponse& hasProc( const std::string& procName,
                           HasProcResponse& response_ ) const;
 
 /**
- * Checks the existence of a table with the given name in GPUdb.
+ * Checks for the existence of a table with the given name.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -8658,7 +8702,7 @@ HasProcResponse& hasProc( const std::string& procName,
 HasTableResponse hasTable( const HasTableRequest& request_ ) const;
 
 /**
- * Checks the existence of a table with the given name in GPUdb.
+ * Checks for the existence of a table with the given name.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -8674,7 +8718,7 @@ HasTableResponse& hasTable( const HasTableRequest& request_,
                             HasTableResponse& response_ ) const;
 
 /**
- * Checks the existence of a table with the given name in GPUdb.
+ * Checks for the existence of a table with the given name.
  * 
  * @param tableName  Name of the table to check for existence.
  * @param options  Optional parameters.  Default value is an empty std::map.
@@ -8687,7 +8731,7 @@ HasTableResponse hasTable( const std::string& tableName,
                            const std::map<std::string, std::string>& options ) const;
 
 /**
- * Checks the existence of a table with the given name in GPUdb.
+ * Checks for the existence of a table with the given name.
  * 
  * @param tableName  Name of the table to check for existence.
  * @param options  Optional parameters.  Default value is an empty std::map.
@@ -8704,7 +8748,7 @@ HasTableResponse& hasTable( const std::string& tableName,
                             HasTableResponse& response_ ) const;
 
 /**
- * Check the existence of a type in GPUdb.
+ * Check for the existence of a type.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -8716,7 +8760,7 @@ HasTableResponse& hasTable( const std::string& tableName,
 HasTypeResponse hasType( const HasTypeRequest& request_ ) const;
 
 /**
- * Check the existence of a type in GPUdb.
+ * Check for the existence of a type.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -8732,10 +8776,9 @@ HasTypeResponse& hasType( const HasTypeRequest& request_,
                           HasTypeResponse& response_ ) const;
 
 /**
- * Check the existence of a type in GPUdb.
+ * Check for the existence of a type.
  * 
- * @param typeId  Id of the type returned by GPUdb in response to /create/type
- *                request.
+ * @param typeId  Id of the type returned in response to /create/type request.
  * @param options  Optional parameters.  Default value is an empty std::map.
  * 
  * @return Response object containing the result of the operation.
@@ -8746,10 +8789,9 @@ HasTypeResponse hasType( const std::string& typeId,
                          const std::map<std::string, std::string>& options ) const;
 
 /**
- * Check the existence of a type in GPUdb.
+ * Check for the existence of a type.
  * 
- * @param typeId  Id of the type returned by GPUdb in response to /create/type
- *                request.
+ * @param typeId  Id of the type returned in response to /create/type request.
  * @param options  Optional parameters.  Default value is an empty std::map.
  * @param[out] response_  Response object containing the results of the
  *                        operation.
@@ -8764,10 +8806,10 @@ HasTypeResponse& hasType( const std::string& typeId,
                           HasTypeResponse& response_ ) const;
 
 /**
- * Adds multiple records to the specified table. The operation is synchronous
- * meaning that GPUdb will not return a response until all the records are
- * fully inserted and available. The response payload provides the counts of
- * the number of records actually inserted and/or updated, and can provide the
+ * Adds multiple records to the specified table. The operation is synchronous,
+ * meaning that a response will not be returned until all the records are fully
+ * inserted and available. The response payload provides the counts of the
+ * number of records actually inserted and/or updated, and can provide the
  * unique identifier of each added record.
  * <p>
  * The @a options parameter can be used to customize this function's behavior.
@@ -8800,10 +8842,10 @@ HasTypeResponse& hasType( const std::string& typeId,
 InsertRecordsResponse insertRecordsRaw( const RawInsertRecordsRequest& request_ ) const;
 
 /**
- * Adds multiple records to the specified table. The operation is synchronous
- * meaning that GPUdb will not return a response until all the records are
- * fully inserted and available. The response payload provides the counts of
- * the number of records actually inserted and/or updated, and can provide the
+ * Adds multiple records to the specified table. The operation is synchronous,
+ * meaning that a response will not be returned until all the records are fully
+ * inserted and available. The response payload provides the counts of the
+ * number of records actually inserted and/or updated, and can provide the
  * unique identifier of each added record.
  * <p>
  * The @a options parameter can be used to customize this function's behavior.
@@ -8840,10 +8882,10 @@ InsertRecordsResponse& insertRecordsRaw( const RawInsertRecordsRequest& request_
                                          InsertRecordsResponse& response_ ) const;
 
 /**
- * Adds multiple records to the specified table. The operation is synchronous
- * meaning that GPUdb will not return a response until all the records are
- * fully inserted and available. The response payload provides the counts of
- * the number of records actually inserted and/or updated, and can provide the
+ * Adds multiple records to the specified table. The operation is synchronous,
+ * meaning that a response will not be returned until all the records are fully
+ * inserted and available. The response payload provides the counts of the
+ * number of records actually inserted and/or updated, and can provide the
  * unique identifier of each added record.
  * <p>
  * The @a options parameter can be used to customize this function's behavior.
@@ -8888,10 +8930,10 @@ InsertRecordsResponse insertRecords( const InsertRecordsRequest<TRequest>& reque
 
 
 /**
- * Adds multiple records to the specified table. The operation is synchronous
- * meaning that GPUdb will not return a response until all the records are
- * fully inserted and available. The response payload provides the counts of
- * the number of records actually inserted and/or updated, and can provide the
+ * Adds multiple records to the specified table. The operation is synchronous,
+ * meaning that a response will not be returned until all the records are fully
+ * inserted and available. The response payload provides the counts of the
+ * number of records actually inserted and/or updated, and can provide the
  * unique identifier of each added record.
  * <p>
  * The @a options parameter can be used to customize this function's behavior.
@@ -8939,10 +8981,10 @@ InsertRecordsResponse& insertRecords( const InsertRecordsRequest<TRequest>& requ
 
 
 /**
- * Adds multiple records to the specified table. The operation is synchronous
- * meaning that GPUdb will not return a response until all the records are
- * fully inserted and available. The response payload provides the counts of
- * the number of records actually inserted and/or updated, and can provide the
+ * Adds multiple records to the specified table. The operation is synchronous,
+ * meaning that a response will not be returned until all the records are fully
+ * inserted and available. The response payload provides the counts of the
+ * number of records actually inserted and/or updated, and can provide the
  * unique identifier of each added record.
  * <p>
  * The @a options parameter can be used to customize this function's behavior.
@@ -8986,9 +9028,9 @@ InsertRecordsResponse& insertRecords( const InsertRecordsRequest<TRequest>& requ
  *                 existing primary keys) will be ignored (or updated). If the
  *                 specified table does not have a primary key column then this
  *                 optional parameter is ignored. Values: 'true', 'false'.
- *                         <li> return_record_ids: If @a true then return
- *                 GPUdb's internal record id along for each inserted record.
- *                 Values: 'true', 'false'.
+ *                         <li> return_record_ids: If @a true then return the
+ *                 internal record id along for each inserted record. Values:
+ *                 'true', 'false'.
  *                         <li> route_to_address: Route to a specific rank/tom.
  *                 Option not suitable for tables using primary/shard keys
  *                 </ul>
@@ -9013,10 +9055,10 @@ InsertRecordsResponse insertRecords( const std::string& tableName,
 
 
 /**
- * Adds multiple records to the specified table. The operation is synchronous
- * meaning that GPUdb will not return a response until all the records are
- * fully inserted and available. The response payload provides the counts of
- * the number of records actually inserted and/or updated, and can provide the
+ * Adds multiple records to the specified table. The operation is synchronous,
+ * meaning that a response will not be returned until all the records are fully
+ * inserted and available. The response payload provides the counts of the
+ * number of records actually inserted and/or updated, and can provide the
  * unique identifier of each added record.
  * <p>
  * The @a options parameter can be used to customize this function's behavior.
@@ -9060,9 +9102,9 @@ InsertRecordsResponse insertRecords( const std::string& tableName,
  *                 existing primary keys) will be ignored (or updated). If the
  *                 specified table does not have a primary key column then this
  *                 optional parameter is ignored. Values: 'true', 'false'.
- *                         <li> return_record_ids: If @a true then return
- *                 GPUdb's internal record id along for each inserted record.
- *                 Values: 'true', 'false'.
+ *                         <li> return_record_ids: If @a true then return the
+ *                 internal record id along for each inserted record. Values:
+ *                 'true', 'false'.
  *                         <li> route_to_address: Route to a specific rank/tom.
  *                 Option not suitable for tables using primary/shard keys
  *                 </ul>
@@ -9097,8 +9139,8 @@ InsertRecordsResponse& insertRecords( const std::string& tableName,
  * rather than random ones. Only individual tables are supported for this
  * operation.
  * <p>
- * This operation is synchronous, meaning that GPUdb will not return until all
- * random records are fully available.
+ * This operation is synchronous, meaning that a response will not be returned
+ * until all random records are fully available.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -9117,8 +9159,8 @@ InsertRecordsRandomResponse insertRecordsRandom( const InsertRecordsRandomReques
  * rather than random ones. Only individual tables are supported for this
  * operation.
  * <p>
- * This operation is synchronous, meaning that GPUdb will not return until all
- * random records are fully available.
+ * This operation is synchronous, meaning that a response will not be returned
+ * until all random records are fully available.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -9141,8 +9183,8 @@ InsertRecordsRandomResponse& insertRecordsRandom( const InsertRecordsRandomReque
  * rather than random ones. Only individual tables are supported for this
  * operation.
  * <p>
- * This operation is synchronous, meaning that GPUdb will not return until all
- * random records are fully available.
+ * This operation is synchronous, meaning that a response will not be returned
+ * until all random records are fully available.
  * 
  * @param tableName  Table to which random records will be added. Must be an
  *                   existing table.  Also, must be an individual table, not a
@@ -9161,6 +9203,18 @@ InsertRecordsRandomResponse& insertRecordsRandom( const InsertRecordsRandomReque
  *                 of the column.  Below follows a more detailed description of
  *                 the map:
  *                 <ul>
+ *                         <li> seed: If provided, the internal random number
+ *                 generator will be initialized with the given value.  The
+ *                 minimum is 0.  This allows for the same set of random
+ *                 numbers to be generated across invocation of this endpoint
+ *                 in case the user wants to repeat the test.  Since @a
+ *                 options, is a map of maps, we need an internal map to
+ *                 provide the seed value.  For example, to pass 100 as the
+ *                 seed value through this parameter, you need something
+ *                 equivalent to: 'options' = {'seed': { 'value': 100 } }
+ *                 <ul>
+ *                         <li> value: Pass the seed value here.
+ *                 </ul>
  *                         <li> all: This key indicates that the specifications
  *                 relayed in the internal map are to be applied to all columns
  *                 of the records.
@@ -9179,8 +9233,8 @@ InsertRecordsRandomResponse& insertRecordsRandom( const InsertRecordsRandomReque
  *                 than or equal to max. Value needs to be within [1, 200].
  *                 If the min is outside the accepted ranges for strings
  *                 columns and 'x' and 'y' columns for point/shape/track types,
- *                 then those parameters will not be set; however, GPUdb will
- *                 not throw an error in such a case. It is the responsibility
+ *                 then those parameters will not be set; however, an error
+ *                 will not be thrown in such a case. It is the responsibility
  *                 of the user to use the @a all parameter judiciously.
  *                         <li> max: For numerical columns, the maximum of the
  *                 generated values is set to this value. Default is 99999. For
@@ -9194,8 +9248,8 @@ InsertRecordsRandomResponse& insertRecordsRandom( const InsertRecordsRandomReque
  *                 than or equal to *min*. Value needs to be within [1, 200].
  *                 If the *max* is outside the accepted ranges for strings
  *                 columns and 'x' and 'y' columns for point/shape/track types,
- *                 then those parameters will not be set; however, GPUdb will
- *                 not throw an error in such a case. It is the responsibility
+ *                 then those parameters will not be set; however, an error
+ *                 will not be thrown in such a case. It is the responsibility
  *                 of the user to use the @a all parameter judiciously.
  *                         <li> interval: If specified, then generate values
  *                 for all columns linearly and evenly spaced with the given
@@ -9205,7 +9259,13 @@ InsertRecordsRandomResponse& insertRecordsRandom( const InsertRecordsRandomReque
  *                 is ignored but the string values would be generated
  *                 following the pattern: 'attrname_creationIndex#', i.e. the
  *                 column name suffixed with an underscore and a running
- *                 counter (starting at 0).
+ *                 counter (starting at 0).  No nulls would be generated for
+ *                 nullable columns.
+ *                         <li> null_percentage: If specified, then generate
+ *                 the given percentage of the count as nulls for all nullable
+ *                 columns.  This option will be ignored for non-nullable
+ *                 columns.  The value must be within the range [0, 1.0].  The
+ *                 default value is 5% (0.05).
  *                 </ul>
  *                         <li> attr_name: Set the following parameters for the
  *                 column specified by the key. This overrides any parameter
@@ -9225,8 +9285,8 @@ InsertRecordsRandomResponse& insertRecordsRandom( const InsertRecordsRandomReque
  *                 than or equal to max. Value needs to be within [1, 200].
  *                 If the min is outside the accepted ranges for strings
  *                 columns and 'x' and 'y' columns for point/shape/track types,
- *                 then those parameters will not be set; however, GPUdb will
- *                 not throw an error in such a case. It is the responsibility
+ *                 then those parameters will not be set; however, an error
+ *                 will not be thrown in such a case. It is the responsibility
  *                 of the user to use the @a all parameter judiciously.
  *                         <li> max: For numerical columns, the maximum of the
  *                 generated values is set to this value. Default is 99999. For
@@ -9240,8 +9300,8 @@ InsertRecordsRandomResponse& insertRecordsRandom( const InsertRecordsRandomReque
  *                 than or equal to *min*. Value needs to be within [1, 200].
  *                 If the *max* is outside the accepted ranges for strings
  *                 columns and 'x' and 'y' columns for point/shape/track types,
- *                 then those parameters will not be set; however, GPUdb will
- *                 not throw an error in such a case. It is the responsibility
+ *                 then those parameters will not be set; however, an error
+ *                 will not be thrown in such a case. It is the responsibility
  *                 of the user to use the @a all parameter judiciously.
  *                         <li> interval: If specified, then generate values
  *                 for all columns linearly and evenly spaced with the given
@@ -9251,10 +9311,17 @@ InsertRecordsRandomResponse& insertRecordsRandom( const InsertRecordsRandomReque
  *                 is ignored but the string values would be generated
  *                 following the pattern: 'attrname_creationIndex#', i.e. the
  *                 column name suffixed with an underscore and a running
- *                 counter (starting at 0).
+ *                 counter (starting at 0).  No nulls would be generated for
+ *                 nullable columns.
+ *                         <li> null_percentage: If specified and if this
+ *                 column is nullable, then generate the given percentage of
+ *                 the count as nulls.  This option will result in an error if
+ *                 the column is not nullable.  The value must be within the
+ *                 range [0, 1.0].  The default value is 5% (0.05).
  *                 </ul>
  *                         <li> track_length: This key-map pair is only valid
- *                 for track type data sets (GPUdb throws an error otherwise).
+ *                 for track type data sets (an error is thrown otherwise).  No
+ *                 nulls would be generated for nullable columns.
  *                 <ul>
  *                         <li> min: Minimum possible length for generated
  *                 series; default is 100 records per series. Must be an
@@ -9284,8 +9351,8 @@ InsertRecordsRandomResponse insertRecordsRandom( const std::string& tableName,
  * rather than random ones. Only individual tables are supported for this
  * operation.
  * <p>
- * This operation is synchronous, meaning that GPUdb will not return until all
- * random records are fully available.
+ * This operation is synchronous, meaning that a response will not be returned
+ * until all random records are fully available.
  * 
  * @param tableName  Table to which random records will be added. Must be an
  *                   existing table.  Also, must be an individual table, not a
@@ -9304,6 +9371,18 @@ InsertRecordsRandomResponse insertRecordsRandom( const std::string& tableName,
  *                 of the column.  Below follows a more detailed description of
  *                 the map:
  *                 <ul>
+ *                         <li> seed: If provided, the internal random number
+ *                 generator will be initialized with the given value.  The
+ *                 minimum is 0.  This allows for the same set of random
+ *                 numbers to be generated across invocation of this endpoint
+ *                 in case the user wants to repeat the test.  Since @a
+ *                 options, is a map of maps, we need an internal map to
+ *                 provide the seed value.  For example, to pass 100 as the
+ *                 seed value through this parameter, you need something
+ *                 equivalent to: 'options' = {'seed': { 'value': 100 } }
+ *                 <ul>
+ *                         <li> value: Pass the seed value here.
+ *                 </ul>
  *                         <li> all: This key indicates that the specifications
  *                 relayed in the internal map are to be applied to all columns
  *                 of the records.
@@ -9322,8 +9401,8 @@ InsertRecordsRandomResponse insertRecordsRandom( const std::string& tableName,
  *                 than or equal to max. Value needs to be within [1, 200].
  *                 If the min is outside the accepted ranges for strings
  *                 columns and 'x' and 'y' columns for point/shape/track types,
- *                 then those parameters will not be set; however, GPUdb will
- *                 not throw an error in such a case. It is the responsibility
+ *                 then those parameters will not be set; however, an error
+ *                 will not be thrown in such a case. It is the responsibility
  *                 of the user to use the @a all parameter judiciously.
  *                         <li> max: For numerical columns, the maximum of the
  *                 generated values is set to this value. Default is 99999. For
@@ -9337,8 +9416,8 @@ InsertRecordsRandomResponse insertRecordsRandom( const std::string& tableName,
  *                 than or equal to *min*. Value needs to be within [1, 200].
  *                 If the *max* is outside the accepted ranges for strings
  *                 columns and 'x' and 'y' columns for point/shape/track types,
- *                 then those parameters will not be set; however, GPUdb will
- *                 not throw an error in such a case. It is the responsibility
+ *                 then those parameters will not be set; however, an error
+ *                 will not be thrown in such a case. It is the responsibility
  *                 of the user to use the @a all parameter judiciously.
  *                         <li> interval: If specified, then generate values
  *                 for all columns linearly and evenly spaced with the given
@@ -9348,7 +9427,13 @@ InsertRecordsRandomResponse insertRecordsRandom( const std::string& tableName,
  *                 is ignored but the string values would be generated
  *                 following the pattern: 'attrname_creationIndex#', i.e. the
  *                 column name suffixed with an underscore and a running
- *                 counter (starting at 0).
+ *                 counter (starting at 0).  No nulls would be generated for
+ *                 nullable columns.
+ *                         <li> null_percentage: If specified, then generate
+ *                 the given percentage of the count as nulls for all nullable
+ *                 columns.  This option will be ignored for non-nullable
+ *                 columns.  The value must be within the range [0, 1.0].  The
+ *                 default value is 5% (0.05).
  *                 </ul>
  *                         <li> attr_name: Set the following parameters for the
  *                 column specified by the key. This overrides any parameter
@@ -9368,8 +9453,8 @@ InsertRecordsRandomResponse insertRecordsRandom( const std::string& tableName,
  *                 than or equal to max. Value needs to be within [1, 200].
  *                 If the min is outside the accepted ranges for strings
  *                 columns and 'x' and 'y' columns for point/shape/track types,
- *                 then those parameters will not be set; however, GPUdb will
- *                 not throw an error in such a case. It is the responsibility
+ *                 then those parameters will not be set; however, an error
+ *                 will not be thrown in such a case. It is the responsibility
  *                 of the user to use the @a all parameter judiciously.
  *                         <li> max: For numerical columns, the maximum of the
  *                 generated values is set to this value. Default is 99999. For
@@ -9383,8 +9468,8 @@ InsertRecordsRandomResponse insertRecordsRandom( const std::string& tableName,
  *                 than or equal to *min*. Value needs to be within [1, 200].
  *                 If the *max* is outside the accepted ranges for strings
  *                 columns and 'x' and 'y' columns for point/shape/track types,
- *                 then those parameters will not be set; however, GPUdb will
- *                 not throw an error in such a case. It is the responsibility
+ *                 then those parameters will not be set; however, an error
+ *                 will not be thrown in such a case. It is the responsibility
  *                 of the user to use the @a all parameter judiciously.
  *                         <li> interval: If specified, then generate values
  *                 for all columns linearly and evenly spaced with the given
@@ -9394,10 +9479,17 @@ InsertRecordsRandomResponse insertRecordsRandom( const std::string& tableName,
  *                 is ignored but the string values would be generated
  *                 following the pattern: 'attrname_creationIndex#', i.e. the
  *                 column name suffixed with an underscore and a running
- *                 counter (starting at 0).
+ *                 counter (starting at 0).  No nulls would be generated for
+ *                 nullable columns.
+ *                         <li> null_percentage: If specified and if this
+ *                 column is nullable, then generate the given percentage of
+ *                 the count as nulls.  This option will result in an error if
+ *                 the column is not nullable.  The value must be within the
+ *                 range [0, 1.0].  The default value is 5% (0.05).
  *                 </ul>
  *                         <li> track_length: This key-map pair is only valid
- *                 for track type data sets (GPUdb throws an error otherwise).
+ *                 for track type data sets (an error is thrown otherwise).  No
+ *                 nulls would be generated for nullable columns.
  *                 <ul>
  *                         <li> min: Minimum possible length for generated
  *                 series; default is 100 records per series. Must be an
@@ -9432,8 +9524,8 @@ InsertRecordsRandomResponse& insertRecordsRandom( const std::string& tableName,
  * with 'x' or 'y' for example). Then when the table is rendered (via <a
  * href="../rest/wms_rest.html" target="_top">WMS</a> or {@link
  * #visualizeImage(const VisualizeImageRequest&) const}) if the
- * 'dosymbology' parameter is 'true' then GPUdb uses the value of the
- * 'SYMBOLCODE' column to pick the symbol displayed for each point.
+ * 'dosymbology' parameter is 'true' then the value of the 'SYMBOLCODE' column
+ * is used to pick the symbol displayed for each point.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -9453,8 +9545,8 @@ InsertSymbolResponse insertSymbol( const InsertSymbolRequest& request_ ) const;
  * with 'x' or 'y' for example). Then when the table is rendered (via <a
  * href="../rest/wms_rest.html" target="_top">WMS</a> or {@link
  * #visualizeImage(const VisualizeImageRequest&,VisualizeImageResponse&) const})
- * if the 'dosymbology' parameter is 'true' then GPUdb uses the value of the
- * 'SYMBOLCODE' column to pick the symbol displayed for each point.
+ * if the 'dosymbology' parameter is 'true' then the value of the 'SYMBOLCODE'
+ * column is used to pick the symbol displayed for each point.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -9478,8 +9570,8 @@ InsertSymbolResponse& insertSymbol( const InsertSymbolRequest& request_,
  * with 'x' or 'y' for example). Then when the table is rendered (via <a
  * href="../rest/wms_rest.html" target="_top">WMS</a> or {@link
  * #visualizeImage(const std::vector<std::string>&,const std::vector<std::string>&,const std::string&,const std::string&,const std::vector<std::vector<std::string> >&,const double,const double,const double,const double,const int32_t,const int32_t,const std::string&,const int64_t,const std::map<std::string, std::vector<std::string> >&,const std::map<std::string, std::string>&) const})
- * if the 'dosymbology' parameter is 'true' then GPUdb uses the value of the
- * 'SYMBOLCODE' column to pick the symbol displayed for each point.
+ * if the 'dosymbology' parameter is 'true' then the value of the 'SYMBOLCODE'
+ * column is used to pick the symbol displayed for each point.
  * 
  * @param symbolId  The id of the symbol being added. This is the same id that
  *                  should be in the 'SYMBOLCODE' column for objects using this
@@ -9520,8 +9612,8 @@ InsertSymbolResponse insertSymbol( const std::string& symbolId,
  * with 'x' or 'y' for example). Then when the table is rendered (via <a
  * href="../rest/wms_rest.html" target="_top">WMS</a> or {@link
  * #visualizeImage(const std::vector<std::string>&,const std::vector<std::string>&,const std::string&,const std::string&,const std::vector<std::vector<std::string> >&,const double,const double,const double,const double,const int32_t,const int32_t,const std::string&,const int64_t,const std::map<std::string, std::vector<std::string> >&,const std::map<std::string, std::string>&,VisualizeImageResponse&) const})
- * if the 'dosymbology' parameter is 'true' then GPUdb uses the value of the
- * 'SYMBOLCODE' column to pick the symbol displayed for each point.
+ * if the 'dosymbology' parameter is 'true' then the value of the 'SYMBOLCODE'
+ * column is used to pick the symbol displayed for each point.
  * 
  * @param symbolId  The id of the symbol being added. This is the same id that
  *                  should be in the 'SYMBOLCODE' column for objects using this
@@ -10169,8 +10261,7 @@ ShowSecurityResponse& showSecurity( const std::vector<std::string>& names,
 
 /**
  * Returns server configuration and version related information to the caller.
- * The GPUdb Admin tool uses it to present server related information to the
- * user.
+ * The admin tool uses it to present server related information to the user.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -10183,8 +10274,7 @@ ShowSystemPropertiesResponse showSystemProperties( const ShowSystemPropertiesReq
 
 /**
  * Returns server configuration and version related information to the caller.
- * The GPUdb Admin tool uses it to present server related information to the
- * user.
+ * The admin tool uses it to present server related information to the user.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -10201,8 +10291,7 @@ ShowSystemPropertiesResponse& showSystemProperties( const ShowSystemPropertiesRe
 
 /**
  * Returns server configuration and version related information to the caller.
- * The GPUdb Admin tool uses it to present server related information to the
- * user.
+ * The admin tool uses it to present server related information to the user.
  * 
  * @param options  Optional parameters.
  *                 <ul>
@@ -10220,8 +10309,7 @@ ShowSystemPropertiesResponse showSystemProperties( const std::map<std::string, s
 
 /**
  * Returns server configuration and version related information to the caller.
- * The GPUdb Admin tool uses it to present server related information to the
- * user.
+ * The admin tool uses it to present server related information to the user.
  * 
  * @param options  Optional parameters.
  *                 <ul>
@@ -10243,7 +10331,7 @@ ShowSystemPropertiesResponse& showSystemProperties( const std::map<std::string, 
 
 /**
  * Provides server configuration and health related status to the caller. The
- * GPUdb Admin tool uses it to present server related information to the user.
+ * admin tool uses it to present server related information to the user.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -10256,7 +10344,7 @@ ShowSystemStatusResponse showSystemStatus( const ShowSystemStatusRequest& reques
 
 /**
  * Provides server configuration and health related status to the caller. The
- * GPUdb Admin tool uses it to present server related information to the user.
+ * admin tool uses it to present server related information to the user.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -10273,7 +10361,7 @@ ShowSystemStatusResponse& showSystemStatus( const ShowSystemStatusRequest& reque
 
 /**
  * Provides server configuration and health related status to the caller. The
- * GPUdb Admin tool uses it to present server related information to the user.
+ * admin tool uses it to present server related information to the user.
  * 
  * @param options  Optional parameters, currently unused.  Default value is an
  *                 empty std::map.
@@ -10286,7 +10374,7 @@ ShowSystemStatusResponse showSystemStatus( const std::map<std::string, std::stri
 
 /**
  * Provides server configuration and health related status to the caller. The
- * GPUdb Admin tool uses it to present server related information to the user.
+ * admin tool uses it to present server related information to the user.
  * 
  * @param options  Optional parameters, currently unused.  Default value is an
  *                 empty std::map.
@@ -10302,8 +10390,8 @@ ShowSystemStatusResponse& showSystemStatus( const std::map<std::string, std::str
                                             ShowSystemStatusResponse& response_ ) const;
 
 /**
- * Returns the last 100 requests made to GPUdb along with the request timing
- * and internal job id. The GPUdb Admin tool uses it to present request timing
+ * Returns the last 100 database requests along with the request timing and
+ * internal job id. The admin tool uses it to present request timing
  * information to the user.
  * 
  * @param[in] request_  Request object containing the parameters for the
@@ -10316,8 +10404,8 @@ ShowSystemStatusResponse& showSystemStatus( const std::map<std::string, std::str
 ShowSystemTimingResponse showSystemTiming( const ShowSystemTimingRequest& request_ ) const;
 
 /**
- * Returns the last 100 requests made to GPUdb along with the request timing
- * and internal job id. The GPUdb Admin tool uses it to present request timing
+ * Returns the last 100 database requests along with the request timing and
+ * internal job id. The admin tool uses it to present request timing
  * information to the user.
  * 
  * @param[in] request_  Request object containing the parameters for the
@@ -10334,8 +10422,8 @@ ShowSystemTimingResponse& showSystemTiming( const ShowSystemTimingRequest& reque
                                             ShowSystemTimingResponse& response_ ) const;
 
 /**
- * Returns the last 100 requests made to GPUdb along with the request timing
- * and internal job id. The GPUdb Admin tool uses it to present request timing
+ * Returns the last 100 database requests along with the request timing and
+ * internal job id. The admin tool uses it to present request timing
  * information to the user.
  * 
  * @param options  Optional parameters, currently unused.  Default value is an
@@ -10348,8 +10436,8 @@ ShowSystemTimingResponse& showSystemTiming( const ShowSystemTimingRequest& reque
 ShowSystemTimingResponse showSystemTiming( const std::map<std::string, std::string>& options ) const;
 
 /**
- * Returns the last 100 requests made to GPUdb along with the request timing
- * and internal job id. The GPUdb Admin tool uses it to present request timing
+ * Returns the last 100 database requests along with the request timing and
+ * internal job id. The admin tool uses it to present request timing
  * information to the user.
  * 
  * @param options  Optional parameters, currently unused.  Default value is an
@@ -10543,7 +10631,7 @@ ShowTableMetadataResponse& showTableMetadata( const ShowTableMetadataRequest& re
  * Retrieves the user provided metadata for the specified tables.
  * 
  * @param tableNames  Tables whose metadata will be fetched. All provided
- *                    tables must exist in GPUdb, or GPUdb returns an error.
+ *                    tables must exist, or an error is returned.
  * @param options  Optional parameters.  Default value is an empty std::map.
  * 
  * @return Response object containing the result of the operation.
@@ -10557,7 +10645,7 @@ ShowTableMetadataResponse showTableMetadata( const std::vector<std::string>& tab
  * Retrieves the user provided metadata for the specified tables.
  * 
  * @param tableNames  Tables whose metadata will be fetched. All provided
- *                    tables must exist in GPUdb, or GPUdb returns an error.
+ *                    tables must exist, or an error is returned.
  * @param options  Optional parameters.  Default value is an empty std::map.
  * @param[out] response_  Response object containing the results of the
  *                        operation.
@@ -10572,11 +10660,11 @@ ShowTableMetadataResponse& showTableMetadata( const std::vector<std::string>& ta
                                               ShowTableMetadataResponse& response_ ) const;
 
 /**
- * Gets names of the tables from GPUdb based on the type information. Each
- * table in GPUdb has a particular type. This type is made out of the type
- * label, schema of the table and the semantic type of the table. This function
- * allows a look up of the existing tables based on full or partial type
- * information. The operation is synchronous.
+ * Gets names of the tables whose type matches the given criteria. Each table
+ * has a particular type. This type is made out of the type label, schema of
+ * the table, and the semantic type of the table. This function allows a look
+ * up of the existing tables based on full or partial type information. The
+ * operation is synchronous.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -10588,11 +10676,11 @@ ShowTableMetadataResponse& showTableMetadata( const std::vector<std::string>& ta
 ShowTablesByTypeResponse showTablesByType( const ShowTablesByTypeRequest& request_ ) const;
 
 /**
- * Gets names of the tables from GPUdb based on the type information. Each
- * table in GPUdb has a particular type. This type is made out of the type
- * label, schema of the table and the semantic type of the table. This function
- * allows a look up of the existing tables based on full or partial type
- * information. The operation is synchronous.
+ * Gets names of the tables whose type matches the given criteria. Each table
+ * has a particular type. This type is made out of the type label, schema of
+ * the table, and the semantic type of the table. This function allows a look
+ * up of the existing tables based on full or partial type information. The
+ * operation is synchronous.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -10608,11 +10696,11 @@ ShowTablesByTypeResponse& showTablesByType( const ShowTablesByTypeRequest& reque
                                             ShowTablesByTypeResponse& response_ ) const;
 
 /**
- * Gets names of the tables from GPUdb based on the type information. Each
- * table in GPUdb has a particular type. This type is made out of the type
- * label, schema of the table and the semantic type of the table. This function
- * allows a look up of the existing tables based on full or partial type
- * information. The operation is synchronous.
+ * Gets names of the tables whose type matches the given criteria. Each table
+ * has a particular type. This type is made out of the type label, schema of
+ * the table, and the semantic type of the table. This function allows a look
+ * up of the existing tables based on full or partial type information. The
+ * operation is synchronous.
  * 
  * @param typeId  Type id returned by a call to /create/type.
  * @param label  Optional user supplied label which can be used instead of the
@@ -10628,11 +10716,11 @@ ShowTablesByTypeResponse showTablesByType( const std::string& typeId,
                                            const std::map<std::string, std::string>& options ) const;
 
 /**
- * Gets names of the tables from GPUdb based on the type information. Each
- * table in GPUdb has a particular type. This type is made out of the type
- * label, schema of the table and the semantic type of the table. This function
- * allows a look up of the existing tables based on full or partial type
- * information. The operation is synchronous.
+ * Gets names of the tables whose type matches the given criteria. Each table
+ * has a particular type. This type is made out of the type label, schema of
+ * the table, and the semantic type of the table. This function allows a look
+ * up of the existing tables based on full or partial type information. The
+ * operation is synchronous.
  * 
  * @param typeId  Type id returned by a call to /create/type.
  * @param label  Optional user supplied label which can be used instead of the
@@ -10653,7 +10741,7 @@ ShowTablesByTypeResponse& showTablesByType( const std::string& typeId,
 
 /**
  * Retrieves information regarding the specified triggers or all existing
- * triggers currently active within GPUdb.
+ * triggers currently active.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -10666,7 +10754,7 @@ ShowTriggersResponse showTriggers( const ShowTriggersRequest& request_ ) const;
 
 /**
  * Retrieves information regarding the specified triggers or all existing
- * triggers currently active within GPUdb.
+ * triggers currently active.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -10683,7 +10771,7 @@ ShowTriggersResponse& showTriggers( const ShowTriggersRequest& request_,
 
 /**
  * Retrieves information regarding the specified triggers or all existing
- * triggers currently active within GPUdb.
+ * triggers currently active.
  * 
  * @param triggerIds  List of IDs of the triggers whose information to be
  *                    retrieved. Empty list means retrieve information on all
@@ -10699,7 +10787,7 @@ ShowTriggersResponse showTriggers( const std::vector<std::string>& triggerIds,
 
 /**
  * Retrieves information regarding the specified triggers or all existing
- * triggers currently active within GPUdb.
+ * triggers currently active.
  * 
  * @param triggerIds  List of IDs of the triggers whose information to be
  *                    retrieved. Empty list means retrieve information on all
@@ -10718,11 +10806,11 @@ ShowTriggersResponse& showTriggers( const std::vector<std::string>& triggerIds,
                                     ShowTriggersResponse& response_ ) const;
 
 /**
- * Retrieves information for the specified data type. Given a type ID, GPUdb
- * returns the data type schema, the label, and the semantic type along with
- * the type ID. If the user provides any combination of label and semantic
- * type, then GPUdb returns the pertinent information for all data types that
- * match the input criteria.
+ * Retrieves information for the specified data type. Given a type ID, the
+ * database returns the data type schema, the label, and the semantic type
+ * along with the type ID. If the user provides any combination of label and
+ * semantic type, then the database returns the pertinent information for all
+ * data types that match the input criteria.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -10734,11 +10822,11 @@ ShowTriggersResponse& showTriggers( const std::vector<std::string>& triggerIds,
 ShowTypesResponse showTypes( const ShowTypesRequest& request_ ) const;
 
 /**
- * Retrieves information for the specified data type. Given a type ID, GPUdb
- * returns the data type schema, the label, and the semantic type along with
- * the type ID. If the user provides any combination of label and semantic
- * type, then GPUdb returns the pertinent information for all data types that
- * match the input criteria.
+ * Retrieves information for the specified data type. Given a type ID, the
+ * database returns the data type schema, the label, and the semantic type
+ * along with the type ID. If the user provides any combination of label and
+ * semantic type, then the database returns the pertinent information for all
+ * data types that match the input criteria.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -10754,11 +10842,11 @@ ShowTypesResponse& showTypes( const ShowTypesRequest& request_,
                               ShowTypesResponse& response_ ) const;
 
 /**
- * Retrieves information for the specified data type. Given a type ID, GPUdb
- * returns the data type schema, the label, and the semantic type along with
- * the type ID. If the user provides any combination of label and semantic
- * type, then GPUdb returns the pertinent information for all data types that
- * match the input criteria.
+ * Retrieves information for the specified data type. Given a type ID, the
+ * database returns the data type schema, the label, and the semantic type
+ * along with the type ID. If the user provides any combination of label and
+ * semantic type, then the database returns the pertinent information for all
+ * data types that match the input criteria.
  * 
  * @param typeId  Type Id returned in response to a call to /create/type.
  * @param label  Option string that was supplied by user in a call to
@@ -10774,11 +10862,11 @@ ShowTypesResponse showTypes( const std::string& typeId,
                              const std::map<std::string, std::string>& options ) const;
 
 /**
- * Retrieves information for the specified data type. Given a type ID, GPUdb
- * returns the data type schema, the label, and the semantic type along with
- * the type ID. If the user provides any combination of label and semantic
- * type, then GPUdb returns the pertinent information for all data types that
- * match the input criteria.
+ * Retrieves information for the specified data type. Given a type ID, the
+ * database returns the data type schema, the label, and the semantic type
+ * along with the type ID. If the user provides any combination of label and
+ * semantic type, then the database returns the pertinent information for all
+ * data types that match the input criteria.
  * 
  * @param typeId  Type Id returned in response to a call to /create/type.
  * @param label  Option string that was supplied by user in a call to
@@ -11157,7 +11245,7 @@ UpdateRecordsBySeriesResponse& updateRecordsBySeries( const UpdateRecordsBySerie
  * the @a viewName.
  * 
  * @param tableName  Name of the view on which the update operation will be
- *                   performed. Must be a valid view in GPUdb.
+ *                   performed. Must be an existing view.
  * @param worldTableName  Name of the table containing the complete series
  *                        (track) information.
  * @param viewName  Optional name of the view containing the series (tracks)
@@ -11182,7 +11270,7 @@ UpdateRecordsBySeriesResponse updateRecordsBySeries( const std::string& tableNam
  * the @a viewName.
  * 
  * @param tableName  Name of the view on which the update operation will be
- *                   performed. Must be a valid view in GPUdb.
+ *                   performed. Must be an existing view.
  * @param worldTableName  Name of the table containing the complete series
  *                        (track) information.
  * @param viewName  Optional name of the view containing the series (tracks)
@@ -11835,12 +11923,12 @@ VisualizeImageLabelsResponse& visualizeImageLabels( const std::string& tableName
  * Creates raster images of data in the given table based on provided input
  * parameters. Numerous parameters are required to call this function. Some of
  * the important parameters are the attributes of the generated images (@a
- * bgColor, @a width, @a height), the collection of GPUdb table names on which
- * this function is to be applied, for which shapes (point, polygon, tracks)
- * the images are to be created and a user specified session key. This session
- * key is later used to fetch the generated images stored by GPUdb. The
- * operation is synchronous meaning that GPUdb will not return the request
- * until the images for all the frames of the video are fully available.
+ * bgColor, @a width, @a height), the collection of table names on which this
+ * function is to be applied, for which shapes (point, polygon, tracks) the
+ * images are to be created and a user specified session key. This session key
+ * is later used to fetch the generated images. The operation is synchronous,
+ * meaning that a response will not be returned until the images for all the
+ * frames of the video are fully available.
  * <p>
  * Once the request has been processed then the generated video frames are
  * available for download via WMS using STYLES=cached. In this request the
@@ -11852,13 +11940,13 @@ VisualizeImageLabelsResponse& visualizeImageLabels( const std::string& tableName
  * For instance, if a 20 frame video with the session key 'MY-SESSION-KEY' was
  * generated, the first frame could be retrieved with the URL::
  * <p>
- * http://<gpudb-ip-address>:9191/wms?REQUEST=GetMap&STYLES=cached&LAYERS=MY-SESSION-KEY&FRAME=0
+ * http://<hostname/ipAddress>:9191/wms?REQUEST=GetMap&STYLES=cached&LAYERS=MY-SESSION-KEY&FRAME=0
  * <p>
  * and the last frame could be retrieved with::
  * <p>
- * http://gpudb-ip-address:9191/wms?REQUEST=GetMap&STYLES=cached&LAYERS=MY-SESSION-KEY&FRAME=19
+ * http://<hostname/ipAddress>:9191/wms?REQUEST=GetMap&STYLES=cached&LAYERS=MY-SESSION-KEY&FRAME=19
  * The response payload provides, among other things, the number of frames
- * which were created by GPUdb.
+ * which were created.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -11873,12 +11961,12 @@ VisualizeVideoResponse visualizeVideo( const VisualizeVideoRequest& request_ ) c
  * Creates raster images of data in the given table based on provided input
  * parameters. Numerous parameters are required to call this function. Some of
  * the important parameters are the attributes of the generated images (@a
- * bgColor, @a width, @a height), the collection of GPUdb table names on which
- * this function is to be applied, for which shapes (point, polygon, tracks)
- * the images are to be created and a user specified session key. This session
- * key is later used to fetch the generated images stored by GPUdb. The
- * operation is synchronous meaning that GPUdb will not return the request
- * until the images for all the frames of the video are fully available.
+ * bgColor, @a width, @a height), the collection of table names on which this
+ * function is to be applied, for which shapes (point, polygon, tracks) the
+ * images are to be created and a user specified session key. This session key
+ * is later used to fetch the generated images. The operation is synchronous,
+ * meaning that a response will not be returned until the images for all the
+ * frames of the video are fully available.
  * <p>
  * Once the request has been processed then the generated video frames are
  * available for download via WMS using STYLES=cached. In this request the
@@ -11890,13 +11978,13 @@ VisualizeVideoResponse visualizeVideo( const VisualizeVideoRequest& request_ ) c
  * For instance, if a 20 frame video with the session key 'MY-SESSION-KEY' was
  * generated, the first frame could be retrieved with the URL::
  * <p>
- * http://<gpudb-ip-address>:9191/wms?REQUEST=GetMap&STYLES=cached&LAYERS=MY-SESSION-KEY&FRAME=0
+ * http://<hostname/ipAddress>:9191/wms?REQUEST=GetMap&STYLES=cached&LAYERS=MY-SESSION-KEY&FRAME=0
  * <p>
  * and the last frame could be retrieved with::
  * <p>
- * http://gpudb-ip-address:9191/wms?REQUEST=GetMap&STYLES=cached&LAYERS=MY-SESSION-KEY&FRAME=19
+ * http://<hostname/ipAddress>:9191/wms?REQUEST=GetMap&STYLES=cached&LAYERS=MY-SESSION-KEY&FRAME=19
  * The response payload provides, among other things, the number of frames
- * which were created by GPUdb.
+ * which were created.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -11915,12 +12003,12 @@ VisualizeVideoResponse& visualizeVideo( const VisualizeVideoRequest& request_,
  * Creates raster images of data in the given table based on provided input
  * parameters. Numerous parameters are required to call this function. Some of
  * the important parameters are the attributes of the generated images (@a
- * bgColor, @a width, @a height), the collection of GPUdb table names on which
- * this function is to be applied, for which shapes (point, polygon, tracks)
- * the images are to be created and a user specified session key. This session
- * key is later used to fetch the generated images stored by GPUdb. The
- * operation is synchronous meaning that GPUdb will not return the request
- * until the images for all the frames of the video are fully available.
+ * bgColor, @a width, @a height), the collection of table names on which this
+ * function is to be applied, for which shapes (point, polygon, tracks) the
+ * images are to be created and a user specified session key. This session key
+ * is later used to fetch the generated images. The operation is synchronous,
+ * meaning that a response will not be returned until the images for all the
+ * frames of the video are fully available.
  * <p>
  * Once the request has been processed then the generated video frames are
  * available for download via WMS using STYLES=cached. In this request the
@@ -11932,13 +12020,13 @@ VisualizeVideoResponse& visualizeVideo( const VisualizeVideoRequest& request_,
  * For instance, if a 20 frame video with the session key 'MY-SESSION-KEY' was
  * generated, the first frame could be retrieved with the URL::
  * <p>
- * http://<gpudb-ip-address>:9191/wms?REQUEST=GetMap&STYLES=cached&LAYERS=MY-SESSION-KEY&FRAME=0
+ * http://<hostname/ipAddress>:9191/wms?REQUEST=GetMap&STYLES=cached&LAYERS=MY-SESSION-KEY&FRAME=0
  * <p>
  * and the last frame could be retrieved with::
  * <p>
- * http://gpudb-ip-address:9191/wms?REQUEST=GetMap&STYLES=cached&LAYERS=MY-SESSION-KEY&FRAME=19
+ * http://<hostname/ipAddress>:9191/wms?REQUEST=GetMap&STYLES=cached&LAYERS=MY-SESSION-KEY&FRAME=19
  * The response payload provides, among other things, the number of frames
- * which were created by GPUdb.
+ * which were created.
  * 
  * @param tableNames  Names of the tables containing the data for various
  *                    layers of the resulting video.
@@ -12035,12 +12123,12 @@ VisualizeVideoResponse visualizeVideo( const std::vector<std::string>& tableName
  * Creates raster images of data in the given table based on provided input
  * parameters. Numerous parameters are required to call this function. Some of
  * the important parameters are the attributes of the generated images (@a
- * bgColor, @a width, @a height), the collection of GPUdb table names on which
- * this function is to be applied, for which shapes (point, polygon, tracks)
- * the images are to be created and a user specified session key. This session
- * key is later used to fetch the generated images stored by GPUdb. The
- * operation is synchronous meaning that GPUdb will not return the request
- * until the images for all the frames of the video are fully available.
+ * bgColor, @a width, @a height), the collection of table names on which this
+ * function is to be applied, for which shapes (point, polygon, tracks) the
+ * images are to be created and a user specified session key. This session key
+ * is later used to fetch the generated images. The operation is synchronous,
+ * meaning that a response will not be returned until the images for all the
+ * frames of the video are fully available.
  * <p>
  * Once the request has been processed then the generated video frames are
  * available for download via WMS using STYLES=cached. In this request the
@@ -12052,13 +12140,13 @@ VisualizeVideoResponse visualizeVideo( const std::vector<std::string>& tableName
  * For instance, if a 20 frame video with the session key 'MY-SESSION-KEY' was
  * generated, the first frame could be retrieved with the URL::
  * <p>
- * http://<gpudb-ip-address>:9191/wms?REQUEST=GetMap&STYLES=cached&LAYERS=MY-SESSION-KEY&FRAME=0
+ * http://<hostname/ipAddress>:9191/wms?REQUEST=GetMap&STYLES=cached&LAYERS=MY-SESSION-KEY&FRAME=0
  * <p>
  * and the last frame could be retrieved with::
  * <p>
- * http://gpudb-ip-address:9191/wms?REQUEST=GetMap&STYLES=cached&LAYERS=MY-SESSION-KEY&FRAME=19
+ * http://<hostname/ipAddress>:9191/wms?REQUEST=GetMap&STYLES=cached&LAYERS=MY-SESSION-KEY&FRAME=19
  * The response payload provides, among other things, the number of frames
- * which were created by GPUdb.
+ * which were created.
  * 
  * @param tableNames  Names of the tables containing the data for various
  *                    layers of the resulting video.

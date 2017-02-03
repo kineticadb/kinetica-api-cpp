@@ -49,8 +49,8 @@ namespace gpudb
          *                       view containing the results. Must not be an
          *                       already existing collection, table or view .
          *                       Default value is an empty string.
-         * @param[in] expression_  The select expression GPUdb uses to filter
-         *                         the specified table.  For details see <a
+         * @param[in] expression_  The select expression to filter the
+         *                         specified table.  For details see <a
          *                         href="../../concepts/index.html#expressions"
          *                         target="_top">concepts</a>.
          * @param[in] options_  Optional parameters.  Default value is an empty

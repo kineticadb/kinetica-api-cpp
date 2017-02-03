@@ -151,6 +151,8 @@ namespace gpudb
     extern const std::string create_type_char64;
     extern const std::string create_type_char8;
     extern const std::string create_type_data;
+    extern const std::string create_type_date;
+    extern const std::string create_type_decimal;
     extern const std::string create_type_disk_optimized;
     extern const std::string create_type_int16;
     extern const std::string create_type_int8;
@@ -159,6 +161,7 @@ namespace gpudb
     extern const std::string create_type_shard_key;
     extern const std::string create_type_store_only;
     extern const std::string create_type_text_search;
+    extern const std::string create_type_time;
     extern const std::string create_type_timestamp;
 
     // Keywords for /create/union request
@@ -296,7 +299,10 @@ namespace gpudb
     extern const std::string insert_records_random_interval;
     extern const std::string insert_records_random_max;
     extern const std::string insert_records_random_min;
+    extern const std::string insert_records_random_null_percentage;
+    extern const std::string insert_records_random_seed;
     extern const std::string insert_records_random_track_length;
+    extern const std::string insert_records_random_value;
 
     // Keywords for /insert/symbol request
     extern const std::string insert_symbol_color;

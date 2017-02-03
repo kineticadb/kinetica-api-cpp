@@ -15,7 +15,7 @@ namespace gpudb
      * <p>
      * Calculates which objects from a table lie within a circle with the given
      * radius and center point (i.e. circular NAI). The operation is
-     * synchronous meaning that GPUdb will not return a response until all the
+     * synchronous, meaning that a response will not be returned until all the
      * objects are fully available. The response payload provides the count of
      * the resulting set. A new resultant set (view) which satisfies the input
      * circular NAI restriction specification is also created if a @a viewName
@@ -52,7 +52,7 @@ namespace gpudb
          * 
          * @param[in] tableName_  Name of the table on which the filter by
          *                        radius operation will be performed.  Must be
-         *                        an existing table in GPUdb.
+         *                        an existing table.
          * @param[in] viewName_  If provided, then this will be the name of the
          *                       view containing the results. Must not be an
          *                       already existing collection, table or view.
@@ -188,7 +188,7 @@ namespace gpudb
      * <p>
      * Calculates which objects from a table lie within a circle with the given
      * radius and center point (i.e. circular NAI). The operation is
-     * synchronous meaning that GPUdb will not return a response until all the
+     * synchronous, meaning that a response will not be returned until all the
      * objects are fully available. The response payload provides the count of
      * the resulting set. A new resultant set (view) which satisfies the input
      * circular NAI restriction specification is also created if a @a viewName

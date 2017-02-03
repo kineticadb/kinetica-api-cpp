@@ -13,20 +13,20 @@ namespace gpudb
      * A set of input parameters for {@link
      * #createType(const CreateTypeRequest&) const}.
      * <p>
-     * Creates a new type in GPUdb describing the layout or schema of a table.
-     * The type definition is a JSON string describing the fields (i.e.
-     * columns) of the type. Each field consists of a name and a data type.
-     * Supported data types are: double, float, int, long, string, and bytes.
-     * In addition one or more properties can be specified for each column
-     * which customize the memory usage and query availability of that column.
-     * Note that some properties are mutually exclusive--i.e. they cannot be
-     * specified for any given column simultaneously.  One example of mutually
-     * exclusive properties are @a data and @a store_only.
+     * Creates a new type describing the layout or schema of a table. The type
+     * definition is a JSON string describing the fields (i.e. columns) of the
+     * type. Each field consists of a name and a data type. Supported data
+     * types are: double, float, int, long, string, and bytes. In addition one
+     * or more properties can be specified for each column which customize the
+     * memory usage and query availability of that column.  Note that some
+     * properties are mutually exclusive--i.e. they cannot be specified for any
+     * given column simultaneously.  One example of mutually exclusive
+     * properties are @a data and @a store_only.
      * <p>
      * To set a *primary key* on one or more columns include the property
-     * 'primary_key' on the desired column_names. If a primary key is specified
-     * then GPUdb enforces a uniqueness constraint in that only a single object
-     * can exist with a given primary key. When {@link
+     * 'primary_key' on the desired column_names. If a primary key is
+     * specified, then a uniqueness constraint is enforced, in that only a
+     * single object can exist with a given primary key. When {@link
      * #insertRecordsRaw(const RawInsertRecordsRequest&) const inserting}
      * data into a table with a primary key, depending on the parameters in the
      * request, incoming objects with primary keys that match existing objects
@@ -162,20 +162,20 @@ namespace gpudb
      * A set of output parameters for {@link
      * #createType(const CreateTypeRequest&) const}.
      * <p>
-     * Creates a new type in GPUdb describing the layout or schema of a table.
-     * The type definition is a JSON string describing the fields (i.e.
-     * columns) of the type. Each field consists of a name and a data type.
-     * Supported data types are: double, float, int, long, string, and bytes.
-     * In addition one or more properties can be specified for each column
-     * which customize the memory usage and query availability of that column.
-     * Note that some properties are mutually exclusive--i.e. they cannot be
-     * specified for any given column simultaneously.  One example of mutually
-     * exclusive properties are @a data and @a store_only.
+     * Creates a new type describing the layout or schema of a table. The type
+     * definition is a JSON string describing the fields (i.e. columns) of the
+     * type. Each field consists of a name and a data type. Supported data
+     * types are: double, float, int, long, string, and bytes. In addition one
+     * or more properties can be specified for each column which customize the
+     * memory usage and query availability of that column.  Note that some
+     * properties are mutually exclusive--i.e. they cannot be specified for any
+     * given column simultaneously.  One example of mutually exclusive
+     * properties are @a data and @a store_only.
      * <p>
      * To set a *primary key* on one or more columns include the property
-     * 'primary_key' on the desired column_names. If a primary key is specified
-     * then GPUdb enforces a uniqueness constraint in that only a single object
-     * can exist with a given primary key. When {@link
+     * 'primary_key' on the desired column_names. If a primary key is
+     * specified, then a uniqueness constraint is enforced, in that only a
+     * single object can exist with a given primary key. When {@link
      * #insertRecordsRaw(const RawInsertRecordsRequest&) const inserting}
      * data into a table with a primary key, depending on the parameters in the
      * request, incoming objects with primary keys that match existing objects

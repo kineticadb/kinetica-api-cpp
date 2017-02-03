@@ -356,9 +356,9 @@ GetRecordsFromCollectionResponse<boost::any>& GPUdb::getRecordsFromCollection( c
  *               number of results should be returned.  Default value is 10000.
  * @param options
  *                 <ul>
- *                         <li> return_record_ids: If 'true' then return
- *                 GPUdb's internal record id along with each returned record.
- *                 Default is 'false'. Values: 'true', 'false'.
+ *                         <li> return_record_ids: If 'true' then return the
+ *                 internal record ID along with each returned record. Default
+ *                 is 'false'. Values: 'true', 'false'.
  *                 </ul>
  *                   Default value is an empty std::map.
  * 
@@ -393,9 +393,9 @@ GetRecordsFromCollectionResponse<boost::any> GPUdb::getRecordsFromCollection( co
  *               number of results should be returned.  Default value is 10000.
  * @param options
  *                 <ul>
- *                         <li> return_record_ids: If 'true' then return
- *                 GPUdb's internal record id along with each returned record.
- *                 Default is 'false'. Values: 'true', 'false'.
+ *                         <li> return_record_ids: If 'true' then return the
+ *                 internal record ID along with each returned record. Default
+ *                 is 'false'. Values: 'true', 'false'.
  *                 </ul>
  *                   Default value is an empty std::map.
  * @param[out] response_  Response object containing the results of the

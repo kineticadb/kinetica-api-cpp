@@ -39,7 +39,7 @@ namespace gpudb
          * parameters.
          * 
          * @param[in] tableName_  Name of the table to be created. Must not be
-         *                        the name of a currently existing GPUdb table.
+         *                        the name of a currently existing table.
          *                        Cannot be an empty string.
          * @param[in] tableNames_  The list of table names making up the union.
          *                         Must contain the names of one or more

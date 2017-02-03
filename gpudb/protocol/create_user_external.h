@@ -36,7 +36,7 @@ namespace gpudb
          * @param[in] name_  Name of the user to be created. Must exactly match
          *                   the user's name in the external LDAP, prefixed
          *                   with a @. Must not be the same name as an existing
-         *                   user in GPUdb.
+         *                   user.
          * @param[in] options_  Optional parameters.
          * 
          */

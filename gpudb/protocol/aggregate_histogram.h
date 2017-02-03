@@ -45,8 +45,8 @@ namespace gpudb
          * parameters.
          * 
          * @param[in] tableName_  Name of the table on which the operation will
-         *                        be performed. Must be a valid table or
-         *                        collection in GPUdb.
+         *                        be performed. Must be an existing table or
+         *                        collection.
          * @param[in] columnName_  Name of a column or an expression of one or
          *                         more column names over which the histogram
          *                         will be calculated.
@@ -59,9 +59,9 @@ namespace gpudb
          * @param[in] options_  Optional parameters.
          *                      <ul>
          *                              <li> value_column: The name of the
-         *                      column GPUdb will use when calculating the bin
-         *                      values (values are summed).  The column must be
-         *                      a numerical type (int, double, long, float).
+         *                      column to use when calculating the bin values
+         *                      (values are summed).  The column must be a
+         *                      numerical type (int, double, long, float).
          *                      </ul>
          *                        Default value is an empty std::map.
          * 

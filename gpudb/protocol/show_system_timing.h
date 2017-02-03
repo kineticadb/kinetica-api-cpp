@@ -13,9 +13,9 @@ namespace gpudb
      * A set of input parameters for {@link
      * #showSystemTiming(const ShowSystemTimingRequest&) const}.
      * <p>
-     * Returns the last 100 requests made to GPUdb along with the request
-     * timing and internal job id. The GPUdb Admin tool uses it to present
-     * request timing information to the user.
+     * Returns the last 100 database requests along with the request timing and
+     * internal job id. The admin tool uses it to present request timing
+     * information to the user.
      */
     struct ShowSystemTimingRequest
     {
@@ -89,9 +89,9 @@ namespace gpudb
      * A set of output parameters for {@link
      * #showSystemTiming(const ShowSystemTimingRequest&) const}.
      * <p>
-     * Returns the last 100 requests made to GPUdb along with the request
-     * timing and internal job id. The GPUdb Admin tool uses it to present
-     * request timing information to the user.
+     * Returns the last 100 database requests along with the request timing and
+     * internal job id. The admin tool uses it to present request timing
+     * information to the user.
      */
     struct ShowSystemTimingResponse
     {

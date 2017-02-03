@@ -13,10 +13,10 @@ namespace gpudb
      * A set of input parameters for {@link
      * #clearTable(const ClearTableRequest&) const}.
      * <p>
-     * Clears (drops) one or all tables in the GPUdb cluster. The operation is
-     * synchronous meaning that the table will be cleared before the function
-     * returns. The response payload returns the status of the operation along
-     * with the name of the table that was cleared.
+     * Clears (drops) one or all tables in the database cluster. The operation
+     * is synchronous meaning that the table will be cleared before the
+     * function returns. The response payload returns the status of the
+     * operation along with the name of the table that was cleared.
      */
     struct ClearTableRequest
     {
@@ -35,9 +35,9 @@ namespace gpudb
          * Constructs a ClearTableRequest object with the specified parameters.
          * 
          * @param[in] tableName_  Name of the table to be cleared. Must be an
-         *                        existing GPUdb table. Empty string clears all
-         *                        available tables in GPUdb.  Default value is
-         *                        an empty string.
+         *                        existing table. Empty string clears all
+         *                        available tables.  Default value is an empty
+         *                        string.
          * @param[in] authorization_  No longer used. User can pass an empty
          *                            string.  Default value is an empty
          *                            string.
@@ -113,10 +113,10 @@ namespace gpudb
      * A set of output parameters for {@link
      * #clearTable(const ClearTableRequest&) const}.
      * <p>
-     * Clears (drops) one or all tables in the GPUdb cluster. The operation is
-     * synchronous meaning that the table will be cleared before the function
-     * returns. The response payload returns the status of the operation along
-     * with the name of the table that was cleared.
+     * Clears (drops) one or all tables in the database cluster. The operation
+     * is synchronous meaning that the table will be cleared before the
+     * function returns. The response payload returns the status of the
+     * operation along with the name of the table that was cleared.
      */
     struct ClearTableResponse
     {

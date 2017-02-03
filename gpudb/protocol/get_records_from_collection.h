@@ -58,9 +58,9 @@ namespace gpudb
          * @param[in] options_
          *                      <ul>
          *                              <li> return_record_ids: If 'true' then
-         *                      return GPUdb's internal record id along with
-         *                      each returned record. Default is 'false'.
-         *                      Values: 'true', 'false'.
+         *                      return the internal record ID along with each
+         *                      returned record. Default is 'false'. Values:
+         *                      'true', 'false'.
          *                      </ul>
          *                        Default value is an empty std::map.
          * 
@@ -97,9 +97,9 @@ namespace gpudb
          * @param[in] options_
          *                      <ul>
          *                              <li> return_record_ids: If 'true' then
-         *                      return GPUdb's internal record id along with
-         *                      each returned record. Default is 'false'.
-         *                      Values: 'true', 'false'.
+         *                      return the internal record ID along with each
+         *                      returned record. Default is 'false'. Values:
+         *                      'true', 'false'.
          *                      </ul>
          *                        Default value is an empty std::map.
          * 

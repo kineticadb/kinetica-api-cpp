@@ -14,8 +14,8 @@ namespace gpudb
      * #showSystemProperties(const ShowSystemPropertiesRequest&) const}.
      * <p>
      * Returns server configuration and version related information to the
-     * caller. The GPUdb Admin tool uses it to present server related
-     * information to the user.
+     * caller. The admin tool uses it to present server related information to
+     * the user.
      */
     struct ShowSystemPropertiesRequest
     {
@@ -95,8 +95,8 @@ namespace gpudb
      * #showSystemProperties(const ShowSystemPropertiesRequest&) const}.
      * <p>
      * Returns server configuration and version related information to the
-     * caller. The GPUdb Admin tool uses it to present server related
-     * information to the user.
+     * caller. The admin tool uses it to present server related information to
+     * the user.
      */
     struct ShowSystemPropertiesResponse
     {

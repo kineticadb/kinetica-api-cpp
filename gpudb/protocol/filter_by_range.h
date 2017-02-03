@@ -45,8 +45,8 @@ namespace gpudb
          * parameters.
          * 
          * @param[in] tableName_  Name of the table on which the filter by
-         *                        range operation will be performed.  Must be a
-         *                        valid GPUdb table.
+         *                        range operation will be performed.  Must be
+         *                        an existing table.
          * @param[in] viewName_  If provided, then this will be the name of the
          *                       view containing the results. Must not be an
          *                       already existing collection, table or view.

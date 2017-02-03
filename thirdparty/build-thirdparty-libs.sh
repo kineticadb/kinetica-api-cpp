@@ -68,7 +68,7 @@ FORCE_REBUILD=0
 BOOST_ARCHIVE=$(readlink -m $(ls $SCRIPT_DIR/../../gpudb-core-libs/boost_*.tar.bz2 | tail -n 1))
 
 DISABLE_CXX11_ABI=0
-STATIc_WITH_PIC=0
+STATIC_WITH_PIC=0
 
 # grab command line args
 while [[ $# > 0 ]]; do
@@ -128,7 +128,7 @@ function build_snappy
         if [ "${STATIC_WITH_PIC}" -eq 1 ]; then
             BUILD_CXXFLAGS="-fPIC"
         fi
-        if [ "${DISABLE_CXX11_ABI}" -eq 1]; then
+        if [ "${DISABLE_CXX11_ABI}" -eq 1 ]; then
             BUILD_CXXFLAGS="$BUILD_CXXFLAGS -D_GLIBCXX_USE_CXX11_ABI=0 "
         fi
 
@@ -251,7 +251,7 @@ function build_boost
 
                 date > $BUILD_DIR/$BOOST_NAME.built
 
-                sed -i 's@// signbit@// signbit\n#undef signbit // clear #define signbit from /usr/include/math.h@g' $INSTALL_PREFIX/include/boost/math/special_functions/sign.hpp
+                sed -i 's@// signbit@// signbit\n#undef signbit // clear #define signbit from /usr/include/math.h@g' $INSTALL_DIR/include/boost/math/special_functions/sign.hpp
                 popd > /dev/null
             echo
         popd > /dev/null

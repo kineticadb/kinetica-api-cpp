@@ -54,7 +54,7 @@ namespace gpudb
          * parameters.
          * 
          * @param[in] tableName_  Name of the table on which the operation will
-         *                        be performed. Must be a valid table in GPUdb.
+         *                        be performed. Must be an existing table.
          * @param[in] columnName_  Name of the column or an expression
          *                         containing one or more column names on which
          *                         the unique function would be applied.
@@ -96,7 +96,7 @@ namespace gpudb
          * parameters.
          * 
          * @param[in] tableName_  Name of the table on which the operation will
-         *                        be performed. Must be a valid table in GPUdb.
+         *                        be performed. Must be an existing table.
          * @param[in] columnName_  Name of the column or an expression
          *                         containing one or more column names on which
          *                         the unique function would be applied.

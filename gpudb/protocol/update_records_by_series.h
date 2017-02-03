@@ -38,8 +38,8 @@ namespace gpudb
          * parameters.
          * 
          * @param[in] tableName_  Name of the view on which the update
-         *                        operation will be performed. Must be a valid
-         *                        view in GPUdb.
+         *                        operation will be performed. Must be an
+         *                        existing view.
          * @param[in] worldTableName_  Name of the table containing the
          *                             complete series (track) information.
          * @param[in] viewName_  Optional name of the view containing the

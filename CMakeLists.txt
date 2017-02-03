@@ -265,11 +265,15 @@ message(STATUS "* CMAKE_CXX_FLAGS : ${CMAKE_CXX_FLAGS}")
 
 # ===========================================================================
 
-include( build/CMakeQtCreator.cmake )
-set(QT_CREATOR_INCLUDES ${INCLUDE_DIRS}
-                        /usr/include
-                        /usr/local/include )
-ADD_QTCREATOR_PROJECT( "gpudb-api-cpp" )
+set(NO_QT_CREATOR $ENV{NO_QT_CREATOR})
+message(STATUS "* NO_QT_CREATOR   : ${NO_QT_CREATOR}")
+if(NOT NO_QT_CREATOR)
+    include( build/CMakeQtCreator.cmake )
+    set(QT_CREATOR_INCLUDES ${INCLUDE_DIRS}
+                            /usr/include
+                            /usr/local/include )
+    ADD_QTCREATOR_PROJECT( "gpudb-api-cpp" )
+endif(NOT NO_QT_CREATOR)
 
 # ===========================================================================
 # Define the targets, the subdir CMakeLists.txt files call the functions.

@@ -13,8 +13,8 @@ namespace gpudb
      * A set of input parameters for {@link
      * #createUserInternal(const CreateUserInternalRequest&) const}.
      * <p>
-     * Creates a new internal user (a user whose credentials are managed by
-     * GPUdb).
+     * Creates a new internal user (a user whose credentials are managed by the
+     * database system).
      */
     struct CreateUserInternalRequest
     {
@@ -37,7 +37,7 @@ namespace gpudb
          * @param[in] name_  Name of the user to be created. Must contain only
          *                   lowercase letters, digits, and underscores, and
          *                   cannot begin with a digit. Must not be the same
-         *                   name as an existing user or role in GPUdb.
+         *                   name as an existing user or role.
          * @param[in] password_  Initial password of the user to be created.
          *                       May be an empty string for no password.
          * @param[in] options_  Optional parameters.
@@ -111,8 +111,8 @@ namespace gpudb
      * A set of output parameters for {@link
      * #createUserInternal(const CreateUserInternalRequest&) const}.
      * <p>
-     * Creates a new internal user (a user whose credentials are managed by
-     * GPUdb).
+     * Creates a new internal user (a user whose credentials are managed by the
+     * database system).
      */
     struct CreateUserInternalResponse
     {

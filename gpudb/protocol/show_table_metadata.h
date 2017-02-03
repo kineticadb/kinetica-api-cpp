@@ -33,8 +33,8 @@ namespace gpudb
          * parameters.
          * 
          * @param[in] tableNames_  Tables whose metadata will be fetched. All
-         *                         provided tables must exist in GPUdb, or
-         *                         GPUdb returns an error.
+         *                         provided tables must exist, or an error is
+         *                         returned.
          * @param[in] options_  Optional parameters.  Default value is an empty
          *                      std::map.
          * 

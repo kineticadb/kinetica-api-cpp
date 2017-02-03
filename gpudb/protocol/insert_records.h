@@ -14,7 +14,7 @@ namespace gpudb
      * #insertRecordsRaw(const RawInsertRecordsRequest&) const}.
      * <p>
      * Adds multiple records to the specified table. The operation is
-     * synchronous meaning that GPUdb will not return a response until all the
+     * synchronous, meaning that a response will not be returned until all the
      * records are fully inserted and available. The response payload provides
      * the counts of the number of records actually inserted and/or updated,
      * and can provide the unique identifier of each added record.
@@ -85,8 +85,8 @@ namespace gpudb
          *                      this optional parameter is ignored. Values:
          *                      'true', 'false'.
          *                              <li> return_record_ids: If @a true then
-         *                      return GPUdb's internal record id along for
-         *                      each inserted record. Values: 'true', 'false'.
+         *                      return the internal record id along for each
+         *                      inserted record. Values: 'true', 'false'.
          *                              <li> route_to_address: Route to a
          *                      specific rank/tom. Option not suitable for
          *                      tables using primary/shard keys
@@ -139,8 +139,8 @@ namespace gpudb
          *                      this optional parameter is ignored. Values:
          *                      'true', 'false'.
          *                              <li> return_record_ids: If @a true then
-         *                      return GPUdb's internal record id along for
-         *                      each inserted record. Values: 'true', 'false'.
+         *                      return the internal record id along for each
+         *                      inserted record. Values: 'true', 'false'.
          *                              <li> route_to_address: Route to a
          *                      specific rank/tom. Option not suitable for
          *                      tables using primary/shard keys
@@ -233,7 +233,7 @@ namespace gpudb
      * #insertRecordsRaw(const RawInsertRecordsRequest&) const}.
      * <p>
      * Adds multiple records to the specified table. The operation is
-     * synchronous meaning that GPUdb will not return a response until all the
+     * synchronous, meaning that a response will not be returned until all the
      * records are fully inserted and available. The response payload provides
      * the counts of the number of records actually inserted and/or updated,
      * and can provide the unique identifier of each added record.
@@ -305,8 +305,8 @@ namespace gpudb
          *                      this optional parameter is ignored. Values:
          *                      'true', 'false'.
          *                              <li> return_record_ids: If @a true then
-         *                      return GPUdb's internal record id along for
-         *                      each inserted record. Values: 'true', 'false'.
+         *                      return the internal record id along for each
+         *                      inserted record. Values: 'true', 'false'.
          *                              <li> route_to_address: Route to a
          *                      specific rank/tom. Option not suitable for
          *                      tables using primary/shard keys
@@ -335,7 +335,7 @@ namespace gpudb
      * #insertRecordsRaw(const RawInsertRecordsRequest&) const}.
      * <p>
      * Adds multiple records to the specified table. The operation is
-     * synchronous meaning that GPUdb will not return a response until all the
+     * synchronous, meaning that a response will not be returned until all the
      * records are fully inserted and available. The response payload provides
      * the counts of the number of records actually inserted and/or updated,
      * and can provide the unique identifier of each added record.

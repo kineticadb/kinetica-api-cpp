@@ -50,9 +50,38 @@ namespace gpudb
         /**
          * Valid only for 'long' columns. Indicates that this field represents
          * a timestamp and will be provided in milliseconds since the Unix
-         * epoch: 00:00:00 Jan 1 1970.
+         * epoch: 00:00:00 Jan 1 1970.  Dates represented by a timestamp must
+         * fall between the year 1000 and the year 2900.
          */
         extern const std::string TIMESTAMP;
+
+
+        /**
+         * Valid only for 'string' columns.  It represents a SQL type
+         * NUMERIC(19, 4) data type.  There can be up to 15 digits before the
+         * decimal point and up to four digits in the fractional part.  The
+         * value can be positive or negative (indicated by a minus sign at the
+         * beginning).  This property is mutually exclusive with the
+         * 'text_search' property.
+         */
+        extern const std::string DECIMAL;
+
+
+        /**
+         * Valid only for 'string' columns.  Indicates that this field
+         * represents a date and will be provided in the format 'YYYY-MM-DD'.
+         * The allowable range is 1000-01-01 through 2900-01-01.
+         */
+        extern const std::string DATE;
+
+
+        /**
+         * Valid only for 'string' columns.  Indicates that this field
+         * represents a time-of-day and will be provided in the format
+         * 'HH:MM:SS.mmm'.  The allowable range is 00:00:00.000 through
+         * 23:59:59.999.
+         */
+        extern const std::string TIME;
 
 
         /**

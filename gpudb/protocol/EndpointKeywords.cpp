@@ -151,6 +151,8 @@ namespace gpudb
     const std::string create_type_char64        ( "char64"         );
     const std::string create_type_char8         ( "char8"          );
     const std::string create_type_data          ( "data"           );
+    const std::string create_type_date          ( "date"           );
+    const std::string create_type_decimal       ( "decimal"        );
     const std::string create_type_disk_optimized( "disk_optimized" );
     const std::string create_type_int16         ( "int16"          );
     const std::string create_type_int8          ( "int8"           );
@@ -159,6 +161,7 @@ namespace gpudb
     const std::string create_type_shard_key     ( "shard_key"      );
     const std::string create_type_store_only    ( "store_only"     );
     const std::string create_type_text_search   ( "text_search"    );
+    const std::string create_type_time          ( "time"           );
     const std::string create_type_timestamp     ( "timestamp"      );
 
     // Keywords for /create/union request
@@ -291,12 +294,15 @@ namespace gpudb
     const std::string insert_records_update_on_existing_pk( "update_on_existing_pk" );
 
     // Keywords for /insert/records/random request
-    const std::string insert_records_random_all         ( "all"          );
-    const std::string insert_records_random_attr_name   ( "attr_name"    );
-    const std::string insert_records_random_interval    ( "interval"     );
-    const std::string insert_records_random_max         ( "max"          );
-    const std::string insert_records_random_min         ( "min"          );
-    const std::string insert_records_random_track_length( "track_length" );
+    const std::string insert_records_random_all            ( "all"             );
+    const std::string insert_records_random_attr_name      ( "attr_name"       );
+    const std::string insert_records_random_interval       ( "interval"        );
+    const std::string insert_records_random_max            ( "max"             );
+    const std::string insert_records_random_min            ( "min"             );
+    const std::string insert_records_random_null_percentage( "null_percentage" );
+    const std::string insert_records_random_seed           ( "seed"            );
+    const std::string insert_records_random_track_length   ( "track_length"    );
+    const std::string insert_records_random_value          ( "value"           );
 
     // Keywords for /insert/symbol request
     const std::string insert_symbol_color   ( "color"    );

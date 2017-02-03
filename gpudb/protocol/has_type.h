@@ -13,7 +13,7 @@ namespace gpudb
      * A set of input parameters for {@link
      * #hasType(const HasTypeRequest&) const}.
      * <p>
-     * Check the existence of a type in GPUdb.
+     * Check for the existence of a type.
      */
     struct HasTypeRequest
     {
@@ -30,7 +30,7 @@ namespace gpudb
         /**
          * Constructs a HasTypeRequest object with the specified parameters.
          * 
-         * @param[in] typeId_  Id of the type returned by GPUdb in response to
+         * @param[in] typeId_  Id of the type returned in response to
          *                     /create/type request.
          * @param[in] options_  Optional parameters.  Default value is an empty
          *                      std::map.
@@ -96,7 +96,7 @@ namespace gpudb
      * A set of output parameters for {@link
      * #hasType(const HasTypeRequest&) const}.
      * <p>
-     * Check the existence of a type in GPUdb.
+     * Check for the existence of a type.
      */
     struct HasTypeResponse
     {

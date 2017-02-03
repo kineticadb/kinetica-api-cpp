@@ -35,7 +35,7 @@ namespace gpudb
          * parameters.
          * 
          * @param[in] tableName_  Name of the table on which the operation will
-         *                        be performed. Must be a valid table in GPUdb.
+         *                        be performed. Must be an existing table.
          * @param[in] columnName_  Name of a column or an expression of one or
          *                         more column on which the min-max will be
          *                         calculated.

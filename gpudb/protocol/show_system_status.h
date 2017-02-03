@@ -14,8 +14,8 @@ namespace gpudb
      * #showSystemStatus(const ShowSystemStatusRequest&) const}.
      * <p>
      * Provides server configuration and health related status to the caller.
-     * The GPUdb Admin tool uses it to present server related information to
-     * the user.
+     * The admin tool uses it to present server related information to the
+     * user.
      */
     struct ShowSystemStatusRequest
     {
@@ -90,8 +90,8 @@ namespace gpudb
      * #showSystemStatus(const ShowSystemStatusRequest&) const}.
      * <p>
      * Provides server configuration and health related status to the caller.
-     * The GPUdb Admin tool uses it to present server related information to
-     * the user.
+     * The admin tool uses it to present server related information to the
+     * user.
      */
     struct ShowSystemStatusResponse
     {

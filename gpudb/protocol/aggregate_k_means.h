@@ -44,8 +44,8 @@ namespace gpudb
          * parameters.
          * 
          * @param[in] tableName_  Name of the table on which the operation will
-         *                        be performed. Must be a valid table or
-         *                        collection in GPUdb.
+         *                        be performed. Must be an existing table or
+         *                        collection.
          * @param[in] columnNames_  List of column names on which the operation
          *                          would be performed. If n columns are
          *                          provided then each of the k result points

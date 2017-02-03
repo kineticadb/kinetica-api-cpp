@@ -33,7 +33,7 @@ namespace gpudb
          * @param[in] name_  Name of the role to be created. Must contain only
          *                   lowercase letters, digits, and underscores, and
          *                   cannot begin with a digit. Must not be the same
-         *                   name as an existing user or role in GPUdb.
+         *                   name as an existing user or role.
          * @param[in] options_  Optional parameters.
          * 
          */

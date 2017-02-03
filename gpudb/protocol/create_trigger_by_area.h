@@ -21,9 +21,9 @@ namespace gpudb
      * tables(s) via {@link
      * #insertRecordsRaw(const RawInsertRecordsRequest&) const} with the
      * chosen columns' values falling within the specified region will trip the
-     * trigger. All such records will be queued at GPUdb's trigger port-by
-     * default '9001' but can also be obtained via {@link
-     * #showSystemStatus(const ShowSystemStatusRequest&) const}-for any
+     * trigger. All such records will be queued at the trigger port (by default
+     * '9001', but able to be retrieved via {@link
+     * #showSystemStatus(const ShowSystemStatusRequest&) const}) for any
      * listening client to collect. Active triggers can be cancelled by using
      * the {@link #clearTrigger(const ClearTriggerRequest&) const} endpoint
      * or by clearing all relevant tables.
@@ -182,9 +182,9 @@ namespace gpudb
      * tables(s) via {@link
      * #insertRecordsRaw(const RawInsertRecordsRequest&) const} with the
      * chosen columns' values falling within the specified region will trip the
-     * trigger. All such records will be queued at GPUdb's trigger port-by
-     * default '9001' but can also be obtained via {@link
-     * #showSystemStatus(const ShowSystemStatusRequest&) const}-for any
+     * trigger. All such records will be queued at the trigger port (by default
+     * '9001', but able to be retrieved via {@link
+     * #showSystemStatus(const ShowSystemStatusRequest&) const}) for any
      * listening client to collect. Active triggers can be cancelled by using
      * the {@link #clearTrigger(const ClearTriggerRequest&) const} endpoint
      * or by clearing all relevant tables.

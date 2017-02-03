@@ -16,13 +16,12 @@ namespace gpudb
      * Creates raster images of data in the given table based on provided input
      * parameters. Numerous parameters are required to call this function. Some
      * of the important parameters are the attributes of the generated images
-     * (@a bgColor, @a width, @a height), the collection of GPUdb table names
-     * on which this function is to be applied, for which shapes (point,
-     * polygon, tracks) the images are to be created and a user specified
-     * session key. This session key is later used to fetch the generated
-     * images stored by GPUdb. The operation is synchronous meaning that GPUdb
-     * will not return the request until the images for all the frames of the
-     * video are fully available.
+     * (@a bgColor, @a width, @a height), the collection of table names on
+     * which this function is to be applied, for which shapes (point, polygon,
+     * tracks) the images are to be created and a user specified session key.
+     * This session key is later used to fetch the generated images. The
+     * operation is synchronous, meaning that a response will not be returned
+     * until the images for all the frames of the video are fully available.
      * <p>
      * Once the request has been processed then the generated video frames are
      * available for download via WMS using STYLES=cached. In this request the
@@ -34,13 +33,13 @@ namespace gpudb
      * For instance, if a 20 frame video with the session key 'MY-SESSION-KEY'
      * was generated, the first frame could be retrieved with the URL::
      * <p>
-     * http://<gpudb-ip-address>:9191/wms?REQUEST=GetMap&STYLES=cached&LAYERS=MY-SESSION-KEY&FRAME=0
+     * http://<hostname/ipAddress>:9191/wms?REQUEST=GetMap&STYLES=cached&LAYERS=MY-SESSION-KEY&FRAME=0
      * <p>
      * and the last frame could be retrieved with::
      * <p>
-     * http://gpudb-ip-address:9191/wms?REQUEST=GetMap&STYLES=cached&LAYERS=MY-SESSION-KEY&FRAME=19
+     * http://<hostname/ipAddress>:9191/wms?REQUEST=GetMap&STYLES=cached&LAYERS=MY-SESSION-KEY&FRAME=19
      * The response payload provides, among other things, the number of frames
-     * which were created by GPUdb.
+     * which were created.
      */
     struct VisualizeVideoRequest
     {
@@ -348,13 +347,12 @@ namespace gpudb
      * Creates raster images of data in the given table based on provided input
      * parameters. Numerous parameters are required to call this function. Some
      * of the important parameters are the attributes of the generated images
-     * (@a bgColor, @a width, @a height), the collection of GPUdb table names
-     * on which this function is to be applied, for which shapes (point,
-     * polygon, tracks) the images are to be created and a user specified
-     * session key. This session key is later used to fetch the generated
-     * images stored by GPUdb. The operation is synchronous meaning that GPUdb
-     * will not return the request until the images for all the frames of the
-     * video are fully available.
+     * (@a bgColor, @a width, @a height), the collection of table names on
+     * which this function is to be applied, for which shapes (point, polygon,
+     * tracks) the images are to be created and a user specified session key.
+     * This session key is later used to fetch the generated images. The
+     * operation is synchronous, meaning that a response will not be returned
+     * until the images for all the frames of the video are fully available.
      * <p>
      * Once the request has been processed then the generated video frames are
      * available for download via WMS using STYLES=cached. In this request the
@@ -366,13 +364,13 @@ namespace gpudb
      * For instance, if a 20 frame video with the session key 'MY-SESSION-KEY'
      * was generated, the first frame could be retrieved with the URL::
      * <p>
-     * http://<gpudb-ip-address>:9191/wms?REQUEST=GetMap&STYLES=cached&LAYERS=MY-SESSION-KEY&FRAME=0
+     * http://<hostname/ipAddress>:9191/wms?REQUEST=GetMap&STYLES=cached&LAYERS=MY-SESSION-KEY&FRAME=0
      * <p>
      * and the last frame could be retrieved with::
      * <p>
-     * http://gpudb-ip-address:9191/wms?REQUEST=GetMap&STYLES=cached&LAYERS=MY-SESSION-KEY&FRAME=19
+     * http://<hostname/ipAddress>:9191/wms?REQUEST=GetMap&STYLES=cached&LAYERS=MY-SESSION-KEY&FRAME=19
      * The response payload provides, among other things, the number of frames
-     * which were created by GPUdb.
+     * which were created.
      */
     struct VisualizeVideoResponse
     {
