@@ -49,6 +49,7 @@ namespace gpudb
             static inline std::string getApiVersion() { return GPUdb::API_VERSION; }
 
             GPUdb(const std::string& url, const Options& options = Options());
+            GPUdb(const std::vector<std::string>& urls, const Options& options = Options());
             std::string getUrl() const;
             std::string getUsername() const;
             std::string getPassword() const;
@@ -105,11 +106,56 @@ namespace gpudb
         private:
             static const std::string API_VERSION;
 
-            std::string url;
-            std::string host;
-            std::string service;
-            std::string path;
-            bool secure;
+            /*
+             * Wraps connection params together for cycling in the HA logic
+             */
+            struct ConnectionToken
+            {
+                ConnectionToken(const std::string& url);
+                bool operator == (const ConnectionToken &rhs) const;
+                bool operator != (const ConnectionToken &rhs) const;
+
+                std::string url;
+                std::string host;
+                std::string port;
+                std::string path;
+                bool secure;
+            };
+
+            /*
+             * Manages the list of available hosts for HA. Randomly selects
+             */
+            struct ConnectionTokenManager
+            {
+                /*
+                 * Populates the list and randomly assigns the currentIndex
+                 */
+                void initialize(const std::vector<ConnectionToken>& tokens);
+
+                /*
+                 * @return The currently available connection information
+                 */
+                ConnectionToken getCurrentToken() const;
+
+                /*
+                 * Cycles the index to the next entry (wrapping around if
+                 * necessary)
+                 * @return The new current token
+                 */
+                ConnectionToken getNextToken();
+
+                private:
+                    std::size_t currentIndex;
+                    std::vector<ConnectionToken> tokens;
+                    mutable boost::mutex tokensMutex;
+            };
+
+            void initializeConnectionTokens(
+                const std::vector<std::string>& urls);
+
+            // Mutable for usage in submitRequestRaw
+            mutable ConnectionTokenManager tokenManager;
+
             std::string username;
             std::string password;
             std::string authorization;

@@ -4,6 +4,8 @@
 #include <boost/lexical_cast.hpp>
 #include <snappy.h>
 
+#include <ctime>
+
 namespace gpudb {
     static const char base64Chars[] = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
 
@@ -149,7 +151,6 @@ namespace gpudb {
     }
 
     GPUdb::GPUdb(const std::string& url, const Options& options) :
-        url(url),
         username(options.getUsername()),
         password(options.getPassword()),
         authorization((!options.getUsername().empty() || !options.getPassword().empty()) ? base64Encode(options.getUsername() + ":" + options.getPassword()) : ""),
@@ -157,15 +158,24 @@ namespace gpudb {
         threadCount(options.getThreadCount()),
         executor(options.getExecutor())
     {
-        if (!parseUrl(url, host, service, path, secure))
-        {
-            throw std::invalid_argument("Invalid URL specified.");
-        }
+        std::vector<std::string> urls;
+        urls.push_back(url);
+        initializeConnectionTokens(urls);
+    }
 
-        if (secure)
-        {
-            throw std::invalid_argument("HTTPS not supported.");
-        }
+    GPUdb::GPUdb(const std::vector<std::string>& urls, const Options& options)
+        : username(options.getUsername()),
+          password(options.getPassword()),
+          authorization(
+              (!options.getUsername().empty() || !options.getPassword().empty())
+                  ? base64Encode(options.getUsername() + ":" +
+                                 options.getPassword())
+                  : ""),
+          useSnappy(options.getUseSnappy()),
+          threadCount(options.getThreadCount()),
+          executor(options.getExecutor())
+    {
+        initializeConnectionTokens(urls);
     }
 
     void GPUdb::addKnownType(const std::string& typeId, const avro::DecoderPtr& decoder)
@@ -265,7 +275,7 @@ namespace gpudb {
 
     std::string GPUdb::getUrl() const
     {
-        return url;
+        return tokenManager.getCurrentToken().url;
     }
 
     bool GPUdb::getUseSnappy() const
@@ -311,95 +321,127 @@ namespace gpudb {
 
     void GPUdb::submitRequestRaw(const std::string& endpoint, const std::vector<uint8_t>& request, GpudbResponse& response, const bool enableCompression) const
     {
-        try
-        {
-            boost::asio::io_service ioService;
-            boost::asio::ip::tcp::resolver resolver(ioService);
-            boost::asio::ip::tcp::resolver::query query(host, service);
-            boost::asio::ip::tcp::resolver::iterator iterator = resolver.resolve(query);
-            boost::asio::ip::tcp::socket socket(ioService);
-            boost::asio::connect(socket, iterator);
-            boost::asio::streambuf requestStreamBuffer;
-            std::ostream requestStream(&requestStreamBuffer);
-            requestStream << "POST " << path << endpoint << " HTTP/1.0\r\n";
+        const ConnectionToken& initialToken = tokenManager.getCurrentToken();
+        std::string errorMessage;
 
-            if (!authorization.empty())
+        do {
+            try
             {
-                requestStream << "Authorization: Basic " << authorization << "\r\n";
-            }
+                const ConnectionToken& token = tokenManager.getCurrentToken();
+                errorMessage.clear();
 
-            if (enableCompression && useSnappy)
-            {
-                std::string compressedRequest;
-                snappy::Compress((char*)&request[0], request.size(), &compressedRequest);
-                requestStream << "Content-Type: application/x-snappy\r\n";
-                requestStream << "Content-Length: " << compressedRequest.size() << "\r\n";
-                requestStream << "\r\n";
-                boost::asio::write(socket, requestStreamBuffer);
-                boost::asio::write(socket, boost::asio::buffer(compressedRequest));
-            }
-            else
-            {
-                requestStream << "Content-Type: application/octet-stream\r\n";
-                requestStream << "Content-Length: " << request.size() << "\r\n";
-                requestStream << "\r\n";
-                boost::asio::write(socket, requestStreamBuffer);
-                boost::asio::write(socket, boost::asio::buffer(request));
-            }
+                boost::asio::io_service ioService;
+                boost::asio::ip::tcp::resolver resolver(ioService);
+                boost::asio::ip::tcp::resolver::query query(token.host, token.port);
+                boost::asio::ip::tcp::resolver::iterator iterator = resolver.resolve(query);
+                boost::asio::ip::tcp::socket socket(ioService);
+                boost::asio::connect(socket, iterator);
+                boost::asio::streambuf requestStreamBuffer;
+                std::ostream requestStream(&requestStreamBuffer);
+                requestStream << "POST " << token.path << endpoint << " HTTP/1.0\r\n";
 
-            boost::asio::streambuf responseStreamBuffer;
-            boost::asio::read_until(socket, responseStreamBuffer, "\r\n\r\n");
-            std::istream responseStream(&responseStreamBuffer);
-            std::string header;
-            std::getline(responseStream, header);
-
-            if (!responseStream || header.substr(0, 5) != "HTTP/")
-            {
-                throw GPUdbException("Invalid response from server.");
-            }
-
-            do
-            {
-                std::getline(responseStream, header);
-            }
-            while (header != "\r");
-
-            std::vector<uint8_t> responseBytes;
-            boost::system::error_code error;
-
-            do
-            {
-                boost::asio::streambuf::const_buffers_type data = responseStreamBuffer.data();
-                size_t totalRead = 0;
-
-                for (boost::asio::streambuf::const_buffers_type::const_iterator it = data.begin(); it != data.end(); ++it)
+                if (!authorization.empty())
                 {
-                    const uint8_t* buffer = boost::asio::buffer_cast<const uint8_t*>(*it);
-                    size_t read = boost::asio::buffer_size(*it);
-                    responseBytes.insert(responseBytes.end(), buffer, buffer + read);
-                    totalRead += read;
+                    requestStream << "Authorization: Basic " << authorization << "\r\n";
                 }
 
-                responseStreamBuffer.consume(totalRead);
-            }
-            while (boost::asio::read(socket, responseStreamBuffer, boost::asio::transfer_at_least(1), error));
+                if (enableCompression && useSnappy)
+                {
+                    std::string compressedRequest;
+                    snappy::Compress((char*)&request[0], request.size(), &compressedRequest);
+                    requestStream << "Content-Type: application/x-snappy\r\n";
+                    requestStream << "Content-Length: " << compressedRequest.size() << "\r\n";
+                    requestStream << "\r\n";
+                    boost::asio::write(socket, requestStreamBuffer);
+                    boost::asio::write(socket, boost::asio::buffer(compressedRequest));
+                }
+                else
+                {
+                    requestStream << "Content-Type: application/octet-stream\r\n";
+                    requestStream << "Content-Length: " << request.size() << "\r\n";
+                    requestStream << "\r\n";
+                    boost::asio::write(socket, requestStreamBuffer);
+                    boost::asio::write(socket, boost::asio::buffer(request));
+                }
 
-            if (error != boost::asio::error::eof)
+                boost::asio::streambuf responseStreamBuffer;
+                boost::asio::read_until(socket, responseStreamBuffer, "\r\n\r\n");
+                std::istream responseStream(&responseStreamBuffer);
+                std::string header;
+                std::getline(responseStream, header);
+
+                if (!responseStream || header.substr(0, 5) != "HTTP/")
+                {
+                    throw GPUdbException("Invalid response from server.");
+                }
+
+                do
+                {
+                    std::getline(responseStream, header);
+                }
+                while (header != "\r");
+
+                std::vector<uint8_t> responseBytes;
+                boost::system::error_code error;
+
+                do
+                {
+                    boost::asio::streambuf::const_buffers_type data = responseStreamBuffer.data();
+                    size_t totalRead = 0;
+
+                    for (boost::asio::streambuf::const_buffers_type::const_iterator it = data.begin(); it != data.end(); ++it)
+                    {
+                        const uint8_t* buffer = boost::asio::buffer_cast<const uint8_t*>(*it);
+                        size_t read = boost::asio::buffer_size(*it);
+                        responseBytes.insert(responseBytes.end(), buffer, buffer + read);
+                        totalRead += read;
+                    }
+
+                    responseStreamBuffer.consume(totalRead);
+                }
+                while (boost::asio::read(socket, responseStreamBuffer, boost::asio::transfer_at_least(1), error));
+
+                if (error != boost::asio::error::eof)
+                {
+                    throw boost::system::system_error(error);
+                }
+
+                avro::decode(response, responseBytes);
+
+                if (response.status == "ERROR")
+                {
+                    throw GPUdbException(response.message);
+                }
+            }
+            catch (const boost::system::system_error& ex)
             {
-                throw boost::system::system_error(error);
+                errorMessage = ex.what();
             }
+        } while (!errorMessage.empty() &&
+                 (tokenManager.getNextToken() != initialToken));
 
-            avro::decode(response, responseBytes);
-
-            if (response.status == "ERROR")
-            {
-                throw GPUdbException(response.message);
-            }
-        }
-        catch (const boost::system::system_error& ex)
+        if (!errorMessage.empty())
         {
-            throw GPUdbException(std::string(ex.what()));
+            throw GPUdbException(errorMessage);
         }
+    }
+
+    void GPUdb::initializeConnectionTokens(
+        const std::vector<std::string>& input)
+    {
+        if (input.empty())
+        {
+            throw GPUdbException("No host provided");
+        }
+
+        std::vector<ConnectionToken> tokens;
+        std::transform(input.begin(), input.end(),
+                       std::back_inserter(tokens),
+                       [](const std::string& url) -> ConnectionToken {
+                           return ConnectionToken(url);
+                       });
+
+        tokenManager.initialize(tokens);
     }
 
     GPUdb::Options::Options() :
@@ -468,5 +510,56 @@ namespace gpudb {
         return *this;
     }
 
-    #include "gpudb/GPUdbFunctions.cpp"
+    //------------------------------------------------------------------------
+    //------------------------------------------------------------------------
+    GPUdb::ConnectionToken::ConnectionToken(const std::string& url) : url(url)
+    {
+        if (!parseUrl(url, host, port, path, secure))
+        {
+            throw std::invalid_argument("Invalid URL specified.");
+        }
+
+        if (secure)
+        {
+            throw std::invalid_argument("HTTPS not supported.");
+        }
+    }
+
+    bool GPUdb::ConnectionToken::operator==(const ConnectionToken& rhs) const
+    {
+        return url == rhs.url;
+    }
+
+    bool GPUdb::ConnectionToken::operator!=(const ConnectionToken& rhs) const
+    {
+        return !(*this == rhs);
+    }
+
+    //------------------------------------------------------------------------
+    //------------------------------------------------------------------------
+    void GPUdb::ConnectionTokenManager::initialize(
+        const std::vector<ConnectionToken>& tokens)
+    {
+        std::srand(std::time(0));
+        this->tokens = tokens;
+        currentIndex = std::rand() % tokens.size();
+    }
+
+    GPUdb::ConnectionToken
+    GPUdb::ConnectionTokenManager::getCurrentToken() const
+    {
+        boost::mutex::scoped_lock lock(tokensMutex);
+        return tokens.at(currentIndex);
+    }
+
+    GPUdb::ConnectionToken GPUdb::ConnectionTokenManager::getNextToken()
+    {
+        {
+            boost::mutex::scoped_lock lock(tokensMutex);
+            currentIndex = (currentIndex + 1) % tokens.size();
+        }
+        return getCurrentToken();
+    }
+
+#include "gpudb/GPUdbFunctions.cpp"
 }

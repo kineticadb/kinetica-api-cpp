@@ -1,20 +1,12 @@
 #include "gpudb/GPUdb.hpp"
 
+#include <boost/algorithm/string/classification.hpp>
+#include <boost/algorithm/string/split.hpp>
 #include <boost/lexical_cast.hpp>
 #include <boost/optional/optional_io.hpp>
 
-int main(int argc, char* argv[])
+void run(gpudb::GPUdb &gpudb)
 {
-    if (argc < 2)
-    {
-        std::cout << "Usage: gpudb-api-example http://gpudb_host:9191\n";
-        exit(1);
-    }
-
-    std::string host(argv[1]);
-    std::cout << "Connecting to GPUdb host: '" << host << "'\n";
-
-    gpudb::GPUdb gpudb(host, gpudb::GPUdb::Options().setThreadCount(4));
     std::map<std::string, std::string> options;
 
     // Get the version information
@@ -164,6 +156,40 @@ int main(int argc, char* argv[])
     // Clean up
 
     gpudb.clearTable(table_name, "", options);
+
+}
+
+int main(int argc, char* argv[])
+{
+    if (argc < 2)
+    {
+        std::cout << "Usage: gpudb-api-example http://gpudb_host:9191\n";
+        std::cout << "\tgpudb-api-example http://gpudb_host:9191,http://gpudb_host:9192";
+        exit(1);
+    }
+
+    std::vector<std::string> hosts;
+    boost::split(hosts, argv[1], boost::is_any_of(","));
+
+    gpudb::GPUdb::Options opts = gpudb::GPUdb::Options().setThreadCount(4);
+
+    if (hosts.size() == 1)
+    {
+        std::string host(hosts[0]);
+        std::cout << "Connecting to GPUdb host: '" << host << "'\n";
+        gpudb::GPUdb gpudb(host, opts);
+        run(gpudb);
+    }
+    else if (hosts.size() > 1)
+    {
+        gpudb::GPUdb gpudb(hosts, opts);
+        std::cout << "Connecting to GPUdb host: '" << gpudb.getUrl() << "'\n";
+        run(gpudb);
+    }
+    else
+    {
+        std::cout << "No host provided\n";
+    }
 
     return 0;
 }
