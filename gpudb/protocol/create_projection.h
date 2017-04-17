@@ -42,10 +42,11 @@ namespace gpudb
          *                             Must not be the name of a currently
          *                             existing table. Cannot be an empty
          *                             string. Valid characters are
-         *                             'A-Za-z0-9_-(){}[] .:' (excluding the
-         *                             single quote), with the first character
-         *                             being one of 'A-Za-z0-9_'. The maximum
-         *                             length is 256 characters.
+         *                             alphanumeric or any of '_-(){}[] .:'
+         *                             (excluding the single quotes), with the
+         *                             first character being alphanumeric or an
+         *                             underscore. The maximum length is 256
+         *                             characters.
          * @param[in] columnNames_  List of columns from @a tableName to be
          *                          included in the projection. Can include
          *                          derived columns. Can be specified as

@@ -67,9 +67,9 @@ namespace gpudb
          *                      (i.e. no sorting is applied).
          *                              <li> sort_order: String indicating how
          *                      the returned values should be sorted -
-         *                      ascending or descending. Ignored if 'sort_by'
-         *                      option is not specified. Values: 'ascending',
-         *                      'descending'.
+         *                      ascending or descending. If sort_order is
+         *                      provided, sort_by has to be provided. Values:
+         *                      'ascending', 'descending'.
          *                      </ul>
          *                        Default value is an empty std::map.
          * 
@@ -110,9 +110,9 @@ namespace gpudb
          *                      (i.e. no sorting is applied).
          *                              <li> sort_order: String indicating how
          *                      the returned values should be sorted -
-         *                      ascending or descending. Ignored if 'sort_by'
-         *                      option is not specified. Values: 'ascending',
-         *                      'descending'.
+         *                      ascending or descending. If sort_order is
+         *                      provided, sort_by has to be provided. Values:
+         *                      'ascending', 'descending'.
          *                      </ul>
          *                        Default value is an empty std::map.
          * 

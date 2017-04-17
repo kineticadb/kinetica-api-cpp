@@ -14,7 +14,7 @@ namespace gpudb
      * #createJoinTable(const CreateJoinTableRequest&) const}.
      * <p>
      * Creates a table that is the result of a SQL JOIN.  For details see: <a
-     * href="../../concepts/index.html#joins" target="_top">join concept
+     * href="../../concepts/joins.html" target="_top">join concept
      * documentation</a>.
      */
     struct CreateJoinTableRequest
@@ -45,16 +45,22 @@ namespace gpudb
          *                         set.  Corresponds to a SQL statement FROM
          *                         clause  Default value is an empty
          *                         std::vector.
-         * @param[in] columnNames_  The list of columns to be selected from the
-         *                          input table names. Empty list says to
-         *                          select all the column names.  Empty list is
-         *                          the default.  Default value is an empty
-         *                          std::vector.
+         * @param[in] columnNames_  List of columns to be included in the join
+         *                          table. Can be the column_names from the
+         *                          member sets if unique or can be prefixed by
+         *                          the table id as <id>.<column_name> where
+         *                          <id> is the table name or alias. Can be
+         *                          specified as aliased via the syntax
+         *                          '<column_name> as <alias>. Can use wild
+         *                          cards as '*' (include all columns), or
+         *                          <id>.* (include all columns from table with
+         *                          name or alias <id>)  Default value is an
+         *                          empty std::vector.
          * @param[in] expressions_  An optional list of expressions to combine
          *                          and filter the joined set.  Corresponds to
          *                          a SQL statement WHERE clause. For details
          *                          see: <a
-         *                          href="../../concepts/index.html#expressions"
+         *                          href="../../concepts/expressions.html"
          *                          target="_top">expressions</a>.  Default
          *                          value is an empty std::vector.
          * @param[in] options_  Optional parameters.
@@ -167,7 +173,7 @@ namespace gpudb
      * #createJoinTable(const CreateJoinTableRequest&) const}.
      * <p>
      * Creates a table that is the result of a SQL JOIN.  For details see: <a
-     * href="../../concepts/index.html#joins" target="_top">join concept
+     * href="../../concepts/joins.html" target="_top">join concept
      * documentation</a>.
      */
     struct CreateJoinTableResponse

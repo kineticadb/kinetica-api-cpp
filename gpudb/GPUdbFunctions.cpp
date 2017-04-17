@@ -775,10 +775,10 @@ AggregateConvexHullResponse& GPUdb::aggregateConvexHull( const std::string& tabl
  * 'mean', 'stddev', 'stddev_pop', 'stddev_samp', 'var', 'var_pop', 'var_samp',
  * 'arg_min', 'arg_max' and 'count_distinct'. The response is returned as a
  * dynamic schema. For details see: <a
- * href="../../concepts/index.html#dynamic-schemas" target="_top">dynamic
- * schemas documentation</a>. If the 'result_table' option is provided then the
- * results are stored in a table with the name given in the option and the
- * results are not returned in the response.
+ * href="../../concepts/dynamic_schemas.html" target="_top">dynamic schemas
+ * documentation</a>. If the 'result_table' option is provided then the results
+ * are stored in a table with the name given in the option and the results are
+ * not returned in the response.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -812,10 +812,10 @@ RawAggregateGroupByResponse GPUdb::aggregateGroupByRaw( const AggregateGroupByRe
  * 'mean', 'stddev', 'stddev_pop', 'stddev_samp', 'var', 'var_pop', 'var_samp',
  * 'arg_min', 'arg_max' and 'count_distinct'. The response is returned as a
  * dynamic schema. For details see: <a
- * href="../../concepts/index.html#dynamic-schemas" target="_top">dynamic
- * schemas documentation</a>. If the 'result_table' option is provided then the
- * results are stored in a table with the name given in the option and the
- * results are not returned in the response.
+ * href="../../concepts/dynamic_schemas.html" target="_top">dynamic schemas
+ * documentation</a>. If the 'result_table' option is provided then the results
+ * are stored in a table with the name given in the option and the results are
+ * not returned in the response.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -852,10 +852,10 @@ RawAggregateGroupByResponse& GPUdb::aggregateGroupByRaw( const AggregateGroupByR
  * 'mean', 'stddev', 'stddev_pop', 'stddev_samp', 'var', 'var_pop', 'var_samp',
  * 'arg_min', 'arg_max' and 'count_distinct'. The response is returned as a
  * dynamic schema. For details see: <a
- * href="../../concepts/index.html#dynamic-schemas" target="_top">dynamic
- * schemas documentation</a>. If the 'result_table' option is provided then the
- * results are stored in a table with the name given in the option and the
- * results are not returned in the response.
+ * href="../../concepts/dynamic_schemas.html" target="_top">dynamic schemas
+ * documentation</a>. If the 'result_table' option is provided then the results
+ * are stored in a table with the name given in the option and the results are
+ * not returned in the response.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -894,10 +894,10 @@ AggregateGroupByResponse GPUdb::aggregateGroupBy( const AggregateGroupByRequest&
  * 'mean', 'stddev', 'stddev_pop', 'stddev_samp', 'var', 'var_pop', 'var_samp',
  * 'arg_min', 'arg_max' and 'count_distinct'. The response is returned as a
  * dynamic schema. For details see: <a
- * href="../../concepts/index.html#dynamic-schemas" target="_top">dynamic
- * schemas documentation</a>. If the 'result_table' option is provided then the
- * results are stored in a table with the name given in the option and the
- * results are not returned in the response.
+ * href="../../concepts/dynamic_schemas.html" target="_top">dynamic schemas
+ * documentation</a>. If the 'result_table' option is provided then the results
+ * are stored in a table with the name given in the option and the results are
+ * not returned in the response.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -939,10 +939,10 @@ AggregateGroupByResponse& GPUdb::aggregateGroupBy( const AggregateGroupByRequest
  * 'mean', 'stddev', 'stddev_pop', 'stddev_samp', 'var', 'var_pop', 'var_samp',
  * 'arg_min', 'arg_max' and 'count_distinct'. The response is returned as a
  * dynamic schema. For details see: <a
- * href="../../concepts/index.html#dynamic-schemas" target="_top">dynamic
- * schemas documentation</a>. If the 'result_table' option is provided then the
- * results are stored in a table with the name given in the option and the
- * results are not returned in the response.
+ * href="../../concepts/dynamic_schemas.html" target="_top">dynamic schemas
+ * documentation</a>. If the 'result_table' option is provided then the results
+ * are stored in a table with the name given in the option and the results are
+ * not returned in the response.
  * 
  * @param tableName  Name of the table on which the operation will be
  *                   performed. Must be an existing table/view/collection.
@@ -1022,10 +1022,10 @@ AggregateGroupByResponse GPUdb::aggregateGroupBy( const std::string& tableName,
  * 'mean', 'stddev', 'stddev_pop', 'stddev_samp', 'var', 'var_pop', 'var_samp',
  * 'arg_min', 'arg_max' and 'count_distinct'. The response is returned as a
  * dynamic schema. For details see: <a
- * href="../../concepts/index.html#dynamic-schemas" target="_top">dynamic
- * schemas documentation</a>. If the 'result_table' option is provided then the
- * results are stored in a table with the name given in the option and the
- * results are not returned in the response.
+ * href="../../concepts/dynamic_schemas.html" target="_top">dynamic schemas
+ * documentation</a>. If the 'result_table' option is provided then the results
+ * are stored in a table with the name given in the option and the results are
+ * not returned in the response.
  * 
  * @param tableName  Name of the table on which the operation will be
  *                   performed. Must be an existing table/view/collection.
@@ -1996,10 +1996,10 @@ AggregateStatisticsByRangeResponse& GPUdb::aggregateStatisticsByRange( const std
  * {"limit":"10","sort_order":"descending"}.
  * <p>
  * The response is returned as a dynamic schema. For details see: <a
- * href="../../concepts/index.html#dynamic-schemas" target="_top">dynamic
- * schemas documentation</a>. If the 'result_table' option is provided then the
- * results are stored in a table with the name given in the option and the
- * results are not returned in the response.
+ * href="../../concepts/dynamic_schemas.html" target="_top">dynamic schemas
+ * documentation</a>. If the 'result_table' option is provided then the results
+ * are stored in a table with the name given in the option and the results are
+ * not returned in the response.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -2029,10 +2029,10 @@ RawAggregateUniqueResponse GPUdb::aggregateUniqueRaw( const AggregateUniqueReque
  * {"limit":"10","sort_order":"descending"}.
  * <p>
  * The response is returned as a dynamic schema. For details see: <a
- * href="../../concepts/index.html#dynamic-schemas" target="_top">dynamic
- * schemas documentation</a>. If the 'result_table' option is provided then the
- * results are stored in a table with the name given in the option and the
- * results are not returned in the response.
+ * href="../../concepts/dynamic_schemas.html" target="_top">dynamic schemas
+ * documentation</a>. If the 'result_table' option is provided then the results
+ * are stored in a table with the name given in the option and the results are
+ * not returned in the response.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -2065,10 +2065,10 @@ RawAggregateUniqueResponse& GPUdb::aggregateUniqueRaw( const AggregateUniqueRequ
  * {"limit":"10","sort_order":"descending"}.
  * <p>
  * The response is returned as a dynamic schema. For details see: <a
- * href="../../concepts/index.html#dynamic-schemas" target="_top">dynamic
- * schemas documentation</a>. If the 'result_table' option is provided then the
- * results are stored in a table with the name given in the option and the
- * results are not returned in the response.
+ * href="../../concepts/dynamic_schemas.html" target="_top">dynamic schemas
+ * documentation</a>. If the 'result_table' option is provided then the results
+ * are stored in a table with the name given in the option and the results are
+ * not returned in the response.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -2103,10 +2103,10 @@ AggregateUniqueResponse GPUdb::aggregateUnique( const AggregateUniqueRequest& re
  * {"limit":"10","sort_order":"descending"}.
  * <p>
  * The response is returned as a dynamic schema. For details see: <a
- * href="../../concepts/index.html#dynamic-schemas" target="_top">dynamic
- * schemas documentation</a>. If the 'result_table' option is provided then the
- * results are stored in a table with the name given in the option and the
- * results are not returned in the response.
+ * href="../../concepts/dynamic_schemas.html" target="_top">dynamic schemas
+ * documentation</a>. If the 'result_table' option is provided then the results
+ * are stored in a table with the name given in the option and the results are
+ * not returned in the response.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -2144,10 +2144,10 @@ AggregateUniqueResponse& GPUdb::aggregateUnique( const AggregateUniqueRequest& r
  * {"limit":"10","sort_order":"descending"}.
  * <p>
  * The response is returned as a dynamic schema. For details see: <a
- * href="../../concepts/index.html#dynamic-schemas" target="_top">dynamic
- * schemas documentation</a>. If the 'result_table' option is provided then the
- * results are stored in a table with the name given in the option and the
- * results are not returned in the response.
+ * href="../../concepts/dynamic_schemas.html" target="_top">dynamic schemas
+ * documentation</a>. If the 'result_table' option is provided then the results
+ * are stored in a table with the name given in the option and the results are
+ * not returned in the response.
  * 
  * @param tableName  Name of the table on which the operation will be
  *                   performed. Must be an existing table.
@@ -2213,10 +2213,10 @@ AggregateUniqueResponse GPUdb::aggregateUnique( const std::string& tableName,
  * {"limit":"10","sort_order":"descending"}.
  * <p>
  * The response is returned as a dynamic schema. For details see: <a
- * href="../../concepts/index.html#dynamic-schemas" target="_top">dynamic
- * schemas documentation</a>. If the 'result_table' option is provided then the
- * results are stored in a table with the name given in the option and the
- * results are not returned in the response.
+ * href="../../concepts/dynamic_schemas.html" target="_top">dynamic schemas
+ * documentation</a>. If the 'result_table' option is provided then the results
+ * are stored in a table with the name given in the option and the results are
+ * not returned in the response.
  * 
  * @param tableName  Name of the table on which the operation will be
  *                   performed. Must be an existing table.
@@ -2610,7 +2610,7 @@ AlterTableResponse& GPUdb::alterTable( const AlterTableRequest& request_,
  *                 true (if option is missing). If True, then validate all
  *                 values. A value too large (or too long) for the new type
  *                 will prevent any change. If False, then when a value is too
- *                 large or long, it will be trancated. Values: 'true',
+ *                 large or long, it will be truncated. Values: 'true',
  *                 'false'.
  *                         <li> copy_values_from_column: when adding or
  *                 changing a column: enter column name - from where to copy
@@ -2685,7 +2685,7 @@ AlterTableResponse GPUdb::alterTable( const std::string& tableName,
  *                 true (if option is missing). If True, then validate all
  *                 values. A value too large (or too long) for the new type
  *                 will prevent any change. If False, then when a value is too
- *                 large or long, it will be trancated. Values: 'true',
+ *                 large or long, it will be truncated. Values: 'true',
  *                 'false'.
  *                         <li> copy_values_from_column: when adding or
  *                 changing a column: enter column name - from where to copy
@@ -3230,7 +3230,7 @@ ClearTriggerResponse& GPUdb::clearTrigger( const std::string& triggerId,
 
 /**
  * Creates a table that is the result of a SQL JOIN.  For details see: <a
- * href="../../concepts/index.html#joins" target="_top">join concept
+ * href="../../concepts/joins.html" target="_top">join concept
  * documentation</a>.
  * 
  * @param[in] request_  Request object containing the parameters for the
@@ -3250,7 +3250,7 @@ CreateJoinTableResponse GPUdb::createJoinTable( const CreateJoinTableRequest& re
 
 /**
  * Creates a table that is the result of a SQL JOIN.  For details see: <a
- * href="../../concepts/index.html#joins" target="_top">join concept
+ * href="../../concepts/joins.html" target="_top">join concept
  * documentation</a>.
  * 
  * @param[in] request_  Request object containing the parameters for the
@@ -3273,7 +3273,7 @@ CreateJoinTableResponse& GPUdb::createJoinTable( const CreateJoinTableRequest& r
 
 /**
  * Creates a table that is the result of a SQL JOIN.  For details see: <a
- * href="../../concepts/index.html#joins" target="_top">join concept
+ * href="../../concepts/joins.html" target="_top">join concept
  * documentation</a>.
  * 
  * @param joinTableName  Name of the join table to be created. Must not be the
@@ -3282,14 +3282,18 @@ CreateJoinTableResponse& GPUdb::createJoinTable( const CreateJoinTableRequest& r
  * @param tableNames  The list of table names making up the joined set.
  *                    Corresponds to a SQL statement FROM clause  Default value
  *                    is an empty std::vector.
- * @param columnNames  The list of columns to be selected from the input table
- *                     names. Empty list says to select all the column names.
- *                     Empty list is the default.  Default value is an empty
- *                     std::vector.
+ * @param columnNames  List of columns to be included in the join table. Can be
+ *                     the column_names from the member sets if unique or can
+ *                     be prefixed by the table id as <id>.<column_name> where
+ *                     <id> is the table name or alias. Can be specified as
+ *                     aliased via the syntax '<column_name> as <alias>. Can
+ *                     use wild cards as '*' (include all columns), or <id>.*
+ *                     (include all columns from table with name or alias <id>)
+ *                     Default value is an empty std::vector.
  * @param expressions  An optional list of expressions to combine and filter
  *                     the joined set.  Corresponds to a SQL statement WHERE
  *                     clause. For details see: <a
- *                     href="../../concepts/index.html#expressions"
+ *                     href="../../concepts/expressions.html"
  *                     target="_top">expressions</a>.  Default value is an
  *                     empty std::vector.
  * @param options  Optional parameters.
@@ -3337,7 +3341,7 @@ CreateJoinTableResponse GPUdb::createJoinTable( const std::string& joinTableName
 
 /**
  * Creates a table that is the result of a SQL JOIN.  For details see: <a
- * href="../../concepts/index.html#joins" target="_top">join concept
+ * href="../../concepts/joins.html" target="_top">join concept
  * documentation</a>.
  * 
  * @param joinTableName  Name of the join table to be created. Must not be the
@@ -3346,14 +3350,18 @@ CreateJoinTableResponse GPUdb::createJoinTable( const std::string& joinTableName
  * @param tableNames  The list of table names making up the joined set.
  *                    Corresponds to a SQL statement FROM clause  Default value
  *                    is an empty std::vector.
- * @param columnNames  The list of columns to be selected from the input table
- *                     names. Empty list says to select all the column names.
- *                     Empty list is the default.  Default value is an empty
- *                     std::vector.
+ * @param columnNames  List of columns to be included in the join table. Can be
+ *                     the column_names from the member sets if unique or can
+ *                     be prefixed by the table id as <id>.<column_name> where
+ *                     <id> is the table name or alias. Can be specified as
+ *                     aliased via the syntax '<column_name> as <alias>. Can
+ *                     use wild cards as '*' (include all columns), or <id>.*
+ *                     (include all columns from table with name or alias <id>)
+ *                     Default value is an empty std::vector.
  * @param expressions  An optional list of expressions to combine and filter
  *                     the joined set.  Corresponds to a SQL statement WHERE
  *                     clause. For details see: <a
- *                     href="../../concepts/index.html#expressions"
+ *                     href="../../concepts/expressions.html"
  *                     target="_top">expressions</a>.  Default value is an
  *                     empty std::vector.
  * @param options  Optional parameters.
@@ -3405,8 +3413,7 @@ CreateJoinTableResponse& GPUdb::createJoinTable( const std::string& joinTableNam
 /**
  * Creates an instance (proc) of the user-defined function (UDF) specified by
  * the given command, options, and files, and makes it available for execution.
- * For details on UDFs, see: <a
- * href="../../concepts/index.html#user-defined-functions"
+ * For details on UDFs, see: <a href="../../concepts/udf.html"
  * target="_top">User-Defined Functions</a>
  * 
  * @param[in] request_  Request object containing the parameters for the
@@ -3427,8 +3434,7 @@ CreateProcResponse GPUdb::createProc( const CreateProcRequest& request_ ) const
 /**
  * Creates an instance (proc) of the user-defined function (UDF) specified by
  * the given command, options, and files, and makes it available for execution.
- * For details on UDFs, see: <a
- * href="../../concepts/index.html#user-defined-functions"
+ * For details on UDFs, see: <a href="../../concepts/udf.html"
  * target="_top">User-Defined Functions</a>
  * 
  * @param[in] request_  Request object containing the parameters for the
@@ -3452,8 +3458,7 @@ CreateProcResponse& GPUdb::createProc( const CreateProcRequest& request_,
 /**
  * Creates an instance (proc) of the user-defined function (UDF) specified by
  * the given command, options, and files, and makes it available for execution.
- * For details on UDFs, see: <a
- * href="../../concepts/index.html#user-defined-functions"
+ * For details on UDFs, see: <a href="../../concepts/udf.html"
  * target="_top">User-Defined Functions</a>
  * 
  * @param procName  Name of the proc to be created. Must not be the name of a
@@ -3510,8 +3515,7 @@ CreateProcResponse GPUdb::createProc( const std::string& procName,
 /**
  * Creates an instance (proc) of the user-defined function (UDF) specified by
  * the given command, options, and files, and makes it available for execution.
- * For details on UDFs, see: <a
- * href="../../concepts/index.html#user-defined-functions"
+ * For details on UDFs, see: <a href="../../concepts/udf.html"
  * target="_top">User-Defined Functions</a>
  * 
  * @param procName  Name of the proc to be created. Must not be the name of a
@@ -3617,10 +3621,10 @@ CreateProjectionResponse& GPUdb::createProjection( const CreateProjectionRequest
  *                   be applied.
  * @param projectionName  Name of the projection to be created. Must not be the
  *                        name of a currently existing table. Cannot be an
- *                        empty string. Valid characters are 'A-Za-z0-9_-(){}[]
- *                        .:' (excluding the single quote), with the first
- *                        character being one of 'A-Za-z0-9_'. The maximum
- *                        length is 256 characters.
+ *                        empty string. Valid characters are alphanumeric or
+ *                        any of '_-(){}[] .:' (excluding the single quotes),
+ *                        with the first character being alphanumeric or an
+ *                        underscore. The maximum length is 256 characters.
  * @param columnNames  List of columns from @a tableName to be included in the
  *                     projection. Can include derived columns. Can be
  *                     specified as aliased via the syntax '<column_name> as
@@ -3665,10 +3669,10 @@ CreateProjectionResponse GPUdb::createProjection( const std::string& tableName,
  *                   be applied.
  * @param projectionName  Name of the projection to be created. Must not be the
  *                        name of a currently existing table. Cannot be an
- *                        empty string. Valid characters are 'A-Za-z0-9_-(){}[]
- *                        .:' (excluding the single quote), with the first
- *                        character being one of 'A-Za-z0-9_'. The maximum
- *                        length is 256 characters.
+ *                        empty string. Valid characters are alphanumeric or
+ *                        any of '_-(){}[] .:' (excluding the single quotes),
+ *                        with the first character being alphanumeric or an
+ *                        underscore. The maximum length is 256 characters.
  * @param columnNames  List of columns from @a tableName to be included in the
  *                     projection. Can include derived columns. Can be
  *                     specified as aliased via the syntax '<column_name> as
@@ -5719,7 +5723,7 @@ ExecuteProcResponse& GPUdb::executeProc( const std::string& procName,
  * Filters data based on the specified expression.  The results are stored in a
  * result set with the given @a viewName.
  * <p>
- * For details see <a href="../../concepts/index.html#expressions"
+ * For details see <a href="../../concepts/expressions.html"
  * target="_top">concepts</a>.
  * <p>
  * The response message contains the number of points for which the expression
@@ -5744,7 +5748,7 @@ FilterResponse GPUdb::filter( const FilterRequest& request_ ) const
  * Filters data based on the specified expression.  The results are stored in a
  * result set with the given @a viewName.
  * <p>
- * For details see <a href="../../concepts/index.html#expressions"
+ * For details see <a href="../../concepts/expressions.html"
  * target="_top">concepts</a>.
  * <p>
  * The response message contains the number of points for which the expression
@@ -5772,7 +5776,7 @@ FilterResponse& GPUdb::filter( const FilterRequest& request_,
  * Filters data based on the specified expression.  The results are stored in a
  * result set with the given @a viewName.
  * <p>
- * For details see <a href="../../concepts/index.html#expressions"
+ * For details see <a href="../../concepts/expressions.html"
  * target="_top">concepts</a>.
  * <p>
  * The response message contains the number of points for which the expression
@@ -5787,8 +5791,7 @@ FilterResponse& GPUdb::filter( const FilterRequest& request_,
  *                  collection, table or view .  Default value is an empty
  *                  string.
  * @param expression  The select expression to filter the specified table.  For
- *                    details see <a
- *                    href="../../concepts/index.html#expressions"
+ *                    details see <a href="../../concepts/expressions.html"
  *                    target="_top">concepts</a>.
  * @param options  Optional parameters.  Default value is an empty std::map.
  * 
@@ -5816,7 +5819,7 @@ FilterResponse GPUdb::filter( const std::string& tableName,
  * Filters data based on the specified expression.  The results are stored in a
  * result set with the given @a viewName.
  * <p>
- * For details see <a href="../../concepts/index.html#expressions"
+ * For details see <a href="../../concepts/expressions.html"
  * target="_top">concepts</a>.
  * <p>
  * The response message contains the number of points for which the expression
@@ -5831,8 +5834,7 @@ FilterResponse GPUdb::filter( const std::string& tableName,
  *                  collection, table or view .  Default value is an empty
  *                  string.
  * @param expression  The select expression to filter the specified table.  For
- *                    details see <a
- *                    href="../../concepts/index.html#expressions"
+ *                    details see <a href="../../concepts/expressions.html"
  *                    target="_top">concepts</a>.
  * @param options  Optional parameters.  Default value is an empty std::map.
  * @param[out] response_  Response object containing the results of the
@@ -6698,7 +6700,9 @@ FilterByRadiusResponse& GPUdb::filterByRadius( const std::string& tableName,
  * bounds. An object from the table identified by @a tableName is added to the
  * view @a viewName if its column is within [@a lowerBound, @a upperBound]
  * (inclusive). The operation is synchronous. The response provides a count of
- * the number of objects which passed the bound filter.
+ * the number of objects which passed the bound filter.  Although this
+ * functionality can also be accomplished with the standard filter function, it
+ * is more efficient.
  * <p>
  * For track objects, the count reflects how many points fall within the given
  * bounds (which may not include all the track points of any given track).
@@ -6723,7 +6727,9 @@ FilterByRangeResponse GPUdb::filterByRange( const FilterByRangeRequest& request_
  * bounds. An object from the table identified by @a tableName is added to the
  * view @a viewName if its column is within [@a lowerBound, @a upperBound]
  * (inclusive). The operation is synchronous. The response provides a count of
- * the number of objects which passed the bound filter.
+ * the number of objects which passed the bound filter.  Although this
+ * functionality can also be accomplished with the standard filter function, it
+ * is more efficient.
  * <p>
  * For track objects, the count reflects how many points fall within the given
  * bounds (which may not include all the track points of any given track).
@@ -6751,7 +6757,9 @@ FilterByRangeResponse& GPUdb::filterByRange( const FilterByRangeRequest& request
  * bounds. An object from the table identified by @a tableName is added to the
  * view @a viewName if its column is within [@a lowerBound, @a upperBound]
  * (inclusive). The operation is synchronous. The response provides a count of
- * the number of objects which passed the bound filter.
+ * the number of objects which passed the bound filter.  Although this
+ * functionality can also be accomplished with the standard filter function, it
+ * is more efficient.
  * <p>
  * For track objects, the count reflects how many points fall within the given
  * bounds (which may not include all the track points of any given track).
@@ -6762,8 +6770,7 @@ FilterByRangeResponse& GPUdb::filterByRange( const FilterByRangeRequest& request
  *                  containing the results. Must not be an already existing
  *                  collection, table or view.  Default value is an empty
  *                  string.
- * @param columnName  Name of a column or an expression of one or more columns
- *                    on which the operation would be applied.
+ * @param columnName  Name of a column on which the operation would be applied.
  * @param lowerBound  Value of the lower bound (inclusive).
  * @param upperBound  Value of the upper bound (inclusive).
  * @param options  Optional parameters.  Default value is an empty std::map.
@@ -6797,7 +6804,9 @@ FilterByRangeResponse GPUdb::filterByRange( const std::string& tableName,
  * bounds. An object from the table identified by @a tableName is added to the
  * view @a viewName if its column is within [@a lowerBound, @a upperBound]
  * (inclusive). The operation is synchronous. The response provides a count of
- * the number of objects which passed the bound filter.
+ * the number of objects which passed the bound filter.  Although this
+ * functionality can also be accomplished with the standard filter function, it
+ * is more efficient.
  * <p>
  * For track objects, the count reflects how many points fall within the given
  * bounds (which may not include all the track points of any given track).
@@ -6808,8 +6817,7 @@ FilterByRangeResponse GPUdb::filterByRange( const std::string& tableName,
  *                  containing the results. Must not be an already existing
  *                  collection, table or view.  Default value is an empty
  *                  string.
- * @param columnName  Name of a column or an expression of one or more columns
- *                    on which the operation would be applied.
+ * @param columnName  Name of a column on which the operation would be applied.
  * @param lowerBound  Value of the lower bound (inclusive).
  * @param upperBound  Value of the upper bound (inclusive).
  * @param options  Optional parameters.  Default value is an empty std::map.
@@ -7071,10 +7079,7 @@ FilterBySeriesResponse& GPUdb::filterBySeries( const std::string& tableName,
  * specified)
  *             ex. justice AND tranquility - will match only those records
  * containing both justice and tranquility
- *         * XOR (specified with -)
- *             ex. justice - peace - will match records containing "justice" or
- * "peace", but not both
- *         * Zero or more char wildcard - (specified with *)
+ *         * Zero or more char wildcard - (specified with '*')
  *             ex, est*is* - will match any records containing a word that
  * starts with "est" and ends with "sh", such as "establish", "establishable",
  * and "establishment"
@@ -7152,10 +7157,7 @@ FilterByStringResponse GPUdb::filterByString( const FilterByStringRequest& reque
  * specified)
  *             ex. justice AND tranquility - will match only those records
  * containing both justice and tranquility
- *         * XOR (specified with -)
- *             ex. justice - peace - will match records containing "justice" or
- * "peace", but not both
- *         * Zero or more char wildcard - (specified with *)
+ *         * Zero or more char wildcard - (specified with '*')
  *             ex, est*is* - will match any records containing a word that
  * starts with "est" and ends with "sh", such as "establish", "establishable",
  * and "establishment"
@@ -7236,10 +7238,7 @@ FilterByStringResponse& GPUdb::filterByString( const FilterByStringRequest& requ
  * specified)
  *             ex. justice AND tranquility - will match only those records
  * containing both justice and tranquility
- *         * XOR (specified with -)
- *             ex. justice - peace - will match records containing "justice" or
- * "peace", but not both
- *         * Zero or more char wildcard - (specified with *)
+ *         * Zero or more char wildcard - (specified with '*')
  *             ex, est*is* - will match any records containing a word that
  * starts with "est" and ends with "sh", such as "establish", "establishable",
  * and "establishment"
@@ -7345,10 +7344,7 @@ FilterByStringResponse GPUdb::filterByString( const std::string& tableName,
  * specified)
  *             ex. justice AND tranquility - will match only those records
  * containing both justice and tranquility
- *         * XOR (specified with -)
- *             ex. justice - peace - will match records containing "justice" or
- * "peace", but not both
- *         * Zero or more char wildcard - (specified with *)
+ *         * Zero or more char wildcard - (specified with '*')
  *             ex, est*is* - will match any records containing a word that
  * starts with "est" and ends with "sh", such as "establish", "establishable",
  * and "establishment"
@@ -7643,7 +7639,9 @@ FilterByTableResponse& GPUdb::filterByTable( const std::string& tableName,
  * response will not be returned until all the objects are fully available. The
  * response payload provides the count of the resulting set. A new result view
  * which satisfies the input filter restriction specification is also created
- * with a view name passed in as part of the input payload.
+ * with a view name passed in as part of the input payload.  Although this
+ * functionality can also be accomplished with the standard filter function, it
+ * is more efficient.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -7668,7 +7666,9 @@ FilterByValueResponse GPUdb::filterByValue( const FilterByValueRequest& request_
  * response will not be returned until all the objects are fully available. The
  * response payload provides the count of the resulting set. A new result view
  * which satisfies the input filter restriction specification is also created
- * with a view name passed in as part of the input payload.
+ * with a view name passed in as part of the input payload.  Although this
+ * functionality can also be accomplished with the standard filter function, it
+ * is more efficient.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -7696,7 +7696,9 @@ FilterByValueResponse& GPUdb::filterByValue( const FilterByValueRequest& request
  * response will not be returned until all the objects are fully available. The
  * response payload provides the count of the resulting set. A new result view
  * which satisfies the input filter restriction specification is also created
- * with a view name passed in as part of the input payload.
+ * with a view name passed in as part of the input payload.  Although this
+ * functionality can also be accomplished with the standard filter function, it
+ * is more efficient.
  * 
  * @param tableName  Name of an existing table on which to perform the
  *                   calculation.
@@ -7709,8 +7711,8 @@ FilterByValueResponse& GPUdb::filterByValue( const FilterByValueRequest& request
  * @param value  The value to search for.  Default value is 0.
  * @param valueStr  The string value to search for.  Default value is an empty
  *                  string.
- * @param columnName  Name of a column or an expression of one or more columns
- *                    on which the filter by value would be applied.
+ * @param columnName  Name of a column on which the filter by value would be
+ *                    applied.
  * @param options  Optional parameters.  Default value is an empty std::map.
  * 
  * @return Response object containing the result of the operation.
@@ -7747,7 +7749,9 @@ FilterByValueResponse GPUdb::filterByValue( const std::string& tableName,
  * response will not be returned until all the objects are fully available. The
  * response payload provides the count of the resulting set. A new result view
  * which satisfies the input filter restriction specification is also created
- * with a view name passed in as part of the input payload.
+ * with a view name passed in as part of the input payload.  Although this
+ * functionality can also be accomplished with the standard filter function, it
+ * is more efficient.
  * 
  * @param tableName  Name of an existing table on which to perform the
  *                   calculation.
@@ -7760,8 +7764,8 @@ FilterByValueResponse GPUdb::filterByValue( const std::string& tableName,
  * @param value  The value to search for.  Default value is 0.
  * @param valueStr  The string value to search for.  Default value is an empty
  *                  string.
- * @param columnName  Name of a column or an expression of one or more columns
- *                    on which the filter by value would be applied.
+ * @param columnName  Name of a column on which the filter by value would be
+ *                    applied.
  * @param options  Optional parameters.  Default value is an empty std::map.
  * @param[out] response_  Response object containing the results of the
  *                        operation.
@@ -7968,9 +7972,9 @@ GetRecordsResponse<boost::any>& GPUdb::getRecords( const GetRecordsRequest& requ
  *                         <li> sort_by: Optional column that the data should
  *                 be sorted by. Empty by default (i.e. no sorting is applied).
  *                         <li> sort_order: String indicating how the returned
- *                 values should be sorted - ascending or descending. Ignored
- *                 if 'sort_by' option is not specified. Values: 'ascending',
- *                 'descending'.
+ *                 values should be sorted - ascending or descending. If
+ *                 sort_order is provided, sort_by has to be provided. Values:
+ *                 'ascending', 'descending'.
  *                 </ul>
  *                   Default value is an empty std::map.
  * 
@@ -8034,9 +8038,9 @@ GetRecordsResponse<boost::any> GPUdb::getRecords( const std::string& tableName,
  *                         <li> sort_by: Optional column that the data should
  *                 be sorted by. Empty by default (i.e. no sorting is applied).
  *                         <li> sort_order: String indicating how the returned
- *                 values should be sorted - ascending or descending. Ignored
- *                 if 'sort_by' option is not specified. Values: 'ascending',
- *                 'descending'.
+ *                 values should be sorted - ascending or descending. If
+ *                 sort_order is provided, sort_by has to be provided. Values:
+ *                 'ascending', 'descending'.
  *                 </ul>
  *                   Default value is an empty std::map.
  * @param[out] response_  Response object containing the results of the
@@ -8088,8 +8092,8 @@ GetRecordsResponse<boost::any>& GPUdb::getRecords( const std::string& tableName,
  * (discontiguous or overlap) based on the type of the update.
  * <p>
  * The response is returned as a dynamic schema. For details see: <a
- * href="../../concepts/index.html#dynamic-schemas" target="_top">dynamic
- * schemas documentation</a>.
+ * href="../../concepts/dynamic_schemas.html" target="_top">dynamic schemas
+ * documentation</a>.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -8122,8 +8126,8 @@ RawGetRecordsByColumnResponse GPUdb::getRecordsByColumnRaw( const GetRecordsByCo
  * (discontiguous or overlap) based on the type of the update.
  * <p>
  * The response is returned as a dynamic schema. For details see: <a
- * href="../../concepts/index.html#dynamic-schemas" target="_top">dynamic
- * schemas documentation</a>.
+ * href="../../concepts/dynamic_schemas.html" target="_top">dynamic schemas
+ * documentation</a>.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -8159,8 +8163,8 @@ RawGetRecordsByColumnResponse& GPUdb::getRecordsByColumnRaw( const GetRecordsByC
  * (discontiguous or overlap) based on the type of the update.
  * <p>
  * The response is returned as a dynamic schema. For details see: <a
- * href="../../concepts/index.html#dynamic-schemas" target="_top">dynamic
- * schemas documentation</a>.
+ * href="../../concepts/dynamic_schemas.html" target="_top">dynamic schemas
+ * documentation</a>.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -8199,8 +8203,8 @@ GetRecordsByColumnResponse GPUdb::getRecordsByColumn( const GetRecordsByColumnRe
  * (discontiguous or overlap) based on the type of the update.
  * <p>
  * The response is returned as a dynamic schema. For details see: <a
- * href="../../concepts/index.html#dynamic-schemas" target="_top">dynamic
- * schemas documentation</a>.
+ * href="../../concepts/dynamic_schemas.html" target="_top">dynamic schemas
+ * documentation</a>.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -8242,13 +8246,12 @@ GetRecordsByColumnResponse& GPUdb::getRecordsByColumn( const GetRecordsByColumnR
  * (discontiguous or overlap) based on the type of the update.
  * <p>
  * The response is returned as a dynamic schema. For details see: <a
- * href="../../concepts/index.html#dynamic-schemas" target="_top">dynamic
- * schemas documentation</a>.
+ * href="../../concepts/dynamic_schemas.html" target="_top">dynamic schemas
+ * documentation</a>.
  * 
  * @param tableName  Name of the table on which this operation will be
  *                   performed. The table cannot be a parent set.
- * @param columnNames  The list of column values to retrieve. Columns annotated
- *                     as store only cannot be retrieved.
+ * @param columnNames  The list of column values to retrieve.
  * @param offset  A positive integer indicating the number of initial results
  *                to skip (this can be useful for paging through the results).
  *                The minimum allowed value is 0. The maximum allowed value is
@@ -8265,8 +8268,8 @@ GetRecordsByColumnResponse& GPUdb::getRecordsByColumn( const GetRecordsByColumnR
  *                 be sorted by. Empty by default (i.e. no sorting is applied).
  *                         <li> sort_order: String indicating how the returned
  *                 values should be sorted - ascending or descending. Default
- *                 is 'ascending'. Ignored if 'sort_by' option is not
- *                 specified. Values: 'ascending', 'descending'.
+ *                 is 'ascending'. If sort_order is provided, sort_by has to be
+ *                 provided. Values: 'ascending', 'descending'.
  *                 </ul>
  *                   Default value is an empty std::map.
  * 
@@ -8314,13 +8317,12 @@ GetRecordsByColumnResponse GPUdb::getRecordsByColumn( const std::string& tableNa
  * (discontiguous or overlap) based on the type of the update.
  * <p>
  * The response is returned as a dynamic schema. For details see: <a
- * href="../../concepts/index.html#dynamic-schemas" target="_top">dynamic
- * schemas documentation</a>.
+ * href="../../concepts/dynamic_schemas.html" target="_top">dynamic schemas
+ * documentation</a>.
  * 
  * @param tableName  Name of the table on which this operation will be
  *                   performed. The table cannot be a parent set.
- * @param columnNames  The list of column values to retrieve. Columns annotated
- *                     as store only cannot be retrieved.
+ * @param columnNames  The list of column values to retrieve.
  * @param offset  A positive integer indicating the number of initial results
  *                to skip (this can be useful for paging through the results).
  *                The minimum allowed value is 0. The maximum allowed value is
@@ -8337,8 +8339,8 @@ GetRecordsByColumnResponse GPUdb::getRecordsByColumn( const std::string& tableNa
  *                 be sorted by. Empty by default (i.e. no sorting is applied).
  *                         <li> sort_order: String indicating how the returned
  *                 values should be sorted - ascending or descending. Default
- *                 is 'ascending'. Ignored if 'sort_by' option is not
- *                 specified. Values: 'ascending', 'descending'.
+ *                 is 'ascending'. If sort_order is provided, sort_by has to be
+ *                 provided. Values: 'ascending', 'descending'.
  *                 </ul>
  *                   Default value is an empty std::map.
  * @param[out] response_  Response object containing the results of the
@@ -10078,10 +10080,9 @@ InsertRecordsRandomResponse& GPUdb::insertRecordsRandom( const std::string& tabl
  * and any additional optional parameter (e.g. color). To have a symbol used
  * for rendering create a table with a string column named 'SYMBOLCODE' (along
  * with 'x' or 'y' for example). Then when the table is rendered (via <a
- * href="../rest/wms_rest.html" target="_top">WMS</a> or {@link
- * #visualizeImage(const VisualizeImageRequest&) const}) if the
- * 'dosymbology' parameter is 'true' then the value of the 'SYMBOLCODE' column
- * is used to pick the symbol displayed for each point.
+ * href="../rest/wms_rest.html" target="_top">WMS</a>) if the 'dosymbology'
+ * parameter is 'true' then the value of the 'SYMBOLCODE' column is used to
+ * pick the symbol displayed for each point.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -10105,10 +10106,9 @@ InsertSymbolResponse GPUdb::insertSymbol( const InsertSymbolRequest& request_ ) 
  * and any additional optional parameter (e.g. color). To have a symbol used
  * for rendering create a table with a string column named 'SYMBOLCODE' (along
  * with 'x' or 'y' for example). Then when the table is rendered (via <a
- * href="../rest/wms_rest.html" target="_top">WMS</a> or {@link
- * #visualizeImage(const VisualizeImageRequest&,VisualizeImageResponse&) const})
- * if the 'dosymbology' parameter is 'true' then the value of the 'SYMBOLCODE'
- * column is used to pick the symbol displayed for each point.
+ * href="../rest/wms_rest.html" target="_top">WMS</a>) if the 'dosymbology'
+ * parameter is 'true' then the value of the 'SYMBOLCODE' column is used to
+ * pick the symbol displayed for each point.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -10135,10 +10135,9 @@ InsertSymbolResponse& GPUdb::insertSymbol( const InsertSymbolRequest& request_,
  * and any additional optional parameter (e.g. color). To have a symbol used
  * for rendering create a table with a string column named 'SYMBOLCODE' (along
  * with 'x' or 'y' for example). Then when the table is rendered (via <a
- * href="../rest/wms_rest.html" target="_top">WMS</a> or {@link
- * #visualizeImage(const std::vector<std::string>&,const std::vector<std::string>&,const std::string&,const std::string&,const std::vector<std::vector<std::string> >&,const double,const double,const double,const double,const int32_t,const int32_t,const std::string&,const int64_t,const std::map<std::string, std::vector<std::string> >&,const std::map<std::string, std::string>&) const})
- * if the 'dosymbology' parameter is 'true' then the value of the 'SYMBOLCODE'
- * column is used to pick the symbol displayed for each point.
+ * href="../rest/wms_rest.html" target="_top">WMS</a>) if the 'dosymbology'
+ * parameter is 'true' then the value of the 'SYMBOLCODE' column is used to
+ * pick the symbol displayed for each point.
  * 
  * @param symbolId  The id of the symbol being added. This is the same id that
  *                  should be in the 'SYMBOLCODE' column for objects using this
@@ -10188,10 +10187,9 @@ InsertSymbolResponse GPUdb::insertSymbol( const std::string& symbolId,
  * and any additional optional parameter (e.g. color). To have a symbol used
  * for rendering create a table with a string column named 'SYMBOLCODE' (along
  * with 'x' or 'y' for example). Then when the table is rendered (via <a
- * href="../rest/wms_rest.html" target="_top">WMS</a> or {@link
- * #visualizeImage(const std::vector<std::string>&,const std::vector<std::string>&,const std::string&,const std::string&,const std::vector<std::vector<std::string> >&,const double,const double,const double,const double,const int32_t,const int32_t,const std::string&,const int64_t,const std::map<std::string, std::vector<std::string> >&,const std::map<std::string, std::string>&,VisualizeImageResponse&) const})
- * if the 'dosymbology' parameter is 'true' then the value of the 'SYMBOLCODE'
- * column is used to pick the symbol displayed for each point.
+ * href="../rest/wms_rest.html" target="_top">WMS</a>) if the 'dosymbology'
+ * parameter is 'true' then the value of the 'SYMBOLCODE' column is used to
+ * pick the symbol displayed for each point.
  * 
  * @param symbolId  The id of the symbol being added. This is the same id that
  *                  should be in the 'SYMBOLCODE' column for objects using this
@@ -11474,6 +11472,10 @@ ShowTableResponse& GPUdb::showTable( const ShowTableRequest& request_,
  *                 @a show_children must be @a false. If @a tableName is empty,
  *                 then @a show_children must be @a true. Values: 'true',
  *                 'false'.
+ *                         <li> no_error_if_not_exists: If @a false will return
+ *                 an error if the provided @a tableName does not exist. If @a
+ *                 true then it will return an empty result. Values: 'true',
+ *                 'false'.
  *                 </ul>
  *                   Default value is an empty std::map.
  * 
@@ -11534,6 +11536,10 @@ ShowTableResponse GPUdb::showTable( const std::string& tableName,
  *                 the collection itself. If @a tableName is a table or view,
  *                 @a show_children must be @a false. If @a tableName is empty,
  *                 then @a show_children must be @a true. Values: 'true',
+ *                 'false'.
+ *                         <li> no_error_if_not_exists: If @a false will return
+ *                 an error if the provided @a tableName does not exist. If @a
+ *                 true then it will return an empty result. Values: 'true',
  *                 'false'.
  *                 </ul>
  *                   Default value is an empty std::map.
@@ -13089,13 +13095,16 @@ VisualizeImageLabelsResponse& GPUdb::visualizeImageLabels( const std::string& ta
  * parameters are ignored for this mode.
  * <p>
  * For instance, if a 20 frame video with the session key 'MY-SESSION-KEY' was
- * generated, the first frame could be retrieved with the URL::
+ * generated, the first frame could be retrieved with the URL:
  * <p>
- * http://<hostname/ipAddress>:9191/wms?REQUEST=GetMap&STYLES=cached&LAYERS=MY-SESSION-KEY&FRAME=0
+ *     <a href="../rest/wms_rest.html"
+ * target="_top">http://<hostname/ipAddress>:9191/wms?REQUEST=GetMap&STYLES=cached&LAYERS=MY-SESSION-KEY&FRAME=0</a>
  * <p>
- * and the last frame could be retrieved with::
+ * and the last frame could be retrieved with:
  * <p>
- * http://<hostname/ipAddress>:9191/wms?REQUEST=GetMap&STYLES=cached&LAYERS=MY-SESSION-KEY&FRAME=19
+ *     <a href="../rest/wms_rest.html"
+ * target="_top">http://<hostname/ipAddress>:9191/wms?REQUEST=GetMap&STYLES=cached&LAYERS=MY-SESSION-KEY&FRAME=19</a>
+ * <p>
  * The response payload provides, among other things, the number of frames
  * which were created.
  * 
@@ -13133,13 +13142,16 @@ VisualizeVideoResponse GPUdb::visualizeVideo( const VisualizeVideoRequest& reque
  * parameters are ignored for this mode.
  * <p>
  * For instance, if a 20 frame video with the session key 'MY-SESSION-KEY' was
- * generated, the first frame could be retrieved with the URL::
+ * generated, the first frame could be retrieved with the URL:
  * <p>
- * http://<hostname/ipAddress>:9191/wms?REQUEST=GetMap&STYLES=cached&LAYERS=MY-SESSION-KEY&FRAME=0
+ *     <a href="../rest/wms_rest.html"
+ * target="_top">http://<hostname/ipAddress>:9191/wms?REQUEST=GetMap&STYLES=cached&LAYERS=MY-SESSION-KEY&FRAME=0</a>
  * <p>
- * and the last frame could be retrieved with::
+ * and the last frame could be retrieved with:
  * <p>
- * http://<hostname/ipAddress>:9191/wms?REQUEST=GetMap&STYLES=cached&LAYERS=MY-SESSION-KEY&FRAME=19
+ *     <a href="../rest/wms_rest.html"
+ * target="_top">http://<hostname/ipAddress>:9191/wms?REQUEST=GetMap&STYLES=cached&LAYERS=MY-SESSION-KEY&FRAME=19</a>
+ * <p>
  * The response payload provides, among other things, the number of frames
  * which were created.
  * 
@@ -13180,13 +13192,16 @@ VisualizeVideoResponse& GPUdb::visualizeVideo( const VisualizeVideoRequest& requ
  * parameters are ignored for this mode.
  * <p>
  * For instance, if a 20 frame video with the session key 'MY-SESSION-KEY' was
- * generated, the first frame could be retrieved with the URL::
+ * generated, the first frame could be retrieved with the URL:
  * <p>
- * http://<hostname/ipAddress>:9191/wms?REQUEST=GetMap&STYLES=cached&LAYERS=MY-SESSION-KEY&FRAME=0
+ *     <a href="../rest/wms_rest.html"
+ * target="_top">http://<hostname/ipAddress>:9191/wms?REQUEST=GetMap&STYLES=cached&LAYERS=MY-SESSION-KEY&FRAME=0</a>
  * <p>
- * and the last frame could be retrieved with::
+ * and the last frame could be retrieved with:
  * <p>
- * http://<hostname/ipAddress>:9191/wms?REQUEST=GetMap&STYLES=cached&LAYERS=MY-SESSION-KEY&FRAME=19
+ *     <a href="../rest/wms_rest.html"
+ * target="_top">http://<hostname/ipAddress>:9191/wms?REQUEST=GetMap&STYLES=cached&LAYERS=MY-SESSION-KEY&FRAME=19</a>
+ * <p>
  * The response payload provides, among other things, the number of frames
  * which were created.
  * 
@@ -13325,13 +13340,16 @@ VisualizeVideoResponse GPUdb::visualizeVideo( const std::vector<std::string>& ta
  * parameters are ignored for this mode.
  * <p>
  * For instance, if a 20 frame video with the session key 'MY-SESSION-KEY' was
- * generated, the first frame could be retrieved with the URL::
+ * generated, the first frame could be retrieved with the URL:
  * <p>
- * http://<hostname/ipAddress>:9191/wms?REQUEST=GetMap&STYLES=cached&LAYERS=MY-SESSION-KEY&FRAME=0
+ *     <a href="../rest/wms_rest.html"
+ * target="_top">http://<hostname/ipAddress>:9191/wms?REQUEST=GetMap&STYLES=cached&LAYERS=MY-SESSION-KEY&FRAME=0</a>
  * <p>
- * and the last frame could be retrieved with::
+ * and the last frame could be retrieved with:
  * <p>
- * http://<hostname/ipAddress>:9191/wms?REQUEST=GetMap&STYLES=cached&LAYERS=MY-SESSION-KEY&FRAME=19
+ *     <a href="../rest/wms_rest.html"
+ * target="_top">http://<hostname/ipAddress>:9191/wms?REQUEST=GetMap&STYLES=cached&LAYERS=MY-SESSION-KEY&FRAME=19</a>
+ * <p>
  * The response payload provides, among other things, the number of frames
  * which were created.
  * 

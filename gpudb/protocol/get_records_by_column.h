@@ -30,8 +30,8 @@ namespace gpudb
      * calls (discontiguous or overlap) based on the type of the update.
      * <p>
      * The response is returned as a dynamic schema. For details see: <a
-     * href="../../concepts/index.html#dynamic-schemas" target="_top">dynamic
-     * schemas documentation</a>.
+     * href="../../concepts/dynamic_schemas.html" target="_top">dynamic schemas
+     * documentation</a>.
      */
     struct GetRecordsByColumnRequest
     {
@@ -58,8 +58,6 @@ namespace gpudb
          *                        will be performed. The table cannot be a
          *                        parent set.
          * @param[in] columnNames_  The list of column values to retrieve.
-         *                          Columns annotated as store only cannot be
-         *                          retrieved.
          * @param[in] offset_  A positive integer indicating the number of
          *                     initial results to skip (this can be useful for
          *                     paging through the results).  The minimum
@@ -80,8 +78,9 @@ namespace gpudb
          *                              <li> sort_order: String indicating how
          *                      the returned values should be sorted -
          *                      ascending or descending. Default is
-         *                      'ascending'. Ignored if 'sort_by' option is not
-         *                      specified. Values: 'ascending', 'descending'.
+         *                      'ascending'. If sort_order is provided, sort_by
+         *                      has to be provided. Values: 'ascending',
+         *                      'descending'.
          *                      </ul>
          *                        Default value is an empty std::map.
          * 
@@ -104,8 +103,6 @@ namespace gpudb
          *                        will be performed. The table cannot be a
          *                        parent set.
          * @param[in] columnNames_  The list of column values to retrieve.
-         *                          Columns annotated as store only cannot be
-         *                          retrieved.
          * @param[in] offset_  A positive integer indicating the number of
          *                     initial results to skip (this can be useful for
          *                     paging through the results).  The minimum
@@ -130,8 +127,9 @@ namespace gpudb
          *                              <li> sort_order: String indicating how
          *                      the returned values should be sorted -
          *                      ascending or descending. Default is
-         *                      'ascending'. Ignored if 'sort_by' option is not
-         *                      specified. Values: 'ascending', 'descending'.
+         *                      'ascending'. If sort_order is provided, sort_by
+         *                      has to be provided. Values: 'ascending',
+         *                      'descending'.
          *                      </ul>
          *                        Default value is an empty std::map.
          * 
@@ -243,8 +241,8 @@ namespace gpudb
      * calls (discontiguous or overlap) based on the type of the update.
      * <p>
      * The response is returned as a dynamic schema. For details see: <a
-     * href="../../concepts/index.html#dynamic-schemas" target="_top">dynamic
-     * schemas documentation</a>.
+     * href="../../concepts/dynamic_schemas.html" target="_top">dynamic schemas
+     * documentation</a>.
      */
     struct RawGetRecordsByColumnResponse
     {
@@ -360,8 +358,8 @@ namespace gpudb
      * calls (discontiguous or overlap) based on the type of the update.
      * <p>
      * The response is returned as a dynamic schema. For details see: <a
-     * href="../../concepts/index.html#dynamic-schemas" target="_top">dynamic
-     * schemas documentation</a>.
+     * href="../../concepts/dynamic_schemas.html" target="_top">dynamic schemas
+     * documentation</a>.
      */
     struct GetRecordsByColumnResponse
     {

@@ -16,7 +16,7 @@ namespace gpudb
      * Filters data based on the specified expression.  The results are stored
      * in a result set with the given @a viewName.
      * <p>
-     * For details see <a href="../../concepts/index.html#expressions"
+     * For details see <a href="../../concepts/expressions.html"
      * target="_top">concepts</a>.
      * <p>
      * The response message contains the number of points for which the
@@ -51,7 +51,7 @@ namespace gpudb
          *                       Default value is an empty string.
          * @param[in] expression_  The select expression to filter the
          *                         specified table.  For details see <a
-         *                         href="../../concepts/index.html#expressions"
+         *                         href="../../concepts/expressions.html"
          *                         target="_top">concepts</a>.
          * @param[in] options_  Optional parameters.  Default value is an empty
          *                      std::map.
@@ -136,7 +136,7 @@ namespace gpudb
      * Filters data based on the specified expression.  The results are stored
      * in a result set with the given @a viewName.
      * <p>
-     * For details see <a href="../../concepts/index.html#expressions"
+     * For details see <a href="../../concepts/expressions.html"
      * target="_top">concepts</a>.
      * <p>
      * The response message contains the number of points for which the

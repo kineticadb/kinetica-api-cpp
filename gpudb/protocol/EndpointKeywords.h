@@ -157,6 +157,7 @@ namespace gpudb
     extern const std::string create_type_int16;
     extern const std::string create_type_int8;
     extern const std::string create_type_ipv4;
+    extern const std::string create_type_nullable;
     extern const std::string create_type_primary_key;
     extern const std::string create_type_shard_key;
     extern const std::string create_type_store_only;
@@ -365,6 +366,7 @@ namespace gpudb
 
     // Keywords for /show/table request
     extern const std::string show_table_get_sizes;
+    extern const std::string show_table_no_error_if_not_exists;
     extern const std::string show_table_show_children;
 
     // Keywords for /show/table response

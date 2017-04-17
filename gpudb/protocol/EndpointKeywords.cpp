@@ -157,6 +157,7 @@ namespace gpudb
     const std::string create_type_int16         ( "int16"          );
     const std::string create_type_int8          ( "int8"           );
     const std::string create_type_ipv4          ( "ipv4"           );
+    const std::string create_type_nullable      ( "nullable"       );
     const std::string create_type_primary_key   ( "primary_key"    );
     const std::string create_type_shard_key     ( "shard_key"      );
     const std::string create_type_store_only    ( "store_only"     );
@@ -364,8 +365,9 @@ namespace gpudb
     const std::string show_system_properties_conf_worker_http_server_ports  ( "conf.worker_http_server_ports"   );
 
     // Keywords for /show/table request
-    const std::string show_table_get_sizes    ( "get_sizes"     );
-    const std::string show_table_show_children( "show_children" );
+    const std::string show_table_get_sizes             ( "get_sizes"              );
+    const std::string show_table_no_error_if_not_exists( "no_error_if_not_exists" );
+    const std::string show_table_show_children         ( "show_children"          );
 
     // Keywords for /show/table response
     const std::string show_table_COLLECTION              ( "COLLECTION"               );

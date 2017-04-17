@@ -87,9 +87,9 @@ GetRecordsResponse<boost::any>& GPUdb::getRecords( const GetRecordsRequest& requ
  *                         <li> sort_by: Optional column that the data should
  *                 be sorted by. Empty by default (i.e. no sorting is applied).
  *                         <li> sort_order: String indicating how the returned
- *                 values should be sorted - ascending or descending. Ignored
- *                 if 'sort_by' option is not specified. Values: 'ascending',
- *                 'descending'.
+ *                 values should be sorted - ascending or descending. If
+ *                 sort_order is provided, sort_by has to be provided. Values:
+ *                 'ascending', 'descending'.
  *                 </ul>
  *                   Default value is an empty std::map.
  * 
@@ -133,9 +133,9 @@ GetRecordsResponse<boost::any> GPUdb::getRecords( const std::string& tableName,
  *                         <li> sort_by: Optional column that the data should
  *                 be sorted by. Empty by default (i.e. no sorting is applied).
  *                         <li> sort_order: String indicating how the returned
- *                 values should be sorted - ascending or descending. Ignored
- *                 if 'sort_by' option is not specified. Values: 'ascending',
- *                 'descending'.
+ *                 values should be sorted - ascending or descending. If
+ *                 sort_order is provided, sort_by has to be provided. Values:
+ *                 'ascending', 'descending'.
  *                 </ul>
  *                   Default value is an empty std::map.
  * @param[out] response_  Response object containing the results of the

@@ -36,10 +36,7 @@ namespace gpudb
      * specified)
      *             ex. justice AND tranquility - will match only those records
      * containing both justice and tranquility
-     *         * XOR (specified with -)
-     *             ex. justice - peace - will match records containing
-     * "justice" or "peace", but not both
-     *         * Zero or more char wildcard - (specified with *)
+     *         * Zero or more char wildcard - (specified with '*')
      *             ex, est*is* - will match any records containing a word that
      * starts with "est" and ends with "sh", such as "establish",
      * "establishable", and "establishment"
@@ -238,10 +235,7 @@ namespace gpudb
      * specified)
      *             ex. justice AND tranquility - will match only those records
      * containing both justice and tranquility
-     *         * XOR (specified with -)
-     *             ex. justice - peace - will match records containing
-     * "justice" or "peace", but not both
-     *         * Zero or more char wildcard - (specified with *)
+     *         * Zero or more char wildcard - (specified with '*')
      *             ex, est*is* - will match any records containing a word that
      * starts with "est" and ends with "sh", such as "establish",
      * "establishable", and "establishment"

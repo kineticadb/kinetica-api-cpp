@@ -15,8 +15,7 @@ namespace gpudb
      * <p>
      * Creates an instance (proc) of the user-defined function (UDF) specified
      * by the given command, options, and files, and makes it available for
-     * execution.  For details on UDFs, see: <a
-     * href="../../concepts/index.html#user-defined-functions"
+     * execution.  For details on UDFs, see: <a href="../../concepts/udf.html"
      * target="_top">User-Defined Functions</a>
      */
     struct CreateProcRequest
@@ -166,8 +165,7 @@ namespace gpudb
      * <p>
      * Creates an instance (proc) of the user-defined function (UDF) specified
      * by the given command, options, and files, and makes it available for
-     * execution.  For details on UDFs, see: <a
-     * href="../../concepts/index.html#user-defined-functions"
+     * execution.  For details on UDFs, see: <a href="../../concepts/udf.html"
      * target="_top">User-Defined Functions</a>
      */
     struct CreateProcResponse

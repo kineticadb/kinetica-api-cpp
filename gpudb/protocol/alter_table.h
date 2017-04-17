@@ -84,7 +84,7 @@ namespace gpudb
          *                      value too large (or too long) for the new type
          *                      will prevent any change. If False, then when a
          *                      value is too large or long, it will be
-         *                      trancated. Values: 'true', 'false'.
+         *                      truncated. Values: 'true', 'false'.
          *                              <li> copy_values_from_column: when
          *                      adding or changing a column: enter column name
          *                      - from where to copy values.

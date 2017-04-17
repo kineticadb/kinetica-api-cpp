@@ -31,13 +31,16 @@ namespace gpudb
      * WMS parameters are ignored for this mode.
      * <p>
      * For instance, if a 20 frame video with the session key 'MY-SESSION-KEY'
-     * was generated, the first frame could be retrieved with the URL::
+     * was generated, the first frame could be retrieved with the URL:
      * <p>
-     * http://<hostname/ipAddress>:9191/wms?REQUEST=GetMap&STYLES=cached&LAYERS=MY-SESSION-KEY&FRAME=0
+     *     <a href="../rest/wms_rest.html"
+     * target="_top">http://<hostname/ipAddress>:9191/wms?REQUEST=GetMap&STYLES=cached&LAYERS=MY-SESSION-KEY&FRAME=0</a>
      * <p>
-     * and the last frame could be retrieved with::
+     * and the last frame could be retrieved with:
      * <p>
-     * http://<hostname/ipAddress>:9191/wms?REQUEST=GetMap&STYLES=cached&LAYERS=MY-SESSION-KEY&FRAME=19
+     *     <a href="../rest/wms_rest.html"
+     * target="_top">http://<hostname/ipAddress>:9191/wms?REQUEST=GetMap&STYLES=cached&LAYERS=MY-SESSION-KEY&FRAME=19</a>
+     * <p>
      * The response payload provides, among other things, the number of frames
      * which were created.
      */
@@ -362,13 +365,16 @@ namespace gpudb
      * WMS parameters are ignored for this mode.
      * <p>
      * For instance, if a 20 frame video with the session key 'MY-SESSION-KEY'
-     * was generated, the first frame could be retrieved with the URL::
+     * was generated, the first frame could be retrieved with the URL:
      * <p>
-     * http://<hostname/ipAddress>:9191/wms?REQUEST=GetMap&STYLES=cached&LAYERS=MY-SESSION-KEY&FRAME=0
+     *     <a href="../rest/wms_rest.html"
+     * target="_top">http://<hostname/ipAddress>:9191/wms?REQUEST=GetMap&STYLES=cached&LAYERS=MY-SESSION-KEY&FRAME=0</a>
      * <p>
-     * and the last frame could be retrieved with::
+     * and the last frame could be retrieved with:
      * <p>
-     * http://<hostname/ipAddress>:9191/wms?REQUEST=GetMap&STYLES=cached&LAYERS=MY-SESSION-KEY&FRAME=19
+     *     <a href="../rest/wms_rest.html"
+     * target="_top">http://<hostname/ipAddress>:9191/wms?REQUEST=GetMap&STYLES=cached&LAYERS=MY-SESSION-KEY&FRAME=19</a>
+     * <p>
      * The response payload provides, among other things, the number of frames
      * which were created.
      */

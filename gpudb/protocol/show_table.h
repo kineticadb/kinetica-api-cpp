@@ -63,6 +63,11 @@ namespace gpudb
          *                      must be @a false. If @a tableName is empty,
          *                      then @a show_children must be @a true. Values:
          *                      'true', 'false'.
+         *                              <li> no_error_if_not_exists: If @a
+         *                      false will return an error if the provided @a
+         *                      tableName does not exist. If @a true then it
+         *                      will return an empty result. Values: 'true',
+         *                      'false'.
          *                      </ul>
          *                        Default value is an empty std::map.
          * 

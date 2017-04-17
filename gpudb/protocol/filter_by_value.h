@@ -21,7 +21,8 @@ namespace gpudb
      * available. The response payload provides the count of the resulting set.
      * A new result view which satisfies the input filter restriction
      * specification is also created with a view name passed in as part of the
-     * input payload.
+     * input payload.  Although this functionality can also be accomplished
+     * with the standard filter function, it is more efficient.
      */
     struct FilterByValueRequest
     {
@@ -56,9 +57,8 @@ namespace gpudb
          * @param[in] value_  The value to search for.  Default value is 0.
          * @param[in] valueStr_  The string value to search for.  Default value
          *                       is an empty string.
-         * @param[in] columnName_  Name of a column or an expression of one or
-         *                         more columns on which the filter by value
-         *                         would be applied.
+         * @param[in] columnName_  Name of a column on which the filter by
+         *                         value would be applied.
          * @param[in] options_  Optional parameters.  Default value is an empty
          *                      std::map.
          * 
@@ -171,7 +171,8 @@ namespace gpudb
      * available. The response payload provides the count of the resulting set.
      * A new result view which satisfies the input filter restriction
      * specification is also created with a view name passed in as part of the
-     * input payload.
+     * input payload.  Although this functionality can also be accomplished
+     * with the standard filter function, it is more efficient.
      */
     struct FilterByValueResponse
     {

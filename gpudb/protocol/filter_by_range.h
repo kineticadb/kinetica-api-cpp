@@ -18,6 +18,8 @@ namespace gpudb
      * added to the view @a viewName if its column is within [@a lowerBound, @a
      * upperBound] (inclusive). The operation is synchronous. The response
      * provides a count of the number of objects which passed the bound filter.
+     * Although this functionality can also be accomplished with the standard
+     * filter function, it is more efficient.
      * <p>
      * For track objects, the count reflects how many points fall within the
      * given bounds (which may not include all the track points of any given
@@ -51,9 +53,8 @@ namespace gpudb
          *                       view containing the results. Must not be an
          *                       already existing collection, table or view.
          *                       Default value is an empty string.
-         * @param[in] columnName_  Name of a column or an expression of one or
-         *                         more columns on which the operation would be
-         *                         applied.
+         * @param[in] columnName_  Name of a column on which the operation
+         *                         would be applied.
          * @param[in] lowerBound_  Value of the lower bound (inclusive).
          * @param[in] upperBound_  Value of the upper bound (inclusive).
          * @param[in] options_  Optional parameters.  Default value is an empty
@@ -157,6 +158,8 @@ namespace gpudb
      * added to the view @a viewName if its column is within [@a lowerBound, @a
      * upperBound] (inclusive). The operation is synchronous. The response
      * provides a count of the number of objects which passed the bound filter.
+     * Although this functionality can also be accomplished with the standard
+     * filter function, it is more efficient.
      * <p>
      * For track objects, the count reflects how many points fall within the
      * given bounds (which may not include all the track points of any given
