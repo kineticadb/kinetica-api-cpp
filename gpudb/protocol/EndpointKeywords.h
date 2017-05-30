@@ -19,6 +19,7 @@ namespace gpudb
     // Keywords for /aggregate/groupby request
     extern const std::string aggregate_group_by_ascending;
     extern const std::string aggregate_group_by_binary;
+    extern const std::string aggregate_group_by_collection_name;
     extern const std::string aggregate_group_by_descending;
     extern const std::string aggregate_group_by_expression;
     extern const std::string aggregate_group_by_having;
@@ -27,6 +28,7 @@ namespace gpudb
     extern const std::string aggregate_group_by_result_table;
     extern const std::string aggregate_group_by_sort_by;
     extern const std::string aggregate_group_by_sort_order;
+    extern const std::string aggregate_group_by_ttl;
     extern const std::string aggregate_group_by_value;
 
     // Keywords for /aggregate/histogram request
@@ -64,11 +66,13 @@ namespace gpudb
     // Keywords for /aggregate/unique request
     extern const std::string aggregate_unique_ascending;
     extern const std::string aggregate_unique_binary;
+    extern const std::string aggregate_unique_collection_name;
     extern const std::string aggregate_unique_descending;
     extern const std::string aggregate_unique_expression;
     extern const std::string aggregate_unique_json;
     extern const std::string aggregate_unique_result_table;
     extern const std::string aggregate_unique_sort_order;
+    extern const std::string aggregate_unique_ttl;
 
     // Keywords for /alter/system/properties request
     extern const std::string alter_system_properties_bulk_add_test;
@@ -76,6 +80,7 @@ namespace gpudb
     extern const std::string alter_system_properties_clear_cache;
     extern const std::string alter_system_properties_communicator_test;
     extern const std::string alter_system_properties_concurrent_kernel_execution;
+    extern const std::string alter_system_properties_false;
     extern const std::string alter_system_properties_flush_to_disk;
     extern const std::string alter_system_properties_kernel_omp_threads;
     extern const std::string alter_system_properties_max_get_records_size;
@@ -83,6 +88,7 @@ namespace gpudb
     extern const std::string alter_system_properties_request_timeout;
     extern const std::string alter_system_properties_set_message_timers_enabled;
     extern const std::string alter_system_properties_sm_omp_threads;
+    extern const std::string alter_system_properties_true;
 
     // Keywords for /alter/table request
     extern const std::string alter_table_add_column;
@@ -117,6 +123,7 @@ namespace gpudb
     extern const std::string create_join_table_optimize_lookups;
     extern const std::string create_join_table_refresh;
     extern const std::string create_join_table_refresh_method;
+    extern const std::string create_join_table_ttl;
 
     // Keywords for /create/proc request
     extern const std::string create_proc_distributed;
@@ -127,18 +134,22 @@ namespace gpudb
     extern const std::string create_projection_expression;
     extern const std::string create_projection_false;
     extern const std::string create_projection_limit;
+    extern const std::string create_projection_materialize_on_gpu;
     extern const std::string create_projection_order_by;
     extern const std::string create_projection_true;
+    extern const std::string create_projection_ttl;
 
     // Keywords for /create/table request
     extern const std::string create_table_collection_name;
     extern const std::string create_table_disallow_homogeneous_tables;
     extern const std::string create_table_false;
     extern const std::string create_table_foreign_keys;
+    extern const std::string create_table_foreign_shard_key;
     extern const std::string create_table_is_collection;
     extern const std::string create_table_is_replicated;
     extern const std::string create_table_no_error_if_exists;
     extern const std::string create_table_true;
+    extern const std::string create_table_ttl;
 
     // Keywords for /create/type request
     extern const std::string create_type_char1;
@@ -170,9 +181,11 @@ namespace gpudb
     extern const std::string create_union_except;
     extern const std::string create_union_false;
     extern const std::string create_union_intersect;
+    extern const std::string create_union_materialize_on_gpu;
     extern const std::string create_union_merge_views;
     extern const std::string create_union_mode;
     extern const std::string create_union_true;
+    extern const std::string create_union_ttl;
     extern const std::string create_union_union;
     extern const std::string create_union_union_all;
     extern const std::string create_union_union_distinct;
@@ -184,6 +197,10 @@ namespace gpudb
     // Keywords for /execute/proc request
     extern const std::string execute_proc_cache_input;
     extern const std::string execute_proc_use_cached_input;
+
+    // Keywords for /filter request
+    extern const std::string filter_collection_name;
+    extern const std::string filter_ttl;
 
     // Keywords for /filter/bygeometry request
     extern const std::string filter_by_geometry_contains;
@@ -237,6 +254,7 @@ namespace gpudb
     extern const std::string get_records_binary;
     extern const std::string get_records_descending;
     extern const std::string get_records_expression;
+    extern const std::string get_records_fast_index_lookup;
     extern const std::string get_records_json;
     extern const std::string get_records_sort_by;
     extern const std::string get_records_sort_order;
@@ -247,6 +265,7 @@ namespace gpudb
     extern const std::string get_records_by_column_descending;
     extern const std::string get_records_by_column_expression;
     extern const std::string get_records_by_column_json;
+    extern const std::string get_records_by_column_order_by;
     extern const std::string get_records_by_column_sort_by;
     extern const std::string get_records_by_column_sort_order;
 
@@ -378,6 +397,7 @@ namespace gpudb
     extern const std::string show_table_allow_homogeneous_tables;
     extern const std::string show_table_attribute_indexes;
     extern const std::string show_table_foreign_keys;
+    extern const std::string show_table_foreign_shard_key;
     extern const std::string show_table_protected;
     extern const std::string show_table_remaining_table_ttl;
     extern const std::string show_table_table_ttl;

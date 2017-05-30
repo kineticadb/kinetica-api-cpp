@@ -49,9 +49,11 @@ namespace gpudb
          * @param[in] tableName_  Name of an existing table on which to perform
          *                        the calculation.
          * @param[in] viewName_  If provided, then this will be the name of the
-         *                       view containing the results. Must not be an
-         *                       already existing collection, table or view.
-         *                       Default value is an empty string.
+         *                       view containing the results. Has the same
+         *                       naming restrictions as <a
+         *                       href="../../concepts/tables.html"
+         *                       target="_top">tables</a>.  Default value is an
+         *                       empty string.
          * @param[in] isString_  Indicates whether the value being searched for
          *                       is string or numeric.
          * @param[in] value_  The value to search for.  Default value is 0.

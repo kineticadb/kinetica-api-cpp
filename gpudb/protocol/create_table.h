@@ -43,18 +43,13 @@ namespace gpudb
          * Constructs a CreateTableRequest object with the specified
          * parameters.
          * 
-         * @param[in] tableName_  Name of the table to be created. Must not be
-         *                        the name of a currently existing table of a
-         *                        different type.  Error for requests with
-         *                        existing table of the same name and type id
-         *                        may be suppressed by using the @a
-         *                        no_error_if_exists option.  Cannot be an
-         *                        empty string.  Valid characters are
-         *                        alphanumeric or any of '_-(){}[] .:'
-         *                        (excluding the single quotes), with the first
-         *                        character being alphanumeric or an
-         *                        underscore.  The maximum length is 256
-         *                        characters.
+         * @param[in] tableName_  Name of the table to be created. Error for
+         *                        requests with existing table of the same name
+         *                        and type id may be suppressed by using the @a
+         *                        no_error_if_exists option.  See <a
+         *                        href="../../concepts/tables.html"
+         *                        target="_top">Tables</a> for naming
+         *                        restrictions.
          * @param[in] typeId_  ID of a currently registered type. All objects
          *                     added to the newly created table will be of this
          *                     type.  Ignored if @a is_collection is @a true.
@@ -92,6 +87,13 @@ namespace gpudb
          *                      list of foreign key constraints, of the format
          *                      'source_column references
          *                      target_table(primary_key_column)'.
+         *                              <li> foreign_shard_key: Foreign shard
+         *                      key description of the format: <fk_foreign_key>
+         *                      references <pk_column_name> from
+         *                      <pk_table_name>(<pk_primary_key>)
+         *                              <li> ttl: Sets the TTL of the table or
+         *                      collection specified in @a tableName. The value
+         *                      must be the desired TTL in minutes.
          *                      </ul>
          *                        Default value is an empty std::map.
          * 

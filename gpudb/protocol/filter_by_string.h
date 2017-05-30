@@ -100,9 +100,11 @@ namespace gpudb
          *                        operation will be performed.  Must be an
          *                        existing table, collection or view.
          * @param[in] viewName_  If provided, then this will be the name of the
-         *                       view containing the results. Must not be an
-         *                       already existing collection, table or view.
-         *                       Default value is an empty string.
+         *                       view containing the results. Has the same
+         *                       naming restrictions as <a
+         *                       href="../../concepts/tables.html"
+         *                       target="_top">tables</a>.  Default value is an
+         *                       empty string.
          * @param[in] expression_  The expression with which to filter the
          *                         table.
          * @param[in] mode_  The string filtering mode to apply. See above for

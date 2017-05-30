@@ -15,9 +15,6 @@
  * the underlying table in case of a view) is updated (records are inserted,
  * deleted or modified) the records retrieved may differ between calls based on
  * the updates applied.
- * <p>
- * Note that when using the Java API, it is not possible to retrieve records
- * from join tables using this operation.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -39,9 +36,6 @@ GetRecordsResponse<boost::any> GPUdb::getRecords( const GetRecordsRequest& reque
  * the underlying table in case of a view) is updated (records are inserted,
  * deleted or modified) the records retrieved may differ between calls based on
  * the updates applied.
- * <p>
- * Note that when using the Java API, it is not possible to retrieve records
- * from join tables using this operation.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -67,9 +61,6 @@ GetRecordsResponse<boost::any>& GPUdb::getRecords( const GetRecordsRequest& requ
  * the underlying table in case of a view) is updated (records are inserted,
  * deleted or modified) the records retrieved may differ between calls based on
  * the updates applied.
- * <p>
- * Note that when using the Java API, it is not possible to retrieve records
- * from join tables using this operation.
  * 
  * @param tableName  Name of the table from which the records will be fetched.
  *                   Must be a table, view or homogeneous collection.
@@ -84,6 +75,12 @@ GetRecordsResponse<boost::any>& GPUdb::getRecords( const GetRecordsRequest& requ
  *                 <ul>
  *                         <li> expression: Optional filter expression to apply
  *                 to the table.
+ *                         <li> fast_index_lookup: Indicates if indexes should
+ *                 be used to perform the lookup for a given expression if
+ *                 possible. Only applicable if there is no sorting, the
+ *                 expression contains only equivalence comparisons based on
+ *                 existing tables indexes and the range of requested values is
+ *                 from [0 to END_OF_SET]. The default value is true.
  *                         <li> sort_by: Optional column that the data should
  *                 be sorted by. Empty by default (i.e. no sorting is applied).
  *                         <li> sort_order: String indicating how the returned
@@ -113,9 +110,6 @@ GetRecordsResponse<boost::any> GPUdb::getRecords( const std::string& tableName,
  * the underlying table in case of a view) is updated (records are inserted,
  * deleted or modified) the records retrieved may differ between calls based on
  * the updates applied.
- * <p>
- * Note that when using the Java API, it is not possible to retrieve records
- * from join tables using this operation.
  * 
  * @param tableName  Name of the table from which the records will be fetched.
  *                   Must be a table, view or homogeneous collection.
@@ -130,6 +124,12 @@ GetRecordsResponse<boost::any> GPUdb::getRecords( const std::string& tableName,
  *                 <ul>
  *                         <li> expression: Optional filter expression to apply
  *                 to the table.
+ *                         <li> fast_index_lookup: Indicates if indexes should
+ *                 be used to perform the lookup for a given expression if
+ *                 possible. Only applicable if there is no sorting, the
+ *                 expression contains only equivalence comparisons based on
+ *                 existing tables indexes and the range of requested values is
+ *                 from [0 to END_OF_SET]. The default value is true.
  *                         <li> sort_by: Optional column that the data should
  *                 be sorted by. Empty by default (i.e. no sorting is applied).
  *                         <li> sort_order: String indicating how the returned

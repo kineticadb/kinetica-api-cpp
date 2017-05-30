@@ -81,6 +81,12 @@ namespace gpudb
          *                      'ascending'. If sort_order is provided, sort_by
          *                      has to be provided. Values: 'ascending',
          *                      'descending'.
+         *                              <li> order_by: Comma-separated list of
+         *                      the columns to be sorted by; e.g. 'timestamp
+         *                      asc, x desc'.  The columns specified must be
+         *                      present in @a columnNames.  If any alias is
+         *                      given for any column name, the alias must be
+         *                      used, rather than the original column name.
          *                      </ul>
          *                        Default value is an empty std::map.
          * 
@@ -130,6 +136,12 @@ namespace gpudb
          *                      'ascending'. If sort_order is provided, sort_by
          *                      has to be provided. Values: 'ascending',
          *                      'descending'.
+         *                              <li> order_by: Comma-separated list of
+         *                      the columns to be sorted by; e.g. 'timestamp
+         *                      asc, x desc'.  The columns specified must be
+         *                      present in @a columnNames.  If any alias is
+         *                      given for any column name, the alias must be
+         *                      used, rather than the original column name.
          *                      </ul>
          *                        Default value is an empty std::map.
          * 

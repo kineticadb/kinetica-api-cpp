@@ -38,9 +38,9 @@ namespace gpudb
          * parameters.
          * 
          * @param[in] joinTableName_  Name of the join table to be created.
-         *                            Must not be the name of a currently
-         *                            existing table or join table. Cannot be
-         *                            an empty string.
+         *                            Has the same naming restrictions as <a
+         *                            href="../../concepts/tables.html"
+         *                            target="_top">tables</a>.
          * @param[in] tableNames_  The list of table names making up the joined
          *                         set.  Corresponds to a SQL statement FROM
          *                         clause  Default value is an empty
@@ -84,6 +84,9 @@ namespace gpudb
          *                      the join table if it exists - throws an error
          *                      otherwise Values: 'no_refresh', 'refresh',
          *                      'full_refresh'.
+         *                              <li> ttl: Sets the TTL of the table
+         *                      specified in @a joinTableName. The value must
+         *                      be the desired TTL in minutes.
          *                      </ul>
          *                        Default value is an empty std::map.
          * 

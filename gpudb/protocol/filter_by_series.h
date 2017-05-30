@@ -53,9 +53,11 @@ namespace gpudb
          *                        currently existing table with track semantic
          *                        type.
          * @param[in] viewName_  If provided, then this will be the name of the
-         *                       view containing the results. Must not be an
-         *                       already existing collection, table or view.
-         *                       Default value is an empty string.
+         *                       view containing the results. Has the same
+         *                       naming restrictions as <a
+         *                       href="../../concepts/tables.html"
+         *                       target="_top">tables</a>.  Default value is an
+         *                       empty string.
          * @param[in] trackId_  The ID of the track which will act as the
          *                      filtering points. Must be an existing track
          *                      within the given table.

@@ -38,9 +38,10 @@ namespace gpudb
          * Constructs a CreateUnionRequest object with the specified
          * parameters.
          * 
-         * @param[in] tableName_  Name of the table to be created. Must not be
-         *                        the name of a currently existing table.
-         *                        Cannot be an empty string.
+         * @param[in] tableName_  Name of the table to be created. Has the same
+         *                        naming restrictions as <a
+         *                        href="../../concepts/tables.html"
+         *                        target="_top">tables</a>.
          * @param[in] tableNames_  The list of table names making up the union.
          *                         Must contain the names of one or more
          *                         existing tables.
@@ -54,12 +55,18 @@ namespace gpudb
          *                      collection which is to contain the union. If
          *                      empty, then the union will be a top-level
          *                      table.
+         *                              <li> materialize_on_gpu: If 'true' then
+         *                      the columns of the union will be cached on the
+         *                      GPU. Values: 'true', 'false'.
          *                              <li> mode: If 'merge_views' then this
          *                      operation will merge (i.e. union) the provided
          *                      views. All 'table_names' must be views from the
          *                      same underlying base table. Values:
          *                      'union_all', 'union', 'union_distinct',
          *                      'except', 'intersect', 'merge_views'.
+         *                              <li> ttl: Sets the TTL of the table
+         *                      specified in @a tableName. The value must be
+         *                      the desired TTL in minutes.
          *                      </ul>
          *                        Default value is an empty std::map.
          * 

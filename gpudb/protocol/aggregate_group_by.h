@@ -77,6 +77,15 @@ namespace gpudb
          *                    be returned.  Default value is 1000.
          * @param[in] options_  Optional parameters.
          *                      <ul>
+         *                              <li> collection_name: Name of a
+         *                      collection which is to contain the table
+         *                      specified in 'result_table', otherwise the
+         *                      table will be a top-level table. If the
+         *                      collection does not allow duplicate types and
+         *                      it contains a table of the same type as the
+         *                      given one, then this table creation request
+         *                      will fail. Additionally this option is invalid
+         *                      if @input{table_name} is a collection.
          *                              <li> expression: Filter expression to
          *                      apply to the table prior to computing the
          *                      aggregate group by.
@@ -89,7 +98,10 @@ namespace gpudb
          *                              <li> sort_by: String determining how
          *                      the results are sorted. Values: 'key', 'value'.
          *                              <li> result_table: The name of the
-         *                      table used to store the results. Column names
+         *                      table used to store the results. Has the same
+         *                      naming restrictions as <a
+         *                      href="../../concepts/tables.html"
+         *                      target="_top">tables</a>. Column names
          *                      (group-by and aggregate fields) need to be
          *                      given aliases e.g. ["FChar256 as fchar256",
          *                      "sum(FDouble) as sfd"].  If present, no results
@@ -97,6 +109,9 @@ namespace gpudb
          *                      not available if one of the grouping attributes
          *                      is an unrestricted string (i.e.; not charN)
          *                      type.
+         *                              <li> ttl: Sets the TTL of the table
+         *                      specified in 'result_table'. The value must be
+         *                      the desired TTL in minutes.
          *                      </ul>
          *                        Default value is an empty std::map.
          * 
@@ -138,6 +153,15 @@ namespace gpudb
          *                         Default value is 'binary'.
          * @param[in] options_  Optional parameters.
          *                      <ul>
+         *                              <li> collection_name: Name of a
+         *                      collection which is to contain the table
+         *                      specified in 'result_table', otherwise the
+         *                      table will be a top-level table. If the
+         *                      collection does not allow duplicate types and
+         *                      it contains a table of the same type as the
+         *                      given one, then this table creation request
+         *                      will fail. Additionally this option is invalid
+         *                      if @input{table_name} is a collection.
          *                              <li> expression: Filter expression to
          *                      apply to the table prior to computing the
          *                      aggregate group by.
@@ -150,7 +174,10 @@ namespace gpudb
          *                              <li> sort_by: String determining how
          *                      the results are sorted. Values: 'key', 'value'.
          *                              <li> result_table: The name of the
-         *                      table used to store the results. Column names
+         *                      table used to store the results. Has the same
+         *                      naming restrictions as <a
+         *                      href="../../concepts/tables.html"
+         *                      target="_top">tables</a>. Column names
          *                      (group-by and aggregate fields) need to be
          *                      given aliases e.g. ["FChar256 as fchar256",
          *                      "sum(FDouble) as sfd"].  If present, no results
@@ -158,6 +185,9 @@ namespace gpudb
          *                      not available if one of the grouping attributes
          *                      is an unrestricted string (i.e.; not charN)
          *                      type.
+         *                              <li> ttl: Sets the TTL of the table
+         *                      specified in 'result_table'. The value must be
+         *                      the desired TTL in minutes.
          *                      </ul>
          *                        Default value is an empty std::map.
          * 

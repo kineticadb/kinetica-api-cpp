@@ -24,9 +24,6 @@ namespace gpudb
      * (or the underlying table in case of a view) is updated (records are
      * inserted, deleted or modified) the records retrieved may differ between
      * calls based on the updates applied.
-     * <p>
-     * Note that when using the Java API, it is not possible to retrieve
-     * records from join tables using this operation.
      */
     struct GetRecordsRequest
     {
@@ -62,6 +59,14 @@ namespace gpudb
          *                      <ul>
          *                              <li> expression: Optional filter
          *                      expression to apply to the table.
+         *                              <li> fast_index_lookup: Indicates if
+         *                      indexes should be used to perform the lookup
+         *                      for a given expression if possible. Only
+         *                      applicable if there is no sorting, the
+         *                      expression contains only equivalence
+         *                      comparisons based on existing tables indexes
+         *                      and the range of requested values is from [0 to
+         *                      END_OF_SET]. The default value is true.
          *                              <li> sort_by: Optional column that the
          *                      data should be sorted by. Empty by default
          *                      (i.e. no sorting is applied).
@@ -105,6 +110,14 @@ namespace gpudb
          *                      <ul>
          *                              <li> expression: Optional filter
          *                      expression to apply to the table.
+         *                              <li> fast_index_lookup: Indicates if
+         *                      indexes should be used to perform the lookup
+         *                      for a given expression if possible. Only
+         *                      applicable if there is no sorting, the
+         *                      expression contains only equivalence
+         *                      comparisons based on existing tables indexes
+         *                      and the range of requested values is from [0 to
+         *                      END_OF_SET]. The default value is true.
          *                              <li> sort_by: Optional column that the
          *                      data should be sorted by. Empty by default
          *                      (i.e. no sorting is applied).
@@ -212,9 +225,6 @@ namespace gpudb
      * (or the underlying table in case of a view) is updated (records are
      * inserted, deleted or modified) the records retrieved may differ between
      * calls based on the updates applied.
-     * <p>
-     * Note that when using the Java API, it is not possible to retrieve
-     * records from join tables using this operation.
      */
     struct RawGetRecordsResponse
     {
@@ -334,9 +344,6 @@ namespace gpudb
      * (or the underlying table in case of a view) is updated (records are
      * inserted, deleted or modified) the records retrieved may differ between
      * calls based on the updates applied.
-     * <p>
-     * Note that when using the Java API, it is not possible to retrieve
-     * records from join tables using this operation.
      * 
      * @param <T>  The type of object being processed.
      * 

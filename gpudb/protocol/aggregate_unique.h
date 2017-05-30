@@ -69,6 +69,14 @@ namespace gpudb
          *                    be returned.  Default value is 10000.
          * @param[in] options_  Optional parameters.
          *                      <ul>
+         *                              <li> collection_name: Name of a
+         *                      collection which is to contain the table
+         *                      specified in 'result_table', otherwise the
+         *                      table will be a top-level table. If the
+         *                      collection does not allow duplicate types and
+         *                      it contains a table of the same type as the
+         *                      given one, then this table creation request
+         *                      will fail.
          *                              <li> expression: Optional filter
          *                      expression to apply to the table.
          *                              <li> sort_order: String indicating how
@@ -76,7 +84,13 @@ namespace gpudb
          *                      'ascending', 'descending'.
          *                              <li> result_table: The name of the
          *                      table used to store the results. If present no
-         *                      results are returned in the response.
+         *                      results are returned in the response. Has the
+         *                      same naming restrictions as <a
+         *                      href="../../concepts/tables.html"
+         *                      target="_top">tables</a>.
+         *                              <li> ttl: Sets the TTL of the table
+         *                      specified in 'result_table'. The value must be
+         *                      the desired TTL in minutes.
          *                      </ul>
          *                        Default value is an empty std::map.
          * 
@@ -114,6 +128,14 @@ namespace gpudb
          *                         Default value is 'binary'.
          * @param[in] options_  Optional parameters.
          *                      <ul>
+         *                              <li> collection_name: Name of a
+         *                      collection which is to contain the table
+         *                      specified in 'result_table', otherwise the
+         *                      table will be a top-level table. If the
+         *                      collection does not allow duplicate types and
+         *                      it contains a table of the same type as the
+         *                      given one, then this table creation request
+         *                      will fail.
          *                              <li> expression: Optional filter
          *                      expression to apply to the table.
          *                              <li> sort_order: String indicating how
@@ -121,7 +143,13 @@ namespace gpudb
          *                      'ascending', 'descending'.
          *                              <li> result_table: The name of the
          *                      table used to store the results. If present no
-         *                      results are returned in the response.
+         *                      results are returned in the response. Has the
+         *                      same naming restrictions as <a
+         *                      href="../../concepts/tables.html"
+         *                      target="_top">tables</a>.
+         *                              <li> ttl: Sets the TTL of the table
+         *                      specified in 'result_table'. The value must be
+         *                      the desired TTL in minutes.
          *                      </ul>
          *                        Default value is an empty std::map.
          * 

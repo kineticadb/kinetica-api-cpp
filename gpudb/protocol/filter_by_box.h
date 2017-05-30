@@ -49,9 +49,10 @@ namespace gpudb
          *                        existing table.
          * @param[in] viewName_  Optional name of the result view that will be
          *                       created containing the results of the query.
-         *                       Must not be an already existing collection,
-         *                       table or view.  Default value is an empty
-         *                       string.
+         *                       Has the same naming restrictions as <a
+         *                       href="../../concepts/tables.html"
+         *                       target="_top">tables</a>.  Default value is an
+         *                       empty string.
          * @param[in] xColumnName_  Name of the column on which to perform the
          *                          bounding box query. If the table's data
          *                          type is not a shape type, must be a valid

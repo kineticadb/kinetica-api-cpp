@@ -13,11 +13,13 @@ namespace gpudb
      * A set of input parameters for {@link
      * #alterSystemProperties(const AlterSystemPropertiesRequest&) const}.
      * <p>
-     * The alter_system_properties endpoint is primarily used to simplify the
-     * testing of the system and is not expected to be used during normal
-     * execution.  Commands are given through the properties_update_map whose
-     * keys are commands and values are strings representing integer values
-     * (for example '8000') or boolean values ('true' or 'false').
+     * The {@link
+     * #alterSystemProperties(const AlterSystemPropertiesRequest&) const}
+     * endpoint is primarily used to simplify the testing of the system and is
+     * not expected to be used during normal execution.  Commands are given
+     * through the @a propertyUpdatesMap whose keys are commands and values are
+     * strings representing integer values (for example '8000') or boolean
+     * values ('true' or 'false').
      */
     struct AlterSystemPropertiesRequest
     {
@@ -41,16 +43,20 @@ namespace gpudb
          *                                 empty.
          *                                 <ul>
          *                                         <li> sm_omp_threads: Set the
-         *                                 number of sm_omp_threads to the
-         *                                 specified integer value.
+         *                                 number of OpenMP threads that will
+         *                                 be used to service filter &
+         *                                 aggregation requests against
+         *                                 collections to the specified integer
+         *                                 value.
          *                                         <li> kernel_omp_threads: Set
-         *                                 the number of kernel_omp_threads to
-         *                                 the specified integer value.
+         *                                 the number of kernel OpenMP threads
+         *                                 to the specified integer value.
          *                                         <li>
          *                                 concurrent_kernel_execution: Enables
          *                                 concurrent kernel execution if the
-         *                                 value is 'true' and disables it if
-         *                                 the value is 'false'.
+         *                                 value is @a true and disables it if
+         *                                 the value is @a false. Values:
+         *                                 'true', 'false'.
          *                                         <li> chunk_size: Sets the
          *                                 chunk size of all new sets to the
          *                                 specified integer value.
@@ -69,49 +75,52 @@ namespace gpudb
          *                                 report timing results. Value string
          *                                 is is a comma separated list of
          *                                 <key>=<value> expressions.
-         *                                 Expressions are: num_transactions =
-         *                                 <num> where <num> is the number of
-         *                                 request reply transactions to invoke
-         *                                 per test; message_size = <bytes>
-         *                                 where bytes is the size of the
-         *                                 messages to send in bytes;
-         *                                 check_values = <enabled> where if
-         *                                 enabled is true the value of the
+         *                                 Expressions are:
+         *                                 num_transactions=<num> where num is
+         *                                 the number of request reply
+         *                                 transactions to invoke per test;
+         *                                 message_size=<bytes> where bytes is
+         *                                 the size of the messages to send in
+         *                                 bytes; check_values=<enabled> where
+         *                                 if enabled is true the value of the
          *                                 messages received are verified.
          *                                         <li>
          *                                 set_message_timers_enabled: Enables
          *                                 the communicator test to collect
          *                                 additional timing statistics when
-         *                                 the value string is 'true'. Disables
-         *                                 the collection when the value string
-         *                                 is 'false'
+         *                                 the value string is @a true.
+         *                                 Disables the collection when the
+         *                                 value string is @a false Values:
+         *                                 'true', 'false'.
          *                                         <li> bulk_add_test: Invoke
-         *                                 the bulk_add test and report timing
+         *                                 the bulk add test and report timing
          *                                 results. Value string is ignored.
          *                                         <li> network_speed: Invoke
          *                                 the network speed test and report
          *                                 timing results. Value string is a
-         *                                 comma separated list of
-         *                                 <key>=<value> expressions.
-         *                                 Expressions are: seconds = <time>
+         *                                 semicolon-separated list of
+         *                                 <key>=<value> expressions.  Valid
+         *                                 expressions are: seconds=<time>
          *                                 where time is the time in seconds to
-         *                                 run the test; data_size = <size>
-         *                                 where <size> is the size in bytes of
-         *                                 the block to be transferred; threads
-         *                                 = <number of threads>; to_ranks =
-         *                                 <comma separated list of ranks>
-         *                                 where the list of ranks is the ranks
-         *                                 that rank 0 will send data to and
-         *                                 get data from. If to_ranks is
+         *                                 run the test; data_size=<size> where
+         *                                 size is the size in bytes of the
+         *                                 block to be transferred;
+         *                                 threads=<number of threads>;
+         *                                 to_ranks=<space-separated list of
+         *                                 ranks> where the list of ranks is
+         *                                 the ranks that rank 0 will send data
+         *                                 to and get data from. If to_ranks is
          *                                 unspecified then all worker ranks
          *                                 are used.
          *                                         <li> request_timeout: Number
-         *                                 of minutes after which /filter/ *
-         *                                 and /aggregate/ * queries will
-         *                                 timeout.
+         *                                 of minutes after which filtering
+         *                                 (e.g., /filter) and aggregating
+         *                                 (e.g., /aggregate/groupby) queries
+         *                                 will timeout.
          *                                         <li> max_get_records_size:
-         *                                 set max_get_records_size. default
-         *                                 20000
+         *                                 The maximum number of records the
+         *                                 database will serve for a given data
+         *                                 retrieval call
          *                                 </ul>
          * @param[in] options_  Optional parameters.  Default value is an empty
          *                      std::map.
@@ -177,11 +186,13 @@ namespace gpudb
      * A set of output parameters for {@link
      * #alterSystemProperties(const AlterSystemPropertiesRequest&) const}.
      * <p>
-     * The alter_system_properties endpoint is primarily used to simplify the
-     * testing of the system and is not expected to be used during normal
-     * execution.  Commands are given through the properties_update_map whose
-     * keys are commands and values are strings representing integer values
-     * (for example '8000') or boolean values ('true' or 'false').
+     * The {@link
+     * #alterSystemProperties(const AlterSystemPropertiesRequest&) const}
+     * endpoint is primarily used to simplify the testing of the system and is
+     * not expected to be used during normal execution.  Commands are given
+     * through the @a propertyUpdatesMap whose keys are commands and values are
+     * strings representing integer values (for example '8000') or boolean
+     * values ('true' or 'false').
      */
     struct AlterSystemPropertiesResponse
     {

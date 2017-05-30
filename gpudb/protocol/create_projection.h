@@ -13,8 +13,8 @@ namespace gpudb
      * A set of input parameters for {@link
      * #createProjection(const CreateProjectionRequest&) const}.
      * <p>
-     * Creates a new projection of an existing table. A projection represents a
-     * subset of the columns (potentially including derived columns) of a
+     * Creates a new projection of an existing table.  A projection represents
+     * a subset of the columns (potentially including derived columns) of a
      * table.
      */
     struct CreateProjectionRequest
@@ -39,14 +39,9 @@ namespace gpudb
          * @param[in] tableName_  Name of the existing table on which the
          *                        projection is to be applied.
          * @param[in] projectionName_  Name of the projection to be created.
-         *                             Must not be the name of a currently
-         *                             existing table. Cannot be an empty
-         *                             string. Valid characters are
-         *                             alphanumeric or any of '_-(){}[] .:'
-         *                             (excluding the single quotes), with the
-         *                             first character being alphanumeric or an
-         *                             underscore. The maximum length is 256
-         *                             characters.
+         *                             Has the same naming restrictions as <a
+         *                             href="../../concepts/tables.html"
+         *                             target="_top">tables</a>.
          * @param[in] columnNames_  List of columns from @a tableName to be
          *                          included in the projection. Can include
          *                          derived columns. Can be specified as
@@ -63,8 +58,17 @@ namespace gpudb
          *                              <li> limit: The number of records to
          *                      keep.
          *                              <li> order_by: Comma-separated list of
-         *                      the columns to be sorted by; i.e 'timestamp
-         *                      asc, x desc'.
+         *                      the columns to be sorted by; e.g. 'timestamp
+         *                      asc, x desc'.  The columns specified must be
+         *                      present in @a columnNames.  If any alias is
+         *                      given for any column name, the alias must be
+         *                      used, rather than the original column name.
+         *                              <li> materialize_on_gpu: If 'true' then
+         *                      the columns of the projection will be cached on
+         *                      the GPU. Values: 'true', 'false'.
+         *                              <li> ttl: Sets the TTL of the table,
+         *                      view, or collection specified in @a tableName.
+         *                      The value must be the desired TTL in minutes.
          *                      </ul>
          *                        Default value is an empty std::map.
          * 
@@ -145,8 +149,8 @@ namespace gpudb
      * A set of output parameters for {@link
      * #createProjection(const CreateProjectionRequest&) const}.
      * <p>
-     * Creates a new projection of an existing table. A projection represents a
-     * subset of the columns (potentially including derived columns) of a
+     * Creates a new projection of an existing table.  A projection represents
+     * a subset of the columns (potentially including derived columns) of a
      * table.
      */
     struct CreateProjectionResponse

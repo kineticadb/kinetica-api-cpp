@@ -866,6 +866,9 @@ RawAggregateGroupByResponse& GPUdb::aggregateGroupByRaw( const AggregateGroupByR
 
 AggregateGroupByResponse GPUdb::aggregateGroupBy( const AggregateGroupByRequest& request_ ) const
 {
+    if (request_.encoding != "binary")
+        throw GPUdbException( "This function only supports binary encoding" );
+
     RawAggregateGroupByResponse actualResponse_;
     submitRequest("/aggregate/groupby", request_, actualResponse_, false);
     AggregateGroupByResponse response_;
@@ -912,6 +915,9 @@ AggregateGroupByResponse GPUdb::aggregateGroupBy( const AggregateGroupByRequest&
 AggregateGroupByResponse& GPUdb::aggregateGroupBy( const AggregateGroupByRequest& request_,
                                                    AggregateGroupByResponse& response_ ) const
 {
+    if (request_.encoding != "binary")
+        throw GPUdbException( "This function only supports binary encoding" );
+
     RawAggregateGroupByResponse actualResponse_;
     submitRequest("/aggregate/groupby", request_, actualResponse_, false);
     response_.responseSchemaStr = actualResponse_.responseSchemaStr;
@@ -959,6 +965,13 @@ AggregateGroupByResponse& GPUdb::aggregateGroupBy( const AggregateGroupByRequest
  *               number of results should be returned.  Default value is 1000.
  * @param options  Optional parameters.
  *                 <ul>
+ *                         <li> collection_name: Name of a collection which is
+ *                 to contain the table specified in 'result_table', otherwise
+ *                 the table will be a top-level table. If the collection does
+ *                 not allow duplicate types and it contains a table of the
+ *                 same type as the given one, then this table creation request
+ *                 will fail. Additionally this option is invalid if
+ *                 @input{table_name} is a collection.
  *                         <li> expression: Filter expression to apply to the
  *                 table prior to computing the aggregate group by.
  *                         <li> having: Filter expression to apply to the
@@ -969,12 +982,16 @@ AggregateGroupByResponse& GPUdb::aggregateGroupBy( const AggregateGroupByRequest
  *                         <li> sort_by: String determining how the results are
  *                 sorted. Values: 'key', 'value'.
  *                         <li> result_table: The name of the table used to
- *                 store the results. Column names (group-by and aggregate
- *                 fields) need to be given aliases e.g. ["FChar256 as
- *                 fchar256", "sum(FDouble) as sfd"].  If present, no results
- *                 are returned in the response.  This option is not available
- *                 if one of the grouping attributes is an unrestricted string
- *                 (i.e.; not charN) type.
+ *                 store the results. Has the same naming restrictions as <a
+ *                 href="../../concepts/tables.html" target="_top">tables</a>.
+ *                 Column names (group-by and aggregate fields) need to be
+ *                 given aliases e.g. ["FChar256 as fchar256", "sum(FDouble) as
+ *                 sfd"].  If present, no results are returned in the response.
+ *                 This option is not available if one of the grouping
+ *                 attributes is an unrestricted string (i.e.; not charN) type.
+ *                         <li> ttl: Sets the TTL of the table specified in
+ *                 'result_table'. The value must be the desired TTL in
+ *                 minutes.
  *                 </ul>
  *                   Default value is an empty std::map.
  * 
@@ -1042,6 +1059,13 @@ AggregateGroupByResponse GPUdb::aggregateGroupBy( const std::string& tableName,
  *               number of results should be returned.  Default value is 1000.
  * @param options  Optional parameters.
  *                 <ul>
+ *                         <li> collection_name: Name of a collection which is
+ *                 to contain the table specified in 'result_table', otherwise
+ *                 the table will be a top-level table. If the collection does
+ *                 not allow duplicate types and it contains a table of the
+ *                 same type as the given one, then this table creation request
+ *                 will fail. Additionally this option is invalid if
+ *                 @input{table_name} is a collection.
  *                         <li> expression: Filter expression to apply to the
  *                 table prior to computing the aggregate group by.
  *                         <li> having: Filter expression to apply to the
@@ -1052,12 +1076,16 @@ AggregateGroupByResponse GPUdb::aggregateGroupBy( const std::string& tableName,
  *                         <li> sort_by: String determining how the results are
  *                 sorted. Values: 'key', 'value'.
  *                         <li> result_table: The name of the table used to
- *                 store the results. Column names (group-by and aggregate
- *                 fields) need to be given aliases e.g. ["FChar256 as
- *                 fchar256", "sum(FDouble) as sfd"].  If present, no results
- *                 are returned in the response.  This option is not available
- *                 if one of the grouping attributes is an unrestricted string
- *                 (i.e.; not charN) type.
+ *                 store the results. Has the same naming restrictions as <a
+ *                 href="../../concepts/tables.html" target="_top">tables</a>.
+ *                 Column names (group-by and aggregate fields) need to be
+ *                 given aliases e.g. ["FChar256 as fchar256", "sum(FDouble) as
+ *                 sfd"].  If present, no results are returned in the response.
+ *                 This option is not available if one of the grouping
+ *                 attributes is an unrestricted string (i.e.; not charN) type.
+ *                         <li> ttl: Sets the TTL of the table specified in
+ *                 'result_table'. The value must be the desired TTL in
+ *                 minutes.
  *                 </ul>
  *                   Default value is an empty std::map.
  * @param[out] response_  Response object containing the results of the
@@ -2079,6 +2107,9 @@ RawAggregateUniqueResponse& GPUdb::aggregateUniqueRaw( const AggregateUniqueRequ
 
 AggregateUniqueResponse GPUdb::aggregateUnique( const AggregateUniqueRequest& request_ ) const
 {
+    if (request_.encoding != "binary")
+        throw GPUdbException( "This function only supports binary encoding" );
+
     RawAggregateUniqueResponse actualResponse_;
     submitRequest("/aggregate/unique", request_, actualResponse_, false);
     AggregateUniqueResponse response_;
@@ -2121,6 +2152,9 @@ AggregateUniqueResponse GPUdb::aggregateUnique( const AggregateUniqueRequest& re
 AggregateUniqueResponse& GPUdb::aggregateUnique( const AggregateUniqueRequest& request_,
                                                  AggregateUniqueResponse& response_ ) const
 {
+    if (request_.encoding != "binary")
+        throw GPUdbException( "This function only supports binary encoding" );
+
     RawAggregateUniqueResponse actualResponse_;
     submitRequest("/aggregate/unique", request_, actualResponse_, false);
     response_.tableName = actualResponse_.tableName;
@@ -2163,13 +2197,23 @@ AggregateUniqueResponse& GPUdb::aggregateUnique( const AggregateUniqueRequest& r
  *               number of results should be returned.  Default value is 10000.
  * @param options  Optional parameters.
  *                 <ul>
+ *                         <li> collection_name: Name of a collection which is
+ *                 to contain the table specified in 'result_table', otherwise
+ *                 the table will be a top-level table. If the collection does
+ *                 not allow duplicate types and it contains a table of the
+ *                 same type as the given one, then this table creation request
+ *                 will fail.
  *                         <li> expression: Optional filter expression to apply
  *                 to the table.
  *                         <li> sort_order: String indicating how the returned
  *                 values should be sorted. Values: 'ascending', 'descending'.
  *                         <li> result_table: The name of the table used to
  *                 store the results. If present no results are returned in the
- *                 response.
+ *                 response. Has the same naming restrictions as <a
+ *                 href="../../concepts/tables.html" target="_top">tables</a>.
+ *                         <li> ttl: Sets the TTL of the table specified in
+ *                 'result_table'. The value must be the desired TTL in
+ *                 minutes.
  *                 </ul>
  *                   Default value is an empty std::map.
  * 
@@ -2232,13 +2276,23 @@ AggregateUniqueResponse GPUdb::aggregateUnique( const std::string& tableName,
  *               number of results should be returned.  Default value is 10000.
  * @param options  Optional parameters.
  *                 <ul>
+ *                         <li> collection_name: Name of a collection which is
+ *                 to contain the table specified in 'result_table', otherwise
+ *                 the table will be a top-level table. If the collection does
+ *                 not allow duplicate types and it contains a table of the
+ *                 same type as the given one, then this table creation request
+ *                 will fail.
  *                         <li> expression: Optional filter expression to apply
  *                 to the table.
  *                         <li> sort_order: String indicating how the returned
  *                 values should be sorted. Values: 'ascending', 'descending'.
  *                         <li> result_table: The name of the table used to
  *                 store the results. If present no results are returned in the
- *                 response.
+ *                 response. Has the same naming restrictions as <a
+ *                 href="../../concepts/tables.html" target="_top">tables</a>.
+ *                         <li> ttl: Sets the TTL of the table specified in
+ *                 'result_table'. The value must be the desired TTL in
+ *                 minutes.
  *                 </ul>
  *                   Default value is an empty std::map.
  * @param[out] response_  Response object containing the results of the
@@ -2273,11 +2327,13 @@ AggregateUniqueResponse& GPUdb::aggregateUnique( const std::string& tableName,
 
 
 /**
- * The alter_system_properties endpoint is primarily used to simplify the
- * testing of the system and is not expected to be used during normal
- * execution.  Commands are given through the properties_update_map whose keys
- * are commands and values are strings representing integer values (for example
- * '8000') or boolean values ('true' or 'false').
+ * The {@link
+ * #alterSystemProperties(const AlterSystemPropertiesRequest&) const}
+ * endpoint is primarily used to simplify the testing of the system and is not
+ * expected to be used during normal execution.  Commands are given through the
+ * @a propertyUpdatesMap whose keys are commands and values are strings
+ * representing integer values (for example '8000') or boolean values ('true'
+ * or 'false').
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -2295,11 +2351,13 @@ AlterSystemPropertiesResponse GPUdb::alterSystemProperties( const AlterSystemPro
 
 
 /**
- * The alter_system_properties endpoint is primarily used to simplify the
- * testing of the system and is not expected to be used during normal
- * execution.  Commands are given through the properties_update_map whose keys
- * are commands and values are strings representing integer values (for example
- * '8000') or boolean values ('true' or 'false').
+ * The {@link
+ * #alterSystemProperties(const AlterSystemPropertiesRequest&,AlterSystemPropertiesResponse&) const}
+ * endpoint is primarily used to simplify the testing of the system and is not
+ * expected to be used during normal execution.  Commands are given through the
+ * @a propertyUpdatesMap whose keys are commands and values are strings
+ * representing integer values (for example '8000') or boolean values ('true'
+ * or 'false').
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -2320,23 +2378,28 @@ AlterSystemPropertiesResponse& GPUdb::alterSystemProperties( const AlterSystemPr
 
 
 /**
- * The alter_system_properties endpoint is primarily used to simplify the
- * testing of the system and is not expected to be used during normal
- * execution.  Commands are given through the properties_update_map whose keys
- * are commands and values are strings representing integer values (for example
- * '8000') or boolean values ('true' or 'false').
+ * The {@link
+ * #alterSystemProperties(const std::map<std::string, std::string>&,const std::map<std::string, std::string>&) const}
+ * endpoint is primarily used to simplify the testing of the system and is not
+ * expected to be used during normal execution.  Commands are given through the
+ * @a propertyUpdatesMap whose keys are commands and values are strings
+ * representing integer values (for example '8000') or boolean values ('true'
+ * or 'false').
  * 
  * @param propertyUpdatesMap  Map containing the properties of the system to be
  *                            updated. Error if empty.
  *                            <ul>
  *                                    <li> sm_omp_threads: Set the number of
- *                            sm_omp_threads to the specified integer value.
+ *                            OpenMP threads that will be used to service
+ *                            filter & aggregation requests against collections
+ *                            to the specified integer value.
  *                                    <li> kernel_omp_threads: Set the number
- *                            of kernel_omp_threads to the specified integer
+ *                            of kernel OpenMP threads to the specified integer
  *                            value.
  *                                    <li> concurrent_kernel_execution: Enables
- *                            concurrent kernel execution if the value is
- *                            'true' and disables it if the value is 'false'.
+ *                            concurrent kernel execution if the value is @a
+ *                            true and disables it if the value is @a false.
+ *                            Values: 'true', 'false'.
  *                                    <li> chunk_size: Sets the chunk size of
  *                            all new sets to the specified integer value.
  *                                    <li> flush_to_disk: Flushes any changes
@@ -2351,37 +2414,39 @@ AlterSystemPropertiesResponse& GPUdb::alterSystemProperties( const AlterSystemPr
  *                            communicator test and report timing results.
  *                            Value string is is a comma separated list of
  *                            <key>=<value> expressions.  Expressions are:
- *                            num_transactions = <num> where <num> is the
- *                            number of request reply transactions to invoke
- *                            per test; message_size = <bytes> where bytes is
- *                            the size of the messages to send in bytes;
- *                            check_values = <enabled> where if enabled is true
+ *                            num_transactions=<num> where num is the number of
+ *                            request reply transactions to invoke per test;
+ *                            message_size=<bytes> where bytes is the size of
+ *                            the messages to send in bytes;
+ *                            check_values=<enabled> where if enabled is true
  *                            the value of the messages received are verified.
  *                                    <li> set_message_timers_enabled: Enables
  *                            the communicator test to collect additional
- *                            timing statistics when the value string is
- *                            'true'. Disables the collection when the value
- *                            string is 'false'
- *                                    <li> bulk_add_test: Invoke the bulk_add
+ *                            timing statistics when the value string is @a
+ *                            true. Disables the collection when the value
+ *                            string is @a false Values: 'true', 'false'.
+ *                                    <li> bulk_add_test: Invoke the bulk add
  *                            test and report timing results. Value string is
  *                            ignored.
  *                                    <li> network_speed: Invoke the network
  *                            speed test and report timing results. Value
- *                            string is a comma separated list of <key>=<value>
- *                            expressions.  Expressions are: seconds = <time>
- *                            where time is the time in seconds to run the
- *                            test; data_size = <size> where <size> is the size
- *                            in bytes of the block to be transferred; threads
- *                            = <number of threads>; to_ranks = <comma
- *                            separated list of ranks> where the list of ranks
- *                            is the ranks that rank 0 will send data to and
- *                            get data from. If to_ranks is unspecified then
- *                            all worker ranks are used.
+ *                            string is a semicolon-separated list of
+ *                            <key>=<value> expressions.  Valid expressions
+ *                            are: seconds=<time> where time is the time in
+ *                            seconds to run the test; data_size=<size> where
+ *                            size is the size in bytes of the block to be
+ *                            transferred; threads=<number of threads>;
+ *                            to_ranks=<space-separated list of ranks> where
+ *                            the list of ranks is the ranks that rank 0 will
+ *                            send data to and get data from. If to_ranks is
+ *                            unspecified then all worker ranks are used.
  *                                    <li> request_timeout: Number of minutes
- *                            after which /filter/ * and /aggregate/ * queries
+ *                            after which filtering (e.g., /filter) and
+ *                            aggregating (e.g., /aggregate/groupby) queries
  *                            will timeout.
- *                                    <li> max_get_records_size: set
- *                            max_get_records_size. default 20000
+ *                                    <li> max_get_records_size: The maximum
+ *                            number of records the database will serve for a
+ *                            given data retrieval call
  *                            </ul>
  * @param options  Optional parameters.  Default value is an empty std::map.
  * 
@@ -2402,23 +2467,28 @@ AlterSystemPropertiesResponse GPUdb::alterSystemProperties( const std::map<std::
 
 
 /**
- * The alter_system_properties endpoint is primarily used to simplify the
- * testing of the system and is not expected to be used during normal
- * execution.  Commands are given through the properties_update_map whose keys
- * are commands and values are strings representing integer values (for example
- * '8000') or boolean values ('true' or 'false').
+ * The {@link
+ * #alterSystemProperties(const std::map<std::string, std::string>&,const std::map<std::string, std::string>&,AlterSystemPropertiesResponse&) const}
+ * endpoint is primarily used to simplify the testing of the system and is not
+ * expected to be used during normal execution.  Commands are given through the
+ * @a propertyUpdatesMap whose keys are commands and values are strings
+ * representing integer values (for example '8000') or boolean values ('true'
+ * or 'false').
  * 
  * @param propertyUpdatesMap  Map containing the properties of the system to be
  *                            updated. Error if empty.
  *                            <ul>
  *                                    <li> sm_omp_threads: Set the number of
- *                            sm_omp_threads to the specified integer value.
+ *                            OpenMP threads that will be used to service
+ *                            filter & aggregation requests against collections
+ *                            to the specified integer value.
  *                                    <li> kernel_omp_threads: Set the number
- *                            of kernel_omp_threads to the specified integer
+ *                            of kernel OpenMP threads to the specified integer
  *                            value.
  *                                    <li> concurrent_kernel_execution: Enables
- *                            concurrent kernel execution if the value is
- *                            'true' and disables it if the value is 'false'.
+ *                            concurrent kernel execution if the value is @a
+ *                            true and disables it if the value is @a false.
+ *                            Values: 'true', 'false'.
  *                                    <li> chunk_size: Sets the chunk size of
  *                            all new sets to the specified integer value.
  *                                    <li> flush_to_disk: Flushes any changes
@@ -2433,37 +2503,39 @@ AlterSystemPropertiesResponse GPUdb::alterSystemProperties( const std::map<std::
  *                            communicator test and report timing results.
  *                            Value string is is a comma separated list of
  *                            <key>=<value> expressions.  Expressions are:
- *                            num_transactions = <num> where <num> is the
- *                            number of request reply transactions to invoke
- *                            per test; message_size = <bytes> where bytes is
- *                            the size of the messages to send in bytes;
- *                            check_values = <enabled> where if enabled is true
+ *                            num_transactions=<num> where num is the number of
+ *                            request reply transactions to invoke per test;
+ *                            message_size=<bytes> where bytes is the size of
+ *                            the messages to send in bytes;
+ *                            check_values=<enabled> where if enabled is true
  *                            the value of the messages received are verified.
  *                                    <li> set_message_timers_enabled: Enables
  *                            the communicator test to collect additional
- *                            timing statistics when the value string is
- *                            'true'. Disables the collection when the value
- *                            string is 'false'
- *                                    <li> bulk_add_test: Invoke the bulk_add
+ *                            timing statistics when the value string is @a
+ *                            true. Disables the collection when the value
+ *                            string is @a false Values: 'true', 'false'.
+ *                                    <li> bulk_add_test: Invoke the bulk add
  *                            test and report timing results. Value string is
  *                            ignored.
  *                                    <li> network_speed: Invoke the network
  *                            speed test and report timing results. Value
- *                            string is a comma separated list of <key>=<value>
- *                            expressions.  Expressions are: seconds = <time>
- *                            where time is the time in seconds to run the
- *                            test; data_size = <size> where <size> is the size
- *                            in bytes of the block to be transferred; threads
- *                            = <number of threads>; to_ranks = <comma
- *                            separated list of ranks> where the list of ranks
- *                            is the ranks that rank 0 will send data to and
- *                            get data from. If to_ranks is unspecified then
- *                            all worker ranks are used.
+ *                            string is a semicolon-separated list of
+ *                            <key>=<value> expressions.  Valid expressions
+ *                            are: seconds=<time> where time is the time in
+ *                            seconds to run the test; data_size=<size> where
+ *                            size is the size in bytes of the block to be
+ *                            transferred; threads=<number of threads>;
+ *                            to_ranks=<space-separated list of ranks> where
+ *                            the list of ranks is the ranks that rank 0 will
+ *                            send data to and get data from. If to_ranks is
+ *                            unspecified then all worker ranks are used.
  *                                    <li> request_timeout: Number of minutes
- *                            after which /filter/ * and /aggregate/ * queries
+ *                            after which filtering (e.g., /filter) and
+ *                            aggregating (e.g., /aggregate/groupby) queries
  *                            will timeout.
- *                                    <li> max_get_records_size: set
- *                            max_get_records_size. default 20000
+ *                                    <li> max_get_records_size: The maximum
+ *                            number of records the database will serve for a
+ *                            given data retrieval call
  *                            </ul>
  * @param options  Optional parameters.  Default value is an empty std::map.
  * @param[out] response_  Response object containing the results of the
@@ -3276,9 +3348,10 @@ CreateJoinTableResponse& GPUdb::createJoinTable( const CreateJoinTableRequest& r
  * href="../../concepts/joins.html" target="_top">join concept
  * documentation</a>.
  * 
- * @param joinTableName  Name of the join table to be created. Must not be the
- *                       name of a currently existing table or join table.
- *                       Cannot be an empty string.
+ * @param joinTableName  Name of the join table to be created.  Has the same
+ *                       naming restrictions as <a
+ *                       href="../../concepts/tables.html"
+ *                       target="_top">tables</a>.
  * @param tableNames  The list of table names making up the joined set.
  *                    Corresponds to a SQL statement FROM clause  Default value
  *                    is an empty std::vector.
@@ -3314,6 +3387,8 @@ CreateJoinTableResponse& GPUdb::createJoinTable( const CreateJoinTableRequest& r
  *                         <li> refresh: Do a manual refresh of the join table
  *                 if it exists - throws an error otherwise Values:
  *                 'no_refresh', 'refresh', 'full_refresh'.
+ *                         <li> ttl: Sets the TTL of the table specified in @a
+ *                 joinTableName. The value must be the desired TTL in minutes.
  *                 </ul>
  *                   Default value is an empty std::map.
  * 
@@ -3344,9 +3419,10 @@ CreateJoinTableResponse GPUdb::createJoinTable( const std::string& joinTableName
  * href="../../concepts/joins.html" target="_top">join concept
  * documentation</a>.
  * 
- * @param joinTableName  Name of the join table to be created. Must not be the
- *                       name of a currently existing table or join table.
- *                       Cannot be an empty string.
+ * @param joinTableName  Name of the join table to be created.  Has the same
+ *                       naming restrictions as <a
+ *                       href="../../concepts/tables.html"
+ *                       target="_top">tables</a>.
  * @param tableNames  The list of table names making up the joined set.
  *                    Corresponds to a SQL statement FROM clause  Default value
  *                    is an empty std::vector.
@@ -3382,6 +3458,8 @@ CreateJoinTableResponse GPUdb::createJoinTable( const std::string& joinTableName
  *                         <li> refresh: Do a manual refresh of the join table
  *                 if it exists - throws an error otherwise Values:
  *                 'no_refresh', 'refresh', 'full_refresh'.
+ *                         <li> ttl: Sets the TTL of the table specified in @a
+ *                 joinTableName. The value must be the desired TTL in minutes.
  *                 </ul>
  *                   Default value is an empty std::map.
  * @param[out] response_  Response object containing the results of the
@@ -3573,7 +3651,7 @@ CreateProcResponse& GPUdb::createProc( const std::string& procName,
 
 
 /**
- * Creates a new projection of an existing table. A projection represents a
+ * Creates a new projection of an existing table.  A projection represents a
  * subset of the columns (potentially including derived columns) of a table.
  * 
  * @param[in] request_  Request object containing the parameters for the
@@ -3592,7 +3670,7 @@ CreateProjectionResponse GPUdb::createProjection( const CreateProjectionRequest&
 
 
 /**
- * Creates a new projection of an existing table. A projection represents a
+ * Creates a new projection of an existing table.  A projection represents a
  * subset of the columns (potentially including derived columns) of a table.
  * 
  * @param[in] request_  Request object containing the parameters for the
@@ -3614,17 +3692,15 @@ CreateProjectionResponse& GPUdb::createProjection( const CreateProjectionRequest
 
 
 /**
- * Creates a new projection of an existing table. A projection represents a
+ * Creates a new projection of an existing table.  A projection represents a
  * subset of the columns (potentially including derived columns) of a table.
  * 
  * @param tableName  Name of the existing table on which the projection is to
  *                   be applied.
- * @param projectionName  Name of the projection to be created. Must not be the
- *                        name of a currently existing table. Cannot be an
- *                        empty string. Valid characters are alphanumeric or
- *                        any of '_-(){}[] .:' (excluding the single quotes),
- *                        with the first character being alphanumeric or an
- *                        underscore. The maximum length is 256 characters.
+ * @param projectionName  Name of the projection to be created. Has the same
+ *                        naming restrictions as <a
+ *                        href="../../concepts/tables.html"
+ *                        target="_top">tables</a>.
  * @param columnNames  List of columns from @a tableName to be included in the
  *                     projection. Can include derived columns. Can be
  *                     specified as aliased via the syntax '<column_name> as
@@ -3637,7 +3713,16 @@ CreateProjectionResponse& GPUdb::createProjection( const CreateProjectionRequest
  *                 applied to the source table prior to the projection.
  *                         <li> limit: The number of records to keep.
  *                         <li> order_by: Comma-separated list of the columns
- *                 to be sorted by; i.e 'timestamp asc, x desc'.
+ *                 to be sorted by; e.g. 'timestamp asc, x desc'.  The columns
+ *                 specified must be present in @a columnNames.  If any alias
+ *                 is given for any column name, the alias must be used, rather
+ *                 than the original column name.
+ *                         <li> materialize_on_gpu: If 'true' then the columns
+ *                 of the projection will be cached on the GPU. Values: 'true',
+ *                 'false'.
+ *                         <li> ttl: Sets the TTL of the table, view, or
+ *                 collection specified in @a tableName. The value must be the
+ *                 desired TTL in minutes.
  *                 </ul>
  *                   Default value is an empty std::map.
  * 
@@ -3662,17 +3747,15 @@ CreateProjectionResponse GPUdb::createProjection( const std::string& tableName,
 
 
 /**
- * Creates a new projection of an existing table. A projection represents a
+ * Creates a new projection of an existing table.  A projection represents a
  * subset of the columns (potentially including derived columns) of a table.
  * 
  * @param tableName  Name of the existing table on which the projection is to
  *                   be applied.
- * @param projectionName  Name of the projection to be created. Must not be the
- *                        name of a currently existing table. Cannot be an
- *                        empty string. Valid characters are alphanumeric or
- *                        any of '_-(){}[] .:' (excluding the single quotes),
- *                        with the first character being alphanumeric or an
- *                        underscore. The maximum length is 256 characters.
+ * @param projectionName  Name of the projection to be created. Has the same
+ *                        naming restrictions as <a
+ *                        href="../../concepts/tables.html"
+ *                        target="_top">tables</a>.
  * @param columnNames  List of columns from @a tableName to be included in the
  *                     projection. Can include derived columns. Can be
  *                     specified as aliased via the syntax '<column_name> as
@@ -3685,7 +3768,16 @@ CreateProjectionResponse GPUdb::createProjection( const std::string& tableName,
  *                 applied to the source table prior to the projection.
  *                         <li> limit: The number of records to keep.
  *                         <li> order_by: Comma-separated list of the columns
- *                 to be sorted by; i.e 'timestamp asc, x desc'.
+ *                 to be sorted by; e.g. 'timestamp asc, x desc'.  The columns
+ *                 specified must be present in @a columnNames.  If any alias
+ *                 is given for any column name, the alias must be used, rather
+ *                 than the original column name.
+ *                         <li> materialize_on_gpu: If 'true' then the columns
+ *                 of the projection will be cached on the GPU. Values: 'true',
+ *                 'false'.
+ *                         <li> ttl: Sets the TTL of the table, view, or
+ *                 collection specified in @a tableName. The value must be the
+ *                 desired TTL in minutes.
  *                 </ul>
  *                   Default value is an empty std::map.
  * @param[out] response_  Response object containing the results of the
@@ -3872,14 +3964,11 @@ CreateTableResponse& GPUdb::createTable( const CreateTableRequest& request_,
  * tableName and set the @a is_collection option to @a true; @a typeId will be
  * ignored.
  * 
- * @param tableName  Name of the table to be created. Must not be the name of a
- *                   currently existing table of a different type.  Error for
- *                   requests with existing table of the same name and type id
- *                   may be suppressed by using the @a no_error_if_exists
- *                   option.  Cannot be an empty string.  Valid characters are
- *                   alphanumeric or any of '_-(){}[] .:' (excluding the single
- *                   quotes), with the first character being alphanumeric or an
- *                   underscore.  The maximum length is 256 characters.
+ * @param tableName  Name of the table to be created. Error for requests with
+ *                   existing table of the same name and type id may be
+ *                   suppressed by using the @a no_error_if_exists option.  See
+ *                   <a href="../../concepts/tables.html"
+ *                   target="_top">Tables</a> for naming restrictions.
  * @param typeId  ID of a currently registered type. All objects added to the
  *                newly created table will be of this type.  Ignored if @a
  *                is_collection is @a true.
@@ -3908,6 +3997,12 @@ CreateTableResponse& GPUdb::createTable( const CreateTableRequest& request_,
  *                         <li> foreign_keys: Semicolon-separated list of
  *                 foreign key constraints, of the format 'source_column
  *                 references target_table(primary_key_column)'.
+ *                         <li> foreign_shard_key: Foreign shard key
+ *                 description of the format: <fk_foreign_key> references
+ *                 <pk_column_name> from <pk_table_name>(<pk_primary_key>)
+ *                         <li> ttl: Sets the TTL of the table or collection
+ *                 specified in @a tableName. The value must be the desired TTL
+ *                 in minutes.
  *                 </ul>
  *                   Default value is an empty std::map.
  * 
@@ -3942,14 +4037,11 @@ CreateTableResponse GPUdb::createTable( const std::string& tableName,
  * tableName and set the @a is_collection option to @a true; @a typeId will be
  * ignored.
  * 
- * @param tableName  Name of the table to be created. Must not be the name of a
- *                   currently existing table of a different type.  Error for
- *                   requests with existing table of the same name and type id
- *                   may be suppressed by using the @a no_error_if_exists
- *                   option.  Cannot be an empty string.  Valid characters are
- *                   alphanumeric or any of '_-(){}[] .:' (excluding the single
- *                   quotes), with the first character being alphanumeric or an
- *                   underscore.  The maximum length is 256 characters.
+ * @param tableName  Name of the table to be created. Error for requests with
+ *                   existing table of the same name and type id may be
+ *                   suppressed by using the @a no_error_if_exists option.  See
+ *                   <a href="../../concepts/tables.html"
+ *                   target="_top">Tables</a> for naming restrictions.
  * @param typeId  ID of a currently registered type. All objects added to the
  *                newly created table will be of this type.  Ignored if @a
  *                is_collection is @a true.
@@ -3978,6 +4070,12 @@ CreateTableResponse GPUdb::createTable( const std::string& tableName,
  *                         <li> foreign_keys: Semicolon-separated list of
  *                 foreign key constraints, of the format 'source_column
  *                 references target_table(primary_key_column)'.
+ *                         <li> foreign_shard_key: Foreign shard key
+ *                 description of the format: <fk_foreign_key> references
+ *                 <pk_column_name> from <pk_table_name>(<pk_primary_key>)
+ *                         <li> ttl: Sets the TTL of the table or collection
+ *                 specified in @a tableName. The value must be the desired TTL
+ *                 in minutes.
  *                 </ul>
  *                   Default value is an empty std::map.
  * @param[out] response_  Response object containing the results of the
@@ -4816,8 +4914,9 @@ CreateUnionResponse& GPUdb::createUnion( const CreateUnionRequest& request_,
  * column types cannot be included in a union, neither can columns with the
  * property 'store_only'.
  * 
- * @param tableName  Name of the table to be created. Must not be the name of a
- *                   currently existing table. Cannot be an empty string.
+ * @param tableName  Name of the table to be created. Has the same naming
+ *                   restrictions as <a href="../../concepts/tables.html"
+ *                   target="_top">tables</a>.
  * @param tableNames  The list of table names making up the union. Must contain
  *                    the names of one or more existing tables.
  * @param inputColumnNames  The list of columns from each of the corresponding
@@ -4829,11 +4928,16 @@ CreateUnionResponse& GPUdb::createUnion( const CreateUnionRequest& request_,
  *                         <li> collection_name: Name of a collection which is
  *                 to contain the union. If empty, then the union will be a
  *                 top-level table.
+ *                         <li> materialize_on_gpu: If 'true' then the columns
+ *                 of the union will be cached on the GPU. Values: 'true',
+ *                 'false'.
  *                         <li> mode: If 'merge_views' then this operation will
  *                 merge (i.e. union) the provided views. All 'table_names'
  *                 must be views from the same underlying base table. Values:
  *                 'union_all', 'union', 'union_distinct', 'except',
  *                 'intersect', 'merge_views'.
+ *                         <li> ttl: Sets the TTL of the table specified in @a
+ *                 tableName. The value must be the desired TTL in minutes.
  *                 </ul>
  *                   Default value is an empty std::map.
  * 
@@ -4865,8 +4969,9 @@ CreateUnionResponse GPUdb::createUnion( const std::string& tableName,
  * column types cannot be included in a union, neither can columns with the
  * property 'store_only'.
  * 
- * @param tableName  Name of the table to be created. Must not be the name of a
- *                   currently existing table. Cannot be an empty string.
+ * @param tableName  Name of the table to be created. Has the same naming
+ *                   restrictions as <a href="../../concepts/tables.html"
+ *                   target="_top">tables</a>.
  * @param tableNames  The list of table names making up the union. Must contain
  *                    the names of one or more existing tables.
  * @param inputColumnNames  The list of columns from each of the corresponding
@@ -4878,11 +4983,16 @@ CreateUnionResponse GPUdb::createUnion( const std::string& tableName,
  *                         <li> collection_name: Name of a collection which is
  *                 to contain the union. If empty, then the union will be a
  *                 top-level table.
+ *                         <li> materialize_on_gpu: If 'true' then the columns
+ *                 of the union will be cached on the GPU. Values: 'true',
+ *                 'false'.
  *                         <li> mode: If 'merge_views' then this operation will
  *                 merge (i.e. union) the provided views. All 'table_names'
  *                 must be views from the same underlying base table. Values:
  *                 'union_all', 'union', 'union_distinct', 'except',
  *                 'intersect', 'merge_views'.
+ *                         <li> ttl: Sets the TTL of the table specified in @a
+ *                 tableName. The value must be the desired TTL in minutes.
  *                 </ul>
  *                   Default value is an empty std::map.
  * @param[out] response_  Response object containing the results of the
@@ -5787,13 +5897,24 @@ FilterResponse& GPUdb::filter( const FilterRequest& request_,
  *                   Collections may be filtered only if all tables within the
  *                   collection have the same type ID.
  * @param viewName  If provided, then this will be the name of the view
- *                  containing the results. Must not be an already existing
- *                  collection, table or view .  Default value is an empty
+ *                  containing the results. Has the same naming restrictions as
+ *                  <a href="../../concepts/tables.html"
+ *                  target="_top">tables</a>.  Default value is an empty
  *                  string.
  * @param expression  The select expression to filter the specified table.  For
  *                    details see <a href="../../concepts/expressions.html"
  *                    target="_top">concepts</a>.
- * @param options  Optional parameters.  Default value is an empty std::map.
+ * @param options  Optional parameters.
+ *                 <ul>
+ *                         <li> collection_name: Name of a collection which is
+ *                 to contain the newly created view, otherwise the view will
+ *                 be a top-level table. If the collection does not allow
+ *                 duplicate types and it contains a table of the same type as
+ *                 the given one, then this table creation request will fail.
+ *                         <li> ttl: Sets the TTL of the view specified in @a
+ *                 viewName. The value must be the desired TTL in minutes.
+ *                 </ul>
+ *                   Default value is an empty std::map.
  * 
  * @return Response object containing the result of the operation.
  * 
@@ -5830,13 +5951,24 @@ FilterResponse GPUdb::filter( const std::string& tableName,
  *                   Collections may be filtered only if all tables within the
  *                   collection have the same type ID.
  * @param viewName  If provided, then this will be the name of the view
- *                  containing the results. Must not be an already existing
- *                  collection, table or view .  Default value is an empty
+ *                  containing the results. Has the same naming restrictions as
+ *                  <a href="../../concepts/tables.html"
+ *                  target="_top">tables</a>.  Default value is an empty
  *                  string.
  * @param expression  The select expression to filter the specified table.  For
  *                    details see <a href="../../concepts/expressions.html"
  *                    target="_top">concepts</a>.
- * @param options  Optional parameters.  Default value is an empty std::map.
+ * @param options  Optional parameters.
+ *                 <ul>
+ *                         <li> collection_name: Name of a collection which is
+ *                 to contain the newly created view, otherwise the view will
+ *                 be a top-level table. If the collection does not allow
+ *                 duplicate types and it contains a table of the same type as
+ *                 the given one, then this table creation request will fail.
+ *                         <li> ttl: Sets the TTL of the view specified in @a
+ *                 viewName. The value must be the desired TTL in minutes.
+ *                 </ul>
+ *                   Default value is an empty std::map.
  * @param[out] response_  Response object containing the results of the
  *                        operation.
  * 
@@ -5923,8 +6055,9 @@ FilterByAreaResponse& GPUdb::filterByArea( const FilterByAreaRequest& request_,
  *                   Collections may be filtered only if all tables within the
  *                   collection have the same type ID.
  * @param viewName  If provided, then this will be the name of the view
- *                  containing the results. Must not be an already existing
- *                  collection, table or view.  Default value is an empty
+ *                  containing the results. Has the same naming restrictions as
+ *                  <a href="../../concepts/tables.html"
+ *                  target="_top">tables</a>.  Default value is an empty
  *                  string.
  * @param xColumnName  Name of the column containing the x values to be
  *                     filtered.
@@ -5975,8 +6108,9 @@ FilterByAreaResponse GPUdb::filterByArea( const std::string& tableName,
  *                   Collections may be filtered only if all tables within the
  *                   collection have the same type ID.
  * @param viewName  If provided, then this will be the name of the view
- *                  containing the results. Must not be an already existing
- *                  collection, table or view.  Default value is an empty
+ *                  containing the results. Has the same naming restrictions as
+ *                  <a href="../../concepts/tables.html"
+ *                  target="_top">tables</a>.  Default value is an empty
  *                  string.
  * @param xColumnName  Name of the column containing the x values to be
  *                     filtered.
@@ -6077,9 +6211,10 @@ FilterByBoxResponse& GPUdb::filterByBox( const FilterByBoxRequest& request_,
  * @param tableName  Name of the table on which the bounding box operation will
  *                   be performed. Must be an existing table.
  * @param viewName  Optional name of the result view that will be created
- *                  containing the results of the query. Must not be an already
- *                  existing collection, table or view.  Default value is an
- *                  empty string.
+ *                  containing the results of the query. Has the same naming
+ *                  restrictions as <a href="../../concepts/tables.html"
+ *                  target="_top">tables</a>.  Default value is an empty
+ *                  string.
  * @param xColumnName  Name of the column on which to perform the bounding box
  *                     query. If the table's data type is not a shape type,
  *                     must be a valid numeric column.
@@ -6137,9 +6272,10 @@ FilterByBoxResponse GPUdb::filterByBox( const std::string& tableName,
  * @param tableName  Name of the table on which the bounding box operation will
  *                   be performed. Must be an existing table.
  * @param viewName  Optional name of the result view that will be created
- *                  containing the results of the query. Must not be an already
- *                  existing collection, table or view.  Default value is an
- *                  empty string.
+ *                  containing the results of the query. Has the same naming
+ *                  restrictions as <a href="../../concepts/tables.html"
+ *                  target="_top">tables</a>.  Default value is an empty
+ *                  string.
  * @param xColumnName  Name of the column on which to perform the bounding box
  *                     query. If the table's data type is not a shape type,
  *                     must be a valid numeric column.
@@ -6241,8 +6377,9 @@ FilterByGeometryResponse& GPUdb::filterByGeometry( const FilterByGeometryRequest
  *                   performed.  Must be an existing table, collection or view
  *                   containing a column named WKT.
  * @param viewName  If provided, then this will be the name of the view
- *                  containing the results. Must not be an already existing
- *                  collection, table or view.  Default value is an empty
+ *                  containing the results. Has the same naming restrictions as
+ *                  <a href="../../concepts/tables.html"
+ *                  target="_top">tables</a>.  Default value is an empty
  *                  string.
  * @param columnName  Name of the column to be used in the filter. Must be
  *                    'WKT'
@@ -6286,8 +6423,9 @@ FilterByGeometryResponse GPUdb::filterByGeometry( const std::string& tableName,
  *                   performed.  Must be an existing table, collection or view
  *                   containing a column named WKT.
  * @param viewName  If provided, then this will be the name of the view
- *                  containing the results. Must not be an already existing
- *                  collection, table or view.  Default value is an empty
+ *                  containing the results. Has the same naming restrictions as
+ *                  <a href="../../concepts/tables.html"
+ *                  target="_top">tables</a>.  Default value is an empty
  *                  string.
  * @param columnName  Name of the column to be used in the filter. Must be
  *                    'WKT'
@@ -6408,8 +6546,9 @@ FilterByListResponse& GPUdb::filterByList( const FilterByListRequest& request_,
  *                   Collections may be filtered only if all tables within the
  *                   collection have the same type ID.
  * @param viewName  If provided, then this will be the name of the view
- *                  containing the results. Must not be an already existing
- *                  collection, table or view.  Default value is an empty
+ *                  containing the results. Has the same naming restrictions as
+ *                  <a href="../../concepts/tables.html"
+ *                  target="_top">tables</a>.  Default value is an empty
  *                  string.
  * @param columnValuesMap  List of values for the corresponding column in the
  *                         table
@@ -6461,8 +6600,9 @@ FilterByListResponse GPUdb::filterByList( const std::string& tableName,
  *                   Collections may be filtered only if all tables within the
  *                   collection have the same type ID.
  * @param viewName  If provided, then this will be the name of the view
- *                  containing the results. Must not be an already existing
- *                  collection, table or view.  Default value is an empty
+ *                  containing the results. Has the same naming restrictions as
+ *                  <a href="../../concepts/tables.html"
+ *                  target="_top">tables</a>.  Default value is an empty
  *                  string.
  * @param columnValuesMap  List of values for the corresponding column in the
  *                         table
@@ -6578,8 +6718,9 @@ FilterByRadiusResponse& GPUdb::filterByRadius( const FilterByRadiusRequest& requ
  * @param tableName  Name of the table on which the filter by radius operation
  *                   will be performed.  Must be an existing table.
  * @param viewName  If provided, then this will be the name of the view
- *                  containing the results. Must not be an already existing
- *                  collection, table or view.  Default value is an empty
+ *                  containing the results. Has the same naming restrictions as
+ *                  <a href="../../concepts/tables.html"
+ *                  target="_top">tables</a>.  Default value is an empty
  *                  string.
  * @param xColumnName  Name of the column to be used for the x-coordinate (the
  *                     longitude) of the center.
@@ -6644,8 +6785,9 @@ FilterByRadiusResponse GPUdb::filterByRadius( const std::string& tableName,
  * @param tableName  Name of the table on which the filter by radius operation
  *                   will be performed.  Must be an existing table.
  * @param viewName  If provided, then this will be the name of the view
- *                  containing the results. Must not be an already existing
- *                  collection, table or view.  Default value is an empty
+ *                  containing the results. Has the same naming restrictions as
+ *                  <a href="../../concepts/tables.html"
+ *                  target="_top">tables</a>.  Default value is an empty
  *                  string.
  * @param xColumnName  Name of the column to be used for the x-coordinate (the
  *                     longitude) of the center.
@@ -6767,8 +6909,9 @@ FilterByRangeResponse& GPUdb::filterByRange( const FilterByRangeRequest& request
  * @param tableName  Name of the table on which the filter by range operation
  *                   will be performed.  Must be an existing table.
  * @param viewName  If provided, then this will be the name of the view
- *                  containing the results. Must not be an already existing
- *                  collection, table or view.  Default value is an empty
+ *                  containing the results. Has the same naming restrictions as
+ *                  <a href="../../concepts/tables.html"
+ *                  target="_top">tables</a>.  Default value is an empty
  *                  string.
  * @param columnName  Name of a column on which the operation would be applied.
  * @param lowerBound  Value of the lower bound (inclusive).
@@ -6814,8 +6957,9 @@ FilterByRangeResponse GPUdb::filterByRange( const std::string& tableName,
  * @param tableName  Name of the table on which the filter by range operation
  *                   will be performed.  Must be an existing table.
  * @param viewName  If provided, then this will be the name of the view
- *                  containing the results. Must not be an already existing
- *                  collection, table or view.  Default value is an empty
+ *                  containing the results. Has the same naming restrictions as
+ *                  <a href="../../concepts/tables.html"
+ *                  target="_top">tables</a>.  Default value is an empty
  *                  string.
  * @param columnName  Name of a column on which the operation would be applied.
  * @param lowerBound  Value of the lower bound (inclusive).
@@ -6934,8 +7078,9 @@ FilterBySeriesResponse& GPUdb::filterBySeries( const FilterBySeriesRequest& requ
  *                   will be performed. Must be a currently existing table with
  *                   track semantic type.
  * @param viewName  If provided, then this will be the name of the view
- *                  containing the results. Must not be an already existing
- *                  collection, table or view.  Default value is an empty
+ *                  containing the results. Has the same naming restrictions as
+ *                  <a href="../../concepts/tables.html"
+ *                  target="_top">tables</a>.  Default value is an empty
  *                  string.
  * @param trackId  The ID of the track which will act as the filtering points.
  *                 Must be an existing track within the given table.
@@ -7003,8 +7148,9 @@ FilterBySeriesResponse GPUdb::filterBySeries( const std::string& tableName,
  *                   will be performed. Must be a currently existing table with
  *                   track semantic type.
  * @param viewName  If provided, then this will be the name of the view
- *                  containing the results. Must not be an already existing
- *                  collection, table or view.  Default value is an empty
+ *                  containing the results. Has the same naming restrictions as
+ *                  <a href="../../concepts/tables.html"
+ *                  target="_top">tables</a>.  Default value is an empty
  *                  string.
  * @param trackId  The ID of the track which will act as the filtering points.
  *                 Must be an existing track within the given table.
@@ -7280,8 +7426,9 @@ FilterByStringResponse& GPUdb::filterByString( const FilterByStringRequest& requ
  * @param tableName  Name of the table on which the filter operation will be
  *                   performed.  Must be an existing table, collection or view.
  * @param viewName  If provided, then this will be the name of the view
- *                  containing the results. Must not be an already existing
- *                  collection, table or view.  Default value is an empty
+ *                  containing the results. Has the same naming restrictions as
+ *                  <a href="../../concepts/tables.html"
+ *                  target="_top">tables</a>.  Default value is an empty
  *                  string.
  * @param expression  The expression with which to filter the table.
  * @param mode  The string filtering mode to apply. See above for details.
@@ -7386,8 +7533,9 @@ FilterByStringResponse GPUdb::filterByString( const std::string& tableName,
  * @param tableName  Name of the table on which the filter operation will be
  *                   performed.  Must be an existing table, collection or view.
  * @param viewName  If provided, then this will be the name of the view
- *                  containing the results. Must not be an already existing
- *                  collection, table or view.  Default value is an empty
+ *                  containing the results. Has the same naming restrictions as
+ *                  <a href="../../concepts/tables.html"
+ *                  target="_top">tables</a>.  Default value is an empty
  *                  string.
  * @param expression  The expression with which to filter the table.
  * @param mode  The string filtering mode to apply. See above for details.
@@ -7498,8 +7646,9 @@ FilterByTableResponse& GPUdb::filterByTable( const FilterByTableRequest& request
  * @param tableName  Name of the table whose data will be filtered. Must be an
  *                   existing table.
  * @param viewName  If provided, then this will be the name of the view
- *                  containing the results. Must not be an already existing
- *                  collection, table or view.  Default value is an empty
+ *                  containing the results. Has the same naming restrictions as
+ *                  <a href="../../concepts/tables.html"
+ *                  target="_top">tables</a>.  Default value is an empty
  *                  string.
  * @param columnName  Name of the column by whose value the data will be
  *                    filtered from the table designated by @a tableName.
@@ -7513,22 +7662,22 @@ FilterByTableResponse& GPUdb::filterByTable( const FilterByTableRequest& request
  * @param options  Optional parameters.
  *                 <ul>
  *                         <li> filter_mode: String indicating the filter mode,
- *                 either 'in_table' or 'not_in_table'. Values: 'in_table',
+ *                 either @a in_table or @a not_in_table. Values: 'in_table',
  *                 'not_in_table'.
- *                         <li> mode: Mode - should be either 'spatial' or
- *                 'normal'. Values: 'normal', 'spatial'.
+ *                         <li> mode: Mode - should be either @a spatial or @a
+ *                 normal. Values: 'normal', 'spatial'.
  *                         <li> buffer: Buffer size, in meters. Only relevant
- *                 for 'spatial' mode.
+ *                 for @a spatial mode.
  *                         <li> buffer_method: Method used to buffer polygons.
- *                 Only relevant for 'spatial' mode. Values: 'normal', 'geos'.
+ *                 Only relevant for @a spatial mode. Values: 'normal', 'geos'.
  *                         <li> max_partition_size: Maximum number of points in
- *                 a partition. Only relevant for 'spatial' mode.
+ *                 a partition. Only relevant for @a spatial mode.
  *                         <li> max_partition_score: Maximum number of points *
- *                 edges in a partition. Only relevant for 'spatial' mode.
+ *                 edges in a partition. Only relevant for @a spatial mode.
  *                         <li> x_column_name: Name of column containing x
- *                 value of point being filtered in spatial mode.
- *                         <li> y_column_name: Name of column containing x
- *                 value of point being filtered in spatial mode.
+ *                 value of point being filtered in @a spatial mode.
+ *                         <li> y_column_name: Name of column containing y
+ *                 value of point being filtered in @a spatial mode.
  *                 </ul>
  *                   Default value is an empty std::map.
  * 
@@ -7570,8 +7719,9 @@ FilterByTableResponse GPUdb::filterByTable( const std::string& tableName,
  * @param tableName  Name of the table whose data will be filtered. Must be an
  *                   existing table.
  * @param viewName  If provided, then this will be the name of the view
- *                  containing the results. Must not be an already existing
- *                  collection, table or view.  Default value is an empty
+ *                  containing the results. Has the same naming restrictions as
+ *                  <a href="../../concepts/tables.html"
+ *                  target="_top">tables</a>.  Default value is an empty
  *                  string.
  * @param columnName  Name of the column by whose value the data will be
  *                    filtered from the table designated by @a tableName.
@@ -7585,22 +7735,22 @@ FilterByTableResponse GPUdb::filterByTable( const std::string& tableName,
  * @param options  Optional parameters.
  *                 <ul>
  *                         <li> filter_mode: String indicating the filter mode,
- *                 either 'in_table' or 'not_in_table'. Values: 'in_table',
+ *                 either @a in_table or @a not_in_table. Values: 'in_table',
  *                 'not_in_table'.
- *                         <li> mode: Mode - should be either 'spatial' or
- *                 'normal'. Values: 'normal', 'spatial'.
+ *                         <li> mode: Mode - should be either @a spatial or @a
+ *                 normal. Values: 'normal', 'spatial'.
  *                         <li> buffer: Buffer size, in meters. Only relevant
- *                 for 'spatial' mode.
+ *                 for @a spatial mode.
  *                         <li> buffer_method: Method used to buffer polygons.
- *                 Only relevant for 'spatial' mode. Values: 'normal', 'geos'.
+ *                 Only relevant for @a spatial mode. Values: 'normal', 'geos'.
  *                         <li> max_partition_size: Maximum number of points in
- *                 a partition. Only relevant for 'spatial' mode.
+ *                 a partition. Only relevant for @a spatial mode.
  *                         <li> max_partition_score: Maximum number of points *
- *                 edges in a partition. Only relevant for 'spatial' mode.
+ *                 edges in a partition. Only relevant for @a spatial mode.
  *                         <li> x_column_name: Name of column containing x
- *                 value of point being filtered in spatial mode.
- *                         <li> y_column_name: Name of column containing x
- *                 value of point being filtered in spatial mode.
+ *                 value of point being filtered in @a spatial mode.
+ *                         <li> y_column_name: Name of column containing y
+ *                 value of point being filtered in @a spatial mode.
  *                 </ul>
  *                   Default value is an empty std::map.
  * @param[out] response_  Response object containing the results of the
@@ -7703,8 +7853,9 @@ FilterByValueResponse& GPUdb::filterByValue( const FilterByValueRequest& request
  * @param tableName  Name of an existing table on which to perform the
  *                   calculation.
  * @param viewName  If provided, then this will be the name of the view
- *                  containing the results. Must not be an already existing
- *                  collection, table or view.  Default value is an empty
+ *                  containing the results. Has the same naming restrictions as
+ *                  <a href="../../concepts/tables.html"
+ *                  target="_top">tables</a>.  Default value is an empty
  *                  string.
  * @param isString  Indicates whether the value being searched for is string or
  *                  numeric.
@@ -7756,8 +7907,9 @@ FilterByValueResponse GPUdb::filterByValue( const std::string& tableName,
  * @param tableName  Name of an existing table on which to perform the
  *                   calculation.
  * @param viewName  If provided, then this will be the name of the view
- *                  containing the results. Must not be an already existing
- *                  collection, table or view.  Default value is an empty
+ *                  containing the results. Has the same naming restrictions as
+ *                  <a href="../../concepts/tables.html"
+ *                  target="_top">tables</a>.  Default value is an empty
  *                  string.
  * @param isString  Indicates whether the value being searched for is string or
  *                  numeric.
@@ -7808,9 +7960,6 @@ FilterByValueResponse& GPUdb::filterByValue( const std::string& tableName,
  * the underlying table in case of a view) is updated (records are inserted,
  * deleted or modified) the records retrieved may differ between calls based on
  * the updates applied.
- * <p>
- * Note that when using the Java API, it is not possible to retrieve records
- * from join tables using this operation.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -7838,9 +7987,6 @@ RawGetRecordsResponse GPUdb::getRecordsRaw( const GetRecordsRequest& request_ ) 
  * the underlying table in case of a view) is updated (records are inserted,
  * deleted or modified) the records retrieved may differ between calls based on
  * the updates applied.
- * <p>
- * Note that when using the Java API, it is not possible to retrieve records
- * from join tables using this operation.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -7871,9 +8017,6 @@ RawGetRecordsResponse& GPUdb::getRecordsRaw( const GetRecordsRequest& request_,
  * the underlying table in case of a view) is updated (records are inserted,
  * deleted or modified) the records retrieved may differ between calls based on
  * the updates applied.
- * <p>
- * Note that when using the Java API, it is not possible to retrieve records
- * from join tables using this operation.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -7884,6 +8027,9 @@ RawGetRecordsResponse& GPUdb::getRecordsRaw( const GetRecordsRequest& request_,
 template<> 
 GetRecordsResponse<boost::any> GPUdb::getRecords( const GetRecordsRequest& request_ ) const
 {
+    if (request_.encoding != "binary")
+        throw GPUdbException( "This function only supports binary encoding" );
+
     RawGetRecordsResponse actualResponse_;
     submitRequest("/get/records", request_, actualResponse_, false);
     GetRecordsResponse<boost::any> response_;
@@ -7910,9 +8056,6 @@ GetRecordsResponse<boost::any> GPUdb::getRecords( const GetRecordsRequest& reque
  * the underlying table in case of a view) is updated (records are inserted,
  * deleted or modified) the records retrieved may differ between calls based on
  * the updates applied.
- * <p>
- * Note that when using the Java API, it is not possible to retrieve records
- * from join tables using this operation.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -7927,6 +8070,9 @@ template<>
 GetRecordsResponse<boost::any>& GPUdb::getRecords( const GetRecordsRequest& request_,
                                                    GetRecordsResponse<boost::any>& response_ ) const
 {
+    if (request_.encoding != "binary")
+        throw GPUdbException( "This function only supports binary encoding" );
+
     RawGetRecordsResponse actualResponse_;
     submitRequest("/get/records", request_, actualResponse_, false);
     response_.tableName = actualResponse_.tableName;
@@ -7952,9 +8098,6 @@ GetRecordsResponse<boost::any>& GPUdb::getRecords( const GetRecordsRequest& requ
  * the underlying table in case of a view) is updated (records are inserted,
  * deleted or modified) the records retrieved may differ between calls based on
  * the updates applied.
- * <p>
- * Note that when using the Java API, it is not possible to retrieve records
- * from join tables using this operation.
  * 
  * @param tableName  Name of the table from which the records will be fetched.
  *                   Must be a table, view or homogeneous collection.
@@ -7969,6 +8112,12 @@ GetRecordsResponse<boost::any>& GPUdb::getRecords( const GetRecordsRequest& requ
  *                 <ul>
  *                         <li> expression: Optional filter expression to apply
  *                 to the table.
+ *                         <li> fast_index_lookup: Indicates if indexes should
+ *                 be used to perform the lookup for a given expression if
+ *                 possible. Only applicable if there is no sorting, the
+ *                 expression contains only equivalence comparisons based on
+ *                 existing tables indexes and the range of requested values is
+ *                 from [0 to END_OF_SET]. The default value is true.
  *                         <li> sort_by: Optional column that the data should
  *                 be sorted by. Empty by default (i.e. no sorting is applied).
  *                         <li> sort_order: String indicating how the returned
@@ -8018,9 +8167,6 @@ GetRecordsResponse<boost::any> GPUdb::getRecords( const std::string& tableName,
  * the underlying table in case of a view) is updated (records are inserted,
  * deleted or modified) the records retrieved may differ between calls based on
  * the updates applied.
- * <p>
- * Note that when using the Java API, it is not possible to retrieve records
- * from join tables using this operation.
  * 
  * @param tableName  Name of the table from which the records will be fetched.
  *                   Must be a table, view or homogeneous collection.
@@ -8035,6 +8181,12 @@ GetRecordsResponse<boost::any> GPUdb::getRecords( const std::string& tableName,
  *                 <ul>
  *                         <li> expression: Optional filter expression to apply
  *                 to the table.
+ *                         <li> fast_index_lookup: Indicates if indexes should
+ *                 be used to perform the lookup for a given expression if
+ *                 possible. Only applicable if there is no sorting, the
+ *                 expression contains only equivalence comparisons based on
+ *                 existing tables indexes and the range of requested values is
+ *                 from [0 to END_OF_SET]. The default value is true.
  *                         <li> sort_by: Optional column that the data should
  *                 be sorted by. Empty by default (i.e. no sorting is applied).
  *                         <li> sort_order: String indicating how the returned
@@ -8175,6 +8327,9 @@ RawGetRecordsByColumnResponse& GPUdb::getRecordsByColumnRaw( const GetRecordsByC
 
 GetRecordsByColumnResponse GPUdb::getRecordsByColumn( const GetRecordsByColumnRequest& request_ ) const
 {
+    if (request_.encoding != "binary")
+        throw GPUdbException( "This function only supports binary encoding" );
+
     RawGetRecordsByColumnResponse actualResponse_;
     submitRequest("/get/records/bycolumn", request_, actualResponse_, false);
     GetRecordsByColumnResponse response_;
@@ -8219,6 +8374,9 @@ GetRecordsByColumnResponse GPUdb::getRecordsByColumn( const GetRecordsByColumnRe
 GetRecordsByColumnResponse& GPUdb::getRecordsByColumn( const GetRecordsByColumnRequest& request_,
                                                        GetRecordsByColumnResponse& response_ ) const
 {
+    if (request_.encoding != "binary")
+        throw GPUdbException( "This function only supports binary encoding" );
+
     RawGetRecordsByColumnResponse actualResponse_;
     submitRequest("/get/records/bycolumn", request_, actualResponse_, false);
     response_.tableName = actualResponse_.tableName;
@@ -8270,6 +8428,11 @@ GetRecordsByColumnResponse& GPUdb::getRecordsByColumn( const GetRecordsByColumnR
  *                 values should be sorted - ascending or descending. Default
  *                 is 'ascending'. If sort_order is provided, sort_by has to be
  *                 provided. Values: 'ascending', 'descending'.
+ *                         <li> order_by: Comma-separated list of the columns
+ *                 to be sorted by; e.g. 'timestamp asc, x desc'.  The columns
+ *                 specified must be present in @a columnNames.  If any alias
+ *                 is given for any column name, the alias must be used, rather
+ *                 than the original column name.
  *                 </ul>
  *                   Default value is an empty std::map.
  * 
@@ -8341,6 +8504,11 @@ GetRecordsByColumnResponse GPUdb::getRecordsByColumn( const std::string& tableNa
  *                 values should be sorted - ascending or descending. Default
  *                 is 'ascending'. If sort_order is provided, sort_by has to be
  *                 provided. Values: 'ascending', 'descending'.
+ *                         <li> order_by: Comma-separated list of the columns
+ *                 to be sorted by; e.g. 'timestamp asc, x desc'.  The columns
+ *                 specified must be present in @a columnNames.  If any alias
+ *                 is given for any column name, the alias must be used, rather
+ *                 than the original column name.
  *                 </ul>
  *                   Default value is an empty std::map.
  * @param[out] response_  Response object containing the results of the
@@ -8456,6 +8624,9 @@ RawGetRecordsBySeriesResponse& GPUdb::getRecordsBySeriesRaw( const GetRecordsByS
 template<> 
 GetRecordsBySeriesResponse<boost::any> GPUdb::getRecordsBySeries( const GetRecordsBySeriesRequest& request_ ) const
 {
+    if (request_.encoding != "binary")
+        throw GPUdbException( "This function only supports binary encoding" );
+
     RawGetRecordsBySeriesResponse actualResponse_;
     submitRequest("/get/records/byseries", request_, actualResponse_, false);
     GetRecordsBySeriesResponse<boost::any> response_;
@@ -8502,6 +8673,9 @@ template<>
 GetRecordsBySeriesResponse<boost::any>& GPUdb::getRecordsBySeries( const GetRecordsBySeriesRequest& request_,
                                                                    GetRecordsBySeriesResponse<boost::any>& response_ ) const
 {
+    if (request_.encoding != "binary")
+        throw GPUdbException( "This function only supports binary encoding" );
+
     RawGetRecordsBySeriesResponse actualResponse_;
     submitRequest("/get/records/byseries", request_, actualResponse_, false);
     response_.tableNames = actualResponse_.tableNames;
@@ -8734,6 +8908,9 @@ RawGetRecordsFromCollectionResponse& GPUdb::getRecordsFromCollectionRaw( const G
 template<> 
 GetRecordsFromCollectionResponse<boost::any> GPUdb::getRecordsFromCollection( const GetRecordsFromCollectionRequest& request_ ) const
 {
+    if (request_.encoding != "binary")
+        throw GPUdbException( "This function only supports binary encoding" );
+
     RawGetRecordsFromCollectionResponse actualResponse_;
     submitRequest("/get/records/fromcollection", request_, actualResponse_, false);
     GetRecordsFromCollectionResponse<boost::any> response_;
@@ -8798,6 +8975,9 @@ template<>
 GetRecordsFromCollectionResponse<boost::any>& GPUdb::getRecordsFromCollection( const GetRecordsFromCollectionRequest& request_,
                                                                                GetRecordsFromCollectionResponse<boost::any>& response_ ) const
 {
+    if (request_.encoding != "binary")
+        throw GPUdbException( "This function only supports binary encoding" );
+
     RawGetRecordsFromCollectionResponse actualResponse_;
     submitRequest("/get/records/fromcollection", request_, actualResponse_, false);
     response_.tableName = actualResponse_.tableName;
@@ -10080,9 +10260,9 @@ InsertRecordsRandomResponse& GPUdb::insertRecordsRandom( const std::string& tabl
  * and any additional optional parameter (e.g. color). To have a symbol used
  * for rendering create a table with a string column named 'SYMBOLCODE' (along
  * with 'x' or 'y' for example). Then when the table is rendered (via <a
- * href="../rest/wms_rest.html" target="_top">WMS</a>) if the 'dosymbology'
- * parameter is 'true' then the value of the 'SYMBOLCODE' column is used to
- * pick the symbol displayed for each point.
+ * href="../../api/rest/wms_rest.html" target="_top">WMS</a>) if the
+ * 'dosymbology' parameter is 'true' then the value of the 'SYMBOLCODE' column
+ * is used to pick the symbol displayed for each point.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -10106,9 +10286,9 @@ InsertSymbolResponse GPUdb::insertSymbol( const InsertSymbolRequest& request_ ) 
  * and any additional optional parameter (e.g. color). To have a symbol used
  * for rendering create a table with a string column named 'SYMBOLCODE' (along
  * with 'x' or 'y' for example). Then when the table is rendered (via <a
- * href="../rest/wms_rest.html" target="_top">WMS</a>) if the 'dosymbology'
- * parameter is 'true' then the value of the 'SYMBOLCODE' column is used to
- * pick the symbol displayed for each point.
+ * href="../../api/rest/wms_rest.html" target="_top">WMS</a>) if the
+ * 'dosymbology' parameter is 'true' then the value of the 'SYMBOLCODE' column
+ * is used to pick the symbol displayed for each point.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -10135,9 +10315,9 @@ InsertSymbolResponse& GPUdb::insertSymbol( const InsertSymbolRequest& request_,
  * and any additional optional parameter (e.g. color). To have a symbol used
  * for rendering create a table with a string column named 'SYMBOLCODE' (along
  * with 'x' or 'y' for example). Then when the table is rendered (via <a
- * href="../rest/wms_rest.html" target="_top">WMS</a>) if the 'dosymbology'
- * parameter is 'true' then the value of the 'SYMBOLCODE' column is used to
- * pick the symbol displayed for each point.
+ * href="../../api/rest/wms_rest.html" target="_top">WMS</a>) if the
+ * 'dosymbology' parameter is 'true' then the value of the 'SYMBOLCODE' column
+ * is used to pick the symbol displayed for each point.
  * 
  * @param symbolId  The id of the symbol being added. This is the same id that
  *                  should be in the 'SYMBOLCODE' column for objects using this
@@ -10187,9 +10367,9 @@ InsertSymbolResponse GPUdb::insertSymbol( const std::string& symbolId,
  * and any additional optional parameter (e.g. color). To have a symbol used
  * for rendering create a table with a string column named 'SYMBOLCODE' (along
  * with 'x' or 'y' for example). Then when the table is rendered (via <a
- * href="../rest/wms_rest.html" target="_top">WMS</a>) if the 'dosymbology'
- * parameter is 'true' then the value of the 'SYMBOLCODE' column is used to
- * pick the symbol displayed for each point.
+ * href="../../api/rest/wms_rest.html" target="_top">WMS</a>) if the
+ * 'dosymbology' parameter is 'true' then the value of the 'SYMBOLCODE' column
+ * is used to pick the symbol displayed for each point.
  * 
  * @param symbolId  The id of the symbol being added. This is the same id that
  *                  should be in the 'SYMBOLCODE' column for objects using this

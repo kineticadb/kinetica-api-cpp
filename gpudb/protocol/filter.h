@@ -46,15 +46,29 @@ namespace gpudb
          *                        filtered only if all tables within the
          *                        collection have the same type ID.
          * @param[in] viewName_  If provided, then this will be the name of the
-         *                       view containing the results. Must not be an
-         *                       already existing collection, table or view .
-         *                       Default value is an empty string.
+         *                       view containing the results. Has the same
+         *                       naming restrictions as <a
+         *                       href="../../concepts/tables.html"
+         *                       target="_top">tables</a>.  Default value is an
+         *                       empty string.
          * @param[in] expression_  The select expression to filter the
          *                         specified table.  For details see <a
          *                         href="../../concepts/expressions.html"
          *                         target="_top">concepts</a>.
-         * @param[in] options_  Optional parameters.  Default value is an empty
-         *                      std::map.
+         * @param[in] options_  Optional parameters.
+         *                      <ul>
+         *                              <li> collection_name: Name of a
+         *                      collection which is to contain the newly
+         *                      created view, otherwise the view will be a
+         *                      top-level table. If the collection does not
+         *                      allow duplicate types and it contains a table
+         *                      of the same type as the given one, then this
+         *                      table creation request will fail.
+         *                              <li> ttl: Sets the TTL of the view
+         *                      specified in @a viewName. The value must be the
+         *                      desired TTL in minutes.
+         *                      </ul>
+         *                        Default value is an empty std::map.
          * 
          */
         FilterRequest(const std::string& tableName_, const std::string& viewName_, const std::string& expression_, const std::map<std::string, std::string>& options_):

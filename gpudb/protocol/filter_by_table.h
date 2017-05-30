@@ -47,9 +47,11 @@ namespace gpudb
          * @param[in] tableName_  Name of the table whose data will be
          *                        filtered. Must be an existing table.
          * @param[in] viewName_  If provided, then this will be the name of the
-         *                       view containing the results. Must not be an
-         *                       already existing collection, table or view.
-         *                       Default value is an empty string.
+         *                       view containing the results. Has the same
+         *                       naming restrictions as <a
+         *                       href="../../concepts/tables.html"
+         *                       target="_top">tables</a>.  Default value is an
+         *                       empty string.
          * @param[in] columnName_  Name of the column by whose value the data
          *                         will be filtered from the table designated
          *                         by @a tableName.
@@ -64,29 +66,29 @@ namespace gpudb
          * @param[in] options_  Optional parameters.
          *                      <ul>
          *                              <li> filter_mode: String indicating the
-         *                      filter mode, either 'in_table' or
-         *                      'not_in_table'. Values: 'in_table',
+         *                      filter mode, either @a in_table or @a
+         *                      not_in_table. Values: 'in_table',
          *                      'not_in_table'.
-         *                              <li> mode: Mode - should be either
-         *                      'spatial' or 'normal'. Values: 'normal',
+         *                              <li> mode: Mode - should be either @a
+         *                      spatial or @a normal. Values: 'normal',
          *                      'spatial'.
          *                              <li> buffer: Buffer size, in meters.
-         *                      Only relevant for 'spatial' mode.
+         *                      Only relevant for @a spatial mode.
          *                              <li> buffer_method: Method used to
-         *                      buffer polygons.  Only relevant for 'spatial'
+         *                      buffer polygons.  Only relevant for @a spatial
          *                      mode. Values: 'normal', 'geos'.
          *                              <li> max_partition_size: Maximum number
-         *                      of points in a partition. Only relevant for
-         *                      'spatial' mode.
+         *                      of points in a partition. Only relevant for @a
+         *                      spatial mode.
          *                              <li> max_partition_score: Maximum
          *                      number of points * edges in a partition. Only
-         *                      relevant for 'spatial' mode.
+         *                      relevant for @a spatial mode.
          *                              <li> x_column_name: Name of column
          *                      containing x value of point being filtered in
-         *                      spatial mode.
+         *                      @a spatial mode.
          *                              <li> y_column_name: Name of column
-         *                      containing x value of point being filtered in
-         *                      spatial mode.
+         *                      containing y value of point being filtered in
+         *                      @a spatial mode.
          *                      </ul>
          *                        Default value is an empty std::map.
          * 

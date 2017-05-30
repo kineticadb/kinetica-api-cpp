@@ -685,6 +685,13 @@ AggregateGroupByResponse& aggregateGroupBy( const AggregateGroupByRequest& reque
  *               number of results should be returned.  Default value is 1000.
  * @param options  Optional parameters.
  *                 <ul>
+ *                         <li> collection_name: Name of a collection which is
+ *                 to contain the table specified in 'result_table', otherwise
+ *                 the table will be a top-level table. If the collection does
+ *                 not allow duplicate types and it contains a table of the
+ *                 same type as the given one, then this table creation request
+ *                 will fail. Additionally this option is invalid if
+ *                 @input{table_name} is a collection.
  *                         <li> expression: Filter expression to apply to the
  *                 table prior to computing the aggregate group by.
  *                         <li> having: Filter expression to apply to the
@@ -695,12 +702,16 @@ AggregateGroupByResponse& aggregateGroupBy( const AggregateGroupByRequest& reque
  *                         <li> sort_by: String determining how the results are
  *                 sorted. Values: 'key', 'value'.
  *                         <li> result_table: The name of the table used to
- *                 store the results. Column names (group-by and aggregate
- *                 fields) need to be given aliases e.g. ["FChar256 as
- *                 fchar256", "sum(FDouble) as sfd"].  If present, no results
- *                 are returned in the response.  This option is not available
- *                 if one of the grouping attributes is an unrestricted string
- *                 (i.e.; not charN) type.
+ *                 store the results. Has the same naming restrictions as <a
+ *                 href="../../concepts/tables.html" target="_top">tables</a>.
+ *                 Column names (group-by and aggregate fields) need to be
+ *                 given aliases e.g. ["FChar256 as fchar256", "sum(FDouble) as
+ *                 sfd"].  If present, no results are returned in the response.
+ *                 This option is not available if one of the grouping
+ *                 attributes is an unrestricted string (i.e.; not charN) type.
+ *                         <li> ttl: Sets the TTL of the table specified in
+ *                 'result_table'. The value must be the desired TTL in
+ *                 minutes.
  *                 </ul>
  *                   Default value is an empty std::map.
  * 
@@ -751,6 +762,13 @@ AggregateGroupByResponse aggregateGroupBy( const std::string& tableName,
  *               number of results should be returned.  Default value is 1000.
  * @param options  Optional parameters.
  *                 <ul>
+ *                         <li> collection_name: Name of a collection which is
+ *                 to contain the table specified in 'result_table', otherwise
+ *                 the table will be a top-level table. If the collection does
+ *                 not allow duplicate types and it contains a table of the
+ *                 same type as the given one, then this table creation request
+ *                 will fail. Additionally this option is invalid if
+ *                 @input{table_name} is a collection.
  *                         <li> expression: Filter expression to apply to the
  *                 table prior to computing the aggregate group by.
  *                         <li> having: Filter expression to apply to the
@@ -761,12 +779,16 @@ AggregateGroupByResponse aggregateGroupBy( const std::string& tableName,
  *                         <li> sort_by: String determining how the results are
  *                 sorted. Values: 'key', 'value'.
  *                         <li> result_table: The name of the table used to
- *                 store the results. Column names (group-by and aggregate
- *                 fields) need to be given aliases e.g. ["FChar256 as
- *                 fchar256", "sum(FDouble) as sfd"].  If present, no results
- *                 are returned in the response.  This option is not available
- *                 if one of the grouping attributes is an unrestricted string
- *                 (i.e.; not charN) type.
+ *                 store the results. Has the same naming restrictions as <a
+ *                 href="../../concepts/tables.html" target="_top">tables</a>.
+ *                 Column names (group-by and aggregate fields) need to be
+ *                 given aliases e.g. ["FChar256 as fchar256", "sum(FDouble) as
+ *                 sfd"].  If present, no results are returned in the response.
+ *                 This option is not available if one of the grouping
+ *                 attributes is an unrestricted string (i.e.; not charN) type.
+ *                         <li> ttl: Sets the TTL of the table specified in
+ *                 'result_table'. The value must be the desired TTL in
+ *                 minutes.
  *                 </ul>
  *                   Default value is an empty std::map.
  * @param[out] response_  Response object containing the results of the
@@ -1650,13 +1672,23 @@ AggregateUniqueResponse& aggregateUnique( const AggregateUniqueRequest& request_
  *               number of results should be returned.  Default value is 10000.
  * @param options  Optional parameters.
  *                 <ul>
+ *                         <li> collection_name: Name of a collection which is
+ *                 to contain the table specified in 'result_table', otherwise
+ *                 the table will be a top-level table. If the collection does
+ *                 not allow duplicate types and it contains a table of the
+ *                 same type as the given one, then this table creation request
+ *                 will fail.
  *                         <li> expression: Optional filter expression to apply
  *                 to the table.
  *                         <li> sort_order: String indicating how the returned
  *                 values should be sorted. Values: 'ascending', 'descending'.
  *                         <li> result_table: The name of the table used to
  *                 store the results. If present no results are returned in the
- *                 response.
+ *                 response. Has the same naming restrictions as <a
+ *                 href="../../concepts/tables.html" target="_top">tables</a>.
+ *                         <li> ttl: Sets the TTL of the table specified in
+ *                 'result_table'. The value must be the desired TTL in
+ *                 minutes.
  *                 </ul>
  *                   Default value is an empty std::map.
  * 
@@ -1702,13 +1734,23 @@ AggregateUniqueResponse aggregateUnique( const std::string& tableName,
  *               number of results should be returned.  Default value is 10000.
  * @param options  Optional parameters.
  *                 <ul>
+ *                         <li> collection_name: Name of a collection which is
+ *                 to contain the table specified in 'result_table', otherwise
+ *                 the table will be a top-level table. If the collection does
+ *                 not allow duplicate types and it contains a table of the
+ *                 same type as the given one, then this table creation request
+ *                 will fail.
  *                         <li> expression: Optional filter expression to apply
  *                 to the table.
  *                         <li> sort_order: String indicating how the returned
  *                 values should be sorted. Values: 'ascending', 'descending'.
  *                         <li> result_table: The name of the table used to
  *                 store the results. If present no results are returned in the
- *                 response.
+ *                 response. Has the same naming restrictions as <a
+ *                 href="../../concepts/tables.html" target="_top">tables</a>.
+ *                         <li> ttl: Sets the TTL of the table specified in
+ *                 'result_table'. The value must be the desired TTL in
+ *                 minutes.
  *                 </ul>
  *                   Default value is an empty std::map.
  * @param[out] response_  Response object containing the results of the
@@ -1727,11 +1769,13 @@ AggregateUniqueResponse& aggregateUnique( const std::string& tableName,
                                           AggregateUniqueResponse& response_ ) const;
 
 /**
- * The alter_system_properties endpoint is primarily used to simplify the
- * testing of the system and is not expected to be used during normal
- * execution.  Commands are given through the properties_update_map whose keys
- * are commands and values are strings representing integer values (for example
- * '8000') or boolean values ('true' or 'false').
+ * The {@link
+ * #alterSystemProperties(const AlterSystemPropertiesRequest&) const}
+ * endpoint is primarily used to simplify the testing of the system and is not
+ * expected to be used during normal execution.  Commands are given through the
+ * @a propertyUpdatesMap whose keys are commands and values are strings
+ * representing integer values (for example '8000') or boolean values ('true'
+ * or 'false').
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -1743,11 +1787,13 @@ AggregateUniqueResponse& aggregateUnique( const std::string& tableName,
 AlterSystemPropertiesResponse alterSystemProperties( const AlterSystemPropertiesRequest& request_ ) const;
 
 /**
- * The alter_system_properties endpoint is primarily used to simplify the
- * testing of the system and is not expected to be used during normal
- * execution.  Commands are given through the properties_update_map whose keys
- * are commands and values are strings representing integer values (for example
- * '8000') or boolean values ('true' or 'false').
+ * The {@link
+ * #alterSystemProperties(const AlterSystemPropertiesRequest&,AlterSystemPropertiesResponse&) const}
+ * endpoint is primarily used to simplify the testing of the system and is not
+ * expected to be used during normal execution.  Commands are given through the
+ * @a propertyUpdatesMap whose keys are commands and values are strings
+ * representing integer values (for example '8000') or boolean values ('true'
+ * or 'false').
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -1763,23 +1809,28 @@ AlterSystemPropertiesResponse& alterSystemProperties( const AlterSystemPropertie
                                                       AlterSystemPropertiesResponse& response_ ) const;
 
 /**
- * The alter_system_properties endpoint is primarily used to simplify the
- * testing of the system and is not expected to be used during normal
- * execution.  Commands are given through the properties_update_map whose keys
- * are commands and values are strings representing integer values (for example
- * '8000') or boolean values ('true' or 'false').
+ * The {@link
+ * #alterSystemProperties(const std::map<std::string, std::string>&,const std::map<std::string, std::string>&) const}
+ * endpoint is primarily used to simplify the testing of the system and is not
+ * expected to be used during normal execution.  Commands are given through the
+ * @a propertyUpdatesMap whose keys are commands and values are strings
+ * representing integer values (for example '8000') or boolean values ('true'
+ * or 'false').
  * 
  * @param propertyUpdatesMap  Map containing the properties of the system to be
  *                            updated. Error if empty.
  *                            <ul>
  *                                    <li> sm_omp_threads: Set the number of
- *                            sm_omp_threads to the specified integer value.
+ *                            OpenMP threads that will be used to service
+ *                            filter & aggregation requests against collections
+ *                            to the specified integer value.
  *                                    <li> kernel_omp_threads: Set the number
- *                            of kernel_omp_threads to the specified integer
+ *                            of kernel OpenMP threads to the specified integer
  *                            value.
  *                                    <li> concurrent_kernel_execution: Enables
- *                            concurrent kernel execution if the value is
- *                            'true' and disables it if the value is 'false'.
+ *                            concurrent kernel execution if the value is @a
+ *                            true and disables it if the value is @a false.
+ *                            Values: 'true', 'false'.
  *                                    <li> chunk_size: Sets the chunk size of
  *                            all new sets to the specified integer value.
  *                                    <li> flush_to_disk: Flushes any changes
@@ -1794,37 +1845,39 @@ AlterSystemPropertiesResponse& alterSystemProperties( const AlterSystemPropertie
  *                            communicator test and report timing results.
  *                            Value string is is a comma separated list of
  *                            <key>=<value> expressions.  Expressions are:
- *                            num_transactions = <num> where <num> is the
- *                            number of request reply transactions to invoke
- *                            per test; message_size = <bytes> where bytes is
- *                            the size of the messages to send in bytes;
- *                            check_values = <enabled> where if enabled is true
+ *                            num_transactions=<num> where num is the number of
+ *                            request reply transactions to invoke per test;
+ *                            message_size=<bytes> where bytes is the size of
+ *                            the messages to send in bytes;
+ *                            check_values=<enabled> where if enabled is true
  *                            the value of the messages received are verified.
  *                                    <li> set_message_timers_enabled: Enables
  *                            the communicator test to collect additional
- *                            timing statistics when the value string is
- *                            'true'. Disables the collection when the value
- *                            string is 'false'
- *                                    <li> bulk_add_test: Invoke the bulk_add
+ *                            timing statistics when the value string is @a
+ *                            true. Disables the collection when the value
+ *                            string is @a false Values: 'true', 'false'.
+ *                                    <li> bulk_add_test: Invoke the bulk add
  *                            test and report timing results. Value string is
  *                            ignored.
  *                                    <li> network_speed: Invoke the network
  *                            speed test and report timing results. Value
- *                            string is a comma separated list of <key>=<value>
- *                            expressions.  Expressions are: seconds = <time>
- *                            where time is the time in seconds to run the
- *                            test; data_size = <size> where <size> is the size
- *                            in bytes of the block to be transferred; threads
- *                            = <number of threads>; to_ranks = <comma
- *                            separated list of ranks> where the list of ranks
- *                            is the ranks that rank 0 will send data to and
- *                            get data from. If to_ranks is unspecified then
- *                            all worker ranks are used.
+ *                            string is a semicolon-separated list of
+ *                            <key>=<value> expressions.  Valid expressions
+ *                            are: seconds=<time> where time is the time in
+ *                            seconds to run the test; data_size=<size> where
+ *                            size is the size in bytes of the block to be
+ *                            transferred; threads=<number of threads>;
+ *                            to_ranks=<space-separated list of ranks> where
+ *                            the list of ranks is the ranks that rank 0 will
+ *                            send data to and get data from. If to_ranks is
+ *                            unspecified then all worker ranks are used.
  *                                    <li> request_timeout: Number of minutes
- *                            after which /filter/ * and /aggregate/ * queries
+ *                            after which filtering (e.g., /filter) and
+ *                            aggregating (e.g., /aggregate/groupby) queries
  *                            will timeout.
- *                                    <li> max_get_records_size: set
- *                            max_get_records_size. default 20000
+ *                                    <li> max_get_records_size: The maximum
+ *                            number of records the database will serve for a
+ *                            given data retrieval call
  *                            </ul>
  * @param options  Optional parameters.  Default value is an empty std::map.
  * 
@@ -1836,23 +1889,28 @@ AlterSystemPropertiesResponse alterSystemProperties( const std::map<std::string,
                                                      const std::map<std::string, std::string>& options ) const;
 
 /**
- * The alter_system_properties endpoint is primarily used to simplify the
- * testing of the system and is not expected to be used during normal
- * execution.  Commands are given through the properties_update_map whose keys
- * are commands and values are strings representing integer values (for example
- * '8000') or boolean values ('true' or 'false').
+ * The {@link
+ * #alterSystemProperties(const std::map<std::string, std::string>&,const std::map<std::string, std::string>&,AlterSystemPropertiesResponse&) const}
+ * endpoint is primarily used to simplify the testing of the system and is not
+ * expected to be used during normal execution.  Commands are given through the
+ * @a propertyUpdatesMap whose keys are commands and values are strings
+ * representing integer values (for example '8000') or boolean values ('true'
+ * or 'false').
  * 
  * @param propertyUpdatesMap  Map containing the properties of the system to be
  *                            updated. Error if empty.
  *                            <ul>
  *                                    <li> sm_omp_threads: Set the number of
- *                            sm_omp_threads to the specified integer value.
+ *                            OpenMP threads that will be used to service
+ *                            filter & aggregation requests against collections
+ *                            to the specified integer value.
  *                                    <li> kernel_omp_threads: Set the number
- *                            of kernel_omp_threads to the specified integer
+ *                            of kernel OpenMP threads to the specified integer
  *                            value.
  *                                    <li> concurrent_kernel_execution: Enables
- *                            concurrent kernel execution if the value is
- *                            'true' and disables it if the value is 'false'.
+ *                            concurrent kernel execution if the value is @a
+ *                            true and disables it if the value is @a false.
+ *                            Values: 'true', 'false'.
  *                                    <li> chunk_size: Sets the chunk size of
  *                            all new sets to the specified integer value.
  *                                    <li> flush_to_disk: Flushes any changes
@@ -1867,37 +1925,39 @@ AlterSystemPropertiesResponse alterSystemProperties( const std::map<std::string,
  *                            communicator test and report timing results.
  *                            Value string is is a comma separated list of
  *                            <key>=<value> expressions.  Expressions are:
- *                            num_transactions = <num> where <num> is the
- *                            number of request reply transactions to invoke
- *                            per test; message_size = <bytes> where bytes is
- *                            the size of the messages to send in bytes;
- *                            check_values = <enabled> where if enabled is true
+ *                            num_transactions=<num> where num is the number of
+ *                            request reply transactions to invoke per test;
+ *                            message_size=<bytes> where bytes is the size of
+ *                            the messages to send in bytes;
+ *                            check_values=<enabled> where if enabled is true
  *                            the value of the messages received are verified.
  *                                    <li> set_message_timers_enabled: Enables
  *                            the communicator test to collect additional
- *                            timing statistics when the value string is
- *                            'true'. Disables the collection when the value
- *                            string is 'false'
- *                                    <li> bulk_add_test: Invoke the bulk_add
+ *                            timing statistics when the value string is @a
+ *                            true. Disables the collection when the value
+ *                            string is @a false Values: 'true', 'false'.
+ *                                    <li> bulk_add_test: Invoke the bulk add
  *                            test and report timing results. Value string is
  *                            ignored.
  *                                    <li> network_speed: Invoke the network
  *                            speed test and report timing results. Value
- *                            string is a comma separated list of <key>=<value>
- *                            expressions.  Expressions are: seconds = <time>
- *                            where time is the time in seconds to run the
- *                            test; data_size = <size> where <size> is the size
- *                            in bytes of the block to be transferred; threads
- *                            = <number of threads>; to_ranks = <comma
- *                            separated list of ranks> where the list of ranks
- *                            is the ranks that rank 0 will send data to and
- *                            get data from. If to_ranks is unspecified then
- *                            all worker ranks are used.
+ *                            string is a semicolon-separated list of
+ *                            <key>=<value> expressions.  Valid expressions
+ *                            are: seconds=<time> where time is the time in
+ *                            seconds to run the test; data_size=<size> where
+ *                            size is the size in bytes of the block to be
+ *                            transferred; threads=<number of threads>;
+ *                            to_ranks=<space-separated list of ranks> where
+ *                            the list of ranks is the ranks that rank 0 will
+ *                            send data to and get data from. If to_ranks is
+ *                            unspecified then all worker ranks are used.
  *                                    <li> request_timeout: Number of minutes
- *                            after which /filter/ * and /aggregate/ * queries
+ *                            after which filtering (e.g., /filter) and
+ *                            aggregating (e.g., /aggregate/groupby) queries
  *                            will timeout.
- *                                    <li> max_get_records_size: set
- *                            max_get_records_size. default 20000
+ *                                    <li> max_get_records_size: The maximum
+ *                            number of records the database will serve for a
+ *                            given data retrieval call
  *                            </ul>
  * @param options  Optional parameters.  Default value is an empty std::map.
  * @param[out] response_  Response object containing the results of the
@@ -2511,9 +2571,10 @@ CreateJoinTableResponse& createJoinTable( const CreateJoinTableRequest& request_
  * href="../../concepts/joins.html" target="_top">join concept
  * documentation</a>.
  * 
- * @param joinTableName  Name of the join table to be created. Must not be the
- *                       name of a currently existing table or join table.
- *                       Cannot be an empty string.
+ * @param joinTableName  Name of the join table to be created.  Has the same
+ *                       naming restrictions as <a
+ *                       href="../../concepts/tables.html"
+ *                       target="_top">tables</a>.
  * @param tableNames  The list of table names making up the joined set.
  *                    Corresponds to a SQL statement FROM clause  Default value
  *                    is an empty std::vector.
@@ -2549,6 +2610,8 @@ CreateJoinTableResponse& createJoinTable( const CreateJoinTableRequest& request_
  *                         <li> refresh: Do a manual refresh of the join table
  *                 if it exists - throws an error otherwise Values:
  *                 'no_refresh', 'refresh', 'full_refresh'.
+ *                         <li> ttl: Sets the TTL of the table specified in @a
+ *                 joinTableName. The value must be the desired TTL in minutes.
  *                 </ul>
  *                   Default value is an empty std::map.
  * 
@@ -2567,9 +2630,10 @@ CreateJoinTableResponse createJoinTable( const std::string& joinTableName,
  * href="../../concepts/joins.html" target="_top">join concept
  * documentation</a>.
  * 
- * @param joinTableName  Name of the join table to be created. Must not be the
- *                       name of a currently existing table or join table.
- *                       Cannot be an empty string.
+ * @param joinTableName  Name of the join table to be created.  Has the same
+ *                       naming restrictions as <a
+ *                       href="../../concepts/tables.html"
+ *                       target="_top">tables</a>.
  * @param tableNames  The list of table names making up the joined set.
  *                    Corresponds to a SQL statement FROM clause  Default value
  *                    is an empty std::vector.
@@ -2605,6 +2669,8 @@ CreateJoinTableResponse createJoinTable( const std::string& joinTableName,
  *                         <li> refresh: Do a manual refresh of the join table
  *                 if it exists - throws an error otherwise Values:
  *                 'no_refresh', 'refresh', 'full_refresh'.
+ *                         <li> ttl: Sets the TTL of the table specified in @a
+ *                 joinTableName. The value must be the desired TTL in minutes.
  *                 </ul>
  *                   Default value is an empty std::map.
  * @param[out] response_  Response object containing the results of the
@@ -2749,7 +2815,7 @@ CreateProcResponse& createProc( const std::string& procName,
                                 CreateProcResponse& response_ ) const;
 
 /**
- * Creates a new projection of an existing table. A projection represents a
+ * Creates a new projection of an existing table.  A projection represents a
  * subset of the columns (potentially including derived columns) of a table.
  * 
  * @param[in] request_  Request object containing the parameters for the
@@ -2762,7 +2828,7 @@ CreateProcResponse& createProc( const std::string& procName,
 CreateProjectionResponse createProjection( const CreateProjectionRequest& request_ ) const;
 
 /**
- * Creates a new projection of an existing table. A projection represents a
+ * Creates a new projection of an existing table.  A projection represents a
  * subset of the columns (potentially including derived columns) of a table.
  * 
  * @param[in] request_  Request object containing the parameters for the
@@ -2779,17 +2845,15 @@ CreateProjectionResponse& createProjection( const CreateProjectionRequest& reque
                                             CreateProjectionResponse& response_ ) const;
 
 /**
- * Creates a new projection of an existing table. A projection represents a
+ * Creates a new projection of an existing table.  A projection represents a
  * subset of the columns (potentially including derived columns) of a table.
  * 
  * @param tableName  Name of the existing table on which the projection is to
  *                   be applied.
- * @param projectionName  Name of the projection to be created. Must not be the
- *                        name of a currently existing table. Cannot be an
- *                        empty string. Valid characters are alphanumeric or
- *                        any of '_-(){}[] .:' (excluding the single quotes),
- *                        with the first character being alphanumeric or an
- *                        underscore. The maximum length is 256 characters.
+ * @param projectionName  Name of the projection to be created. Has the same
+ *                        naming restrictions as <a
+ *                        href="../../concepts/tables.html"
+ *                        target="_top">tables</a>.
  * @param columnNames  List of columns from @a tableName to be included in the
  *                     projection. Can include derived columns. Can be
  *                     specified as aliased via the syntax '<column_name> as
@@ -2802,7 +2866,16 @@ CreateProjectionResponse& createProjection( const CreateProjectionRequest& reque
  *                 applied to the source table prior to the projection.
  *                         <li> limit: The number of records to keep.
  *                         <li> order_by: Comma-separated list of the columns
- *                 to be sorted by; i.e 'timestamp asc, x desc'.
+ *                 to be sorted by; e.g. 'timestamp asc, x desc'.  The columns
+ *                 specified must be present in @a columnNames.  If any alias
+ *                 is given for any column name, the alias must be used, rather
+ *                 than the original column name.
+ *                         <li> materialize_on_gpu: If 'true' then the columns
+ *                 of the projection will be cached on the GPU. Values: 'true',
+ *                 'false'.
+ *                         <li> ttl: Sets the TTL of the table, view, or
+ *                 collection specified in @a tableName. The value must be the
+ *                 desired TTL in minutes.
  *                 </ul>
  *                   Default value is an empty std::map.
  * 
@@ -2816,17 +2889,15 @@ CreateProjectionResponse createProjection( const std::string& tableName,
                                            const std::map<std::string, std::string>& options ) const;
 
 /**
- * Creates a new projection of an existing table. A projection represents a
+ * Creates a new projection of an existing table.  A projection represents a
  * subset of the columns (potentially including derived columns) of a table.
  * 
  * @param tableName  Name of the existing table on which the projection is to
  *                   be applied.
- * @param projectionName  Name of the projection to be created. Must not be the
- *                        name of a currently existing table. Cannot be an
- *                        empty string. Valid characters are alphanumeric or
- *                        any of '_-(){}[] .:' (excluding the single quotes),
- *                        with the first character being alphanumeric or an
- *                        underscore. The maximum length is 256 characters.
+ * @param projectionName  Name of the projection to be created. Has the same
+ *                        naming restrictions as <a
+ *                        href="../../concepts/tables.html"
+ *                        target="_top">tables</a>.
  * @param columnNames  List of columns from @a tableName to be included in the
  *                     projection. Can include derived columns. Can be
  *                     specified as aliased via the syntax '<column_name> as
@@ -2839,7 +2910,16 @@ CreateProjectionResponse createProjection( const std::string& tableName,
  *                 applied to the source table prior to the projection.
  *                         <li> limit: The number of records to keep.
  *                         <li> order_by: Comma-separated list of the columns
- *                 to be sorted by; i.e 'timestamp asc, x desc'.
+ *                 to be sorted by; e.g. 'timestamp asc, x desc'.  The columns
+ *                 specified must be present in @a columnNames.  If any alias
+ *                 is given for any column name, the alias must be used, rather
+ *                 than the original column name.
+ *                         <li> materialize_on_gpu: If 'true' then the columns
+ *                 of the projection will be cached on the GPU. Values: 'true',
+ *                 'false'.
+ *                         <li> ttl: Sets the TTL of the table, view, or
+ *                 collection specified in @a tableName. The value must be the
+ *                 desired TTL in minutes.
  *                 </ul>
  *                   Default value is an empty std::map.
  * @param[out] response_  Response object containing the results of the
@@ -2977,14 +3057,11 @@ CreateTableResponse& createTable( const CreateTableRequest& request_,
  * tableName and set the @a is_collection option to @a true; @a typeId will be
  * ignored.
  * 
- * @param tableName  Name of the table to be created. Must not be the name of a
- *                   currently existing table of a different type.  Error for
- *                   requests with existing table of the same name and type id
- *                   may be suppressed by using the @a no_error_if_exists
- *                   option.  Cannot be an empty string.  Valid characters are
- *                   alphanumeric or any of '_-(){}[] .:' (excluding the single
- *                   quotes), with the first character being alphanumeric or an
- *                   underscore.  The maximum length is 256 characters.
+ * @param tableName  Name of the table to be created. Error for requests with
+ *                   existing table of the same name and type id may be
+ *                   suppressed by using the @a no_error_if_exists option.  See
+ *                   <a href="../../concepts/tables.html"
+ *                   target="_top">Tables</a> for naming restrictions.
  * @param typeId  ID of a currently registered type. All objects added to the
  *                newly created table will be of this type.  Ignored if @a
  *                is_collection is @a true.
@@ -3013,6 +3090,12 @@ CreateTableResponse& createTable( const CreateTableRequest& request_,
  *                         <li> foreign_keys: Semicolon-separated list of
  *                 foreign key constraints, of the format 'source_column
  *                 references target_table(primary_key_column)'.
+ *                         <li> foreign_shard_key: Foreign shard key
+ *                 description of the format: <fk_foreign_key> references
+ *                 <pk_column_name> from <pk_table_name>(<pk_primary_key>)
+ *                         <li> ttl: Sets the TTL of the table or collection
+ *                 specified in @a tableName. The value must be the desired TTL
+ *                 in minutes.
  *                 </ul>
  *                   Default value is an empty std::map.
  * 
@@ -3037,14 +3120,11 @@ CreateTableResponse createTable( const std::string& tableName,
  * tableName and set the @a is_collection option to @a true; @a typeId will be
  * ignored.
  * 
- * @param tableName  Name of the table to be created. Must not be the name of a
- *                   currently existing table of a different type.  Error for
- *                   requests with existing table of the same name and type id
- *                   may be suppressed by using the @a no_error_if_exists
- *                   option.  Cannot be an empty string.  Valid characters are
- *                   alphanumeric or any of '_-(){}[] .:' (excluding the single
- *                   quotes), with the first character being alphanumeric or an
- *                   underscore.  The maximum length is 256 characters.
+ * @param tableName  Name of the table to be created. Error for requests with
+ *                   existing table of the same name and type id may be
+ *                   suppressed by using the @a no_error_if_exists option.  See
+ *                   <a href="../../concepts/tables.html"
+ *                   target="_top">Tables</a> for naming restrictions.
  * @param typeId  ID of a currently registered type. All objects added to the
  *                newly created table will be of this type.  Ignored if @a
  *                is_collection is @a true.
@@ -3073,6 +3153,12 @@ CreateTableResponse createTable( const std::string& tableName,
  *                         <li> foreign_keys: Semicolon-separated list of
  *                 foreign key constraints, of the format 'source_column
  *                 references target_table(primary_key_column)'.
+ *                         <li> foreign_shard_key: Foreign shard key
+ *                 description of the format: <fk_foreign_key> references
+ *                 <pk_column_name> from <pk_table_name>(<pk_primary_key>)
+ *                         <li> ttl: Sets the TTL of the table or collection
+ *                 specified in @a tableName. The value must be the desired TTL
+ *                 in minutes.
  *                 </ul>
  *                   Default value is an empty std::map.
  * @param[out] response_  Response object containing the results of the
@@ -3741,8 +3827,9 @@ CreateUnionResponse& createUnion( const CreateUnionRequest& request_,
  * column types cannot be included in a union, neither can columns with the
  * property 'store_only'.
  * 
- * @param tableName  Name of the table to be created. Must not be the name of a
- *                   currently existing table. Cannot be an empty string.
+ * @param tableName  Name of the table to be created. Has the same naming
+ *                   restrictions as <a href="../../concepts/tables.html"
+ *                   target="_top">tables</a>.
  * @param tableNames  The list of table names making up the union. Must contain
  *                    the names of one or more existing tables.
  * @param inputColumnNames  The list of columns from each of the corresponding
@@ -3754,11 +3841,16 @@ CreateUnionResponse& createUnion( const CreateUnionRequest& request_,
  *                         <li> collection_name: Name of a collection which is
  *                 to contain the union. If empty, then the union will be a
  *                 top-level table.
+ *                         <li> materialize_on_gpu: If 'true' then the columns
+ *                 of the union will be cached on the GPU. Values: 'true',
+ *                 'false'.
  *                         <li> mode: If 'merge_views' then this operation will
  *                 merge (i.e. union) the provided views. All 'table_names'
  *                 must be views from the same underlying base table. Values:
  *                 'union_all', 'union', 'union_distinct', 'except',
  *                 'intersect', 'merge_views'.
+ *                         <li> ttl: Sets the TTL of the table specified in @a
+ *                 tableName. The value must be the desired TTL in minutes.
  *                 </ul>
  *                   Default value is an empty std::map.
  * 
@@ -3778,8 +3870,9 @@ CreateUnionResponse createUnion( const std::string& tableName,
  * column types cannot be included in a union, neither can columns with the
  * property 'store_only'.
  * 
- * @param tableName  Name of the table to be created. Must not be the name of a
- *                   currently existing table. Cannot be an empty string.
+ * @param tableName  Name of the table to be created. Has the same naming
+ *                   restrictions as <a href="../../concepts/tables.html"
+ *                   target="_top">tables</a>.
  * @param tableNames  The list of table names making up the union. Must contain
  *                    the names of one or more existing tables.
  * @param inputColumnNames  The list of columns from each of the corresponding
@@ -3791,11 +3884,16 @@ CreateUnionResponse createUnion( const std::string& tableName,
  *                         <li> collection_name: Name of a collection which is
  *                 to contain the union. If empty, then the union will be a
  *                 top-level table.
+ *                         <li> materialize_on_gpu: If 'true' then the columns
+ *                 of the union will be cached on the GPU. Values: 'true',
+ *                 'false'.
  *                         <li> mode: If 'merge_views' then this operation will
  *                 merge (i.e. union) the provided views. All 'table_names'
  *                 must be views from the same underlying base table. Values:
  *                 'union_all', 'union', 'union_distinct', 'except',
  *                 'intersect', 'merge_views'.
+ *                         <li> ttl: Sets the TTL of the table specified in @a
+ *                 tableName. The value must be the desired TTL in minutes.
  *                 </ul>
  *                   Default value is an empty std::map.
  * @param[out] response_  Response object containing the results of the
@@ -4468,13 +4566,24 @@ FilterResponse& filter( const FilterRequest& request_,
  *                   Collections may be filtered only if all tables within the
  *                   collection have the same type ID.
  * @param viewName  If provided, then this will be the name of the view
- *                  containing the results. Must not be an already existing
- *                  collection, table or view .  Default value is an empty
+ *                  containing the results. Has the same naming restrictions as
+ *                  <a href="../../concepts/tables.html"
+ *                  target="_top">tables</a>.  Default value is an empty
  *                  string.
  * @param expression  The select expression to filter the specified table.  For
  *                    details see <a href="../../concepts/expressions.html"
  *                    target="_top">concepts</a>.
- * @param options  Optional parameters.  Default value is an empty std::map.
+ * @param options  Optional parameters.
+ *                 <ul>
+ *                         <li> collection_name: Name of a collection which is
+ *                 to contain the newly created view, otherwise the view will
+ *                 be a top-level table. If the collection does not allow
+ *                 duplicate types and it contains a table of the same type as
+ *                 the given one, then this table creation request will fail.
+ *                         <li> ttl: Sets the TTL of the view specified in @a
+ *                 viewName. The value must be the desired TTL in minutes.
+ *                 </ul>
+ *                   Default value is an empty std::map.
  * 
  * @return Response object containing the result of the operation.
  * 
@@ -4500,13 +4609,24 @@ FilterResponse filter( const std::string& tableName,
  *                   Collections may be filtered only if all tables within the
  *                   collection have the same type ID.
  * @param viewName  If provided, then this will be the name of the view
- *                  containing the results. Must not be an already existing
- *                  collection, table or view .  Default value is an empty
+ *                  containing the results. Has the same naming restrictions as
+ *                  <a href="../../concepts/tables.html"
+ *                  target="_top">tables</a>.  Default value is an empty
  *                  string.
  * @param expression  The select expression to filter the specified table.  For
  *                    details see <a href="../../concepts/expressions.html"
  *                    target="_top">concepts</a>.
- * @param options  Optional parameters.  Default value is an empty std::map.
+ * @param options  Optional parameters.
+ *                 <ul>
+ *                         <li> collection_name: Name of a collection which is
+ *                 to contain the newly created view, otherwise the view will
+ *                 be a top-level table. If the collection does not allow
+ *                 duplicate types and it contains a table of the same type as
+ *                 the given one, then this table creation request will fail.
+ *                         <li> ttl: Sets the TTL of the view specified in @a
+ *                 viewName. The value must be the desired TTL in minutes.
+ *                 </ul>
+ *                   Default value is an empty std::map.
  * @param[out] response_  Response object containing the results of the
  *                        operation.
  * 
@@ -4572,8 +4692,9 @@ FilterByAreaResponse& filterByArea( const FilterByAreaRequest& request_,
  *                   Collections may be filtered only if all tables within the
  *                   collection have the same type ID.
  * @param viewName  If provided, then this will be the name of the view
- *                  containing the results. Must not be an already existing
- *                  collection, table or view.  Default value is an empty
+ *                  containing the results. Has the same naming restrictions as
+ *                  <a href="../../concepts/tables.html"
+ *                  target="_top">tables</a>.  Default value is an empty
  *                  string.
  * @param xColumnName  Name of the column containing the x values to be
  *                     filtered.
@@ -4610,8 +4731,9 @@ FilterByAreaResponse filterByArea( const std::string& tableName,
  *                   Collections may be filtered only if all tables within the
  *                   collection have the same type ID.
  * @param viewName  If provided, then this will be the name of the view
- *                  containing the results. Must not be an already existing
- *                  collection, table or view.  Default value is an empty
+ *                  containing the results. Has the same naming restrictions as
+ *                  <a href="../../concepts/tables.html"
+ *                  target="_top">tables</a>.  Default value is an empty
  *                  string.
  * @param xColumnName  Name of the column containing the x values to be
  *                     filtered.
@@ -4688,9 +4810,10 @@ FilterByBoxResponse& filterByBox( const FilterByBoxRequest& request_,
  * @param tableName  Name of the table on which the bounding box operation will
  *                   be performed. Must be an existing table.
  * @param viewName  Optional name of the result view that will be created
- *                  containing the results of the query. Must not be an already
- *                  existing collection, table or view.  Default value is an
- *                  empty string.
+ *                  containing the results of the query. Has the same naming
+ *                  restrictions as <a href="../../concepts/tables.html"
+ *                  target="_top">tables</a>.  Default value is an empty
+ *                  string.
  * @param xColumnName  Name of the column on which to perform the bounding box
  *                     query. If the table's data type is not a shape type,
  *                     must be a valid numeric column.
@@ -4732,9 +4855,10 @@ FilterByBoxResponse filterByBox( const std::string& tableName,
  * @param tableName  Name of the table on which the bounding box operation will
  *                   be performed. Must be an existing table.
  * @param viewName  Optional name of the result view that will be created
- *                  containing the results of the query. Must not be an already
- *                  existing collection, table or view.  Default value is an
- *                  empty string.
+ *                  containing the results of the query. Has the same naming
+ *                  restrictions as <a href="../../concepts/tables.html"
+ *                  target="_top">tables</a>.  Default value is an empty
+ *                  string.
  * @param xColumnName  Name of the column on which to perform the bounding box
  *                     query. If the table's data type is not a shape type,
  *                     must be a valid numeric column.
@@ -4810,8 +4934,9 @@ FilterByGeometryResponse& filterByGeometry( const FilterByGeometryRequest& reque
  *                   performed.  Must be an existing table, collection or view
  *                   containing a column named WKT.
  * @param viewName  If provided, then this will be the name of the view
- *                  containing the results. Must not be an already existing
- *                  collection, table or view.  Default value is an empty
+ *                  containing the results. Has the same naming restrictions as
+ *                  <a href="../../concepts/tables.html"
+ *                  target="_top">tables</a>.  Default value is an empty
  *                  string.
  * @param columnName  Name of the column to be used in the filter. Must be
  *                    'WKT'
@@ -4842,8 +4967,9 @@ FilterByGeometryResponse filterByGeometry( const std::string& tableName,
  *                   performed.  Must be an existing table, collection or view
  *                   containing a column named WKT.
  * @param viewName  If provided, then this will be the name of the view
- *                  containing the results. Must not be an already existing
- *                  collection, table or view.  Default value is an empty
+ *                  containing the results. Has the same naming restrictions as
+ *                  <a href="../../concepts/tables.html"
+ *                  target="_top">tables</a>.  Default value is an empty
  *                  string.
  * @param columnName  Name of the column to be used in the filter. Must be
  *                    'WKT'
@@ -4941,8 +5067,9 @@ FilterByListResponse& filterByList( const FilterByListRequest& request_,
  *                   Collections may be filtered only if all tables within the
  *                   collection have the same type ID.
  * @param viewName  If provided, then this will be the name of the view
- *                  containing the results. Must not be an already existing
- *                  collection, table or view.  Default value is an empty
+ *                  containing the results. Has the same naming restrictions as
+ *                  <a href="../../concepts/tables.html"
+ *                  target="_top">tables</a>.  Default value is an empty
  *                  string.
  * @param columnValuesMap  List of values for the corresponding column in the
  *                         table
@@ -4983,8 +5110,9 @@ FilterByListResponse filterByList( const std::string& tableName,
  *                   Collections may be filtered only if all tables within the
  *                   collection have the same type ID.
  * @param viewName  If provided, then this will be the name of the view
- *                  containing the results. Must not be an already existing
- *                  collection, table or view.  Default value is an empty
+ *                  containing the results. Has the same naming restrictions as
+ *                  <a href="../../concepts/tables.html"
+ *                  target="_top">tables</a>.  Default value is an empty
  *                  string.
  * @param columnValuesMap  List of values for the corresponding column in the
  *                         table
@@ -5079,8 +5207,9 @@ FilterByRadiusResponse& filterByRadius( const FilterByRadiusRequest& request_,
  * @param tableName  Name of the table on which the filter by radius operation
  *                   will be performed.  Must be an existing table.
  * @param viewName  If provided, then this will be the name of the view
- *                  containing the results. Must not be an already existing
- *                  collection, table or view.  Default value is an empty
+ *                  containing the results. Has the same naming restrictions as
+ *                  <a href="../../concepts/tables.html"
+ *                  target="_top">tables</a>.  Default value is an empty
  *                  string.
  * @param xColumnName  Name of the column to be used for the x-coordinate (the
  *                     longitude) of the center.
@@ -5130,8 +5259,9 @@ FilterByRadiusResponse filterByRadius( const std::string& tableName,
  * @param tableName  Name of the table on which the filter by radius operation
  *                   will be performed.  Must be an existing table.
  * @param viewName  If provided, then this will be the name of the view
- *                  containing the results. Must not be an already existing
- *                  collection, table or view.  Default value is an empty
+ *                  containing the results. Has the same naming restrictions as
+ *                  <a href="../../concepts/tables.html"
+ *                  target="_top">tables</a>.  Default value is an empty
  *                  string.
  * @param xColumnName  Name of the column to be used for the x-coordinate (the
  *                     longitude) of the center.
@@ -5228,8 +5358,9 @@ FilterByRangeResponse& filterByRange( const FilterByRangeRequest& request_,
  * @param tableName  Name of the table on which the filter by range operation
  *                   will be performed.  Must be an existing table.
  * @param viewName  If provided, then this will be the name of the view
- *                  containing the results. Must not be an already existing
- *                  collection, table or view.  Default value is an empty
+ *                  containing the results. Has the same naming restrictions as
+ *                  <a href="../../concepts/tables.html"
+ *                  target="_top">tables</a>.  Default value is an empty
  *                  string.
  * @param columnName  Name of a column on which the operation would be applied.
  * @param lowerBound  Value of the lower bound (inclusive).
@@ -5262,8 +5393,9 @@ FilterByRangeResponse filterByRange( const std::string& tableName,
  * @param tableName  Name of the table on which the filter by range operation
  *                   will be performed.  Must be an existing table.
  * @param viewName  If provided, then this will be the name of the view
- *                  containing the results. Must not be an already existing
- *                  collection, table or view.  Default value is an empty
+ *                  containing the results. Has the same naming restrictions as
+ *                  <a href="../../concepts/tables.html"
+ *                  target="_top">tables</a>.  Default value is an empty
  *                  string.
  * @param columnName  Name of a column on which the operation would be applied.
  * @param lowerBound  Value of the lower bound (inclusive).
@@ -5359,8 +5491,9 @@ FilterBySeriesResponse& filterBySeries( const FilterBySeriesRequest& request_,
  *                   will be performed. Must be a currently existing table with
  *                   track semantic type.
  * @param viewName  If provided, then this will be the name of the view
- *                  containing the results. Must not be an already existing
- *                  collection, table or view.  Default value is an empty
+ *                  containing the results. Has the same naming restrictions as
+ *                  <a href="../../concepts/tables.html"
+ *                  target="_top">tables</a>.  Default value is an empty
  *                  string.
  * @param trackId  The ID of the track which will act as the filtering points.
  *                 Must be an existing track within the given table.
@@ -5416,8 +5549,9 @@ FilterBySeriesResponse filterBySeries( const std::string& tableName,
  *                   will be performed. Must be a currently existing table with
  *                   track semantic type.
  * @param viewName  If provided, then this will be the name of the view
- *                  containing the results. Must not be an already existing
- *                  collection, table or view.  Default value is an empty
+ *                  containing the results. Has the same naming restrictions as
+ *                  <a href="../../concepts/tables.html"
+ *                  target="_top">tables</a>.  Default value is an empty
  *                  string.
  * @param trackId  The ID of the track which will act as the filtering points.
  *                 Must be an existing track within the given table.
@@ -5671,8 +5805,9 @@ FilterByStringResponse& filterByString( const FilterByStringRequest& request_,
  * @param tableName  Name of the table on which the filter operation will be
  *                   performed.  Must be an existing table, collection or view.
  * @param viewName  If provided, then this will be the name of the view
- *                  containing the results. Must not be an already existing
- *                  collection, table or view.  Default value is an empty
+ *                  containing the results. Has the same naming restrictions as
+ *                  <a href="../../concepts/tables.html"
+ *                  target="_top">tables</a>.  Default value is an empty
  *                  string.
  * @param expression  The expression with which to filter the table.
  * @param mode  The string filtering mode to apply. See above for details.
@@ -5764,8 +5899,9 @@ FilterByStringResponse filterByString( const std::string& tableName,
  * @param tableName  Name of the table on which the filter operation will be
  *                   performed.  Must be an existing table, collection or view.
  * @param viewName  If provided, then this will be the name of the view
- *                  containing the results. Must not be an already existing
- *                  collection, table or view.  Default value is an empty
+ *                  containing the results. Has the same naming restrictions as
+ *                  <a href="../../concepts/tables.html"
+ *                  target="_top">tables</a>.  Default value is an empty
  *                  string.
  * @param expression  The expression with which to filter the table.
  * @param mode  The string filtering mode to apply. See above for details.
@@ -5853,8 +5989,9 @@ FilterByTableResponse& filterByTable( const FilterByTableRequest& request_,
  * @param tableName  Name of the table whose data will be filtered. Must be an
  *                   existing table.
  * @param viewName  If provided, then this will be the name of the view
- *                  containing the results. Must not be an already existing
- *                  collection, table or view.  Default value is an empty
+ *                  containing the results. Has the same naming restrictions as
+ *                  <a href="../../concepts/tables.html"
+ *                  target="_top">tables</a>.  Default value is an empty
  *                  string.
  * @param columnName  Name of the column by whose value the data will be
  *                    filtered from the table designated by @a tableName.
@@ -5868,22 +6005,22 @@ FilterByTableResponse& filterByTable( const FilterByTableRequest& request_,
  * @param options  Optional parameters.
  *                 <ul>
  *                         <li> filter_mode: String indicating the filter mode,
- *                 either 'in_table' or 'not_in_table'. Values: 'in_table',
+ *                 either @a in_table or @a not_in_table. Values: 'in_table',
  *                 'not_in_table'.
- *                         <li> mode: Mode - should be either 'spatial' or
- *                 'normal'. Values: 'normal', 'spatial'.
+ *                         <li> mode: Mode - should be either @a spatial or @a
+ *                 normal. Values: 'normal', 'spatial'.
  *                         <li> buffer: Buffer size, in meters. Only relevant
- *                 for 'spatial' mode.
+ *                 for @a spatial mode.
  *                         <li> buffer_method: Method used to buffer polygons.
- *                 Only relevant for 'spatial' mode. Values: 'normal', 'geos'.
+ *                 Only relevant for @a spatial mode. Values: 'normal', 'geos'.
  *                         <li> max_partition_size: Maximum number of points in
- *                 a partition. Only relevant for 'spatial' mode.
+ *                 a partition. Only relevant for @a spatial mode.
  *                         <li> max_partition_score: Maximum number of points *
- *                 edges in a partition. Only relevant for 'spatial' mode.
+ *                 edges in a partition. Only relevant for @a spatial mode.
  *                         <li> x_column_name: Name of column containing x
- *                 value of point being filtered in spatial mode.
- *                         <li> y_column_name: Name of column containing x
- *                 value of point being filtered in spatial mode.
+ *                 value of point being filtered in @a spatial mode.
+ *                         <li> y_column_name: Name of column containing y
+ *                 value of point being filtered in @a spatial mode.
  *                 </ul>
  *                   Default value is an empty std::map.
  * 
@@ -5912,8 +6049,9 @@ FilterByTableResponse filterByTable( const std::string& tableName,
  * @param tableName  Name of the table whose data will be filtered. Must be an
  *                   existing table.
  * @param viewName  If provided, then this will be the name of the view
- *                  containing the results. Must not be an already existing
- *                  collection, table or view.  Default value is an empty
+ *                  containing the results. Has the same naming restrictions as
+ *                  <a href="../../concepts/tables.html"
+ *                  target="_top">tables</a>.  Default value is an empty
  *                  string.
  * @param columnName  Name of the column by whose value the data will be
  *                    filtered from the table designated by @a tableName.
@@ -5927,22 +6065,22 @@ FilterByTableResponse filterByTable( const std::string& tableName,
  * @param options  Optional parameters.
  *                 <ul>
  *                         <li> filter_mode: String indicating the filter mode,
- *                 either 'in_table' or 'not_in_table'. Values: 'in_table',
+ *                 either @a in_table or @a not_in_table. Values: 'in_table',
  *                 'not_in_table'.
- *                         <li> mode: Mode - should be either 'spatial' or
- *                 'normal'. Values: 'normal', 'spatial'.
+ *                         <li> mode: Mode - should be either @a spatial or @a
+ *                 normal. Values: 'normal', 'spatial'.
  *                         <li> buffer: Buffer size, in meters. Only relevant
- *                 for 'spatial' mode.
+ *                 for @a spatial mode.
  *                         <li> buffer_method: Method used to buffer polygons.
- *                 Only relevant for 'spatial' mode. Values: 'normal', 'geos'.
+ *                 Only relevant for @a spatial mode. Values: 'normal', 'geos'.
  *                         <li> max_partition_size: Maximum number of points in
- *                 a partition. Only relevant for 'spatial' mode.
+ *                 a partition. Only relevant for @a spatial mode.
  *                         <li> max_partition_score: Maximum number of points *
- *                 edges in a partition. Only relevant for 'spatial' mode.
+ *                 edges in a partition. Only relevant for @a spatial mode.
  *                         <li> x_column_name: Name of column containing x
- *                 value of point being filtered in spatial mode.
- *                         <li> y_column_name: Name of column containing x
- *                 value of point being filtered in spatial mode.
+ *                 value of point being filtered in @a spatial mode.
+ *                         <li> y_column_name: Name of column containing y
+ *                 value of point being filtered in @a spatial mode.
  *                 </ul>
  *                   Default value is an empty std::map.
  * @param[out] response_  Response object containing the results of the
@@ -6022,8 +6160,9 @@ FilterByValueResponse& filterByValue( const FilterByValueRequest& request_,
  * @param tableName  Name of an existing table on which to perform the
  *                   calculation.
  * @param viewName  If provided, then this will be the name of the view
- *                  containing the results. Must not be an already existing
- *                  collection, table or view.  Default value is an empty
+ *                  containing the results. Has the same naming restrictions as
+ *                  <a href="../../concepts/tables.html"
+ *                  target="_top">tables</a>.  Default value is an empty
  *                  string.
  * @param isString  Indicates whether the value being searched for is string or
  *                  numeric.
@@ -6061,8 +6200,9 @@ FilterByValueResponse filterByValue( const std::string& tableName,
  * @param tableName  Name of an existing table on which to perform the
  *                   calculation.
  * @param viewName  If provided, then this will be the name of the view
- *                  containing the results. Must not be an already existing
- *                  collection, table or view.  Default value is an empty
+ *                  containing the results. Has the same naming restrictions as
+ *                  <a href="../../concepts/tables.html"
+ *                  target="_top">tables</a>.  Default value is an empty
  *                  string.
  * @param isString  Indicates whether the value being searched for is string or
  *                  numeric.
@@ -6100,9 +6240,6 @@ FilterByValueResponse& filterByValue( const std::string& tableName,
  * the underlying table in case of a view) is updated (records are inserted,
  * deleted or modified) the records retrieved may differ between calls based on
  * the updates applied.
- * <p>
- * Note that when using the Java API, it is not possible to retrieve records
- * from join tables using this operation.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -6124,9 +6261,6 @@ RawGetRecordsResponse getRecordsRaw( const GetRecordsRequest& request_ ) const;
  * the underlying table in case of a view) is updated (records are inserted,
  * deleted or modified) the records retrieved may differ between calls based on
  * the updates applied.
- * <p>
- * Note that when using the Java API, it is not possible to retrieve records
- * from join tables using this operation.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -6152,9 +6286,6 @@ RawGetRecordsResponse& getRecordsRaw( const GetRecordsRequest& request_,
  * the underlying table in case of a view) is updated (records are inserted,
  * deleted or modified) the records retrieved may differ between calls based on
  * the updates applied.
- * <p>
- * Note that when using the Java API, it is not possible to retrieve records
- * from join tables using this operation.
  * 
  * @tparam <TResponse>  The type of object being retrieved.
  * 
@@ -6167,6 +6298,9 @@ RawGetRecordsResponse& getRecordsRaw( const GetRecordsRequest& request_,
 template<typename TResponse> 
 GetRecordsResponse<TResponse> getRecords( const GetRecordsRequest& request_ ) const
 {
+    if (request_.encoding != "binary")
+        throw GPUdbException( "This function only supports binary encoding" );
+
     RawGetRecordsResponse actualResponse_;
     submitRequest("/get/records", request_, actualResponse_, false);
     GetRecordsResponse<TResponse> response_;
@@ -6192,9 +6326,6 @@ GetRecordsResponse<TResponse> getRecords( const GetRecordsRequest& request_ ) co
  * the underlying table in case of a view) is updated (records are inserted,
  * deleted or modified) the records retrieved may differ between calls based on
  * the updates applied.
- * <p>
- * Note that when using the Java API, it is not possible to retrieve records
- * from join tables using this operation.
  * 
  * @tparam <TResponse>  The type of object being retrieved.
  * 
@@ -6211,6 +6342,9 @@ template<typename TResponse>
 GetRecordsResponse<TResponse>& getRecords( const GetRecordsRequest& request_,
                                            GetRecordsResponse<TResponse>& response_ ) const
 {
+    if (request_.encoding != "binary")
+        throw GPUdbException( "This function only supports binary encoding" );
+
     RawGetRecordsResponse actualResponse_;
     submitRequest("/get/records", request_, actualResponse_, false);
     response_.tableName = actualResponse_.tableName;
@@ -6235,9 +6369,6 @@ GetRecordsResponse<TResponse>& getRecords( const GetRecordsRequest& request_,
  * the underlying table in case of a view) is updated (records are inserted,
  * deleted or modified) the records retrieved may differ between calls based on
  * the updates applied.
- * <p>
- * Note that when using the Java API, it is not possible to retrieve records
- * from join tables using this operation.
  * 
  * @tparam <TResponse>  The type of object being retrieved.
  * 
@@ -6254,6 +6385,12 @@ GetRecordsResponse<TResponse>& getRecords( const GetRecordsRequest& request_,
  *                 <ul>
  *                         <li> expression: Optional filter expression to apply
  *                 to the table.
+ *                         <li> fast_index_lookup: Indicates if indexes should
+ *                 be used to perform the lookup for a given expression if
+ *                 possible. Only applicable if there is no sorting, the
+ *                 expression contains only equivalence comparisons based on
+ *                 existing tables indexes and the range of requested values is
+ *                 from [0 to END_OF_SET]. The default value is true.
  *                         <li> sort_by: Optional column that the data should
  *                 be sorted by. Empty by default (i.e. no sorting is applied).
  *                         <li> sort_order: String indicating how the returned
@@ -6302,9 +6439,6 @@ GetRecordsResponse<TResponse> getRecords( const std::string& tableName,
  * the underlying table in case of a view) is updated (records are inserted,
  * deleted or modified) the records retrieved may differ between calls based on
  * the updates applied.
- * <p>
- * Note that when using the Java API, it is not possible to retrieve records
- * from join tables using this operation.
  * 
  * @tparam <TResponse>  The type of object being retrieved.
  * 
@@ -6321,6 +6455,12 @@ GetRecordsResponse<TResponse> getRecords( const std::string& tableName,
  *                 <ul>
  *                         <li> expression: Optional filter expression to apply
  *                 to the table.
+ *                         <li> fast_index_lookup: Indicates if indexes should
+ *                 be used to perform the lookup for a given expression if
+ *                 possible. Only applicable if there is no sorting, the
+ *                 expression contains only equivalence comparisons based on
+ *                 existing tables indexes and the range of requested values is
+ *                 from [0 to END_OF_SET]. The default value is true.
  *                         <li> sort_by: Optional column that the data should
  *                 be sorted by. Empty by default (i.e. no sorting is applied).
  *                         <li> sort_order: String indicating how the returned
@@ -6372,9 +6512,6 @@ GetRecordsResponse<TResponse>& getRecords( const std::string& tableName,
  * the underlying table in case of a view) is updated (records are inserted,
  * deleted or modified) the records retrieved may differ between calls based on
  * the updates applied.
- * <p>
- * Note that when using the Java API, it is not possible to retrieve records
- * from join tables using this operation.
  * 
  * @tparam <TResponse>  The type of object being retrieved.
  * 
@@ -6389,6 +6526,9 @@ template<typename TResponse>
 GetRecordsResponse<TResponse> getRecords( const ::avro::ValidSchema& schema_,
                                           const GetRecordsRequest& request_ ) const
 {
+    if (request_.encoding != "binary")
+        throw GPUdbException( "This function only supports binary encoding" );
+
     RawGetRecordsResponse actualResponse_;
     submitRequest("/get/records", request_, actualResponse_, false);
     GetRecordsResponse<TResponse> response_;
@@ -6414,9 +6554,6 @@ GetRecordsResponse<TResponse> getRecords( const ::avro::ValidSchema& schema_,
  * the underlying table in case of a view) is updated (records are inserted,
  * deleted or modified) the records retrieved may differ between calls based on
  * the updates applied.
- * <p>
- * Note that when using the Java API, it is not possible to retrieve records
- * from join tables using this operation.
  * 
  * @tparam <TResponse>  The type of object being retrieved.
  * 
@@ -6431,6 +6568,9 @@ template<typename TResponse>
 GetRecordsResponse<TResponse> getRecords( const Type& type_,
                                           const GetRecordsRequest& request_ ) const
 {
+    if (request_.encoding != "binary")
+        throw GPUdbException( "This function only supports binary encoding" );
+
     RawGetRecordsResponse actualResponse_;
     submitRequest("/get/records", request_, actualResponse_, false);
     GetRecordsResponse<TResponse> response_;
@@ -6456,9 +6596,6 @@ GetRecordsResponse<TResponse> getRecords( const Type& type_,
  * the underlying table in case of a view) is updated (records are inserted,
  * deleted or modified) the records retrieved may differ between calls based on
  * the updates applied.
- * <p>
- * Note that when using the Java API, it is not possible to retrieve records
- * from join tables using this operation.
  * 
  * @tparam <TResponse>  The type of object being retrieved.
  * 
@@ -6477,6 +6614,9 @@ GetRecordsResponse<TResponse>& getRecords( const ::avro::ValidSchema& schema_,
                                            const GetRecordsRequest& request_,
                                            GetRecordsResponse<TResponse>& response_ ) const
 {
+    if (request_.encoding != "binary")
+        throw GPUdbException( "This function only supports binary encoding" );
+
     RawGetRecordsResponse actualResponse_;
     submitRequest("/get/records", request_, actualResponse_, false);
     response_.tableName = actualResponse_.tableName;
@@ -6501,9 +6641,6 @@ GetRecordsResponse<TResponse>& getRecords( const ::avro::ValidSchema& schema_,
  * the underlying table in case of a view) is updated (records are inserted,
  * deleted or modified) the records retrieved may differ between calls based on
  * the updates applied.
- * <p>
- * Note that when using the Java API, it is not possible to retrieve records
- * from join tables using this operation.
  * 
  * @tparam <TResponse>  The type of object being retrieved.
  * 
@@ -6522,6 +6659,9 @@ GetRecordsResponse<TResponse>& getRecords( const Type& type_,
                                            const GetRecordsRequest& request_,
                                            GetRecordsResponse<TResponse>& response_ ) const
 {
+    if (request_.encoding != "binary")
+        throw GPUdbException( "This function only supports binary encoding" );
+
     RawGetRecordsResponse actualResponse_;
     submitRequest("/get/records", request_, actualResponse_, false);
     response_.tableName = actualResponse_.tableName;
@@ -6546,9 +6686,6 @@ GetRecordsResponse<TResponse>& getRecords( const Type& type_,
  * the underlying table in case of a view) is updated (records are inserted,
  * deleted or modified) the records retrieved may differ between calls based on
  * the updates applied.
- * <p>
- * Note that when using the Java API, it is not possible to retrieve records
- * from join tables using this operation.
  * 
  * @tparam <TResponse>  The type of object being retrieved.
  * 
@@ -6566,6 +6703,12 @@ GetRecordsResponse<TResponse>& getRecords( const Type& type_,
  *                 <ul>
  *                         <li> expression: Optional filter expression to apply
  *                 to the table.
+ *                         <li> fast_index_lookup: Indicates if indexes should
+ *                 be used to perform the lookup for a given expression if
+ *                 possible. Only applicable if there is no sorting, the
+ *                 expression contains only equivalence comparisons based on
+ *                 existing tables indexes and the range of requested values is
+ *                 from [0 to END_OF_SET]. The default value is true.
  *                         <li> sort_by: Optional column that the data should
  *                 be sorted by. Empty by default (i.e. no sorting is applied).
  *                         <li> sort_order: String indicating how the returned
@@ -6615,9 +6758,6 @@ GetRecordsResponse<TResponse> getRecords( const ::avro::ValidSchema& schema_,
  * the underlying table in case of a view) is updated (records are inserted,
  * deleted or modified) the records retrieved may differ between calls based on
  * the updates applied.
- * <p>
- * Note that when using the Java API, it is not possible to retrieve records
- * from join tables using this operation.
  * 
  * @tparam <TResponse>  The type of object being retrieved.
  * 
@@ -6635,6 +6775,12 @@ GetRecordsResponse<TResponse> getRecords( const ::avro::ValidSchema& schema_,
  *                 <ul>
  *                         <li> expression: Optional filter expression to apply
  *                 to the table.
+ *                         <li> fast_index_lookup: Indicates if indexes should
+ *                 be used to perform the lookup for a given expression if
+ *                 possible. Only applicable if there is no sorting, the
+ *                 expression contains only equivalence comparisons based on
+ *                 existing tables indexes and the range of requested values is
+ *                 from [0 to END_OF_SET]. The default value is true.
  *                         <li> sort_by: Optional column that the data should
  *                 be sorted by. Empty by default (i.e. no sorting is applied).
  *                         <li> sort_order: String indicating how the returned
@@ -6684,9 +6830,6 @@ GetRecordsResponse<TResponse> getRecords( const Type& type_,
  * the underlying table in case of a view) is updated (records are inserted,
  * deleted or modified) the records retrieved may differ between calls based on
  * the updates applied.
- * <p>
- * Note that when using the Java API, it is not possible to retrieve records
- * from join tables using this operation.
  * 
  * @tparam <TResponse>  The type of object being retrieved.
  * 
@@ -6704,6 +6847,12 @@ GetRecordsResponse<TResponse> getRecords( const Type& type_,
  *                 <ul>
  *                         <li> expression: Optional filter expression to apply
  *                 to the table.
+ *                         <li> fast_index_lookup: Indicates if indexes should
+ *                 be used to perform the lookup for a given expression if
+ *                 possible. Only applicable if there is no sorting, the
+ *                 expression contains only equivalence comparisons based on
+ *                 existing tables indexes and the range of requested values is
+ *                 from [0 to END_OF_SET]. The default value is true.
  *                         <li> sort_by: Optional column that the data should
  *                 be sorted by. Empty by default (i.e. no sorting is applied).
  *                         <li> sort_order: String indicating how the returned
@@ -6756,9 +6905,6 @@ GetRecordsResponse<TResponse>& getRecords( const ::avro::ValidSchema& schema_,
  * the underlying table in case of a view) is updated (records are inserted,
  * deleted or modified) the records retrieved may differ between calls based on
  * the updates applied.
- * <p>
- * Note that when using the Java API, it is not possible to retrieve records
- * from join tables using this operation.
  * 
  * @tparam <TResponse>  The type of object being retrieved.
  * 
@@ -6776,6 +6922,12 @@ GetRecordsResponse<TResponse>& getRecords( const ::avro::ValidSchema& schema_,
  *                 <ul>
  *                         <li> expression: Optional filter expression to apply
  *                 to the table.
+ *                         <li> fast_index_lookup: Indicates if indexes should
+ *                 be used to perform the lookup for a given expression if
+ *                 possible. Only applicable if there is no sorting, the
+ *                 expression contains only equivalence comparisons based on
+ *                 existing tables indexes and the range of requested values is
+ *                 from [0 to END_OF_SET]. The default value is true.
  *                         <li> sort_by: Optional column that the data should
  *                 be sorted by. Empty by default (i.e. no sorting is applied).
  *                         <li> sort_order: String indicating how the returned
@@ -6977,6 +7129,11 @@ GetRecordsByColumnResponse& getRecordsByColumn( const GetRecordsByColumnRequest&
  *                 values should be sorted - ascending or descending. Default
  *                 is 'ascending'. If sort_order is provided, sort_by has to be
  *                 provided. Values: 'ascending', 'descending'.
+ *                         <li> order_by: Comma-separated list of the columns
+ *                 to be sorted by; e.g. 'timestamp asc, x desc'.  The columns
+ *                 specified must be present in @a columnNames.  If any alias
+ *                 is given for any column name, the alias must be used, rather
+ *                 than the original column name.
  *                 </ul>
  *                   Default value is an empty std::map.
  * 
@@ -7030,6 +7187,11 @@ GetRecordsByColumnResponse getRecordsByColumn( const std::string& tableName,
  *                 values should be sorted - ascending or descending. Default
  *                 is 'ascending'. If sort_order is provided, sort_by has to be
  *                 provided. Values: 'ascending', 'descending'.
+ *                         <li> order_by: Comma-separated list of the columns
+ *                 to be sorted by; e.g. 'timestamp asc, x desc'.  The columns
+ *                 specified must be present in @a columnNames.  If any alias
+ *                 is given for any column name, the alias must be used, rather
+ *                 than the original column name.
  *                 </ul>
  *                   Default value is an empty std::map.
  * @param[out] response_  Response object containing the results of the
@@ -7119,6 +7281,9 @@ RawGetRecordsBySeriesResponse& getRecordsBySeriesRaw( const GetRecordsBySeriesRe
 template<typename TResponse> 
 GetRecordsBySeriesResponse<TResponse> getRecordsBySeries( const GetRecordsBySeriesRequest& request_ ) const
 {
+    if (request_.encoding != "binary")
+        throw GPUdbException( "This function only supports binary encoding" );
+
     RawGetRecordsBySeriesResponse actualResponse_;
     submitRequest("/get/records/byseries", request_, actualResponse_, false);
     GetRecordsBySeriesResponse<TResponse> response_;
@@ -7166,6 +7331,9 @@ template<typename TResponse>
 GetRecordsBySeriesResponse<TResponse>& getRecordsBySeries( const GetRecordsBySeriesRequest& request_,
                                                            GetRecordsBySeriesResponse<TResponse>& response_ ) const
 {
+    if (request_.encoding != "binary")
+        throw GPUdbException( "This function only supports binary encoding" );
+
     RawGetRecordsBySeriesResponse actualResponse_;
     submitRequest("/get/records/byseries", request_, actualResponse_, false);
     response_.tableNames = actualResponse_.tableNames;
@@ -7351,6 +7519,9 @@ template<typename TResponse>
 GetRecordsBySeriesResponse<TResponse> getRecordsBySeries( const ::avro::ValidSchema& schema_,
                                                           const GetRecordsBySeriesRequest& request_ ) const
 {
+    if (request_.encoding != "binary")
+        throw GPUdbException( "This function only supports binary encoding" );
+
     RawGetRecordsBySeriesResponse actualResponse_;
     submitRequest("/get/records/byseries", request_, actualResponse_, false);
     GetRecordsBySeriesResponse<TResponse> response_;
@@ -7395,6 +7566,9 @@ template<typename TResponse>
 GetRecordsBySeriesResponse<TResponse> getRecordsBySeries( const Type& type_,
                                                           const GetRecordsBySeriesRequest& request_ ) const
 {
+    if (request_.encoding != "binary")
+        throw GPUdbException( "This function only supports binary encoding" );
+
     RawGetRecordsBySeriesResponse actualResponse_;
     submitRequest("/get/records/byseries", request_, actualResponse_, false);
     GetRecordsBySeriesResponse<TResponse> response_;
@@ -7444,6 +7618,9 @@ GetRecordsBySeriesResponse<TResponse>& getRecordsBySeries( const ::avro::ValidSc
                                                            const GetRecordsBySeriesRequest& request_,
                                                            GetRecordsBySeriesResponse<TResponse>& response_ ) const
 {
+    if (request_.encoding != "binary")
+        throw GPUdbException( "This function only supports binary encoding" );
+
     RawGetRecordsBySeriesResponse actualResponse_;
     submitRequest("/get/records/byseries", request_, actualResponse_, false);
     response_.tableNames = actualResponse_.tableNames;
@@ -7492,6 +7669,9 @@ GetRecordsBySeriesResponse<TResponse>& getRecordsBySeries( const Type& type_,
                                                            const GetRecordsBySeriesRequest& request_,
                                                            GetRecordsBySeriesResponse<TResponse>& response_ ) const
 {
+    if (request_.encoding != "binary")
+        throw GPUdbException( "This function only supports binary encoding" );
+
     RawGetRecordsBySeriesResponse actualResponse_;
     submitRequest("/get/records/byseries", request_, actualResponse_, false);
     response_.tableNames = actualResponse_.tableNames;
@@ -7865,6 +8045,9 @@ RawGetRecordsFromCollectionResponse& getRecordsFromCollectionRaw( const GetRecor
 template<typename TResponse> 
 GetRecordsFromCollectionResponse<TResponse> getRecordsFromCollection( const GetRecordsFromCollectionRequest& request_ ) const
 {
+    if (request_.encoding != "binary")
+        throw GPUdbException( "This function only supports binary encoding" );
+
     RawGetRecordsFromCollectionResponse actualResponse_;
     submitRequest("/get/records/fromcollection", request_, actualResponse_, false);
     GetRecordsFromCollectionResponse<TResponse> response_;
@@ -7903,6 +8086,9 @@ template<typename TResponse>
 GetRecordsFromCollectionResponse<TResponse>& getRecordsFromCollection( const GetRecordsFromCollectionRequest& request_,
                                                                        GetRecordsFromCollectionResponse<TResponse>& response_ ) const
 {
+    if (request_.encoding != "binary")
+        throw GPUdbException( "This function only supports binary encoding" );
+
     RawGetRecordsFromCollectionResponse actualResponse_;
     submitRequest("/get/records/fromcollection", request_, actualResponse_, false);
     response_.tableName = actualResponse_.tableName;
@@ -8053,6 +8239,9 @@ template<typename TResponse>
 GetRecordsFromCollectionResponse<TResponse> getRecordsFromCollection( const ::avro::ValidSchema& schema_,
                                                                       const GetRecordsFromCollectionRequest& request_ ) const
 {
+    if (request_.encoding != "binary")
+        throw GPUdbException( "This function only supports binary encoding" );
+
     RawGetRecordsFromCollectionResponse actualResponse_;
     submitRequest("/get/records/fromcollection", request_, actualResponse_, false);
     GetRecordsFromCollectionResponse<TResponse> response_;
@@ -8089,6 +8278,9 @@ template<typename TResponse>
 GetRecordsFromCollectionResponse<TResponse> getRecordsFromCollection( const Type& type_,
                                                                       const GetRecordsFromCollectionRequest& request_ ) const
 {
+    if (request_.encoding != "binary")
+        throw GPUdbException( "This function only supports binary encoding" );
+
     RawGetRecordsFromCollectionResponse actualResponse_;
     submitRequest("/get/records/fromcollection", request_, actualResponse_, false);
     GetRecordsFromCollectionResponse<TResponse> response_;
@@ -8129,6 +8321,9 @@ GetRecordsFromCollectionResponse<TResponse>& getRecordsFromCollection( const ::a
                                                                        const GetRecordsFromCollectionRequest& request_,
                                                                        GetRecordsFromCollectionResponse<TResponse>& response_ ) const
 {
+    if (request_.encoding != "binary")
+        throw GPUdbException( "This function only supports binary encoding" );
+
     RawGetRecordsFromCollectionResponse actualResponse_;
     submitRequest("/get/records/fromcollection", request_, actualResponse_, false);
     response_.tableName = actualResponse_.tableName;
@@ -8168,6 +8363,9 @@ GetRecordsFromCollectionResponse<TResponse>& getRecordsFromCollection( const Typ
                                                                        const GetRecordsFromCollectionRequest& request_,
                                                                        GetRecordsFromCollectionResponse<TResponse>& response_ ) const
 {
+    if (request_.encoding != "binary")
+        throw GPUdbException( "This function only supports binary encoding" );
+
     RawGetRecordsFromCollectionResponse actualResponse_;
     submitRequest("/get/records/fromcollection", request_, actualResponse_, false);
     response_.tableName = actualResponse_.tableName;
@@ -9524,9 +9722,9 @@ InsertRecordsRandomResponse& insertRecordsRandom( const std::string& tableName,
  * and any additional optional parameter (e.g. color). To have a symbol used
  * for rendering create a table with a string column named 'SYMBOLCODE' (along
  * with 'x' or 'y' for example). Then when the table is rendered (via <a
- * href="../rest/wms_rest.html" target="_top">WMS</a>) if the 'dosymbology'
- * parameter is 'true' then the value of the 'SYMBOLCODE' column is used to
- * pick the symbol displayed for each point.
+ * href="../../api/rest/wms_rest.html" target="_top">WMS</a>) if the
+ * 'dosymbology' parameter is 'true' then the value of the 'SYMBOLCODE' column
+ * is used to pick the symbol displayed for each point.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -9544,9 +9742,9 @@ InsertSymbolResponse insertSymbol( const InsertSymbolRequest& request_ ) const;
  * and any additional optional parameter (e.g. color). To have a symbol used
  * for rendering create a table with a string column named 'SYMBOLCODE' (along
  * with 'x' or 'y' for example). Then when the table is rendered (via <a
- * href="../rest/wms_rest.html" target="_top">WMS</a>) if the 'dosymbology'
- * parameter is 'true' then the value of the 'SYMBOLCODE' column is used to
- * pick the symbol displayed for each point.
+ * href="../../api/rest/wms_rest.html" target="_top">WMS</a>) if the
+ * 'dosymbology' parameter is 'true' then the value of the 'SYMBOLCODE' column
+ * is used to pick the symbol displayed for each point.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -9568,9 +9766,9 @@ InsertSymbolResponse& insertSymbol( const InsertSymbolRequest& request_,
  * and any additional optional parameter (e.g. color). To have a symbol used
  * for rendering create a table with a string column named 'SYMBOLCODE' (along
  * with 'x' or 'y' for example). Then when the table is rendered (via <a
- * href="../rest/wms_rest.html" target="_top">WMS</a>) if the 'dosymbology'
- * parameter is 'true' then the value of the 'SYMBOLCODE' column is used to
- * pick the symbol displayed for each point.
+ * href="../../api/rest/wms_rest.html" target="_top">WMS</a>) if the
+ * 'dosymbology' parameter is 'true' then the value of the 'SYMBOLCODE' column
+ * is used to pick the symbol displayed for each point.
  * 
  * @param symbolId  The id of the symbol being added. This is the same id that
  *                  should be in the 'SYMBOLCODE' column for objects using this
@@ -9609,9 +9807,9 @@ InsertSymbolResponse insertSymbol( const std::string& symbolId,
  * and any additional optional parameter (e.g. color). To have a symbol used
  * for rendering create a table with a string column named 'SYMBOLCODE' (along
  * with 'x' or 'y' for example). Then when the table is rendered (via <a
- * href="../rest/wms_rest.html" target="_top">WMS</a>) if the 'dosymbology'
- * parameter is 'true' then the value of the 'SYMBOLCODE' column is used to
- * pick the symbol displayed for each point.
+ * href="../../api/rest/wms_rest.html" target="_top">WMS</a>) if the
+ * 'dosymbology' parameter is 'true' then the value of the 'SYMBOLCODE' column
+ * is used to pick the symbol displayed for each point.
  * 
  * @param symbolId  The id of the symbol being added. This is the same id that
  *                  should be in the 'SYMBOLCODE' column for objects using this
