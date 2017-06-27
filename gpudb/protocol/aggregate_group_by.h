@@ -32,7 +32,7 @@ namespace gpudb
      * 'stddev_pop', 'stddev_samp', 'var', 'var_pop', 'var_samp', 'arg_min',
      * 'arg_max' and 'count_distinct'. The response is returned as a dynamic
      * schema. For details see: <a href="../../concepts/dynamic_schemas.html"
-     * target="_top">dynamic schemas documentation</a>. If the 'result_table'
+     * target="_top">dynamic schemas documentation</a>. If the @a result_table
      * option is provided then the results are stored in a table with the name
      * given in the option and the results are not returned in the response.
      */
@@ -79,13 +79,13 @@ namespace gpudb
          *                      <ul>
          *                              <li> collection_name: Name of a
          *                      collection which is to contain the table
-         *                      specified in 'result_table', otherwise the
+         *                      specified in @a result_table, otherwise the
          *                      table will be a top-level table. If the
          *                      collection does not allow duplicate types and
          *                      it contains a table of the same type as the
          *                      given one, then this table creation request
          *                      will fail. Additionally this option is invalid
-         *                      if @input{table_name} is a collection.
+         *                      if @a tableName is a collection.
          *                              <li> expression: Filter expression to
          *                      apply to the table prior to computing the
          *                      aggregate group by.
@@ -110,7 +110,7 @@ namespace gpudb
          *                      is an unrestricted string (i.e.; not charN)
          *                      type.
          *                              <li> ttl: Sets the TTL of the table
-         *                      specified in 'result_table'. The value must be
+         *                      specified in @a result_table. The value must be
          *                      the desired TTL in minutes.
          *                      </ul>
          *                        Default value is an empty std::map.
@@ -155,13 +155,13 @@ namespace gpudb
          *                      <ul>
          *                              <li> collection_name: Name of a
          *                      collection which is to contain the table
-         *                      specified in 'result_table', otherwise the
+         *                      specified in @a result_table, otherwise the
          *                      table will be a top-level table. If the
          *                      collection does not allow duplicate types and
          *                      it contains a table of the same type as the
          *                      given one, then this table creation request
          *                      will fail. Additionally this option is invalid
-         *                      if @input{table_name} is a collection.
+         *                      if @a tableName is a collection.
          *                              <li> expression: Filter expression to
          *                      apply to the table prior to computing the
          *                      aggregate group by.
@@ -186,7 +186,7 @@ namespace gpudb
          *                      is an unrestricted string (i.e.; not charN)
          *                      type.
          *                              <li> ttl: Sets the TTL of the table
-         *                      specified in 'result_table'. The value must be
+         *                      specified in @a result_table. The value must be
          *                      the desired TTL in minutes.
          *                      </ul>
          *                        Default value is an empty std::map.
@@ -301,7 +301,7 @@ namespace gpudb
      * 'stddev_pop', 'stddev_samp', 'var', 'var_pop', 'var_samp', 'arg_min',
      * 'arg_max' and 'count_distinct'. The response is returned as a dynamic
      * schema. For details see: <a href="../../concepts/dynamic_schemas.html"
-     * target="_top">dynamic schemas documentation</a>. If the 'result_table'
+     * target="_top">dynamic schemas documentation</a>. If the @a result_table
      * option is provided then the results are stored in a table with the name
      * given in the option and the results are not returned in the response.
      */
@@ -413,7 +413,7 @@ namespace gpudb
      * 'stddev_pop', 'stddev_samp', 'var', 'var_pop', 'var_samp', 'arg_min',
      * 'arg_max' and 'count_distinct'. The response is returned as a dynamic
      * schema. For details see: <a href="../../concepts/dynamic_schemas.html"
-     * target="_top">dynamic schemas documentation</a>. If the 'result_table'
+     * target="_top">dynamic schemas documentation</a>. If the @a result_table
      * option is provided then the results are stored in a table with the name
      * given in the option and the results are not returned in the response.
      */

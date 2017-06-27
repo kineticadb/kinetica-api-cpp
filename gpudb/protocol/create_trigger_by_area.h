@@ -53,7 +53,9 @@ namespace gpudb
          * Constructs a CreateTriggerByAreaRequest object with the specified
          * parameters.
          * 
-         * @param[in] requestId_  ID for the trigger to be activated.
+         * @param[in] requestId_  User-created ID for the trigger. The ID can
+         *                        be alphanumeric, contain symbols, and must
+         *                        contain at least one character.
          * @param[in] tableNames_  Names of the tables on which the trigger
          *                         will be activated and maintained.
          * @param[in] xColumnName_  Name of a numeric column on which the

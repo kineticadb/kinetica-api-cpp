@@ -34,9 +34,9 @@ namespace gpudb
          * parameters.
          * 
          * @param[in] triggerIds_  List of IDs of the triggers whose
-         *                         information to be retrieved. Empty list
-         *                         means retrieve information on all active
-         *                         triggers.
+         *                         information is to be retrieved. An empty
+         *                         list means information will be retrieved on
+         *                         all active triggers.
          * @param[in] options_  Optional parameters.  Default value is an empty
          *                      std::map.
          * 

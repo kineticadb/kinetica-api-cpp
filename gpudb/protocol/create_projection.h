@@ -51,7 +51,9 @@ namespace gpudb
          *                      <ul>
          *                              <li> collection_name: Name of a
          *                      collection to which the projection is to be
-         *                      assigned as a child.
+         *                      assigned as a child. If the collection provided
+         *                      is non-existent, the collection will be
+         *                      automatically created.
          *                              <li> expression: An optional filter
          *                      expression to be applied to the source table
          *                      prior to the projection.

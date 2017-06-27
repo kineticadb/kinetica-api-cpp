@@ -49,7 +49,9 @@ namespace gpudb
          * Constructs a CreateTriggerByRangeRequest object with the specified
          * parameters.
          * 
-         * @param[in] requestId_  ID for the trigger request.
+         * @param[in] requestId_  User-created ID for the trigger. The ID can
+         *                        be alphanumeric, contain symbols, and must
+         *                        contain at least one character.
          * @param[in] tableNames_  Tables on which the trigger will be active.
          * @param[in] columnName_  Name of a numeric column_name on which the
          *                         trigger is activated.

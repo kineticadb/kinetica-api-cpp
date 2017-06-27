@@ -67,8 +67,10 @@ namespace gpudb
          *                      <ul>
          *                              <li> collection_name: Name of a
          *                      collection which is to contain the join table.
-         *                      If empty, then the join table will be a
-         *                      top-level table.
+         *                      If the collection provided is non-existent, the
+         *                      collection will be automatically created. If
+         *                      empty, then the join table will be a top-level
+         *                      table.
          *                              <li> max_query_dimensions: The maximum
          *                      number of tables in a joined table that can be
          *                      accessed by a query and are not equated by a

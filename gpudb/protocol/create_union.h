@@ -53,6 +53,8 @@ namespace gpudb
          *                      <ul>
          *                              <li> collection_name: Name of a
          *                      collection which is to contain the union. If
+         *                      the collection provided is non-existent, the
+         *                      collection will be automatically created. If
          *                      empty, then the union will be a top-level
          *                      table.
          *                              <li> materialize_on_gpu: If 'true' then
