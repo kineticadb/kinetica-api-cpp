@@ -37,8 +37,7 @@ namespace gpudb
          *                       empty string.
          * @param[in] authorization_  No longer used. User can pass an empty
          *                            string.
-         * @param[in] options_  Optional parameters.  Default value is an empty
-         *                      std::map.
+         * @param[in] options_  Optional parameters.
          * 
          */
         AdminShutdownRequest(const std::string& exitType_, const std::string& authorization_, const std::map<std::string, std::string>& options_):

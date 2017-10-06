@@ -44,8 +44,7 @@ namespace gpudb
          * @param[in] yColumnName_  Name of the column containing the y
          *                          coordinates of the points for the operation
          *                          being performed.
-         * @param[in] options_  Optional parameters.  Default value is an empty
-         *                      std::map.
+         * @param[in] options_  Optional parameters.
          * 
          */
         AggregateConvexHullRequest(const std::string& tableName_, const std::string& xColumnName_, const std::string& yColumnName_, const std::map<std::string, std::string>& options_):

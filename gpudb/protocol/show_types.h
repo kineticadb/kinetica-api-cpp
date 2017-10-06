@@ -39,8 +39,7 @@ namespace gpudb
          *                     /create/type.
          * @param[in] label_  Option string that was supplied by user in a call
          *                    to /create/type.
-         * @param[in] options_  Optional parameters.  Default value is an empty
-         *                      std::map.
+         * @param[in] options_  Optional parameters.
          * 
          */
         ShowTypesRequest(const std::string& typeId_, const std::string& label_, const std::map<std::string, std::string>& options_):

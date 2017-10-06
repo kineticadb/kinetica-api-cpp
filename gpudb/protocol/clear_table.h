@@ -36,13 +36,24 @@ namespace gpudb
          * 
          * @param[in] tableName_  Name of the table to be cleared. Must be an
          *                        existing table. Empty string clears all
-         *                        available tables.  Default value is an empty
-         *                        string.
+         *                        available tables.
          * @param[in] authorization_  No longer used. User can pass an empty
-         *                            string.  Default value is an empty
          *                            string.
-         * @param[in] options_  Optional parameters.  Default value is an empty
-         *                      std::map.
+         * @param[in] options_  Optional parameters.
+         *                      <ul>
+         *                              <li>
+         *                      gpudb::clear_table_no_error_if_not_exists: If
+         *                      @a true and if the table specified in @a
+         *                      tableName does not exist no error is returned.
+         *                      If @a false and if the table specified in @a
+         *                      tableName does not exist then an error is
+         *                      returned.
+         *                      <ul>
+         *                              <li> gpudb::clear_table_true
+         *                              <li> gpudb::clear_table_false
+         *                      </ul>
+         *                      The default value is gpudb::clear_table_false.
+         *                      </ul>
          * 
          */
         ClearTableRequest(const std::string& tableName_, const std::string& authorization_, const std::map<std::string, std::string>& options_):

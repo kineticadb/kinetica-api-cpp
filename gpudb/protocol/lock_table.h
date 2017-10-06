@@ -14,12 +14,12 @@ namespace gpudb
      * #lockTable(const LockTableRequest&) const}.
      * <p>
      * Manages global access to a table's data.  By default a table has a @a
-     * lockType of @a unlock, indicating all operations are permitted.  A user
-     * may request a @a read-only or a @a write-only lock, after which only
-     * read or write operations, respectively, are permitted on the table until
-     * the lock is removed.  When @a lockType is @a disable then no operations
-     * are permitted on the table.  The lock status can be queried by setting
-     * @a lockType to @a status.
+     * lockType of @a read-write, indicating all operations are permitted.  A
+     * user may request a @a read-only or a @a write-only lock, after which
+     * only read or write operations, respectively, are permitted on the table
+     * until the lock is removed.  When @a lockType is @a no-access then no
+     * operations are permitted on the table.  The lock status can be queried
+     * by setting @a lockType to @a status.
      */
     struct LockTableRequest
     {
@@ -43,11 +43,21 @@ namespace gpudb
          * @param[in] lockType_  The type of lock being applied to the table.
          *                       Setting it to @a status will return the
          *                       current lock status of the table without
-         *                       changing it. Values: 'status', 'disable',
-         *                       'read-only', 'write-only', 'unlock'.
-         *                         Default value is 'status'.
-         * @param[in] options_  Optional parameters.  Default value is an empty
-         *                      std::map.
+         *                       changing it.
+         *                       <ul>
+         *                               <li> gpudb::lock_table_status: Show
+         *                       locked status
+         *                               <li> gpudb::lock_table_no_access:
+         *                       Allow no read/write operations
+         *                               <li> gpudb::lock_table_read_only:
+         *                       Allow only read operations
+         *                               <li> gpudb::lock_table_write_only:
+         *                       Allow only write operations
+         *                               <li> gpudb::lock_table_read_write:
+         *                       Allow all read/write operations
+         *                       </ul>
+         *                       The default value is gpudb::lock_table_status.
+         * @param[in] options_  Optional parameters.
          * 
          */
         LockTableRequest(const std::string& tableName_, const std::string& lockType_, const std::map<std::string, std::string>& options_):
@@ -119,12 +129,12 @@ namespace gpudb
      * #lockTable(const LockTableRequest&) const}.
      * <p>
      * Manages global access to a table's data.  By default a table has a @a
-     * lockType of @a unlock, indicating all operations are permitted.  A user
-     * may request a @a read-only or a @a write-only lock, after which only
-     * read or write operations, respectively, are permitted on the table until
-     * the lock is removed.  When @a lockType is @a disable then no operations
-     * are permitted on the table.  The lock status can be queried by setting
-     * @a lockType to @a status.
+     * lockType of @a read-write, indicating all operations are permitted.  A
+     * user may request a @a read-only or a @a write-only lock, after which
+     * only read or write operations, respectively, are permitted on the table
+     * until the lock is removed.  When @a lockType is @a no-access then no
+     * operations are permitted on the table.  The lock status can be queried
+     * by setting @a lockType to @a status.
      */
     struct LockTableResponse
     {

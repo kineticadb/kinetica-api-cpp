@@ -58,12 +58,13 @@ namespace gpudb
          *                       parameters.
          * @param[in] options_  Optional parameters.
          *                      <ul>
-         *                              <li> value_column: The name of the
-         *                      column to use when calculating the bin values
-         *                      (values are summed).  The column must be a
-         *                      numerical type (int, double, long, float).
+         *                              <li>
+         *                      gpudb::aggregate_histogram_value_column: The
+         *                      name of the column to use when calculating the
+         *                      bin values (values are summed).  The column
+         *                      must be a numerical type (int, double, long,
+         *                      float).
          *                      </ul>
-         *                        Default value is an empty std::map.
          * 
          */
         AggregateHistogramRequest(const std::string& tableName_, const std::string& columnName_, const double start_, const double end_, const double interval_, const std::map<std::string, std::string>& options_):

@@ -3,70 +3,58 @@
  *
  *  DO NOT EDIT DIRECTLY.
  */
-#ifndef __ADMIN_GET_SHARD_ASSIGNMENTS_H__
-#define __ADMIN_GET_SHARD_ASSIGNMENTS_H__
-
-    /**
-     * @private
-     */
+#ifndef __ADMIN_SHOW_SHARDS_H__
+#define __ADMIN_SHOW_SHARDS_H__
 
 namespace gpudb
 {
 
     /**
-     * @private
      * A set of input parameters for {@link
-     * #adminGetShardAssignments(const AdminGetShardAssignmentsRequest&) const}.
+     * #adminShowShards(const AdminShowShardsRequest&) const}.
      * <p>
+     * Show the mapping of shards to the corresponding rank and tom.  The
+     * response message contains list of 16384 (total number of shards in the
+     * system) Rank and TOM numbers corresponding to each shard.
      */
-    struct AdminGetShardAssignmentsRequest
+    struct AdminShowShardsRequest
     {
 
         /**
-         * @private
-         * Constructs an AdminGetShardAssignmentsRequest object with default
-         * parameter values.
+         * Constructs an AdminShowShardsRequest object with default parameter
+         * values.
          */
-        AdminGetShardAssignmentsRequest() :
+        AdminShowShardsRequest() :
             options(std::map<std::string, std::string>())
         {
         }
 
         /**
-         * @private
-         * Constructs an AdminGetShardAssignmentsRequest object with the
-         * specified parameters.
+         * Constructs an AdminShowShardsRequest object with the specified
+         * parameters.
          * 
-         * @param[in] options_
+         * @param[in] options_  Optional parameters.
          * 
          */
-        AdminGetShardAssignmentsRequest(const std::map<std::string, std::string>& options_):
+        AdminShowShardsRequest(const std::map<std::string, std::string>& options_):
             options( options_ )
         {
         }
-
-    /**
-     * @private
-     */
 
         std::map<std::string, std::string> options;
     };
 }
 
-    /**
-     * @private
-     */
-
 namespace avro
 {
-    template<> struct codec_traits<gpudb::AdminGetShardAssignmentsRequest>
+    template<> struct codec_traits<gpudb::AdminShowShardsRequest>
     {
-        static void encode(Encoder& e, const gpudb::AdminGetShardAssignmentsRequest& v)
+        static void encode(Encoder& e, const gpudb::AdminShowShardsRequest& v)
         {
             ::avro::encode(e, v.options);
         }
 
-        static void decode(Decoder& d, gpudb::AdminGetShardAssignmentsRequest& v)
+        static void decode(Decoder& d, gpudb::AdminShowShardsRequest& v)
         {
             if (::avro::ResolvingDecoder *rd = dynamic_cast< ::avro::ResolvingDecoder*>(&d))
             {
@@ -93,60 +81,49 @@ namespace avro
     };
 }
 
-    /**
-     * @private
-     */
-
 namespace gpudb
 {
 
     /**
-     * @private
      * A set of output parameters for {@link
-     * #adminGetShardAssignments(const AdminGetShardAssignmentsRequest&) const}.
+     * #adminShowShards(const AdminShowShardsRequest&) const}.
      * <p>
+     * Show the mapping of shards to the corresponding rank and tom.  The
+     * response message contains list of 16384 (total number of shards in the
+     * system) Rank and TOM numbers corresponding to each shard.
      */
-    struct AdminGetShardAssignmentsResponse
+    struct AdminShowShardsResponse
     {
 
         /**
-         * @private
-         * Constructs an AdminGetShardAssignmentsResponse object with default
-         * parameter values.
+         * Constructs an AdminShowShardsResponse object with default parameter
+         * values.
          */
-        AdminGetShardAssignmentsResponse() :
+        AdminShowShardsResponse() :
             version(int64_t()),
-            shardAssignmentsRank(std::vector<int32_t>()),
-            shardAssignmentsTom(std::vector<int32_t>())
+            rank(std::vector<int32_t>()),
+            tom(std::vector<int32_t>())
         {
         }
 
-    /**
-     * @private
-     */
-
         int64_t version;
-        std::vector<int32_t> shardAssignmentsRank;
-        std::vector<int32_t> shardAssignmentsTom;
+        std::vector<int32_t> rank;
+        std::vector<int32_t> tom;
     };
 }
 
-    /**
-     * @private
-     */
-
 namespace avro
 {
-    template<> struct codec_traits<gpudb::AdminGetShardAssignmentsResponse>
+    template<> struct codec_traits<gpudb::AdminShowShardsResponse>
     {
-        static void encode(Encoder& e, const gpudb::AdminGetShardAssignmentsResponse& v)
+        static void encode(Encoder& e, const gpudb::AdminShowShardsResponse& v)
         {
             ::avro::encode(e, v.version);
-            ::avro::encode(e, v.shardAssignmentsRank);
-            ::avro::encode(e, v.shardAssignmentsTom);
+            ::avro::encode(e, v.rank);
+            ::avro::encode(e, v.tom);
         }
 
-        static void decode(Decoder& d, gpudb::AdminGetShardAssignmentsResponse& v)
+        static void decode(Decoder& d, gpudb::AdminShowShardsResponse& v)
         {
             if (::avro::ResolvingDecoder *rd = dynamic_cast< ::avro::ResolvingDecoder*>(&d))
             {
@@ -161,11 +138,11 @@ namespace avro
                             break;
 
                         case 1:
-                            ::avro::decode(d, v.shardAssignmentsRank);
+                            ::avro::decode(d, v.rank);
                             break;
 
                         case 2:
-                            ::avro::decode(d, v.shardAssignmentsTom);
+                            ::avro::decode(d, v.tom);
                             break;
 
                         default:
@@ -176,8 +153,8 @@ namespace avro
             else
             {
                 ::avro::decode(d, v.version);
-                ::avro::decode(d, v.shardAssignmentsRank);
-                ::avro::decode(d, v.shardAssignmentsTom);
+                ::avro::decode(d, v.rank);
+                ::avro::decode(d, v.tom);
             }
         }
     };

@@ -34,9 +34,8 @@ namespace gpudb
          *                    run ID is not found or the proc instance has
          *                    already completed, this does nothing. If not
          *                    specified, all running proc instances will be
-         *                    killed.  Default value is an empty string.
-         * @param[in] options_  Optional parameters.  Default value is an empty
-         *                      std::map.
+         *                    killed.
+         * @param[in] options_  Optional parameters.
          * 
          */
         KillProcRequest(const std::string& runId_, const std::map<std::string, std::string>& options_):

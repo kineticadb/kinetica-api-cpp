@@ -57,8 +57,7 @@ namespace gpudb
          *                         trigger is activated.
          * @param[in] min_  The lower bound (inclusive) for the trigger range.
          * @param[in] max_  The upper bound (inclusive) for the trigger range.
-         * @param[in] options_  Optional parameters.  Default value is an empty
-         *                      std::map.
+         * @param[in] options_  Optional parameters.
          * 
          */
         CreateTriggerByRangeRequest(const std::string& requestId_, const std::vector<std::string>& tableNames_, const std::string& columnName_, const double min_, const double max_, const std::map<std::string, std::string>& options_):

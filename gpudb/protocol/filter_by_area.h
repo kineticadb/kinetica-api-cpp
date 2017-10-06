@@ -52,8 +52,7 @@ namespace gpudb
          *                       view containing the results. Has the same
          *                       naming restrictions as <a
          *                       href="../../concepts/tables.html"
-         *                       target="_top">tables</a>.  Default value is an
-         *                       empty string.
+         *                       target="_top">tables</a>.
          * @param[in] xColumnName_  Name of the column containing the x values
          *                          to be filtered.
          * @param[in] xVector_  List of x coordinates of the vertices of the
@@ -62,8 +61,7 @@ namespace gpudb
          *                          to be filtered.
          * @param[in] yVector_  List of y coordinates of the vertices of the
          *                      polygon representing the area to be filtered.
-         * @param[in] options_  Optional parameters.  Default value is an empty
-         *                      std::map.
+         * @param[in] options_  Optional parameters.
          * 
          */
         FilterByAreaRequest(const std::string& tableName_, const std::string& viewName_, const std::string& xColumnName_, const std::vector<double>& xVector_, const std::string& yColumnName_, const std::vector<double>& yVector_, const std::map<std::string, std::string>& options_):

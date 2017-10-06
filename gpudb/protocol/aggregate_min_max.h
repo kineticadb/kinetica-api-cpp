@@ -39,8 +39,7 @@ namespace gpudb
          * @param[in] columnName_  Name of a column or an expression of one or
          *                         more column on which the min-max will be
          *                         calculated.
-         * @param[in] options_  Optional parameters.  Default value is an empty
-         *                      std::map.
+         * @param[in] options_  Optional parameters.
          * 
          */
         AggregateMinMaxRequest(const std::string& tableName_, const std::string& columnName_, const std::map<std::string, std::string>& options_):

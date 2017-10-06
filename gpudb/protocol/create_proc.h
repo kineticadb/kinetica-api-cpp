@@ -39,16 +39,32 @@ namespace gpudb
          * 
          * @param[in] procName_  Name of the proc to be created. Must not be
          *                       the name of a currently existing proc.
-         * @param[in] executionMode_  The execution mode of the proc. Values:
-         *                            'distributed', 'nondistributed'.
-         *                              Default value is 'distributed'.
+         * @param[in] executionMode_  The execution mode of the proc.
+         *                            <ul>
+         *                                    <li>
+         *                            gpudb::create_proc_distributed: Input
+         *                            table data will be divided into data
+         *                            segments that are distributed across all
+         *                            nodes in the cluster, and the proc
+         *                            command will be invoked once per data
+         *                            segment in parallel. Output table data
+         *                            from each invocation will be saved to the
+         *                            same node as the corresponding input
+         *                            data.
+         *                                    <li>
+         *                            gpudb::create_proc_nondistributed: The
+         *                            proc command will be invoked only once
+         *                            per execution, and will not have access
+         *                            to any input or output table data.
+         *                            </ul>
+         *                            The default value is
+         *                            gpudb::create_proc_distributed.
          * @param[in] files_  A map of the files that make up the proc. The
          *                    keys of the map are file names, and the values
          *                    are the binary contents of the files. The file
          *                    names may include subdirectory names (e.g.
          *                    'subdir/file') but must not resolve to a
-         *                    directory above the root for the proc.  Default
-         *                    value is an empty std::map.
+         *                    directory above the root for the proc.
          * @param[in] command_  The command (excluding arguments) that will be
          *                      invoked when the proc is executed. It will be
          *                      invoked from the directory containing the proc
@@ -62,13 +78,10 @@ namespace gpudb
          *                      in that directory, it must be preceded with
          *                      './' as per Linux convention. If not specified,
          *                      and exactly one file is provided in @a files,
-         *                      that file will be invoked.  Default value is an
-         *                      empty string.
+         *                      that file will be invoked.
          * @param[in] args_  An array of command-line arguments that will be
          *                   passed to @a command when the proc is executed.
-         *                   Default value is an empty std::vector.
-         * @param[in] options_  Optional parameters.  Default value is an empty
-         *                      std::map.
+         * @param[in] options_  Optional parameters.
          * 
          */
         CreateProcRequest(const std::string& procName_, const std::string& executionMode_, const std::map<std::string, std::vector<uint8_t> >& files_, const std::string& command_, const std::vector<std::string>& args_, const std::map<std::string, std::string>& options_):

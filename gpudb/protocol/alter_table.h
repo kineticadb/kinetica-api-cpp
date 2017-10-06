@@ -13,26 +13,40 @@ namespace gpudb
      * A set of input parameters for {@link
      * #alterTable(const AlterTableRequest&) const}.
      * <p>
-     * Apply various modifications to a table or collection. Available
-     * modifications include:
+     * Apply various modifications to a table, view, or collection.  The
+     * availble
+     * modifications include the following:
      * <p>
-     *      Creating or deleting an index on a particular column. This can
-     * speed up certain search queries (such as {@link
-     * #getRecordsRaw(const GetRecordsRequest&) const}, {@link
-     * #deleteRecords(const DeleteRecordsRequest&) const}, {@link
-     * #updateRecordsRaw(const RawUpdateRecordsRequest&) const}) when using
-     * expressions containing equality or relational operators on indexed
-     * columns. This only applies to tables.
+     * Create or delete an index on a particular column. This can speed up
+     * certain search queries
+     * (such as {@link #getRecordsRaw(const GetRecordsRequest&) const},
+     * {@link #deleteRecords(const DeleteRecordsRequest&) const}, {@link
+     * #updateRecordsRaw(const RawUpdateRecordsRequest&) const})
+     * when using expressions containing equality or relational operators on
+     * indexed columns. This
+     * only applies to tables.
      * <p>
-     *      Setting the time-to-live (TTL). This can be applied to tables,
-     * views, or collections.  When applied to collections, every table & view
-     * within the collection will have its TTL set to the given value.
+     * Set the time-to-live (TTL). This can be applied to tables, views, or
+     * collections.  When
+     * applied to collections, every table & view within the collection will
+     * have its TTL set to the
+     * given value.
      * <p>
-     *      Making a table protected or not. Protected tables have their TTLs
-     * set to not automatically expire. This can be applied to tables, views,
-     * and collections.
+     * Set the global access mode (i.e. locking) for a table. The mode can be
+     * set to 'no-access', 'read-only',
+     * 'write-only' or 'read-write'.
      * <p>
-     *      Allowing homogeneous tables within a collection.
+     * Make a table protected or not. Protected tables have their TTLs set to
+     * not automatically
+     * expire. This can be applied to tables, views, and collections.
+     * <p>
+     * Allow homogeneous tables within a collection.
+     * <p>
+     * Manage a table's columns--a column can be added, removed, or have its
+     * <a href="../../concepts/types.html" target="_top">type and
+     * properties</a> modified.
+     * <p>
+     * Set or unset compression for a column.
      */
     struct AlterTableRequest
     {
@@ -56,42 +70,130 @@ namespace gpudb
          * @param[in] tableName_  Table on which the operation will be
          *                        performed. Must be an existing table, view,
          *                        or collection.
-         * @param[in] action_  Modification operation to be applied Values:
-         *                     'create_index', 'delete_index',
-         *                     'allow_homogeneous_tables', 'protected', 'ttl',
-         *                     'add_column', 'delete_column', 'change_column',
-         *                     'rename_table'.
+         * @param[in] action_  Modification operation to be applied
+         *                     <ul>
+         *                             <li>
+         *                     gpudb::alter_table_allow_homogeneous_tables:
+         *                     Sets whether homogeneous tables are allowed in
+         *                     the given collection. This action is only valid
+         *                     if @a tableName is a collection. The @a value
+         *                     must be either 'true' or 'false'.
+         *                             <li> gpudb::alter_table_create_index:
+         *                     Creates an index on the column name specified in
+         *                     @a value. If this column is already indexed, an
+         *                     error will be returned.
+         *                             <li> gpudb::alter_table_delete_index:
+         *                     Deletes an existing index on the column name
+         *                     specified in @a value. If this column does not
+         *                     have indexing turned on, an error will be
+         *                     returned.
+         *                             <li>
+         *                     gpudb::alter_table_move_to_collection: Move a
+         *                     table into a collection @a value.
+         *                             <li> gpudb::alter_table_protected: Sets
+         *                     whether the given @a tableName should be
+         *                     protected or not. The @a value must be either
+         *                     'true' or 'false'.
+         *                             <li> gpudb::alter_table_rename_table:
+         *                     Rename a table, view or collection to @a value.
+         *                     Has the same naming restrictions as <a
+         *                     href="../../concepts/tables.html"
+         *                     target="_top">tables</a>.
+         *                             <li> gpudb::alter_table_ttl: Sets the
+         *                     TTL of the table, view, or collection specified
+         *                     in @a tableName. The @a value must be the
+         *                     desired TTL in minutes.
+         *                             <li> gpudb::alter_table_add_column: Add
+         *                     the column specified in @a value to the table
+         *                     specified in @a tableName.  Use @a column_type
+         *                     and @a column_properties in @a options to set
+         *                     the column's type and properties, respectively.
+         *                             <li> gpudb::alter_table_change_column:
+         *                     Change type and properties of the column
+         *                     specified in @a value.  Use @a column_type and
+         *                     @a column_properties in @a options to set the
+         *                     column's type and properties, respectively.
+         *                             <li>
+         *                     gpudb::alter_table_set_column_compression:
+         *                     Modify the compression setting on the column
+         *                     specified in @a value.
+         *                             <li> gpudb::alter_table_delete_column:
+         *                     Delete the column specified in @a value from the
+         *                     table specified in @a tableName.
+         *                             <li>
+         *                     gpudb::alter_table_create_foreign_key: Create a
+         *                     foreign key using the format 'source_column
+         *                     references target_table(primary_key_column) [ as
+         *                     <foreign_key_name> ]'.
+         *                             <li>
+         *                     gpudb::alter_table_delete_foreign_key: Delete a
+         *                     foreign key.  The @a value should be the
+         *                     <foreign_key_name> or the string used to define
+         *                     the foreign key.
+         *                             <li>
+         *                     gpudb::alter_table_set_global_access_mode: Set
+         *                     the global access mode (i.e. locking) for the
+         *                     table specified in @a tableName. Specify the
+         *                     access mode in @a value. Valid modes are
+         *                     'no-access', 'read-only', 'write-only' and
+         *                     'read-write'.
+         *                     </ul>
          * @param[in] value_  The value of the modification. May be a column
-         *                    name, 'true' or 'false', or a TTL depending on @a
-         *                    action.
+         *                    name, 'true' or 'false', a TTL, or the global
+         *                    access mode depending on @a action.
          * @param[in] options_  Optional parameters.
          *                      <ul>
-         *                              <li> column_default_value: when adding
-         *                      a column: set a default value, for existing
-         *                      data.
-         *                              <li> column_properties: when adding or
-         *                      changing a column: set the column properties
-         *                      (strings, separated by a comma: data,
-         *                      store_only, text_search, char8, int8 etc).
-         *                              <li> column_type: when adding or
-         *                      changing a column: set the column type
-         *                      (strings, separated by a comma: int, double,
-         *                      string, null etc).
-         *                              <li> validate_change_column: Validate
-         *                      the type change before applying column_change
-         *                      request. Default is true (if option is
-         *                      missing). If True, then validate all values. A
-         *                      value too large (or too long) for the new type
-         *                      will prevent any change. If False, then when a
-         *                      value is too large or long, it will be
-         *                      truncated. Values: 'true', 'false'.
-         *                              <li> copy_values_from_column: when
-         *                      adding or changing a column: enter column name
-         *                      - from where to copy values.
-         *                              <li> rename_column: new column name
-         *                      (using change_column).
+         *                              <li>
+         *                      gpudb::alter_table_column_default_value: When
+         *                      adding a column, set a default value for
+         *                      existing records.
+         *                              <li>
+         *                      gpudb::alter_table_column_properties: When
+         *                      adding or changing a column, set the column
+         *                      properties (strings, separated by a comma:
+         *                      data, store_only, text_search, char8, int8
+         *                      etc).
+         *                              <li> gpudb::alter_table_column_type:
+         *                      When adding or changing a column, set the
+         *                      column type (strings, separated by a comma:
+         *                      int, double, string, null etc).
+         *                              <li>
+         *                      gpudb::alter_table_compression_type: When
+         *                      setting column compression (@a
+         *                      set_column_compression for @a action),
+         *                      compression type to use: @a none (to use no
+         *                      compression) or a valid compression type.
+         *                      <ul>
+         *                              <li> gpudb::alter_table_none
+         *                              <li> gpudb::alter_table_snappy
+         *                              <li> gpudb::alter_table_lz4
+         *                              <li> gpudb::alter_table_lz4hc
          *                      </ul>
-         *                        Default value is an empty std::map.
+         *                      The default value is gpudb::alter_table_snappy.
+         *                              <li>
+         *                      gpudb::alter_table_copy_values_from_column:
+         *                      When adding or changing a column, enter a
+         *                      column name from the same table being altered
+         *                      to use as a source for the column being
+         *                      added/changed; values will be copied from this
+         *                      source column into the new/modified column.
+         *                              <li> gpudb::alter_table_rename_column:
+         *                      When changing a column, specify new column
+         *                      name.
+         *                              <li>
+         *                      gpudb::alter_table_validate_change_column: When
+         *                      changing a column, validate the change before
+         *                      applying it. If @a true, then validate all
+         *                      values. A value too large (or too long) for the
+         *                      new type will prevent any change. If @a false,
+         *                      then when a value is too large or long, it will
+         *                      be truncated.
+         *                      <ul>
+         *                              <li> gpudb::alter_table_true: true
+         *                              <li> gpudb::alter_table_false: false
+         *                      </ul>
+         *                      The default value is gpudb::alter_table_true.
+         *                      </ul>
          * 
          */
         AlterTableRequest(const std::string& tableName_, const std::string& action_, const std::string& value_, const std::map<std::string, std::string>& options_):
@@ -170,26 +272,40 @@ namespace gpudb
      * A set of output parameters for {@link
      * #alterTable(const AlterTableRequest&) const}.
      * <p>
-     * Apply various modifications to a table or collection. Available
-     * modifications include:
+     * Apply various modifications to a table, view, or collection.  The
+     * availble
+     * modifications include the following:
      * <p>
-     *      Creating or deleting an index on a particular column. This can
-     * speed up certain search queries (such as {@link
-     * #getRecordsRaw(const GetRecordsRequest&) const}, {@link
-     * #deleteRecords(const DeleteRecordsRequest&) const}, {@link
-     * #updateRecordsRaw(const RawUpdateRecordsRequest&) const}) when using
-     * expressions containing equality or relational operators on indexed
-     * columns. This only applies to tables.
+     * Create or delete an index on a particular column. This can speed up
+     * certain search queries
+     * (such as {@link #getRecordsRaw(const GetRecordsRequest&) const},
+     * {@link #deleteRecords(const DeleteRecordsRequest&) const}, {@link
+     * #updateRecordsRaw(const RawUpdateRecordsRequest&) const})
+     * when using expressions containing equality or relational operators on
+     * indexed columns. This
+     * only applies to tables.
      * <p>
-     *      Setting the time-to-live (TTL). This can be applied to tables,
-     * views, or collections.  When applied to collections, every table & view
-     * within the collection will have its TTL set to the given value.
+     * Set the time-to-live (TTL). This can be applied to tables, views, or
+     * collections.  When
+     * applied to collections, every table & view within the collection will
+     * have its TTL set to the
+     * given value.
      * <p>
-     *      Making a table protected or not. Protected tables have their TTLs
-     * set to not automatically expire. This can be applied to tables, views,
-     * and collections.
+     * Set the global access mode (i.e. locking) for a table. The mode can be
+     * set to 'no-access', 'read-only',
+     * 'write-only' or 'read-write'.
      * <p>
-     *      Allowing homogeneous tables within a collection.
+     * Make a table protected or not. Protected tables have their TTLs set to
+     * not automatically
+     * expire. This can be applied to tables, views, and collections.
+     * <p>
+     * Allow homogeneous tables within a collection.
+     * <p>
+     * Manage a table's columns--a column can be added, removed, or have its
+     * <a href="../../concepts/types.html" target="_top">type and
+     * properties</a> modified.
+     * <p>
+     * Set or unset compression for a column.
      */
     struct AlterTableResponse
     {
@@ -201,13 +317,21 @@ namespace gpudb
         AlterTableResponse() :
             tableName(std::string()),
             action(std::string()),
-            value(std::string())
+            value(std::string()),
+            typeId(std::string()),
+            typeDefinition(std::string()),
+            properties(std::map<std::string, std::vector<std::string> >()),
+            label(std::string())
         {
         }
 
         std::string tableName;
         std::string action;
         std::string value;
+        std::string typeId;
+        std::string typeDefinition;
+        std::map<std::string, std::vector<std::string> > properties;
+        std::string label;
     };
 }
 
@@ -220,6 +344,10 @@ namespace avro
             ::avro::encode(e, v.tableName);
             ::avro::encode(e, v.action);
             ::avro::encode(e, v.value);
+            ::avro::encode(e, v.typeId);
+            ::avro::encode(e, v.typeDefinition);
+            ::avro::encode(e, v.properties);
+            ::avro::encode(e, v.label);
         }
 
         static void decode(Decoder& d, gpudb::AlterTableResponse& v)
@@ -244,6 +372,22 @@ namespace avro
                             ::avro::decode(d, v.value);
                             break;
 
+                        case 3:
+                            ::avro::decode(d, v.typeId);
+                            break;
+
+                        case 4:
+                            ::avro::decode(d, v.typeDefinition);
+                            break;
+
+                        case 5:
+                            ::avro::decode(d, v.properties);
+                            break;
+
+                        case 6:
+                            ::avro::decode(d, v.label);
+                            break;
+
                         default:
                             break;
                     }
@@ -254,6 +398,10 @@ namespace avro
                 ::avro::decode(d, v.tableName);
                 ::avro::decode(d, v.action);
                 ::avro::decode(d, v.value);
+                ::avro::decode(d, v.typeId);
+                ::avro::decode(d, v.typeDefinition);
+                ::avro::decode(d, v.properties);
+                ::avro::decode(d, v.label);
             }
         }
     };

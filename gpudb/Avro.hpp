@@ -185,7 +185,7 @@ namespace gpudb
                     encoder->init(*outputStream);
                     ::avro::encode(*encoder, objects[i]);
                     encoder->flush();
-                    int size = outputStream->byteCount();
+                    size_t size = outputStream->byteCount();
                     std::auto_ptr< ::avro::InputStream> inputStream = ::avro::memoryInputStream(*outputStream);
                     ::avro::StreamReader streamReader(*inputStream);
                     encodedObjects[i].resize(size, 0);

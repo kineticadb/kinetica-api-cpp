@@ -6,48 +6,24 @@
 #ifndef __VISUALIZE_VIDEO_H__
 #define __VISUALIZE_VIDEO_H__
 
+    /**
+     * @private
+     */
+
 namespace gpudb
 {
 
     /**
+     * @private
      * A set of input parameters for {@link
      * #visualizeVideo(const VisualizeVideoRequest&) const}.
      * <p>
-     * Creates raster images of data in the given table based on provided input
-     * parameters. Numerous parameters are required to call this function. Some
-     * of the important parameters are the attributes of the generated images
-     * (@a bgColor, @a width, @a height), the collection of table names on
-     * which this function is to be applied, for which shapes (point, polygon,
-     * tracks) the images are to be created and a user specified session key.
-     * This session key is later used to fetch the generated images. The
-     * operation is synchronous, meaning that a response will not be returned
-     * until the images for all the frames of the video are fully available.
-     * <p>
-     * Once the request has been processed then the generated video frames are
-     * available for download via WMS using STYLES=cached. In this request the
-     * LAYERS parameter should be populated with the session key passed in @a
-     * sessionKey of the visualize video request and the FRAME parameter
-     * indicates which 0-based frame of the video should be returned. All other
-     * WMS parameters are ignored for this mode.
-     * <p>
-     * For instance, if a 20 frame video with the session key 'MY-SESSION-KEY'
-     * was generated, the first frame could be retrieved with the URL:
-     * <p>
-     *     <a href="../rest/wms_rest.html"
-     * target="_top">http://<hostname/ipAddress>:9191/wms?REQUEST=GetMap&STYLES=cached&LAYERS=MY-SESSION-KEY&FRAME=0</a>
-     * <p>
-     * and the last frame could be retrieved with:
-     * <p>
-     *     <a href="../rest/wms_rest.html"
-     * target="_top">http://<hostname/ipAddress>:9191/wms?REQUEST=GetMap&STYLES=cached&LAYERS=MY-SESSION-KEY&FRAME=19</a>
-     * <p>
-     * The response payload provides, among other things, the number of frames
-     * which were created.
      */
     struct VisualizeVideoRequest
     {
 
         /**
+         * @private
          * Constructs a VisualizeVideoRequest object with default parameter
          * values.
          */
@@ -57,6 +33,7 @@ namespace gpudb
             trackIds(std::vector<std::vector<std::string> >()),
             xColumnName(std::string()),
             yColumnName(std::string()),
+            geometryColumnName(std::string()),
             minX(double()),
             maxX(double()),
             minY(double()),
@@ -74,97 +51,160 @@ namespace gpudb
         }
 
         /**
+         * @private
          * Constructs a VisualizeVideoRequest object with the specified
          * parameters.
          * 
-         * @param[in] tableNames_  Names of the tables containing the data for
-         *                         various layers of the resulting video.
-         * @param[in] worldTableNames_  Optional name of the tables containing
-         *                              the data for the entire track when the
-         *                              @a tableNames contains only part of the
-         *                              track data, but the entire track has to
-         *                              be rendered. The number of tables
-         *                              should match the number of tables in
-         *                              the @a tableNames
-         * @param[in] trackIds_  Tracks from the @a tableNames to be rendered.
-         * @param[in] xColumnName_  Name of the column containing the x
-         *                          coordinates.
-         * @param[in] yColumnName_  Name of the column containing the y
-         *                          coordinates.
-         * @param[in] minX_  Lower bound for the x values.
-         * @param[in] maxX_  Upper bound for the x values.
-         * @param[in] minY_  Lower bound for the y values.
-         * @param[in] maxY_  Upper bound for the y values.
-         * @param[in] width_  Width of the generated image.
-         * @param[in] height_  Height of the generated image.
-         * @param[in] projection_  Spatial Reference System (i.e. EPSG Code).
-         *                         Values: 'EPSG:4326', 'PLATE_CARREE',
-         *                         '900913', 'EPSG:900913', '102100',
-         *                         'EPSG:102100', '3857', 'EPSG:3857',
-         *                         'WEB_MERCATOR'.
-         *                           Default value is 'PLATE_CARREE'.
-         * @param[in] bgColor_  Background color of the generated image.
+         * @param[in] tableNames_
+         * @param[in] worldTableNames_
+         * @param[in] trackIds_
+         * @param[in] xColumnName_
+         * @param[in] yColumnName_
+         * @param[in] geometryColumnName_
+         * @param[in] minX_
+         * @param[in] maxX_
+         * @param[in] minY_
+         * @param[in] maxY_
+         * @param[in] width_
+         * @param[in] height_
+         * @param[in] projection_
+         *                         <ul>
+         *                                 <li>
+         *                         gpudb::visualize_video_EPSG_4326
+         *                                 <li>
+         *                         gpudb::visualize_video_PLATE_CARREE
+         *                                 <li> gpudb::visualize_video_900913
+         *                                 <li>
+         *                         gpudb::visualize_video_EPSG_900913
+         *                                 <li> gpudb::visualize_video_102100
+         *                                 <li>
+         *                         gpudb::visualize_video_EPSG_102100
+         *                                 <li> gpudb::visualize_video_3857
+         *                                 <li>
+         *                         gpudb::visualize_video_EPSG_3857
+         *                                 <li>
+         *                         gpudb::visualize_video_WEB_MERCATOR
+         *                         </ul>
+         *                         The default value is
+         *                         gpudb::visualize_video_PLATE_CARREE.
+         * @param[in] bgColor_
          * @param[in] timeIntervals_
          * @param[in] videoStyle_
-         * @param[in] sessionKey_  User Provided session key that is later used
-         *                         to retrieve the generated video from the
-         *                         WMS.
-         * @param[in] styleOptions_  Styling options for the image.
+         * @param[in] sessionKey_
+         * @param[in] styleOptions_
          *                           <ul>
-         *                                   <li> do_points: Rasterize point
-         *                           data toggle. Values: 'true', 'false'.
-         *                                   <li> do_shapes: Rasterize shapes
-         *                           toggle. Values: 'true', 'false'.
-         *                                   <li> do_tracks: Rasterize tracks
-         *                           toggle. Values: 'true', 'false'.
-         *                                   <li> pointcolors: RGB color value
-         *                           in hex for the points.
-         *                                   <li> pointsizes: Size of points.
-         *                                   <li> pointshapes: Shape of the
-         *                           point. Values: 'none', 'circle', 'square',
-         *                           'diamond', 'hollowcircle', 'hollowsquare',
-         *                           'hollowdiamond', 'SYMBOLCODE'.
-         *                                   <li> shapelinewidths: Width of the
-         *                           lines.
-         *                                   <li> shapelinecolors: RGB color
-         *                           values in hex for the line.
-         *                                   <li> shapefillcolors: RGB color
-         *                           values in hex for the fill color of the
-         *                           shapes. Use '-1' for no fill.
-         *                                   <li> tracklinewidths: Width of the
-         *                           track lines. '0' implies do not draw track
-         *                           lines.
-         *                                   <li> tracklinecolors: RGB color
-         *                           values for the track lines.
-         *                                   <li> trackmarkersizes: Size of the
-         *                           track point markers.
-         *                                   <li> trackmarkercolors: Color of
-         *                           the track point markers.
-         *                                   <li> trackmarkershapes: Shape of
-         *                           track point markers. Values: 'none',
-         *                           'circle', 'square', 'diamond',
-         *                           'hollowcircle', 'hollowsquare',
-         *                           'hollowdiamond', 'SYMBOLCODE'.
-         *                                   <li> trackheadcolors: Color of
-         *                           track head markers.
-         *                                   <li> trackheadsizes: Size of track
-         *                           head markers.
-         *                                   <li> trackheadshapes: Shape of
-         *                           track head markers. Values: 'none',
-         *                           'circle', 'square', 'diamond',
-         *                           'hollowcircle', 'hollowsquare',
-         *                           'hollowdiamond', 'SYMBOLCODE'.
+         *                                   <li>
+         *                           gpudb::visualize_video_do_points:
+         *                           <ul>
+         *                                   <li> gpudb::visualize_video_true
+         *                                   <li> gpudb::visualize_video_false
          *                           </ul>
-         * @param[in] options_  Optional parameters.  Default value is an empty
-         *                      std::map.
+         *                           The default value is
+         *                           gpudb::visualize_video_true.
+         *                                   <li>
+         *                           gpudb::visualize_video_do_shapes:
+         *                           <ul>
+         *                                   <li> gpudb::visualize_video_true
+         *                                   <li> gpudb::visualize_video_false
+         *                           </ul>
+         *                           The default value is
+         *                           gpudb::visualize_video_true.
+         *                                   <li>
+         *                           gpudb::visualize_video_do_tracks:
+         *                           <ul>
+         *                                   <li> gpudb::visualize_video_true
+         *                                   <li> gpudb::visualize_video_false
+         *                           </ul>
+         *                           The default value is
+         *                           gpudb::visualize_video_true.
+         *                                   <li>
+         *                           gpudb::visualize_video_pointcolors
+         *                                   <li>
+         *                           gpudb::visualize_video_pointsizes
+         *                                   <li>
+         *                           gpudb::visualize_video_pointshapes:
+         *                           <ul>
+         *                                   <li> gpudb::visualize_video_none
+         *                                   <li> gpudb::visualize_video_circle
+         *                                   <li> gpudb::visualize_video_square
+         *                                   <li>
+         *                           gpudb::visualize_video_diamond
+         *                                   <li>
+         *                           gpudb::visualize_video_hollowcircle
+         *                                   <li>
+         *                           gpudb::visualize_video_hollowsquare
+         *                                   <li>
+         *                           gpudb::visualize_video_hollowdiamond
+         *                                   <li>
+         *                           gpudb::visualize_video_SYMBOLCODE
+         *                           </ul>
+         *                                   <li>
+         *                           gpudb::visualize_video_shapelinewidths
+         *                                   <li>
+         *                           gpudb::visualize_video_shapelinecolors
+         *                                   <li>
+         *                           gpudb::visualize_video_shapefillcolors
+         *                                   <li>
+         *                           gpudb::visualize_video_tracklinewidths
+         *                                   <li>
+         *                           gpudb::visualize_video_tracklinecolors
+         *                                   <li>
+         *                           gpudb::visualize_video_trackmarkersizes
+         *                                   <li>
+         *                           gpudb::visualize_video_trackmarkercolors
+         *                                   <li>
+         *                           gpudb::visualize_video_trackmarkershapes:
+         *                           <ul>
+         *                                   <li> gpudb::visualize_video_none
+         *                                   <li> gpudb::visualize_video_circle
+         *                                   <li> gpudb::visualize_video_square
+         *                                   <li>
+         *                           gpudb::visualize_video_diamond
+         *                                   <li>
+         *                           gpudb::visualize_video_hollowcircle
+         *                                   <li>
+         *                           gpudb::visualize_video_hollowsquare
+         *                                   <li>
+         *                           gpudb::visualize_video_hollowdiamond
+         *                                   <li>
+         *                           gpudb::visualize_video_SYMBOLCODE
+         *                           </ul>
+         *                           The default value is
+         *                           gpudb::visualize_video_none.
+         *                                   <li>
+         *                           gpudb::visualize_video_trackheadcolors
+         *                                   <li>
+         *                           gpudb::visualize_video_trackheadsizes
+         *                                   <li>
+         *                           gpudb::visualize_video_trackheadshapes:
+         *                           <ul>
+         *                                   <li> gpudb::visualize_video_none
+         *                                   <li> gpudb::visualize_video_circle
+         *                                   <li> gpudb::visualize_video_square
+         *                                   <li>
+         *                           gpudb::visualize_video_diamond
+         *                                   <li>
+         *                           gpudb::visualize_video_hollowcircle
+         *                                   <li>
+         *                           gpudb::visualize_video_hollowsquare
+         *                                   <li>
+         *                           gpudb::visualize_video_hollowdiamond
+         *                                   <li>
+         *                           gpudb::visualize_video_SYMBOLCODE
+         *                           </ul>
+         *                           The default value is
+         *                           gpudb::visualize_video_circle.
+         *                           </ul>
+         * @param[in] options_
          * 
          */
-        VisualizeVideoRequest(const std::vector<std::string>& tableNames_, const std::vector<std::string>& worldTableNames_, const std::vector<std::vector<std::string> >& trackIds_, const std::string& xColumnName_, const std::string& yColumnName_, const double minX_, const double maxX_, const double minY_, const double maxY_, const int32_t width_, const int32_t height_, const std::string& projection_, const int64_t bgColor_, const std::vector<std::vector<double> >& timeIntervals_, const std::string& videoStyle_, const std::string& sessionKey_, const std::map<std::string, std::vector<std::string> >& styleOptions_, const std::map<std::string, std::string>& options_):
+        VisualizeVideoRequest(const std::vector<std::string>& tableNames_, const std::vector<std::string>& worldTableNames_, const std::vector<std::vector<std::string> >& trackIds_, const std::string& xColumnName_, const std::string& yColumnName_, const std::string& geometryColumnName_, const double minX_, const double maxX_, const double minY_, const double maxY_, const int32_t width_, const int32_t height_, const std::string& projection_, const int64_t bgColor_, const std::vector<std::vector<double> >& timeIntervals_, const std::string& videoStyle_, const std::string& sessionKey_, const std::map<std::string, std::vector<std::string> >& styleOptions_, const std::map<std::string, std::string>& options_):
             tableNames( tableNames_ ),
             worldTableNames( worldTableNames_ ),
             trackIds( trackIds_ ),
             xColumnName( xColumnName_ ),
             yColumnName( yColumnName_ ),
+            geometryColumnName( geometryColumnName_ ),
             minX( minX_ ),
             maxX( maxX_ ),
             minY( minY_ ),
@@ -181,11 +221,16 @@ namespace gpudb
         {
         }
 
+    /**
+     * @private
+     */
+
         std::vector<std::string> tableNames;
         std::vector<std::string> worldTableNames;
         std::vector<std::vector<std::string> > trackIds;
         std::string xColumnName;
         std::string yColumnName;
+        std::string geometryColumnName;
         double minX;
         double maxX;
         double minY;
@@ -202,6 +247,10 @@ namespace gpudb
     };
 }
 
+    /**
+     * @private
+     */
+
 namespace avro
 {
     template<> struct codec_traits<gpudb::VisualizeVideoRequest>
@@ -213,6 +262,7 @@ namespace avro
             ::avro::encode(e, v.trackIds);
             ::avro::encode(e, v.xColumnName);
             ::avro::encode(e, v.yColumnName);
+            ::avro::encode(e, v.geometryColumnName);
             ::avro::encode(e, v.minX);
             ::avro::encode(e, v.maxX);
             ::avro::encode(e, v.minY);
@@ -259,54 +309,58 @@ namespace avro
                             break;
 
                         case 5:
-                            ::avro::decode(d, v.minX);
+                            ::avro::decode(d, v.geometryColumnName);
                             break;
 
                         case 6:
-                            ::avro::decode(d, v.maxX);
+                            ::avro::decode(d, v.minX);
                             break;
 
                         case 7:
-                            ::avro::decode(d, v.minY);
+                            ::avro::decode(d, v.maxX);
                             break;
 
                         case 8:
-                            ::avro::decode(d, v.maxY);
+                            ::avro::decode(d, v.minY);
                             break;
 
                         case 9:
-                            ::avro::decode(d, v.width);
+                            ::avro::decode(d, v.maxY);
                             break;
 
                         case 10:
-                            ::avro::decode(d, v.height);
+                            ::avro::decode(d, v.width);
                             break;
 
                         case 11:
-                            ::avro::decode(d, v.projection);
+                            ::avro::decode(d, v.height);
                             break;
 
                         case 12:
-                            ::avro::decode(d, v.bgColor);
+                            ::avro::decode(d, v.projection);
                             break;
 
                         case 13:
-                            ::avro::decode(d, v.timeIntervals);
+                            ::avro::decode(d, v.bgColor);
                             break;
 
                         case 14:
-                            ::avro::decode(d, v.videoStyle);
+                            ::avro::decode(d, v.timeIntervals);
                             break;
 
                         case 15:
-                            ::avro::decode(d, v.sessionKey);
+                            ::avro::decode(d, v.videoStyle);
                             break;
 
                         case 16:
-                            ::avro::decode(d, v.styleOptions);
+                            ::avro::decode(d, v.sessionKey);
                             break;
 
                         case 17:
+                            ::avro::decode(d, v.styleOptions);
+                            break;
+
+                        case 18:
                             ::avro::decode(d, v.options);
                             break;
 
@@ -322,6 +376,7 @@ namespace avro
                 ::avro::decode(d, v.trackIds);
                 ::avro::decode(d, v.xColumnName);
                 ::avro::decode(d, v.yColumnName);
+                ::avro::decode(d, v.geometryColumnName);
                 ::avro::decode(d, v.minX);
                 ::avro::decode(d, v.maxX);
                 ::avro::decode(d, v.minY);
@@ -340,48 +395,24 @@ namespace avro
     };
 }
 
+    /**
+     * @private
+     */
+
 namespace gpudb
 {
 
     /**
+     * @private
      * A set of output parameters for {@link
      * #visualizeVideo(const VisualizeVideoRequest&) const}.
      * <p>
-     * Creates raster images of data in the given table based on provided input
-     * parameters. Numerous parameters are required to call this function. Some
-     * of the important parameters are the attributes of the generated images
-     * (@a bgColor, @a width, @a height), the collection of table names on
-     * which this function is to be applied, for which shapes (point, polygon,
-     * tracks) the images are to be created and a user specified session key.
-     * This session key is later used to fetch the generated images. The
-     * operation is synchronous, meaning that a response will not be returned
-     * until the images for all the frames of the video are fully available.
-     * <p>
-     * Once the request has been processed then the generated video frames are
-     * available for download via WMS using STYLES=cached. In this request the
-     * LAYERS parameter should be populated with the session key passed in @a
-     * sessionKey of the visualize video request and the FRAME parameter
-     * indicates which 0-based frame of the video should be returned. All other
-     * WMS parameters are ignored for this mode.
-     * <p>
-     * For instance, if a 20 frame video with the session key 'MY-SESSION-KEY'
-     * was generated, the first frame could be retrieved with the URL:
-     * <p>
-     *     <a href="../rest/wms_rest.html"
-     * target="_top">http://<hostname/ipAddress>:9191/wms?REQUEST=GetMap&STYLES=cached&LAYERS=MY-SESSION-KEY&FRAME=0</a>
-     * <p>
-     * and the last frame could be retrieved with:
-     * <p>
-     *     <a href="../rest/wms_rest.html"
-     * target="_top">http://<hostname/ipAddress>:9191/wms?REQUEST=GetMap&STYLES=cached&LAYERS=MY-SESSION-KEY&FRAME=19</a>
-     * <p>
-     * The response payload provides, among other things, the number of frames
-     * which were created.
      */
     struct VisualizeVideoResponse
     {
 
         /**
+         * @private
          * Constructs a VisualizeVideoResponse object with default parameter
          * values.
          */
@@ -395,6 +426,10 @@ namespace gpudb
         {
         }
 
+    /**
+     * @private
+     */
+
         double width;
         double height;
         int64_t bgColor;
@@ -403,6 +438,10 @@ namespace gpudb
         std::vector<std::vector<uint8_t> > data;
     };
 }
+
+    /**
+     * @private
+     */
 
 namespace avro
 {

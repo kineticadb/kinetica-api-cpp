@@ -29,6 +29,8 @@ namespace gpudb
 
         const std::string TIME          ( "time"           );
 
+        const std::string DATETIME      ( "datetime"       );
+
         const std::string CHAR1         ( "char1"          );
 
         const std::string CHAR2         ( "char2"          );
@@ -53,11 +55,15 @@ namespace gpudb
 
         const std::string IPV4          ( "ipv4"           );
 
+        const std::string WKT           ( "wkt"            );
+
         const std::string PRIMARY_KEY   ( "primary_key"    );
 
         const std::string SHARD_KEY     ( "shard_key"      );
 
         const std::string NULLABLE      ( "nullable"       );
+
+        const std::string DICT          ( "dict"           );
 
     } // end namespace ColumnProperty
 } // end namespace gpudb

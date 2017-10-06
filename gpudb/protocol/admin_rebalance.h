@@ -6,60 +6,80 @@
 #ifndef __ADMIN_REBALANCE_H__
 #define __ADMIN_REBALANCE_H__
 
-    /**
-     * @private
-     */
-
 namespace gpudb
 {
 
     /**
-     * @private
      * A set of input parameters for {@link
      * #adminRebalance(const AdminRebalanceRequest&) const}.
      * <p>
+     * Rebalance the cluster so that all the nodes contain approximately equal
+     * number of records.  The rebalance will also cause the shards to be (as
+     * much as possible) equally distributed across all the ranks. Note that
+     * the system may move any shards that were moved by system administrator
+     * using {@link
+     * #adminAlterShards(const AdminAlterShardsRequest&) const}
      */
     struct AdminRebalanceRequest
     {
 
         /**
-         * @private
          * Constructs an AdminRebalanceRequest object with default parameter
          * values.
          */
         AdminRebalanceRequest() :
             tableNames(std::vector<std::string>()),
+            action(std::string()),
             options(std::map<std::string, std::string>())
         {
         }
 
         /**
-         * @private
          * Constructs an AdminRebalanceRequest object with the specified
          * parameters.
          * 
-         * @param[in] tableNames_
-         * @param[in] options_
+         * @param[in] tableNames_  Sepcify the tables here if only specific
+         *                         tables have to be rebalanced.  Leave this
+         *                         empty to rebalance all the tables.  Note
+         *                         that only the tables which have no primary
+         *                         or shard key can be rebalanced.
+         * @param[in] action_  Specify 'start' to start rebalancing the cluster
+         *                     or 'stop' to prematurely stop a previsouly
+         *                     issued rebalance request.
+         *                     <ul>
+         *                             <li> gpudb::admin_rebalance_start
+         *                             <li> gpudb::admin_rebalance_stop
+         *                     </ul>
+         * @param[in] options_  Optional parameters.
+         *                      <ul>
+         *                              <li> gpudb::admin_rebalance_reshard: If
+         *                      @a true, then all the nodes in the cluster will
+         *                      be assigned approximately the same number of
+         *                      shards. Note that for big clusters, this data
+         *                      transfer could be time consuming and also
+         *                      result in delay in responding to queries for
+         *                      busy clusters.
+         *                      <ul>
+         *                              <li> gpudb::admin_rebalance_true
+         *                              <li> gpudb::admin_rebalance_false
+         *                      </ul>
+         *                      The default value is
+         *                      gpudb::admin_rebalance_true.
+         *                      </ul>
          * 
          */
-        AdminRebalanceRequest(const std::vector<std::string>& tableNames_, const std::map<std::string, std::string>& options_):
+        AdminRebalanceRequest(const std::vector<std::string>& tableNames_, const std::string& action_, const std::map<std::string, std::string>& options_):
             tableNames( tableNames_ ),
+            action( action_ ),
             options( options_ )
         {
         }
 
-    /**
-     * @private
-     */
-
         std::vector<std::string> tableNames;
+        std::string action;
         std::map<std::string, std::string> options;
     };
 }
-
-    /**
-     * @private
-     */
 
 namespace avro
 {
@@ -68,6 +88,7 @@ namespace avro
         static void encode(Encoder& e, const gpudb::AdminRebalanceRequest& v)
         {
             ::avro::encode(e, v.tableNames);
+            ::avro::encode(e, v.action);
             ::avro::encode(e, v.options);
         }
 
@@ -86,6 +107,10 @@ namespace avro
                             break;
 
                         case 1:
+                            ::avro::decode(d, v.action);
+                            break;
+
+                        case 2:
                             ::avro::decode(d, v.options);
                             break;
 
@@ -97,30 +122,31 @@ namespace avro
             else
             {
                 ::avro::decode(d, v.tableNames);
+                ::avro::decode(d, v.action);
                 ::avro::decode(d, v.options);
             }
         }
     };
 }
 
-    /**
-     * @private
-     */
-
 namespace gpudb
 {
 
     /**
-     * @private
      * A set of output parameters for {@link
      * #adminRebalance(const AdminRebalanceRequest&) const}.
      * <p>
+     * Rebalance the cluster so that all the nodes contain approximately equal
+     * number of records.  The rebalance will also cause the shards to be (as
+     * much as possible) equally distributed across all the ranks. Note that
+     * the system may move any shards that were moved by system administrator
+     * using {@link
+     * #adminAlterShards(const AdminAlterShardsRequest&) const}
      */
     struct AdminRebalanceResponse
     {
 
         /**
-         * @private
          * Constructs an AdminRebalanceResponse object with default parameter
          * values.
          */
@@ -130,18 +156,10 @@ namespace gpudb
         {
         }
 
-    /**
-     * @private
-     */
-
         std::vector<std::string> tableNames;
         std::vector<std::string> message;
     };
 }
-
-    /**
-     * @private
-     */
 
 namespace avro
 {

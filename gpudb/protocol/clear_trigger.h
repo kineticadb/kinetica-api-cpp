@@ -35,8 +35,7 @@ namespace gpudb
          * parameters.
          * 
          * @param[in] triggerId_  ID for the trigger to be deactivated.
-         * @param[in] options_  Optional parameters.  Default value is an empty
-         *                      std::map.
+         * @param[in] options_  Optional parameters.
          * 
          */
         ClearTriggerRequest(const std::string& triggerId_, const std::map<std::string, std::string>& options_):

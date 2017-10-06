@@ -70,25 +70,37 @@ namespace gpudb
          *                    allowed by the server should be returned.
          * @param[in] options_
          *                      <ul>
-         *                              <li> expression: Optional filter
-         *                      expression to apply to the table.
-         *                              <li> sort_by: Optional column that the
-         *                      data should be sorted by. Empty by default
-         *                      (i.e. no sorting is applied).
-         *                              <li> sort_order: String indicating how
-         *                      the returned values should be sorted -
-         *                      ascending or descending. Default is
+         *                              <li>
+         *                      gpudb::get_records_by_column_expression:
+         *                      Optional filter expression to apply to the
+         *                      table.
+         *                              <li>
+         *                      gpudb::get_records_by_column_sort_by: Optional
+         *                      column that the data should be sorted by. Empty
+         *                      by default (i.e. no sorting is applied).
+         *                              <li>
+         *                      gpudb::get_records_by_column_sort_order: String
+         *                      indicating how the returned values should be
+         *                      sorted - ascending or descending. Default is
          *                      'ascending'. If sort_order is provided, sort_by
-         *                      has to be provided. Values: 'ascending',
-         *                      'descending'.
-         *                              <li> order_by: Comma-separated list of
-         *                      the columns to be sorted by; e.g. 'timestamp
-         *                      asc, x desc'.  The columns specified must be
-         *                      present in @a columnNames.  If any alias is
-         *                      given for any column name, the alias must be
-         *                      used, rather than the original column name.
+         *                      has to be provided.
+         *                      <ul>
+         *                              <li>
+         *                      gpudb::get_records_by_column_ascending
+         *                              <li>
+         *                      gpudb::get_records_by_column_descending
          *                      </ul>
-         *                        Default value is an empty std::map.
+         *                      The default value is
+         *                      gpudb::get_records_by_column_ascending.
+         *                              <li>
+         *                      gpudb::get_records_by_column_order_by:
+         *                      Comma-separated list of the columns to be
+         *                      sorted by; e.g. 'timestamp asc, x desc'.  The
+         *                      columns specified must be present in @a
+         *                      columnNames.  If any alias is given for any
+         *                      column name, the alias must be used, rather
+         *                      than the original column name.
+         *                      </ul>
          * 
          */
         GetRecordsByColumnRequest(const std::string& tableName_, const std::vector<std::string>& columnNames_, const int64_t offset_, const int64_t limit_, const std::map<std::string, std::string>& options_):
@@ -120,30 +132,47 @@ namespace gpudb
          *                    indicate that the maximum number of results
          *                    allowed by the server should be returned.
          * @param[in] encoding_  Specifies the encoding for returned records;
-         *                       either 'binary' or 'json'. Values: 'binary',
-         *                       'json'.
-         *                         Default value is 'binary'.
+         *                       either 'binary' or 'json'.
+         *                       <ul>
+         *                               <li>
+         *                       gpudb::get_records_by_column_binary
+         *                               <li> gpudb::get_records_by_column_json
+         *                       </ul>
+         *                       The default value is
+         *                       gpudb::get_records_by_column_binary.
          * @param[in] options_
          *                      <ul>
-         *                              <li> expression: Optional filter
-         *                      expression to apply to the table.
-         *                              <li> sort_by: Optional column that the
-         *                      data should be sorted by. Empty by default
-         *                      (i.e. no sorting is applied).
-         *                              <li> sort_order: String indicating how
-         *                      the returned values should be sorted -
-         *                      ascending or descending. Default is
+         *                              <li>
+         *                      gpudb::get_records_by_column_expression:
+         *                      Optional filter expression to apply to the
+         *                      table.
+         *                              <li>
+         *                      gpudb::get_records_by_column_sort_by: Optional
+         *                      column that the data should be sorted by. Empty
+         *                      by default (i.e. no sorting is applied).
+         *                              <li>
+         *                      gpudb::get_records_by_column_sort_order: String
+         *                      indicating how the returned values should be
+         *                      sorted - ascending or descending. Default is
          *                      'ascending'. If sort_order is provided, sort_by
-         *                      has to be provided. Values: 'ascending',
-         *                      'descending'.
-         *                              <li> order_by: Comma-separated list of
-         *                      the columns to be sorted by; e.g. 'timestamp
-         *                      asc, x desc'.  The columns specified must be
-         *                      present in @a columnNames.  If any alias is
-         *                      given for any column name, the alias must be
-         *                      used, rather than the original column name.
+         *                      has to be provided.
+         *                      <ul>
+         *                              <li>
+         *                      gpudb::get_records_by_column_ascending
+         *                              <li>
+         *                      gpudb::get_records_by_column_descending
          *                      </ul>
-         *                        Default value is an empty std::map.
+         *                      The default value is
+         *                      gpudb::get_records_by_column_ascending.
+         *                              <li>
+         *                      gpudb::get_records_by_column_order_by:
+         *                      Comma-separated list of the columns to be
+         *                      sorted by; e.g. 'timestamp asc, x desc'.  The
+         *                      columns specified must be present in @a
+         *                      columnNames.  If any alias is given for any
+         *                      column name, the alias must be used, rather
+         *                      than the original column name.
+         *                      </ul>
          * 
          */
         GetRecordsByColumnRequest(const std::string& tableName_, const std::vector<std::string>& columnNames_, const int64_t offset_, const int64_t limit_, const std::string& encoding_, const std::map<std::string, std::string>& options_):

@@ -35,11 +35,12 @@ namespace gpudb
          * 
          * @param[in] options_  Optional parameters.
          *                      <ul>
-         *                              <li> properties: A list of comma
-         *                      separated names of properties requested. If not
-         *                      specified, all properties will be returned.
+         *                              <li>
+         *                      gpudb::show_system_properties_properties: A
+         *                      list of comma separated names of properties
+         *                      requested. If not specified, all properties
+         *                      will be returned.
          *                      </ul>
-         *                        Default value is an empty std::map.
          * 
          */
         ShowSystemPropertiesRequest(const std::map<std::string, std::string>& options_):

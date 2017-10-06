@@ -53,14 +53,12 @@ namespace gpudb
          *                       view containing the results. Has the same
          *                       naming restrictions as <a
          *                       href="../../concepts/tables.html"
-         *                       target="_top">tables</a>.  Default value is an
-         *                       empty string.
+         *                       target="_top">tables</a>.
          * @param[in] columnName_  Name of a column on which the operation
          *                         would be applied.
          * @param[in] lowerBound_  Value of the lower bound (inclusive).
          * @param[in] upperBound_  Value of the upper bound (inclusive).
-         * @param[in] options_  Optional parameters.  Default value is an empty
-         *                      std::map.
+         * @param[in] options_  Optional parameters.
          * 
          */
         FilterByRangeRequest(const std::string& tableName_, const std::string& viewName_, const std::string& columnName_, const double lowerBound_, const double upperBound_, const std::map<std::string, std::string>& options_):

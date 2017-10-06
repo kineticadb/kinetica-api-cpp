@@ -172,6 +172,8 @@ endforeach()
 # Link order is from bottom up.
 # i.e. Put libA that depends on libB above libB in the list below.
 set(GPUDB_API_CPP_LINK_LIBRARIES
+    ssl
+    crypto
     snappy
     avrocpp # dep on boost
     ${Boost_LIBRARIES}
@@ -294,8 +296,8 @@ ADD_LIBRARY_FULL( gpudb_api_cpp_lib_${STATIC_OR_SHARED} ${STATIC_OR_SHARED}
         GPUdb.hpp
         GPUdbFunctions.hpp
         GPUdbTemplates.hpp
+        Http.hpp
         Type.hpp
-        GPUdbIngestor.hpp
         protocol/EndpointKeywords.h
         protocol/GPUdbProtocol.h
     SOURCES
@@ -303,8 +305,8 @@ ADD_LIBRARY_FULL( gpudb_api_cpp_lib_${STATIC_OR_SHARED} ${STATIC_OR_SHARED}
         ColumnProperties.cpp
         GenericRecord.cpp
         GPUdb.cpp
-        GPUdbIngestor.cpp
         GPUdbException.cpp
+        Http.cpp
         Type.cpp
         protocol/EndpointKeywords.cpp
     LINK_LIBRARIES

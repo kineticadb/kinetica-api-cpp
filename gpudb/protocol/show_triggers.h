@@ -37,8 +37,7 @@ namespace gpudb
          *                         information is to be retrieved. An empty
          *                         list means information will be retrieved on
          *                         all active triggers.
-         * @param[in] options_  Optional parameters.  Default value is an empty
-         *                      std::map.
+         * @param[in] options_  Optional parameters.
          * 
          */
         ShowTriggersRequest(const std::vector<std::string>& triggerIds_, const std::map<std::string, std::string>& options_):

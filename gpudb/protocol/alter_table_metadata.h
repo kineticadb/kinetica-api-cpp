@@ -46,8 +46,7 @@ namespace gpudb
          *                          every table. If the provided map is empty,
          *                          then all existing metadata for the table(s)
          *                          will be cleared.
-         * @param[in] options_  Optional parameters.  Default value is an empty
-         *                      std::map.
+         * @param[in] options_  Optional parameters.
          * 
          */
         AlterTableMetadataRequest(const std::vector<std::string>& tableNames_, const std::map<std::string, std::string>& metadataMap_, const std::map<std::string, std::string>& options_):

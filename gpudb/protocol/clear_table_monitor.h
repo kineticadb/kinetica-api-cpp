@@ -34,8 +34,7 @@ namespace gpudb
          * parameters.
          * 
          * @param[in] topicId_  The topic ID returned by /create/tablemonitor.
-         * @param[in] options_  Optional parameters.  Default value is an empty
-         *                      std::map.
+         * @param[in] options_  Optional parameters.
          * 
          */
         ClearTableMonitorRequest(const std::string& topicId_, const std::map<std::string, std::string>& options_):

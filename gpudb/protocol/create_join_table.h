@@ -41,56 +41,104 @@ namespace gpudb
          *                            Has the same naming restrictions as <a
          *                            href="../../concepts/tables.html"
          *                            target="_top">tables</a>.
-         * @param[in] tableNames_  The list of table names making up the joined
-         *                         set.  Corresponds to a SQL statement FROM
-         *                         clause  Default value is an empty
-         *                         std::vector.
-         * @param[in] columnNames_  List of columns to be included in the join
-         *                          table. Can be the column_names from the
-         *                          member sets if unique or can be prefixed by
-         *                          the table id as <id>.<column_name> where
-         *                          <id> is the table name or alias. Can be
-         *                          specified as aliased via the syntax
-         *                          '<column_name> as <alias>. Can use wild
-         *                          cards as '*' (include all columns), or
-         *                          <id>.* (include all columns from table with
-         *                          name or alias <id>)  Default value is an
-         *                          empty std::vector.
+         * @param[in] tableNames_  The list of table names composing the join.
+         *                         Corresponds to a SQL statement FROM clause
+         * @param[in] columnNames_  List of member table columns or column
+         *                          expressions to be included in the join.
+         *                          Columns can be prefixed with
+         *                          'table_id.column_name', where 'table_id' is
+         *                          the table name or alias.  Columns can be
+         *                          aliased via the syntax 'column_name as
+         *                          alias'. Wild cards '*' can be used to
+         *                          include all columns across member tables or
+         *                          'table_id.*' for all of a single table's
+         *                          columns.  Columns and column expressions
+         *                          comprising the join must be uniquely named
+         *                          or aliased--therefore, the '*' wild card
+         *                          cannot be used if column names aren't
+         *                          unique across all tables.
          * @param[in] expressions_  An optional list of expressions to combine
-         *                          and filter the joined set.  Corresponds to
-         *                          a SQL statement WHERE clause. For details
-         *                          see: <a
+         *                          and filter the joined tables.  Corresponds
+         *                          to a SQL statement WHERE clause. For
+         *                          details see: <a
          *                          href="../../concepts/expressions.html"
-         *                          target="_top">expressions</a>.  Default
-         *                          value is an empty std::vector.
+         *                          target="_top">expressions</a>.
          * @param[in] options_  Optional parameters.
          *                      <ul>
-         *                              <li> collection_name: Name of a
-         *                      collection which is to contain the join table.
+         *                              <li>
+         *                      gpudb::create_join_table_collection_name: Name
+         *                      of a collection which is to contain the join.
          *                      If the collection provided is non-existent, the
          *                      collection will be automatically created. If
-         *                      empty, then the join table will be a top-level
-         *                      table.
-         *                              <li> max_query_dimensions: The maximum
-         *                      number of tables in a joined table that can be
-         *                      accessed by a query and are not equated by a
+         *                      empty, then the join will be at the top level.
+         *                              <li>
+         *                      gpudb::create_join_table_max_query_dimensions:
+         *                      The maximum number of tables in a join that can
+         *                      be accessed by a query and are not equated by a
          *                      foreign-key to primary-key equality predicate
-         *                              <li> optimize_lookups: Use the applied
-         *                      filters to precalculate the lookup table to get
-         *                      data from the primary key sets
-         *                              <li> refresh_method: Method by which
-         *                      the join table can be refreshed when underlying
-         *                      member tables have changed. Values: 'manual',
-         *                      'on_query', 'on_insert'.
-         *                              <li> refresh: Do a manual refresh of
-         *                      the join table if it exists - throws an error
-         *                      otherwise Values: 'no_refresh', 'refresh',
-         *                      'full_refresh'.
-         *                              <li> ttl: Sets the TTL of the table
-         *                      specified in @a joinTableName. The value must
-         *                      be the desired TTL in minutes.
+         *                              <li>
+         *                      gpudb::create_join_table_optimize_lookups: Use
+         *                      more memory to speed up the joining of tables.
+         *                      <ul>
+         *                              <li> gpudb::create_join_table_true
+         *                              <li> gpudb::create_join_table_false
          *                      </ul>
-         *                        Default value is an empty std::map.
+         *                      The default value is
+         *                      gpudb::create_join_table_false.
+         *                              <li>
+         *                      gpudb::create_join_table_refresh_method: Method
+         *                      by which the join can be refreshed when the
+         *                      data in underlying member tables have changed.
+         *                      <ul>
+         *                              <li> gpudb::create_join_table_manual:
+         *                      refresh only occurs when manually requested by
+         *                      calling this endpoint with refresh option set
+         *                      to @a refresh or @a full_refresh
+         *                              <li> gpudb::create_join_table_on_query:
+         *                      incrementally refresh (refresh just those
+         *                      records added) whenever a new query is issued
+         *                      and new data is inserted into the base table.
+         *                      A full refresh of all the records occurs when a
+         *                      new query is issued and there have been inserts
+         *                      to any non-base-tables since the last query
+         *                              <li>
+         *                      gpudb::create_join_table_on_insert:
+         *                      incrementally refresh (refresh just those
+         *                      records added) whenever new data is inserted
+         *                      into a base table.  A full refresh of all the
+         *                      records occurs when a new query is issued and
+         *                      there have been inserts to any non-base-tables
+         *                      since the last query
+         *                      </ul>
+         *                      The default value is
+         *                      gpudb::create_join_table_manual.
+         *                              <li> gpudb::create_join_table_refresh:
+         *                      Do a manual refresh of the join if it exists -
+         *                      throws an error otherwise
+         *                      <ul>
+         *                              <li>
+         *                      gpudb::create_join_table_no_refresh: don't
+         *                      refresh
+         *                              <li> gpudb::create_join_table_refresh:
+         *                      incrementally refresh (refresh just those
+         *                      records added) if new data has been inserted
+         *                      into the base table.  A full refresh of all the
+         *                      records occurs if there have been inserts to
+         *                      any non-base-tables since the last refresh
+         *                              <li>
+         *                      gpudb::create_join_table_full_refresh: always
+         *                      refresh even if no new records have been added.
+         *                      Only refresh method guaranteed to do a full
+         *                      refresh (refresh all the records) if a delete
+         *                      or update has occurred since the last refresh.
+         *                      </ul>
+         *                      The default value is
+         *                      gpudb::create_join_table_no_refresh.
+         *                              <li> gpudb::create_join_table_ttl: Sets
+         *                      the TTL of the table specified in @a
+         *                      joinTableName. The value must be the desired
+         *                      TTL in minutes.
+         *                      </ul>
          * 
          */
         CreateJoinTableRequest(const std::string& joinTableName_, const std::vector<std::string>& tableNames_, const std::vector<std::string>& columnNames_, const std::vector<std::string>& expressions_, const std::map<std::string, std::string>& options_):

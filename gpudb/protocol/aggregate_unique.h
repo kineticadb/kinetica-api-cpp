@@ -28,9 +28,16 @@ namespace gpudb
      * <p>
      * The response is returned as a dynamic schema. For details see: <a
      * href="../../concepts/dynamic_schemas.html" target="_top">dynamic schemas
-     * documentation</a>. If the 'result_table' option is provided then the
-     * results are stored in a table with the name given in the option and the
-     * results are not returned in the response.
+     * documentation</a>.
+     * <p>
+     * If a @a result_table name is specified in the options, the results are
+     * stored in a new table with that name.  No results are returned in the
+     * response.  If the source table's <a
+     * href="../../concepts/tables.html#shard-keys" target="_top">shard key</a>
+     * is used as the @a columnName, the result table will be sharded, in all
+     * other cases it will be replicated.  Sorting will properly function only
+     * if the result table is replicated or if there is only one processing
+     * node and should not be relied upon in other cases.
      */
     struct AggregateUniqueRequest
     {
@@ -66,33 +73,74 @@ namespace gpudb
          * @param[in] limit_  A positive integer indicating the maximum number
          *                    of results to be returned. Or END_OF_SET (-9999)
          *                    to indicate that the max number of results should
-         *                    be returned.  Default value is 10000.
+         *                    be returned.
          * @param[in] options_  Optional parameters.
          *                      <ul>
-         *                              <li> collection_name: Name of a
-         *                      collection which is to contain the table
+         *                              <li>
+         *                      gpudb::aggregate_unique_collection_name: Name
+         *                      of a collection which is to contain the table
          *                      specified in 'result_table', otherwise the
          *                      table will be a top-level table. If the
          *                      collection does not allow duplicate types and
          *                      it contains a table of the same type as the
          *                      given one, then this table creation request
          *                      will fail.
-         *                              <li> expression: Optional filter
-         *                      expression to apply to the table.
-         *                              <li> sort_order: String indicating how
-         *                      the returned values should be sorted. Values:
-         *                      'ascending', 'descending'.
-         *                              <li> result_table: The name of the
-         *                      table used to store the results. If present no
-         *                      results are returned in the response. Has the
-         *                      same naming restrictions as <a
-         *                      href="../../concepts/tables.html"
-         *                      target="_top">tables</a>.
-         *                              <li> ttl: Sets the TTL of the table
-         *                      specified in 'result_table'. The value must be
-         *                      the desired TTL in minutes.
+         *                              <li>
+         *                      gpudb::aggregate_unique_expression: Optional
+         *                      filter expression to apply to the table.
+         *                              <li>
+         *                      gpudb::aggregate_unique_sort_order: String
+         *                      indicating how the returned values should be
+         *                      sorted.
+         *                      <ul>
+         *                              <li> gpudb::aggregate_unique_ascending
+         *                              <li> gpudb::aggregate_unique_descending
          *                      </ul>
-         *                        Default value is an empty std::map.
+         *                      The default value is
+         *                      gpudb::aggregate_unique_ascending.
+         *                              <li>
+         *                      gpudb::aggregate_unique_result_table: The name
+         *                      of the table used to store the results. If
+         *                      present no results are returned in the
+         *                      response. Has the same naming restrictions as
+         *                      <a href="../../concepts/tables.html"
+         *                      target="_top">tables</a>.
+         *                              <li>
+         *                      gpudb::aggregate_unique_result_table_persist:
+         *                      If @a true then the result table specified in
+         *                      @a result_table will be persisted as a regular
+         *                      table (it will not be automatically cleared
+         *                      unless a @a ttl is provided, and the table data
+         *                      can be modified in subsequent operations). If
+         *                      @a false (the default) then the result table
+         *                      will be a read-only, memory-only temporary
+         *                      table.
+         *                      <ul>
+         *                              <li> gpudb::aggregate_unique_true
+         *                              <li> gpudb::aggregate_unique_false
+         *                      </ul>
+         *                      The default value is
+         *                      gpudb::aggregate_unique_false.
+         *                              <li>
+         *                      gpudb::aggregate_unique_result_table_force_replicated:
+         *                      Force the result table to be replicated
+         *                      (ignores any sharding). Must be used in
+         *                      combination with the 'result_table' option.
+         *                              <li>
+         *                      gpudb::aggregate_unique_result_table_generate_pk:
+         *                      If 'true' then set a primary key for the result
+         *                      table. Must be used in combination with the
+         *                      'result_table' option.
+         *                              <li> gpudb::aggregate_unique_ttl: Sets
+         *                      the TTL of the table specified in
+         *                      'result_table'. The value must be the desired
+         *                      TTL in minutes.
+         *                              <li>
+         *                      gpudb::aggregate_unique_chunk_size: If provided
+         *                      this indicates the chunk size to be used for
+         *                      the result table. Must be used in combination
+         *                      with the @a result_table option.
+         *                      </ul>
          * 
          */
         AggregateUniqueRequest(const std::string& tableName_, const std::string& columnName_, const int64_t offset_, const int64_t limit_, const std::map<std::string, std::string>& options_):
@@ -122,36 +170,85 @@ namespace gpudb
          * @param[in] limit_  A positive integer indicating the maximum number
          *                    of results to be returned. Or END_OF_SET (-9999)
          *                    to indicate that the max number of results should
-         *                    be returned.  Default value is 10000.
+         *                    be returned.
          * @param[in] encoding_  Specifies the encoding for returned records.
-         *                       Values: 'binary', 'json'.
-         *                         Default value is 'binary'.
+         *                       <ul>
+         *                               <li> gpudb::aggregate_unique_binary:
+         *                       Indicates that the returned records should be
+         *                       binary encoded.
+         *                               <li> gpudb::aggregate_unique_json:
+         *                       Indicates that the returned records should be
+         *                       json encoded.
+         *                       </ul>
+         *                       The default value is
+         *                       gpudb::aggregate_unique_binary.
          * @param[in] options_  Optional parameters.
          *                      <ul>
-         *                              <li> collection_name: Name of a
-         *                      collection which is to contain the table
+         *                              <li>
+         *                      gpudb::aggregate_unique_collection_name: Name
+         *                      of a collection which is to contain the table
          *                      specified in 'result_table', otherwise the
          *                      table will be a top-level table. If the
          *                      collection does not allow duplicate types and
          *                      it contains a table of the same type as the
          *                      given one, then this table creation request
          *                      will fail.
-         *                              <li> expression: Optional filter
-         *                      expression to apply to the table.
-         *                              <li> sort_order: String indicating how
-         *                      the returned values should be sorted. Values:
-         *                      'ascending', 'descending'.
-         *                              <li> result_table: The name of the
-         *                      table used to store the results. If present no
-         *                      results are returned in the response. Has the
-         *                      same naming restrictions as <a
-         *                      href="../../concepts/tables.html"
-         *                      target="_top">tables</a>.
-         *                              <li> ttl: Sets the TTL of the table
-         *                      specified in 'result_table'. The value must be
-         *                      the desired TTL in minutes.
+         *                              <li>
+         *                      gpudb::aggregate_unique_expression: Optional
+         *                      filter expression to apply to the table.
+         *                              <li>
+         *                      gpudb::aggregate_unique_sort_order: String
+         *                      indicating how the returned values should be
+         *                      sorted.
+         *                      <ul>
+         *                              <li> gpudb::aggregate_unique_ascending
+         *                              <li> gpudb::aggregate_unique_descending
          *                      </ul>
-         *                        Default value is an empty std::map.
+         *                      The default value is
+         *                      gpudb::aggregate_unique_ascending.
+         *                              <li>
+         *                      gpudb::aggregate_unique_result_table: The name
+         *                      of the table used to store the results. If
+         *                      present no results are returned in the
+         *                      response. Has the same naming restrictions as
+         *                      <a href="../../concepts/tables.html"
+         *                      target="_top">tables</a>.
+         *                              <li>
+         *                      gpudb::aggregate_unique_result_table_persist:
+         *                      If @a true then the result table specified in
+         *                      @a result_table will be persisted as a regular
+         *                      table (it will not be automatically cleared
+         *                      unless a @a ttl is provided, and the table data
+         *                      can be modified in subsequent operations). If
+         *                      @a false (the default) then the result table
+         *                      will be a read-only, memory-only temporary
+         *                      table.
+         *                      <ul>
+         *                              <li> gpudb::aggregate_unique_true
+         *                              <li> gpudb::aggregate_unique_false
+         *                      </ul>
+         *                      The default value is
+         *                      gpudb::aggregate_unique_false.
+         *                              <li>
+         *                      gpudb::aggregate_unique_result_table_force_replicated:
+         *                      Force the result table to be replicated
+         *                      (ignores any sharding). Must be used in
+         *                      combination with the 'result_table' option.
+         *                              <li>
+         *                      gpudb::aggregate_unique_result_table_generate_pk:
+         *                      If 'true' then set a primary key for the result
+         *                      table. Must be used in combination with the
+         *                      'result_table' option.
+         *                              <li> gpudb::aggregate_unique_ttl: Sets
+         *                      the TTL of the table specified in
+         *                      'result_table'. The value must be the desired
+         *                      TTL in minutes.
+         *                              <li>
+         *                      gpudb::aggregate_unique_chunk_size: If provided
+         *                      this indicates the chunk size to be used for
+         *                      the result table. Must be used in combination
+         *                      with the @a result_table option.
+         *                      </ul>
          * 
          */
         AggregateUniqueRequest(const std::string& tableName_, const std::string& columnName_, const int64_t offset_, const int64_t limit_, const std::string& encoding_, const std::map<std::string, std::string>& options_):
@@ -259,9 +356,16 @@ namespace gpudb
      * <p>
      * The response is returned as a dynamic schema. For details see: <a
      * href="../../concepts/dynamic_schemas.html" target="_top">dynamic schemas
-     * documentation</a>. If the 'result_table' option is provided then the
-     * results are stored in a table with the name given in the option and the
-     * results are not returned in the response.
+     * documentation</a>.
+     * <p>
+     * If a @a result_table name is specified in the options, the results are
+     * stored in a new table with that name.  No results are returned in the
+     * response.  If the source table's <a
+     * href="../../concepts/tables.html#shard-keys" target="_top">shard key</a>
+     * is used as the @a columnName, the result table will be sharded, in all
+     * other cases it will be replicated.  Sorting will properly function only
+     * if the result table is replicated or if there is only one processing
+     * node and should not be relied upon in other cases.
      */
     struct RawAggregateUniqueResponse
     {
@@ -367,9 +471,16 @@ namespace gpudb
      * <p>
      * The response is returned as a dynamic schema. For details see: <a
      * href="../../concepts/dynamic_schemas.html" target="_top">dynamic schemas
-     * documentation</a>. If the 'result_table' option is provided then the
-     * results are stored in a table with the name given in the option and the
-     * results are not returned in the response.
+     * documentation</a>.
+     * <p>
+     * If a @a result_table name is specified in the options, the results are
+     * stored in a new table with that name.  No results are returned in the
+     * response.  If the source table's <a
+     * href="../../concepts/tables.html#shard-keys" target="_top">shard key</a>
+     * is used as the @a columnName, the result table will be sharded, in all
+     * other cases it will be replicated.  Sorting will properly function only
+     * if the result table is replicated or if there is only one processing
+     * node and should not be relied upon in other cases.
      */
     struct AggregateUniqueResponse
     {

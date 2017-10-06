@@ -36,8 +36,18 @@ namespace gpudb
          * @param[in] name_  Name of the user or role from which the permission
          *                   will be revoked. Must be an existing user or role.
          * @param[in] permission_  Permission to revoke from the user or role.
-         *                         Values: 'system_admin', 'system_write',
-         *                         'system_read'.
+         *                         <ul>
+         *                                 <li>
+         *                         gpudb::revoke_permission_system_system_admin:
+         *                         Full access to all data and system
+         *                         functions.
+         *                                 <li>
+         *                         gpudb::revoke_permission_system_system_write:
+         *                         Read and write access to all tables.
+         *                                 <li>
+         *                         gpudb::revoke_permission_system_system_read:
+         *                         Read-only access to all tables.
+         *                         </ul>
          * @param[in] options_  Optional parameters.
          * 
          */

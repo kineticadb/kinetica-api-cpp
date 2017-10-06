@@ -32,6 +32,7 @@ namespace gpudb
             worldTableNames(std::vector<std::string>()),
             xColumnName(std::string()),
             yColumnName(std::string()),
+            geometryColumnName(std::string()),
             trackIds(std::vector<std::vector<std::string> >()),
             cbColumnName1(std::string()),
             cbVals1(std::vector<std::string>()),
@@ -59,6 +60,7 @@ namespace gpudb
          * @param[in] worldTableNames_
          * @param[in] xColumnName_
          * @param[in] yColumnName_
+         * @param[in] geometryColumnName_
          * @param[in] trackIds_
          * @param[in] cbColumnName1_
          * @param[in] cbVals1_
@@ -70,53 +72,170 @@ namespace gpudb
          * @param[in] maxY_
          * @param[in] width_
          * @param[in] height_
-         * @param[in] projection_  Values: 'EPSG:4326', 'PLATE_CARREE',
-         *                         '900913', 'EPSG:900913', '102100',
-         *                         'EPSG:102100', '3857', 'EPSG:3857',
-         *                         'WEB_MERCATOR'.
+         * @param[in] projection_
+         *                         <ul>
+         *                                 <li>
+         *                         gpudb::visualize_image_classbreak_EPSG_4326
+         *                                 <li>
+         *                         gpudb::visualize_image_classbreak_PLATE_CARREE
+         *                                 <li>
+         *                         gpudb::visualize_image_classbreak_900913
+         *                                 <li>
+         *                         gpudb::visualize_image_classbreak_EPSG_900913
+         *                                 <li>
+         *                         gpudb::visualize_image_classbreak_102100
+         *                                 <li>
+         *                         gpudb::visualize_image_classbreak_EPSG_102100
+         *                                 <li>
+         *                         gpudb::visualize_image_classbreak_3857
+         *                                 <li>
+         *                         gpudb::visualize_image_classbreak_EPSG_3857
+         *                                 <li>
+         *                         gpudb::visualize_image_classbreak_WEB_MERCATOR
+         *                         </ul>
+         *                         The default value is
+         *                         gpudb::visualize_image_classbreak_PLATE_CARREE.
          * @param[in] bgColor_
          * @param[in] styleOptions_
          *                           <ul>
-         *                                   <li> do_points: Values: 'true',
-         *                           'false'.
-         *                                   <li> do_shapes: Values: 'true',
-         *                           'false'.
-         *                                   <li> do_tracks: Values: 'true',
-         *                           'false'.
-         *                                   <li> do_symbology: Values: 'true',
-         *                           'false'.
-         *                                   <li> pointcolors:
-         *                                   <li> pointsizes:
-         *                                   <li> pointshapes: Values: 'none',
-         *                           'circle', 'square', 'diamond',
-         *                           'hollowcircle', 'hollowsquare',
-         *                           'hollowdiamond', 'SYMBOLCODE'.
-         *                                   <li> shapelinewidths:
-         *                                   <li> shapelinecolors:
-         *                                   <li> shapefillcolors:
-         *                                   <li> tracklinewidths:
-         *                                   <li> tracklinecolors:
-         *                                   <li> trackmarkersizes:
-         *                                   <li> trackmarkercolors:
-         *                                   <li> trackmarkershapes: Values:
-         *                           'none', 'circle', 'square', 'diamond',
-         *                           'hollowcircle', 'hollowsquare',
-         *                           'hollowdiamond', 'SYMBOLCODE'.
-         *                                   <li> trackheadcolors:
-         *                                   <li> trackheadsizes:
-         *                                   <li> trackheadshapes: Values:
-         *                           'none', 'circle', 'square', 'diamond',
-         *                           'hollowcircle', 'hollowsquare',
-         *                           'hollowdiamond', 'SYMBOLCODE'.
+         *                                   <li>
+         *                           gpudb::visualize_image_classbreak_do_points:
+         *                           <ul>
+         *                                   <li>
+         *                           gpudb::visualize_image_classbreak_true
+         *                                   <li>
+         *                           gpudb::visualize_image_classbreak_false
+         *                           </ul>
+         *                           The default value is
+         *                           gpudb::visualize_image_classbreak_true.
+         *                                   <li>
+         *                           gpudb::visualize_image_classbreak_do_shapes:
+         *                           <ul>
+         *                                   <li>
+         *                           gpudb::visualize_image_classbreak_true
+         *                                   <li>
+         *                           gpudb::visualize_image_classbreak_false
+         *                           </ul>
+         *                           The default value is
+         *                           gpudb::visualize_image_classbreak_true.
+         *                                   <li>
+         *                           gpudb::visualize_image_classbreak_do_tracks:
+         *                           <ul>
+         *                                   <li>
+         *                           gpudb::visualize_image_classbreak_true
+         *                                   <li>
+         *                           gpudb::visualize_image_classbreak_false
+         *                           </ul>
+         *                           The default value is
+         *                           gpudb::visualize_image_classbreak_true.
+         *                                   <li>
+         *                           gpudb::visualize_image_classbreak_do_symbology:
+         *                           <ul>
+         *                                   <li>
+         *                           gpudb::visualize_image_classbreak_true
+         *                                   <li>
+         *                           gpudb::visualize_image_classbreak_false
+         *                           </ul>
+         *                           The default value is
+         *                           gpudb::visualize_image_classbreak_false.
+         *                                   <li>
+         *                           gpudb::visualize_image_classbreak_pointcolors
+         *                                   <li>
+         *                           gpudb::visualize_image_classbreak_pointsizes
+         *                                   <li>
+         *                           gpudb::visualize_image_classbreak_pointshapes:
+         *                           <ul>
+         *                                   <li>
+         *                           gpudb::visualize_image_classbreak_none
+         *                                   <li>
+         *                           gpudb::visualize_image_classbreak_circle
+         *                                   <li>
+         *                           gpudb::visualize_image_classbreak_square
+         *                                   <li>
+         *                           gpudb::visualize_image_classbreak_diamond
+         *                                   <li>
+         *                           gpudb::visualize_image_classbreak_hollowcircle
+         *                                   <li>
+         *                           gpudb::visualize_image_classbreak_hollowsquare
+         *                                   <li>
+         *                           gpudb::visualize_image_classbreak_hollowdiamond
+         *                                   <li>
+         *                           gpudb::visualize_image_classbreak_SYMBOLCODE
+         *                           </ul>
+         *                           The default value is
+         *                           gpudb::visualize_image_classbreak_none.
+         *                                   <li>
+         *                           gpudb::visualize_image_classbreak_shapelinewidths
+         *                                   <li>
+         *                           gpudb::visualize_image_classbreak_shapelinecolors
+         *                                   <li>
+         *                           gpudb::visualize_image_classbreak_shapefillcolors
+         *                                   <li>
+         *                           gpudb::visualize_image_classbreak_tracklinewidths
+         *                                   <li>
+         *                           gpudb::visualize_image_classbreak_tracklinecolors
+         *                                   <li>
+         *                           gpudb::visualize_image_classbreak_trackmarkersizes
+         *                                   <li>
+         *                           gpudb::visualize_image_classbreak_trackmarkercolors
+         *                                   <li>
+         *                           gpudb::visualize_image_classbreak_trackmarkershapes:
+         *                           <ul>
+         *                                   <li>
+         *                           gpudb::visualize_image_classbreak_none
+         *                                   <li>
+         *                           gpudb::visualize_image_classbreak_circle
+         *                                   <li>
+         *                           gpudb::visualize_image_classbreak_square
+         *                                   <li>
+         *                           gpudb::visualize_image_classbreak_diamond
+         *                                   <li>
+         *                           gpudb::visualize_image_classbreak_hollowcircle
+         *                                   <li>
+         *                           gpudb::visualize_image_classbreak_hollowsquare
+         *                                   <li>
+         *                           gpudb::visualize_image_classbreak_hollowdiamond
+         *                                   <li>
+         *                           gpudb::visualize_image_classbreak_SYMBOLCODE
+         *                           </ul>
+         *                           The default value is
+         *                           gpudb::visualize_image_classbreak_none.
+         *                                   <li>
+         *                           gpudb::visualize_image_classbreak_trackheadcolors
+         *                                   <li>
+         *                           gpudb::visualize_image_classbreak_trackheadsizes
+         *                                   <li>
+         *                           gpudb::visualize_image_classbreak_trackheadshapes:
+         *                           <ul>
+         *                                   <li>
+         *                           gpudb::visualize_image_classbreak_none
+         *                                   <li>
+         *                           gpudb::visualize_image_classbreak_circle
+         *                                   <li>
+         *                           gpudb::visualize_image_classbreak_square
+         *                                   <li>
+         *                           gpudb::visualize_image_classbreak_diamond
+         *                                   <li>
+         *                           gpudb::visualize_image_classbreak_hollowcircle
+         *                                   <li>
+         *                           gpudb::visualize_image_classbreak_hollowsquare
+         *                                   <li>
+         *                           gpudb::visualize_image_classbreak_hollowdiamond
+         *                                   <li>
+         *                           gpudb::visualize_image_classbreak_SYMBOLCODE
+         *                           </ul>
+         *                           The default value is
+         *                           gpudb::visualize_image_classbreak_circle.
          *                           </ul>
          * @param[in] options_
          * 
          */
-        VisualizeImageClassbreakRequest(const std::vector<std::string>& tableNames_, const std::vector<std::string>& worldTableNames_, const std::string& xColumnName_, const std::string& yColumnName_, const std::vector<std::vector<std::string> >& trackIds_, const std::string& cbColumnName1_, const std::vector<std::string>& cbVals1_, const std::vector<std::string>& cbColumnName2_, const std::vector<std::vector<std::string> >& cbVals2_, const double minX_, const double maxX_, const double minY_, const double maxY_, const int32_t width_, const int32_t height_, const std::string& projection_, const int64_t bgColor_, const std::map<std::string, std::vector<std::string> >& styleOptions_, const std::map<std::string, std::string>& options_):
+        VisualizeImageClassbreakRequest(const std::vector<std::string>& tableNames_, const std::vector<std::string>& worldTableNames_, const std::string& xColumnName_, const std::string& yColumnName_, const std::string& geometryColumnName_, const std::vector<std::vector<std::string> >& trackIds_, const std::string& cbColumnName1_, const std::vector<std::string>& cbVals1_, const std::vector<std::string>& cbColumnName2_, const std::vector<std::vector<std::string> >& cbVals2_, const double minX_, const double maxX_, const double minY_, const double maxY_, const int32_t width_, const int32_t height_, const std::string& projection_, const int64_t bgColor_, const std::map<std::string, std::vector<std::string> >& styleOptions_, const std::map<std::string, std::string>& options_):
             tableNames( tableNames_ ),
             worldTableNames( worldTableNames_ ),
             xColumnName( xColumnName_ ),
             yColumnName( yColumnName_ ),
+            geometryColumnName( geometryColumnName_ ),
             trackIds( trackIds_ ),
             cbColumnName1( cbColumnName1_ ),
             cbVals1( cbVals1_ ),
@@ -143,6 +262,7 @@ namespace gpudb
         std::vector<std::string> worldTableNames;
         std::string xColumnName;
         std::string yColumnName;
+        std::string geometryColumnName;
         std::vector<std::vector<std::string> > trackIds;
         std::string cbColumnName1;
         std::vector<std::string> cbVals1;
@@ -175,6 +295,7 @@ namespace avro
             ::avro::encode(e, v.worldTableNames);
             ::avro::encode(e, v.xColumnName);
             ::avro::encode(e, v.yColumnName);
+            ::avro::encode(e, v.geometryColumnName);
             ::avro::encode(e, v.trackIds);
             ::avro::encode(e, v.cbColumnName1);
             ::avro::encode(e, v.cbVals1);
@@ -219,62 +340,66 @@ namespace avro
                             break;
 
                         case 4:
-                            ::avro::decode(d, v.trackIds);
+                            ::avro::decode(d, v.geometryColumnName);
                             break;
 
                         case 5:
-                            ::avro::decode(d, v.cbColumnName1);
+                            ::avro::decode(d, v.trackIds);
                             break;
 
                         case 6:
-                            ::avro::decode(d, v.cbVals1);
+                            ::avro::decode(d, v.cbColumnName1);
                             break;
 
                         case 7:
-                            ::avro::decode(d, v.cbColumnName2);
+                            ::avro::decode(d, v.cbVals1);
                             break;
 
                         case 8:
-                            ::avro::decode(d, v.cbVals2);
+                            ::avro::decode(d, v.cbColumnName2);
                             break;
 
                         case 9:
-                            ::avro::decode(d, v.minX);
+                            ::avro::decode(d, v.cbVals2);
                             break;
 
                         case 10:
-                            ::avro::decode(d, v.maxX);
+                            ::avro::decode(d, v.minX);
                             break;
 
                         case 11:
-                            ::avro::decode(d, v.minY);
+                            ::avro::decode(d, v.maxX);
                             break;
 
                         case 12:
-                            ::avro::decode(d, v.maxY);
+                            ::avro::decode(d, v.minY);
                             break;
 
                         case 13:
-                            ::avro::decode(d, v.width);
+                            ::avro::decode(d, v.maxY);
                             break;
 
                         case 14:
-                            ::avro::decode(d, v.height);
+                            ::avro::decode(d, v.width);
                             break;
 
                         case 15:
-                            ::avro::decode(d, v.projection);
+                            ::avro::decode(d, v.height);
                             break;
 
                         case 16:
-                            ::avro::decode(d, v.bgColor);
+                            ::avro::decode(d, v.projection);
                             break;
 
                         case 17:
-                            ::avro::decode(d, v.styleOptions);
+                            ::avro::decode(d, v.bgColor);
                             break;
 
                         case 18:
+                            ::avro::decode(d, v.styleOptions);
+                            break;
+
+                        case 19:
                             ::avro::decode(d, v.options);
                             break;
 
@@ -289,6 +414,7 @@ namespace avro
                 ::avro::decode(d, v.worldTableNames);
                 ::avro::decode(d, v.xColumnName);
                 ::avro::decode(d, v.yColumnName);
+                ::avro::decode(d, v.geometryColumnName);
                 ::avro::decode(d, v.trackIds);
                 ::avro::decode(d, v.cbColumnName1);
                 ::avro::decode(d, v.cbVals1);

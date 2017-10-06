@@ -70,7 +70,8 @@ namespace gpudb
         /**
          * Valid only for 'string' columns.  Indicates that this field
          * represents a date and will be provided in the format 'YYYY-MM-DD'.
-         * The allowable range is 1000-01-01 through 2900-01-01.
+         * The allowable range is 1000-01-01 through 2900-01-01.  This property
+         * is mutually exclusive with the *text_search* property.
          */
         extern const std::string DATE;
 
@@ -79,9 +80,20 @@ namespace gpudb
          * Valid only for 'string' columns.  Indicates that this field
          * represents a time-of-day and will be provided in the format
          * 'HH:MM:SS.mmm'.  The allowable range is 00:00:00.000 through
-         * 23:59:59.999.
+         * 23:59:59.999.  This property is mutually exclusive with the
+         * *text_search* property.
          */
         extern const std::string TIME;
+
+
+        /**
+         * Valid only for 'string' columns.  Indicates that this field
+         * represents a datetime and will be provided in the format 'YYYY-MM-DD
+         * HH:MM:SS.mmm'.  The allowable range is 1000-01-01 00:00:00.000
+         * through 2900-01-01 23:59:59.999.  This property is mutually
+         * exclusive with the *text_search* property.
+         */
+        extern const std::string DATETIME;
 
 
         /**
@@ -191,6 +203,14 @@ namespace gpudb
 
 
         /**
+         * Valid only for 'string' and 'bytes' columns. Indicates that this
+         * field contains geospatial geometry objects in Well-Known Text (WKT)
+         * or Well-Known Binary (WKB) format.
+         */
+        extern const std::string WKT;
+
+
+        /**
          * This property indicates that this column will be part of (or the
          * entire) primary key.
          */
@@ -213,12 +233,22 @@ namespace gpudb
          * type integer and is nullable, then the entry for the column in the
          * avro schema must be: ['int', 'null'].
          * <p>
-         * The Java and C++ APIs have built-in convenience for bypassing
-         * setting the avro schema by hand.  For those two languages, one can
-         * use this property as usual and not have to worry about the avro
-         * schema for the record.
+         * The C++, C#, Java, and Python APIs have built-in convenience for
+         * bypassing setting the avro schema by hand.  For those two languages,
+         * one can use this property as usual and not have to worry about the
+         * avro schema for the record.
          */
         extern const std::string NULLABLE;
+
+
+        /**
+         * This property indicates that this column should be dictionary
+         * encoded. It can only be used in conjunction with string columns
+         * marked with a charN property. This property is appropriate for
+         * columns where the cardinality (the number of unique values) is
+         * expected to be low, and can save a large amount of memory.
+         */
+        extern const std::string DICT;
 
 
     } // end namespace ColumnProperty

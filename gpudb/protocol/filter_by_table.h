@@ -50,8 +50,7 @@ namespace gpudb
          *                       view containing the results. Has the same
          *                       naming restrictions as <a
          *                       href="../../concepts/tables.html"
-         *                       target="_top">tables</a>.  Default value is an
-         *                       empty string.
+         *                       target="_top">tables</a>.
          * @param[in] columnName_  Name of the column by whose value the data
          *                         will be filtered from the table designated
          *                         by @a tableName.
@@ -61,36 +60,63 @@ namespace gpudb
          * @param[in] sourceTableColumnName_  Name of the column in the @a
          *                                    sourceTableName whose values will
          *                                    be used as the filter for table
-         *                                    @a tableName. Must match the type
-         *                                    of the @a columnName.
+         *                                    @a tableName. Must be a
+         *                                    geospatial geometry column if in
+         *                                    'spatial' mode; otherwise, Must
+         *                                    match the type of the @a
+         *                                    columnName.
          * @param[in] options_  Optional parameters.
          *                      <ul>
-         *                              <li> filter_mode: String indicating the
-         *                      filter mode, either @a in_table or @a
-         *                      not_in_table. Values: 'in_table',
-         *                      'not_in_table'.
-         *                              <li> mode: Mode - should be either @a
-         *                      spatial or @a normal. Values: 'normal',
-         *                      'spatial'.
-         *                              <li> buffer: Buffer size, in meters.
-         *                      Only relevant for @a spatial mode.
-         *                              <li> buffer_method: Method used to
-         *                      buffer polygons.  Only relevant for @a spatial
-         *                      mode. Values: 'normal', 'geos'.
-         *                              <li> max_partition_size: Maximum number
-         *                      of points in a partition. Only relevant for @a
-         *                      spatial mode.
-         *                              <li> max_partition_score: Maximum
-         *                      number of points * edges in a partition. Only
-         *                      relevant for @a spatial mode.
-         *                              <li> x_column_name: Name of column
-         *                      containing x value of point being filtered in
-         *                      @a spatial mode.
-         *                              <li> y_column_name: Name of column
-         *                      containing y value of point being filtered in
-         *                      @a spatial mode.
+         *                              <li>
+         *                      gpudb::filter_by_table_filter_mode: String
+         *                      indicating the filter mode, either @a in_table
+         *                      or @a not_in_table.
+         *                      <ul>
+         *                              <li> gpudb::filter_by_table_in_table
+         *                              <li>
+         *                      gpudb::filter_by_table_not_in_table
          *                      </ul>
-         *                        Default value is an empty std::map.
+         *                      The default value is
+         *                      gpudb::filter_by_table_in_table.
+         *                              <li> gpudb::filter_by_table_mode: Mode
+         *                      - should be either @a spatial or @a normal.
+         *                      <ul>
+         *                              <li> gpudb::filter_by_table_normal
+         *                              <li> gpudb::filter_by_table_spatial
+         *                      </ul>
+         *                      The default value is
+         *                      gpudb::filter_by_table_normal.
+         *                              <li> gpudb::filter_by_table_buffer:
+         *                      Buffer size, in meters. Only relevant for @a
+         *                      spatial mode.
+         *                              <li>
+         *                      gpudb::filter_by_table_buffer_method: Method
+         *                      used to buffer polygons.  Only relevant for @a
+         *                      spatial mode.
+         *                      <ul>
+         *                              <li> gpudb::filter_by_table_normal
+         *                              <li> gpudb::filter_by_table_geos: Use
+         *                      geos 1 edge per corner algorithm
+         *                      </ul>
+         *                      The default value is
+         *                      gpudb::filter_by_table_normal.
+         *                              <li>
+         *                      gpudb::filter_by_table_max_partition_size:
+         *                      Maximum number of points in a partition. Only
+         *                      relevant for @a spatial mode.
+         *                              <li>
+         *                      gpudb::filter_by_table_max_partition_score:
+         *                      Maximum number of points * edges in a
+         *                      partition. Only relevant for @a spatial mode.
+         *                              <li>
+         *                      gpudb::filter_by_table_x_column_name: Name of
+         *                      column containing x value of point being
+         *                      filtered in @a spatial mode.
+         *                              <li>
+         *                      gpudb::filter_by_table_y_column_name: Name of
+         *                      column containing y value of point being
+         *                      filtered in @a spatial mode.
+         *                      </ul>
          * 
          */
         FilterByTableRequest(const std::string& tableName_, const std::string& viewName_, const std::string& columnName_, const std::string& sourceTableName_, const std::string& sourceTableColumnName_, const std::map<std::string, std::string>& options_):

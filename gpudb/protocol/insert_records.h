@@ -20,19 +20,12 @@ namespace gpudb
      * and can provide the unique identifier of each added record.
      * <p>
      * The @a options parameter can be used to customize this function's
-     * behavior.  The @a update_on_existing_pk option specifies the primary-key
-     * collision policy.  If the table has a {@link
-     * #createType(const CreateTypeRequest&) const primary key} and if @a
-     * update_on_existing_pk is @a true, then if any of the records being added
-     * have the same primary key as existing records, the existing records are
-     * replaced (i.e. updated) with the given records.  If @a
-     * update_on_existing_pk is @a false and if the records being added have
-     * the same primary key as existing records, they are ignored (the existing
-     * records are left unchanged).  It is quite possible that in this case
-     * some of the given records will be inserted and some (those having
-     * existing primary keys) will be ignored (or updated).  If the specified
-     * table does not have a primary key column, then the @a
-     * update_on_existing_pk option is ignored.
+     * behavior.
+     * <p>
+     * The @a update_on_existing_pk option specifies the record collision
+     * policy for inserting into a table with a <a
+     * href="../../concepts/tables.html#primary-keys" target="_top">primary
+     * key</a>, but is ignored if no primary key exists.
      * <p>
      * The @a return_record_ids option indicates that the database should
      * return the unique identifiers of inserted records.
@@ -68,30 +61,42 @@ namespace gpudb
          *                   is @a json.
          * @param[in] options_  Optional parameters.
          *                      <ul>
-         *                              <li> update_on_existing_pk: If the
-         *                      table has a /create/type, then if the value is
-         *                      @a true then if any of the records being added
-         *                      have the same primary key as existing records,
-         *                      the existing records are replaced (i.e.
-         *                      updated) with the given records. If @a false,
-         *                      and if the records being added have the same
-         *                      primary key as existing records, they are
-         *                      ignored (the existing records are left
-         *                      unchanged).  It is quite possible that in this
-         *                      case some of the given records will be inserted
-         *                      and some (those having existing primary keys)
-         *                      will be ignored (or updated). If the specified
-         *                      table does not have a primary key column then
-         *                      this optional parameter is ignored. Values:
-         *                      'true', 'false'.
-         *                              <li> return_record_ids: If @a true then
-         *                      return the internal record id along for each
-         *                      inserted record. Values: 'true', 'false'.
-         *                              <li> route_to_address: Route to a
-         *                      specific rank/tom. Option not suitable for
+         *                              <li>
+         *                      gpudb::insert_records_update_on_existing_pk:
+         *                      Specifies the record collision policy for
+         *                      inserting into a table with a <a
+         *                      href="../../concepts/tables.html#primary-keys"
+         *                      target="_top">primary key</a>.  If set to @a
+         *                      true, any existing table record with primary
+         *                      key values that match those of a record being
+         *                      inserted will be replaced by that new record.
+         *                      If set to @a false, any existing table record
+         *                      with primary key values that match those of a
+         *                      record being inserted will remain unchanged and
+         *                      the new record discarded.  If the specified
+         *                      table does not have a primary key, then this
+         *                      option is ignored.
+         *                      <ul>
+         *                              <li> gpudb::insert_records_true
+         *                              <li> gpudb::insert_records_false
+         *                      </ul>
+         *                      The default value is
+         *                      gpudb::insert_records_false.
+         *                              <li>
+         *                      gpudb::insert_records_return_record_ids: If @a
+         *                      true then return the internal record id along
+         *                      for each inserted record.
+         *                      <ul>
+         *                              <li> gpudb::insert_records_true
+         *                              <li> gpudb::insert_records_false
+         *                      </ul>
+         *                      The default value is
+         *                      gpudb::insert_records_false.
+         *                              <li>
+         *                      gpudb::insert_records_route_to_address: Route
+         *                      to a specific rank/tom. Option not suitable for
          *                      tables using primary/shard keys
          *                      </ul>
-         *                        Default value is an empty std::map.
          * 
          */
         RawInsertRecordsRequest(const std::string& tableName_, const std::vector<std::vector<uint8_t> >& list_, const std::map<std::string, std::string>& options_):
@@ -118,34 +123,51 @@ namespace gpudb
          *                      type as that of the table. Empty array if @a
          *                      listEncoding is @a binary.
          * @param[in] listEncoding_  The encoding of the records to be
-         *                           inserted. Values: 'binary', 'json'.
-         *                             Default value is 'binary'.
+         *                           inserted.
+         *                           <ul>
+         *                                   <li> gpudb::insert_records_binary
+         *                                   <li> gpudb::insert_records_json
+         *                           </ul>
+         *                           The default value is
+         *                           gpudb::insert_records_binary.
          * @param[in] options_  Optional parameters.
          *                      <ul>
-         *                              <li> update_on_existing_pk: If the
-         *                      table has a /create/type, then if the value is
-         *                      @a true then if any of the records being added
-         *                      have the same primary key as existing records,
-         *                      the existing records are replaced (i.e.
-         *                      updated) with the given records. If @a false,
-         *                      and if the records being added have the same
-         *                      primary key as existing records, they are
-         *                      ignored (the existing records are left
-         *                      unchanged).  It is quite possible that in this
-         *                      case some of the given records will be inserted
-         *                      and some (those having existing primary keys)
-         *                      will be ignored (or updated). If the specified
-         *                      table does not have a primary key column then
-         *                      this optional parameter is ignored. Values:
-         *                      'true', 'false'.
-         *                              <li> return_record_ids: If @a true then
-         *                      return the internal record id along for each
-         *                      inserted record. Values: 'true', 'false'.
-         *                              <li> route_to_address: Route to a
-         *                      specific rank/tom. Option not suitable for
+         *                              <li>
+         *                      gpudb::insert_records_update_on_existing_pk:
+         *                      Specifies the record collision policy for
+         *                      inserting into a table with a <a
+         *                      href="../../concepts/tables.html#primary-keys"
+         *                      target="_top">primary key</a>.  If set to @a
+         *                      true, any existing table record with primary
+         *                      key values that match those of a record being
+         *                      inserted will be replaced by that new record.
+         *                      If set to @a false, any existing table record
+         *                      with primary key values that match those of a
+         *                      record being inserted will remain unchanged and
+         *                      the new record discarded.  If the specified
+         *                      table does not have a primary key, then this
+         *                      option is ignored.
+         *                      <ul>
+         *                              <li> gpudb::insert_records_true
+         *                              <li> gpudb::insert_records_false
+         *                      </ul>
+         *                      The default value is
+         *                      gpudb::insert_records_false.
+         *                              <li>
+         *                      gpudb::insert_records_return_record_ids: If @a
+         *                      true then return the internal record id along
+         *                      for each inserted record.
+         *                      <ul>
+         *                              <li> gpudb::insert_records_true
+         *                              <li> gpudb::insert_records_false
+         *                      </ul>
+         *                      The default value is
+         *                      gpudb::insert_records_false.
+         *                              <li>
+         *                      gpudb::insert_records_route_to_address: Route
+         *                      to a specific rank/tom. Option not suitable for
          *                      tables using primary/shard keys
          *                      </ul>
-         *                        Default value is an empty std::map.
          * 
          */
         RawInsertRecordsRequest(const std::string& tableName_, const std::vector<std::vector<uint8_t> >& list_, const std::vector<std::string>& listStr_, const std::string& listEncoding_, const std::map<std::string, std::string>& options_):
@@ -239,19 +261,12 @@ namespace gpudb
      * and can provide the unique identifier of each added record.
      * <p>
      * The @a options parameter can be used to customize this function's
-     * behavior.  The @a update_on_existing_pk option specifies the primary-key
-     * collision policy.  If the table has a {@link
-     * #createType(const std::string&,const std::string&,const std::map<std::string, std::vector<std::string> >&,const std::map<std::string, std::string>&) const
-     * primary key} and if @a update_on_existing_pk is @a true, then if any of
-     * the records being added have the same primary key as existing records,
-     * the existing records are replaced (i.e. updated) with the given records.
-     * If @a update_on_existing_pk is @a false and if the records being added
-     * have the same primary key as existing records, they are ignored (the
-     * existing records are left unchanged).  It is quite possible that in this
-     * case some of the given records will be inserted and some (those having
-     * existing primary keys) will be ignored (or updated).  If the specified
-     * table does not have a primary key column, then the @a
-     * update_on_existing_pk option is ignored.
+     * behavior.
+     * <p>
+     * The @a update_on_existing_pk option specifies the record collision
+     * policy for inserting into a table with a <a
+     * href="../../concepts/tables.html#primary-keys" target="_top">primary
+     * key</a>, but is ignored if no primary key exists.
      * <p>
      * The @a return_record_ids option indicates that the database should
      * return the unique identifiers of inserted records.
@@ -288,30 +303,42 @@ namespace gpudb
          *                   is @a json.
          * @param[in] options_  Optional parameters.
          *                      <ul>
-         *                              <li> update_on_existing_pk: If the
-         *                      table has a /create/type, then if the value is
-         *                      @a true then if any of the records being added
-         *                      have the same primary key as existing records,
-         *                      the existing records are replaced (i.e.
-         *                      updated) with the given records. If @a false,
-         *                      and if the records being added have the same
-         *                      primary key as existing records, they are
-         *                      ignored (the existing records are left
-         *                      unchanged).  It is quite possible that in this
-         *                      case some of the given records will be inserted
-         *                      and some (those having existing primary keys)
-         *                      will be ignored (or updated). If the specified
-         *                      table does not have a primary key column then
-         *                      this optional parameter is ignored. Values:
-         *                      'true', 'false'.
-         *                              <li> return_record_ids: If @a true then
-         *                      return the internal record id along for each
-         *                      inserted record. Values: 'true', 'false'.
-         *                              <li> route_to_address: Route to a
-         *                      specific rank/tom. Option not suitable for
+         *                              <li>
+         *                      gpudb::insert_records_update_on_existing_pk:
+         *                      Specifies the record collision policy for
+         *                      inserting into a table with a <a
+         *                      href="../../concepts/tables.html#primary-keys"
+         *                      target="_top">primary key</a>.  If set to @a
+         *                      true, any existing table record with primary
+         *                      key values that match those of a record being
+         *                      inserted will be replaced by that new record.
+         *                      If set to @a false, any existing table record
+         *                      with primary key values that match those of a
+         *                      record being inserted will remain unchanged and
+         *                      the new record discarded.  If the specified
+         *                      table does not have a primary key, then this
+         *                      option is ignored.
+         *                      <ul>
+         *                              <li> gpudb::insert_records_true
+         *                              <li> gpudb::insert_records_false
+         *                      </ul>
+         *                      The default value is
+         *                      gpudb::insert_records_false.
+         *                              <li>
+         *                      gpudb::insert_records_return_record_ids: If @a
+         *                      true then return the internal record id along
+         *                      for each inserted record.
+         *                      <ul>
+         *                              <li> gpudb::insert_records_true
+         *                              <li> gpudb::insert_records_false
+         *                      </ul>
+         *                      The default value is
+         *                      gpudb::insert_records_false.
+         *                              <li>
+         *                      gpudb::insert_records_route_to_address: Route
+         *                      to a specific rank/tom. Option not suitable for
          *                      tables using primary/shard keys
          *                      </ul>
-         *                        Default value is an empty std::map.
          * 
          */
         InsertRecordsRequest(const std::string& tableName_, const std::vector<T>& data_, const std::map<std::string, std::string>& options_):
@@ -341,19 +368,12 @@ namespace gpudb
      * and can provide the unique identifier of each added record.
      * <p>
      * The @a options parameter can be used to customize this function's
-     * behavior.  The @a update_on_existing_pk option specifies the primary-key
-     * collision policy.  If the table has a {@link
-     * #createType(const CreateTypeRequest&) const primary key} and if @a
-     * update_on_existing_pk is @a true, then if any of the records being added
-     * have the same primary key as existing records, the existing records are
-     * replaced (i.e. updated) with the given records.  If @a
-     * update_on_existing_pk is @a false and if the records being added have
-     * the same primary key as existing records, they are ignored (the existing
-     * records are left unchanged).  It is quite possible that in this case
-     * some of the given records will be inserted and some (those having
-     * existing primary keys) will be ignored (or updated).  If the specified
-     * table does not have a primary key column, then the @a
-     * update_on_existing_pk option is ignored.
+     * behavior.
+     * <p>
+     * The @a update_on_existing_pk option specifies the record collision
+     * policy for inserting into a table with a <a
+     * href="../../concepts/tables.html#primary-keys" target="_top">primary
+     * key</a>, but is ignored if no primary key exists.
      * <p>
      * The @a return_record_ids option indicates that the database should
      * return the unique identifiers of inserted records.

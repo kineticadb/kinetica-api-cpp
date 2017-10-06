@@ -65,7 +65,7 @@ BUILD_DIR=$ROOT_BUILD_DIR/thirdparty
 INSTALL_DIR=$ROOT_BUILD_DIR/thirdparty/install
 FORCE_REBUILD=0
 
-BOOST_ARCHIVE=$(readlink -m $(ls $SCRIPT_DIR/../../gpudb-core-libs/boost_*.tar.bz2 | tail -n 1))
+BOOST_ARCHIVE="$(ls $SCRIPT_DIR/boost_* 2>/dev/null | grep -E '\.tgz$|\.tar.gz$|\.tar.bz2$' | tail -n 1)"
 
 DISABLE_CXX11_ABI=0
 STATIC_WITH_PIC=0
@@ -128,7 +128,8 @@ function build_snappy
         if [ "${STATIC_WITH_PIC}" -eq 1 ]; then
             BUILD_CXXFLAGS="-fPIC"
         fi
-        if [ "${DISABLE_CXX11_ABI}" -eq 1 ]; then
+        echo "DISABLE_CXX_ABI=${DISABLE_CXX_ABI}"
+        if [ "${DISABLE_CXX11_ABI}" -eq "1" ]; then
             BUILD_CXXFLAGS="$BUILD_CXXFLAGS -D_GLIBCXX_USE_CXX11_ABI=0 "
         fi
 
@@ -186,9 +187,17 @@ function build_avro
 
         # Unfortunately, it seems the only way to get this flag in there is to manually
         # update the makefiles after cmake has generated them.
-        if [ $DISABLE_CXX11_ABI -eq 1 ]; then
+        if [ "$DISABLE_CXX11_ABI" -eq "1" ] || [ "${STATIC_WITH_PIC}" -eq "1" ]; then
+            local ABI_FLAGS=""
+            local PIC_FLAGS=""
+            if [ "${DISABLE_CXX11_ABI}" -eq "1" ]; then
+                ABI_FLAGS="-D_GLIBCXX_USE_CXX11_ABI=0"
+            fi
+            if [ "${STATIC_WITH_PIC}" -eq "1" ]; then
+                PIC_FLAGS="-fPIC"
+            fi
             for f in $(find . -name "flags.make"); do
-                run_cmd "sed -i 's/CXX_FLAGS = /CXX_FLAGS = -fPIC -D_GLIBCXX_USE_CXX11_ABI=0 /g' $f"
+                run_cmd "sed -i 's/CXX_FLAGS = /CXX_FLAGS = ${PIC_FLAGS} ${ABI_FLAGS} /g' $f"
             done
         fi
 
@@ -251,7 +260,7 @@ function build_boost
 
                 date > $BUILD_DIR/$BOOST_NAME.built
 
-                sed -i 's@// signbit@// signbit\n#undef signbit // clear #define signbit from /usr/include/math.h@g' $INSTALL_DIR/include/boost/math/special_functions/sign.hpp
+                sed -i 's@// signbit@// signbit\n#undef signbit // clear #define signbit from /usr/include/math.h@g' $INSTALL_PREFIX/include/boost/math/special_functions/sign.hpp
                 popd > /dev/null
             echo
         popd > /dev/null
@@ -266,12 +275,21 @@ function build_boost
 # ---------------------------------------------------------------------------
 # Main script
 
+mkdir -p $BUILD_DIR
+
 LOG=$BUILD_DIR/build.log
 
-if [ ! -f $BOOST_ARCHIVE ]; then
-    echo "ERROR: Unable to locate Boost archive at: $BOOST_ARCHIVE" | tee -a $LOG
+if [ -z "$BOOST_ARCHIVE" ]; then
+    echo "ERROR: Please specify the path to a boost archive using '--boost-archive' or by placing a boost archive in the $SCRIPT_DIR folder.  Boost archives can be downloaded from: http://www.boost.org" | tee -a $LOG
     exit 1
 fi
+
+if [ ! -f "$BOOST_ARCHIVE" ]; then
+    echo "ERROR: No Boost archive at '$BOOST_ARCHIVE'.  Please specify the path to a boost archive using '--boost-archive' or place a boost archive in the $SCRIPT_DIR folder.  Boost archives can be downloaded from: http://www.boost.org" | tee -a $LOG
+    exit 1
+fi
+
+echo "Using Boost library at $BOOST_ARCHIVE." | tee -a $LOG
 
 pushd $ROOT_DIR > /dev/null
 

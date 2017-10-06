@@ -51,16 +51,16 @@ namespace gpudb
          *                          @a options.
          * @param[in] options_  Optional parameters.
          *                      <ul>
-         *                              <li> global_expression: An optional
-         *                      global expression to reduce the search space of
-         *                      the @a expressions.
-         *                              <li> record_id: A record id identifying
-         *                      a single record, obtained at the time of
-         *                      /insert/records or by calling
+         *                              <li>
+         *                      gpudb::delete_records_global_expression: An
+         *                      optional global expression to reduce the search
+         *                      space of the @a expressions.
+         *                              <li> gpudb::delete_records_record_id: A
+         *                      record id identifying a single record, obtained
+         *                      at the time of /insert/records or by calling
          *                      /get/records/fromcollection with the
          *                      *return_record_ids* option.
          *                      </ul>
-         *                        Default value is an empty std::map.
          * 
          */
         DeleteRecordsRequest(const std::string& tableName_, const std::vector<std::string>& expressions_, const std::map<std::string, std::string>& options_):

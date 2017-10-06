@@ -59,20 +59,67 @@ namespace gpudb
          * @param[in] maxY_
          * @param[in] width_
          * @param[in] height_
-         * @param[in] projection_  Values: 'EPSG:4326', 'PLATE_CARREE',
-         *                         '900913', 'EPSG:900913', '102100',
-         *                         'EPSG:102100', '3857', 'EPSG:3857',
-         *                         'WEB_MERCATOR'.
+         * @param[in] projection_
+         *                         <ul>
+         *                                 <li>
+         *                         gpudb::visualize_image_heatmap_EPSG_4326
+         *                                 <li>
+         *                         gpudb::visualize_image_heatmap_PLATE_CARREE
+         *                                 <li>
+         *                         gpudb::visualize_image_heatmap_900913
+         *                                 <li>
+         *                         gpudb::visualize_image_heatmap_EPSG_900913
+         *                                 <li>
+         *                         gpudb::visualize_image_heatmap_102100
+         *                                 <li>
+         *                         gpudb::visualize_image_heatmap_EPSG_102100
+         *                                 <li>
+         *                         gpudb::visualize_image_heatmap_3857
+         *                                 <li>
+         *                         gpudb::visualize_image_heatmap_EPSG_3857
+         *                                 <li>
+         *                         gpudb::visualize_image_heatmap_WEB_MERCATOR
+         *                         </ul>
+         *                         The default value is
+         *                         gpudb::visualize_image_heatmap_PLATE_CARREE.
          * @param[in] styleOptions_
          *                           <ul>
-         *                                   <li> colormap: Values: 'jet',
-         *                           'hot', 'hsv', 'gray', 'blues', 'greens',
-         *                           'greys', 'oranges', 'purples', 'reds',
-         *                           'viridis'.
-         *                                   <li> blur_radius:
-         *                                   <li> bg_color:
-         *                                   <li> gradient_start_color:
-         *                                   <li> gradient_end_color:
+         *                                   <li>
+         *                           gpudb::visualize_image_heatmap_colormap:
+         *                           <ul>
+         *                                   <li>
+         *                           gpudb::visualize_image_heatmap_jet
+         *                                   <li>
+         *                           gpudb::visualize_image_heatmap_hot
+         *                                   <li>
+         *                           gpudb::visualize_image_heatmap_hsv
+         *                                   <li>
+         *                           gpudb::visualize_image_heatmap_gray
+         *                                   <li>
+         *                           gpudb::visualize_image_heatmap_blues
+         *                                   <li>
+         *                           gpudb::visualize_image_heatmap_greens
+         *                                   <li>
+         *                           gpudb::visualize_image_heatmap_greys
+         *                                   <li>
+         *                           gpudb::visualize_image_heatmap_oranges
+         *                                   <li>
+         *                           gpudb::visualize_image_heatmap_purples
+         *                                   <li>
+         *                           gpudb::visualize_image_heatmap_reds
+         *                                   <li>
+         *                           gpudb::visualize_image_heatmap_viridis
+         *                           </ul>
+         *                           The default value is
+         *                           gpudb::visualize_image_heatmap_jet.
+         *                                   <li>
+         *                           gpudb::visualize_image_heatmap_blur_radius
+         *                                   <li>
+         *                           gpudb::visualize_image_heatmap_bg_color
+         *                                   <li>
+         *                           gpudb::visualize_image_heatmap_gradient_start_color
+         *                                   <li>
+         *                           gpudb::visualize_image_heatmap_gradient_end_color
          *                           </ul>
          * @param[in] options_
          * 

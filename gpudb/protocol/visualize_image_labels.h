@@ -45,6 +45,7 @@ namespace gpudb
             fillColor(std::string()),
             leaderXColumnName(std::string()),
             leaderYColumnName(std::string()),
+            filter(std::string()),
             minX(double()),
             maxX(double()),
             minY(double()),
@@ -78,20 +79,40 @@ namespace gpudb
          * @param[in] fillColor_
          * @param[in] leaderXColumnName_
          * @param[in] leaderYColumnName_
+         * @param[in] filter_
          * @param[in] minX_
          * @param[in] maxX_
          * @param[in] minY_
          * @param[in] maxY_
          * @param[in] width_
          * @param[in] height_
-         * @param[in] projection_  Values: 'EPSG:4326', 'PLATE_CARREE',
-         *                         '900913', 'EPSG:900913', '102100',
-         *                         'EPSG:102100', '3857', 'EPSG:3857',
-         *                         'WEB_MERCATOR'.
+         * @param[in] projection_
+         *                         <ul>
+         *                                 <li>
+         *                         gpudb::visualize_image_labels_EPSG_4326
+         *                                 <li>
+         *                         gpudb::visualize_image_labels_PLATE_CARREE
+         *                                 <li>
+         *                         gpudb::visualize_image_labels_900913
+         *                                 <li>
+         *                         gpudb::visualize_image_labels_EPSG_900913
+         *                                 <li>
+         *                         gpudb::visualize_image_labels_102100
+         *                                 <li>
+         *                         gpudb::visualize_image_labels_EPSG_102100
+         *                                 <li>
+         *                         gpudb::visualize_image_labels_3857
+         *                                 <li>
+         *                         gpudb::visualize_image_labels_EPSG_3857
+         *                                 <li>
+         *                         gpudb::visualize_image_labels_WEB_MERCATOR
+         *                         </ul>
+         *                         The default value is
+         *                         gpudb::visualize_image_labels_PLATE_CARREE.
          * @param[in] options_
          * 
          */
-        VisualizeImageLabelsRequest(const std::string& tableName_, const std::string& xColumnName_, const std::string& yColumnName_, const std::string& xOffset_, const std::string& yOffset_, const std::string& textString_, const std::string& font_, const std::string& textColor_, const std::string& textAngle_, const std::string& textScale_, const std::string& drawBox_, const std::string& drawLeader_, const std::string& lineWidth_, const std::string& lineColor_, const std::string& fillColor_, const std::string& leaderXColumnName_, const std::string& leaderYColumnName_, const double minX_, const double maxX_, const double minY_, const double maxY_, const int32_t width_, const int32_t height_, const std::string& projection_, const std::map<std::string, std::string>& options_):
+        VisualizeImageLabelsRequest(const std::string& tableName_, const std::string& xColumnName_, const std::string& yColumnName_, const std::string& xOffset_, const std::string& yOffset_, const std::string& textString_, const std::string& font_, const std::string& textColor_, const std::string& textAngle_, const std::string& textScale_, const std::string& drawBox_, const std::string& drawLeader_, const std::string& lineWidth_, const std::string& lineColor_, const std::string& fillColor_, const std::string& leaderXColumnName_, const std::string& leaderYColumnName_, const std::string& filter_, const double minX_, const double maxX_, const double minY_, const double maxY_, const int32_t width_, const int32_t height_, const std::string& projection_, const std::map<std::string, std::string>& options_):
             tableName( tableName_ ),
             xColumnName( xColumnName_ ),
             yColumnName( yColumnName_ ),
@@ -109,6 +130,7 @@ namespace gpudb
             fillColor( fillColor_ ),
             leaderXColumnName( leaderXColumnName_ ),
             leaderYColumnName( leaderYColumnName_ ),
+            filter( filter_ ),
             minX( minX_ ),
             maxX( maxX_ ),
             minY( minY_ ),
@@ -141,6 +163,7 @@ namespace gpudb
         std::string fillColor;
         std::string leaderXColumnName;
         std::string leaderYColumnName;
+        std::string filter;
         double minX;
         double maxX;
         double minY;
@@ -179,6 +202,7 @@ namespace avro
             ::avro::encode(e, v.fillColor);
             ::avro::encode(e, v.leaderXColumnName);
             ::avro::encode(e, v.leaderYColumnName);
+            ::avro::encode(e, v.filter);
             ::avro::encode(e, v.minX);
             ::avro::encode(e, v.maxX);
             ::avro::encode(e, v.minY);
@@ -268,34 +292,38 @@ namespace avro
                             break;
 
                         case 17:
-                            ::avro::decode(d, v.minX);
+                            ::avro::decode(d, v.filter);
                             break;
 
                         case 18:
-                            ::avro::decode(d, v.maxX);
+                            ::avro::decode(d, v.minX);
                             break;
 
                         case 19:
-                            ::avro::decode(d, v.minY);
+                            ::avro::decode(d, v.maxX);
                             break;
 
                         case 20:
-                            ::avro::decode(d, v.maxY);
+                            ::avro::decode(d, v.minY);
                             break;
 
                         case 21:
-                            ::avro::decode(d, v.width);
+                            ::avro::decode(d, v.maxY);
                             break;
 
                         case 22:
-                            ::avro::decode(d, v.height);
+                            ::avro::decode(d, v.width);
                             break;
 
                         case 23:
-                            ::avro::decode(d, v.projection);
+                            ::avro::decode(d, v.height);
                             break;
 
                         case 24:
+                            ::avro::decode(d, v.projection);
+                            break;
+
+                        case 25:
                             ::avro::decode(d, v.options);
                             break;
 
@@ -323,6 +351,7 @@ namespace avro
                 ::avro::decode(d, v.fillColor);
                 ::avro::decode(d, v.leaderXColumnName);
                 ::avro::decode(d, v.leaderYColumnName);
+                ::avro::decode(d, v.filter);
                 ::avro::decode(d, v.minX);
                 ::avro::decode(d, v.maxX);
                 ::avro::decode(d, v.minY);

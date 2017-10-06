@@ -32,8 +32,7 @@ namespace gpudb
          * 
          * @param[in] typeId_  Id of the type returned in response to
          *                     /create/type request.
-         * @param[in] options_  Optional parameters.  Default value is an empty
-         *                      std::map.
+         * @param[in] options_  Optional parameters.
          * 
          */
         HasTypeRequest(const std::string& typeId_, const std::map<std::string, std::string>& options_):

@@ -18,23 +18,43 @@ namespace gpudb
      * Calculates unique combinations (groups) of values for the given columns
      * in a given table/view/collection and computes aggregates on each unique
      * combination. This is somewhat analogous to an SQL-style SELECT...GROUP
-     * BY. Any column(s) can be grouped on, but only non-string (i.e. numeric)
-     * columns may be used for computing aggregates. The results can be paged
-     * via the @a offset and @a limit parameters. For example, to get 10 groups
-     * with the largest counts the inputs would be: limit=10,
-     * options={"sort_order":"descending", "sort_by":"value"}. @a options can
-     * be used to customize behavior of this call e.g. filtering or sorting the
-     * results. To group by 'x' and 'y' and compute the number of objects
-     * within each group, use column_names=['x','y','count(*)'].  To also
-     * compute the sum of 'z' over each group, use
-     * column_names=['x','y','count(*)','sum(z)']. Available aggregation
-     * functions are: 'count(*)', 'sum', 'min', 'max', 'avg', 'mean', 'stddev',
-     * 'stddev_pop', 'stddev_samp', 'var', 'var_pop', 'var_samp', 'arg_min',
-     * 'arg_max' and 'count_distinct'. The response is returned as a dynamic
-     * schema. For details see: <a href="../../concepts/dynamic_schemas.html"
-     * target="_top">dynamic schemas documentation</a>. If the @a result_table
-     * option is provided then the results are stored in a table with the name
-     * given in the option and the results are not returned in the response.
+     * BY.
+     * <p>
+     * Any column(s) can be grouped on, and all column types except
+     * unrestricted-length strings may be used for computing applicable
+     * aggregates.
+     * <p>
+     * The results can be paged via the @a offset and @a limit parameters. For
+     * example, to get 10 groups with the largest counts the inputs would be:
+     * limit=10, options={"sort_order":"descending", "sort_by":"value"}.
+     * <p>
+     * @a options can be used to customize behavior of this call e.g. filtering
+     * or sorting the results.
+     * <p>
+     * To group by columns 'x' and 'y' and compute the number of objects within
+     * each group, use:  column_names=['x','y','count(*)'].
+     * <p>
+     * To also compute the sum of 'z' over each group, use:
+     * column_names=['x','y','count(*)','sum(z)'].
+     * <p>
+     * Available <a
+     * href="../../concepts/expressions.html#aggregate-expressions"
+     * target="_top">aggregation functions</a> are: count(*), sum, min, max,
+     * avg, mean, stddev, stddev_pop, stddev_samp, var, var_pop, var_samp,
+     * arg_min, arg_max and count_distinct.
+     * <p>
+     * The response is returned as a dynamic schema. For details see: <a
+     * href="../../concepts/dynamic_schemas.html" target="_top">dynamic schemas
+     * documentation</a>.
+     * <p>
+     * If a @a result_table name is specified in the options, the results are
+     * stored in a new table with that name.  No results are returned in the
+     * response.  If the source table's <a
+     * href="../../concepts/tables.html#shard-keys" target="_top">shard key</a>
+     * is used as the grouping column(s), the result table will be sharded, in
+     * all other cases it will be replicated.  Sorting will properly function
+     * only if the result table is replicated or if there is only one
+     * processing node and should not be relied upon in other cases.
      */
     struct AggregateGroupByRequest
     {
@@ -74,11 +94,12 @@ namespace gpudb
          * @param[in] limit_  A positive integer indicating the maximum number
          *                    of results to be returned Or END_OF_SET (-9999)
          *                    to indicate that the max number of results should
-         *                    be returned.  Default value is 1000.
+         *                    be returned.
          * @param[in] options_  Optional parameters.
          *                      <ul>
-         *                              <li> collection_name: Name of a
-         *                      collection which is to contain the table
+         *                              <li>
+         *                      gpudb::aggregate_group_by_collection_name: Name
+         *                      of a collection which is to contain the table
          *                      specified in @a result_table, otherwise the
          *                      table will be a top-level table. If the
          *                      collection does not allow duplicate types and
@@ -86,20 +107,53 @@ namespace gpudb
          *                      given one, then this table creation request
          *                      will fail. Additionally this option is invalid
          *                      if @a tableName is a collection.
-         *                              <li> expression: Filter expression to
-         *                      apply to the table prior to computing the
-         *                      aggregate group by.
-         *                              <li> having: Filter expression to apply
-         *                      to the aggregated results.
-         *                              <li> sort_order: String indicating how
-         *                      the returned values should be sorted -
-         *                      ascending or descending. Values: 'ascending',
-         *                      'descending'.
-         *                              <li> sort_by: String determining how
-         *                      the results are sorted. Values: 'key', 'value'.
-         *                              <li> result_table: The name of the
-         *                      table used to store the results. Has the same
-         *                      naming restrictions as <a
+         *                              <li>
+         *                      gpudb::aggregate_group_by_expression: Filter
+         *                      expression to apply to the table prior to
+         *                      computing the aggregate group by.
+         *                              <li> gpudb::aggregate_group_by_having:
+         *                      Filter expression to apply to the aggregated
+         *                      results.
+         *                              <li>
+         *                      gpudb::aggregate_group_by_sort_order: String
+         *                      indicating how the returned values should be
+         *                      sorted - ascending or descending.
+         *                      <ul>
+         *                              <li>
+         *                      gpudb::aggregate_group_by_ascending: Indicates
+         *                      that the returned values should be sorted in
+         *                      ascending order.
+         *                              <li>
+         *                      gpudb::aggregate_group_by_descending: Indicates
+         *                      that the returned values should be sorted in
+         *                      descending order.
+         *                      </ul>
+         *                      The default value is
+         *                      gpudb::aggregate_group_by_ascending.
+         *                              <li> gpudb::aggregate_group_by_sort_by:
+         *                      String determining how the results are sorted.
+         *                      <ul>
+         *                              <li> gpudb::aggregate_group_by_key:
+         *                      Indicates that the returned values should be
+         *                      sorted by key, which corresponds to the
+         *                      grouping columns. If you have multiple grouping
+         *                      columns (and are sorting by key), it will first
+         *                      sort the first grouping column, then the second
+         *                      grouping column, etc.
+         *                              <li> gpudb::aggregate_group_by_value:
+         *                      Indicates that the returned values should be
+         *                      sorted by value, which corresponds to the
+         *                      aggregates. If you have multiple aggregates
+         *                      (and are sorting by value), it will first sort
+         *                      by the first aggregate, then the second
+         *                      aggregate, etc.
+         *                      </ul>
+         *                      The default value is
+         *                      gpudb::aggregate_group_by_key.
+         *                              <li>
+         *                      gpudb::aggregate_group_by_result_table: The
+         *                      name of the table used to store the results.
+         *                      Has the same naming restrictions as <a
          *                      href="../../concepts/tables.html"
          *                      target="_top">tables</a>. Column names
          *                      (group-by and aggregate fields) need to be
@@ -109,11 +163,42 @@ namespace gpudb
          *                      not available if one of the grouping attributes
          *                      is an unrestricted string (i.e.; not charN)
          *                      type.
-         *                              <li> ttl: Sets the TTL of the table
-         *                      specified in @a result_table. The value must be
-         *                      the desired TTL in minutes.
+         *                              <li>
+         *                      gpudb::aggregate_group_by_result_table_persist:
+         *                      If @a true then the result table specified in
+         *                      {result_table}@{key of input.options} will be
+         *                      persisted as a regular table (it will not be
+         *                      automatically cleared unless a @a ttl is
+         *                      provided, and the table data can be modified in
+         *                      subsequent operations). If @a false (the
+         *                      default) then the result table will be a
+         *                      read-only, memory-only temporary table.
+         *                      <ul>
+         *                              <li> gpudb::aggregate_group_by_true
+         *                              <li> gpudb::aggregate_group_by_false
          *                      </ul>
-         *                        Default value is an empty std::map.
+         *                      The default value is
+         *                      gpudb::aggregate_group_by_false.
+         *                              <li>
+         *                      gpudb::aggregate_group_by_result_table_force_replicated:
+         *                      Force the result table to be replicated
+         *                      (ignores any sharding). Must be used in
+         *                      combination with the @a result_table option.
+         *                              <li>
+         *                      gpudb::aggregate_group_by_result_table_generate_pk:
+         *                      If 'true' then set a primary key for the result
+         *                      table. Must be used in combination with the @a
+         *                      result_table option.
+         *                              <li> gpudb::aggregate_group_by_ttl:
+         *                      Sets the TTL of the table specified in @a
+         *                      result_table. The value must be the desired TTL
+         *                      in minutes.
+         *                              <li>
+         *                      gpudb::aggregate_group_by_chunk_size: If
+         *                      provided this indicates the chunk size to be
+         *                      used for the result table. Must be used in
+         *                      combination with the @a result_table option.
+         *                      </ul>
          * 
          */
         AggregateGroupByRequest(const std::string& tableName_, const std::vector<std::string>& columnNames_, const int64_t offset_, const int64_t limit_, const std::map<std::string, std::string>& options_):
@@ -147,14 +232,23 @@ namespace gpudb
          * @param[in] limit_  A positive integer indicating the maximum number
          *                    of results to be returned Or END_OF_SET (-9999)
          *                    to indicate that the max number of results should
-         *                    be returned.  Default value is 1000.
+         *                    be returned.
          * @param[in] encoding_  Specifies the encoding for returned records.
-         *                       Values: 'binary', 'json'.
-         *                         Default value is 'binary'.
+         *                       <ul>
+         *                               <li> gpudb::aggregate_group_by_binary:
+         *                       Indicates that the returned records should be
+         *                       binary encoded.
+         *                               <li> gpudb::aggregate_group_by_json:
+         *                       Indicates that the returned records should be
+         *                       json encoded.
+         *                       </ul>
+         *                       The default value is
+         *                       gpudb::aggregate_group_by_binary.
          * @param[in] options_  Optional parameters.
          *                      <ul>
-         *                              <li> collection_name: Name of a
-         *                      collection which is to contain the table
+         *                              <li>
+         *                      gpudb::aggregate_group_by_collection_name: Name
+         *                      of a collection which is to contain the table
          *                      specified in @a result_table, otherwise the
          *                      table will be a top-level table. If the
          *                      collection does not allow duplicate types and
@@ -162,20 +256,53 @@ namespace gpudb
          *                      given one, then this table creation request
          *                      will fail. Additionally this option is invalid
          *                      if @a tableName is a collection.
-         *                              <li> expression: Filter expression to
-         *                      apply to the table prior to computing the
-         *                      aggregate group by.
-         *                              <li> having: Filter expression to apply
-         *                      to the aggregated results.
-         *                              <li> sort_order: String indicating how
-         *                      the returned values should be sorted -
-         *                      ascending or descending. Values: 'ascending',
-         *                      'descending'.
-         *                              <li> sort_by: String determining how
-         *                      the results are sorted. Values: 'key', 'value'.
-         *                              <li> result_table: The name of the
-         *                      table used to store the results. Has the same
-         *                      naming restrictions as <a
+         *                              <li>
+         *                      gpudb::aggregate_group_by_expression: Filter
+         *                      expression to apply to the table prior to
+         *                      computing the aggregate group by.
+         *                              <li> gpudb::aggregate_group_by_having:
+         *                      Filter expression to apply to the aggregated
+         *                      results.
+         *                              <li>
+         *                      gpudb::aggregate_group_by_sort_order: String
+         *                      indicating how the returned values should be
+         *                      sorted - ascending or descending.
+         *                      <ul>
+         *                              <li>
+         *                      gpudb::aggregate_group_by_ascending: Indicates
+         *                      that the returned values should be sorted in
+         *                      ascending order.
+         *                              <li>
+         *                      gpudb::aggregate_group_by_descending: Indicates
+         *                      that the returned values should be sorted in
+         *                      descending order.
+         *                      </ul>
+         *                      The default value is
+         *                      gpudb::aggregate_group_by_ascending.
+         *                              <li> gpudb::aggregate_group_by_sort_by:
+         *                      String determining how the results are sorted.
+         *                      <ul>
+         *                              <li> gpudb::aggregate_group_by_key:
+         *                      Indicates that the returned values should be
+         *                      sorted by key, which corresponds to the
+         *                      grouping columns. If you have multiple grouping
+         *                      columns (and are sorting by key), it will first
+         *                      sort the first grouping column, then the second
+         *                      grouping column, etc.
+         *                              <li> gpudb::aggregate_group_by_value:
+         *                      Indicates that the returned values should be
+         *                      sorted by value, which corresponds to the
+         *                      aggregates. If you have multiple aggregates
+         *                      (and are sorting by value), it will first sort
+         *                      by the first aggregate, then the second
+         *                      aggregate, etc.
+         *                      </ul>
+         *                      The default value is
+         *                      gpudb::aggregate_group_by_key.
+         *                              <li>
+         *                      gpudb::aggregate_group_by_result_table: The
+         *                      name of the table used to store the results.
+         *                      Has the same naming restrictions as <a
          *                      href="../../concepts/tables.html"
          *                      target="_top">tables</a>. Column names
          *                      (group-by and aggregate fields) need to be
@@ -185,11 +312,42 @@ namespace gpudb
          *                      not available if one of the grouping attributes
          *                      is an unrestricted string (i.e.; not charN)
          *                      type.
-         *                              <li> ttl: Sets the TTL of the table
-         *                      specified in @a result_table. The value must be
-         *                      the desired TTL in minutes.
+         *                              <li>
+         *                      gpudb::aggregate_group_by_result_table_persist:
+         *                      If @a true then the result table specified in
+         *                      {result_table}@{key of input.options} will be
+         *                      persisted as a regular table (it will not be
+         *                      automatically cleared unless a @a ttl is
+         *                      provided, and the table data can be modified in
+         *                      subsequent operations). If @a false (the
+         *                      default) then the result table will be a
+         *                      read-only, memory-only temporary table.
+         *                      <ul>
+         *                              <li> gpudb::aggregate_group_by_true
+         *                              <li> gpudb::aggregate_group_by_false
          *                      </ul>
-         *                        Default value is an empty std::map.
+         *                      The default value is
+         *                      gpudb::aggregate_group_by_false.
+         *                              <li>
+         *                      gpudb::aggregate_group_by_result_table_force_replicated:
+         *                      Force the result table to be replicated
+         *                      (ignores any sharding). Must be used in
+         *                      combination with the @a result_table option.
+         *                              <li>
+         *                      gpudb::aggregate_group_by_result_table_generate_pk:
+         *                      If 'true' then set a primary key for the result
+         *                      table. Must be used in combination with the @a
+         *                      result_table option.
+         *                              <li> gpudb::aggregate_group_by_ttl:
+         *                      Sets the TTL of the table specified in @a
+         *                      result_table. The value must be the desired TTL
+         *                      in minutes.
+         *                              <li>
+         *                      gpudb::aggregate_group_by_chunk_size: If
+         *                      provided this indicates the chunk size to be
+         *                      used for the result table. Must be used in
+         *                      combination with the @a result_table option.
+         *                      </ul>
          * 
          */
         AggregateGroupByRequest(const std::string& tableName_, const std::vector<std::string>& columnNames_, const int64_t offset_, const int64_t limit_, const std::string& encoding_, const std::map<std::string, std::string>& options_):
@@ -287,23 +445,43 @@ namespace gpudb
      * Calculates unique combinations (groups) of values for the given columns
      * in a given table/view/collection and computes aggregates on each unique
      * combination. This is somewhat analogous to an SQL-style SELECT...GROUP
-     * BY. Any column(s) can be grouped on, but only non-string (i.e. numeric)
-     * columns may be used for computing aggregates. The results can be paged
-     * via the @a offset and @a limit parameters. For example, to get 10 groups
-     * with the largest counts the inputs would be: limit=10,
-     * options={"sort_order":"descending", "sort_by":"value"}. @a options can
-     * be used to customize behavior of this call e.g. filtering or sorting the
-     * results. To group by 'x' and 'y' and compute the number of objects
-     * within each group, use column_names=['x','y','count(*)'].  To also
-     * compute the sum of 'z' over each group, use
-     * column_names=['x','y','count(*)','sum(z)']. Available aggregation
-     * functions are: 'count(*)', 'sum', 'min', 'max', 'avg', 'mean', 'stddev',
-     * 'stddev_pop', 'stddev_samp', 'var', 'var_pop', 'var_samp', 'arg_min',
-     * 'arg_max' and 'count_distinct'. The response is returned as a dynamic
-     * schema. For details see: <a href="../../concepts/dynamic_schemas.html"
-     * target="_top">dynamic schemas documentation</a>. If the @a result_table
-     * option is provided then the results are stored in a table with the name
-     * given in the option and the results are not returned in the response.
+     * BY.
+     * <p>
+     * Any column(s) can be grouped on, and all column types except
+     * unrestricted-length strings may be used for computing applicable
+     * aggregates.
+     * <p>
+     * The results can be paged via the @a offset and @a limit parameters. For
+     * example, to get 10 groups with the largest counts the inputs would be:
+     * limit=10, options={"sort_order":"descending", "sort_by":"value"}.
+     * <p>
+     * @a options can be used to customize behavior of this call e.g. filtering
+     * or sorting the results.
+     * <p>
+     * To group by columns 'x' and 'y' and compute the number of objects within
+     * each group, use:  column_names=['x','y','count(*)'].
+     * <p>
+     * To also compute the sum of 'z' over each group, use:
+     * column_names=['x','y','count(*)','sum(z)'].
+     * <p>
+     * Available <a
+     * href="../../concepts/expressions.html#aggregate-expressions"
+     * target="_top">aggregation functions</a> are: count(*), sum, min, max,
+     * avg, mean, stddev, stddev_pop, stddev_samp, var, var_pop, var_samp,
+     * arg_min, arg_max and count_distinct.
+     * <p>
+     * The response is returned as a dynamic schema. For details see: <a
+     * href="../../concepts/dynamic_schemas.html" target="_top">dynamic schemas
+     * documentation</a>.
+     * <p>
+     * If a @a result_table name is specified in the options, the results are
+     * stored in a new table with that name.  No results are returned in the
+     * response.  If the source table's <a
+     * href="../../concepts/tables.html#shard-keys" target="_top">shard key</a>
+     * is used as the grouping column(s), the result table will be sharded, in
+     * all other cases it will be replicated.  Sorting will properly function
+     * only if the result table is replicated or if there is only one
+     * processing node and should not be relied upon in other cases.
      */
     struct RawAggregateGroupByResponse
     {
@@ -399,23 +577,43 @@ namespace gpudb
      * Calculates unique combinations (groups) of values for the given columns
      * in a given table/view/collection and computes aggregates on each unique
      * combination. This is somewhat analogous to an SQL-style SELECT...GROUP
-     * BY. Any column(s) can be grouped on, but only non-string (i.e. numeric)
-     * columns may be used for computing aggregates. The results can be paged
-     * via the @a offset and @a limit parameters. For example, to get 10 groups
-     * with the largest counts the inputs would be: limit=10,
-     * options={"sort_order":"descending", "sort_by":"value"}. @a options can
-     * be used to customize behavior of this call e.g. filtering or sorting the
-     * results. To group by 'x' and 'y' and compute the number of objects
-     * within each group, use column_names=['x','y','count(*)'].  To also
-     * compute the sum of 'z' over each group, use
-     * column_names=['x','y','count(*)','sum(z)']. Available aggregation
-     * functions are: 'count(*)', 'sum', 'min', 'max', 'avg', 'mean', 'stddev',
-     * 'stddev_pop', 'stddev_samp', 'var', 'var_pop', 'var_samp', 'arg_min',
-     * 'arg_max' and 'count_distinct'. The response is returned as a dynamic
-     * schema. For details see: <a href="../../concepts/dynamic_schemas.html"
-     * target="_top">dynamic schemas documentation</a>. If the @a result_table
-     * option is provided then the results are stored in a table with the name
-     * given in the option and the results are not returned in the response.
+     * BY.
+     * <p>
+     * Any column(s) can be grouped on, and all column types except
+     * unrestricted-length strings may be used for computing applicable
+     * aggregates.
+     * <p>
+     * The results can be paged via the @a offset and @a limit parameters. For
+     * example, to get 10 groups with the largest counts the inputs would be:
+     * limit=10, options={"sort_order":"descending", "sort_by":"value"}.
+     * <p>
+     * @a options can be used to customize behavior of this call e.g. filtering
+     * or sorting the results.
+     * <p>
+     * To group by columns 'x' and 'y' and compute the number of objects within
+     * each group, use:  column_names=['x','y','count(*)'].
+     * <p>
+     * To also compute the sum of 'z' over each group, use:
+     * column_names=['x','y','count(*)','sum(z)'].
+     * <p>
+     * Available <a
+     * href="../../concepts/expressions.html#aggregate-expressions"
+     * target="_top">aggregation functions</a> are: count(*), sum, min, max,
+     * avg, mean, stddev, stddev_pop, stddev_samp, var, var_pop, var_samp,
+     * arg_min, arg_max and count_distinct.
+     * <p>
+     * The response is returned as a dynamic schema. For details see: <a
+     * href="../../concepts/dynamic_schemas.html" target="_top">dynamic schemas
+     * documentation</a>.
+     * <p>
+     * If a @a result_table name is specified in the options, the results are
+     * stored in a new table with that name.  No results are returned in the
+     * response.  If the source table's <a
+     * href="../../concepts/tables.html#shard-keys" target="_top">shard key</a>
+     * is used as the grouping column(s), the result table will be sharded, in
+     * all other cases it will be replicated.  Sorting will properly function
+     * only if the result table is replicated or if there is only one
+     * processing node and should not be relied upon in other cases.
      */
     struct AggregateGroupByResponse
     {

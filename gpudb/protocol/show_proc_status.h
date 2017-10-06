@@ -41,16 +41,22 @@ namespace gpudb
          *                    returned. If the run ID is not found, nothing
          *                    will be returned. If not specified, the statuses
          *                    of all running and completed proc instances will
-         *                    be returned.  Default value is an empty string.
+         *                    be returned.
          * @param[in] options_  Optional parameters.
          *                      <ul>
-         *                              <li> clear_complete: If set to @a true,
-         *                      if a proc instance has completed (either
-         *                      successfully or unsuccessfully) then its status
-         *                      will be cleared and no longer returned in
-         *                      subsequent calls. Values: 'true', 'false'.
+         *                              <li>
+         *                      gpudb::show_proc_status_clear_complete: If set
+         *                      to @a true, if a proc instance has completed
+         *                      (either successfully or unsuccessfully) then
+         *                      its status will be cleared and no longer
+         *                      returned in subsequent calls.
+         *                      <ul>
+         *                              <li> gpudb::show_proc_status_true
+         *                              <li> gpudb::show_proc_status_false
          *                      </ul>
-         *                        Default value is an empty std::map.
+         *                      The default value is
+         *                      gpudb::show_proc_status_false.
+         *                      </ul>
          * 
          */
         ShowProcStatusRequest(const std::string& runId_, const std::map<std::string, std::string>& options_):

@@ -48,23 +48,49 @@ namespace gpudb
          *                       view containing the results. Has the same
          *                       naming restrictions as <a
          *                       href="../../concepts/tables.html"
-         *                       target="_top">tables</a>.  Default value is an
-         *                       empty string.
+         *                       target="_top">tables</a>.
          * @param[in] expression_  The expression with which to filter the
          *                         table.
          * @param[in] mode_  The string filtering mode to apply. See below for
-         *                   details. Values: 'search', 'equals', 'contains',
-         *                   'starts_with', 'regex'.
+         *                   details.
+         *                   <ul>
+         *                           <li> gpudb::filter_by_string_search: Full
+         *                   text search query with wildcards and boolean
+         *                   operators. Note that for this mode, no column can
+         *                   be specified in @a columnNames; all string columns
+         *                   of the table that have text search enabled will be
+         *                   searched.
+         *                           <li> gpudb::filter_by_string_equals: Exact
+         *                   whole-string match (accelerated).
+         *                           <li> gpudb::filter_by_string_contains:
+         *                   Partial substring match (not accelerated).  If the
+         *                   column is a string type (non-charN) and the number
+         *                   of records is too large, it will return 0.
+         *                           <li> gpudb::filter_by_string_starts_with:
+         *                   Strings that start with the given expression (not
+         *                   accelerated). If the column is a string type
+         *                   (non-charN) and the number of records is too
+         *                   large, it will return 0.
+         *                           <li> gpudb::filter_by_string_regex: Full
+         *                   regular expression search (not accelerated). If
+         *                   the column is a string type (non-charN) and the
+         *                   number of records is too large, it will return 0.
+         *                   </ul>
          * @param[in] columnNames_  List of columns on which to apply the
          *                          filter. Ignored for 'search' mode.
          * @param[in] options_  Optional parameters.
          *                      <ul>
-         *                              <li> case_sensitive: If 'false' then
-         *                      string filtering will ignore case. Does not
-         *                      apply to 'search' mode. Values: 'true',
-         *                      'false'.
+         *                              <li>
+         *                      gpudb::filter_by_string_case_sensitive: If
+         *                      'false' then string filtering will ignore case.
+         *                      Does not apply to 'search' mode.
+         *                      <ul>
+         *                              <li> gpudb::filter_by_string_true
+         *                              <li> gpudb::filter_by_string_false
          *                      </ul>
-         *                        Default value is an empty std::map.
+         *                      The default value is
+         *                      gpudb::filter_by_string_true.
+         *                      </ul>
          * 
          */
         FilterByStringRequest(const std::string& tableName_, const std::string& viewName_, const std::string& expression_, const std::string& mode_, const std::vector<std::string>& columnNames_, const std::map<std::string, std::string>& options_):

@@ -61,21 +61,67 @@ namespace gpudb
          * @param[in] timeIntervals_
          * @param[in] width_
          * @param[in] height_
-         * @param[in] projection_  Values: 'EPSG:4326', 'PLATE_CARREE',
-         *                         '900913', 'EPSG:900913', '102100',
-         *                         'EPSG:102100', '3857', 'EPSG:3857',
-         *                         'WEB_MERCATOR'.
+         * @param[in] projection_
+         *                         <ul>
+         *                                 <li>
+         *                         gpudb::visualize_video_heatmap_EPSG_4326
+         *                                 <li>
+         *                         gpudb::visualize_video_heatmap_PLATE_CARREE
+         *                                 <li>
+         *                         gpudb::visualize_video_heatmap_900913
+         *                                 <li>
+         *                         gpudb::visualize_video_heatmap_EPSG_900913
+         *                                 <li>
+         *                         gpudb::visualize_video_heatmap_102100
+         *                                 <li>
+         *                         gpudb::visualize_video_heatmap_EPSG_102100
+         *                                 <li>
+         *                         gpudb::visualize_video_heatmap_3857
+         *                                 <li>
+         *                         gpudb::visualize_video_heatmap_EPSG_3857
+         *                                 <li>
+         *                         gpudb::visualize_video_heatmap_WEB_MERCATOR
+         *                         </ul>
+         *                         The default value is
+         *                         gpudb::visualize_video_heatmap_PLATE_CARREE.
          * @param[in] videoStyle_
          * @param[in] sessionKey_
          * @param[in] styleOptions_
          *                           <ul>
-         *                                   <li> colormap: Values: 'jet',
-         *                           'hot', 'hsv', 'gray', 'blues', 'greens',
-         *                           'greys', 'oranges', 'purples', 'reds'.
-         *                                   <li> blur_radius:
-         *                                   <li> bg_color:
-         *                                   <li> gradient_start_color:
-         *                                   <li> gradient_end_color:
+         *                                   <li>
+         *                           gpudb::visualize_video_heatmap_colormap:
+         *                           <ul>
+         *                                   <li>
+         *                           gpudb::visualize_video_heatmap_jet
+         *                                   <li>
+         *                           gpudb::visualize_video_heatmap_hot
+         *                                   <li>
+         *                           gpudb::visualize_video_heatmap_hsv
+         *                                   <li>
+         *                           gpudb::visualize_video_heatmap_gray
+         *                                   <li>
+         *                           gpudb::visualize_video_heatmap_blues
+         *                                   <li>
+         *                           gpudb::visualize_video_heatmap_greens
+         *                                   <li>
+         *                           gpudb::visualize_video_heatmap_greys
+         *                                   <li>
+         *                           gpudb::visualize_video_heatmap_oranges
+         *                                   <li>
+         *                           gpudb::visualize_video_heatmap_purples
+         *                                   <li>
+         *                           gpudb::visualize_video_heatmap_reds
+         *                           </ul>
+         *                           The default value is
+         *                           gpudb::visualize_video_heatmap_reds.
+         *                                   <li>
+         *                           gpudb::visualize_video_heatmap_blur_radius
+         *                                   <li>
+         *                           gpudb::visualize_video_heatmap_bg_color
+         *                                   <li>
+         *                           gpudb::visualize_video_heatmap_gradient_start_color
+         *                                   <li>
+         *                           gpudb::visualize_video_heatmap_gradient_end_color
          *                           </ul>
          * @param[in] options_
          * 

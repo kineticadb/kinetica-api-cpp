@@ -33,8 +33,25 @@ namespace gpudb
          * Constructs an AdminVerifyDbRequest object with the specified
          * parameters.
          * 
-         * @param[in] options_  Optional parameters.  Default value is an empty
-         *                      std::map.
+         * @param[in] options_  Optional parameters.
+         *                      <ul>
+         *                              <li>
+         *                      gpudb::admin_verify_db_rebuild_on_error:
+         *                      <ul>
+         *                              <li> gpudb::admin_verify_db_true
+         *                              <li> gpudb::admin_verify_db_false
+         *                      </ul>
+         *                      The default value is
+         *                      gpudb::admin_verify_db_false.
+         *                              <li>
+         *                      gpudb::admin_verify_db_verify_persist:
+         *                      <ul>
+         *                              <li> gpudb::admin_verify_db_true
+         *                              <li> gpudb::admin_verify_db_false
+         *                      </ul>
+         *                      The default value is
+         *                      gpudb::admin_verify_db_false.
+         *                      </ul>
          * 
          */
         AdminVerifyDbRequest(const std::map<std::string, std::string>& options_):

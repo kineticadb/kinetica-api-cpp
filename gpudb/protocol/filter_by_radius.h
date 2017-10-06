@@ -23,9 +23,7 @@ namespace gpudb
      * <p>
      * For track data, all track points that lie within the circle plus one
      * point on either side of the circle (if the track goes beyond the circle)
-     * will be included in the result. For shapes, e.g. polygons, all polygons
-     * that intersect the circle will be included (even if none of the points
-     * of the polygon fall within the circle).
+     * will be included in the result.
      */
     struct FilterByRadiusRequest
     {
@@ -57,8 +55,7 @@ namespace gpudb
          *                       view containing the results. Has the same
          *                       naming restrictions as <a
          *                       href="../../concepts/tables.html"
-         *                       target="_top">tables</a>.  Default value is an
-         *                       empty string.
+         *                       target="_top">tables</a>.
          * @param[in] xColumnName_  Name of the column to be used for the
          *                          x-coordinate (the longitude) of the center.
          * @param[in] xCenter_  Value of the longitude of the center. Must be
@@ -76,8 +73,7 @@ namespace gpudb
          *                     of '42000' means 42 km.  The minimum allowed
          *                     value is 0. The maximum allowed value is
          *                     MAX_INT.
-         * @param[in] options_  Optional parameters.  Default value is an empty
-         *                      std::map.
+         * @param[in] options_  Optional parameters.
          * 
          */
         FilterByRadiusRequest(const std::string& tableName_, const std::string& viewName_, const std::string& xColumnName_, const double xCenter_, const std::string& yColumnName_, const double yCenter_, const double radius_, const std::map<std::string, std::string>& options_):
@@ -198,9 +194,7 @@ namespace gpudb
      * <p>
      * For track data, all track points that lie within the circle plus one
      * point on either side of the circle (if the track goes beyond the circle)
-     * will be included in the result. For shapes, e.g. polygons, all polygons
-     * that intersect the circle will be included (even if none of the points
-     * of the polygon fall within the circle).
+     * will be included in the result.
      */
     struct FilterByRadiusResponse
     {

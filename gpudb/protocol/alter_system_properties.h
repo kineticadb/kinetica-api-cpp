@@ -42,35 +42,55 @@ namespace gpudb
          *                                 system to be updated. Error if
          *                                 empty.
          *                                 <ul>
-         *                                         <li> sm_omp_threads: Set the
-         *                                 number of OpenMP threads that will
-         *                                 be used to service filter &
-         *                                 aggregation requests against
+         *                                         <li>
+         *                                 gpudb::alter_system_properties_sm_omp_threads:
+         *                                 Set the number of OpenMP threads
+         *                                 that will be used to service filter
+         *                                 & aggregation requests against
          *                                 collections to the specified integer
          *                                 value.
-         *                                         <li> kernel_omp_threads: Set
-         *                                 the number of kernel OpenMP threads
+         *                                         <li>
+         *                                 gpudb::alter_system_properties_kernel_omp_threads:
+         *                                 Set the number of kernel OpenMP
+         *                                 threads to the specified integer
+         *                                 value.
+         *                                         <li>
+         *                                 gpudb::alter_system_properties_concurrent_kernel_execution:
+         *                                 Enables concurrent kernel execution
+         *                                 if the value is @a true and disables
+         *                                 it if the value is @a false.
+         *                                 <ul>
+         *                                         <li>
+         *                                 gpudb::alter_system_properties_true
+         *                                         <li>
+         *                                 gpudb::alter_system_properties_false
+         *                                 </ul>
+         *                                         <li>
+         *                                 gpudb::alter_system_properties_chunk_size:
+         *                                 Sets the chunk size of all new sets
          *                                 to the specified integer value.
          *                                         <li>
-         *                                 concurrent_kernel_execution: Enables
-         *                                 concurrent kernel execution if the
-         *                                 value is @a true and disables it if
-         *                                 the value is @a false. Values:
-         *                                 'true', 'false'.
-         *                                         <li> chunk_size: Sets the
-         *                                 chunk size of all new sets to the
-         *                                 specified integer value.
-         *                                         <li> flush_to_disk: Flushes
-         *                                 any changes to any tables to the
-         *                                 persistent store.  These changes
+         *                                 gpudb::alter_system_properties_execution_mode:
+         *                                 Sets the execution_mode for kernel
+         *                                 executions to the specified string
+         *                                 value. Possible values are host,
+         *                                 device, default (engine decides) or
+         *                                 an integer value that indicates max
+         *                                 chunk size to exec on host
+         *                                         <li>
+         *                                 gpudb::alter_system_properties_flush_to_disk:
+         *                                 Flushes any changes to any tables to
+         *                                 the persistent store.  These changes
          *                                 include updates to the vector store,
          *                                 object store, and text search store,
          *                                 Value string is ignored
-         *                                         <li> clear_cache: Clears
-         *                                 cached results.  Useful to allow
-         *                                 repeated timing of endpoints. Value
-         *                                 string is ignored
-         *                                         <li> communicator_test:
+         *                                         <li>
+         *                                 gpudb::alter_system_properties_clear_cache:
+         *                                 Clears cached results.  Useful to
+         *                                 allow repeated timing of endpoints.
+         *                                 Value string is ignored
+         *                                         <li>
+         *                                 gpudb::alter_system_properties_communicator_test:
          *                                 Invoke the communicator test and
          *                                 report timing results. Value string
          *                                 is is a comma separated list of
@@ -85,20 +105,28 @@ namespace gpudb
          *                                 if enabled is true the value of the
          *                                 messages received are verified.
          *                                         <li>
-         *                                 set_message_timers_enabled: Enables
-         *                                 the communicator test to collect
-         *                                 additional timing statistics when
-         *                                 the value string is @a true.
+         *                                 gpudb::alter_system_properties_set_message_timers_enabled:
+         *                                 Enables the communicator test to
+         *                                 collect additional timing statistics
+         *                                 when the value string is @a true.
          *                                 Disables the collection when the
-         *                                 value string is @a false Values:
-         *                                 'true', 'false'.
-         *                                         <li> bulk_add_test: Invoke
-         *                                 the bulk add test and report timing
-         *                                 results. Value string is ignored.
-         *                                         <li> network_speed: Invoke
-         *                                 the network speed test and report
-         *                                 timing results. Value string is a
-         *                                 semicolon-separated list of
+         *                                 value string is @a false
+         *                                 <ul>
+         *                                         <li>
+         *                                 gpudb::alter_system_properties_true
+         *                                         <li>
+         *                                 gpudb::alter_system_properties_false
+         *                                 </ul>
+         *                                         <li>
+         *                                 gpudb::alter_system_properties_bulk_add_test:
+         *                                 Invoke the bulk add test and report
+         *                                 timing results. Value string is
+         *                                 ignored.
+         *                                         <li>
+         *                                 gpudb::alter_system_properties_network_speed:
+         *                                 Invoke the network speed test and
+         *                                 report timing results. Value string
+         *                                 is a semicolon-separated list of
          *                                 <key>=<value> expressions.  Valid
          *                                 expressions are: seconds=<time>
          *                                 where time is the time in seconds to
@@ -112,18 +140,47 @@ namespace gpudb
          *                                 to and get data from. If to_ranks is
          *                                 unspecified then all worker ranks
          *                                 are used.
-         *                                         <li> request_timeout: Number
-         *                                 of minutes after which filtering
-         *                                 (e.g., /filter) and aggregating
-         *                                 (e.g., /aggregate/groupby) queries
-         *                                 will timeout.
-         *                                         <li> max_get_records_size:
+         *                                         <li>
+         *                                 gpudb::alter_system_properties_request_timeout:
+         *                                 Number of minutes after which
+         *                                 filtering (e.g., /filter) and
+         *                                 aggregating (e.g.,
+         *                                 /aggregate/groupby) queries will
+         *                                 timeout.
+         *                                         <li>
+         *                                 gpudb::alter_system_properties_max_get_records_size:
          *                                 The maximum number of records the
          *                                 database will serve for a given data
          *                                 retrieval call
+         *                                         <li>
+         *                                 gpudb::alter_system_properties_memory_allocation_limit_mb:
+         *                                 Set the memory allocation limit for
+         *                                 all rank processes in megabytes, 0
+         *                                 means no limit. Overrides any
+         *                                 individual rank memory allocation
+         *                                 limits.
+         *                                         <li>
+         *                                 gpudb::alter_system_properties_enable_audit:
+         *                                 Enable or disable auditing.
+         *                                         <li>
+         *                                 gpudb::alter_system_properties_audit_headers:
+         *                                 Enable or disable auditing of
+         *                                 request headers.
+         *                                         <li>
+         *                                 gpudb::alter_system_properties_audit_body:
+         *                                 Enable or disable auditing of
+         *                                 request bodies.
+         *                                         <li>
+         *                                 gpudb::alter_system_properties_audit_data:
+         *                                 Enable or disable auditing of
+         *                                 request data.
+         *                                         <li>
+         *                                 gpudb::alter_system_properties_enable_job_manager:
+         *                                 Enable JobManager to enforce
+         *                                 processing of requests in the order
+         *                                 received.
          *                                 </ul>
-         * @param[in] options_  Optional parameters.  Default value is an empty
-         *                      std::map.
+         * @param[in] options_  Optional parameters.
          * 
          */
         AlterSystemPropertiesRequest(const std::map<std::string, std::string>& propertyUpdatesMap_, const std::map<std::string, std::string>& options_):

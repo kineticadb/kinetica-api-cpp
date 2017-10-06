@@ -48,21 +48,29 @@ namespace gpudb
          *                        existing collection or table.
          * @param[in] offset_  A positive integer indicating the number of
          *                     initial results to skip (this can be useful for
-         *                     paging through the results).  Default value is
-         *                     0. The minimum allowed value is 0. The maximum
-         *                     allowed value is MAX_INT.
+         *                     paging through the results).  The minimum
+         *                     allowed value is 0. The maximum allowed value is
+         *                     MAX_INT.
          * @param[in] limit_  A positive integer indicating the maximum number
          *                    of results to be returned, or END_OF_SET (-9999)
          *                    to indicate that the max number of results should
-         *                    be returned.  Default value is 10000.
+         *                    be returned.
          * @param[in] options_
          *                      <ul>
-         *                              <li> return_record_ids: If 'true' then
-         *                      return the internal record ID along with each
-         *                      returned record. Default is 'false'. Values:
-         *                      'true', 'false'.
+         *                              <li>
+         *                      gpudb::get_records_from_collection_return_record_ids:
+         *                      If 'true' then return the internal record ID
+         *                      along with each returned record. Default is
+         *                      'false'.
+         *                      <ul>
+         *                              <li>
+         *                      gpudb::get_records_from_collection_true
+         *                              <li>
+         *                      gpudb::get_records_from_collection_false
          *                      </ul>
-         *                        Default value is an empty std::map.
+         *                      The default value is
+         *                      gpudb::get_records_from_collection_false.
+         *                      </ul>
          * 
          */
         GetRecordsFromCollectionRequest(const std::string& tableName_, const int64_t offset_, const int64_t limit_, const std::map<std::string, std::string>& options_):
@@ -83,25 +91,39 @@ namespace gpudb
          *                        existing collection or table.
          * @param[in] offset_  A positive integer indicating the number of
          *                     initial results to skip (this can be useful for
-         *                     paging through the results).  Default value is
-         *                     0. The minimum allowed value is 0. The maximum
-         *                     allowed value is MAX_INT.
+         *                     paging through the results).  The minimum
+         *                     allowed value is 0. The maximum allowed value is
+         *                     MAX_INT.
          * @param[in] limit_  A positive integer indicating the maximum number
          *                    of results to be returned, or END_OF_SET (-9999)
          *                    to indicate that the max number of results should
-         *                    be returned.  Default value is 10000.
+         *                    be returned.
          * @param[in] encoding_  Specifies the encoding for returned records;
-         *                       either 'binary' or 'json'. Values: 'binary',
-         *                       'json'.
-         *                         Default value is 'binary'.
+         *                       either 'binary' or 'json'.
+         *                       <ul>
+         *                               <li>
+         *                       gpudb::get_records_from_collection_binary
+         *                               <li>
+         *                       gpudb::get_records_from_collection_json
+         *                       </ul>
+         *                       The default value is
+         *                       gpudb::get_records_from_collection_binary.
          * @param[in] options_
          *                      <ul>
-         *                              <li> return_record_ids: If 'true' then
-         *                      return the internal record ID along with each
-         *                      returned record. Default is 'false'. Values:
-         *                      'true', 'false'.
+         *                              <li>
+         *                      gpudb::get_records_from_collection_return_record_ids:
+         *                      If 'true' then return the internal record ID
+         *                      along with each returned record. Default is
+         *                      'false'.
+         *                      <ul>
+         *                              <li>
+         *                      gpudb::get_records_from_collection_true
+         *                              <li>
+         *                      gpudb::get_records_from_collection_false
          *                      </ul>
-         *                        Default value is an empty std::map.
+         *                      The default value is
+         *                      gpudb::get_records_from_collection_false.
+         *                      </ul>
          * 
          */
         GetRecordsFromCollectionRequest(const std::string& tableName_, const int64_t offset_, const int64_t limit_, const std::string& encoding_, const std::map<std::string, std::string>& options_):

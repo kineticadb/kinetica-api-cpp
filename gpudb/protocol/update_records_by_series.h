@@ -44,10 +44,8 @@ namespace gpudb
          *                             complete series (track) information.
          * @param[in] viewName_  Optional name of the view containing the
          *                       series (tracks) which have to be updated.
-         *                       Default value is an empty string.
-         * @param[in] reserved_  Default value is an empty std::vector.
-         * @param[in] options_  Optional parameters.  Default value is an empty
-         *                      std::map.
+         * @param[in] reserved_
+         * @param[in] options_  Optional parameters.
          * 
          */
         UpdateRecordsBySeriesRequest(const std::string& tableName_, const std::string& worldTableName_, const std::string& viewName_, const std::vector<std::string>& reserved_, const std::map<std::string, std::string>& options_):

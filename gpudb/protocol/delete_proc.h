@@ -33,8 +33,7 @@ namespace gpudb
          * 
          * @param[in] procName_  Name of the proc to be deleted. Must be the
          *                       name of a currently existing proc.
-         * @param[in] options_  Optional parameters.  Default value is an empty
-         *                      std::map.
+         * @param[in] options_  Optional parameters.
          * 
          */
         DeleteProcRequest(const std::string& procName_, const std::map<std::string, std::string>& options_):

@@ -52,17 +52,14 @@ namespace gpudb
          *                       view containing the results. Has the same
          *                       naming restrictions as <a
          *                       href="../../concepts/tables.html"
-         *                       target="_top">tables</a>.  Default value is an
-         *                       empty string.
+         *                       target="_top">tables</a>.
          * @param[in] isString_  Indicates whether the value being searched for
          *                       is string or numeric.
-         * @param[in] value_  The value to search for.  Default value is 0.
-         * @param[in] valueStr_  The string value to search for.  Default value
-         *                       is an empty string.
+         * @param[in] value_  The value to search for.
+         * @param[in] valueStr_  The string value to search for.
          * @param[in] columnName_  Name of a column on which the filter by
          *                         value would be applied.
-         * @param[in] options_  Optional parameters.  Default value is an empty
-         *                      std::map.
+         * @param[in] options_  Optional parameters.
          * 
          */
         FilterByValueRequest(const std::string& tableName_, const std::string& viewName_, const bool isString_, const double value_, const std::string& valueStr_, const std::string& columnName_, const std::map<std::string, std::string>& options_):

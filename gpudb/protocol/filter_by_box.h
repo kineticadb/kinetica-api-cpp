@@ -51,27 +51,23 @@ namespace gpudb
          *                       created containing the results of the query.
          *                       Has the same naming restrictions as <a
          *                       href="../../concepts/tables.html"
-         *                       target="_top">tables</a>.  Default value is an
-         *                       empty string.
+         *                       target="_top">tables</a>.
          * @param[in] xColumnName_  Name of the column on which to perform the
-         *                          bounding box query. If the table's data
-         *                          type is not a shape type, must be a valid
-         *                          numeric column.
+         *                          bounding box query. Must be a valid numeric
+         *                          column.
          * @param[in] minX_  Lower bound for the column chosen by @a
          *                   xColumnName.  Must be less than or equal to @a
          *                   maxX.
          * @param[in] maxX_  Upper bound for @a xColumnName.  Must be greater
          *                   than or equal to @a minX.
          * @param[in] yColumnName_  Name of a column on which to perform the
-         *                          bounding box query. If the table's data
-         *                          type is not a shape type, must be a valid
-         *                          numeric column.
+         *                          bounding box query. Must be a valid numeric
+         *                          column.
          * @param[in] minY_  Lower bound for @a yColumnName. Must be less than
          *                   or equal to @a maxY.
          * @param[in] maxY_  Upper bound for @a yColumnName. Must be greater
          *                   than or equal to @a minY.
-         * @param[in] options_  Optional parameters.  Default value is an empty
-         *                      std::map.
+         * @param[in] options_  Optional parameters.
          * 
          */
         FilterByBoxRequest(const std::string& tableName_, const std::string& viewName_, const std::string& xColumnName_, const double minX_, const double maxX_, const std::string& yColumnName_, const double minY_, const double maxY_, const std::map<std::string, std::string>& options_):
