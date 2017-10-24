@@ -19,10 +19,14 @@ namespace gpudb
      * columnName) of a particular table (specified by @a tableName). If @a
      * columnName is a numeric column the values will be in @a
      * binaryEncodedResponse. Otherwise if @a columnName is a string column the
-     * values will be in @a jsonEncodedResponse.  @a offset and @a limit are
-     * used to page through the results if there are large numbers of unique
-     * values. To get the first 10 unique values sorted in descending order @a
-     * options would be::
+     * values will be in @a jsonEncodedResponse.  The results can be paged via
+     * the @a offset and @a limit parameters.
+     * <p>
+     * Columns marked as <a href="../../concepts/types.html#data-handling"
+     * target="_top">store-only</a> are unable to be used with this function.
+     * <p>
+     * To get the first 10 unique values sorted in descending order @a options
+     * would be::
      * <p>
      * {"limit":"10","sort_order":"descending"}.
      * <p>
@@ -30,14 +34,18 @@ namespace gpudb
      * href="../../concepts/dynamic_schemas.html" target="_top">dynamic schemas
      * documentation</a>.
      * <p>
-     * If a @a result_table name is specified in the options, the results are
-     * stored in a new table with that name.  No results are returned in the
-     * response.  If the source table's <a
-     * href="../../concepts/tables.html#shard-keys" target="_top">shard key</a>
-     * is used as the @a columnName, the result table will be sharded, in all
-     * other cases it will be replicated.  Sorting will properly function only
-     * if the result table is replicated or if there is only one processing
-     * node and should not be relied upon in other cases.
+     * If a @a result_table name is specified in the @a options, the results
+     * are stored in a new table with that name--no results are returned in the
+     * response.  Both the table name and resulting column name must adhere to
+     * <a href="../../concepts/tables.html#table" target="_top">standard naming
+     * conventions</a>; any column expression will need to be aliased.  If the
+     * source table's <a href="../../concepts/tables.html#shard-keys"
+     * target="_top">shard key</a> is used as the @a columnName, the result
+     * table will be sharded, in all other cases it will be replicated.
+     * Sorting will properly function only if the result table is replicated or
+     * if there is only one processing node and should not be relied upon in
+     * other cases.  Not available when the value of @a columnName is an
+     * unrestricted-length string.
      */
     struct AggregateUniqueRequest
     {
@@ -101,7 +109,7 @@ namespace gpudb
          *                              <li>
          *                      gpudb::aggregate_unique_result_table: The name
          *                      of the table used to store the results. If
-         *                      present no results are returned in the
+         *                      present, no results are returned in the
          *                      response. Has the same naming restrictions as
          *                      <a href="../../concepts/tables.html"
          *                      target="_top">tables</a>.
@@ -209,7 +217,7 @@ namespace gpudb
          *                              <li>
          *                      gpudb::aggregate_unique_result_table: The name
          *                      of the table used to store the results. If
-         *                      present no results are returned in the
+         *                      present, no results are returned in the
          *                      response. Has the same naming restrictions as
          *                      <a href="../../concepts/tables.html"
          *                      target="_top">tables</a>.
@@ -347,10 +355,14 @@ namespace gpudb
      * columnName) of a particular table (specified by @a tableName). If @a
      * columnName is a numeric column the values will be in @a
      * binaryEncodedResponse. Otherwise if @a columnName is a string column the
-     * values will be in @a jsonEncodedResponse.  @a offset and @a limit are
-     * used to page through the results if there are large numbers of unique
-     * values. To get the first 10 unique values sorted in descending order @a
-     * options would be::
+     * values will be in @a jsonEncodedResponse.  The results can be paged via
+     * the @a offset and @a limit parameters.
+     * <p>
+     * Columns marked as <a href="../../concepts/types.html#data-handling"
+     * target="_top">store-only</a> are unable to be used with this function.
+     * <p>
+     * To get the first 10 unique values sorted in descending order @a options
+     * would be::
      * <p>
      * {"limit":"10","sort_order":"descending"}.
      * <p>
@@ -358,14 +370,18 @@ namespace gpudb
      * href="../../concepts/dynamic_schemas.html" target="_top">dynamic schemas
      * documentation</a>.
      * <p>
-     * If a @a result_table name is specified in the options, the results are
-     * stored in a new table with that name.  No results are returned in the
-     * response.  If the source table's <a
-     * href="../../concepts/tables.html#shard-keys" target="_top">shard key</a>
-     * is used as the @a columnName, the result table will be sharded, in all
-     * other cases it will be replicated.  Sorting will properly function only
-     * if the result table is replicated or if there is only one processing
-     * node and should not be relied upon in other cases.
+     * If a @a result_table name is specified in the @a options, the results
+     * are stored in a new table with that name--no results are returned in the
+     * response.  Both the table name and resulting column name must adhere to
+     * <a href="../../concepts/tables.html#table" target="_top">standard naming
+     * conventions</a>; any column expression will need to be aliased.  If the
+     * source table's <a href="../../concepts/tables.html#shard-keys"
+     * target="_top">shard key</a> is used as the @a columnName, the result
+     * table will be sharded, in all other cases it will be replicated.
+     * Sorting will properly function only if the result table is replicated or
+     * if there is only one processing node and should not be relied upon in
+     * other cases.  Not available when the value of @a columnName is an
+     * unrestricted-length string.
      */
     struct RawAggregateUniqueResponse
     {
@@ -462,10 +478,14 @@ namespace gpudb
      * columnName) of a particular table (specified by @a tableName). If @a
      * columnName is a numeric column the values will be in @a
      * binaryEncodedResponse. Otherwise if @a columnName is a string column the
-     * values will be in @a jsonEncodedResponse.  @a offset and @a limit are
-     * used to page through the results if there are large numbers of unique
-     * values. To get the first 10 unique values sorted in descending order @a
-     * options would be::
+     * values will be in @a jsonEncodedResponse.  The results can be paged via
+     * the @a offset and @a limit parameters.
+     * <p>
+     * Columns marked as <a href="../../concepts/types.html#data-handling"
+     * target="_top">store-only</a> are unable to be used with this function.
+     * <p>
+     * To get the first 10 unique values sorted in descending order @a options
+     * would be::
      * <p>
      * {"limit":"10","sort_order":"descending"}.
      * <p>
@@ -473,14 +493,18 @@ namespace gpudb
      * href="../../concepts/dynamic_schemas.html" target="_top">dynamic schemas
      * documentation</a>.
      * <p>
-     * If a @a result_table name is specified in the options, the results are
-     * stored in a new table with that name.  No results are returned in the
-     * response.  If the source table's <a
-     * href="../../concepts/tables.html#shard-keys" target="_top">shard key</a>
-     * is used as the @a columnName, the result table will be sharded, in all
-     * other cases it will be replicated.  Sorting will properly function only
-     * if the result table is replicated or if there is only one processing
-     * node and should not be relied upon in other cases.
+     * If a @a result_table name is specified in the @a options, the results
+     * are stored in a new table with that name--no results are returned in the
+     * response.  Both the table name and resulting column name must adhere to
+     * <a href="../../concepts/tables.html#table" target="_top">standard naming
+     * conventions</a>; any column expression will need to be aliased.  If the
+     * source table's <a href="../../concepts/tables.html#shard-keys"
+     * target="_top">shard key</a> is used as the @a columnName, the result
+     * table will be sharded, in all other cases it will be replicated.
+     * Sorting will properly function only if the result table is replicated or
+     * if there is only one processing node and should not be relied upon in
+     * other cases.  Not available when the value of @a columnName is an
+     * unrestricted-length string.
      */
     struct AggregateUniqueResponse
     {

@@ -13,29 +13,39 @@ namespace gpudb
      * A set of input parameters for {@link
      * #aggregateStatistics(const AggregateStatisticsRequest&) const}.
      * <p>
-     * Calculates the requested statistics of a given column in a given table.
+     * Calculates the requested statistics of the given column(s) in a given
+     * table.
      * <p>
-     * The available statistics are count (number of total objects), mean, stdv
-     * (standard deviation), variance, skew, kurtosis, sum, sum_of_squares,
-     * min, max, weighted_average, cardinality (unique count), estimated
-     * cardinality, percentile and percentile_rank.
+     * The available statistics are @a count (number of total objects), @a
+     * mean, @a stdv (standard deviation), @a variance, @a skew, @a kurtosis,
+     * @a sum, @a min, @a max, @a weighted_average, @a cardinality (unique
+     * count), @a estimated_cardinality, @a percentile and @a percentile_rank.
      * <p>
      * Estimated cardinality is calculated by using the hyperloglog
      * approximation technique.
      * <p>
-     * Percentiles and percentile_ranks are approximate and are calculated
-     * using the t-digest algorithm. They must include the desired
-     * percentile/percentile_rank. To compute multiple percentiles each value
-     * must be specified separately (i.e.
+     * Percentiles and percentile ranks are approximate and are calculated
+     * using the t-digest algorithm. They must include the desired @a
+     * percentile/@a percentile_rank. To compute multiple percentiles each
+     * value must be specified separately (i.e.
      * 'percentile(75.0),percentile(99.0),percentile_rank(1234.56),percentile_rank(-5)').
      * <p>
-     * The weighted average statistic requires a weight_attribute to be
+     * The weighted average statistic requires a @a weight_column_name to be
      * specified in @a options. The weighted average is then defined as the sum
-     * of the products of @a columnName times the weight attribute divided by
-     * the sum of the weight attribute.
+     * of the products of @a columnName times the @a weight_column_name values
+     * divided by the sum of the @a weight_column_name values.
      * <p>
-     * The response includes a list of the statistics requested along with the
-     * count of the number of items in the given set.
+     * Additional columns can be used in the calculation of statistics via the
+     * @a additional_column_names option.  Values in these columns will be
+     * included in the overall aggregate calculation--individual aggregates
+     * will not be calculated per additional column.  For instance, requesting
+     * the @a count & @a mean of @a columnName x and @a additional_column_names
+     * y & z, where x holds the numbers 1-10, y holds 11-20, and z holds 21-30,
+     * would return the total number of x, y, & z values (30), and the single
+     * average value across all x, y, & z values (15.5).
+     * <p>
+     * The response includes a list of key/value pairs of each statistic
+     * requested and its corresponding value.
      */
     struct AggregateStatisticsRequest
     {
@@ -58,14 +68,14 @@ namespace gpudb
          * 
          * @param[in] tableName_  Name of the table on which the statistics
          *                        operation will be performed.
-         * @param[in] columnName_  Name of the column for which the statistics
-         *                         are to be calculated.
+         * @param[in] columnName_  Name of the primary column for which the
+         *                         statistics are to be calculated.
          * @param[in] stats_  Comma separated list of the statistics to
          *                    calculate, e.g. "sum,mean".
          *                    <ul>
          *                            <li> gpudb::aggregate_statistics_count:
          *                    Number of objects (independent of the given
-         *                    column).
+         *                    column(s)).
          *                            <li> gpudb::aggregate_statistics_mean:
          *                    Arithmetic mean (average), equivalent to
          *                    sum/count.
@@ -81,36 +91,33 @@ namespace gpudb
          *                    gpudb::aggregate_statistics_kurtosis: Kurtosis
          *                    (fourth standardized moment).
          *                            <li> gpudb::aggregate_statistics_sum: Sum
-         *                    of all values in the column.
-         *                            <li>
-         *                    gpudb::aggregate_statistics_sum_of_squares: Sum
-         *                    of the squares of all values in the column.
+         *                    of all values in the column(s).
          *                            <li> gpudb::aggregate_statistics_min:
-         *                    Minimum value of the column.
+         *                    Minimum value of the column(s).
          *                            <li> gpudb::aggregate_statistics_max:
-         *                    Maximum value of the column.
+         *                    Maximum value of the column(s).
          *                            <li>
          *                    gpudb::aggregate_statistics_weighted_average:
-         *                    Weighted arithmetic mean (using the option
-         *                    'weight_column_name' as the weighting column).
+         *                    Weighted arithmetic mean (using the option @a
+         *                    weight_column_name as the weighting column).
          *                            <li>
          *                    gpudb::aggregate_statistics_cardinality: Number
-         *                    of unique values in the column.
+         *                    of unique values in the column(s).
          *                            <li>
          *                    gpudb::aggregate_statistics_estimated_cardinality:
          *                    Estimate (via hyperloglog technique) of the
-         *                    number of unique values in the column.
+         *                    number of unique values in the column(s).
          *                            <li>
          *                    gpudb::aggregate_statistics_percentile: Estimate
          *                    (via t-digest) of the given percentile of the
-         *                    column (percentile(50.0) will be an approximation
-         *                    of the median).
+         *                    column(s) (percentile(50.0) will be an
+         *                    approximation of the median).
          *                            <li>
          *                    gpudb::aggregate_statistics_percentile_rank:
          *                    Estimate (via t-digest) of the percentile rank of
-         *                    the given value in the column (if the given value
-         *                    is the median of the column,
-         *                    percentile_rank([median]) will return
+         *                    the given value in the column(s) (if the given
+         *                    value is the median of the column(s),
+         *                    percentile_rank(<median>) will return
          *                    approximately 50.0).
          *                    </ul>
          * @param[in] options_  Optional parameters.
@@ -119,7 +126,10 @@ namespace gpudb
          *                      gpudb::aggregate_statistics_additional_column_names:
          *                      A list of comma separated column names over
          *                      which statistics can be accumulated along with
-         *                      the primary column.
+         *                      the primary column.  All columns listed and @a
+         *                      columnName must be of the same type.  Must not
+         *                      include the column specified in @a columnName
+         *                      and no column can be listed twice.
          *                              <li>
          *                      gpudb::aggregate_statistics_weight_column_name:
          *                      Name of column used as weighting attribute for
@@ -203,29 +213,39 @@ namespace gpudb
      * A set of output parameters for {@link
      * #aggregateStatistics(const AggregateStatisticsRequest&) const}.
      * <p>
-     * Calculates the requested statistics of a given column in a given table.
+     * Calculates the requested statistics of the given column(s) in a given
+     * table.
      * <p>
-     * The available statistics are count (number of total objects), mean, stdv
-     * (standard deviation), variance, skew, kurtosis, sum, sum_of_squares,
-     * min, max, weighted_average, cardinality (unique count), estimated
-     * cardinality, percentile and percentile_rank.
+     * The available statistics are @a count (number of total objects), @a
+     * mean, @a stdv (standard deviation), @a variance, @a skew, @a kurtosis,
+     * @a sum, @a min, @a max, @a weighted_average, @a cardinality (unique
+     * count), @a estimated_cardinality, @a percentile and @a percentile_rank.
      * <p>
      * Estimated cardinality is calculated by using the hyperloglog
      * approximation technique.
      * <p>
-     * Percentiles and percentile_ranks are approximate and are calculated
-     * using the t-digest algorithm. They must include the desired
-     * percentile/percentile_rank. To compute multiple percentiles each value
-     * must be specified separately (i.e.
+     * Percentiles and percentile ranks are approximate and are calculated
+     * using the t-digest algorithm. They must include the desired @a
+     * percentile/@a percentile_rank. To compute multiple percentiles each
+     * value must be specified separately (i.e.
      * 'percentile(75.0),percentile(99.0),percentile_rank(1234.56),percentile_rank(-5)').
      * <p>
-     * The weighted average statistic requires a weight_attribute to be
+     * The weighted average statistic requires a @a weight_column_name to be
      * specified in @a options. The weighted average is then defined as the sum
-     * of the products of @a columnName times the weight attribute divided by
-     * the sum of the weight attribute.
+     * of the products of @a columnName times the @a weight_column_name values
+     * divided by the sum of the @a weight_column_name values.
      * <p>
-     * The response includes a list of the statistics requested along with the
-     * count of the number of items in the given set.
+     * Additional columns can be used in the calculation of statistics via the
+     * @a additional_column_names option.  Values in these columns will be
+     * included in the overall aggregate calculation--individual aggregates
+     * will not be calculated per additional column.  For instance, requesting
+     * the @a count & @a mean of @a columnName x and @a additional_column_names
+     * y & z, where x holds the numbers 1-10, y holds 11-20, and z holds 21-30,
+     * would return the total number of x, y, & z values (30), and the single
+     * average value across all x, y, & z values (15.5).
+     * <p>
+     * The response includes a list of key/value pairs of each statistic
+     * requested and its corresponding value.
      */
     struct AggregateStatisticsResponse
     {

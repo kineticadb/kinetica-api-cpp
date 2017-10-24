@@ -32,6 +32,7 @@ namespace gpudb
             xColumnName(std::string()),
             yColumnName(std::string()),
             valueColumnName(std::string()),
+            geometryColumnName(std::string()),
             minX(double()),
             maxX(double()),
             minY(double()),
@@ -53,6 +54,7 @@ namespace gpudb
          * @param[in] xColumnName_
          * @param[in] yColumnName_
          * @param[in] valueColumnName_
+         * @param[in] geometryColumnName_
          * @param[in] minX_
          * @param[in] maxX_
          * @param[in] minY_
@@ -124,11 +126,12 @@ namespace gpudb
          * @param[in] options_
          * 
          */
-        VisualizeImageHeatmapRequest(const std::vector<std::string>& tableNames_, const std::string& xColumnName_, const std::string& yColumnName_, const std::string& valueColumnName_, const double minX_, const double maxX_, const double minY_, const double maxY_, const int32_t width_, const int32_t height_, const std::string& projection_, const std::map<std::string, std::string>& styleOptions_, const std::map<std::string, std::string>& options_):
+        VisualizeImageHeatmapRequest(const std::vector<std::string>& tableNames_, const std::string& xColumnName_, const std::string& yColumnName_, const std::string& valueColumnName_, const std::string& geometryColumnName_, const double minX_, const double maxX_, const double minY_, const double maxY_, const int32_t width_, const int32_t height_, const std::string& projection_, const std::map<std::string, std::string>& styleOptions_, const std::map<std::string, std::string>& options_):
             tableNames( tableNames_ ),
             xColumnName( xColumnName_ ),
             yColumnName( yColumnName_ ),
             valueColumnName( valueColumnName_ ),
+            geometryColumnName( geometryColumnName_ ),
             minX( minX_ ),
             maxX( maxX_ ),
             minY( minY_ ),
@@ -149,6 +152,7 @@ namespace gpudb
         std::string xColumnName;
         std::string yColumnName;
         std::string valueColumnName;
+        std::string geometryColumnName;
         double minX;
         double maxX;
         double minY;
@@ -175,6 +179,7 @@ namespace avro
             ::avro::encode(e, v.xColumnName);
             ::avro::encode(e, v.yColumnName);
             ::avro::encode(e, v.valueColumnName);
+            ::avro::encode(e, v.geometryColumnName);
             ::avro::encode(e, v.minX);
             ::avro::encode(e, v.maxX);
             ::avro::encode(e, v.minY);
@@ -213,38 +218,42 @@ namespace avro
                             break;
 
                         case 4:
-                            ::avro::decode(d, v.minX);
+                            ::avro::decode(d, v.geometryColumnName);
                             break;
 
                         case 5:
-                            ::avro::decode(d, v.maxX);
+                            ::avro::decode(d, v.minX);
                             break;
 
                         case 6:
-                            ::avro::decode(d, v.minY);
+                            ::avro::decode(d, v.maxX);
                             break;
 
                         case 7:
-                            ::avro::decode(d, v.maxY);
+                            ::avro::decode(d, v.minY);
                             break;
 
                         case 8:
-                            ::avro::decode(d, v.width);
+                            ::avro::decode(d, v.maxY);
                             break;
 
                         case 9:
-                            ::avro::decode(d, v.height);
+                            ::avro::decode(d, v.width);
                             break;
 
                         case 10:
-                            ::avro::decode(d, v.projection);
+                            ::avro::decode(d, v.height);
                             break;
 
                         case 11:
-                            ::avro::decode(d, v.styleOptions);
+                            ::avro::decode(d, v.projection);
                             break;
 
                         case 12:
+                            ::avro::decode(d, v.styleOptions);
+                            break;
+
+                        case 13:
                             ::avro::decode(d, v.options);
                             break;
 
@@ -259,6 +268,7 @@ namespace avro
                 ::avro::decode(d, v.xColumnName);
                 ::avro::decode(d, v.yColumnName);
                 ::avro::decode(d, v.valueColumnName);
+                ::avro::decode(d, v.geometryColumnName);
                 ::avro::decode(d, v.minX);
                 ::avro::decode(d, v.maxX);
                 ::avro::decode(d, v.minY);

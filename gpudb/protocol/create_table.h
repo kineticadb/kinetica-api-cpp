@@ -104,15 +104,15 @@ namespace gpudb
          *                      </ul>
          *                      The default value is gpudb::create_table_false.
          *                              <li> gpudb::create_table_foreign_keys:
-         *                      Semicolon-separated list of foreign key
-         *                      constraints, of the format 'source_column
-         *                      references target_table(primary_key_column) [
-         *                      as <foreign_key_name> ]'.
+         *                      Semicolon-separated list of foreign keys, of
+         *                      the format 'source_column references
+         *                      target_table(primary_key_column) [ as
+         *                      <foreign_key_name> ]'.
          *                              <li>
          *                      gpudb::create_table_foreign_shard_key: Foreign
-         *                      shard key description of the format:
-         *                      <fk_foreign_key> references <pk_column_name>
-         *                      from <pk_table_name>(<pk_primary_key>)
+         *                      shard key of the format 'source_column
+         *                      references shard_by_column from
+         *                      target_table(primary_key_column)'
          *                              <li> gpudb::create_table_ttl: Sets the
          *                      TTL of the table or collection specified in @a
          *                      tableName. The value must be the desired TTL in

@@ -96,7 +96,6 @@ namespace gpudb
     extern const std::string aggregate_statistics_skew;
     extern const std::string aggregate_statistics_stdv;
     extern const std::string aggregate_statistics_sum;
-    extern const std::string aggregate_statistics_sum_of_squares;
     extern const std::string aggregate_statistics_variance;
     extern const std::string aggregate_statistics_weight_column_name;
     extern const std::string aggregate_statistics_weighted_average;

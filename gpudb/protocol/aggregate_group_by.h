@@ -22,7 +22,10 @@ namespace gpudb
      * <p>
      * Any column(s) can be grouped on, and all column types except
      * unrestricted-length strings may be used for computing applicable
-     * aggregates.
+     * aggregates; columns marked as <a
+     * href="../../concepts/types.html#data-handling"
+     * target="_top">store-only</a> are unable to be used in grouping or
+     * aggregation.
      * <p>
      * The results can be paged via the @a offset and @a limit parameters. For
      * example, to get 10 groups with the largest counts the inputs would be:
@@ -47,14 +50,18 @@ namespace gpudb
      * href="../../concepts/dynamic_schemas.html" target="_top">dynamic schemas
      * documentation</a>.
      * <p>
-     * If a @a result_table name is specified in the options, the results are
-     * stored in a new table with that name.  No results are returned in the
-     * response.  If the source table's <a
-     * href="../../concepts/tables.html#shard-keys" target="_top">shard key</a>
-     * is used as the grouping column(s), the result table will be sharded, in
-     * all other cases it will be replicated.  Sorting will properly function
-     * only if the result table is replicated or if there is only one
-     * processing node and should not be relied upon in other cases.
+     * If a @a result_table name is specified in the @a options, the results
+     * are stored in a new table with that name--no results are returned in the
+     * response.  Both the table name and resulting column names must adhere to
+     * <a href="../../concepts/tables.html#table" target="_top">standard naming
+     * conventions</a>; column/aggregation expressions will need to be aliased.
+     * If the source table's <a href="../../concepts/tables.html#shard-keys"
+     * target="_top">shard key</a> is used as the grouping column(s), the
+     * result table will be sharded, in all other cases it will be replicated.
+     * Sorting will properly function only if the result table is replicated or
+     * if there is only one processing node and should not be relied upon in
+     * other cases.  Not available when any of the values of @a columnNames is
+     * an unrestricted-length string.
      */
     struct AggregateGroupByRequest
     {
@@ -82,10 +89,6 @@ namespace gpudb
          *                        table/view/collection.
          * @param[in] columnNames_  List of one or more column names,
          *                          expressions, and aggregate expressions.
-         *                          Must include at least one 'grouping' column
-         *                          or expression.  If no aggregate is
-         *                          included, count(*) will be computed as a
-         *                          default.
          * @param[in] offset_  A positive integer indicating the number of
          *                     initial results to skip (this can be useful for
          *                     paging through the results).  The minimum
@@ -166,13 +169,13 @@ namespace gpudb
          *                              <li>
          *                      gpudb::aggregate_group_by_result_table_persist:
          *                      If @a true then the result table specified in
-         *                      {result_table}@{key of input.options} will be
-         *                      persisted as a regular table (it will not be
-         *                      automatically cleared unless a @a ttl is
-         *                      provided, and the table data can be modified in
-         *                      subsequent operations). If @a false (the
-         *                      default) then the result table will be a
-         *                      read-only, memory-only temporary table.
+         *                      @a result_table will be persisted as a regular
+         *                      table (it will not be automatically cleared
+         *                      unless a @a ttl is provided, and the table data
+         *                      can be modified in subsequent operations). If
+         *                      @a false (the default) then the result table
+         *                      will be a read-only, memory-only temporary
+         *                      table.
          *                      <ul>
          *                              <li> gpudb::aggregate_group_by_true
          *                              <li> gpudb::aggregate_group_by_false
@@ -220,10 +223,6 @@ namespace gpudb
          *                        table/view/collection.
          * @param[in] columnNames_  List of one or more column names,
          *                          expressions, and aggregate expressions.
-         *                          Must include at least one 'grouping' column
-         *                          or expression.  If no aggregate is
-         *                          included, count(*) will be computed as a
-         *                          default.
          * @param[in] offset_  A positive integer indicating the number of
          *                     initial results to skip (this can be useful for
          *                     paging through the results).  The minimum
@@ -315,13 +314,13 @@ namespace gpudb
          *                              <li>
          *                      gpudb::aggregate_group_by_result_table_persist:
          *                      If @a true then the result table specified in
-         *                      {result_table}@{key of input.options} will be
-         *                      persisted as a regular table (it will not be
-         *                      automatically cleared unless a @a ttl is
-         *                      provided, and the table data can be modified in
-         *                      subsequent operations). If @a false (the
-         *                      default) then the result table will be a
-         *                      read-only, memory-only temporary table.
+         *                      @a result_table will be persisted as a regular
+         *                      table (it will not be automatically cleared
+         *                      unless a @a ttl is provided, and the table data
+         *                      can be modified in subsequent operations). If
+         *                      @a false (the default) then the result table
+         *                      will be a read-only, memory-only temporary
+         *                      table.
          *                      <ul>
          *                              <li> gpudb::aggregate_group_by_true
          *                              <li> gpudb::aggregate_group_by_false
@@ -449,7 +448,10 @@ namespace gpudb
      * <p>
      * Any column(s) can be grouped on, and all column types except
      * unrestricted-length strings may be used for computing applicable
-     * aggregates.
+     * aggregates; columns marked as <a
+     * href="../../concepts/types.html#data-handling"
+     * target="_top">store-only</a> are unable to be used in grouping or
+     * aggregation.
      * <p>
      * The results can be paged via the @a offset and @a limit parameters. For
      * example, to get 10 groups with the largest counts the inputs would be:
@@ -474,14 +476,18 @@ namespace gpudb
      * href="../../concepts/dynamic_schemas.html" target="_top">dynamic schemas
      * documentation</a>.
      * <p>
-     * If a @a result_table name is specified in the options, the results are
-     * stored in a new table with that name.  No results are returned in the
-     * response.  If the source table's <a
-     * href="../../concepts/tables.html#shard-keys" target="_top">shard key</a>
-     * is used as the grouping column(s), the result table will be sharded, in
-     * all other cases it will be replicated.  Sorting will properly function
-     * only if the result table is replicated or if there is only one
-     * processing node and should not be relied upon in other cases.
+     * If a @a result_table name is specified in the @a options, the results
+     * are stored in a new table with that name--no results are returned in the
+     * response.  Both the table name and resulting column names must adhere to
+     * <a href="../../concepts/tables.html#table" target="_top">standard naming
+     * conventions</a>; column/aggregation expressions will need to be aliased.
+     * If the source table's <a href="../../concepts/tables.html#shard-keys"
+     * target="_top">shard key</a> is used as the grouping column(s), the
+     * result table will be sharded, in all other cases it will be replicated.
+     * Sorting will properly function only if the result table is replicated or
+     * if there is only one processing node and should not be relied upon in
+     * other cases.  Not available when any of the values of @a columnNames is
+     * an unrestricted-length string.
      */
     struct RawAggregateGroupByResponse
     {
@@ -581,7 +587,10 @@ namespace gpudb
      * <p>
      * Any column(s) can be grouped on, and all column types except
      * unrestricted-length strings may be used for computing applicable
-     * aggregates.
+     * aggregates; columns marked as <a
+     * href="../../concepts/types.html#data-handling"
+     * target="_top">store-only</a> are unable to be used in grouping or
+     * aggregation.
      * <p>
      * The results can be paged via the @a offset and @a limit parameters. For
      * example, to get 10 groups with the largest counts the inputs would be:
@@ -606,14 +615,18 @@ namespace gpudb
      * href="../../concepts/dynamic_schemas.html" target="_top">dynamic schemas
      * documentation</a>.
      * <p>
-     * If a @a result_table name is specified in the options, the results are
-     * stored in a new table with that name.  No results are returned in the
-     * response.  If the source table's <a
-     * href="../../concepts/tables.html#shard-keys" target="_top">shard key</a>
-     * is used as the grouping column(s), the result table will be sharded, in
-     * all other cases it will be replicated.  Sorting will properly function
-     * only if the result table is replicated or if there is only one
-     * processing node and should not be relied upon in other cases.
+     * If a @a result_table name is specified in the @a options, the results
+     * are stored in a new table with that name--no results are returned in the
+     * response.  Both the table name and resulting column names must adhere to
+     * <a href="../../concepts/tables.html#table" target="_top">standard naming
+     * conventions</a>; column/aggregation expressions will need to be aliased.
+     * If the source table's <a href="../../concepts/tables.html#shard-keys"
+     * target="_top">shard key</a> is used as the grouping column(s), the
+     * result table will be sharded, in all other cases it will be replicated.
+     * Sorting will properly function only if the result table is replicated or
+     * if there is only one processing node and should not be relied upon in
+     * other cases.  Not available when any of the values of @a columnNames is
+     * an unrestricted-length string.
      */
     struct AggregateGroupByResponse
     {

@@ -163,32 +163,38 @@ int main(int argc, char* argv[])
 {
     if (argc < 2)
     {
-        std::cout << "Usage: gpudb-api-example http://gpudb_host:9191\n";
-        std::cout << "\tgpudb-api-example http://gpudb_host:9191,http://gpudb_host:9192";
+        std::cout << "Usage: gpudb-api-example http://gpudb_host:9191" << std::endl;
+        std::cout << "\tgpudb-api-example http://gpudb_host:9191,http://gpudb_host:9192" << std::endl;
         exit(1);
     }
 
     std::vector<std::string> hosts;
     boost::split(hosts, argv[1], boost::is_any_of(","));
 
-    gpudb::GPUdb::Options opts = gpudb::GPUdb::Options().setThreadCount(4);
+    #ifndef GPUDB_NO_HTTPS
+    // Use SSL context that does no certificate validation (for example purposes only)
+    boost::asio::ssl::context sslContext(boost::asio::ssl::context::sslv23);
+    gpudb::GPUdb::Options opts = gpudb::GPUdb::Options().setTimeout(1000).setSslContext(&sslContext);
+    #else
+    gpudb::GPUdb::Options opts = gpudb::GPUdb::Options().setTimeout(1000);
+    #endif
 
     if (hosts.size() == 1)
     {
         std::string host(hosts[0]);
-        std::cout << "Connecting to GPUdb host: '" << host << "'\n";
+        std::cout << "Connecting to GPUdb host: '" << host << "'" << std::endl;
         gpudb::GPUdb gpudb(host, opts);
         run(gpudb);
     }
     else if (hosts.size() > 1)
     {
         gpudb::GPUdb gpudb(hosts, opts);
-        std::cout << "Connecting to GPUdb host: '" << gpudb.getUrl() << "'\n";
+        std::cout << "Connecting to GPUdb host: '" << gpudb.getUrl() << "'" << std::endl;
         run(gpudb);
     }
     else
     {
-        std::cout << "No host provided\n";
+        std::cout << "No host provided" << std::endl;
     }
 
     return 0;

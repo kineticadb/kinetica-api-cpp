@@ -48,9 +48,24 @@ function( ADD_QTCREATOR_PROJECT project_name)
 
     # Make the qtcreator-template.files
 
-    file(GLOB_RECURSE QT_CREATOR_FILES ${QT_CREATOR_TOP_SRC_DIR}
-         *.h *.hh *.hpp *.hxx *.c *.cpp *.cxx *.cu 
-         *.json *.py *.ini *.properties )
+    file(GLOB_RECURSE QT_CREATOR_FILES
+         ${QT_CREATOR_TOP_SRC_DIR}/gpudb/*.h
+         ${QT_CREATOR_TOP_SRC_DIR}/gpudb/*.hh
+         ${QT_CREATOR_TOP_SRC_DIR}/gpudb/*.hpp
+         ${QT_CREATOR_TOP_SRC_DIR}/gpudb/*.hxx
+         ${QT_CREATOR_TOP_SRC_DIR}/gpudb/*.c
+         ${QT_CREATOR_TOP_SRC_DIR}/gpudb/*.cpp
+         ${QT_CREATOR_TOP_SRC_DIR}/gpudb/*.cxx )
+    file(GLOB_RECURSE QT_CREATOR_FILES_EXAMPLES
+         ${QT_CREATOR_TOP_SRC_DIR}/example/*.h
+         ${QT_CREATOR_TOP_SRC_DIR}/example/*.hh
+         ${QT_CREATOR_TOP_SRC_DIR}/example/*.hpp
+         ${QT_CREATOR_TOP_SRC_DIR}/example/*.hxx
+         ${QT_CREATOR_TOP_SRC_DIR}/example/*.c
+         ${QT_CREATOR_TOP_SRC_DIR}/example/*.cpp
+         ${QT_CREATOR_TOP_SRC_DIR}/example/*.cxx )
+
+    set(QT_CREATOR_FILES ${QT_CREATOR_FILES} ${QT_CREATOR_FILES_EXAMPLES})
 
     list(SORT QT_CREATOR_FILES)
     string(REPLACE ";" "\n" QT_CREATOR_FILES "${QT_CREATOR_FILES}")

@@ -96,7 +96,6 @@ namespace gpudb
     const std::string aggregate_statistics_skew                   ( "skew"                    );
     const std::string aggregate_statistics_stdv                   ( "stdv"                    );
     const std::string aggregate_statistics_sum                    ( "sum"                     );
-    const std::string aggregate_statistics_sum_of_squares         ( "sum_of_squares"          );
     const std::string aggregate_statistics_variance               ( "variance"                );
     const std::string aggregate_statistics_weight_column_name     ( "weight_column_name"      );
     const std::string aggregate_statistics_weighted_average       ( "weighted_average"        );

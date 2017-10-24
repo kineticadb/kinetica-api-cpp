@@ -1474,7 +1474,10 @@ AggregateConvexHullResponse& GPUdb::aggregateConvexHull( const std::string& tabl
  * combination. This is somewhat analogous to an SQL-style SELECT...GROUP BY.
  * <p>
  * Any column(s) can be grouped on, and all column types except
- * unrestricted-length strings may be used for computing applicable aggregates.
+ * unrestricted-length strings may be used for computing applicable aggregates;
+ * columns marked as <a href="../../concepts/types.html#data-handling"
+ * target="_top">store-only</a> are unable to be used in grouping or
+ * aggregation.
  * <p>
  * The results can be paged via the @a offset and @a limit parameters. For
  * example, to get 10 groups with the largest counts the inputs would be:
@@ -1498,14 +1501,18 @@ AggregateConvexHullResponse& GPUdb::aggregateConvexHull( const std::string& tabl
  * href="../../concepts/dynamic_schemas.html" target="_top">dynamic schemas
  * documentation</a>.
  * <p>
- * If a @a result_table name is specified in the options, the results are
- * stored in a new table with that name.  No results are returned in the
- * response.  If the source table's <a
- * href="../../concepts/tables.html#shard-keys" target="_top">shard key</a> is
- * used as the grouping column(s), the result table will be sharded, in all
- * other cases it will be replicated.  Sorting will properly function only if
- * the result table is replicated or if there is only one processing node and
- * should not be relied upon in other cases.
+ * If a @a result_table name is specified in the @a options, the results are
+ * stored in a new table with that name--no results are returned in the
+ * response.  Both the table name and resulting column names must adhere to <a
+ * href="../../concepts/tables.html#table" target="_top">standard naming
+ * conventions</a>; column/aggregation expressions will need to be aliased.  If
+ * the source table's <a href="../../concepts/tables.html#shard-keys"
+ * target="_top">shard key</a> is used as the grouping column(s), the result
+ * table will be sharded, in all other cases it will be replicated.  Sorting
+ * will properly function only if the result table is replicated or if there is
+ * only one processing node and should not be relied upon in other cases.  Not
+ * available when any of the values of @a columnNames is an unrestricted-length
+ * string.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -1528,7 +1535,10 @@ RawAggregateGroupByResponse GPUdb::aggregateGroupByRaw( const AggregateGroupByRe
  * combination. This is somewhat analogous to an SQL-style SELECT...GROUP BY.
  * <p>
  * Any column(s) can be grouped on, and all column types except
- * unrestricted-length strings may be used for computing applicable aggregates.
+ * unrestricted-length strings may be used for computing applicable aggregates;
+ * columns marked as <a href="../../concepts/types.html#data-handling"
+ * target="_top">store-only</a> are unable to be used in grouping or
+ * aggregation.
  * <p>
  * The results can be paged via the @a offset and @a limit parameters. For
  * example, to get 10 groups with the largest counts the inputs would be:
@@ -1552,14 +1562,18 @@ RawAggregateGroupByResponse GPUdb::aggregateGroupByRaw( const AggregateGroupByRe
  * href="../../concepts/dynamic_schemas.html" target="_top">dynamic schemas
  * documentation</a>.
  * <p>
- * If a @a result_table name is specified in the options, the results are
- * stored in a new table with that name.  No results are returned in the
- * response.  If the source table's <a
- * href="../../concepts/tables.html#shard-keys" target="_top">shard key</a> is
- * used as the grouping column(s), the result table will be sharded, in all
- * other cases it will be replicated.  Sorting will properly function only if
- * the result table is replicated or if there is only one processing node and
- * should not be relied upon in other cases.
+ * If a @a result_table name is specified in the @a options, the results are
+ * stored in a new table with that name--no results are returned in the
+ * response.  Both the table name and resulting column names must adhere to <a
+ * href="../../concepts/tables.html#table" target="_top">standard naming
+ * conventions</a>; column/aggregation expressions will need to be aliased.  If
+ * the source table's <a href="../../concepts/tables.html#shard-keys"
+ * target="_top">shard key</a> is used as the grouping column(s), the result
+ * table will be sharded, in all other cases it will be replicated.  Sorting
+ * will properly function only if the result table is replicated or if there is
+ * only one processing node and should not be relied upon in other cases.  Not
+ * available when any of the values of @a columnNames is an unrestricted-length
+ * string.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -1585,7 +1599,10 @@ RawAggregateGroupByResponse& GPUdb::aggregateGroupByRaw( const AggregateGroupByR
  * combination. This is somewhat analogous to an SQL-style SELECT...GROUP BY.
  * <p>
  * Any column(s) can be grouped on, and all column types except
- * unrestricted-length strings may be used for computing applicable aggregates.
+ * unrestricted-length strings may be used for computing applicable aggregates;
+ * columns marked as <a href="../../concepts/types.html#data-handling"
+ * target="_top">store-only</a> are unable to be used in grouping or
+ * aggregation.
  * <p>
  * The results can be paged via the @a offset and @a limit parameters. For
  * example, to get 10 groups with the largest counts the inputs would be:
@@ -1609,14 +1626,18 @@ RawAggregateGroupByResponse& GPUdb::aggregateGroupByRaw( const AggregateGroupByR
  * href="../../concepts/dynamic_schemas.html" target="_top">dynamic schemas
  * documentation</a>.
  * <p>
- * If a @a result_table name is specified in the options, the results are
- * stored in a new table with that name.  No results are returned in the
- * response.  If the source table's <a
- * href="../../concepts/tables.html#shard-keys" target="_top">shard key</a> is
- * used as the grouping column(s), the result table will be sharded, in all
- * other cases it will be replicated.  Sorting will properly function only if
- * the result table is replicated or if there is only one processing node and
- * should not be relied upon in other cases.
+ * If a @a result_table name is specified in the @a options, the results are
+ * stored in a new table with that name--no results are returned in the
+ * response.  Both the table name and resulting column names must adhere to <a
+ * href="../../concepts/tables.html#table" target="_top">standard naming
+ * conventions</a>; column/aggregation expressions will need to be aliased.  If
+ * the source table's <a href="../../concepts/tables.html#shard-keys"
+ * target="_top">shard key</a> is used as the grouping column(s), the result
+ * table will be sharded, in all other cases it will be replicated.  Sorting
+ * will properly function only if the result table is replicated or if there is
+ * only one processing node and should not be relied upon in other cases.  Not
+ * available when any of the values of @a columnNames is an unrestricted-length
+ * string.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -1647,7 +1668,10 @@ AggregateGroupByResponse GPUdb::aggregateGroupBy( const AggregateGroupByRequest&
  * combination. This is somewhat analogous to an SQL-style SELECT...GROUP BY.
  * <p>
  * Any column(s) can be grouped on, and all column types except
- * unrestricted-length strings may be used for computing applicable aggregates.
+ * unrestricted-length strings may be used for computing applicable aggregates;
+ * columns marked as <a href="../../concepts/types.html#data-handling"
+ * target="_top">store-only</a> are unable to be used in grouping or
+ * aggregation.
  * <p>
  * The results can be paged via the @a offset and @a limit parameters. For
  * example, to get 10 groups with the largest counts the inputs would be:
@@ -1671,14 +1695,18 @@ AggregateGroupByResponse GPUdb::aggregateGroupBy( const AggregateGroupByRequest&
  * href="../../concepts/dynamic_schemas.html" target="_top">dynamic schemas
  * documentation</a>.
  * <p>
- * If a @a result_table name is specified in the options, the results are
- * stored in a new table with that name.  No results are returned in the
- * response.  If the source table's <a
- * href="../../concepts/tables.html#shard-keys" target="_top">shard key</a> is
- * used as the grouping column(s), the result table will be sharded, in all
- * other cases it will be replicated.  Sorting will properly function only if
- * the result table is replicated or if there is only one processing node and
- * should not be relied upon in other cases.
+ * If a @a result_table name is specified in the @a options, the results are
+ * stored in a new table with that name--no results are returned in the
+ * response.  Both the table name and resulting column names must adhere to <a
+ * href="../../concepts/tables.html#table" target="_top">standard naming
+ * conventions</a>; column/aggregation expressions will need to be aliased.  If
+ * the source table's <a href="../../concepts/tables.html#shard-keys"
+ * target="_top">shard key</a> is used as the grouping column(s), the result
+ * table will be sharded, in all other cases it will be replicated.  Sorting
+ * will properly function only if the result table is replicated or if there is
+ * only one processing node and should not be relied upon in other cases.  Not
+ * available when any of the values of @a columnNames is an unrestricted-length
+ * string.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -1712,7 +1740,10 @@ AggregateGroupByResponse& GPUdb::aggregateGroupBy( const AggregateGroupByRequest
  * combination. This is somewhat analogous to an SQL-style SELECT...GROUP BY.
  * <p>
  * Any column(s) can be grouped on, and all column types except
- * unrestricted-length strings may be used for computing applicable aggregates.
+ * unrestricted-length strings may be used for computing applicable aggregates;
+ * columns marked as <a href="../../concepts/types.html#data-handling"
+ * target="_top">store-only</a> are unable to be used in grouping or
+ * aggregation.
  * <p>
  * The results can be paged via the @a offset and @a limit parameters. For
  * example, to get 10 groups with the largest counts the inputs would be:
@@ -1736,21 +1767,23 @@ AggregateGroupByResponse& GPUdb::aggregateGroupBy( const AggregateGroupByRequest
  * href="../../concepts/dynamic_schemas.html" target="_top">dynamic schemas
  * documentation</a>.
  * <p>
- * If a @a result_table name is specified in the options, the results are
- * stored in a new table with that name.  No results are returned in the
- * response.  If the source table's <a
- * href="../../concepts/tables.html#shard-keys" target="_top">shard key</a> is
- * used as the grouping column(s), the result table will be sharded, in all
- * other cases it will be replicated.  Sorting will properly function only if
- * the result table is replicated or if there is only one processing node and
- * should not be relied upon in other cases.
+ * If a @a result_table name is specified in the @a options, the results are
+ * stored in a new table with that name--no results are returned in the
+ * response.  Both the table name and resulting column names must adhere to <a
+ * href="../../concepts/tables.html#table" target="_top">standard naming
+ * conventions</a>; column/aggregation expressions will need to be aliased.  If
+ * the source table's <a href="../../concepts/tables.html#shard-keys"
+ * target="_top">shard key</a> is used as the grouping column(s), the result
+ * table will be sharded, in all other cases it will be replicated.  Sorting
+ * will properly function only if the result table is replicated or if there is
+ * only one processing node and should not be relied upon in other cases.  Not
+ * available when any of the values of @a columnNames is an unrestricted-length
+ * string.
  * 
  * @param tableName  Name of the table on which the operation will be
  *                   performed. Must be an existing table/view/collection.
  * @param columnNames  List of one or more column names, expressions, and
- *                     aggregate expressions. Must include at least one
- *                     'grouping' column or expression.  If no aggregate is
- *                     included, count(*) will be computed as a default.
+ *                     aggregate expressions.
  * @param offset  A positive integer indicating the number of initial results
  *                to skip (this can be useful for paging through the results).
  *                The minimum allowed value is 0. The maximum allowed value is
@@ -1810,13 +1843,12 @@ AggregateGroupByResponse& GPUdb::aggregateGroupBy( const AggregateGroupByRequest
  *                 available if one of the grouping attributes is an
  *                 unrestricted string (i.e.; not charN) type.
  *                         <li> gpudb::aggregate_group_by_result_table_persist:
- *                 If @a true then the result table specified in
- *                 {result_table}@{key of input.options} will be persisted as a
- *                 regular table (it will not be automatically cleared unless a
- *                 @a ttl is provided, and the table data can be modified in
- *                 subsequent operations). If @a false (the default) then the
- *                 result table will be a read-only, memory-only temporary
- *                 table.
+ *                 If @a true then the result table specified in @a
+ *                 result_table will be persisted as a regular table (it will
+ *                 not be automatically cleared unless a @a ttl is provided,
+ *                 and the table data can be modified in subsequent
+ *                 operations). If @a false (the default) then the result table
+ *                 will be a read-only, memory-only temporary table.
  *                 <ul>
  *                         <li> gpudb::aggregate_group_by_true
  *                         <li> gpudb::aggregate_group_by_false
@@ -1873,7 +1905,10 @@ AggregateGroupByResponse GPUdb::aggregateGroupBy( const std::string& tableName,
  * combination. This is somewhat analogous to an SQL-style SELECT...GROUP BY.
  * <p>
  * Any column(s) can be grouped on, and all column types except
- * unrestricted-length strings may be used for computing applicable aggregates.
+ * unrestricted-length strings may be used for computing applicable aggregates;
+ * columns marked as <a href="../../concepts/types.html#data-handling"
+ * target="_top">store-only</a> are unable to be used in grouping or
+ * aggregation.
  * <p>
  * The results can be paged via the @a offset and @a limit parameters. For
  * example, to get 10 groups with the largest counts the inputs would be:
@@ -1897,21 +1932,23 @@ AggregateGroupByResponse GPUdb::aggregateGroupBy( const std::string& tableName,
  * href="../../concepts/dynamic_schemas.html" target="_top">dynamic schemas
  * documentation</a>.
  * <p>
- * If a @a result_table name is specified in the options, the results are
- * stored in a new table with that name.  No results are returned in the
- * response.  If the source table's <a
- * href="../../concepts/tables.html#shard-keys" target="_top">shard key</a> is
- * used as the grouping column(s), the result table will be sharded, in all
- * other cases it will be replicated.  Sorting will properly function only if
- * the result table is replicated or if there is only one processing node and
- * should not be relied upon in other cases.
+ * If a @a result_table name is specified in the @a options, the results are
+ * stored in a new table with that name--no results are returned in the
+ * response.  Both the table name and resulting column names must adhere to <a
+ * href="../../concepts/tables.html#table" target="_top">standard naming
+ * conventions</a>; column/aggregation expressions will need to be aliased.  If
+ * the source table's <a href="../../concepts/tables.html#shard-keys"
+ * target="_top">shard key</a> is used as the grouping column(s), the result
+ * table will be sharded, in all other cases it will be replicated.  Sorting
+ * will properly function only if the result table is replicated or if there is
+ * only one processing node and should not be relied upon in other cases.  Not
+ * available when any of the values of @a columnNames is an unrestricted-length
+ * string.
  * 
  * @param tableName  Name of the table on which the operation will be
  *                   performed. Must be an existing table/view/collection.
  * @param columnNames  List of one or more column names, expressions, and
- *                     aggregate expressions. Must include at least one
- *                     'grouping' column or expression.  If no aggregate is
- *                     included, count(*) will be computed as a default.
+ *                     aggregate expressions.
  * @param offset  A positive integer indicating the number of initial results
  *                to skip (this can be useful for paging through the results).
  *                The minimum allowed value is 0. The maximum allowed value is
@@ -1971,13 +2008,12 @@ AggregateGroupByResponse GPUdb::aggregateGroupBy( const std::string& tableName,
  *                 available if one of the grouping attributes is an
  *                 unrestricted string (i.e.; not charN) type.
  *                         <li> gpudb::aggregate_group_by_result_table_persist:
- *                 If @a true then the result table specified in
- *                 {result_table}@{key of input.options} will be persisted as a
- *                 regular table (it will not be automatically cleared unless a
- *                 @a ttl is provided, and the table data can be modified in
- *                 subsequent operations). If @a false (the default) then the
- *                 result table will be a read-only, memory-only temporary
- *                 table.
+ *                 If @a true then the result table specified in @a
+ *                 result_table will be persisted as a regular table (it will
+ *                 not be automatically cleared unless a @a ttl is provided,
+ *                 and the table data can be modified in subsequent
+ *                 operations). If @a false (the default) then the result table
+ *                 will be a read-only, memory-only temporary table.
  *                 <ul>
  *                         <li> gpudb::aggregate_group_by_true
  *                         <li> gpudb::aggregate_group_by_false
@@ -2556,29 +2592,38 @@ AggregateMinMaxGeometryResponse& GPUdb::aggregateMinMaxGeometry( const std::stri
 
 
 /**
- * Calculates the requested statistics of a given column in a given table.
+ * Calculates the requested statistics of the given column(s) in a given table.
  * <p>
- * The available statistics are count (number of total objects), mean, stdv
- * (standard deviation), variance, skew, kurtosis, sum, sum_of_squares, min,
- * max, weighted_average, cardinality (unique count), estimated cardinality,
- * percentile and percentile_rank.
+ * The available statistics are @a count (number of total objects), @a mean, @a
+ * stdv (standard deviation), @a variance, @a skew, @a kurtosis, @a sum, @a
+ * min, @a max, @a weighted_average, @a cardinality (unique count), @a
+ * estimated_cardinality, @a percentile and @a percentile_rank.
  * <p>
  * Estimated cardinality is calculated by using the hyperloglog approximation
  * technique.
  * <p>
- * Percentiles and percentile_ranks are approximate and are calculated using
- * the t-digest algorithm. They must include the desired
- * percentile/percentile_rank. To compute multiple percentiles each value must
- * be specified separately (i.e.
+ * Percentiles and percentile ranks are approximate and are calculated using
+ * the t-digest algorithm. They must include the desired @a percentile/@a
+ * percentile_rank. To compute multiple percentiles each value must be
+ * specified separately (i.e.
  * 'percentile(75.0),percentile(99.0),percentile_rank(1234.56),percentile_rank(-5)').
  * <p>
- * The weighted average statistic requires a weight_attribute to be specified
- * in @a options. The weighted average is then defined as the sum of the
- * products of @a columnName times the weight attribute divided by the sum of
- * the weight attribute.
+ * The weighted average statistic requires a @a weight_column_name to be
+ * specified in @a options. The weighted average is then defined as the sum of
+ * the products of @a columnName times the @a weight_column_name values divided
+ * by the sum of the @a weight_column_name values.
  * <p>
- * The response includes a list of the statistics requested along with the
- * count of the number of items in the given set.
+ * Additional columns can be used in the calculation of statistics via the @a
+ * additional_column_names option.  Values in these columns will be included in
+ * the overall aggregate calculation--individual aggregates will not be
+ * calculated per additional column.  For instance, requesting the @a count &
+ * @a mean of @a columnName x and @a additional_column_names y & z, where x
+ * holds the numbers 1-10, y holds 11-20, and z holds 21-30, would return the
+ * total number of x, y, & z values (30), and the single average value across
+ * all x, y, & z values (15.5).
+ * <p>
+ * The response includes a list of key/value pairs of each statistic requested
+ * and its corresponding value.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -2596,29 +2641,38 @@ AggregateStatisticsResponse GPUdb::aggregateStatistics( const AggregateStatistic
 
 
 /**
- * Calculates the requested statistics of a given column in a given table.
+ * Calculates the requested statistics of the given column(s) in a given table.
  * <p>
- * The available statistics are count (number of total objects), mean, stdv
- * (standard deviation), variance, skew, kurtosis, sum, sum_of_squares, min,
- * max, weighted_average, cardinality (unique count), estimated cardinality,
- * percentile and percentile_rank.
+ * The available statistics are @a count (number of total objects), @a mean, @a
+ * stdv (standard deviation), @a variance, @a skew, @a kurtosis, @a sum, @a
+ * min, @a max, @a weighted_average, @a cardinality (unique count), @a
+ * estimated_cardinality, @a percentile and @a percentile_rank.
  * <p>
  * Estimated cardinality is calculated by using the hyperloglog approximation
  * technique.
  * <p>
- * Percentiles and percentile_ranks are approximate and are calculated using
- * the t-digest algorithm. They must include the desired
- * percentile/percentile_rank. To compute multiple percentiles each value must
- * be specified separately (i.e.
+ * Percentiles and percentile ranks are approximate and are calculated using
+ * the t-digest algorithm. They must include the desired @a percentile/@a
+ * percentile_rank. To compute multiple percentiles each value must be
+ * specified separately (i.e.
  * 'percentile(75.0),percentile(99.0),percentile_rank(1234.56),percentile_rank(-5)').
  * <p>
- * The weighted average statistic requires a weight_attribute to be specified
- * in @a options. The weighted average is then defined as the sum of the
- * products of @a columnName times the weight attribute divided by the sum of
- * the weight attribute.
+ * The weighted average statistic requires a @a weight_column_name to be
+ * specified in @a options. The weighted average is then defined as the sum of
+ * the products of @a columnName times the @a weight_column_name values divided
+ * by the sum of the @a weight_column_name values.
  * <p>
- * The response includes a list of the statistics requested along with the
- * count of the number of items in the given set.
+ * Additional columns can be used in the calculation of statistics via the @a
+ * additional_column_names option.  Values in these columns will be included in
+ * the overall aggregate calculation--individual aggregates will not be
+ * calculated per additional column.  For instance, requesting the @a count &
+ * @a mean of @a columnName x and @a additional_column_names y & z, where x
+ * holds the numbers 1-10, y holds 11-20, and z holds 21-30, would return the
+ * total number of x, y, & z values (30), and the single average value across
+ * all x, y, & z values (15.5).
+ * <p>
+ * The response includes a list of key/value pairs of each statistic requested
+ * and its corresponding value.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -2639,39 +2693,48 @@ AggregateStatisticsResponse& GPUdb::aggregateStatistics( const AggregateStatisti
 
 
 /**
- * Calculates the requested statistics of a given column in a given table.
+ * Calculates the requested statistics of the given column(s) in a given table.
  * <p>
- * The available statistics are count (number of total objects), mean, stdv
- * (standard deviation), variance, skew, kurtosis, sum, sum_of_squares, min,
- * max, weighted_average, cardinality (unique count), estimated cardinality,
- * percentile and percentile_rank.
+ * The available statistics are @a count (number of total objects), @a mean, @a
+ * stdv (standard deviation), @a variance, @a skew, @a kurtosis, @a sum, @a
+ * min, @a max, @a weighted_average, @a cardinality (unique count), @a
+ * estimated_cardinality, @a percentile and @a percentile_rank.
  * <p>
  * Estimated cardinality is calculated by using the hyperloglog approximation
  * technique.
  * <p>
- * Percentiles and percentile_ranks are approximate and are calculated using
- * the t-digest algorithm. They must include the desired
- * percentile/percentile_rank. To compute multiple percentiles each value must
- * be specified separately (i.e.
+ * Percentiles and percentile ranks are approximate and are calculated using
+ * the t-digest algorithm. They must include the desired @a percentile/@a
+ * percentile_rank. To compute multiple percentiles each value must be
+ * specified separately (i.e.
  * 'percentile(75.0),percentile(99.0),percentile_rank(1234.56),percentile_rank(-5)').
  * <p>
- * The weighted average statistic requires a weight_attribute to be specified
- * in @a options. The weighted average is then defined as the sum of the
- * products of @a columnName times the weight attribute divided by the sum of
- * the weight attribute.
+ * The weighted average statistic requires a @a weight_column_name to be
+ * specified in @a options. The weighted average is then defined as the sum of
+ * the products of @a columnName times the @a weight_column_name values divided
+ * by the sum of the @a weight_column_name values.
  * <p>
- * The response includes a list of the statistics requested along with the
- * count of the number of items in the given set.
+ * Additional columns can be used in the calculation of statistics via the @a
+ * additional_column_names option.  Values in these columns will be included in
+ * the overall aggregate calculation--individual aggregates will not be
+ * calculated per additional column.  For instance, requesting the @a count &
+ * @a mean of @a columnName x and @a additional_column_names y & z, where x
+ * holds the numbers 1-10, y holds 11-20, and z holds 21-30, would return the
+ * total number of x, y, & z values (30), and the single average value across
+ * all x, y, & z values (15.5).
+ * <p>
+ * The response includes a list of key/value pairs of each statistic requested
+ * and its corresponding value.
  * 
  * @param tableName  Name of the table on which the statistics operation will
  *                   be performed.
- * @param columnName  Name of the column for which the statistics are to be
- *                    calculated.
+ * @param columnName  Name of the primary column for which the statistics are
+ *                    to be calculated.
  * @param stats  Comma separated list of the statistics to calculate, e.g.
  *               "sum,mean".
  *               <ul>
  *                       <li> gpudb::aggregate_statistics_count: Number of
- *               objects (independent of the given column).
+ *               objects (independent of the given column(s)).
  *                       <li> gpudb::aggregate_statistics_mean: Arithmetic mean
  *               (average), equivalent to sum/count.
  *                       <li> gpudb::aggregate_statistics_stdv: Sample standard
@@ -2683,37 +2746,38 @@ AggregateStatisticsResponse& GPUdb::aggregateStatistics( const AggregateStatisti
  *                       <li> gpudb::aggregate_statistics_kurtosis: Kurtosis
  *               (fourth standardized moment).
  *                       <li> gpudb::aggregate_statistics_sum: Sum of all
- *               values in the column.
- *                       <li> gpudb::aggregate_statistics_sum_of_squares: Sum
- *               of the squares of all values in the column.
+ *               values in the column(s).
  *                       <li> gpudb::aggregate_statistics_min: Minimum value of
- *               the column.
+ *               the column(s).
  *                       <li> gpudb::aggregate_statistics_max: Maximum value of
- *               the column.
+ *               the column(s).
  *                       <li> gpudb::aggregate_statistics_weighted_average:
- *               Weighted arithmetic mean (using the option
- *               'weight_column_name' as the weighting column).
+ *               Weighted arithmetic mean (using the option @a
+ *               weight_column_name as the weighting column).
  *                       <li> gpudb::aggregate_statistics_cardinality: Number
- *               of unique values in the column.
+ *               of unique values in the column(s).
  *                       <li>
  *               gpudb::aggregate_statistics_estimated_cardinality: Estimate
  *               (via hyperloglog technique) of the number of unique values in
- *               the column.
+ *               the column(s).
  *                       <li> gpudb::aggregate_statistics_percentile: Estimate
- *               (via t-digest) of the given percentile of the column
+ *               (via t-digest) of the given percentile of the column(s)
  *               (percentile(50.0) will be an approximation of the median).
  *                       <li> gpudb::aggregate_statistics_percentile_rank:
  *               Estimate (via t-digest) of the percentile rank of the given
- *               value in the column (if the given value is the median of the
- *               column, percentile_rank([median]) will return approximately
- *               50.0).
+ *               value in the column(s) (if the given value is the median of
+ *               the column(s), percentile_rank(<median>) will return
+ *               approximately 50.0).
  *               </ul>
  * @param options  Optional parameters.
  *                 <ul>
  *                         <li>
  *                 gpudb::aggregate_statistics_additional_column_names: A list
  *                 of comma separated column names over which statistics can be
- *                 accumulated along with the primary column.
+ *                 accumulated along with the primary column.  All columns
+ *                 listed and @a columnName must be of the same type.  Must not
+ *                 include the column specified in @a columnName and no column
+ *                 can be listed twice.
  *                         <li> gpudb::aggregate_statistics_weight_column_name:
  *                 Name of column used as weighting attribute for the weighted
  *                 average statistic.
@@ -2740,39 +2804,48 @@ AggregateStatisticsResponse GPUdb::aggregateStatistics( const std::string& table
 
 
 /**
- * Calculates the requested statistics of a given column in a given table.
+ * Calculates the requested statistics of the given column(s) in a given table.
  * <p>
- * The available statistics are count (number of total objects), mean, stdv
- * (standard deviation), variance, skew, kurtosis, sum, sum_of_squares, min,
- * max, weighted_average, cardinality (unique count), estimated cardinality,
- * percentile and percentile_rank.
+ * The available statistics are @a count (number of total objects), @a mean, @a
+ * stdv (standard deviation), @a variance, @a skew, @a kurtosis, @a sum, @a
+ * min, @a max, @a weighted_average, @a cardinality (unique count), @a
+ * estimated_cardinality, @a percentile and @a percentile_rank.
  * <p>
  * Estimated cardinality is calculated by using the hyperloglog approximation
  * technique.
  * <p>
- * Percentiles and percentile_ranks are approximate and are calculated using
- * the t-digest algorithm. They must include the desired
- * percentile/percentile_rank. To compute multiple percentiles each value must
- * be specified separately (i.e.
+ * Percentiles and percentile ranks are approximate and are calculated using
+ * the t-digest algorithm. They must include the desired @a percentile/@a
+ * percentile_rank. To compute multiple percentiles each value must be
+ * specified separately (i.e.
  * 'percentile(75.0),percentile(99.0),percentile_rank(1234.56),percentile_rank(-5)').
  * <p>
- * The weighted average statistic requires a weight_attribute to be specified
- * in @a options. The weighted average is then defined as the sum of the
- * products of @a columnName times the weight attribute divided by the sum of
- * the weight attribute.
+ * The weighted average statistic requires a @a weight_column_name to be
+ * specified in @a options. The weighted average is then defined as the sum of
+ * the products of @a columnName times the @a weight_column_name values divided
+ * by the sum of the @a weight_column_name values.
  * <p>
- * The response includes a list of the statistics requested along with the
- * count of the number of items in the given set.
+ * Additional columns can be used in the calculation of statistics via the @a
+ * additional_column_names option.  Values in these columns will be included in
+ * the overall aggregate calculation--individual aggregates will not be
+ * calculated per additional column.  For instance, requesting the @a count &
+ * @a mean of @a columnName x and @a additional_column_names y & z, where x
+ * holds the numbers 1-10, y holds 11-20, and z holds 21-30, would return the
+ * total number of x, y, & z values (30), and the single average value across
+ * all x, y, & z values (15.5).
+ * <p>
+ * The response includes a list of key/value pairs of each statistic requested
+ * and its corresponding value.
  * 
  * @param tableName  Name of the table on which the statistics operation will
  *                   be performed.
- * @param columnName  Name of the column for which the statistics are to be
- *                    calculated.
+ * @param columnName  Name of the primary column for which the statistics are
+ *                    to be calculated.
  * @param stats  Comma separated list of the statistics to calculate, e.g.
  *               "sum,mean".
  *               <ul>
  *                       <li> gpudb::aggregate_statistics_count: Number of
- *               objects (independent of the given column).
+ *               objects (independent of the given column(s)).
  *                       <li> gpudb::aggregate_statistics_mean: Arithmetic mean
  *               (average), equivalent to sum/count.
  *                       <li> gpudb::aggregate_statistics_stdv: Sample standard
@@ -2784,37 +2857,38 @@ AggregateStatisticsResponse GPUdb::aggregateStatistics( const std::string& table
  *                       <li> gpudb::aggregate_statistics_kurtosis: Kurtosis
  *               (fourth standardized moment).
  *                       <li> gpudb::aggregate_statistics_sum: Sum of all
- *               values in the column.
- *                       <li> gpudb::aggregate_statistics_sum_of_squares: Sum
- *               of the squares of all values in the column.
+ *               values in the column(s).
  *                       <li> gpudb::aggregate_statistics_min: Minimum value of
- *               the column.
+ *               the column(s).
  *                       <li> gpudb::aggregate_statistics_max: Maximum value of
- *               the column.
+ *               the column(s).
  *                       <li> gpudb::aggregate_statistics_weighted_average:
- *               Weighted arithmetic mean (using the option
- *               'weight_column_name' as the weighting column).
+ *               Weighted arithmetic mean (using the option @a
+ *               weight_column_name as the weighting column).
  *                       <li> gpudb::aggregate_statistics_cardinality: Number
- *               of unique values in the column.
+ *               of unique values in the column(s).
  *                       <li>
  *               gpudb::aggregate_statistics_estimated_cardinality: Estimate
  *               (via hyperloglog technique) of the number of unique values in
- *               the column.
+ *               the column(s).
  *                       <li> gpudb::aggregate_statistics_percentile: Estimate
- *               (via t-digest) of the given percentile of the column
+ *               (via t-digest) of the given percentile of the column(s)
  *               (percentile(50.0) will be an approximation of the median).
  *                       <li> gpudb::aggregate_statistics_percentile_rank:
  *               Estimate (via t-digest) of the percentile rank of the given
- *               value in the column (if the given value is the median of the
- *               column, percentile_rank([median]) will return approximately
- *               50.0).
+ *               value in the column(s) (if the given value is the median of
+ *               the column(s), percentile_rank(<median>) will return
+ *               approximately 50.0).
  *               </ul>
  * @param options  Optional parameters.
  *                 <ul>
  *                         <li>
  *                 gpudb::aggregate_statistics_additional_column_names: A list
  *                 of comma separated column names over which statistics can be
- *                 accumulated along with the primary column.
+ *                 accumulated along with the primary column.  All columns
+ *                 listed and @a columnName must be of the same type.  Must not
+ *                 include the column specified in @a columnName and no column
+ *                 can be listed twice.
  *                         <li> gpudb::aggregate_statistics_weight_column_name:
  *                 Name of column used as weighting attribute for the weighted
  *                 average statistic.
@@ -3114,10 +3188,14 @@ AggregateStatisticsByRangeResponse& GPUdb::aggregateStatisticsByRange( const std
  * columnName) of a particular table (specified by @a tableName). If @a
  * columnName is a numeric column the values will be in @a
  * binaryEncodedResponse. Otherwise if @a columnName is a string column the
- * values will be in @a jsonEncodedResponse.  @a offset and @a limit are used
- * to page through the results if there are large numbers of unique values. To
- * get the first 10 unique values sorted in descending order @a options would
- * be::
+ * values will be in @a jsonEncodedResponse.  The results can be paged via the
+ * @a offset and @a limit parameters.
+ * <p>
+ * Columns marked as <a href="../../concepts/types.html#data-handling"
+ * target="_top">store-only</a> are unable to be used with this function.
+ * <p>
+ * To get the first 10 unique values sorted in descending order @a options
+ * would be::
  * <p>
  * {"limit":"10","sort_order":"descending"}.
  * <p>
@@ -3125,14 +3203,17 @@ AggregateStatisticsByRangeResponse& GPUdb::aggregateStatisticsByRange( const std
  * href="../../concepts/dynamic_schemas.html" target="_top">dynamic schemas
  * documentation</a>.
  * <p>
- * If a @a result_table name is specified in the options, the results are
- * stored in a new table with that name.  No results are returned in the
- * response.  If the source table's <a
- * href="../../concepts/tables.html#shard-keys" target="_top">shard key</a> is
- * used as the @a columnName, the result table will be sharded, in all other
- * cases it will be replicated.  Sorting will properly function only if the
- * result table is replicated or if there is only one processing node and
- * should not be relied upon in other cases.
+ * If a @a result_table name is specified in the @a options, the results are
+ * stored in a new table with that name--no results are returned in the
+ * response.  Both the table name and resulting column name must adhere to <a
+ * href="../../concepts/tables.html#table" target="_top">standard naming
+ * conventions</a>; any column expression will need to be aliased.  If the
+ * source table's <a href="../../concepts/tables.html#shard-keys"
+ * target="_top">shard key</a> is used as the @a columnName, the result table
+ * will be sharded, in all other cases it will be replicated.  Sorting will
+ * properly function only if the result table is replicated or if there is only
+ * one processing node and should not be relied upon in other cases.  Not
+ * available when the value of @a columnName is an unrestricted-length string.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -3154,10 +3235,14 @@ RawAggregateUniqueResponse GPUdb::aggregateUniqueRaw( const AggregateUniqueReque
  * columnName) of a particular table (specified by @a tableName). If @a
  * columnName is a numeric column the values will be in @a
  * binaryEncodedResponse. Otherwise if @a columnName is a string column the
- * values will be in @a jsonEncodedResponse.  @a offset and @a limit are used
- * to page through the results if there are large numbers of unique values. To
- * get the first 10 unique values sorted in descending order @a options would
- * be::
+ * values will be in @a jsonEncodedResponse.  The results can be paged via the
+ * @a offset and @a limit parameters.
+ * <p>
+ * Columns marked as <a href="../../concepts/types.html#data-handling"
+ * target="_top">store-only</a> are unable to be used with this function.
+ * <p>
+ * To get the first 10 unique values sorted in descending order @a options
+ * would be::
  * <p>
  * {"limit":"10","sort_order":"descending"}.
  * <p>
@@ -3165,14 +3250,17 @@ RawAggregateUniqueResponse GPUdb::aggregateUniqueRaw( const AggregateUniqueReque
  * href="../../concepts/dynamic_schemas.html" target="_top">dynamic schemas
  * documentation</a>.
  * <p>
- * If a @a result_table name is specified in the options, the results are
- * stored in a new table with that name.  No results are returned in the
- * response.  If the source table's <a
- * href="../../concepts/tables.html#shard-keys" target="_top">shard key</a> is
- * used as the @a columnName, the result table will be sharded, in all other
- * cases it will be replicated.  Sorting will properly function only if the
- * result table is replicated or if there is only one processing node and
- * should not be relied upon in other cases.
+ * If a @a result_table name is specified in the @a options, the results are
+ * stored in a new table with that name--no results are returned in the
+ * response.  Both the table name and resulting column name must adhere to <a
+ * href="../../concepts/tables.html#table" target="_top">standard naming
+ * conventions</a>; any column expression will need to be aliased.  If the
+ * source table's <a href="../../concepts/tables.html#shard-keys"
+ * target="_top">shard key</a> is used as the @a columnName, the result table
+ * will be sharded, in all other cases it will be replicated.  Sorting will
+ * properly function only if the result table is replicated or if there is only
+ * one processing node and should not be relied upon in other cases.  Not
+ * available when the value of @a columnName is an unrestricted-length string.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -3197,10 +3285,14 @@ RawAggregateUniqueResponse& GPUdb::aggregateUniqueRaw( const AggregateUniqueRequ
  * columnName) of a particular table (specified by @a tableName). If @a
  * columnName is a numeric column the values will be in @a
  * binaryEncodedResponse. Otherwise if @a columnName is a string column the
- * values will be in @a jsonEncodedResponse.  @a offset and @a limit are used
- * to page through the results if there are large numbers of unique values. To
- * get the first 10 unique values sorted in descending order @a options would
- * be::
+ * values will be in @a jsonEncodedResponse.  The results can be paged via the
+ * @a offset and @a limit parameters.
+ * <p>
+ * Columns marked as <a href="../../concepts/types.html#data-handling"
+ * target="_top">store-only</a> are unable to be used with this function.
+ * <p>
+ * To get the first 10 unique values sorted in descending order @a options
+ * would be::
  * <p>
  * {"limit":"10","sort_order":"descending"}.
  * <p>
@@ -3208,14 +3300,17 @@ RawAggregateUniqueResponse& GPUdb::aggregateUniqueRaw( const AggregateUniqueRequ
  * href="../../concepts/dynamic_schemas.html" target="_top">dynamic schemas
  * documentation</a>.
  * <p>
- * If a @a result_table name is specified in the options, the results are
- * stored in a new table with that name.  No results are returned in the
- * response.  If the source table's <a
- * href="../../concepts/tables.html#shard-keys" target="_top">shard key</a> is
- * used as the @a columnName, the result table will be sharded, in all other
- * cases it will be replicated.  Sorting will properly function only if the
- * result table is replicated or if there is only one processing node and
- * should not be relied upon in other cases.
+ * If a @a result_table name is specified in the @a options, the results are
+ * stored in a new table with that name--no results are returned in the
+ * response.  Both the table name and resulting column name must adhere to <a
+ * href="../../concepts/tables.html#table" target="_top">standard naming
+ * conventions</a>; any column expression will need to be aliased.  If the
+ * source table's <a href="../../concepts/tables.html#shard-keys"
+ * target="_top">shard key</a> is used as the @a columnName, the result table
+ * will be sharded, in all other cases it will be replicated.  Sorting will
+ * properly function only if the result table is replicated or if there is only
+ * one processing node and should not be relied upon in other cases.  Not
+ * available when the value of @a columnName is an unrestricted-length string.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -3245,10 +3340,14 @@ AggregateUniqueResponse GPUdb::aggregateUnique( const AggregateUniqueRequest& re
  * columnName) of a particular table (specified by @a tableName). If @a
  * columnName is a numeric column the values will be in @a
  * binaryEncodedResponse. Otherwise if @a columnName is a string column the
- * values will be in @a jsonEncodedResponse.  @a offset and @a limit are used
- * to page through the results if there are large numbers of unique values. To
- * get the first 10 unique values sorted in descending order @a options would
- * be::
+ * values will be in @a jsonEncodedResponse.  The results can be paged via the
+ * @a offset and @a limit parameters.
+ * <p>
+ * Columns marked as <a href="../../concepts/types.html#data-handling"
+ * target="_top">store-only</a> are unable to be used with this function.
+ * <p>
+ * To get the first 10 unique values sorted in descending order @a options
+ * would be::
  * <p>
  * {"limit":"10","sort_order":"descending"}.
  * <p>
@@ -3256,14 +3355,17 @@ AggregateUniqueResponse GPUdb::aggregateUnique( const AggregateUniqueRequest& re
  * href="../../concepts/dynamic_schemas.html" target="_top">dynamic schemas
  * documentation</a>.
  * <p>
- * If a @a result_table name is specified in the options, the results are
- * stored in a new table with that name.  No results are returned in the
- * response.  If the source table's <a
- * href="../../concepts/tables.html#shard-keys" target="_top">shard key</a> is
- * used as the @a columnName, the result table will be sharded, in all other
- * cases it will be replicated.  Sorting will properly function only if the
- * result table is replicated or if there is only one processing node and
- * should not be relied upon in other cases.
+ * If a @a result_table name is specified in the @a options, the results are
+ * stored in a new table with that name--no results are returned in the
+ * response.  Both the table name and resulting column name must adhere to <a
+ * href="../../concepts/tables.html#table" target="_top">standard naming
+ * conventions</a>; any column expression will need to be aliased.  If the
+ * source table's <a href="../../concepts/tables.html#shard-keys"
+ * target="_top">shard key</a> is used as the @a columnName, the result table
+ * will be sharded, in all other cases it will be replicated.  Sorting will
+ * properly function only if the result table is replicated or if there is only
+ * one processing node and should not be relied upon in other cases.  Not
+ * available when the value of @a columnName is an unrestricted-length string.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -3296,10 +3398,14 @@ AggregateUniqueResponse& GPUdb::aggregateUnique( const AggregateUniqueRequest& r
  * columnName) of a particular table (specified by @a tableName). If @a
  * columnName is a numeric column the values will be in @a
  * binaryEncodedResponse. Otherwise if @a columnName is a string column the
- * values will be in @a jsonEncodedResponse.  @a offset and @a limit are used
- * to page through the results if there are large numbers of unique values. To
- * get the first 10 unique values sorted in descending order @a options would
- * be::
+ * values will be in @a jsonEncodedResponse.  The results can be paged via the
+ * @a offset and @a limit parameters.
+ * <p>
+ * Columns marked as <a href="../../concepts/types.html#data-handling"
+ * target="_top">store-only</a> are unable to be used with this function.
+ * <p>
+ * To get the first 10 unique values sorted in descending order @a options
+ * would be::
  * <p>
  * {"limit":"10","sort_order":"descending"}.
  * <p>
@@ -3307,14 +3413,17 @@ AggregateUniqueResponse& GPUdb::aggregateUnique( const AggregateUniqueRequest& r
  * href="../../concepts/dynamic_schemas.html" target="_top">dynamic schemas
  * documentation</a>.
  * <p>
- * If a @a result_table name is specified in the options, the results are
- * stored in a new table with that name.  No results are returned in the
- * response.  If the source table's <a
- * href="../../concepts/tables.html#shard-keys" target="_top">shard key</a> is
- * used as the @a columnName, the result table will be sharded, in all other
- * cases it will be replicated.  Sorting will properly function only if the
- * result table is replicated or if there is only one processing node and
- * should not be relied upon in other cases.
+ * If a @a result_table name is specified in the @a options, the results are
+ * stored in a new table with that name--no results are returned in the
+ * response.  Both the table name and resulting column name must adhere to <a
+ * href="../../concepts/tables.html#table" target="_top">standard naming
+ * conventions</a>; any column expression will need to be aliased.  If the
+ * source table's <a href="../../concepts/tables.html#shard-keys"
+ * target="_top">shard key</a> is used as the @a columnName, the result table
+ * will be sharded, in all other cases it will be replicated.  Sorting will
+ * properly function only if the result table is replicated or if there is only
+ * one processing node and should not be relied upon in other cases.  Not
+ * available when the value of @a columnName is an unrestricted-length string.
  * 
  * @param tableName  Name of the table on which the operation will be
  *                   performed. Must be an existing table.
@@ -3346,7 +3455,7 @@ AggregateUniqueResponse& GPUdb::aggregateUnique( const AggregateUniqueRequest& r
  *                 </ul>
  *                 The default value is gpudb::aggregate_unique_ascending.
  *                         <li> gpudb::aggregate_unique_result_table: The name
- *                 of the table used to store the results. If present no
+ *                 of the table used to store the results. If present, no
  *                 results are returned in the response. Has the same naming
  *                 restrictions as <a href="../../concepts/tables.html"
  *                 target="_top">tables</a>.
@@ -3411,10 +3520,14 @@ AggregateUniqueResponse GPUdb::aggregateUnique( const std::string& tableName,
  * columnName) of a particular table (specified by @a tableName). If @a
  * columnName is a numeric column the values will be in @a
  * binaryEncodedResponse. Otherwise if @a columnName is a string column the
- * values will be in @a jsonEncodedResponse.  @a offset and @a limit are used
- * to page through the results if there are large numbers of unique values. To
- * get the first 10 unique values sorted in descending order @a options would
- * be::
+ * values will be in @a jsonEncodedResponse.  The results can be paged via the
+ * @a offset and @a limit parameters.
+ * <p>
+ * Columns marked as <a href="../../concepts/types.html#data-handling"
+ * target="_top">store-only</a> are unable to be used with this function.
+ * <p>
+ * To get the first 10 unique values sorted in descending order @a options
+ * would be::
  * <p>
  * {"limit":"10","sort_order":"descending"}.
  * <p>
@@ -3422,14 +3535,17 @@ AggregateUniqueResponse GPUdb::aggregateUnique( const std::string& tableName,
  * href="../../concepts/dynamic_schemas.html" target="_top">dynamic schemas
  * documentation</a>.
  * <p>
- * If a @a result_table name is specified in the options, the results are
- * stored in a new table with that name.  No results are returned in the
- * response.  If the source table's <a
- * href="../../concepts/tables.html#shard-keys" target="_top">shard key</a> is
- * used as the @a columnName, the result table will be sharded, in all other
- * cases it will be replicated.  Sorting will properly function only if the
- * result table is replicated or if there is only one processing node and
- * should not be relied upon in other cases.
+ * If a @a result_table name is specified in the @a options, the results are
+ * stored in a new table with that name--no results are returned in the
+ * response.  Both the table name and resulting column name must adhere to <a
+ * href="../../concepts/tables.html#table" target="_top">standard naming
+ * conventions</a>; any column expression will need to be aliased.  If the
+ * source table's <a href="../../concepts/tables.html#shard-keys"
+ * target="_top">shard key</a> is used as the @a columnName, the result table
+ * will be sharded, in all other cases it will be replicated.  Sorting will
+ * properly function only if the result table is replicated or if there is only
+ * one processing node and should not be relied upon in other cases.  Not
+ * available when the value of @a columnName is an unrestricted-length string.
  * 
  * @param tableName  Name of the table on which the operation will be
  *                   performed. Must be an existing table.
@@ -3461,7 +3577,7 @@ AggregateUniqueResponse GPUdb::aggregateUnique( const std::string& tableName,
  *                 </ul>
  *                 The default value is gpudb::aggregate_unique_ascending.
  *                         <li> gpudb::aggregate_unique_result_table: The name
- *                 of the table used to store the results. If present no
+ *                 of the table used to store the results. If present, no
  *                 results are returned in the response. Has the same naming
  *                 restrictions as <a href="../../concepts/tables.html"
  *                 target="_top">tables</a>.
@@ -4194,7 +4310,7 @@ AlterSystemPropertiesResponse& GPUdb::alterSystemProperties( const std::map<std:
 
 
 /**
- * Apply various modifications to a table, view, or collection.  The availble
+ * Apply various modifications to a table, view, or collection.  The available
  * modifications include the following:
  * <p>
  * Create or delete an index on a particular column. This can speed up certain
@@ -4244,7 +4360,7 @@ AlterTableResponse GPUdb::alterTable( const AlterTableRequest& request_ ) const
 
 
 /**
- * Apply various modifications to a table, view, or collection.  The availble
+ * Apply various modifications to a table, view, or collection.  The available
  * modifications include the following:
  * <p>
  * Create or delete an index on a particular column. This can speed up certain
@@ -4300,7 +4416,7 @@ AlterTableResponse& GPUdb::alterTable( const AlterTableRequest& request_,
 
 
 /**
- * Apply various modifications to a table, view, or collection.  The availble
+ * Apply various modifications to a table, view, or collection.  The available
  * modifications include the following:
  * <p>
  * Create or delete an index on a particular column. This can speed up certain
@@ -4453,7 +4569,7 @@ AlterTableResponse GPUdb::alterTable( const std::string& tableName,
 
 
 /**
- * Apply various modifications to a table, view, or collection.  The availble
+ * Apply various modifications to a table, view, or collection.  The available
  * modifications include the following:
  * <p>
  * Create or delete an index on a particular column. This can speed up certain
@@ -5815,10 +5931,11 @@ CreateProcResponse& GPUdb::createProc( const std::string& procName,
  * that all the data being ordered resides on the same processing node, so it
  * won't make sense to use @a order_by without moving average.
  * <p>
- * Also, a projection can be created with a different shard key than the source
- * table.  By specifying @a shard_key, the projection will be sharded according
- * to the specified columns, regardless of how the source table is sharded.
- * The source table can even be unsharded or replicated.
+ * Also, a projection can be created with a different <a
+ * href="../../concepts/tables.html#shard-keys" target="_top">shard key</a>
+ * than the source table.  By specifying @a shard_key, the projection will be
+ * sharded according to the specified columns, regardless of how the source
+ * table is sharded.  The source table can even be unsharded or replicated.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -5856,10 +5973,11 @@ CreateProjectionResponse GPUdb::createProjection( const CreateProjectionRequest&
  * that all the data being ordered resides on the same processing node, so it
  * won't make sense to use @a order_by without moving average.
  * <p>
- * Also, a projection can be created with a different shard key than the source
- * table.  By specifying @a shard_key, the projection will be sharded according
- * to the specified columns, regardless of how the source table is sharded.
- * The source table can even be unsharded or replicated.
+ * Also, a projection can be created with a different <a
+ * href="../../concepts/tables.html#shard-keys" target="_top">shard key</a>
+ * than the source table.  By specifying @a shard_key, the projection will be
+ * sharded according to the specified columns, regardless of how the source
+ * table is sharded.  The source table can even be unsharded or replicated.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -5900,10 +6018,11 @@ CreateProjectionResponse& GPUdb::createProjection( const CreateProjectionRequest
  * that all the data being ordered resides on the same processing node, so it
  * won't make sense to use @a order_by without moving average.
  * <p>
- * Also, a projection can be created with a different shard key than the source
- * table.  By specifying @a shard_key, the projection will be sharded according
- * to the specified columns, regardless of how the source table is sharded.
- * The source table can even be unsharded or replicated.
+ * Also, a projection can be created with a different <a
+ * href="../../concepts/tables.html#shard-keys" target="_top">shard key</a>
+ * than the source table.  By specifying @a shard_key, the projection will be
+ * sharded according to the specified columns, regardless of how the source
+ * table is sharded.  The source table can even be unsharded or replicated.
  * 
  * @param tableName  Name of the existing table on which the projection is to
  *                   be applied.
@@ -6009,10 +6128,11 @@ CreateProjectionResponse GPUdb::createProjection( const std::string& tableName,
  * that all the data being ordered resides on the same processing node, so it
  * won't make sense to use @a order_by without moving average.
  * <p>
- * Also, a projection can be created with a different shard key than the source
- * table.  By specifying @a shard_key, the projection will be sharded according
- * to the specified columns, regardless of how the source table is sharded.
- * The source table can even be unsharded or replicated.
+ * Also, a projection can be created with a different <a
+ * href="../../concepts/tables.html#shard-keys" target="_top">shard key</a>
+ * than the source table.  By specifying @a shard_key, the projection will be
+ * sharded according to the specified columns, regardless of how the source
+ * table is sharded.  The source table can even be unsharded or replicated.
  * 
  * @param tableName  Name of the existing table on which the projection is to
  *                   be applied.
@@ -6312,13 +6432,12 @@ CreateTableResponse& GPUdb::createTable( const CreateTableRequest& request_,
  *                 </ul>
  *                 The default value is gpudb::create_table_false.
  *                         <li> gpudb::create_table_foreign_keys:
- *                 Semicolon-separated list of foreign key constraints, of the
- *                 format 'source_column references
- *                 target_table(primary_key_column) [ as <foreign_key_name> ]'.
+ *                 Semicolon-separated list of foreign keys, of the format
+ *                 'source_column references target_table(primary_key_column) [
+ *                 as <foreign_key_name> ]'.
  *                         <li> gpudb::create_table_foreign_shard_key: Foreign
- *                 shard key description of the format: <fk_foreign_key>
- *                 references <pk_column_name> from
- *                 <pk_table_name>(<pk_primary_key>)
+ *                 shard key of the format 'source_column references
+ *                 shard_by_column from target_table(primary_key_column)'
  *                         <li> gpudb::create_table_ttl: Sets the TTL of the
  *                 table or collection specified in @a tableName. The value
  *                 must be the desired TTL in minutes.
@@ -6421,13 +6540,12 @@ CreateTableResponse GPUdb::createTable( const std::string& tableName,
  *                 </ul>
  *                 The default value is gpudb::create_table_false.
  *                         <li> gpudb::create_table_foreign_keys:
- *                 Semicolon-separated list of foreign key constraints, of the
- *                 format 'source_column references
- *                 target_table(primary_key_column) [ as <foreign_key_name> ]'.
+ *                 Semicolon-separated list of foreign keys, of the format
+ *                 'source_column references target_table(primary_key_column) [
+ *                 as <foreign_key_name> ]'.
  *                         <li> gpudb::create_table_foreign_shard_key: Foreign
- *                 shard key description of the format: <fk_foreign_key>
- *                 references <pk_column_name> from
- *                 <pk_table_name>(<pk_primary_key>)
+ *                 shard key of the format 'source_column references
+ *                 shard_by_column from target_table(primary_key_column)'
  *                         <li> gpudb::create_table_ttl: Sets the TTL of the
  *                 table or collection specified in @a tableName. The value
  *                 must be the desired TTL in minutes.
@@ -17158,6 +17276,7 @@ VisualizeImageHeatmapResponse& GPUdb::visualizeImageHeatmap( const VisualizeImag
  * @param xColumnName
  * @param yColumnName
  * @param valueColumnName
+ * @param geometryColumnName
  * @param minX
  * @param maxX
  * @param minY
@@ -17213,6 +17332,7 @@ VisualizeImageHeatmapResponse GPUdb::visualizeImageHeatmap( const std::vector<st
                                                             const std::string& xColumnName,
                                                             const std::string& yColumnName,
                                                             const std::string& valueColumnName,
+                                                            const std::string& geometryColumnName,
                                                             const double minX,
                                                             const double maxX,
                                                             const double minY,
@@ -17228,6 +17348,7 @@ VisualizeImageHeatmapResponse GPUdb::visualizeImageHeatmap( const std::vector<st
     actualRequest_.xColumnName = xColumnName;
     actualRequest_.yColumnName = yColumnName;
     actualRequest_.valueColumnName = valueColumnName;
+    actualRequest_.geometryColumnName = geometryColumnName;
     actualRequest_.minX = minX;
     actualRequest_.maxX = maxX;
     actualRequest_.minY = minY;
@@ -17250,6 +17371,7 @@ VisualizeImageHeatmapResponse GPUdb::visualizeImageHeatmap( const std::vector<st
  * @param xColumnName
  * @param yColumnName
  * @param valueColumnName
+ * @param geometryColumnName
  * @param minX
  * @param maxX
  * @param minY
@@ -17308,6 +17430,7 @@ VisualizeImageHeatmapResponse& GPUdb::visualizeImageHeatmap( const std::vector<s
                                                              const std::string& xColumnName,
                                                              const std::string& yColumnName,
                                                              const std::string& valueColumnName,
+                                                             const std::string& geometryColumnName,
                                                              const double minX,
                                                              const double maxX,
                                                              const double minY,
@@ -17324,6 +17447,7 @@ VisualizeImageHeatmapResponse& GPUdb::visualizeImageHeatmap( const std::vector<s
     actualRequest_.xColumnName = xColumnName;
     actualRequest_.yColumnName = yColumnName;
     actualRequest_.valueColumnName = valueColumnName;
+    actualRequest_.geometryColumnName = geometryColumnName;
     actualRequest_.minX = minX;
     actualRequest_.maxX = maxX;
     actualRequest_.minY = minY;
