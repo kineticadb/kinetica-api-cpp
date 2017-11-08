@@ -254,7 +254,7 @@ function build_boost
                     BJAM_FLAGS="$BJAM_FLAGS define=_GLIBCXX_USE_CXX11_ABI=0"
                 fi
                 if [ "$STATIC_WITH_PIC" -eq 1 ]; then
-                    BJAM_FLAGS="$BJAM_FLAGS cxxflags='-fPIC'"
+                    BJAM_FLAGS="$BJAM_FLAGS cxxflags='-fPIC $CXXFLAGS'"
                 fi
                 run_cmd "./bjam -a $BJAM_FLAGS --layout=system install variant=release threading=multi --user-config=user-config.jam --prefix=$INSTALL_DIR -j8 install"
 

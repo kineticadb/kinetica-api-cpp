@@ -1,10 +1,17 @@
 #include "gpudb/GPUdbIngestor.hpp"
 
-#include "gpudb/GPUdb.hpp"
+#include "gpudb/utils/MurmurHash3.h"
 
+#include <cstdlib>  // srand, rand
 #include <cstring>
+#include <endian.h>
 #include <map>
 #include <sstream>
+#include <time.h>   // time for seeding the rng
+
+#include <boost/lexical_cast.hpp>
+#include <boost/regex.hpp>
+
 
 
 namespace gpudb
@@ -12,7 +19,18 @@ namespace gpudb
 
 // --------------------- Implementation of Class WorkerList ----------------------
 
-// TODO: Add an optional input parameter for a regex for URL matching
+/* Creates a <see cref="WorkerList"/> object and automatically populates it with the
+ * worker URLs from GPUdb to support multi-head ingest. ( If the
+ * specified GPUdb instance has multi-head ingest disabled, the worker
+ * list will be empty and multi-head ingest will not be used.) Note that
+ * in some cases, workers may be configured to use more than one IP
+ * address, not all of which may be accessible to the client; this
+ * constructor uses the first IP returned by the server for each worker.
+ * </summary>
+ * 
+ * <param name="db">The <see cref="GPUdb"/> instance from which to
+ * obtain the worker URLs.</param>
+ */
 WorkerList::WorkerList( const GPUdb &gpudb )
 {
     // Get the system properties information from the server
@@ -33,15 +51,12 @@ WorkerList::WorkerList( const GPUdb &gpudb )
     bool multi_head_ingest_enabled = ( it->second == gpudb::show_system_properties_TRUE );
     if ( !multi_head_ingest_enabled )
     {   // nope, it is NOT enabled;
-        // so, just add the server URL to the worker list and return.
-        std::string gpudb_server_url = gpudb.getUrl();
-        m_worker_urls.push_back( gpudb_server_url );
         return; // nothing more to do
     }
 
     // Multi-head ingestion IS enabled; find the worker IP addresses
     // and ports; then add them to the worker url vector.
-    // -----------------------------------------------------------------
+    // -------------------------------------------------------------
 
     // Get the IP addresses of the worker ranks
     std::string ip_keyword = gpudb::show_system_properties_conf_worker_http_server_ips;
@@ -50,13 +65,14 @@ WorkerList::WorkerList( const GPUdb &gpudb )
     { // keyword not found
         throw GPUdbException( "Missing value for " + ip_keyword );
     }
+
     // Parse the IP addresses
     char delim = ';';
-    std::vector<std::string> worker_ips;
-    worker_ips = split_string( it->second, delim, worker_ips );
+    std::vector<std::string> worker_ip_lists;
+    split_string( it->second, delim, worker_ip_lists );
 
     // Check that the there's at least one IP address given
-    if ( worker_ips.empty() )
+    if ( worker_ip_lists.empty() )
         throw GPUdbException( "Empty value for " + ip_keyword );
 
     // Get the port numbers of the worker ranks
@@ -66,43 +82,209 @@ WorkerList::WorkerList( const GPUdb &gpudb )
     { // keyword not found
         throw GPUdbException( "Missing value for " + port_keyword );
     }
-    // Parse the IP addresses
+
+    // Parse the ports
     std::vector<std::string> worker_ports;
-    worker_ports = split_string( it->second, delim, worker_ports );
+    split_string( it->second, delim, worker_ports );
 
     // Check that the same number of IP addresses and ports are provided
-    if ( worker_ips.size() != worker_ports.size() )
+    if ( worker_ip_lists.size() != worker_ports.size() )
         throw GPUdbException( "Inconsistent number of values for " + ip_keyword + " and " + port_keyword );
 
-    // For each worker rank, create a URL from the IP address and port number
-    std::string worker_ip, worker_port;
-    for ( size_t i = 0; i < worker_ips.size(); ++i )
+    // For each worker rank--except the very first (rank0)--create a URL from
+    // the IP address and port number
+    std::vector<std::string> worker_ips;  // will be cleared in split-string calls
+    char ip_delim = ',';
+    for ( size_t i = 1; i < worker_ip_lists.size(); ++i )
     {
-        worker_ip   = worker_ips[   i ];
-        worker_port = worker_ports[ i ];
+        // Each of the IP entries is actually a list delimited by a comma
+        split_string( worker_ip_lists[ i ], ip_delim, worker_ips );
 
-        std::string worker_url = ("http://" + worker_ip + ":" + worker_port);
-        m_worker_urls.push_back( worker_url );
+        // Go through all IPs and see if any will work
+        std::vector<std::string>::const_iterator it;
+        for( it = worker_ips.begin(); it != worker_ips.end(); ++it )
+        {
+            std::string worker_url_str = ("http://" + *it + ":" + worker_ports[ i ] + "/insert/records");
+            gpudb::HttpUrl worker_url( worker_url_str );
+            m_worker_urls.push_back( worker_url );
+            break; // no need to look at the remaining IPs in this group
+        }  // end inner loop
+    } // end outer loop
 
-        // TODO: Use a regular expression to match the worker URL against it
-    }
+    if ( m_worker_urls.empty() ) // O_o No worker found!
+        throw GPUdbException( "No worker HTTP servers found." );
 
-    return; // done
+    return;
 }  // end WorkerList constructor
 
 
-// static convenience function
-std::vector<std::string>& WorkerList::split_string( const std::string &in_string,
-                                                    char delim,
-                                                    std::vector<std::string> &elements )
+
+/* Creates a <see cref="WorkerList"/> object and automatically populates it with the
+ * worker URLs from GPUdb to support multi-head ingest. ( If the
+ * specified GPUdb instance has multi-head ingest disabled, the worker
+ * list will be empty and multi-head ingest will not be used.) Note that
+ * in some cases, workers may be configured to use more than one IP
+ * address, not all of which may be accessible to the client; this
+ * constructor uses the provided regular expression to match the workers in each
+ * group, and only uses matching workers, if any.
+ * </summary>
+ * 
+ * <param name="db">The <see cref="GPUdb"/> instance from which to
+ * obtain the worker URLs.</param>
+ * <param name="ip_regex_str">A regular expression pattern for the IPs to match.</param>
+ */
+WorkerList::WorkerList(const GPUdb &gpudb, const std::string &ip_regex_str )
 {
+    // Generate the regular expression from the given pattern
+    std::regex ip_regex;
+    try
+    {
+        ip_regex = std::regex( ip_regex_str );
+    } catch (std::exception e)
+    {
+        throw GPUdbException( "Unable to create a regular expression from given pattern '"
+                              + ip_regex_str + "'" );
+    }
+
+    // Get the system properties information from the server
+    std::map<std::string, std::string> options;
+    gpudb::ShowSystemPropertiesResponse sys_properties_rsp;
+    sys_properties_rsp = gpudb.showSystemProperties( options );
+    std::map<std::string, std::string> &sys_property_map = sys_properties_rsp.propertyMap;
+
+    // Check if multihead ingestion is enabled
+    std::map<std::string, std::string>::iterator it;
+    it = sys_property_map.find( gpudb::show_system_properties_conf_enable_worker_http_servers );
+    if ( it == sys_property_map.end() )
+    { // keyword not found
+        throw GPUdbException( "Missing value for " + gpudb::show_system_properties_conf_enable_worker_http_servers );
+    }
+
+    // so, is multi-head ingestion enabled?
+    bool multi_head_ingest_enabled = ( it->second == gpudb::show_system_properties_TRUE );
+    if ( !multi_head_ingest_enabled )
+    {   // nope, it is NOT enabled;
+        return; // nothing more to do
+    }
+
+    // Multi-head ingestion IS enabled; find the worker IP addresses
+    // and ports; then add them to the worker url vector.
+    // -------------------------------------------------------------
+
+    // Get the IP addresses of the worker ranks
+    std::string ip_keyword = gpudb::show_system_properties_conf_worker_http_server_ips;
+    it = sys_property_map.find( ip_keyword );
+    if ( it == sys_property_map.end() )
+    { // keyword not found
+        throw GPUdbException( "Missing value for " + ip_keyword );
+    }
+
+    // Parse the IP addresses
+    char delim = ';';
+    std::vector<std::string> worker_ip_lists;
+    split_string( it->second, delim, worker_ip_lists );
+
+    // Check that the there's at least one IP address given
+    if ( worker_ip_lists.empty() )
+        throw GPUdbException( "Empty value for " + ip_keyword );
+
+    // Get the port numbers of the worker ranks
+    std::string port_keyword = gpudb::show_system_properties_conf_worker_http_server_ports;
+    it = sys_property_map.find( port_keyword );
+    if ( it == sys_property_map.end() )
+    { // keyword not found
+        throw GPUdbException( "Missing value for " + port_keyword );
+    }
+
+    // Parse the ports
+    std::vector<std::string> worker_ports;
+    split_string( it->second, delim, worker_ports );
+
+    // Check that the same number of IP addresses and ports are provided
+    if ( worker_ip_lists.size() != worker_ports.size() )
+        throw GPUdbException( "Inconsistent number of values for " + ip_keyword + " and " + port_keyword );
+
+    // For each worker rank--except the very first (rank0)--create a URL from
+    // the IP address and port number
+    std::vector<std::string> worker_ips;  // will be cleared in split-string calls
+    char ip_delim = ',';
+    for ( size_t i = 1; i < worker_ip_lists.size(); ++i )
+    {
+        // Each of the IP entries is actually a list delimited by a comma
+        split_string( worker_ip_lists[ i ], ip_delim, worker_ips );
+
+        bool matching_ip_found = false;
+
+        // Go through all IPs and see if any will work
+        std::vector<std::string>::const_iterator it;
+        for( it = worker_ips.begin(); it != worker_ips.end(); ++it )
+        {
+            // See if this IP is a match for the given REGEX
+            matching_ip_found = std::regex_match( *it, ip_regex );
+
+            // Create a URI for the matching IP address
+            if ( matching_ip_found )
+            {
+                std::string worker_url_str = ("http://" + *it + ":" + worker_ports[ i ] + "/insert/records");
+                gpudb::HttpUrl worker_url( worker_url_str );
+                m_worker_urls.push_back( worker_url );
+                break; // no need to look at the remaining IPs in this group
+            }
+        }  // end inner loop
+
+        if ( !matching_ip_found ) // none found; that's a problem
+        {
+            std::ostringstream ss;
+            ss << "No matching IP found for worker #" << i << " for regex '" << ip_regex_str << "'";
+            throw GPUdbException( ss.str() );
+        }
+    } // end outer loop
+
+    if ( m_worker_urls.empty() ) // O_o No (matching) worker found!
+        throw GPUdbException( "No worker HTTP servers found." );
+
+    return;
+}  // end WorkerList constructor
+
+
+///*
+// * Desctructor
+// */
+//WorkerList~WorkerList()
+//{}
+
+
+/*
+ *  Returns a string representation of the workers contained within
+ */
+std::string WorkerList::toString() const
+{
+    std::ostringstream ss;
+    for ( const_iterator it = m_worker_urls.begin();
+          it != m_worker_urls.end(); ++it )
+    {
+        ss << *it << "; ";
+    }
+    return ss.str();
+}
+
+/*
+ * static convenience function
+ * Any pre-existing entries in elements will be cleared.
+ */
+void WorkerList::split_string( const std::string &in_string,
+                               char delim,
+                               std::vector<std::string> &elements )
+{
+    elements.clear();
+
     std::stringstream ss( in_string );
     std::string item;
     while ( std::getline( ss, item, delim ) )
     {
         elements.push_back( item );
     }
-    return elements;
+    return;
 }  // end split_string
 
 
@@ -110,105 +292,2584 @@ std::vector<std::string>& WorkerList::split_string( const std::string &in_string
 
 
 
-// --------------------- Implementation of Class RecordKey ----------------------
+
+
+
+// --------------------- Various Convenient Functions for RecordKey ----------------------
+
+namespace timestamp
+{
+#define TIMESTAMP_BASE_YEAR 1900
+
+#define YEARS_PER_QUAD_YEAR 4
+#define DAYS_PER_YEAR       365   // not leap year
+
+#define DAYS_PER_QUAD_YEAR  (YEARS_PER_QUAD_YEAR * DAYS_PER_YEAR+1)
+#define DAYS_PER_WEEK       7
+#define HOURS_PER_DAY       24
+#define MINUTES_PER_HOUR    60
+#define SECS_PER_MINUTE     60
+#define MSECS_PER_SEC       1000L
+#define MSECS_PER_MINUTE    (MSECS_PER_SEC * SECS_PER_MINUTE)
+#define MSECS_PER_HOUR      (MSECS_PER_MINUTE * MINUTES_PER_HOUR)
+#define MSECS_PER_DAY       (MSECS_PER_HOUR * HOURS_PER_DAY)
+#define MSECS_PER_YEAR      (DAYS_PER_YEAR * MSECS_PER_DAY)
+#define MSECS_PER_QUAD_YEAR (MSECS_PER_DAY * DAYS_PER_QUAD_YEAR)
+
+#define JAN_1_0001_DAY_OF_WEEK 1  // 0 based day of week - is a friday (as if gregorian calandar started in year 1)
+
+// Need the MS_OFFSET  to avoid division rounding towards 0.  Only values
+// after 1901 are valid.  1901 was chosen because it is the year after
+// a leap year.  this makes last yeqr of quad year from 1901 a leap
+// year which simplifies calculations (see (*) comments below)..  Not
+// going before 1900 avoids the complication that 1900 isn't a leap
+// year.
+#define MS_OFFSET ((68/YEARS_PER_QUAD_YEAR)*MSECS_PER_QUAD_YEAR + MSECS_PER_YEAR)
+
+const int YEARS_PER_CENTURY = 100;
+const int CENTURIES_PER_QUAD_CENTURY = 4;
+const int EPOCH_YEAR = 1970;
+
+const int LEAP_DAYS_PER_QUAD_YEAR = 1;
+const int LEAP_DAYS_PER_CENTURY = ((YEARS_PER_CENTURY/YEARS_PER_QUAD_YEAR) - 1);
+const int LEAP_DAYS_PER_QUAD_CENTURY = CENTURIES_PER_QUAD_CENTURY*((YEARS_PER_CENTURY/YEARS_PER_QUAD_YEAR) - 1) + 1;
+const int DAYS_PER_CENTURY = (YEARS_PER_CENTURY*DAYS_PER_YEAR + LEAP_DAYS_PER_CENTURY);
+const int DAYS_PER_QUAD_CENTURY = (CENTURIES_PER_QUAD_CENTURY*DAYS_PER_CENTURY + 1);
+const int64_t MSECS_PER_CENTURY = (DAYS_PER_CENTURY*MSECS_PER_DAY);
+const int64_t MSECS_PER_QUAD_CENTURY = (DAYS_PER_QUAD_CENTURY*MSECS_PER_DAY);
+
+const int YEARS_TO_EPOCH = (EPOCH_YEAR-1); // from year 1
+const int YEARS_PER_QUAD_CENTURY  = (YEARS_PER_CENTURY*CENTURIES_PER_QUAD_CENTURY);
+
+const int QUAD_CENTURIES_OFFSET          = (YEARS_TO_EPOCH/YEARS_PER_QUAD_CENTURY);
+const int YEAR_IN_QUAD_CENTURY_OFFSET    = (YEARS_TO_EPOCH%YEARS_PER_QUAD_CENTURY);
+const int CENTURY_OF_QUAD_CENTURY_OFFSET = (YEAR_IN_QUAD_CENTURY_OFFSET/YEARS_PER_CENTURY);
+const int YEAR_IN_CENTURY_OFFSET         = (YEAR_IN_QUAD_CENTURY_OFFSET%YEARS_PER_CENTURY);
+const int QUAD_YEAR_OF_CENTURY_OFFSET    = (YEAR_IN_CENTURY_OFFSET/YEARS_PER_QUAD_YEAR);
+const int YEAR_IN_QUAD_YEAR_OFFSET       = (YEAR_IN_CENTURY_OFFSET%YEARS_PER_QUAD_YEAR);
+
+const int64_t MS_EPOCH_OFFSET = (QUAD_CENTURIES_OFFSET*MSECS_PER_QUAD_CENTURY + CENTURY_OF_QUAD_CENTURY_OFFSET*MSECS_PER_CENTURY + \
+                                 QUAD_YEAR_OF_CENTURY_OFFSET*MSECS_PER_QUAD_YEAR + YEAR_IN_QUAD_YEAR_OFFSET*MSECS_PER_YEAR);
+
+inline bool isa_leap_year(int year)
+{
+    return (
+        (year % YEARS_PER_QUAD_CENTURY == 0) ? true :
+        (year % YEARS_PER_CENTURY == 0)      ? false :
+        (year % YEARS_PER_QUAD_YEAR == 0)    ? true :
+                                               false );
+}  // end isa_leap_year
+
+
+inline int get_month_and_day_from_day_of_year(int &dy, bool ly)
+{
+    if (dy <= 31)
+        return 1;
+    dy -= 31;
+    if (dy <= 28 + ly)
+        return 2;
+    dy -= 28 + ly;
+    if (dy <= 31)
+        return 3;
+    dy -= 31;
+    if (dy <= 30)
+        return 4;
+    dy -= 30;
+    if (dy <= 31)
+        return 5;
+    dy -= 31;
+    if (dy <= 30)
+        return 6;
+    dy -= 30;
+    if (dy <= 31)
+        return 7;
+    dy -= 31;
+    if (dy <= 31)
+        return 8;
+    dy -= 31;
+    if (dy <= 30)
+        return 9;
+    dy -= 30;
+    if (dy <= 31)
+        return 10;
+    dy -= 31;
+    if (dy <= 30)
+        return 11;
+    dy -= 30;
+    return 12;      // december
+}  // end get_month_and_day_from_day_of_year
+
+
+inline int hour_from_ms(int64_t ms)
+{
+    return (int)(((ms + MS_EPOCH_OFFSET)/MSECS_PER_HOUR) % HOURS_PER_DAY);
+}
+
+inline int minute_from_ms(int64_t ms)
+{
+    return (int)(((ms + MS_EPOCH_OFFSET)/MSECS_PER_MINUTE) % MINUTES_PER_HOUR);
+}
+
+inline int sec_from_ms(int64_t ms)
+{
+    return (int)(((ms + MS_EPOCH_OFFSET)/MSECS_PER_SEC) % SECS_PER_MINUTE);
+}
+
+inline int msec_from_ms(int64_t ms)
+{
+    return (int)((ms + MS_EPOCH_OFFSET) % MSECS_PER_SEC);
+}
+
+inline int days_since_0001_from_ms(int64_t ms)
+{
+    return (ms + MS_EPOCH_OFFSET)/ MSECS_PER_DAY;
+}
+
+inline int day_of_week_from_days_since_0001(int days_since_1)
+{
+    return ((days_since_1 + JAN_1_0001_DAY_OF_WEEK) % DAYS_PER_WEEK) + 1;
+}
+
+inline int day_of_week_from_ms(int64_t ms)
+{
+    return day_of_week_from_days_since_0001(days_since_0001_from_ms(ms));
+}
+
+
+
+inline int days_in_month(int year, int month)
+{
+    bool ly = (year % 400 == 0) ? true : (year % 100 == 0) ? false : (year % 4 == 0) ? true : false;
+    //                             J,  F,  M,  A,  M,  J,  J,  A,  S,  O,  N,  D
+    const int days_per_month[] = {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
+    int leap_day = (ly && (month == 2)) ? 1 : 0;
+    return ( days_per_month[month-1] + leap_day );
+}
+
+#define BITS_PER_YEAR 11     // 1900 based (field == 0 is year 1900 )
+#define BITS_PER_MONTH 4    // 1 based
+#define BITS_PER_DAY 5      // 1 based
+#define BITS_PER_HOUR 5     // 0 based
+#define BITS_PER_MINUTE 6   // 0 based
+#define BITS_PER_SEC 6      // 0 based
+#define BITS_PER_MSEC 10    // 0 based
+#define BITS_PER_YDAY 9     // 1 based
+#define BITS_PER_WDAY 3     // 1 based
+
+#define SHIFT_YEAR   (64-BITS_PER_YEAR)               // 53
+#define SHIFT_MONTH  (SHIFT_YEAR   - BITS_PER_MONTH)  // 49
+#define SHIFT_DAY    (SHIFT_MONTH  - BITS_PER_DAY)    // 44
+#define SHIFT_HOUR   (SHIFT_DAY    - BITS_PER_HOUR)   // 39
+#define SHIFT_MINUTE (SHIFT_HOUR   - BITS_PER_MINUTE) // 33
+#define SHIFT_SEC    (SHIFT_MINUTE - BITS_PER_SEC)    // 27
+#define SHIFT_MSEC   (SHIFT_SEC    - BITS_PER_MSEC)   // 17
+#define SHIFT_YDAY   (SHIFT_MSEC   - BITS_PER_YDAY)   // 8
+#define SHIFT_WDAY   (SHIFT_YDAY   - BITS_PER_WDAY)   // 5
+
+inline int64_t create_timestamp_from_fields( int year_field,
+                                             int month_of_year_field,
+                                             int day_of_month_field,
+                                             int hour_field,
+                                             int minute_field,
+                                             int sec_field,
+                                             int msec_field,
+                                             int day_of_year_field,
+                                             int day_of_week_field )
+{
+    return
+        (((int64_t)year_field)          << SHIFT_YEAR) +
+        (((int64_t)month_of_year_field) << SHIFT_MONTH) +
+        (((int64_t)day_of_month_field)  << SHIFT_DAY) +
+        (((int64_t)hour_field)          << SHIFT_HOUR) +
+        (((int64_t)minute_field)        << SHIFT_MINUTE) +
+        (((int64_t)sec_field)           << SHIFT_SEC) +
+        (((int64_t)msec_field)          << SHIFT_MSEC) +
+        (((int64_t)day_of_year_field)   << SHIFT_YDAY) +
+        (((int64_t)day_of_week_field)   << SHIFT_WDAY);
+}  // end create_timestamp_from_fields
+
+
+inline int64_t create_timestamp_from_epoch_ms(int64_t ms)
+{
+    int days_since_1 = (ms+MS_EPOCH_OFFSET)/MSECS_PER_DAY;
+    int quad_century = days_since_1/DAYS_PER_QUAD_CENTURY;
+    int day_of_quad_century = days_since_1 - quad_century*DAYS_PER_QUAD_CENTURY;
+    int century_of_quad_century = day_of_quad_century/DAYS_PER_CENTURY;
+    if (century_of_quad_century == 4) century_of_quad_century = 3;
+    int day_of_century = day_of_quad_century - century_of_quad_century*DAYS_PER_CENTURY;
+    int quad_year_of_century = day_of_century/DAYS_PER_QUAD_YEAR;
+    int day_of_quad_year = day_of_century - quad_year_of_century * DAYS_PER_QUAD_YEAR;
+    int year_of_quad_year = day_of_quad_year/DAYS_PER_YEAR;
+    if (year_of_quad_year == 4) year_of_quad_year = 3;
+    int day_of_year_field = day_of_quad_year - year_of_quad_year*DAYS_PER_YEAR + 1;
+
+    int year = YEARS_PER_QUAD_CENTURY*quad_century + YEARS_PER_CENTURY*century_of_quad_century + YEARS_PER_QUAD_YEAR*quad_year_of_century + year_of_quad_year + 1;
+    int year_field = year - TIMESTAMP_BASE_YEAR;
+
+    bool ly = isa_leap_year(year);
+
+    int day_of_month_field = day_of_year_field; // gets modified by next function call
+    int month_of_year_field = get_month_and_day_from_day_of_year(day_of_month_field,ly);
+
+    int hour_field   = hour_from_ms(ms);
+    int minute_field = minute_from_ms(ms);
+    int sec_field    = sec_from_ms(ms);
+    int msec_field   = msec_from_ms(ms);
+    int day_of_week_field = day_of_week_from_ms(ms);
+
+    return create_timestamp_from_fields(year_field,
+                                        month_of_year_field,
+                                        day_of_month_field,
+                                        hour_field,
+                                        minute_field,
+                                        sec_field,
+                                        msec_field,
+                                        day_of_year_field,
+                                        day_of_week_field);
+}  // end create_timestamp_from_epoch_ms
+
+
+inline int get_day_of_year_from_month_and_day(int month, int day, int leap_year)
+{
+    const int days_before_month[] = {0, 31, 59, 90, 120, 151, 181, 212, 243, 273, 304, 334};
+    return ( days_before_month[month-1]
+             + day
+             + ( (month > 2) ? leap_year : 0) );  // # of days after the given day
+}
+
+inline int day_of_year_from_date(int year, int month, int day)
+{
+    bool ly = (year % 400 == 0) ? true : (year % 100 == 0) ? false : (year % 4 == 0) ? true : false;
+    return get_day_of_year_from_month_and_day(month, day, ly);
+}
+
+
+inline int days_since_epoch_from_year_and_day_of_year(int year, int day_of_year)
+{
+    // get days between 1 and y
+    int y   = year-1;  // years since base year of 1
+    int qc  = y / YEARS_PER_QUAD_CENTURY;
+    int yqc = y - qc * YEARS_PER_QUAD_CENTURY;
+    int c   = yqc/ YEARS_PER_CENTURY;
+    int yc  = yqc - c * YEARS_PER_CENTURY;
+    int q   = yc / YEARS_PER_QUAD_YEAR;
+    int yq  = yc - q * YEARS_PER_QUAD_YEAR;
+    int d   = day_of_year-1;
+    int days = (DAYS_PER_QUAD_CENTURY * qc) + (DAYS_PER_CENTURY * c) + (DAYS_PER_QUAD_YEAR * q) + DAYS_PER_YEAR*yq + d;
+
+    // get days between 1 and 1970
+    const int y1 = 1970-1;
+    const int qc1  = y1 / YEARS_PER_QUAD_CENTURY;
+    const int yqc1 = y1 - qc1 * YEARS_PER_QUAD_CENTURY;
+    const int c1   = yqc1/ YEARS_PER_CENTURY;
+    const int yc1  = yqc1 - c1 * YEARS_PER_CENTURY;
+    const int q1   = yc1 / YEARS_PER_QUAD_YEAR;
+    const int yq1  = yc1 - q1 * YEARS_PER_QUAD_YEAR;
+    const int days1 = (DAYS_PER_QUAD_CENTURY * qc1) + (DAYS_PER_CENTURY * c1) + (DAYS_PER_QUAD_YEAR * q1) + DAYS_PER_YEAR*yq1;
+
+    // return the difference
+    return days - days1;
+}
+
+
+inline void get_day_of_year_and_week( int year, int month, int day_of_month, int& day_of_year, int& day_of_week )
+{
+    day_of_year = day_of_year_from_date( year, month, day_of_month );
+
+    int day_of_epoch = days_since_epoch_from_year_and_day_of_year(year, day_of_year ); // 0 based
+
+    // 1 based. add large multiple of 7 to days_of_epoch to make it positive
+    // and add 4 since Jan 1 1970 was a Thursday.
+    day_of_week = ( ( (day_of_epoch + 52*1000*7 + 4) % 7 ) + 1 );
+}
+
+
+#define DATE_YEAR_BASE 1900
+
+#define DATE_BITS_PER_YEAR  11     // 1900 based (field == 0 is year 1000), range: 876-2923
+#define DATE_BITS_PER_MONTH  4     // 1 based
+#define DATE_BITS_PER_DAY    5     // 1 based
+#define DATE_BITS_PER_YDAY   9     // 1 based
+#define DATE_BITS_PER_WDAY   3     // 1 based
+
+#define DATE_SHIFT_YEAR   ( 32                - DATE_BITS_PER_YEAR  )  // 21
+#define DATE_SHIFT_MONTH  ( DATE_SHIFT_YEAR   - DATE_BITS_PER_MONTH )  // 17
+#define DATE_SHIFT_DAY    ( DATE_SHIFT_MONTH  - DATE_BITS_PER_DAY   )  // 12
+#define DATE_SHIFT_YDAY   ( DATE_SHIFT_DAY    - DATE_BITS_PER_YDAY  )  // 3
+#define DATE_SHIFT_WDAY   ( DATE_SHIFT_YDAY   - DATE_BITS_PER_WDAY  )  // 0
+
+inline int32_t create_date_from_fields( int year, int month, int day_of_month,
+                                        int day_of_year, int day_of_week )
+{
+    return ( ( year          << DATE_SHIFT_YEAR  ) +
+             ( month         << DATE_SHIFT_MONTH ) +
+             ( day_of_month  << DATE_SHIFT_DAY   ) +
+             ( day_of_year   << DATE_SHIFT_YDAY  ) +
+             ( day_of_week   << DATE_SHIFT_WDAY  ) );
+}
+
+
+inline bool process_date(int year, int month, int day_of_month, int32_t &date )
+{
+    // Check that it is within our range
+    if ( (year < 1000) || (year > 2900) )
+        return false;
+
+    // Check that the month is valid
+    if ( (month < 1) || (month > 12) )
+        return false;
+
+    // Check that the day is valid for the given month
+    int max_day = days_in_month(year, month);
+    if ( (day_of_month < 1) || (day_of_month > max_day) )
+        return false;
+
+    // Get the day of year and the day of week
+    int day_of_year;
+    int day_of_week;
+    get_day_of_year_and_week( year, month, day_of_month, day_of_year, day_of_week );
+
+    // Finally, encode the various fields into one integer
+    date = create_date_from_fields( year - DATE_YEAR_BASE, month, day_of_month,
+                                     day_of_year, day_of_week);
+    return true;
+}  // end process_date
+
+
+
+inline bool process_datetime( int year, int month, int day_of_month,
+                              int hour, int minute, int second, int msec,
+                              int64_t &datetime )
+{
+    // Check that it is within our range
+    if ( (year < 1000) || (year > 2900) )
+        return false;
+
+    // Check that the month is valid
+    if ( (month < 1) || (month > 12) )
+        return false;
+
+    // Check that the day is valid for the given month
+    int max_day = days_in_month(year, month);
+    if ( (day_of_month < 1) || (day_of_month > max_day) )
+        return false;
+
+    // Check that the hour is valid
+    if ( (hour < 0) || (hour > 23) )
+        return false;
+
+    // Check that the minute is valid
+    if ( (minute < 0) || (minute > 59) )
+        return false;
+
+    // Check that the second is valid
+    if ( (second < 0) || (second > 59) )
+        return false;
+
+    // Check that the millisecond is valid
+    if ( (msec < 0) || (msec > 999) )
+        return false;
+
+    // Get the day of year and the day of week
+    int day_of_year;
+    int day_of_week;
+    get_day_of_year_and_week( year, month, day_of_month, day_of_year, day_of_week );
+
+    // Finally, encode the various fields into one integer
+    datetime = create_timestamp_from_fields( year - DATE_YEAR_BASE, month, day_of_month,
+                                             hour, minute, second, msec,
+                                             day_of_year, day_of_week );
+    return true;
+}  // end process_datetime
+
+
+
+#define TIME_SHIFT_HOUR   26
+#define TIME_SHIFT_MINUTE 20
+#define TIME_SHIFT_SEC    14
+#define TIME_SHIFT_MSEC    4
+
+inline bool process_time(int hour, int minute, int second, int millisecond, int32_t &time )
+{
+    // Check that the hour is valid
+    if ( (hour < 0) || (hour > 23) )
+        return false;
+
+    // Check that the minute is valid
+    if ( (minute < 0) || (minute > 59) )
+        return false;
+
+    // Check that the second is valid
+    if ( (second < 0) || (second > 59) )
+        return false;
+
+    // Check that the millisecond is valid
+    if ( (millisecond < 0) || (millisecond > 999) )
+        return false;
+
+    // Finally, encode the various fields into one integer
+    time = ( ( ((uint32_t) hour)        << TIME_SHIFT_HOUR   ) +
+             ( ((uint32_t) minute)      << TIME_SHIFT_MINUTE ) +
+             ( ((uint32_t) second)      << TIME_SHIFT_SEC    ) +
+             ( ((uint32_t) millisecond) << TIME_SHIFT_MSEC   ) );
+
+    return true;
+}  // end process_time
+
+
+} // end namespace timestamp
+
+
+
+namespace charN
+{
+// --------------------------------------------------------------------------
+/// A big-endian 0-32 byte char* string stored as a 4 64-bit ints.
+/// All inlined since these may be used in loops.
+// --------------------------------------------------------------------------
+template<int N>     //N is the number of bytes (32,64,128,256)
+struct fixed_array_buf_t
+{
+    /// Convert from a little-endian string to a big-endian intXXX
+    inline fixed_array_buf_t(const std::string& s, bool reverse=false)
+    {
+        init(s.data(), s.size(), reverse);
+    }
+
+    inline void init(const char* s, size_t len, bool reverse=false)
+    {
+        uint64_t v[N] = {};
+
+        // Initialize to zero
+        for (int i = 0; i < N; ++i )
+            v[ i ] = 0;
+
+        const int num_longs = (N/8);
+        size_t offset = 0;
+        for (int i = 0; i < num_longs; ++i )
+        {
+            if (len > offset)
+            {
+                memcpy(&v[i], (s + offset), std::min( size_t(8),
+                                                      (len - offset) ) );
+            }
+            offset += 8;
+        }
+
+        if (reverse)
+        {
+            for (int i = 0; i < num_longs; ++i )
+                val[i] = htobe64( v[i] );
+        }
+        else
+        {
+            for (int i = 0; i < num_longs; ++i)
+                val[i] = htobe64( v[ num_longs-1-i ] );
+        }
+    }
+
+    union
+    {
+        uint64_t val[ N/8 ];
+        char     buf[ N ];
+    };
+};  // end struct fixed_array_buf_t
+
+
+// Templated on the number of bytes
+typedef fixed_array_buf_t<32>  Int256_buf;
+typedef fixed_array_buf_t<64>  Int512_buf;
+typedef fixed_array_buf_t<128> Int1024_buf;
+typedef fixed_array_buf_t<256> Int2048_buf;
+
+
+// Rename for convenience
+typedef Int256_buf   char32_buf_t;
+typedef Int512_buf   char64_buf_t;
+typedef Int1024_buf  char128_buf_t;
+typedef Int2048_buf  char256_buf_t;
+
+
+}  // end namespace charN
+
+// --------------------- END Various Convenient Functions for RecordKey ----------------------
+
+
+// --------------------- Internal Class RecordKey ----------------------
+
+enum ColumnTypeSize_T
+{
+    CHAR1     =   1,
+    CHAR2     =   2,
+    CHAR4     =   4,
+    CHAR8     =   8,
+    CHAR16    =  16,
+    CHAR32    =  32,
+    CHAR64    =  64,
+    CHAR128   = 128,
+    CHAR256   = 256,
+    DATE      =   4,
+    DATETIME  =   8,
+    DECIMAL   =   8,
+    DOUBLE    =   8,
+    FLOAT     =   4,
+    INT       =   4,
+    INT8      =   1,
+    INT16     =   2,
+    IPV4      =   4,
+    LONG      =   8,
+    STRING    =   8,
+    TIME      =   4,
+    TIMESTAMP =   8
+};
+
+#define GPUDB_HASH_SEED 10
+
+/*
+ * A key based on a given record that serves as either a primary key
+ * or a shard key.  The <see cref="RecordKeyBuilder"/> class creates
+ * these record keys.
+ */
+class RecordKey
+{
+public:
+
+    RecordKey();
+    RecordKey( size_t buffer_size );
+    RecordKey( const RecordKey &other );
+    ~RecordKey();
+
+    // Returns whether the key is valid at the moment
+    bool is_valid() const { return m_is_valid; }
+
+    // Return the key's hash code
+    int32_t get_hash_code() const { return m_hash_code; }
+
+    // Resets the key to be an empty one with the new buffer size
+    void reset( size_t buffer_size );
+
+
+    // Adds a char1 to the buffer
+    void add_char1( const std::string& value, bool is_null );
+
+    // Adds a char2 to the buffer
+    void add_char2( const std::string& value, bool is_null );
+
+    // Adds a char4 to the buffer
+    void add_char4( const std::string& value, bool is_null );
+
+    // Adds a char8 to the buffer
+    void add_char8( const std::string& value, bool is_null );
+
+    // Adds a char16 to the buffer
+    void add_char16( const std::string& value, bool is_null );
+
+    // Adds a char32 to the buffer
+    void add_char32( const std::string& value, bool is_null );
+
+    // Adds a char64 to the buffer
+    void add_char64( const std::string& value, bool is_null );
+
+    // Adds a char128 to the buffer
+    void add_char128( const std::string& value, bool is_null );
+
+    // Adds a char256 to the buffer
+    void add_char256( const std::string& value, bool is_null );
+
+    // Adds a date to the buffer
+    void add_date( const std::string& value, bool is_null );
+
+    // Adds a datetime to the buffer
+    void add_datetime( const std::string& value, bool is_null );
+
+    // Adds a decimal to the buffer
+    void add_decimal( const std::string& value, bool is_null );
+
+    // Adds a double to the buffer
+    void add_double( double value, bool is_null );
+
+    // Adds a float to the buffer
+    void add_float( float value, bool is_null );
+
+    // Adds an int8 to the buffer
+    void add_int8( int8_t value, bool is_null );
+
+    // Adds an int16 to the buffer
+    void add_int16( int16_t value, bool is_null );
+
+    // Adds an integer to the buffer
+    void add_int( int32_t value, bool is_null );
+
+    // Adds a IPv4 address to the buffer
+    void add_ipv4( const std::string& value, bool is_null );
+
+    // Adds a long to the buffer
+    void add_long( int64_t value, bool is_null );
+
+    // Adds a time to the buffer
+    void add_time( const std::string& value, bool is_null );
+
+    // Adds a timestamp (long) to the buffer
+    void add_timestamp( int64_t value, bool is_null );
+
+    // Adds (the hash value of) a string to the buffer
+    void add_string( const std::string& value, bool is_null );
+
+
+    /// Compute the hash of the key in the buffer
+    void compute_hash();
+
+    /// Given a routing table consisting of worker rank indices, choose a
+    /// worker rank based on the hash of the record key.
+    size_t route( const std::vector<int32_t>& routing_table ) const;
+
+    /// The assignment operator
+    RecordKey& operator=(const RecordKey& other);
+
+    /// Returns true if the other RecordKey is equivalent to this key
+    bool operator==(const RecordKey& rhs) const;
+    bool operator!=(const RecordKey& rhs) const {  return !(*this == rhs); }
+
+    /// Returns true if this RecordKey is less than the other key
+    bool operator<(const RecordKey& rhs) const;
+    bool operator>(const RecordKey& rhs) const {  return ( !(*this < rhs)
+                                                           && !(*this == rhs) ); }
+
+    std::string toString( const std::string& separator = " " ) const;
+private:
+
+    // Copy contents of another key into this one
+    void copy( const RecordKey& other );
+
+    // Returns whether the buffer is full or not
+    bool is_buffer_full( bool throw_if_full = true ) const;
+
+    // Check whether the buffer will overflow if we attempt to add n more bytes
+    bool will_buffer_overflow( int n, bool throw_if_overflow = true ) const;
+
+    // Adds a single byte to the buffer; does the accounting, too
+    void add( uint8_t b );
+
+    std::vector<unsigned char> m_buffer;
+    size_t  m_buffer_size;
+    size_t  m_current_size;
+    int32_t m_hash_code;
+    int64_t m_routing_hash;
+    bool    m_is_valid;
+    bool    m_key_is_complete;
+
+};  // end class RecordKey
+
+
+// Default constructor
+RecordKey::RecordKey()
+{
+    m_buffer_size  = 0;
+    m_current_size = 0;
+    m_hash_code    = 0;
+    m_routing_hash = 0;
+
+    m_is_valid        = false;
+    m_key_is_complete = false;
+}
+
 
 // Constructor
 RecordKey::RecordKey( size_t buffer_size )
 {
     if ( buffer_size < 1 )
-        throw GPUdbException( "Too small value for input parameter 'buffer_size': "
-                              + std::to_string( buffer_size ) + " (must be >= 1)" );
+    {
+        std::ostringstream ss;
+        ss << "Buffer size must be greater than or equal to 1; given: '"
+           << buffer_size << "'";
+        throw GPUdbException( ss.str() );
+    }
 
     // Allocate the buffer and initialize
-    m_buffer = new unsigned char[ buffer_size ];
-    memset( m_buffer, 0, buffer_size );
+    m_buffer.reserve( buffer_size );
+
+    m_buffer_size  = buffer_size;
+    m_current_size = 0;
+    m_hash_code    = 0;
+    m_routing_hash = 0;
+
+    m_is_valid        = true;
+    m_key_is_complete = false;
 }  // end RecordKey constructor
 
 
-// Destructor
-RecordKey::~RecordKey()
+// Copy constructor
+RecordKey::RecordKey( const RecordKey &other )
 {
-    delete [] m_buffer;
+    this->copy( other );
+}  // end RecordKey copy constructor
+
+
+// Assignment operator
+RecordKey& RecordKey::operator=(const RecordKey& other)
+{
+    this->copy( other );
+    return *this;
+}  // end assignment operator
+
+
+// Copy contents of another key into this one
+void RecordKey::copy(const RecordKey& other)
+{
+    // Protect against invalid self-assignment
+    if ( this != &other )
+    {
+        // Set this key with the other key's buffer size
+        this->reset( other.m_buffer_size );
+
+        // Copy the content of the buffer (already allocated by
+        // reset()
+        m_buffer.insert( m_buffer.begin(),
+                         other.m_buffer.begin(), other.m_buffer.end() );
+
+        // Copy over the other variables
+        m_current_size    = other.m_current_size;
+        m_hash_code       = other.m_hash_code;
+        m_routing_hash    = other.m_routing_hash;
+        m_is_valid        = other.m_is_valid;
+        m_key_is_complete = other.m_key_is_complete;
+    }
+}  // end copy()
+
+
+// Destructor
+RecordKey::~RecordKey() {}
+
+
+/*
+ * Converts the internal byte buffer to string for printing purposes.
+ */
+std::string RecordKey::toString( const std::string& separator ) const
+{
+    std::ostringstream ss;
+    for (size_t n = 0; n < m_buffer_size; ++n)
+    {
+        if (n > 0) ss << separator;
+        ss << m_buffer[ n ];
+    }
+
+    return ss.str();
+}  // end toString
+
+
+/*
+ *  Resets the key to be an empty one with the new buffer size
+ *
+ * <param name="buffer_size">The new size for the key buffer</param>
+ */
+void RecordKey::reset( size_t buffer_size )
+{
+    if ( buffer_size < 1 )
+    {
+        std::ostringstream ss;
+        ss << "Buffer size must be greater than or equal to 1; given: '"
+           << buffer_size << "'";
+        throw GPUdbException( ss.str() );
+    }
+
+    m_buffer_size  = buffer_size;
+    m_current_size = 0;
+    m_hash_code    = 0;
+    m_routing_hash = 0;
+
+    m_is_valid        = true;
+    m_key_is_complete = false;
+
+    // Delete old buffer content, and allocate enough for the new key
+    m_buffer.clear();
+    m_buffer.reserve( m_buffer_size );
+}  // end reset
+
+
+
+bool RecordKey::is_buffer_full( bool throw_if_full ) const
+{
+    if ( m_current_size >= m_buffer_size ) // should never be greater, but staying on the safe side
+    {
+        if ( throw_if_full )
+            throw GPUdbException( "The buffer is already full!" );
+        return true; // yes, the buffer is full, and we haven't thrown
+    }
+
+    return false; // buffer is NOT full
+}  // end is_buffer_full
+
+
+bool RecordKey::will_buffer_overflow( int n, bool throw_if_overflow ) const
+{
+    if ( (m_current_size + n) > m_buffer_size )
+    {
+        if ( throw_if_overflow )
+        {
+            std::ostringstream ss;
+            ss << "The buffer (of size " << m_buffer_size << ") does not "
+               << "have sufficient room in it to put " << n << " more "
+               << "byte(s) (current size is " << m_current_size << ")";
+            throw GPUdbException( ss.str() );
+        }
+        return true; // yes, the buffer WILL overflow, and we haven't thrown
+    }
+    return false; // buffer will NOT overflow
+} // end will_buffer_overflow
+
+
+/*
+ * Adds a byte to the byte buffer and increments the current size
+ * by one.  Use ONLY this method to add to the buffer; do not add
+ * to buffer in other methods directly.  Note that this function does
+ * not check if the buffer will overflow or is already full.  The caller
+ * must take care of that.
+ *
+ * <param name="b">The byte to be added to the buffer.</param>
+ */
+void RecordKey::add( uint8_t b )
+{
+    // Let's not forget to increment the size!
+    m_buffer[ m_current_size++ ] = b;
 }
 
 
-// void RecordKey::add_double( double value )
-// {
-//     return;
-// } // end RecordKey::add_double
+/*
+ * Adds a char1 to the buffer.
+ *
+ * <param name="value">The char1 to be added.</param>
+ * <param name="is_null">Indicates that a null value is to be added.</param>
+ */
+void RecordKey::add_char1( const std::string &value, bool is_null )
+{
+    // Check if the given number of characters will fit in the buffer
+    this->will_buffer_overflow( ColumnTypeSize_T::CHAR1 );
 
-// --------------------- END Implementation of Class RecordKey ----------------------
+    // Handle nulls
+    if ( is_null )
+    {   // Add one zero for the null value
+        this->add( 0 ); // the only 0
+        return;
+    }
+
+    // Process the data
+    uint8_t char1_val = 0;
+    memcpy(&char1_val, &value[0], std::min( (size_t)ColumnTypeSize_T::CHAR1, value.size() ) );
+
+    // Copy the bytes of the char1 to the buffer
+    memcpy( &m_buffer[0] + m_current_size, &char1_val, ColumnTypeSize_T::CHAR1 );
+    m_current_size += ColumnTypeSize_T::CHAR1;
+} // end RecordKey::add_char1
+
+
+
+/*
+ * Adds a char2 to the buffer.
+ *
+ * <param name="value">The char2 to be added.</param>
+ * <param name="is_null">Indicates that a null value is to be added.</param>
+ */
+void RecordKey::add_char2( const std::string &value, bool is_null )
+{
+    // Check if the given number of characters will fit in the buffer
+    this->will_buffer_overflow( ColumnTypeSize_T::CHAR2 );
+
+    // Handle nulls
+    if ( is_null )
+    {   // Add two zeroes for the null value
+        this->add( 0 ); // 1st 0
+        this->add( 0 ); // 2nd 0
+        return;
+    }
+
+    // Process the data
+    uint16_t char2_val_tmp = 0;
+    uint16_t char2_val     = 0;
+    memcpy(&char2_val_tmp, &value[0], std::min( (size_t)ColumnTypeSize_T::CHAR2, value.size() ) );
+    char2_val = htobe16( char2_val_tmp );
+
+    // Copy the bytes of the char2 to the buffer
+    memcpy( &m_buffer[0] + m_current_size, &char2_val, ColumnTypeSize_T::CHAR2 );
+    m_current_size += ColumnTypeSize_T::CHAR2;
+
+} // end RecordKey::add_char2
+
+
+/*
+ * Adds a char4 to the buffer.
+ *
+ * <param name="value">The char4 to be added.</param>
+ * <param name="is_null">Indicates that a null value is to be added.</param>
+ */
+void RecordKey::add_char4( const std::string &value, bool is_null )
+{
+    // Check if the given number of characters will fit in the buffer
+    this->will_buffer_overflow( ColumnTypeSize_T::CHAR4 );
+
+    // Handle nulls
+    if ( is_null )
+    {   // Add four zeroes for the null value
+        this->add( 0 ); // 1st 0
+        this->add( 0 ); // 2nd 0
+        this->add( 0 ); // 3rd 0
+        this->add( 0 ); // 4th 0
+        return;
+    }
+
+    // Process the data
+    uint32_t char4_val_tmp = 0;
+    uint32_t char4_val     = 0;
+    memcpy(&char4_val_tmp, &value[0], std::min( (size_t)ColumnTypeSize_T::CHAR4, value.size() ) );
+    char4_val = htobe32( char4_val_tmp );
+
+    // Copy the bytes of the char4 to the buffer
+    memcpy( &m_buffer[0] + m_current_size, &char4_val, ColumnTypeSize_T::CHAR4 );
+    m_current_size += ColumnTypeSize_T::CHAR4;
+
+} // end RecordKey::add_char4
 
 
 
 
-// --------------------- Implementation of Class WorkerQueue ----------------------
+/*
+ * Adds a char8 to the buffer.
+ *
+ * <param name="value">The char8 to be added.</param>
+ * <param name="is_null">Indicates that a null value is to be added.</param>
+ */
+void RecordKey::add_char8( const std::string &value, bool is_null )
+{
+    // Check if the given number of characters will fit in the buffer
+    this->will_buffer_overflow( ColumnTypeSize_T::CHAR8 );
 
-template<typename T>
-WorkerQueue<T>::WorkerQueue( std::string url, size_t capacity,
-                             bool has_primary_key,
-                             bool update_on_existing_pk )
-    : m_url( url ),
+    // Handle nulls
+    if ( is_null )
+    {   // Add eight zeroes for the null value
+        this->add( 0 ); // 1st 0
+        this->add( 0 ); // 2nd 0
+        this->add( 0 ); // 3rd 0
+        this->add( 0 ); // 4th 0
+        this->add( 0 ); // 5th 0
+        this->add( 0 ); // 6th 0
+        this->add( 0 ); // 7th 0
+        this->add( 0 ); // 8th 0
+        return;
+    }
+
+    // Process the data
+    uint64_t char8_val_tmp = 0;
+    uint64_t char8_val     = 0;
+    memcpy(&char8_val_tmp, &value[0], std::min( (size_t)ColumnTypeSize_T::CHAR8, value.size() ) );
+    char8_val = htobe64( char8_val_tmp );
+
+    // Copy the bytes of the char8 to the buffer
+    memcpy( &m_buffer[0] + m_current_size, &char8_val, ColumnTypeSize_T::CHAR8 );
+    m_current_size += ColumnTypeSize_T::CHAR8;
+
+} // end RecordKey::add_char8
+
+
+
+/*
+ * Adds a char16 to the buffer.
+ *
+ * <param name="value">The char16 to be added.</param>
+ * <param name="is_null">Indicates that a null value is to be added.</param>
+ */
+void RecordKey::add_char16( const std::string &value, bool is_null )
+{
+    // Check if the given number of characters will fit in the buffer
+    this->will_buffer_overflow( ColumnTypeSize_T::CHAR16 );
+
+    // Handle nulls
+    if ( is_null )
+    {   // Add 16 zeroes for the null value
+        for ( size_t i = 0; i < ColumnTypeSize_T::CHAR16; ++i )
+        {
+            this->add( 0 );
+        }
+        return;
+    }
+
+    // Process the data
+    size_t half_size = (size_t)ColumnTypeSize_T::CHAR8;
+    uint64_t char16_val_tmp[2] = {0, 0};  // low and high values
+    uint64_t char16_val[2] = {0, 0};
+    // First the low value
+    memcpy(&char16_val_tmp[0], &value[0], std::min( half_size, value.size() ) );
+    // Then the high value, if needed
+    if ( value.size() > half_size )
+        memcpy(&char16_val_tmp[1], &value[half_size], std::min( half_size,
+                                                        ( value.size() - half_size ) ) );
+    // Flip the endianness
+    char16_val[0] = htobe64( char16_val_tmp[1] );  // high -> low
+    char16_val[1] = htobe64( char16_val_tmp[0] );  // low  -> high
+
+    // Copy the bytes of the char16 to the buffer
+    memcpy( &m_buffer[0] + m_current_size, &char16_val, ColumnTypeSize_T::CHAR16 );
+    m_current_size += ColumnTypeSize_T::CHAR16;
+
+} // end RecordKey::add_char16
+
+
+
+/*
+ * Adds a char32 to the buffer.
+ *
+ * <param name="value">The char32 to be added.</param>
+ * <param name="is_null">Indicates that a null value is to be added.</param>
+ */
+void RecordKey::add_char32( const std::string &value, bool is_null )
+{
+    // Check if the given number of characters will fit in the buffer
+    this->will_buffer_overflow( ColumnTypeSize_T::CHAR32 );
+
+    // Handle nulls
+    if ( is_null )
+    {   // Add 32 zeroes for the null value
+        for ( size_t i = 0; i < ColumnTypeSize_T::CHAR32; ++i )
+        {
+            this->add( 0 );
+        }
+        return;
+    }
+
+    // Process the data
+    charN::char32_buf_t char32_val( value );
+
+    // Copy the bytes of the char32 to the buffer (four bytes at a time)
+    memcpy( &m_buffer[0] + m_current_size, &char32_val.buf, ColumnTypeSize_T::CHAR32 );
+    m_current_size += ColumnTypeSize_T::CHAR32;
+
+} // end RecordKey::add_char32
+
+
+
+/*
+ * Adds a char64 to the buffer.
+ *
+ * <param name="value">The char64 to be added.</param>
+ * <param name="is_null">Indicates that a null value is to be added.</param>
+ */
+void RecordKey::add_char64( const std::string &value, bool is_null )
+{
+    // Check if the given number of characters will fit in the buffer
+    this->will_buffer_overflow( ColumnTypeSize_T::CHAR64 );
+
+    // Handle nulls
+    if ( is_null )
+    {   // Add 64 zeroes for the null value
+        for ( size_t i = 0; i < ColumnTypeSize_T::CHAR64; ++i )
+        {
+            this->add( 0 );
+        }
+        return;
+    }
+
+    // Process the data
+    charN::char64_buf_t char64_val( value );
+
+    // Copy the bytes of the char64 to the buffer (four bytes at a time)
+    memcpy( &m_buffer[0] + m_current_size, &char64_val.buf, ColumnTypeSize_T::CHAR64 );
+    m_current_size += ColumnTypeSize_T::CHAR64;
+
+} // end RecordKey::add_char64
+
+
+
+/*
+ * Adds a char128 to the buffer.
+ *
+ * <param name="value">The char128 to be added.</param>
+ * <param name="is_null">Indicates that a null value is to be added.</param>
+ */
+void RecordKey::add_char128( const std::string &value, bool is_null )
+{
+    // Check if the given number of characters will fit in the buffer
+    this->will_buffer_overflow( ColumnTypeSize_T::CHAR128 );
+
+    // Handle nulls
+    if ( is_null )
+    {   // Add 128 zeroes for the null value
+        for ( size_t i = 0; i < ColumnTypeSize_T::CHAR128; ++i )
+        {
+            this->add( 0 );
+        }
+        return;
+    }
+
+    // Process the data
+    charN::char128_buf_t char128_val( value );
+
+    // Copy the bytes of the char128 to the buffer (four bytes at a time)
+    memcpy( &m_buffer[0] + m_current_size, &char128_val.buf, ColumnTypeSize_T::CHAR128 );
+    m_current_size += ColumnTypeSize_T::CHAR128;
+
+} // end RecordKey::add_char128
+
+
+
+/*
+ * Adds a char256 to the buffer.
+ *
+ * <param name="value">The char256 to be added.</param>
+ * <param name="is_null">Indicates that a null value is to be added.</param>
+ */
+void RecordKey::add_char256( const std::string &value, bool is_null )
+{
+    // Check if the given number of characters will fit in the buffer
+    this->will_buffer_overflow( ColumnTypeSize_T::CHAR256 );
+
+    // Handle nulls
+    if ( is_null )
+    {   // Add 256 zeroes for the null value
+        for ( size_t i = 0; i < ColumnTypeSize_T::CHAR256; ++i )
+        {
+            this->add( 0 );
+        }
+        return;
+    }
+
+    // Process the data
+    charN::char256_buf_t char256_val( value );
+
+    // Copy the bytes of the char256 to the buffer (four bytes at a time)
+    memcpy( &m_buffer[0] + m_current_size, &char256_val.buf, ColumnTypeSize_T::CHAR256 );
+    m_current_size += ColumnTypeSize_T::CHAR256;
+
+} // end RecordKey::add_char256
+
+
+
+// Needed for parsing date
+static boost::regex date_regex( "\\A\\s*(\\d{4})-(\\d{2})-(\\d{2})\\s*$" );
+
+/*
+ * Adds a string of the format "YYYY-MM-DD" to the buffer.  Internally, the
+ * date is stored as an integer.
+ *
+ * <param name="value">The date to be added.  Must be of the format
+ * "YYYY-MM-DD".</param>
+ * <param name="is_null">Indicates that a null value is to be added.</param>
+ */
+void RecordKey::add_date( const std::string &value, bool is_null )
+{
+    // Check if the given number of characters will fit in the buffer
+    this->will_buffer_overflow( ColumnTypeSize_T::DATE );
+
+    // Handle nulls
+    if ( is_null )
+    {   // Add a null int
+        this->add_int( 0, is_null );
+        return;
+    }
+
+    // Does the given value match our format of YYYY-MM-DD?
+    boost::cmatch matches;
+    if ( !boost::regex_match( value.c_str(), matches, date_regex ) )
+    {  // No match, so the key is invalid
+        this->add_int( 0, is_null );
+        m_is_valid = false;
+        return;
+    }
+
+    // Get the year, month and day out
+    int year  = boost::lexical_cast<int>( std::string( matches[1].first, matches[1].second ) );
+    int month = boost::lexical_cast<int>( std::string( matches[2].first, matches[2].second ) );
+    int day   = boost::lexical_cast<int>( std::string( matches[3].first, matches[3].second ) );
+
+    // Process the date
+    int32_t encoded_date_integer = 0;
+    bool encoding_success = timestamp::process_date( year, month, day, encoded_date_integer );
+    if ( !encoding_success )
+    {  // something went wrong in the encoding process
+        this->add_int( 0, is_null );
+        m_is_valid = false;
+        return;
+    }
+
+    this->add_int( encoded_date_integer, is_null );
+
+} // end RecordKey::add_date
+
+
+
+// Needed for parsing datetime
+// YYYY-MM-DD[ HH:MM:SS[.ffffff]]
+// Note - allow up to 6 decimal digits (but we ignore the last 3)
+static boost::regex datetime_regex( "\\A\\s*(\\d{4})-(\\d{2})-(\\d{2})(?:\\s+(\\d{1,2}):(\\d{2}):(\\d{2})(?:\\.(\\d{1,6}))?)?\\s*$" );
+
+/*
+ * Adds a string of the format "YYYY-MM-DD[ HH:MM:SS[.mmm]]" to the buffer.  Internally, the
+ * date is stored as an long.  For the optional milliseconds, allow up to six
+ * decimal digits, but we discard the last three.
+ *
+ * <param name="value">The datetime to be added.  Must be of the format
+ * "YYYY-MM-DD[ HH:MM:SS[.mmm]]".</param>
+ * <param name="is_null">Indicates that a null value is to be added.</param>
+ */
+void RecordKey::add_datetime( const std::string &value, bool is_null )
+{
+    // Check if the given number of characters will fit in the buffer
+    this->will_buffer_overflow( ColumnTypeSize_T::DATETIME );
+
+    // Handle nulls
+    if ( is_null )
+    {   // Add a null int
+        this->add_long( 0, is_null );
+        return;
+    }
+
+    // Does the given value match our format of "YYYY-MM-DD[ HH:MM:SS[.mmm]]"?
+    boost::cmatch matches;
+    if ( !boost::regex_match( value.c_str(), matches, datetime_regex ) )
+    {  // No match, so the key is invalid
+        this->add_long( 0, is_null );
+        m_is_valid = false;
+        return;
+    }
+
+    // The regex groups for specific parts
+    boost::csub_match year_group  = matches[ 1 ];
+    boost::csub_match month_group = matches[ 2 ];
+    boost::csub_match day_group   = matches[ 3 ];
+    boost::csub_match hour_group  = matches[ 4 ];
+    boost::csub_match min_group   = matches[ 5 ];
+    boost::csub_match sec_group   = matches[ 6 ];
+    boost::csub_match msec_group  = matches[ 7 ];
+
+    // Get the year, month, day, hour, minute, and second
+    int year, month, day;
+    int hour, min, sec;
+    hour = 0;
+    min  = 0;
+    sec  = 0;
+    year  = boost::lexical_cast<int>( std::string( year_group.first,  year_group.second  ) );
+    month = boost::lexical_cast<int>( std::string( month_group.first, month_group.second ) );
+    day   = boost::lexical_cast<int>( std::string( day_group.first,   day_group.second   ) );
+
+    if ( hour_group.matched )
+    {
+        hour  = boost::lexical_cast<int>( std::string( hour_group.first, hour_group.second ) );
+        min   = boost::lexical_cast<int>( std::string( min_group.first,  min_group.second  ) );
+        sec   = boost::lexical_cast<int>( std::string( sec_group.first,  sec_group.second  ) );
+    }
+
+    int msec = 0;
+
+    // The millisecond component is optional
+    if ( msec_group.matched )
+    {
+        msec = boost::lexical_cast<int>( std::string( msec_group.first, msec_group.second ) );
+
+        // Handle single and double digits for milliseconds
+        switch ( msec_group.length() )
+        {
+            case 1:
+                msec *= 100; break;
+            case 2:
+                msec *= 10; break;
+            // Skipping 3--nothing to do in that case
+            case 4:
+                msec /= 10; break;
+            case 5:
+                msec /= 100; break;
+            case 6:
+                msec /= 1000; break;
+        }  // end switch
+    }  // end if msec is given
+
+    // Process the date
+    int64_t encoded_datetime = 0;
+    bool encoding_success = timestamp::process_datetime( year, month, day,
+                                                         hour, min, sec, msec,
+                                                         encoded_datetime );
+    if ( !encoding_success )
+    {  // something went wrong in the encoding process
+        this->add_long( 0, is_null );
+        m_is_valid = false;
+        return;
+    }
+
+    this->add_long( encoded_datetime, is_null );
+    return;
+} // end RecordKey::add_datetime
+
+
+
+// Needed for parsing decimal values
+static boost::regex decimal_regex( "\\A\\s*(?<sign>[+-]?)((?<int>\\d+)(\\.(?<intfrac>\\d{0,4}))?|\\.(?<onlyfrac>\\d{1,4}))\\s*\\z" );
+
+/*
+ * Adds a decimal string to the buffer.  Internally, the
+ * date is stored as a long.
+ *
+ * <param name="value">The decimal value to be added.  Must have
+ * upto 19 digits of precision and four digits of scale format.</param>
+ * <param name="is_null">Indicates that a null value is to be added.</param>
+ */
+void RecordKey::add_decimal( const std::string &value, bool is_null )
+{
+    // Check if the given number of characters will fit in the buffer
+    this->will_buffer_overflow( ColumnTypeSize_T::DECIMAL );
+
+    // Handle nulls
+    if ( is_null )
+    {   // Add a null long
+        this->add_long( 0L, is_null );
+        return;
+    }
+
+    // Does the given value match decimal format?
+    boost::cmatch matches;
+    if ( !boost::regex_match( value.c_str(), matches, decimal_regex ) )
+    {  // No match, so the key is invalid
+        this->add_long( 0L, is_null );
+        m_is_valid = false;
+        return;
+    }
+
+    // Get the regex match groups
+    boost::csub_match sign_group               = matches[ 1 ];
+    boost::csub_match integral_group           = matches[ 3 ];
+    boost::csub_match frac_with_integral_group = matches[ 5 ];
+    boost::csub_match frac_only_group          = matches[ 6 ];
+
+    int64_t encoded_decimal_val = 0;
+
+    // Parse the string; first check to see if there's an integral part
+    if ( integral_group.matched )
+    {
+        // Get the integral part
+        encoded_decimal_val = boost::lexical_cast<int64_t>( std::string( integral_group.first, integral_group.second ) );
+
+        // Do we also have a fractional part?
+        if ( frac_with_integral_group.matched )
+        {   // yes!
+            // The fraction could be zero in length (i.e. the string ends with the decimal point)
+            if ( frac_with_integral_group.length() > 0 )
+            {
+                int64_t fraction = 0;
+                fraction = boost::lexical_cast<int64_t>( std::string( frac_with_integral_group.first,
+                                                                      frac_with_integral_group.second ) );
+
+                // We need to shift the integral part to the left appropriately
+                // before adding the fraction
+                int64_t integral_part = encoded_decimal_val * (int64_t) std::pow( 10, frac_with_integral_group.length() );
+                encoded_decimal_val   = (integral_part + fraction);
+            }
+        }  // end fraction given with integer
+
+        // Shift the integer to the left if the fraction is less than 10,000
+        switch ( frac_with_integral_group.length() )
+        {
+            case 0:
+                encoded_decimal_val *= 10000; break;
+            case 1:
+                encoded_decimal_val *= 1000; break;
+            case 2:
+                encoded_decimal_val *= 100; break;
+            case 3:
+                encoded_decimal_val *= 10; break;
+        }  // end switch
+    }
+    else if ( frac_only_group.matched ) // no integral part given; only fraction
+    {
+        encoded_decimal_val = boost::lexical_cast<int64_t>( std::string( frac_only_group.first,
+                                                                         frac_only_group.second ) );
+
+        // Adjust the value so that it is always four digits long
+        switch ( frac_only_group.length() )
+        {
+            case 1:
+                encoded_decimal_val *= 1000; break;
+            case 2:
+                encoded_decimal_val *= 100; break;
+            case 3:
+                encoded_decimal_val *= 10; break;
+        }
+    }
+    else // no match!
+    {  // something went wrong in the encoding process
+        this->add_long( 0L, is_null );
+        m_is_valid = false;
+        return;
+    }
+
+    // Now handle the sign, if any
+    if ( sign_group.matched )
+    {
+        // Needs action only if negative
+        if ( sign_group.compare( "-" ) == 0 )
+        {
+            encoded_decimal_val = (-1) * encoded_decimal_val;
+        }
+    }
+
+    this->add_long( encoded_decimal_val, is_null );
+    return;
+} // end RecordKey::add_decimal
+
+
+
+/*
+ * Adds a double to the buffer.
+ *
+ * <param name="value">The double to be added.</param>
+ * <param name="is_null">Indicates that a null value is to be added.</param>
+ */
+void RecordKey::add_double( double value, bool is_null )
+{
+    // Check if the given number of characters will fit in the buffer
+    this->will_buffer_overflow( ColumnTypeSize_T::DOUBLE );
+
+    // Handle nulls
+    if ( is_null )
+    {   // Add eight zeroes for the null value
+        this->add( 0 ); // 1st 0
+        this->add( 0 ); // 2nd 0
+        this->add( 0 ); // 3rd 0
+        this->add( 0 ); // 4th 0
+        this->add( 0 ); // 5th 0
+        this->add( 0 ); // 6th 0
+        this->add( 0 ); // 7th 0
+        this->add( 0 ); // 8th 0
+        return;
+    }
+
+    // Copy the bytes of the double to the buffer
+    memcpy( &m_buffer[0] + m_current_size, &value, ColumnTypeSize_T::DOUBLE );
+    m_current_size += ColumnTypeSize_T::DOUBLE;
+    return;
+} // end RecordKey::add_double
+
+
+/*
+ * Adds a float to the buffer.
+ *
+ * <param name="value">The float to be added.</param>
+ * <param name="is_null">Indicates that a null value is to be added.</param>
+ */
+void RecordKey::add_float( float value, bool is_null )
+{
+    // Check if the given number of characters will fit in the buffer
+    this->will_buffer_overflow( ColumnTypeSize_T::FLOAT );
+
+    // Handle nulls
+    if ( is_null )
+    {   // Add four zeroes for the null value
+        this->add( 0 ); // 1st 0
+        this->add( 0 ); // 2nd 0
+        this->add( 0 ); // 3rd 0
+        this->add( 0 ); // 4th 0
+        return;
+    }
+
+    // Copy the bytes of the float to the buffer
+    memcpy( &m_buffer[0] + m_current_size, &value, ColumnTypeSize_T::FLOAT );
+    m_current_size += ColumnTypeSize_T::FLOAT;
+    return;
+} // end RecordKey::add_float
+
+
+
+/*
+ * Adds an integer to the buffer.
+ *
+ * <param name="value">The integer to be added.</param>
+ * <param name="is_null">Indicates that a null value is to be added.</param>
+ */
+void RecordKey::add_int( int value, bool is_null )
+{
+    // Check if the given number of characters will fit in the buffer
+    this->will_buffer_overflow( ColumnTypeSize_T::INT );
+
+    // Handle nulls
+    if ( is_null )
+    {   // Add four zeroes for the null value
+        this->add( 0 ); // 1st 0
+        this->add( 0 ); // 2nd 0
+        this->add( 0 ); // 3rd 0
+        this->add( 0 ); // 4th 0
+        return;
+    }
+
+    // Copy the bytes of the integer to the buffer
+    memcpy( &m_buffer[0] + m_current_size, &value, ColumnTypeSize_T::INT );
+    m_current_size += ColumnTypeSize_T::INT;
+} // end RecordKey::add_int
+
+
+/*
+ * Adds an int8 to the buffer.
+ *
+ * <param name="value">The integer/byte to be added.</param>
+ * <param name="is_null">Indicates that a null value is to be added.</param>
+ */
+void RecordKey::add_int8( int8_t value, bool is_null )
+{
+    // Check if the given number of characters will fit in the buffer
+    this->will_buffer_overflow( ColumnTypeSize_T::INT8 );
+
+    // Handle nulls
+    if ( is_null )
+    {   // Add one zero for the null value
+        this->add( 0 ); // only 0
+        return;
+    }
+
+    // Copy the bytes of the int8 to the buffer
+    memcpy( &m_buffer[0] + m_current_size, &value, ColumnTypeSize_T::INT8 );
+    m_current_size += ColumnTypeSize_T::INT8;
+    return;
+} // end RecordKey::add_int8
+
+
+/*
+ * Adds an int16 to the buffer.
+ *
+ * <param name="value">The integer/short to be added.</param>
+ * <param name="is_null">Indicates that a null value is to be added.</param>
+ */
+void RecordKey::add_int16( int16_t value, bool is_null )
+{
+    // Check if the given number of characters will fit in the buffer
+    this->will_buffer_overflow( ColumnTypeSize_T::INT16 );
+
+    // Handle nulls
+    if ( is_null )
+    {   // Add two zeroes for the null value
+        this->add( 0 ); // 1st 0
+        this->add( 0 ); // 2nd 0
+        return;
+    }
+
+    // Copy the bytes of the int16 to the buffer
+    memcpy( &m_buffer[0] + m_current_size, &value, ColumnTypeSize_T::INT16 );
+    m_current_size += ColumnTypeSize_T::INT16;
+    return;
+} // end RecordKey::add_int16
+
+
+
+/*
+ * Adds a IPv4 address to the buffer.  Internally, the address is stored
+ * as an integer.
+ *
+ * <param name="value">The IPv4 address to be added.</param>
+ * <param name="is_null">Indicates that a null value is to be added.</param>
+ */
+void RecordKey::add_ipv4( const std::string& value, bool is_null )
+{
+    // Check if the given number of characters will fit in the buffer
+    this->will_buffer_overflow( ColumnTypeSize_T::IPV4 );
+
+    // Handle nulls
+    if ( is_null )
+    {   // Add four zeroes for the null value
+        this->add_int( 0, is_null );
+        return;
+    }
+
+    // Parse the string of the format "x.x.x.x" where each x is in [0, 255]
+    unsigned int c0, c1, c2, c3;
+    int sscanf_response = sscanf( value.c_str(), "%u.%u.%u.%u", &c0, &c1, &c2, &c3 );
+
+    // Could not parse it as an IPv4 address
+    if (sscanf_response != 4)
+    {
+        this->add_int( 0, is_null );
+        m_is_valid = false;
+        return;
+    }
+
+    // Check that each x is within [0, 255]
+    if ( (c0 > 255) || (c1 > 255) || (c2 > 255) || (c3 > 255) )
+    {
+        this->add_int( 0, is_null );
+        m_is_valid = false;
+        return;
+    }
+
+    // Deduce the integer representing the IPv4 address
+    int32_t ipv4_integer = ( (c0 << 24) | (c1 << 16) | (c2 << 8) | c3);
+    this->add_int( ipv4_integer, is_null );
+    return;
+} // end RecordKey::add_ipv4
+
+
+
+/*
+ * Adds a long to the buffer.
+ *
+ * <param name="value">The long to be added.</param>
+ * <param name="is_null">Indicates that a null value is to be added.</param>
+ */
+void RecordKey::add_long( int64_t value, bool is_null )
+{
+    // Check if the given number of characters will fit in the buffer
+    this->will_buffer_overflow( ColumnTypeSize_T::LONG );
+
+    // Handle nulls
+    if ( is_null )
+    {   // Add eight zeroes for the null value
+        this->add( 0 ); // 1st 0
+        this->add( 0 ); // 2nd 0
+        this->add( 0 ); // 3rd 0
+        this->add( 0 ); // 4th 0
+        this->add( 0 ); // 5th 0
+        this->add( 0 ); // 6th 0
+        this->add( 0 ); // 7th 0
+        this->add( 0 ); // 8th 0
+        return;
+    }
+
+    // Copy the bytes of the long to the buffer
+    memcpy( &m_buffer[0] + m_current_size, &value, ColumnTypeSize_T::LONG );
+    m_current_size += ColumnTypeSize_T::LONG;
+    return;
+} // end RecordKey::add_long
+
+
+
+/*
+ * Adds a string to the buffer.
+ *
+ * <param name="value">The string to be added.</param>
+ * <param name="is_null">Indicates that a null value is to be added.</param>
+ */
+void RecordKey::add_string( const std::string &value, bool is_null )
+{
+    // Check if the given number of characters will fit in the buffer
+    this->will_buffer_overflow( ColumnTypeSize_T::STRING );
+
+    // Handle nulls
+    if ( is_null )
+    {   // Add eight zeroes for the null value
+        this->add( 0 ); // 1st 0
+        this->add( 0 ); // 2nd 0
+        this->add( 0 ); // 3rd 0
+        this->add( 0 ); // 4th 0
+        this->add( 0 ); // 5th 0
+        this->add( 0 ); // 6th 0
+        this->add( 0 ); // 7th 0
+        this->add( 0 ); // 8th 0
+        return;
+    }
+
+    // Get the murmur hash of the string
+    uint64_t murmur[2] = {0, 0};
+    MurmurHash3_x64_128( value.c_str(), value.size(), GPUDB_HASH_SEED, murmur);
+
+    // Copy the bytes of the string to the buffer
+    memcpy( &m_buffer[0] + m_current_size, &murmur, ColumnTypeSize_T::STRING );
+    m_current_size += ColumnTypeSize_T::STRING;
+    return;
+} // end RecordKey::add_string
+
+
+
+// Needed for parsing time
+// Handle with and without milliseconds, with and without leading '0'
+// Possible formats:
+// '02:10:10.123' length: 12
+// '2:10:10.123'  length: 11
+// '2:10:10.1'    length:  9
+// '02:10:10'     length:  8
+// '2:10:10'      length:  7
+static boost::regex time_regex( "\\A\\s*(\\d{1,2}):(\\d{2}):(\\d{2})(\\.(\\d{1,3}))?\\s*$" );
+
+/*
+ * Adds a string of the format "HH:MM:SS[.mmm]" (where the milliseconds are
+ * optional) to the buffer.  Internally, the time is stored as an integer.
+ *
+ * <param name="value">The time to be added.  Must be of the format
+ * "HH:MM:SS[.mmm]".</param>
+ * <param name="is_null">Indicates that a null value is to be added.</param>
+ */
+void RecordKey::add_time( const std::string &value, bool is_null )
+{
+    // Check if the given number of characters will fit in the buffer
+    this->will_buffer_overflow( ColumnTypeSize_T::TIME );
+
+    // Handle nulls
+    if ( is_null )
+    {   // Add a null int
+        this->add_int( 0, is_null );
+        return;
+    }
+
+    // Does the given value match our format of YYYY-MM-DD?
+    boost::cmatch matches;
+    if ( !boost::regex_match( value.c_str(), matches, time_regex ) )
+    {  // No match, so the key is invalid
+        this->add_int( 0, is_null );
+        m_is_valid = false;
+        return;
+    }
+
+    // Regex groups for specific parts
+    boost::csub_match hr_group  = matches[ 1 ];
+    boost::csub_match min_group = matches[ 2 ];
+    boost::csub_match sec_group = matches[ 3 ];
+    boost::csub_match ms_group  = matches[ 5 ];
+
+    // Get the year, month and time out
+    int hour   = boost::lexical_cast<int>( std::string( hr_group.first,  hr_group.second  ) );
+    int minute = boost::lexical_cast<int>( std::string( min_group.first, min_group.second ) );
+    int second = boost::lexical_cast<int>( std::string( sec_group.first, sec_group.second ) );
+    int millisecond = 0;
+
+    // The millisecond component is optional
+    if ( ms_group.matched )
+        millisecond = boost::lexical_cast<int>( std::string( ms_group.first, ms_group.second ) );
+
+    // Handle single and double digits for milliseconds
+    switch ( ms_group.length() )
+    {
+        case 1:
+            millisecond *= 100; break;
+        case 2:
+            millisecond *= 10; break;
+    }
+
+    // Process the time
+    int32_t encoded_time_integer = 0;
+    bool encoding_success = timestamp::process_time( hour, minute, second, millisecond, encoded_time_integer );
+    if ( !encoding_success )
+    {  // something went wrong in the encoding process
+        this->add_int( 0, is_null );
+        m_is_valid = false;
+        return;
+    }
+
+    this->add_int( encoded_time_integer, is_null );
+    return;
+} // end RecordKey::add_time
+
+
+
+/*
+ * Adds a timestamp (long) to the buffer.
+ *
+ * <param name="value">The timestamp to be added.</param>
+ * <param name="is_null">Indicates that a null value is to be added.</param>
+ */
+void RecordKey::add_timestamp( int64_t value, bool is_null )
+{
+    // Check if the given number of characters will fit in the buffer
+    this->will_buffer_overflow( ColumnTypeSize_T::TIMESTAMP );
+
+    // Handle nulls
+    if ( is_null )
+    {   // Add eight zeroes for the null value
+        this->add( 0 ); // 1st 0
+        this->add( 0 ); // 2nd 0
+        this->add( 0 ); // 3rd 0
+        this->add( 0 ); // 4th 0
+        this->add( 0 ); // 5th 0
+        this->add( 0 ); // 6th 0
+        this->add( 0 ); // 7th 0
+        this->add( 0 ); // 8th 0
+        return;
+    }
+
+    // Encode the timestamp properly
+    int64_t timestamp = timestamp::create_timestamp_from_epoch_ms( value );
+
+    // Copy the bytes of the timestamp to the buffer
+    memcpy( &m_buffer[0] + m_current_size, &timestamp, ColumnTypeSize_T::TIMESTAMP );
+    m_current_size += ColumnTypeSize_T::TIMESTAMP;
+    return;
+} // end RecordKey::add_timestamp
+
+
+/*
+ * Compute the hash of the key in the buffer.  Use the Murmurhash3
+ * algorithm to compute the hash.  If not all of the values have been
+ * added to the key (i.e. if the buffer is not full), then throw an
+ * exception.
+ */
+void RecordKey::compute_hash()
+{
+    // Check all the values for the key have been added
+//    if ( m_buffer.size() != m_buffer_size )
+    if ( m_current_size != m_buffer_size )
+    {
+        std::ostringstream ss;
+        ss << "The RecordKey buffer is not full; check that all the relevant values have been added (buffer size "
+           << m_buffer_size << ", current buffer size " << m_current_size;
+        throw GPUdbException( ss.str() );
+    }
+
+    // Check that it's not a zero-sized key
+    if ( m_buffer_size == 0 )
+        throw GPUdbException( "The RecordKey has zero buffer size; cannot compute any hash.  Reset size and add values." );
+
+    // Hash the value
+    int64_t murmur[2] = {0, 0};
+
+    // run the hash function
+    MurmurHash3_x64_128( &m_buffer[0], m_buffer_size, GPUDB_HASH_SEED, murmur);
+
+    // unpack
+    m_routing_hash = murmur[0];
+
+    // Calculate the 32-bit hash code
+    m_hash_code = (int32_t) ( m_routing_hash ^ ((m_routing_hash >> 32) & 0x0000ffffL) );
+
+    // Flag indicating that now the key is complete and ready to be used
+    m_key_is_complete = true;
+}  // end compute_hash
+
+
+
+/*
+ * Given a routing table consisting of worker rank indices, choose a
+ * worker rank based on the hash of the record key.
+ *
+ * <param name="routing_table">A list of integers which represent worker ranks.</param>
+ *
+ * <returns>The appropriate entry from <paramref name="routingTable"/>.</returns>
+ */
+size_t RecordKey::route( const std::vector<int32_t>& routing_table ) const
+{
+    if ( !m_key_is_complete )
+        throw GPUdbException( "Can't route using the RecordKey since it is not ready to be used; check that all the relevant values have been added." );
+
+    // Return 1 less than the value of the nth element of routingTable where
+    //    n == (record key hash) % (number of elements in routingTable)
+    // (because the 1st worker rank is the 0th element in the worker list)
+    int32_t destination_rank = routing_table[ std::abs( m_routing_hash % (int)routing_table.size() ) ];
+    return (size_t)(destination_rank - 1);
+}  // end route
+
+
+// Returns true if the other RecordKey is equivalent to this key
+// (if the routing hashes are the same)
+bool RecordKey::operator==(const RecordKey& rhs) const
+{
+    return ( m_routing_hash == rhs.m_routing_hash );
+}  // end ==
+
+
+// Returns true if this RecordKey is less than the other key
+// (if the routing hash of this one is less than that of the other)
+bool RecordKey::operator<(const RecordKey& rhs) const
+{
+    return ( m_routing_hash < rhs.m_routing_hash );
+}  // end <
+
+
+
+// --------------------- END Class RecordKey ----------------------
+
+
+
+
+
+
+// --------------------- Internal Class RecordKeyBuilder ----------------------
+class RecordKeyBuilder
+{
+private:
+
+    enum ColumnType_T
+    {
+        CHAR1,
+        CHAR2,
+        CHAR4,
+        CHAR8,
+        CHAR16,
+        CHAR32,
+        CHAR64,
+        CHAR128,
+        CHAR256,
+        DATE,
+        DATETIME,
+        DECIMAL,
+        DOUBLE,
+        FLOAT,
+        INT,
+        INT8,
+        INT16,
+        IPV4,
+        LONG,
+        STRING,
+        TIME,
+        TIMESTAMP
+    };
+
+    // Some typedefs for nullable types
+    typedef boost::optional<int32_t> nullableInt;
+
+    gpudb::Type                m_record_type;
+    std::vector<int32_t>       m_pk_shard_key_indices;
+    std::vector<ColumnType_T>  m_column_types;
+    size_t                     m_key_buffer_size;
+
+    RecordKeyBuilder() : m_record_type( gpudb::Type( "empty_type" ) ) {}
+
+public:
+
+    // Constructs a RecordKey builder
+    RecordKeyBuilder( bool is_primary_key, const gpudb::Type& record_type );
+
+    bool build( const gpudb::GenericRecord& record, RecordKey& record_key ) const;
+
+    // Returns whether this builder builds any routing keys. That is,
+    // if there are any routing columns in the relevant record type
+    bool has_key() const { return !m_pk_shard_key_indices.empty(); }
+
+    // Returns true if the other RecordKeyBuilder is equivalent to this builder
+    bool operator==(const RecordKeyBuilder& rhs) const;
+
+    bool operator!=(const RecordKeyBuilder& rhs) const {  return !(*this == rhs); }
+};  // end class RecordKeyBuilder
+
+
+/*
+ * Constructor.
+ * <param name="is_primary_key">Indicates whether the RecordKey to be built
+ * is a primary key or not.</param>
+ * <param name="record_type">The type of the record that this builder is for.</param>
+ */
+RecordKeyBuilder::RecordKeyBuilder( bool is_primary_key, const gpudb::Type& record_type ) :
+    m_record_type( record_type )
+{
+    m_key_buffer_size = 0;
+
+    // We need to deduce if it's a "track" type:
+    // does it have x, y, timestamp, and track ID.
+    // If it is, the track ID column will be a routing column
+    bool has_x = false;
+    bool has_y = false;
+    bool has_timestamp = false;
+    int track_id_column_idx = -1; // not found yet
+
+    const std::vector<gpudb::Type::Column> columns = record_type.getColumns();
+    for ( size_t i = 0; i < columns.size(); ++i )
+    {
+        // Get the column
+        gpudb::Type::Column column = columns[ i ];
+
+        // Check if it is one of: x, y, timestamp, track ID
+        std::string column_name = column.getName();
+
+        if ( column_name.compare( "x" ) == 0 )
+            has_x = true;
+
+        if ( column_name.compare( "y" ) == 0 )
+            has_y = true;
+
+        if ( column_name.compare( "TIMESTAMP" ) == 0 )
+            has_timestamp = true;
+
+        if ( column_name.compare( "TRACKID" ) == 0 )
+            track_id_column_idx = i;
+
+        // Check if this column has been declared as a primary/shard key
+        // And if so, and if appropriate, add it to the routing key column list
+        if ( is_primary_key && column.hasProperty( gpudb::ColumnProperty::PRIMARY_KEY ) )
+        {
+            m_pk_shard_key_indices.push_back( i );
+        }
+        else if ( !is_primary_key && column.hasProperty( gpudb::ColumnProperty::SHARD_KEY ) )
+        {
+            m_pk_shard_key_indices.push_back( i );
+        }
+    }  // end loop
+
+    // Check if this is a track-type table; if so, add the track ID column's index to the list
+    if ( !is_primary_key && has_timestamp && has_x && has_y
+         && (track_id_column_idx != -1) )
+    {
+        if ( m_pk_shard_key_indices.size() == 0)
+        {
+            m_pk_shard_key_indices.push_back( track_id_column_idx );
+        }
+        else if ( (m_pk_shard_key_indices.size() != 1)
+                  || (m_pk_shard_key_indices[0] != track_id_column_idx) )
+            throw GPUdbException( "Cannot have a shard key other than 'TRACKID' for track tables." );
+    } // end processing track types
+
+    // For each index of routing columns, save the column type, and increase
+    // the buffer size appropriately
+    for (size_t i = 0; i < m_pk_shard_key_indices.size(); ++i)
+    {
+        // Get the column info
+        gpudb::Type::Column column = columns[ m_pk_shard_key_indices[ i ] ];
+
+        switch( column.getType() )
+        {
+            case gpudb::Type::Column::ColumnType::DOUBLE:
+            {
+                m_column_types.push_back( ColumnType_T::DOUBLE );
+                m_key_buffer_size += ColumnTypeSize_T::DOUBLE;
+                break;
+            }
+
+            case gpudb::Type::Column::ColumnType::FLOAT:
+            {
+                m_column_types.push_back( ColumnType_T::FLOAT );
+                m_key_buffer_size += ColumnTypeSize_T::FLOAT;
+                break;
+            }
+
+            case gpudb::Type::Column::ColumnType::INT:
+            {   // Int can be a regular integer or int8 or int16
+                if ( column.hasProperty( gpudb::ColumnProperty::INT8 ) )
+                {
+                    m_column_types.push_back( ColumnType_T::INT8 );
+                    m_key_buffer_size += ColumnTypeSize_T::INT8;
+                }
+                else if ( column.hasProperty( gpudb::ColumnProperty::INT16 ) )
+                {
+                    m_column_types.push_back( ColumnType_T::INT16 );
+                    m_key_buffer_size += ColumnTypeSize_T::INT16;
+                }
+                else // a regular integer
+                {
+                    m_column_types.push_back( ColumnType_T::INT );
+                    m_key_buffer_size += ColumnTypeSize_T::INT;
+                }
+                break;
+            }  // end case int
+
+            case gpudb::Type::Column::ColumnType::LONG:
+            {   // Long can be either a regular long or a timestamp
+                if ( column.hasProperty( gpudb::ColumnProperty::TIMESTAMP ) )
+                {
+                    m_column_types.push_back( ColumnType_T::TIMESTAMP );
+                    m_key_buffer_size += ColumnTypeSize_T::TIMESTAMP;
+                }
+                else  // regular long
+                {
+                    m_column_types.push_back( ColumnType_T::LONG );
+                    m_key_buffer_size += ColumnTypeSize_T::LONG;
+                }
+                break;
+            }  // end case long
+
+            case gpudb::Type::Column::ColumnType::STRING:
+            {   // Strings can have a plethora of (mutually exclusive) properties
+                if ( column.hasProperty( gpudb::ColumnProperty::CHAR1 ) )
+                {
+                    m_column_types.push_back( ColumnType_T::CHAR1 );
+                    m_key_buffer_size += ColumnTypeSize_T::CHAR1;
+                }
+                else if ( column.hasProperty( gpudb::ColumnProperty::CHAR2 ) )
+                {
+                    m_column_types.push_back( ColumnType_T::CHAR2 );
+                    m_key_buffer_size += ColumnTypeSize_T::CHAR2;
+                }
+                else if ( column.hasProperty( gpudb::ColumnProperty::CHAR4 ) )
+                {
+                    m_column_types.push_back( ColumnType_T::CHAR4 );
+                    m_key_buffer_size += ColumnTypeSize_T::CHAR4;
+                }
+                else if ( column.hasProperty( gpudb::ColumnProperty::CHAR8 ) )
+                {
+                    m_column_types.push_back( ColumnType_T::CHAR8 );
+                    m_key_buffer_size += ColumnTypeSize_T::CHAR8;
+                }
+                else if ( column.hasProperty( gpudb::ColumnProperty::CHAR16 ) )
+                {
+                    m_column_types.push_back( ColumnType_T::CHAR16 );
+                    m_key_buffer_size += ColumnTypeSize_T::CHAR16;
+                }
+                else if ( column.hasProperty( gpudb::ColumnProperty::CHAR32 ) )
+                {
+                    m_column_types.push_back( ColumnType_T::CHAR32 );
+                    m_key_buffer_size += ColumnTypeSize_T::CHAR32;
+                }
+                else if ( column.hasProperty( gpudb::ColumnProperty::CHAR64 ) )
+                {
+                    m_column_types.push_back( ColumnType_T::CHAR64 );
+                    m_key_buffer_size += ColumnTypeSize_T::CHAR64;
+                }
+                else if ( column.hasProperty( gpudb::ColumnProperty::CHAR128 ) )
+                {
+                    m_column_types.push_back( ColumnType_T::CHAR128 );
+                    m_key_buffer_size += ColumnTypeSize_T::CHAR128;
+                }
+                else if ( column.hasProperty( gpudb::ColumnProperty::CHAR256 ) )
+                {
+                    m_column_types.push_back( ColumnType_T::CHAR256 );
+                    m_key_buffer_size += ColumnTypeSize_T::CHAR256;
+                }
+                else if ( column.hasProperty( gpudb::ColumnProperty::DATE ) )
+                {
+                    m_column_types.push_back( ColumnType_T::DATE );
+                    m_key_buffer_size += ColumnTypeSize_T::DATE;
+                }
+                else if ( column.hasProperty( gpudb::ColumnProperty::DATETIME ) )
+                {
+                    m_column_types.push_back( ColumnType_T::DATETIME );
+                    m_key_buffer_size += ColumnTypeSize_T::DATETIME;
+                }
+                else if ( column.hasProperty( gpudb::ColumnProperty::DECIMAL ) )
+                {
+                    m_column_types.push_back( ColumnType_T::DECIMAL );
+                    m_key_buffer_size += ColumnTypeSize_T::DECIMAL;
+                }
+                else if ( column.hasProperty( gpudb::ColumnProperty::IPV4) )
+                {
+                    m_column_types.push_back( ColumnType_T::IPV4 );
+                    m_key_buffer_size += ColumnTypeSize_T::IPV4;
+                }
+                else if ( column.hasProperty( gpudb::ColumnProperty::TIME ) )
+                {
+                    m_column_types.push_back( ColumnType_T::TIME );
+                    m_key_buffer_size += ColumnTypeSize_T::TIME;
+                }
+                else // a regular string
+                {
+                    m_column_types.push_back( ColumnType_T::STRING );
+                    m_key_buffer_size += ColumnTypeSize_T::STRING;
+                }
+                break;
+            }  // end case string
+
+            // Other types are not allowed for routing columns
+            case gpudb::Type::Column::BYTES:
+            default:
+                throw GPUdbException( "Cannot use column '" + column.getName()
+                                      + "' as a sharding column." );
+        }  // end switch
+    }  // end loop
+
+}  // end constructor
+
+
+
+/*
+ * Build a RecordKey object based on a record.
+ *
+ * <param name="record">The record off which the key needs to be built.</param>
+ *
+ * <param name="record_key">The record key to be built; any pre-existing info in the
+ * key will be obliterated (i.e. the key will be reset).</param>
+ *
+ * <returns>True if the record key could be built; false otherwise.</returns>
+ */
+bool RecordKeyBuilder::build( const gpudb::GenericRecord& record, RecordKey& record_key ) const
+{
+    // Can't build a key if the buffer size is zero!
+    if ( m_key_buffer_size == 0 )
+        return false;
+
+    // Reset the passed in key so that it matches this key builder's type
+    record_key.reset( m_key_buffer_size );
+
+    // Add each routing column's value to the key
+    size_t num_key_columns = m_pk_shard_key_indices.size();
+    for ( size_t i = 0; i < num_key_columns; ++i )
+    {
+        // Get the index of the column inside the record
+        size_t column_index = m_pk_shard_key_indices[ i ];
+
+        // Get the column information (useful for finding out nullability)
+        gpudb::Type::Column column = m_record_type.getColumn( column_index );
+
+        // Figure out if it's a nullable type and also if it's a null value
+        // (which tells us whether we can get a value out of the column)
+        bool can_get_value = false;
+        if ( !record.isNull( column_index ) )
+        {
+            can_get_value = true;
+        }
+
+        // Get the relevant column's value out from the record
+        // (the type may be different per column) and add to the record key
+        switch ( m_column_types[ i ] )  // ith column
+        {
+            case ColumnType_T::CHAR1:
+            {
+                std::string value;
+                if ( can_get_value )
+                    value = record.getAsString( column_index );
+
+                // Now we add the char1 value (or null) to the record key
+                record_key.add_char1( value, record.isNull( column_index ) );
+                break;
+            }  // end case char1
+
+            case ColumnType_T::CHAR2:
+            {
+                std::string value;
+                if ( can_get_value )
+                    value = record.getAsString( column_index );
+
+                // Now we add the char2 value (or null) to the record key
+                record_key.add_char2( value, record.isNull( column_index ) );
+                break;
+            }  // end case char2
+
+            case ColumnType_T::CHAR4:
+            {
+                std::string value;
+                if ( can_get_value )
+                    value = record.getAsString( column_index );
+
+                // Now we add the char4 value (or null) to the record key
+                record_key.add_char4( value, record.isNull( column_index ) );
+                break;
+            }  // end case char4
+
+            case ColumnType_T::CHAR8:
+            {
+                std::string value;
+                if ( can_get_value )
+                    value = record.getAsString( column_index );
+
+                // Now we add the char8 value (or null) to the record key
+                record_key.add_char8( value, record.isNull( column_index ) );
+                break;
+            }  // end case char8
+
+            case ColumnType_T::CHAR16:
+            {
+                std::string value;
+                if ( can_get_value )
+                    value = record.getAsString( column_index );
+
+                // Now we add the char16 value (or null) to the record key
+                record_key.add_char16( value, record.isNull( column_index ) );
+                break;
+            }  // end case char16
+
+            case ColumnType_T::CHAR32:
+            {
+                std::string value;
+                if ( can_get_value )
+                    value = record.getAsString( column_index );
+
+                // Now we add the char32 value (or null) to the record key
+                record_key.add_char32( value, record.isNull( column_index ) );
+                break;
+            }  // end case char32
+
+            case ColumnType_T::CHAR64:
+            {
+                std::string value;
+                if ( can_get_value )
+                    value = record.getAsString( column_index );
+
+                // Now we add the char64 value (or null) to the record key
+                record_key.add_char64( value, record.isNull( column_index ) );
+                break;
+            }  // end case char64
+
+            case ColumnType_T::CHAR128:
+            {
+                std::string value;
+                if ( can_get_value )
+                    value = record.getAsString( column_index );
+
+                // Now we add the char128 value (or null) to the record key
+                record_key.add_char128( value, record.isNull( column_index ) );
+                break;
+            }  // end case char128
+
+            case ColumnType_T::CHAR256:
+            {
+                std::string value;
+                if ( can_get_value )
+                    value = record.getAsString( column_index );
+
+                // Now we add the char256 value (or null) to the record key
+                record_key.add_char256( value, record.isNull( column_index ) );
+                break;
+            }  // end case char256
+
+            case ColumnType_T::DATE:
+            {
+                std::string value;
+                if ( can_get_value )
+                    value = record.getAsString( column_index );
+
+                // Now we add the date value (or null) to the record key
+                record_key.add_date( value, record.isNull( column_index ) );
+                break;
+            }  // end case date
+
+            case ColumnType_T::DATETIME:
+            {
+                std::string value;
+                if ( can_get_value )
+                    value = record.getAsString( column_index );
+
+                // Now we add the datetime value (or null) to the record key
+                record_key.add_datetime( value, record.isNull( column_index ) );
+                break;
+            }  // end case datetime
+
+            case ColumnType_T::DECIMAL:
+            {
+                std::string value;
+                if ( can_get_value )
+                    value = record.getAsString( column_index );
+
+                // Now we add the decimal value (or null) to the record key
+                record_key.add_decimal( value, record.isNull( column_index ) );
+                break;
+            }  // end case decimal
+
+            case ColumnType_T::DOUBLE:
+            {
+                double value = 0;
+                if ( can_get_value )
+                    value = record.getAsDouble( column_index );
+
+                // Now we add the double value (or null) to the record key
+                record_key.add_double( value, record.isNull( column_index ) );
+                break;
+            }  // end case double
+
+            case ColumnType_T::FLOAT:
+            {
+                float value = 0;
+                if ( can_get_value )
+                    value = record.getAsFloat( column_index );
+
+                // Now we add the float value (or null) to the record key
+                record_key.add_float( value, record.isNull( column_index ) );
+                break;
+            }  // end case float
+
+            case ColumnType_T::INT:
+            {
+                int32_t value = 0;
+                if ( can_get_value )
+                    value = record.getAsInt( column_index );
+
+                // Now we add the int value (or null) to the record key
+                record_key.add_int( value, record.isNull( column_index ) );
+                break;
+            }  // end case int
+
+            case ColumnType_T::INT8:
+            {
+                int32_t value = 0;
+                if ( can_get_value )
+                    value = record.getAsInt( column_index );
+
+                // Now we add the int8 value (or null) to the record key
+                record_key.add_int8( (int8_t)value, record.isNull( column_index ) );
+                break;
+            }  // end case int8
+
+            case ColumnType_T::INT16:
+            {
+                int32_t value = 0;
+                if ( can_get_value )
+                    value = record.getAsInt( column_index );
+
+                // Now we add the int16 value (or null) to the record key
+                record_key.add_int16( (int16_t)value, record.isNull( column_index ) );
+                break;
+            }  // end case int16
+
+            case ColumnType_T::IPV4:
+            {
+                std::string value;
+                if ( can_get_value )
+                    value = record.getAsString( column_index );
+
+                // Now we add the IPv4 value (or null) to the record key
+                record_key.add_ipv4( value, record.isNull( column_index ) );
+                break;
+            }  // end case ipv4
+
+            case ColumnType_T::LONG:
+            {
+                int64_t value = 0;
+                if ( can_get_value )
+                    value = record.getAsLong( column_index );
+
+                // Now we add the long value (or null) to the record key
+                record_key.add_long( value, record.isNull( column_index ) );
+                break;
+            }  // end case long
+
+            case ColumnType_T::TIME:
+            {
+                std::string value;
+                if ( can_get_value )
+                    value = record.getAsString( column_index );
+
+                // Now we add the time value (or null) to the record key
+                record_key.add_time( value, record.isNull( column_index ) );
+                break;
+            }  // end case time
+
+            case ColumnType_T::TIMESTAMP:
+            {
+                int64_t value = 0;
+                if ( can_get_value )
+                    value = record.getAsLong( column_index );
+
+                // Now we add the long value (or null) to the record key
+                record_key.add_timestamp( value, record.isNull( column_index ) );
+                break;
+            }  // end case timestamp
+
+            case ColumnType_T::STRING:
+            {
+                std::string value;
+                if ( can_get_value )
+                    value = record.getAsString( column_index );
+
+                // Now we add the string value (or null) to the record key
+                record_key.add_string( value, record.isNull( column_index ) );
+                break;
+            }  // end case string
+
+            default:
+                throw GPUdbException( "Unhandled type for column '" + column.getName()
+                                      + "'."  );
+        }  // end switch on column type
+    }  // end loop
+
+    // Compute the hash for the key before sending it
+    record_key.compute_hash();
+
+    return true;  // we succeeded in building a key
+}  // end build
+
+
+
+// Returns if the other RecordKeyBuilder is equivalent to this builder
+bool RecordKeyBuilder::operator==(const RecordKeyBuilder& rhs) const
+{
+    return ( m_column_types == rhs.m_column_types );
+}  // end ==
+
+
+// --------------------- END Class RecordKeyBuilder ----------------------
+
+
+
+
+
+// --------------------- Internal Class WorkerQueue ----------------------
+
+/*
+ *  The WorkerQueue class maintains queues of record to be inserted
+ *  into GPUdb.  It is templated on the type of the record that is to
+ *  be ingested into the DB server.
+ */
+class WorkerQueue
+{
+public:
+
+    // We need a shared pointer to move vectors of records around
+    typedef std::vector<gpudb::GenericRecord>  recordVector_T;
+
+private:
+
+    gpudb::HttpUrl   m_url;
+    size_t           m_capacity;
+    bool             m_has_primary_key;
+    bool             m_update_on_existing_pk;
+    recordVector_T   m_queue;
+
+    /// Map of the primary key to the key's index in the record queue
+//    typedef std::map<const RecordKey&, size_t> primary_key_map_t;
+    typedef std::map<RecordKey, size_t> primary_key_map_t;
+    primary_key_map_t  m_primary_key_map;
+
+    WorkerQueue();
+
+public:
+
+    // Takes a string for the url
+    WorkerQueue( const std::string& url, size_t capacity, bool has_primary_key,
+                 bool update_on_existing_pk );
+
+    ~WorkerQueue();
+
+    /// Returns the URL in string format for this worker
+    const gpudb::HttpUrl& get_url() const { return m_url; }
+
+    /// Returns the current queue and creates a new internal queue
+    void flush( recordVector_T& flushed_records );
+
+    /// Inserts a record into the queue
+    bool insert( const gpudb::GenericRecord& record,
+                 const RecordKey& key,
+                 recordVector_T& flushed_records );
+
+
+}; // end class WorkerQueue
+
+
+
+WorkerQueue::WorkerQueue( const std::string& url, size_t capacity,
+                          bool has_primary_key,
+                          bool update_on_existing_pk ) :
+      m_url( url ),
       m_capacity( capacity ),
       m_has_primary_key( has_primary_key ),
       m_update_on_existing_pk( update_on_existing_pk )
 {
     // Reserve enough capacity for the queue
+    m_queue = recordVector_T();
     m_queue.reserve( capacity );
 
     return;
 }  // end WorkerQueue constructor
 
 
-
-// template<typename T>
-// WorkerQueue<T>::~WorkerQueue()
-// {
-//     // Free the queue
-//     delete m_queue;
-
-//     return;
-// }  // end WorkerQueue destructor
+WorkerQueue::~WorkerQueue()
+{
+    m_queue.clear();
+    m_primary_key_map.clear();
+}
 
 
 /*
  *  Returns the current queue and creates a new internal queue.
  */
-template<typename T>
-std::vector<T>& WorkerQueue<T>::flush()
+void WorkerQueue::flush( recordVector_T& flushed_records )
 {
-    // Save the current/old queue
-    std::vector<T> old_queue = m_queue;
+    // Put the records in the outbound (passed in) vector
+    flushed_records.clear();
+    flushed_records.swap( m_queue );
 
-    // Create a new queue
-    // (TODO: Do we need to free this guy later on?)
-    m_queue = std::vector<T>();
+    // Reserve enough capacity in the "new" queue
     m_queue.reserve( m_capacity );
 
-    return old_queue;
+    // Clear out the primary key map
+    m_primary_key_map.clear();
+
+    return;
 }  // end WorkerQueue flush()
 
 
 
 /*
- *  Insert a record into the queue.  Returns the queue
- *  if full (post-insertion), NULL otherwise.
+ *  Insert a record into the queue.  Returns true if the record was inserted,
+ *  false otherwise.
  */
-template<typename T>
-std::vector<T>& WorkerQueue<T>::insert( T record, RecordKey key )
+bool WorkerQueue::insert( const gpudb::GenericRecord& record,
+                          const RecordKey& key,
+                          recordVector_T& flushed_records )
 {
     // Special insertion operation for records consisting primary keys
-    if ( m_has_primary_key )
+    if ( m_has_primary_key && key.is_valid() )
     {
         // First check if the given key already exists as a primary key
         typename primary_key_map_t::iterator it;
         it = m_primary_key_map.find( key );
+
         if ( it == m_primary_key_map.end() )
-        { // key does NOT already exist
-            // insert the record into the queue
+        { // Key does NOT already exist
+            // Insert the record into the queue
             m_queue.push_back( record );
             
-            // insert the (key, queue index) into the map that keep
+            // Insert the (key, queue index) into the map that keep
             // tracks of where the record associated with a given key
             // is inside the record queue.
             m_primary_key_map[ key ] = (m_queue.size() - 1);
@@ -219,39 +2880,374 @@ std::vector<T>& WorkerQueue<T>::insert( T record, RecordKey key )
             if ( m_update_on_existing_pk )
             {  // yes, it's allowed
                 size_t record_index = it->second;
-                m_queue[ record_index ] = record;
+                m_queue.at( record_index ) = record;
             }
             else
-            {  // updating existing primary keys not allowed
-                return NULL;
+            {   // updating existing primary keys not allowed; so not inserting
+                // this record
+                return false;
             }
         }
     }  // end if primary keys exist
-    else // no primary key involved; simply add to the queue
-    {
+    else // either no primary key involved or the given key is invalid;
+    {   // in the latter case, the server will return the appropriate error.
+        // In the former case, simply add to the queue
         m_queue.push_back( record );
     }
 
-    // If the queue is full to the capacity, flush it
+    // If the queue is full to the capacity, flush it and return those records
     if ( m_queue.size() == m_capacity )
     {
-        return this->flush();
+        this->flush( flushed_records );
+        return true;
     }
-    else // queue not full yet; return NULL
+    else // queue not full yet
     {
-        return NULL;
+        return false;
     }
 }  // end WorkerQueue insert
 
 
-// --------------------- END Implementation of Class WorkerQueue ----------------------
+
+// --------------------- END Class WorkerQueue ----------------------
 
 
 
-// --------------------- Implementation of Class RecordKeyBuilder ----------------------
 
 
-// --------------------- END Implementation of Class RecordKeyBuilder ----------------------
+// --------------------- Beign Class GPUdbIngestor ----------------------
+
+GPUdbIngestor::GPUdbIngestor( const gpudb::GPUdb& db, const gpudb::Type& record_type,
+                              const std::string& table_name, size_t batch_size ) :
+    m_db( db ),
+    m_record_type( record_type )
+{
+    WorkerList worker_list( db );
+    construct( db, record_type, table_name, worker_list, batch_size );
+}  // end GPUdbIngestor constructor
+
+
+
+GPUdbIngestor::GPUdbIngestor( const gpudb::GPUdb& db, const gpudb::Type& record_type,
+                              const std::string& table_name,
+                              const std::map<std::string, std::string>& insert_options,
+                              size_t batch_size ) :
+    m_db( db ),
+    m_insert_options( insert_options ),
+    m_record_type( record_type )
+{
+    WorkerList worker_list( db );
+    construct( db, record_type, table_name, worker_list, batch_size );
+}  // end GPUdbIngestor constructor
+
+
+
+GPUdbIngestor::GPUdbIngestor( const gpudb::GPUdb& db, const gpudb::Type& record_type,
+                              const std::string& table_name,
+                              const WorkerList& worker_list,
+                              size_t batch_size ) :
+    m_db( db ),
+    m_record_type( record_type )
+{
+    construct( db, record_type, table_name, worker_list, batch_size );
+}  // end GPUdbIngestor constructor
+
+
+
+GPUdbIngestor::GPUdbIngestor( const gpudb::GPUdb& db, const gpudb::Type& record_type,
+                              const std::string& table_name,
+                              const WorkerList& worker_list,
+                              const std::map<std::string, std::string>& insert_options,
+                              size_t batch_size ) :
+    m_db( db ),
+    m_insert_options( insert_options ),
+    m_record_type( record_type )
+{
+    construct( db, record_type, table_name, worker_list, batch_size );
+}  // end GPUdbIngestor constructor
+
+
+
+void GPUdbIngestor::construct( const gpudb::GPUdb& db,
+                               const gpudb::Type& record_type,
+                               const std::string& table_name,
+                               const WorkerList& worker_list,
+                               size_t batch_size )
+{
+    m_table_name  = table_name;
+
+    // The batch size must be greater than or equal to 1
+    if ( batch_size < 1 )
+    {
+        std::ostringstream ss;
+        ss << "Batch size must be greater than one; given " << batch_size;
+        throw GPUdbException( ss.str() );
+    }
+    m_batch_size = batch_size;
+
+    m_count_inserted = 0;
+    m_count_updated  = 0;
+
+    // Set up the primary and shard key builders
+    // -----------------------------------------
+    m_primary_key_builder_ptr = new RecordKeyBuilder( true, record_type );
+    m_shard_key_builder_ptr   = new RecordKeyBuilder( false, record_type );
+
+    if ( m_primary_key_builder_ptr->has_key() )
+    {   // there are primary keys for this record type
+        // Now check if there is a distinct shard key
+        if ( !m_shard_key_builder_ptr->has_key()
+             || (*m_shard_key_builder_ptr == *m_primary_key_builder_ptr) )
+        {  // No distinct shard key
+            m_shard_key_builder_ptr = m_primary_key_builder_ptr;
+        }
+    }
+    else  // there are no primary keys
+    {
+        // Release the source and set to null
+        delete m_primary_key_builder_ptr;
+        m_primary_key_builder_ptr = NULL;
+
+        // Check if there are shard keys
+        if ( !m_shard_key_builder_ptr->has_key() )
+        {   // release the source
+            delete m_shard_key_builder_ptr;
+            m_shard_key_builder_ptr = NULL;
+        }
+    }
+
+    // Set up the worker queues
+    // ------------------------
+    // Do we update records if there are matching primary keys in the database?
+    bool update_records_on_existing_pk = false;
+    str_to_str_map_t::const_iterator iter = m_insert_options.find( gpudb::insert_records_update_on_existing_pk );
+    if ( iter != m_insert_options.end() )
+    {   // The option is given, but is it true?
+        if ( gpudb::insert_records_true.compare( iter->second ) == 0 )
+            update_records_on_existing_pk = true;
+    }
+
+    // Does the record type have primary keys?
+    bool has_primary_key = (m_primary_key_builder_ptr != NULL);
+    try
+    {
+        // If we have multiple workers, then use those
+        if ( !worker_list.empty() )
+        {
+            // Add a worker (record) queue per worker rank of the database
+            for ( WorkerList::const_iterator it = worker_list.begin(); it != worker_list.end(); ++it )
+            {
+                worker_queue_ptr_t worker_queue( new WorkerQueue( (std::string)*it, batch_size, has_primary_key,
+                                                                  update_records_on_existing_pk ) );
+                m_worker_queues.push_back( worker_queue );
+            }
+
+            // Get the worker rank information from the db server
+            gpudb::AdminShowShardsResponse admin_show_shards_rsp;
+            std::map<std::string, std::string> options;
+            db.adminShowShards( options, admin_show_shards_rsp );
+            m_routing_table.swap( admin_show_shards_rsp.rank );
+
+            // Check that enough worker URLs are specified
+            for ( size_t i = 0; i < m_routing_table.size(); ++i )
+            {
+                if ( m_routing_table[ i ] > (int32_t)m_worker_queues.size() )
+                    throw GPUdbException( "Not enough worker URLs specified" );
+            }
+        }
+        else // multi-head ingest is NOT turned on; use the regular server IP address
+        {
+            std::string url = ( (std::string)m_db.getUrl() + "/insert/records" );
+            worker_queue_ptr_t worker_queue( new WorkerQueue( url, batch_size, has_primary_key,
+                                                              update_records_on_existing_pk ) );
+
+            m_worker_queues.push_back( worker_queue );
+        }
+    } catch (GPUdbException e)
+    {
+        throw GPUdbException( e.what() );
+    } catch (std::exception e)
+    {
+        throw GPUdbException( e.what() );
+    }
+
+
+    // Initialize the random seed
+    std::srand( std::time( NULL ) );
+
+    return;
+}  // end construct
+
+
+GPUdbIngestor::~GPUdbIngestor()
+{
+    // Release resources
+    delete m_primary_key_builder_ptr;
+    delete m_shard_key_builder_ptr;
+
+    m_worker_queues.clear();
+    m_routing_table.clear();
+}  // end destructor
+
+/*
+ * Ensures that all queued records are inserted into the database.  If an error
+ * occurs while inserting the records from any queue, the recoreds will no
+ * longer be in that queue nor in the database; catch <see cref="GPUdbInsertException{T}" />
+ * to get the list of records that were being inserted if needed (for example,
+ * to retry).  Other queues may also still contain unflushed records if this
+ * occurs.
+ */
+void GPUdbIngestor::flush()
+{
+    std::vector<worker_queue_ptr_t>::const_iterator it;
+    for ( it = m_worker_queues.begin(); it != m_worker_queues.end(); ++it )
+    {
+        // Flush the queue
+        WorkerQueue::recordVector_T records_to_flush;
+        (it->get())->flush( records_to_flush );
+
+        // Actually insert the records
+        this->flush( records_to_flush, (*it)->get_url() );
+    }
+}  // end public flush
+
+
+/*
+ * Insert the given list of records to the database residing at the given URL.
+ * Upon any error, thrown InsertException with the queue of records passed into it.
+ *
+ * <param name="queue">The list of records to insert.</param>
+ * <param name="url">The address of the database worker.</param>
+ */
+void GPUdbIngestor::flush( const std::vector<gpudb::GenericRecord>& queue,
+                           const gpudb::HttpUrl& url )
+{
+    if ( queue.empty() )
+    {
+        return; // nothing to do since the queue is empty
+    }
+
+    try
+    {
+        // Encode the records into binary first
+        std::vector<std::vector<uint8_t> > encoded_records;
+        gpudb::avro::encode( encoded_records, queue );
+
+        // Create the /insert/records request and response objects
+        gpudb::RawInsertRecordsRequest request( m_table_name, encoded_records, m_insert_options );
+        gpudb::InsertRecordsResponse response;
+
+        // Make the /insert/records call
+        m_db.submitRequest( url, request, response );
+
+        // Save the counts of inserted and updated records
+        m_count_inserted += response.countInserted;
+        m_count_updated  += response.countUpdated;
+
+    } catch (gpudb::GPUdbException e)
+    {  // throw the records to the caller since they weren't inserted into the db
+        throw GPUdbInsertionException( url, queue, e.what() );
+    } catch (std::exception e)
+    {  // throw the records to the caller since they weren't inserted into the db
+        throw GPUdbInsertionException( url, queue, e.what() );
+    }
+}  // end private flush
+
+
+/*
+ * Queues a record for insertion into GPUdb.  If the queue reaches
+ * the <member cref="batch_size" />, all records in the queue will be
+ * inserted into Kinetica before the method returns.  If an error occurs
+ * while inserting the records, the records will no longer be in the queue
+ * nor in Kinetica; catch <see cref="InsertException{T}"/>  to get the list
+ * of records that were being inserted if needed (for example, to retry).
+ *
+ * <param name="record">The record to insert.</param>
+ */
+void GPUdbIngestor::insert( gpudb::GenericRecord record )
+{
+    // Create the record keys
+    RecordKey primary_key; // used to check for uniqueness
+    RecordKey shard_key;   // used to find which worker to send this record to
+    bool have_shard_key   = false;
+
+    // Build the primary key, if any
+    if ( m_primary_key_builder_ptr != NULL )
+    {
+        m_primary_key_builder_ptr->build( record, primary_key );
+    }
+
+    // Build the sharding/routing key, if any
+    if ( m_shard_key_builder_ptr != NULL )
+    {
+        have_shard_key = m_shard_key_builder_ptr->build( record, shard_key );
+    }
+
+    // Find out which worker to send the record to; then add the record
+    // to the appropriate worker's record queue
+    worker_queue_ptr_t worker_queue_ptr;
+    if ( m_routing_table.empty() )
+    {   // We have no information regarding multiple worker ranks; use the
+        // first/only address
+        worker_queue_ptr = m_worker_queues[ 0 ];
+    }
+    else if ( !have_shard_key )
+    {   // We do NOT have a shard key; choose a random worker
+        worker_queue_ptr = m_worker_queues[ std::rand() % m_worker_queues.size() ];
+    }
+    else
+    {   // Get the appropriate worker based on the sharding/routing key
+        size_t worker_index = shard_key.route( m_routing_table );
+        worker_queue_ptr = m_worker_queues[ worker_index ];
+    }
+
+    // Insert the record into the queue
+    WorkerQueue::recordVector_T  flushed_records;
+    worker_queue_ptr->insert( record, primary_key, flushed_records );
+
+    // If inserting the queue resulted in flushing the queue, then flush it
+    // properly
+    if ( !flushed_records.empty() )
+    {
+        this->flush( flushed_records, worker_queue_ptr->get_url() );
+    }
+}  // end insert a single record
+
+
+
+
+/*
+ * Queues a list of records for insertion into Kientica.  If any queue reaches
+ * the <member cref="batch_size" />, all records in the queue will be
+ * inserted into Kinetica before the method returns.  If an error occurs
+ * while inserting the records, the records will no longer be in the queue
+ * nor in Kinetica; catch <see cref="InsertException{T}"/>  to get the list
+ * of records that were being inserted if needed (for example, to retry).
+ *
+ * <param name="records">The records to insert.</param>
+ */
+void GPUdbIngestor::insert( std::vector<gpudb::GenericRecord> records )
+{
+    // Insert one record at a time
+    for ( size_t i = 0; i < records.size(); ++i )
+    {
+        try
+        {
+            this->insert( records[ i ] );
+        }
+        catch ( GPUdbInsertionException e )
+        {
+            // Add the remaining records to the insertion exception queue
+            e.append_records( (records.begin() + i + 1), records.end() );
+
+            // Rethrow
+            throw e;
+        }
+    }  // end outer loop
+}  // end insert multiple records
+
+// --------------------- END Class GPUdbIngestor ----------------------
+
 
 
 } // end namespace gpudb

@@ -62,6 +62,13 @@ namespace gpudb
         return m_properties;
     }
 
+    // Return whether this column has the given property
+    bool Type::Column::hasProperty( std::string property ) const
+    {
+        return ( std::find( m_properties.begin(), m_properties.end(), property )
+                 != m_properties.end() );
+    }
+
     void Type::Column::initialize()
     {
         if (m_name.empty())

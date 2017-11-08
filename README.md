@@ -38,10 +38,10 @@ Third-party Tools and Libraries
         -   Debian based distributions install it using:
             -   `apt install cmake`
     -   Boost library v1.48 or newer, http://www.boost.org/
-        -   The GPUdb API depends on the Boost 'system' and 'thread' libraries.
+        -   The GPUdb API depends on the Boost 'regex', 'system' and 'thread' libraries.
         -   It is easiest to use the Linux distribution provided Boost package.
         -   Red Hat based distributions install it using:
-            -   `yum install boost boost-devel boost-system boost-thread`
+            -   `yum install boost boost-devel boost-system boost-thread boost-regex`
             -   The headers are typically installed in /usr/include/boost and libs in /usr/lib64
         -   Red Hat and CENTOS 6 ship with an older boost 1.41 library.
             Use the 'EPEL' (https://fedoraproject.org/wiki/EPEL) repository to
@@ -50,7 +50,7 @@ Third-party Tools and Libraries
             See below about how to configure the GPUdb CPP API CMake build to detect
             and use an alternate boost install.
         -   Debian based distributions install it using:
-            -   `apt install libboost-dev libbost-system-dev libboost-thread-dev`
+            -   `apt install libboost-dev libboost-regex-dev libbost-system-dev libboost-thread-dev`
 -   Build the libraries from the source archives in the thirdparty/ directory.
     -   Dependencies
         - CMake (as above)

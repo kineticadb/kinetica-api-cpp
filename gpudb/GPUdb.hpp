@@ -122,6 +122,20 @@ namespace gpudb
             size_t getTimeout() const;
 
             template<typename TRequest, typename TResponse>
+            TResponse& submitRequest(const HttpUrl& url,
+                                     const TRequest& request,
+                                     TResponse& response,
+                                     const bool enableCompression = false) const
+            {
+                std::vector<uint8_t> requestBytes;
+                avro::encode(requestBytes, request);
+                GpudbResponse gpudbResponse;
+                submitRequestRaw(url, requestBytes, gpudbResponse, enableCompression);
+                avro::decode(response, gpudbResponse.data);
+                return response;
+            }
+
+            template<typename TRequest, typename TResponse>
             TResponse& submitRequest(const std::string& endpoint,
                                      const TRequest& request,
                                      TResponse& response,
@@ -136,18 +150,15 @@ namespace gpudb
             }
 
             template<typename TRequest, typename TResponse>
-            TResponse& submitRequest(const HttpUrl& url,
+            TResponse& submitRequest(const char* endpoint,
                                      const TRequest& request,
                                      TResponse& response,
-                                     const bool enableCompression = false)
+                                     const bool enableCompression = false) const
             {
-                std::vector<uint8_t> requestBytes;
-                avro::encode(requestBytes, request);
-                GpudbResponse gpudbResponse;
-                submitRequestRaw(url, requestBytes, gpudbResponse, enableCompression);
-                avro::decode(response, gpudbResponse.data);
+                submitRequest( (std::string) endpoint, request, response, enableCompression );
                 return response;
             }
+
 
             #include "gpudb/GPUdbFunctions.hpp"
 

@@ -409,6 +409,11 @@ namespace gpudb {
             httpRequest.send(httpResponse);
         }
 
+        if (httpResponse.getResponseCode() == 401)
+        {
+            throw GPUdbException("Insufficient credentials");
+        }
+
         avro::decode(response, httpResponse.getResponseBody());
 
         if (throwOnError && response.status == "ERROR")

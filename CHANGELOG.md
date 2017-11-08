@@ -1,6 +1,13 @@
 GPUdb C++ API Changelog
 =======================
 
+Version 6.1.0 - 2017-11-08
+--------------------------
+
+-   Added support for the 'datetime' property
+-   Added multi-head ingestion support
+
+
 Version 6.0.0 - 2017-01-24
 --------------------------
 

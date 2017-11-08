@@ -33,6 +33,7 @@ namespace gpudb
                     ColumnType getType() const;
                     bool isNullable() const;
                     const std::vector<std::string>& getProperties() const;
+                    bool hasProperty( std::string property ) const;
 
                 private:
                     std::string m_name;

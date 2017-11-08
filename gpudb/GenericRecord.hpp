@@ -206,6 +206,8 @@ namespace gpudb
             std::string toString(const size_t index) const;
             std::string toString(const std::string& name) const;
 
+            friend std::ostream &operator << (std::ostream  &os, GenericRecord &gr);
+
         private:
             static void transpose(const std::string& schemaString, const std::vector<uint8_t>& encodedData, std::vector<GenericRecord>& data);
 
