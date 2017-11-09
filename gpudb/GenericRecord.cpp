@@ -643,16 +643,12 @@ namespace gpudb
             throw GPUdbException("Schema must be of type record.");
         }
 
-<<<<<<< HEAD
-        int fieldCount = (int)root->leaves() - 2;
-=======
         if ( root->leaves() < 3 )
         {
             throw GPUdbException("Schema must have at least three fields.");
         }
-        size_t fieldCount = (root->leaves() - 2);
+        int fieldCount = (int)root->leaves() - 2;
 
->>>>>>> b83cab8... APICPP-11 Added support for multi-head ingestion
         std::vector<std::pair<Type::Column::ColumnType, bool> > columnTypes;
         columnTypes.reserve(fieldCount);
 
