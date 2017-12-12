@@ -647,7 +647,7 @@ namespace gpudb
         {
             throw GPUdbException("Schema must have at least three fields.");
         }
-        int fieldCount = (int)root->leaves() - 2;
+		int fieldCount = (int)root->leaves() - 2;
 
         std::vector<std::pair<Type::Column::ColumnType, bool> > columnTypes;
         columnTypes.reserve(fieldCount);
@@ -900,27 +900,27 @@ namespace gpudb
             {
                 switch ( it->getType() )
                 {
-                    case Type::Column::ColumnType::INT:
+                    case Type::Column::INT:
                     {
                         os << record.getAsInt( i ); break;
                     }
-                    case Type::Column::ColumnType::LONG:
+                    case Type::Column::LONG:
                     {
                         os << record.getAsLong( i ); break;
                     }
-                    case Type::Column::ColumnType::FLOAT:
+                    case Type::Column::FLOAT:
                     {
                         os << record.getAsFloat( i ); break;
                     }
-                    case Type::Column::ColumnType::DOUBLE:
+                    case Type::Column::DOUBLE:
                     {
                         os << record.getAsDouble( i ); break;
                     }
-                    case Type::Column::ColumnType::STRING:
+                    case Type::Column::STRING:
                     {
                         os << record.getAsString( i ); break;
                     }
-                    case Type::Column::ColumnType::BYTES:
+                    case Type::Column::BYTES:
                     {
                         std::vector<unsigned char> bytes = record.getAsBytes( i );
                         std::vector<unsigned char>::const_iterator it2;

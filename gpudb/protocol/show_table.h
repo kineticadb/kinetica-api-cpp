@@ -27,8 +27,7 @@ namespace gpudb
      * For a collection, setting the @a show_children option to @a false
      * returns only information about the collection itself; setting @a
      * show_children to @a true returns a list of tables and views contained in
-     * the collection, along with their description, type id, schema, type
-     * label, type properties, and additional information including TTL.
+     * the collection, along with their corresponding detail.
      */
     struct ShowTableRequest
     {
@@ -167,8 +166,7 @@ namespace gpudb
      * For a collection, setting the @a show_children option to @a false
      * returns only information about the collection itself; setting @a
      * show_children to @a true returns a list of tables and views contained in
-     * the collection, along with their description, type id, schema, type
-     * label, type properties, and additional information including TTL.
+     * the collection, along with their corresponding detail.
      */
     struct ShowTableResponse
     {

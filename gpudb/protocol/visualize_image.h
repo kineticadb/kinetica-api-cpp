@@ -124,6 +124,10 @@ namespace gpudb
          *                                   <li>
          *                           gpudb::visualize_image_pointsizes
          *                                   <li>
+         *                           gpudb::visualize_image_pointoffset_x
+         *                                   <li>
+         *                           gpudb::visualize_image_pointoffset_y
+         *                                   <li>
          *                           gpudb::visualize_image_pointshapes:
          *                           <ul>
          *                                   <li> gpudb::visualize_image_none
@@ -143,9 +147,15 @@ namespace gpudb
          *                           The default value is
          *                           gpudb::visualize_image_square.
          *                                   <li>
+         *                           gpudb::visualize_image_symbolrotations
+         *                                   <li>
          *                           gpudb::visualize_image_shapelinewidths
          *                                   <li>
          *                           gpudb::visualize_image_shapelinecolors
+         *                                   <li>
+         *                           gpudb::visualize_image_shapelinepatterns
+         *                                   <li>
+         *                           gpudb::visualize_image_shapelinepatternlen
          *                                   <li>
          *                           gpudb::visualize_image_shapefillcolors
          *                                   <li>

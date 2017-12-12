@@ -406,6 +406,14 @@ AdminOfflineResponse& adminOffline( const AdminOfflineRequest& request_,
  *                         <li> gpudb::admin_offline_false
  *                 </ul>
  * @param options  Optional parameters.
+ *                 <ul>
+ *                         <li> gpudb::admin_offline_flush_to_disk: Flush to
+ *                 disk when going offline
+ *                 <ul>
+ *                         <li> gpudb::admin_offline_true
+ *                         <li> gpudb::admin_offline_false
+ *                 </ul>
+ *                 </ul>
  * 
  * @return Response object containing the result of the operation.
  * 
@@ -424,6 +432,14 @@ AdminOfflineResponse adminOffline( const bool offline,
  *                         <li> gpudb::admin_offline_false
  *                 </ul>
  * @param options  Optional parameters.
+ *                 <ul>
+ *                         <li> gpudb::admin_offline_flush_to_disk: Flush to
+ *                 disk when going offline
+ *                 <ul>
+ *                         <li> gpudb::admin_offline_true
+ *                         <li> gpudb::admin_offline_false
+ *                 </ul>
+ *                 </ul>
  * @param[out] response_  Response object containing the results of the
  *                        operation.
  * 
@@ -1371,10 +1387,9 @@ AggregateGroupByResponse& aggregateGroupBy( const AggregateGroupByRequest& reque
  *                 <ul>
  *                         <li> gpudb::aggregate_group_by_collection_name: Name
  *                 of a collection which is to contain the table specified in
- *                 @a result_table, otherwise the table will be a top-level
- *                 table. If the collection does not allow duplicate types and
- *                 it contains a table of the same type as the given one, then
- *                 this table creation request will fail. Additionally this
+ *                 @a result_table. If the collection provided is non-existent,
+ *                 the collection will be automatically created. If empty, then
+ *                 the table will be a top-level table.  Additionally this
  *                 option is invalid if @a tableName is a collection.
  *                         <li> gpudb::aggregate_group_by_expression: Filter
  *                 expression to apply to the table prior to computing the
@@ -1419,12 +1434,11 @@ AggregateGroupByResponse& aggregateGroupBy( const AggregateGroupByRequest& reque
  *                 available if one of the grouping attributes is an
  *                 unrestricted string (i.e.; not charN) type.
  *                         <li> gpudb::aggregate_group_by_result_table_persist:
- *                 If @a true then the result table specified in @a
- *                 result_table will be persisted as a regular table (it will
- *                 not be automatically cleared unless a @a ttl is provided,
- *                 and the table data can be modified in subsequent
- *                 operations). If @a false (the default) then the result table
- *                 will be a read-only, memory-only temporary table.
+ *                 If @a true, then the result table specified in @a
+ *                 result_table will be persisted and will not expire unless a
+ *                 @a ttl is specified.   If @a false, then the result table
+ *                 will be an in-memory table and will expire unless a @a ttl
+ *                 is specified otherwise.
  *                 <ul>
  *                         <li> gpudb::aggregate_group_by_true
  *                         <li> gpudb::aggregate_group_by_false
@@ -1439,13 +1453,21 @@ AggregateGroupByResponse& aggregateGroupBy( const AggregateGroupByRequest& reque
  *                 gpudb::aggregate_group_by_result_table_generate_pk: If
  *                 'true' then set a primary key for the result table. Must be
  *                 used in combination with the @a result_table option.
- *                         <li> gpudb::aggregate_group_by_ttl: Sets the TTL of
- *                 the table specified in @a result_table. The value must be
- *                 the desired TTL in minutes.
- *                         <li> gpudb::aggregate_group_by_chunk_size: If
- *                 provided this indicates the chunk size to be used for the
- *                 result table. Must be used in combination with the @a
- *                 result_table option.
+ *                         <li> gpudb::aggregate_group_by_ttl: Sets the <a
+ *                 href="../../concepts/ttl.html" target="_top">TTL</a> of the
+ *                 table specified in @a result_table.
+ *                         <li> gpudb::aggregate_group_by_chunk_size: Indicates
+ *                 the chunk size to be used for the result table. Must be used
+ *                 in combination with the @a result_table option.
+ *                         <li> gpudb::aggregate_group_by_materialize_on_gpu:
+ *                 If @a true then the columns of the groupby result table will
+ *                 be cached on the GPU. Must be used in combination with the
+ *                 @a result_table option.
+ *                 <ul>
+ *                         <li> gpudb::aggregate_group_by_true
+ *                         <li> gpudb::aggregate_group_by_false
+ *                 </ul>
+ *                 The default value is gpudb::aggregate_group_by_false.
  *                 </ul>
  * 
  * @return Response object containing the result of the operation.
@@ -1519,10 +1541,9 @@ AggregateGroupByResponse aggregateGroupBy( const std::string& tableName,
  *                 <ul>
  *                         <li> gpudb::aggregate_group_by_collection_name: Name
  *                 of a collection which is to contain the table specified in
- *                 @a result_table, otherwise the table will be a top-level
- *                 table. If the collection does not allow duplicate types and
- *                 it contains a table of the same type as the given one, then
- *                 this table creation request will fail. Additionally this
+ *                 @a result_table. If the collection provided is non-existent,
+ *                 the collection will be automatically created. If empty, then
+ *                 the table will be a top-level table.  Additionally this
  *                 option is invalid if @a tableName is a collection.
  *                         <li> gpudb::aggregate_group_by_expression: Filter
  *                 expression to apply to the table prior to computing the
@@ -1567,12 +1588,11 @@ AggregateGroupByResponse aggregateGroupBy( const std::string& tableName,
  *                 available if one of the grouping attributes is an
  *                 unrestricted string (i.e.; not charN) type.
  *                         <li> gpudb::aggregate_group_by_result_table_persist:
- *                 If @a true then the result table specified in @a
- *                 result_table will be persisted as a regular table (it will
- *                 not be automatically cleared unless a @a ttl is provided,
- *                 and the table data can be modified in subsequent
- *                 operations). If @a false (the default) then the result table
- *                 will be a read-only, memory-only temporary table.
+ *                 If @a true, then the result table specified in @a
+ *                 result_table will be persisted and will not expire unless a
+ *                 @a ttl is specified.   If @a false, then the result table
+ *                 will be an in-memory table and will expire unless a @a ttl
+ *                 is specified otherwise.
  *                 <ul>
  *                         <li> gpudb::aggregate_group_by_true
  *                         <li> gpudb::aggregate_group_by_false
@@ -1587,13 +1607,21 @@ AggregateGroupByResponse aggregateGroupBy( const std::string& tableName,
  *                 gpudb::aggregate_group_by_result_table_generate_pk: If
  *                 'true' then set a primary key for the result table. Must be
  *                 used in combination with the @a result_table option.
- *                         <li> gpudb::aggregate_group_by_ttl: Sets the TTL of
- *                 the table specified in @a result_table. The value must be
- *                 the desired TTL in minutes.
- *                         <li> gpudb::aggregate_group_by_chunk_size: If
- *                 provided this indicates the chunk size to be used for the
- *                 result table. Must be used in combination with the @a
- *                 result_table option.
+ *                         <li> gpudb::aggregate_group_by_ttl: Sets the <a
+ *                 href="../../concepts/ttl.html" target="_top">TTL</a> of the
+ *                 table specified in @a result_table.
+ *                         <li> gpudb::aggregate_group_by_chunk_size: Indicates
+ *                 the chunk size to be used for the result table. Must be used
+ *                 in combination with the @a result_table option.
+ *                         <li> gpudb::aggregate_group_by_materialize_on_gpu:
+ *                 If @a true then the columns of the groupby result table will
+ *                 be cached on the GPU. Must be used in combination with the
+ *                 @a result_table option.
+ *                 <ul>
+ *                         <li> gpudb::aggregate_group_by_true
+ *                         <li> gpudb::aggregate_group_by_false
+ *                 </ul>
+ *                 The default value is gpudb::aggregate_group_by_false.
  *                 </ul>
  * @param[out] response_  Response object containing the results of the
  *                        operation.
@@ -2742,10 +2770,10 @@ AggregateUniqueResponse& aggregateUnique( const AggregateUniqueRequest& request_
  *                 <ul>
  *                         <li> gpudb::aggregate_unique_collection_name: Name
  *                 of a collection which is to contain the table specified in
- *                 'result_table', otherwise the table will be a top-level
- *                 table. If the collection does not allow duplicate types and
- *                 it contains a table of the same type as the given one, then
- *                 this table creation request will fail.
+ *                 @a result_table. If the collection provided is non-existent,
+ *                 the collection will be automatically created. If empty, then
+ *                 the table will be a top-level table.  Additionally this
+ *                 option is invalid if @a tableName is a collection.
  *                         <li> gpudb::aggregate_unique_expression: Optional
  *                 filter expression to apply to the table.
  *                         <li> gpudb::aggregate_unique_sort_order: String
@@ -2761,12 +2789,11 @@ AggregateUniqueResponse& aggregateUnique( const AggregateUniqueRequest& request_
  *                 restrictions as <a href="../../concepts/tables.html"
  *                 target="_top">tables</a>.
  *                         <li> gpudb::aggregate_unique_result_table_persist:
- *                 If @a true then the result table specified in @a
- *                 result_table will be persisted as a regular table (it will
- *                 not be automatically cleared unless a @a ttl is provided,
- *                 and the table data can be modified in subsequent
- *                 operations). If @a false (the default) then the result table
- *                 will be a read-only, memory-only temporary table.
+ *                 If @a true, then the result table specified in @a
+ *                 result_table will be persisted and will not expire unless a
+ *                 @a ttl is specified.   If @a false, then the result table
+ *                 will be an in-memory table and will expire unless a @a ttl
+ *                 is specified otherwise.
  *                 <ul>
  *                         <li> gpudb::aggregate_unique_true
  *                         <li> gpudb::aggregate_unique_false
@@ -2775,18 +2802,17 @@ AggregateUniqueResponse& aggregateUnique( const AggregateUniqueRequest& request_
  *                         <li>
  *                 gpudb::aggregate_unique_result_table_force_replicated: Force
  *                 the result table to be replicated (ignores any sharding).
- *                 Must be used in combination with the 'result_table' option.
+ *                 Must be used in combination with the @a result_table option.
  *                         <li>
  *                 gpudb::aggregate_unique_result_table_generate_pk: If 'true'
  *                 then set a primary key for the result table. Must be used in
- *                 combination with the 'result_table' option.
- *                         <li> gpudb::aggregate_unique_ttl: Sets the TTL of
- *                 the table specified in 'result_table'. The value must be the
- *                 desired TTL in minutes.
- *                         <li> gpudb::aggregate_unique_chunk_size: If provided
- *                 this indicates the chunk size to be used for the result
- *                 table. Must be used in combination with the @a result_table
- *                 option.
+ *                 combination with the @a result_table option.
+ *                         <li> gpudb::aggregate_unique_ttl: Sets the <a
+ *                 href="../../concepts/ttl.html" target="_top">TTL</a> of the
+ *                 table specified in @a result_table.
+ *                         <li> gpudb::aggregate_unique_chunk_size: Indicates
+ *                 the chunk size to be used for the result table. Must be used
+ *                 in combination with the @a result_table option.
  *                 </ul>
  * 
  * @return Response object containing the result of the operation.
@@ -2847,10 +2873,10 @@ AggregateUniqueResponse aggregateUnique( const std::string& tableName,
  *                 <ul>
  *                         <li> gpudb::aggregate_unique_collection_name: Name
  *                 of a collection which is to contain the table specified in
- *                 'result_table', otherwise the table will be a top-level
- *                 table. If the collection does not allow duplicate types and
- *                 it contains a table of the same type as the given one, then
- *                 this table creation request will fail.
+ *                 @a result_table. If the collection provided is non-existent,
+ *                 the collection will be automatically created. If empty, then
+ *                 the table will be a top-level table.  Additionally this
+ *                 option is invalid if @a tableName is a collection.
  *                         <li> gpudb::aggregate_unique_expression: Optional
  *                 filter expression to apply to the table.
  *                         <li> gpudb::aggregate_unique_sort_order: String
@@ -2866,12 +2892,11 @@ AggregateUniqueResponse aggregateUnique( const std::string& tableName,
  *                 restrictions as <a href="../../concepts/tables.html"
  *                 target="_top">tables</a>.
  *                         <li> gpudb::aggregate_unique_result_table_persist:
- *                 If @a true then the result table specified in @a
- *                 result_table will be persisted as a regular table (it will
- *                 not be automatically cleared unless a @a ttl is provided,
- *                 and the table data can be modified in subsequent
- *                 operations). If @a false (the default) then the result table
- *                 will be a read-only, memory-only temporary table.
+ *                 If @a true, then the result table specified in @a
+ *                 result_table will be persisted and will not expire unless a
+ *                 @a ttl is specified.   If @a false, then the result table
+ *                 will be an in-memory table and will expire unless a @a ttl
+ *                 is specified otherwise.
  *                 <ul>
  *                         <li> gpudb::aggregate_unique_true
  *                         <li> gpudb::aggregate_unique_false
@@ -2880,18 +2905,17 @@ AggregateUniqueResponse aggregateUnique( const std::string& tableName,
  *                         <li>
  *                 gpudb::aggregate_unique_result_table_force_replicated: Force
  *                 the result table to be replicated (ignores any sharding).
- *                 Must be used in combination with the 'result_table' option.
+ *                 Must be used in combination with the @a result_table option.
  *                         <li>
  *                 gpudb::aggregate_unique_result_table_generate_pk: If 'true'
  *                 then set a primary key for the result table. Must be used in
- *                 combination with the 'result_table' option.
- *                         <li> gpudb::aggregate_unique_ttl: Sets the TTL of
- *                 the table specified in 'result_table'. The value must be the
- *                 desired TTL in minutes.
- *                         <li> gpudb::aggregate_unique_chunk_size: If provided
- *                 this indicates the chunk size to be used for the result
- *                 table. Must be used in combination with the @a result_table
- *                 option.
+ *                 combination with the @a result_table option.
+ *                         <li> gpudb::aggregate_unique_ttl: Sets the <a
+ *                 href="../../concepts/ttl.html" target="_top">TTL</a> of the
+ *                 table specified in @a result_table.
+ *                         <li> gpudb::aggregate_unique_chunk_size: Indicates
+ *                 the chunk size to be used for the result table. Must be used
+ *                 in combination with the @a result_table option.
  *                 </ul>
  * @param[out] response_  Response object containing the results of the
  *                        operation.
@@ -3033,24 +3057,20 @@ AggregateUnpivotResponse& aggregateUnpivot( const AggregateUnpivotRequest& reque
  *                 <ul>
  *                         <li> gpudb::aggregate_unpivot_collection_name: Name
  *                 of a collection which is to contain the table specified in
- *                 @a result_table, otherwise the table will be a top-level
- *                 table. If the collection does not allow duplicate types and
- *                 it contains a table of the same type as the given one, then
- *                 this table creation request will fail. Additionally this
- *                 option is invalid if @a tableName is a collection.
+ *                 @a result_table. If the collection provided is non-existent,
+ *                 the collection will be automatically created. If empty, then
+ *                 the table will be a top-level table.
  *                         <li> gpudb::aggregate_unpivot_result_table: The name
  *                 of the table used to store the results. Has the same naming
  *                 restrictions as <a href="../../concepts/tables.html"
  *                 target="_top">tables</a>. If present, no results are
  *                 returned in the response.
  *                         <li> gpudb::aggregate_unpivot_result_table_persist:
- *                 If @a true then the result table specified in
- *                 {result_table}@{key of input.options} will be persisted as a
- *                 regular table (it will not be automatically cleared unless a
- *                 @a ttl is provided, and the table data can be modified in
- *                 subsequent operations). If @a false (the default) then the
- *                 result table will be a read-only, memory-only temporary
- *                 table.
+ *                 If @a true, then the result table specified in @a
+ *                 result_table will be persisted and will not expire unless a
+ *                 @a ttl is specified.   If @a false, then the result table
+ *                 will be an in-memory table and will expire unless a @a ttl
+ *                 is specified otherwise.
  *                 <ul>
  *                         <li> gpudb::aggregate_unpivot_true
  *                         <li> gpudb::aggregate_unpivot_false
@@ -3065,15 +3085,14 @@ AggregateUnpivotResponse& aggregateUnpivot( const AggregateUnpivotRequest& reque
  *                 present in input table.  If any alias is given for any
  *                 column name, the alias must be used, rather than the
  *                 original column name.
- *                         <li> gpudb::aggregate_unpivot_chunk_size: If
- *                 provided this indicates the chunk size to be used for the
- *                 result table. Must be used in combination with the @a
- *                 result_table option.
+ *                         <li> gpudb::aggregate_unpivot_chunk_size: Indicates
+ *                 the chunk size to be used for the result table. Must be used
+ *                 in combination with the @a result_table option.
  *                         <li> gpudb::aggregate_unpivot_limit: The number of
  *                 records to keep.
- *                         <li> gpudb::aggregate_unpivot_ttl: Sets the TTL of
- *                 the table specified in @a result_table. The value must be
- *                 the desired TTL in minutes.
+ *                         <li> gpudb::aggregate_unpivot_ttl: Sets the <a
+ *                 href="../../concepts/ttl.html" target="_top">TTL</a> of the
+ *                 table specified in @a result_table.
  *                 </ul>
  * 
  * @return Response object containing the result of the operation.
@@ -3111,24 +3130,20 @@ AggregateUnpivotResponse aggregateUnpivot( const std::string& tableName,
  *                 <ul>
  *                         <li> gpudb::aggregate_unpivot_collection_name: Name
  *                 of a collection which is to contain the table specified in
- *                 @a result_table, otherwise the table will be a top-level
- *                 table. If the collection does not allow duplicate types and
- *                 it contains a table of the same type as the given one, then
- *                 this table creation request will fail. Additionally this
- *                 option is invalid if @a tableName is a collection.
+ *                 @a result_table. If the collection provided is non-existent,
+ *                 the collection will be automatically created. If empty, then
+ *                 the table will be a top-level table.
  *                         <li> gpudb::aggregate_unpivot_result_table: The name
  *                 of the table used to store the results. Has the same naming
  *                 restrictions as <a href="../../concepts/tables.html"
  *                 target="_top">tables</a>. If present, no results are
  *                 returned in the response.
  *                         <li> gpudb::aggregate_unpivot_result_table_persist:
- *                 If @a true then the result table specified in
- *                 {result_table}@{key of input.options} will be persisted as a
- *                 regular table (it will not be automatically cleared unless a
- *                 @a ttl is provided, and the table data can be modified in
- *                 subsequent operations). If @a false (the default) then the
- *                 result table will be a read-only, memory-only temporary
- *                 table.
+ *                 If @a true, then the result table specified in @a
+ *                 result_table will be persisted and will not expire unless a
+ *                 @a ttl is specified.   If @a false, then the result table
+ *                 will be an in-memory table and will expire unless a @a ttl
+ *                 is specified otherwise.
  *                 <ul>
  *                         <li> gpudb::aggregate_unpivot_true
  *                         <li> gpudb::aggregate_unpivot_false
@@ -3143,15 +3158,14 @@ AggregateUnpivotResponse aggregateUnpivot( const std::string& tableName,
  *                 present in input table.  If any alias is given for any
  *                 column name, the alias must be used, rather than the
  *                 original column name.
- *                         <li> gpudb::aggregate_unpivot_chunk_size: If
- *                 provided this indicates the chunk size to be used for the
- *                 result table. Must be used in combination with the @a
- *                 result_table option.
+ *                         <li> gpudb::aggregate_unpivot_chunk_size: Indicates
+ *                 the chunk size to be used for the result table. Must be used
+ *                 in combination with the @a result_table option.
  *                         <li> gpudb::aggregate_unpivot_limit: The number of
  *                 records to keep.
- *                         <li> gpudb::aggregate_unpivot_ttl: Sets the TTL of
- *                 the table specified in @a result_table. The value must be
- *                 the desired TTL in minutes.
+ *                         <li> gpudb::aggregate_unpivot_ttl: Sets the <a
+ *                 href="../../concepts/ttl.html" target="_top">TTL</a> of the
+ *                 table specified in @a result_table.
  *                 </ul>
  * @param[out] response_  Response object containing the results of the
  *                        operation.
@@ -3478,28 +3492,27 @@ AlterSystemPropertiesResponse& alterSystemProperties( const std::map<std::string
  * Apply various modifications to a table, view, or collection.  The available
  * modifications include the following:
  * <p>
- * Create or delete an index on a particular column. This can speed up certain
- * search queries
- * (such as {@link #getRecordsRaw(const GetRecordsRequest&) const}, {@link
- * #deleteRecords(const DeleteRecordsRequest&) const}, {@link
- * #updateRecordsRaw(const RawUpdateRecordsRequest&) const})
- * when using expressions containing equality or relational operators on
- * indexed columns. This
- * only applies to tables.
+ * Create or delete an <a href="../../concepts/indexes.html#column-index"
+ * target="_top">index</a> on a
+ * particular column. This can speed up certain operations when using
+ * expressions
+ * containing equality or relational operators on indexed columns. This only
+ * applies to tables.
  * <p>
- * Set the time-to-live (TTL). This can be applied to tables, views, or
- * collections.  When
- * applied to collections, every table & view within the collection will have
- * its TTL set to the
- * given value.
+ * Set the <a href="../../concepts/ttl.html" target="_top">time-to-live
+ * (TTL)</a>. This can be applied
+ * to tables, views, or collections.  When applied to collections, every
+ * contained
+ * table & view that is not protected will have its TTL set to the given value.
  * <p>
  * Set the global access mode (i.e. locking) for a table. The mode can be set
- * to 'no-access', 'read-only',
- * 'write-only' or 'read-write'.
+ * to
+ * 'no_access', 'read_only', 'write_only' or 'read_write'.
  * <p>
- * Make a table protected or not. Protected tables have their TTLs set to not
- * automatically
- * expire. This can be applied to tables, views, and collections.
+ * Change the <a href="../../concepts/protection.html"
+ * target="_top">protection</a> mode to prevent or
+ * allow automatic expiration. This can be applied to tables, views, and
+ * collections.
  * <p>
  * Allow homogeneous tables within a collection.
  * <p>
@@ -3507,7 +3520,8 @@ AlterSystemPropertiesResponse& alterSystemProperties( const std::map<std::string
  * <a href="../../concepts/types.html" target="_top">type and properties</a>
  * modified.
  * <p>
- * Set or unset compression for a column.
+ * Set or unset <a href="../../concepts/compression.html"
+ * target="_top">compression</a> for a column.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -3522,31 +3536,27 @@ AlterTableResponse alterTable( const AlterTableRequest& request_ ) const;
  * Apply various modifications to a table, view, or collection.  The available
  * modifications include the following:
  * <p>
- * Create or delete an index on a particular column. This can speed up certain
- * search queries
- * (such as {@link
- * #getRecordsRaw(const GetRecordsRequest&,RawGetRecordsResponse&) const},
- * {@link
- * #deleteRecords(const DeleteRecordsRequest&,DeleteRecordsResponse&) const},
- * {@link
- * #updateRecordsRaw(const RawUpdateRecordsRequest&,UpdateRecordsResponse&) const})
- * when using expressions containing equality or relational operators on
- * indexed columns. This
- * only applies to tables.
+ * Create or delete an <a href="../../concepts/indexes.html#column-index"
+ * target="_top">index</a> on a
+ * particular column. This can speed up certain operations when using
+ * expressions
+ * containing equality or relational operators on indexed columns. This only
+ * applies to tables.
  * <p>
- * Set the time-to-live (TTL). This can be applied to tables, views, or
- * collections.  When
- * applied to collections, every table & view within the collection will have
- * its TTL set to the
- * given value.
+ * Set the <a href="../../concepts/ttl.html" target="_top">time-to-live
+ * (TTL)</a>. This can be applied
+ * to tables, views, or collections.  When applied to collections, every
+ * contained
+ * table & view that is not protected will have its TTL set to the given value.
  * <p>
  * Set the global access mode (i.e. locking) for a table. The mode can be set
- * to 'no-access', 'read-only',
- * 'write-only' or 'read-write'.
+ * to
+ * 'no_access', 'read_only', 'write_only' or 'read_write'.
  * <p>
- * Make a table protected or not. Protected tables have their TTLs set to not
- * automatically
- * expire. This can be applied to tables, views, and collections.
+ * Change the <a href="../../concepts/protection.html"
+ * target="_top">protection</a> mode to prevent or
+ * allow automatic expiration. This can be applied to tables, views, and
+ * collections.
  * <p>
  * Allow homogeneous tables within a collection.
  * <p>
@@ -3554,7 +3564,8 @@ AlterTableResponse alterTable( const AlterTableRequest& request_ ) const;
  * <a href="../../concepts/types.html" target="_top">type and properties</a>
  * modified.
  * <p>
- * Set or unset compression for a column.
+ * Set or unset <a href="../../concepts/compression.html"
+ * target="_top">compression</a> for a column.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -3573,28 +3584,27 @@ AlterTableResponse& alterTable( const AlterTableRequest& request_,
  * Apply various modifications to a table, view, or collection.  The available
  * modifications include the following:
  * <p>
- * Create or delete an index on a particular column. This can speed up certain
- * search queries
- * (such as {@link #getRecordsRaw(const GetRecordsRequest&) const}, {@link
- * #deleteRecords(const std::string&,const std::vector<std::string>&,const std::map<std::string, std::string>&) const},
- * {@link #updateRecordsRaw(const RawUpdateRecordsRequest&) const})
- * when using expressions containing equality or relational operators on
- * indexed columns. This
- * only applies to tables.
+ * Create or delete an <a href="../../concepts/indexes.html#column-index"
+ * target="_top">index</a> on a
+ * particular column. This can speed up certain operations when using
+ * expressions
+ * containing equality or relational operators on indexed columns. This only
+ * applies to tables.
  * <p>
- * Set the time-to-live (TTL). This can be applied to tables, views, or
- * collections.  When
- * applied to collections, every table & view within the collection will have
- * its TTL set to the
- * given value.
+ * Set the <a href="../../concepts/ttl.html" target="_top">time-to-live
+ * (TTL)</a>. This can be applied
+ * to tables, views, or collections.  When applied to collections, every
+ * contained
+ * table & view that is not protected will have its TTL set to the given value.
  * <p>
  * Set the global access mode (i.e. locking) for a table. The mode can be set
- * to 'no-access', 'read-only',
- * 'write-only' or 'read-write'.
+ * to
+ * 'no_access', 'read_only', 'write_only' or 'read_write'.
  * <p>
- * Make a table protected or not. Protected tables have their TTLs set to not
- * automatically
- * expire. This can be applied to tables, views, and collections.
+ * Change the <a href="../../concepts/protection.html"
+ * target="_top">protection</a> mode to prevent or
+ * allow automatic expiration. This can be applied to tables, views, and
+ * collections.
  * <p>
  * Allow homogeneous tables within a collection.
  * <p>
@@ -3602,7 +3612,8 @@ AlterTableResponse& alterTable( const AlterTableRequest& request_,
  * <a href="../../concepts/types.html" target="_top">type and properties</a>
  * modified.
  * <p>
- * Set or unset compression for a column.
+ * Set or unset <a href="../../concepts/compression.html"
+ * target="_top">compression</a> for a column.
  * 
  * @param tableName  Table on which the operation will be performed. Must be an
  *                   existing table, view, or collection.
@@ -3612,50 +3623,60 @@ AlterTableResponse& alterTable( const AlterTableRequest& request_,
  *                Sets whether homogeneous tables are allowed in the given
  *                collection. This action is only valid if @a tableName is a
  *                collection. The @a value must be either 'true' or 'false'.
- *                        <li> gpudb::alter_table_create_index: Creates an
- *                index on the column name specified in @a value. If this
- *                column is already indexed, an error will be returned.
+ *                        <li> gpudb::alter_table_create_index: Creates an <a
+ *                href="../../concepts/indexes.html#column-index"
+ *                target="_top">index</a> on the column name specified in @a
+ *                value. If this column is already indexed, an error will be
+ *                returned.
  *                        <li> gpudb::alter_table_delete_index: Deletes an
- *                existing index on the column name specified in @a value. If
- *                this column does not have indexing turned on, an error will
- *                be returned.
- *                        <li> gpudb::alter_table_move_to_collection: Move a
+ *                existing <a href="../../concepts/indexes.html#column-index"
+ *                target="_top">index</a> on the column name specified in @a
+ *                value. If this column does not have indexing turned on, an
+ *                error will be returned.
+ *                        <li> gpudb::alter_table_move_to_collection: Moves a
  *                table into a collection @a value.
  *                        <li> gpudb::alter_table_protected: Sets whether the
- *                given @a tableName should be protected or not. The @a value
- *                must be either 'true' or 'false'.
- *                        <li> gpudb::alter_table_rename_table: Rename a table,
- *                view or collection to @a value. Has the same naming
+ *                given @a tableName should be <a
+ *                href="../../concepts/protection.html"
+ *                target="_top">protected</a> or not. The @a value must be
+ *                either 'true' or 'false'.
+ *                        <li> gpudb::alter_table_rename_table: Renames a
+ *                table, view or collection to @a value. Has the same naming
  *                restrictions as <a href="../../concepts/tables.html"
  *                target="_top">tables</a>.
- *                        <li> gpudb::alter_table_ttl: Sets the TTL of the
- *                table, view, or collection specified in @a tableName. The @a
- *                value must be the desired TTL in minutes.
- *                        <li> gpudb::alter_table_add_column: Add the column
+ *                        <li> gpudb::alter_table_ttl: Sets the <a
+ *                href="../../concepts/ttl.html" target="_top">TTL</a> of the
+ *                table, view, or collection specified in @a tableName.
+ *                        <li> gpudb::alter_table_add_column: Adds the column
  *                specified in @a value to the table specified in @a tableName.
  *                Use @a column_type and @a column_properties in @a options to
  *                set the column's type and properties, respectively.
- *                        <li> gpudb::alter_table_change_column: Change type
+ *                        <li> gpudb::alter_table_change_column: Changes type
  *                and properties of the column specified in @a value.  Use @a
  *                column_type and @a column_properties in @a options to set the
  *                column's type and properties, respectively.
  *                        <li> gpudb::alter_table_set_column_compression:
- *                Modify the compression setting on the column specified in @a
- *                value.
- *                        <li> gpudb::alter_table_delete_column: Delete the
+ *                Modifies the <a href="../../concepts/compression.html"
+ *                target="_top">compression</a> setting on the column specified
+ *                in @a value.
+ *                        <li> gpudb::alter_table_delete_column: Deletes the
  *                column specified in @a value from the table specified in @a
  *                tableName.
- *                        <li> gpudb::alter_table_create_foreign_key: Create a
- *                foreign key using the format 'source_column references
- *                target_table(primary_key_column) [ as <foreign_key_name> ]'.
- *                        <li> gpudb::alter_table_delete_foreign_key: Delete a
- *                foreign key.  The @a value should be the <foreign_key_name>
- *                or the string used to define the foreign key.
- *                        <li> gpudb::alter_table_set_global_access_mode: Set
+ *                        <li> gpudb::alter_table_create_foreign_key: Creates a
+ *                <a href="../../concepts/tables.html#foreign-key"
+ *                target="_top">foreign key</a> using the format 'source_column
+ *                references target_table(primary_key_column) [ as
+ *                <foreign_key_name> ]'.
+ *                        <li> gpudb::alter_table_delete_foreign_key: Deletes a
+ *                <a href="../../concepts/tables.html#foreign-key"
+ *                target="_top">foreign key</a>.  The @a value should be the
+ *                <foreign_key_name> specified when creating the key or the
+ *                complete string used to define it.
+ *                        <li> gpudb::alter_table_set_global_access_mode: Sets
  *                the global access mode (i.e. locking) for the table specified
  *                in @a tableName. Specify the access mode in @a value. Valid
- *                modes are 'no-access', 'read-only', 'write-only' and
- *                'read-write'.
+ *                modes are 'no_access', 'read_only', 'write_only' and
+ *                'read_write'.
  *                </ul>
  * @param value  The value of the modification. May be a column name, 'true' or
  *               'false', a TTL, or the global access mode depending on @a
@@ -3715,28 +3736,27 @@ AlterTableResponse alterTable( const std::string& tableName,
  * Apply various modifications to a table, view, or collection.  The available
  * modifications include the following:
  * <p>
- * Create or delete an index on a particular column. This can speed up certain
- * search queries
- * (such as {@link #getRecordsRaw(const GetRecordsRequest&) const}, {@link
- * #deleteRecords(const std::string&,const std::vector<std::string>&,const std::map<std::string, std::string>&,DeleteRecordsResponse&) const},
- * {@link #updateRecordsRaw(const RawUpdateRecordsRequest&) const})
- * when using expressions containing equality or relational operators on
- * indexed columns. This
- * only applies to tables.
+ * Create or delete an <a href="../../concepts/indexes.html#column-index"
+ * target="_top">index</a> on a
+ * particular column. This can speed up certain operations when using
+ * expressions
+ * containing equality or relational operators on indexed columns. This only
+ * applies to tables.
  * <p>
- * Set the time-to-live (TTL). This can be applied to tables, views, or
- * collections.  When
- * applied to collections, every table & view within the collection will have
- * its TTL set to the
- * given value.
+ * Set the <a href="../../concepts/ttl.html" target="_top">time-to-live
+ * (TTL)</a>. This can be applied
+ * to tables, views, or collections.  When applied to collections, every
+ * contained
+ * table & view that is not protected will have its TTL set to the given value.
  * <p>
  * Set the global access mode (i.e. locking) for a table. The mode can be set
- * to 'no-access', 'read-only',
- * 'write-only' or 'read-write'.
+ * to
+ * 'no_access', 'read_only', 'write_only' or 'read_write'.
  * <p>
- * Make a table protected or not. Protected tables have their TTLs set to not
- * automatically
- * expire. This can be applied to tables, views, and collections.
+ * Change the <a href="../../concepts/protection.html"
+ * target="_top">protection</a> mode to prevent or
+ * allow automatic expiration. This can be applied to tables, views, and
+ * collections.
  * <p>
  * Allow homogeneous tables within a collection.
  * <p>
@@ -3744,7 +3764,8 @@ AlterTableResponse alterTable( const std::string& tableName,
  * <a href="../../concepts/types.html" target="_top">type and properties</a>
  * modified.
  * <p>
- * Set or unset compression for a column.
+ * Set or unset <a href="../../concepts/compression.html"
+ * target="_top">compression</a> for a column.
  * 
  * @param tableName  Table on which the operation will be performed. Must be an
  *                   existing table, view, or collection.
@@ -3754,50 +3775,60 @@ AlterTableResponse alterTable( const std::string& tableName,
  *                Sets whether homogeneous tables are allowed in the given
  *                collection. This action is only valid if @a tableName is a
  *                collection. The @a value must be either 'true' or 'false'.
- *                        <li> gpudb::alter_table_create_index: Creates an
- *                index on the column name specified in @a value. If this
- *                column is already indexed, an error will be returned.
+ *                        <li> gpudb::alter_table_create_index: Creates an <a
+ *                href="../../concepts/indexes.html#column-index"
+ *                target="_top">index</a> on the column name specified in @a
+ *                value. If this column is already indexed, an error will be
+ *                returned.
  *                        <li> gpudb::alter_table_delete_index: Deletes an
- *                existing index on the column name specified in @a value. If
- *                this column does not have indexing turned on, an error will
- *                be returned.
- *                        <li> gpudb::alter_table_move_to_collection: Move a
+ *                existing <a href="../../concepts/indexes.html#column-index"
+ *                target="_top">index</a> on the column name specified in @a
+ *                value. If this column does not have indexing turned on, an
+ *                error will be returned.
+ *                        <li> gpudb::alter_table_move_to_collection: Moves a
  *                table into a collection @a value.
  *                        <li> gpudb::alter_table_protected: Sets whether the
- *                given @a tableName should be protected or not. The @a value
- *                must be either 'true' or 'false'.
- *                        <li> gpudb::alter_table_rename_table: Rename a table,
- *                view or collection to @a value. Has the same naming
+ *                given @a tableName should be <a
+ *                href="../../concepts/protection.html"
+ *                target="_top">protected</a> or not. The @a value must be
+ *                either 'true' or 'false'.
+ *                        <li> gpudb::alter_table_rename_table: Renames a
+ *                table, view or collection to @a value. Has the same naming
  *                restrictions as <a href="../../concepts/tables.html"
  *                target="_top">tables</a>.
- *                        <li> gpudb::alter_table_ttl: Sets the TTL of the
- *                table, view, or collection specified in @a tableName. The @a
- *                value must be the desired TTL in minutes.
- *                        <li> gpudb::alter_table_add_column: Add the column
+ *                        <li> gpudb::alter_table_ttl: Sets the <a
+ *                href="../../concepts/ttl.html" target="_top">TTL</a> of the
+ *                table, view, or collection specified in @a tableName.
+ *                        <li> gpudb::alter_table_add_column: Adds the column
  *                specified in @a value to the table specified in @a tableName.
  *                Use @a column_type and @a column_properties in @a options to
  *                set the column's type and properties, respectively.
- *                        <li> gpudb::alter_table_change_column: Change type
+ *                        <li> gpudb::alter_table_change_column: Changes type
  *                and properties of the column specified in @a value.  Use @a
  *                column_type and @a column_properties in @a options to set the
  *                column's type and properties, respectively.
  *                        <li> gpudb::alter_table_set_column_compression:
- *                Modify the compression setting on the column specified in @a
- *                value.
- *                        <li> gpudb::alter_table_delete_column: Delete the
+ *                Modifies the <a href="../../concepts/compression.html"
+ *                target="_top">compression</a> setting on the column specified
+ *                in @a value.
+ *                        <li> gpudb::alter_table_delete_column: Deletes the
  *                column specified in @a value from the table specified in @a
  *                tableName.
- *                        <li> gpudb::alter_table_create_foreign_key: Create a
- *                foreign key using the format 'source_column references
- *                target_table(primary_key_column) [ as <foreign_key_name> ]'.
- *                        <li> gpudb::alter_table_delete_foreign_key: Delete a
- *                foreign key.  The @a value should be the <foreign_key_name>
- *                or the string used to define the foreign key.
- *                        <li> gpudb::alter_table_set_global_access_mode: Set
+ *                        <li> gpudb::alter_table_create_foreign_key: Creates a
+ *                <a href="../../concepts/tables.html#foreign-key"
+ *                target="_top">foreign key</a> using the format 'source_column
+ *                references target_table(primary_key_column) [ as
+ *                <foreign_key_name> ]'.
+ *                        <li> gpudb::alter_table_delete_foreign_key: Deletes a
+ *                <a href="../../concepts/tables.html#foreign-key"
+ *                target="_top">foreign key</a>.  The @a value should be the
+ *                <foreign_key_name> specified when creating the key or the
+ *                complete string used to define it.
+ *                        <li> gpudb::alter_table_set_global_access_mode: Sets
  *                the global access mode (i.e. locking) for the table specified
  *                in @a tableName. Specify the access mode in @a value. Valid
- *                modes are 'no-access', 'read-only', 'write-only' and
- *                'read-write'.
+ *                modes are 'no_access', 'read_only', 'write_only' and
+ *                'read_write'.
  *                </ul>
  * @param value  The value of the modification. May be a column name, 'true' or
  *               'false', a TTL, or the global access mode depending on @a
@@ -4077,8 +4108,7 @@ AppendRecordsResponse& appendRecords( const AppendRecordsRequest& request_,
  *                 indicating the maximum number of results to be returned from
  *                 source table (specified by @a sourceTableName). Or
  *                 END_OF_SET (-9999) to indicate that the max number of
- *                 results should be returned. Default value is END_OF_SET
- *                 (-9999).
+ *                 results should be returned.
  *                         <li> gpudb::append_records_expression: Optional
  *                 filter expression to apply to the source table (specified by
  *                 @a sourceTableName). Empty by default.
@@ -4144,8 +4174,7 @@ AppendRecordsResponse appendRecords( const std::string& tableName,
  *                 indicating the maximum number of results to be returned from
  *                 source table (specified by @a sourceTableName). Or
  *                 END_OF_SET (-9999) to indicate that the max number of
- *                 results should be returned. Default value is END_OF_SET
- *                 (-9999).
+ *                 results should be returned.
  *                         <li> gpudb::append_records_expression: Optional
  *                 filter expression to apply to the source table (specified by
  *                 @a sourceTableName). Empty by default.
@@ -4459,7 +4488,7 @@ CreateJoinTableResponse& createJoinTable( const CreateJoinTableRequest& request_
  *                       href="../../concepts/tables.html"
  *                       target="_top">tables</a>.
  * @param tableNames  The list of table names composing the join.  Corresponds
- *                    to a SQL statement FROM clause
+ *                    to a SQL statement FROM clause.
  * @param columnNames  List of member table columns or column expressions to be
  *                     included in the join. Columns can be prefixed with
  *                     'table_id.column_name', where 'table_id' is the table
@@ -4531,9 +4560,9 @@ CreateJoinTableResponse& createJoinTable( const CreateJoinTableRequest& request_
  *                 last refresh.
  *                 </ul>
  *                 The default value is gpudb::create_join_table_no_refresh.
- *                         <li> gpudb::create_join_table_ttl: Sets the TTL of
- *                 the table specified in @a joinTableName. The value must be
- *                 the desired TTL in minutes.
+ *                         <li> gpudb::create_join_table_ttl: Sets the <a
+ *                 href="../../concepts/ttl.html" target="_top">TTL</a> of the
+ *                 join table specified in @a joinTableName.
  *                 </ul>
  * 
  * @return Response object containing the result of the operation.
@@ -4556,7 +4585,7 @@ CreateJoinTableResponse createJoinTable( const std::string& joinTableName,
  *                       href="../../concepts/tables.html"
  *                       target="_top">tables</a>.
  * @param tableNames  The list of table names composing the join.  Corresponds
- *                    to a SQL statement FROM clause
+ *                    to a SQL statement FROM clause.
  * @param columnNames  List of member table columns or column expressions to be
  *                     included in the join. Columns can be prefixed with
  *                     'table_id.column_name', where 'table_id' is the table
@@ -4628,9 +4657,9 @@ CreateJoinTableResponse createJoinTable( const std::string& joinTableName,
  *                 last refresh.
  *                 </ul>
  *                 The default value is gpudb::create_join_table_no_refresh.
- *                         <li> gpudb::create_join_table_ttl: Sets the TTL of
- *                 the table specified in @a joinTableName. The value must be
- *                 the desired TTL in minutes.
+ *                         <li> gpudb::create_join_table_ttl: Sets the <a
+ *                 href="../../concepts/ttl.html" target="_top">TTL</a> of the
+ *                 join table specified in @a joinTableName.
  *                 </ul>
  * @param[out] response_  Response object containing the results of the
  *                        operation.
@@ -4913,6 +4942,7 @@ CreateProjectionResponse& createProjection( const CreateProjectionRequest& reque
  *                 target="_top">collection</a> to which the projection is to
  *                 be assigned as a child. If the collection provided is
  *                 non-existent, the collection will be automatically created.
+ *                 If empty, then the projection will be at the top level.
  *                         <li> gpudb::create_projection_expression: An
  *                 optional filter <a href="../../concepts/expressions.html"
  *                 target="_top">expression</a> to be applied to the source
@@ -4933,25 +4963,22 @@ CreateProjectionResponse& createProjection( const CreateProjectionRequest& reque
  *                         <li> gpudb::create_projection_false
  *                 </ul>
  *                 The default value is gpudb::create_projection_false.
- *                         <li> gpudb::create_projection_chunk_size: If
- *                 provided this indicates the chunk size to be used for this
- *                 table.
- *                         <li> gpudb::create_projection_ttl: Sets the TTL of
- *                 the table, view, or collection specified in @a
- *                 projectionName. The value must be the desired TTL in
- *                 minutes.
+ *                         <li> gpudb::create_projection_chunk_size: Indicates
+ *                 the chunk size to be used for this table.
+ *                         <li> gpudb::create_projection_ttl: Sets the <a
+ *                 href="../../concepts/ttl.html" target="_top">TTL</a> of the
+ *                 projection specified in @a projectionName.
  *                         <li> gpudb::create_projection_shard_key:
  *                 Comma-separated list of the columns to be sharded on; e.g.
  *                 'column1, column2'.  The columns specified must be present
  *                 in @a columnNames.  If any alias is given for any column
  *                 name, the alias must be used, rather than the original
  *                 column name.
- *                         <li> gpudb::create_projection_persist: If @a true
- *                 then the projection will be persisted as a regular table (it
- *                 will not be automatically cleared unless a @a ttl is
- *                 provided, and the table data can be modified in subsequent
- *                 operations). If @a false then the projection will be a
- *                 read-only, memory-only temporary table.
+ *                         <li> gpudb::create_projection_persist: If @a true,
+ *                 then the projection specified in @a projectionName will be
+ *                 persisted and will not expire unless a @a ttl is specified.
+ *                 If @a false, then the projection will be an in-memory table
+ *                 and will expire unless a @a ttl is specified otherwise.
  *                 <ul>
  *                         <li> gpudb::create_projection_true
  *                         <li> gpudb::create_projection_false
@@ -5012,6 +5039,7 @@ CreateProjectionResponse createProjection( const std::string& tableName,
  *                 target="_top">collection</a> to which the projection is to
  *                 be assigned as a child. If the collection provided is
  *                 non-existent, the collection will be automatically created.
+ *                 If empty, then the projection will be at the top level.
  *                         <li> gpudb::create_projection_expression: An
  *                 optional filter <a href="../../concepts/expressions.html"
  *                 target="_top">expression</a> to be applied to the source
@@ -5032,25 +5060,22 @@ CreateProjectionResponse createProjection( const std::string& tableName,
  *                         <li> gpudb::create_projection_false
  *                 </ul>
  *                 The default value is gpudb::create_projection_false.
- *                         <li> gpudb::create_projection_chunk_size: If
- *                 provided this indicates the chunk size to be used for this
- *                 table.
- *                         <li> gpudb::create_projection_ttl: Sets the TTL of
- *                 the table, view, or collection specified in @a
- *                 projectionName. The value must be the desired TTL in
- *                 minutes.
+ *                         <li> gpudb::create_projection_chunk_size: Indicates
+ *                 the chunk size to be used for this table.
+ *                         <li> gpudb::create_projection_ttl: Sets the <a
+ *                 href="../../concepts/ttl.html" target="_top">TTL</a> of the
+ *                 projection specified in @a projectionName.
  *                         <li> gpudb::create_projection_shard_key:
  *                 Comma-separated list of the columns to be sharded on; e.g.
  *                 'column1, column2'.  The columns specified must be present
  *                 in @a columnNames.  If any alias is given for any column
  *                 name, the alias must be used, rather than the original
  *                 column name.
- *                         <li> gpudb::create_projection_persist: If @a true
- *                 then the projection will be persisted as a regular table (it
- *                 will not be automatically cleared unless a @a ttl is
- *                 provided, and the table data can be modified in subsequent
- *                 operations). If @a false then the projection will be a
- *                 read-only, memory-only temporary table.
+ *                         <li> gpudb::create_projection_persist: If @a true,
+ *                 then the projection specified in @a projectionName will be
+ *                 persisted and will not expire unless a @a ttl is specified.
+ *                 If @a false, then the projection will be an in-memory table
+ *                 and will expire unless a @a ttl is specified otherwise.
  *                 <ul>
  *                         <li> gpudb::create_projection_true
  *                         <li> gpudb::create_projection_false
@@ -5213,10 +5238,9 @@ CreateTableResponse& createTable( const CreateTableRequest& request_,
  *                 The default value is gpudb::create_table_false.
  *                         <li> gpudb::create_table_collection_name: Name of a
  *                 collection which is to contain the newly created table. If
- *                 empty, then the newly created table will be a top-level
- *                 table. If the collection does not allow duplicate types and
- *                 it contains a table of the same type as the given one, then
- *                 this table creation request will fail.
+ *                 the collection provided is non-existent, the collection will
+ *                 be automatically created. If empty, then the newly created
+ *                 table will be a top-level table.
  *                         <li> gpudb::create_table_is_collection: Indicates
  *                 whether the new table to be created will be a collection.
  *                 <ul>
@@ -5235,33 +5259,44 @@ CreateTableResponse& createTable( const CreateTableRequest& request_,
  *                 </ul>
  *                 The default value is gpudb::create_table_false.
  *                         <li> gpudb::create_table_is_replicated: For a table,
- *                 indicates whether the table is to be replicated to all the
- *                 database ranks. This may be necessary when the table is to
- *                 be joined with other tables in a query.
+ *                 indicates the <a
+ *                 href="../../concepts/tables.html#distribution"
+ *                 target="_top">distribution scheme</a> for the table's data.
+ *                 If true, the table will be <a
+ *                 href="../../concepts/tables.html#replication"
+ *                 target="_top">replicated</a>.  If false, the table will be
+ *                 <a href="../../concepts/tables.html#sharding"
+ *                 target="_top">sharded</a> according to the <a
+ *                 href="../../concepts/tables.html#shard-keys"
+ *                 target="_top">shard key</a> specified in the given @a
+ *                 typeId, or <a
+ *                 href="../../concepts/tables.html#random-sharding"
+ *                 target="_top">randomly sharded</a>, if no shard key is
+ *                 specified.
  *                 <ul>
  *                         <li> gpudb::create_table_true
  *                         <li> gpudb::create_table_false
  *                 </ul>
  *                 The default value is gpudb::create_table_false.
  *                         <li> gpudb::create_table_foreign_keys:
- *                 Semicolon-separated list of foreign keys, of the format
- *                 'source_column references target_table(primary_key_column) [
- *                 as <foreign_key_name> ]'.
+ *                 Semicolon-separated list of <a
+ *                 href="../../concepts/tables.html#foreign-keys"
+ *                 target="_top">foreign keys</a>, of the format 'source_column
+ *                 references target_table(primary_key_column) [ as
+ *                 <foreign_key_name> ]'.
  *                         <li> gpudb::create_table_foreign_shard_key: Foreign
  *                 shard key of the format 'source_column references
  *                 shard_by_column from target_table(primary_key_column)'
- *                         <li> gpudb::create_table_ttl: Sets the TTL of the
- *                 table or collection specified in @a tableName. The value
- *                 must be the desired TTL in minutes.
- *                         <li> gpudb::create_table_chunk_size: If provided
- *                 this indicates the chunk size to be used for this table.
+ *                         <li> gpudb::create_table_ttl: For a table, sets the
+ *                 <a href="../../concepts/ttl.html" target="_top">TTL</a> of
+ *                 the table specified in @a tableName.
+ *                         <li> gpudb::create_table_chunk_size: Indicates the
+ *                 chunk size to be used for this table.
  *                         <li> gpudb::create_table_is_result_table: For a
- *                 table, indicates whether the table is a non-persistent,
- *                 memory-only table that will store the output of a proc
- *                 executed with /execute/proc. A result table cannot contain
- *                 store_only, text_search, or string columns (char columns are
- *                 acceptable), records cannot be inserted into it directly,
- *                 and it will not be retained if the server is restarted.
+ *                 table, indicates whether the table is an in-memory table. A
+ *                 result table cannot contain store_only, text_search, or
+ *                 string columns (charN columns are acceptable), and it will
+ *                 not be retained if the server is restarted.
  *                 <ul>
  *                         <li> gpudb::create_table_true
  *                         <li> gpudb::create_table_false
@@ -5311,10 +5346,9 @@ CreateTableResponse createTable( const std::string& tableName,
  *                 The default value is gpudb::create_table_false.
  *                         <li> gpudb::create_table_collection_name: Name of a
  *                 collection which is to contain the newly created table. If
- *                 empty, then the newly created table will be a top-level
- *                 table. If the collection does not allow duplicate types and
- *                 it contains a table of the same type as the given one, then
- *                 this table creation request will fail.
+ *                 the collection provided is non-existent, the collection will
+ *                 be automatically created. If empty, then the newly created
+ *                 table will be a top-level table.
  *                         <li> gpudb::create_table_is_collection: Indicates
  *                 whether the new table to be created will be a collection.
  *                 <ul>
@@ -5333,33 +5367,44 @@ CreateTableResponse createTable( const std::string& tableName,
  *                 </ul>
  *                 The default value is gpudb::create_table_false.
  *                         <li> gpudb::create_table_is_replicated: For a table,
- *                 indicates whether the table is to be replicated to all the
- *                 database ranks. This may be necessary when the table is to
- *                 be joined with other tables in a query.
+ *                 indicates the <a
+ *                 href="../../concepts/tables.html#distribution"
+ *                 target="_top">distribution scheme</a> for the table's data.
+ *                 If true, the table will be <a
+ *                 href="../../concepts/tables.html#replication"
+ *                 target="_top">replicated</a>.  If false, the table will be
+ *                 <a href="../../concepts/tables.html#sharding"
+ *                 target="_top">sharded</a> according to the <a
+ *                 href="../../concepts/tables.html#shard-keys"
+ *                 target="_top">shard key</a> specified in the given @a
+ *                 typeId, or <a
+ *                 href="../../concepts/tables.html#random-sharding"
+ *                 target="_top">randomly sharded</a>, if no shard key is
+ *                 specified.
  *                 <ul>
  *                         <li> gpudb::create_table_true
  *                         <li> gpudb::create_table_false
  *                 </ul>
  *                 The default value is gpudb::create_table_false.
  *                         <li> gpudb::create_table_foreign_keys:
- *                 Semicolon-separated list of foreign keys, of the format
- *                 'source_column references target_table(primary_key_column) [
- *                 as <foreign_key_name> ]'.
+ *                 Semicolon-separated list of <a
+ *                 href="../../concepts/tables.html#foreign-keys"
+ *                 target="_top">foreign keys</a>, of the format 'source_column
+ *                 references target_table(primary_key_column) [ as
+ *                 <foreign_key_name> ]'.
  *                         <li> gpudb::create_table_foreign_shard_key: Foreign
  *                 shard key of the format 'source_column references
  *                 shard_by_column from target_table(primary_key_column)'
- *                         <li> gpudb::create_table_ttl: Sets the TTL of the
- *                 table or collection specified in @a tableName. The value
- *                 must be the desired TTL in minutes.
- *                         <li> gpudb::create_table_chunk_size: If provided
- *                 this indicates the chunk size to be used for this table.
+ *                         <li> gpudb::create_table_ttl: For a table, sets the
+ *                 <a href="../../concepts/ttl.html" target="_top">TTL</a> of
+ *                 the table specified in @a tableName.
+ *                         <li> gpudb::create_table_chunk_size: Indicates the
+ *                 chunk size to be used for this table.
  *                         <li> gpudb::create_table_is_result_table: For a
- *                 table, indicates whether the table is a non-persistent,
- *                 memory-only table that will store the output of a proc
- *                 executed with /execute/proc. A result table cannot contain
- *                 store_only, text_search, or string columns (char columns are
- *                 acceptable), records cannot be inserted into it directly,
- *                 and it will not be retained if the server is restarted.
+ *                 table, indicates whether the table is an in-memory table. A
+ *                 result table cannot contain store_only, text_search, or
+ *                 string columns (charN columns are acceptable), and it will
+ *                 not be retained if the server is restarted.
  *                 <ul>
  *                         <li> gpudb::create_table_true
  *                         <li> gpudb::create_table_false
@@ -6293,7 +6338,7 @@ CreateTypeResponse& createType( const std::string& typeDefinition,
 /**
  * Performs a <a href="../../concepts/unions.html" target="_top">union</a>
  * (concatenation) of one or more existing tables or views, the results of
- * which are stored in a new view. It is equivalent to the SQL UNION ALL
+ * which are stored in a new table. It is equivalent to the SQL UNION ALL
  * operator.  Non-charN 'string' and 'bytes' column types cannot be included in
  * a union, neither can columns with the property 'store_only'. Though not
  * explicitly unions, <a href="../../concepts/intersect.html"
@@ -6312,7 +6357,7 @@ CreateUnionResponse createUnion( const CreateUnionRequest& request_ ) const;
 /**
  * Performs a <a href="../../concepts/unions.html" target="_top">union</a>
  * (concatenation) of one or more existing tables or views, the results of
- * which are stored in a new view. It is equivalent to the SQL UNION ALL
+ * which are stored in a new table. It is equivalent to the SQL UNION ALL
  * operator.  Non-charN 'string' and 'bytes' column types cannot be included in
  * a union, neither can columns with the property 'store_only'. Though not
  * explicitly unions, <a href="../../concepts/intersect.html"
@@ -6335,7 +6380,7 @@ CreateUnionResponse& createUnion( const CreateUnionRequest& request_,
 /**
  * Performs a <a href="../../concepts/unions.html" target="_top">union</a>
  * (concatenation) of one or more existing tables or views, the results of
- * which are stored in a new view. It is equivalent to the SQL UNION ALL
+ * which are stored in a new table. It is equivalent to the SQL UNION ALL
  * operator.  Non-charN 'string' and 'bytes' column types cannot be included in
  * a union, neither can columns with the property 'store_only'. Though not
  * explicitly unions, <a href="../../concepts/intersect.html"
@@ -6386,25 +6431,26 @@ CreateUnionResponse& createUnion( const CreateUnionRequest& request_,
  *                 (only works on 2 tables).
  *                         <li> gpudb::create_union_merge_views: Merge two or
  *                 more views (or views of views) of the same base data set
- *                 into a new view. The resulting view would match the results
- *                 of a SQL OR operation, e.g., if filter 1 creates a view
- *                 using the expression 'x = 10' and filter 2 creates a view
- *                 using the expression 'x <= 10', then the merge views
- *                 operation creates a new view using the expression 'x = 10 OR
- *                 x <= 10'.
+ *                 into a new view. If this mode is selected
+ *                                                       @a inputColumnNames
+ *                 AND @a outputColumnNames are ignored The resulting view
+ *                 would match the results of a SQL OR operation, e.g., if
+ *                 filter 1 creates a view using the expression 'x = 10' and
+ *                 filter 2 creates a view using the expression 'x <= 10', then
+ *                 the merge views operation creates a new view using the
+ *                 expression 'x = 10 OR x <= 10'.
  *                 </ul>
  *                 The default value is gpudb::create_union_union_all.
- *                         <li> gpudb::create_union_chunk_size: If provided
- *                 this indicates the chunk size to be used for this table.
- *                         <li> gpudb::create_union_ttl: Sets the TTL of the
- *                 table specified in @a tableName. The value must be the
- *                 desired TTL in minutes.
- *                         <li> gpudb::create_union_persist: If @a true then
- *                 the union will be persisted as a regular table (it will not
- *                 be automatically cleared unless a @a ttl is provided, and
- *                 the table data can be modified in subsequent operations). If
- *                 @a false (the default) then the union will be a read-only,
- *                 memory-only temporary table.
+ *                         <li> gpudb::create_union_chunk_size: Indicates the
+ *                 chunk size to be used for this table.
+ *                         <li> gpudb::create_union_ttl: Sets the <a
+ *                 href="../../concepts/ttl.html" target="_top">TTL</a> of the
+ *                 table specified in @a tableName.
+ *                         <li> gpudb::create_union_persist: If @a true, then
+ *                 the union specified in @a tableName will be persisted and
+ *                 will not expire unless a @a ttl is specified.   If @a false,
+ *                 then the union will be an in-memory table and will expire
+ *                 unless a @a ttl is specified otherwise.
  *                 <ul>
  *                         <li> gpudb::create_union_true
  *                         <li> gpudb::create_union_false
@@ -6425,7 +6471,7 @@ CreateUnionResponse createUnion( const std::string& tableName,
 /**
  * Performs a <a href="../../concepts/unions.html" target="_top">union</a>
  * (concatenation) of one or more existing tables or views, the results of
- * which are stored in a new view. It is equivalent to the SQL UNION ALL
+ * which are stored in a new table. It is equivalent to the SQL UNION ALL
  * operator.  Non-charN 'string' and 'bytes' column types cannot be included in
  * a union, neither can columns with the property 'store_only'. Though not
  * explicitly unions, <a href="../../concepts/intersect.html"
@@ -6476,25 +6522,26 @@ CreateUnionResponse createUnion( const std::string& tableName,
  *                 (only works on 2 tables).
  *                         <li> gpudb::create_union_merge_views: Merge two or
  *                 more views (or views of views) of the same base data set
- *                 into a new view. The resulting view would match the results
- *                 of a SQL OR operation, e.g., if filter 1 creates a view
- *                 using the expression 'x = 10' and filter 2 creates a view
- *                 using the expression 'x <= 10', then the merge views
- *                 operation creates a new view using the expression 'x = 10 OR
- *                 x <= 10'.
+ *                 into a new view. If this mode is selected
+ *                                                       @a inputColumnNames
+ *                 AND @a outputColumnNames are ignored The resulting view
+ *                 would match the results of a SQL OR operation, e.g., if
+ *                 filter 1 creates a view using the expression 'x = 10' and
+ *                 filter 2 creates a view using the expression 'x <= 10', then
+ *                 the merge views operation creates a new view using the
+ *                 expression 'x = 10 OR x <= 10'.
  *                 </ul>
  *                 The default value is gpudb::create_union_union_all.
- *                         <li> gpudb::create_union_chunk_size: If provided
- *                 this indicates the chunk size to be used for this table.
- *                         <li> gpudb::create_union_ttl: Sets the TTL of the
- *                 table specified in @a tableName. The value must be the
- *                 desired TTL in minutes.
- *                         <li> gpudb::create_union_persist: If @a true then
- *                 the union will be persisted as a regular table (it will not
- *                 be automatically cleared unless a @a ttl is provided, and
- *                 the table data can be modified in subsequent operations). If
- *                 @a false (the default) then the union will be a read-only,
- *                 memory-only temporary table.
+ *                         <li> gpudb::create_union_chunk_size: Indicates the
+ *                 chunk size to be used for this table.
+ *                         <li> gpudb::create_union_ttl: Sets the <a
+ *                 href="../../concepts/ttl.html" target="_top">TTL</a> of the
+ *                 table specified in @a tableName.
+ *                         <li> gpudb::create_union_persist: If @a true, then
+ *                 the union specified in @a tableName will be persisted and
+ *                 will not expire unless a @a ttl is specified.   If @a false,
+ *                 then the union will be an in-memory table and will expire
+ *                 unless a @a ttl is specified otherwise.
  *                 <ul>
  *                         <li> gpudb::create_union_true
  *                         <li> gpudb::create_union_false
@@ -7180,14 +7227,13 @@ FilterResponse& filter( const FilterRequest& request_,
  * @param options  Optional parameters.
  *                 <ul>
  *                         <li> gpudb::filter_collection_name: Name of a
- *                 collection which is to contain the newly created view,
- *                 otherwise the view will be a top-level table. If the
- *                 collection does not allow duplicate types and it contains a
- *                 table of the same type as the given one, then this table
- *                 creation request will fail.
- *                         <li> gpudb::filter_ttl: Sets the TTL of the view
- *                 specified in @a viewName. The value must be the desired TTL
- *                 in minutes.
+ *                 collection which is to contain the newly created view. If
+ *                 the collection provided is non-existent, the collection will
+ *                 be automatically created. If empty, then the newly created
+ *                 view will be top-level.
+ *                         <li> gpudb::filter_ttl: Sets the <a
+ *                 href="../../concepts/ttl.html" target="_top">TTL</a> of the
+ *                 view specified in @a viewName.
  *                 </ul>
  * 
  * @return Response object containing the result of the operation.
@@ -7223,14 +7269,13 @@ FilterResponse filter( const std::string& tableName,
  * @param options  Optional parameters.
  *                 <ul>
  *                         <li> gpudb::filter_collection_name: Name of a
- *                 collection which is to contain the newly created view,
- *                 otherwise the view will be a top-level table. If the
- *                 collection does not allow duplicate types and it contains a
- *                 table of the same type as the given one, then this table
- *                 creation request will fail.
- *                         <li> gpudb::filter_ttl: Sets the TTL of the view
- *                 specified in @a viewName. The value must be the desired TTL
- *                 in minutes.
+ *                 collection which is to contain the newly created view. If
+ *                 the collection provided is non-existent, the collection will
+ *                 be automatically created. If empty, then the newly created
+ *                 view will be top-level.
+ *                         <li> gpudb::filter_ttl: Sets the <a
+ *                 href="../../concepts/ttl.html" target="_top">TTL</a> of the
+ *                 view specified in @a viewName.
  *                 </ul>
  * @param[out] response_  Response object containing the results of the
  *                        operation.
@@ -9877,19 +9922,16 @@ GetRecordsResponse<TResponse>& getRecords( const Type& type_,
 
 
 /**
- * For a given table, retrieves the values of the given columns within a given
- * range. It returns maps of column name to the vector of values for each
- * supported data type (double, float, long, int and string). This operation
- * supports pagination feature, i.e. values that are retrieved are those
- * associated with the indices between the start (offset) and end value (offset
- * + limit) parameters (inclusive). If there are num_points values in the table
- * then each of the indices between 0 and num_points-1 retrieves a unique
- * value.
+ * For a given table, retrieves the values from the requested column(s). Maps
+ * of column name to the array of values as well as the column data type are
+ * returned. This endpoint supports pagination with the @a offset and @a limit
+ * parameters.
  * <p>
- * Note that when using the pagination feature, if the table (or the underlying
- * table in case of a view) is updated (records are inserted, deleted or
- * modified) the records or values retrieved may differ between calls
- * (discontiguous or overlap) based on the type of the update.
+ * When using pagination, if the table (or the underlying table in the case of
+ * a view) is modified (records are inserted, updated, or deleted) during a
+ * call to the endpoint, the records or values retrieved may differ between
+ * calls based on the type of the update, e.g., the contiguity across pages
+ * cannot be relied upon.
  * <p>
  * The response is returned as a dynamic schema. For details see: <a
  * href="../../concepts/dynamic_schemas.html" target="_top">dynamic schemas
@@ -9905,19 +9947,16 @@ GetRecordsResponse<TResponse>& getRecords( const Type& type_,
 RawGetRecordsByColumnResponse getRecordsByColumnRaw( const GetRecordsByColumnRequest& request_ ) const;
 
 /**
- * For a given table, retrieves the values of the given columns within a given
- * range. It returns maps of column name to the vector of values for each
- * supported data type (double, float, long, int and string). This operation
- * supports pagination feature, i.e. values that are retrieved are those
- * associated with the indices between the start (offset) and end value (offset
- * + limit) parameters (inclusive). If there are num_points values in the table
- * then each of the indices between 0 and num_points-1 retrieves a unique
- * value.
+ * For a given table, retrieves the values from the requested column(s). Maps
+ * of column name to the array of values as well as the column data type are
+ * returned. This endpoint supports pagination with the @a offset and @a limit
+ * parameters.
  * <p>
- * Note that when using the pagination feature, if the table (or the underlying
- * table in case of a view) is updated (records are inserted, deleted or
- * modified) the records or values retrieved may differ between calls
- * (discontiguous or overlap) based on the type of the update.
+ * When using pagination, if the table (or the underlying table in the case of
+ * a view) is modified (records are inserted, updated, or deleted) during a
+ * call to the endpoint, the records or values retrieved may differ between
+ * calls based on the type of the update, e.g., the contiguity across pages
+ * cannot be relied upon.
  * <p>
  * The response is returned as a dynamic schema. For details see: <a
  * href="../../concepts/dynamic_schemas.html" target="_top">dynamic schemas
@@ -9937,19 +9976,16 @@ RawGetRecordsByColumnResponse& getRecordsByColumnRaw( const GetRecordsByColumnRe
                                                       RawGetRecordsByColumnResponse& response_ ) const;
 
 /**
- * For a given table, retrieves the values of the given columns within a given
- * range. It returns maps of column name to the vector of values for each
- * supported data type (double, float, long, int and string). This operation
- * supports pagination feature, i.e. values that are retrieved are those
- * associated with the indices between the start (offset) and end value (offset
- * + limit) parameters (inclusive). If there are num_points values in the table
- * then each of the indices between 0 and num_points-1 retrieves a unique
- * value.
+ * For a given table, retrieves the values from the requested column(s). Maps
+ * of column name to the array of values as well as the column data type are
+ * returned. This endpoint supports pagination with the @a offset and @a limit
+ * parameters.
  * <p>
- * Note that when using the pagination feature, if the table (or the underlying
- * table in case of a view) is updated (records are inserted, deleted or
- * modified) the records or values retrieved may differ between calls
- * (discontiguous or overlap) based on the type of the update.
+ * When using pagination, if the table (or the underlying table in the case of
+ * a view) is modified (records are inserted, updated, or deleted) during a
+ * call to the endpoint, the records or values retrieved may differ between
+ * calls based on the type of the update, e.g., the contiguity across pages
+ * cannot be relied upon.
  * <p>
  * The response is returned as a dynamic schema. For details see: <a
  * href="../../concepts/dynamic_schemas.html" target="_top">dynamic schemas
@@ -9965,19 +10001,16 @@ RawGetRecordsByColumnResponse& getRecordsByColumnRaw( const GetRecordsByColumnRe
 GetRecordsByColumnResponse getRecordsByColumn( const GetRecordsByColumnRequest& request_ ) const;
 
 /**
- * For a given table, retrieves the values of the given columns within a given
- * range. It returns maps of column name to the vector of values for each
- * supported data type (double, float, long, int and string). This operation
- * supports pagination feature, i.e. values that are retrieved are those
- * associated with the indices between the start (offset) and end value (offset
- * + limit) parameters (inclusive). If there are num_points values in the table
- * then each of the indices between 0 and num_points-1 retrieves a unique
- * value.
+ * For a given table, retrieves the values from the requested column(s). Maps
+ * of column name to the array of values as well as the column data type are
+ * returned. This endpoint supports pagination with the @a offset and @a limit
+ * parameters.
  * <p>
- * Note that when using the pagination feature, if the table (or the underlying
- * table in case of a view) is updated (records are inserted, deleted or
- * modified) the records or values retrieved may differ between calls
- * (discontiguous or overlap) based on the type of the update.
+ * When using pagination, if the table (or the underlying table in the case of
+ * a view) is modified (records are inserted, updated, or deleted) during a
+ * call to the endpoint, the records or values retrieved may differ between
+ * calls based on the type of the update, e.g., the contiguity across pages
+ * cannot be relied upon.
  * <p>
  * The response is returned as a dynamic schema. For details see: <a
  * href="../../concepts/dynamic_schemas.html" target="_top">dynamic schemas
@@ -9997,19 +10030,16 @@ GetRecordsByColumnResponse& getRecordsByColumn( const GetRecordsByColumnRequest&
                                                 GetRecordsByColumnResponse& response_ ) const;
 
 /**
- * For a given table, retrieves the values of the given columns within a given
- * range. It returns maps of column name to the vector of values for each
- * supported data type (double, float, long, int and string). This operation
- * supports pagination feature, i.e. values that are retrieved are those
- * associated with the indices between the start (offset) and end value (offset
- * + limit) parameters (inclusive). If there are num_points values in the table
- * then each of the indices between 0 and num_points-1 retrieves a unique
- * value.
+ * For a given table, retrieves the values from the requested column(s). Maps
+ * of column name to the array of values as well as the column data type are
+ * returned. This endpoint supports pagination with the @a offset and @a limit
+ * parameters.
  * <p>
- * Note that when using the pagination feature, if the table (or the underlying
- * table in case of a view) is updated (records are inserted, deleted or
- * modified) the records or values retrieved may differ between calls
- * (discontiguous or overlap) based on the type of the update.
+ * When using pagination, if the table (or the underlying table in the case of
+ * a view) is modified (records are inserted, updated, or deleted) during a
+ * call to the endpoint, the records or values retrieved may differ between
+ * calls based on the type of the update, e.g., the contiguity across pages
+ * cannot be relied upon.
  * <p>
  * The response is returned as a dynamic schema. For details see: <a
  * href="../../concepts/dynamic_schemas.html" target="_top">dynamic schemas
@@ -10061,19 +10091,16 @@ GetRecordsByColumnResponse getRecordsByColumn( const std::string& tableName,
                                                const std::map<std::string, std::string>& options ) const;
 
 /**
- * For a given table, retrieves the values of the given columns within a given
- * range. It returns maps of column name to the vector of values for each
- * supported data type (double, float, long, int and string). This operation
- * supports pagination feature, i.e. values that are retrieved are those
- * associated with the indices between the start (offset) and end value (offset
- * + limit) parameters (inclusive). If there are num_points values in the table
- * then each of the indices between 0 and num_points-1 retrieves a unique
- * value.
+ * For a given table, retrieves the values from the requested column(s). Maps
+ * of column name to the array of values as well as the column data type are
+ * returned. This endpoint supports pagination with the @a offset and @a limit
+ * parameters.
  * <p>
- * Note that when using the pagination feature, if the table (or the underlying
- * table in case of a view) is updated (records are inserted, deleted or
- * modified) the records or values retrieved may differ between calls
- * (discontiguous or overlap) based on the type of the update.
+ * When using pagination, if the table (or the underlying table in the case of
+ * a view) is modified (records are inserted, updated, or deleted) during a
+ * call to the endpoint, the records or values retrieved may differ between
+ * calls based on the type of the update, e.g., the contiguity across pages
+ * cannot be relied upon.
  * <p>
  * The response is returned as a dynamic schema. For details see: <a
  * href="../../concepts/dynamic_schemas.html" target="_top">dynamic schemas
@@ -12436,9 +12463,10 @@ InsertRecordsRandomResponse& insertRecordsRandom( const InsertRecordsRandomReque
  *                 not applicable to WKT or Track-specific columns. The value
  *                 must be greater than 0. This option is disabled by default.
  *                 </ul>
- *                         <li> gpudb::insert_records_random_attr_name: Set the
- *                 following parameters for the column specified by the key.
- *                 This overrides any parameter set by @a all.
+ *                         <li> gpudb::insert_records_random_attr_name: Use the
+ *                 desired column name in place of @a attr_name, and set the
+ *                 following parameters for the column specified. This
+ *                 overrides any parameter set by @a all.
  *                 <ul>
  *                         <li> gpudb::insert_records_random_min: For numerical
  *                 columns, the minimum of the generated values is set to this
@@ -12627,9 +12655,10 @@ InsertRecordsRandomResponse insertRecordsRandom( const std::string& tableName,
  *                 not applicable to WKT or Track-specific columns. The value
  *                 must be greater than 0. This option is disabled by default.
  *                 </ul>
- *                         <li> gpudb::insert_records_random_attr_name: Set the
- *                 following parameters for the column specified by the key.
- *                 This overrides any parameter set by @a all.
+ *                         <li> gpudb::insert_records_random_attr_name: Use the
+ *                 desired column name in place of @a attr_name, and set the
+ *                 following parameters for the column specified. This
+ *                 overrides any parameter set by @a all.
  *                 <ul>
  *                         <li> gpudb::insert_records_random_min: For numerical
  *                 columns, the minimum of the generated values is set to this
@@ -12922,10 +12951,10 @@ KillProcResponse& killProc( const std::string& runId,
 
 /**
  * Manages global access to a table's data.  By default a table has a @a
- * lockType of @a read-write, indicating all operations are permitted.  A user
- * may request a @a read-only or a @a write-only lock, after which only read or
+ * lockType of @a read_write, indicating all operations are permitted.  A user
+ * may request a @a read_only or a @a write_only lock, after which only read or
  * write operations, respectively, are permitted on the table until the lock is
- * removed.  When @a lockType is @a no-access then no operations are permitted
+ * removed.  When @a lockType is @a no_access then no operations are permitted
  * on the table.  The lock status can be queried by setting @a lockType to @a
  * status.
  * 
@@ -12940,10 +12969,10 @@ LockTableResponse lockTable( const LockTableRequest& request_ ) const;
 
 /**
  * Manages global access to a table's data.  By default a table has a @a
- * lockType of @a read-write, indicating all operations are permitted.  A user
- * may request a @a read-only or a @a write-only lock, after which only read or
+ * lockType of @a read_write, indicating all operations are permitted.  A user
+ * may request a @a read_only or a @a write_only lock, after which only read or
  * write operations, respectively, are permitted on the table until the lock is
- * removed.  When @a lockType is @a no-access then no operations are permitted
+ * removed.  When @a lockType is @a no_access then no operations are permitted
  * on the table.  The lock status can be queried by setting @a lockType to @a
  * status.
  * 
@@ -12962,10 +12991,10 @@ LockTableResponse& lockTable( const LockTableRequest& request_,
 
 /**
  * Manages global access to a table's data.  By default a table has a @a
- * lockType of @a read-write, indicating all operations are permitted.  A user
- * may request a @a read-only or a @a write-only lock, after which only read or
+ * lockType of @a read_write, indicating all operations are permitted.  A user
+ * may request a @a read_only or a @a write_only lock, after which only read or
  * write operations, respectively, are permitted on the table until the lock is
- * removed.  When @a lockType is @a no-access then no operations are permitted
+ * removed.  When @a lockType is @a no_access then no operations are permitted
  * on the table.  The lock status can be queried by setting @a lockType to @a
  * status.
  * 
@@ -12998,10 +13027,10 @@ LockTableResponse lockTable( const std::string& tableName,
 
 /**
  * Manages global access to a table's data.  By default a table has a @a
- * lockType of @a read-write, indicating all operations are permitted.  A user
- * may request a @a read-only or a @a write-only lock, after which only read or
+ * lockType of @a read_write, indicating all operations are permitted.  A user
+ * may request a @a read_only or a @a write_only lock, after which only read or
  * write operations, respectively, are permitted on the table until the lock is
- * removed.  When @a lockType is @a no-access then no operations are permitted
+ * removed.  When @a lockType is @a no_access then no operations are permitted
  * on the table.  The lock status can be queried by setting @a lockType to @a
  * status.
  * 
@@ -13041,7 +13070,11 @@ LockTableResponse& lockTable( const std::string& tableName,
  * records from source tables (specified by @a sourceTableNames) based on the
  * field mapping information (specified by @a fieldMaps). The field map
  * (specified by @a fieldMaps) holds the user specified maps of target table
- * column names to source table columns.
+ * column names to source table columns. The array of @a fieldMaps must match
+ * one-to-one with the @a sourceTableNames, e.g., there's a map present in @a
+ * fieldMaps for each table listed in @a sourceTableNames. Read more about
+ * Merge Records <a href="../../concepts/merge_records.html"
+ * target="_top">here</a>.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -13057,7 +13090,11 @@ MergeRecordsResponse mergeRecords( const MergeRecordsRequest& request_ ) const;
  * records from source tables (specified by @a sourceTableNames) based on the
  * field mapping information (specified by @a fieldMaps). The field map
  * (specified by @a fieldMaps) holds the user specified maps of target table
- * column names to source table columns.
+ * column names to source table columns. The array of @a fieldMaps must match
+ * one-to-one with the @a sourceTableNames, e.g., there's a map present in @a
+ * fieldMaps for each table listed in @a sourceTableNames. Read more about
+ * Merge Records <a href="../../concepts/merge_records.html"
+ * target="_top">here</a>.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -13077,43 +13114,52 @@ MergeRecordsResponse& mergeRecords( const MergeRecordsRequest& request_,
  * records from source tables (specified by @a sourceTableNames) based on the
  * field mapping information (specified by @a fieldMaps). The field map
  * (specified by @a fieldMaps) holds the user specified maps of target table
- * column names to source table columns.
+ * column names to source table columns. The array of @a fieldMaps must match
+ * one-to-one with the @a sourceTableNames, e.g., there's a map present in @a
+ * fieldMaps for each table listed in @a sourceTableNames. Read more about
+ * Merge Records <a href="../../concepts/merge_records.html"
+ * target="_top">here</a>.
  * 
  * @param tableName  The new result table name for the records to be merged.
  *                   Must NOT be an existing table.
  * @param sourceTableNames  The list of source table names to get the records
  *                          from. Must be existing table names.
- * @param fieldMaps  Contains the mapping of column names from result table
- *                   (specified by @a tableName) as the keys, and corresponding
- *                   column names from a table from source tables (specified by
- *                   @a sourceTableNames). Must be existing column names in
- *                   source table and target table, and their types must be
- *                   matched.
+ * @param fieldMaps  Contains a list of source/target column mappings, one
+ *                   mapping for each source table listed in @a
+ *                   sourceTableNames being merged into the target table
+ *                   specified by @a tableName.  Each mapping contains the
+ *                   target column names (as keys) that the data in the mapped
+ *                   source columns (as values) will be merged into.  All of
+ *                   the source columns being merged into a given target column
+ *                   must match in type, as that type will determine the type
+ *                   of the new target column.
  * @param options  Optional parameters.
  *                 <ul>
  *                         <li> gpudb::merge_records_collection_name: Name of a
  *                 collection which is to contain the newly created merged
- *                 table (specified by @a tableName). If empty, then the newly
- *                 created merged table will be a top-level table. If the
- *                 collection does not allow duplicate types and it contains a
- *                 table of the same type as the given one, then this table
- *                 creation request will fail.
- *                         <li> gpudb::merge_records_is_replicated: For a
- *                 merged table (specified by @a tableName), indicates whether
- *                 the table is to be replicated to all the database ranks.
- *                 This may be necessary when the table is to be joined with
- *                 other tables in a query.
+ *                 table specified by @a tableName. If the collection provided
+ *                 is non-existent, the collection will be automatically
+ *                 created. If empty, then the newly created merged table will
+ *                 be a top-level table.
+ *                         <li> gpudb::merge_records_is_replicated: Indicates
+ *                 the <a href="../../concepts/tables.html#distribution"
+ *                 target="_top">distribution scheme</a> for the data of the
+ *                 merged table specified in @a tableName.  If true, the table
+ *                 will be <a href="../../concepts/tables.html#replication"
+ *                 target="_top">replicated</a>.  If false, the table will be
+ *                 <a href="../../concepts/tables.html#random-sharding"
+ *                 target="_top">randomly sharded</a>.
  *                 <ul>
  *                         <li> gpudb::merge_records_true
  *                         <li> gpudb::merge_records_false
  *                 </ul>
  *                 The default value is gpudb::merge_records_false.
- *                         <li> gpudb::merge_records_ttl: Sets the TTL of the
- *                 merged table or collection (specified by @a tableName). The
- *                 value must be the desired TTL in minutes.
- *                         <li> gpudb::merge_records_chunk_size: If provided
- *                 this indicates the chunk size to be used for the merged
- *                 table.
+ *                         <li> gpudb::merge_records_ttl: Sets the <a
+ *                 href="../../concepts/ttl.html" target="_top">TTL</a> of the
+ *                 merged table specified in @a tableName.
+ *                         <li> gpudb::merge_records_chunk_size: Indicates the
+ *                 chunk size to be used for the merged table specified in @a
+ *                 tableName.
  *                 </ul>
  * 
  * @return Response object containing the result of the operation.
@@ -13130,43 +13176,52 @@ MergeRecordsResponse mergeRecords( const std::string& tableName,
  * records from source tables (specified by @a sourceTableNames) based on the
  * field mapping information (specified by @a fieldMaps). The field map
  * (specified by @a fieldMaps) holds the user specified maps of target table
- * column names to source table columns.
+ * column names to source table columns. The array of @a fieldMaps must match
+ * one-to-one with the @a sourceTableNames, e.g., there's a map present in @a
+ * fieldMaps for each table listed in @a sourceTableNames. Read more about
+ * Merge Records <a href="../../concepts/merge_records.html"
+ * target="_top">here</a>.
  * 
  * @param tableName  The new result table name for the records to be merged.
  *                   Must NOT be an existing table.
  * @param sourceTableNames  The list of source table names to get the records
  *                          from. Must be existing table names.
- * @param fieldMaps  Contains the mapping of column names from result table
- *                   (specified by @a tableName) as the keys, and corresponding
- *                   column names from a table from source tables (specified by
- *                   @a sourceTableNames). Must be existing column names in
- *                   source table and target table, and their types must be
- *                   matched.
+ * @param fieldMaps  Contains a list of source/target column mappings, one
+ *                   mapping for each source table listed in @a
+ *                   sourceTableNames being merged into the target table
+ *                   specified by @a tableName.  Each mapping contains the
+ *                   target column names (as keys) that the data in the mapped
+ *                   source columns (as values) will be merged into.  All of
+ *                   the source columns being merged into a given target column
+ *                   must match in type, as that type will determine the type
+ *                   of the new target column.
  * @param options  Optional parameters.
  *                 <ul>
  *                         <li> gpudb::merge_records_collection_name: Name of a
  *                 collection which is to contain the newly created merged
- *                 table (specified by @a tableName). If empty, then the newly
- *                 created merged table will be a top-level table. If the
- *                 collection does not allow duplicate types and it contains a
- *                 table of the same type as the given one, then this table
- *                 creation request will fail.
- *                         <li> gpudb::merge_records_is_replicated: For a
- *                 merged table (specified by @a tableName), indicates whether
- *                 the table is to be replicated to all the database ranks.
- *                 This may be necessary when the table is to be joined with
- *                 other tables in a query.
+ *                 table specified by @a tableName. If the collection provided
+ *                 is non-existent, the collection will be automatically
+ *                 created. If empty, then the newly created merged table will
+ *                 be a top-level table.
+ *                         <li> gpudb::merge_records_is_replicated: Indicates
+ *                 the <a href="../../concepts/tables.html#distribution"
+ *                 target="_top">distribution scheme</a> for the data of the
+ *                 merged table specified in @a tableName.  If true, the table
+ *                 will be <a href="../../concepts/tables.html#replication"
+ *                 target="_top">replicated</a>.  If false, the table will be
+ *                 <a href="../../concepts/tables.html#random-sharding"
+ *                 target="_top">randomly sharded</a>.
  *                 <ul>
  *                         <li> gpudb::merge_records_true
  *                         <li> gpudb::merge_records_false
  *                 </ul>
  *                 The default value is gpudb::merge_records_false.
- *                         <li> gpudb::merge_records_ttl: Sets the TTL of the
- *                 merged table or collection (specified by @a tableName). The
- *                 value must be the desired TTL in minutes.
- *                         <li> gpudb::merge_records_chunk_size: If provided
- *                 this indicates the chunk size to be used for the merged
- *                 table.
+ *                         <li> gpudb::merge_records_ttl: Sets the <a
+ *                 href="../../concepts/ttl.html" target="_top">TTL</a> of the
+ *                 merged table specified in @a tableName.
+ *                         <li> gpudb::merge_records_chunk_size: Indicates the
+ *                 chunk size to be used for the merged table specified in @a
+ *                 tableName.
  *                 </ul>
  * @param[out] response_  Response object containing the results of the
  *                        operation.
@@ -13943,8 +13998,7 @@ ShowSystemTimingResponse& showSystemTiming( const std::map<std::string, std::str
  * For a collection, setting the @a show_children option to @a false returns
  * only information about the collection itself; setting @a show_children to @a
  * true returns a list of tables and views contained in the collection, along
- * with their description, type id, schema, type label, type properties, and
- * additional information including TTL.
+ * with their corresponding detail.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -13970,8 +14024,7 @@ ShowTableResponse showTable( const ShowTableRequest& request_ ) const;
  * For a collection, setting the @a show_children option to @a false returns
  * only information about the collection itself; setting @a show_children to @a
  * true returns a list of tables and views contained in the collection, along
- * with their description, type id, schema, type label, type properties, and
- * additional information including TTL.
+ * with their corresponding detail.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -14001,8 +14054,7 @@ ShowTableResponse& showTable( const ShowTableRequest& request_,
  * For a collection, setting the @a show_children option to @a false returns
  * only information about the collection itself; setting @a show_children to @a
  * true returns a list of tables and views contained in the collection, along
- * with their description, type id, schema, type label, type properties, and
- * additional information including TTL.
+ * with their corresponding detail.
  * 
  * @param tableName  Name of the table for which to retrieve the information.
  *                   If blank, then information about all collections and
@@ -14067,8 +14119,7 @@ ShowTableResponse showTable( const std::string& tableName,
  * For a collection, setting the @a show_children option to @a false returns
  * only information about the collection itself; setting @a show_children to @a
  * true returns a list of tables and views contained in the collection, along
- * with their description, type id, schema, type label, type properties, and
- * additional information including TTL.
+ * with their corresponding detail.
  * 
  * @param tableName  Name of the table for which to retrieve the information.
  *                   If blank, then information about all collections and
@@ -14917,6 +14968,8 @@ VisualizeImageResponse& visualizeImage( const VisualizeImageRequest& request_,
  *                      The default value is gpudb::visualize_image_false.
  *                              <li> gpudb::visualize_image_pointcolors
  *                              <li> gpudb::visualize_image_pointsizes
+ *                              <li> gpudb::visualize_image_pointoffset_x
+ *                              <li> gpudb::visualize_image_pointoffset_y
  *                              <li> gpudb::visualize_image_pointshapes:
  *                      <ul>
  *                              <li> gpudb::visualize_image_none
@@ -14929,8 +14982,11 @@ VisualizeImageResponse& visualizeImage( const VisualizeImageRequest& request_,
  *                              <li> gpudb::visualize_image_SYMBOLCODE
  *                      </ul>
  *                      The default value is gpudb::visualize_image_square.
+ *                              <li> gpudb::visualize_image_symbolrotations
  *                              <li> gpudb::visualize_image_shapelinewidths
  *                              <li> gpudb::visualize_image_shapelinecolors
+ *                              <li> gpudb::visualize_image_shapelinepatterns
+ *                              <li> gpudb::visualize_image_shapelinepatternlen
  *                              <li> gpudb::visualize_image_shapefillcolors
  *                              <li> gpudb::visualize_image_tracklinewidths
  *                              <li> gpudb::visualize_image_tracklinecolors
@@ -15046,6 +15102,8 @@ VisualizeImageResponse visualizeImage( const std::vector<std::string>& tableName
  *                      The default value is gpudb::visualize_image_false.
  *                              <li> gpudb::visualize_image_pointcolors
  *                              <li> gpudb::visualize_image_pointsizes
+ *                              <li> gpudb::visualize_image_pointoffset_x
+ *                              <li> gpudb::visualize_image_pointoffset_y
  *                              <li> gpudb::visualize_image_pointshapes:
  *                      <ul>
  *                              <li> gpudb::visualize_image_none
@@ -15058,8 +15116,11 @@ VisualizeImageResponse visualizeImage( const std::vector<std::string>& tableName
  *                              <li> gpudb::visualize_image_SYMBOLCODE
  *                      </ul>
  *                      The default value is gpudb::visualize_image_square.
+ *                              <li> gpudb::visualize_image_symbolrotations
  *                              <li> gpudb::visualize_image_shapelinewidths
  *                              <li> gpudb::visualize_image_shapelinecolors
+ *                              <li> gpudb::visualize_image_shapelinepatterns
+ *                              <li> gpudb::visualize_image_shapelinepatternlen
  *                              <li> gpudb::visualize_image_shapefillcolors
  *                              <li> gpudb::visualize_image_tracklinewidths
  *                              <li> gpudb::visualize_image_tracklinecolors
@@ -15437,10 +15498,8 @@ VisualizeImageClassbreakResponse& visualizeImageClassbreak( const VisualizeImage
  * @param yColumnName
  * @param geometryColumnName
  * @param trackIds
- * @param cbColumnName1
- * @param cbVals1
- * @param cbColumnName2
- * @param cbVals2
+ * @param cbColumnName
+ * @param cbVals
  * @param minX
  * @param maxX
  * @param minY
@@ -15505,6 +15564,10 @@ VisualizeImageClassbreakResponse& visualizeImageClassbreak( const VisualizeImage
  *                              <li>
  *                      gpudb::visualize_image_classbreak_pointsizes
  *                              <li>
+ *                      gpudb::visualize_image_classbreak_pointoffset_x
+ *                              <li>
+ *                      gpudb::visualize_image_classbreak_pointoffset_y
+ *                              <li>
  *                      gpudb::visualize_image_classbreak_pointshapes:
  *                      <ul>
  *                              <li> gpudb::visualize_image_classbreak_none
@@ -15526,6 +15589,10 @@ VisualizeImageClassbreakResponse& visualizeImageClassbreak( const VisualizeImage
  *                      gpudb::visualize_image_classbreak_shapelinewidths
  *                              <li>
  *                      gpudb::visualize_image_classbreak_shapelinecolors
+ *                              <li>
+ *                      gpudb::visualize_image_classbreak_shapelinepatterns
+ *                              <li>
+ *                      gpudb::visualize_image_classbreak_shapelinepatternlen
  *                              <li>
  *                      gpudb::visualize_image_classbreak_shapefillcolors
  *                              <li>
@@ -15589,10 +15656,8 @@ VisualizeImageClassbreakResponse visualizeImageClassbreak( const std::vector<std
                                                            const std::string& yColumnName,
                                                            const std::string& geometryColumnName,
                                                            const std::vector<std::vector<std::string> >& trackIds,
-                                                           const std::string& cbColumnName1,
-                                                           const std::vector<std::string>& cbVals1,
-                                                           const std::vector<std::string>& cbColumnName2,
-                                                           const std::vector<std::vector<std::string> >& cbVals2,
+                                                           const std::string& cbColumnName,
+                                                           const std::vector<std::string>& cbVals,
                                                            const double minX,
                                                            const double maxX,
                                                            const double minY,
@@ -15613,10 +15678,8 @@ VisualizeImageClassbreakResponse visualizeImageClassbreak( const std::vector<std
  * @param yColumnName
  * @param geometryColumnName
  * @param trackIds
- * @param cbColumnName1
- * @param cbVals1
- * @param cbColumnName2
- * @param cbVals2
+ * @param cbColumnName
+ * @param cbVals
  * @param minX
  * @param maxX
  * @param minY
@@ -15681,6 +15744,10 @@ VisualizeImageClassbreakResponse visualizeImageClassbreak( const std::vector<std
  *                              <li>
  *                      gpudb::visualize_image_classbreak_pointsizes
  *                              <li>
+ *                      gpudb::visualize_image_classbreak_pointoffset_x
+ *                              <li>
+ *                      gpudb::visualize_image_classbreak_pointoffset_y
+ *                              <li>
  *                      gpudb::visualize_image_classbreak_pointshapes:
  *                      <ul>
  *                              <li> gpudb::visualize_image_classbreak_none
@@ -15702,6 +15769,10 @@ VisualizeImageClassbreakResponse visualizeImageClassbreak( const std::vector<std
  *                      gpudb::visualize_image_classbreak_shapelinewidths
  *                              <li>
  *                      gpudb::visualize_image_classbreak_shapelinecolors
+ *                              <li>
+ *                      gpudb::visualize_image_classbreak_shapelinepatterns
+ *                              <li>
+ *                      gpudb::visualize_image_classbreak_shapelinepatternlen
  *                              <li>
  *                      gpudb::visualize_image_classbreak_shapefillcolors
  *                              <li>
@@ -15768,10 +15839,8 @@ VisualizeImageClassbreakResponse& visualizeImageClassbreak( const std::vector<st
                                                             const std::string& yColumnName,
                                                             const std::string& geometryColumnName,
                                                             const std::vector<std::vector<std::string> >& trackIds,
-                                                            const std::string& cbColumnName1,
-                                                            const std::vector<std::string>& cbVals1,
-                                                            const std::vector<std::string>& cbColumnName2,
-                                                            const std::vector<std::vector<std::string> >& cbVals2,
+                                                            const std::string& cbColumnName,
+                                                            const std::vector<std::string>& cbVals,
                                                             const double minX,
                                                             const double maxX,
                                                             const double minY,

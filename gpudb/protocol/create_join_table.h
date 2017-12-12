@@ -42,7 +42,7 @@ namespace gpudb
          *                            href="../../concepts/tables.html"
          *                            target="_top">tables</a>.
          * @param[in] tableNames_  The list of table names composing the join.
-         *                         Corresponds to a SQL statement FROM clause
+         *                         Corresponds to a SQL statement FROM clause.
          * @param[in] columnNames_  List of member table columns or column
          *                          expressions to be included in the join.
          *                          Columns can be prefixed with
@@ -135,9 +135,9 @@ namespace gpudb
          *                      The default value is
          *                      gpudb::create_join_table_no_refresh.
          *                              <li> gpudb::create_join_table_ttl: Sets
-         *                      the TTL of the table specified in @a
-         *                      joinTableName. The value must be the desired
-         *                      TTL in minutes.
+         *                      the <a href="../../concepts/ttl.html"
+         *                      target="_top">TTL</a> of the join table
+         *                      specified in @a joinTableName.
          *                      </ul>
          * 
          */

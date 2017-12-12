@@ -62,8 +62,7 @@ namespace gpudb
          *                      of results to be returned from source table
          *                      (specified by @a sourceTableName). Or
          *                      END_OF_SET (-9999) to indicate that the max
-         *                      number of results should be returned. Default
-         *                      value is END_OF_SET (-9999).
+         *                      number of results should be returned.
          *                              <li> gpudb::append_records_expression:
          *                      Optional filter expression to apply to the
          *                      source table (specified by @a sourceTableName).

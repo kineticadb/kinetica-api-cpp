@@ -12,6 +12,7 @@ C++ specific documentation can be found at:
 For the client-side API changes, please refer to CHANGELOG.md, and for GPUdb
 function changes, please refer to CHANGELOG-FUNCTIONS.md.
 
+
 Instructions to build the Kinetica CPP API on Linux
 ===================================================
 
@@ -154,3 +155,80 @@ Editing and Building GPUdb API C++ with QTCreator
 -   Fixing a 'Could not initialize GLX', an OpenGL crash error when starting QTCreator
     -   `$ qtcreator -noload Welcome qtcreator-gpudb-api-cpp.creator`
 
+
+Instructions to build the Kinetica CPP API on Windows
+=====================================================
+
+
+Requirements
+------------
+
+-	Windows 7, 8, 10, or more recent
+-	Microsoft Visual Studio 2013 or more recent
+-	Third-party libraries (see below for building instructions)
+
+
+Notes
+-----
+
+-	Windows version of the GPUdb C++ API does not support SSL.  You will need to define the GPUDB_NO_HTTPS macro before including API header files.
+-	To automatically restore NuGet projects (needed for openssl), open Tools > Options > NuGet Package Manager and select the options for Allow NuGet to download missing packages and Automatically check for missing packages during build in Visual Studio
+	-	See: https://docs.microsoft.com/en-us/nuget/Consume-Packages/Package-restore-troubleshooting
+
+
+Third-party Libraries
+---------------------
+
+-	Install/Build these libraries from their distribution packages:
+    -	Boost library v1.65.1: http://www.boost.org/
+        -	The GPUdb API depends on the Boost 'regex', 'system' and 'thread' libraries.
+		-	Download Windows ZIP from: www.boost.org/users/history/version_1_65_1.html (or whatever version of Boost is needed)
+			-	Full build instructions are in this file at: more/getting_started/windows.html (see section 5)
+			-	Or, you may try to use the "Prebuilt windows binaries"
+			-	Or, you may be able to use the NuGet Boost Package(s)
+				-	From the NuGet Console: Install-Package boost -Version 1.65.1
+				-	For VS 2013 Libraries: Install-Package boost-vc120 -Version 1.65.1
+				-	For VS 2015 Libraries: Install-Package boost-vc140 -Version 1.65.1
+				-	You may need to update the Project paths
+		-	Uncompress to: gpudb-api-cpp\thirdparty\boost_1_65_1.
+			-	You should now have a file: gpudb-api-cpp\thirdparty\boost_1_65_1\bootstrap.bat
+			-	The header files should now be in the right place, but you still need to build the libraries.
+		-	From your Widows Start menu, find the entry under VS for "Developer Command Prompt for VS2013" (or the target VS version)
+		-	Open that to create a VS build command prompt window.
+		-	CD to <your machine path>\gpudb-api-cpp\thirdparty\boost_1_65_1
+		-	Run: bootstrap.bat
+			-	You should now have a file: gpudb-api-cpp\thirdparty\boost_1_65_1\b2.exe
+		-	Run: b2 address-model=64 --build-type=complete --toolset=msvc-12.0 --threading=multi --runtime-link=shared --stagedir=./lib64
+			-	Change the "toolset" parameter for different versions of VS.
+				-	Use "--toolset=msvc-14.0" for VS 2015.
+				-	Use "--toolset=msvc-14.1" for VS 2017.
+			-	Use "address-model=32" for x86 (and change --stagedir=./lib32).
+			-	Use "--variant=debug" for DEBUG builds or "--variant=release" for RELEASE builds.  You may have to change "--build-type" to "minimal" for this to take effect.
+			-	The libraries should end up in: gpudb-api-cpp/thirdparty/boost_1_65_1/lib64/lib
+			-	For other options, run: b2 --help
+	-	Avro
+		-	Download avro-cpp-1.7.7.tar.gz.  See: http://www.apache.org/dyn/closer.cgi/avro/
+		-	Full instructions at: https://avro.apache.org/docs/current/api/cpp/html/index.html
+		-	Uncompress to: gpudb-api-cpp\thirdparty\avro-cpp-1.7.7
+		-	Copy "api" folder to "avro"
+			-	Building Avro requires CMake.  You can install this from the NuGet Console by typing: Install-Package CMake -Version 3.5.2
+			-	Add it to your path: gpudb-api-cpp\project\gpudbapidll\packages\CMake.3.5.2\bin (or, wherever you installed it)
+			-	Set BOOST_ROOT=<your_path>gpudb-api-cpp\thirdparty\boost_1_65_1
+			-	Set BOOST_INCLUDEDIR=<your_path>gpudb-api-cpp\thirdparty\boost_1_65_1\boost
+			-	Set BOOST_LIBRARYDIR=<your_path>gpudb-api-cpp\thirdparty\boost_1_65_1\lib64\lib
+		-	In VS Build Command-Prompt, change to the Avro folder: gpudb-api-cpp\thirdparty\avro-cpp-1.7.7
+		-	Run: cmake -G "Visual Studio 10"
+			-	Change "10" to "14" for VS 2015
+			-	This creates, among other things, Avro-cpp.sln file.
+		-	Open the Avro-cpp.sln file in Visual Studio
+			-	If needed, create an x64 platform in Configuratino Manager
+			-	You should only need to build the "avrocpp_s" project
+			-	In avrocpp_s Property Pages, remove x86 option from "Additional Options" on the Librarian-All Options page
+			-	In avrocpp_s Property Pages, Configuration Properties-General, change Output Directory to: $(SolutionDir)$(Platform)\$(Configuration)\
+		-	Build desired flavors of libraries (of avrocpp_s Project)
+-	Open gpudb-api-cpp\project\gpudbapidll\gpudbapidll.sln
+	-	To build the C++ API with support for SSL, you will need to install OpenSSL
+		-	You can install this from the NuGet Console (for the gpudbapiexe project) by typing: Install-Package zeroc.openssl.v120 -Version 1.0.2.4
+		-	You may need to install the appropriate version for your Visual Studio (e.g., v140 for VS 2015)
+	-	If you do not need SSL support, you may add GPUDB_NO_HTTPS to the Proprocessor Definitions
+    -   Build your desired flavors (e.g., Debug/Release, x64/x86)

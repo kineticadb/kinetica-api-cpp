@@ -22,6 +22,7 @@ namespace gpudb
 
     // Keywords for /admin/offline request
     extern const std::string admin_offline_false;
+    extern const std::string admin_offline_flush_to_disk;
     extern const std::string admin_offline_true;
 
     // Keywords for /admin/rebalance request
@@ -59,6 +60,7 @@ namespace gpudb
     extern const std::string aggregate_group_by_having;
     extern const std::string aggregate_group_by_json;
     extern const std::string aggregate_group_by_key;
+    extern const std::string aggregate_group_by_materialize_on_gpu;
     extern const std::string aggregate_group_by_result_table;
     extern const std::string aggregate_group_by_result_table_force_replicated;
     extern const std::string aggregate_group_by_result_table_generate_pk;
@@ -567,12 +569,17 @@ namespace gpudb
     extern const std::string visualize_image_oriented_arrow;
     extern const std::string visualize_image_oriented_triangle;
     extern const std::string visualize_image_pointcolors;
+    extern const std::string visualize_image_pointoffset_x;
+    extern const std::string visualize_image_pointoffset_y;
     extern const std::string visualize_image_pointshapes;
     extern const std::string visualize_image_pointsizes;
     extern const std::string visualize_image_shapefillcolors;
     extern const std::string visualize_image_shapelinecolors;
+    extern const std::string visualize_image_shapelinepatternlen;
+    extern const std::string visualize_image_shapelinepatterns;
     extern const std::string visualize_image_shapelinewidths;
     extern const std::string visualize_image_square;
+    extern const std::string visualize_image_symbolrotations;
     extern const std::string visualize_image_trackheadcolors;
     extern const std::string visualize_image_trackheadshapes;
     extern const std::string visualize_image_trackheadsizes;
@@ -633,10 +640,14 @@ namespace gpudb
     extern const std::string visualize_image_classbreak_hollowsquare;
     extern const std::string visualize_image_classbreak_none;
     extern const std::string visualize_image_classbreak_pointcolors;
+    extern const std::string visualize_image_classbreak_pointoffset_x;
+    extern const std::string visualize_image_classbreak_pointoffset_y;
     extern const std::string visualize_image_classbreak_pointshapes;
     extern const std::string visualize_image_classbreak_pointsizes;
     extern const std::string visualize_image_classbreak_shapefillcolors;
     extern const std::string visualize_image_classbreak_shapelinecolors;
+    extern const std::string visualize_image_classbreak_shapelinepatternlen;
+    extern const std::string visualize_image_classbreak_shapelinepatterns;
     extern const std::string visualize_image_classbreak_shapelinewidths;
     extern const std::string visualize_image_classbreak_square;
     extern const std::string visualize_image_classbreak_trackheadcolors;

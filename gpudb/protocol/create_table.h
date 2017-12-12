@@ -69,12 +69,10 @@ namespace gpudb
          *                              <li>
          *                      gpudb::create_table_collection_name: Name of a
          *                      collection which is to contain the newly
-         *                      created table. If empty, then the newly created
-         *                      table will be a top-level table. If the
-         *                      collection does not allow duplicate types and
-         *                      it contains a table of the same type as the
-         *                      given one, then this table creation request
-         *                      will fail.
+         *                      created table. If the collection provided is
+         *                      non-existent, the collection will be
+         *                      automatically created. If empty, then the newly
+         *                      created table will be a top-level table.
          *                              <li> gpudb::create_table_is_collection:
          *                      Indicates whether the new table to be created
          *                      will be a collection.
@@ -94,18 +92,31 @@ namespace gpudb
          *                      </ul>
          *                      The default value is gpudb::create_table_false.
          *                              <li> gpudb::create_table_is_replicated:
-         *                      For a table, indicates whether the table is to
-         *                      be replicated to all the database ranks. This
-         *                      may be necessary when the table is to be joined
-         *                      with other tables in a query.
+         *                      For a table, indicates the <a
+         *                      href="../../concepts/tables.html#distribution"
+         *                      target="_top">distribution scheme</a> for the
+         *                      table's data.  If true, the table will be <a
+         *                      href="../../concepts/tables.html#replication"
+         *                      target="_top">replicated</a>.  If false, the
+         *                      table will be <a
+         *                      href="../../concepts/tables.html#sharding"
+         *                      target="_top">sharded</a> according to the <a
+         *                      href="../../concepts/tables.html#shard-keys"
+         *                      target="_top">shard key</a> specified in the
+         *                      given @a typeId, or <a
+         *                      href="../../concepts/tables.html#random-sharding"
+         *                      target="_top">randomly sharded</a>, if no shard
+         *                      key is specified.
          *                      <ul>
          *                              <li> gpudb::create_table_true
          *                              <li> gpudb::create_table_false
          *                      </ul>
          *                      The default value is gpudb::create_table_false.
          *                              <li> gpudb::create_table_foreign_keys:
-         *                      Semicolon-separated list of foreign keys, of
-         *                      the format 'source_column references
+         *                      Semicolon-separated list of <a
+         *                      href="../../concepts/tables.html#foreign-keys"
+         *                      target="_top">foreign keys</a>, of the format
+         *                      'source_column references
          *                      target_table(primary_key_column) [ as
          *                      <foreign_key_name> ]'.
          *                              <li>
@@ -113,22 +124,20 @@ namespace gpudb
          *                      shard key of the format 'source_column
          *                      references shard_by_column from
          *                      target_table(primary_key_column)'
-         *                              <li> gpudb::create_table_ttl: Sets the
-         *                      TTL of the table or collection specified in @a
-         *                      tableName. The value must be the desired TTL in
-         *                      minutes.
-         *                              <li> gpudb::create_table_chunk_size: If
-         *                      provided this indicates the chunk size to be
-         *                      used for this table.
+         *                              <li> gpudb::create_table_ttl: For a
+         *                      table, sets the <a
+         *                      href="../../concepts/ttl.html"
+         *                      target="_top">TTL</a> of the table specified in
+         *                      @a tableName.
+         *                              <li> gpudb::create_table_chunk_size:
+         *                      Indicates the chunk size to be used for this
+         *                      table.
          *                              <li>
          *                      gpudb::create_table_is_result_table: For a
-         *                      table, indicates whether the table is a
-         *                      non-persistent, memory-only table that will
-         *                      store the output of a proc executed with
-         *                      /execute/proc. A result table cannot contain
+         *                      table, indicates whether the table is an
+         *                      in-memory table. A result table cannot contain
          *                      store_only, text_search, or string columns
-         *                      (char columns are acceptable), records cannot
-         *                      be inserted into it directly, and it will not
+         *                      (charN columns are acceptable), and it will not
          *                      be retained if the server is restarted.
          *                      <ul>
          *                              <li> gpudb::create_table_true

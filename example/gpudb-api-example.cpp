@@ -165,6 +165,11 @@ int main(int argc, char* argv[])
     {
         std::cout << "Usage: gpudb-api-example http://gpudb_host:9191" << std::endl;
         std::cout << "\tgpudb-api-example http://gpudb_host:9191,http://gpudb_host:9192" << std::endl;
+
+		int i;
+		std::cout << "Press any key...";
+		std::cin >> i;
+
         exit(1);
     }
 
@@ -196,6 +201,10 @@ int main(int argc, char* argv[])
     {
         std::cout << "No host provided" << std::endl;
     }
+
+	int i;
+	std::cout << "Press any key...";
+	std::cin >> i;
 
     return 0;
 }

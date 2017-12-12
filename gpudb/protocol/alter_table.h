@@ -17,28 +17,29 @@ namespace gpudb
      * available
      * modifications include the following:
      * <p>
-     * Create or delete an index on a particular column. This can speed up
-     * certain search queries
-     * (such as {@link #getRecordsRaw(const GetRecordsRequest&) const},
-     * {@link #deleteRecords(const DeleteRecordsRequest&) const}, {@link
-     * #updateRecordsRaw(const RawUpdateRecordsRequest&) const})
-     * when using expressions containing equality or relational operators on
-     * indexed columns. This
-     * only applies to tables.
+     * Create or delete an <a href="../../concepts/indexes.html#column-index"
+     * target="_top">index</a> on a
+     * particular column. This can speed up certain operations when using
+     * expressions
+     * containing equality or relational operators on indexed columns. This
+     * only
+     * applies to tables.
      * <p>
-     * Set the time-to-live (TTL). This can be applied to tables, views, or
-     * collections.  When
-     * applied to collections, every table & view within the collection will
-     * have its TTL set to the
-     * given value.
+     * Set the <a href="../../concepts/ttl.html" target="_top">time-to-live
+     * (TTL)</a>. This can be applied
+     * to tables, views, or collections.  When applied to collections, every
+     * contained
+     * table & view that is not protected will have its TTL set to the given
+     * value.
      * <p>
      * Set the global access mode (i.e. locking) for a table. The mode can be
-     * set to 'no-access', 'read-only',
-     * 'write-only' or 'read-write'.
+     * set to
+     * 'no_access', 'read_only', 'write_only' or 'read_write'.
      * <p>
-     * Make a table protected or not. Protected tables have their TTLs set to
-     * not automatically
-     * expire. This can be applied to tables, views, and collections.
+     * Change the <a href="../../concepts/protection.html"
+     * target="_top">protection</a> mode to prevent or
+     * allow automatic expiration. This can be applied to tables, views, and
+     * collections.
      * <p>
      * Allow homogeneous tables within a collection.
      * <p>
@@ -46,7 +47,8 @@ namespace gpudb
      * <a href="../../concepts/types.html" target="_top">type and
      * properties</a> modified.
      * <p>
-     * Set or unset compression for a column.
+     * Set or unset <a href="../../concepts/compression.html"
+     * target="_top">compression</a> for a column.
      */
     struct AlterTableRequest
     {
@@ -79,64 +81,75 @@ namespace gpudb
          *                     if @a tableName is a collection. The @a value
          *                     must be either 'true' or 'false'.
          *                             <li> gpudb::alter_table_create_index:
-         *                     Creates an index on the column name specified in
-         *                     @a value. If this column is already indexed, an
-         *                     error will be returned.
+         *                     Creates an <a
+         *                     href="../../concepts/indexes.html#column-index"
+         *                     target="_top">index</a> on the column name
+         *                     specified in @a value. If this column is already
+         *                     indexed, an error will be returned.
          *                             <li> gpudb::alter_table_delete_index:
-         *                     Deletes an existing index on the column name
+         *                     Deletes an existing <a
+         *                     href="../../concepts/indexes.html#column-index"
+         *                     target="_top">index</a> on the column name
          *                     specified in @a value. If this column does not
          *                     have indexing turned on, an error will be
          *                     returned.
          *                             <li>
-         *                     gpudb::alter_table_move_to_collection: Move a
+         *                     gpudb::alter_table_move_to_collection: Moves a
          *                     table into a collection @a value.
          *                             <li> gpudb::alter_table_protected: Sets
-         *                     whether the given @a tableName should be
-         *                     protected or not. The @a value must be either
-         *                     'true' or 'false'.
+         *                     whether the given @a tableName should be <a
+         *                     href="../../concepts/protection.html"
+         *                     target="_top">protected</a> or not. The @a value
+         *                     must be either 'true' or 'false'.
          *                             <li> gpudb::alter_table_rename_table:
-         *                     Rename a table, view or collection to @a value.
+         *                     Renames a table, view or collection to @a value.
          *                     Has the same naming restrictions as <a
          *                     href="../../concepts/tables.html"
          *                     target="_top">tables</a>.
-         *                             <li> gpudb::alter_table_ttl: Sets the
-         *                     TTL of the table, view, or collection specified
-         *                     in @a tableName. The @a value must be the
-         *                     desired TTL in minutes.
-         *                             <li> gpudb::alter_table_add_column: Add
+         *                             <li> gpudb::alter_table_ttl: Sets the <a
+         *                     href="../../concepts/ttl.html"
+         *                     target="_top">TTL</a> of the table, view, or
+         *                     collection specified in @a tableName.
+         *                             <li> gpudb::alter_table_add_column: Adds
          *                     the column specified in @a value to the table
          *                     specified in @a tableName.  Use @a column_type
          *                     and @a column_properties in @a options to set
          *                     the column's type and properties, respectively.
          *                             <li> gpudb::alter_table_change_column:
-         *                     Change type and properties of the column
+         *                     Changes type and properties of the column
          *                     specified in @a value.  Use @a column_type and
          *                     @a column_properties in @a options to set the
          *                     column's type and properties, respectively.
          *                             <li>
          *                     gpudb::alter_table_set_column_compression:
-         *                     Modify the compression setting on the column
-         *                     specified in @a value.
+         *                     Modifies the <a
+         *                     href="../../concepts/compression.html"
+         *                     target="_top">compression</a> setting on the
+         *                     column specified in @a value.
          *                             <li> gpudb::alter_table_delete_column:
-         *                     Delete the column specified in @a value from the
-         *                     table specified in @a tableName.
+         *                     Deletes the column specified in @a value from
+         *                     the table specified in @a tableName.
          *                             <li>
-         *                     gpudb::alter_table_create_foreign_key: Create a
-         *                     foreign key using the format 'source_column
-         *                     references target_table(primary_key_column) [ as
+         *                     gpudb::alter_table_create_foreign_key: Creates a
+         *                     <a href="../../concepts/tables.html#foreign-key"
+         *                     target="_top">foreign key</a> using the format
+         *                     'source_column references
+         *                     target_table(primary_key_column) [ as
          *                     <foreign_key_name> ]'.
          *                             <li>
-         *                     gpudb::alter_table_delete_foreign_key: Delete a
-         *                     foreign key.  The @a value should be the
-         *                     <foreign_key_name> or the string used to define
-         *                     the foreign key.
+         *                     gpudb::alter_table_delete_foreign_key: Deletes a
+         *                     <a href="../../concepts/tables.html#foreign-key"
+         *                     target="_top">foreign key</a>.  The @a value
+         *                     should be the <foreign_key_name> specified when
+         *                     creating the key or the complete string used to
+         *                     define it.
          *                             <li>
-         *                     gpudb::alter_table_set_global_access_mode: Set
+         *                     gpudb::alter_table_set_global_access_mode: Sets
          *                     the global access mode (i.e. locking) for the
          *                     table specified in @a tableName. Specify the
          *                     access mode in @a value. Valid modes are
-         *                     'no-access', 'read-only', 'write-only' and
-         *                     'read-write'.
+         *                     'no_access', 'read_only', 'write_only' and
+         *                     'read_write'.
          *                     </ul>
          * @param[in] value_  The value of the modification. May be a column
          *                    name, 'true' or 'false', a TTL, or the global
@@ -276,28 +289,29 @@ namespace gpudb
      * available
      * modifications include the following:
      * <p>
-     * Create or delete an index on a particular column. This can speed up
-     * certain search queries
-     * (such as {@link #getRecordsRaw(const GetRecordsRequest&) const},
-     * {@link #deleteRecords(const DeleteRecordsRequest&) const}, {@link
-     * #updateRecordsRaw(const RawUpdateRecordsRequest&) const})
-     * when using expressions containing equality or relational operators on
-     * indexed columns. This
-     * only applies to tables.
+     * Create or delete an <a href="../../concepts/indexes.html#column-index"
+     * target="_top">index</a> on a
+     * particular column. This can speed up certain operations when using
+     * expressions
+     * containing equality or relational operators on indexed columns. This
+     * only
+     * applies to tables.
      * <p>
-     * Set the time-to-live (TTL). This can be applied to tables, views, or
-     * collections.  When
-     * applied to collections, every table & view within the collection will
-     * have its TTL set to the
-     * given value.
+     * Set the <a href="../../concepts/ttl.html" target="_top">time-to-live
+     * (TTL)</a>. This can be applied
+     * to tables, views, or collections.  When applied to collections, every
+     * contained
+     * table & view that is not protected will have its TTL set to the given
+     * value.
      * <p>
      * Set the global access mode (i.e. locking) for a table. The mode can be
-     * set to 'no-access', 'read-only',
-     * 'write-only' or 'read-write'.
+     * set to
+     * 'no_access', 'read_only', 'write_only' or 'read_write'.
      * <p>
-     * Make a table protected or not. Protected tables have their TTLs set to
-     * not automatically
-     * expire. This can be applied to tables, views, and collections.
+     * Change the <a href="../../concepts/protection.html"
+     * target="_top">protection</a> mode to prevent or
+     * allow automatic expiration. This can be applied to tables, views, and
+     * collections.
      * <p>
      * Allow homogeneous tables within a collection.
      * <p>
@@ -305,7 +319,8 @@ namespace gpudb
      * <a href="../../concepts/types.html" target="_top">type and
      * properties</a> modified.
      * <p>
-     * Set or unset compression for a column.
+     * Set or unset <a href="../../concepts/compression.html"
+     * target="_top">compression</a> for a column.
      */
     struct AlterTableResponse
     {
