@@ -103,13 +103,12 @@ namespace gpudb
          *                              <li>
          *                      gpudb::aggregate_group_by_collection_name: Name
          *                      of a collection which is to contain the table
-         *                      specified in @a result_table, otherwise the
-         *                      table will be a top-level table. If the
-         *                      collection does not allow duplicate types and
-         *                      it contains a table of the same type as the
-         *                      given one, then this table creation request
-         *                      will fail. Additionally this option is invalid
-         *                      if @a tableName is a collection.
+         *                      specified in @a result_table. If the collection
+         *                      provided is non-existent, the collection will
+         *                      be automatically created. If empty, then the
+         *                      table will be a top-level table.  Additionally
+         *                      this option is invalid if @a tableName is a
+         *                      collection.
          *                              <li>
          *                      gpudb::aggregate_group_by_expression: Filter
          *                      expression to apply to the table prior to
@@ -168,14 +167,12 @@ namespace gpudb
          *                      type.
          *                              <li>
          *                      gpudb::aggregate_group_by_result_table_persist:
-         *                      If @a true then the result table specified in
-         *                      @a result_table will be persisted as a regular
-         *                      table (it will not be automatically cleared
-         *                      unless a @a ttl is provided, and the table data
-         *                      can be modified in subsequent operations). If
-         *                      @a false (the default) then the result table
-         *                      will be a read-only, memory-only temporary
-         *                      table.
+         *                      If @a true, then the result table specified in
+         *                      @a result_table will be persisted and will not
+         *                      expire unless a @a ttl is specified.   If @a
+         *                      false, then the result table will be an
+         *                      in-memory table and will expire unless a @a ttl
+         *                      is specified otherwise.
          *                      <ul>
          *                              <li> gpudb::aggregate_group_by_true
          *                              <li> gpudb::aggregate_group_by_false
@@ -193,14 +190,26 @@ namespace gpudb
          *                      table. Must be used in combination with the @a
          *                      result_table option.
          *                              <li> gpudb::aggregate_group_by_ttl:
-         *                      Sets the TTL of the table specified in @a
-         *                      result_table. The value must be the desired TTL
-         *                      in minutes.
+         *                      Sets the <a href="../../concepts/ttl.html"
+         *                      target="_top">TTL</a> of the table specified in
+         *                      @a result_table.
          *                              <li>
-         *                      gpudb::aggregate_group_by_chunk_size: If
-         *                      provided this indicates the chunk size to be
-         *                      used for the result table. Must be used in
-         *                      combination with the @a result_table option.
+         *                      gpudb::aggregate_group_by_chunk_size: Indicates
+         *                      the chunk size to be used for the result table.
+         *                      Must be used in combination with the @a
+         *                      result_table option.
+         *                              <li>
+         *                      gpudb::aggregate_group_by_materialize_on_gpu:
+         *                      If @a true then the columns of the groupby
+         *                      result table will be cached on the GPU. Must be
+         *                      used in combination with the @a result_table
+         *                      option.
+         *                      <ul>
+         *                              <li> gpudb::aggregate_group_by_true
+         *                              <li> gpudb::aggregate_group_by_false
+         *                      </ul>
+         *                      The default value is
+         *                      gpudb::aggregate_group_by_false.
          *                      </ul>
          * 
          */
@@ -248,13 +257,12 @@ namespace gpudb
          *                              <li>
          *                      gpudb::aggregate_group_by_collection_name: Name
          *                      of a collection which is to contain the table
-         *                      specified in @a result_table, otherwise the
-         *                      table will be a top-level table. If the
-         *                      collection does not allow duplicate types and
-         *                      it contains a table of the same type as the
-         *                      given one, then this table creation request
-         *                      will fail. Additionally this option is invalid
-         *                      if @a tableName is a collection.
+         *                      specified in @a result_table. If the collection
+         *                      provided is non-existent, the collection will
+         *                      be automatically created. If empty, then the
+         *                      table will be a top-level table.  Additionally
+         *                      this option is invalid if @a tableName is a
+         *                      collection.
          *                              <li>
          *                      gpudb::aggregate_group_by_expression: Filter
          *                      expression to apply to the table prior to
@@ -313,14 +321,12 @@ namespace gpudb
          *                      type.
          *                              <li>
          *                      gpudb::aggregate_group_by_result_table_persist:
-         *                      If @a true then the result table specified in
-         *                      @a result_table will be persisted as a regular
-         *                      table (it will not be automatically cleared
-         *                      unless a @a ttl is provided, and the table data
-         *                      can be modified in subsequent operations). If
-         *                      @a false (the default) then the result table
-         *                      will be a read-only, memory-only temporary
-         *                      table.
+         *                      If @a true, then the result table specified in
+         *                      @a result_table will be persisted and will not
+         *                      expire unless a @a ttl is specified.   If @a
+         *                      false, then the result table will be an
+         *                      in-memory table and will expire unless a @a ttl
+         *                      is specified otherwise.
          *                      <ul>
          *                              <li> gpudb::aggregate_group_by_true
          *                              <li> gpudb::aggregate_group_by_false
@@ -338,14 +344,26 @@ namespace gpudb
          *                      table. Must be used in combination with the @a
          *                      result_table option.
          *                              <li> gpudb::aggregate_group_by_ttl:
-         *                      Sets the TTL of the table specified in @a
-         *                      result_table. The value must be the desired TTL
-         *                      in minutes.
+         *                      Sets the <a href="../../concepts/ttl.html"
+         *                      target="_top">TTL</a> of the table specified in
+         *                      @a result_table.
          *                              <li>
-         *                      gpudb::aggregate_group_by_chunk_size: If
-         *                      provided this indicates the chunk size to be
-         *                      used for the result table. Must be used in
-         *                      combination with the @a result_table option.
+         *                      gpudb::aggregate_group_by_chunk_size: Indicates
+         *                      the chunk size to be used for the result table.
+         *                      Must be used in combination with the @a
+         *                      result_table option.
+         *                              <li>
+         *                      gpudb::aggregate_group_by_materialize_on_gpu:
+         *                      If @a true then the columns of the groupby
+         *                      result table will be cached on the GPU. Must be
+         *                      used in combination with the @a result_table
+         *                      option.
+         *                      <ul>
+         *                              <li> gpudb::aggregate_group_by_true
+         *                              <li> gpudb::aggregate_group_by_false
+         *                      </ul>
+         *                      The default value is
+         *                      gpudb::aggregate_group_by_false.
          *                      </ul>
          * 
          */

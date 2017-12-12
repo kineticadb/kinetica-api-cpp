@@ -34,10 +34,8 @@ namespace gpudb
             yColumnName(std::string()),
             geometryColumnName(std::string()),
             trackIds(std::vector<std::vector<std::string> >()),
-            cbColumnName1(std::string()),
-            cbVals1(std::vector<std::string>()),
-            cbColumnName2(std::vector<std::string>()),
-            cbVals2(std::vector<std::vector<std::string> >()),
+            cbColumnName(std::string()),
+            cbVals(std::vector<std::string>()),
             minX(double()),
             maxX(double()),
             minY(double()),
@@ -62,10 +60,8 @@ namespace gpudb
          * @param[in] yColumnName_
          * @param[in] geometryColumnName_
          * @param[in] trackIds_
-         * @param[in] cbColumnName1_
-         * @param[in] cbVals1_
-         * @param[in] cbColumnName2_
-         * @param[in] cbVals2_
+         * @param[in] cbColumnName_
+         * @param[in] cbVals_
          * @param[in] minX_
          * @param[in] maxX_
          * @param[in] minY_
@@ -143,6 +139,10 @@ namespace gpudb
          *                                   <li>
          *                           gpudb::visualize_image_classbreak_pointsizes
          *                                   <li>
+         *                           gpudb::visualize_image_classbreak_pointoffset_x
+         *                                   <li>
+         *                           gpudb::visualize_image_classbreak_pointoffset_y
+         *                                   <li>
          *                           gpudb::visualize_image_classbreak_pointshapes:
          *                           <ul>
          *                                   <li>
@@ -168,6 +168,10 @@ namespace gpudb
          *                           gpudb::visualize_image_classbreak_shapelinewidths
          *                                   <li>
          *                           gpudb::visualize_image_classbreak_shapelinecolors
+         *                                   <li>
+         *                           gpudb::visualize_image_classbreak_shapelinepatterns
+         *                                   <li>
+         *                           gpudb::visualize_image_classbreak_shapelinepatternlen
          *                                   <li>
          *                           gpudb::visualize_image_classbreak_shapefillcolors
          *                                   <li>
@@ -230,17 +234,15 @@ namespace gpudb
          * @param[in] options_
          * 
          */
-        VisualizeImageClassbreakRequest(const std::vector<std::string>& tableNames_, const std::vector<std::string>& worldTableNames_, const std::string& xColumnName_, const std::string& yColumnName_, const std::string& geometryColumnName_, const std::vector<std::vector<std::string> >& trackIds_, const std::string& cbColumnName1_, const std::vector<std::string>& cbVals1_, const std::vector<std::string>& cbColumnName2_, const std::vector<std::vector<std::string> >& cbVals2_, const double minX_, const double maxX_, const double minY_, const double maxY_, const int32_t width_, const int32_t height_, const std::string& projection_, const int64_t bgColor_, const std::map<std::string, std::vector<std::string> >& styleOptions_, const std::map<std::string, std::string>& options_):
+        VisualizeImageClassbreakRequest(const std::vector<std::string>& tableNames_, const std::vector<std::string>& worldTableNames_, const std::string& xColumnName_, const std::string& yColumnName_, const std::string& geometryColumnName_, const std::vector<std::vector<std::string> >& trackIds_, const std::string& cbColumnName_, const std::vector<std::string>& cbVals_, const double minX_, const double maxX_, const double minY_, const double maxY_, const int32_t width_, const int32_t height_, const std::string& projection_, const int64_t bgColor_, const std::map<std::string, std::vector<std::string> >& styleOptions_, const std::map<std::string, std::string>& options_):
             tableNames( tableNames_ ),
             worldTableNames( worldTableNames_ ),
             xColumnName( xColumnName_ ),
             yColumnName( yColumnName_ ),
             geometryColumnName( geometryColumnName_ ),
             trackIds( trackIds_ ),
-            cbColumnName1( cbColumnName1_ ),
-            cbVals1( cbVals1_ ),
-            cbColumnName2( cbColumnName2_ ),
-            cbVals2( cbVals2_ ),
+            cbColumnName( cbColumnName_ ),
+            cbVals( cbVals_ ),
             minX( minX_ ),
             maxX( maxX_ ),
             minY( minY_ ),
@@ -264,10 +266,8 @@ namespace gpudb
         std::string yColumnName;
         std::string geometryColumnName;
         std::vector<std::vector<std::string> > trackIds;
-        std::string cbColumnName1;
-        std::vector<std::string> cbVals1;
-        std::vector<std::string> cbColumnName2;
-        std::vector<std::vector<std::string> > cbVals2;
+        std::string cbColumnName;
+        std::vector<std::string> cbVals;
         double minX;
         double maxX;
         double minY;
@@ -297,10 +297,8 @@ namespace avro
             ::avro::encode(e, v.yColumnName);
             ::avro::encode(e, v.geometryColumnName);
             ::avro::encode(e, v.trackIds);
-            ::avro::encode(e, v.cbColumnName1);
-            ::avro::encode(e, v.cbVals1);
-            ::avro::encode(e, v.cbColumnName2);
-            ::avro::encode(e, v.cbVals2);
+            ::avro::encode(e, v.cbColumnName);
+            ::avro::encode(e, v.cbVals);
             ::avro::encode(e, v.minX);
             ::avro::encode(e, v.maxX);
             ::avro::encode(e, v.minY);
@@ -348,58 +346,50 @@ namespace avro
                             break;
 
                         case 6:
-                            ::avro::decode(d, v.cbColumnName1);
+                            ::avro::decode(d, v.cbColumnName);
                             break;
 
                         case 7:
-                            ::avro::decode(d, v.cbVals1);
+                            ::avro::decode(d, v.cbVals);
                             break;
 
                         case 8:
-                            ::avro::decode(d, v.cbColumnName2);
-                            break;
-
-                        case 9:
-                            ::avro::decode(d, v.cbVals2);
-                            break;
-
-                        case 10:
                             ::avro::decode(d, v.minX);
                             break;
 
-                        case 11:
+                        case 9:
                             ::avro::decode(d, v.maxX);
                             break;
 
-                        case 12:
+                        case 10:
                             ::avro::decode(d, v.minY);
                             break;
 
-                        case 13:
+                        case 11:
                             ::avro::decode(d, v.maxY);
                             break;
 
-                        case 14:
+                        case 12:
                             ::avro::decode(d, v.width);
                             break;
 
-                        case 15:
+                        case 13:
                             ::avro::decode(d, v.height);
                             break;
 
-                        case 16:
+                        case 14:
                             ::avro::decode(d, v.projection);
                             break;
 
-                        case 17:
+                        case 15:
                             ::avro::decode(d, v.bgColor);
                             break;
 
-                        case 18:
+                        case 16:
                             ::avro::decode(d, v.styleOptions);
                             break;
 
-                        case 19:
+                        case 17:
                             ::avro::decode(d, v.options);
                             break;
 
@@ -416,10 +406,8 @@ namespace avro
                 ::avro::decode(d, v.yColumnName);
                 ::avro::decode(d, v.geometryColumnName);
                 ::avro::decode(d, v.trackIds);
-                ::avro::decode(d, v.cbColumnName1);
-                ::avro::decode(d, v.cbVals1);
-                ::avro::decode(d, v.cbColumnName2);
-                ::avro::decode(d, v.cbVals2);
+                ::avro::decode(d, v.cbColumnName);
+                ::avro::decode(d, v.cbVals);
                 ::avro::decode(d, v.minX);
                 ::avro::decode(d, v.maxX);
                 ::avro::decode(d, v.minY);

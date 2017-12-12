@@ -64,13 +64,10 @@ namespace gpudb
          *                              <li>
          *                      gpudb::aggregate_unpivot_collection_name: Name
          *                      of a collection which is to contain the table
-         *                      specified in @a result_table, otherwise the
-         *                      table will be a top-level table. If the
-         *                      collection does not allow duplicate types and
-         *                      it contains a table of the same type as the
-         *                      given one, then this table creation request
-         *                      will fail. Additionally this option is invalid
-         *                      if @a tableName is a collection.
+         *                      specified in @a result_table. If the collection
+         *                      provided is non-existent, the collection will
+         *                      be automatically created. If empty, then the
+         *                      table will be a top-level table.
          *                              <li>
          *                      gpudb::aggregate_unpivot_result_table: The name
          *                      of the table used to store the results. Has the
@@ -80,14 +77,12 @@ namespace gpudb
          *                      results are returned in the response.
          *                              <li>
          *                      gpudb::aggregate_unpivot_result_table_persist:
-         *                      If @a true then the result table specified in
-         *                      {result_table}@{key of input.options} will be
-         *                      persisted as a regular table (it will not be
-         *                      automatically cleared unless a @a ttl is
-         *                      provided, and the table data can be modified in
-         *                      subsequent operations). If @a false (the
-         *                      default) then the result table will be a
-         *                      read-only, memory-only temporary table.
+         *                      If @a true, then the result table specified in
+         *                      @a result_table will be persisted and will not
+         *                      expire unless a @a ttl is specified.   If @a
+         *                      false, then the result table will be an
+         *                      in-memory table and will expire unless a @a ttl
+         *                      is specified otherwise.
          *                      <ul>
          *                              <li> gpudb::aggregate_unpivot_true
          *                              <li> gpudb::aggregate_unpivot_false
@@ -106,16 +101,16 @@ namespace gpudb
          *                      name, the alias must be used, rather than the
          *                      original column name.
          *                              <li>
-         *                      gpudb::aggregate_unpivot_chunk_size: If
-         *                      provided this indicates the chunk size to be
-         *                      used for the result table. Must be used in
-         *                      combination with the @a result_table option.
+         *                      gpudb::aggregate_unpivot_chunk_size: Indicates
+         *                      the chunk size to be used for the result table.
+         *                      Must be used in combination with the @a
+         *                      result_table option.
          *                              <li> gpudb::aggregate_unpivot_limit:
          *                      The number of records to keep.
          *                              <li> gpudb::aggregate_unpivot_ttl: Sets
-         *                      the TTL of the table specified in @a
-         *                      result_table. The value must be the desired TTL
-         *                      in minutes.
+         *                      the <a href="../../concepts/ttl.html"
+         *                      target="_top">TTL</a> of the table specified in
+         *                      @a result_table.
          *                      </ul>
          * 
          */
@@ -158,13 +153,10 @@ namespace gpudb
          *                              <li>
          *                      gpudb::aggregate_unpivot_collection_name: Name
          *                      of a collection which is to contain the table
-         *                      specified in @a result_table, otherwise the
-         *                      table will be a top-level table. If the
-         *                      collection does not allow duplicate types and
-         *                      it contains a table of the same type as the
-         *                      given one, then this table creation request
-         *                      will fail. Additionally this option is invalid
-         *                      if @a tableName is a collection.
+         *                      specified in @a result_table. If the collection
+         *                      provided is non-existent, the collection will
+         *                      be automatically created. If empty, then the
+         *                      table will be a top-level table.
          *                              <li>
          *                      gpudb::aggregate_unpivot_result_table: The name
          *                      of the table used to store the results. Has the
@@ -174,14 +166,12 @@ namespace gpudb
          *                      results are returned in the response.
          *                              <li>
          *                      gpudb::aggregate_unpivot_result_table_persist:
-         *                      If @a true then the result table specified in
-         *                      {result_table}@{key of input.options} will be
-         *                      persisted as a regular table (it will not be
-         *                      automatically cleared unless a @a ttl is
-         *                      provided, and the table data can be modified in
-         *                      subsequent operations). If @a false (the
-         *                      default) then the result table will be a
-         *                      read-only, memory-only temporary table.
+         *                      If @a true, then the result table specified in
+         *                      @a result_table will be persisted and will not
+         *                      expire unless a @a ttl is specified.   If @a
+         *                      false, then the result table will be an
+         *                      in-memory table and will expire unless a @a ttl
+         *                      is specified otherwise.
          *                      <ul>
          *                              <li> gpudb::aggregate_unpivot_true
          *                              <li> gpudb::aggregate_unpivot_false
@@ -200,16 +190,16 @@ namespace gpudb
          *                      name, the alias must be used, rather than the
          *                      original column name.
          *                              <li>
-         *                      gpudb::aggregate_unpivot_chunk_size: If
-         *                      provided this indicates the chunk size to be
-         *                      used for the result table. Must be used in
-         *                      combination with the @a result_table option.
+         *                      gpudb::aggregate_unpivot_chunk_size: Indicates
+         *                      the chunk size to be used for the result table.
+         *                      Must be used in combination with the @a
+         *                      result_table option.
          *                              <li> gpudb::aggregate_unpivot_limit:
          *                      The number of records to keep.
          *                              <li> gpudb::aggregate_unpivot_ttl: Sets
-         *                      the TTL of the table specified in @a
-         *                      result_table. The value must be the desired TTL
-         *                      in minutes.
+         *                      the <a href="../../concepts/ttl.html"
+         *                      target="_top">TTL</a> of the table specified in
+         *                      @a result_table.
          *                      </ul>
          * 
          */

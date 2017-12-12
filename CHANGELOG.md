@@ -1,11 +1,13 @@
 GPUdb C++ API Changelog
 =======================
 
-Version 6.1.0 - 2017-11-08
+Version 6.1.0 - 2017-12-11
 --------------------------
 
 -   Added support for the 'datetime' property
 -   Added multi-head ingestion support
+-   Added == overloaded operator for Type and Type::Column
+-   Added << (ostream) overloaded operator for Type::Column
 
 
 Version 6.0.0 - 2017-01-24

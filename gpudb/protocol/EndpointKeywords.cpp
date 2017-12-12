@@ -21,8 +21,9 @@ namespace gpudb
     const std::string admin_alter_jobs_cancel( "cancel" );
 
     // Keywords for /admin/offline request
-    const std::string admin_offline_false( "false" );
-    const std::string admin_offline_true ( "true"  );
+    const std::string admin_offline_false        ( "false"         );
+    const std::string admin_offline_flush_to_disk( "flush_to_disk" );
+    const std::string admin_offline_true         ( "true"          );
 
     // Keywords for /admin/rebalance request
     const std::string admin_rebalance_false  ( "false"   );
@@ -59,6 +60,7 @@ namespace gpudb
     const std::string aggregate_group_by_having                       ( "having"                        );
     const std::string aggregate_group_by_json                         ( "json"                          );
     const std::string aggregate_group_by_key                          ( "key"                           );
+    const std::string aggregate_group_by_materialize_on_gpu           ( "materialize_on_gpu"            );
     const std::string aggregate_group_by_result_table                 ( "result_table"                  );
     const std::string aggregate_group_by_result_table_force_replicated( "result_table_force_replicated" );
     const std::string aggregate_group_by_result_table_generate_pk     ( "result_table_generate_pk"      );
@@ -439,11 +441,11 @@ namespace gpudb
     const std::string insert_symbol_svg_path( "svg_path" );
 
     // Keywords for /lock/table request
-    const std::string lock_table_no_access ( "no-access"  );
-    const std::string lock_table_read_only ( "read-only"  );
-    const std::string lock_table_read_write( "read-write" );
+    const std::string lock_table_no_access ( "no_access"  );
+    const std::string lock_table_read_only ( "read_only"  );
+    const std::string lock_table_read_write( "read_write" );
     const std::string lock_table_status    ( "status"     );
-    const std::string lock_table_write_only( "write-only" );
+    const std::string lock_table_write_only( "write_only" );
 
     // Keywords for /merge/records request
     const std::string merge_records_chunk_size     ( "chunk_size"      );
@@ -519,14 +521,14 @@ namespace gpudb
     const std::string show_table_foreign_keys            ( "foreign_keys"             );
     const std::string show_table_foreign_shard_key       ( "foreign_shard_key"        );
     const std::string show_table_global_access_mode      ( "global_access_mode"       );
-    const std::string show_table_no_access               ( "no-access"                );
+    const std::string show_table_no_access               ( "no_access"                );
     const std::string show_table_protected               ( "protected"                );
-    const std::string show_table_read_only               ( "read-only"                );
-    const std::string show_table_read_write              ( "read-write"               );
+    const std::string show_table_read_only               ( "read_only"                );
+    const std::string show_table_read_write              ( "read_write"               );
     const std::string show_table_record_bytes            ( "record_bytes"             );
     const std::string show_table_remaining_table_ttl     ( "remaining_table_ttl"      );
     const std::string show_table_table_ttl               ( "table_ttl"                );
-    const std::string show_table_write_only              ( "write-only"               );
+    const std::string show_table_write_only              ( "write_only"               );
 
     // Keywords for /show/table request and response
     const std::string show_table_false( "false" );
@@ -543,45 +545,50 @@ namespace gpudb
     const std::string update_records_update_on_existing_pk( "update_on_existing_pk" );
 
     // Keywords for /visualize/image request
-    const std::string visualize_image_102100           ( "102100"            );
-    const std::string visualize_image_3857             ( "3857"              );
-    const std::string visualize_image_900913           ( "900913"            );
-    const std::string visualize_image_EPSG_102100      ( "EPSG:102100"       );
-    const std::string visualize_image_EPSG_3857        ( "EPSG:3857"         );
-    const std::string visualize_image_EPSG_4326        ( "EPSG:4326"         );
-    const std::string visualize_image_EPSG_900913      ( "EPSG:900913"       );
-    const std::string visualize_image_PLATE_CARREE     ( "PLATE_CARREE"      );
-    const std::string visualize_image_SYMBOLCODE       ( "SYMBOLCODE"        );
-    const std::string visualize_image_WEB_MERCATOR     ( "WEB_MERCATOR"      );
-    const std::string visualize_image_circle           ( "circle"            );
-    const std::string visualize_image_diamond          ( "diamond"           );
-    const std::string visualize_image_do_points        ( "do_points"         );
-    const std::string visualize_image_do_shapes        ( "do_shapes"         );
-    const std::string visualize_image_do_symbology     ( "do_symbology"      );
-    const std::string visualize_image_do_tracks        ( "do_tracks"         );
-    const std::string visualize_image_false            ( "false"             );
-    const std::string visualize_image_hollowcircle     ( "hollowcircle"      );
-    const std::string visualize_image_hollowdiamond    ( "hollowdiamond"     );
-    const std::string visualize_image_hollowsquare     ( "hollowsquare"      );
-    const std::string visualize_image_none             ( "none"              );
-    const std::string visualize_image_oriented_arrow   ( "oriented_arrow"    );
-    const std::string visualize_image_oriented_triangle( "oriented_triangle" );
-    const std::string visualize_image_pointcolors      ( "pointcolors"       );
-    const std::string visualize_image_pointshapes      ( "pointshapes"       );
-    const std::string visualize_image_pointsizes       ( "pointsizes"        );
-    const std::string visualize_image_shapefillcolors  ( "shapefillcolors"   );
-    const std::string visualize_image_shapelinecolors  ( "shapelinecolors"   );
-    const std::string visualize_image_shapelinewidths  ( "shapelinewidths"   );
-    const std::string visualize_image_square           ( "square"            );
-    const std::string visualize_image_trackheadcolors  ( "trackheadcolors"   );
-    const std::string visualize_image_trackheadshapes  ( "trackheadshapes"   );
-    const std::string visualize_image_trackheadsizes   ( "trackheadsizes"    );
-    const std::string visualize_image_tracklinecolors  ( "tracklinecolors"   );
-    const std::string visualize_image_tracklinewidths  ( "tracklinewidths"   );
-    const std::string visualize_image_trackmarkercolors( "trackmarkercolors" );
-    const std::string visualize_image_trackmarkershapes( "trackmarkershapes" );
-    const std::string visualize_image_trackmarkersizes ( "trackmarkersizes"  );
-    const std::string visualize_image_true             ( "true"              );
+    const std::string visualize_image_102100             ( "102100"              );
+    const std::string visualize_image_3857               ( "3857"                );
+    const std::string visualize_image_900913             ( "900913"              );
+    const std::string visualize_image_EPSG_102100        ( "EPSG:102100"         );
+    const std::string visualize_image_EPSG_3857          ( "EPSG:3857"           );
+    const std::string visualize_image_EPSG_4326          ( "EPSG:4326"           );
+    const std::string visualize_image_EPSG_900913        ( "EPSG:900913"         );
+    const std::string visualize_image_PLATE_CARREE       ( "PLATE_CARREE"        );
+    const std::string visualize_image_SYMBOLCODE         ( "SYMBOLCODE"          );
+    const std::string visualize_image_WEB_MERCATOR       ( "WEB_MERCATOR"        );
+    const std::string visualize_image_circle             ( "circle"              );
+    const std::string visualize_image_diamond            ( "diamond"             );
+    const std::string visualize_image_do_points          ( "do_points"           );
+    const std::string visualize_image_do_shapes          ( "do_shapes"           );
+    const std::string visualize_image_do_symbology       ( "do_symbology"        );
+    const std::string visualize_image_do_tracks          ( "do_tracks"           );
+    const std::string visualize_image_false              ( "false"               );
+    const std::string visualize_image_hollowcircle       ( "hollowcircle"        );
+    const std::string visualize_image_hollowdiamond      ( "hollowdiamond"       );
+    const std::string visualize_image_hollowsquare       ( "hollowsquare"        );
+    const std::string visualize_image_none               ( "none"                );
+    const std::string visualize_image_oriented_arrow     ( "oriented_arrow"      );
+    const std::string visualize_image_oriented_triangle  ( "oriented_triangle"   );
+    const std::string visualize_image_pointcolors        ( "pointcolors"         );
+    const std::string visualize_image_pointoffset_x      ( "pointoffset_x"       );
+    const std::string visualize_image_pointoffset_y      ( "pointoffset_y"       );
+    const std::string visualize_image_pointshapes        ( "pointshapes"         );
+    const std::string visualize_image_pointsizes         ( "pointsizes"          );
+    const std::string visualize_image_shapefillcolors    ( "shapefillcolors"     );
+    const std::string visualize_image_shapelinecolors    ( "shapelinecolors"     );
+    const std::string visualize_image_shapelinepatternlen( "shapelinepatternlen" );
+    const std::string visualize_image_shapelinepatterns  ( "shapelinepatterns"   );
+    const std::string visualize_image_shapelinewidths    ( "shapelinewidths"     );
+    const std::string visualize_image_square             ( "square"              );
+    const std::string visualize_image_symbolrotations    ( "symbolrotations"     );
+    const std::string visualize_image_trackheadcolors    ( "trackheadcolors"     );
+    const std::string visualize_image_trackheadshapes    ( "trackheadshapes"     );
+    const std::string visualize_image_trackheadsizes     ( "trackheadsizes"      );
+    const std::string visualize_image_tracklinecolors    ( "tracklinecolors"     );
+    const std::string visualize_image_tracklinewidths    ( "tracklinewidths"     );
+    const std::string visualize_image_trackmarkercolors  ( "trackmarkercolors"   );
+    const std::string visualize_image_trackmarkershapes  ( "trackmarkershapes"   );
+    const std::string visualize_image_trackmarkersizes   ( "trackmarkersizes"    );
+    const std::string visualize_image_true               ( "true"                );
 
     // Keywords for /visualize/image/chart request
     const std::string visualize_image_chart_cb_delimiter  ( "cb_delimiter"   );
@@ -611,43 +618,47 @@ namespace gpudb
     const std::string visualize_image_chart_sorted_y_values( "sorted_y_values" );
 
     // Keywords for /visualize/image/classbreak request
-    const std::string visualize_image_classbreak_102100           ( "102100"            );
-    const std::string visualize_image_classbreak_3857             ( "3857"              );
-    const std::string visualize_image_classbreak_900913           ( "900913"            );
-    const std::string visualize_image_classbreak_EPSG_102100      ( "EPSG:102100"       );
-    const std::string visualize_image_classbreak_EPSG_3857        ( "EPSG:3857"         );
-    const std::string visualize_image_classbreak_EPSG_4326        ( "EPSG:4326"         );
-    const std::string visualize_image_classbreak_EPSG_900913      ( "EPSG:900913"       );
-    const std::string visualize_image_classbreak_PLATE_CARREE     ( "PLATE_CARREE"      );
-    const std::string visualize_image_classbreak_SYMBOLCODE       ( "SYMBOLCODE"        );
-    const std::string visualize_image_classbreak_WEB_MERCATOR     ( "WEB_MERCATOR"      );
-    const std::string visualize_image_classbreak_circle           ( "circle"            );
-    const std::string visualize_image_classbreak_diamond          ( "diamond"           );
-    const std::string visualize_image_classbreak_do_points        ( "do_points"         );
-    const std::string visualize_image_classbreak_do_shapes        ( "do_shapes"         );
-    const std::string visualize_image_classbreak_do_symbology     ( "do_symbology"      );
-    const std::string visualize_image_classbreak_do_tracks        ( "do_tracks"         );
-    const std::string visualize_image_classbreak_false            ( "false"             );
-    const std::string visualize_image_classbreak_hollowcircle     ( "hollowcircle"      );
-    const std::string visualize_image_classbreak_hollowdiamond    ( "hollowdiamond"     );
-    const std::string visualize_image_classbreak_hollowsquare     ( "hollowsquare"      );
-    const std::string visualize_image_classbreak_none             ( "none"              );
-    const std::string visualize_image_classbreak_pointcolors      ( "pointcolors"       );
-    const std::string visualize_image_classbreak_pointshapes      ( "pointshapes"       );
-    const std::string visualize_image_classbreak_pointsizes       ( "pointsizes"        );
-    const std::string visualize_image_classbreak_shapefillcolors  ( "shapefillcolors"   );
-    const std::string visualize_image_classbreak_shapelinecolors  ( "shapelinecolors"   );
-    const std::string visualize_image_classbreak_shapelinewidths  ( "shapelinewidths"   );
-    const std::string visualize_image_classbreak_square           ( "square"            );
-    const std::string visualize_image_classbreak_trackheadcolors  ( "trackheadcolors"   );
-    const std::string visualize_image_classbreak_trackheadshapes  ( "trackheadshapes"   );
-    const std::string visualize_image_classbreak_trackheadsizes   ( "trackheadsizes"    );
-    const std::string visualize_image_classbreak_tracklinecolors  ( "tracklinecolors"   );
-    const std::string visualize_image_classbreak_tracklinewidths  ( "tracklinewidths"   );
-    const std::string visualize_image_classbreak_trackmarkercolors( "trackmarkercolors" );
-    const std::string visualize_image_classbreak_trackmarkershapes( "trackmarkershapes" );
-    const std::string visualize_image_classbreak_trackmarkersizes ( "trackmarkersizes"  );
-    const std::string visualize_image_classbreak_true             ( "true"              );
+    const std::string visualize_image_classbreak_102100             ( "102100"              );
+    const std::string visualize_image_classbreak_3857               ( "3857"                );
+    const std::string visualize_image_classbreak_900913             ( "900913"              );
+    const std::string visualize_image_classbreak_EPSG_102100        ( "EPSG:102100"         );
+    const std::string visualize_image_classbreak_EPSG_3857          ( "EPSG:3857"           );
+    const std::string visualize_image_classbreak_EPSG_4326          ( "EPSG:4326"           );
+    const std::string visualize_image_classbreak_EPSG_900913        ( "EPSG:900913"         );
+    const std::string visualize_image_classbreak_PLATE_CARREE       ( "PLATE_CARREE"        );
+    const std::string visualize_image_classbreak_SYMBOLCODE         ( "SYMBOLCODE"          );
+    const std::string visualize_image_classbreak_WEB_MERCATOR       ( "WEB_MERCATOR"        );
+    const std::string visualize_image_classbreak_circle             ( "circle"              );
+    const std::string visualize_image_classbreak_diamond            ( "diamond"             );
+    const std::string visualize_image_classbreak_do_points          ( "do_points"           );
+    const std::string visualize_image_classbreak_do_shapes          ( "do_shapes"           );
+    const std::string visualize_image_classbreak_do_symbology       ( "do_symbology"        );
+    const std::string visualize_image_classbreak_do_tracks          ( "do_tracks"           );
+    const std::string visualize_image_classbreak_false              ( "false"               );
+    const std::string visualize_image_classbreak_hollowcircle       ( "hollowcircle"        );
+    const std::string visualize_image_classbreak_hollowdiamond      ( "hollowdiamond"       );
+    const std::string visualize_image_classbreak_hollowsquare       ( "hollowsquare"        );
+    const std::string visualize_image_classbreak_none               ( "none"                );
+    const std::string visualize_image_classbreak_pointcolors        ( "pointcolors"         );
+    const std::string visualize_image_classbreak_pointoffset_x      ( "pointoffset_x"       );
+    const std::string visualize_image_classbreak_pointoffset_y      ( "pointoffset_y"       );
+    const std::string visualize_image_classbreak_pointshapes        ( "pointshapes"         );
+    const std::string visualize_image_classbreak_pointsizes         ( "pointsizes"          );
+    const std::string visualize_image_classbreak_shapefillcolors    ( "shapefillcolors"     );
+    const std::string visualize_image_classbreak_shapelinecolors    ( "shapelinecolors"     );
+    const std::string visualize_image_classbreak_shapelinepatternlen( "shapelinepatternlen" );
+    const std::string visualize_image_classbreak_shapelinepatterns  ( "shapelinepatterns"   );
+    const std::string visualize_image_classbreak_shapelinewidths    ( "shapelinewidths"     );
+    const std::string visualize_image_classbreak_square             ( "square"              );
+    const std::string visualize_image_classbreak_trackheadcolors    ( "trackheadcolors"     );
+    const std::string visualize_image_classbreak_trackheadshapes    ( "trackheadshapes"     );
+    const std::string visualize_image_classbreak_trackheadsizes     ( "trackheadsizes"      );
+    const std::string visualize_image_classbreak_tracklinecolors    ( "tracklinecolors"     );
+    const std::string visualize_image_classbreak_tracklinewidths    ( "tracklinewidths"     );
+    const std::string visualize_image_classbreak_trackmarkercolors  ( "trackmarkercolors"   );
+    const std::string visualize_image_classbreak_trackmarkershapes  ( "trackmarkershapes"   );
+    const std::string visualize_image_classbreak_trackmarkersizes   ( "trackmarkersizes"    );
+    const std::string visualize_image_classbreak_true               ( "true"                );
 
     // Keywords for /visualize/image/heatmap request
     const std::string visualize_image_heatmap_102100              ( "102100"               );

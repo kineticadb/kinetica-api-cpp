@@ -104,6 +104,61 @@ namespace gpudb
         }
     }
 
+
+    // Overloading == for Column
+    bool operator==(const gpudb::Type::Column &lhs, const gpudb::Type::Column &rhs)
+    {
+        return ( (lhs.m_name == rhs.m_name)
+            && (lhs.m_type == rhs.m_type)
+            && (lhs.m_isNullable == rhs.m_isNullable)
+            && (lhs.m_properties == rhs.m_properties) );
+    }
+
+    std::ostream &operator << (std::ostream &os, const gpudb::Type::Column &column)
+    {
+        os << " (" << column.getName() << ", " << column.getType() << ", nullable: " << column.m_isNullable;
+
+        if ( !column.m_properties.empty() )
+        {
+            os << " properties: ";
+            std::vector<std::string>::const_iterator iter;
+            for ( iter = column.m_properties.begin(); iter != column.m_properties.end(); ++iter )
+                os << *iter << ", ";
+        }
+        os << std::endl;
+        return os;
+    }
+
+    std::ostream &operator << (std::ostream &os, gpudb::Type::Column &column)
+    {
+        os << " (" << column.getName() << ", " << column.getType() << ", nullable: " << column.m_isNullable;
+
+        if ( !column.m_properties.empty() )
+        {
+            os << " properties: ";
+            std::vector<std::string>::const_iterator iter;
+            for ( iter = column.m_properties.begin(); iter != column.m_properties.end(); ++iter )
+                os << *iter << ", ";
+        }
+        os << std::endl;
+        return os;
+    }
+
+
+    // Overloading == for Type
+    bool operator==(const gpudb::Type &lhs, const gpudb::Type &rhs)
+    {
+        std::cout << "gpudb::Type== LHS has been created? " << lhs.m_has_been_created << " RHS been created? " << rhs.m_has_been_created
+            << " lhs type id " << lhs.m_type_id << " rhs type id " << rhs.m_type_id << std::endl; // debug~~~~~~~~~~~~~~
+        // If both LHS and RHS have been created in Kinetica, just check
+        // the type ID
+        if ( lhs.m_has_been_created && rhs.m_has_been_created )
+            return (lhs.m_type_id == rhs.m_type_id);
+
+        // else, check the columns
+        return ( lhs.m_data->columns == rhs.m_data->columns);
+    }
+
     Type Type::fromTable(const GPUdb& gpudb, const std::string& tableName)
     {
         ShowTableResponse response;
@@ -129,7 +184,7 @@ namespace gpudb
             }
         }
 
-        return Type(response.typeLabels[0], response.typeSchemas[0], response.properties[0]);
+        return Type( response.typeLabels[0], response.typeSchemas[0], response.properties[0], response.typeIds[0] );
     }
 
     Type Type::fromType(const GPUdb& gpudb, const std::string& typeId)
@@ -143,7 +198,7 @@ namespace gpudb
             throw GPUdbException("Type " + typeId + " does not exist.");
         }
 
-        return Type(response.labels[0], response.typeSchemas[0], response.properties[0]);
+        return Type( response.labels[0], response.typeSchemas[0], response.properties[0], typeId );
     }
 
     Type::Type(const std::vector<Type::Column>& columns) :
@@ -177,6 +232,18 @@ namespace gpudb
         m_data->label = label;
         createFromSchema(typeSchema, properties);
         createSchema();
+    }
+
+    Type::Type( const std::string& label, const std::string& typeSchema,
+                const std::map<std::string, std::vector<std::string> >& properties,
+                const std::string& type_id ) :
+        m_data(boost::make_shared<TypeData>())
+    {
+        m_data->label = label;
+        createFromSchema(typeSchema, properties);
+        createSchema();
+        m_type_id = type_id;
+        m_has_been_created = true;
     }
 
     const std::string& Type::getLabel() const
@@ -226,7 +293,7 @@ namespace gpudb
         return m_data->schema;
     }
 
-    std::string Type::create(const GPUdb& gpudb) const
+    std::string Type::create(const GPUdb& gpudb)
     {
         boost::property_tree::ptree root;
         root.put("type", "record");
@@ -291,8 +358,11 @@ namespace gpudb
         root.add_child("fields", fields);
         std::ostringstream schemaStream;
         boost::property_tree::write_json(schemaStream, root);
+
         CreateTypeResponse response;
-        return gpudb.createType(schemaStream.str(), m_data->label, properties, std::map<std::string, std::string>(), response).typeId;
+        m_type_id = gpudb.createType(schemaStream.str(), m_data->label, properties, std::map<std::string, std::string>(), response).typeId;
+        m_has_been_created = true;
+        return m_type_id;
     }
 
     Type::Type()

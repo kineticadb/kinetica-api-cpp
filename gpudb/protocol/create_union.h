@@ -15,7 +15,7 @@ namespace gpudb
      * <p>
      * Performs a <a href="../../concepts/unions.html" target="_top">union</a>
      * (concatenation) of one or more existing tables or views, the results of
-     * which are stored in a new view. It is equivalent to the SQL UNION ALL
+     * which are stored in a new table. It is equivalent to the SQL UNION ALL
      * operator.  Non-charN 'string' and 'bytes' column types cannot be
      * included in a union, neither can columns with the property 'store_only'.
      * Though not explicitly unions, <a href="../../concepts/intersect.html"
@@ -94,30 +94,33 @@ namespace gpudb
          *                      the specified tables (only works on 2 tables).
          *                              <li> gpudb::create_union_merge_views:
          *                      Merge two or more views (or views of views) of
-         *                      the same base data set into a new view. The
-         *                      resulting view would match the results of a SQL
-         *                      OR operation, e.g., if filter 1 creates a view
-         *                      using the expression 'x = 10' and filter 2
-         *                      creates a view using the expression 'x <= 10',
-         *                      then the merge views operation creates a new
-         *                      view using the expression 'x = 10 OR x <= 10'.
+         *                      the same base data set into a new view. If this
+         *                      mode is selected
+         *                                                            @a
+         *                      inputColumnNames AND @a outputColumnNames are
+         *                      ignored The resulting view would match the
+         *                      results of a SQL OR operation, e.g., if filter
+         *                      1 creates a view using the expression 'x = 10'
+         *                      and filter 2 creates a view using the
+         *                      expression 'x <= 10', then the merge views
+         *                      operation creates a new view using the
+         *                      expression 'x = 10 OR x <= 10'.
          *                      </ul>
          *                      The default value is
          *                      gpudb::create_union_union_all.
-         *                              <li> gpudb::create_union_chunk_size: If
-         *                      provided this indicates the chunk size to be
-         *                      used for this table.
+         *                              <li> gpudb::create_union_chunk_size:
+         *                      Indicates the chunk size to be used for this
+         *                      table.
          *                              <li> gpudb::create_union_ttl: Sets the
-         *                      TTL of the table specified in @a tableName. The
-         *                      value must be the desired TTL in minutes.
+         *                      <a href="../../concepts/ttl.html"
+         *                      target="_top">TTL</a> of the table specified in
+         *                      @a tableName.
          *                              <li> gpudb::create_union_persist: If @a
-         *                      true then the union will be persisted as a
-         *                      regular table (it will not be automatically
-         *                      cleared unless a @a ttl is provided, and the
-         *                      table data can be modified in subsequent
-         *                      operations). If @a false (the default) then the
-         *                      union will be a read-only, memory-only
-         *                      temporary table.
+         *                      true, then the union specified in @a tableName
+         *                      will be persisted and will not expire unless a
+         *                      @a ttl is specified.   If @a false, then the
+         *                      union will be an in-memory table and will
+         *                      expire unless a @a ttl is specified otherwise.
          *                      <ul>
          *                              <li> gpudb::create_union_true
          *                              <li> gpudb::create_union_false
@@ -212,7 +215,7 @@ namespace gpudb
      * <p>
      * Performs a <a href="../../concepts/unions.html" target="_top">union</a>
      * (concatenation) of one or more existing tables or views, the results of
-     * which are stored in a new view. It is equivalent to the SQL UNION ALL
+     * which are stored in a new table. It is equivalent to the SQL UNION ALL
      * operator.  Non-charN 'string' and 'bytes' column types cannot be
      * included in a union, neither can columns with the property 'store_only'.
      * Though not explicitly unions, <a href="../../concepts/intersect.html"

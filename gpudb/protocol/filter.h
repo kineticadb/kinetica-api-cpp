@@ -58,14 +58,14 @@ namespace gpudb
          *                      <ul>
          *                              <li> gpudb::filter_collection_name:
          *                      Name of a collection which is to contain the
-         *                      newly created view, otherwise the view will be
-         *                      a top-level table. If the collection does not
-         *                      allow duplicate types and it contains a table
-         *                      of the same type as the given one, then this
-         *                      table creation request will fail.
-         *                              <li> gpudb::filter_ttl: Sets the TTL of
-         *                      the view specified in @a viewName. The value
-         *                      must be the desired TTL in minutes.
+         *                      newly created view. If the collection provided
+         *                      is non-existent, the collection will be
+         *                      automatically created. If empty, then the newly
+         *                      created view will be top-level.
+         *                              <li> gpudb::filter_ttl: Sets the <a
+         *                      href="../../concepts/ttl.html"
+         *                      target="_top">TTL</a> of the view specified in
+         *                      @a viewName.
          *                      </ul>
          * 
          */

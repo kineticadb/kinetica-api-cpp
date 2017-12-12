@@ -14,10 +14,10 @@ namespace gpudb
      * #lockTable(const LockTableRequest&) const}.
      * <p>
      * Manages global access to a table's data.  By default a table has a @a
-     * lockType of @a read-write, indicating all operations are permitted.  A
-     * user may request a @a read-only or a @a write-only lock, after which
+     * lockType of @a read_write, indicating all operations are permitted.  A
+     * user may request a @a read_only or a @a write_only lock, after which
      * only read or write operations, respectively, are permitted on the table
-     * until the lock is removed.  When @a lockType is @a no-access then no
+     * until the lock is removed.  When @a lockType is @a no_access then no
      * operations are permitted on the table.  The lock status can be queried
      * by setting @a lockType to @a status.
      */
@@ -129,10 +129,10 @@ namespace gpudb
      * #lockTable(const LockTableRequest&) const}.
      * <p>
      * Manages global access to a table's data.  By default a table has a @a
-     * lockType of @a read-write, indicating all operations are permitted.  A
-     * user may request a @a read-only or a @a write-only lock, after which
+     * lockType of @a read_write, indicating all operations are permitted.  A
+     * user may request a @a read_only or a @a write_only lock, after which
      * only read or write operations, respectively, are permitted on the table
-     * until the lock is removed.  When @a lockType is @a no-access then no
+     * until the lock is removed.  When @a lockType is @a no_access then no
      * operations are permitted on the table.  The lock status can be queried
      * by setting @a lockType to @a status.
      */

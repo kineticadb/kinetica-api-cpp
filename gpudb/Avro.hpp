@@ -242,7 +242,7 @@ namespace gpudb
         template<typename T> void encode(std::vector<std::vector<uint8_t> >& encodedObjects, const std::vector<T>& objects, const size_t threadCount = 1, const ExecutorPtr executor = ExecutorPtr())
         {
             encodedObjects.resize(objects.size(), std::vector<uint8_t>());
-            encode(&encodedObjects[0], &objects[0], objects.size(), threadCount, executor);
+            if (objects.size() > 0) encode(&encodedObjects[0], &objects[0], objects.size(), threadCount, executor);
         }
 
         class Decoder

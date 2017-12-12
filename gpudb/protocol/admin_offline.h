@@ -39,6 +39,15 @@ namespace gpudb
          *                              <li> gpudb::admin_offline_false
          *                      </ul>
          * @param[in] options_  Optional parameters.
+         *                      <ul>
+         *                              <li>
+         *                      gpudb::admin_offline_flush_to_disk: Flush to
+         *                      disk when going offline
+         *                      <ul>
+         *                              <li> gpudb::admin_offline_true
+         *                              <li> gpudb::admin_offline_false
+         *                      </ul>
+         *                      </ul>
          * 
          */
         AdminOfflineRequest(const bool offline_, const std::map<std::string, std::string>& options_):

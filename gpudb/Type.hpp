@@ -35,6 +35,10 @@ namespace gpudb
                     const std::vector<std::string>& getProperties() const;
                     bool hasProperty( std::string property ) const;
 
+                    friend bool operator==(const Column &lhs, const Column &rhs);  // overloading ==
+                    friend std::ostream &operator << (std::ostream &os, const Column &column);
+                    friend std::ostream &operator << (std::ostream &os, Column &column);
+
                 private:
                     std::string m_name;
                     ColumnType m_type;
@@ -59,7 +63,10 @@ namespace gpudb
             size_t getColumnIndex(const std::string& name) const;
             bool hasColumn(const std::string& name) const;
             const ::avro::ValidSchema& getSchema() const;
-            std::string create(const GPUdb& gpudb) const;
+            std::string create(const GPUdb& gpudb);
+
+            friend bool operator==(const Type &lhs, const Type &rhs);  // overloading ==
+            friend bool operator!=(const Type &lhs, const Type &rhs) { return !(lhs == rhs); }
 
         private:
             struct TypeData
@@ -71,8 +78,11 @@ namespace gpudb
             };
 
             boost::shared_ptr<TypeData> m_data;
+            std::string m_type_id;
+            bool m_has_been_created = false;
 
             Type();
+            Type(const std::string& label, const std::string& typeSchema, const std::map<std::string, std::vector<std::string> >& properties, const std::string& type_id);
             void initialize();
             void createFromSchema(const std::string& typeSchema, const std::map<std::string, std::vector<std::string> >& properties);
             void createSchema();

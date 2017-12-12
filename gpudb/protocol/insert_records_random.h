@@ -164,9 +164,10 @@ namespace gpudb
          *                      default.
          *                      </ul>
          *                              <li>
-         *                      gpudb::insert_records_random_attr_name: Set the
-         *                      following parameters for the column specified
-         *                      by the key. This overrides any parameter set by
+         *                      gpudb::insert_records_random_attr_name: Use the
+         *                      desired column name in place of @a attr_name,
+         *                      and set the following parameters for the column
+         *                      specified. This overrides any parameter set by
          *                      @a all.
          *                      <ul>
          *                              <li> gpudb::insert_records_random_min:

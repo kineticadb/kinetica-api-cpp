@@ -79,7 +79,9 @@ namespace gpudb
          *                      target="_top">collection</a> to which the
          *                      projection is to be assigned as a child. If the
          *                      collection provided is non-existent, the
-         *                      collection will be automatically created.
+         *                      collection will be automatically created. If
+         *                      empty, then the projection will be at the top
+         *                      level.
          *                              <li>
          *                      gpudb::create_projection_expression: An
          *                      optional filter <a
@@ -106,13 +108,12 @@ namespace gpudb
          *                      The default value is
          *                      gpudb::create_projection_false.
          *                              <li>
-         *                      gpudb::create_projection_chunk_size: If
-         *                      provided this indicates the chunk size to be
-         *                      used for this table.
+         *                      gpudb::create_projection_chunk_size: Indicates
+         *                      the chunk size to be used for this table.
          *                              <li> gpudb::create_projection_ttl: Sets
-         *                      the TTL of the table, view, or collection
-         *                      specified in @a projectionName. The value must
-         *                      be the desired TTL in minutes.
+         *                      the <a href="../../concepts/ttl.html"
+         *                      target="_top">TTL</a> of the projection
+         *                      specified in @a projectionName.
          *                              <li>
          *                      gpudb::create_projection_shard_key:
          *                      Comma-separated list of the columns to be
@@ -122,13 +123,12 @@ namespace gpudb
          *                      column name, the alias must be used, rather
          *                      than the original column name.
          *                              <li> gpudb::create_projection_persist:
-         *                      If @a true then the projection will be
-         *                      persisted as a regular table (it will not be
-         *                      automatically cleared unless a @a ttl is
-         *                      provided, and the table data can be modified in
-         *                      subsequent operations). If @a false then the
-         *                      projection will be a read-only, memory-only
-         *                      temporary table.
+         *                      If @a true, then the projection specified in @a
+         *                      projectionName will be persisted and will not
+         *                      expire unless a @a ttl is specified.   If @a
+         *                      false, then the projection will be an in-memory
+         *                      table and will expire unless a @a ttl is
+         *                      specified otherwise.
          *                      <ul>
          *                              <li> gpudb::create_projection_true
          *                              <li> gpudb::create_projection_false
