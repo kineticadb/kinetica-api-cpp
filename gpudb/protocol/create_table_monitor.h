@@ -43,8 +43,7 @@ namespace gpudb
          * 
          * @param[in] tableName_  Name of the table to monitor. Must not refer
          *                        to a collection.
-         * @param[in] options_  Optional parameters.  Default value is an empty
-         *                      std::map.
+         * @param[in] options_  Optional parameters.
          * 
          */
         CreateTableMonitorRequest(const std::string& tableName_, const std::map<std::string, std::string>& options_):

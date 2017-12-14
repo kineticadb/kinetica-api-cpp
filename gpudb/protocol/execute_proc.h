@@ -42,19 +42,17 @@ namespace gpudb
          *                       of a currently existing proc.
          * @param[in] params_  A map containing named parameters to pass to the
          *                     proc. Each key/value pair specifies the name of
-         *                     a parameter and its value.  Default value is an
-         *                     empty std::map.
+         *                     a parameter and its value.
          * @param[in] binParams_  A map containing named binary parameters to
          *                        pass to the proc. Each key/value pair
          *                        specifies the name of a parameter and its
-         *                        value.  Default value is an empty std::map.
+         *                        value.
          * @param[in] inputTableNames_  Names of the tables containing data to
          *                              be passed to the proc. Each name
          *                              specified must be the name of a
          *                              currently existing table. If no table
          *                              names are specified, no data will be
-         *                              passed to the proc.  Default value is
-         *                              an empty std::vector.
+         *                              passed to the proc.
          * @param[in] inputColumnNames_  Map of table names from @a
          *                               inputTableNames to lists of names of
          *                               columns from those tables that will be
@@ -64,8 +62,7 @@ namespace gpudb
          *                               table. If a table name from @a
          *                               inputTableNames is not included, all
          *                               columns from that table will be passed
-         *                               to the proc.  Default value is an
-         *                               empty std::map.
+         *                               to the proc.
          * @param[in] outputTableNames_  Names of the tables to which output
          *                               data from the proc will be written. If
          *                               a specified table does not exist, it
@@ -73,22 +70,25 @@ namespace gpudb
          *                               same schema as the corresponding table
          *                               (by order) from @a inputTableNames,
          *                               excluding any primary and shard keys.
-         *                               If no table names are specified, no
-         *                               output data can be returned from the
-         *                               proc.  Default value is an empty
-         *                               std::vector.
+         *                               If a specified table is a
+         *                               non-persistent result table, it must
+         *                               not have primary or shard keys. If no
+         *                               table names are specified, no output
+         *                               data can be returned from the proc.
          * @param[in] options_  Optional parameters.
          *                      <ul>
-         *                              <li> cache_input: A comma-delimited
-         *                      list of table names from @a inputTableNames
-         *                      from which input data will be cached for use in
-         *                      subsequent calls to /execute/proc with the @a
-         *                      use_cached_input option. Cached input data will
-         *                      be retained until the proc status is cleared
-         *                      with the /show/proc/status option of
-         *                      /show/proc/status and all proc instances using
-         *                      the cached data have completed.
-         *                              <li> use_cached_input: A
+         *                              <li> gpudb::execute_proc_cache_input: A
+         *                      comma-delimited list of table names from @a
+         *                      inputTableNames from which input data will be
+         *                      cached for use in subsequent calls to
+         *                      /execute/proc with the @a use_cached_input
+         *                      option. Cached input data will be retained
+         *                      until the proc status is cleared with the
+         *                      /show/proc/status option of /show/proc/status
+         *                      and all proc instances using the cached data
+         *                      have completed.
+         *                              <li>
+         *                      gpudb::execute_proc_use_cached_input: A
          *                      comma-delimited list of run IDs (as returned
          *                      from prior calls to /execute/proc) of running
          *                      or completed proc instances from which input
@@ -102,7 +102,6 @@ namespace gpudb
          *                      from the first run ID specified in the list
          *                      that includes that table will be used.
          *                      </ul>
-         *                        Default value is an empty std::map.
          * 
          */
         ExecuteProcRequest(const std::string& procName_, const std::map<std::string, std::string>& params_, const std::map<std::string, std::vector<uint8_t> >& binParams_, const std::vector<std::string>& inputTableNames_, const std::map<std::string, std::vector<std::string> >& inputColumnNames_, const std::vector<std::string>& outputTableNames_, const std::map<std::string, std::string>& options_):

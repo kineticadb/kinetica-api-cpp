@@ -46,19 +46,41 @@ namespace gpudb
          *                       view containing the results. Has the same
          *                       naming restrictions as <a
          *                       href="../../concepts/tables.html"
-         *                       target="_top">tables</a>.  Default value is an
-         *                       empty string.
+         *                       target="_top">tables</a>.
          * @param[in] columnName_  Name of the column to be used in the filter.
          *                         Must be 'WKT'
          * @param[in] inputWkt_  A geometry in WKT format that will be used to
-         *                       filter the objects in @a tableName.  Default
-         *                       value is an empty string.
+         *                       filter the objects in @a tableName.
          * @param[in] operation_  The geometric filtering operation to perform
-         *                        Values: 'contains', 'crosses', 'disjoint',
-         *                        'equals', 'intersects', 'overlaps',
-         *                        'touches', 'within'.
-         * @param[in] options_  Optional parameters.  Default value is an empty
-         *                      std::map.
+         *                        <ul>
+         *                                <li>
+         *                        gpudb::filter_by_geometry_contains: Matches
+         *                        records that contain the given WKT in @a
+         *                        inputWkt, i.e. the given WKT is within the
+         *                        bounds of a record's geometry.
+         *                                <li>
+         *                        gpudb::filter_by_geometry_crosses: Matches
+         *                        records that cross the given WKT.
+         *                                <li>
+         *                        gpudb::filter_by_geometry_disjoint: Matches
+         *                        records that are disjoint from the given WKT.
+         *                                <li>
+         *                        gpudb::filter_by_geometry_equals: Matches
+         *                        records that are the same as the given WKT.
+         *                                <li>
+         *                        gpudb::filter_by_geometry_intersects: Matches
+         *                        records that intersect the given WKT.
+         *                                <li>
+         *                        gpudb::filter_by_geometry_overlaps: Matches
+         *                        records that overlap the given WKT.
+         *                                <li>
+         *                        gpudb::filter_by_geometry_touches: Matches
+         *                        records that touch the given WKT.
+         *                                <li>
+         *                        gpudb::filter_by_geometry_within: Matches
+         *                        records that are within the given WKT.
+         *                        </ul>
+         * @param[in] options_  Optional parameters.
          * 
          */
         FilterByGeometryRequest(const std::string& tableName_, const std::string& viewName_, const std::string& columnName_, const std::string& inputWkt_, const std::string& operation_, const std::map<std::string, std::string>& options_):

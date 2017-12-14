@@ -35,6 +35,8 @@ Third-party Tools and Libraries
         -   It is easiest to use the Linux distribution provided cmake package.
         -   Red Hat based distributions install it using:
             -   `yum install cmake`
+        -   Debian based distributions install it using:
+            -   `apt install cmake`
     -   Boost library v1.48 or newer, http://www.boost.org/
         -   The GPUdb API depends on the Boost 'system' and 'thread' libraries.
         -   It is easiest to use the Linux distribution provided Boost package.
@@ -47,10 +49,28 @@ Third-party Tools and Libraries
             /usr/include/boost148/ and /usr/lib64/boost148/ directories.
             See below about how to configure the GPUdb CPP API CMake build to detect
             and use an alternate boost install.
+        -   Debian based distributions install it using:
+            -   `apt install libboost-dev libbost-system-dev libboost-thread-dev`
 -   Build the libraries from the source archives in the thirdparty/ directory.
-    -   The `thirdparty/build-thirdparty-libs.sh` script builds
-        Apache Avro and Google Snappy in the directory 'thirdparty/build' and
-        installs them to 'thirdparty/install'.
+    -   Dependencies
+        - CMake (as above)
+        - ZLib and BZ2 - compiled in Boost iostreams and required in Avro
+            -   Debian:
+                -   `apt install libbz2-dev zlib1g-dev`
+            - Red Hat based distributions:
+                -   `yum install bzip2 bzip2-devel zlib zlib-devel`
+        - chrpath - used to update rpaths
+            -   Red Hat:
+                -   `yum install chrpath`
+            -   Debian:
+                -   `apt install chrpath`
+    -   Before running the build script, locate the version of Boost that you want
+        to use to build the package.  You can download a source tarball of Boost from
+        http://www.boost.org.  You can place the tarball in the thirdparty folder or
+        specify the location using the --boost-archive parameter to the build script.
+    -   The `thirdparty/build-thirdparty-libs.sh` script builds the provided version
+        of Boost, and the included Apache Avro and Google Snappy in the directory 
+        '../_build/thirdparty/build' and installs them to '../_build/thirdparty/install'.
     -   Run the script without arguments, unless you need to specify the boost root
         as shown below.
     -   Apache Avro serialization library v1.7.7, https://avro.apache.org/index.html
@@ -64,7 +84,7 @@ Third-party Tools and Libraries
             -   Ex. GPUDB_AVRO_CMAKE_FLAGS="-DBoost_NO_BOOST_CMAKE=TRUE -DBOOST_INCLUDEDIR=/usr/include/boost148 -DBOOST_LIBRARYDIR=/usr/lib64/boost148/" ./build-thirdparty-libs.sh
     -   Snappy compression library v1.1.3, https://github.com/google/snappy
         -   The snappy library should not need any configuration.
-    -   Simply delete the 'thirdparty/build' and 'thirdparty/install' 
+    -   Simply delete the '../_build/thirdparty/build' and '../_build/thirdparty/install' 
         directories if you need to recreate them.
 
 

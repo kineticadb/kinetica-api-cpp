@@ -72,8 +72,7 @@ namespace gpudb
          *                      on which the trigger is activated. This usually
          *                      translates to the y-coordinates of a geospatial
          *                      region. Must be the same length as xvals.
-         * @param[in] options_  Optional parameters.  Default value is an empty
-         *                      std::map.
+         * @param[in] options_  Optional parameters.
          * 
          */
         CreateTriggerByAreaRequest(const std::string& requestId_, const std::vector<std::string>& tableNames_, const std::string& xColumnName_, const std::vector<double>& xVector_, const std::string& yColumnName_, const std::vector<double>& yVector_, const std::map<std::string, std::string>& options_):

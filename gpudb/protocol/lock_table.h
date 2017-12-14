@@ -43,11 +43,20 @@ namespace gpudb
          * @param[in] lockType_  The type of lock being applied to the table.
          *                       Setting it to @a status will return the
          *                       current lock status of the table without
-         *                       changing it. Values: 'status', 'disable',
-         *                       'read-only', 'write-only', 'unlock'.
-         *                         Default value is 'status'.
-         * @param[in] options_  Optional parameters.  Default value is an empty
-         *                      std::map.
+         *                       changing it.
+         *                       <ul>
+         *                               <li> gpudb::lock_table_status: Show
+         *                       locked status
+         *                               <li> gpudb::lock_table_disable: Allow
+         *                       no read/write operations
+         *                               <li> gpudb::lock_table_read_only:
+         *                       Allow only read operations
+         *                               <li> gpudb::lock_table_write_only:
+         *                       Allow only write operations
+         *                               <li> gpudb::lock_table_unlock: Allow
+         *                       all read/write operations
+         *                       </ul>
+         * @param[in] options_  Optional parameters.
          * 
          */
         LockTableRequest(const std::string& tableName_, const std::string& lockType_, const std::map<std::string, std::string>& options_):

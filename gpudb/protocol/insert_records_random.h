@@ -61,34 +61,39 @@ namespace gpudb
          *                      depending on the type of the column.  Below
          *                      follows a more detailed description of the map:
          *                      <ul>
-         *                              <li> seed: If provided, the internal
-         *                      random number generator will be initialized
-         *                      with the given value.  The minimum is 0.  This
-         *                      allows for the same set of random numbers to be
-         *                      generated across invocation of this endpoint in
-         *                      case the user wants to repeat the test.  Since
-         *                      @a options, is a map of maps, we need an
-         *                      internal map to provide the seed value.  For
-         *                      example, to pass 100 as the seed value through
-         *                      this parameter, you need something equivalent
-         *                      to: 'options' = {'seed': { 'value': 100 } }
+         *                              <li> gpudb::insert_records_random_seed:
+         *                      If provided, the internal random number
+         *                      generator will be initialized with the given
+         *                      value.  The minimum is 0.  This allows for the
+         *                      same set of random numbers to be generated
+         *                      across invocation of this endpoint in case the
+         *                      user wants to repeat the test.  Since @a
+         *                      options, is a map of maps, we need an internal
+         *                      map to provide the seed value.  For example, to
+         *                      pass 100 as the seed value through this
+         *                      parameter, you need something equivalent to:
+         *                      'options' = {'seed': { 'value': 100 } }
          *                      <ul>
-         *                              <li> value: Pass the seed value here.
+         *                              <li>
+         *                      gpudb::insert_records_random_value: Pass the
+         *                      seed value here.
          *                      </ul>
-         *                              <li> all: This key indicates that the
-         *                      specifications relayed in the internal map are
-         *                      to be applied to all columns of the records.
+         *                              <li> gpudb::insert_records_random_all:
+         *                      This key indicates that the specifications
+         *                      relayed in the internal map are to be applied
+         *                      to all columns of the records.
          *                      <ul>
-         *                              <li> min: For numerical columns, the
-         *                      minimum of the generated values is set to this
-         *                      value.  Default is -99999.  For point, shape,
-         *                      and track semantic types, min for numeric 'x'
-         *                      and 'y' columns needs to be within [-180, 180]
-         *                      and [-90, 90], respectively. The default
-         *                      minimum possible values for these columns in
-         *                      such cases are -180.0 and -90.0. For the
-         *                      'TIMESTAMP' column, the default minimum
-         *                      corresponds to Jan 1, 2010.
+         *                              <li> gpudb::insert_records_random_min:
+         *                      For numerical columns, the minimum of the
+         *                      generated values is set to this value.  Default
+         *                      is -99999.  For point, shape, and track
+         *                      semantic types, min for numeric 'x' and 'y'
+         *                      columns needs to be within [-180, 180] and
+         *                      [-90, 90], respectively. The default minimum
+         *                      possible values for these columns in such cases
+         *                      are -180.0 and -90.0. For the 'TIMESTAMP'
+         *                      column, the default minimum corresponds to Jan
+         *                      1, 2010.
          *                      For string columns, the minimum length of the
          *                      randomly generated strings is set to this value
          *                      (default is 1). If both minimum and maximum are
@@ -101,14 +106,15 @@ namespace gpudb
          *                      thrown in such a case. It is the responsibility
          *                      of the user to use the @a all parameter
          *                      judiciously.
-         *                              <li> max: For numerical columns, the
-         *                      maximum of the generated values is set to this
-         *                      value. Default is 99999. For point, shape, and
-         *                      track semantic types, max for numeric 'x' and
-         *                      'y' columns needs to be within [-180, 180] and
-         *                      [-90, 90], respectively. The default minimum
-         *                      possible values for these columns in such cases
-         *                      are 180.0 and 90.0.
+         *                              <li> gpudb::insert_records_random_max:
+         *                      For numerical columns, the maximum of the
+         *                      generated values is set to this value. Default
+         *                      is 99999. For point, shape, and track semantic
+         *                      types, max for numeric 'x' and 'y' columns
+         *                      needs to be within [-180, 180] and [-90, 90],
+         *                      respectively. The default minimum possible
+         *                      values for these columns in such cases are
+         *                      180.0 and 90.0.
          *                      For string columns, the maximum length of the
          *                      randomly generated strings is set to this value
          *                      (default is 200). If both minimum and maximum
@@ -122,112 +128,123 @@ namespace gpudb
          *                      thrown in such a case. It is the responsibility
          *                      of the user to use the @a all parameter
          *                      judiciously.
-         *                              <li> interval: If specified, then
-         *                      generate values for all columns linearly and
-         *                      evenly spaced with the given interval value
-         *                      starting at the minimum value (instead of
-         *                      generating random data). *Any provided max
-         *                      value is disregarded.*  For string-type
-         *                      columns, the interval value is ignored but the
-         *                      string values would be generated following the
-         *                      pattern: 'attrname_creationIndex#', i.e. the
-         *                      column name suffixed with an underscore and a
-         *                      running counter (starting at 0).  No nulls
-         *                      would be generated for nullable columns.
-         *                              <li> null_percentage: If specified,
-         *                      then generate the given percentage of the count
-         *                      as nulls for all nullable columns.  This option
-         *                      will be ignored for non-nullable columns.  The
-         *                      value must be within the range [0, 1.0].  The
-         *                      default value is 5% (0.05).
-         *                      </ul>
-         *                              <li> attr_name: Set the following
-         *                      parameters for the column specified by the key.
-         *                      This overrides any parameter set by @a all.
-         *                      <ul>
-         *                              <li> min: For numerical columns, the
-         *                      minimum of the generated values is set to this
-         *                      value.  Default is -99999.  For point, shape,
-         *                      and track semantic types, min for numeric 'x'
-         *                      and 'y' columns needs to be within [-180, 180]
-         *                      and [-90, 90], respectively. The default
-         *                      minimum possible values for these columns in
-         *                      such cases are -180.0 and -90.0. For the
-         *                      'TIMESTAMP' column, the default minimum
-         *                      corresponds to Jan 1, 2010.
-         *                      For string columns, the minimum length of the
-         *                      randomly generated strings is set to this value
-         *                      (default is 1). If both minimum and maximum are
-         *                      provided, minimum must be less than or equal to
-         *                      max. Value needs to be within [1, 200].
-         *                      If the min is outside the accepted ranges for
-         *                      strings columns and 'x' and 'y' columns for
-         *                      point/shape/track types, then those parameters
-         *                      will not be set; however, an error will not be
-         *                      thrown in such a case. It is the responsibility
-         *                      of the user to use the @a all parameter
-         *                      judiciously.
-         *                              <li> max: For numerical columns, the
-         *                      maximum of the generated values is set to this
-         *                      value. Default is 99999. For point, shape, and
-         *                      track semantic types, max for numeric 'x' and
-         *                      'y' columns needs to be within [-180, 180] and
-         *                      [-90, 90], respectively. The default minimum
-         *                      possible values for these columns in such cases
-         *                      are 180.0 and 90.0.
-         *                      For string columns, the maximum length of the
-         *                      randomly generated strings is set to this value
-         *                      (default is 200). If both minimum and maximum
-         *                      are provided, *max* must be greater than or
-         *                      equal to *min*. Value needs to be within [1,
-         *                      200].
-         *                      If the *max* is outside the accepted ranges for
-         *                      strings columns and 'x' and 'y' columns for
-         *                      point/shape/track types, then those parameters
-         *                      will not be set; however, an error will not be
-         *                      thrown in such a case. It is the responsibility
-         *                      of the user to use the @a all parameter
-         *                      judiciously.
-         *                              <li> interval: If specified, then
-         *                      generate values for all columns linearly and
-         *                      evenly spaced with the given interval value
-         *                      starting at the minimum value (instead of
-         *                      generating random data). *Any provided max
-         *                      value is disregarded.*  For string-type
-         *                      columns, the interval value is ignored but the
-         *                      string values would be generated following the
-         *                      pattern: 'attrname_creationIndex#', i.e. the
-         *                      column name suffixed with an underscore and a
-         *                      running counter (starting at 0).  No nulls
-         *                      would be generated for nullable columns.
-         *                              <li> null_percentage: If specified and
-         *                      if this column is nullable, then generate the
-         *                      given percentage of the count as nulls.  This
-         *                      option will result in an error if the column is
-         *                      not nullable.  The value must be within the
-         *                      range [0, 1.0].  The default value is 5%
-         *                      (0.05).
-         *                      </ul>
-         *                              <li> track_length: This key-map pair is
-         *                      only valid for track type data sets (an error
-         *                      is thrown otherwise).  No nulls would be
+         *                              <li>
+         *                      gpudb::insert_records_random_interval: If
+         *                      specified, then generate values for all columns
+         *                      linearly and evenly spaced with the given
+         *                      interval value starting at the minimum value
+         *                      (instead of generating random data). *Any
+         *                      provided max value is disregarded.*  For
+         *                      string-type columns, the interval value is
+         *                      ignored but the string values would be
+         *                      generated following the pattern:
+         *                      'attrname_creationIndex#', i.e. the column name
+         *                      suffixed with an underscore and a running
+         *                      counter (starting at 0).  No nulls would be
          *                      generated for nullable columns.
+         *                              <li>
+         *                      gpudb::insert_records_random_null_percentage:
+         *                      If specified, then generate the given
+         *                      percentage of the count as nulls for all
+         *                      nullable columns.  This option will be ignored
+         *                      for non-nullable columns.  The value must be
+         *                      within the range [0, 1.0].  The default value
+         *                      is 5% (0.05).
+         *                      </ul>
+         *                              <li>
+         *                      gpudb::insert_records_random_attr_name: Set the
+         *                      following parameters for the column specified
+         *                      by the key. This overrides any parameter set by
+         *                      @a all.
          *                      <ul>
-         *                              <li> min: Minimum possible length for
-         *                      generated series; default is 100 records per
-         *                      series. Must be an integral value within the
-         *                      range [1, 500]. If both min and max are
-         *                      specified, min must be less than or equal to
-         *                      max.
-         *                              <li> max: Maximum possible length for
-         *                      generated series; default is 500 records per
-         *                      series. Must be an integral value within the
-         *                      range [1, 500]. If both min and max are
-         *                      specified, max must be greater than or equal to
-         *                      min.
+         *                              <li> gpudb::insert_records_random_min:
+         *                      For numerical columns, the minimum of the
+         *                      generated values is set to this value.  Default
+         *                      is -99999.  For point, shape, and track
+         *                      semantic types, min for numeric 'x' and 'y'
+         *                      columns needs to be within [-180, 180] and
+         *                      [-90, 90], respectively. The default minimum
+         *                      possible values for these columns in such cases
+         *                      are -180.0 and -90.0. For the 'TIMESTAMP'
+         *                      column, the default minimum corresponds to Jan
+         *                      1, 2010.
+         *                      For string columns, the minimum length of the
+         *                      randomly generated strings is set to this value
+         *                      (default is 1). If both minimum and maximum are
+         *                      provided, minimum must be less than or equal to
+         *                      max. Value needs to be within [1, 200].
+         *                      If the min is outside the accepted ranges for
+         *                      strings columns and 'x' and 'y' columns for
+         *                      point/shape/track types, then those parameters
+         *                      will not be set; however, an error will not be
+         *                      thrown in such a case. It is the responsibility
+         *                      of the user to use the @a all parameter
+         *                      judiciously.
+         *                              <li> gpudb::insert_records_random_max:
+         *                      For numerical columns, the maximum of the
+         *                      generated values is set to this value. Default
+         *                      is 99999. For point, shape, and track semantic
+         *                      types, max for numeric 'x' and 'y' columns
+         *                      needs to be within [-180, 180] and [-90, 90],
+         *                      respectively. The default minimum possible
+         *                      values for these columns in such cases are
+         *                      180.0 and 90.0.
+         *                      For string columns, the maximum length of the
+         *                      randomly generated strings is set to this value
+         *                      (default is 200). If both minimum and maximum
+         *                      are provided, *max* must be greater than or
+         *                      equal to *min*. Value needs to be within [1,
+         *                      200].
+         *                      If the *max* is outside the accepted ranges for
+         *                      strings columns and 'x' and 'y' columns for
+         *                      point/shape/track types, then those parameters
+         *                      will not be set; however, an error will not be
+         *                      thrown in such a case. It is the responsibility
+         *                      of the user to use the @a all parameter
+         *                      judiciously.
+         *                              <li>
+         *                      gpudb::insert_records_random_interval: If
+         *                      specified, then generate values for all columns
+         *                      linearly and evenly spaced with the given
+         *                      interval value starting at the minimum value
+         *                      (instead of generating random data). *Any
+         *                      provided max value is disregarded.*  For
+         *                      string-type columns, the interval value is
+         *                      ignored but the string values would be
+         *                      generated following the pattern:
+         *                      'attrname_creationIndex#', i.e. the column name
+         *                      suffixed with an underscore and a running
+         *                      counter (starting at 0).  No nulls would be
+         *                      generated for nullable columns.
+         *                              <li>
+         *                      gpudb::insert_records_random_null_percentage:
+         *                      If specified and if this column is nullable,
+         *                      then generate the given percentage of the count
+         *                      as nulls.  This option will result in an error
+         *                      if the column is not nullable.  The value must
+         *                      be within the range [0, 1.0].  The default
+         *                      value is 5% (0.05).
+         *                      </ul>
+         *                              <li>
+         *                      gpudb::insert_records_random_track_length: This
+         *                      key-map pair is only valid for track type data
+         *                      sets (an error is thrown otherwise).  No nulls
+         *                      would be generated for nullable columns.
+         *                      <ul>
+         *                              <li> gpudb::insert_records_random_min:
+         *                      Minimum possible length for generated series;
+         *                      default is 100 records per series. Must be an
+         *                      integral value within the range [1, 500]. If
+         *                      both min and max are specified, min must be
+         *                      less than or equal to max.
+         *                              <li> gpudb::insert_records_random_max:
+         *                      Maximum possible length for generated series;
+         *                      default is 500 records per series. Must be an
+         *                      integral value within the range [1, 500]. If
+         *                      both min and max are specified, max must be
+         *                      greater than or equal to min.
          *                      </ul>
          *                      </ul>
-         *                        Default value is an empty std::map.
          * 
          */
         InsertRecordsRandomRequest(const std::string& tableName_, const int64_t count_, const std::map<std::string, std::map<std::string, double> >& options_):

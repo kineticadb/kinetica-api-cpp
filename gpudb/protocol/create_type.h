@@ -80,10 +80,160 @@ namespace gpudb
          *                         relevant column names for the given table.
          *                         Specifying any property overrides the
          *                         default properties for that column (which is
-         *                         based on the column's data type).  Default
-         *                         value is an empty std::map.
-         * @param[in] options_  Optional parameters.  Default value is an empty
-         *                      std::map.
+         *                         based on the column's data type).
+         *                         <ul>
+         *                                 <li> gpudb::create_type_data:
+         *                         Default property for all numeric and string
+         *                         type columns; makes the column available for
+         *                         GPU queries.
+         *                                 <li> gpudb::create_type_text_search:
+         *                         Valid only for 'string' columns. Enables
+         *                         full text search for string columns. Can be
+         *                         set independently of *data* and
+         *                         *store_only*.
+         *                                 <li> gpudb::create_type_store_only:
+         *                         Persist the column value but do not make it
+         *                         available to queries (e.g.
+         *                         /filter/bybox)-i.e. it is mutually exclusive
+         *                         to the 'data' property. Any 'bytes' type
+         *                         column must have a 'store_only' property.
+         *                         This property reduces system memory usage.
+         *                                 <li>
+         *                         gpudb::create_type_disk_optimized: Works in
+         *                         conjunction with the 'data' property for
+         *                         string columns. This property reduces system
+         *                         disk usage by disabling reverse string
+         *                         lookups. Queries like /filter,
+         *                         /filter/bylist, and /filter/byvalue work as
+         *                         usual but /aggregate/unique,
+         *                         /aggregate/groupby and /get/records/bycolumn
+         *                         are not allowed on columns with this
+         *                         property.
+         *                                 <li> gpudb::create_type_timestamp:
+         *                         Valid only for 'long' columns. Indicates
+         *                         that this field represents a timestamp and
+         *                         will be provided in milliseconds since the
+         *                         Unix epoch: 00:00:00 Jan 1 1970.  Dates
+         *                         represented by a timestamp must fall between
+         *                         the year 1000 and the year 2900.
+         *                                 <li> gpudb::create_type_decimal:
+         *                         Valid only for 'string' columns.  It
+         *                         represents a SQL type NUMERIC(19, 4) data
+         *                         type.  There can be up to 15 digits before
+         *                         the decimal point and up to four digits in
+         *                         the fractional part.  The value can be
+         *                         positive or negative (indicated by a minus
+         *                         sign at the beginning).  This property is
+         *                         mutually exclusive with the 'text_search'
+         *                         property.
+         *                                 <li> gpudb::create_type_date: Valid
+         *                         only for 'string' columns.  Indicates that
+         *                         this field represents a date and will be
+         *                         provided in the format 'YYYY-MM-DD'.  The
+         *                         allowable range is 1000-01-01 through
+         *                         2900-01-01.
+         *                                 <li> gpudb::create_type_time: Valid
+         *                         only for 'string' columns.  Indicates that
+         *                         this field represents a time-of-day and will
+         *                         be provided in the format 'HH:MM:SS.mmm'.
+         *                         The allowable range is 00:00:00.000 through
+         *                         23:59:59.999.
+         *                                 <li> gpudb::create_type_char1: This
+         *                         property provides optimized memory, disk and
+         *                         query performance for string columns.
+         *                         Strings with this property must be no longer
+         *                         than 1 character. This property cannot be
+         *                         combined with *text_search*
+         *                                 <li> gpudb::create_type_char2: This
+         *                         property provides optimized memory, disk and
+         *                         query performance for string columns.
+         *                         Strings with this property must be no longer
+         *                         than 2 characters. This property cannot be
+         *                         combined with *text_search*
+         *                                 <li> gpudb::create_type_char4: This
+         *                         property provides optimized memory, disk and
+         *                         query performance for string columns.
+         *                         Strings with this property must be no longer
+         *                         than 4 characters. This property cannot be
+         *                         combined with *text_search*
+         *                                 <li> gpudb::create_type_char8: This
+         *                         property provides optimized memory, disk and
+         *                         query performance for string columns.
+         *                         Strings with this property must be no longer
+         *                         than 8 characters. This property cannot be
+         *                         combined with *text_search*
+         *                                 <li> gpudb::create_type_char16: This
+         *                         property provides optimized memory, disk and
+         *                         query performance for string columns.
+         *                         Strings with this property must be no longer
+         *                         than 16 characters. This property cannot be
+         *                         combined with *text_search*
+         *                                 <li> gpudb::create_type_char32: This
+         *                         property provides optimized memory, disk and
+         *                         query performance for string columns.
+         *                         Strings with this property must be no longer
+         *                         than 32 characters. This property cannot be
+         *                         combined with *text_search*
+         *                                 <li> gpudb::create_type_char64: This
+         *                         property provides optimized memory, disk and
+         *                         query performance for string columns.
+         *                         Strings with this property must be no longer
+         *                         than 64 characters. This property cannot be
+         *                         combined with *text_search*
+         *                                 <li> gpudb::create_type_char128:
+         *                         This property provides optimized memory,
+         *                         disk and query performance for string
+         *                         columns. Strings with this property must be
+         *                         no longer than 128 characters. This property
+         *                         cannot be combined with *text_search*
+         *                                 <li> gpudb::create_type_char256:
+         *                         This property provides optimized memory,
+         *                         disk and query performance for string
+         *                         columns. Strings with this property must be
+         *                         no longer than 256 characters. This property
+         *                         cannot be combined with *text_search*
+         *                                 <li> gpudb::create_type_int8: This
+         *                         property provides optimized memory and query
+         *                         performance for int columns. Ints with this
+         *                         property must be between -128 and +127
+         *                         (inclusive)
+         *                                 <li> gpudb::create_type_int16: This
+         *                         property provides optimized memory and query
+         *                         performance for int columns. Ints with this
+         *                         property must be between -32768 and +32767
+         *                         (inclusive)
+         *                                 <li> gpudb::create_type_ipv4: This
+         *                         property provides optimized memory, disk and
+         *                         query performance for string columns
+         *                         representing IPv4 addresses (i.e.
+         *                         192.168.1.1). Strings with this property
+         *                         must be of the form: A.B.C.D where A, B, C
+         *                         and D are in the range of 0-255.
+         *                                 <li> gpudb::create_type_primary_key:
+         *                         This property indicates that this column
+         *                         will be part of (or the entire) primary key.
+         *                                 <li> gpudb::create_type_shard_key:
+         *                         This property indicates that this column
+         *                         will be part of (or the entire) shard key.
+         *                                 <li> gpudb::create_type_nullable:
+         *                         This property indicates that this column is
+         *                         nullable.  However, setting this property is
+         *                         insufficient for making the column nullable.
+         *                         The user must declare the type of the column
+         *                         as a union between its regular type and
+         *                         'null' in the avro schema for the record
+         *                         type in @a typeDefinition.  For example, if
+         *                         a column is of type integer and is nullable,
+         *                         then the entry for the column in the avro
+         *                         schema must be: ['int', 'null'].
+         *                         The Java and C++ APIs have built-in
+         *                         convenience for bypassing setting the avro
+         *                         schema by hand.  For those two languages,
+         *                         one can use this property as usual and not
+         *                         have to worry about the avro schema for the
+         *                         record.
+         *                         </ul>
+         * @param[in] options_  Optional parameters.
          * 
          */
         CreateTypeRequest(const std::string& typeDefinition_, const std::string& label_, const std::map<std::string, std::vector<std::string> >& properties_, const std::map<std::string, std::string>& options_):

@@ -61,22 +61,67 @@ namespace gpudb
          * @param[in] columnName_  Name of the column for which the statistics
          *                         are to be calculated.
          * @param[in] stats_  Comma separated list of the statistics to
-         *                    calculate, e.g. "sum,mean". Values: 'count',
-         *                    'mean', 'stdv', 'variance', 'skew', 'kurtosis',
-         *                    'sum', 'min', 'max', 'weighted_average',
-         *                    'cardinality', 'estimated_cardinality',
-         *                    'percentile', 'percentile_rank'.
+         *                    calculate, e.g. "sum,mean".
+         *                    <ul>
+         *                            <li> gpudb::aggregate_statistics_count:
+         *                    Number of objects (independent of the given
+         *                    column).
+         *                            <li> gpudb::aggregate_statistics_mean:
+         *                    Arithmetic mean (average), equivalent to
+         *                    sum/count.
+         *                            <li> gpudb::aggregate_statistics_stdv:
+         *                    Sample standard deviation (denominator is
+         *                    count-1).
+         *                            <li>
+         *                    gpudb::aggregate_statistics_variance: Unbiased
+         *                    sample variance (denominator is count-1).
+         *                            <li> gpudb::aggregate_statistics_skew:
+         *                    Skewness (third standardized moment).
+         *                            <li>
+         *                    gpudb::aggregate_statistics_kurtosis: Kurtosis
+         *                    (fourth standardized moment).
+         *                            <li> gpudb::aggregate_statistics_sum: Sum
+         *                    of all values in the column.
+         *                            <li> gpudb::aggregate_statistics_min:
+         *                    Minimum value of the column.
+         *                            <li> gpudb::aggregate_statistics_max:
+         *                    Maximum value of the column.
+         *                            <li>
+         *                    gpudb::aggregate_statistics_weighted_average:
+         *                    Weighted arithmetic mean (using the option
+         *                    'weight_column_name' as the weighting column).
+         *                            <li>
+         *                    gpudb::aggregate_statistics_cardinality: Number
+         *                    of unique values in the column.
+         *                            <li>
+         *                    gpudb::aggregate_statistics_estimated_cardinality:
+         *                    Estimate (via hyperloglog technique) of the
+         *                    number of unique values in the column.
+         *                            <li>
+         *                    gpudb::aggregate_statistics_percentile: Estimate
+         *                    (via t-digest) of the given percentile of the
+         *                    column (percentile(50.0) will be an approximation
+         *                    of the median).
+         *                            <li>
+         *                    gpudb::aggregate_statistics_percentile_rank:
+         *                    Estimate (via t-digest) of the percentile rank of
+         *                    the given value in the column (if the given value
+         *                    is the median of the column,
+         *                    percentile_rank(<median>) will return
+         *                    approximately 50.0).
+         *                    </ul>
          * @param[in] options_  Optional parameters.
          *                      <ul>
-         *                              <li> additional_column_names: A list of
-         *                      comma separated column names over which
-         *                      statistics can be accumulated along with the
-         *                      primary column.
-         *                              <li> weight_column_name: Name of column
-         *                      used as weighting attribute for the weighted
-         *                      average statistic.
+         *                              <li>
+         *                      gpudb::aggregate_statistics_additional_column_names:
+         *                      A list of comma separated column names over
+         *                      which statistics can be accumulated along with
+         *                      the primary column.
+         *                              <li>
+         *                      gpudb::aggregate_statistics_weight_column_name:
+         *                      Name of column used as weighting attribute for
+         *                      the weighted average statistic.
          *                      </ul>
-         *                        Default value is an empty std::map.
          * 
          */
         AggregateStatisticsRequest(const std::string& tableName_, const std::string& columnName_, const std::string& stats_, const std::map<std::string, std::string>& options_):

@@ -6,14 +6,30 @@
 #include <boost/property_tree/ptree.hpp>
 #include <boost/property_tree/json_parser.hpp>
 #include <boost/scoped_ptr.hpp>
+#include <boost/unordered_set.hpp>
 
 namespace gpudb
 {
-    Type::Column::Column(const std::string& name, const ColumnType type) :
+    Type::Column::Column(const std::string& name, const ColumnType type, const std::string& property1, const std::string& property2, const std::string& property3) :
         m_name(name),
         m_type(type),
         m_isNullable(false)
     {
+        if (!property1.empty())
+        {
+            m_properties.push_back(property1);
+
+            if (!property2.empty())
+            {
+                m_properties.push_back(property2);
+
+                if (!property3.empty())
+                {
+                    m_properties.push_back(property3);
+                }
+            }
+        }
+
         initialize();
     }
 
@@ -346,6 +362,7 @@ namespace gpudb
             }
 
             boost::optional<std::string> fieldType = field->second.get_optional<std::string>("type");
+            bool isNullable = false;
 
             if (!fieldType)
             {
@@ -370,6 +387,7 @@ namespace gpudb
                             if (!fieldType->empty() && *fieldTypeElementString == "null")
                             {
                                 valid = true;
+                                isNullable = true;
                             }
                             else if (fieldType->empty())
                             {
@@ -422,15 +440,42 @@ namespace gpudb
                 throw std::invalid_argument("Field " + *fieldName + " must be of type bytes, double, float, int, long or string.");
             }
 
-            std::map<std::string, std::vector<std::string> >::const_iterator columnProperties = properties.find(*fieldName);
+            std::map<std::string, std::vector<std::string> >::const_iterator columnPropertiesIterator = properties.find(*fieldName);
 
-            if (columnProperties == properties.end())
+            if (columnPropertiesIterator == properties.end())
             {
-                m_data->columns.push_back(Column(*fieldName, columnType));
+                if (isNullable)
+                {
+                    std::vector<std::string> columnProperties;
+                    columnProperties.push_back(ColumnProperty::NULLABLE);
+                    m_data->columns.push_back(Column(*fieldName, columnType, columnProperties));
+                }
+                else
+                {
+                    m_data->columns.push_back(Column(*fieldName, columnType));
+                }
             }
             else
             {
-                m_data->columns.push_back(Column(*fieldName, columnType, columnProperties->second));
+                const std::vector<std::string>& columnProperties = columnPropertiesIterator->second;
+
+                if (isNullable)
+                {
+                    if (std::find(columnProperties.begin(), columnProperties.end(), ColumnProperty::NULLABLE) == columnProperties.end())
+                    {
+                        std::vector<std::string> newColumnProperties(columnProperties);
+                        newColumnProperties.push_back(ColumnProperty::NULLABLE);
+                        m_data->columns.push_back(Column(*fieldName, columnType, newColumnProperties));
+                    }
+                    else
+                    {
+                        m_data->columns.push_back(Column(*fieldName, columnType, columnProperties));
+                    }
+                }
+                else
+                {
+                    m_data->columns.push_back(Column(*fieldName, columnType, columnProperties));
+                }
             }
 
             m_data->columnMap[*fieldName] = m_data->columns.size() - 1;
@@ -441,7 +486,9 @@ namespace gpudb
     {
         ::avro::RecordSchema recordSchema("type_name");
         std::vector<std::string> fields;
+        boost::unordered_set<std::string> fieldNames;
         const std::vector<Type::Column>& columns = m_data->columns;
+        const std::map<std::string, size_t>& columnMap = m_data->columnMap;
         size_t columnCount = columns.size();
 
         for (size_t i = 0; i < columnCount; ++i)
@@ -467,34 +514,17 @@ namespace gpudb
             for (size_t n = 1; ; ++n)
             {
                 fieldName = baseFieldName + (n > 1 ? "_" + boost::lexical_cast<std::string>(n) : "");
-                bool found = false;
+                std::map<std::string, size_t>::const_iterator columnIndex = columnMap.find(fieldName);
 
-                for (size_t j = 0; j < columnCount; ++j)
-                {
-                    if (j == i)
-                    {
-                        continue;
-                    }
-
-                    if (columns[j].getName() == fieldName)
-                    {
-                        found = true;
-                        break;
-                    }
-                }
-
-                if (!found)
-                {
-                    found = std::find(fields.begin(), fields.end(), fieldName) != fields.end();
-                }
-
-                if (!found)
+                if ((columnIndex == columnMap.end() || columnIndex->second == i)
+                    && (fieldNames.find(fieldName) == fieldNames.end()))
                 {
                     break;
                 }
             }
 
             fields.push_back(fieldName);
+            fieldNames.insert(fieldName);
             boost::scoped_ptr< ::avro::Schema> fieldSchema;
 
             switch (columns[i].getType())

@@ -56,8 +56,7 @@ namespace gpudb
          *                       view containing the results. Has the same
          *                       naming restrictions as <a
          *                       href="../../concepts/tables.html"
-         *                       target="_top">tables</a>.  Default value is an
-         *                       empty string.
+         *                       target="_top">tables</a>.
          * @param[in] trackId_  The ID of the track which will act as the
          *                      filtering points. Must be an existing track
          *                      within the given table.
@@ -67,25 +66,32 @@ namespace gpudb
          *                             set.
          * @param[in] options_  Optional parameters.
          *                      <ul>
-         *                              <li> spatial_radius: A positive number
-         *                      passed as a string representing the radius of
-         *                      the search area centered around each track
-         *                      point's geospatial coordinates. The value is
-         *                      interpreted in meters. Required parameter.
-         *                              <li> time_radius: A positive number
-         *                      passed as a string representing the maximum
-         *                      allowable time difference between the
+         *                              <li>
+         *                      gpudb::filter_by_series_spatial_radius: A
+         *                      positive number passed as a string representing
+         *                      the radius of the search area centered around
+         *                      each track point's geospatial coordinates. The
+         *                      value is interpreted in meters. Required
+         *                      parameter.
+         *                              <li>
+         *                      gpudb::filter_by_series_time_radius: A positive
+         *                      number passed as a string representing the
+         *                      maximum allowable time difference between the
          *                      timestamps of a filtered object and the given
          *                      track's points. The value is interpreted in
          *                      seconds. Required parameter.
-         *                              <li> spatial_distance_metric: A string
-         *                      representing the coordinate system to use for
-         *                      the spatial search criteria. Acceptable values
-         *                      are 'euclidean' and 'great_circle'. Optional
-         *                      parameter; default is 'euclidean'. Values:
-         *                      'euclidean', 'great_circle'.
+         *                              <li>
+         *                      gpudb::filter_by_series_spatial_distance_metric:
+         *                      A string representing the coordinate system to
+         *                      use for the spatial search criteria. Acceptable
+         *                      values are 'euclidean' and 'great_circle'.
+         *                      Optional parameter; default is 'euclidean'.
+         *                      <ul>
+         *                              <li> gpudb::filter_by_series_euclidean
+         *                              <li>
+         *                      gpudb::filter_by_series_great_circle
          *                      </ul>
-         *                        Default value is an empty std::map.
+         *                      </ul>
          * 
          */
         FilterBySeriesRequest(const std::string& tableName_, const std::string& viewName_, const std::string& trackId_, const std::vector<std::string>& targetTrackIds_, const std::map<std::string, std::string>& options_):

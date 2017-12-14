@@ -33,16 +33,18 @@ namespace gpudb
          * @param[in] procName_  Name of the proc to show information about. If
          *                       specified, must be the name of a currently
          *                       existing proc. If not specified, information
-         *                       about all procs will be returned.  Default
-         *                       value is an empty string.
+         *                       about all procs will be returned.
          * @param[in] options_  Optional parameters.
          *                      <ul>
-         *                              <li> include_files: If set to @a true,
-         *                      the files that make up the proc will be
-         *                      returned. If set to @a false, the files will
-         *                      not be returned. Values: 'true', 'false'.
+         *                              <li> gpudb::show_proc_include_files: If
+         *                      set to @a true, the files that make up the proc
+         *                      will be returned. If set to @a false, the files
+         *                      will not be returned.
+         *                      <ul>
+         *                              <li> gpudb::show_proc_true
+         *                              <li> gpudb::show_proc_false
          *                      </ul>
-         *                        Default value is an empty std::map.
+         *                      </ul>
          * 
          */
         ShowProcRequest(const std::string& procName_, const std::map<std::string, std::string>& options_):

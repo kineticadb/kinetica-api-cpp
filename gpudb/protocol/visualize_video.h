@@ -98,11 +98,23 @@ namespace gpudb
          * @param[in] width_  Width of the generated image.
          * @param[in] height_  Height of the generated image.
          * @param[in] projection_  Spatial Reference System (i.e. EPSG Code).
-         *                         Values: 'EPSG:4326', 'PLATE_CARREE',
-         *                         '900913', 'EPSG:900913', '102100',
-         *                         'EPSG:102100', '3857', 'EPSG:3857',
-         *                         'WEB_MERCATOR'.
-         *                           Default value is 'PLATE_CARREE'.
+         *                         <ul>
+         *                                 <li>
+         *                         gpudb::visualize_video_EPSG_4326
+         *                                 <li>
+         *                         gpudb::visualize_video_PLATE_CARREE
+         *                                 <li> gpudb::visualize_video_900913
+         *                                 <li>
+         *                         gpudb::visualize_video_EPSG_900913
+         *                                 <li> gpudb::visualize_video_102100
+         *                                 <li>
+         *                         gpudb::visualize_video_EPSG_102100
+         *                                 <li> gpudb::visualize_video_3857
+         *                                 <li>
+         *                         gpudb::visualize_video_EPSG_3857
+         *                                 <li>
+         *                         gpudb::visualize_video_WEB_MERCATOR
+         *                         </ul>
          * @param[in] bgColor_  Background color of the generated image.
          * @param[in] timeIntervals_
          * @param[in] videoStyle_
@@ -111,52 +123,118 @@ namespace gpudb
          *                         WMS.
          * @param[in] styleOptions_  Styling options for the image.
          *                           <ul>
-         *                                   <li> do_points: Rasterize point
-         *                           data toggle. Values: 'true', 'false'.
-         *                                   <li> do_shapes: Rasterize shapes
-         *                           toggle. Values: 'true', 'false'.
-         *                                   <li> do_tracks: Rasterize tracks
-         *                           toggle. Values: 'true', 'false'.
-         *                                   <li> pointcolors: RGB color value
-         *                           in hex for the points.
-         *                                   <li> pointsizes: Size of points.
-         *                                   <li> pointshapes: Shape of the
-         *                           point. Values: 'none', 'circle', 'square',
-         *                           'diamond', 'hollowcircle', 'hollowsquare',
-         *                           'hollowdiamond', 'SYMBOLCODE'.
-         *                                   <li> shapelinewidths: Width of the
-         *                           lines.
-         *                                   <li> shapelinecolors: RGB color
-         *                           values in hex for the line.
-         *                                   <li> shapefillcolors: RGB color
-         *                           values in hex for the fill color of the
-         *                           shapes. Use '-1' for no fill.
-         *                                   <li> tracklinewidths: Width of the
-         *                           track lines. '0' implies do not draw track
-         *                           lines.
-         *                                   <li> tracklinecolors: RGB color
-         *                           values for the track lines.
-         *                                   <li> trackmarkersizes: Size of the
-         *                           track point markers.
-         *                                   <li> trackmarkercolors: Color of
-         *                           the track point markers.
-         *                                   <li> trackmarkershapes: Shape of
-         *                           track point markers. Values: 'none',
-         *                           'circle', 'square', 'diamond',
-         *                           'hollowcircle', 'hollowsquare',
-         *                           'hollowdiamond', 'SYMBOLCODE'.
-         *                                   <li> trackheadcolors: Color of
-         *                           track head markers.
-         *                                   <li> trackheadsizes: Size of track
-         *                           head markers.
-         *                                   <li> trackheadshapes: Shape of
-         *                           track head markers. Values: 'none',
-         *                           'circle', 'square', 'diamond',
-         *                           'hollowcircle', 'hollowsquare',
-         *                           'hollowdiamond', 'SYMBOLCODE'.
+         *                                   <li>
+         *                           gpudb::visualize_video_do_points:
+         *                           Rasterize point data toggle.
+         *                           <ul>
+         *                                   <li> gpudb::visualize_video_true
+         *                                   <li> gpudb::visualize_video_false
          *                           </ul>
-         * @param[in] options_  Optional parameters.  Default value is an empty
-         *                      std::map.
+         *                                   <li>
+         *                           gpudb::visualize_video_do_shapes:
+         *                           Rasterize shapes toggle.
+         *                           <ul>
+         *                                   <li> gpudb::visualize_video_true
+         *                                   <li> gpudb::visualize_video_false
+         *                           </ul>
+         *                                   <li>
+         *                           gpudb::visualize_video_do_tracks:
+         *                           Rasterize tracks toggle.
+         *                           <ul>
+         *                                   <li> gpudb::visualize_video_true
+         *                                   <li> gpudb::visualize_video_false
+         *                           </ul>
+         *                                   <li>
+         *                           gpudb::visualize_video_pointcolors: RGB
+         *                           color value in hex for the points.
+         *                                   <li>
+         *                           gpudb::visualize_video_pointsizes: Size of
+         *                           points.
+         *                                   <li>
+         *                           gpudb::visualize_video_pointshapes: Shape
+         *                           of the point.
+         *                           <ul>
+         *                                   <li> gpudb::visualize_video_none
+         *                                   <li> gpudb::visualize_video_circle
+         *                                   <li> gpudb::visualize_video_square
+         *                                   <li>
+         *                           gpudb::visualize_video_diamond
+         *                                   <li>
+         *                           gpudb::visualize_video_hollowcircle
+         *                                   <li>
+         *                           gpudb::visualize_video_hollowsquare
+         *                                   <li>
+         *                           gpudb::visualize_video_hollowdiamond
+         *                                   <li>
+         *                           gpudb::visualize_video_SYMBOLCODE
+         *                           </ul>
+         *                                   <li>
+         *                           gpudb::visualize_video_shapelinewidths:
+         *                           Width of the lines.
+         *                                   <li>
+         *                           gpudb::visualize_video_shapelinecolors:
+         *                           RGB color values in hex for the line.
+         *                                   <li>
+         *                           gpudb::visualize_video_shapefillcolors:
+         *                           RGB color values in hex for the fill color
+         *                           of the shapes. Use '-1' for no fill.
+         *                                   <li>
+         *                           gpudb::visualize_video_tracklinewidths:
+         *                           Width of the track lines. '0' implies do
+         *                           not draw track lines.
+         *                                   <li>
+         *                           gpudb::visualize_video_tracklinecolors:
+         *                           RGB color values for the track lines.
+         *                                   <li>
+         *                           gpudb::visualize_video_trackmarkersizes:
+         *                           Size of the track point markers.
+         *                                   <li>
+         *                           gpudb::visualize_video_trackmarkercolors:
+         *                           Color of the track point markers.
+         *                                   <li>
+         *                           gpudb::visualize_video_trackmarkershapes:
+         *                           Shape of track point markers.
+         *                           <ul>
+         *                                   <li> gpudb::visualize_video_none
+         *                                   <li> gpudb::visualize_video_circle
+         *                                   <li> gpudb::visualize_video_square
+         *                                   <li>
+         *                           gpudb::visualize_video_diamond
+         *                                   <li>
+         *                           gpudb::visualize_video_hollowcircle
+         *                                   <li>
+         *                           gpudb::visualize_video_hollowsquare
+         *                                   <li>
+         *                           gpudb::visualize_video_hollowdiamond
+         *                                   <li>
+         *                           gpudb::visualize_video_SYMBOLCODE
+         *                           </ul>
+         *                                   <li>
+         *                           gpudb::visualize_video_trackheadcolors:
+         *                           Color of track head markers.
+         *                                   <li>
+         *                           gpudb::visualize_video_trackheadsizes:
+         *                           Size of track head markers.
+         *                                   <li>
+         *                           gpudb::visualize_video_trackheadshapes:
+         *                           Shape of track head markers.
+         *                           <ul>
+         *                                   <li> gpudb::visualize_video_none
+         *                                   <li> gpudb::visualize_video_circle
+         *                                   <li> gpudb::visualize_video_square
+         *                                   <li>
+         *                           gpudb::visualize_video_diamond
+         *                                   <li>
+         *                           gpudb::visualize_video_hollowcircle
+         *                                   <li>
+         *                           gpudb::visualize_video_hollowsquare
+         *                                   <li>
+         *                           gpudb::visualize_video_hollowdiamond
+         *                                   <li>
+         *                           gpudb::visualize_video_SYMBOLCODE
+         *                           </ul>
+         *                           </ul>
+         * @param[in] options_  Optional parameters.
          * 
          */
         VisualizeVideoRequest(const std::vector<std::string>& tableNames_, const std::vector<std::string>& worldTableNames_, const std::vector<std::vector<std::string> >& trackIds_, const std::string& xColumnName_, const std::string& yColumnName_, const double minX_, const double maxX_, const double minY_, const double maxY_, const int32_t width_, const int32_t height_, const std::string& projection_, const int64_t bgColor_, const std::vector<std::vector<double> >& timeIntervals_, const std::string& videoStyle_, const std::string& sessionKey_, const std::map<std::string, std::vector<std::string> >& styleOptions_, const std::map<std::string, std::string>& options_):

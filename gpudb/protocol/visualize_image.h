@@ -62,44 +62,124 @@ namespace gpudb
          * @param[in] maxY_
          * @param[in] width_
          * @param[in] height_
-         * @param[in] projection_  Values: 'EPSG:4326', 'PLATE_CARREE',
-         *                         '900913', 'EPSG:900913', '102100',
-         *                         'EPSG:102100', '3857', 'EPSG:3857',
-         *                         'WEB_MERCATOR'.
+         * @param[in] projection_
+         *                         <ul>
+         *                                 <li>
+         *                         gpudb::visualize_image_EPSG_4326
+         *                                 <li>
+         *                         gpudb::visualize_image_PLATE_CARREE
+         *                                 <li> gpudb::visualize_image_900913
+         *                                 <li>
+         *                         gpudb::visualize_image_EPSG_900913
+         *                                 <li> gpudb::visualize_image_102100
+         *                                 <li>
+         *                         gpudb::visualize_image_EPSG_102100
+         *                                 <li> gpudb::visualize_image_3857
+         *                                 <li>
+         *                         gpudb::visualize_image_EPSG_3857
+         *                                 <li>
+         *                         gpudb::visualize_image_WEB_MERCATOR
+         *                         </ul>
          * @param[in] bgColor_
          * @param[in] styleOptions_
          *                           <ul>
-         *                                   <li> do_points: Values: 'true',
-         *                           'false'.
-         *                                   <li> do_shapes: Values: 'true',
-         *                           'false'.
-         *                                   <li> do_tracks: Values: 'true',
-         *                           'false'.
-         *                                   <li> do_symbology: Values: 'true',
-         *                           'false'.
-         *                                   <li> pointcolors:
-         *                                   <li> pointsizes:
-         *                                   <li> pointshapes: Values: 'none',
-         *                           'circle', 'square', 'diamond',
-         *                           'hollowcircle', 'hollowsquare',
-         *                           'hollowdiamond', 'SYMBOLCODE'.
-         *                                   <li> shapelinewidths:
-         *                                   <li> shapelinecolors:
-         *                                   <li> shapefillcolors:
-         *                                   <li> tracklinewidths:
-         *                                   <li> tracklinecolors:
-         *                                   <li> trackmarkersizes:
-         *                                   <li> trackmarkercolors:
-         *                                   <li> trackmarkershapes: Values:
-         *                           'none', 'circle', 'square', 'diamond',
-         *                           'hollowcircle', 'hollowsquare',
-         *                           'hollowdiamond', 'SYMBOLCODE'.
-         *                                   <li> trackheadcolors:
-         *                                   <li> trackheadsizes:
-         *                                   <li> trackheadshapes: Values:
-         *                           'none', 'circle', 'square', 'diamond',
-         *                           'hollowcircle', 'hollowsquare',
-         *                           'hollowdiamond', 'SYMBOLCODE'.
+         *                                   <li>
+         *                           gpudb::visualize_image_do_points:
+         *                           <ul>
+         *                                   <li> gpudb::visualize_image_true
+         *                                   <li> gpudb::visualize_image_false
+         *                           </ul>
+         *                                   <li>
+         *                           gpudb::visualize_image_do_shapes:
+         *                           <ul>
+         *                                   <li> gpudb::visualize_image_true
+         *                                   <li> gpudb::visualize_image_false
+         *                           </ul>
+         *                                   <li>
+         *                           gpudb::visualize_image_do_tracks:
+         *                           <ul>
+         *                                   <li> gpudb::visualize_image_true
+         *                                   <li> gpudb::visualize_image_false
+         *                           </ul>
+         *                                   <li>
+         *                           gpudb::visualize_image_do_symbology:
+         *                           <ul>
+         *                                   <li> gpudb::visualize_image_true
+         *                                   <li> gpudb::visualize_image_false
+         *                           </ul>
+         *                                   <li>
+         *                           gpudb::visualize_image_pointcolors
+         *                                   <li>
+         *                           gpudb::visualize_image_pointsizes
+         *                                   <li>
+         *                           gpudb::visualize_image_pointshapes:
+         *                           <ul>
+         *                                   <li> gpudb::visualize_image_none
+         *                                   <li> gpudb::visualize_image_circle
+         *                                   <li> gpudb::visualize_image_square
+         *                                   <li>
+         *                           gpudb::visualize_image_diamond
+         *                                   <li>
+         *                           gpudb::visualize_image_hollowcircle
+         *                                   <li>
+         *                           gpudb::visualize_image_hollowsquare
+         *                                   <li>
+         *                           gpudb::visualize_image_hollowdiamond
+         *                                   <li>
+         *                           gpudb::visualize_image_SYMBOLCODE
+         *                           </ul>
+         *                                   <li>
+         *                           gpudb::visualize_image_shapelinewidths
+         *                                   <li>
+         *                           gpudb::visualize_image_shapelinecolors
+         *                                   <li>
+         *                           gpudb::visualize_image_shapefillcolors
+         *                                   <li>
+         *                           gpudb::visualize_image_tracklinewidths
+         *                                   <li>
+         *                           gpudb::visualize_image_tracklinecolors
+         *                                   <li>
+         *                           gpudb::visualize_image_trackmarkersizes
+         *                                   <li>
+         *                           gpudb::visualize_image_trackmarkercolors
+         *                                   <li>
+         *                           gpudb::visualize_image_trackmarkershapes:
+         *                           <ul>
+         *                                   <li> gpudb::visualize_image_none
+         *                                   <li> gpudb::visualize_image_circle
+         *                                   <li> gpudb::visualize_image_square
+         *                                   <li>
+         *                           gpudb::visualize_image_diamond
+         *                                   <li>
+         *                           gpudb::visualize_image_hollowcircle
+         *                                   <li>
+         *                           gpudb::visualize_image_hollowsquare
+         *                                   <li>
+         *                           gpudb::visualize_image_hollowdiamond
+         *                                   <li>
+         *                           gpudb::visualize_image_SYMBOLCODE
+         *                           </ul>
+         *                                   <li>
+         *                           gpudb::visualize_image_trackheadcolors
+         *                                   <li>
+         *                           gpudb::visualize_image_trackheadsizes
+         *                                   <li>
+         *                           gpudb::visualize_image_trackheadshapes:
+         *                           <ul>
+         *                                   <li> gpudb::visualize_image_none
+         *                                   <li> gpudb::visualize_image_circle
+         *                                   <li> gpudb::visualize_image_square
+         *                                   <li>
+         *                           gpudb::visualize_image_diamond
+         *                                   <li>
+         *                           gpudb::visualize_image_hollowcircle
+         *                                   <li>
+         *                           gpudb::visualize_image_hollowsquare
+         *                                   <li>
+         *                           gpudb::visualize_image_hollowdiamond
+         *                                   <li>
+         *                           gpudb::visualize_image_SYMBOLCODE
+         *                           </ul>
          *                           </ul>
          * @param[in] options_
          * 

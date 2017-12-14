@@ -23,9 +23,10 @@ namespace gpudb
      * For example, if a type definition has the columns 'x' and 'y', then a
      * filter by list query with the column map {"x":["10.1", "2.3"],
      * "y":["0.0", "-31.5", "42.0"]} will return the count of all data points
-     * whose x and y values match one of the values in the respective x- and
-     * y-lists. If the filter_mode option is set to 'not_in_list' then the
-     * filter will match all items that are not in the provided list(s).
+     * whose x and y values match both in the respective x- and y-lists, e.g.,
+     * "x = 10.1 and y = 0.0", "x = 2.3 and y = -31.5", etc. However, a record
+     * with "x = 10.1 and y = -31.5" or "x = 2.3 and y = 0.0" would not be
+     * returned because the values in the given lists do not correspond.
      */
     struct FilterByListRequest
     {
@@ -55,17 +56,23 @@ namespace gpudb
          *                       view containing the results. Has the same
          *                       naming restrictions as <a
          *                       href="../../concepts/tables.html"
-         *                       target="_top">tables</a>.  Default value is an
-         *                       empty string.
+         *                       target="_top">tables</a>.
          * @param[in] columnValuesMap_  List of values for the corresponding
          *                              column in the table
          * @param[in] options_  Optional parameters.
          *                      <ul>
-         *                              <li> filter_mode: String indicating the
-         *                      filter mode, either 'in_list' or 'not_in_list'.
-         *                      Values: 'in_list', 'not_in_list'.
+         *                              <li> gpudb::filter_by_list_filter_mode:
+         *                      String indicating the filter mode, either
+         *                      'in_list' or 'not_in_list'.
+         *                      <ul>
+         *                              <li> gpudb::filter_by_list_in_list: The
+         *                      filter will match all items that are in the
+         *                      provided list(s).
+         *                              <li> gpudb::filter_by_list_not_in_list:
+         *                      The filter will match all items that are not in
+         *                      the provided list(s).
          *                      </ul>
-         *                        Default value is an empty std::map.
+         *                      </ul>
          * 
          */
         FilterByListRequest(const std::string& tableName_, const std::string& viewName_, const std::map<std::string, std::vector<std::string> >& columnValuesMap_, const std::map<std::string, std::string>& options_):
@@ -154,9 +161,10 @@ namespace gpudb
      * For example, if a type definition has the columns 'x' and 'y', then a
      * filter by list query with the column map {"x":["10.1", "2.3"],
      * "y":["0.0", "-31.5", "42.0"]} will return the count of all data points
-     * whose x and y values match one of the values in the respective x- and
-     * y-lists. If the filter_mode option is set to 'not_in_list' then the
-     * filter will match all items that are not in the provided list(s).
+     * whose x and y values match both in the respective x- and y-lists, e.g.,
+     * "x = 10.1 and y = 0.0", "x = 2.3 and y = -31.5", etc. However, a record
+     * with "x = 10.1 and y = -31.5" or "x = 2.3 and y = 0.0" would not be
+     * returned because the values in the given lists do not correspond.
      */
     struct FilterByListResponse
     {

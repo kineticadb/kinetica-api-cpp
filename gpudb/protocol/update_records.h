@@ -75,34 +75,44 @@ namespace gpudb
          *                              not yield a matching record to be
          *                              updated, then the corresponding element
          *                              from this list will be added to the
-         *                              table.  Default value is an empty
-         *                              std::vector.
+         *                              table.
          * @param[in] options_  Optional parameters.
          *                      <ul>
-         *                              <li> global_expression: An optional
-         *                      global expression to reduce the search space of
-         *                      the predicates listed in @a expressions.
-         *                              <li> bypass_safety_checks: When set to
-         *                      'true', all predicates are available for
-         *                      primary key updates.  Keep in mind that it is
-         *                      possible to destroy data in this case, since a
-         *                      single predicate may match multiple objects
-         *                      (potentially all of records of a table), and
-         *                      then updating all of those records to have the
-         *                      same primary key will, due to the primary key
-         *                      uniqueness constraints, effectively delete all
-         *                      but one of those updated records. Values:
-         *                      'true', 'false'.
-         *                              <li> update_on_existing_pk: Can be used
-         *                      to customize behavior when the updated primary
-         *                      key value already exists, as described in
-         *                      /insert/records. Values: 'true', 'false'.
-         *                              <li> record_id: ID of a single record
-         *                      to be updated (returned in the call to
-         *                      /insert/records or
+         *                              <li>
+         *                      gpudb::update_records_global_expression: An
+         *                      optional global expression to reduce the search
+         *                      space of the predicates listed in @a
+         *                      expressions.
+         *                              <li>
+         *                      gpudb::update_records_bypass_safety_checks:
+         *                      When set to 'true', all predicates are
+         *                      available for primary key updates.  Keep in
+         *                      mind that it is possible to destroy data in
+         *                      this case, since a single predicate may match
+         *                      multiple objects (potentially all of records of
+         *                      a table), and then updating all of those
+         *                      records to have the same primary key will, due
+         *                      to the primary key uniqueness constraints,
+         *                      effectively delete all but one of those updated
+         *                      records.
+         *                      <ul>
+         *                              <li> gpudb::update_records_true
+         *                              <li> gpudb::update_records_false
+         *                      </ul>
+         *                              <li>
+         *                      gpudb::update_records_update_on_existing_pk:
+         *                      Can be used to customize behavior when the
+         *                      updated primary key value already exists, as
+         *                      described in /insert/records.
+         *                      <ul>
+         *                              <li> gpudb::update_records_true
+         *                              <li> gpudb::update_records_false
+         *                      </ul>
+         *                              <li> gpudb::update_records_record_id:
+         *                      ID of a single record to be updated (returned
+         *                      in the call to /insert/records or
          *                      /get/records/fromcollection).
          *                      </ul>
-         *                        Default value is an empty std::map.
          * 
          */
         RawUpdateRecordsRequest(const std::string& tableName_, const std::vector<std::string>& expressions_, const std::vector<std::map<std::string, boost::optional<std::string> > >& newValuesMaps_, const std::vector<std::vector<uint8_t> >& recordsToInsert_, const std::map<std::string, std::string>& options_):
@@ -139,44 +149,57 @@ namespace gpudb
          *                              not yield a matching record to be
          *                              updated, then the corresponding element
          *                              from this list will be added to the
-         *                              table.  Default value is an empty
-         *                              std::vector.
+         *                              table.
          * @param[in] recordsToInsertStr_  An optional list of new json-avro
          *                                 encoded objects to insert, one for
          *                                 each update, to be added to the set
          *                                 if the particular update did not
-         *                                 affect any objects.  Default value
-         *                                 is an empty std::vector.
+         *                                 affect any objects.
          * @param[in] recordEncoding_  Identifies which of @a recordsToInsert
          *                             and @a recordsToInsertStr should be
-         *                             used. Values: 'binary', 'json'.
-         *                               Default value is 'binary'.
+         *                             used.
+         *                             <ul>
+         *                                     <li>
+         *                             gpudb::update_records_binary
+         *                                     <li> gpudb::update_records_json
+         *                             </ul>
          * @param[in] options_  Optional parameters.
          *                      <ul>
-         *                              <li> global_expression: An optional
-         *                      global expression to reduce the search space of
-         *                      the predicates listed in @a expressions.
-         *                              <li> bypass_safety_checks: When set to
-         *                      'true', all predicates are available for
-         *                      primary key updates.  Keep in mind that it is
-         *                      possible to destroy data in this case, since a
-         *                      single predicate may match multiple objects
-         *                      (potentially all of records of a table), and
-         *                      then updating all of those records to have the
-         *                      same primary key will, due to the primary key
-         *                      uniqueness constraints, effectively delete all
-         *                      but one of those updated records. Values:
-         *                      'true', 'false'.
-         *                              <li> update_on_existing_pk: Can be used
-         *                      to customize behavior when the updated primary
-         *                      key value already exists, as described in
-         *                      /insert/records. Values: 'true', 'false'.
-         *                              <li> record_id: ID of a single record
-         *                      to be updated (returned in the call to
-         *                      /insert/records or
+         *                              <li>
+         *                      gpudb::update_records_global_expression: An
+         *                      optional global expression to reduce the search
+         *                      space of the predicates listed in @a
+         *                      expressions.
+         *                              <li>
+         *                      gpudb::update_records_bypass_safety_checks:
+         *                      When set to 'true', all predicates are
+         *                      available for primary key updates.  Keep in
+         *                      mind that it is possible to destroy data in
+         *                      this case, since a single predicate may match
+         *                      multiple objects (potentially all of records of
+         *                      a table), and then updating all of those
+         *                      records to have the same primary key will, due
+         *                      to the primary key uniqueness constraints,
+         *                      effectively delete all but one of those updated
+         *                      records.
+         *                      <ul>
+         *                              <li> gpudb::update_records_true
+         *                              <li> gpudb::update_records_false
+         *                      </ul>
+         *                              <li>
+         *                      gpudb::update_records_update_on_existing_pk:
+         *                      Can be used to customize behavior when the
+         *                      updated primary key value already exists, as
+         *                      described in /insert/records.
+         *                      <ul>
+         *                              <li> gpudb::update_records_true
+         *                              <li> gpudb::update_records_false
+         *                      </ul>
+         *                              <li> gpudb::update_records_record_id:
+         *                      ID of a single record to be updated (returned
+         *                      in the call to /insert/records or
          *                      /get/records/fromcollection).
          *                      </ul>
-         *                        Default value is an empty std::map.
          * 
          */
         RawUpdateRecordsRequest(const std::string& tableName_, const std::vector<std::string>& expressions_, const std::vector<std::map<std::string, boost::optional<std::string> > >& newValuesMaps_, const std::vector<std::vector<uint8_t> >& recordsToInsert_, const std::vector<std::string>& recordsToInsertStr_, const std::string& recordEncoding_, const std::map<std::string, std::string>& options_):
@@ -340,34 +363,44 @@ namespace gpudb
          *                   records to insert, one for each update.  If one of
          *                   @a expressions does not yield a matching record to
          *                   be updated, then the corresponding element from
-         *                   this list will be added to the table.  Default
-         *                   value is an empty std::vector.
+         *                   this list will be added to the table.
          * @param[in] options_  Optional parameters.
          *                      <ul>
-         *                              <li> global_expression: An optional
-         *                      global expression to reduce the search space of
-         *                      the predicates listed in @a expressions.
-         *                              <li> bypass_safety_checks: When set to
-         *                      'true', all predicates are available for
-         *                      primary key updates.  Keep in mind that it is
-         *                      possible to destroy data in this case, since a
-         *                      single predicate may match multiple objects
-         *                      (potentially all of records of a table), and
-         *                      then updating all of those records to have the
-         *                      same primary key will, due to the primary key
-         *                      uniqueness constraints, effectively delete all
-         *                      but one of those updated records. Values:
-         *                      'true', 'false'.
-         *                              <li> update_on_existing_pk: Can be used
-         *                      to customize behavior when the updated primary
-         *                      key value already exists, as described in
-         *                      /insert/records. Values: 'true', 'false'.
-         *                              <li> record_id: ID of a single record
-         *                      to be updated (returned in the call to
-         *                      /insert/records or
+         *                              <li>
+         *                      gpudb::update_records_global_expression: An
+         *                      optional global expression to reduce the search
+         *                      space of the predicates listed in @a
+         *                      expressions.
+         *                              <li>
+         *                      gpudb::update_records_bypass_safety_checks:
+         *                      When set to 'true', all predicates are
+         *                      available for primary key updates.  Keep in
+         *                      mind that it is possible to destroy data in
+         *                      this case, since a single predicate may match
+         *                      multiple objects (potentially all of records of
+         *                      a table), and then updating all of those
+         *                      records to have the same primary key will, due
+         *                      to the primary key uniqueness constraints,
+         *                      effectively delete all but one of those updated
+         *                      records.
+         *                      <ul>
+         *                              <li> gpudb::update_records_true
+         *                              <li> gpudb::update_records_false
+         *                      </ul>
+         *                              <li>
+         *                      gpudb::update_records_update_on_existing_pk:
+         *                      Can be used to customize behavior when the
+         *                      updated primary key value already exists, as
+         *                      described in /insert/records.
+         *                      <ul>
+         *                              <li> gpudb::update_records_true
+         *                              <li> gpudb::update_records_false
+         *                      </ul>
+         *                              <li> gpudb::update_records_record_id:
+         *                      ID of a single record to be updated (returned
+         *                      in the call to /insert/records or
          *                      /get/records/fromcollection).
          *                      </ul>
-         *                        Default value is an empty std::map.
          * 
          */
         UpdateRecordsRequest(const std::string& tableName_, const std::vector<std::string>& expressions_, const std::vector<std::map<std::string, boost::optional<std::string> > >& newValuesMaps_, const std::vector<T>& data_, const std::map<std::string, std::string>& options_):

@@ -33,6 +33,10 @@ namespace gpudb
      * and collections.
      * <p>
      *      Allowing homogeneous tables within a collection.
+
+     *      Managing a table's columns--a column can be added or removed, or
+     * have its <a href="../../concepts/types.html" target="_top">type</a>
+     * modified.
      */
     struct AlterTableRequest
     {
@@ -56,42 +60,82 @@ namespace gpudb
          * @param[in] tableName_  Table on which the operation will be
          *                        performed. Must be an existing table, view,
          *                        or collection.
-         * @param[in] action_  Modification operation to be applied Values:
-         *                     'create_index', 'delete_index',
-         *                     'allow_homogeneous_tables', 'protected', 'ttl',
-         *                     'add_column', 'delete_column', 'change_column',
-         *                     'rename_table'.
+         * @param[in] action_  Modification operation to be applied
+         *                     <ul>
+         *                             <li> gpudb::alter_table_create_index:
+         *                     Creates an index on the column name specified in
+         *                     @a value. If this column is already indexed, an
+         *                     error will be returned.
+         *                             <li> gpudb::alter_table_delete_index:
+         *                     Deletes an existing index on the column name
+         *                     specified in @a value. If this column does not
+         *                     have indexing turned on, an error will be
+         *                     returned.
+         *                             <li>
+         *                     gpudb::alter_table_allow_homogeneous_tables:
+         *                     Sets whether homogeneous tables are allowed in
+         *                     the given collection. This action is only valid
+         *                     if @a tableName is a collection. The @a value
+         *                     must be either 'true' or 'false'.
+         *                             <li> gpudb::alter_table_protected: Sets
+         *                     whether the given @a tableName should be
+         *                     protected or not. The @a value must be either
+         *                     'true' or 'false'.
+         *                             <li> gpudb::alter_table_ttl: Sets the
+         *                     TTL of the table, view, or collection specified
+         *                     in @a tableName. The @a value must be the
+         *                     desired TTL in minutes.
+         *                             <li> gpudb::alter_table_add_column: Add
+         *                     a column @a value to the table. set the column
+         *                     properties in options
+         *                             <li> gpudb::alter_table_delete_column:
+         *                     Delete a column @a value from the table
+         *                             <li> gpudb::alter_table_change_column:
+         *                     Change properties of a column @a value in the
+         *                     table. set the column properties in options
+         *                             <li> gpudb::alter_table_rename_table:
+         *                     Rename a table, view or collection to @a value.
+         *                     Has the same naming restrictions as <a
+         *                     href="../../concepts/tables.html"
+         *                     target="_top">tables</a>.
+         *                     </ul>
          * @param[in] value_  The value of the modification. May be a column
          *                    name, 'true' or 'false', or a TTL depending on @a
          *                    action.
          * @param[in] options_  Optional parameters.
          *                      <ul>
-         *                              <li> column_default_value: when adding
-         *                      a column: set a default value, for existing
-         *                      data.
-         *                              <li> column_properties: when adding or
-         *                      changing a column: set the column properties
-         *                      (strings, separated by a comma: data,
-         *                      store_only, text_search, char8, int8 etc).
-         *                              <li> column_type: when adding or
-         *                      changing a column: set the column type
-         *                      (strings, separated by a comma: int, double,
-         *                      string, null etc).
-         *                              <li> validate_change_column: Validate
-         *                      the type change before applying column_change
-         *                      request. Default is true (if option is
-         *                      missing). If True, then validate all values. A
-         *                      value too large (or too long) for the new type
-         *                      will prevent any change. If False, then when a
-         *                      value is too large or long, it will be
-         *                      truncated. Values: 'true', 'false'.
-         *                              <li> copy_values_from_column: when
-         *                      adding or changing a column: enter column name
-         *                      - from where to copy values.
-         *                              <li> rename_column: new column name
-         *                      (using change_column).
+         *                              <li>
+         *                      gpudb::alter_table_column_default_value: when
+         *                      adding a column: set a default value, for
+         *                      existing data.
+         *                              <li>
+         *                      gpudb::alter_table_column_properties: when
+         *                      adding or changing a column: set the column
+         *                      properties (strings, separated by a comma:
+         *                      data, store_only, text_search, char8, int8
+         *                      etc).
+         *                              <li> gpudb::alter_table_column_type:
+         *                      when adding or changing a column: set the
+         *                      column type (strings, separated by a comma:
+         *                      int, double, string, null etc).
+         *                              <li>
+         *                      gpudb::alter_table_validate_change_column:
+         *                      Validate the type change before applying
+         *                      column_change request. Default is @a true (if
+         *                      option is missing). If @a true, then validate
+         *                      all values. A value too large (or too long) for
+         *                      the new type will prevent any change. If @a
+         *                      false, then when a value is too large or long,
+         *                      it will be truncated.
+         *                      <ul>
+         *                              <li> gpudb::alter_table_true: true
+         *                              <li> gpudb::alter_table_false: false
          *                      </ul>
-         *                        Default value is an empty std::map.
+         *                              <li>
+         *                      gpudb::alter_table_copy_values_from_column:
+         *                      when adding or changing a column: enter column
+         *                      name - from where to copy values.
+         *                      </ul>
          * 
          */
         AlterTableRequest(const std::string& tableName_, const std::string& action_, const std::string& value_, const std::map<std::string, std::string>& options_):
@@ -190,6 +234,10 @@ namespace gpudb
      * and collections.
      * <p>
      *      Allowing homogeneous tables within a collection.
+
+     *      Managing a table's columns--a column can be added or removed, or
+     * have its <a href="../../concepts/types.html" target="_top">type</a>
+     * modified.
      */
     struct AlterTableResponse
     {

@@ -51,25 +51,35 @@ namespace gpudb
          *                        views is returned.
          * @param[in] options_  Optional parameters.
          *                      <ul>
-         *                              <li> get_sizes: If @a true then the
-         *                      table sizes will be returned; blank, otherwise.
-         *                      Values: 'true', 'false'.
-         *                              <li> show_children: If @a tableName is
-         *                      a collection, then @a true will return
-         *                      information about the children of the
-         *                      collection, and @a false will return
+         *                              <li> gpudb::show_table_get_sizes: If @a
+         *                      true then the table sizes will be returned;
+         *                      blank, otherwise.
+         *                      <ul>
+         *                              <li> gpudb::show_table_true
+         *                              <li> gpudb::show_table_false
+         *                      </ul>
+         *                              <li> gpudb::show_table_show_children:
+         *                      If @a tableName is a collection, then @a true
+         *                      will return information about the children of
+         *                      the collection, and @a false will return
          *                      information about the collection itself. If @a
          *                      tableName is a table or view, @a show_children
          *                      must be @a false. If @a tableName is empty,
-         *                      then @a show_children must be @a true. Values:
-         *                      'true', 'false'.
-         *                              <li> no_error_if_not_exists: If @a
+         *                      then @a show_children must be @a true.
+         *                      <ul>
+         *                              <li> gpudb::show_table_true
+         *                              <li> gpudb::show_table_false
+         *                      </ul>
+         *                              <li>
+         *                      gpudb::show_table_no_error_if_not_exists: If @a
          *                      false will return an error if the provided @a
          *                      tableName does not exist. If @a true then it
-         *                      will return an empty result. Values: 'true',
-         *                      'false'.
+         *                      will return an empty result.
+         *                      <ul>
+         *                              <li> gpudb::show_table_true
+         *                              <li> gpudb::show_table_false
          *                      </ul>
-         *                        Default value is an empty std::map.
+         *                      </ul>
          * 
          */
         ShowTableRequest(const std::string& tableName_, const std::map<std::string, std::string>& options_):

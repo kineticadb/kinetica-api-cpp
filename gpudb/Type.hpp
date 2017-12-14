@@ -27,7 +27,7 @@ namespace gpudb
                         STRING = ::avro::AVRO_STRING
                     };
 
-                    Column(const std::string& name, const ColumnType type);
+                    Column(const std::string& name, const ColumnType type, const std::string& property1 = "", const std::string& property2 = "", const std::string& property3 = "");
                     Column(const std::string& name, const ColumnType type, const std::vector<std::string>& properties);
                     const std::string& getName() const;
                     ColumnType getType() const;

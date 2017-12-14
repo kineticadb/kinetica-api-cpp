@@ -35,8 +35,7 @@ namespace gpudb
          * @param[in] tableNames_  Tables whose metadata will be fetched. All
          *                         provided tables must exist, or an error is
          *                         returned.
-         * @param[in] options_  Optional parameters.  Default value is an empty
-         *                      std::map.
+         * @param[in] options_  Optional parameters.
          * 
          */
         ShowTableMetadataRequest(const std::vector<std::string>& tableNames_, const std::map<std::string, std::string>& options_):

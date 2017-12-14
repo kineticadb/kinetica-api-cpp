@@ -60,16 +60,13 @@ namespace gpudb
          *                             series/tracks. Can be blank.
          * @param[in] offset_  A positive integer indicating the number of
          *                     initial series/tracks to skip (useful for paging
-         *                     through the results).  Default value is 0. The
-         *                     minimum allowed value is 0. The maximum allowed
-         *                     value is MAX_INT.
+         *                     through the results).  The minimum allowed value
+         *                     is 0. The maximum allowed value is MAX_INT.
          * @param[in] limit_  A positive integer indicating the maximum number
          *                    of series/tracks to be returned. Or END_OF_SET
          *                    (-9999) to indicate that the max number of
-         *                    results should be returned.  Default value is
-         *                    10000.
-         * @param[in] options_  Optional parameters.  Default value is an empty
-         *                      std::map.
+         *                    results should be returned.
+         * @param[in] options_  Optional parameters.
          * 
          */
         GetRecordsBySeriesRequest(const std::string& tableName_, const std::string& worldTableName_, const int32_t offset_, const int32_t limit_, const std::map<std::string, std::string>& options_):
@@ -99,20 +96,20 @@ namespace gpudb
          *                             series/tracks. Can be blank.
          * @param[in] offset_  A positive integer indicating the number of
          *                     initial series/tracks to skip (useful for paging
-         *                     through the results).  Default value is 0. The
-         *                     minimum allowed value is 0. The maximum allowed
-         *                     value is MAX_INT.
+         *                     through the results).  The minimum allowed value
+         *                     is 0. The maximum allowed value is MAX_INT.
          * @param[in] limit_  A positive integer indicating the maximum number
          *                    of series/tracks to be returned. Or END_OF_SET
          *                    (-9999) to indicate that the max number of
-         *                    results should be returned.  Default value is
-         *                    10000.
+         *                    results should be returned.
          * @param[in] encoding_  Specifies the encoding for returned records;
-         *                       either 'binary' or 'json'. Values: 'binary',
-         *                       'json'.
-         *                         Default value is 'binary'.
-         * @param[in] options_  Optional parameters.  Default value is an empty
-         *                      std::map.
+         *                       either 'binary' or 'json'.
+         *                       <ul>
+         *                               <li>
+         *                       gpudb::get_records_by_series_binary
+         *                               <li> gpudb::get_records_by_series_json
+         *                       </ul>
+         * @param[in] options_  Optional parameters.
          * 
          */
         GetRecordsBySeriesRequest(const std::string& tableName_, const std::string& worldTableName_, const int32_t offset_, const int32_t limit_, const std::string& encoding_, const std::map<std::string, std::string>& options_):

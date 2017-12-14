@@ -22,12 +22,15 @@ namespace gpudb
     extern const std::string aggregate_group_by_collection_name;
     extern const std::string aggregate_group_by_descending;
     extern const std::string aggregate_group_by_expression;
+    extern const std::string aggregate_group_by_false;
     extern const std::string aggregate_group_by_having;
     extern const std::string aggregate_group_by_json;
     extern const std::string aggregate_group_by_key;
     extern const std::string aggregate_group_by_result_table;
+    extern const std::string aggregate_group_by_result_table_persist;
     extern const std::string aggregate_group_by_sort_by;
     extern const std::string aggregate_group_by_sort_order;
+    extern const std::string aggregate_group_by_true;
     extern const std::string aggregate_group_by_ttl;
     extern const std::string aggregate_group_by_value;
 
@@ -69,9 +72,12 @@ namespace gpudb
     extern const std::string aggregate_unique_collection_name;
     extern const std::string aggregate_unique_descending;
     extern const std::string aggregate_unique_expression;
+    extern const std::string aggregate_unique_false;
     extern const std::string aggregate_unique_json;
     extern const std::string aggregate_unique_result_table;
+    extern const std::string aggregate_unique_result_table_persist;
     extern const std::string aggregate_unique_sort_order;
+    extern const std::string aggregate_unique_true;
     extern const std::string aggregate_unique_ttl;
 
     // Keywords for /alter/system/properties request
@@ -103,7 +109,6 @@ namespace gpudb
     extern const std::string alter_table_delete_index;
     extern const std::string alter_table_false;
     extern const std::string alter_table_protected;
-    extern const std::string alter_table_rename_column;
     extern const std::string alter_table_rename_table;
     extern const std::string alter_table_true;
     extern const std::string alter_table_ttl;
@@ -114,6 +119,7 @@ namespace gpudb
 
     // Keywords for /create/jointable request
     extern const std::string create_join_table_collection_name;
+    extern const std::string create_join_table_false;
     extern const std::string create_join_table_full_refresh;
     extern const std::string create_join_table_manual;
     extern const std::string create_join_table_max_query_dimensions;
@@ -123,6 +129,7 @@ namespace gpudb
     extern const std::string create_join_table_optimize_lookups;
     extern const std::string create_join_table_refresh;
     extern const std::string create_join_table_refresh_method;
+    extern const std::string create_join_table_true;
     extern const std::string create_join_table_ttl;
 
     // Keywords for /create/proc request
@@ -136,6 +143,8 @@ namespace gpudb
     extern const std::string create_projection_limit;
     extern const std::string create_projection_materialize_on_gpu;
     extern const std::string create_projection_order_by;
+    extern const std::string create_projection_persist;
+    extern const std::string create_projection_shard_key;
     extern const std::string create_projection_true;
     extern const std::string create_projection_ttl;
 
@@ -147,6 +156,7 @@ namespace gpudb
     extern const std::string create_table_foreign_shard_key;
     extern const std::string create_table_is_collection;
     extern const std::string create_table_is_replicated;
+    extern const std::string create_table_is_result_table;
     extern const std::string create_table_no_error_if_exists;
     extern const std::string create_table_true;
     extern const std::string create_table_ttl;
@@ -184,6 +194,7 @@ namespace gpudb
     extern const std::string create_union_materialize_on_gpu;
     extern const std::string create_union_merge_views;
     extern const std::string create_union_mode;
+    extern const std::string create_union_persist;
     extern const std::string create_union_true;
     extern const std::string create_union_ttl;
     extern const std::string create_union_union;

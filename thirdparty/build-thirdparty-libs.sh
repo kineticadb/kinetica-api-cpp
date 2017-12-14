@@ -65,7 +65,7 @@ BUILD_DIR=$ROOT_BUILD_DIR/thirdparty
 INSTALL_DIR=$ROOT_BUILD_DIR/thirdparty/install
 FORCE_REBUILD=0
 
-BOOST_ARCHIVE=$(readlink -m $(ls $SCRIPT_DIR/../../gpudb-core-libs/boost_*.tar.bz2 | tail -n 1))
+BOOST_ARCHIVE="$(ls $SCRIPT_DIR/boost_* 2>/dev/null | grep -E '\.tgz$|\.tar.gz$|\.tar.bz2$' | tail -n 1)"
 
 DISABLE_CXX11_ABI=0
 STATIC_WITH_PIC=0
@@ -266,12 +266,21 @@ function build_boost
 # ---------------------------------------------------------------------------
 # Main script
 
+mkdir -p $BUILD_DIR
+
 LOG=$BUILD_DIR/build.log
 
-if [ ! -f $BOOST_ARCHIVE ]; then
-    echo "ERROR: Unable to locate Boost archive at: $BOOST_ARCHIVE" | tee -a $LOG
+if [ -z "$BOOST_ARCHIVE" ]; then
+    echo "ERROR: Please specify the path to a boost archive using '--boost-archive' or by placing a boost archive in the $SCRIPT_DIR folder.  Boost archives can be downloaded from: http://www.boost.org" | tee -a $LOG
     exit 1
 fi
+
+if [ ! -f "$BOOST_ARCHIVE" ]; then
+    echo "ERROR: No Boost archive at '$BOOST_ARCHIVE'.  Please specify the path to a boost archive using '--boost-archive' or place a boost archive in the $SCRIPT_DIR folder.  Boost archives can be downloaded from: http://www.boost.org" | tee -a $LOG
+    exit 1
+fi
+
+echo "Using Boost library at $BOOST_ARCHIVE." | tee -a $LOG
 
 pushd $ROOT_DIR > /dev/null
 

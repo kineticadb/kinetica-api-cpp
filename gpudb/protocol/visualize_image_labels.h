@@ -84,10 +84,27 @@ namespace gpudb
          * @param[in] maxY_
          * @param[in] width_
          * @param[in] height_
-         * @param[in] projection_  Values: 'EPSG:4326', 'PLATE_CARREE',
-         *                         '900913', 'EPSG:900913', '102100',
-         *                         'EPSG:102100', '3857', 'EPSG:3857',
-         *                         'WEB_MERCATOR'.
+         * @param[in] projection_
+         *                         <ul>
+         *                                 <li>
+         *                         gpudb::visualize_image_labels_EPSG_4326
+         *                                 <li>
+         *                         gpudb::visualize_image_labels_PLATE_CARREE
+         *                                 <li>
+         *                         gpudb::visualize_image_labels_900913
+         *                                 <li>
+         *                         gpudb::visualize_image_labels_EPSG_900913
+         *                                 <li>
+         *                         gpudb::visualize_image_labels_102100
+         *                                 <li>
+         *                         gpudb::visualize_image_labels_EPSG_102100
+         *                                 <li>
+         *                         gpudb::visualize_image_labels_3857
+         *                                 <li>
+         *                         gpudb::visualize_image_labels_EPSG_3857
+         *                                 <li>
+         *                         gpudb::visualize_image_labels_WEB_MERCATOR
+         *                         </ul>
          * @param[in] options_
          * 
          */

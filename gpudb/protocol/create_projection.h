@@ -13,9 +13,31 @@ namespace gpudb
      * A set of input parameters for {@link
      * #createProjection(const CreateProjectionRequest&) const}.
      * <p>
-     * Creates a new projection of an existing table.  A projection represents
-     * a subset of the columns (potentially including derived columns) of a
-     * table.
+     * Creates a new <a href="../../concepts/projections.html"
+     * target="_top">projection</a> of an existing table. A projection
+     * represents a subset of the columns (potentially including derived
+     * columns) of a table.
+     * <p>
+     * Notes:
+     * <p>
+     * A moving average can be calculated on a given column using the following
+     * syntax in the @a columnNames parameter:
+     * <p>
+     * 'moving_average(column_name,num_points_before,num_points_after) as
+     * new_column_name'
+     * <p>
+     * For each record in the moving_average function's 'column_name'
+     * parameter, it computes the average over the previous 'num_points_before'
+     * records and the subsequent 'num_points_after' records.
+     * <p>
+     * Note that moving average relies on @a order_by, and @a order_by requires
+     * that all the data being ordered resides on the same processing node, so
+     * it won't make sense to use @a order_by without moving average.
+     * <p>
+     * Also, a projection can be created with a different shard key than the
+     * source table.  By specifying @a shard_key, the projection will be
+     * sharded according to the specified columns, regardless of how the source
+     * table is sharded.  The source table can even be unsharded or replicated.
      */
     struct CreateProjectionRequest
     {
@@ -45,34 +67,65 @@ namespace gpudb
          * @param[in] columnNames_  List of columns from @a tableName to be
          *                          included in the projection. Can include
          *                          derived columns. Can be specified as
-         *                          aliased via the syntax '<column_name> as
-         *                          <alias>.
+         *                          aliased via the syntax 'column_name as
+         *                          alias'.
          * @param[in] options_  Optional parameters.
          *                      <ul>
-         *                              <li> collection_name: Name of a
-         *                      collection to which the projection is to be
-         *                      assigned as a child. If the collection provided
-         *                      is non-existent, the collection will be
-         *                      automatically created.
-         *                              <li> expression: An optional filter
-         *                      expression to be applied to the source table
-         *                      prior to the projection.
-         *                              <li> limit: The number of records to
-         *                      keep.
-         *                              <li> order_by: Comma-separated list of
-         *                      the columns to be sorted by; e.g. 'timestamp
-         *                      asc, x desc'.  The columns specified must be
-         *                      present in @a columnNames.  If any alias is
-         *                      given for any column name, the alias must be
-         *                      used, rather than the original column name.
-         *                              <li> materialize_on_gpu: If 'true' then
-         *                      the columns of the projection will be cached on
-         *                      the GPU. Values: 'true', 'false'.
-         *                              <li> ttl: Sets the TTL of the table,
-         *                      view, or collection specified in @a tableName.
-         *                      The value must be the desired TTL in minutes.
+         *                              <li>
+         *                      gpudb::create_projection_collection_name: Name
+         *                      of a <a href="../../concepts/collections.html"
+         *                      target="_top">collection</a> to which the
+         *                      projection is to be assigned as a child. If the
+         *                      collection provided is non-existent, the
+         *                      collection will be automatically created.
+         *                              <li>
+         *                      gpudb::create_projection_expression: An
+         *                      optional filter <a
+         *                      href="../../concepts/expressions.html"
+         *                      target="_top">expression</a> to be applied to
+         *                      the source table prior to the projection.
+         *                              <li> gpudb::create_projection_limit:
+         *                      The number of records to keep.
+         *                              <li> gpudb::create_projection_order_by:
+         *                      Comma-separated list of the columns to be
+         *                      sorted by; e.g. 'timestamp asc, x desc'.  The
+         *                      columns specified must be present in @a
+         *                      columnNames.  If any alias is given for any
+         *                      column name, the alias must be used, rather
+         *                      than the original column name.
+         *                              <li>
+         *                      gpudb::create_projection_materialize_on_gpu: If
+         *                      @a true then the columns of the projection will
+         *                      be cached on the GPU.
+         *                      <ul>
+         *                              <li> gpudb::create_projection_true
+         *                              <li> gpudb::create_projection_false
          *                      </ul>
-         *                        Default value is an empty std::map.
+         *                              <li> gpudb::create_projection_ttl: Sets
+         *                      the TTL of the table, view, or collection
+         *                      specified in @a projectionName. The value must
+         *                      be the desired TTL in minutes.
+         *                              <li>
+         *                      gpudb::create_projection_shard_key:
+         *                      Comma-separated list of the columns to be
+         *                      sharded on; e.g. 'column1, column2'.  The
+         *                      columns specified must be present in @a
+         *                      columnNames.  If any alias is given for any
+         *                      column name, the alias must be used, rather
+         *                      than the original column name.
+         *                              <li> gpudb::create_projection_persist:
+         *                      If @a true then the projection will be
+         *                      persisted as a regular table (it will not be
+         *                      automatically cleared unless a @a ttl is
+         *                      provided, and the table data can be modified in
+         *                      subsequent operations). If @a false then the
+         *                      projection will be a read-only, memory-only
+         *                      temporary table.
+         *                      <ul>
+         *                              <li> gpudb::create_projection_true
+         *                              <li> gpudb::create_projection_false
+         *                      </ul>
+         *                      </ul>
          * 
          */
         CreateProjectionRequest(const std::string& tableName_, const std::string& projectionName_, const std::vector<std::string>& columnNames_, const std::map<std::string, std::string>& options_):
@@ -151,9 +204,31 @@ namespace gpudb
      * A set of output parameters for {@link
      * #createProjection(const CreateProjectionRequest&) const}.
      * <p>
-     * Creates a new projection of an existing table.  A projection represents
-     * a subset of the columns (potentially including derived columns) of a
-     * table.
+     * Creates a new <a href="../../concepts/projections.html"
+     * target="_top">projection</a> of an existing table. A projection
+     * represents a subset of the columns (potentially including derived
+     * columns) of a table.
+     * <p>
+     * Notes:
+     * <p>
+     * A moving average can be calculated on a given column using the following
+     * syntax in the @a columnNames parameter:
+     * <p>
+     * 'moving_average(column_name,num_points_before,num_points_after) as
+     * new_column_name'
+     * <p>
+     * For each record in the moving_average function's 'column_name'
+     * parameter, it computes the average over the previous 'num_points_before'
+     * records and the subsequent 'num_points_after' records.
+     * <p>
+     * Note that moving average relies on @a order_by, and @a order_by requires
+     * that all the data being ordered resides on the same processing node, so
+     * it won't make sense to use @a order_by without moving average.
+     * <p>
+     * Also, a projection can be created with a different shard key than the
+     * source table.  By specifying @a shard_key, the projection will be
+     * sharded according to the specified columns, regardless of how the source
+     * table is sharded.  The source table can even be unsharded or replicated.
      */
     struct CreateProjectionResponse
     {

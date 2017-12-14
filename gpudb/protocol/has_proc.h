@@ -31,8 +31,7 @@ namespace gpudb
          * Constructs a HasProcRequest object with the specified parameters.
          * 
          * @param[in] procName_  Name of the proc to check for existence.
-         * @param[in] options_  Optional parameters.  Default value is an empty
-         *                      std::map.
+         * @param[in] options_  Optional parameters.
          * 
          */
         HasProcRequest(const std::string& procName_, const std::map<std::string, std::string>& options_):

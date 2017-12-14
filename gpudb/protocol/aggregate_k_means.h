@@ -58,18 +58,20 @@ namespace gpudb
          *                        tolerance.
          * @param[in] options_  Optional parameters.
          *                      <ul>
-         *                              <li> whiten: When set to 1 each of the
-         *                      columns is first normalized by its stdv -
-         *                      default is not to whiten.
-         *                              <li> max_iters: Number of times to try
-         *                      to hit the tolerance limit before giving up -
-         *                      default is 10.
-         *                              <li> num_tries: Number of times to run
-         *                      the k-means algorithm with a different randomly
-         *                      selected starting points - helps avoid local
-         *                      minimum. Default is 1.
+         *                              <li> gpudb::aggregate_k_means_whiten:
+         *                      When set to 1 each of the columns is first
+         *                      normalized by its stdv - default is not to
+         *                      whiten.
+         *                              <li>
+         *                      gpudb::aggregate_k_means_max_iters: Number of
+         *                      times to try to hit the tolerance limit before
+         *                      giving up - default is 10.
+         *                              <li>
+         *                      gpudb::aggregate_k_means_num_tries: Number of
+         *                      times to run the k-means algorithm with a
+         *                      different randomly selected starting points -
+         *                      helps avoid local minimum. Default is 1.
          *                      </ul>
-         *                        Default value is an empty std::map.
          * 
          */
         AggregateKMeansRequest(const std::string& tableName_, const std::vector<std::string>& columnNames_, const int32_t k_, const double tolerance_, const std::map<std::string, std::string>& options_):

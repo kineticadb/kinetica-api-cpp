@@ -643,7 +643,12 @@ namespace gpudb
             throw GPUdbException("Schema must be of type record.");
         }
 
-        size_t fieldCount = root->leaves() - 2;
+        if ( root->leaves() < 3 )
+        {
+            throw GPUdbException("Schema must have at least three fields.");
+        }
+        size_t fieldCount = (root->leaves() - 2);
+
         std::vector<std::pair<Type::Column::ColumnType, bool> > columnTypes;
         columnTypes.reserve(fieldCount);
 
@@ -873,7 +878,68 @@ namespace gpudb
             case Type::Column::STRING: INIT_COLUMN(std::string)
         }
     }
-}
+
+
+    std::ostream &operator << (std::ostream  &os, GenericRecord &record)
+    {
+        std::vector<Type::Column> columns = record.getType().getColumns();
+
+        std::vector<Type::Column>::const_iterator it;
+        size_t i = 0;
+        for ( it = columns.begin(); it != columns.end(); ++it )
+        {
+
+            os << " " << it->getName() << ": ";
+
+            // Handle nulls
+            if ( record.isNull( i ) )
+            {
+                os << "<NULL>";
+            }
+            else // not a nullable, or if so, not a null
+            {
+                switch ( it->getType() )
+                {
+                    case Type::Column::ColumnType::INT:
+                    {
+                        os << record.getAsInt( i ); break;
+                    }
+                    case Type::Column::ColumnType::LONG:
+                    {
+                        os << record.getAsLong( i ); break;
+                    }
+                    case Type::Column::ColumnType::FLOAT:
+                    {
+                        os << record.getAsFloat( i ); break;
+                    }
+                    case Type::Column::ColumnType::DOUBLE:
+                    {
+                        os << record.getAsDouble( i ); break;
+                    }
+                    case Type::Column::ColumnType::STRING:
+                    {
+                        os << record.getAsString( i ); break;
+                    }
+                    case Type::Column::ColumnType::BYTES:
+                    {
+                        std::vector<unsigned char> bytes = record.getAsBytes( i );
+                        std::vector<unsigned char>::const_iterator it2;
+                        for ( it2 = bytes.begin(); it2 != bytes.end(); ++it2 )
+                            os << *it2;
+                        break;
+                    }
+                }  // end switch
+            }  // end else
+            ++i;
+        }
+
+        return os;
+    }
+
+
+
+} // namespace gpudb
+
 
 namespace avro
 {

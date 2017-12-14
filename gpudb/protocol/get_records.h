@@ -48,35 +48,41 @@ namespace gpudb
          *                        homogeneous collection.
          * @param[in] offset_  A positive integer indicating the number of
          *                     initial results to skip (this can be useful for
-         *                     paging through the results).  Default value is
-         *                     0. The minimum allowed value is 0. The maximum
-         *                     allowed value is MAX_INT.
+         *                     paging through the results).  The minimum
+         *                     allowed value is 0. The maximum allowed value is
+         *                     MAX_INT.
          * @param[in] limit_  A positive integer indicating the maximum number
          *                    of results to be returned. Or END_OF_SET (-9999)
          *                    to indicate that the max number of results should
-         *                    be returned.  Default value is 10000.
+         *                    be returned.
          * @param[in] options_
          *                      <ul>
-         *                              <li> expression: Optional filter
-         *                      expression to apply to the table.
-         *                              <li> fast_index_lookup: Indicates if
-         *                      indexes should be used to perform the lookup
+         *                              <li> gpudb::get_records_expression:
+         *                      Optional filter expression to apply to the
+         *                      table.
+         *                              <li>
+         *                      gpudb::get_records_fast_index_lookup: Indicates
+         *                      if indexes should be used to perform the lookup
          *                      for a given expression if possible. Only
          *                      applicable if there is no sorting, the
          *                      expression contains only equivalence
          *                      comparisons based on existing tables indexes
          *                      and the range of requested values is from [0 to
          *                      END_OF_SET]. The default value is true.
-         *                              <li> sort_by: Optional column that the
-         *                      data should be sorted by. Empty by default
-         *                      (i.e. no sorting is applied).
-         *                              <li> sort_order: String indicating how
-         *                      the returned values should be sorted -
-         *                      ascending or descending. If sort_order is
-         *                      provided, sort_by has to be provided. Values:
-         *                      'ascending', 'descending'.
+         *                              <li> gpudb::get_records_sort_by:
+         *                      Optional column that the data should be sorted
+         *                      by. Empty by default (i.e. no sorting is
+         *                      applied).
+         *                              <li> gpudb::get_records_sort_order:
+         *                      String indicating how the returned values
+         *                      should be sorted - ascending or descending. If
+         *                      sort_order is provided, sort_by has to be
+         *                      provided.
+         *                      <ul>
+         *                              <li> gpudb::get_records_ascending
+         *                              <li> gpudb::get_records_descending
          *                      </ul>
-         *                        Default value is an empty std::map.
+         *                      </ul>
          * 
          */
         GetRecordsRequest(const std::string& tableName_, const int64_t offset_, const int64_t limit_, const std::map<std::string, std::string>& options_):
@@ -96,38 +102,46 @@ namespace gpudb
          *                        homogeneous collection.
          * @param[in] offset_  A positive integer indicating the number of
          *                     initial results to skip (this can be useful for
-         *                     paging through the results).  Default value is
-         *                     0. The minimum allowed value is 0. The maximum
-         *                     allowed value is MAX_INT.
+         *                     paging through the results).  The minimum
+         *                     allowed value is 0. The maximum allowed value is
+         *                     MAX_INT.
          * @param[in] limit_  A positive integer indicating the maximum number
          *                    of results to be returned. Or END_OF_SET (-9999)
          *                    to indicate that the max number of results should
-         *                    be returned.  Default value is 10000.
+         *                    be returned.
          * @param[in] encoding_  Specifies the encoding for returned records.
-         *                       Values: 'binary', 'json'.
-         *                         Default value is 'binary'.
+         *                       <ul>
+         *                               <li> gpudb::get_records_binary
+         *                               <li> gpudb::get_records_json
+         *                       </ul>
          * @param[in] options_
          *                      <ul>
-         *                              <li> expression: Optional filter
-         *                      expression to apply to the table.
-         *                              <li> fast_index_lookup: Indicates if
-         *                      indexes should be used to perform the lookup
+         *                              <li> gpudb::get_records_expression:
+         *                      Optional filter expression to apply to the
+         *                      table.
+         *                              <li>
+         *                      gpudb::get_records_fast_index_lookup: Indicates
+         *                      if indexes should be used to perform the lookup
          *                      for a given expression if possible. Only
          *                      applicable if there is no sorting, the
          *                      expression contains only equivalence
          *                      comparisons based on existing tables indexes
          *                      and the range of requested values is from [0 to
          *                      END_OF_SET]. The default value is true.
-         *                              <li> sort_by: Optional column that the
-         *                      data should be sorted by. Empty by default
-         *                      (i.e. no sorting is applied).
-         *                              <li> sort_order: String indicating how
-         *                      the returned values should be sorted -
-         *                      ascending or descending. If sort_order is
-         *                      provided, sort_by has to be provided. Values:
-         *                      'ascending', 'descending'.
+         *                              <li> gpudb::get_records_sort_by:
+         *                      Optional column that the data should be sorted
+         *                      by. Empty by default (i.e. no sorting is
+         *                      applied).
+         *                              <li> gpudb::get_records_sort_order:
+         *                      String indicating how the returned values
+         *                      should be sorted - ascending or descending. If
+         *                      sort_order is provided, sort_by has to be
+         *                      provided.
+         *                      <ul>
+         *                              <li> gpudb::get_records_ascending
+         *                              <li> gpudb::get_records_descending
          *                      </ul>
-         *                        Default value is an empty std::map.
+         *                      </ul>
          * 
          */
         GetRecordsRequest(const std::string& tableName_, const int64_t offset_, const int64_t limit_, const std::string& encoding_, const std::map<std::string, std::string>& options_):

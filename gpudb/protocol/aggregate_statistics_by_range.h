@@ -65,8 +65,7 @@ namespace gpudb
          *                        performed.
          * @param[in] selectExpression_  For a non-empty expression statistics
          *                               are calculated for those records for
-         *                               which the expression is true.  Default
-         *                               value is an empty string.
+         *                               which the expression is true.
          * @param[in] columnName_  Name of the binning-column used to divide
          *                         the set samples into bins.
          * @param[in] valueColumnName_  Name of the value-column for which
@@ -83,22 +82,25 @@ namespace gpudb
          *                       start+interval``*``(i+1)).
          * @param[in] options_  Map of optional parameters:
          *                      <ul>
-         *                              <li> additional_column_names: A list of
-         *                      comma separated value-column names over which
-         *                      statistics can be accumulated along with the
-         *                      primary value_column.
-         *                              <li> bin_values: A list of comma
-         *                      separated binning-column values. Values that
-         *                      match the nth bin_values value are placed in
-         *                      the nth bin.
-         *                              <li> weight_column_name: Name of the
-         *                      column used as weighting column for the
-         *                      weighted_average statistic.
-         *                              <li> order_column_name: Name of the
-         *                      column used for candlestick charting
-         *                      techniques.
+         *                              <li>
+         *                      gpudb::aggregate_statistics_by_range_additional_column_names:
+         *                      A list of comma separated value-column names
+         *                      over which statistics can be accumulated along
+         *                      with the primary value_column.
+         *                              <li>
+         *                      gpudb::aggregate_statistics_by_range_bin_values:
+         *                      A list of comma separated binning-column
+         *                      values. Values that match the nth bin_values
+         *                      value are placed in the nth bin.
+         *                              <li>
+         *                      gpudb::aggregate_statistics_by_range_weight_column_name:
+         *                      Name of the column used as weighting column for
+         *                      the weighted_average statistic.
+         *                              <li>
+         *                      gpudb::aggregate_statistics_by_range_order_column_name:
+         *                      Name of the column used for candlestick
+         *                      charting techniques.
          *                      </ul>
-         *                        Default value is an empty std::map.
          * 
          */
         AggregateStatisticsByRangeRequest(const std::string& tableName_, const std::string& selectExpression_, const std::string& columnName_, const std::string& valueColumnName_, const std::string& stats_, const double start_, const double end_, const double interval_, const std::map<std::string, std::string>& options_):

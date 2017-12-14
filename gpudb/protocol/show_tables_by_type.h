@@ -41,8 +41,7 @@ namespace gpudb
          * @param[in] label_  Optional user supplied label which can be used
          *                    instead of the type_id to retrieve all tables
          *                    with the given label.
-         * @param[in] options_  Optional parameters.  Default value is an empty
-         *                      std::map.
+         * @param[in] options_  Optional parameters.
          * 
          */
         ShowTablesByTypeRequest(const std::string& typeId_, const std::string& label_, const std::map<std::string, std::string>& options_):

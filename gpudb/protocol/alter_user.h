@@ -35,7 +35,12 @@ namespace gpudb
          * @param[in] name_  Name of the user to be altered. Must be an
          *                   existing user.
          * @param[in] action_  Modification operation to be applied to the
-         *                     user. Values: 'set_password'.
+         *                     user.
+         *                     <ul>
+         *                             <li> gpudb::alter_user_set_password:
+         *                     Sets the password of the user. The user must be
+         *                     an internal user.
+         *                     </ul>
          * @param[in] value_  The value of the modification, depending on @a
          *                    action.
          * @param[in] options_  Optional parameters.

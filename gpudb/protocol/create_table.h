@@ -20,7 +20,7 @@ namespace gpudb
      * created inside a collection if the option @a collection_name is
      * specified. If that collection does not already exist, it will be
      * created.
-
+     * <p>
      * To create a new collection, specify the name of the collection in @a
      * tableName and set the @a is_collection option to @a true; @a typeId will
      * be ignored.
@@ -55,13 +55,18 @@ namespace gpudb
          *                     type.  Ignored if @a is_collection is @a true.
          * @param[in] options_  Optional parameters.
          *                      <ul>
-         *                              <li> no_error_if_exists: If @a true,
-         *                      prevents an error from occurring if the table
-         *                      already exists and is of the given type.  If a
-         *                      table with the same ID but a different type
-         *                      exists, it is still an error. Values: 'true',
-         *                      'false'.
-         *                              <li> collection_name: Name of a
+         *                              <li>
+         *                      gpudb::create_table_no_error_if_exists: If @a
+         *                      true, prevents an error from occurring if the
+         *                      table already exists and is of the given type.
+         *                      If a table with the same ID but a different
+         *                      type exists, it is still an error.
+         *                      <ul>
+         *                              <li> gpudb::create_table_true
+         *                              <li> gpudb::create_table_false
+         *                      </ul>
+         *                              <li>
+         *                      gpudb::create_table_collection_name: Name of a
          *                      collection which is to contain the newly
          *                      created table. If empty, then the newly created
          *                      table will be a top-level table. If the
@@ -69,33 +74,59 @@ namespace gpudb
          *                      it contains a table of the same type as the
          *                      given one, then this table creation request
          *                      will fail.
-         *                              <li> is_collection: Indicates whether
-         *                      the new table to be created will be a
-         *                      collection. Values: 'true', 'false'.
-         *                              <li> disallow_homogeneous_tables: For a
-         *                      collection, indicates whether the collection
-         *                      prohibits containment of multiple tables of
-         *                      exactly the same data type. Values: 'true',
-         *                      'false'.
-         *                              <li> is_replicated: For a table,
-         *                      indicates whether the table is to be replicated
-         *                      to all the database ranks. This may be
-         *                      necessary when the table is to be joined with
-         *                      other tables in a query. Values: 'true',
-         *                      'false'.
-         *                              <li> foreign_keys: Semicolon-separated
-         *                      list of foreign key constraints, of the format
-         *                      'source_column references
-         *                      target_table(primary_key_column)'.
-         *                              <li> foreign_shard_key: Foreign shard
-         *                      key description of the format: <fk_foreign_key>
-         *                      references <pk_column_name> from
-         *                      <pk_table_name>(<pk_primary_key>)
-         *                              <li> ttl: Sets the TTL of the table or
-         *                      collection specified in @a tableName. The value
-         *                      must be the desired TTL in minutes.
+         *                              <li> gpudb::create_table_is_collection:
+         *                      Indicates whether the new table to be created
+         *                      will be a collection.
+         *                      <ul>
+         *                              <li> gpudb::create_table_true
+         *                              <li> gpudb::create_table_false
          *                      </ul>
-         *                        Default value is an empty std::map.
+         *                              <li>
+         *                      gpudb::create_table_disallow_homogeneous_tables:
+         *                      For a collection, indicates whether the
+         *                      collection prohibits containment of multiple
+         *                      tables of exactly the same data type.
+         *                      <ul>
+         *                              <li> gpudb::create_table_true
+         *                              <li> gpudb::create_table_false
+         *                      </ul>
+         *                              <li> gpudb::create_table_is_replicated:
+         *                      For a table, indicates whether the table is to
+         *                      be replicated to all the database ranks. This
+         *                      may be necessary when the table is to be joined
+         *                      with other tables in a query.
+         *                      <ul>
+         *                              <li> gpudb::create_table_true
+         *                              <li> gpudb::create_table_false
+         *                      </ul>
+         *                              <li> gpudb::create_table_foreign_keys:
+         *                      Semicolon-separated list of foreign key
+         *                      constraints, of the format 'source_column
+         *                      references target_table(primary_key_column)'.
+         *                              <li>
+         *                      gpudb::create_table_foreign_shard_key: Foreign
+         *                      shard key description of the format:
+         *                      <fk_foreign_key> references <pk_column_name>
+         *                      from <pk_table_name>(<pk_primary_key>)
+         *                              <li> gpudb::create_table_ttl: Sets the
+         *                      TTL of the table or collection specified in @a
+         *                      tableName. The value must be the desired TTL in
+         *                      minutes.
+         *                              <li>
+         *                      gpudb::create_table_is_result_table: For a
+         *                      table, indicates whether the table is a
+         *                      non-persistent, memory-only table that will
+         *                      store the output of a proc executed with
+         *                      /execute/proc. A result table cannot contain
+         *                      store_only, text_search, or string columns
+         *                      (char columns are acceptable), records cannot
+         *                      be inserted into it directly, and it will not
+         *                      be retained if the server is restarted.
+         *                      <ul>
+         *                              <li> gpudb::create_table_true
+         *                              <li> gpudb::create_table_false
+         *                      </ul>
+         *                      </ul>
          * 
          */
         CreateTableRequest(const std::string& tableName_, const std::string& typeId_, const std::map<std::string, std::string>& options_):
@@ -173,7 +204,7 @@ namespace gpudb
      * created inside a collection if the option @a collection_name is
      * specified. If that collection does not already exist, it will be
      * created.
-
+     * <p>
      * To create a new collection, specify the name of the collection in @a
      * tableName and set the @a is_collection option to @a true; @a typeId will
      * be ignored.

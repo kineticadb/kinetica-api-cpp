@@ -66,29 +66,34 @@ GetRecordsResponse<boost::any>& GPUdb::getRecords( const GetRecordsRequest& requ
  *                   Must be a table, view or homogeneous collection.
  * @param offset  A positive integer indicating the number of initial results
  *                to skip (this can be useful for paging through the results).
- *                Default value is 0. The minimum allowed value is 0. The
- *                maximum allowed value is MAX_INT.
+ *                The minimum allowed value is 0. The maximum allowed value is
+ *                MAX_INT.
  * @param limit  A positive integer indicating the maximum number of results to
  *               be returned. Or END_OF_SET (-9999) to indicate that the max
- *               number of results should be returned.  Default value is 10000.
+ *               number of results should be returned.
  * @param options
  *                 <ul>
- *                         <li> expression: Optional filter expression to apply
- *                 to the table.
- *                         <li> fast_index_lookup: Indicates if indexes should
- *                 be used to perform the lookup for a given expression if
- *                 possible. Only applicable if there is no sorting, the
- *                 expression contains only equivalence comparisons based on
- *                 existing tables indexes and the range of requested values is
- *                 from [0 to END_OF_SET]. The default value is true.
- *                         <li> sort_by: Optional column that the data should
- *                 be sorted by. Empty by default (i.e. no sorting is applied).
- *                         <li> sort_order: String indicating how the returned
- *                 values should be sorted - ascending or descending. If
- *                 sort_order is provided, sort_by has to be provided. Values:
- *                 'ascending', 'descending'.
+ *                         <li> gpudb::get_records_expression: Optional filter
+ *                 expression to apply to the table.
+ *                         <li> gpudb::get_records_fast_index_lookup: Indicates
+ *                 if indexes should be used to perform the lookup for a given
+ *                 expression if possible. Only applicable if there is no
+ *                 sorting, the expression contains only equivalence
+ *                 comparisons based on existing tables indexes and the range
+ *                 of requested values is from [0 to END_OF_SET]. The default
+ *                 value is true.
+ *                         <li> gpudb::get_records_sort_by: Optional column
+ *                 that the data should be sorted by. Empty by default (i.e. no
+ *                 sorting is applied).
+ *                         <li> gpudb::get_records_sort_order: String
+ *                 indicating how the returned values should be sorted -
+ *                 ascending or descending. If sort_order is provided, sort_by
+ *                 has to be provided.
+ *                 <ul>
+ *                         <li> gpudb::get_records_ascending
+ *                         <li> gpudb::get_records_descending
  *                 </ul>
- *                   Default value is an empty std::map.
+ *                 </ul>
  * 
  * @return Response object containing the result of the operation.
  * 
@@ -115,29 +120,34 @@ GetRecordsResponse<boost::any> GPUdb::getRecords( const std::string& tableName,
  *                   Must be a table, view or homogeneous collection.
  * @param offset  A positive integer indicating the number of initial results
  *                to skip (this can be useful for paging through the results).
- *                Default value is 0. The minimum allowed value is 0. The
- *                maximum allowed value is MAX_INT.
+ *                The minimum allowed value is 0. The maximum allowed value is
+ *                MAX_INT.
  * @param limit  A positive integer indicating the maximum number of results to
  *               be returned. Or END_OF_SET (-9999) to indicate that the max
- *               number of results should be returned.  Default value is 10000.
+ *               number of results should be returned.
  * @param options
  *                 <ul>
- *                         <li> expression: Optional filter expression to apply
- *                 to the table.
- *                         <li> fast_index_lookup: Indicates if indexes should
- *                 be used to perform the lookup for a given expression if
- *                 possible. Only applicable if there is no sorting, the
- *                 expression contains only equivalence comparisons based on
- *                 existing tables indexes and the range of requested values is
- *                 from [0 to END_OF_SET]. The default value is true.
- *                         <li> sort_by: Optional column that the data should
- *                 be sorted by. Empty by default (i.e. no sorting is applied).
- *                         <li> sort_order: String indicating how the returned
- *                 values should be sorted - ascending or descending. If
- *                 sort_order is provided, sort_by has to be provided. Values:
- *                 'ascending', 'descending'.
+ *                         <li> gpudb::get_records_expression: Optional filter
+ *                 expression to apply to the table.
+ *                         <li> gpudb::get_records_fast_index_lookup: Indicates
+ *                 if indexes should be used to perform the lookup for a given
+ *                 expression if possible. Only applicable if there is no
+ *                 sorting, the expression contains only equivalence
+ *                 comparisons based on existing tables indexes and the range
+ *                 of requested values is from [0 to END_OF_SET]. The default
+ *                 value is true.
+ *                         <li> gpudb::get_records_sort_by: Optional column
+ *                 that the data should be sorted by. Empty by default (i.e. no
+ *                 sorting is applied).
+ *                         <li> gpudb::get_records_sort_order: String
+ *                 indicating how the returned values should be sorted -
+ *                 ascending or descending. If sort_order is provided, sort_by
+ *                 has to be provided.
+ *                 <ul>
+ *                         <li> gpudb::get_records_ascending
+ *                         <li> gpudb::get_records_descending
  *                 </ul>
- *                   Default value is an empty std::map.
+ *                 </ul>
  * @param[out] response_  Response object containing the results of the
  *                        operation.
  * 
@@ -225,13 +235,12 @@ GetRecordsBySeriesResponse<boost::any>& GPUdb::getRecordsBySeries( const GetReco
  *                        blank.
  * @param offset  A positive integer indicating the number of initial
  *                series/tracks to skip (useful for paging through the
- *                results).  Default value is 0. The minimum allowed value is
- *                0. The maximum allowed value is MAX_INT.
+ *                results).  The minimum allowed value is 0. The maximum
+ *                allowed value is MAX_INT.
  * @param limit  A positive integer indicating the maximum number of
  *               series/tracks to be returned. Or END_OF_SET (-9999) to
  *               indicate that the max number of results should be returned.
- *               Default value is 10000.
- * @param options  Optional parameters.  Default value is an empty std::map.
+ * @param options  Optional parameters.
  * 
  * @return Response object containing the result of the operation.
  * 
@@ -268,13 +277,12 @@ GetRecordsBySeriesResponse<boost::any> GPUdb::getRecordsBySeries( const std::str
  *                        blank.
  * @param offset  A positive integer indicating the number of initial
  *                series/tracks to skip (useful for paging through the
- *                results).  Default value is 0. The minimum allowed value is
- *                0. The maximum allowed value is MAX_INT.
+ *                results).  The minimum allowed value is 0. The maximum
+ *                allowed value is MAX_INT.
  * @param limit  A positive integer indicating the maximum number of
  *               series/tracks to be returned. Or END_OF_SET (-9999) to
  *               indicate that the max number of results should be returned.
- *               Default value is 10000.
- * @param options  Optional parameters.  Default value is an empty std::map.
+ * @param options  Optional parameters.
  * @param[out] response_  Response object containing the results of the
  *                        operation.
  * 
@@ -349,18 +357,22 @@ GetRecordsFromCollectionResponse<boost::any>& GPUdb::getRecordsFromCollection( c
  *                   be retrieved. Must be an existing collection or table.
  * @param offset  A positive integer indicating the number of initial results
  *                to skip (this can be useful for paging through the results).
- *                Default value is 0. The minimum allowed value is 0. The
- *                maximum allowed value is MAX_INT.
+ *                The minimum allowed value is 0. The maximum allowed value is
+ *                MAX_INT.
  * @param limit  A positive integer indicating the maximum number of results to
  *               be returned, or END_OF_SET (-9999) to indicate that the max
- *               number of results should be returned.  Default value is 10000.
+ *               number of results should be returned.
  * @param options
  *                 <ul>
- *                         <li> return_record_ids: If 'true' then return the
- *                 internal record ID along with each returned record. Default
- *                 is 'false'. Values: 'true', 'false'.
+ *                         <li>
+ *                 gpudb::get_records_from_collection_return_record_ids: If
+ *                 'true' then return the internal record ID along with each
+ *                 returned record. Default is 'false'.
+ *                 <ul>
+ *                         <li> gpudb::get_records_from_collection_true
+ *                         <li> gpudb::get_records_from_collection_false
  *                 </ul>
- *                   Default value is an empty std::map.
+ *                 </ul>
  * 
  * @return Response object containing the result of the operation.
  * 
@@ -386,18 +398,22 @@ GetRecordsFromCollectionResponse<boost::any> GPUdb::getRecordsFromCollection( co
  *                   be retrieved. Must be an existing collection or table.
  * @param offset  A positive integer indicating the number of initial results
  *                to skip (this can be useful for paging through the results).
- *                Default value is 0. The minimum allowed value is 0. The
- *                maximum allowed value is MAX_INT.
+ *                The minimum allowed value is 0. The maximum allowed value is
+ *                MAX_INT.
  * @param limit  A positive integer indicating the maximum number of results to
  *               be returned, or END_OF_SET (-9999) to indicate that the max
- *               number of results should be returned.  Default value is 10000.
+ *               number of results should be returned.
  * @param options
  *                 <ul>
- *                         <li> return_record_ids: If 'true' then return the
- *                 internal record ID along with each returned record. Default
- *                 is 'false'. Values: 'true', 'false'.
+ *                         <li>
+ *                 gpudb::get_records_from_collection_return_record_ids: If
+ *                 'true' then return the internal record ID along with each
+ *                 returned record. Default is 'false'.
+ *                 <ul>
+ *                         <li> gpudb::get_records_from_collection_true
+ *                         <li> gpudb::get_records_from_collection_false
  *                 </ul>
- *                   Default value is an empty std::map.
+ *                 </ul>
  * @param[out] response_  Response object containing the results of the
  *                        operation.
  * 

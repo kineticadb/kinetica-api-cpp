@@ -37,9 +37,24 @@ namespace gpudb
          * @param[in] name_  Name of the user or role from which the permission
          *                   will be revoked. Must be an existing user or role.
          * @param[in] permission_  Permission to revoke from the user or role.
-         *                         Values: 'table_admin', 'table_insert',
-         *                         'table_update', 'table_delete',
-         *                         'table_read'.
+         *                         <ul>
+         *                                 <li>
+         *                         gpudb::revoke_permission_table_table_admin:
+         *                         Full read/write and administrative access to
+         *                         the table.
+         *                                 <li>
+         *                         gpudb::revoke_permission_table_table_insert:
+         *                         Insert access to the table.
+         *                                 <li>
+         *                         gpudb::revoke_permission_table_table_update:
+         *                         Update access to the table.
+         *                                 <li>
+         *                         gpudb::revoke_permission_table_table_delete:
+         *                         Delete access to the table.
+         *                                 <li>
+         *                         gpudb::revoke_permission_table_table_read:
+         *                         Read access to the table.
+         *                         </ul>
          * @param[in] tableName_  Name of the table to which the permission
          *                        grants access. Must be an existing table,
          *                        collection, or view.

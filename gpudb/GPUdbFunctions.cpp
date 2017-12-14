@@ -227,9 +227,12 @@ AdminOfflineResponse& GPUdb::adminOffline( const AdminOfflineRequest& request_,
  * Take the system offline. When the system is offline, no user operations can
  * be performed with the exception of a system shutdown.
  * 
- * @param offline  Set to true if desired state is offline. Values: 'true',
- *                 'false'.
- * @param options  Optional parameters.  Default value is an empty std::map.
+ * @param offline  Set to true if desired state is offline.
+ *                 <ul>
+ *                         <li> gpudb::admin_offline_true
+ *                         <li> gpudb::admin_offline_false
+ *                 </ul>
+ * @param options  Optional parameters.
  * 
  * @return Response object containing the result of the operation.
  * 
@@ -251,9 +254,12 @@ AdminOfflineResponse GPUdb::adminOffline( const bool offline,
  * Take the system offline. When the system is offline, no user operations can
  * be performed with the exception of a system shutdown.
  * 
- * @param offline  Set to true if desired state is offline. Values: 'true',
- *                 'false'.
- * @param options  Optional parameters.  Default value is an empty std::map.
+ * @param offline  Set to true if desired state is offline.
+ *                 <ul>
+ *                         <li> gpudb::admin_offline_true
+ *                         <li> gpudb::admin_offline_false
+ *                 </ul>
+ * @param options  Optional parameters.
  * @param[out] response_  Response object containing the results of the
  *                        operation.
  * 
@@ -514,7 +520,7 @@ AdminShutdownResponse& GPUdb::adminShutdown( const AdminShutdownRequest& request
  * 
  * @param exitType  Reserved for future use. User can pass an empty string.
  * @param authorization  No longer used. User can pass an empty string.
- * @param options  Optional parameters.  Default value is an empty std::map.
+ * @param options  Optional parameters.
  * 
  * @return Response object containing the result of the operation.
  * 
@@ -539,7 +545,7 @@ AdminShutdownResponse GPUdb::adminShutdown( const std::string& exitType,
  * 
  * @param exitType  Reserved for future use. User can pass an empty string.
  * @param authorization  No longer used. User can pass an empty string.
- * @param options  Optional parameters.  Default value is an empty std::map.
+ * @param options  Optional parameters.
  * @param[out] response_  Response object containing the results of the
  *                        operation.
  * 
@@ -610,7 +616,7 @@ AdminVerifyDbResponse& GPUdb::adminVerifyDb( const AdminVerifyDbRequest& request
  * are found, the verified_ok flag in the response is set to false and the list
  * of errors found is provided in the error_list.
  * 
- * @param options  Optional parameters.  Default value is an empty std::map.
+ * @param options  Optional parameters.
  * 
  * @return Response object containing the result of the operation.
  * 
@@ -631,7 +637,7 @@ AdminVerifyDbResponse GPUdb::adminVerifyDb( const std::map<std::string, std::str
  * are found, the verified_ok flag in the response is set to false and the list
  * of errors found is provided in the error_list.
  * 
- * @param options  Optional parameters.  Default value is an empty std::map.
+ * @param options  Optional parameters.
  * @param[out] response_  Response object containing the results of the
  *                        operation.
  * 
@@ -701,7 +707,7 @@ AggregateConvexHullResponse& GPUdb::aggregateConvexHull( const AggregateConvexHu
  *                     points for the operation being performed.
  * @param yColumnName  Name of the column containing the y coordinates of the
  *                     points for the operation being performed.
- * @param options  Optional parameters.  Default value is an empty std::map.
+ * @param options  Optional parameters.
  * 
  * @return Response object containing the result of the operation.
  * 
@@ -733,7 +739,7 @@ AggregateConvexHullResponse GPUdb::aggregateConvexHull( const std::string& table
  *                     points for the operation being performed.
  * @param yColumnName  Name of the column containing the y coordinates of the
  *                     points for the operation being performed.
- * @param options  Optional parameters.  Default value is an empty std::map.
+ * @param options  Optional parameters.
  * @param[out] response_  Response object containing the results of the
  *                        operation.
  * 
@@ -762,23 +768,40 @@ AggregateConvexHullResponse& GPUdb::aggregateConvexHull( const std::string& tabl
  * Calculates unique combinations (groups) of values for the given columns in a
  * given table/view/collection and computes aggregates on each unique
  * combination. This is somewhat analogous to an SQL-style SELECT...GROUP BY.
- * Any column(s) can be grouped on, but only non-string (i.e. numeric) columns
- * may be used for computing aggregates. The results can be paged via the @a
- * offset and @a limit parameters. For example, to get 10 groups with the
- * largest counts the inputs would be: limit=10,
- * options={"sort_order":"descending", "sort_by":"value"}. @a options can be
- * used to customize behavior of this call e.g. filtering or sorting the
- * results. To group by 'x' and 'y' and compute the number of objects within
- * each group, use column_names=['x','y','count(*)'].  To also compute the sum
- * of 'z' over each group, use column_names=['x','y','count(*)','sum(z)'].
- * Available aggregation functions are: 'count(*)', 'sum', 'min', 'max', 'avg',
- * 'mean', 'stddev', 'stddev_pop', 'stddev_samp', 'var', 'var_pop', 'var_samp',
- * 'arg_min', 'arg_max' and 'count_distinct'. The response is returned as a
- * dynamic schema. For details see: <a
+ * <p>
+ * Any column(s) can be grouped on, and all column types except
+ * unrestricted-length strings may be used for computing applicable aggregates.
+ * <p>
+ * The results can be paged via the @a offset and @a limit parameters. For
+ * example, to get 10 groups with the largest counts the inputs would be:
+ * limit=10, options={"sort_order":"descending", "sort_by":"value"}.
+ * <p>
+ * @a options can be used to customize behavior of this call e.g. filtering or
+ * sorting the results.
+ * <p>
+ * To group by columns 'x' and 'y' and compute the number of objects within
+ * each group, use:  column_names=['x','y','count(*)'].
+ * <p>
+ * To also compute the sum of 'z' over each group, use:
+ * column_names=['x','y','count(*)','sum(z)'].
+ * <p>
+ * Available <a href="../../concepts/expressions.html#aggregate-expressions"
+ * target="_top">aggregation functions</a> are: count(*), sum, min, max, avg,
+ * mean, stddev, stddev_pop, stddev_samp, var, var_pop, var_samp, arg_min,
+ * arg_max and count_distinct.
+ * <p>
+ * The response is returned as a dynamic schema. For details see: <a
  * href="../../concepts/dynamic_schemas.html" target="_top">dynamic schemas
- * documentation</a>. If the @a result_table option is provided then the
- * results are stored in a table with the name given in the option and the
- * results are not returned in the response.
+ * documentation</a>.
+ * <p>
+ * If a @a result_table name is specified in the options, the results are
+ * stored in a new table with that name.  No results are returned in the
+ * response.  If the source table's <a
+ * href="../../concepts/tables.html#shard-keys" target="_top">shard key</a> is
+ * used as the grouping column(s), the result table will be sharded, in all
+ * other cases it will be replicated.  Sorting will properly function only if
+ * the result table is replicated or if there is only one processing node and
+ * should not be relied upon in other cases.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -799,23 +822,40 @@ RawAggregateGroupByResponse GPUdb::aggregateGroupByRaw( const AggregateGroupByRe
  * Calculates unique combinations (groups) of values for the given columns in a
  * given table/view/collection and computes aggregates on each unique
  * combination. This is somewhat analogous to an SQL-style SELECT...GROUP BY.
- * Any column(s) can be grouped on, but only non-string (i.e. numeric) columns
- * may be used for computing aggregates. The results can be paged via the @a
- * offset and @a limit parameters. For example, to get 10 groups with the
- * largest counts the inputs would be: limit=10,
- * options={"sort_order":"descending", "sort_by":"value"}. @a options can be
- * used to customize behavior of this call e.g. filtering or sorting the
- * results. To group by 'x' and 'y' and compute the number of objects within
- * each group, use column_names=['x','y','count(*)'].  To also compute the sum
- * of 'z' over each group, use column_names=['x','y','count(*)','sum(z)'].
- * Available aggregation functions are: 'count(*)', 'sum', 'min', 'max', 'avg',
- * 'mean', 'stddev', 'stddev_pop', 'stddev_samp', 'var', 'var_pop', 'var_samp',
- * 'arg_min', 'arg_max' and 'count_distinct'. The response is returned as a
- * dynamic schema. For details see: <a
+ * <p>
+ * Any column(s) can be grouped on, and all column types except
+ * unrestricted-length strings may be used for computing applicable aggregates.
+ * <p>
+ * The results can be paged via the @a offset and @a limit parameters. For
+ * example, to get 10 groups with the largest counts the inputs would be:
+ * limit=10, options={"sort_order":"descending", "sort_by":"value"}.
+ * <p>
+ * @a options can be used to customize behavior of this call e.g. filtering or
+ * sorting the results.
+ * <p>
+ * To group by columns 'x' and 'y' and compute the number of objects within
+ * each group, use:  column_names=['x','y','count(*)'].
+ * <p>
+ * To also compute the sum of 'z' over each group, use:
+ * column_names=['x','y','count(*)','sum(z)'].
+ * <p>
+ * Available <a href="../../concepts/expressions.html#aggregate-expressions"
+ * target="_top">aggregation functions</a> are: count(*), sum, min, max, avg,
+ * mean, stddev, stddev_pop, stddev_samp, var, var_pop, var_samp, arg_min,
+ * arg_max and count_distinct.
+ * <p>
+ * The response is returned as a dynamic schema. For details see: <a
  * href="../../concepts/dynamic_schemas.html" target="_top">dynamic schemas
- * documentation</a>. If the @a result_table option is provided then the
- * results are stored in a table with the name given in the option and the
- * results are not returned in the response.
+ * documentation</a>.
+ * <p>
+ * If a @a result_table name is specified in the options, the results are
+ * stored in a new table with that name.  No results are returned in the
+ * response.  If the source table's <a
+ * href="../../concepts/tables.html#shard-keys" target="_top">shard key</a> is
+ * used as the grouping column(s), the result table will be sharded, in all
+ * other cases it will be replicated.  Sorting will properly function only if
+ * the result table is replicated or if there is only one processing node and
+ * should not be relied upon in other cases.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -839,23 +879,40 @@ RawAggregateGroupByResponse& GPUdb::aggregateGroupByRaw( const AggregateGroupByR
  * Calculates unique combinations (groups) of values for the given columns in a
  * given table/view/collection and computes aggregates on each unique
  * combination. This is somewhat analogous to an SQL-style SELECT...GROUP BY.
- * Any column(s) can be grouped on, but only non-string (i.e. numeric) columns
- * may be used for computing aggregates. The results can be paged via the @a
- * offset and @a limit parameters. For example, to get 10 groups with the
- * largest counts the inputs would be: limit=10,
- * options={"sort_order":"descending", "sort_by":"value"}. @a options can be
- * used to customize behavior of this call e.g. filtering or sorting the
- * results. To group by 'x' and 'y' and compute the number of objects within
- * each group, use column_names=['x','y','count(*)'].  To also compute the sum
- * of 'z' over each group, use column_names=['x','y','count(*)','sum(z)'].
- * Available aggregation functions are: 'count(*)', 'sum', 'min', 'max', 'avg',
- * 'mean', 'stddev', 'stddev_pop', 'stddev_samp', 'var', 'var_pop', 'var_samp',
- * 'arg_min', 'arg_max' and 'count_distinct'. The response is returned as a
- * dynamic schema. For details see: <a
+ * <p>
+ * Any column(s) can be grouped on, and all column types except
+ * unrestricted-length strings may be used for computing applicable aggregates.
+ * <p>
+ * The results can be paged via the @a offset and @a limit parameters. For
+ * example, to get 10 groups with the largest counts the inputs would be:
+ * limit=10, options={"sort_order":"descending", "sort_by":"value"}.
+ * <p>
+ * @a options can be used to customize behavior of this call e.g. filtering or
+ * sorting the results.
+ * <p>
+ * To group by columns 'x' and 'y' and compute the number of objects within
+ * each group, use:  column_names=['x','y','count(*)'].
+ * <p>
+ * To also compute the sum of 'z' over each group, use:
+ * column_names=['x','y','count(*)','sum(z)'].
+ * <p>
+ * Available <a href="../../concepts/expressions.html#aggregate-expressions"
+ * target="_top">aggregation functions</a> are: count(*), sum, min, max, avg,
+ * mean, stddev, stddev_pop, stddev_samp, var, var_pop, var_samp, arg_min,
+ * arg_max and count_distinct.
+ * <p>
+ * The response is returned as a dynamic schema. For details see: <a
  * href="../../concepts/dynamic_schemas.html" target="_top">dynamic schemas
- * documentation</a>. If the @a result_table option is provided then the
- * results are stored in a table with the name given in the option and the
- * results are not returned in the response.
+ * documentation</a>.
+ * <p>
+ * If a @a result_table name is specified in the options, the results are
+ * stored in a new table with that name.  No results are returned in the
+ * response.  If the source table's <a
+ * href="../../concepts/tables.html#shard-keys" target="_top">shard key</a> is
+ * used as the grouping column(s), the result table will be sharded, in all
+ * other cases it will be replicated.  Sorting will properly function only if
+ * the result table is replicated or if there is only one processing node and
+ * should not be relied upon in other cases.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -884,23 +941,40 @@ AggregateGroupByResponse GPUdb::aggregateGroupBy( const AggregateGroupByRequest&
  * Calculates unique combinations (groups) of values for the given columns in a
  * given table/view/collection and computes aggregates on each unique
  * combination. This is somewhat analogous to an SQL-style SELECT...GROUP BY.
- * Any column(s) can be grouped on, but only non-string (i.e. numeric) columns
- * may be used for computing aggregates. The results can be paged via the @a
- * offset and @a limit parameters. For example, to get 10 groups with the
- * largest counts the inputs would be: limit=10,
- * options={"sort_order":"descending", "sort_by":"value"}. @a options can be
- * used to customize behavior of this call e.g. filtering or sorting the
- * results. To group by 'x' and 'y' and compute the number of objects within
- * each group, use column_names=['x','y','count(*)'].  To also compute the sum
- * of 'z' over each group, use column_names=['x','y','count(*)','sum(z)'].
- * Available aggregation functions are: 'count(*)', 'sum', 'min', 'max', 'avg',
- * 'mean', 'stddev', 'stddev_pop', 'stddev_samp', 'var', 'var_pop', 'var_samp',
- * 'arg_min', 'arg_max' and 'count_distinct'. The response is returned as a
- * dynamic schema. For details see: <a
+ * <p>
+ * Any column(s) can be grouped on, and all column types except
+ * unrestricted-length strings may be used for computing applicable aggregates.
+ * <p>
+ * The results can be paged via the @a offset and @a limit parameters. For
+ * example, to get 10 groups with the largest counts the inputs would be:
+ * limit=10, options={"sort_order":"descending", "sort_by":"value"}.
+ * <p>
+ * @a options can be used to customize behavior of this call e.g. filtering or
+ * sorting the results.
+ * <p>
+ * To group by columns 'x' and 'y' and compute the number of objects within
+ * each group, use:  column_names=['x','y','count(*)'].
+ * <p>
+ * To also compute the sum of 'z' over each group, use:
+ * column_names=['x','y','count(*)','sum(z)'].
+ * <p>
+ * Available <a href="../../concepts/expressions.html#aggregate-expressions"
+ * target="_top">aggregation functions</a> are: count(*), sum, min, max, avg,
+ * mean, stddev, stddev_pop, stddev_samp, var, var_pop, var_samp, arg_min,
+ * arg_max and count_distinct.
+ * <p>
+ * The response is returned as a dynamic schema. For details see: <a
  * href="../../concepts/dynamic_schemas.html" target="_top">dynamic schemas
- * documentation</a>. If the @a result_table option is provided then the
- * results are stored in a table with the name given in the option and the
- * results are not returned in the response.
+ * documentation</a>.
+ * <p>
+ * If a @a result_table name is specified in the options, the results are
+ * stored in a new table with that name.  No results are returned in the
+ * response.  If the source table's <a
+ * href="../../concepts/tables.html#shard-keys" target="_top">shard key</a> is
+ * used as the grouping column(s), the result table will be sharded, in all
+ * other cases it will be replicated.  Sorting will properly function only if
+ * the result table is replicated or if there is only one processing node and
+ * should not be relied upon in other cases.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -932,23 +1006,40 @@ AggregateGroupByResponse& GPUdb::aggregateGroupBy( const AggregateGroupByRequest
  * Calculates unique combinations (groups) of values for the given columns in a
  * given table/view/collection and computes aggregates on each unique
  * combination. This is somewhat analogous to an SQL-style SELECT...GROUP BY.
- * Any column(s) can be grouped on, but only non-string (i.e. numeric) columns
- * may be used for computing aggregates. The results can be paged via the @a
- * offset and @a limit parameters. For example, to get 10 groups with the
- * largest counts the inputs would be: limit=10,
- * options={"sort_order":"descending", "sort_by":"value"}. @a options can be
- * used to customize behavior of this call e.g. filtering or sorting the
- * results. To group by 'x' and 'y' and compute the number of objects within
- * each group, use column_names=['x','y','count(*)'].  To also compute the sum
- * of 'z' over each group, use column_names=['x','y','count(*)','sum(z)'].
- * Available aggregation functions are: 'count(*)', 'sum', 'min', 'max', 'avg',
- * 'mean', 'stddev', 'stddev_pop', 'stddev_samp', 'var', 'var_pop', 'var_samp',
- * 'arg_min', 'arg_max' and 'count_distinct'. The response is returned as a
- * dynamic schema. For details see: <a
+ * <p>
+ * Any column(s) can be grouped on, and all column types except
+ * unrestricted-length strings may be used for computing applicable aggregates.
+ * <p>
+ * The results can be paged via the @a offset and @a limit parameters. For
+ * example, to get 10 groups with the largest counts the inputs would be:
+ * limit=10, options={"sort_order":"descending", "sort_by":"value"}.
+ * <p>
+ * @a options can be used to customize behavior of this call e.g. filtering or
+ * sorting the results.
+ * <p>
+ * To group by columns 'x' and 'y' and compute the number of objects within
+ * each group, use:  column_names=['x','y','count(*)'].
+ * <p>
+ * To also compute the sum of 'z' over each group, use:
+ * column_names=['x','y','count(*)','sum(z)'].
+ * <p>
+ * Available <a href="../../concepts/expressions.html#aggregate-expressions"
+ * target="_top">aggregation functions</a> are: count(*), sum, min, max, avg,
+ * mean, stddev, stddev_pop, stddev_samp, var, var_pop, var_samp, arg_min,
+ * arg_max and count_distinct.
+ * <p>
+ * The response is returned as a dynamic schema. For details see: <a
  * href="../../concepts/dynamic_schemas.html" target="_top">dynamic schemas
- * documentation</a>. If the @a result_table option is provided then the
- * results are stored in a table with the name given in the option and the
- * results are not returned in the response.
+ * documentation</a>.
+ * <p>
+ * If a @a result_table name is specified in the options, the results are
+ * stored in a new table with that name.  No results are returned in the
+ * response.  If the source table's <a
+ * href="../../concepts/tables.html#shard-keys" target="_top">shard key</a> is
+ * used as the grouping column(s), the result table will be sharded, in all
+ * other cases it will be replicated.  Sorting will properly function only if
+ * the result table is replicated or if there is only one processing node and
+ * should not be relied upon in other cases.
  * 
  * @param tableName  Name of the table on which the operation will be
  *                   performed. Must be an existing table/view/collection.
@@ -962,37 +1053,71 @@ AggregateGroupByResponse& GPUdb::aggregateGroupBy( const AggregateGroupByRequest
  *                MAX_INT.
  * @param limit  A positive integer indicating the maximum number of results to
  *               be returned Or END_OF_SET (-9999) to indicate that the max
- *               number of results should be returned.  Default value is 1000.
+ *               number of results should be returned.
  * @param options  Optional parameters.
  *                 <ul>
- *                         <li> collection_name: Name of a collection which is
- *                 to contain the table specified in @a result_table, otherwise
- *                 the table will be a top-level table. If the collection does
- *                 not allow duplicate types and it contains a table of the
- *                 same type as the given one, then this table creation request
- *                 will fail. Additionally this option is invalid if @a
- *                 tableName is a collection.
- *                         <li> expression: Filter expression to apply to the
- *                 table prior to computing the aggregate group by.
- *                         <li> having: Filter expression to apply to the
- *                 aggregated results.
- *                         <li> sort_order: String indicating how the returned
- *                 values should be sorted - ascending or descending. Values:
- *                 'ascending', 'descending'.
- *                         <li> sort_by: String determining how the results are
- *                 sorted. Values: 'key', 'value'.
- *                         <li> result_table: The name of the table used to
- *                 store the results. Has the same naming restrictions as <a
- *                 href="../../concepts/tables.html" target="_top">tables</a>.
- *                 Column names (group-by and aggregate fields) need to be
- *                 given aliases e.g. ["FChar256 as fchar256", "sum(FDouble) as
- *                 sfd"].  If present, no results are returned in the response.
- *                 This option is not available if one of the grouping
- *                 attributes is an unrestricted string (i.e.; not charN) type.
- *                         <li> ttl: Sets the TTL of the table specified in @a
- *                 result_table. The value must be the desired TTL in minutes.
+ *                         <li> gpudb::aggregate_group_by_collection_name: Name
+ *                 of a collection which is to contain the table specified in
+ *                 @a result_table, otherwise the table will be a top-level
+ *                 table. If the collection does not allow duplicate types and
+ *                 it contains a table of the same type as the given one, then
+ *                 this table creation request will fail. Additionally this
+ *                 option is invalid if @a tableName is a collection.
+ *                         <li> gpudb::aggregate_group_by_expression: Filter
+ *                 expression to apply to the table prior to computing the
+ *                 aggregate group by.
+ *                         <li> gpudb::aggregate_group_by_having: Filter
+ *                 expression to apply to the aggregated results.
+ *                         <li> gpudb::aggregate_group_by_sort_order: String
+ *                 indicating how the returned values should be sorted -
+ *                 ascending or descending.
+ *                 <ul>
+ *                         <li> gpudb::aggregate_group_by_ascending: Indicates
+ *                 that the returned values should be sorted in ascending
+ *                 order.
+ *                         <li> gpudb::aggregate_group_by_descending: Indicates
+ *                 that the returned values should be sorted in descending
+ *                 order.
  *                 </ul>
- *                   Default value is an empty std::map.
+ *                         <li> gpudb::aggregate_group_by_sort_by: String
+ *                 determining how the results are sorted.
+ *                 <ul>
+ *                         <li> gpudb::aggregate_group_by_key: Indicates that
+ *                 the returned values should be sorted by key, which
+ *                 corresponds to the grouping columns. If you have multiple
+ *                 grouping columns (and are sorting by key), it will first
+ *                 sort the first grouping column, then the second grouping
+ *                 column, etc.
+ *                         <li> gpudb::aggregate_group_by_value: Indicates that
+ *                 the returned values should be sorted by value, which
+ *                 corresponds to the aggregates. If you have multiple
+ *                 aggregates (and are sorting by value), it will first sort by
+ *                 the first aggregate, then the second aggregate, etc.
+ *                 </ul>
+ *                         <li> gpudb::aggregate_group_by_result_table: The
+ *                 name of the table used to store the results. Has the same
+ *                 naming restrictions as <a href="../../concepts/tables.html"
+ *                 target="_top">tables</a>. Column names (group-by and
+ *                 aggregate fields) need to be given aliases e.g. ["FChar256
+ *                 as fchar256", "sum(FDouble) as sfd"].  If present, no
+ *                 results are returned in the response.  This option is not
+ *                 available if one of the grouping attributes is an
+ *                 unrestricted string (i.e.; not charN) type.
+ *                         <li> gpudb::aggregate_group_by_result_table_persist:
+ *                 If @a true then the result table specified in @a
+ *                 result_table will be persisted as a regular table (it will
+ *                 not be automatically cleared unless a @a ttl is provided,
+ *                 and the table data can be modified in subsequent
+ *                 operations). If @a false then the result table will be a
+ *                 read-only, memory-only temporary table.
+ *                 <ul>
+ *                         <li> gpudb::aggregate_group_by_true
+ *                         <li> gpudb::aggregate_group_by_false
+ *                 </ul>
+ *                         <li> gpudb::aggregate_group_by_ttl: Sets the TTL of
+ *                 the table specified in @a result_table. The value must be
+ *                 the desired TTL in minutes.
+ *                 </ul>
  * 
  * @return Response object containing the result of the operation.
  * 
@@ -1025,23 +1150,40 @@ AggregateGroupByResponse GPUdb::aggregateGroupBy( const std::string& tableName,
  * Calculates unique combinations (groups) of values for the given columns in a
  * given table/view/collection and computes aggregates on each unique
  * combination. This is somewhat analogous to an SQL-style SELECT...GROUP BY.
- * Any column(s) can be grouped on, but only non-string (i.e. numeric) columns
- * may be used for computing aggregates. The results can be paged via the @a
- * offset and @a limit parameters. For example, to get 10 groups with the
- * largest counts the inputs would be: limit=10,
- * options={"sort_order":"descending", "sort_by":"value"}. @a options can be
- * used to customize behavior of this call e.g. filtering or sorting the
- * results. To group by 'x' and 'y' and compute the number of objects within
- * each group, use column_names=['x','y','count(*)'].  To also compute the sum
- * of 'z' over each group, use column_names=['x','y','count(*)','sum(z)'].
- * Available aggregation functions are: 'count(*)', 'sum', 'min', 'max', 'avg',
- * 'mean', 'stddev', 'stddev_pop', 'stddev_samp', 'var', 'var_pop', 'var_samp',
- * 'arg_min', 'arg_max' and 'count_distinct'. The response is returned as a
- * dynamic schema. For details see: <a
+ * <p>
+ * Any column(s) can be grouped on, and all column types except
+ * unrestricted-length strings may be used for computing applicable aggregates.
+ * <p>
+ * The results can be paged via the @a offset and @a limit parameters. For
+ * example, to get 10 groups with the largest counts the inputs would be:
+ * limit=10, options={"sort_order":"descending", "sort_by":"value"}.
+ * <p>
+ * @a options can be used to customize behavior of this call e.g. filtering or
+ * sorting the results.
+ * <p>
+ * To group by columns 'x' and 'y' and compute the number of objects within
+ * each group, use:  column_names=['x','y','count(*)'].
+ * <p>
+ * To also compute the sum of 'z' over each group, use:
+ * column_names=['x','y','count(*)','sum(z)'].
+ * <p>
+ * Available <a href="../../concepts/expressions.html#aggregate-expressions"
+ * target="_top">aggregation functions</a> are: count(*), sum, min, max, avg,
+ * mean, stddev, stddev_pop, stddev_samp, var, var_pop, var_samp, arg_min,
+ * arg_max and count_distinct.
+ * <p>
+ * The response is returned as a dynamic schema. For details see: <a
  * href="../../concepts/dynamic_schemas.html" target="_top">dynamic schemas
- * documentation</a>. If the @a result_table option is provided then the
- * results are stored in a table with the name given in the option and the
- * results are not returned in the response.
+ * documentation</a>.
+ * <p>
+ * If a @a result_table name is specified in the options, the results are
+ * stored in a new table with that name.  No results are returned in the
+ * response.  If the source table's <a
+ * href="../../concepts/tables.html#shard-keys" target="_top">shard key</a> is
+ * used as the grouping column(s), the result table will be sharded, in all
+ * other cases it will be replicated.  Sorting will properly function only if
+ * the result table is replicated or if there is only one processing node and
+ * should not be relied upon in other cases.
  * 
  * @param tableName  Name of the table on which the operation will be
  *                   performed. Must be an existing table/view/collection.
@@ -1055,37 +1197,71 @@ AggregateGroupByResponse GPUdb::aggregateGroupBy( const std::string& tableName,
  *                MAX_INT.
  * @param limit  A positive integer indicating the maximum number of results to
  *               be returned Or END_OF_SET (-9999) to indicate that the max
- *               number of results should be returned.  Default value is 1000.
+ *               number of results should be returned.
  * @param options  Optional parameters.
  *                 <ul>
- *                         <li> collection_name: Name of a collection which is
- *                 to contain the table specified in @a result_table, otherwise
- *                 the table will be a top-level table. If the collection does
- *                 not allow duplicate types and it contains a table of the
- *                 same type as the given one, then this table creation request
- *                 will fail. Additionally this option is invalid if @a
- *                 tableName is a collection.
- *                         <li> expression: Filter expression to apply to the
- *                 table prior to computing the aggregate group by.
- *                         <li> having: Filter expression to apply to the
- *                 aggregated results.
- *                         <li> sort_order: String indicating how the returned
- *                 values should be sorted - ascending or descending. Values:
- *                 'ascending', 'descending'.
- *                         <li> sort_by: String determining how the results are
- *                 sorted. Values: 'key', 'value'.
- *                         <li> result_table: The name of the table used to
- *                 store the results. Has the same naming restrictions as <a
- *                 href="../../concepts/tables.html" target="_top">tables</a>.
- *                 Column names (group-by and aggregate fields) need to be
- *                 given aliases e.g. ["FChar256 as fchar256", "sum(FDouble) as
- *                 sfd"].  If present, no results are returned in the response.
- *                 This option is not available if one of the grouping
- *                 attributes is an unrestricted string (i.e.; not charN) type.
- *                         <li> ttl: Sets the TTL of the table specified in @a
- *                 result_table. The value must be the desired TTL in minutes.
+ *                         <li> gpudb::aggregate_group_by_collection_name: Name
+ *                 of a collection which is to contain the table specified in
+ *                 @a result_table, otherwise the table will be a top-level
+ *                 table. If the collection does not allow duplicate types and
+ *                 it contains a table of the same type as the given one, then
+ *                 this table creation request will fail. Additionally this
+ *                 option is invalid if @a tableName is a collection.
+ *                         <li> gpudb::aggregate_group_by_expression: Filter
+ *                 expression to apply to the table prior to computing the
+ *                 aggregate group by.
+ *                         <li> gpudb::aggregate_group_by_having: Filter
+ *                 expression to apply to the aggregated results.
+ *                         <li> gpudb::aggregate_group_by_sort_order: String
+ *                 indicating how the returned values should be sorted -
+ *                 ascending or descending.
+ *                 <ul>
+ *                         <li> gpudb::aggregate_group_by_ascending: Indicates
+ *                 that the returned values should be sorted in ascending
+ *                 order.
+ *                         <li> gpudb::aggregate_group_by_descending: Indicates
+ *                 that the returned values should be sorted in descending
+ *                 order.
  *                 </ul>
- *                   Default value is an empty std::map.
+ *                         <li> gpudb::aggregate_group_by_sort_by: String
+ *                 determining how the results are sorted.
+ *                 <ul>
+ *                         <li> gpudb::aggregate_group_by_key: Indicates that
+ *                 the returned values should be sorted by key, which
+ *                 corresponds to the grouping columns. If you have multiple
+ *                 grouping columns (and are sorting by key), it will first
+ *                 sort the first grouping column, then the second grouping
+ *                 column, etc.
+ *                         <li> gpudb::aggregate_group_by_value: Indicates that
+ *                 the returned values should be sorted by value, which
+ *                 corresponds to the aggregates. If you have multiple
+ *                 aggregates (and are sorting by value), it will first sort by
+ *                 the first aggregate, then the second aggregate, etc.
+ *                 </ul>
+ *                         <li> gpudb::aggregate_group_by_result_table: The
+ *                 name of the table used to store the results. Has the same
+ *                 naming restrictions as <a href="../../concepts/tables.html"
+ *                 target="_top">tables</a>. Column names (group-by and
+ *                 aggregate fields) need to be given aliases e.g. ["FChar256
+ *                 as fchar256", "sum(FDouble) as sfd"].  If present, no
+ *                 results are returned in the response.  This option is not
+ *                 available if one of the grouping attributes is an
+ *                 unrestricted string (i.e.; not charN) type.
+ *                         <li> gpudb::aggregate_group_by_result_table_persist:
+ *                 If @a true then the result table specified in @a
+ *                 result_table will be persisted as a regular table (it will
+ *                 not be automatically cleared unless a @a ttl is provided,
+ *                 and the table data can be modified in subsequent
+ *                 operations). If @a false then the result table will be a
+ *                 read-only, memory-only temporary table.
+ *                 <ul>
+ *                         <li> gpudb::aggregate_group_by_true
+ *                         <li> gpudb::aggregate_group_by_false
+ *                 </ul>
+ *                         <li> gpudb::aggregate_group_by_ttl: Sets the TTL of
+ *                 the table specified in @a result_table. The value must be
+ *                 the desired TTL in minutes.
+ *                 </ul>
  * @param[out] response_  Response object containing the results of the
  *                        operation.
  * 
@@ -1192,11 +1368,11 @@ AggregateHistogramResponse& GPUdb::aggregateHistogram( const AggregateHistogramR
  * @param interval  The size of each bin within the start and end parameters.
  * @param options  Optional parameters.
  *                 <ul>
- *                         <li> value_column: The name of the column to use
- *                 when calculating the bin values (values are summed).  The
- *                 column must be a numerical type (int, double, long, float).
+ *                         <li> gpudb::aggregate_histogram_value_column: The
+ *                 name of the column to use when calculating the bin values
+ *                 (values are summed).  The column must be a numerical type
+ *                 (int, double, long, float).
  *                 </ul>
- *                   Default value is an empty std::map.
  * 
  * @return Response object containing the result of the operation.
  * 
@@ -1242,11 +1418,11 @@ AggregateHistogramResponse GPUdb::aggregateHistogram( const std::string& tableNa
  * @param interval  The size of each bin within the start and end parameters.
  * @param options  Optional parameters.
  *                 <ul>
- *                         <li> value_column: The name of the column to use
- *                 when calculating the bin values (values are summed).  The
- *                 column must be a numerical type (int, double, long, float).
+ *                         <li> gpudb::aggregate_histogram_value_column: The
+ *                 name of the column to use when calculating the bin values
+ *                 (values are summed).  The column must be a numerical type
+ *                 (int, double, long, float).
  *                 </ul>
- *                   Default value is an empty std::map.
  * @param[out] response_  Response object containing the results of the
  *                        operation.
  * 
@@ -1349,15 +1525,17 @@ AggregateKMeansResponse& GPUdb::aggregateKMeans( const AggregateKMeansRequest& r
  *                   points is less than the given tolerance.
  * @param options  Optional parameters.
  *                 <ul>
- *                         <li> whiten: When set to 1 each of the columns is
- *                 first normalized by its stdv - default is not to whiten.
- *                         <li> max_iters: Number of times to try to hit the
- *                 tolerance limit before giving up - default is 10.
- *                         <li> num_tries: Number of times to run the k-means
- *                 algorithm with a different randomly selected starting points
- *                 - helps avoid local minimum. Default is 1.
+ *                         <li> gpudb::aggregate_k_means_whiten: When set to 1
+ *                 each of the columns is first normalized by its stdv -
+ *                 default is not to whiten.
+ *                         <li> gpudb::aggregate_k_means_max_iters: Number of
+ *                 times to try to hit the tolerance limit before giving up -
+ *                 default is 10.
+ *                         <li> gpudb::aggregate_k_means_num_tries: Number of
+ *                 times to run the k-means algorithm with a different randomly
+ *                 selected starting points - helps avoid local minimum.
+ *                 Default is 1.
  *                 </ul>
- *                   Default value is an empty std::map.
  * 
  * @return Response object containing the result of the operation.
  * 
@@ -1402,15 +1580,17 @@ AggregateKMeansResponse GPUdb::aggregateKMeans( const std::string& tableName,
  *                   points is less than the given tolerance.
  * @param options  Optional parameters.
  *                 <ul>
- *                         <li> whiten: When set to 1 each of the columns is
- *                 first normalized by its stdv - default is not to whiten.
- *                         <li> max_iters: Number of times to try to hit the
- *                 tolerance limit before giving up - default is 10.
- *                         <li> num_tries: Number of times to run the k-means
- *                 algorithm with a different randomly selected starting points
- *                 - helps avoid local minimum. Default is 1.
+ *                         <li> gpudb::aggregate_k_means_whiten: When set to 1
+ *                 each of the columns is first normalized by its stdv -
+ *                 default is not to whiten.
+ *                         <li> gpudb::aggregate_k_means_max_iters: Number of
+ *                 times to try to hit the tolerance limit before giving up -
+ *                 default is 10.
+ *                         <li> gpudb::aggregate_k_means_num_tries: Number of
+ *                 times to run the k-means algorithm with a different randomly
+ *                 selected starting points - helps avoid local minimum.
+ *                 Default is 1.
  *                 </ul>
- *                   Default value is an empty std::map.
  * @param[out] response_  Response object containing the results of the
  *                        operation.
  * 
@@ -1486,7 +1666,7 @@ AggregateMinMaxResponse& GPUdb::aggregateMinMax( const AggregateMinMaxRequest& r
  *                   performed. Must be an existing table.
  * @param columnName  Name of a column or an expression of one or more column
  *                    on which the min-max will be calculated.
- * @param options  Optional parameters.  Default value is an empty std::map.
+ * @param options  Optional parameters.
  * 
  * @return Response object containing the result of the operation.
  * 
@@ -1514,7 +1694,7 @@ AggregateMinMaxResponse GPUdb::aggregateMinMax( const std::string& tableName,
  *                   performed. Must be an existing table.
  * @param columnName  Name of a column or an expression of one or more column
  *                    on which the min-max will be calculated.
- * @param options  Optional parameters.  Default value is an empty std::map.
+ * @param options  Optional parameters.
  * @param[out] response_  Response object containing the results of the
  *                        operation.
  * 
@@ -1650,19 +1830,54 @@ AggregateStatisticsResponse& GPUdb::aggregateStatistics( const AggregateStatisti
  * @param columnName  Name of the column for which the statistics are to be
  *                    calculated.
  * @param stats  Comma separated list of the statistics to calculate, e.g.
- *               "sum,mean". Values: 'count', 'mean', 'stdv', 'variance',
- *               'skew', 'kurtosis', 'sum', 'min', 'max', 'weighted_average',
- *               'cardinality', 'estimated_cardinality', 'percentile',
- *               'percentile_rank'.
+ *               "sum,mean".
+ *               <ul>
+ *                       <li> gpudb::aggregate_statistics_count: Number of
+ *               objects (independent of the given column).
+ *                       <li> gpudb::aggregate_statistics_mean: Arithmetic mean
+ *               (average), equivalent to sum/count.
+ *                       <li> gpudb::aggregate_statistics_stdv: Sample standard
+ *               deviation (denominator is count-1).
+ *                       <li> gpudb::aggregate_statistics_variance: Unbiased
+ *               sample variance (denominator is count-1).
+ *                       <li> gpudb::aggregate_statistics_skew: Skewness (third
+ *               standardized moment).
+ *                       <li> gpudb::aggregate_statistics_kurtosis: Kurtosis
+ *               (fourth standardized moment).
+ *                       <li> gpudb::aggregate_statistics_sum: Sum of all
+ *               values in the column.
+ *                       <li> gpudb::aggregate_statistics_min: Minimum value of
+ *               the column.
+ *                       <li> gpudb::aggregate_statistics_max: Maximum value of
+ *               the column.
+ *                       <li> gpudb::aggregate_statistics_weighted_average:
+ *               Weighted arithmetic mean (using the option
+ *               'weight_column_name' as the weighting column).
+ *                       <li> gpudb::aggregate_statistics_cardinality: Number
+ *               of unique values in the column.
+ *                       <li>
+ *               gpudb::aggregate_statistics_estimated_cardinality: Estimate
+ *               (via hyperloglog technique) of the number of unique values in
+ *               the column.
+ *                       <li> gpudb::aggregate_statistics_percentile: Estimate
+ *               (via t-digest) of the given percentile of the column
+ *               (percentile(50.0) will be an approximation of the median).
+ *                       <li> gpudb::aggregate_statistics_percentile_rank:
+ *               Estimate (via t-digest) of the percentile rank of the given
+ *               value in the column (if the given value is the median of the
+ *               column, percentile_rank(<median>) will return approximately
+ *               50.0).
+ *               </ul>
  * @param options  Optional parameters.
  *                 <ul>
- *                         <li> additional_column_names: A list of comma
- *                 separated column names over which statistics can be
+ *                         <li>
+ *                 gpudb::aggregate_statistics_additional_column_names: A list
+ *                 of comma separated column names over which statistics can be
  *                 accumulated along with the primary column.
- *                         <li> weight_column_name: Name of column used as
- *                 weighting attribute for the weighted average statistic.
+ *                         <li> gpudb::aggregate_statistics_weight_column_name:
+ *                 Name of column used as weighting attribute for the weighted
+ *                 average statistic.
  *                 </ul>
- *                   Default value is an empty std::map.
  * 
  * @return Response object containing the result of the operation.
  * 
@@ -1714,19 +1929,54 @@ AggregateStatisticsResponse GPUdb::aggregateStatistics( const std::string& table
  * @param columnName  Name of the column for which the statistics are to be
  *                    calculated.
  * @param stats  Comma separated list of the statistics to calculate, e.g.
- *               "sum,mean". Values: 'count', 'mean', 'stdv', 'variance',
- *               'skew', 'kurtosis', 'sum', 'min', 'max', 'weighted_average',
- *               'cardinality', 'estimated_cardinality', 'percentile',
- *               'percentile_rank'.
+ *               "sum,mean".
+ *               <ul>
+ *                       <li> gpudb::aggregate_statistics_count: Number of
+ *               objects (independent of the given column).
+ *                       <li> gpudb::aggregate_statistics_mean: Arithmetic mean
+ *               (average), equivalent to sum/count.
+ *                       <li> gpudb::aggregate_statistics_stdv: Sample standard
+ *               deviation (denominator is count-1).
+ *                       <li> gpudb::aggregate_statistics_variance: Unbiased
+ *               sample variance (denominator is count-1).
+ *                       <li> gpudb::aggregate_statistics_skew: Skewness (third
+ *               standardized moment).
+ *                       <li> gpudb::aggregate_statistics_kurtosis: Kurtosis
+ *               (fourth standardized moment).
+ *                       <li> gpudb::aggregate_statistics_sum: Sum of all
+ *               values in the column.
+ *                       <li> gpudb::aggregate_statistics_min: Minimum value of
+ *               the column.
+ *                       <li> gpudb::aggregate_statistics_max: Maximum value of
+ *               the column.
+ *                       <li> gpudb::aggregate_statistics_weighted_average:
+ *               Weighted arithmetic mean (using the option
+ *               'weight_column_name' as the weighting column).
+ *                       <li> gpudb::aggregate_statistics_cardinality: Number
+ *               of unique values in the column.
+ *                       <li>
+ *               gpudb::aggregate_statistics_estimated_cardinality: Estimate
+ *               (via hyperloglog technique) of the number of unique values in
+ *               the column.
+ *                       <li> gpudb::aggregate_statistics_percentile: Estimate
+ *               (via t-digest) of the given percentile of the column
+ *               (percentile(50.0) will be an approximation of the median).
+ *                       <li> gpudb::aggregate_statistics_percentile_rank:
+ *               Estimate (via t-digest) of the percentile rank of the given
+ *               value in the column (if the given value is the median of the
+ *               column, percentile_rank(<median>) will return approximately
+ *               50.0).
+ *               </ul>
  * @param options  Optional parameters.
  *                 <ul>
- *                         <li> additional_column_names: A list of comma
- *                 separated column names over which statistics can be
+ *                         <li>
+ *                 gpudb::aggregate_statistics_additional_column_names: A list
+ *                 of comma separated column names over which statistics can be
  *                 accumulated along with the primary column.
- *                         <li> weight_column_name: Name of column used as
- *                 weighting attribute for the weighted average statistic.
+ *                         <li> gpudb::aggregate_statistics_weight_column_name:
+ *                 Name of column used as weighting attribute for the weighted
+ *                 average statistic.
  *                 </ul>
- *                   Default value is an empty std::map.
  * @param[out] response_  Response object containing the results of the
  *                        operation.
  * 
@@ -1860,8 +2110,7 @@ AggregateStatisticsByRangeResponse& GPUdb::aggregateStatisticsByRange( const Agg
  *                   will be performed.
  * @param selectExpression  For a non-empty expression statistics are
  *                          calculated for those records for which the
- *                          expression is true.  Default value is an empty
- *                          string.
+ *                          expression is true.
  * @param columnName  Name of the binning-column used to divide the set samples
  *                    into bins.
  * @param valueColumnName  Name of the value-column for which statistics are to
@@ -1876,18 +2125,23 @@ AggregateStatisticsByRangeResponse& GPUdb::aggregateStatisticsByRange( const Agg
  *                  start+interval``*``(i+1)).
  * @param options  Map of optional parameters:
  *                 <ul>
- *                         <li> additional_column_names: A list of comma
- *                 separated value-column names over which statistics can be
- *                 accumulated along with the primary value_column.
- *                         <li> bin_values: A list of comma separated
- *                 binning-column values. Values that match the nth bin_values
- *                 value are placed in the nth bin.
- *                         <li> weight_column_name: Name of the column used as
- *                 weighting column for the weighted_average statistic.
- *                         <li> order_column_name: Name of the column used for
- *                 candlestick charting techniques.
+ *                         <li>
+ *                 gpudb::aggregate_statistics_by_range_additional_column_names:
+ *                 A list of comma separated value-column names over which
+ *                 statistics can be accumulated along with the primary
+ *                 value_column.
+ *                         <li>
+ *                 gpudb::aggregate_statistics_by_range_bin_values: A list of
+ *                 comma separated binning-column values. Values that match the
+ *                 nth bin_values value are placed in the nth bin.
+ *                         <li>
+ *                 gpudb::aggregate_statistics_by_range_weight_column_name:
+ *                 Name of the column used as weighting column for the
+ *                 weighted_average statistic.
+ *                         <li>
+ *                 gpudb::aggregate_statistics_by_range_order_column_name: Name
+ *                 of the column used for candlestick charting techniques.
  *                 </ul>
- *                   Default value is an empty std::map.
  * 
  * @return Response object containing the result of the operation.
  * 
@@ -1947,8 +2201,7 @@ AggregateStatisticsByRangeResponse GPUdb::aggregateStatisticsByRange( const std:
  *                   will be performed.
  * @param selectExpression  For a non-empty expression statistics are
  *                          calculated for those records for which the
- *                          expression is true.  Default value is an empty
- *                          string.
+ *                          expression is true.
  * @param columnName  Name of the binning-column used to divide the set samples
  *                    into bins.
  * @param valueColumnName  Name of the value-column for which statistics are to
@@ -1963,18 +2216,23 @@ AggregateStatisticsByRangeResponse GPUdb::aggregateStatisticsByRange( const std:
  *                  start+interval``*``(i+1)).
  * @param options  Map of optional parameters:
  *                 <ul>
- *                         <li> additional_column_names: A list of comma
- *                 separated value-column names over which statistics can be
- *                 accumulated along with the primary value_column.
- *                         <li> bin_values: A list of comma separated
- *                 binning-column values. Values that match the nth bin_values
- *                 value are placed in the nth bin.
- *                         <li> weight_column_name: Name of the column used as
- *                 weighting column for the weighted_average statistic.
- *                         <li> order_column_name: Name of the column used for
- *                 candlestick charting techniques.
+ *                         <li>
+ *                 gpudb::aggregate_statistics_by_range_additional_column_names:
+ *                 A list of comma separated value-column names over which
+ *                 statistics can be accumulated along with the primary
+ *                 value_column.
+ *                         <li>
+ *                 gpudb::aggregate_statistics_by_range_bin_values: A list of
+ *                 comma separated binning-column values. Values that match the
+ *                 nth bin_values value are placed in the nth bin.
+ *                         <li>
+ *                 gpudb::aggregate_statistics_by_range_weight_column_name:
+ *                 Name of the column used as weighting column for the
+ *                 weighted_average statistic.
+ *                         <li>
+ *                 gpudb::aggregate_statistics_by_range_order_column_name: Name
+ *                 of the column used for candlestick charting techniques.
  *                 </ul>
- *                   Default value is an empty std::map.
  * @param[out] response_  Response object containing the results of the
  *                        operation.
  * 
@@ -2023,9 +2281,16 @@ AggregateStatisticsByRangeResponse& GPUdb::aggregateStatisticsByRange( const std
  * <p>
  * The response is returned as a dynamic schema. For details see: <a
  * href="../../concepts/dynamic_schemas.html" target="_top">dynamic schemas
- * documentation</a>. If the 'result_table' option is provided then the results
- * are stored in a table with the name given in the option and the results are
- * not returned in the response.
+ * documentation</a>.
+ * <p>
+ * If a @a result_table name is specified in the options, the results are
+ * stored in a new table with that name.  No results are returned in the
+ * response.  If the source table's <a
+ * href="../../concepts/tables.html#shard-keys" target="_top">shard key</a> is
+ * used as the @a columnName, the result table will be sharded, in all other
+ * cases it will be replicated.  Sorting will properly function only if the
+ * result table is replicated or if there is only one processing node and
+ * should not be relied upon in other cases.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -2056,9 +2321,16 @@ RawAggregateUniqueResponse GPUdb::aggregateUniqueRaw( const AggregateUniqueReque
  * <p>
  * The response is returned as a dynamic schema. For details see: <a
  * href="../../concepts/dynamic_schemas.html" target="_top">dynamic schemas
- * documentation</a>. If the 'result_table' option is provided then the results
- * are stored in a table with the name given in the option and the results are
- * not returned in the response.
+ * documentation</a>.
+ * <p>
+ * If a @a result_table name is specified in the options, the results are
+ * stored in a new table with that name.  No results are returned in the
+ * response.  If the source table's <a
+ * href="../../concepts/tables.html#shard-keys" target="_top">shard key</a> is
+ * used as the @a columnName, the result table will be sharded, in all other
+ * cases it will be replicated.  Sorting will properly function only if the
+ * result table is replicated or if there is only one processing node and
+ * should not be relied upon in other cases.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -2092,9 +2364,16 @@ RawAggregateUniqueResponse& GPUdb::aggregateUniqueRaw( const AggregateUniqueRequ
  * <p>
  * The response is returned as a dynamic schema. For details see: <a
  * href="../../concepts/dynamic_schemas.html" target="_top">dynamic schemas
- * documentation</a>. If the 'result_table' option is provided then the results
- * are stored in a table with the name given in the option and the results are
- * not returned in the response.
+ * documentation</a>.
+ * <p>
+ * If a @a result_table name is specified in the options, the results are
+ * stored in a new table with that name.  No results are returned in the
+ * response.  If the source table's <a
+ * href="../../concepts/tables.html#shard-keys" target="_top">shard key</a> is
+ * used as the @a columnName, the result table will be sharded, in all other
+ * cases it will be replicated.  Sorting will properly function only if the
+ * result table is replicated or if there is only one processing node and
+ * should not be relied upon in other cases.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -2133,9 +2412,16 @@ AggregateUniqueResponse GPUdb::aggregateUnique( const AggregateUniqueRequest& re
  * <p>
  * The response is returned as a dynamic schema. For details see: <a
  * href="../../concepts/dynamic_schemas.html" target="_top">dynamic schemas
- * documentation</a>. If the 'result_table' option is provided then the results
- * are stored in a table with the name given in the option and the results are
- * not returned in the response.
+ * documentation</a>.
+ * <p>
+ * If a @a result_table name is specified in the options, the results are
+ * stored in a new table with that name.  No results are returned in the
+ * response.  If the source table's <a
+ * href="../../concepts/tables.html#shard-keys" target="_top">shard key</a> is
+ * used as the @a columnName, the result table will be sharded, in all other
+ * cases it will be replicated.  Sorting will properly function only if the
+ * result table is replicated or if there is only one processing node and
+ * should not be relied upon in other cases.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -2177,9 +2463,16 @@ AggregateUniqueResponse& GPUdb::aggregateUnique( const AggregateUniqueRequest& r
  * <p>
  * The response is returned as a dynamic schema. For details see: <a
  * href="../../concepts/dynamic_schemas.html" target="_top">dynamic schemas
- * documentation</a>. If the 'result_table' option is provided then the results
- * are stored in a table with the name given in the option and the results are
- * not returned in the response.
+ * documentation</a>.
+ * <p>
+ * If a @a result_table name is specified in the options, the results are
+ * stored in a new table with that name.  No results are returned in the
+ * response.  If the source table's <a
+ * href="../../concepts/tables.html#shard-keys" target="_top">shard key</a> is
+ * used as the @a columnName, the result table will be sharded, in all other
+ * cases it will be replicated.  Sorting will properly function only if the
+ * result table is replicated or if there is only one processing node and
+ * should not be relied upon in other cases.
  * 
  * @param tableName  Name of the table on which the operation will be
  *                   performed. Must be an existing table.
@@ -2192,28 +2485,43 @@ AggregateUniqueResponse& GPUdb::aggregateUnique( const AggregateUniqueRequest& r
  *                MAX_INT.
  * @param limit  A positive integer indicating the maximum number of results to
  *               be returned. Or END_OF_SET (-9999) to indicate that the max
- *               number of results should be returned.  Default value is 10000.
+ *               number of results should be returned.
  * @param options  Optional parameters.
  *                 <ul>
- *                         <li> collection_name: Name of a collection which is
- *                 to contain the table specified in 'result_table', otherwise
- *                 the table will be a top-level table. If the collection does
- *                 not allow duplicate types and it contains a table of the
- *                 same type as the given one, then this table creation request
- *                 will fail.
- *                         <li> expression: Optional filter expression to apply
- *                 to the table.
- *                         <li> sort_order: String indicating how the returned
- *                 values should be sorted. Values: 'ascending', 'descending'.
- *                         <li> result_table: The name of the table used to
- *                 store the results. If present no results are returned in the
- *                 response. Has the same naming restrictions as <a
- *                 href="../../concepts/tables.html" target="_top">tables</a>.
- *                         <li> ttl: Sets the TTL of the table specified in
- *                 'result_table'. The value must be the desired TTL in
- *                 minutes.
+ *                         <li> gpudb::aggregate_unique_collection_name: Name
+ *                 of a collection which is to contain the table specified in
+ *                 'result_table', otherwise the table will be a top-level
+ *                 table. If the collection does not allow duplicate types and
+ *                 it contains a table of the same type as the given one, then
+ *                 this table creation request will fail.
+ *                         <li> gpudb::aggregate_unique_expression: Optional
+ *                 filter expression to apply to the table.
+ *                         <li> gpudb::aggregate_unique_sort_order: String
+ *                 indicating how the returned values should be sorted.
+ *                 <ul>
+ *                         <li> gpudb::aggregate_unique_ascending
+ *                         <li> gpudb::aggregate_unique_descending
  *                 </ul>
- *                   Default value is an empty std::map.
+ *                         <li> gpudb::aggregate_unique_result_table: The name
+ *                 of the table used to store the results. If present no
+ *                 results are returned in the response. Has the same naming
+ *                 restrictions as <a href="../../concepts/tables.html"
+ *                 target="_top">tables</a>.
+ *                         <li> gpudb::aggregate_unique_result_table_persist:
+ *                 If @a true then the result table specified in @a
+ *                 result_table will be persisted as a regular table (it will
+ *                 not be automatically cleared unless a @a ttl is provided,
+ *                 and the table data can be modified in subsequent
+ *                 operations). If @a false (the default) then the result table
+ *                 will be a read-only, memory-only temporary table.
+ *                 <ul>
+ *                         <li> gpudb::aggregate_unique_true
+ *                         <li> gpudb::aggregate_unique_false
+ *                 </ul>
+ *                         <li> gpudb::aggregate_unique_ttl: Sets the TTL of
+ *                 the table specified in 'result_table'. The value must be the
+ *                 desired TTL in minutes.
+ *                 </ul>
  * 
  * @return Response object containing the result of the operation.
  * 
@@ -2256,9 +2564,16 @@ AggregateUniqueResponse GPUdb::aggregateUnique( const std::string& tableName,
  * <p>
  * The response is returned as a dynamic schema. For details see: <a
  * href="../../concepts/dynamic_schemas.html" target="_top">dynamic schemas
- * documentation</a>. If the 'result_table' option is provided then the results
- * are stored in a table with the name given in the option and the results are
- * not returned in the response.
+ * documentation</a>.
+ * <p>
+ * If a @a result_table name is specified in the options, the results are
+ * stored in a new table with that name.  No results are returned in the
+ * response.  If the source table's <a
+ * href="../../concepts/tables.html#shard-keys" target="_top">shard key</a> is
+ * used as the @a columnName, the result table will be sharded, in all other
+ * cases it will be replicated.  Sorting will properly function only if the
+ * result table is replicated or if there is only one processing node and
+ * should not be relied upon in other cases.
  * 
  * @param tableName  Name of the table on which the operation will be
  *                   performed. Must be an existing table.
@@ -2271,28 +2586,43 @@ AggregateUniqueResponse GPUdb::aggregateUnique( const std::string& tableName,
  *                MAX_INT.
  * @param limit  A positive integer indicating the maximum number of results to
  *               be returned. Or END_OF_SET (-9999) to indicate that the max
- *               number of results should be returned.  Default value is 10000.
+ *               number of results should be returned.
  * @param options  Optional parameters.
  *                 <ul>
- *                         <li> collection_name: Name of a collection which is
- *                 to contain the table specified in 'result_table', otherwise
- *                 the table will be a top-level table. If the collection does
- *                 not allow duplicate types and it contains a table of the
- *                 same type as the given one, then this table creation request
- *                 will fail.
- *                         <li> expression: Optional filter expression to apply
- *                 to the table.
- *                         <li> sort_order: String indicating how the returned
- *                 values should be sorted. Values: 'ascending', 'descending'.
- *                         <li> result_table: The name of the table used to
- *                 store the results. If present no results are returned in the
- *                 response. Has the same naming restrictions as <a
- *                 href="../../concepts/tables.html" target="_top">tables</a>.
- *                         <li> ttl: Sets the TTL of the table specified in
- *                 'result_table'. The value must be the desired TTL in
- *                 minutes.
+ *                         <li> gpudb::aggregate_unique_collection_name: Name
+ *                 of a collection which is to contain the table specified in
+ *                 'result_table', otherwise the table will be a top-level
+ *                 table. If the collection does not allow duplicate types and
+ *                 it contains a table of the same type as the given one, then
+ *                 this table creation request will fail.
+ *                         <li> gpudb::aggregate_unique_expression: Optional
+ *                 filter expression to apply to the table.
+ *                         <li> gpudb::aggregate_unique_sort_order: String
+ *                 indicating how the returned values should be sorted.
+ *                 <ul>
+ *                         <li> gpudb::aggregate_unique_ascending
+ *                         <li> gpudb::aggregate_unique_descending
  *                 </ul>
- *                   Default value is an empty std::map.
+ *                         <li> gpudb::aggregate_unique_result_table: The name
+ *                 of the table used to store the results. If present no
+ *                 results are returned in the response. Has the same naming
+ *                 restrictions as <a href="../../concepts/tables.html"
+ *                 target="_top">tables</a>.
+ *                         <li> gpudb::aggregate_unique_result_table_persist:
+ *                 If @a true then the result table specified in @a
+ *                 result_table will be persisted as a regular table (it will
+ *                 not be automatically cleared unless a @a ttl is provided,
+ *                 and the table data can be modified in subsequent
+ *                 operations). If @a false (the default) then the result table
+ *                 will be a read-only, memory-only temporary table.
+ *                 <ul>
+ *                         <li> gpudb::aggregate_unique_true
+ *                         <li> gpudb::aggregate_unique_false
+ *                 </ul>
+ *                         <li> gpudb::aggregate_unique_ttl: Sets the TTL of
+ *                 the table specified in 'result_table'. The value must be the
+ *                 desired TTL in minutes.
+ *                 </ul>
  * @param[out] response_  Response object containing the results of the
  *                        operation.
  * 
@@ -2387,66 +2717,88 @@ AlterSystemPropertiesResponse& GPUdb::alterSystemProperties( const AlterSystemPr
  * @param propertyUpdatesMap  Map containing the properties of the system to be
  *                            updated. Error if empty.
  *                            <ul>
- *                                    <li> sm_omp_threads: Set the number of
- *                            OpenMP threads that will be used to service
- *                            filter & aggregation requests against collections
- *                            to the specified integer value.
- *                                    <li> kernel_omp_threads: Set the number
- *                            of kernel OpenMP threads to the specified integer
+ *                                    <li>
+ *                            gpudb::alter_system_properties_sm_omp_threads:
+ *                            Set the number of OpenMP threads that will be
+ *                            used to service filter & aggregation requests
+ *                            against collections to the specified integer
  *                            value.
- *                                    <li> concurrent_kernel_execution: Enables
- *                            concurrent kernel execution if the value is @a
- *                            true and disables it if the value is @a false.
- *                            Values: 'true', 'false'.
- *                                    <li> chunk_size: Sets the chunk size of
- *                            all new sets to the specified integer value.
- *                                    <li> flush_to_disk: Flushes any changes
- *                            to any tables to the persistent store.  These
- *                            changes include updates to the vector store,
- *                            object store, and text search store, Value string
- *                            is ignored
- *                                    <li> clear_cache: Clears cached results.
- *                            Useful to allow repeated timing of endpoints.
- *                            Value string is ignored
- *                                    <li> communicator_test: Invoke the
- *                            communicator test and report timing results.
- *                            Value string is is a comma separated list of
- *                            <key>=<value> expressions.  Expressions are:
- *                            num_transactions=<num> where num is the number of
- *                            request reply transactions to invoke per test;
- *                            message_size=<bytes> where bytes is the size of
- *                            the messages to send in bytes;
+ *                                    <li>
+ *                            gpudb::alter_system_properties_kernel_omp_threads:
+ *                            Set the number of kernel OpenMP threads to the
+ *                            specified integer value.
+ *                                    <li>
+ *                            gpudb::alter_system_properties_concurrent_kernel_execution:
+ *                            Enables concurrent kernel execution if the value
+ *                            is @a true and disables it if the value is @a
+ *                            false.
+ *                            <ul>
+ *                                    <li> gpudb::alter_system_properties_true
+ *                                    <li> gpudb::alter_system_properties_false
+ *                            </ul>
+ *                                    <li>
+ *                            gpudb::alter_system_properties_chunk_size: Sets
+ *                            the chunk size of all new sets to the specified
+ *                            integer value.
+ *                                    <li>
+ *                            gpudb::alter_system_properties_flush_to_disk:
+ *                            Flushes any changes to any tables to the
+ *                            persistent store.  These changes include updates
+ *                            to the vector store, object store, and text
+ *                            search store, Value string is ignored
+ *                                    <li>
+ *                            gpudb::alter_system_properties_clear_cache:
+ *                            Clears cached results.  Useful to allow repeated
+ *                            timing of endpoints. Value string is ignored
+ *                                    <li>
+ *                            gpudb::alter_system_properties_communicator_test:
+ *                            Invoke the communicator test and report timing
+ *                            results. Value string is is a comma separated
+ *                            list of <key>=<value> expressions.  Expressions
+ *                            are: num_transactions=<num> where num is the
+ *                            number of request reply transactions to invoke
+ *                            per test; message_size=<bytes> where bytes is the
+ *                            size of the messages to send in bytes;
  *                            check_values=<enabled> where if enabled is true
  *                            the value of the messages received are verified.
- *                                    <li> set_message_timers_enabled: Enables
- *                            the communicator test to collect additional
- *                            timing statistics when the value string is @a
- *                            true. Disables the collection when the value
- *                            string is @a false Values: 'true', 'false'.
- *                                    <li> bulk_add_test: Invoke the bulk add
- *                            test and report timing results. Value string is
- *                            ignored.
- *                                    <li> network_speed: Invoke the network
- *                            speed test and report timing results. Value
- *                            string is a semicolon-separated list of
- *                            <key>=<value> expressions.  Valid expressions
- *                            are: seconds=<time> where time is the time in
- *                            seconds to run the test; data_size=<size> where
- *                            size is the size in bytes of the block to be
- *                            transferred; threads=<number of threads>;
+ *                                    <li>
+ *                            gpudb::alter_system_properties_set_message_timers_enabled:
+ *                            Enables the communicator test to collect
+ *                            additional timing statistics when the value
+ *                            string is @a true. Disables the collection when
+ *                            the value string is @a false
+ *                            <ul>
+ *                                    <li> gpudb::alter_system_properties_true
+ *                                    <li> gpudb::alter_system_properties_false
+ *                            </ul>
+ *                                    <li>
+ *                            gpudb::alter_system_properties_bulk_add_test:
+ *                            Invoke the bulk add test and report timing
+ *                            results. Value string is ignored.
+ *                                    <li>
+ *                            gpudb::alter_system_properties_network_speed:
+ *                            Invoke the network speed test and report timing
+ *                            results. Value string is a semicolon-separated
+ *                            list of <key>=<value> expressions.  Valid
+ *                            expressions are: seconds=<time> where time is the
+ *                            time in seconds to run the test; data_size=<size>
+ *                            where size is the size in bytes of the block to
+ *                            be transferred; threads=<number of threads>;
  *                            to_ranks=<space-separated list of ranks> where
  *                            the list of ranks is the ranks that rank 0 will
  *                            send data to and get data from. If to_ranks is
  *                            unspecified then all worker ranks are used.
- *                                    <li> request_timeout: Number of minutes
- *                            after which filtering (e.g., /filter) and
- *                            aggregating (e.g., /aggregate/groupby) queries
- *                            will timeout.
- *                                    <li> max_get_records_size: The maximum
- *                            number of records the database will serve for a
- *                            given data retrieval call
+ *                                    <li>
+ *                            gpudb::alter_system_properties_request_timeout:
+ *                            Number of minutes after which filtering (e.g.,
+ *                            /filter) and aggregating (e.g.,
+ *                            /aggregate/groupby) queries will timeout.
+ *                                    <li>
+ *                            gpudb::alter_system_properties_max_get_records_size:
+ *                            The maximum number of records the database will
+ *                            serve for a given data retrieval call
  *                            </ul>
- * @param options  Optional parameters.  Default value is an empty std::map.
+ * @param options  Optional parameters.
  * 
  * @return Response object containing the result of the operation.
  * 
@@ -2476,66 +2828,88 @@ AlterSystemPropertiesResponse GPUdb::alterSystemProperties( const std::map<std::
  * @param propertyUpdatesMap  Map containing the properties of the system to be
  *                            updated. Error if empty.
  *                            <ul>
- *                                    <li> sm_omp_threads: Set the number of
- *                            OpenMP threads that will be used to service
- *                            filter & aggregation requests against collections
- *                            to the specified integer value.
- *                                    <li> kernel_omp_threads: Set the number
- *                            of kernel OpenMP threads to the specified integer
+ *                                    <li>
+ *                            gpudb::alter_system_properties_sm_omp_threads:
+ *                            Set the number of OpenMP threads that will be
+ *                            used to service filter & aggregation requests
+ *                            against collections to the specified integer
  *                            value.
- *                                    <li> concurrent_kernel_execution: Enables
- *                            concurrent kernel execution if the value is @a
- *                            true and disables it if the value is @a false.
- *                            Values: 'true', 'false'.
- *                                    <li> chunk_size: Sets the chunk size of
- *                            all new sets to the specified integer value.
- *                                    <li> flush_to_disk: Flushes any changes
- *                            to any tables to the persistent store.  These
- *                            changes include updates to the vector store,
- *                            object store, and text search store, Value string
- *                            is ignored
- *                                    <li> clear_cache: Clears cached results.
- *                            Useful to allow repeated timing of endpoints.
- *                            Value string is ignored
- *                                    <li> communicator_test: Invoke the
- *                            communicator test and report timing results.
- *                            Value string is is a comma separated list of
- *                            <key>=<value> expressions.  Expressions are:
- *                            num_transactions=<num> where num is the number of
- *                            request reply transactions to invoke per test;
- *                            message_size=<bytes> where bytes is the size of
- *                            the messages to send in bytes;
+ *                                    <li>
+ *                            gpudb::alter_system_properties_kernel_omp_threads:
+ *                            Set the number of kernel OpenMP threads to the
+ *                            specified integer value.
+ *                                    <li>
+ *                            gpudb::alter_system_properties_concurrent_kernel_execution:
+ *                            Enables concurrent kernel execution if the value
+ *                            is @a true and disables it if the value is @a
+ *                            false.
+ *                            <ul>
+ *                                    <li> gpudb::alter_system_properties_true
+ *                                    <li> gpudb::alter_system_properties_false
+ *                            </ul>
+ *                                    <li>
+ *                            gpudb::alter_system_properties_chunk_size: Sets
+ *                            the chunk size of all new sets to the specified
+ *                            integer value.
+ *                                    <li>
+ *                            gpudb::alter_system_properties_flush_to_disk:
+ *                            Flushes any changes to any tables to the
+ *                            persistent store.  These changes include updates
+ *                            to the vector store, object store, and text
+ *                            search store, Value string is ignored
+ *                                    <li>
+ *                            gpudb::alter_system_properties_clear_cache:
+ *                            Clears cached results.  Useful to allow repeated
+ *                            timing of endpoints. Value string is ignored
+ *                                    <li>
+ *                            gpudb::alter_system_properties_communicator_test:
+ *                            Invoke the communicator test and report timing
+ *                            results. Value string is is a comma separated
+ *                            list of <key>=<value> expressions.  Expressions
+ *                            are: num_transactions=<num> where num is the
+ *                            number of request reply transactions to invoke
+ *                            per test; message_size=<bytes> where bytes is the
+ *                            size of the messages to send in bytes;
  *                            check_values=<enabled> where if enabled is true
  *                            the value of the messages received are verified.
- *                                    <li> set_message_timers_enabled: Enables
- *                            the communicator test to collect additional
- *                            timing statistics when the value string is @a
- *                            true. Disables the collection when the value
- *                            string is @a false Values: 'true', 'false'.
- *                                    <li> bulk_add_test: Invoke the bulk add
- *                            test and report timing results. Value string is
- *                            ignored.
- *                                    <li> network_speed: Invoke the network
- *                            speed test and report timing results. Value
- *                            string is a semicolon-separated list of
- *                            <key>=<value> expressions.  Valid expressions
- *                            are: seconds=<time> where time is the time in
- *                            seconds to run the test; data_size=<size> where
- *                            size is the size in bytes of the block to be
- *                            transferred; threads=<number of threads>;
+ *                                    <li>
+ *                            gpudb::alter_system_properties_set_message_timers_enabled:
+ *                            Enables the communicator test to collect
+ *                            additional timing statistics when the value
+ *                            string is @a true. Disables the collection when
+ *                            the value string is @a false
+ *                            <ul>
+ *                                    <li> gpudb::alter_system_properties_true
+ *                                    <li> gpudb::alter_system_properties_false
+ *                            </ul>
+ *                                    <li>
+ *                            gpudb::alter_system_properties_bulk_add_test:
+ *                            Invoke the bulk add test and report timing
+ *                            results. Value string is ignored.
+ *                                    <li>
+ *                            gpudb::alter_system_properties_network_speed:
+ *                            Invoke the network speed test and report timing
+ *                            results. Value string is a semicolon-separated
+ *                            list of <key>=<value> expressions.  Valid
+ *                            expressions are: seconds=<time> where time is the
+ *                            time in seconds to run the test; data_size=<size>
+ *                            where size is the size in bytes of the block to
+ *                            be transferred; threads=<number of threads>;
  *                            to_ranks=<space-separated list of ranks> where
  *                            the list of ranks is the ranks that rank 0 will
  *                            send data to and get data from. If to_ranks is
  *                            unspecified then all worker ranks are used.
- *                                    <li> request_timeout: Number of minutes
- *                            after which filtering (e.g., /filter) and
- *                            aggregating (e.g., /aggregate/groupby) queries
- *                            will timeout.
- *                                    <li> max_get_records_size: The maximum
- *                            number of records the database will serve for a
- *                            given data retrieval call
+ *                                    <li>
+ *                            gpudb::alter_system_properties_request_timeout:
+ *                            Number of minutes after which filtering (e.g.,
+ *                            /filter) and aggregating (e.g.,
+ *                            /aggregate/groupby) queries will timeout.
+ *                                    <li>
+ *                            gpudb::alter_system_properties_max_get_records_size:
+ *                            The maximum number of records the database will
+ *                            serve for a given data retrieval call
  *                            </ul>
- * @param options  Optional parameters.  Default value is an empty std::map.
+ * @param options  Optional parameters.
  * @param[out] response_  Response object containing the results of the
  *                        operation.
  * 
@@ -2577,6 +2951,9 @@ AlterSystemPropertiesResponse& GPUdb::alterSystemProperties( const std::map<std:
  * collections.
  * <p>
  *      Allowing homogeneous tables within a collection.
+
+ *      Managing a table's columns--a column can be added or removed, or have
+ * its <a href="../../concepts/types.html" target="_top">type</a> modified.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -2616,6 +2993,9 @@ AlterTableResponse GPUdb::alterTable( const AlterTableRequest& request_ ) const
  * collections.
  * <p>
  *      Allowing homogeneous tables within a collection.
+
+ *      Managing a table's columns--a column can be added or removed, or have
+ * its <a href="../../concepts/types.html" target="_top">type</a> modified.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -2656,39 +3036,71 @@ AlterTableResponse& GPUdb::alterTable( const AlterTableRequest& request_,
  * collections.
  * <p>
  *      Allowing homogeneous tables within a collection.
+
+ *      Managing a table's columns--a column can be added or removed, or have
+ * its <a href="../../concepts/types.html" target="_top">type</a> modified.
  * 
  * @param tableName  Table on which the operation will be performed. Must be an
  *                   existing table, view, or collection.
- * @param action  Modification operation to be applied Values: 'create_index',
- *                'delete_index', 'allow_homogeneous_tables', 'protected',
- *                'ttl', 'add_column', 'delete_column', 'change_column',
- *                'rename_table'.
+ * @param action  Modification operation to be applied
+ *                <ul>
+ *                        <li> gpudb::alter_table_create_index: Creates an
+ *                index on the column name specified in @a value. If this
+ *                column is already indexed, an error will be returned.
+ *                        <li> gpudb::alter_table_delete_index: Deletes an
+ *                existing index on the column name specified in @a value. If
+ *                this column does not have indexing turned on, an error will
+ *                be returned.
+ *                        <li> gpudb::alter_table_allow_homogeneous_tables:
+ *                Sets whether homogeneous tables are allowed in the given
+ *                collection. This action is only valid if @a tableName is a
+ *                collection. The @a value must be either 'true' or 'false'.
+ *                        <li> gpudb::alter_table_protected: Sets whether the
+ *                given @a tableName should be protected or not. The @a value
+ *                must be either 'true' or 'false'.
+ *                        <li> gpudb::alter_table_ttl: Sets the TTL of the
+ *                table, view, or collection specified in @a tableName. The @a
+ *                value must be the desired TTL in minutes.
+ *                        <li> gpudb::alter_table_add_column: Add a column @a
+ *                value to the table. set the column properties in options
+ *                        <li> gpudb::alter_table_delete_column: Delete a
+ *                column @a value from the table
+ *                        <li> gpudb::alter_table_change_column: Change
+ *                properties of a column @a value in the table. set the column
+ *                properties in options
+ *                        <li> gpudb::alter_table_rename_table: Rename a table,
+ *                view or collection to @a value. Has the same naming
+ *                restrictions as <a href="../../concepts/tables.html"
+ *                target="_top">tables</a>.
+ *                </ul>
  * @param value  The value of the modification. May be a column name, 'true' or
  *               'false', or a TTL depending on @a action.
  * @param options  Optional parameters.
  *                 <ul>
- *                         <li> column_default_value: when adding a column: set
- *                 a default value, for existing data.
- *                         <li> column_properties: when adding or changing a
- *                 column: set the column properties (strings, separated by a
- *                 comma: data, store_only, text_search, char8, int8 etc).
- *                         <li> column_type: when adding or changing a column:
- *                 set the column type (strings, separated by a comma: int,
- *                 double, string, null etc).
- *                         <li> validate_change_column: Validate the type
- *                 change before applying column_change request. Default is
- *                 true (if option is missing). If True, then validate all
- *                 values. A value too large (or too long) for the new type
- *                 will prevent any change. If False, then when a value is too
- *                 large or long, it will be truncated. Values: 'true',
- *                 'false'.
- *                         <li> copy_values_from_column: when adding or
- *                 changing a column: enter column name - from where to copy
- *                 values.
- *                         <li> rename_column: new column name (using
- *                 change_column).
+ *                         <li> gpudb::alter_table_column_default_value: when
+ *                 adding a column: set a default value, for existing data.
+ *                         <li> gpudb::alter_table_column_properties: when
+ *                 adding or changing a column: set the column properties
+ *                 (strings, separated by a comma: data, store_only,
+ *                 text_search, char8, int8 etc).
+ *                         <li> gpudb::alter_table_column_type: when adding or
+ *                 changing a column: set the column type (strings, separated
+ *                 by a comma: int, double, string, null etc).
+ *                         <li> gpudb::alter_table_validate_change_column:
+ *                 Validate the type change before applying column_change
+ *                 request. Default is @a true (if option is missing). If @a
+ *                 true, then validate all values. A value too large (or too
+ *                 long) for the new type will prevent any change. If @a false,
+ *                 then when a value is too large or long, it will be
+ *                 truncated.
+ *                 <ul>
+ *                         <li> gpudb::alter_table_true: true
+ *                         <li> gpudb::alter_table_false: false
  *                 </ul>
- *                   Default value is an empty std::map.
+ *                         <li> gpudb::alter_table_copy_values_from_column:
+ *                 when adding or changing a column: enter column name - from
+ *                 where to copy values.
+ *                 </ul>
  * 
  * @return Response object containing the result of the operation.
  * 
@@ -2731,39 +3143,71 @@ AlterTableResponse GPUdb::alterTable( const std::string& tableName,
  * collections.
  * <p>
  *      Allowing homogeneous tables within a collection.
+
+ *      Managing a table's columns--a column can be added or removed, or have
+ * its <a href="../../concepts/types.html" target="_top">type</a> modified.
  * 
  * @param tableName  Table on which the operation will be performed. Must be an
  *                   existing table, view, or collection.
- * @param action  Modification operation to be applied Values: 'create_index',
- *                'delete_index', 'allow_homogeneous_tables', 'protected',
- *                'ttl', 'add_column', 'delete_column', 'change_column',
- *                'rename_table'.
+ * @param action  Modification operation to be applied
+ *                <ul>
+ *                        <li> gpudb::alter_table_create_index: Creates an
+ *                index on the column name specified in @a value. If this
+ *                column is already indexed, an error will be returned.
+ *                        <li> gpudb::alter_table_delete_index: Deletes an
+ *                existing index on the column name specified in @a value. If
+ *                this column does not have indexing turned on, an error will
+ *                be returned.
+ *                        <li> gpudb::alter_table_allow_homogeneous_tables:
+ *                Sets whether homogeneous tables are allowed in the given
+ *                collection. This action is only valid if @a tableName is a
+ *                collection. The @a value must be either 'true' or 'false'.
+ *                        <li> gpudb::alter_table_protected: Sets whether the
+ *                given @a tableName should be protected or not. The @a value
+ *                must be either 'true' or 'false'.
+ *                        <li> gpudb::alter_table_ttl: Sets the TTL of the
+ *                table, view, or collection specified in @a tableName. The @a
+ *                value must be the desired TTL in minutes.
+ *                        <li> gpudb::alter_table_add_column: Add a column @a
+ *                value to the table. set the column properties in options
+ *                        <li> gpudb::alter_table_delete_column: Delete a
+ *                column @a value from the table
+ *                        <li> gpudb::alter_table_change_column: Change
+ *                properties of a column @a value in the table. set the column
+ *                properties in options
+ *                        <li> gpudb::alter_table_rename_table: Rename a table,
+ *                view or collection to @a value. Has the same naming
+ *                restrictions as <a href="../../concepts/tables.html"
+ *                target="_top">tables</a>.
+ *                </ul>
  * @param value  The value of the modification. May be a column name, 'true' or
  *               'false', or a TTL depending on @a action.
  * @param options  Optional parameters.
  *                 <ul>
- *                         <li> column_default_value: when adding a column: set
- *                 a default value, for existing data.
- *                         <li> column_properties: when adding or changing a
- *                 column: set the column properties (strings, separated by a
- *                 comma: data, store_only, text_search, char8, int8 etc).
- *                         <li> column_type: when adding or changing a column:
- *                 set the column type (strings, separated by a comma: int,
- *                 double, string, null etc).
- *                         <li> validate_change_column: Validate the type
- *                 change before applying column_change request. Default is
- *                 true (if option is missing). If True, then validate all
- *                 values. A value too large (or too long) for the new type
- *                 will prevent any change. If False, then when a value is too
- *                 large or long, it will be truncated. Values: 'true',
- *                 'false'.
- *                         <li> copy_values_from_column: when adding or
- *                 changing a column: enter column name - from where to copy
- *                 values.
- *                         <li> rename_column: new column name (using
- *                 change_column).
+ *                         <li> gpudb::alter_table_column_default_value: when
+ *                 adding a column: set a default value, for existing data.
+ *                         <li> gpudb::alter_table_column_properties: when
+ *                 adding or changing a column: set the column properties
+ *                 (strings, separated by a comma: data, store_only,
+ *                 text_search, char8, int8 etc).
+ *                         <li> gpudb::alter_table_column_type: when adding or
+ *                 changing a column: set the column type (strings, separated
+ *                 by a comma: int, double, string, null etc).
+ *                         <li> gpudb::alter_table_validate_change_column:
+ *                 Validate the type change before applying column_change
+ *                 request. Default is @a true (if option is missing). If @a
+ *                 true, then validate all values. A value too large (or too
+ *                 long) for the new type will prevent any change. If @a false,
+ *                 then when a value is too large or long, it will be
+ *                 truncated.
+ *                 <ul>
+ *                         <li> gpudb::alter_table_true: true
+ *                         <li> gpudb::alter_table_false: false
  *                 </ul>
- *                   Default value is an empty std::map.
+ *                         <li> gpudb::alter_table_copy_values_from_column:
+ *                 when adding or changing a column: enter column name - from
+ *                 where to copy values.
+ *                 </ul>
  * @param[out] response_  Response object containing the results of the
  *                        operation.
  * 
@@ -2847,7 +3291,7 @@ AlterTableMetadataResponse& GPUdb::alterTableMetadata( const AlterTableMetadataR
  *                     all the tables; so the change will be applied to every
  *                     table. If the provided map is empty, then all existing
  *                     metadata for the table(s) will be cleared.
- * @param options  Optional parameters.  Default value is an empty std::map.
+ * @param options  Optional parameters.
  * 
  * @return Response object containing the result of the operation.
  * 
@@ -2881,7 +3325,7 @@ AlterTableMetadataResponse GPUdb::alterTableMetadata( const std::vector<std::str
  *                     all the tables; so the change will be applied to every
  *                     table. If the provided map is empty, then all existing
  *                     metadata for the table(s) will be cleared.
- * @param options  Optional parameters.  Default value is an empty std::map.
+ * @param options  Optional parameters.
  * @param[out] response_  Response object containing the results of the
  *                        operation.
  * 
@@ -2947,8 +3391,11 @@ AlterUserResponse& GPUdb::alterUser( const AlterUserRequest& request_,
  * Alters a user.
  * 
  * @param name  Name of the user to be altered. Must be an existing user.
- * @param action  Modification operation to be applied to the user. Values:
- *                'set_password'.
+ * @param action  Modification operation to be applied to the user.
+ *                <ul>
+ *                        <li> gpudb::alter_user_set_password: Sets the
+ *                password of the user. The user must be an internal user.
+ *                </ul>
  * @param value  The value of the modification, depending on @a action.
  * @param options  Optional parameters.
  * 
@@ -2976,8 +3423,11 @@ AlterUserResponse GPUdb::alterUser( const std::string& name,
  * Alters a user.
  * 
  * @param name  Name of the user to be altered. Must be an existing user.
- * @param action  Modification operation to be applied to the user. Values:
- *                'set_password'.
+ * @param action  Modification operation to be applied to the user.
+ *                <ul>
+ *                        <li> gpudb::alter_user_set_password: Sets the
+ *                password of the user. The user must be an internal user.
+ *                </ul>
  * @param value  The value of the modification, depending on @a action.
  * @param options  Optional parameters.
  * @param[out] response_  Response object containing the results of the
@@ -3056,11 +3506,9 @@ ClearTableResponse& GPUdb::clearTable( const ClearTableRequest& request_,
  * the name of the table that was cleared.
  * 
  * @param tableName  Name of the table to be cleared. Must be an existing
- *                   table. Empty string clears all available tables.  Default
- *                   value is an empty string.
+ *                   table. Empty string clears all available tables.
  * @param authorization  No longer used. User can pass an empty string.
- *                       Default value is an empty string.
- * @param options  Optional parameters.  Default value is an empty std::map.
+ * @param options  Optional parameters.
  * 
  * @return Response object containing the result of the operation.
  * 
@@ -3087,11 +3535,9 @@ ClearTableResponse GPUdb::clearTable( const std::string& tableName,
  * the name of the table that was cleared.
  * 
  * @param tableName  Name of the table to be cleared. Must be an existing
- *                   table. Empty string clears all available tables.  Default
- *                   value is an empty string.
+ *                   table. Empty string clears all available tables.
  * @param authorization  No longer used. User can pass an empty string.
- *                       Default value is an empty string.
- * @param options  Optional parameters.  Default value is an empty std::map.
+ * @param options  Optional parameters.
  * @param[out] response_  Response object containing the results of the
  *                        operation.
  * 
@@ -3160,7 +3606,7 @@ ClearTableMonitorResponse& GPUdb::clearTableMonitor( const ClearTableMonitorRequ
  * #createTableMonitor(const std::string&,const std::map<std::string, std::string>&) const}.
  * 
  * @param topicId  The topic ID returned by /create/tablemonitor.
- * @param options  Optional parameters.  Default value is an empty std::map.
+ * @param options  Optional parameters.
  * 
  * @return Response object containing the result of the operation.
  * 
@@ -3183,7 +3629,7 @@ ClearTableMonitorResponse GPUdb::clearTableMonitor( const std::string& topicId,
  * #createTableMonitor(const std::string&,const std::map<std::string, std::string>&,CreateTableMonitorResponse&) const}.
  * 
  * @param topicId  The topic ID returned by /create/tablemonitor.
- * @param options  Optional parameters.  Default value is an empty std::map.
+ * @param options  Optional parameters.
  * @param[out] response_  Response object containing the results of the
  *                        operation.
  * 
@@ -3253,7 +3699,7 @@ ClearTriggerResponse& GPUdb::clearTrigger( const ClearTriggerRequest& request_,
  * failure of the trigger deactivation.
  * 
  * @param triggerId  ID for the trigger to be deactivated.
- * @param options  Optional parameters.  Default value is an empty std::map.
+ * @param options  Optional parameters.
  * 
  * @return Response object containing the result of the operation.
  * 
@@ -3277,7 +3723,7 @@ ClearTriggerResponse GPUdb::clearTrigger( const std::string& triggerId,
  * failure of the trigger deactivation.
  * 
  * @param triggerId  ID for the trigger to be deactivated.
- * @param options  Optional parameters.  Default value is an empty std::map.
+ * @param options  Optional parameters.
  * @param[out] response_  Response object containing the results of the
  *                        operation.
  * 
@@ -3350,46 +3796,80 @@ CreateJoinTableResponse& GPUdb::createJoinTable( const CreateJoinTableRequest& r
  *                       naming restrictions as <a
  *                       href="../../concepts/tables.html"
  *                       target="_top">tables</a>.
- * @param tableNames  The list of table names making up the joined set.
- *                    Corresponds to a SQL statement FROM clause  Default value
- *                    is an empty std::vector.
- * @param columnNames  List of columns to be included in the join table. Can be
- *                     the column_names from the member sets if unique or can
- *                     be prefixed by the table id as <id>.<column_name> where
- *                     <id> is the table name or alias. Can be specified as
- *                     aliased via the syntax '<column_name> as <alias>. Can
- *                     use wild cards as '*' (include all columns), or <id>.*
- *                     (include all columns from table with name or alias <id>)
- *                     Default value is an empty std::vector.
+ * @param tableNames  The list of table names composing the join.  Corresponds
+ *                    to a SQL statement FROM clause
+ * @param columnNames  List of member table columns or column expressions to be
+ *                     included in the join. Columns can be prefixed with
+ *                     'table_id.column_name', where 'table_id' is the table
+ *                     name or alias.  Columns can be aliased via the syntax
+ *                     'column_name as alias'. Wild cards '*' can be used to
+ *                     include all columns across member tables or 'table_id.*'
+ *                     for all of a single table's columns.  Columns and column
+ *                     expressions comprising the join must be uniquely named
+ *                     or aliased--therefore, the '*' wild card cannot be used
+ *                     if column names aren't unique across all tables.
  * @param expressions  An optional list of expressions to combine and filter
- *                     the joined set.  Corresponds to a SQL statement WHERE
+ *                     the joined tables.  Corresponds to a SQL statement WHERE
  *                     clause. For details see: <a
  *                     href="../../concepts/expressions.html"
- *                     target="_top">expressions</a>.  Default value is an
- *                     empty std::vector.
+ *                     target="_top">expressions</a>.
  * @param options  Optional parameters.
  *                 <ul>
- *                         <li> collection_name: Name of a collection which is
- *                 to contain the join table. If the collection provided is
- *                 non-existent, the collection will be automatically created.
- *                 If empty, then the join table will be a top-level table.
- *                         <li> max_query_dimensions: The maximum number of
- *                 tables in a joined table that can be accessed by a query and
- *                 are not equated by a foreign-key to primary-key equality
- *                 predicate
- *                         <li> optimize_lookups: Use the applied filters to
- *                 precalculate the lookup table to get data from the primary
- *                 key sets
- *                         <li> refresh_method: Method by which the join table
- *                 can be refreshed when underlying member tables have changed.
- *                 Values: 'manual', 'on_query', 'on_insert'.
- *                         <li> refresh: Do a manual refresh of the join table
- *                 if it exists - throws an error otherwise Values:
- *                 'no_refresh', 'refresh', 'full_refresh'.
- *                         <li> ttl: Sets the TTL of the table specified in @a
- *                 joinTableName. The value must be the desired TTL in minutes.
+ *                         <li> gpudb::create_join_table_collection_name: Name
+ *                 of a collection which is to contain the join. If the
+ *                 collection provided is non-existent, the collection will be
+ *                 automatically created. If empty, then the join will be at
+ *                 the top level.
+ *                         <li> gpudb::create_join_table_max_query_dimensions:
+ *                 The maximum number of tables in a join that can be accessed
+ *                 by a query and are not equated by a foreign-key to
+ *                 primary-key equality predicate
+ *                         <li> gpudb::create_join_table_optimize_lookups: Use
+ *                 more memory to speed up the joining of tables.
+ *                 <ul>
+ *                         <li> gpudb::create_join_table_true
+ *                         <li> gpudb::create_join_table_false
  *                 </ul>
- *                   Default value is an empty std::map.
+ *                         <li> gpudb::create_join_table_refresh_method: Method
+ *                 by which the join can be refreshed when the data in
+ *                 underlying member tables have changed.
+ *                 <ul>
+ *                         <li> gpudb::create_join_table_manual: refresh only
+ *                 occurs when manually requested by calling this endpoint with
+ *                 refresh option set to @a refresh or @a full_refresh
+ *                         <li> gpudb::create_join_table_on_query:
+ *                 incrementally refresh (refresh just those records added)
+ *                 whenever a new query is issued and new data is inserted into
+ *                 the base table.  A full refresh of all the records occurs
+ *                 when a new query is issued and there have been inserts to
+ *                 any non-base-tables since the last query
+ *                         <li> gpudb::create_join_table_on_insert:
+ *                 incrementally refresh (refresh just those records added)
+ *                 whenever new data is inserted into a base table.  A full
+ *                 refresh of all the records occurs when a new query is issued
+ *                 and there have been inserts to any non-base-tables since the
+ *                 last query
+ *                 </ul>
+ *                         <li> gpudb::create_join_table_refresh: Do a manual
+ *                 refresh of the join if it exists - throws an error otherwise
+ *                 <ul>
+ *                         <li> gpudb::create_join_table_no_refresh: don't
+ *                 refresh
+ *                         <li> gpudb::create_join_table_refresh: incrementally
+ *                 refresh (refresh just those records added) if new data has
+ *                 been inserted into the base table.  A full refresh of all
+ *                 the records occurs if there have been inserts to any
+ *                 non-base-tables since the last refresh
+ *                         <li> gpudb::create_join_table_full_refresh: always
+ *                 refresh even if no new records have been added.  Only
+ *                 refresh method guaranteed to do a full refresh (refresh all
+ *                 the records) if a delete or update has occurred since the
+ *                 last refresh.
+ *                 </ul>
+ *                         <li> gpudb::create_join_table_ttl: Sets the TTL of
+ *                 the table specified in @a joinTableName. The value must be
+ *                 the desired TTL in minutes.
+ *                 </ul>
  * 
  * @return Response object containing the result of the operation.
  * 
@@ -3422,46 +3902,80 @@ CreateJoinTableResponse GPUdb::createJoinTable( const std::string& joinTableName
  *                       naming restrictions as <a
  *                       href="../../concepts/tables.html"
  *                       target="_top">tables</a>.
- * @param tableNames  The list of table names making up the joined set.
- *                    Corresponds to a SQL statement FROM clause  Default value
- *                    is an empty std::vector.
- * @param columnNames  List of columns to be included in the join table. Can be
- *                     the column_names from the member sets if unique or can
- *                     be prefixed by the table id as <id>.<column_name> where
- *                     <id> is the table name or alias. Can be specified as
- *                     aliased via the syntax '<column_name> as <alias>. Can
- *                     use wild cards as '*' (include all columns), or <id>.*
- *                     (include all columns from table with name or alias <id>)
- *                     Default value is an empty std::vector.
+ * @param tableNames  The list of table names composing the join.  Corresponds
+ *                    to a SQL statement FROM clause
+ * @param columnNames  List of member table columns or column expressions to be
+ *                     included in the join. Columns can be prefixed with
+ *                     'table_id.column_name', where 'table_id' is the table
+ *                     name or alias.  Columns can be aliased via the syntax
+ *                     'column_name as alias'. Wild cards '*' can be used to
+ *                     include all columns across member tables or 'table_id.*'
+ *                     for all of a single table's columns.  Columns and column
+ *                     expressions comprising the join must be uniquely named
+ *                     or aliased--therefore, the '*' wild card cannot be used
+ *                     if column names aren't unique across all tables.
  * @param expressions  An optional list of expressions to combine and filter
- *                     the joined set.  Corresponds to a SQL statement WHERE
+ *                     the joined tables.  Corresponds to a SQL statement WHERE
  *                     clause. For details see: <a
  *                     href="../../concepts/expressions.html"
- *                     target="_top">expressions</a>.  Default value is an
- *                     empty std::vector.
+ *                     target="_top">expressions</a>.
  * @param options  Optional parameters.
  *                 <ul>
- *                         <li> collection_name: Name of a collection which is
- *                 to contain the join table. If the collection provided is
- *                 non-existent, the collection will be automatically created.
- *                 If empty, then the join table will be a top-level table.
- *                         <li> max_query_dimensions: The maximum number of
- *                 tables in a joined table that can be accessed by a query and
- *                 are not equated by a foreign-key to primary-key equality
- *                 predicate
- *                         <li> optimize_lookups: Use the applied filters to
- *                 precalculate the lookup table to get data from the primary
- *                 key sets
- *                         <li> refresh_method: Method by which the join table
- *                 can be refreshed when underlying member tables have changed.
- *                 Values: 'manual', 'on_query', 'on_insert'.
- *                         <li> refresh: Do a manual refresh of the join table
- *                 if it exists - throws an error otherwise Values:
- *                 'no_refresh', 'refresh', 'full_refresh'.
- *                         <li> ttl: Sets the TTL of the table specified in @a
- *                 joinTableName. The value must be the desired TTL in minutes.
+ *                         <li> gpudb::create_join_table_collection_name: Name
+ *                 of a collection which is to contain the join. If the
+ *                 collection provided is non-existent, the collection will be
+ *                 automatically created. If empty, then the join will be at
+ *                 the top level.
+ *                         <li> gpudb::create_join_table_max_query_dimensions:
+ *                 The maximum number of tables in a join that can be accessed
+ *                 by a query and are not equated by a foreign-key to
+ *                 primary-key equality predicate
+ *                         <li> gpudb::create_join_table_optimize_lookups: Use
+ *                 more memory to speed up the joining of tables.
+ *                 <ul>
+ *                         <li> gpudb::create_join_table_true
+ *                         <li> gpudb::create_join_table_false
  *                 </ul>
- *                   Default value is an empty std::map.
+ *                         <li> gpudb::create_join_table_refresh_method: Method
+ *                 by which the join can be refreshed when the data in
+ *                 underlying member tables have changed.
+ *                 <ul>
+ *                         <li> gpudb::create_join_table_manual: refresh only
+ *                 occurs when manually requested by calling this endpoint with
+ *                 refresh option set to @a refresh or @a full_refresh
+ *                         <li> gpudb::create_join_table_on_query:
+ *                 incrementally refresh (refresh just those records added)
+ *                 whenever a new query is issued and new data is inserted into
+ *                 the base table.  A full refresh of all the records occurs
+ *                 when a new query is issued and there have been inserts to
+ *                 any non-base-tables since the last query
+ *                         <li> gpudb::create_join_table_on_insert:
+ *                 incrementally refresh (refresh just those records added)
+ *                 whenever new data is inserted into a base table.  A full
+ *                 refresh of all the records occurs when a new query is issued
+ *                 and there have been inserts to any non-base-tables since the
+ *                 last query
+ *                 </ul>
+ *                         <li> gpudb::create_join_table_refresh: Do a manual
+ *                 refresh of the join if it exists - throws an error otherwise
+ *                 <ul>
+ *                         <li> gpudb::create_join_table_no_refresh: don't
+ *                 refresh
+ *                         <li> gpudb::create_join_table_refresh: incrementally
+ *                 refresh (refresh just those records added) if new data has
+ *                 been inserted into the base table.  A full refresh of all
+ *                 the records occurs if there have been inserts to any
+ *                 non-base-tables since the last refresh
+ *                         <li> gpudb::create_join_table_full_refresh: always
+ *                 refresh even if no new records have been added.  Only
+ *                 refresh method guaranteed to do a full refresh (refresh all
+ *                 the records) if a delete or update has occurred since the
+ *                 last refresh.
+ *                 </ul>
+ *                         <li> gpudb::create_join_table_ttl: Sets the TTL of
+ *                 the table specified in @a joinTableName. The value must be
+ *                 the desired TTL in minutes.
+ *                 </ul>
  * @param[out] response_  Response object containing the results of the
  *                        operation.
  * 
@@ -3541,14 +4055,25 @@ CreateProcResponse& GPUdb::createProc( const CreateProcRequest& request_,
  * 
  * @param procName  Name of the proc to be created. Must not be the name of a
  *                  currently existing proc.
- * @param executionMode  The execution mode of the proc. Values: 'distributed',
- *                       'nondistributed'.
- *                         Default value is 'distributed'.
+ * @param executionMode  The execution mode of the proc.
+ *                       <ul>
+ *                               <li> gpudb::create_proc_distributed: Input
+ *                       table data will be divided into data segments that are
+ *                       distributed across all nodes in the cluster, and the
+ *                       proc command will be invoked once per data segment in
+ *                       parallel. Output table data from each invocation will
+ *                       be saved to the same node as the corresponding input
+ *                       data.
+ *                               <li> gpudb::create_proc_nondistributed: The
+ *                       proc command will be invoked only once per execution,
+ *                       and will not have access to any input or output table
+ *                       data.
+ *                       </ul>
  * @param files  A map of the files that make up the proc. The keys of the map
  *               are file names, and the values are the binary contents of the
  *               files. The file names may include subdirectory names (e.g.
  *               'subdir/file') but must not resolve to a directory above the
- *               root for the proc.  Default value is an empty std::map.
+ *               root for the proc.
  * @param command  The command (excluding arguments) that will be invoked when
  *                 the proc is executed. It will be invoked from the directory
  *                 containing the proc @a files and may be any command that can
@@ -3559,12 +4084,10 @@ CreateProcResponse& GPUdb::createProc( const CreateProcRequest& request_,
  *                 node. If the command refers to a file in that directory, it
  *                 must be preceded with './' as per Linux convention. If not
  *                 specified, and exactly one file is provided in @a files,
- *                 that file will be invoked.  Default value is an empty
- *                 string.
+ *                 that file will be invoked.
  * @param args  An array of command-line arguments that will be passed to @a
- *              command when the proc is executed.  Default value is an empty
- *              std::vector.
- * @param options  Optional parameters.  Default value is an empty std::map.
+ *              command when the proc is executed.
+ * @param options  Optional parameters.
  * 
  * @return Response object containing the result of the operation.
  * 
@@ -3598,14 +4121,25 @@ CreateProcResponse GPUdb::createProc( const std::string& procName,
  * 
  * @param procName  Name of the proc to be created. Must not be the name of a
  *                  currently existing proc.
- * @param executionMode  The execution mode of the proc. Values: 'distributed',
- *                       'nondistributed'.
- *                         Default value is 'distributed'.
+ * @param executionMode  The execution mode of the proc.
+ *                       <ul>
+ *                               <li> gpudb::create_proc_distributed: Input
+ *                       table data will be divided into data segments that are
+ *                       distributed across all nodes in the cluster, and the
+ *                       proc command will be invoked once per data segment in
+ *                       parallel. Output table data from each invocation will
+ *                       be saved to the same node as the corresponding input
+ *                       data.
+ *                               <li> gpudb::create_proc_nondistributed: The
+ *                       proc command will be invoked only once per execution,
+ *                       and will not have access to any input or output table
+ *                       data.
+ *                       </ul>
  * @param files  A map of the files that make up the proc. The keys of the map
  *               are file names, and the values are the binary contents of the
  *               files. The file names may include subdirectory names (e.g.
  *               'subdir/file') but must not resolve to a directory above the
- *               root for the proc.  Default value is an empty std::map.
+ *               root for the proc.
  * @param command  The command (excluding arguments) that will be invoked when
  *                 the proc is executed. It will be invoked from the directory
  *                 containing the proc @a files and may be any command that can
@@ -3616,12 +4150,10 @@ CreateProcResponse GPUdb::createProc( const std::string& procName,
  *                 node. If the command refers to a file in that directory, it
  *                 must be preceded with './' as per Linux convention. If not
  *                 specified, and exactly one file is provided in @a files,
- *                 that file will be invoked.  Default value is an empty
- *                 string.
+ *                 that file will be invoked.
  * @param args  An array of command-line arguments that will be passed to @a
- *              command when the proc is executed.  Default value is an empty
- *              std::vector.
- * @param options  Optional parameters.  Default value is an empty std::map.
+ *              command when the proc is executed.
+ * @param options  Optional parameters.
  * @param[out] response_  Response object containing the results of the
  *                        operation.
  * 
@@ -3651,8 +4183,30 @@ CreateProcResponse& GPUdb::createProc( const std::string& procName,
 
 
 /**
- * Creates a new projection of an existing table.  A projection represents a
+ * Creates a new <a href="../../concepts/projections.html"
+ * target="_top">projection</a> of an existing table. A projection represents a
  * subset of the columns (potentially including derived columns) of a table.
+ * <p>
+ * Notes:
+ * <p>
+ * A moving average can be calculated on a given column using the following
+ * syntax in the @a columnNames parameter:
+ * <p>
+ * 'moving_average(column_name,num_points_before,num_points_after) as
+ * new_column_name'
+ * <p>
+ * For each record in the moving_average function's 'column_name' parameter, it
+ * computes the average over the previous 'num_points_before' records and the
+ * subsequent 'num_points_after' records.
+ * <p>
+ * Note that moving average relies on @a order_by, and @a order_by requires
+ * that all the data being ordered resides on the same processing node, so it
+ * won't make sense to use @a order_by without moving average.
+ * <p>
+ * Also, a projection can be created with a different shard key than the source
+ * table.  By specifying @a shard_key, the projection will be sharded according
+ * to the specified columns, regardless of how the source table is sharded.
+ * The source table can even be unsharded or replicated.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -3670,8 +4224,30 @@ CreateProjectionResponse GPUdb::createProjection( const CreateProjectionRequest&
 
 
 /**
- * Creates a new projection of an existing table.  A projection represents a
+ * Creates a new <a href="../../concepts/projections.html"
+ * target="_top">projection</a> of an existing table. A projection represents a
  * subset of the columns (potentially including derived columns) of a table.
+ * <p>
+ * Notes:
+ * <p>
+ * A moving average can be calculated on a given column using the following
+ * syntax in the @a columnNames parameter:
+ * <p>
+ * 'moving_average(column_name,num_points_before,num_points_after) as
+ * new_column_name'
+ * <p>
+ * For each record in the moving_average function's 'column_name' parameter, it
+ * computes the average over the previous 'num_points_before' records and the
+ * subsequent 'num_points_after' records.
+ * <p>
+ * Note that moving average relies on @a order_by, and @a order_by requires
+ * that all the data being ordered resides on the same processing node, so it
+ * won't make sense to use @a order_by without moving average.
+ * <p>
+ * Also, a projection can be created with a different shard key than the source
+ * table.  By specifying @a shard_key, the projection will be sharded according
+ * to the specified columns, regardless of how the source table is sharded.
+ * The source table can even be unsharded or replicated.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -3692,8 +4268,30 @@ CreateProjectionResponse& GPUdb::createProjection( const CreateProjectionRequest
 
 
 /**
- * Creates a new projection of an existing table.  A projection represents a
+ * Creates a new <a href="../../concepts/projections.html"
+ * target="_top">projection</a> of an existing table. A projection represents a
  * subset of the columns (potentially including derived columns) of a table.
+ * <p>
+ * Notes:
+ * <p>
+ * A moving average can be calculated on a given column using the following
+ * syntax in the @a columnNames parameter:
+ * <p>
+ * 'moving_average(column_name,num_points_before,num_points_after) as
+ * new_column_name'
+ * <p>
+ * For each record in the moving_average function's 'column_name' parameter, it
+ * computes the average over the previous 'num_points_before' records and the
+ * subsequent 'num_points_after' records.
+ * <p>
+ * Note that moving average relies on @a order_by, and @a order_by requires
+ * that all the data being ordered resides on the same processing node, so it
+ * won't make sense to use @a order_by without moving average.
+ * <p>
+ * Also, a projection can be created with a different shard key than the source
+ * table.  By specifying @a shard_key, the projection will be sharded according
+ * to the specified columns, regardless of how the source table is sharded.
+ * The source table can even be unsharded or replicated.
  * 
  * @param tableName  Name of the existing table on which the projection is to
  *                   be applied.
@@ -3703,30 +4301,55 @@ CreateProjectionResponse& GPUdb::createProjection( const CreateProjectionRequest
  *                        target="_top">tables</a>.
  * @param columnNames  List of columns from @a tableName to be included in the
  *                     projection. Can include derived columns. Can be
- *                     specified as aliased via the syntax '<column_name> as
- *                     <alias>.
+ *                     specified as aliased via the syntax 'column_name as
+ *                     alias'.
  * @param options  Optional parameters.
  *                 <ul>
- *                         <li> collection_name: Name of a collection to which
- *                 the projection is to be assigned as a child. If the
- *                 collection provided is non-existent, the collection will be
- *                 automatically created.
- *                         <li> expression: An optional filter expression to be
- *                 applied to the source table prior to the projection.
- *                         <li> limit: The number of records to keep.
- *                         <li> order_by: Comma-separated list of the columns
- *                 to be sorted by; e.g. 'timestamp asc, x desc'.  The columns
- *                 specified must be present in @a columnNames.  If any alias
- *                 is given for any column name, the alias must be used, rather
- *                 than the original column name.
- *                         <li> materialize_on_gpu: If 'true' then the columns
- *                 of the projection will be cached on the GPU. Values: 'true',
- *                 'false'.
- *                         <li> ttl: Sets the TTL of the table, view, or
- *                 collection specified in @a tableName. The value must be the
- *                 desired TTL in minutes.
+ *                         <li> gpudb::create_projection_collection_name: Name
+ *                 of a <a href="../../concepts/collections.html"
+ *                 target="_top">collection</a> to which the projection is to
+ *                 be assigned as a child. If the collection provided is
+ *                 non-existent, the collection will be automatically created.
+ *                         <li> gpudb::create_projection_expression: An
+ *                 optional filter <a href="../../concepts/expressions.html"
+ *                 target="_top">expression</a> to be applied to the source
+ *                 table prior to the projection.
+ *                         <li> gpudb::create_projection_limit: The number of
+ *                 records to keep.
+ *                         <li> gpudb::create_projection_order_by:
+ *                 Comma-separated list of the columns to be sorted by; e.g.
+ *                 'timestamp asc, x desc'.  The columns specified must be
+ *                 present in @a columnNames.  If any alias is given for any
+ *                 column name, the alias must be used, rather than the
+ *                 original column name.
+ *                         <li> gpudb::create_projection_materialize_on_gpu: If
+ *                 @a true then the columns of the projection will be cached on
+ *                 the GPU.
+ *                 <ul>
+ *                         <li> gpudb::create_projection_true
+ *                         <li> gpudb::create_projection_false
  *                 </ul>
- *                   Default value is an empty std::map.
+ *                         <li> gpudb::create_projection_ttl: Sets the TTL of
+ *                 the table, view, or collection specified in @a
+ *                 projectionName. The value must be the desired TTL in
+ *                 minutes.
+ *                         <li> gpudb::create_projection_shard_key:
+ *                 Comma-separated list of the columns to be sharded on; e.g.
+ *                 'column1, column2'.  The columns specified must be present
+ *                 in @a columnNames.  If any alias is given for any column
+ *                 name, the alias must be used, rather than the original
+ *                 column name.
+ *                         <li> gpudb::create_projection_persist: If @a true
+ *                 then the projection will be persisted as a regular table (it
+ *                 will not be automatically cleared unless a @a ttl is
+ *                 provided, and the table data can be modified in subsequent
+ *                 operations). If @a false then the projection will be a
+ *                 read-only, memory-only temporary table.
+ *                 <ul>
+ *                         <li> gpudb::create_projection_true
+ *                         <li> gpudb::create_projection_false
+ *                 </ul>
+ *                 </ul>
  * 
  * @return Response object containing the result of the operation.
  * 
@@ -3749,8 +4372,30 @@ CreateProjectionResponse GPUdb::createProjection( const std::string& tableName,
 
 
 /**
- * Creates a new projection of an existing table.  A projection represents a
+ * Creates a new <a href="../../concepts/projections.html"
+ * target="_top">projection</a> of an existing table. A projection represents a
  * subset of the columns (potentially including derived columns) of a table.
+ * <p>
+ * Notes:
+ * <p>
+ * A moving average can be calculated on a given column using the following
+ * syntax in the @a columnNames parameter:
+ * <p>
+ * 'moving_average(column_name,num_points_before,num_points_after) as
+ * new_column_name'
+ * <p>
+ * For each record in the moving_average function's 'column_name' parameter, it
+ * computes the average over the previous 'num_points_before' records and the
+ * subsequent 'num_points_after' records.
+ * <p>
+ * Note that moving average relies on @a order_by, and @a order_by requires
+ * that all the data being ordered resides on the same processing node, so it
+ * won't make sense to use @a order_by without moving average.
+ * <p>
+ * Also, a projection can be created with a different shard key than the source
+ * table.  By specifying @a shard_key, the projection will be sharded according
+ * to the specified columns, regardless of how the source table is sharded.
+ * The source table can even be unsharded or replicated.
  * 
  * @param tableName  Name of the existing table on which the projection is to
  *                   be applied.
@@ -3760,30 +4405,55 @@ CreateProjectionResponse GPUdb::createProjection( const std::string& tableName,
  *                        target="_top">tables</a>.
  * @param columnNames  List of columns from @a tableName to be included in the
  *                     projection. Can include derived columns. Can be
- *                     specified as aliased via the syntax '<column_name> as
- *                     <alias>.
+ *                     specified as aliased via the syntax 'column_name as
+ *                     alias'.
  * @param options  Optional parameters.
  *                 <ul>
- *                         <li> collection_name: Name of a collection to which
- *                 the projection is to be assigned as a child. If the
- *                 collection provided is non-existent, the collection will be
- *                 automatically created.
- *                         <li> expression: An optional filter expression to be
- *                 applied to the source table prior to the projection.
- *                         <li> limit: The number of records to keep.
- *                         <li> order_by: Comma-separated list of the columns
- *                 to be sorted by; e.g. 'timestamp asc, x desc'.  The columns
- *                 specified must be present in @a columnNames.  If any alias
- *                 is given for any column name, the alias must be used, rather
- *                 than the original column name.
- *                         <li> materialize_on_gpu: If 'true' then the columns
- *                 of the projection will be cached on the GPU. Values: 'true',
- *                 'false'.
- *                         <li> ttl: Sets the TTL of the table, view, or
- *                 collection specified in @a tableName. The value must be the
- *                 desired TTL in minutes.
+ *                         <li> gpudb::create_projection_collection_name: Name
+ *                 of a <a href="../../concepts/collections.html"
+ *                 target="_top">collection</a> to which the projection is to
+ *                 be assigned as a child. If the collection provided is
+ *                 non-existent, the collection will be automatically created.
+ *                         <li> gpudb::create_projection_expression: An
+ *                 optional filter <a href="../../concepts/expressions.html"
+ *                 target="_top">expression</a> to be applied to the source
+ *                 table prior to the projection.
+ *                         <li> gpudb::create_projection_limit: The number of
+ *                 records to keep.
+ *                         <li> gpudb::create_projection_order_by:
+ *                 Comma-separated list of the columns to be sorted by; e.g.
+ *                 'timestamp asc, x desc'.  The columns specified must be
+ *                 present in @a columnNames.  If any alias is given for any
+ *                 column name, the alias must be used, rather than the
+ *                 original column name.
+ *                         <li> gpudb::create_projection_materialize_on_gpu: If
+ *                 @a true then the columns of the projection will be cached on
+ *                 the GPU.
+ *                 <ul>
+ *                         <li> gpudb::create_projection_true
+ *                         <li> gpudb::create_projection_false
  *                 </ul>
- *                   Default value is an empty std::map.
+ *                         <li> gpudb::create_projection_ttl: Sets the TTL of
+ *                 the table, view, or collection specified in @a
+ *                 projectionName. The value must be the desired TTL in
+ *                 minutes.
+ *                         <li> gpudb::create_projection_shard_key:
+ *                 Comma-separated list of the columns to be sharded on; e.g.
+ *                 'column1, column2'.  The columns specified must be present
+ *                 in @a columnNames.  If any alias is given for any column
+ *                 name, the alias must be used, rather than the original
+ *                 column name.
+ *                         <li> gpudb::create_projection_persist: If @a true
+ *                 then the projection will be persisted as a regular table (it
+ *                 will not be automatically cleared unless a @a ttl is
+ *                 provided, and the table data can be modified in subsequent
+ *                 operations). If @a false then the projection will be a
+ *                 read-only, memory-only temporary table.
+ *                 <ul>
+ *                         <li> gpudb::create_projection_true
+ *                         <li> gpudb::create_projection_false
+ *                 </ul>
+ *                 </ul>
  * @param[out] response_  Response object containing the results of the
  *                        operation.
  * 
@@ -3905,7 +4575,7 @@ CreateRoleResponse& GPUdb::createRole( const std::string& name,
  * #createType(const CreateTypeRequest&) const}). The table will be created
  * inside a collection if the option @a collection_name is specified. If that
  * collection does not already exist, it will be created.
-
+ * <p>
  * To create a new collection, specify the name of the collection in @a
  * tableName and set the @a is_collection option to @a true; @a typeId will be
  * ignored.
@@ -3932,7 +4602,7 @@ CreateTableResponse GPUdb::createTable( const CreateTableRequest& request_ ) con
  * #createType(const CreateTypeRequest&,CreateTypeResponse&) const}). The
  * table will be created inside a collection if the option @a collection_name
  * is specified. If that collection does not already exist, it will be created.
-
+ * <p>
  * To create a new collection, specify the name of the collection in @a
  * tableName and set the @a is_collection option to @a true; @a typeId will be
  * ignored.
@@ -3963,7 +4633,7 @@ CreateTableResponse& GPUdb::createTable( const CreateTableRequest& request_,
  * The table will be created inside a collection if the option @a
  * collection_name is specified. If that collection does not already exist, it
  * will be created.
-
+ * <p>
  * To create a new collection, specify the name of the collection in @a
  * tableName and set the @a is_collection option to @a true; @a typeId will be
  * ignored.
@@ -3978,37 +4648,66 @@ CreateTableResponse& GPUdb::createTable( const CreateTableRequest& request_,
  *                is_collection is @a true.
  * @param options  Optional parameters.
  *                 <ul>
- *                         <li> no_error_if_exists: If @a true, prevents an
- *                 error from occurring if the table already exists and is of
- *                 the given type.  If a table with the same ID but a different
- *                 type exists, it is still an error. Values: 'true', 'false'.
- *                         <li> collection_name: Name of a collection which is
- *                 to contain the newly created table. If empty, then the newly
- *                 created table will be a top-level table. If the collection
- *                 does not allow duplicate types and it contains a table of
- *                 the same type as the given one, then this table creation
- *                 request will fail.
- *                         <li> is_collection: Indicates whether the new table
- *                 to be created will be a collection. Values: 'true', 'false'.
- *                         <li> disallow_homogeneous_tables: For a collection,
- *                 indicates whether the collection prohibits containment of
- *                 multiple tables of exactly the same data type. Values:
- *                 'true', 'false'.
- *                         <li> is_replicated: For a table, indicates whether
- *                 the table is to be replicated to all the database ranks.
- *                 This may be necessary when the table is to be joined with
- *                 other tables in a query. Values: 'true', 'false'.
- *                         <li> foreign_keys: Semicolon-separated list of
- *                 foreign key constraints, of the format 'source_column
- *                 references target_table(primary_key_column)'.
- *                         <li> foreign_shard_key: Foreign shard key
- *                 description of the format: <fk_foreign_key> references
- *                 <pk_column_name> from <pk_table_name>(<pk_primary_key>)
- *                         <li> ttl: Sets the TTL of the table or collection
- *                 specified in @a tableName. The value must be the desired TTL
- *                 in minutes.
+ *                         <li> gpudb::create_table_no_error_if_exists: If @a
+ *                 true, prevents an error from occurring if the table already
+ *                 exists and is of the given type.  If a table with the same
+ *                 ID but a different type exists, it is still an error.
+ *                 <ul>
+ *                         <li> gpudb::create_table_true
+ *                         <li> gpudb::create_table_false
  *                 </ul>
- *                   Default value is an empty std::map.
+ *                         <li> gpudb::create_table_collection_name: Name of a
+ *                 collection which is to contain the newly created table. If
+ *                 empty, then the newly created table will be a top-level
+ *                 table. If the collection does not allow duplicate types and
+ *                 it contains a table of the same type as the given one, then
+ *                 this table creation request will fail.
+ *                         <li> gpudb::create_table_is_collection: Indicates
+ *                 whether the new table to be created will be a collection.
+ *                 <ul>
+ *                         <li> gpudb::create_table_true
+ *                         <li> gpudb::create_table_false
+ *                 </ul>
+ *                         <li>
+ *                 gpudb::create_table_disallow_homogeneous_tables: For a
+ *                 collection, indicates whether the collection prohibits
+ *                 containment of multiple tables of exactly the same data
+ *                 type.
+ *                 <ul>
+ *                         <li> gpudb::create_table_true
+ *                         <li> gpudb::create_table_false
+ *                 </ul>
+ *                         <li> gpudb::create_table_is_replicated: For a table,
+ *                 indicates whether the table is to be replicated to all the
+ *                 database ranks. This may be necessary when the table is to
+ *                 be joined with other tables in a query.
+ *                 <ul>
+ *                         <li> gpudb::create_table_true
+ *                         <li> gpudb::create_table_false
+ *                 </ul>
+ *                         <li> gpudb::create_table_foreign_keys:
+ *                 Semicolon-separated list of foreign key constraints, of the
+ *                 format 'source_column references
+ *                 target_table(primary_key_column)'.
+ *                         <li> gpudb::create_table_foreign_shard_key: Foreign
+ *                 shard key description of the format: <fk_foreign_key>
+ *                 references <pk_column_name> from
+ *                 <pk_table_name>(<pk_primary_key>)
+ *                         <li> gpudb::create_table_ttl: Sets the TTL of the
+ *                 table or collection specified in @a tableName. The value
+ *                 must be the desired TTL in minutes.
+ *                         <li> gpudb::create_table_is_result_table: For a
+ *                 table, indicates whether the table is a non-persistent,
+ *                 memory-only table that will store the output of a proc
+ *                 executed with /execute/proc. A result table cannot contain
+ *                 store_only, text_search, or string columns (char columns are
+ *                 acceptable), records cannot be inserted into it directly,
+ *                 and it will not be retained if the server is restarted.
+ *                 <ul>
+ *                         <li> gpudb::create_table_true
+ *                         <li> gpudb::create_table_false
+ *                 </ul>
+ *                 </ul>
  * 
  * @return Response object containing the result of the operation.
  * 
@@ -4036,7 +4735,7 @@ CreateTableResponse GPUdb::createTable( const std::string& tableName,
  * The table will be created inside a collection if the option @a
  * collection_name is specified. If that collection does not already exist, it
  * will be created.
-
+ * <p>
  * To create a new collection, specify the name of the collection in @a
  * tableName and set the @a is_collection option to @a true; @a typeId will be
  * ignored.
@@ -4051,37 +4750,66 @@ CreateTableResponse GPUdb::createTable( const std::string& tableName,
  *                is_collection is @a true.
  * @param options  Optional parameters.
  *                 <ul>
- *                         <li> no_error_if_exists: If @a true, prevents an
- *                 error from occurring if the table already exists and is of
- *                 the given type.  If a table with the same ID but a different
- *                 type exists, it is still an error. Values: 'true', 'false'.
- *                         <li> collection_name: Name of a collection which is
- *                 to contain the newly created table. If empty, then the newly
- *                 created table will be a top-level table. If the collection
- *                 does not allow duplicate types and it contains a table of
- *                 the same type as the given one, then this table creation
- *                 request will fail.
- *                         <li> is_collection: Indicates whether the new table
- *                 to be created will be a collection. Values: 'true', 'false'.
- *                         <li> disallow_homogeneous_tables: For a collection,
- *                 indicates whether the collection prohibits containment of
- *                 multiple tables of exactly the same data type. Values:
- *                 'true', 'false'.
- *                         <li> is_replicated: For a table, indicates whether
- *                 the table is to be replicated to all the database ranks.
- *                 This may be necessary when the table is to be joined with
- *                 other tables in a query. Values: 'true', 'false'.
- *                         <li> foreign_keys: Semicolon-separated list of
- *                 foreign key constraints, of the format 'source_column
- *                 references target_table(primary_key_column)'.
- *                         <li> foreign_shard_key: Foreign shard key
- *                 description of the format: <fk_foreign_key> references
- *                 <pk_column_name> from <pk_table_name>(<pk_primary_key>)
- *                         <li> ttl: Sets the TTL of the table or collection
- *                 specified in @a tableName. The value must be the desired TTL
- *                 in minutes.
+ *                         <li> gpudb::create_table_no_error_if_exists: If @a
+ *                 true, prevents an error from occurring if the table already
+ *                 exists and is of the given type.  If a table with the same
+ *                 ID but a different type exists, it is still an error.
+ *                 <ul>
+ *                         <li> gpudb::create_table_true
+ *                         <li> gpudb::create_table_false
  *                 </ul>
- *                   Default value is an empty std::map.
+ *                         <li> gpudb::create_table_collection_name: Name of a
+ *                 collection which is to contain the newly created table. If
+ *                 empty, then the newly created table will be a top-level
+ *                 table. If the collection does not allow duplicate types and
+ *                 it contains a table of the same type as the given one, then
+ *                 this table creation request will fail.
+ *                         <li> gpudb::create_table_is_collection: Indicates
+ *                 whether the new table to be created will be a collection.
+ *                 <ul>
+ *                         <li> gpudb::create_table_true
+ *                         <li> gpudb::create_table_false
+ *                 </ul>
+ *                         <li>
+ *                 gpudb::create_table_disallow_homogeneous_tables: For a
+ *                 collection, indicates whether the collection prohibits
+ *                 containment of multiple tables of exactly the same data
+ *                 type.
+ *                 <ul>
+ *                         <li> gpudb::create_table_true
+ *                         <li> gpudb::create_table_false
+ *                 </ul>
+ *                         <li> gpudb::create_table_is_replicated: For a table,
+ *                 indicates whether the table is to be replicated to all the
+ *                 database ranks. This may be necessary when the table is to
+ *                 be joined with other tables in a query.
+ *                 <ul>
+ *                         <li> gpudb::create_table_true
+ *                         <li> gpudb::create_table_false
+ *                 </ul>
+ *                         <li> gpudb::create_table_foreign_keys:
+ *                 Semicolon-separated list of foreign key constraints, of the
+ *                 format 'source_column references
+ *                 target_table(primary_key_column)'.
+ *                         <li> gpudb::create_table_foreign_shard_key: Foreign
+ *                 shard key description of the format: <fk_foreign_key>
+ *                 references <pk_column_name> from
+ *                 <pk_table_name>(<pk_primary_key>)
+ *                         <li> gpudb::create_table_ttl: Sets the TTL of the
+ *                 table or collection specified in @a tableName. The value
+ *                 must be the desired TTL in minutes.
+ *                         <li> gpudb::create_table_is_result_table: For a
+ *                 table, indicates whether the table is a non-persistent,
+ *                 memory-only table that will store the output of a proc
+ *                 executed with /execute/proc. A result table cannot contain
+ *                 store_only, text_search, or string columns (char columns are
+ *                 acceptable), records cannot be inserted into it directly,
+ *                 and it will not be retained if the server is restarted.
+ *                 <ul>
+ *                         <li> gpudb::create_table_true
+ *                         <li> gpudb::create_table_false
+ *                 </ul>
+ *                 </ul>
  * @param[out] response_  Response object containing the results of the
  *                        operation.
  * 
@@ -4175,7 +4903,7 @@ CreateTableMonitorResponse& GPUdb::createTableMonitor( const CreateTableMonitorR
  * 
  * @param tableName  Name of the table to monitor. Must not refer to a
  *                   collection.
- * @param options  Optional parameters.  Default value is an empty std::map.
+ * @param options  Optional parameters.
  * 
  * @return Response object containing the result of the operation.
  * 
@@ -4207,7 +4935,7 @@ CreateTableMonitorResponse GPUdb::createTableMonitor( const std::string& tableNa
  * 
  * @param tableName  Name of the table to monitor. Must not refer to a
  *                   collection.
- * @param options  Optional parameters.  Default value is an empty std::map.
+ * @param options  Optional parameters.
  * @param[out] response_  Response object containing the results of the
  *                        operation.
  * 
@@ -4332,7 +5060,7 @@ CreateTriggerByAreaResponse& GPUdb::createTriggerByArea( const CreateTriggerByAr
  *                 trigger is activated. This usually translates to the
  *                 y-coordinates of a geospatial region. Must be the same
  *                 length as xvals.
- * @param options  Optional parameters.  Default value is an empty std::map.
+ * @param options  Optional parameters.
  * 
  * @return Response object containing the result of the operation.
  * 
@@ -4395,7 +5123,7 @@ CreateTriggerByAreaResponse GPUdb::createTriggerByArea( const std::string& reque
  *                 trigger is activated. This usually translates to the
  *                 y-coordinates of a geospatial region. Must be the same
  *                 length as xvals.
- * @param options  Optional parameters.  Default value is an empty std::map.
+ * @param options  Optional parameters.
  * @param[out] response_  Response object containing the results of the
  *                        operation.
  * 
@@ -4517,7 +5245,7 @@ CreateTriggerByRangeResponse& GPUdb::createTriggerByRange( const CreateTriggerBy
  *                    activated.
  * @param min  The lower bound (inclusive) for the trigger range.
  * @param max  The upper bound (inclusive) for the trigger range.
- * @param options  Optional parameters.  Default value is an empty std::map.
+ * @param options  Optional parameters.
  * 
  * @return Response object containing the result of the operation.
  * 
@@ -4568,7 +5296,7 @@ CreateTriggerByRangeResponse GPUdb::createTriggerByRange( const std::string& req
  *                    activated.
  * @param min  The lower bound (inclusive) for the trigger range.
  * @param max  The upper bound (inclusive) for the trigger range.
- * @param options  Optional parameters.  Default value is an empty std::map.
+ * @param options  Optional parameters.
  * @param[out] response_  Response object containing the results of the
  *                        operation.
  * 
@@ -4768,8 +5496,131 @@ CreateTypeResponse& GPUdb::createType( const CreateTypeRequest& request_,
  *                    used must be relevant column names for the given table.
  *                    Specifying any property overrides the default properties
  *                    for that column (which is based on the column's data
- *                    type).  Default value is an empty std::map.
- * @param options  Optional parameters.  Default value is an empty std::map.
+ *                    type).
+ *                    <ul>
+ *                            <li> gpudb::create_type_data: Default property
+ *                    for all numeric and string type columns; makes the column
+ *                    available for GPU queries.
+ *                            <li> gpudb::create_type_text_search: Valid only
+ *                    for 'string' columns. Enables full text search for string
+ *                    columns. Can be set independently of *data* and
+ *                    *store_only*.
+ *                            <li> gpudb::create_type_store_only: Persist the
+ *                    column value but do not make it available to queries
+ *                    (e.g. /filter/bybox)-i.e. it is mutually exclusive to the
+ *                    'data' property. Any 'bytes' type column must have a
+ *                    'store_only' property. This property reduces system
+ *                    memory usage.
+ *                            <li> gpudb::create_type_disk_optimized: Works in
+ *                    conjunction with the 'data' property for string columns.
+ *                    This property reduces system disk usage by disabling
+ *                    reverse string lookups. Queries like /filter,
+ *                    /filter/bylist, and /filter/byvalue work as usual but
+ *                    /aggregate/unique, /aggregate/groupby and
+ *                    /get/records/bycolumn are not allowed on columns with
+ *                    this property.
+ *                            <li> gpudb::create_type_timestamp: Valid only for
+ *                    'long' columns. Indicates that this field represents a
+ *                    timestamp and will be provided in milliseconds since the
+ *                    Unix epoch: 00:00:00 Jan 1 1970.  Dates represented by a
+ *                    timestamp must fall between the year 1000 and the year
+ *                    2900.
+ *                            <li> gpudb::create_type_decimal: Valid only for
+ *                    'string' columns.  It represents a SQL type NUMERIC(19,
+ *                    4) data type.  There can be up to 15 digits before the
+ *                    decimal point and up to four digits in the fractional
+ *                    part.  The value can be positive or negative (indicated
+ *                    by a minus sign at the beginning).  This property is
+ *                    mutually exclusive with the 'text_search' property.
+ *                            <li> gpudb::create_type_date: Valid only for
+ *                    'string' columns.  Indicates that this field represents a
+ *                    date and will be provided in the format 'YYYY-MM-DD'.
+ *                    The allowable range is 1000-01-01 through 2900-01-01.
+ *                            <li> gpudb::create_type_time: Valid only for
+ *                    'string' columns.  Indicates that this field represents a
+ *                    time-of-day and will be provided in the format
+ *                    'HH:MM:SS.mmm'.  The allowable range is 00:00:00.000
+ *                    through 23:59:59.999.
+ *                            <li> gpudb::create_type_char1: This property
+ *                    provides optimized memory, disk and query performance for
+ *                    string columns. Strings with this property must be no
+ *                    longer than 1 character. This property cannot be combined
+ *                    with *text_search*
+ *                            <li> gpudb::create_type_char2: This property
+ *                    provides optimized memory, disk and query performance for
+ *                    string columns. Strings with this property must be no
+ *                    longer than 2 characters. This property cannot be
+ *                    combined with *text_search*
+ *                            <li> gpudb::create_type_char4: This property
+ *                    provides optimized memory, disk and query performance for
+ *                    string columns. Strings with this property must be no
+ *                    longer than 4 characters. This property cannot be
+ *                    combined with *text_search*
+ *                            <li> gpudb::create_type_char8: This property
+ *                    provides optimized memory, disk and query performance for
+ *                    string columns. Strings with this property must be no
+ *                    longer than 8 characters. This property cannot be
+ *                    combined with *text_search*
+ *                            <li> gpudb::create_type_char16: This property
+ *                    provides optimized memory, disk and query performance for
+ *                    string columns. Strings with this property must be no
+ *                    longer than 16 characters. This property cannot be
+ *                    combined with *text_search*
+ *                            <li> gpudb::create_type_char32: This property
+ *                    provides optimized memory, disk and query performance for
+ *                    string columns. Strings with this property must be no
+ *                    longer than 32 characters. This property cannot be
+ *                    combined with *text_search*
+ *                            <li> gpudb::create_type_char64: This property
+ *                    provides optimized memory, disk and query performance for
+ *                    string columns. Strings with this property must be no
+ *                    longer than 64 characters. This property cannot be
+ *                    combined with *text_search*
+ *                            <li> gpudb::create_type_char128: This property
+ *                    provides optimized memory, disk and query performance for
+ *                    string columns. Strings with this property must be no
+ *                    longer than 128 characters. This property cannot be
+ *                    combined with *text_search*
+ *                            <li> gpudb::create_type_char256: This property
+ *                    provides optimized memory, disk and query performance for
+ *                    string columns. Strings with this property must be no
+ *                    longer than 256 characters. This property cannot be
+ *                    combined with *text_search*
+ *                            <li> gpudb::create_type_int8: This property
+ *                    provides optimized memory and query performance for int
+ *                    columns. Ints with this property must be between -128 and
+ *                    +127 (inclusive)
+ *                            <li> gpudb::create_type_int16: This property
+ *                    provides optimized memory and query performance for int
+ *                    columns. Ints with this property must be between -32768
+ *                    and +32767 (inclusive)
+ *                            <li> gpudb::create_type_ipv4: This property
+ *                    provides optimized memory, disk and query performance for
+ *                    string columns representing IPv4 addresses (i.e.
+ *                    192.168.1.1). Strings with this property must be of the
+ *                    form: A.B.C.D where A, B, C and D are in the range of
+ *                    0-255.
+ *                            <li> gpudb::create_type_primary_key: This
+ *                    property indicates that this column will be part of (or
+ *                    the entire) primary key.
+ *                            <li> gpudb::create_type_shard_key: This property
+ *                    indicates that this column will be part of (or the
+ *                    entire) shard key.
+ *                            <li> gpudb::create_type_nullable: This property
+ *                    indicates that this column is nullable.  However, setting
+ *                    this property is insufficient for making the column
+ *                    nullable.  The user must declare the type of the column
+ *                    as a union between its regular type and 'null' in the
+ *                    avro schema for the record type in @a typeDefinition.
+ *                    For example, if a column is of type integer and is
+ *                    nullable, then the entry for the column in the avro
+ *                    schema must be: ['int', 'null'].
+ *                    The Java and C++ APIs have built-in convenience for
+ *                    bypassing setting the avro schema by hand.  For those two
+ *                    languages, one can use this property as usual and not
+ *                    have to worry about the avro schema for the record.
+ *                    </ul>
+ * @param options  Optional parameters.
  * 
  * @return Response object containing the result of the operation.
  * 
@@ -4845,8 +5696,131 @@ CreateTypeResponse GPUdb::createType( const std::string& typeDefinition,
  *                    used must be relevant column names for the given table.
  *                    Specifying any property overrides the default properties
  *                    for that column (which is based on the column's data
- *                    type).  Default value is an empty std::map.
- * @param options  Optional parameters.  Default value is an empty std::map.
+ *                    type).
+ *                    <ul>
+ *                            <li> gpudb::create_type_data: Default property
+ *                    for all numeric and string type columns; makes the column
+ *                    available for GPU queries.
+ *                            <li> gpudb::create_type_text_search: Valid only
+ *                    for 'string' columns. Enables full text search for string
+ *                    columns. Can be set independently of *data* and
+ *                    *store_only*.
+ *                            <li> gpudb::create_type_store_only: Persist the
+ *                    column value but do not make it available to queries
+ *                    (e.g. /filter/bybox)-i.e. it is mutually exclusive to the
+ *                    'data' property. Any 'bytes' type column must have a
+ *                    'store_only' property. This property reduces system
+ *                    memory usage.
+ *                            <li> gpudb::create_type_disk_optimized: Works in
+ *                    conjunction with the 'data' property for string columns.
+ *                    This property reduces system disk usage by disabling
+ *                    reverse string lookups. Queries like /filter,
+ *                    /filter/bylist, and /filter/byvalue work as usual but
+ *                    /aggregate/unique, /aggregate/groupby and
+ *                    /get/records/bycolumn are not allowed on columns with
+ *                    this property.
+ *                            <li> gpudb::create_type_timestamp: Valid only for
+ *                    'long' columns. Indicates that this field represents a
+ *                    timestamp and will be provided in milliseconds since the
+ *                    Unix epoch: 00:00:00 Jan 1 1970.  Dates represented by a
+ *                    timestamp must fall between the year 1000 and the year
+ *                    2900.
+ *                            <li> gpudb::create_type_decimal: Valid only for
+ *                    'string' columns.  It represents a SQL type NUMERIC(19,
+ *                    4) data type.  There can be up to 15 digits before the
+ *                    decimal point and up to four digits in the fractional
+ *                    part.  The value can be positive or negative (indicated
+ *                    by a minus sign at the beginning).  This property is
+ *                    mutually exclusive with the 'text_search' property.
+ *                            <li> gpudb::create_type_date: Valid only for
+ *                    'string' columns.  Indicates that this field represents a
+ *                    date and will be provided in the format 'YYYY-MM-DD'.
+ *                    The allowable range is 1000-01-01 through 2900-01-01.
+ *                            <li> gpudb::create_type_time: Valid only for
+ *                    'string' columns.  Indicates that this field represents a
+ *                    time-of-day and will be provided in the format
+ *                    'HH:MM:SS.mmm'.  The allowable range is 00:00:00.000
+ *                    through 23:59:59.999.
+ *                            <li> gpudb::create_type_char1: This property
+ *                    provides optimized memory, disk and query performance for
+ *                    string columns. Strings with this property must be no
+ *                    longer than 1 character. This property cannot be combined
+ *                    with *text_search*
+ *                            <li> gpudb::create_type_char2: This property
+ *                    provides optimized memory, disk and query performance for
+ *                    string columns. Strings with this property must be no
+ *                    longer than 2 characters. This property cannot be
+ *                    combined with *text_search*
+ *                            <li> gpudb::create_type_char4: This property
+ *                    provides optimized memory, disk and query performance for
+ *                    string columns. Strings with this property must be no
+ *                    longer than 4 characters. This property cannot be
+ *                    combined with *text_search*
+ *                            <li> gpudb::create_type_char8: This property
+ *                    provides optimized memory, disk and query performance for
+ *                    string columns. Strings with this property must be no
+ *                    longer than 8 characters. This property cannot be
+ *                    combined with *text_search*
+ *                            <li> gpudb::create_type_char16: This property
+ *                    provides optimized memory, disk and query performance for
+ *                    string columns. Strings with this property must be no
+ *                    longer than 16 characters. This property cannot be
+ *                    combined with *text_search*
+ *                            <li> gpudb::create_type_char32: This property
+ *                    provides optimized memory, disk and query performance for
+ *                    string columns. Strings with this property must be no
+ *                    longer than 32 characters. This property cannot be
+ *                    combined with *text_search*
+ *                            <li> gpudb::create_type_char64: This property
+ *                    provides optimized memory, disk and query performance for
+ *                    string columns. Strings with this property must be no
+ *                    longer than 64 characters. This property cannot be
+ *                    combined with *text_search*
+ *                            <li> gpudb::create_type_char128: This property
+ *                    provides optimized memory, disk and query performance for
+ *                    string columns. Strings with this property must be no
+ *                    longer than 128 characters. This property cannot be
+ *                    combined with *text_search*
+ *                            <li> gpudb::create_type_char256: This property
+ *                    provides optimized memory, disk and query performance for
+ *                    string columns. Strings with this property must be no
+ *                    longer than 256 characters. This property cannot be
+ *                    combined with *text_search*
+ *                            <li> gpudb::create_type_int8: This property
+ *                    provides optimized memory and query performance for int
+ *                    columns. Ints with this property must be between -128 and
+ *                    +127 (inclusive)
+ *                            <li> gpudb::create_type_int16: This property
+ *                    provides optimized memory and query performance for int
+ *                    columns. Ints with this property must be between -32768
+ *                    and +32767 (inclusive)
+ *                            <li> gpudb::create_type_ipv4: This property
+ *                    provides optimized memory, disk and query performance for
+ *                    string columns representing IPv4 addresses (i.e.
+ *                    192.168.1.1). Strings with this property must be of the
+ *                    form: A.B.C.D where A, B, C and D are in the range of
+ *                    0-255.
+ *                            <li> gpudb::create_type_primary_key: This
+ *                    property indicates that this column will be part of (or
+ *                    the entire) primary key.
+ *                            <li> gpudb::create_type_shard_key: This property
+ *                    indicates that this column will be part of (or the
+ *                    entire) shard key.
+ *                            <li> gpudb::create_type_nullable: This property
+ *                    indicates that this column is nullable.  However, setting
+ *                    this property is insufficient for making the column
+ *                    nullable.  The user must declare the type of the column
+ *                    as a union between its regular type and 'null' in the
+ *                    avro schema for the record type in @a typeDefinition.
+ *                    For example, if a column is of type integer and is
+ *                    nullable, then the entry for the column in the avro
+ *                    schema must be: ['int', 'null'].
+ *                    The Java and C++ APIs have built-in convenience for
+ *                    bypassing setting the avro schema by hand.  For those two
+ *                    languages, one can use this property as usual and not
+ *                    have to worry about the avro schema for the record.
+ *                    </ul>
+ * @param options  Optional parameters.
  * @param[out] response_  Response object containing the results of the
  *                        operation.
  * 
@@ -4876,10 +5850,14 @@ CreateTypeResponse& GPUdb::createType( const std::string& typeDefinition,
 
 
 /**
- * Creates a table that is the concatenation of one or more existing tables. It
- * is equivalent to the SQL UNION ALL operator.  Non-charN 'string' and 'bytes'
- * column types cannot be included in a union, neither can columns with the
- * property 'store_only'.
+ * Performs a <a href="../../concepts/unions.html" target="_top">union</a>
+ * (concatenation) of one or more existing tables or views, the results of
+ * which are stored in a new view. It is equivalent to the SQL UNION ALL
+ * operator.  Non-charN 'string' and 'bytes' column types cannot be included in
+ * a union, neither can columns with the property 'store_only'. Though not
+ * explicitly unions, <a href="../../concepts/intersect.html"
+ * target="_top">intersect</a> and <a href="../../concepts/except.html"
+ * target="_top">except</a> are also available from this endpoint.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -4897,10 +5875,14 @@ CreateUnionResponse GPUdb::createUnion( const CreateUnionRequest& request_ ) con
 
 
 /**
- * Creates a table that is the concatenation of one or more existing tables. It
- * is equivalent to the SQL UNION ALL operator.  Non-charN 'string' and 'bytes'
- * column types cannot be included in a union, neither can columns with the
- * property 'store_only'.
+ * Performs a <a href="../../concepts/unions.html" target="_top">union</a>
+ * (concatenation) of one or more existing tables or views, the results of
+ * which are stored in a new view. It is equivalent to the SQL UNION ALL
+ * operator.  Non-charN 'string' and 'bytes' column types cannot be included in
+ * a union, neither can columns with the property 'store_only'. Though not
+ * explicitly unions, <a href="../../concepts/intersect.html"
+ * target="_top">intersect</a> and <a href="../../concepts/except.html"
+ * target="_top">except</a> are also available from this endpoint.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -4921,10 +5903,14 @@ CreateUnionResponse& GPUdb::createUnion( const CreateUnionRequest& request_,
 
 
 /**
- * Creates a table that is the concatenation of one or more existing tables. It
- * is equivalent to the SQL UNION ALL operator.  Non-charN 'string' and 'bytes'
- * column types cannot be included in a union, neither can columns with the
- * property 'store_only'.
+ * Performs a <a href="../../concepts/unions.html" target="_top">union</a>
+ * (concatenation) of one or more existing tables or views, the results of
+ * which are stored in a new view. It is equivalent to the SQL UNION ALL
+ * operator.  Non-charN 'string' and 'bytes' column types cannot be included in
+ * a union, neither can columns with the property 'store_only'. Though not
+ * explicitly unions, <a href="../../concepts/intersect.html"
+ * target="_top">intersect</a> and <a href="../../concepts/except.html"
+ * target="_top">except</a> are also available from this endpoint.
  * 
  * @param tableName  Name of the table to be created. Has the same naming
  *                   restrictions as <a href="../../concepts/tables.html"
@@ -4937,22 +5923,59 @@ CreateUnionResponse& GPUdb::createUnion( const CreateUnionRequest& request_,
  *                           the union.
  * @param options  Optional parameters.
  *                 <ul>
- *                         <li> collection_name: Name of a collection which is
- *                 to contain the union. If the collection provided is
- *                 non-existent, the collection will be automatically created.
- *                 If empty, then the union will be a top-level table.
- *                         <li> materialize_on_gpu: If 'true' then the columns
- *                 of the union will be cached on the GPU. Values: 'true',
- *                 'false'.
- *                         <li> mode: If 'merge_views' then this operation will
- *                 merge (i.e. union) the provided views. All 'table_names'
- *                 must be views from the same underlying base table. Values:
- *                 'union_all', 'union', 'union_distinct', 'except',
- *                 'intersect', 'merge_views'.
- *                         <li> ttl: Sets the TTL of the table specified in @a
- *                 tableName. The value must be the desired TTL in minutes.
+ *                         <li> gpudb::create_union_collection_name: Name of a
+ *                 collection which is to contain the union. If the collection
+ *                 provided is non-existent, the collection will be
+ *                 automatically created. If empty, then the union will be a
+ *                 top-level table.
+ *                         <li> gpudb::create_union_materialize_on_gpu: If
+ *                 'true' then the columns of the union will be cached on the
+ *                 GPU.
+ *                 <ul>
+ *                         <li> gpudb::create_union_true
+ *                         <li> gpudb::create_union_false
  *                 </ul>
- *                   Default value is an empty std::map.
+ *                         <li> gpudb::create_union_mode: If 'merge_views' then
+ *                 this operation will merge (i.e. union) the provided views.
+ *                 All 'table_names' must be views from the same underlying
+ *                 base table.
+ *                 <ul>
+ *                         <li> gpudb::create_union_union_all: Retains all rows
+ *                 from the specified tables.
+ *                         <li> gpudb::create_union_union: Retains all unique
+ *                 rows from the specified tables (synonym for
+ *                 'union_distinct').
+ *                         <li> gpudb::create_union_union_distinct: Retains all
+ *                 unique rows from the specified tables.
+ *                         <li> gpudb::create_union_except: Retains all unique
+ *                 rows from the first table that do not appear in the second
+ *                 table (only works on 2 tables).
+ *                         <li> gpudb::create_union_intersect: Retains all
+ *                 unique rows that appear in both of the specified tables
+ *                 (only works on 2 tables).
+ *                         <li> gpudb::create_union_merge_views: Merge two or
+ *                 more views (or views of views) of the same base data set
+ *                 into a new view. The resulting view would match the results
+ *                 of a SQL OR operation, e.g., if filter 1 creates a view
+ *                 using the expression 'x = 10' and filter 2 creates a view
+ *                 using the expression 'x <= 10', then the merge views
+ *                 operation creates a new view using the expression 'x = 10 OR
+ *                 x <= 10'.
+ *                 </ul>
+ *                         <li> gpudb::create_union_ttl: Sets the TTL of the
+ *                 table specified in @a tableName. The value must be the
+ *                 desired TTL in minutes.
+ *                         <li> gpudb::create_union_persist: If @a true then
+ *                 the union will be persisted as a regular table (it will not
+ *                 be automatically cleared unless a @a ttl is provided, and
+ *                 the table data can be modified in subsequent operations). If
+ *                 @a false then the union will be a read-only, memory-only
+ *                 temporary table.
+ *                 <ul>
+ *                         <li> gpudb::create_union_true
+ *                         <li> gpudb::create_union_false
+ *                 </ul>
+ *                 </ul>
  * 
  * @return Response object containing the result of the operation.
  * 
@@ -4977,10 +6000,14 @@ CreateUnionResponse GPUdb::createUnion( const std::string& tableName,
 
 
 /**
- * Creates a table that is the concatenation of one or more existing tables. It
- * is equivalent to the SQL UNION ALL operator.  Non-charN 'string' and 'bytes'
- * column types cannot be included in a union, neither can columns with the
- * property 'store_only'.
+ * Performs a <a href="../../concepts/unions.html" target="_top">union</a>
+ * (concatenation) of one or more existing tables or views, the results of
+ * which are stored in a new view. It is equivalent to the SQL UNION ALL
+ * operator.  Non-charN 'string' and 'bytes' column types cannot be included in
+ * a union, neither can columns with the property 'store_only'. Though not
+ * explicitly unions, <a href="../../concepts/intersect.html"
+ * target="_top">intersect</a> and <a href="../../concepts/except.html"
+ * target="_top">except</a> are also available from this endpoint.
  * 
  * @param tableName  Name of the table to be created. Has the same naming
  *                   restrictions as <a href="../../concepts/tables.html"
@@ -4993,22 +6020,59 @@ CreateUnionResponse GPUdb::createUnion( const std::string& tableName,
  *                           the union.
  * @param options  Optional parameters.
  *                 <ul>
- *                         <li> collection_name: Name of a collection which is
- *                 to contain the union. If the collection provided is
- *                 non-existent, the collection will be automatically created.
- *                 If empty, then the union will be a top-level table.
- *                         <li> materialize_on_gpu: If 'true' then the columns
- *                 of the union will be cached on the GPU. Values: 'true',
- *                 'false'.
- *                         <li> mode: If 'merge_views' then this operation will
- *                 merge (i.e. union) the provided views. All 'table_names'
- *                 must be views from the same underlying base table. Values:
- *                 'union_all', 'union', 'union_distinct', 'except',
- *                 'intersect', 'merge_views'.
- *                         <li> ttl: Sets the TTL of the table specified in @a
- *                 tableName. The value must be the desired TTL in minutes.
+ *                         <li> gpudb::create_union_collection_name: Name of a
+ *                 collection which is to contain the union. If the collection
+ *                 provided is non-existent, the collection will be
+ *                 automatically created. If empty, then the union will be a
+ *                 top-level table.
+ *                         <li> gpudb::create_union_materialize_on_gpu: If
+ *                 'true' then the columns of the union will be cached on the
+ *                 GPU.
+ *                 <ul>
+ *                         <li> gpudb::create_union_true
+ *                         <li> gpudb::create_union_false
  *                 </ul>
- *                   Default value is an empty std::map.
+ *                         <li> gpudb::create_union_mode: If 'merge_views' then
+ *                 this operation will merge (i.e. union) the provided views.
+ *                 All 'table_names' must be views from the same underlying
+ *                 base table.
+ *                 <ul>
+ *                         <li> gpudb::create_union_union_all: Retains all rows
+ *                 from the specified tables.
+ *                         <li> gpudb::create_union_union: Retains all unique
+ *                 rows from the specified tables (synonym for
+ *                 'union_distinct').
+ *                         <li> gpudb::create_union_union_distinct: Retains all
+ *                 unique rows from the specified tables.
+ *                         <li> gpudb::create_union_except: Retains all unique
+ *                 rows from the first table that do not appear in the second
+ *                 table (only works on 2 tables).
+ *                         <li> gpudb::create_union_intersect: Retains all
+ *                 unique rows that appear in both of the specified tables
+ *                 (only works on 2 tables).
+ *                         <li> gpudb::create_union_merge_views: Merge two or
+ *                 more views (or views of views) of the same base data set
+ *                 into a new view. The resulting view would match the results
+ *                 of a SQL OR operation, e.g., if filter 1 creates a view
+ *                 using the expression 'x = 10' and filter 2 creates a view
+ *                 using the expression 'x <= 10', then the merge views
+ *                 operation creates a new view using the expression 'x = 10 OR
+ *                 x <= 10'.
+ *                 </ul>
+ *                         <li> gpudb::create_union_ttl: Sets the TTL of the
+ *                 table specified in @a tableName. The value must be the
+ *                 desired TTL in minutes.
+ *                         <li> gpudb::create_union_persist: If @a true then
+ *                 the union will be persisted as a regular table (it will not
+ *                 be automatically cleared unless a @a ttl is provided, and
+ *                 the table data can be modified in subsequent operations). If
+ *                 @a false then the union will be a read-only, memory-only
+ *                 temporary table.
+ *                 <ul>
+ *                         <li> gpudb::create_union_true
+ *                         <li> gpudb::create_union_false
+ *                 </ul>
+ *                 </ul>
  * @param[out] response_  Response object containing the results of the
  *                        operation.
  * 
@@ -5275,7 +6339,7 @@ DeleteProcResponse& GPUdb::deleteProc( const DeleteProcRequest& request_,
  * 
  * @param procName  Name of the proc to be deleted. Must be the name of a
  *                  currently existing proc.
- * @param options  Optional parameters.  Default value is an empty std::map.
+ * @param options  Optional parameters.
  * 
  * @return Response object containing the result of the operation.
  * 
@@ -5298,7 +6362,7 @@ DeleteProcResponse GPUdb::deleteProc( const std::string& procName,
  * 
  * @param procName  Name of the proc to be deleted. Must be the name of a
  *                  currently existing proc.
- * @param options  Optional parameters.  Default value is an empty std::map.
+ * @param options  Optional parameters.
  * @param[out] response_  Response object containing the results of the
  *                        operation.
  * 
@@ -5388,14 +6452,14 @@ DeleteRecordsResponse& GPUdb::deleteRecords( const DeleteRecordsRequest& request
  *                     exclusive to specifying @a record_id in the @a options.
  * @param options  Optional parameters.
  *                 <ul>
- *                         <li> global_expression: An optional global
- *                 expression to reduce the search space of the @a expressions.
- *                         <li> record_id: A record id identifying a single
- *                 record, obtained at the time of /insert/records or by
- *                 calling /get/records/fromcollection with the
- *                 *return_record_ids* option.
+ *                         <li> gpudb::delete_records_global_expression: An
+ *                 optional global expression to reduce the search space of the
+ *                 @a expressions.
+ *                         <li> gpudb::delete_records_record_id: A record id
+ *                 identifying a single record, obtained at the time of
+ *                 /insert/records or by calling /get/records/fromcollection
+ *                 with the *return_record_ids* option.
  *                 </ul>
- *                   Default value is an empty std::map.
  * 
  * @return Response object containing the result of the operation.
  * 
@@ -5433,14 +6497,14 @@ DeleteRecordsResponse GPUdb::deleteRecords( const std::string& tableName,
  *                     exclusive to specifying @a record_id in the @a options.
  * @param options  Optional parameters.
  *                 <ul>
- *                         <li> global_expression: An optional global
- *                 expression to reduce the search space of the @a expressions.
- *                         <li> record_id: A record id identifying a single
- *                 record, obtained at the time of /insert/records or by
- *                 calling /get/records/fromcollection with the
- *                 *return_record_ids* option.
+ *                         <li> gpudb::delete_records_global_expression: An
+ *                 optional global expression to reduce the search space of the
+ *                 @a expressions.
+ *                         <li> gpudb::delete_records_record_id: A record id
+ *                 identifying a single record, obtained at the time of
+ *                 /insert/records or by calling /get/records/fromcollection
+ *                 with the *return_record_ids* option.
  *                 </ul>
- *                   Default value is an empty std::map.
  * @param[out] response_  Response object containing the results of the
  *                        operation.
  * 
@@ -5684,53 +6748,53 @@ ExecuteProcResponse& GPUdb::executeProc( const ExecuteProcRequest& request_,
  *                  currently existing proc.
  * @param params  A map containing named parameters to pass to the proc. Each
  *                key/value pair specifies the name of a parameter and its
- *                value.  Default value is an empty std::map.
+ *                value.
  * @param binParams  A map containing named binary parameters to pass to the
  *                   proc. Each key/value pair specifies the name of a
- *                   parameter and its value.  Default value is an empty
- *                   std::map.
+ *                   parameter and its value.
  * @param inputTableNames  Names of the tables containing data to be passed to
  *                         the proc. Each name specified must be the name of a
  *                         currently existing table. If no table names are
  *                         specified, no data will be passed to the proc.
- *                         Default value is an empty std::vector.
  * @param inputColumnNames  Map of table names from @a inputTableNames to lists
  *                          of names of columns from those tables that will be
  *                          passed to the proc. Each column name specified must
  *                          be the name of an existing column in the
  *                          corresponding table. If a table name from @a
  *                          inputTableNames is not included, all columns from
- *                          that table will be passed to the proc.  Default
- *                          value is an empty std::map.
+ *                          that table will be passed to the proc.
  * @param outputTableNames  Names of the tables to which output data from the
  *                          proc will be written. If a specified table does not
  *                          exist, it will automatically be created with the
  *                          same schema as the corresponding table (by order)
  *                          from @a inputTableNames, excluding any primary and
- *                          shard keys. If no table names are specified, no
- *                          output data can be returned from the proc.  Default
- *                          value is an empty std::vector.
+ *                          shard keys. If a specified table is a
+ *                          non-persistent result table, it must not have
+ *                          primary or shard keys. If no table names are
+ *                          specified, no output data can be returned from the
+ *                          proc.
  * @param options  Optional parameters.
  *                 <ul>
- *                         <li> cache_input: A comma-delimited list of table
- *                 names from @a inputTableNames from which input data will be
- *                 cached for use in subsequent calls to /execute/proc with the
- *                 @a use_cached_input option. Cached input data will be
- *                 retained until the proc status is cleared with the
- *                 /show/proc/status option of /show/proc/status and all proc
- *                 instances using the cached data have completed.
- *                         <li> use_cached_input: A comma-delimited list of run
- *                 IDs (as returned from prior calls to /execute/proc) of
- *                 running or completed proc instances from which input data
- *                 cached using the @a cache_input option will be used. Cached
- *                 input data will not be used for any tables specified in @a
- *                 inputTableNames, but data from all other tables cached for
- *                 the specified run IDs will be passed to the proc. If the
- *                 same table was cached for multiple specified run IDs, the
- *                 cached data from the first run ID specified in the list that
- *                 includes that table will be used.
+ *                         <li> gpudb::execute_proc_cache_input: A
+ *                 comma-delimited list of table names from @a inputTableNames
+ *                 from which input data will be cached for use in subsequent
+ *                 calls to /execute/proc with the @a use_cached_input option.
+ *                 Cached input data will be retained until the proc status is
+ *                 cleared with the /show/proc/status option of
+ *                 /show/proc/status and all proc instances using the cached
+ *                 data have completed.
+ *                         <li> gpudb::execute_proc_use_cached_input: A
+ *                 comma-delimited list of run IDs (as returned from prior
+ *                 calls to /execute/proc) of running or completed proc
+ *                 instances from which input data cached using the @a
+ *                 cache_input option will be used. Cached input data will not
+ *                 be used for any tables specified in @a inputTableNames, but
+ *                 data from all other tables cached for the specified run IDs
+ *                 will be passed to the proc. If the same table was cached for
+ *                 multiple specified run IDs, the cached data from the first
+ *                 run ID specified in the list that includes that table will
+ *                 be used.
  *                 </ul>
- *                   Default value is an empty std::map.
  * 
  * @return Response object containing the result of the operation.
  * 
@@ -5766,53 +6830,53 @@ ExecuteProcResponse GPUdb::executeProc( const std::string& procName,
  *                  currently existing proc.
  * @param params  A map containing named parameters to pass to the proc. Each
  *                key/value pair specifies the name of a parameter and its
- *                value.  Default value is an empty std::map.
+ *                value.
  * @param binParams  A map containing named binary parameters to pass to the
  *                   proc. Each key/value pair specifies the name of a
- *                   parameter and its value.  Default value is an empty
- *                   std::map.
+ *                   parameter and its value.
  * @param inputTableNames  Names of the tables containing data to be passed to
  *                         the proc. Each name specified must be the name of a
  *                         currently existing table. If no table names are
  *                         specified, no data will be passed to the proc.
- *                         Default value is an empty std::vector.
  * @param inputColumnNames  Map of table names from @a inputTableNames to lists
  *                          of names of columns from those tables that will be
  *                          passed to the proc. Each column name specified must
  *                          be the name of an existing column in the
  *                          corresponding table. If a table name from @a
  *                          inputTableNames is not included, all columns from
- *                          that table will be passed to the proc.  Default
- *                          value is an empty std::map.
+ *                          that table will be passed to the proc.
  * @param outputTableNames  Names of the tables to which output data from the
  *                          proc will be written. If a specified table does not
  *                          exist, it will automatically be created with the
  *                          same schema as the corresponding table (by order)
  *                          from @a inputTableNames, excluding any primary and
- *                          shard keys. If no table names are specified, no
- *                          output data can be returned from the proc.  Default
- *                          value is an empty std::vector.
+ *                          shard keys. If a specified table is a
+ *                          non-persistent result table, it must not have
+ *                          primary or shard keys. If no table names are
+ *                          specified, no output data can be returned from the
+ *                          proc.
  * @param options  Optional parameters.
  *                 <ul>
- *                         <li> cache_input: A comma-delimited list of table
- *                 names from @a inputTableNames from which input data will be
- *                 cached for use in subsequent calls to /execute/proc with the
- *                 @a use_cached_input option. Cached input data will be
- *                 retained until the proc status is cleared with the
- *                 /show/proc/status option of /show/proc/status and all proc
- *                 instances using the cached data have completed.
- *                         <li> use_cached_input: A comma-delimited list of run
- *                 IDs (as returned from prior calls to /execute/proc) of
- *                 running or completed proc instances from which input data
- *                 cached using the @a cache_input option will be used. Cached
- *                 input data will not be used for any tables specified in @a
- *                 inputTableNames, but data from all other tables cached for
- *                 the specified run IDs will be passed to the proc. If the
- *                 same table was cached for multiple specified run IDs, the
- *                 cached data from the first run ID specified in the list that
- *                 includes that table will be used.
+ *                         <li> gpudb::execute_proc_cache_input: A
+ *                 comma-delimited list of table names from @a inputTableNames
+ *                 from which input data will be cached for use in subsequent
+ *                 calls to /execute/proc with the @a use_cached_input option.
+ *                 Cached input data will be retained until the proc status is
+ *                 cleared with the /show/proc/status option of
+ *                 /show/proc/status and all proc instances using the cached
+ *                 data have completed.
+ *                         <li> gpudb::execute_proc_use_cached_input: A
+ *                 comma-delimited list of run IDs (as returned from prior
+ *                 calls to /execute/proc) of running or completed proc
+ *                 instances from which input data cached using the @a
+ *                 cache_input option will be used. Cached input data will not
+ *                 be used for any tables specified in @a inputTableNames, but
+ *                 data from all other tables cached for the specified run IDs
+ *                 will be passed to the proc. If the same table was cached for
+ *                 multiple specified run IDs, the cached data from the first
+ *                 run ID specified in the list that includes that table will
+ *                 be used.
  *                 </ul>
- *                   Default value is an empty std::map.
  * @param[out] response_  Response object containing the results of the
  *                        operation.
  * 
@@ -5913,22 +6977,22 @@ FilterResponse& GPUdb::filter( const FilterRequest& request_,
  * @param viewName  If provided, then this will be the name of the view
  *                  containing the results. Has the same naming restrictions as
  *                  <a href="../../concepts/tables.html"
- *                  target="_top">tables</a>.  Default value is an empty
- *                  string.
+ *                  target="_top">tables</a>.
  * @param expression  The select expression to filter the specified table.  For
  *                    details see <a href="../../concepts/expressions.html"
  *                    target="_top">concepts</a>.
  * @param options  Optional parameters.
  *                 <ul>
- *                         <li> collection_name: Name of a collection which is
- *                 to contain the newly created view, otherwise the view will
- *                 be a top-level table. If the collection does not allow
- *                 duplicate types and it contains a table of the same type as
- *                 the given one, then this table creation request will fail.
- *                         <li> ttl: Sets the TTL of the view specified in @a
- *                 viewName. The value must be the desired TTL in minutes.
+ *                         <li> gpudb::filter_collection_name: Name of a
+ *                 collection which is to contain the newly created view,
+ *                 otherwise the view will be a top-level table. If the
+ *                 collection does not allow duplicate types and it contains a
+ *                 table of the same type as the given one, then this table
+ *                 creation request will fail.
+ *                         <li> gpudb::filter_ttl: Sets the TTL of the view
+ *                 specified in @a viewName. The value must be the desired TTL
+ *                 in minutes.
  *                 </ul>
- *                   Default value is an empty std::map.
  * 
  * @return Response object containing the result of the operation.
  * 
@@ -5967,22 +7031,22 @@ FilterResponse GPUdb::filter( const std::string& tableName,
  * @param viewName  If provided, then this will be the name of the view
  *                  containing the results. Has the same naming restrictions as
  *                  <a href="../../concepts/tables.html"
- *                  target="_top">tables</a>.  Default value is an empty
- *                  string.
+ *                  target="_top">tables</a>.
  * @param expression  The select expression to filter the specified table.  For
  *                    details see <a href="../../concepts/expressions.html"
  *                    target="_top">concepts</a>.
  * @param options  Optional parameters.
  *                 <ul>
- *                         <li> collection_name: Name of a collection which is
- *                 to contain the newly created view, otherwise the view will
- *                 be a top-level table. If the collection does not allow
- *                 duplicate types and it contains a table of the same type as
- *                 the given one, then this table creation request will fail.
- *                         <li> ttl: Sets the TTL of the view specified in @a
- *                 viewName. The value must be the desired TTL in minutes.
+ *                         <li> gpudb::filter_collection_name: Name of a
+ *                 collection which is to contain the newly created view,
+ *                 otherwise the view will be a top-level table. If the
+ *                 collection does not allow duplicate types and it contains a
+ *                 table of the same type as the given one, then this table
+ *                 creation request will fail.
+ *                         <li> gpudb::filter_ttl: Sets the TTL of the view
+ *                 specified in @a viewName. The value must be the desired TTL
+ *                 in minutes.
  *                 </ul>
- *                   Default value is an empty std::map.
  * @param[out] response_  Response object containing the results of the
  *                        operation.
  * 
@@ -6014,6 +7078,10 @@ FilterResponse& GPUdb::filter( const std::string& tableName,
  * response payload provides the count of the resulting set. A new resultant
  * set (view) which satisfies the input NAI restriction specification is
  * created with the name @a viewName passed in as part of the input.
+ * <p>
+ * Note that if you call this endpoint using a table that has WKT data, the
+ * x_column_name and y_column_name settings are no longer required because the
+ * geospatial filter works automatically.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -6037,6 +7105,10 @@ FilterByAreaResponse GPUdb::filterByArea( const FilterByAreaRequest& request_ ) 
  * response payload provides the count of the resulting set. A new resultant
  * set (view) which satisfies the input NAI restriction specification is
  * created with the name @a viewName passed in as part of the input.
+ * <p>
+ * Note that if you call this endpoint using a table that has WKT data, the
+ * x_column_name and y_column_name settings are no longer required because the
+ * geospatial filter works automatically.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -6063,6 +7135,10 @@ FilterByAreaResponse& GPUdb::filterByArea( const FilterByAreaRequest& request_,
  * response payload provides the count of the resulting set. A new resultant
  * set (view) which satisfies the input NAI restriction specification is
  * created with the name @a viewName passed in as part of the input.
+ * <p>
+ * Note that if you call this endpoint using a table that has WKT data, the
+ * x_column_name and y_column_name settings are no longer required because the
+ * geospatial filter works automatically.
  * 
  * @param tableName  Name of the table to filter.  This may be the name of a
  *                   collection, a table or a view (when chaining queries).
@@ -6071,8 +7147,7 @@ FilterByAreaResponse& GPUdb::filterByArea( const FilterByAreaRequest& request_,
  * @param viewName  If provided, then this will be the name of the view
  *                  containing the results. Has the same naming restrictions as
  *                  <a href="../../concepts/tables.html"
- *                  target="_top">tables</a>.  Default value is an empty
- *                  string.
+ *                  target="_top">tables</a>.
  * @param xColumnName  Name of the column containing the x values to be
  *                     filtered.
  * @param xVector  List of x coordinates of the vertices of the polygon
@@ -6081,7 +7156,7 @@ FilterByAreaResponse& GPUdb::filterByArea( const FilterByAreaRequest& request_,
  *                     filtered.
  * @param yVector  List of y coordinates of the vertices of the polygon
  *                 representing the area to be filtered.
- * @param options  Optional parameters.  Default value is an empty std::map.
+ * @param options  Optional parameters.
  * 
  * @return Response object containing the result of the operation.
  * 
@@ -6116,6 +7191,10 @@ FilterByAreaResponse GPUdb::filterByArea( const std::string& tableName,
  * response payload provides the count of the resulting set. A new resultant
  * set (view) which satisfies the input NAI restriction specification is
  * created with the name @a viewName passed in as part of the input.
+ * <p>
+ * Note that if you call this endpoint using a table that has WKT data, the
+ * x_column_name and y_column_name settings are no longer required because the
+ * geospatial filter works automatically.
  * 
  * @param tableName  Name of the table to filter.  This may be the name of a
  *                   collection, a table or a view (when chaining queries).
@@ -6124,8 +7203,7 @@ FilterByAreaResponse GPUdb::filterByArea( const std::string& tableName,
  * @param viewName  If provided, then this will be the name of the view
  *                  containing the results. Has the same naming restrictions as
  *                  <a href="../../concepts/tables.html"
- *                  target="_top">tables</a>.  Default value is an empty
- *                  string.
+ *                  target="_top">tables</a>.
  * @param xColumnName  Name of the column containing the x values to be
  *                     filtered.
  * @param xVector  List of x coordinates of the vertices of the polygon
@@ -6134,7 +7212,7 @@ FilterByAreaResponse GPUdb::filterByArea( const std::string& tableName,
  *                     filtered.
  * @param yVector  List of y coordinates of the vertices of the polygon
  *                 representing the area to be filtered.
- * @param options  Optional parameters.  Default value is an empty std::map.
+ * @param options  Optional parameters.
  * @param[out] response_  Response object containing the results of the
  *                        operation.
  * 
@@ -6227,8 +7305,7 @@ FilterByBoxResponse& GPUdb::filterByBox( const FilterByBoxRequest& request_,
  * @param viewName  Optional name of the result view that will be created
  *                  containing the results of the query. Has the same naming
  *                  restrictions as <a href="../../concepts/tables.html"
- *                  target="_top">tables</a>.  Default value is an empty
- *                  string.
+ *                  target="_top">tables</a>.
  * @param xColumnName  Name of the column on which to perform the bounding box
  *                     query. If the table's data type is not a shape type,
  *                     must be a valid numeric column.
@@ -6243,7 +7320,7 @@ FilterByBoxResponse& GPUdb::filterByBox( const FilterByBoxRequest& request_,
  *              @a maxY.
  * @param maxY  Upper bound for @a yColumnName. Must be greater than or equal
  *              to @a minY.
- * @param options  Optional parameters.  Default value is an empty std::map.
+ * @param options  Optional parameters.
  * 
  * @return Response object containing the result of the operation.
  * 
@@ -6288,8 +7365,7 @@ FilterByBoxResponse GPUdb::filterByBox( const std::string& tableName,
  * @param viewName  Optional name of the result view that will be created
  *                  containing the results of the query. Has the same naming
  *                  restrictions as <a href="../../concepts/tables.html"
- *                  target="_top">tables</a>.  Default value is an empty
- *                  string.
+ *                  target="_top">tables</a>.
  * @param xColumnName  Name of the column on which to perform the bounding box
  *                     query. If the table's data type is not a shape type,
  *                     must be a valid numeric column.
@@ -6304,7 +7380,7 @@ FilterByBoxResponse GPUdb::filterByBox( const std::string& tableName,
  *              @a maxY.
  * @param maxY  Upper bound for @a yColumnName. Must be greater than or equal
  *              to @a minY.
- * @param options  Optional parameters.  Default value is an empty std::map.
+ * @param options  Optional parameters.
  * @param[out] response_  Response object containing the results of the
  *                        operation.
  * 
@@ -6393,16 +7469,32 @@ FilterByGeometryResponse& GPUdb::filterByGeometry( const FilterByGeometryRequest
  * @param viewName  If provided, then this will be the name of the view
  *                  containing the results. Has the same naming restrictions as
  *                  <a href="../../concepts/tables.html"
- *                  target="_top">tables</a>.  Default value is an empty
- *                  string.
+ *                  target="_top">tables</a>.
  * @param columnName  Name of the column to be used in the filter. Must be
  *                    'WKT'
  * @param inputWkt  A geometry in WKT format that will be used to filter the
- *                  objects in @a tableName.  Default value is an empty string.
- * @param operation  The geometric filtering operation to perform Values:
- *                   'contains', 'crosses', 'disjoint', 'equals', 'intersects',
- *                   'overlaps', 'touches', 'within'.
- * @param options  Optional parameters.  Default value is an empty std::map.
+ *                  objects in @a tableName.
+ * @param operation  The geometric filtering operation to perform
+ *                   <ul>
+ *                           <li> gpudb::filter_by_geometry_contains: Matches
+ *                   records that contain the given WKT in @a inputWkt, i.e.
+ *                   the given WKT is within the bounds of a record's geometry.
+ *                           <li> gpudb::filter_by_geometry_crosses: Matches
+ *                   records that cross the given WKT.
+ *                           <li> gpudb::filter_by_geometry_disjoint: Matches
+ *                   records that are disjoint from the given WKT.
+ *                           <li> gpudb::filter_by_geometry_equals: Matches
+ *                   records that are the same as the given WKT.
+ *                           <li> gpudb::filter_by_geometry_intersects: Matches
+ *                   records that intersect the given WKT.
+ *                           <li> gpudb::filter_by_geometry_overlaps: Matches
+ *                   records that overlap the given WKT.
+ *                           <li> gpudb::filter_by_geometry_touches: Matches
+ *                   records that touch the given WKT.
+ *                           <li> gpudb::filter_by_geometry_within: Matches
+ *                   records that are within the given WKT.
+ *                   </ul>
+ * @param options  Optional parameters.
  * 
  * @return Response object containing the result of the operation.
  * 
@@ -6439,16 +7531,32 @@ FilterByGeometryResponse GPUdb::filterByGeometry( const std::string& tableName,
  * @param viewName  If provided, then this will be the name of the view
  *                  containing the results. Has the same naming restrictions as
  *                  <a href="../../concepts/tables.html"
- *                  target="_top">tables</a>.  Default value is an empty
- *                  string.
+ *                  target="_top">tables</a>.
  * @param columnName  Name of the column to be used in the filter. Must be
  *                    'WKT'
  * @param inputWkt  A geometry in WKT format that will be used to filter the
- *                  objects in @a tableName.  Default value is an empty string.
- * @param operation  The geometric filtering operation to perform Values:
- *                   'contains', 'crosses', 'disjoint', 'equals', 'intersects',
- *                   'overlaps', 'touches', 'within'.
- * @param options  Optional parameters.  Default value is an empty std::map.
+ *                  objects in @a tableName.
+ * @param operation  The geometric filtering operation to perform
+ *                   <ul>
+ *                           <li> gpudb::filter_by_geometry_contains: Matches
+ *                   records that contain the given WKT in @a inputWkt, i.e.
+ *                   the given WKT is within the bounds of a record's geometry.
+ *                           <li> gpudb::filter_by_geometry_crosses: Matches
+ *                   records that cross the given WKT.
+ *                           <li> gpudb::filter_by_geometry_disjoint: Matches
+ *                   records that are disjoint from the given WKT.
+ *                           <li> gpudb::filter_by_geometry_equals: Matches
+ *                   records that are the same as the given WKT.
+ *                           <li> gpudb::filter_by_geometry_intersects: Matches
+ *                   records that intersect the given WKT.
+ *                           <li> gpudb::filter_by_geometry_overlaps: Matches
+ *                   records that overlap the given WKT.
+ *                           <li> gpudb::filter_by_geometry_touches: Matches
+ *                   records that touch the given WKT.
+ *                           <li> gpudb::filter_by_geometry_within: Matches
+ *                   records that are within the given WKT.
+ *                   </ul>
+ * @param options  Optional parameters.
  * @param[out] response_  Response object containing the results of the
  *                        operation.
  * 
@@ -6488,9 +7596,10 @@ FilterByGeometryResponse& GPUdb::filterByGeometry( const std::string& tableName,
  * For example, if a type definition has the columns 'x' and 'y', then a filter
  * by list query with the column map {"x":["10.1", "2.3"], "y":["0.0", "-31.5",
  * "42.0"]} will return the count of all data points whose x and y values match
- * one of the values in the respective x- and y-lists. If the filter_mode
- * option is set to 'not_in_list' then the filter will match all items that are
- * not in the provided list(s).
+ * both in the respective x- and y-lists, e.g., "x = 10.1 and y = 0.0", "x =
+ * 2.3 and y = -31.5", etc. However, a record with "x = 10.1 and y = -31.5" or
+ * "x = 2.3 and y = 0.0" would not be returned because the values in the given
+ * lists do not correspond.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -6518,9 +7627,10 @@ FilterByListResponse GPUdb::filterByList( const FilterByListRequest& request_ ) 
  * For example, if a type definition has the columns 'x' and 'y', then a filter
  * by list query with the column map {"x":["10.1", "2.3"], "y":["0.0", "-31.5",
  * "42.0"]} will return the count of all data points whose x and y values match
- * one of the values in the respective x- and y-lists. If the filter_mode
- * option is set to 'not_in_list' then the filter will match all items that are
- * not in the provided list(s).
+ * both in the respective x- and y-lists, e.g., "x = 10.1 and y = 0.0", "x =
+ * 2.3 and y = -31.5", etc. However, a record with "x = 10.1 and y = -31.5" or
+ * "x = 2.3 and y = 0.0" would not be returned because the values in the given
+ * lists do not correspond.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -6551,9 +7661,10 @@ FilterByListResponse& GPUdb::filterByList( const FilterByListRequest& request_,
  * For example, if a type definition has the columns 'x' and 'y', then a filter
  * by list query with the column map {"x":["10.1", "2.3"], "y":["0.0", "-31.5",
  * "42.0"]} will return the count of all data points whose x and y values match
- * one of the values in the respective x- and y-lists. If the filter_mode
- * option is set to 'not_in_list' then the filter will match all items that are
- * not in the provided list(s).
+ * both in the respective x- and y-lists, e.g., "x = 10.1 and y = 0.0", "x =
+ * 2.3 and y = -31.5", etc. However, a record with "x = 10.1 and y = -31.5" or
+ * "x = 2.3 and y = 0.0" would not be returned because the values in the given
+ * lists do not correspond.
  * 
  * @param tableName  Name of the table to filter.  This may be the ID of a
  *                   collection, table or a result set (for chaining queries).
@@ -6562,17 +7673,21 @@ FilterByListResponse& GPUdb::filterByList( const FilterByListRequest& request_,
  * @param viewName  If provided, then this will be the name of the view
  *                  containing the results. Has the same naming restrictions as
  *                  <a href="../../concepts/tables.html"
- *                  target="_top">tables</a>.  Default value is an empty
- *                  string.
+ *                  target="_top">tables</a>.
  * @param columnValuesMap  List of values for the corresponding column in the
  *                         table
  * @param options  Optional parameters.
  *                 <ul>
- *                         <li> filter_mode: String indicating the filter mode,
- *                 either 'in_list' or 'not_in_list'. Values: 'in_list',
+ *                         <li> gpudb::filter_by_list_filter_mode: String
+ *                 indicating the filter mode, either 'in_list' or
  *                 'not_in_list'.
+ *                 <ul>
+ *                         <li> gpudb::filter_by_list_in_list: The filter will
+ *                 match all items that are in the provided list(s).
+ *                         <li> gpudb::filter_by_list_not_in_list: The filter
+ *                 will match all items that are not in the provided list(s).
  *                 </ul>
- *                   Default value is an empty std::map.
+ *                 </ul>
  * 
  * @return Response object containing the result of the operation.
  * 
@@ -6605,9 +7720,10 @@ FilterByListResponse GPUdb::filterByList( const std::string& tableName,
  * For example, if a type definition has the columns 'x' and 'y', then a filter
  * by list query with the column map {"x":["10.1", "2.3"], "y":["0.0", "-31.5",
  * "42.0"]} will return the count of all data points whose x and y values match
- * one of the values in the respective x- and y-lists. If the filter_mode
- * option is set to 'not_in_list' then the filter will match all items that are
- * not in the provided list(s).
+ * both in the respective x- and y-lists, e.g., "x = 10.1 and y = 0.0", "x =
+ * 2.3 and y = -31.5", etc. However, a record with "x = 10.1 and y = -31.5" or
+ * "x = 2.3 and y = 0.0" would not be returned because the values in the given
+ * lists do not correspond.
  * 
  * @param tableName  Name of the table to filter.  This may be the ID of a
  *                   collection, table or a result set (for chaining queries).
@@ -6616,17 +7732,21 @@ FilterByListResponse GPUdb::filterByList( const std::string& tableName,
  * @param viewName  If provided, then this will be the name of the view
  *                  containing the results. Has the same naming restrictions as
  *                  <a href="../../concepts/tables.html"
- *                  target="_top">tables</a>.  Default value is an empty
- *                  string.
+ *                  target="_top">tables</a>.
  * @param columnValuesMap  List of values for the corresponding column in the
  *                         table
  * @param options  Optional parameters.
  *                 <ul>
- *                         <li> filter_mode: String indicating the filter mode,
- *                 either 'in_list' or 'not_in_list'. Values: 'in_list',
+ *                         <li> gpudb::filter_by_list_filter_mode: String
+ *                 indicating the filter mode, either 'in_list' or
  *                 'not_in_list'.
+ *                 <ul>
+ *                         <li> gpudb::filter_by_list_in_list: The filter will
+ *                 match all items that are in the provided list(s).
+ *                         <li> gpudb::filter_by_list_not_in_list: The filter
+ *                 will match all items that are not in the provided list(s).
  *                 </ul>
- *                   Default value is an empty std::map.
+ *                 </ul>
  * @param[out] response_  Response object containing the results of the
  *                        operation.
  * 
@@ -6734,8 +7854,7 @@ FilterByRadiusResponse& GPUdb::filterByRadius( const FilterByRadiusRequest& requ
  * @param viewName  If provided, then this will be the name of the view
  *                  containing the results. Has the same naming restrictions as
  *                  <a href="../../concepts/tables.html"
- *                  target="_top">tables</a>.  Default value is an empty
- *                  string.
+ *                  target="_top">tables</a>.
  * @param xColumnName  Name of the column to be used for the x-coordinate (the
  *                     longitude) of the center.
  * @param xCenter  Value of the longitude of the center. Must be within
@@ -6751,7 +7870,7 @@ FilterByRadiusResponse& GPUdb::filterByRadius( const FilterByRadiusRequest& requ
  *                meters; so, for example, a value of '42000' means 42 km.  The
  *                minimum allowed value is 0. The maximum allowed value is
  *                MAX_INT.
- * @param options  Optional parameters.  Default value is an empty std::map.
+ * @param options  Optional parameters.
  * 
  * @return Response object containing the result of the operation.
  * 
@@ -6801,8 +7920,7 @@ FilterByRadiusResponse GPUdb::filterByRadius( const std::string& tableName,
  * @param viewName  If provided, then this will be the name of the view
  *                  containing the results. Has the same naming restrictions as
  *                  <a href="../../concepts/tables.html"
- *                  target="_top">tables</a>.  Default value is an empty
- *                  string.
+ *                  target="_top">tables</a>.
  * @param xColumnName  Name of the column to be used for the x-coordinate (the
  *                     longitude) of the center.
  * @param xCenter  Value of the longitude of the center. Must be within
@@ -6818,7 +7936,7 @@ FilterByRadiusResponse GPUdb::filterByRadius( const std::string& tableName,
  *                meters; so, for example, a value of '42000' means 42 km.  The
  *                minimum allowed value is 0. The maximum allowed value is
  *                MAX_INT.
- * @param options  Optional parameters.  Default value is an empty std::map.
+ * @param options  Optional parameters.
  * @param[out] response_  Response object containing the results of the
  *                        operation.
  * 
@@ -6925,12 +8043,11 @@ FilterByRangeResponse& GPUdb::filterByRange( const FilterByRangeRequest& request
  * @param viewName  If provided, then this will be the name of the view
  *                  containing the results. Has the same naming restrictions as
  *                  <a href="../../concepts/tables.html"
- *                  target="_top">tables</a>.  Default value is an empty
- *                  string.
+ *                  target="_top">tables</a>.
  * @param columnName  Name of a column on which the operation would be applied.
  * @param lowerBound  Value of the lower bound (inclusive).
  * @param upperBound  Value of the upper bound (inclusive).
- * @param options  Optional parameters.  Default value is an empty std::map.
+ * @param options  Optional parameters.
  * 
  * @return Response object containing the result of the operation.
  * 
@@ -6973,12 +8090,11 @@ FilterByRangeResponse GPUdb::filterByRange( const std::string& tableName,
  * @param viewName  If provided, then this will be the name of the view
  *                  containing the results. Has the same naming restrictions as
  *                  <a href="../../concepts/tables.html"
- *                  target="_top">tables</a>.  Default value is an empty
- *                  string.
+ *                  target="_top">tables</a>.
  * @param columnName  Name of a column on which the operation would be applied.
  * @param lowerBound  Value of the lower bound (inclusive).
  * @param upperBound  Value of the upper bound (inclusive).
- * @param options  Optional parameters.  Default value is an empty std::map.
+ * @param options  Optional parameters.
  * @param[out] response_  Response object containing the results of the
  *                        operation.
  * 
@@ -7094,8 +8210,7 @@ FilterBySeriesResponse& GPUdb::filterBySeries( const FilterBySeriesRequest& requ
  * @param viewName  If provided, then this will be the name of the view
  *                  containing the results. Has the same naming restrictions as
  *                  <a href="../../concepts/tables.html"
- *                  target="_top">tables</a>.  Default value is an empty
- *                  string.
+ *                  target="_top">tables</a>.
  * @param trackId  The ID of the track which will act as the filtering points.
  *                 Must be an existing track within the given table.
  * @param targetTrackIds  Up to one track ID to intersect with the "filter"
@@ -7103,22 +8218,26 @@ FilterBySeriesResponse& GPUdb::filterBySeries( const FilterBySeriesRequest& requ
  *                        within the given set.
  * @param options  Optional parameters.
  *                 <ul>
- *                         <li> spatial_radius: A positive number passed as a
- *                 string representing the radius of the search area centered
- *                 around each track point's geospatial coordinates. The value
- *                 is interpreted in meters. Required parameter.
- *                         <li> time_radius: A positive number passed as a
- *                 string representing the maximum allowable time difference
- *                 between the timestamps of a filtered object and the given
- *                 track's points. The value is interpreted in seconds.
+ *                         <li> gpudb::filter_by_series_spatial_radius: A
+ *                 positive number passed as a string representing the radius
+ *                 of the search area centered around each track point's
+ *                 geospatial coordinates. The value is interpreted in meters.
  *                 Required parameter.
- *                         <li> spatial_distance_metric: A string representing
- *                 the coordinate system to use for the spatial search
- *                 criteria. Acceptable values are 'euclidean' and
+ *                         <li> gpudb::filter_by_series_time_radius: A positive
+ *                 number passed as a string representing the maximum allowable
+ *                 time difference between the timestamps of a filtered object
+ *                 and the given track's points. The value is interpreted in
+ *                 seconds. Required parameter.
+ *                         <li>
+ *                 gpudb::filter_by_series_spatial_distance_metric: A string
+ *                 representing the coordinate system to use for the spatial
+ *                 search criteria. Acceptable values are 'euclidean' and
  *                 'great_circle'. Optional parameter; default is 'euclidean'.
- *                 Values: 'euclidean', 'great_circle'.
+ *                 <ul>
+ *                         <li> gpudb::filter_by_series_euclidean
+ *                         <li> gpudb::filter_by_series_great_circle
  *                 </ul>
- *                   Default value is an empty std::map.
+ *                 </ul>
  * 
  * @return Response object containing the result of the operation.
  * 
@@ -7164,8 +8283,7 @@ FilterBySeriesResponse GPUdb::filterBySeries( const std::string& tableName,
  * @param viewName  If provided, then this will be the name of the view
  *                  containing the results. Has the same naming restrictions as
  *                  <a href="../../concepts/tables.html"
- *                  target="_top">tables</a>.  Default value is an empty
- *                  string.
+ *                  target="_top">tables</a>.
  * @param trackId  The ID of the track which will act as the filtering points.
  *                 Must be an existing track within the given table.
  * @param targetTrackIds  Up to one track ID to intersect with the "filter"
@@ -7173,22 +8291,26 @@ FilterBySeriesResponse GPUdb::filterBySeries( const std::string& tableName,
  *                        within the given set.
  * @param options  Optional parameters.
  *                 <ul>
- *                         <li> spatial_radius: A positive number passed as a
- *                 string representing the radius of the search area centered
- *                 around each track point's geospatial coordinates. The value
- *                 is interpreted in meters. Required parameter.
- *                         <li> time_radius: A positive number passed as a
- *                 string representing the maximum allowable time difference
- *                 between the timestamps of a filtered object and the given
- *                 track's points. The value is interpreted in seconds.
+ *                         <li> gpudb::filter_by_series_spatial_radius: A
+ *                 positive number passed as a string representing the radius
+ *                 of the search area centered around each track point's
+ *                 geospatial coordinates. The value is interpreted in meters.
  *                 Required parameter.
- *                         <li> spatial_distance_metric: A string representing
- *                 the coordinate system to use for the spatial search
- *                 criteria. Acceptable values are 'euclidean' and
+ *                         <li> gpudb::filter_by_series_time_radius: A positive
+ *                 number passed as a string representing the maximum allowable
+ *                 time difference between the timestamps of a filtered object
+ *                 and the given track's points. The value is interpreted in
+ *                 seconds. Required parameter.
+ *                         <li>
+ *                 gpudb::filter_by_series_spatial_distance_metric: A string
+ *                 representing the coordinate system to use for the spatial
+ *                 search criteria. Acceptable values are 'euclidean' and
  *                 'great_circle'. Optional parameter; default is 'euclidean'.
- *                 Values: 'euclidean', 'great_circle'.
+ *                 <ul>
+ *                         <li> gpudb::filter_by_series_euclidean
+ *                         <li> gpudb::filter_by_series_great_circle
  *                 </ul>
- *                   Default value is an empty std::map.
+ *                 </ul>
  * @param[out] response_  Response object containing the results of the
  *                        operation.
  * 
@@ -7274,20 +8396,42 @@ FilterByStringResponse& GPUdb::filterByString( const FilterByStringRequest& requ
  * @param viewName  If provided, then this will be the name of the view
  *                  containing the results. Has the same naming restrictions as
  *                  <a href="../../concepts/tables.html"
- *                  target="_top">tables</a>.  Default value is an empty
- *                  string.
+ *                  target="_top">tables</a>.
  * @param expression  The expression with which to filter the table.
  * @param mode  The string filtering mode to apply. See below for details.
- *              Values: 'search', 'equals', 'contains', 'starts_with', 'regex'.
+ *              <ul>
+ *                      <li> gpudb::filter_by_string_search: Full text search
+ *              query with wildcards and boolean operators. Note that for this
+ *              mode, no column can be specified in @a columnNames; all string
+ *              columns of the table that have text search enabled will be
+ *              searched.
+ *                      <li> gpudb::filter_by_string_equals: Exact whole-string
+ *              match (accelerated).
+ *                      <li> gpudb::filter_by_string_contains: Partial
+ *              substring match (not accelerated).  If the column is a string
+ *              type (non-charN) and the number of records is too large, it
+ *              will return 0.
+ *                      <li> gpudb::filter_by_string_starts_with: Strings that
+ *              start with the given expression (not accelerated). If the
+ *              column is a string type (non-charN) and the number of records
+ *              is too large, it will return 0.
+ *                      <li> gpudb::filter_by_string_regex: Full regular
+ *              expression search (not accelerated). If the column is a string
+ *              type (non-charN) and the number of records is too large, it
+ *              will return 0.
+ *              </ul>
  * @param columnNames  List of columns on which to apply the filter. Ignored
  *                     for 'search' mode.
  * @param options  Optional parameters.
  *                 <ul>
- *                         <li> case_sensitive: If 'false' then string
- *                 filtering will ignore case. Does not apply to 'search' mode.
- *                 Values: 'true', 'false'.
+ *                         <li> gpudb::filter_by_string_case_sensitive: If
+ *                 'false' then string filtering will ignore case. Does not
+ *                 apply to 'search' mode.
+ *                 <ul>
+ *                         <li> gpudb::filter_by_string_true
+ *                         <li> gpudb::filter_by_string_false
  *                 </ul>
- *                   Default value is an empty std::map.
+ *                 </ul>
  * 
  * @return Response object containing the result of the operation.
  * 
@@ -7325,20 +8469,42 @@ FilterByStringResponse GPUdb::filterByString( const std::string& tableName,
  * @param viewName  If provided, then this will be the name of the view
  *                  containing the results. Has the same naming restrictions as
  *                  <a href="../../concepts/tables.html"
- *                  target="_top">tables</a>.  Default value is an empty
- *                  string.
+ *                  target="_top">tables</a>.
  * @param expression  The expression with which to filter the table.
  * @param mode  The string filtering mode to apply. See below for details.
- *              Values: 'search', 'equals', 'contains', 'starts_with', 'regex'.
+ *              <ul>
+ *                      <li> gpudb::filter_by_string_search: Full text search
+ *              query with wildcards and boolean operators. Note that for this
+ *              mode, no column can be specified in @a columnNames; all string
+ *              columns of the table that have text search enabled will be
+ *              searched.
+ *                      <li> gpudb::filter_by_string_equals: Exact whole-string
+ *              match (accelerated).
+ *                      <li> gpudb::filter_by_string_contains: Partial
+ *              substring match (not accelerated).  If the column is a string
+ *              type (non-charN) and the number of records is too large, it
+ *              will return 0.
+ *                      <li> gpudb::filter_by_string_starts_with: Strings that
+ *              start with the given expression (not accelerated). If the
+ *              column is a string type (non-charN) and the number of records
+ *              is too large, it will return 0.
+ *                      <li> gpudb::filter_by_string_regex: Full regular
+ *              expression search (not accelerated). If the column is a string
+ *              type (non-charN) and the number of records is too large, it
+ *              will return 0.
+ *              </ul>
  * @param columnNames  List of columns on which to apply the filter. Ignored
  *                     for 'search' mode.
  * @param options  Optional parameters.
  *                 <ul>
- *                         <li> case_sensitive: If 'false' then string
- *                 filtering will ignore case. Does not apply to 'search' mode.
- *                 Values: 'true', 'false'.
+ *                         <li> gpudb::filter_by_string_case_sensitive: If
+ *                 'false' then string filtering will ignore case. Does not
+ *                 apply to 'search' mode.
+ *                 <ul>
+ *                         <li> gpudb::filter_by_string_true
+ *                         <li> gpudb::filter_by_string_false
  *                 </ul>
- *                   Default value is an empty std::map.
+ *                 </ul>
  * @param[out] response_  Response object containing the results of the
  *                        operation.
  * 
@@ -7438,8 +8604,7 @@ FilterByTableResponse& GPUdb::filterByTable( const FilterByTableRequest& request
  * @param viewName  If provided, then this will be the name of the view
  *                  containing the results. Has the same naming restrictions as
  *                  <a href="../../concepts/tables.html"
- *                  target="_top">tables</a>.  Default value is an empty
- *                  string.
+ *                  target="_top">tables</a>.
  * @param columnName  Name of the column by whose value the data will be
  *                    filtered from the table designated by @a tableName.
  * @param sourceTableName  Name of the table whose data will be compared
@@ -7451,25 +8616,41 @@ FilterByTableResponse& GPUdb::filterByTable( const FilterByTableRequest& request
  *                               @a columnName.
  * @param options  Optional parameters.
  *                 <ul>
- *                         <li> filter_mode: String indicating the filter mode,
- *                 either @a in_table or @a not_in_table. Values: 'in_table',
- *                 'not_in_table'.
- *                         <li> mode: Mode - should be either @a spatial or @a
- *                 normal. Values: 'normal', 'spatial'.
- *                         <li> buffer: Buffer size, in meters. Only relevant
- *                 for @a spatial mode.
- *                         <li> buffer_method: Method used to buffer polygons.
- *                 Only relevant for @a spatial mode. Values: 'normal', 'geos'.
- *                         <li> max_partition_size: Maximum number of points in
- *                 a partition. Only relevant for @a spatial mode.
- *                         <li> max_partition_score: Maximum number of points *
- *                 edges in a partition. Only relevant for @a spatial mode.
- *                         <li> x_column_name: Name of column containing x
- *                 value of point being filtered in @a spatial mode.
- *                         <li> y_column_name: Name of column containing y
- *                 value of point being filtered in @a spatial mode.
+ *                         <li> gpudb::filter_by_table_filter_mode: String
+ *                 indicating the filter mode, either @a in_table or @a
+ *                 not_in_table.
+ *                 <ul>
+ *                         <li> gpudb::filter_by_table_in_table
+ *                         <li> gpudb::filter_by_table_not_in_table
  *                 </ul>
- *                   Default value is an empty std::map.
+ *                         <li> gpudb::filter_by_table_mode: Mode - should be
+ *                 either @a spatial or @a normal.
+ *                 <ul>
+ *                         <li> gpudb::filter_by_table_normal
+ *                         <li> gpudb::filter_by_table_spatial
+ *                 </ul>
+ *                         <li> gpudb::filter_by_table_buffer: Buffer size, in
+ *                 meters. Only relevant for @a spatial mode.
+ *                         <li> gpudb::filter_by_table_buffer_method: Method
+ *                 used to buffer polygons.  Only relevant for @a spatial mode.
+ *                 <ul>
+ *                         <li> gpudb::filter_by_table_normal
+ *                         <li> gpudb::filter_by_table_geos: Use geos 1 edge
+ *                 per corner algorithm
+ *                 </ul>
+ *                         <li> gpudb::filter_by_table_max_partition_size:
+ *                 Maximum number of points in a partition. Only relevant for
+ *                 @a spatial mode.
+ *                         <li> gpudb::filter_by_table_max_partition_score:
+ *                 Maximum number of points * edges in a partition. Only
+ *                 relevant for @a spatial mode.
+ *                         <li> gpudb::filter_by_table_x_column_name: Name of
+ *                 column containing x value of point being filtered in @a
+ *                 spatial mode.
+ *                         <li> gpudb::filter_by_table_y_column_name: Name of
+ *                 column containing y value of point being filtered in @a
+ *                 spatial mode.
+ *                 </ul>
  * 
  * @return Response object containing the result of the operation.
  * 
@@ -7511,8 +8692,7 @@ FilterByTableResponse GPUdb::filterByTable( const std::string& tableName,
  * @param viewName  If provided, then this will be the name of the view
  *                  containing the results. Has the same naming restrictions as
  *                  <a href="../../concepts/tables.html"
- *                  target="_top">tables</a>.  Default value is an empty
- *                  string.
+ *                  target="_top">tables</a>.
  * @param columnName  Name of the column by whose value the data will be
  *                    filtered from the table designated by @a tableName.
  * @param sourceTableName  Name of the table whose data will be compared
@@ -7524,25 +8704,41 @@ FilterByTableResponse GPUdb::filterByTable( const std::string& tableName,
  *                               @a columnName.
  * @param options  Optional parameters.
  *                 <ul>
- *                         <li> filter_mode: String indicating the filter mode,
- *                 either @a in_table or @a not_in_table. Values: 'in_table',
- *                 'not_in_table'.
- *                         <li> mode: Mode - should be either @a spatial or @a
- *                 normal. Values: 'normal', 'spatial'.
- *                         <li> buffer: Buffer size, in meters. Only relevant
- *                 for @a spatial mode.
- *                         <li> buffer_method: Method used to buffer polygons.
- *                 Only relevant for @a spatial mode. Values: 'normal', 'geos'.
- *                         <li> max_partition_size: Maximum number of points in
- *                 a partition. Only relevant for @a spatial mode.
- *                         <li> max_partition_score: Maximum number of points *
- *                 edges in a partition. Only relevant for @a spatial mode.
- *                         <li> x_column_name: Name of column containing x
- *                 value of point being filtered in @a spatial mode.
- *                         <li> y_column_name: Name of column containing y
- *                 value of point being filtered in @a spatial mode.
+ *                         <li> gpudb::filter_by_table_filter_mode: String
+ *                 indicating the filter mode, either @a in_table or @a
+ *                 not_in_table.
+ *                 <ul>
+ *                         <li> gpudb::filter_by_table_in_table
+ *                         <li> gpudb::filter_by_table_not_in_table
  *                 </ul>
- *                   Default value is an empty std::map.
+ *                         <li> gpudb::filter_by_table_mode: Mode - should be
+ *                 either @a spatial or @a normal.
+ *                 <ul>
+ *                         <li> gpudb::filter_by_table_normal
+ *                         <li> gpudb::filter_by_table_spatial
+ *                 </ul>
+ *                         <li> gpudb::filter_by_table_buffer: Buffer size, in
+ *                 meters. Only relevant for @a spatial mode.
+ *                         <li> gpudb::filter_by_table_buffer_method: Method
+ *                 used to buffer polygons.  Only relevant for @a spatial mode.
+ *                 <ul>
+ *                         <li> gpudb::filter_by_table_normal
+ *                         <li> gpudb::filter_by_table_geos: Use geos 1 edge
+ *                 per corner algorithm
+ *                 </ul>
+ *                         <li> gpudb::filter_by_table_max_partition_size:
+ *                 Maximum number of points in a partition. Only relevant for
+ *                 @a spatial mode.
+ *                         <li> gpudb::filter_by_table_max_partition_score:
+ *                 Maximum number of points * edges in a partition. Only
+ *                 relevant for @a spatial mode.
+ *                         <li> gpudb::filter_by_table_x_column_name: Name of
+ *                 column containing x value of point being filtered in @a
+ *                 spatial mode.
+ *                         <li> gpudb::filter_by_table_y_column_name: Name of
+ *                 column containing y value of point being filtered in @a
+ *                 spatial mode.
+ *                 </ul>
  * @param[out] response_  Response object containing the results of the
  *                        operation.
  * 
@@ -7645,16 +8841,14 @@ FilterByValueResponse& GPUdb::filterByValue( const FilterByValueRequest& request
  * @param viewName  If provided, then this will be the name of the view
  *                  containing the results. Has the same naming restrictions as
  *                  <a href="../../concepts/tables.html"
- *                  target="_top">tables</a>.  Default value is an empty
- *                  string.
+ *                  target="_top">tables</a>.
  * @param isString  Indicates whether the value being searched for is string or
  *                  numeric.
- * @param value  The value to search for.  Default value is 0.
- * @param valueStr  The string value to search for.  Default value is an empty
- *                  string.
+ * @param value  The value to search for.
+ * @param valueStr  The string value to search for.
  * @param columnName  Name of a column on which the filter by value would be
  *                    applied.
- * @param options  Optional parameters.  Default value is an empty std::map.
+ * @param options  Optional parameters.
  * 
  * @return Response object containing the result of the operation.
  * 
@@ -7699,16 +8893,14 @@ FilterByValueResponse GPUdb::filterByValue( const std::string& tableName,
  * @param viewName  If provided, then this will be the name of the view
  *                  containing the results. Has the same naming restrictions as
  *                  <a href="../../concepts/tables.html"
- *                  target="_top">tables</a>.  Default value is an empty
- *                  string.
+ *                  target="_top">tables</a>.
  * @param isString  Indicates whether the value being searched for is string or
  *                  numeric.
- * @param value  The value to search for.  Default value is 0.
- * @param valueStr  The string value to search for.  Default value is an empty
- *                  string.
+ * @param value  The value to search for.
+ * @param valueStr  The string value to search for.
  * @param columnName  Name of a column on which the filter by value would be
  *                    applied.
- * @param options  Optional parameters.  Default value is an empty std::map.
+ * @param options  Optional parameters.
  * @param[out] response_  Response object containing the results of the
  *                        operation.
  * 
@@ -7893,29 +9085,34 @@ GetRecordsResponse<boost::any>& GPUdb::getRecords( const GetRecordsRequest& requ
  *                   Must be a table, view or homogeneous collection.
  * @param offset  A positive integer indicating the number of initial results
  *                to skip (this can be useful for paging through the results).
- *                Default value is 0. The minimum allowed value is 0. The
- *                maximum allowed value is MAX_INT.
+ *                The minimum allowed value is 0. The maximum allowed value is
+ *                MAX_INT.
  * @param limit  A positive integer indicating the maximum number of results to
  *               be returned. Or END_OF_SET (-9999) to indicate that the max
- *               number of results should be returned.  Default value is 10000.
+ *               number of results should be returned.
  * @param options
  *                 <ul>
- *                         <li> expression: Optional filter expression to apply
- *                 to the table.
- *                         <li> fast_index_lookup: Indicates if indexes should
- *                 be used to perform the lookup for a given expression if
- *                 possible. Only applicable if there is no sorting, the
- *                 expression contains only equivalence comparisons based on
- *                 existing tables indexes and the range of requested values is
- *                 from [0 to END_OF_SET]. The default value is true.
- *                         <li> sort_by: Optional column that the data should
- *                 be sorted by. Empty by default (i.e. no sorting is applied).
- *                         <li> sort_order: String indicating how the returned
- *                 values should be sorted - ascending or descending. If
- *                 sort_order is provided, sort_by has to be provided. Values:
- *                 'ascending', 'descending'.
+ *                         <li> gpudb::get_records_expression: Optional filter
+ *                 expression to apply to the table.
+ *                         <li> gpudb::get_records_fast_index_lookup: Indicates
+ *                 if indexes should be used to perform the lookup for a given
+ *                 expression if possible. Only applicable if there is no
+ *                 sorting, the expression contains only equivalence
+ *                 comparisons based on existing tables indexes and the range
+ *                 of requested values is from [0 to END_OF_SET]. The default
+ *                 value is true.
+ *                         <li> gpudb::get_records_sort_by: Optional column
+ *                 that the data should be sorted by. Empty by default (i.e. no
+ *                 sorting is applied).
+ *                         <li> gpudb::get_records_sort_order: String
+ *                 indicating how the returned values should be sorted -
+ *                 ascending or descending. If sort_order is provided, sort_by
+ *                 has to be provided.
+ *                 <ul>
+ *                         <li> gpudb::get_records_ascending
+ *                         <li> gpudb::get_records_descending
  *                 </ul>
- *                   Default value is an empty std::map.
+ *                 </ul>
  * 
  * @return Response object containing the result of the operation.
  * 
@@ -7962,29 +9159,34 @@ GetRecordsResponse<boost::any> GPUdb::getRecords( const std::string& tableName,
  *                   Must be a table, view or homogeneous collection.
  * @param offset  A positive integer indicating the number of initial results
  *                to skip (this can be useful for paging through the results).
- *                Default value is 0. The minimum allowed value is 0. The
- *                maximum allowed value is MAX_INT.
+ *                The minimum allowed value is 0. The maximum allowed value is
+ *                MAX_INT.
  * @param limit  A positive integer indicating the maximum number of results to
  *               be returned. Or END_OF_SET (-9999) to indicate that the max
- *               number of results should be returned.  Default value is 10000.
+ *               number of results should be returned.
  * @param options
  *                 <ul>
- *                         <li> expression: Optional filter expression to apply
- *                 to the table.
- *                         <li> fast_index_lookup: Indicates if indexes should
- *                 be used to perform the lookup for a given expression if
- *                 possible. Only applicable if there is no sorting, the
- *                 expression contains only equivalence comparisons based on
- *                 existing tables indexes and the range of requested values is
- *                 from [0 to END_OF_SET]. The default value is true.
- *                         <li> sort_by: Optional column that the data should
- *                 be sorted by. Empty by default (i.e. no sorting is applied).
- *                         <li> sort_order: String indicating how the returned
- *                 values should be sorted - ascending or descending. If
- *                 sort_order is provided, sort_by has to be provided. Values:
- *                 'ascending', 'descending'.
+ *                         <li> gpudb::get_records_expression: Optional filter
+ *                 expression to apply to the table.
+ *                         <li> gpudb::get_records_fast_index_lookup: Indicates
+ *                 if indexes should be used to perform the lookup for a given
+ *                 expression if possible. Only applicable if there is no
+ *                 sorting, the expression contains only equivalence
+ *                 comparisons based on existing tables indexes and the range
+ *                 of requested values is from [0 to END_OF_SET]. The default
+ *                 value is true.
+ *                         <li> gpudb::get_records_sort_by: Optional column
+ *                 that the data should be sorted by. Empty by default (i.e. no
+ *                 sorting is applied).
+ *                         <li> gpudb::get_records_sort_order: String
+ *                 indicating how the returned values should be sorted -
+ *                 ascending or descending. If sort_order is provided, sort_by
+ *                 has to be provided.
+ *                 <ul>
+ *                         <li> gpudb::get_records_ascending
+ *                         <li> gpudb::get_records_descending
  *                 </ul>
- *                   Default value is an empty std::map.
+ *                 </ul>
  * @param[out] response_  Response object containing the results of the
  *                        operation.
  * 
@@ -8210,21 +9412,26 @@ GetRecordsByColumnResponse& GPUdb::getRecordsByColumn( const GetRecordsByColumnR
  *               results allowed by the server should be returned.
  * @param options
  *                 <ul>
- *                         <li> expression: Optional filter expression to apply
- *                 to the table.
- *                         <li> sort_by: Optional column that the data should
- *                 be sorted by. Empty by default (i.e. no sorting is applied).
- *                         <li> sort_order: String indicating how the returned
- *                 values should be sorted - ascending or descending. Default
- *                 is 'ascending'. If sort_order is provided, sort_by has to be
- *                 provided. Values: 'ascending', 'descending'.
- *                         <li> order_by: Comma-separated list of the columns
- *                 to be sorted by; e.g. 'timestamp asc, x desc'.  The columns
- *                 specified must be present in @a columnNames.  If any alias
- *                 is given for any column name, the alias must be used, rather
- *                 than the original column name.
+ *                         <li> gpudb::get_records_by_column_expression:
+ *                 Optional filter expression to apply to the table.
+ *                         <li> gpudb::get_records_by_column_sort_by: Optional
+ *                 column that the data should be sorted by. Empty by default
+ *                 (i.e. no sorting is applied).
+ *                         <li> gpudb::get_records_by_column_sort_order: String
+ *                 indicating how the returned values should be sorted -
+ *                 ascending or descending. Default is 'ascending'. If
+ *                 sort_order is provided, sort_by has to be provided.
+ *                 <ul>
+ *                         <li> gpudb::get_records_by_column_ascending
+ *                         <li> gpudb::get_records_by_column_descending
  *                 </ul>
- *                   Default value is an empty std::map.
+ *                         <li> gpudb::get_records_by_column_order_by:
+ *                 Comma-separated list of the columns to be sorted by; e.g.
+ *                 'timestamp asc, x desc'.  The columns specified must be
+ *                 present in @a columnNames.  If any alias is given for any
+ *                 column name, the alias must be used, rather than the
+ *                 original column name.
+ *                 </ul>
  * 
  * @return Response object containing the result of the operation.
  * 
@@ -8286,21 +9493,26 @@ GetRecordsByColumnResponse GPUdb::getRecordsByColumn( const std::string& tableNa
  *               results allowed by the server should be returned.
  * @param options
  *                 <ul>
- *                         <li> expression: Optional filter expression to apply
- *                 to the table.
- *                         <li> sort_by: Optional column that the data should
- *                 be sorted by. Empty by default (i.e. no sorting is applied).
- *                         <li> sort_order: String indicating how the returned
- *                 values should be sorted - ascending or descending. Default
- *                 is 'ascending'. If sort_order is provided, sort_by has to be
- *                 provided. Values: 'ascending', 'descending'.
- *                         <li> order_by: Comma-separated list of the columns
- *                 to be sorted by; e.g. 'timestamp asc, x desc'.  The columns
- *                 specified must be present in @a columnNames.  If any alias
- *                 is given for any column name, the alias must be used, rather
- *                 than the original column name.
+ *                         <li> gpudb::get_records_by_column_expression:
+ *                 Optional filter expression to apply to the table.
+ *                         <li> gpudb::get_records_by_column_sort_by: Optional
+ *                 column that the data should be sorted by. Empty by default
+ *                 (i.e. no sorting is applied).
+ *                         <li> gpudb::get_records_by_column_sort_order: String
+ *                 indicating how the returned values should be sorted -
+ *                 ascending or descending. Default is 'ascending'. If
+ *                 sort_order is provided, sort_by has to be provided.
+ *                 <ul>
+ *                         <li> gpudb::get_records_by_column_ascending
+ *                         <li> gpudb::get_records_by_column_descending
  *                 </ul>
- *                   Default value is an empty std::map.
+ *                         <li> gpudb::get_records_by_column_order_by:
+ *                 Comma-separated list of the columns to be sorted by; e.g.
+ *                 'timestamp asc, x desc'.  The columns specified must be
+ *                 present in @a columnNames.  If any alias is given for any
+ *                 column name, the alias must be used, rather than the
+ *                 original column name.
+ *                 </ul>
  * @param[out] response_  Response object containing the results of the
  *                        operation.
  * 
@@ -8509,13 +9721,12 @@ GetRecordsBySeriesResponse<boost::any>& GPUdb::getRecordsBySeries( const GetReco
  *                        blank.
  * @param offset  A positive integer indicating the number of initial
  *                series/tracks to skip (useful for paging through the
- *                results).  Default value is 0. The minimum allowed value is
- *                0. The maximum allowed value is MAX_INT.
+ *                results).  The minimum allowed value is 0. The maximum
+ *                allowed value is MAX_INT.
  * @param limit  A positive integer indicating the maximum number of
  *               series/tracks to be returned. Or END_OF_SET (-9999) to
  *               indicate that the max number of results should be returned.
- *               Default value is 10000.
- * @param options  Optional parameters.  Default value is an empty std::map.
+ * @param options  Optional parameters.
  * 
  * @return Response object containing the result of the operation.
  * 
@@ -8577,13 +9788,12 @@ GetRecordsBySeriesResponse<boost::any> GPUdb::getRecordsBySeries( const std::str
  *                        blank.
  * @param offset  A positive integer indicating the number of initial
  *                series/tracks to skip (useful for paging through the
- *                results).  Default value is 0. The minimum allowed value is
- *                0. The maximum allowed value is MAX_INT.
+ *                results).  The minimum allowed value is 0. The maximum
+ *                allowed value is MAX_INT.
  * @param limit  A positive integer indicating the maximum number of
  *               series/tracks to be returned. Or END_OF_SET (-9999) to
  *               indicate that the max number of results should be returned.
- *               Default value is 10000.
- * @param options  Optional parameters.  Default value is an empty std::map.
+ * @param options  Optional parameters.
  * @param[out] response_  Response object containing the results of the
  *                        operation.
  * 
@@ -8822,18 +10032,22 @@ GetRecordsFromCollectionResponse<boost::any>& GPUdb::getRecordsFromCollection( c
  *                   be retrieved. Must be an existing collection or table.
  * @param offset  A positive integer indicating the number of initial results
  *                to skip (this can be useful for paging through the results).
- *                Default value is 0. The minimum allowed value is 0. The
- *                maximum allowed value is MAX_INT.
+ *                The minimum allowed value is 0. The maximum allowed value is
+ *                MAX_INT.
  * @param limit  A positive integer indicating the maximum number of results to
  *               be returned, or END_OF_SET (-9999) to indicate that the max
- *               number of results should be returned.  Default value is 10000.
+ *               number of results should be returned.
  * @param options
  *                 <ul>
- *                         <li> return_record_ids: If 'true' then return the
- *                 internal record ID along with each returned record. Default
- *                 is 'false'. Values: 'true', 'false'.
+ *                         <li>
+ *                 gpudb::get_records_from_collection_return_record_ids: If
+ *                 'true' then return the internal record ID along with each
+ *                 returned record. Default is 'false'.
+ *                 <ul>
+ *                         <li> gpudb::get_records_from_collection_true
+ *                         <li> gpudb::get_records_from_collection_false
  *                 </ul>
- *                   Default value is an empty std::map.
+ *                 </ul>
  * 
  * @return Response object containing the result of the operation.
  * 
@@ -8904,18 +10118,22 @@ GetRecordsFromCollectionResponse<boost::any> GPUdb::getRecordsFromCollection( co
  *                   be retrieved. Must be an existing collection or table.
  * @param offset  A positive integer indicating the number of initial results
  *                to skip (this can be useful for paging through the results).
- *                Default value is 0. The minimum allowed value is 0. The
- *                maximum allowed value is MAX_INT.
+ *                The minimum allowed value is 0. The maximum allowed value is
+ *                MAX_INT.
  * @param limit  A positive integer indicating the maximum number of results to
  *               be returned, or END_OF_SET (-9999) to indicate that the max
- *               number of results should be returned.  Default value is 10000.
+ *               number of results should be returned.
  * @param options
  *                 <ul>
- *                         <li> return_record_ids: If 'true' then return the
- *                 internal record ID along with each returned record. Default
- *                 is 'false'. Values: 'true', 'false'.
+ *                         <li>
+ *                 gpudb::get_records_from_collection_return_record_ids: If
+ *                 'true' then return the internal record ID along with each
+ *                 returned record. Default is 'false'.
+ *                 <ul>
+ *                         <li> gpudb::get_records_from_collection_true
+ *                         <li> gpudb::get_records_from_collection_false
  *                 </ul>
- *                   Default value is an empty std::map.
+ *                 </ul>
  * @param[out] response_  Response object containing the results of the
  *                        operation.
  * 
@@ -9018,8 +10236,15 @@ GrantPermissionSystemResponse& GPUdb::grantPermissionSystem( const GrantPermissi
  * 
  * @param name  Name of the user or role to which the permission will be
  *              granted. Must be an existing user or role.
- * @param permission  Permission to grant to the user or role. Values:
- *                    'system_admin', 'system_write', 'system_read'.
+ * @param permission  Permission to grant to the user or role.
+ *                    <ul>
+ *                            <li> gpudb::grant_permission_system_system_admin:
+ *                    Full access to all data and system functions.
+ *                            <li> gpudb::grant_permission_system_system_write:
+ *                    Read and write access to all tables.
+ *                            <li> gpudb::grant_permission_system_system_read:
+ *                    Read-only access to all tables.
+ *                    </ul>
  * @param options  Optional parameters.
  * 
  * @return Response object containing the result of the operation.
@@ -9045,8 +10270,15 @@ GrantPermissionSystemResponse GPUdb::grantPermissionSystem( const std::string& n
  * 
  * @param name  Name of the user or role to which the permission will be
  *              granted. Must be an existing user or role.
- * @param permission  Permission to grant to the user or role. Values:
- *                    'system_admin', 'system_write', 'system_read'.
+ * @param permission  Permission to grant to the user or role.
+ *                    <ul>
+ *                            <li> gpudb::grant_permission_system_system_admin:
+ *                    Full access to all data and system functions.
+ *                            <li> gpudb::grant_permission_system_system_write:
+ *                    Read and write access to all tables.
+ *                            <li> gpudb::grant_permission_system_system_read:
+ *                    Read-only access to all tables.
+ *                    </ul>
  * @param options  Optional parameters.
  * @param[out] response_  Response object containing the results of the
  *                        operation.
@@ -9114,15 +10346,24 @@ GrantPermissionTableResponse& GPUdb::grantPermissionTable( const GrantPermission
  * 
  * @param name  Name of the user or role to which the permission will be
  *              granted. Must be an existing user or role.
- * @param permission  Permission to grant to the user or role. Values:
- *                    'table_admin', 'table_insert', 'table_update',
- *                    'table_delete', 'table_read'.
+ * @param permission  Permission to grant to the user or role.
+ *                    <ul>
+ *                            <li> gpudb::grant_permission_table_table_admin:
+ *                    Full read/write and administrative access to the table.
+ *                            <li> gpudb::grant_permission_table_table_insert:
+ *                    Insert access to the table.
+ *                            <li> gpudb::grant_permission_table_table_update:
+ *                    Update access to the table.
+ *                            <li> gpudb::grant_permission_table_table_delete:
+ *                    Delete access to the table.
+ *                            <li> gpudb::grant_permission_table_table_read:
+ *                    Read access to the table.
+ *                    </ul>
  * @param tableName  Name of the table to which the permission grants access.
  *                   Must be an existing table, collection, or view. If a
  *                   collection, the permission also applies to tables and
  *                   views in the collection.
- * @param filterExpression  Reserved for future use.  Default value is an empty
- *                          string.
+ * @param filterExpression  Reserved for future use.
  * @param options  Optional parameters.
  * 
  * @return Response object containing the result of the operation.
@@ -9152,15 +10393,24 @@ GrantPermissionTableResponse GPUdb::grantPermissionTable( const std::string& nam
  * 
  * @param name  Name of the user or role to which the permission will be
  *              granted. Must be an existing user or role.
- * @param permission  Permission to grant to the user or role. Values:
- *                    'table_admin', 'table_insert', 'table_update',
- *                    'table_delete', 'table_read'.
+ * @param permission  Permission to grant to the user or role.
+ *                    <ul>
+ *                            <li> gpudb::grant_permission_table_table_admin:
+ *                    Full read/write and administrative access to the table.
+ *                            <li> gpudb::grant_permission_table_table_insert:
+ *                    Insert access to the table.
+ *                            <li> gpudb::grant_permission_table_table_update:
+ *                    Update access to the table.
+ *                            <li> gpudb::grant_permission_table_table_delete:
+ *                    Delete access to the table.
+ *                            <li> gpudb::grant_permission_table_table_read:
+ *                    Read access to the table.
+ *                    </ul>
  * @param tableName  Name of the table to which the permission grants access.
  *                   Must be an existing table, collection, or view. If a
  *                   collection, the permission also applies to tables and
  *                   views in the collection.
- * @param filterExpression  Reserved for future use.  Default value is an empty
- *                          string.
+ * @param filterExpression  Reserved for future use.
  * @param options  Optional parameters.
  * @param[out] response_  Response object containing the results of the
  *                        operation.
@@ -9327,7 +10577,7 @@ HasProcResponse& GPUdb::hasProc( const HasProcRequest& request_,
  * Checks the existence of a proc with the given name.
  * 
  * @param procName  Name of the proc to check for existence.
- * @param options  Optional parameters.  Default value is an empty std::map.
+ * @param options  Optional parameters.
  * 
  * @return Response object containing the result of the operation.
  * 
@@ -9349,7 +10599,7 @@ HasProcResponse GPUdb::hasProc( const std::string& procName,
  * Checks the existence of a proc with the given name.
  * 
  * @param procName  Name of the proc to check for existence.
- * @param options  Optional parameters.  Default value is an empty std::map.
+ * @param options  Optional parameters.
  * @param[out] response_  Response object containing the results of the
  *                        operation.
  * 
@@ -9413,7 +10663,7 @@ HasTableResponse& GPUdb::hasTable( const HasTableRequest& request_,
  * Checks for the existence of a table with the given name.
  * 
  * @param tableName  Name of the table to check for existence.
- * @param options  Optional parameters.  Default value is an empty std::map.
+ * @param options  Optional parameters.
  * 
  * @return Response object containing the result of the operation.
  * 
@@ -9435,7 +10685,7 @@ HasTableResponse GPUdb::hasTable( const std::string& tableName,
  * Checks for the existence of a table with the given name.
  * 
  * @param tableName  Name of the table to check for existence.
- * @param options  Optional parameters.  Default value is an empty std::map.
+ * @param options  Optional parameters.
  * @param[out] response_  Response object containing the results of the
  *                        operation.
  * 
@@ -9499,7 +10749,7 @@ HasTypeResponse& GPUdb::hasType( const HasTypeRequest& request_,
  * Check for the existence of a type.
  * 
  * @param typeId  Id of the type returned in response to /create/type request.
- * @param options  Optional parameters.  Default value is an empty std::map.
+ * @param options  Optional parameters.
  * 
  * @return Response object containing the result of the operation.
  * 
@@ -9521,7 +10771,7 @@ HasTypeResponse GPUdb::hasType( const std::string& typeId,
  * Check for the existence of a type.
  * 
  * @param typeId  Id of the type returned in response to /create/type request.
- * @param options  Optional parameters.  Default value is an empty std::map.
+ * @param options  Optional parameters.
  * @param[out] response_  Response object containing the results of the
  *                        operation.
  * 
@@ -9550,18 +10800,11 @@ HasTypeResponse& GPUdb::hasType( const std::string& typeId,
  * unique identifier of each added record.
  * <p>
  * The @a options parameter can be used to customize this function's behavior.
- * The @a update_on_existing_pk option specifies the primary-key collision
- * policy.  If the table has a {@link
- * #createType(const CreateTypeRequest&) const primary key} and if @a
- * update_on_existing_pk is @a true, then if any of the records being added
- * have the same primary key as existing records, the existing records are
- * replaced (i.e. updated) with the given records.  If @a update_on_existing_pk
- * is @a false and if the records being added have the same primary key as
- * existing records, they are ignored (the existing records are left
- * unchanged).  It is quite possible that in this case some of the given
- * records will be inserted and some (those having existing primary keys) will
- * be ignored (or updated).  If the specified table does not have a primary key
- * column, then the @a update_on_existing_pk option is ignored.
+ * <p>
+ * The @a update_on_existing_pk option specifies the record collision policy
+ * for inserting into a table with a <a
+ * href="../../concepts/tables.html#primary-keys" target="_top">primary
+ * key</a>, but is ignored if no primary key exists.
  * <p>
  * The @a return_record_ids option indicates that the database should return
  * the unique identifiers of inserted records.
@@ -9592,18 +10835,11 @@ InsertRecordsResponse GPUdb::insertRecordsRaw( const RawInsertRecordsRequest& re
  * unique identifier of each added record.
  * <p>
  * The @a options parameter can be used to customize this function's behavior.
- * The @a update_on_existing_pk option specifies the primary-key collision
- * policy.  If the table has a {@link
- * #createType(const CreateTypeRequest&,CreateTypeResponse&) const primary
- * key} and if @a update_on_existing_pk is @a true, then if any of the records
- * being added have the same primary key as existing records, the existing
- * records are replaced (i.e. updated) with the given records.  If @a
- * update_on_existing_pk is @a false and if the records being added have the
- * same primary key as existing records, they are ignored (the existing records
- * are left unchanged).  It is quite possible that in this case some of the
- * given records will be inserted and some (those having existing primary keys)
- * will be ignored (or updated).  If the specified table does not have a
- * primary key column, then the @a update_on_existing_pk option is ignored.
+ * <p>
+ * The @a update_on_existing_pk option specifies the record collision policy
+ * for inserting into a table with a <a
+ * href="../../concepts/tables.html#primary-keys" target="_top">primary
+ * key</a>, but is ignored if no primary key exists.
  * <p>
  * The @a return_record_ids option indicates that the database should return
  * the unique identifiers of inserted records.
@@ -9712,30 +10948,32 @@ InsertRecordsRandomResponse& GPUdb::insertRecordsRandom( const InsertRecordsRand
  *                 of the column.  Below follows a more detailed description of
  *                 the map:
  *                 <ul>
- *                         <li> seed: If provided, the internal random number
- *                 generator will be initialized with the given value.  The
- *                 minimum is 0.  This allows for the same set of random
- *                 numbers to be generated across invocation of this endpoint
- *                 in case the user wants to repeat the test.  Since @a
- *                 options, is a map of maps, we need an internal map to
- *                 provide the seed value.  For example, to pass 100 as the
- *                 seed value through this parameter, you need something
- *                 equivalent to: 'options' = {'seed': { 'value': 100 } }
+ *                         <li> gpudb::insert_records_random_seed: If provided,
+ *                 the internal random number generator will be initialized
+ *                 with the given value.  The minimum is 0.  This allows for
+ *                 the same set of random numbers to be generated across
+ *                 invocation of this endpoint in case the user wants to repeat
+ *                 the test.  Since @a options, is a map of maps, we need an
+ *                 internal map to provide the seed value.  For example, to
+ *                 pass 100 as the seed value through this parameter, you need
+ *                 something equivalent to: 'options' = {'seed': { 'value': 100
+ *                 } }
  *                 <ul>
- *                         <li> value: Pass the seed value here.
+ *                         <li> gpudb::insert_records_random_value: Pass the
+ *                 seed value here.
  *                 </ul>
- *                         <li> all: This key indicates that the specifications
- *                 relayed in the internal map are to be applied to all columns
- *                 of the records.
+ *                         <li> gpudb::insert_records_random_all: This key
+ *                 indicates that the specifications relayed in the internal
+ *                 map are to be applied to all columns of the records.
  *                 <ul>
- *                         <li> min: For numerical columns, the minimum of the
- *                 generated values is set to this value.  Default is -99999.
- *                 For point, shape, and track semantic types, min for numeric
- *                 'x' and 'y' columns needs to be within [-180, 180] and [-90,
- *                 90], respectively. The default minimum possible values for
- *                 these columns in such cases are -180.0 and -90.0. For the
- *                 'TIMESTAMP' column, the default minimum corresponds to Jan
- *                 1, 2010.
+ *                         <li> gpudb::insert_records_random_min: For numerical
+ *                 columns, the minimum of the generated values is set to this
+ *                 value.  Default is -99999.  For point, shape, and track
+ *                 semantic types, min for numeric 'x' and 'y' columns needs to
+ *                 be within [-180, 180] and [-90, 90], respectively. The
+ *                 default minimum possible values for these columns in such
+ *                 cases are -180.0 and -90.0. For the 'TIMESTAMP' column, the
+ *                 default minimum corresponds to Jan 1, 2010.
  *                 For string columns, the minimum length of the randomly
  *                 generated strings is set to this value (default is 1). If
  *                 both minimum and maximum are provided, minimum must be less
@@ -9745,12 +10983,13 @@ InsertRecordsRandomResponse& GPUdb::insertRecordsRandom( const InsertRecordsRand
  *                 then those parameters will not be set; however, an error
  *                 will not be thrown in such a case. It is the responsibility
  *                 of the user to use the @a all parameter judiciously.
- *                         <li> max: For numerical columns, the maximum of the
- *                 generated values is set to this value. Default is 99999. For
- *                 point, shape, and track semantic types, max for numeric 'x'
- *                 and 'y' columns needs to be within [-180, 180] and [-90,
- *                 90], respectively. The default minimum possible values for
- *                 these columns in such cases are 180.0 and 90.0.
+ *                         <li> gpudb::insert_records_random_max: For numerical
+ *                 columns, the maximum of the generated values is set to this
+ *                 value. Default is 99999. For point, shape, and track
+ *                 semantic types, max for numeric 'x' and 'y' columns needs to
+ *                 be within [-180, 180] and [-90, 90], respectively. The
+ *                 default minimum possible values for these columns in such
+ *                 cases are 180.0 and 90.0.
  *                 For string columns, the maximum length of the randomly
  *                 generated strings is set to this value (default is 200). If
  *                 both minimum and maximum are provided, *max* must be greater
@@ -9760,34 +10999,34 @@ InsertRecordsRandomResponse& GPUdb::insertRecordsRandom( const InsertRecordsRand
  *                 then those parameters will not be set; however, an error
  *                 will not be thrown in such a case. It is the responsibility
  *                 of the user to use the @a all parameter judiciously.
- *                         <li> interval: If specified, then generate values
- *                 for all columns linearly and evenly spaced with the given
- *                 interval value starting at the minimum value (instead of
- *                 generating random data). *Any provided max value is
- *                 disregarded.*  For string-type columns, the interval value
- *                 is ignored but the string values would be generated
- *                 following the pattern: 'attrname_creationIndex#', i.e. the
- *                 column name suffixed with an underscore and a running
- *                 counter (starting at 0).  No nulls would be generated for
- *                 nullable columns.
- *                         <li> null_percentage: If specified, then generate
- *                 the given percentage of the count as nulls for all nullable
- *                 columns.  This option will be ignored for non-nullable
- *                 columns.  The value must be within the range [0, 1.0].  The
- *                 default value is 5% (0.05).
+ *                         <li> gpudb::insert_records_random_interval: If
+ *                 specified, then generate values for all columns linearly and
+ *                 evenly spaced with the given interval value starting at the
+ *                 minimum value (instead of generating random data). *Any
+ *                 provided max value is disregarded.*  For string-type
+ *                 columns, the interval value is ignored but the string values
+ *                 would be generated following the pattern:
+ *                 'attrname_creationIndex#', i.e. the column name suffixed
+ *                 with an underscore and a running counter (starting at 0).
+ *                 No nulls would be generated for nullable columns.
+ *                         <li> gpudb::insert_records_random_null_percentage:
+ *                 If specified, then generate the given percentage of the
+ *                 count as nulls for all nullable columns.  This option will
+ *                 be ignored for non-nullable columns.  The value must be
+ *                 within the range [0, 1.0].  The default value is 5% (0.05).
  *                 </ul>
- *                         <li> attr_name: Set the following parameters for the
- *                 column specified by the key. This overrides any parameter
- *                 set by @a all.
+ *                         <li> gpudb::insert_records_random_attr_name: Set the
+ *                 following parameters for the column specified by the key.
+ *                 This overrides any parameter set by @a all.
  *                 <ul>
- *                         <li> min: For numerical columns, the minimum of the
- *                 generated values is set to this value.  Default is -99999.
- *                 For point, shape, and track semantic types, min for numeric
- *                 'x' and 'y' columns needs to be within [-180, 180] and [-90,
- *                 90], respectively. The default minimum possible values for
- *                 these columns in such cases are -180.0 and -90.0. For the
- *                 'TIMESTAMP' column, the default minimum corresponds to Jan
- *                 1, 2010.
+ *                         <li> gpudb::insert_records_random_min: For numerical
+ *                 columns, the minimum of the generated values is set to this
+ *                 value.  Default is -99999.  For point, shape, and track
+ *                 semantic types, min for numeric 'x' and 'y' columns needs to
+ *                 be within [-180, 180] and [-90, 90], respectively. The
+ *                 default minimum possible values for these columns in such
+ *                 cases are -180.0 and -90.0. For the 'TIMESTAMP' column, the
+ *                 default minimum corresponds to Jan 1, 2010.
  *                 For string columns, the minimum length of the randomly
  *                 generated strings is set to this value (default is 1). If
  *                 both minimum and maximum are provided, minimum must be less
@@ -9797,12 +11036,13 @@ InsertRecordsRandomResponse& GPUdb::insertRecordsRandom( const InsertRecordsRand
  *                 then those parameters will not be set; however, an error
  *                 will not be thrown in such a case. It is the responsibility
  *                 of the user to use the @a all parameter judiciously.
- *                         <li> max: For numerical columns, the maximum of the
- *                 generated values is set to this value. Default is 99999. For
- *                 point, shape, and track semantic types, max for numeric 'x'
- *                 and 'y' columns needs to be within [-180, 180] and [-90,
- *                 90], respectively. The default minimum possible values for
- *                 these columns in such cases are 180.0 and 90.0.
+ *                         <li> gpudb::insert_records_random_max: For numerical
+ *                 columns, the maximum of the generated values is set to this
+ *                 value. Default is 99999. For point, shape, and track
+ *                 semantic types, max for numeric 'x' and 'y' columns needs to
+ *                 be within [-180, 180] and [-90, 90], respectively. The
+ *                 default minimum possible values for these columns in such
+ *                 cases are 180.0 and 90.0.
  *                 For string columns, the maximum length of the randomly
  *                 generated strings is set to this value (default is 200). If
  *                 both minimum and maximum are provided, *max* must be greater
@@ -9812,37 +11052,40 @@ InsertRecordsRandomResponse& GPUdb::insertRecordsRandom( const InsertRecordsRand
  *                 then those parameters will not be set; however, an error
  *                 will not be thrown in such a case. It is the responsibility
  *                 of the user to use the @a all parameter judiciously.
- *                         <li> interval: If specified, then generate values
- *                 for all columns linearly and evenly spaced with the given
- *                 interval value starting at the minimum value (instead of
- *                 generating random data). *Any provided max value is
- *                 disregarded.*  For string-type columns, the interval value
- *                 is ignored but the string values would be generated
- *                 following the pattern: 'attrname_creationIndex#', i.e. the
- *                 column name suffixed with an underscore and a running
- *                 counter (starting at 0).  No nulls would be generated for
+ *                         <li> gpudb::insert_records_random_interval: If
+ *                 specified, then generate values for all columns linearly and
+ *                 evenly spaced with the given interval value starting at the
+ *                 minimum value (instead of generating random data). *Any
+ *                 provided max value is disregarded.*  For string-type
+ *                 columns, the interval value is ignored but the string values
+ *                 would be generated following the pattern:
+ *                 'attrname_creationIndex#', i.e. the column name suffixed
+ *                 with an underscore and a running counter (starting at 0).
+ *                 No nulls would be generated for nullable columns.
+ *                         <li> gpudb::insert_records_random_null_percentage:
+ *                 If specified and if this column is nullable, then generate
+ *                 the given percentage of the count as nulls.  This option
+ *                 will result in an error if the column is not nullable.  The
+ *                 value must be within the range [0, 1.0].  The default value
+ *                 is 5% (0.05).
+ *                 </ul>
+ *                         <li> gpudb::insert_records_random_track_length: This
+ *                 key-map pair is only valid for track type data sets (an
+ *                 error is thrown otherwise).  No nulls would be generated for
  *                 nullable columns.
- *                         <li> null_percentage: If specified and if this
- *                 column is nullable, then generate the given percentage of
- *                 the count as nulls.  This option will result in an error if
- *                 the column is not nullable.  The value must be within the
- *                 range [0, 1.0].  The default value is 5% (0.05).
- *                 </ul>
- *                         <li> track_length: This key-map pair is only valid
- *                 for track type data sets (an error is thrown otherwise).  No
- *                 nulls would be generated for nullable columns.
  *                 <ul>
- *                         <li> min: Minimum possible length for generated
- *                 series; default is 100 records per series. Must be an
- *                 integral value within the range [1, 500]. If both min and
- *                 max are specified, min must be less than or equal to max.
- *                         <li> max: Maximum possible length for generated
- *                 series; default is 500 records per series. Must be an
- *                 integral value within the range [1, 500]. If both min and
- *                 max are specified, max must be greater than or equal to min.
+ *                         <li> gpudb::insert_records_random_min: Minimum
+ *                 possible length for generated series; default is 100 records
+ *                 per series. Must be an integral value within the range [1,
+ *                 500]. If both min and max are specified, min must be less
+ *                 than or equal to max.
+ *                         <li> gpudb::insert_records_random_max: Maximum
+ *                 possible length for generated series; default is 500 records
+ *                 per series. Must be an integral value within the range [1,
+ *                 500]. If both min and max are specified, max must be greater
+ *                 than or equal to min.
  *                 </ul>
  *                 </ul>
- *                   Default value is an empty std::map.
  * 
  * @return Response object containing the result of the operation.
  * 
@@ -9890,30 +11133,32 @@ InsertRecordsRandomResponse GPUdb::insertRecordsRandom( const std::string& table
  *                 of the column.  Below follows a more detailed description of
  *                 the map:
  *                 <ul>
- *                         <li> seed: If provided, the internal random number
- *                 generator will be initialized with the given value.  The
- *                 minimum is 0.  This allows for the same set of random
- *                 numbers to be generated across invocation of this endpoint
- *                 in case the user wants to repeat the test.  Since @a
- *                 options, is a map of maps, we need an internal map to
- *                 provide the seed value.  For example, to pass 100 as the
- *                 seed value through this parameter, you need something
- *                 equivalent to: 'options' = {'seed': { 'value': 100 } }
+ *                         <li> gpudb::insert_records_random_seed: If provided,
+ *                 the internal random number generator will be initialized
+ *                 with the given value.  The minimum is 0.  This allows for
+ *                 the same set of random numbers to be generated across
+ *                 invocation of this endpoint in case the user wants to repeat
+ *                 the test.  Since @a options, is a map of maps, we need an
+ *                 internal map to provide the seed value.  For example, to
+ *                 pass 100 as the seed value through this parameter, you need
+ *                 something equivalent to: 'options' = {'seed': { 'value': 100
+ *                 } }
  *                 <ul>
- *                         <li> value: Pass the seed value here.
+ *                         <li> gpudb::insert_records_random_value: Pass the
+ *                 seed value here.
  *                 </ul>
- *                         <li> all: This key indicates that the specifications
- *                 relayed in the internal map are to be applied to all columns
- *                 of the records.
+ *                         <li> gpudb::insert_records_random_all: This key
+ *                 indicates that the specifications relayed in the internal
+ *                 map are to be applied to all columns of the records.
  *                 <ul>
- *                         <li> min: For numerical columns, the minimum of the
- *                 generated values is set to this value.  Default is -99999.
- *                 For point, shape, and track semantic types, min for numeric
- *                 'x' and 'y' columns needs to be within [-180, 180] and [-90,
- *                 90], respectively. The default minimum possible values for
- *                 these columns in such cases are -180.0 and -90.0. For the
- *                 'TIMESTAMP' column, the default minimum corresponds to Jan
- *                 1, 2010.
+ *                         <li> gpudb::insert_records_random_min: For numerical
+ *                 columns, the minimum of the generated values is set to this
+ *                 value.  Default is -99999.  For point, shape, and track
+ *                 semantic types, min for numeric 'x' and 'y' columns needs to
+ *                 be within [-180, 180] and [-90, 90], respectively. The
+ *                 default minimum possible values for these columns in such
+ *                 cases are -180.0 and -90.0. For the 'TIMESTAMP' column, the
+ *                 default minimum corresponds to Jan 1, 2010.
  *                 For string columns, the minimum length of the randomly
  *                 generated strings is set to this value (default is 1). If
  *                 both minimum and maximum are provided, minimum must be less
@@ -9923,12 +11168,13 @@ InsertRecordsRandomResponse GPUdb::insertRecordsRandom( const std::string& table
  *                 then those parameters will not be set; however, an error
  *                 will not be thrown in such a case. It is the responsibility
  *                 of the user to use the @a all parameter judiciously.
- *                         <li> max: For numerical columns, the maximum of the
- *                 generated values is set to this value. Default is 99999. For
- *                 point, shape, and track semantic types, max for numeric 'x'
- *                 and 'y' columns needs to be within [-180, 180] and [-90,
- *                 90], respectively. The default minimum possible values for
- *                 these columns in such cases are 180.0 and 90.0.
+ *                         <li> gpudb::insert_records_random_max: For numerical
+ *                 columns, the maximum of the generated values is set to this
+ *                 value. Default is 99999. For point, shape, and track
+ *                 semantic types, max for numeric 'x' and 'y' columns needs to
+ *                 be within [-180, 180] and [-90, 90], respectively. The
+ *                 default minimum possible values for these columns in such
+ *                 cases are 180.0 and 90.0.
  *                 For string columns, the maximum length of the randomly
  *                 generated strings is set to this value (default is 200). If
  *                 both minimum and maximum are provided, *max* must be greater
@@ -9938,34 +11184,34 @@ InsertRecordsRandomResponse GPUdb::insertRecordsRandom( const std::string& table
  *                 then those parameters will not be set; however, an error
  *                 will not be thrown in such a case. It is the responsibility
  *                 of the user to use the @a all parameter judiciously.
- *                         <li> interval: If specified, then generate values
- *                 for all columns linearly and evenly spaced with the given
- *                 interval value starting at the minimum value (instead of
- *                 generating random data). *Any provided max value is
- *                 disregarded.*  For string-type columns, the interval value
- *                 is ignored but the string values would be generated
- *                 following the pattern: 'attrname_creationIndex#', i.e. the
- *                 column name suffixed with an underscore and a running
- *                 counter (starting at 0).  No nulls would be generated for
- *                 nullable columns.
- *                         <li> null_percentage: If specified, then generate
- *                 the given percentage of the count as nulls for all nullable
- *                 columns.  This option will be ignored for non-nullable
- *                 columns.  The value must be within the range [0, 1.0].  The
- *                 default value is 5% (0.05).
+ *                         <li> gpudb::insert_records_random_interval: If
+ *                 specified, then generate values for all columns linearly and
+ *                 evenly spaced with the given interval value starting at the
+ *                 minimum value (instead of generating random data). *Any
+ *                 provided max value is disregarded.*  For string-type
+ *                 columns, the interval value is ignored but the string values
+ *                 would be generated following the pattern:
+ *                 'attrname_creationIndex#', i.e. the column name suffixed
+ *                 with an underscore and a running counter (starting at 0).
+ *                 No nulls would be generated for nullable columns.
+ *                         <li> gpudb::insert_records_random_null_percentage:
+ *                 If specified, then generate the given percentage of the
+ *                 count as nulls for all nullable columns.  This option will
+ *                 be ignored for non-nullable columns.  The value must be
+ *                 within the range [0, 1.0].  The default value is 5% (0.05).
  *                 </ul>
- *                         <li> attr_name: Set the following parameters for the
- *                 column specified by the key. This overrides any parameter
- *                 set by @a all.
+ *                         <li> gpudb::insert_records_random_attr_name: Set the
+ *                 following parameters for the column specified by the key.
+ *                 This overrides any parameter set by @a all.
  *                 <ul>
- *                         <li> min: For numerical columns, the minimum of the
- *                 generated values is set to this value.  Default is -99999.
- *                 For point, shape, and track semantic types, min for numeric
- *                 'x' and 'y' columns needs to be within [-180, 180] and [-90,
- *                 90], respectively. The default minimum possible values for
- *                 these columns in such cases are -180.0 and -90.0. For the
- *                 'TIMESTAMP' column, the default minimum corresponds to Jan
- *                 1, 2010.
+ *                         <li> gpudb::insert_records_random_min: For numerical
+ *                 columns, the minimum of the generated values is set to this
+ *                 value.  Default is -99999.  For point, shape, and track
+ *                 semantic types, min for numeric 'x' and 'y' columns needs to
+ *                 be within [-180, 180] and [-90, 90], respectively. The
+ *                 default minimum possible values for these columns in such
+ *                 cases are -180.0 and -90.0. For the 'TIMESTAMP' column, the
+ *                 default minimum corresponds to Jan 1, 2010.
  *                 For string columns, the minimum length of the randomly
  *                 generated strings is set to this value (default is 1). If
  *                 both minimum and maximum are provided, minimum must be less
@@ -9975,12 +11221,13 @@ InsertRecordsRandomResponse GPUdb::insertRecordsRandom( const std::string& table
  *                 then those parameters will not be set; however, an error
  *                 will not be thrown in such a case. It is the responsibility
  *                 of the user to use the @a all parameter judiciously.
- *                         <li> max: For numerical columns, the maximum of the
- *                 generated values is set to this value. Default is 99999. For
- *                 point, shape, and track semantic types, max for numeric 'x'
- *                 and 'y' columns needs to be within [-180, 180] and [-90,
- *                 90], respectively. The default minimum possible values for
- *                 these columns in such cases are 180.0 and 90.0.
+ *                         <li> gpudb::insert_records_random_max: For numerical
+ *                 columns, the maximum of the generated values is set to this
+ *                 value. Default is 99999. For point, shape, and track
+ *                 semantic types, max for numeric 'x' and 'y' columns needs to
+ *                 be within [-180, 180] and [-90, 90], respectively. The
+ *                 default minimum possible values for these columns in such
+ *                 cases are 180.0 and 90.0.
  *                 For string columns, the maximum length of the randomly
  *                 generated strings is set to this value (default is 200). If
  *                 both minimum and maximum are provided, *max* must be greater
@@ -9990,37 +11237,40 @@ InsertRecordsRandomResponse GPUdb::insertRecordsRandom( const std::string& table
  *                 then those parameters will not be set; however, an error
  *                 will not be thrown in such a case. It is the responsibility
  *                 of the user to use the @a all parameter judiciously.
- *                         <li> interval: If specified, then generate values
- *                 for all columns linearly and evenly spaced with the given
- *                 interval value starting at the minimum value (instead of
- *                 generating random data). *Any provided max value is
- *                 disregarded.*  For string-type columns, the interval value
- *                 is ignored but the string values would be generated
- *                 following the pattern: 'attrname_creationIndex#', i.e. the
- *                 column name suffixed with an underscore and a running
- *                 counter (starting at 0).  No nulls would be generated for
+ *                         <li> gpudb::insert_records_random_interval: If
+ *                 specified, then generate values for all columns linearly and
+ *                 evenly spaced with the given interval value starting at the
+ *                 minimum value (instead of generating random data). *Any
+ *                 provided max value is disregarded.*  For string-type
+ *                 columns, the interval value is ignored but the string values
+ *                 would be generated following the pattern:
+ *                 'attrname_creationIndex#', i.e. the column name suffixed
+ *                 with an underscore and a running counter (starting at 0).
+ *                 No nulls would be generated for nullable columns.
+ *                         <li> gpudb::insert_records_random_null_percentage:
+ *                 If specified and if this column is nullable, then generate
+ *                 the given percentage of the count as nulls.  This option
+ *                 will result in an error if the column is not nullable.  The
+ *                 value must be within the range [0, 1.0].  The default value
+ *                 is 5% (0.05).
+ *                 </ul>
+ *                         <li> gpudb::insert_records_random_track_length: This
+ *                 key-map pair is only valid for track type data sets (an
+ *                 error is thrown otherwise).  No nulls would be generated for
  *                 nullable columns.
- *                         <li> null_percentage: If specified and if this
- *                 column is nullable, then generate the given percentage of
- *                 the count as nulls.  This option will result in an error if
- *                 the column is not nullable.  The value must be within the
- *                 range [0, 1.0].  The default value is 5% (0.05).
- *                 </ul>
- *                         <li> track_length: This key-map pair is only valid
- *                 for track type data sets (an error is thrown otherwise).  No
- *                 nulls would be generated for nullable columns.
  *                 <ul>
- *                         <li> min: Minimum possible length for generated
- *                 series; default is 100 records per series. Must be an
- *                 integral value within the range [1, 500]. If both min and
- *                 max are specified, min must be less than or equal to max.
- *                         <li> max: Maximum possible length for generated
- *                 series; default is 500 records per series. Must be an
- *                 integral value within the range [1, 500]. If both min and
- *                 max are specified, max must be greater than or equal to min.
+ *                         <li> gpudb::insert_records_random_min: Minimum
+ *                 possible length for generated series; default is 100 records
+ *                 per series. Must be an integral value within the range [1,
+ *                 500]. If both min and max are specified, min must be less
+ *                 than or equal to max.
+ *                         <li> gpudb::insert_records_random_max: Maximum
+ *                 possible length for generated series; default is 500 records
+ *                 per series. Must be an integral value within the range [1,
+ *                 500]. If both min and max are specified, max must be greater
+ *                 than or equal to min.
  *                 </ul>
  *                 </ul>
- *                   Default value is an empty std::map.
  * @param[out] response_  Response object containing the results of the
  *                        operation.
  * 
@@ -10113,7 +11363,11 @@ InsertSymbolResponse& GPUdb::insertSymbol( const InsertSymbolRequest& request_,
  *                  should be in the 'SYMBOLCODE' column for objects using this
  *                  symbol
  * @param symbolFormat  Specifies the symbol format. Must be either 'svg' or
- *                      'svg_path'. Values: 'svg', 'svg_path'.
+ *                      'svg_path'.
+ *                      <ul>
+ *                              <li> gpudb::insert_symbol_svg
+ *                              <li> gpudb::insert_symbol_svg_path
+ *                      </ul>
  * @param symbolData  The actual symbol data. If @a symbolFormat is 'svg' then
  *                    this should be the raw bytes representing an svg file. If
  *                    @a symbolFormat is svg path then this should be an svg
@@ -10121,14 +11375,13 @@ InsertSymbolResponse& GPUdb::insertSymbol( const InsertSymbolRequest& request_,
  *                    'M25.979,12.896,5.979,12.896,5.979,19.562,25.979,19.562z'
  * @param options  Optional parameters.
  *                 <ul>
- *                         <li> color: If @a symbolFormat is 'svg' this is
- *                 ignored. If @a symbolFormat is 'svg_path' then this option
- *                 specifies the color (in RRGGBB hex format) of the path. For
- *                 example, to have the path rendered in red, used 'FF0000'. If
- *                 'color' is not provided then '00FF00' (i.e. green) is used
- *                 by default.
+ *                         <li> gpudb::insert_symbol_color: If @a symbolFormat
+ *                 is 'svg' this is ignored. If @a symbolFormat is 'svg_path'
+ *                 then this option specifies the color (in RRGGBB hex format)
+ *                 of the path. For example, to have the path rendered in red,
+ *                 used 'FF0000'. If 'color' is not provided then '00FF00'
+ *                 (i.e. green) is used by default.
  *                 </ul>
- *                   Default value is an empty std::map.
  * 
  * @return Response object containing the result of the operation.
  * 
@@ -10165,7 +11418,11 @@ InsertSymbolResponse GPUdb::insertSymbol( const std::string& symbolId,
  *                  should be in the 'SYMBOLCODE' column for objects using this
  *                  symbol
  * @param symbolFormat  Specifies the symbol format. Must be either 'svg' or
- *                      'svg_path'. Values: 'svg', 'svg_path'.
+ *                      'svg_path'.
+ *                      <ul>
+ *                              <li> gpudb::insert_symbol_svg
+ *                              <li> gpudb::insert_symbol_svg_path
+ *                      </ul>
  * @param symbolData  The actual symbol data. If @a symbolFormat is 'svg' then
  *                    this should be the raw bytes representing an svg file. If
  *                    @a symbolFormat is svg path then this should be an svg
@@ -10173,14 +11430,13 @@ InsertSymbolResponse GPUdb::insertSymbol( const std::string& symbolId,
  *                    'M25.979,12.896,5.979,12.896,5.979,19.562,25.979,19.562z'
  * @param options  Optional parameters.
  *                 <ul>
- *                         <li> color: If @a symbolFormat is 'svg' this is
- *                 ignored. If @a symbolFormat is 'svg_path' then this option
- *                 specifies the color (in RRGGBB hex format) of the path. For
- *                 example, to have the path rendered in red, used 'FF0000'. If
- *                 'color' is not provided then '00FF00' (i.e. green) is used
- *                 by default.
+ *                         <li> gpudb::insert_symbol_color: If @a symbolFormat
+ *                 is 'svg' this is ignored. If @a symbolFormat is 'svg_path'
+ *                 then this option specifies the color (in RRGGBB hex format)
+ *                 of the path. For example, to have the path rendered in red,
+ *                 used 'FF0000'. If 'color' is not provided then '00FF00'
+ *                 (i.e. green) is used by default.
  *                 </ul>
- *                   Default value is an empty std::map.
  * @param[out] response_  Response object containing the results of the
  *                        operation.
  * 
@@ -10250,8 +11506,8 @@ KillProcResponse& GPUdb::killProc( const KillProcRequest& request_,
  * @param runId  The run ID of the running proc instance. If the run ID is not
  *               found or the proc instance has already completed, this does
  *               nothing. If not specified, all running proc instances will be
- *               killed.  Default value is an empty string.
- * @param options  Optional parameters.  Default value is an empty std::map.
+ *               killed.
+ * @param options  Optional parameters.
  * 
  * @return Response object containing the result of the operation.
  * 
@@ -10275,8 +11531,8 @@ KillProcResponse GPUdb::killProc( const std::string& runId,
  * @param runId  The run ID of the running proc instance. If the run ID is not
  *               found or the proc instance has already completed, this does
  *               nothing. If not specified, all running proc instances will be
- *               killed.  Default value is an empty string.
- * @param options  Optional parameters.  Default value is an empty std::map.
+ *               killed.
+ * @param options  Optional parameters.
  * @param[out] response_  Response object containing the results of the
  *                        operation.
  * 
@@ -10361,10 +11617,19 @@ LockTableResponse& GPUdb::lockTable( const LockTableRequest& request_,
  *                   existing table, collection, or view.
  * @param lockType  The type of lock being applied to the table. Setting it to
  *                  @a status will return the current lock status of the table
- *                  without changing it. Values: 'status', 'disable',
- *                  'read-only', 'write-only', 'unlock'.
- *                    Default value is 'status'.
- * @param options  Optional parameters.  Default value is an empty std::map.
+ *                  without changing it.
+ *                  <ul>
+ *                          <li> gpudb::lock_table_status: Show locked status
+ *                          <li> gpudb::lock_table_disable: Allow no read/write
+ *                  operations
+ *                          <li> gpudb::lock_table_read_only: Allow only read
+ *                  operations
+ *                          <li> gpudb::lock_table_write_only: Allow only write
+ *                  operations
+ *                          <li> gpudb::lock_table_unlock: Allow all read/write
+ *                  operations
+ *                  </ul>
+ * @param options  Optional parameters.
  * 
  * @return Response object containing the result of the operation.
  * 
@@ -10397,10 +11662,19 @@ LockTableResponse GPUdb::lockTable( const std::string& tableName,
  *                   existing table, collection, or view.
  * @param lockType  The type of lock being applied to the table. Setting it to
  *                  @a status will return the current lock status of the table
- *                  without changing it. Values: 'status', 'disable',
- *                  'read-only', 'write-only', 'unlock'.
- *                    Default value is 'status'.
- * @param options  Optional parameters.  Default value is an empty std::map.
+ *                  without changing it.
+ *                  <ul>
+ *                          <li> gpudb::lock_table_status: Show locked status
+ *                          <li> gpudb::lock_table_disable: Allow no read/write
+ *                  operations
+ *                          <li> gpudb::lock_table_read_only: Allow only read
+ *                  operations
+ *                          <li> gpudb::lock_table_write_only: Allow only write
+ *                  operations
+ *                          <li> gpudb::lock_table_unlock: Allow all read/write
+ *                  operations
+ *                  </ul>
+ * @param options  Optional parameters.
  * @param[out] response_  Response object containing the results of the
  *                        operation.
  * 
@@ -10467,8 +11741,17 @@ RevokePermissionSystemResponse& GPUdb::revokePermissionSystem( const RevokePermi
  * 
  * @param name  Name of the user or role from which the permission will be
  *              revoked. Must be an existing user or role.
- * @param permission  Permission to revoke from the user or role. Values:
- *                    'system_admin', 'system_write', 'system_read'.
+ * @param permission  Permission to revoke from the user or role.
+ *                    <ul>
+ *                            <li>
+ *                    gpudb::revoke_permission_system_system_admin: Full access
+ *                    to all data and system functions.
+ *                            <li>
+ *                    gpudb::revoke_permission_system_system_write: Read and
+ *                    write access to all tables.
+ *                            <li> gpudb::revoke_permission_system_system_read:
+ *                    Read-only access to all tables.
+ *                    </ul>
  * @param options  Optional parameters.
  * 
  * @return Response object containing the result of the operation.
@@ -10494,8 +11777,17 @@ RevokePermissionSystemResponse GPUdb::revokePermissionSystem( const std::string&
  * 
  * @param name  Name of the user or role from which the permission will be
  *              revoked. Must be an existing user or role.
- * @param permission  Permission to revoke from the user or role. Values:
- *                    'system_admin', 'system_write', 'system_read'.
+ * @param permission  Permission to revoke from the user or role.
+ *                    <ul>
+ *                            <li>
+ *                    gpudb::revoke_permission_system_system_admin: Full access
+ *                    to all data and system functions.
+ *                            <li>
+ *                    gpudb::revoke_permission_system_system_write: Read and
+ *                    write access to all tables.
+ *                            <li> gpudb::revoke_permission_system_system_read:
+ *                    Read-only access to all tables.
+ *                    </ul>
  * @param options  Optional parameters.
  * @param[out] response_  Response object containing the results of the
  *                        operation.
@@ -10563,9 +11855,19 @@ RevokePermissionTableResponse& GPUdb::revokePermissionTable( const RevokePermiss
  * 
  * @param name  Name of the user or role from which the permission will be
  *              revoked. Must be an existing user or role.
- * @param permission  Permission to revoke from the user or role. Values:
- *                    'table_admin', 'table_insert', 'table_update',
- *                    'table_delete', 'table_read'.
+ * @param permission  Permission to revoke from the user or role.
+ *                    <ul>
+ *                            <li> gpudb::revoke_permission_table_table_admin:
+ *                    Full read/write and administrative access to the table.
+ *                            <li> gpudb::revoke_permission_table_table_insert:
+ *                    Insert access to the table.
+ *                            <li> gpudb::revoke_permission_table_table_update:
+ *                    Update access to the table.
+ *                            <li> gpudb::revoke_permission_table_table_delete:
+ *                    Delete access to the table.
+ *                            <li> gpudb::revoke_permission_table_table_read:
+ *                    Read access to the table.
+ *                    </ul>
  * @param tableName  Name of the table to which the permission grants access.
  *                   Must be an existing table, collection, or view.
  * @param options  Optional parameters.
@@ -10595,9 +11897,19 @@ RevokePermissionTableResponse GPUdb::revokePermissionTable( const std::string& n
  * 
  * @param name  Name of the user or role from which the permission will be
  *              revoked. Must be an existing user or role.
- * @param permission  Permission to revoke from the user or role. Values:
- *                    'table_admin', 'table_insert', 'table_update',
- *                    'table_delete', 'table_read'.
+ * @param permission  Permission to revoke from the user or role.
+ *                    <ul>
+ *                            <li> gpudb::revoke_permission_table_table_admin:
+ *                    Full read/write and administrative access to the table.
+ *                            <li> gpudb::revoke_permission_table_table_insert:
+ *                    Insert access to the table.
+ *                            <li> gpudb::revoke_permission_table_table_update:
+ *                    Update access to the table.
+ *                            <li> gpudb::revoke_permission_table_table_delete:
+ *                    Delete access to the table.
+ *                            <li> gpudb::revoke_permission_table_table_read:
+ *                    Read access to the table.
+ *                    </ul>
  * @param tableName  Name of the table to which the permission grants access.
  *                   Must be an existing table, collection, or view.
  * @param options  Optional parameters.
@@ -10766,14 +12078,16 @@ ShowProcResponse& GPUdb::showProc( const ShowProcRequest& request_,
  * @param procName  Name of the proc to show information about. If specified,
  *                  must be the name of a currently existing proc. If not
  *                  specified, information about all procs will be returned.
- *                  Default value is an empty string.
  * @param options  Optional parameters.
  *                 <ul>
- *                         <li> include_files: If set to @a true, the files
- *                 that make up the proc will be returned. If set to @a false,
- *                 the files will not be returned. Values: 'true', 'false'.
+ *                         <li> gpudb::show_proc_include_files: If set to @a
+ *                 true, the files that make up the proc will be returned. If
+ *                 set to @a false, the files will not be returned.
+ *                 <ul>
+ *                         <li> gpudb::show_proc_true
+ *                         <li> gpudb::show_proc_false
  *                 </ul>
- *                   Default value is an empty std::map.
+ *                 </ul>
  * 
  * @return Response object containing the result of the operation.
  * 
@@ -10797,14 +12111,16 @@ ShowProcResponse GPUdb::showProc( const std::string& procName,
  * @param procName  Name of the proc to show information about. If specified,
  *                  must be the name of a currently existing proc. If not
  *                  specified, information about all procs will be returned.
- *                  Default value is an empty string.
  * @param options  Optional parameters.
  *                 <ul>
- *                         <li> include_files: If set to @a true, the files
- *                 that make up the proc will be returned. If set to @a false,
- *                 the files will not be returned. Values: 'true', 'false'.
+ *                         <li> gpudb::show_proc_include_files: If set to @a
+ *                 true, the files that make up the proc will be returned. If
+ *                 set to @a false, the files will not be returned.
+ *                 <ul>
+ *                         <li> gpudb::show_proc_true
+ *                         <li> gpudb::show_proc_false
  *                 </ul>
- *                   Default value is an empty std::map.
+ *                 </ul>
  * @param[out] response_  Response object containing the results of the
  *                        operation.
  * 
@@ -10883,16 +12199,18 @@ ShowProcStatusResponse& GPUdb::showProcStatus( const ShowProcStatusRequest& requ
  *               for which the status will be returned. If the run ID is not
  *               found, nothing will be returned. If not specified, the
  *               statuses of all running and completed proc instances will be
- *               returned.  Default value is an empty string.
+ *               returned.
  * @param options  Optional parameters.
  *                 <ul>
- *                         <li> clear_complete: If set to @a true, if a proc
- *                 instance has completed (either successfully or
- *                 unsuccessfully) then its status will be cleared and no
- *                 longer returned in subsequent calls. Values: 'true',
- *                 'false'.
+ *                         <li> gpudb::show_proc_status_clear_complete: If set
+ *                 to @a true, if a proc instance has completed (either
+ *                 successfully or unsuccessfully) then its status will be
+ *                 cleared and no longer returned in subsequent calls.
+ *                 <ul>
+ *                         <li> gpudb::show_proc_status_true
+ *                         <li> gpudb::show_proc_status_false
  *                 </ul>
- *                   Default value is an empty std::map.
+ *                 </ul>
  * 
  * @return Response object containing the result of the operation.
  * 
@@ -10921,16 +12239,18 @@ ShowProcStatusResponse GPUdb::showProcStatus( const std::string& runId,
  *               for which the status will be returned. If the run ID is not
  *               found, nothing will be returned. If not specified, the
  *               statuses of all running and completed proc instances will be
- *               returned.  Default value is an empty string.
+ *               returned.
  * @param options  Optional parameters.
  *                 <ul>
- *                         <li> clear_complete: If set to @a true, if a proc
- *                 instance has completed (either successfully or
- *                 unsuccessfully) then its status will be cleared and no
- *                 longer returned in subsequent calls. Values: 'true',
- *                 'false'.
+ *                         <li> gpudb::show_proc_status_clear_complete: If set
+ *                 to @a true, if a proc instance has completed (either
+ *                 successfully or unsuccessfully) then its status will be
+ *                 cleared and no longer returned in subsequent calls.
+ *                 <ul>
+ *                         <li> gpudb::show_proc_status_true
+ *                         <li> gpudb::show_proc_status_false
  *                 </ul>
- *                   Default value is an empty std::map.
+ *                 </ul>
  * @param[out] response_  Response object containing the results of the
  *                        operation.
  * 
@@ -11096,11 +12416,10 @@ ShowSystemPropertiesResponse& GPUdb::showSystemProperties( const ShowSystemPrope
  * 
  * @param options  Optional parameters.
  *                 <ul>
- *                         <li> properties: A list of comma separated names of
- *                 properties requested. If not specified, all properties will
- *                 be returned.
+ *                         <li> gpudb::show_system_properties_properties: A
+ *                 list of comma separated names of properties requested. If
+ *                 not specified, all properties will be returned.
  *                 </ul>
- *                   Default value is an empty std::map.
  * 
  * @return Response object containing the result of the operation.
  * 
@@ -11122,11 +12441,10 @@ ShowSystemPropertiesResponse GPUdb::showSystemProperties( const std::map<std::st
  * 
  * @param options  Optional parameters.
  *                 <ul>
- *                         <li> properties: A list of comma separated names of
- *                 properties requested. If not specified, all properties will
- *                 be returned.
+ *                         <li> gpudb::show_system_properties_properties: A
+ *                 list of comma separated names of properties requested. If
+ *                 not specified, all properties will be returned.
  *                 </ul>
- *                   Default value is an empty std::map.
  * @param[out] response_  Response object containing the results of the
  *                        operation.
  * 
@@ -11190,8 +12508,7 @@ ShowSystemStatusResponse& GPUdb::showSystemStatus( const ShowSystemStatusRequest
  * Provides server configuration and health related status to the caller. The
  * admin tool uses it to present server related information to the user.
  * 
- * @param options  Optional parameters, currently unused.  Default value is an
- *                 empty std::map.
+ * @param options  Optional parameters, currently unused.
  * 
  * @return Response object containing the result of the operation.
  * 
@@ -11211,8 +12528,7 @@ ShowSystemStatusResponse GPUdb::showSystemStatus( const std::map<std::string, st
  * Provides server configuration and health related status to the caller. The
  * admin tool uses it to present server related information to the user.
  * 
- * @param options  Optional parameters, currently unused.  Default value is an
- *                 empty std::map.
+ * @param options  Optional parameters, currently unused.
  * @param[out] response_  Response object containing the results of the
  *                        operation.
  * 
@@ -11279,8 +12595,7 @@ ShowSystemTimingResponse& GPUdb::showSystemTiming( const ShowSystemTimingRequest
  * internal job id. The admin tool uses it to present request timing
  * information to the user.
  * 
- * @param options  Optional parameters, currently unused.  Default value is an
- *                 empty std::map.
+ * @param options  Optional parameters, currently unused.
  * 
  * @return Response object containing the result of the operation.
  * 
@@ -11301,8 +12616,7 @@ ShowSystemTimingResponse GPUdb::showSystemTiming( const std::map<std::string, st
  * internal job id. The admin tool uses it to present request timing
  * information to the user.
  * 
- * @param options  Optional parameters, currently unused.  Default value is an
- *                 empty std::map.
+ * @param options  Optional parameters, currently unused.
  * @param[out] response_  Response object containing the results of the
  *                        operation.
  * 
@@ -11433,21 +12747,31 @@ ShowTableResponse& GPUdb::showTable( const ShowTableRequest& request_,
  *                   top-level tables and views is returned.
  * @param options  Optional parameters.
  *                 <ul>
- *                         <li> get_sizes: If @a true then the table sizes will
- *                 be returned; blank, otherwise. Values: 'true', 'false'.
- *                         <li> show_children: If @a tableName is a collection,
- *                 then @a true will return information about the children of
- *                 the collection, and @a false will return information about
- *                 the collection itself. If @a tableName is a table or view,
- *                 @a show_children must be @a false. If @a tableName is empty,
- *                 then @a show_children must be @a true. Values: 'true',
- *                 'false'.
- *                         <li> no_error_if_not_exists: If @a false will return
- *                 an error if the provided @a tableName does not exist. If @a
- *                 true then it will return an empty result. Values: 'true',
- *                 'false'.
+ *                         <li> gpudb::show_table_get_sizes: If @a true then
+ *                 the table sizes will be returned; blank, otherwise.
+ *                 <ul>
+ *                         <li> gpudb::show_table_true
+ *                         <li> gpudb::show_table_false
  *                 </ul>
- *                   Default value is an empty std::map.
+ *                         <li> gpudb::show_table_show_children: If @a
+ *                 tableName is a collection, then @a true will return
+ *                 information about the children of the collection, and @a
+ *                 false will return information about the collection itself.
+ *                 If @a tableName is a table or view, @a show_children must be
+ *                 @a false. If @a tableName is empty, then @a show_children
+ *                 must be @a true.
+ *                 <ul>
+ *                         <li> gpudb::show_table_true
+ *                         <li> gpudb::show_table_false
+ *                 </ul>
+ *                         <li> gpudb::show_table_no_error_if_not_exists: If @a
+ *                 false will return an error if the provided @a tableName does
+ *                 not exist. If @a true then it will return an empty result.
+ *                 <ul>
+ *                         <li> gpudb::show_table_true
+ *                         <li> gpudb::show_table_false
+ *                 </ul>
+ *                 </ul>
  * 
  * @return Response object containing the result of the operation.
  * 
@@ -11498,21 +12822,31 @@ ShowTableResponse GPUdb::showTable( const std::string& tableName,
  *                   top-level tables and views is returned.
  * @param options  Optional parameters.
  *                 <ul>
- *                         <li> get_sizes: If @a true then the table sizes will
- *                 be returned; blank, otherwise. Values: 'true', 'false'.
- *                         <li> show_children: If @a tableName is a collection,
- *                 then @a true will return information about the children of
- *                 the collection, and @a false will return information about
- *                 the collection itself. If @a tableName is a table or view,
- *                 @a show_children must be @a false. If @a tableName is empty,
- *                 then @a show_children must be @a true. Values: 'true',
- *                 'false'.
- *                         <li> no_error_if_not_exists: If @a false will return
- *                 an error if the provided @a tableName does not exist. If @a
- *                 true then it will return an empty result. Values: 'true',
- *                 'false'.
+ *                         <li> gpudb::show_table_get_sizes: If @a true then
+ *                 the table sizes will be returned; blank, otherwise.
+ *                 <ul>
+ *                         <li> gpudb::show_table_true
+ *                         <li> gpudb::show_table_false
  *                 </ul>
- *                   Default value is an empty std::map.
+ *                         <li> gpudb::show_table_show_children: If @a
+ *                 tableName is a collection, then @a true will return
+ *                 information about the children of the collection, and @a
+ *                 false will return information about the collection itself.
+ *                 If @a tableName is a table or view, @a show_children must be
+ *                 @a false. If @a tableName is empty, then @a show_children
+ *                 must be @a true.
+ *                 <ul>
+ *                         <li> gpudb::show_table_true
+ *                         <li> gpudb::show_table_false
+ *                 </ul>
+ *                         <li> gpudb::show_table_no_error_if_not_exists: If @a
+ *                 false will return an error if the provided @a tableName does
+ *                 not exist. If @a true then it will return an empty result.
+ *                 <ul>
+ *                         <li> gpudb::show_table_true
+ *                         <li> gpudb::show_table_false
+ *                 </ul>
+ *                 </ul>
  * @param[out] response_  Response object containing the results of the
  *                        operation.
  * 
@@ -11587,7 +12921,7 @@ ShowTableMetadataResponse& GPUdb::showTableMetadata( const ShowTableMetadataRequ
  * 
  * @param tableNames  Tables whose metadata will be fetched. All provided
  *                    tables must exist, or an error is returned.
- * @param options  Optional parameters.  Default value is an empty std::map.
+ * @param options  Optional parameters.
  * 
  * @return Response object containing the result of the operation.
  * 
@@ -11610,7 +12944,7 @@ ShowTableMetadataResponse GPUdb::showTableMetadata( const std::vector<std::strin
  * 
  * @param tableNames  Tables whose metadata will be fetched. All provided
  *                    tables must exist, or an error is returned.
- * @param options  Optional parameters.  Default value is an empty std::map.
+ * @param options  Optional parameters.
  * @param[out] response_  Response object containing the results of the
  *                        operation.
  * 
@@ -11688,7 +13022,7 @@ ShowTablesByTypeResponse& GPUdb::showTablesByType( const ShowTablesByTypeRequest
  * @param typeId  Type id returned by a call to /create/type.
  * @param label  Optional user supplied label which can be used instead of the
  *               type_id to retrieve all tables with the given label.
- * @param options  Optional parameters.  Default value is an empty std::map.
+ * @param options  Optional parameters.
  * 
  * @return Response object containing the result of the operation.
  * 
@@ -11718,7 +13052,7 @@ ShowTablesByTypeResponse GPUdb::showTablesByType( const std::string& typeId,
  * @param typeId  Type id returned by a call to /create/type.
  * @param label  Optional user supplied label which can be used instead of the
  *               type_id to retrieve all tables with the given label.
- * @param options  Optional parameters.  Default value is an empty std::map.
+ * @param options  Optional parameters.
  * @param[out] response_  Response object containing the results of the
  *                        operation.
  * 
@@ -11789,7 +13123,7 @@ ShowTriggersResponse& GPUdb::showTriggers( const ShowTriggersRequest& request_,
  * @param triggerIds  List of IDs of the triggers whose information is to be
  *                    retrieved. An empty list means information will be
  *                    retrieved on all active triggers.
- * @param options  Optional parameters.  Default value is an empty std::map.
+ * @param options  Optional parameters.
  * 
  * @return Response object containing the result of the operation.
  * 
@@ -11814,7 +13148,7 @@ ShowTriggersResponse GPUdb::showTriggers( const std::vector<std::string>& trigge
  * @param triggerIds  List of IDs of the triggers whose information is to be
  *                    retrieved. An empty list means information will be
  *                    retrieved on all active triggers.
- * @param options  Optional parameters.  Default value is an empty std::map.
+ * @param options  Optional parameters.
  * @param[out] response_  Response object containing the results of the
  *                        operation.
  * 
@@ -11912,7 +13246,7 @@ ShowTypesResponse& GPUdb::showTypes( const ShowTypesRequest& request_,
  * @param typeId  Type Id returned in response to a call to /create/type.
  * @param label  Option string that was supplied by user in a call to
  *               /create/type.
- * @param options  Optional parameters.  Default value is an empty std::map.
+ * @param options  Optional parameters.
  * 
  * @return Response object containing the result of the operation.
  * 
@@ -11952,7 +13286,7 @@ ShowTypesResponse GPUdb::showTypes( const std::string& typeId,
  * @param typeId  Type Id returned in response to a call to /create/type.
  * @param label  Option string that was supplied by user in a call to
  *               /create/type.
- * @param options  Optional parameters.  Default value is an empty std::map.
+ * @param options  Optional parameters.
  * @param[out] response_  Response object containing the results of the
  *                        operation.
  * 
@@ -12113,10 +13447,9 @@ UpdateRecordsBySeriesResponse& GPUdb::updateRecordsBySeries( const UpdateRecords
  * @param worldTableName  Name of the table containing the complete series
  *                        (track) information.
  * @param viewName  Optional name of the view containing the series (tracks)
- *                  which have to be updated.  Default value is an empty
- *                  string.
- * @param reserved  Default value is an empty std::vector.
- * @param options  Optional parameters.  Default value is an empty std::map.
+ *                  which have to be updated.
+ * @param reserved
+ * @param options  Optional parameters.
  * 
  * @return Response object containing the result of the operation.
  * 
@@ -12150,10 +13483,9 @@ UpdateRecordsBySeriesResponse GPUdb::updateRecordsBySeries( const std::string& t
  * @param worldTableName  Name of the table containing the complete series
  *                        (track) information.
  * @param viewName  Optional name of the view containing the series (tracks)
- *                  which have to be updated.  Default value is an empty
- *                  string.
- * @param reserved  Default value is an empty std::vector.
- * @param options  Optional parameters.  Default value is an empty std::map.
+ *                  which have to be updated.
+ * @param reserved
+ * @param options  Optional parameters.
  * @param[out] response_  Response object containing the results of the
  *                        operation.
  * 
@@ -12233,36 +13565,85 @@ VisualizeImageResponse& GPUdb::visualizeImage( const VisualizeImageRequest& requ
  * @param maxY
  * @param width
  * @param height
- * @param projection  Values: 'EPSG:4326', 'PLATE_CARREE', '900913',
- *                    'EPSG:900913', '102100', 'EPSG:102100', '3857',
- *                    'EPSG:3857', 'WEB_MERCATOR'.
+ * @param projection
+ *                    <ul>
+ *                            <li> gpudb::visualize_image_EPSG_4326
+ *                            <li> gpudb::visualize_image_PLATE_CARREE
+ *                            <li> gpudb::visualize_image_900913
+ *                            <li> gpudb::visualize_image_EPSG_900913
+ *                            <li> gpudb::visualize_image_102100
+ *                            <li> gpudb::visualize_image_EPSG_102100
+ *                            <li> gpudb::visualize_image_3857
+ *                            <li> gpudb::visualize_image_EPSG_3857
+ *                            <li> gpudb::visualize_image_WEB_MERCATOR
+ *                    </ul>
  * @param bgColor
  * @param styleOptions
  *                      <ul>
- *                              <li> do_points: Values: 'true', 'false'.
- *                              <li> do_shapes: Values: 'true', 'false'.
- *                              <li> do_tracks: Values: 'true', 'false'.
- *                              <li> do_symbology: Values: 'true', 'false'.
- *                              <li> pointcolors:
- *                              <li> pointsizes:
- *                              <li> pointshapes: Values: 'none', 'circle',
- *                      'square', 'diamond', 'hollowcircle', 'hollowsquare',
- *                      'hollowdiamond', 'SYMBOLCODE'.
- *                              <li> shapelinewidths:
- *                              <li> shapelinecolors:
- *                              <li> shapefillcolors:
- *                              <li> tracklinewidths:
- *                              <li> tracklinecolors:
- *                              <li> trackmarkersizes:
- *                              <li> trackmarkercolors:
- *                              <li> trackmarkershapes: Values: 'none',
- *                      'circle', 'square', 'diamond', 'hollowcircle',
- *                      'hollowsquare', 'hollowdiamond', 'SYMBOLCODE'.
- *                              <li> trackheadcolors:
- *                              <li> trackheadsizes:
- *                              <li> trackheadshapes: Values: 'none', 'circle',
- *                      'square', 'diamond', 'hollowcircle', 'hollowsquare',
- *                      'hollowdiamond', 'SYMBOLCODE'.
+ *                              <li> gpudb::visualize_image_do_points:
+ *                      <ul>
+ *                              <li> gpudb::visualize_image_true
+ *                              <li> gpudb::visualize_image_false
+ *                      </ul>
+ *                              <li> gpudb::visualize_image_do_shapes:
+ *                      <ul>
+ *                              <li> gpudb::visualize_image_true
+ *                              <li> gpudb::visualize_image_false
+ *                      </ul>
+ *                              <li> gpudb::visualize_image_do_tracks:
+ *                      <ul>
+ *                              <li> gpudb::visualize_image_true
+ *                              <li> gpudb::visualize_image_false
+ *                      </ul>
+ *                              <li> gpudb::visualize_image_do_symbology:
+ *                      <ul>
+ *                              <li> gpudb::visualize_image_true
+ *                              <li> gpudb::visualize_image_false
+ *                      </ul>
+ *                              <li> gpudb::visualize_image_pointcolors
+ *                              <li> gpudb::visualize_image_pointsizes
+ *                              <li> gpudb::visualize_image_pointshapes:
+ *                      <ul>
+ *                              <li> gpudb::visualize_image_none
+ *                              <li> gpudb::visualize_image_circle
+ *                              <li> gpudb::visualize_image_square
+ *                              <li> gpudb::visualize_image_diamond
+ *                              <li> gpudb::visualize_image_hollowcircle
+ *                              <li> gpudb::visualize_image_hollowsquare
+ *                              <li> gpudb::visualize_image_hollowdiamond
+ *                              <li> gpudb::visualize_image_SYMBOLCODE
+ *                      </ul>
+ *                              <li> gpudb::visualize_image_shapelinewidths
+ *                              <li> gpudb::visualize_image_shapelinecolors
+ *                              <li> gpudb::visualize_image_shapefillcolors
+ *                              <li> gpudb::visualize_image_tracklinewidths
+ *                              <li> gpudb::visualize_image_tracklinecolors
+ *                              <li> gpudb::visualize_image_trackmarkersizes
+ *                              <li> gpudb::visualize_image_trackmarkercolors
+ *                              <li> gpudb::visualize_image_trackmarkershapes:
+ *                      <ul>
+ *                              <li> gpudb::visualize_image_none
+ *                              <li> gpudb::visualize_image_circle
+ *                              <li> gpudb::visualize_image_square
+ *                              <li> gpudb::visualize_image_diamond
+ *                              <li> gpudb::visualize_image_hollowcircle
+ *                              <li> gpudb::visualize_image_hollowsquare
+ *                              <li> gpudb::visualize_image_hollowdiamond
+ *                              <li> gpudb::visualize_image_SYMBOLCODE
+ *                      </ul>
+ *                              <li> gpudb::visualize_image_trackheadcolors
+ *                              <li> gpudb::visualize_image_trackheadsizes
+ *                              <li> gpudb::visualize_image_trackheadshapes:
+ *                      <ul>
+ *                              <li> gpudb::visualize_image_none
+ *                              <li> gpudb::visualize_image_circle
+ *                              <li> gpudb::visualize_image_square
+ *                              <li> gpudb::visualize_image_diamond
+ *                              <li> gpudb::visualize_image_hollowcircle
+ *                              <li> gpudb::visualize_image_hollowsquare
+ *                              <li> gpudb::visualize_image_hollowdiamond
+ *                              <li> gpudb::visualize_image_SYMBOLCODE
+ *                      </ul>
  *                      </ul>
  * @param options
  * 
@@ -12322,36 +13703,85 @@ VisualizeImageResponse GPUdb::visualizeImage( const std::vector<std::string>& ta
  * @param maxY
  * @param width
  * @param height
- * @param projection  Values: 'EPSG:4326', 'PLATE_CARREE', '900913',
- *                    'EPSG:900913', '102100', 'EPSG:102100', '3857',
- *                    'EPSG:3857', 'WEB_MERCATOR'.
+ * @param projection
+ *                    <ul>
+ *                            <li> gpudb::visualize_image_EPSG_4326
+ *                            <li> gpudb::visualize_image_PLATE_CARREE
+ *                            <li> gpudb::visualize_image_900913
+ *                            <li> gpudb::visualize_image_EPSG_900913
+ *                            <li> gpudb::visualize_image_102100
+ *                            <li> gpudb::visualize_image_EPSG_102100
+ *                            <li> gpudb::visualize_image_3857
+ *                            <li> gpudb::visualize_image_EPSG_3857
+ *                            <li> gpudb::visualize_image_WEB_MERCATOR
+ *                    </ul>
  * @param bgColor
  * @param styleOptions
  *                      <ul>
- *                              <li> do_points: Values: 'true', 'false'.
- *                              <li> do_shapes: Values: 'true', 'false'.
- *                              <li> do_tracks: Values: 'true', 'false'.
- *                              <li> do_symbology: Values: 'true', 'false'.
- *                              <li> pointcolors:
- *                              <li> pointsizes:
- *                              <li> pointshapes: Values: 'none', 'circle',
- *                      'square', 'diamond', 'hollowcircle', 'hollowsquare',
- *                      'hollowdiamond', 'SYMBOLCODE'.
- *                              <li> shapelinewidths:
- *                              <li> shapelinecolors:
- *                              <li> shapefillcolors:
- *                              <li> tracklinewidths:
- *                              <li> tracklinecolors:
- *                              <li> trackmarkersizes:
- *                              <li> trackmarkercolors:
- *                              <li> trackmarkershapes: Values: 'none',
- *                      'circle', 'square', 'diamond', 'hollowcircle',
- *                      'hollowsquare', 'hollowdiamond', 'SYMBOLCODE'.
- *                              <li> trackheadcolors:
- *                              <li> trackheadsizes:
- *                              <li> trackheadshapes: Values: 'none', 'circle',
- *                      'square', 'diamond', 'hollowcircle', 'hollowsquare',
- *                      'hollowdiamond', 'SYMBOLCODE'.
+ *                              <li> gpudb::visualize_image_do_points:
+ *                      <ul>
+ *                              <li> gpudb::visualize_image_true
+ *                              <li> gpudb::visualize_image_false
+ *                      </ul>
+ *                              <li> gpudb::visualize_image_do_shapes:
+ *                      <ul>
+ *                              <li> gpudb::visualize_image_true
+ *                              <li> gpudb::visualize_image_false
+ *                      </ul>
+ *                              <li> gpudb::visualize_image_do_tracks:
+ *                      <ul>
+ *                              <li> gpudb::visualize_image_true
+ *                              <li> gpudb::visualize_image_false
+ *                      </ul>
+ *                              <li> gpudb::visualize_image_do_symbology:
+ *                      <ul>
+ *                              <li> gpudb::visualize_image_true
+ *                              <li> gpudb::visualize_image_false
+ *                      </ul>
+ *                              <li> gpudb::visualize_image_pointcolors
+ *                              <li> gpudb::visualize_image_pointsizes
+ *                              <li> gpudb::visualize_image_pointshapes:
+ *                      <ul>
+ *                              <li> gpudb::visualize_image_none
+ *                              <li> gpudb::visualize_image_circle
+ *                              <li> gpudb::visualize_image_square
+ *                              <li> gpudb::visualize_image_diamond
+ *                              <li> gpudb::visualize_image_hollowcircle
+ *                              <li> gpudb::visualize_image_hollowsquare
+ *                              <li> gpudb::visualize_image_hollowdiamond
+ *                              <li> gpudb::visualize_image_SYMBOLCODE
+ *                      </ul>
+ *                              <li> gpudb::visualize_image_shapelinewidths
+ *                              <li> gpudb::visualize_image_shapelinecolors
+ *                              <li> gpudb::visualize_image_shapefillcolors
+ *                              <li> gpudb::visualize_image_tracklinewidths
+ *                              <li> gpudb::visualize_image_tracklinecolors
+ *                              <li> gpudb::visualize_image_trackmarkersizes
+ *                              <li> gpudb::visualize_image_trackmarkercolors
+ *                              <li> gpudb::visualize_image_trackmarkershapes:
+ *                      <ul>
+ *                              <li> gpudb::visualize_image_none
+ *                              <li> gpudb::visualize_image_circle
+ *                              <li> gpudb::visualize_image_square
+ *                              <li> gpudb::visualize_image_diamond
+ *                              <li> gpudb::visualize_image_hollowcircle
+ *                              <li> gpudb::visualize_image_hollowsquare
+ *                              <li> gpudb::visualize_image_hollowdiamond
+ *                              <li> gpudb::visualize_image_SYMBOLCODE
+ *                      </ul>
+ *                              <li> gpudb::visualize_image_trackheadcolors
+ *                              <li> gpudb::visualize_image_trackheadsizes
+ *                              <li> gpudb::visualize_image_trackheadshapes:
+ *                      <ul>
+ *                              <li> gpudb::visualize_image_none
+ *                              <li> gpudb::visualize_image_circle
+ *                              <li> gpudb::visualize_image_square
+ *                              <li> gpudb::visualize_image_diamond
+ *                              <li> gpudb::visualize_image_hollowcircle
+ *                              <li> gpudb::visualize_image_hollowsquare
+ *                              <li> gpudb::visualize_image_hollowdiamond
+ *                              <li> gpudb::visualize_image_SYMBOLCODE
+ *                      </ul>
  *                      </ul>
  * @param options
  * @param[out] response_  Response object containing the results of the
@@ -12457,36 +13887,119 @@ VisualizeImageClassbreakResponse& GPUdb::visualizeImageClassbreak( const Visuali
  * @param maxY
  * @param width
  * @param height
- * @param projection  Values: 'EPSG:4326', 'PLATE_CARREE', '900913',
- *                    'EPSG:900913', '102100', 'EPSG:102100', '3857',
- *                    'EPSG:3857', 'WEB_MERCATOR'.
+ * @param projection
+ *                    <ul>
+ *                            <li> gpudb::visualize_image_classbreak_EPSG_4326
+ *                            <li>
+ *                    gpudb::visualize_image_classbreak_PLATE_CARREE
+ *                            <li> gpudb::visualize_image_classbreak_900913
+ *                            <li>
+ *                    gpudb::visualize_image_classbreak_EPSG_900913
+ *                            <li> gpudb::visualize_image_classbreak_102100
+ *                            <li>
+ *                    gpudb::visualize_image_classbreak_EPSG_102100
+ *                            <li> gpudb::visualize_image_classbreak_3857
+ *                            <li> gpudb::visualize_image_classbreak_EPSG_3857
+ *                            <li>
+ *                    gpudb::visualize_image_classbreak_WEB_MERCATOR
+ *                    </ul>
  * @param bgColor
  * @param styleOptions
  *                      <ul>
- *                              <li> do_points: Values: 'true', 'false'.
- *                              <li> do_shapes: Values: 'true', 'false'.
- *                              <li> do_tracks: Values: 'true', 'false'.
- *                              <li> do_symbology: Values: 'true', 'false'.
- *                              <li> pointcolors:
- *                              <li> pointsizes:
- *                              <li> pointshapes: Values: 'none', 'circle',
- *                      'square', 'diamond', 'hollowcircle', 'hollowsquare',
- *                      'hollowdiamond', 'SYMBOLCODE'.
- *                              <li> shapelinewidths:
- *                              <li> shapelinecolors:
- *                              <li> shapefillcolors:
- *                              <li> tracklinewidths:
- *                              <li> tracklinecolors:
- *                              <li> trackmarkersizes:
- *                              <li> trackmarkercolors:
- *                              <li> trackmarkershapes: Values: 'none',
- *                      'circle', 'square', 'diamond', 'hollowcircle',
- *                      'hollowsquare', 'hollowdiamond', 'SYMBOLCODE'.
- *                              <li> trackheadcolors:
- *                              <li> trackheadsizes:
- *                              <li> trackheadshapes: Values: 'none', 'circle',
- *                      'square', 'diamond', 'hollowcircle', 'hollowsquare',
- *                      'hollowdiamond', 'SYMBOLCODE'.
+ *                              <li>
+ *                      gpudb::visualize_image_classbreak_do_points:
+ *                      <ul>
+ *                              <li> gpudb::visualize_image_classbreak_true
+ *                              <li> gpudb::visualize_image_classbreak_false
+ *                      </ul>
+ *                              <li>
+ *                      gpudb::visualize_image_classbreak_do_shapes:
+ *                      <ul>
+ *                              <li> gpudb::visualize_image_classbreak_true
+ *                              <li> gpudb::visualize_image_classbreak_false
+ *                      </ul>
+ *                              <li>
+ *                      gpudb::visualize_image_classbreak_do_tracks:
+ *                      <ul>
+ *                              <li> gpudb::visualize_image_classbreak_true
+ *                              <li> gpudb::visualize_image_classbreak_false
+ *                      </ul>
+ *                              <li>
+ *                      gpudb::visualize_image_classbreak_do_symbology:
+ *                      <ul>
+ *                              <li> gpudb::visualize_image_classbreak_true
+ *                              <li> gpudb::visualize_image_classbreak_false
+ *                      </ul>
+ *                              <li>
+ *                      gpudb::visualize_image_classbreak_pointcolors
+ *                              <li>
+ *                      gpudb::visualize_image_classbreak_pointsizes
+ *                              <li>
+ *                      gpudb::visualize_image_classbreak_pointshapes:
+ *                      <ul>
+ *                              <li> gpudb::visualize_image_classbreak_none
+ *                              <li> gpudb::visualize_image_classbreak_circle
+ *                              <li> gpudb::visualize_image_classbreak_square
+ *                              <li> gpudb::visualize_image_classbreak_diamond
+ *                              <li>
+ *                      gpudb::visualize_image_classbreak_hollowcircle
+ *                              <li>
+ *                      gpudb::visualize_image_classbreak_hollowsquare
+ *                              <li>
+ *                      gpudb::visualize_image_classbreak_hollowdiamond
+ *                              <li>
+ *                      gpudb::visualize_image_classbreak_SYMBOLCODE
+ *                      </ul>
+ *                              <li>
+ *                      gpudb::visualize_image_classbreak_shapelinewidths
+ *                              <li>
+ *                      gpudb::visualize_image_classbreak_shapelinecolors
+ *                              <li>
+ *                      gpudb::visualize_image_classbreak_shapefillcolors
+ *                              <li>
+ *                      gpudb::visualize_image_classbreak_tracklinewidths
+ *                              <li>
+ *                      gpudb::visualize_image_classbreak_tracklinecolors
+ *                              <li>
+ *                      gpudb::visualize_image_classbreak_trackmarkersizes
+ *                              <li>
+ *                      gpudb::visualize_image_classbreak_trackmarkercolors
+ *                              <li>
+ *                      gpudb::visualize_image_classbreak_trackmarkershapes:
+ *                      <ul>
+ *                              <li> gpudb::visualize_image_classbreak_none
+ *                              <li> gpudb::visualize_image_classbreak_circle
+ *                              <li> gpudb::visualize_image_classbreak_square
+ *                              <li> gpudb::visualize_image_classbreak_diamond
+ *                              <li>
+ *                      gpudb::visualize_image_classbreak_hollowcircle
+ *                              <li>
+ *                      gpudb::visualize_image_classbreak_hollowsquare
+ *                              <li>
+ *                      gpudb::visualize_image_classbreak_hollowdiamond
+ *                              <li>
+ *                      gpudb::visualize_image_classbreak_SYMBOLCODE
+ *                      </ul>
+ *                              <li>
+ *                      gpudb::visualize_image_classbreak_trackheadcolors
+ *                              <li>
+ *                      gpudb::visualize_image_classbreak_trackheadsizes
+ *                              <li>
+ *                      gpudb::visualize_image_classbreak_trackheadshapes:
+ *                      <ul>
+ *                              <li> gpudb::visualize_image_classbreak_none
+ *                              <li> gpudb::visualize_image_classbreak_circle
+ *                              <li> gpudb::visualize_image_classbreak_square
+ *                              <li> gpudb::visualize_image_classbreak_diamond
+ *                              <li>
+ *                      gpudb::visualize_image_classbreak_hollowcircle
+ *                              <li>
+ *                      gpudb::visualize_image_classbreak_hollowsquare
+ *                              <li>
+ *                      gpudb::visualize_image_classbreak_hollowdiamond
+ *                              <li>
+ *                      gpudb::visualize_image_classbreak_SYMBOLCODE
+ *                      </ul>
  *                      </ul>
  * @param options
  * 
@@ -12558,36 +14071,119 @@ VisualizeImageClassbreakResponse GPUdb::visualizeImageClassbreak( const std::vec
  * @param maxY
  * @param width
  * @param height
- * @param projection  Values: 'EPSG:4326', 'PLATE_CARREE', '900913',
- *                    'EPSG:900913', '102100', 'EPSG:102100', '3857',
- *                    'EPSG:3857', 'WEB_MERCATOR'.
+ * @param projection
+ *                    <ul>
+ *                            <li> gpudb::visualize_image_classbreak_EPSG_4326
+ *                            <li>
+ *                    gpudb::visualize_image_classbreak_PLATE_CARREE
+ *                            <li> gpudb::visualize_image_classbreak_900913
+ *                            <li>
+ *                    gpudb::visualize_image_classbreak_EPSG_900913
+ *                            <li> gpudb::visualize_image_classbreak_102100
+ *                            <li>
+ *                    gpudb::visualize_image_classbreak_EPSG_102100
+ *                            <li> gpudb::visualize_image_classbreak_3857
+ *                            <li> gpudb::visualize_image_classbreak_EPSG_3857
+ *                            <li>
+ *                    gpudb::visualize_image_classbreak_WEB_MERCATOR
+ *                    </ul>
  * @param bgColor
  * @param styleOptions
  *                      <ul>
- *                              <li> do_points: Values: 'true', 'false'.
- *                              <li> do_shapes: Values: 'true', 'false'.
- *                              <li> do_tracks: Values: 'true', 'false'.
- *                              <li> do_symbology: Values: 'true', 'false'.
- *                              <li> pointcolors:
- *                              <li> pointsizes:
- *                              <li> pointshapes: Values: 'none', 'circle',
- *                      'square', 'diamond', 'hollowcircle', 'hollowsquare',
- *                      'hollowdiamond', 'SYMBOLCODE'.
- *                              <li> shapelinewidths:
- *                              <li> shapelinecolors:
- *                              <li> shapefillcolors:
- *                              <li> tracklinewidths:
- *                              <li> tracklinecolors:
- *                              <li> trackmarkersizes:
- *                              <li> trackmarkercolors:
- *                              <li> trackmarkershapes: Values: 'none',
- *                      'circle', 'square', 'diamond', 'hollowcircle',
- *                      'hollowsquare', 'hollowdiamond', 'SYMBOLCODE'.
- *                              <li> trackheadcolors:
- *                              <li> trackheadsizes:
- *                              <li> trackheadshapes: Values: 'none', 'circle',
- *                      'square', 'diamond', 'hollowcircle', 'hollowsquare',
- *                      'hollowdiamond', 'SYMBOLCODE'.
+ *                              <li>
+ *                      gpudb::visualize_image_classbreak_do_points:
+ *                      <ul>
+ *                              <li> gpudb::visualize_image_classbreak_true
+ *                              <li> gpudb::visualize_image_classbreak_false
+ *                      </ul>
+ *                              <li>
+ *                      gpudb::visualize_image_classbreak_do_shapes:
+ *                      <ul>
+ *                              <li> gpudb::visualize_image_classbreak_true
+ *                              <li> gpudb::visualize_image_classbreak_false
+ *                      </ul>
+ *                              <li>
+ *                      gpudb::visualize_image_classbreak_do_tracks:
+ *                      <ul>
+ *                              <li> gpudb::visualize_image_classbreak_true
+ *                              <li> gpudb::visualize_image_classbreak_false
+ *                      </ul>
+ *                              <li>
+ *                      gpudb::visualize_image_classbreak_do_symbology:
+ *                      <ul>
+ *                              <li> gpudb::visualize_image_classbreak_true
+ *                              <li> gpudb::visualize_image_classbreak_false
+ *                      </ul>
+ *                              <li>
+ *                      gpudb::visualize_image_classbreak_pointcolors
+ *                              <li>
+ *                      gpudb::visualize_image_classbreak_pointsizes
+ *                              <li>
+ *                      gpudb::visualize_image_classbreak_pointshapes:
+ *                      <ul>
+ *                              <li> gpudb::visualize_image_classbreak_none
+ *                              <li> gpudb::visualize_image_classbreak_circle
+ *                              <li> gpudb::visualize_image_classbreak_square
+ *                              <li> gpudb::visualize_image_classbreak_diamond
+ *                              <li>
+ *                      gpudb::visualize_image_classbreak_hollowcircle
+ *                              <li>
+ *                      gpudb::visualize_image_classbreak_hollowsquare
+ *                              <li>
+ *                      gpudb::visualize_image_classbreak_hollowdiamond
+ *                              <li>
+ *                      gpudb::visualize_image_classbreak_SYMBOLCODE
+ *                      </ul>
+ *                              <li>
+ *                      gpudb::visualize_image_classbreak_shapelinewidths
+ *                              <li>
+ *                      gpudb::visualize_image_classbreak_shapelinecolors
+ *                              <li>
+ *                      gpudb::visualize_image_classbreak_shapefillcolors
+ *                              <li>
+ *                      gpudb::visualize_image_classbreak_tracklinewidths
+ *                              <li>
+ *                      gpudb::visualize_image_classbreak_tracklinecolors
+ *                              <li>
+ *                      gpudb::visualize_image_classbreak_trackmarkersizes
+ *                              <li>
+ *                      gpudb::visualize_image_classbreak_trackmarkercolors
+ *                              <li>
+ *                      gpudb::visualize_image_classbreak_trackmarkershapes:
+ *                      <ul>
+ *                              <li> gpudb::visualize_image_classbreak_none
+ *                              <li> gpudb::visualize_image_classbreak_circle
+ *                              <li> gpudb::visualize_image_classbreak_square
+ *                              <li> gpudb::visualize_image_classbreak_diamond
+ *                              <li>
+ *                      gpudb::visualize_image_classbreak_hollowcircle
+ *                              <li>
+ *                      gpudb::visualize_image_classbreak_hollowsquare
+ *                              <li>
+ *                      gpudb::visualize_image_classbreak_hollowdiamond
+ *                              <li>
+ *                      gpudb::visualize_image_classbreak_SYMBOLCODE
+ *                      </ul>
+ *                              <li>
+ *                      gpudb::visualize_image_classbreak_trackheadcolors
+ *                              <li>
+ *                      gpudb::visualize_image_classbreak_trackheadsizes
+ *                              <li>
+ *                      gpudb::visualize_image_classbreak_trackheadshapes:
+ *                      <ul>
+ *                              <li> gpudb::visualize_image_classbreak_none
+ *                              <li> gpudb::visualize_image_classbreak_circle
+ *                              <li> gpudb::visualize_image_classbreak_square
+ *                              <li> gpudb::visualize_image_classbreak_diamond
+ *                              <li>
+ *                      gpudb::visualize_image_classbreak_hollowcircle
+ *                              <li>
+ *                      gpudb::visualize_image_classbreak_hollowsquare
+ *                              <li>
+ *                      gpudb::visualize_image_classbreak_hollowdiamond
+ *                              <li>
+ *                      gpudb::visualize_image_classbreak_SYMBOLCODE
+ *                      </ul>
  *                      </ul>
  * @param options
  * @param[out] response_  Response object containing the results of the
@@ -12696,18 +14292,40 @@ VisualizeImageHeatmapResponse& GPUdb::visualizeImageHeatmap( const VisualizeImag
  * @param maxY
  * @param width
  * @param height
- * @param projection  Values: 'EPSG:4326', 'PLATE_CARREE', '900913',
- *                    'EPSG:900913', '102100', 'EPSG:102100', '3857',
- *                    'EPSG:3857', 'WEB_MERCATOR'.
+ * @param projection
+ *                    <ul>
+ *                            <li> gpudb::visualize_image_heatmap_EPSG_4326
+ *                            <li> gpudb::visualize_image_heatmap_PLATE_CARREE
+ *                            <li> gpudb::visualize_image_heatmap_900913
+ *                            <li> gpudb::visualize_image_heatmap_EPSG_900913
+ *                            <li> gpudb::visualize_image_heatmap_102100
+ *                            <li> gpudb::visualize_image_heatmap_EPSG_102100
+ *                            <li> gpudb::visualize_image_heatmap_3857
+ *                            <li> gpudb::visualize_image_heatmap_EPSG_3857
+ *                            <li> gpudb::visualize_image_heatmap_WEB_MERCATOR
+ *                    </ul>
  * @param styleOptions
  *                      <ul>
- *                              <li> colormap: Values: 'jet', 'hot', 'hsv',
- *                      'gray', 'blues', 'greens', 'greys', 'oranges',
- *                      'purples', 'reds', 'viridis'.
- *                              <li> blur_radius:
- *                              <li> bg_color:
- *                              <li> gradient_start_color:
- *                              <li> gradient_end_color:
+ *                              <li> gpudb::visualize_image_heatmap_colormap:
+ *                      <ul>
+ *                              <li> gpudb::visualize_image_heatmap_jet
+ *                              <li> gpudb::visualize_image_heatmap_hot
+ *                              <li> gpudb::visualize_image_heatmap_hsv
+ *                              <li> gpudb::visualize_image_heatmap_gray
+ *                              <li> gpudb::visualize_image_heatmap_blues
+ *                              <li> gpudb::visualize_image_heatmap_greens
+ *                              <li> gpudb::visualize_image_heatmap_greys
+ *                              <li> gpudb::visualize_image_heatmap_oranges
+ *                              <li> gpudb::visualize_image_heatmap_purples
+ *                              <li> gpudb::visualize_image_heatmap_reds
+ *                              <li> gpudb::visualize_image_heatmap_viridis
+ *                      </ul>
+ *                              <li> gpudb::visualize_image_heatmap_blur_radius
+ *                              <li> gpudb::visualize_image_heatmap_bg_color
+ *                              <li>
+ *                      gpudb::visualize_image_heatmap_gradient_start_color
+ *                              <li>
+ *                      gpudb::visualize_image_heatmap_gradient_end_color
  *                      </ul>
  * @param options
  * 
@@ -12762,18 +14380,40 @@ VisualizeImageHeatmapResponse GPUdb::visualizeImageHeatmap( const std::vector<st
  * @param maxY
  * @param width
  * @param height
- * @param projection  Values: 'EPSG:4326', 'PLATE_CARREE', '900913',
- *                    'EPSG:900913', '102100', 'EPSG:102100', '3857',
- *                    'EPSG:3857', 'WEB_MERCATOR'.
+ * @param projection
+ *                    <ul>
+ *                            <li> gpudb::visualize_image_heatmap_EPSG_4326
+ *                            <li> gpudb::visualize_image_heatmap_PLATE_CARREE
+ *                            <li> gpudb::visualize_image_heatmap_900913
+ *                            <li> gpudb::visualize_image_heatmap_EPSG_900913
+ *                            <li> gpudb::visualize_image_heatmap_102100
+ *                            <li> gpudb::visualize_image_heatmap_EPSG_102100
+ *                            <li> gpudb::visualize_image_heatmap_3857
+ *                            <li> gpudb::visualize_image_heatmap_EPSG_3857
+ *                            <li> gpudb::visualize_image_heatmap_WEB_MERCATOR
+ *                    </ul>
  * @param styleOptions
  *                      <ul>
- *                              <li> colormap: Values: 'jet', 'hot', 'hsv',
- *                      'gray', 'blues', 'greens', 'greys', 'oranges',
- *                      'purples', 'reds', 'viridis'.
- *                              <li> blur_radius:
- *                              <li> bg_color:
- *                              <li> gradient_start_color:
- *                              <li> gradient_end_color:
+ *                              <li> gpudb::visualize_image_heatmap_colormap:
+ *                      <ul>
+ *                              <li> gpudb::visualize_image_heatmap_jet
+ *                              <li> gpudb::visualize_image_heatmap_hot
+ *                              <li> gpudb::visualize_image_heatmap_hsv
+ *                              <li> gpudb::visualize_image_heatmap_gray
+ *                              <li> gpudb::visualize_image_heatmap_blues
+ *                              <li> gpudb::visualize_image_heatmap_greens
+ *                              <li> gpudb::visualize_image_heatmap_greys
+ *                              <li> gpudb::visualize_image_heatmap_oranges
+ *                              <li> gpudb::visualize_image_heatmap_purples
+ *                              <li> gpudb::visualize_image_heatmap_reds
+ *                              <li> gpudb::visualize_image_heatmap_viridis
+ *                      </ul>
+ *                              <li> gpudb::visualize_image_heatmap_blur_radius
+ *                              <li> gpudb::visualize_image_heatmap_bg_color
+ *                              <li>
+ *                      gpudb::visualize_image_heatmap_gradient_start_color
+ *                              <li>
+ *                      gpudb::visualize_image_heatmap_gradient_end_color
  *                      </ul>
  * @param options
  * @param[out] response_  Response object containing the results of the
@@ -12883,9 +14523,18 @@ VisualizeImageLabelsResponse& GPUdb::visualizeImageLabels( const VisualizeImageL
  * @param maxY
  * @param width
  * @param height
- * @param projection  Values: 'EPSG:4326', 'PLATE_CARREE', '900913',
- *                    'EPSG:900913', '102100', 'EPSG:102100', '3857',
- *                    'EPSG:3857', 'WEB_MERCATOR'.
+ * @param projection
+ *                    <ul>
+ *                            <li> gpudb::visualize_image_labels_EPSG_4326
+ *                            <li> gpudb::visualize_image_labels_PLATE_CARREE
+ *                            <li> gpudb::visualize_image_labels_900913
+ *                            <li> gpudb::visualize_image_labels_EPSG_900913
+ *                            <li> gpudb::visualize_image_labels_102100
+ *                            <li> gpudb::visualize_image_labels_EPSG_102100
+ *                            <li> gpudb::visualize_image_labels_3857
+ *                            <li> gpudb::visualize_image_labels_EPSG_3857
+ *                            <li> gpudb::visualize_image_labels_WEB_MERCATOR
+ *                    </ul>
  * @param options
  * 
  * @return Response object containing the result of the operation.
@@ -12976,9 +14625,18 @@ VisualizeImageLabelsResponse GPUdb::visualizeImageLabels( const std::string& tab
  * @param maxY
  * @param width
  * @param height
- * @param projection  Values: 'EPSG:4326', 'PLATE_CARREE', '900913',
- *                    'EPSG:900913', '102100', 'EPSG:102100', '3857',
- *                    'EPSG:3857', 'WEB_MERCATOR'.
+ * @param projection
+ *                    <ul>
+ *                            <li> gpudb::visualize_image_labels_EPSG_4326
+ *                            <li> gpudb::visualize_image_labels_PLATE_CARREE
+ *                            <li> gpudb::visualize_image_labels_900913
+ *                            <li> gpudb::visualize_image_labels_EPSG_900913
+ *                            <li> gpudb::visualize_image_labels_102100
+ *                            <li> gpudb::visualize_image_labels_EPSG_102100
+ *                            <li> gpudb::visualize_image_labels_3857
+ *                            <li> gpudb::visualize_image_labels_EPSG_3857
+ *                            <li> gpudb::visualize_image_labels_WEB_MERCATOR
+ *                    </ul>
  * @param options
  * @param[out] response_  Response object containing the results of the
  *                        operation.
@@ -13191,11 +14849,18 @@ VisualizeVideoResponse& GPUdb::visualizeVideo( const VisualizeVideoRequest& requ
  * @param maxY  Upper bound for the y values.
  * @param width  Width of the generated image.
  * @param height  Height of the generated image.
- * @param projection  Spatial Reference System (i.e. EPSG Code). Values:
- *                    'EPSG:4326', 'PLATE_CARREE', '900913', 'EPSG:900913',
- *                    '102100', 'EPSG:102100', '3857', 'EPSG:3857',
- *                    'WEB_MERCATOR'.
- *                      Default value is 'PLATE_CARREE'.
+ * @param projection  Spatial Reference System (i.e. EPSG Code).
+ *                    <ul>
+ *                            <li> gpudb::visualize_video_EPSG_4326
+ *                            <li> gpudb::visualize_video_PLATE_CARREE
+ *                            <li> gpudb::visualize_video_900913
+ *                            <li> gpudb::visualize_video_EPSG_900913
+ *                            <li> gpudb::visualize_video_102100
+ *                            <li> gpudb::visualize_video_EPSG_102100
+ *                            <li> gpudb::visualize_video_3857
+ *                            <li> gpudb::visualize_video_EPSG_3857
+ *                            <li> gpudb::visualize_video_WEB_MERCATOR
+ *                    </ul>
  * @param bgColor  Background color of the generated image.
  * @param timeIntervals
  * @param videoStyle
@@ -13203,45 +14868,86 @@ VisualizeVideoResponse& GPUdb::visualizeVideo( const VisualizeVideoRequest& requ
  *                    the generated video from the WMS.
  * @param styleOptions  Styling options for the image.
  *                      <ul>
- *                              <li> do_points: Rasterize point data toggle.
- *                      Values: 'true', 'false'.
- *                              <li> do_shapes: Rasterize shapes toggle.
- *                      Values: 'true', 'false'.
- *                              <li> do_tracks: Rasterize tracks toggle.
- *                      Values: 'true', 'false'.
- *                              <li> pointcolors: RGB color value in hex for
- *                      the points.
- *                              <li> pointsizes: Size of points.
- *                              <li> pointshapes: Shape of the point. Values:
- *                      'none', 'circle', 'square', 'diamond', 'hollowcircle',
- *                      'hollowsquare', 'hollowdiamond', 'SYMBOLCODE'.
- *                              <li> shapelinewidths: Width of the lines.
- *                              <li> shapelinecolors: RGB color values in hex
- *                      for the line.
- *                              <li> shapefillcolors: RGB color values in hex
- *                      for the fill color of the shapes. Use '-1' for no fill.
- *                              <li> tracklinewidths: Width of the track lines.
- *                      '0' implies do not draw track lines.
- *                              <li> tracklinecolors: RGB color values for the
- *                      track lines.
- *                              <li> trackmarkersizes: Size of the track point
- *                      markers.
- *                              <li> trackmarkercolors: Color of the track
- *                      point markers.
- *                              <li> trackmarkershapes: Shape of track point
- *                      markers. Values: 'none', 'circle', 'square', 'diamond',
- *                      'hollowcircle', 'hollowsquare', 'hollowdiamond',
- *                      'SYMBOLCODE'.
- *                              <li> trackheadcolors: Color of track head
- *                      markers.
- *                              <li> trackheadsizes: Size of track head
- *                      markers.
- *                              <li> trackheadshapes: Shape of track head
- *                      markers. Values: 'none', 'circle', 'square', 'diamond',
- *                      'hollowcircle', 'hollowsquare', 'hollowdiamond',
- *                      'SYMBOLCODE'.
+ *                              <li> gpudb::visualize_video_do_points:
+ *                      Rasterize point data toggle.
+ *                      <ul>
+ *                              <li> gpudb::visualize_video_true
+ *                              <li> gpudb::visualize_video_false
  *                      </ul>
- * @param options  Optional parameters.  Default value is an empty std::map.
+ *                              <li> gpudb::visualize_video_do_shapes:
+ *                      Rasterize shapes toggle.
+ *                      <ul>
+ *                              <li> gpudb::visualize_video_true
+ *                              <li> gpudb::visualize_video_false
+ *                      </ul>
+ *                              <li> gpudb::visualize_video_do_tracks:
+ *                      Rasterize tracks toggle.
+ *                      <ul>
+ *                              <li> gpudb::visualize_video_true
+ *                              <li> gpudb::visualize_video_false
+ *                      </ul>
+ *                              <li> gpudb::visualize_video_pointcolors: RGB
+ *                      color value in hex for the points.
+ *                              <li> gpudb::visualize_video_pointsizes: Size of
+ *                      points.
+ *                              <li> gpudb::visualize_video_pointshapes: Shape
+ *                      of the point.
+ *                      <ul>
+ *                              <li> gpudb::visualize_video_none
+ *                              <li> gpudb::visualize_video_circle
+ *                              <li> gpudb::visualize_video_square
+ *                              <li> gpudb::visualize_video_diamond
+ *                              <li> gpudb::visualize_video_hollowcircle
+ *                              <li> gpudb::visualize_video_hollowsquare
+ *                              <li> gpudb::visualize_video_hollowdiamond
+ *                              <li> gpudb::visualize_video_SYMBOLCODE
+ *                      </ul>
+ *                              <li> gpudb::visualize_video_shapelinewidths:
+ *                      Width of the lines.
+ *                              <li> gpudb::visualize_video_shapelinecolors:
+ *                      RGB color values in hex for the line.
+ *                              <li> gpudb::visualize_video_shapefillcolors:
+ *                      RGB color values in hex for the fill color of the
+ *                      shapes. Use '-1' for no fill.
+ *                              <li> gpudb::visualize_video_tracklinewidths:
+ *                      Width of the track lines. '0' implies do not draw track
+ *                      lines.
+ *                              <li> gpudb::visualize_video_tracklinecolors:
+ *                      RGB color values for the track lines.
+ *                              <li> gpudb::visualize_video_trackmarkersizes:
+ *                      Size of the track point markers.
+ *                              <li> gpudb::visualize_video_trackmarkercolors:
+ *                      Color of the track point markers.
+ *                              <li> gpudb::visualize_video_trackmarkershapes:
+ *                      Shape of track point markers.
+ *                      <ul>
+ *                              <li> gpudb::visualize_video_none
+ *                              <li> gpudb::visualize_video_circle
+ *                              <li> gpudb::visualize_video_square
+ *                              <li> gpudb::visualize_video_diamond
+ *                              <li> gpudb::visualize_video_hollowcircle
+ *                              <li> gpudb::visualize_video_hollowsquare
+ *                              <li> gpudb::visualize_video_hollowdiamond
+ *                              <li> gpudb::visualize_video_SYMBOLCODE
+ *                      </ul>
+ *                              <li> gpudb::visualize_video_trackheadcolors:
+ *                      Color of track head markers.
+ *                              <li> gpudb::visualize_video_trackheadsizes:
+ *                      Size of track head markers.
+ *                              <li> gpudb::visualize_video_trackheadshapes:
+ *                      Shape of track head markers.
+ *                      <ul>
+ *                              <li> gpudb::visualize_video_none
+ *                              <li> gpudb::visualize_video_circle
+ *                              <li> gpudb::visualize_video_square
+ *                              <li> gpudb::visualize_video_diamond
+ *                              <li> gpudb::visualize_video_hollowcircle
+ *                              <li> gpudb::visualize_video_hollowsquare
+ *                              <li> gpudb::visualize_video_hollowdiamond
+ *                              <li> gpudb::visualize_video_SYMBOLCODE
+ *                      </ul>
+ *                      </ul>
+ * @param options  Optional parameters.
  * 
  * @return Response object containing the result of the operation.
  * 
@@ -13339,11 +15045,18 @@ VisualizeVideoResponse GPUdb::visualizeVideo( const std::vector<std::string>& ta
  * @param maxY  Upper bound for the y values.
  * @param width  Width of the generated image.
  * @param height  Height of the generated image.
- * @param projection  Spatial Reference System (i.e. EPSG Code). Values:
- *                    'EPSG:4326', 'PLATE_CARREE', '900913', 'EPSG:900913',
- *                    '102100', 'EPSG:102100', '3857', 'EPSG:3857',
- *                    'WEB_MERCATOR'.
- *                      Default value is 'PLATE_CARREE'.
+ * @param projection  Spatial Reference System (i.e. EPSG Code).
+ *                    <ul>
+ *                            <li> gpudb::visualize_video_EPSG_4326
+ *                            <li> gpudb::visualize_video_PLATE_CARREE
+ *                            <li> gpudb::visualize_video_900913
+ *                            <li> gpudb::visualize_video_EPSG_900913
+ *                            <li> gpudb::visualize_video_102100
+ *                            <li> gpudb::visualize_video_EPSG_102100
+ *                            <li> gpudb::visualize_video_3857
+ *                            <li> gpudb::visualize_video_EPSG_3857
+ *                            <li> gpudb::visualize_video_WEB_MERCATOR
+ *                    </ul>
  * @param bgColor  Background color of the generated image.
  * @param timeIntervals
  * @param videoStyle
@@ -13351,45 +15064,86 @@ VisualizeVideoResponse GPUdb::visualizeVideo( const std::vector<std::string>& ta
  *                    the generated video from the WMS.
  * @param styleOptions  Styling options for the image.
  *                      <ul>
- *                              <li> do_points: Rasterize point data toggle.
- *                      Values: 'true', 'false'.
- *                              <li> do_shapes: Rasterize shapes toggle.
- *                      Values: 'true', 'false'.
- *                              <li> do_tracks: Rasterize tracks toggle.
- *                      Values: 'true', 'false'.
- *                              <li> pointcolors: RGB color value in hex for
- *                      the points.
- *                              <li> pointsizes: Size of points.
- *                              <li> pointshapes: Shape of the point. Values:
- *                      'none', 'circle', 'square', 'diamond', 'hollowcircle',
- *                      'hollowsquare', 'hollowdiamond', 'SYMBOLCODE'.
- *                              <li> shapelinewidths: Width of the lines.
- *                              <li> shapelinecolors: RGB color values in hex
- *                      for the line.
- *                              <li> shapefillcolors: RGB color values in hex
- *                      for the fill color of the shapes. Use '-1' for no fill.
- *                              <li> tracklinewidths: Width of the track lines.
- *                      '0' implies do not draw track lines.
- *                              <li> tracklinecolors: RGB color values for the
- *                      track lines.
- *                              <li> trackmarkersizes: Size of the track point
- *                      markers.
- *                              <li> trackmarkercolors: Color of the track
- *                      point markers.
- *                              <li> trackmarkershapes: Shape of track point
- *                      markers. Values: 'none', 'circle', 'square', 'diamond',
- *                      'hollowcircle', 'hollowsquare', 'hollowdiamond',
- *                      'SYMBOLCODE'.
- *                              <li> trackheadcolors: Color of track head
- *                      markers.
- *                              <li> trackheadsizes: Size of track head
- *                      markers.
- *                              <li> trackheadshapes: Shape of track head
- *                      markers. Values: 'none', 'circle', 'square', 'diamond',
- *                      'hollowcircle', 'hollowsquare', 'hollowdiamond',
- *                      'SYMBOLCODE'.
+ *                              <li> gpudb::visualize_video_do_points:
+ *                      Rasterize point data toggle.
+ *                      <ul>
+ *                              <li> gpudb::visualize_video_true
+ *                              <li> gpudb::visualize_video_false
  *                      </ul>
- * @param options  Optional parameters.  Default value is an empty std::map.
+ *                              <li> gpudb::visualize_video_do_shapes:
+ *                      Rasterize shapes toggle.
+ *                      <ul>
+ *                              <li> gpudb::visualize_video_true
+ *                              <li> gpudb::visualize_video_false
+ *                      </ul>
+ *                              <li> gpudb::visualize_video_do_tracks:
+ *                      Rasterize tracks toggle.
+ *                      <ul>
+ *                              <li> gpudb::visualize_video_true
+ *                              <li> gpudb::visualize_video_false
+ *                      </ul>
+ *                              <li> gpudb::visualize_video_pointcolors: RGB
+ *                      color value in hex for the points.
+ *                              <li> gpudb::visualize_video_pointsizes: Size of
+ *                      points.
+ *                              <li> gpudb::visualize_video_pointshapes: Shape
+ *                      of the point.
+ *                      <ul>
+ *                              <li> gpudb::visualize_video_none
+ *                              <li> gpudb::visualize_video_circle
+ *                              <li> gpudb::visualize_video_square
+ *                              <li> gpudb::visualize_video_diamond
+ *                              <li> gpudb::visualize_video_hollowcircle
+ *                              <li> gpudb::visualize_video_hollowsquare
+ *                              <li> gpudb::visualize_video_hollowdiamond
+ *                              <li> gpudb::visualize_video_SYMBOLCODE
+ *                      </ul>
+ *                              <li> gpudb::visualize_video_shapelinewidths:
+ *                      Width of the lines.
+ *                              <li> gpudb::visualize_video_shapelinecolors:
+ *                      RGB color values in hex for the line.
+ *                              <li> gpudb::visualize_video_shapefillcolors:
+ *                      RGB color values in hex for the fill color of the
+ *                      shapes. Use '-1' for no fill.
+ *                              <li> gpudb::visualize_video_tracklinewidths:
+ *                      Width of the track lines. '0' implies do not draw track
+ *                      lines.
+ *                              <li> gpudb::visualize_video_tracklinecolors:
+ *                      RGB color values for the track lines.
+ *                              <li> gpudb::visualize_video_trackmarkersizes:
+ *                      Size of the track point markers.
+ *                              <li> gpudb::visualize_video_trackmarkercolors:
+ *                      Color of the track point markers.
+ *                              <li> gpudb::visualize_video_trackmarkershapes:
+ *                      Shape of track point markers.
+ *                      <ul>
+ *                              <li> gpudb::visualize_video_none
+ *                              <li> gpudb::visualize_video_circle
+ *                              <li> gpudb::visualize_video_square
+ *                              <li> gpudb::visualize_video_diamond
+ *                              <li> gpudb::visualize_video_hollowcircle
+ *                              <li> gpudb::visualize_video_hollowsquare
+ *                              <li> gpudb::visualize_video_hollowdiamond
+ *                              <li> gpudb::visualize_video_SYMBOLCODE
+ *                      </ul>
+ *                              <li> gpudb::visualize_video_trackheadcolors:
+ *                      Color of track head markers.
+ *                              <li> gpudb::visualize_video_trackheadsizes:
+ *                      Size of track head markers.
+ *                              <li> gpudb::visualize_video_trackheadshapes:
+ *                      Shape of track head markers.
+ *                      <ul>
+ *                              <li> gpudb::visualize_video_none
+ *                              <li> gpudb::visualize_video_circle
+ *                              <li> gpudb::visualize_video_square
+ *                              <li> gpudb::visualize_video_diamond
+ *                              <li> gpudb::visualize_video_hollowcircle
+ *                              <li> gpudb::visualize_video_hollowsquare
+ *                              <li> gpudb::visualize_video_hollowdiamond
+ *                              <li> gpudb::visualize_video_SYMBOLCODE
+ *                      </ul>
+ *                      </ul>
+ * @param options  Optional parameters.
  * @param[out] response_  Response object containing the results of the
  *                        operation.
  * 
@@ -13494,20 +15248,41 @@ VisualizeVideoHeatmapResponse& GPUdb::visualizeVideoHeatmap( const VisualizeVide
  * @param timeIntervals
  * @param width
  * @param height
- * @param projection  Values: 'EPSG:4326', 'PLATE_CARREE', '900913',
- *                    'EPSG:900913', '102100', 'EPSG:102100', '3857',
- *                    'EPSG:3857', 'WEB_MERCATOR'.
+ * @param projection
+ *                    <ul>
+ *                            <li> gpudb::visualize_video_heatmap_EPSG_4326
+ *                            <li> gpudb::visualize_video_heatmap_PLATE_CARREE
+ *                            <li> gpudb::visualize_video_heatmap_900913
+ *                            <li> gpudb::visualize_video_heatmap_EPSG_900913
+ *                            <li> gpudb::visualize_video_heatmap_102100
+ *                            <li> gpudb::visualize_video_heatmap_EPSG_102100
+ *                            <li> gpudb::visualize_video_heatmap_3857
+ *                            <li> gpudb::visualize_video_heatmap_EPSG_3857
+ *                            <li> gpudb::visualize_video_heatmap_WEB_MERCATOR
+ *                    </ul>
  * @param videoStyle
  * @param sessionKey
  * @param styleOptions
  *                      <ul>
- *                              <li> colormap: Values: 'jet', 'hot', 'hsv',
- *                      'gray', 'blues', 'greens', 'greys', 'oranges',
- *                      'purples', 'reds'.
- *                              <li> blur_radius:
- *                              <li> bg_color:
- *                              <li> gradient_start_color:
- *                              <li> gradient_end_color:
+ *                              <li> gpudb::visualize_video_heatmap_colormap:
+ *                      <ul>
+ *                              <li> gpudb::visualize_video_heatmap_jet
+ *                              <li> gpudb::visualize_video_heatmap_hot
+ *                              <li> gpudb::visualize_video_heatmap_hsv
+ *                              <li> gpudb::visualize_video_heatmap_gray
+ *                              <li> gpudb::visualize_video_heatmap_blues
+ *                              <li> gpudb::visualize_video_heatmap_greens
+ *                              <li> gpudb::visualize_video_heatmap_greys
+ *                              <li> gpudb::visualize_video_heatmap_oranges
+ *                              <li> gpudb::visualize_video_heatmap_purples
+ *                              <li> gpudb::visualize_video_heatmap_reds
+ *                      </ul>
+ *                              <li> gpudb::visualize_video_heatmap_blur_radius
+ *                              <li> gpudb::visualize_video_heatmap_bg_color
+ *                              <li>
+ *                      gpudb::visualize_video_heatmap_gradient_start_color
+ *                              <li>
+ *                      gpudb::visualize_video_heatmap_gradient_end_color
  *                      </ul>
  * @param options
  * 
@@ -13566,20 +15341,41 @@ VisualizeVideoHeatmapResponse GPUdb::visualizeVideoHeatmap( const std::vector<st
  * @param timeIntervals
  * @param width
  * @param height
- * @param projection  Values: 'EPSG:4326', 'PLATE_CARREE', '900913',
- *                    'EPSG:900913', '102100', 'EPSG:102100', '3857',
- *                    'EPSG:3857', 'WEB_MERCATOR'.
+ * @param projection
+ *                    <ul>
+ *                            <li> gpudb::visualize_video_heatmap_EPSG_4326
+ *                            <li> gpudb::visualize_video_heatmap_PLATE_CARREE
+ *                            <li> gpudb::visualize_video_heatmap_900913
+ *                            <li> gpudb::visualize_video_heatmap_EPSG_900913
+ *                            <li> gpudb::visualize_video_heatmap_102100
+ *                            <li> gpudb::visualize_video_heatmap_EPSG_102100
+ *                            <li> gpudb::visualize_video_heatmap_3857
+ *                            <li> gpudb::visualize_video_heatmap_EPSG_3857
+ *                            <li> gpudb::visualize_video_heatmap_WEB_MERCATOR
+ *                    </ul>
  * @param videoStyle
  * @param sessionKey
  * @param styleOptions
  *                      <ul>
- *                              <li> colormap: Values: 'jet', 'hot', 'hsv',
- *                      'gray', 'blues', 'greens', 'greys', 'oranges',
- *                      'purples', 'reds'.
- *                              <li> blur_radius:
- *                              <li> bg_color:
- *                              <li> gradient_start_color:
- *                              <li> gradient_end_color:
+ *                              <li> gpudb::visualize_video_heatmap_colormap:
+ *                      <ul>
+ *                              <li> gpudb::visualize_video_heatmap_jet
+ *                              <li> gpudb::visualize_video_heatmap_hot
+ *                              <li> gpudb::visualize_video_heatmap_hsv
+ *                              <li> gpudb::visualize_video_heatmap_gray
+ *                              <li> gpudb::visualize_video_heatmap_blues
+ *                              <li> gpudb::visualize_video_heatmap_greens
+ *                              <li> gpudb::visualize_video_heatmap_greys
+ *                              <li> gpudb::visualize_video_heatmap_oranges
+ *                              <li> gpudb::visualize_video_heatmap_purples
+ *                              <li> gpudb::visualize_video_heatmap_reds
+ *                      </ul>
+ *                              <li> gpudb::visualize_video_heatmap_blur_radius
+ *                              <li> gpudb::visualize_video_heatmap_bg_color
+ *                              <li>
+ *                      gpudb::visualize_video_heatmap_gradient_start_color
+ *                              <li>
+ *                      gpudb::visualize_video_heatmap_gradient_end_color
  *                      </ul>
  * @param options
  * @param[out] response_  Response object containing the results of the
