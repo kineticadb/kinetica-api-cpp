@@ -6,7 +6,7 @@
 
 /**
  * Add a new node to the GPUdb cluster. By default this will only add the node
- * to the cluster, but will not be assigned any data shards. Set the @a reshard
+ * to the cluster but will not be assigned any data shards. Set the @a reshard
  * option to @a true to move some shards from the other nodes in the cluster to
  * this node.
  * 
@@ -21,7 +21,7 @@ AdminAddNodeResponse adminAddNode( const AdminAddNodeRequest& request_ ) const;
 
 /**
  * Add a new node to the GPUdb cluster. By default this will only add the node
- * to the cluster, but will not be assigned any data shards. Set the @a reshard
+ * to the cluster but will not be assigned any data shards. Set the @a reshard
  * option to @a true to move some shards from the other nodes in the cluster to
  * this node.
  * 
@@ -40,7 +40,7 @@ AdminAddNodeResponse& adminAddNode( const AdminAddNodeRequest& request_,
 
 /**
  * Add a new node to the GPUdb cluster. By default this will only add the node
- * to the cluster, but will not be assigned any data shards. Set the @a reshard
+ * to the cluster but will not be assigned any data shards. Set the @a reshard
  * option to @a true to move some shards from the other nodes in the cluster to
  * this node.
  * 
@@ -70,7 +70,7 @@ AdminAddNodeResponse adminAddNode( const std::string& hostName,
 
 /**
  * Add a new node to the GPUdb cluster. By default this will only add the node
- * to the cluster, but will not be assigned any data shards. Set the @a reshard
+ * to the cluster but will not be assigned any data shards. Set the @a reshard
  * option to @a true to move some shards from the other nodes in the cluster to
  * this node.
  * 
@@ -165,11 +165,12 @@ AdminAlterConfigurationResponse& adminAlterConfiguration( const std::string& con
                                                           AdminAlterConfigurationResponse& response_ ) const;
 
 /**
- * Perform the requested action on a list of one or more job(s) . Currently
- * only cancelling filter, aggregate and get records reqeusts are supported.
- * Based on the type of job and the current state of execution, the action may
- * not be successfully executed. The final result of the attempted actions for
- * each specified job is returned in the status array of the response.
+ * Perform the requested action on a list of one or more job(s). Based on the
+ * type of job and the current state of execution, the action may not be
+ * successfully executed. The final result of the attempted actions for each
+ * specified job is returned in the status array of the response. See <a
+ * href="../../gpudbAdmin/job_manager.html" target="_top">Job Manager</a> for
+ * more information.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -181,11 +182,12 @@ AdminAlterConfigurationResponse& adminAlterConfiguration( const std::string& con
 AdminAlterJobsResponse adminAlterJobs( const AdminAlterJobsRequest& request_ ) const;
 
 /**
- * Perform the requested action on a list of one or more job(s) . Currently
- * only cancelling filter, aggregate and get records reqeusts are supported.
- * Based on the type of job and the current state of execution, the action may
- * not be successfully executed. The final result of the attempted actions for
- * each specified job is returned in the status array of the response.
+ * Perform the requested action on a list of one or more job(s). Based on the
+ * type of job and the current state of execution, the action may not be
+ * successfully executed. The final result of the attempted actions for each
+ * specified job is returned in the status array of the response. See <a
+ * href="../../gpudbAdmin/job_manager.html" target="_top">Job Manager</a> for
+ * more information.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -201,11 +203,12 @@ AdminAlterJobsResponse& adminAlterJobs( const AdminAlterJobsRequest& request_,
                                         AdminAlterJobsResponse& response_ ) const;
 
 /**
- * Perform the requested action on a list of one or more job(s) . Currently
- * only cancelling filter, aggregate and get records reqeusts are supported.
- * Based on the type of job and the current state of execution, the action may
- * not be successfully executed. The final result of the attempted actions for
- * each specified job is returned in the status array of the response.
+ * Perform the requested action on a list of one or more job(s). Based on the
+ * type of job and the current state of execution, the action may not be
+ * successfully executed. The final result of the attempted actions for each
+ * specified job is returned in the status array of the response. See <a
+ * href="../../gpudbAdmin/job_manager.html" target="_top">Job Manager</a> for
+ * more information.
  * 
  * @param jobIds  Jobs to be modified.
  * @param action  Action to be performed on the jobs specified by job_ids.
@@ -223,11 +226,12 @@ AdminAlterJobsResponse adminAlterJobs( const std::vector<int32_t>& jobIds,
                                        const std::map<std::string, std::string>& options ) const;
 
 /**
- * Perform the requested action on a list of one or more job(s) . Currently
- * only cancelling filter, aggregate and get records reqeusts are supported.
- * Based on the type of job and the current state of execution, the action may
- * not be successfully executed. The final result of the attempted actions for
- * each specified job is returned in the status array of the response.
+ * Perform the requested action on a list of one or more job(s). Based on the
+ * type of job and the current state of execution, the action may not be
+ * successfully executed. The final result of the attempted actions for each
+ * specified job is returned in the status array of the response. See <a
+ * href="../../gpudbAdmin/job_manager.html" target="_top">Job Manager</a> for
+ * more information.
  * 
  * @param jobIds  Jobs to be modified.
  * @param action  Action to be performed on the jobs specified by job_ids.
@@ -303,10 +307,9 @@ AdminAlterShardsResponse& adminAlterShards( const AdminAlterShardsRequest& reque
  *                  moved.
  * @param rank  node to which the shard will be moved.
  * @param tom  Toms to which the shard will be moved.
- * @param index  the shard which is being moved.  When use_index is set to
- *               true, size of this array must equal the size of rank/tom
- *               array.
- * @param backupMapList  List of rank_tom integers, for which backup toms are
+ * @param index  The shard being moved.  When use_index is set to true, size of
+ *               this array must equal the size of rank/tom array.
+ * @param backupMapList  List of rank_tom integers for which backup toms are
  *                       defined
  * @param backupMapValues  List of the backup rank_tom(s) for each rank_tom in
  *                         backup_map_list
@@ -340,10 +343,9 @@ AdminAlterShardsResponse adminAlterShards( const int64_t version,
  *                  moved.
  * @param rank  node to which the shard will be moved.
  * @param tom  Toms to which the shard will be moved.
- * @param index  the shard which is being moved.  When use_index is set to
- *               true, size of this array must equal the size of rank/tom
- *               array.
- * @param backupMapList  List of rank_tom integers, for which backup toms are
+ * @param index  The shard being moved.  When use_index is set to true, size of
+ *               this array must equal the size of rank/tom array.
+ * @param backupMapList  List of rank_tom integers for which backup toms are
  *                       defined
  * @param backupMapValues  List of the backup rank_tom(s) for each rank_tom in
  *                         backup_map_list
@@ -495,7 +497,7 @@ AdminRebalanceResponse& adminRebalance( const AdminRebalanceRequest& request_,
  * may move any shards that were moved by system administrator using {@link
  * #adminAlterShards(const int64_t,const bool,const std::vector<int32_t>&,const std::vector<int32_t>&,const std::vector<int32_t>&,const std::vector<int32_t>&,const std::vector<std::vector<int32_t> >&,const std::map<std::string, std::string>&) const}
  * 
- * @param tableNames  Sepcify the tables here if only specific tables have to
+ * @param tableNames  Specify the tables here if only specific tables have to
  *                    be rebalanced.  Leave this empty to rebalance all the
  *                    tables.  Note that only the tables which have no primary
  *                    or shard key can be rebalanced.
@@ -535,7 +537,7 @@ AdminRebalanceResponse adminRebalance( const std::vector<std::string>& tableName
  * may move any shards that were moved by system administrator using {@link
  * #adminAlterShards(const int64_t,const bool,const std::vector<int32_t>&,const std::vector<int32_t>&,const std::vector<int32_t>&,const std::vector<int32_t>&,const std::vector<std::vector<int32_t> >&,const std::map<std::string, std::string>&,AdminAlterShardsResponse&) const}
  * 
- * @param tableNames  Sepcify the tables here if only specific tables have to
+ * @param tableNames  Specify the tables here if only specific tables have to
  *                    be rebalanced.  Leave this empty to rebalance all the
  *                    tables.  Note that only the tables which have no primary
  *                    or shard key can be rebalanced.
@@ -1056,8 +1058,8 @@ AggregateConvexHullResponse& aggregateConvexHull( const AggregateConvexHullReque
  * Calculates and returns the convex hull for the values in a table specified
  * by @a tableName.
  * 
- * @param tableName  Name of Table on which the operation will be performed.
- *                   Must be an existing table.  It can not be a collection.
+ * @param tableName  Name of table on which the operation will be performed.
+ *                   Must be an existing table.  It cannot be a collection.
  * @param xColumnName  Name of the column containing the x coordinates of the
  *                     points for the operation being performed.
  * @param yColumnName  Name of the column containing the y coordinates of the
@@ -1077,8 +1079,8 @@ AggregateConvexHullResponse aggregateConvexHull( const std::string& tableName,
  * Calculates and returns the convex hull for the values in a table specified
  * by @a tableName.
  * 
- * @param tableName  Name of Table on which the operation will be performed.
- *                   Must be an existing table.  It can not be a collection.
+ * @param tableName  Name of table on which the operation will be performed.
+ *                   Must be an existing table.  It cannot be a collection.
  * @param xColumnName  Name of the column containing the x coordinates of the
  *                     points for the operation being performed.
  * @param yColumnName  Name of the column containing the y coordinates of the
@@ -1423,7 +1425,7 @@ AggregateGroupByResponse& aggregateGroupBy( const AggregateGroupByRequest& reque
  *                 aggregates (and are sorting by value), it will first sort by
  *                 the first aggregate, then the second aggregate, etc.
  *                 </ul>
- *                 The default value is gpudb::aggregate_group_by_key.
+ *                 The default value is gpudb::aggregate_group_by_value.
  *                         <li> gpudb::aggregate_group_by_result_table: The
  *                 name of the table used to store the results. Has the same
  *                 naming restrictions as <a href="../../concepts/tables.html"
@@ -1577,7 +1579,7 @@ AggregateGroupByResponse aggregateGroupBy( const std::string& tableName,
  *                 aggregates (and are sorting by value), it will first sort by
  *                 the first aggregate, then the second aggregate, etc.
  *                 </ul>
- *                 The default value is gpudb::aggregate_group_by_key.
+ *                 The default value is gpudb::aggregate_group_by_value.
  *                         <li> gpudb::aggregate_group_by_result_table: The
  *                 name of the table used to store the results. Has the same
  *                 naming restrictions as <a href="../../concepts/tables.html"
@@ -5528,7 +5530,7 @@ CreateTableMonitorResponse& createTableMonitor( const std::string& tableName,
  * {@link #insertRecordsRaw(const RawInsertRecordsRequest&) const} with the
  * chosen columns' values falling within the specified region will trip the
  * trigger. All such records will be queued at the trigger port (by default
- * '9001', but able to be retrieved via {@link
+ * '9001' but able to be retrieved via {@link
  * #showSystemStatus(const ShowSystemStatusRequest&) const}) for any
  * listening client to collect. Active triggers can be cancelled by using the
  * {@link #clearTrigger(const ClearTriggerRequest&) const} endpoint or by
@@ -5555,7 +5557,7 @@ CreateTriggerByAreaResponse createTriggerByArea( const CreateTriggerByAreaReques
  * #insertRecordsRaw(const RawInsertRecordsRequest&,InsertRecordsResponse&) const}
  * with the chosen columns' values falling within the specified region will
  * trip the trigger. All such records will be queued at the trigger port (by
- * default '9001', but able to be retrieved via {@link
+ * default '9001' but able to be retrieved via {@link
  * #showSystemStatus(const ShowSystemStatusRequest&,ShowSystemStatusResponse&) const})
  * for any listening client to collect. Active triggers can be cancelled by
  * using the {@link
@@ -5586,7 +5588,7 @@ CreateTriggerByAreaResponse& createTriggerByArea( const CreateTriggerByAreaReque
  * tables(s) via {@link
  * #insertRecordsRaw(const RawInsertRecordsRequest&) const} with the chosen
  * columns' values falling within the specified region will trip the trigger.
- * All such records will be queued at the trigger port (by default '9001', but
+ * All such records will be queued at the trigger port (by default '9001' but
  * able to be retrieved via {@link
  * #showSystemStatus(const std::map<std::string, std::string>&) const})
  * for any listening client to collect. Active triggers can be cancelled by
@@ -5635,7 +5637,7 @@ CreateTriggerByAreaResponse createTriggerByArea( const std::string& requestId,
  * tables(s) via {@link
  * #insertRecordsRaw(const RawInsertRecordsRequest&) const} with the chosen
  * columns' values falling within the specified region will trip the trigger.
- * All such records will be queued at the trigger port (by default '9001', but
+ * All such records will be queued at the trigger port (by default '9001' but
  * able to be retrieved via {@link
  * #showSystemStatus(const std::map<std::string, std::string>&,ShowSystemStatusResponse&) const})
  * for any listening client to collect. Active triggers can be cancelled by
@@ -5687,7 +5689,7 @@ CreateTriggerByAreaResponse& createTriggerByArea( const std::string& requestId,
  * #insertRecordsRaw(const RawInsertRecordsRequest&) const} with the chosen
  * column_name's value falling within the specified range will trip the
  * trigger. All such records will be queued at the trigger port (by default
- * '9001', but able to be retrieved via {@link
+ * '9001' but able to be retrieved via {@link
  * #showSystemStatus(const ShowSystemStatusRequest&) const}) for any
  * listening client to collect. Active triggers can be cancelled by using the
  * {@link #clearTrigger(const ClearTriggerRequest&) const} endpoint or by
@@ -5712,7 +5714,7 @@ CreateTriggerByRangeResponse createTriggerByRange( const CreateTriggerByRangeReq
  * #insertRecordsRaw(const RawInsertRecordsRequest&,InsertRecordsResponse&) const}
  * with the chosen column_name's value falling within the specified range will
  * trip the trigger. All such records will be queued at the trigger port (by
- * default '9001', but able to be retrieved via {@link
+ * default '9001' but able to be retrieved via {@link
  * #showSystemStatus(const ShowSystemStatusRequest&,ShowSystemStatusResponse&) const})
  * for any listening client to collect. Active triggers can be cancelled by
  * using the {@link
@@ -5742,7 +5744,7 @@ CreateTriggerByRangeResponse& createTriggerByRange( const CreateTriggerByRangeRe
  * #insertRecordsRaw(const RawInsertRecordsRequest&) const} with the chosen
  * column_name's value falling within the specified range will trip the
  * trigger. All such records will be queued at the trigger port (by default
- * '9001', but able to be retrieved via {@link
+ * '9001' but able to be retrieved via {@link
  * #showSystemStatus(const std::map<std::string, std::string>&) const})
  * for any listening client to collect. Active triggers can be cancelled by
  * using the {@link
@@ -5780,7 +5782,7 @@ CreateTriggerByRangeResponse createTriggerByRange( const std::string& requestId,
  * #insertRecordsRaw(const RawInsertRecordsRequest&) const} with the chosen
  * column_name's value falling within the specified range will trip the
  * trigger. All such records will be queued at the trigger port (by default
- * '9001', but able to be retrieved via {@link
+ * '9001' but able to be retrieved via {@link
  * #showSystemStatus(const std::map<std::string, std::string>&,ShowSystemStatusResponse&) const})
  * for any listening client to collect. Active triggers can be cancelled by
  * using the {@link
@@ -5978,7 +5980,7 @@ CreateTypeResponse& createType( const CreateTypeRequest& request_,
  *                    *store_only*.
  *                            <li> gpudb::create_type_store_only: Persist the
  *                    column value but do not make it available to queries
- *                    (e.g. /filter/bybox)-i.e. it is mutually exclusive to the
+ *                    (e.g. /filter)-i.e. it is mutually exclusive to the
  *                    'data' property. Any 'bytes' type column must have a
  *                    'store_only' property. This property reduces system
  *                    memory usage.
@@ -6185,7 +6187,7 @@ CreateTypeResponse createType( const std::string& typeDefinition,
  *                    *store_only*.
  *                            <li> gpudb::create_type_store_only: Persist the
  *                    column value but do not make it available to queries
- *                    (e.g. /filter/bybox)-i.e. it is mutually exclusive to the
+ *                    (e.g. /filter)-i.e. it is mutually exclusive to the
  *                    'data' property. Any 'bytes' type column must have a
  *                    'store_only' property. This property reduces system
  *                    memory usage.
@@ -6431,14 +6433,13 @@ CreateUnionResponse& createUnion( const CreateUnionRequest& request_,
  *                 (only works on 2 tables).
  *                         <li> gpudb::create_union_merge_views: Merge two or
  *                 more views (or views of views) of the same base data set
- *                 into a new view. If this mode is selected
- *                                                       @a inputColumnNames
- *                 AND @a outputColumnNames are ignored The resulting view
- *                 would match the results of a SQL OR operation, e.g., if
- *                 filter 1 creates a view using the expression 'x = 10' and
- *                 filter 2 creates a view using the expression 'x <= 10', then
- *                 the merge views operation creates a new view using the
- *                 expression 'x = 10 OR x <= 10'.
+ *                 into a new view. If this mode is selected @a
+ *                 inputColumnNames AND @a outputColumnNames must be empty. The
+ *                 resulting view would match the results of a SQL OR
+ *                 operation, e.g., if filter 1 creates a view using the
+ *                 expression 'x = 10' and filter 2 creates a view using the
+ *                 expression 'x <= 10', then the merge views operation creates
+ *                 a new view using the expression 'x = 10 OR x <= 10'.
  *                 </ul>
  *                 The default value is gpudb::create_union_union_all.
  *                         <li> gpudb::create_union_chunk_size: Indicates the
@@ -6522,14 +6523,13 @@ CreateUnionResponse createUnion( const std::string& tableName,
  *                 (only works on 2 tables).
  *                         <li> gpudb::create_union_merge_views: Merge two or
  *                 more views (or views of views) of the same base data set
- *                 into a new view. If this mode is selected
- *                                                       @a inputColumnNames
- *                 AND @a outputColumnNames are ignored The resulting view
- *                 would match the results of a SQL OR operation, e.g., if
- *                 filter 1 creates a view using the expression 'x = 10' and
- *                 filter 2 creates a view using the expression 'x <= 10', then
- *                 the merge views operation creates a new view using the
- *                 expression 'x = 10 OR x <= 10'.
+ *                 into a new view. If this mode is selected @a
+ *                 inputColumnNames AND @a outputColumnNames must be empty. The
+ *                 resulting view would match the results of a SQL OR
+ *                 operation, e.g., if filter 1 creates a view using the
+ *                 expression 'x = 10' and filter 2 creates a view using the
+ *                 expression 'x <= 10', then the merge views operation creates
+ *                 a new view using the expression 'x = 10 OR x <= 10'.
  *                 </ul>
  *                 The default value is gpudb::create_union_union_all.
  *                         <li> gpudb::create_union_chunk_size: Indicates the
@@ -6814,9 +6814,11 @@ DeleteRecordsResponse& deleteRecords( const DeleteRecordsRequest& request_,
  *                   must be a currently existing table and not a collection or
  *                   a view.
  * @param expressions  A list of the actual predicates, one for each select;
- *                     format should follow the guidelines provided /filter.
- *                     Specifying one or more @a expressions is mutually
- *                     exclusive to specifying @a record_id in the @a options.
+ *                     format should follow the guidelines provided <a
+ *                     href="../../concepts/expressions.html"
+ *                     target="_top">here</a>. Specifying one or more @a
+ *                     expressions is mutually exclusive to specifying @a
+ *                     record_id in the @a options.
  * @param options  Optional parameters.
  *                 <ul>
  *                         <li> gpudb::delete_records_global_expression: An
@@ -6849,9 +6851,11 @@ DeleteRecordsResponse deleteRecords( const std::string& tableName,
  *                   must be a currently existing table and not a collection or
  *                   a view.
  * @param expressions  A list of the actual predicates, one for each select;
- *                     format should follow the guidelines provided /filter.
- *                     Specifying one or more @a expressions is mutually
- *                     exclusive to specifying @a record_id in the @a options.
+ *                     format should follow the guidelines provided <a
+ *                     href="../../concepts/expressions.html"
+ *                     target="_top">here</a>. Specifying one or more @a
+ *                     expressions is mutually exclusive to specifying @a
+ *                     record_id in the @a options.
  * @param options  Optional parameters.
  *                 <ul>
  *                         <li> gpudb::delete_records_global_expression: An
@@ -7163,10 +7167,11 @@ ExecuteProcResponse& executeProc( const std::string& procName,
 
 /**
  * Filters data based on the specified expression.  The results are stored in a
- * result set with the given @a viewName.
+ * <a href="../../concepts/filtered_views.html" target="_top">result set</a>
+ * with the given @a viewName.
  * <p>
  * For details see <a href="../../concepts/expressions.html"
- * target="_top">concepts</a>.
+ * target="_top">Expressions</a>.
  * <p>
  * The response message contains the number of points for which the expression
  * evaluated to be true, which is equivalent to the size of the result view.
@@ -7182,10 +7187,11 @@ FilterResponse filter( const FilterRequest& request_ ) const;
 
 /**
  * Filters data based on the specified expression.  The results are stored in a
- * result set with the given @a viewName.
+ * <a href="../../concepts/filtered_views.html" target="_top">result set</a>
+ * with the given @a viewName.
  * <p>
  * For details see <a href="../../concepts/expressions.html"
- * target="_top">concepts</a>.
+ * target="_top">Expressions</a>.
  * <p>
  * The response message contains the number of points for which the expression
  * evaluated to be true, which is equivalent to the size of the result view.
@@ -7205,10 +7211,11 @@ FilterResponse& filter( const FilterRequest& request_,
 
 /**
  * Filters data based on the specified expression.  The results are stored in a
- * result set with the given @a viewName.
+ * <a href="../../concepts/filtered_views.html" target="_top">result set</a>
+ * with the given @a viewName.
  * <p>
  * For details see <a href="../../concepts/expressions.html"
- * target="_top">concepts</a>.
+ * target="_top">Expressions</a>.
  * <p>
  * The response message contains the number of points for which the expression
  * evaluated to be true, which is equivalent to the size of the result view.
@@ -7223,7 +7230,7 @@ FilterResponse& filter( const FilterRequest& request_,
  *                  target="_top">tables</a>.
  * @param expression  The select expression to filter the specified table.  For
  *                    details see <a href="../../concepts/expressions.html"
- *                    target="_top">concepts</a>.
+ *                    target="_top">Expressions</a>.
  * @param options  Optional parameters.
  *                 <ul>
  *                         <li> gpudb::filter_collection_name: Name of a
@@ -7247,10 +7254,11 @@ FilterResponse filter( const std::string& tableName,
 
 /**
  * Filters data based on the specified expression.  The results are stored in a
- * result set with the given @a viewName.
+ * <a href="../../concepts/filtered_views.html" target="_top">result set</a>
+ * with the given @a viewName.
  * <p>
  * For details see <a href="../../concepts/expressions.html"
- * target="_top">concepts</a>.
+ * target="_top">Expressions</a>.
  * <p>
  * The response message contains the number of points for which the expression
  * evaluated to be true, which is equivalent to the size of the result view.
@@ -7265,7 +7273,7 @@ FilterResponse filter( const std::string& tableName,
  *                  target="_top">tables</a>.
  * @param expression  The select expression to filter the specified table.  For
  *                    details see <a href="../../concepts/expressions.html"
- *                    target="_top">concepts</a>.
+ *                    target="_top">Expressions</a>.
  * @param options  Optional parameters.
  *                 <ul>
  *                         <li> gpudb::filter_collection_name: Name of a
@@ -12756,9 +12764,9 @@ InsertRecordsRandomResponse& insertRecordsRandom( const std::string& tableName,
  * and any additional optional parameter (e.g. color). To have a symbol used
  * for rendering create a table with a string column named 'SYMBOLCODE' (along
  * with 'x' or 'y' for example). Then when the table is rendered (via <a
- * href="../../api/rest/wms_rest.html" target="_top">WMS</a>) if the
- * 'dosymbology' parameter is 'true' then the value of the 'SYMBOLCODE' column
- * is used to pick the symbol displayed for each point.
+ * href="../rest/wms_rest.html" target="_top">WMS</a>) if the 'dosymbology'
+ * parameter is 'true' then the value of the 'SYMBOLCODE' column is used to
+ * pick the symbol displayed for each point.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -12776,9 +12784,9 @@ InsertSymbolResponse insertSymbol( const InsertSymbolRequest& request_ ) const;
  * and any additional optional parameter (e.g. color). To have a symbol used
  * for rendering create a table with a string column named 'SYMBOLCODE' (along
  * with 'x' or 'y' for example). Then when the table is rendered (via <a
- * href="../../api/rest/wms_rest.html" target="_top">WMS</a>) if the
- * 'dosymbology' parameter is 'true' then the value of the 'SYMBOLCODE' column
- * is used to pick the symbol displayed for each point.
+ * href="../rest/wms_rest.html" target="_top">WMS</a>) if the 'dosymbology'
+ * parameter is 'true' then the value of the 'SYMBOLCODE' column is used to
+ * pick the symbol displayed for each point.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -12800,9 +12808,9 @@ InsertSymbolResponse& insertSymbol( const InsertSymbolRequest& request_,
  * and any additional optional parameter (e.g. color). To have a symbol used
  * for rendering create a table with a string column named 'SYMBOLCODE' (along
  * with 'x' or 'y' for example). Then when the table is rendered (via <a
- * href="../../api/rest/wms_rest.html" target="_top">WMS</a>) if the
- * 'dosymbology' parameter is 'true' then the value of the 'SYMBOLCODE' column
- * is used to pick the symbol displayed for each point.
+ * href="../rest/wms_rest.html" target="_top">WMS</a>) if the 'dosymbology'
+ * parameter is 'true' then the value of the 'SYMBOLCODE' column is used to
+ * pick the symbol displayed for each point.
  * 
  * @param symbolId  The id of the symbol being added. This is the same id that
  *                  should be in the 'SYMBOLCODE' column for objects using this
@@ -12844,9 +12852,9 @@ InsertSymbolResponse insertSymbol( const std::string& symbolId,
  * and any additional optional parameter (e.g. color). To have a symbol used
  * for rendering create a table with a string column named 'SYMBOLCODE' (along
  * with 'x' or 'y' for example). Then when the table is rendered (via <a
- * href="../../api/rest/wms_rest.html" target="_top">WMS</a>) if the
- * 'dosymbology' parameter is 'true' then the value of the 'SYMBOLCODE' column
- * is used to pick the symbol displayed for each point.
+ * href="../rest/wms_rest.html" target="_top">WMS</a>) if the 'dosymbology'
+ * parameter is 'true' then the value of the 'SYMBOLCODE' column is used to
+ * pick the symbol displayed for each point.
  * 
  * @param symbolId  The id of the symbol being added. This is the same id that
  *                  should be in the 'SYMBOLCODE' column for objects using this
@@ -14672,7 +14680,7 @@ UpdateRecordsResponse& updateRecords( const UpdateRecordsRequest<TRequest>& requ
  *                 The default value is gpudb::update_records_false.
  *                         <li> gpudb::update_records_update_on_existing_pk:
  *                 Can be used to customize behavior when the updated primary
- *                 key value already exists, as described in /insert/records.
+ *                 key value already exists as described in /insert/records.
  *                 <ul>
  *                         <li> gpudb::update_records_true
  *                         <li> gpudb::update_records_false
@@ -14763,7 +14771,7 @@ UpdateRecordsResponse updateRecords( const std::string& tableName,
  *                 The default value is gpudb::update_records_false.
  *                         <li> gpudb::update_records_update_on_existing_pk:
  *                 Can be used to customize behavior when the updated primary
- *                 key value already exists, as described in /insert/records.
+ *                 key value already exists as described in /insert/records.
  *                 <ul>
  *                         <li> gpudb::update_records_true
  *                         <li> gpudb::update_records_false
@@ -14988,6 +14996,11 @@ VisualizeImageResponse& visualizeImage( const VisualizeImageRequest& request_,
  *                              <li> gpudb::visualize_image_shapelinepatterns
  *                              <li> gpudb::visualize_image_shapelinepatternlen
  *                              <li> gpudb::visualize_image_shapefillcolors
+ *                              <li> gpudb::visualize_image_hashlineintervals
+ *                              <li> gpudb::visualize_image_hashlinecolors
+ *                              <li> gpudb::visualize_image_hashlineangles
+ *                              <li> gpudb::visualize_image_hashlinelens
+ *                              <li> gpudb::visualize_image_hashlinewidths
  *                              <li> gpudb::visualize_image_tracklinewidths
  *                              <li> gpudb::visualize_image_tracklinecolors
  *                              <li> gpudb::visualize_image_trackmarkersizes
@@ -15122,6 +15135,11 @@ VisualizeImageResponse visualizeImage( const std::vector<std::string>& tableName
  *                              <li> gpudb::visualize_image_shapelinepatterns
  *                              <li> gpudb::visualize_image_shapelinepatternlen
  *                              <li> gpudb::visualize_image_shapefillcolors
+ *                              <li> gpudb::visualize_image_hashlineintervals
+ *                              <li> gpudb::visualize_image_hashlinecolors
+ *                              <li> gpudb::visualize_image_hashlineangles
+ *                              <li> gpudb::visualize_image_hashlinelens
+ *                              <li> gpudb::visualize_image_hashlinewidths
  *                              <li> gpudb::visualize_image_tracklinewidths
  *                              <li> gpudb::visualize_image_tracklinecolors
  *                              <li> gpudb::visualize_image_trackmarkersizes
@@ -15303,11 +15321,11 @@ VisualizeImageChartResponse& visualizeImageChart( const VisualizeImageChartReque
  *                              <li> gpudb::visualize_image_chart_x_order_by:
  *                      An expression or aggregate expression by which
  *                      non-numeric x column values are sorted, e.g.
- *                      avg(price).
+ *                      "avg(price) descending".
  *                              <li> gpudb::visualize_image_chart_y_order_by:
  *                      An expression or aggregate expression by which
  *                      non-numeric y column values are sorted, e.g.
- *                      avg(price).
+ *                      "avg(price)", which defaults to "avg(price) ascending".
  *                              <li> gpudb::visualize_image_chart_jitter_x:
  *                      Amplitude of horizontal jitter applied to non-numaric x
  *                      column values.
@@ -15422,11 +15440,11 @@ VisualizeImageChartResponse visualizeImageChart( const std::string& tableName,
  *                              <li> gpudb::visualize_image_chart_x_order_by:
  *                      An expression or aggregate expression by which
  *                      non-numeric x column values are sorted, e.g.
- *                      avg(price).
+ *                      "avg(price) descending".
  *                              <li> gpudb::visualize_image_chart_y_order_by:
  *                      An expression or aggregate expression by which
  *                      non-numeric y column values are sorted, e.g.
- *                      avg(price).
+ *                      "avg(price)", which defaults to "avg(price) ascending".
  *                              <li> gpudb::visualize_image_chart_jitter_x:
  *                      Amplitude of horizontal jitter applied to non-numaric x
  *                      column values.
@@ -15595,6 +15613,16 @@ VisualizeImageClassbreakResponse& visualizeImageClassbreak( const VisualizeImage
  *                      gpudb::visualize_image_classbreak_shapelinepatternlen
  *                              <li>
  *                      gpudb::visualize_image_classbreak_shapefillcolors
+ *                              <li>
+ *                      gpudb::visualize_image_classbreak_hashlineintervals
+ *                              <li>
+ *                      gpudb::visualize_image_classbreak_hashlinecolors
+ *                              <li>
+ *                      gpudb::visualize_image_classbreak_hashlineangles
+ *                              <li>
+ *                      gpudb::visualize_image_classbreak_hashlinelens
+ *                              <li>
+ *                      gpudb::visualize_image_classbreak_hashlinewidths
  *                              <li>
  *                      gpudb::visualize_image_classbreak_tracklinewidths
  *                              <li>
@@ -15775,6 +15803,16 @@ VisualizeImageClassbreakResponse visualizeImageClassbreak( const std::vector<std
  *                      gpudb::visualize_image_classbreak_shapelinepatternlen
  *                              <li>
  *                      gpudb::visualize_image_classbreak_shapefillcolors
+ *                              <li>
+ *                      gpudb::visualize_image_classbreak_hashlineintervals
+ *                              <li>
+ *                      gpudb::visualize_image_classbreak_hashlinecolors
+ *                              <li>
+ *                      gpudb::visualize_image_classbreak_hashlineangles
+ *                              <li>
+ *                      gpudb::visualize_image_classbreak_hashlinelens
+ *                              <li>
+ *                      gpudb::visualize_image_classbreak_hashlinewidths
  *                              <li>
  *                      gpudb::visualize_image_classbreak_tracklinewidths
  *                              <li>

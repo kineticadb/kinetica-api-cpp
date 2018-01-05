@@ -145,12 +145,13 @@ namespace gpudb
          *                           gpudb::visualize_image_chart_x_order_by:
          *                           An expression or aggregate expression by
          *                           which non-numeric x column values are
-         *                           sorted, e.g. avg(price).
+         *                           sorted, e.g. "avg(price) descending".
          *                                   <li>
          *                           gpudb::visualize_image_chart_y_order_by:
          *                           An expression or aggregate expression by
          *                           which non-numeric y column values are
-         *                           sorted, e.g. avg(price).
+         *                           sorted, e.g. "avg(price)", which defaults
+         *                           to "avg(price) ascending".
          *                                   <li>
          *                           gpudb::visualize_image_chart_jitter_x:
          *                           Amplitude of horizontal jitter applied to

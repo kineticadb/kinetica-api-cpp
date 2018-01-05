@@ -2,6 +2,8 @@
 
 #include "gpudb/GPUdb.hpp"
 
+#include <algorithm> // for sort and set_symmetric_difference
+
 #include <boost/lexical_cast.hpp>
 #include <boost/property_tree/ptree.hpp>
 #include <boost/property_tree/json_parser.hpp>
@@ -102,7 +104,59 @@ namespace gpudb
                 m_isNullable = true;
             }
         }
-    }
+
+        // Sort the properties; will be useful later
+        std::sort( m_properties.begin(), m_properties.end() );
+    }  // end initialize
+
+
+    /* Check if the given type's columns' data types are compatible
+     * (checks primitive types and type-related properties, including nullability).
+     * If check_query_compatibility is true, then also check for query
+     * related properties, e.g. 'data', 'disk_optimized', 'store_only',
+     * and 'text_search'.
+     */
+    bool Type::Column::isColumnCompatible(const Type::Column &other, bool check_query_compatibility ) const
+    {
+        // Looking for a 100% match between the columns
+        if ( check_query_compatibility )
+        {
+            return ( (m_name == other.getName())
+                && (m_type == other.getType())
+                && (m_isNullable == other.isNullable())
+                && (m_properties == other.getProperties()) );
+        }
+
+        // Check if the name, primitive data type, and nullability match
+        if ( (m_name != other.getName())
+             || (m_type != other.getType())
+             || (m_isNullable != other.m_isNullable) )
+        {
+            return false;
+        }
+
+        // Check if the data type related properties match; ignore the
+        // following properties: date, text_search, store_only, disk_optimized
+        // -------------------------------------------------------------------
+        // Get the uncommon elements from both the properties
+        std::set<std::string> uncommon_properties;
+        const std::vector<std::string>& other_props = other.getProperties();
+        std::set_symmetric_difference( m_properties.begin(), m_properties.end(),
+                                       other_props.begin(),  other_props.end(),
+                                       std::inserter( uncommon_properties,
+                                                      uncommon_properties.begin() ) );
+
+        // Now erase the properties that we're ignoring
+        uncommon_properties.erase( gpudb::ColumnProperty::DATA );
+        uncommon_properties.erase( gpudb::ColumnProperty::DISK_OPTIMIZED );
+        uncommon_properties.erase( gpudb::ColumnProperty::STORE_ONLY);
+        uncommon_properties.erase( gpudb::ColumnProperty::TEXT_SEARCH );
+
+        // If are no more uncommon property, then the columns are compatible
+        if ( uncommon_properties.empty() )
+            return true;
+        return false;
+    }  // end isColumnCompatible
 
 
     // Overloading == for Column
@@ -145,19 +199,38 @@ namespace gpudb
     }
 
 
-    // Overloading == for Type
-    bool operator==(const gpudb::Type &lhs, const gpudb::Type &rhs)
-    {
-        std::cout << "gpudb::Type== LHS has been created? " << lhs.m_has_been_created << " RHS been created? " << rhs.m_has_been_created
-            << " lhs type id " << lhs.m_type_id << " rhs type id " << rhs.m_type_id << std::endl; // debug~~~~~~~~~~~~~~
-        // If both LHS and RHS have been created in Kinetica, just check
-        // the type ID
-        if ( lhs.m_has_been_created && rhs.m_has_been_created )
-            return (lhs.m_type_id == rhs.m_type_id);
 
-        // else, check the columns
-        return ( lhs.m_data->columns == rhs.m_data->columns);
-    }
+    /* Check if the given type's columns' data types are compatible
+     * (checks primitive types and type-related properties, including nullability).
+     * If check_query_compatibility is true, then also check for query
+     * related properties, e.g. 'data', 'disk_optimized', 'store_only',
+     * and 'text_search'.
+     */
+    bool Type::isTypeCompatible(const Type &other, bool check_query_compatibility ) const
+    {
+        // Looking for a 100% match between all the columns
+        if ( check_query_compatibility )
+        {
+            return ( m_data->columns == other.m_data->columns );
+        }
+
+        // Looking for column name, data type, and data related property compatibility;
+        // so, need to ignore 'data', 'text_search', 'disk_optimized', and 'store_only'.
+        // -----------------------------------------------------------------------------
+        // First check that the number of columns is the same
+        if ( m_data->columns.size() != other.m_data->columns.size() )
+            return false;
+
+        // Now go through all the columns and check for compatibility
+        for ( size_t i = 0; i < m_data->columns.size(); ++i )
+        {
+            // Bail out at the first mismatch
+            if ( !m_data->columns[ i ].isColumnCompatible( other.m_data->columns[ i ] ) )
+                return false;
+        }
+        return true; // all match
+    }  // end isTypeCompatible
+
 
     Type Type::fromTable(const GPUdb& gpudb, const std::string& tableName)
     {
@@ -184,7 +257,7 @@ namespace gpudb
             }
         }
 
-        return Type( response.typeLabels[0], response.typeSchemas[0], response.properties[0], response.typeIds[0] );
+        return Type( response.typeLabels[0], response.typeSchemas[0], response.properties[0] );
     }
 
     Type Type::fromType(const GPUdb& gpudb, const std::string& typeId)
@@ -198,7 +271,7 @@ namespace gpudb
             throw GPUdbException("Type " + typeId + " does not exist.");
         }
 
-        return Type( response.labels[0], response.typeSchemas[0], response.properties[0], typeId );
+        return Type( response.labels[0], response.typeSchemas[0], response.properties[0] );
     }
 
     Type::Type(const std::vector<Type::Column>& columns) :
@@ -234,17 +307,6 @@ namespace gpudb
         createSchema();
     }
 
-    Type::Type( const std::string& label, const std::string& typeSchema,
-                const std::map<std::string, std::vector<std::string> >& properties,
-                const std::string& type_id ) :
-        m_data(boost::make_shared<TypeData>())
-    {
-        m_data->label = label;
-        createFromSchema(typeSchema, properties);
-        createSchema();
-        m_type_id = type_id;
-        m_has_been_created = true;
-    }
 
     const std::string& Type::getLabel() const
     {
@@ -293,7 +355,7 @@ namespace gpudb
         return m_data->schema;
     }
 
-    std::string Type::create(const GPUdb& gpudb)
+    std::string Type::create(const GPUdb& gpudb) const
     {
         boost::property_tree::ptree root;
         root.put("type", "record");
@@ -360,9 +422,7 @@ namespace gpudb
         boost::property_tree::write_json(schemaStream, root);
 
         CreateTypeResponse response;
-        m_type_id = gpudb.createType(schemaStream.str(), m_data->label, properties, std::map<std::string, std::string>(), response).typeId;
-        m_has_been_created = true;
-        return m_type_id;
+        return gpudb.createType(schemaStream.str(), m_data->label, properties, std::map<std::string, std::string>(), response).typeId;
     }
 
     Type::Type()

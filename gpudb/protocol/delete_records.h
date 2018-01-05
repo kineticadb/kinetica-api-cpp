@@ -45,10 +45,12 @@ namespace gpudb
          *                        table and not a collection or a view.
          * @param[in] expressions_  A list of the actual predicates, one for
          *                          each select; format should follow the
-         *                          guidelines provided /filter. Specifying one
-         *                          or more @a expressions is mutually
-         *                          exclusive to specifying @a record_id in the
-         *                          @a options.
+         *                          guidelines provided <a
+         *                          href="../../concepts/expressions.html"
+         *                          target="_top">here</a>. Specifying one or
+         *                          more @a expressions is mutually exclusive
+         *                          to specifying @a record_id in the @a
+         *                          options.
          * @param[in] options_  Optional parameters.
          *                      <ul>
          *                              <li>

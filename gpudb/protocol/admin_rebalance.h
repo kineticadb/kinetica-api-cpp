@@ -38,7 +38,7 @@ namespace gpudb
          * Constructs an AdminRebalanceRequest object with the specified
          * parameters.
          * 
-         * @param[in] tableNames_  Sepcify the tables here if only specific
+         * @param[in] tableNames_  Specify the tables here if only specific
          *                         tables have to be rebalanced.  Leave this
          *                         empty to rebalance all the tables.  Note
          *                         that only the tables which have no primary

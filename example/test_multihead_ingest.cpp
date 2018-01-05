@@ -779,6 +779,47 @@ void test_sharding_pk( const gpudb::GPUdb &db )
 }  // end test_sharding_pk
 
 
+
+
+void test_type_compatibility( const gpudb::GPUdb &db )
+{
+    std::cout << "Test type compatibilty" << std::endl;
+    std::cout << "======================" << std::endl;
+
+    // Create a type
+    std::vector<gpudb::Type::Column> columns;
+    columns.push_back( gpudb::Type::Column("a",  gpudb::Type::Column::INT, gpudb::ColumnProperty::STORE_ONLY) );
+    columns.push_back( gpudb::Type::Column("i",  gpudb::Type::Column::INT, gpudb::ColumnProperty::SHARD_KEY, gpudb::ColumnProperty::NULLABLE ) );
+
+    gpudb::Type type1 = gpudb::Type( "Test", columns );
+    type1.create( db );
+
+    // Create another type
+    std::vector<gpudb::Type::Column> columns2;
+    columns2.push_back( gpudb::Type::Column("a",  gpudb::Type::Column::INT) );
+    columns2.push_back( gpudb::Type::Column("i",  gpudb::Type::Column::INT, gpudb::ColumnProperty::SHARD_KEY, gpudb::ColumnProperty::NULLABLE ) );
+
+    gpudb::Type type2 = gpudb::Type( "Test", columns2 );
+    type2.create( db );
+
+    // Create a third type
+    std::vector<gpudb::Type::Column> columns3;
+    columns3.push_back( gpudb::Type::Column("b",  gpudb::Type::Column::INT) );
+    columns3.push_back( gpudb::Type::Column("i",  gpudb::Type::Column::INT, gpudb::ColumnProperty::SHARD_KEY, gpudb::ColumnProperty::NULLABLE ) );
+
+    gpudb::Type type3 = gpudb::Type( "Test", columns3 );
+    type3.create( db );
+
+    std::cout << "Types 1 and 2, disregarding query compatibility (expect true): " << type1.isTypeCompatible( type2 ) << std::endl;
+    std::cout << "Types 1 and 2, including query compatibility (expect false): " << type1.isTypeCompatible( type2, true ) << std::endl;
+    std::cout << "Types 1 and 3, disregarding query compatibility (expect false): " << type1.isTypeCompatible( type3 ) << std::endl;
+    std::cout << "Types 1 and 2, including query compatibility (expect false): " << type1.isTypeCompatible( type3, true ) << std::endl;
+    std::cout << std::endl;
+
+} // end test_type_compatibility
+
+
+
 int main(int argc, char* argv[])
 {
     if (argc < 2)
@@ -794,10 +835,13 @@ int main(int argc, char* argv[])
 
     try
     {
-        std::cout << "Test GPUdbIngestor:" << std::endl;
-        std::cout << "===================" << std::endl;
         gpudb::GPUdb db(host, gpudb::GPUdb::Options().setThreadCount(4));
 
+        // Simple type compatibility test
+        test_type_compatibility( db );
+
+        std::cout << "Test GPUdbIngestor:" << std::endl;
+        std::cout << "===================" << std::endl;
         // Create a worker list
         gpudb::WorkerList workers( db );
         std::cout << "# workers: " << workers.size() << std::endl;
@@ -819,7 +863,7 @@ int main(int argc, char* argv[])
 
     // gpudb::GPUdbIngestor<int> gpudb_ingestor();
 
-    std::cout << "Done testing; qutting main..." << std::endl; // debug~~~~~
+    std::cout << "Done testing; quitting main..." << std::endl; // debug~~~~~
 }  // end main
 
 

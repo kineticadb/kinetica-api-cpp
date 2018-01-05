@@ -647,12 +647,12 @@ namespace gpudb
         {
             throw GPUdbException("Schema must have at least three fields.");
         }
-		int fieldCount = (int)root->leaves() - 2;
+        size_t fieldCount = root->leaves() - 2;
 
         std::vector<std::pair<Type::Column::ColumnType, bool> > columnTypes;
         columnTypes.reserve(fieldCount);
 
-        for (int i = 0; i < fieldCount; ++i)
+        for (size_t i = 0; i < fieldCount; ++i)
         {
             const ::avro::NodePtr& field = root->leafAt(i);
 

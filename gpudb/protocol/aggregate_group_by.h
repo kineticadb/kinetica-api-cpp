@@ -151,7 +151,7 @@ namespace gpudb
          *                      aggregate, etc.
          *                      </ul>
          *                      The default value is
-         *                      gpudb::aggregate_group_by_key.
+         *                      gpudb::aggregate_group_by_value.
          *                              <li>
          *                      gpudb::aggregate_group_by_result_table: The
          *                      name of the table used to store the results.
@@ -305,7 +305,7 @@ namespace gpudb
          *                      aggregate, etc.
          *                      </ul>
          *                      The default value is
-         *                      gpudb::aggregate_group_by_key.
+         *                      gpudb::aggregate_group_by_value.
          *                              <li>
          *                      gpudb::aggregate_group_by_result_table: The
          *                      name of the table used to store the results.

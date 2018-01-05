@@ -562,6 +562,11 @@ namespace gpudb
     extern const std::string visualize_image_do_symbology;
     extern const std::string visualize_image_do_tracks;
     extern const std::string visualize_image_false;
+    extern const std::string visualize_image_hashlineangles;
+    extern const std::string visualize_image_hashlinecolors;
+    extern const std::string visualize_image_hashlineintervals;
+    extern const std::string visualize_image_hashlinelens;
+    extern const std::string visualize_image_hashlinewidths;
     extern const std::string visualize_image_hollowcircle;
     extern const std::string visualize_image_hollowdiamond;
     extern const std::string visualize_image_hollowsquare;
@@ -635,6 +640,11 @@ namespace gpudb
     extern const std::string visualize_image_classbreak_do_symbology;
     extern const std::string visualize_image_classbreak_do_tracks;
     extern const std::string visualize_image_classbreak_false;
+    extern const std::string visualize_image_classbreak_hashlineangles;
+    extern const std::string visualize_image_classbreak_hashlinecolors;
+    extern const std::string visualize_image_classbreak_hashlineintervals;
+    extern const std::string visualize_image_classbreak_hashlinelens;
+    extern const std::string visualize_image_classbreak_hashlinewidths;
     extern const std::string visualize_image_classbreak_hollowcircle;
     extern const std::string visualize_image_classbreak_hollowdiamond;
     extern const std::string visualize_image_classbreak_hollowsquare;

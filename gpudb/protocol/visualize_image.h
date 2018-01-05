@@ -159,6 +159,16 @@ namespace gpudb
          *                                   <li>
          *                           gpudb::visualize_image_shapefillcolors
          *                                   <li>
+         *                           gpudb::visualize_image_hashlineintervals
+         *                                   <li>
+         *                           gpudb::visualize_image_hashlinecolors
+         *                                   <li>
+         *                           gpudb::visualize_image_hashlineangles
+         *                                   <li>
+         *                           gpudb::visualize_image_hashlinelens
+         *                                   <li>
+         *                           gpudb::visualize_image_hashlinewidths
+         *                                   <li>
          *                           gpudb::visualize_image_tracklinewidths
          *                                   <li>
          *                           gpudb::visualize_image_tracklinecolors

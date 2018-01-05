@@ -30,9 +30,9 @@ namespace gpudb
 
         /**
          * Persist the column value but do not make it available to queries
-         * (e.g. /filter/bybox)-i.e. it is mutually exclusive to the 'data'
-         * property. Any 'bytes' type column must have a 'store_only' property.
-         * This property reduces system memory usage.
+         * (e.g. /filter)-i.e. it is mutually exclusive to the 'data' property.
+         * Any 'bytes' type column must have a 'store_only' property. This
+         * property reduces system memory usage.
          */
         extern const std::string STORE_ONLY;
 

@@ -13,7 +13,7 @@ For the client-side API changes, please refer to CHANGELOG.md, and for GPUdb
 function changes, please refer to CHANGELOG-FUNCTIONS.md.
 
 
-Instructions to build the Kinetica CPP API on Linux
+Instructions to build the Kinetica C++ API on Linux
 ===================================================
 
 Please completely read this set of instructions thoroughly before starting.
@@ -112,6 +112,8 @@ CMake Build Instructions
         -   Specify the root of the built and installed thirdparty libs.
         -   If you followed the directions to build the thirdparty libaries above
             you should not have to specify this directory.
+    -   `-DGPUDB_NO_HTTPS=TRUE`
+        -   Disable SSL support.  Default value is `FALSE` which enables SSL support.
 -   Finding the Boost headers and libraries.
     -   Red Hat 7 and newer distributions should come with a suitable system
         boost development library that will be detected and used without intervention.

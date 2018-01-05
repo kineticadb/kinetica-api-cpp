@@ -14,10 +14,11 @@ namespace gpudb
      * #filter(const FilterRequest&) const}.
      * <p>
      * Filters data based on the specified expression.  The results are stored
-     * in a result set with the given @a viewName.
+     * in a <a href="../../concepts/filtered_views.html" target="_top">result
+     * set</a> with the given @a viewName.
      * <p>
      * For details see <a href="../../concepts/expressions.html"
-     * target="_top">concepts</a>.
+     * target="_top">Expressions</a>.
      * <p>
      * The response message contains the number of points for which the
      * expression evaluated to be true, which is equivalent to the size of the
@@ -53,7 +54,7 @@ namespace gpudb
          * @param[in] expression_  The select expression to filter the
          *                         specified table.  For details see <a
          *                         href="../../concepts/expressions.html"
-         *                         target="_top">concepts</a>.
+         *                         target="_top">Expressions</a>.
          * @param[in] options_  Optional parameters.
          *                      <ul>
          *                              <li> gpudb::filter_collection_name:
@@ -146,10 +147,11 @@ namespace gpudb
      * #filter(const FilterRequest&) const}.
      * <p>
      * Filters data based on the specified expression.  The results are stored
-     * in a result set with the given @a viewName.
+     * in a <a href="../../concepts/filtered_views.html" target="_top">result
+     * set</a> with the given @a viewName.
      * <p>
      * For details see <a href="../../concepts/expressions.html"
-     * target="_top">concepts</a>.
+     * target="_top">Expressions</a>.
      * <p>
      * The response message contains the number of points for which the
      * expression evaluated to be true, which is equivalent to the size of the

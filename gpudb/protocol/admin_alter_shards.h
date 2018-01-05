@@ -50,10 +50,10 @@ namespace gpudb
          *                       indicate the shards being moved.
          * @param[in] rank_  node to which the shard will be moved.
          * @param[in] tom_  Toms to which the shard will be moved.
-         * @param[in] index_  the shard which is being moved.  When use_index
-         *                    is set to true, size of this array must equal the
-         *                    size of rank/tom array.
-         * @param[in] backupMapList_  List of rank_tom integers, for which
+         * @param[in] index_  The shard being moved.  When use_index is set to
+         *                    true, size of this array must equal the size of
+         *                    rank/tom array.
+         * @param[in] backupMapList_  List of rank_tom integers for which
          *                            backup toms are defined
          * @param[in] backupMapValues_  List of the backup rank_tom(s) for each
          *                              rank_tom in backup_map_list
