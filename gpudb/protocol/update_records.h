@@ -104,7 +104,7 @@ namespace gpudb
          *                              <li>
          *                      gpudb::update_records_update_on_existing_pk:
          *                      Can be used to customize behavior when the
-         *                      updated primary key value already exists, as
+         *                      updated primary key value already exists as
          *                      described in /insert/records.
          *                      <ul>
          *                              <li> gpudb::update_records_true
@@ -197,7 +197,7 @@ namespace gpudb
          *                              <li>
          *                      gpudb::update_records_update_on_existing_pk:
          *                      Can be used to customize behavior when the
-         *                      updated primary key value already exists, as
+         *                      updated primary key value already exists as
          *                      described in /insert/records.
          *                      <ul>
          *                              <li> gpudb::update_records_true
@@ -402,7 +402,7 @@ namespace gpudb
          *                              <li>
          *                      gpudb::update_records_update_on_existing_pk:
          *                      Can be used to customize behavior when the
-         *                      updated primary key value already exists, as
+         *                      updated primary key value already exists as
          *                      described in /insert/records.
          *                      <ul>
          *                              <li> gpudb::update_records_true

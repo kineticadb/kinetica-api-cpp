@@ -562,6 +562,11 @@ namespace gpudb
     const std::string visualize_image_do_symbology       ( "do_symbology"        );
     const std::string visualize_image_do_tracks          ( "do_tracks"           );
     const std::string visualize_image_false              ( "false"               );
+    const std::string visualize_image_hashlineangles     ( "hashlineangles"      );
+    const std::string visualize_image_hashlinecolors     ( "hashlinecolors"      );
+    const std::string visualize_image_hashlineintervals  ( "hashlineintervals"   );
+    const std::string visualize_image_hashlinelens       ( "hashlinelens"        );
+    const std::string visualize_image_hashlinewidths     ( "hashlinewidths"      );
     const std::string visualize_image_hollowcircle       ( "hollowcircle"        );
     const std::string visualize_image_hollowdiamond      ( "hollowdiamond"       );
     const std::string visualize_image_hollowsquare       ( "hollowsquare"        );
@@ -635,6 +640,11 @@ namespace gpudb
     const std::string visualize_image_classbreak_do_symbology       ( "do_symbology"        );
     const std::string visualize_image_classbreak_do_tracks          ( "do_tracks"           );
     const std::string visualize_image_classbreak_false              ( "false"               );
+    const std::string visualize_image_classbreak_hashlineangles     ( "hashlineangles"      );
+    const std::string visualize_image_classbreak_hashlinecolors     ( "hashlinecolors"      );
+    const std::string visualize_image_classbreak_hashlineintervals  ( "hashlineintervals"   );
+    const std::string visualize_image_classbreak_hashlinelens       ( "hashlinelens"        );
+    const std::string visualize_image_classbreak_hashlinewidths     ( "hashlinewidths"      );
     const std::string visualize_image_classbreak_hollowcircle       ( "hollowcircle"        );
     const std::string visualize_image_classbreak_hollowdiamond      ( "hollowdiamond"       );
     const std::string visualize_image_classbreak_hollowsquare       ( "hollowsquare"        );

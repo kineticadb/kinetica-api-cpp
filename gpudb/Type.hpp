@@ -9,6 +9,9 @@ namespace gpudb
 {
     class GPUdb;
 
+    /*
+     * This class is thread safe and immutable.
+     */
     class Type
     {
         friend class GenericRecord;
@@ -35,6 +38,12 @@ namespace gpudb
                     const std::vector<std::string>& getProperties() const;
                     bool hasProperty( std::string property ) const;
 
+                    /// Check if the given column is compatible with this column
+                    /// (checks name, primitive types and type-related properties, including nullability).
+                    /// By default, does not check query compatibility (e.g. 'data',
+                    /// 'disk_optimized', 'store_only', and 'text_search'.), but will if specified.
+                    bool isColumnCompatible(const Column &other, bool check_query_compatibility = false ) const;
+
                     friend bool operator==(const Column &lhs, const Column &rhs);  // overloading ==
                     friend std::ostream &operator << (std::ostream &os, const Column &column);
                     friend std::ostream &operator << (std::ostream &os, Column &column);
@@ -43,7 +52,7 @@ namespace gpudb
                     std::string m_name;
                     ColumnType m_type;
                     bool m_isNullable;
-                    std::vector<std::string> m_properties;
+                    std::vector<std::string> m_properties;  // kept sorted
 
                     void initialize();
             };
@@ -63,10 +72,13 @@ namespace gpudb
             size_t getColumnIndex(const std::string& name) const;
             bool hasColumn(const std::string& name) const;
             const ::avro::ValidSchema& getSchema() const;
-            std::string create(const GPUdb& gpudb);
+            std::string create(const GPUdb& gpudb) const;
 
-            friend bool operator==(const Type &lhs, const Type &rhs);  // overloading ==
-            friend bool operator!=(const Type &lhs, const Type &rhs) { return !(lhs == rhs); }
+            /// Check if the given type's columns' data types are compatible
+            /// (checks primitive types and type-related properties, including nullability).
+            /// By default, does not check query compatibility (e.g. 'data',
+            /// 'disk_optimized', 'store_only', and 'text_search'.), but will if specified.
+            bool isTypeCompatible(const Type &other, bool check_query_compatibility = false ) const;
 
         private:
             struct TypeData
@@ -77,12 +89,12 @@ namespace gpudb
                 ::avro::ValidSchema schema;
             };
 
+            // Using a shared pointer to store all relevant data so that there is only
+            // one instance of it across all copies of the same type
+            // Do NOT add any member outside of m_data.
             boost::shared_ptr<TypeData> m_data;
-            std::string m_type_id;
-            bool m_has_been_created = false;
 
             Type();
-            Type(const std::string& label, const std::string& typeSchema, const std::map<std::string, std::vector<std::string> >& properties, const std::string& type_id);
             void initialize();
             void createFromSchema(const std::string& typeSchema, const std::map<std::string, std::vector<std::string> >& properties);
             void createSchema();

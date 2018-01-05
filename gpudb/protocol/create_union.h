@@ -95,16 +95,14 @@ namespace gpudb
          *                              <li> gpudb::create_union_merge_views:
          *                      Merge two or more views (or views of views) of
          *                      the same base data set into a new view. If this
-         *                      mode is selected
-         *                                                            @a
-         *                      inputColumnNames AND @a outputColumnNames are
-         *                      ignored The resulting view would match the
-         *                      results of a SQL OR operation, e.g., if filter
-         *                      1 creates a view using the expression 'x = 10'
-         *                      and filter 2 creates a view using the
-         *                      expression 'x <= 10', then the merge views
-         *                      operation creates a new view using the
-         *                      expression 'x = 10 OR x <= 10'.
+         *                      mode is selected @a inputColumnNames AND @a
+         *                      outputColumnNames must be empty. The resulting
+         *                      view would match the results of a SQL OR
+         *                      operation, e.g., if filter 1 creates a view
+         *                      using the expression 'x = 10' and filter 2
+         *                      creates a view using the expression 'x <= 10',
+         *                      then the merge views operation creates a new
+         *                      view using the expression 'x = 10 OR x <= 10'.
          *                      </ul>
          *                      The default value is
          *                      gpudb::create_union_union_all.

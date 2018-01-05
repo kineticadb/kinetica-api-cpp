@@ -42,17 +42,28 @@ include( build/CMakeProject.cmake )
 include( build/CMakeFunctions.cmake )
 
 message(STATUS "* ---------------------------------------------------------------------------" )
-message(STATUS "* GPUdb API CPP CMake command line options" )
+message(STATUS "* GPUdb API C++ CMake command line options" )
 message(STATUS "* " )
 message(STATUS "* -DGPUDB_API_CPP_LIBS_DIR=${GPUDB_API_CPP_SOURCE_DIR}/thirdparty/install" )
 message(STATUS "*   Specify the location of the 3rd party avro and snappy development libraries." )
 message(STATUS "*   Please build them first using the thirdparty/build-thrirdparty-libs.sh script first." )
 message(STATUS "*   The install/ dir should contain 'include/' and 'lib/' subdirectories." )
 message(STATUS "* " )
+message(STATUS "* -DGPUDB_NO_HTTPS=TRUE" )
+message(STATUS "*   Do not use SSL, else do use it. (Default FALSE)" )
+message(STATUS "* " )
 message(STATUS "* ---------------------------------------------------------------------------" )
 message(STATUS " " )
 
 EXIT_IF_HELP_REQUESTED()
+
+if (NOT DEFINED GPUDB_NO_HTTPS)
+    set(GPUDB_NO_HTTPS "FALSE")
+endif()
+set(GPUDB_NO_HTTPS ${GPUDB_NO_HTTPS} CACHE STRING
+    "Turn SSL usage on/off." FORCE)
+
+MESSAGE(STATUS "* GPUDB_NO_HTTPS = '${GPUDB_NO_HTTPS}'")
 
 # ===========================================================================
 # GPUDB_API_CPP version
@@ -193,6 +204,9 @@ link_directories(/usr/lib/
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fopenmp -rdynamic")
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -D__STDC_LIMIT_MACROS") # For MAX_INTXX when including <stdint.h>
 set(CMAKE_C_FLAGS   "${CMAKE_C_FLAGS} -D__STDC_LIMIT_MACROS")   # For MAX_INTXX when including <stdint.h>
+if (GPUDB_NO_HTTPS)
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DGPUDB_NO_HTTPS")
+endif()
 
 # ---------------------------------------------------------------------------
 

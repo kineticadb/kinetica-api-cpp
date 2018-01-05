@@ -14,8 +14,8 @@ namespace gpudb
      * #adminAddNode(const AdminAddNodeRequest&) const}.
      * <p>
      * Add a new node to the GPUdb cluster. By default this will only add the
-     * node to the cluster, but will not be assigned any data shards. Set the
-     * @a reshard option to @a true to move some shards from the other nodes in
+     * node to the cluster but will not be assigned any data shards. Set the @a
+     * reshard option to @a true to move some shards from the other nodes in
      * the cluster to this node.
      */
     struct AdminAddNodeRequest
@@ -126,8 +126,8 @@ namespace gpudb
      * #adminAddNode(const AdminAddNodeRequest&) const}.
      * <p>
      * Add a new node to the GPUdb cluster. By default this will only add the
-     * node to the cluster, but will not be assigned any data shards. Set the
-     * @a reshard option to @a true to move some shards from the other nodes in
+     * node to the cluster but will not be assigned any data shards. Set the @a
+     * reshard option to @a true to move some shards from the other nodes in
      * the cluster to this node.
      */
     struct AdminAddNodeResponse
