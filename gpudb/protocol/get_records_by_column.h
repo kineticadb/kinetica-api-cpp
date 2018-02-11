@@ -27,8 +27,8 @@ namespace gpudb
      * contiguity across pages cannot be relied upon.
      * <p>
      * The response is returned as a dynamic schema. For details see: <a
-     * href="../../concepts/dynamic_schemas.html" target="_top">dynamic schemas
-     * documentation</a>.
+     * href="../../api/index.html#dynamic-schemas" target="_top">dynamic
+     * schemas documentation</a>.
      */
     struct GetRecordsByColumnRequest
     {
@@ -78,9 +78,8 @@ namespace gpudb
          *                              <li>
          *                      gpudb::get_records_by_column_sort_order: String
          *                      indicating how the returned values should be
-         *                      sorted - ascending or descending. Default is
-         *                      'ascending'. If sort_order is provided, sort_by
-         *                      has to be provided.
+         *                      sorted - ascending or descending. If sort_order
+         *                      is provided, sort_by has to be provided.
          *                      <ul>
          *                              <li>
          *                      gpudb::get_records_by_column_ascending
@@ -150,9 +149,8 @@ namespace gpudb
          *                              <li>
          *                      gpudb::get_records_by_column_sort_order: String
          *                      indicating how the returned values should be
-         *                      sorted - ascending or descending. Default is
-         *                      'ascending'. If sort_order is provided, sort_by
-         *                      has to be provided.
+         *                      sorted - ascending or descending. If sort_order
+         *                      is provided, sort_by has to be provided.
          *                      <ul>
          *                              <li>
          *                      gpudb::get_records_by_column_ascending
@@ -276,8 +274,8 @@ namespace gpudb
      * contiguity across pages cannot be relied upon.
      * <p>
      * The response is returned as a dynamic schema. For details see: <a
-     * href="../../concepts/dynamic_schemas.html" target="_top">dynamic schemas
-     * documentation</a>.
+     * href="../../api/index.html#dynamic-schemas" target="_top">dynamic
+     * schemas documentation</a>.
      */
     struct RawGetRecordsByColumnResponse
     {
@@ -390,8 +388,8 @@ namespace gpudb
      * contiguity across pages cannot be relied upon.
      * <p>
      * The response is returned as a dynamic schema. For details see: <a
-     * href="../../concepts/dynamic_schemas.html" target="_top">dynamic schemas
-     * documentation</a>.
+     * href="../../api/index.html#dynamic-schemas" target="_top">dynamic
+     * schemas documentation</a>.
      */
     struct GetRecordsByColumnResponse
     {

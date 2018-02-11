@@ -12,11 +12,6 @@
 
 namespace gpudb
 {
-    // Keywords for /admin/add/node request
-    extern const std::string admin_add_node_false;
-    extern const std::string admin_add_node_reshard;
-    extern const std::string admin_add_node_true;
-
     // Keywords for /admin/alter/jobs request
     extern const std::string admin_alter_jobs_cancel;
 
@@ -24,19 +19,6 @@ namespace gpudb
     extern const std::string admin_offline_false;
     extern const std::string admin_offline_flush_to_disk;
     extern const std::string admin_offline_true;
-
-    // Keywords for /admin/rebalance request
-    extern const std::string admin_rebalance_false;
-    extern const std::string admin_rebalance_reshard;
-    extern const std::string admin_rebalance_start;
-    extern const std::string admin_rebalance_stop;
-    extern const std::string admin_rebalance_true;
-
-    // Keywords for /admin/remove/node request
-    extern const std::string admin_remove_node_false;
-    extern const std::string admin_remove_node_force;
-    extern const std::string admin_remove_node_reshard;
-    extern const std::string admin_remove_node_true;
 
     // Keywords for /admin/show/jobs request
     extern const std::string admin_show_jobs_false;

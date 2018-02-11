@@ -12,11 +12,6 @@
 
 namespace gpudb
 {
-    // Keywords for /admin/add/node request
-    const std::string admin_add_node_false  ( "false"   );
-    const std::string admin_add_node_reshard( "reshard" );
-    const std::string admin_add_node_true   ( "true"    );
-
     // Keywords for /admin/alter/jobs request
     const std::string admin_alter_jobs_cancel( "cancel" );
 
@@ -24,19 +19,6 @@ namespace gpudb
     const std::string admin_offline_false        ( "false"         );
     const std::string admin_offline_flush_to_disk( "flush_to_disk" );
     const std::string admin_offline_true         ( "true"          );
-
-    // Keywords for /admin/rebalance request
-    const std::string admin_rebalance_false  ( "false"   );
-    const std::string admin_rebalance_reshard( "reshard" );
-    const std::string admin_rebalance_start  ( "start"   );
-    const std::string admin_rebalance_stop   ( "stop"    );
-    const std::string admin_rebalance_true   ( "true"    );
-
-    // Keywords for /admin/remove/node request
-    const std::string admin_remove_node_false  ( "false"   );
-    const std::string admin_remove_node_force  ( "force"   );
-    const std::string admin_remove_node_reshard( "reshard" );
-    const std::string admin_remove_node_true   ( "true"    );
 
     // Keywords for /admin/show/jobs request
     const std::string admin_show_jobs_false       ( "false"        );

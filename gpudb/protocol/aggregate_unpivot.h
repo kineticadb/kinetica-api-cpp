@@ -26,8 +26,8 @@ namespace gpudb
      * respectively.
      * <p>
      * The response is returned as a dynamic schema. For details see: <a
-     * href="../../concepts/dynamic_schemas.html" target="_top">dynamic schemas
-     * documentation</a>.
+     * href="../../api/index.html#dynamic-schemas" target="_top">dynamic
+     * schemas documentation</a>.
      */
     struct AggregateUnpivotRequest
     {
@@ -306,8 +306,8 @@ namespace gpudb
      * respectively.
      * <p>
      * The response is returned as a dynamic schema. For details see: <a
-     * href="../../concepts/dynamic_schemas.html" target="_top">dynamic schemas
-     * documentation</a>.
+     * href="../../api/index.html#dynamic-schemas" target="_top">dynamic
+     * schemas documentation</a>.
      */
     struct RawAggregateUnpivotResponse
     {
@@ -419,8 +419,8 @@ namespace gpudb
      * respectively.
      * <p>
      * The response is returned as a dynamic schema. For details see: <a
-     * href="../../concepts/dynamic_schemas.html" target="_top">dynamic schemas
-     * documentation</a>.
+     * href="../../api/index.html#dynamic-schemas" target="_top">dynamic
+     * schemas documentation</a>.
      */
     struct AggregateUnpivotResponse
     {

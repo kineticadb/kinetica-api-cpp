@@ -5,104 +5,6 @@
  */
 
 /**
- * Add a new node to the GPUdb cluster. By default this will only add the node
- * to the cluster but will not be assigned any data shards. Set the @a reshard
- * option to @a true to move some shards from the other nodes in the cluster to
- * this node.
- * 
- * @param[in] request_  Request object containing the parameters for the
- *                      operation.
- * 
- * @return Response object containing the result of the operation.
- * 
- */
-
-AdminAddNodeResponse adminAddNode( const AdminAddNodeRequest& request_ ) const;
-
-/**
- * Add a new node to the GPUdb cluster. By default this will only add the node
- * to the cluster but will not be assigned any data shards. Set the @a reshard
- * option to @a true to move some shards from the other nodes in the cluster to
- * this node.
- * 
- * @param[in] request_  Request object containing the parameters for the
- *                      operation.
- * @param[out] response_  Response object containing the results of the
- *                        operation.
- * 
- * @return Response object containing the result of the operation (initially
- *         passed in by reference).
- * 
- */
-
-AdminAddNodeResponse& adminAddNode( const AdminAddNodeRequest& request_,
-                                    AdminAddNodeResponse& response_ ) const;
-
-/**
- * Add a new node to the GPUdb cluster. By default this will only add the node
- * to the cluster but will not be assigned any data shards. Set the @a reshard
- * option to @a true to move some shards from the other nodes in the cluster to
- * this node.
- * 
- * @param hostName  host name of the node being added to the system.
- * @param gpuIndex
- * @param options  Optional parameters.
- *                 <ul>
- *                         <li> gpudb::admin_add_node_reshard: If @a true, then
- *                 some of the shards from all the existing nodes will be moved
- *                 to the new node being added. Note that for big clusters,
- *                 this data transfer could be time consuming and also result
- *                 in delay in responding to queries for busy clusters.
- *                 <ul>
- *                         <li> gpudb::admin_add_node_true
- *                         <li> gpudb::admin_add_node_false
- *                 </ul>
- *                 The default value is gpudb::admin_add_node_false.
- *                 </ul>
- * 
- * @return Response object containing the result of the operation.
- * 
- */
-
-AdminAddNodeResponse adminAddNode( const std::string& hostName,
-                                   const int32_t gpuIndex,
-                                   const std::map<std::string, std::string>& options ) const;
-
-/**
- * Add a new node to the GPUdb cluster. By default this will only add the node
- * to the cluster but will not be assigned any data shards. Set the @a reshard
- * option to @a true to move some shards from the other nodes in the cluster to
- * this node.
- * 
- * @param hostName  host name of the node being added to the system.
- * @param gpuIndex
- * @param options  Optional parameters.
- *                 <ul>
- *                         <li> gpudb::admin_add_node_reshard: If @a true, then
- *                 some of the shards from all the existing nodes will be moved
- *                 to the new node being added. Note that for big clusters,
- *                 this data transfer could be time consuming and also result
- *                 in delay in responding to queries for busy clusters.
- *                 <ul>
- *                         <li> gpudb::admin_add_node_true
- *                         <li> gpudb::admin_add_node_false
- *                 </ul>
- *                 The default value is gpudb::admin_add_node_false.
- *                 </ul>
- * @param[out] response_  Response object containing the results of the
- *                        operation.
- * 
- * @return Response object containing the result of the operation (initially
- *         passed in by reference).
- * 
- */
-
-AdminAddNodeResponse& adminAddNode( const std::string& hostName,
-                                    const int32_t gpuIndex,
-                                    const std::map<std::string, std::string>& options,
-                                    AdminAddNodeResponse& response_ ) const;
-
-/**
  * Update the system config file.  Updates to the config file are only
  * permitted when the system is stopped.
  * 
@@ -253,122 +155,6 @@ AdminAlterJobsResponse& adminAlterJobs( const std::vector<int32_t>& jobIds,
                                         AdminAlterJobsResponse& response_ ) const;
 
 /**
- * Specify the mapping of the shards to the various ranks in the cluster. In
- * most cases, it should be sufficient to let the system automatically
- * distribute the shards evenly across the available ranks. However, this
- * endpoint can be used to move shards for various administrative reasons, say
- * in case of heterogeneous node clusters.  It should be noted that the system
- * may reassign the shards the when the number of nodes in the cluster changes
- * or the cluster is rebalanced.
- * 
- * @param[in] request_  Request object containing the parameters for the
- *                      operation.
- * 
- * @return Response object containing the result of the operation.
- * 
- */
-
-AdminAlterShardsResponse adminAlterShards( const AdminAlterShardsRequest& request_ ) const;
-
-/**
- * Specify the mapping of the shards to the various ranks in the cluster. In
- * most cases, it should be sufficient to let the system automatically
- * distribute the shards evenly across the available ranks. However, this
- * endpoint can be used to move shards for various administrative reasons, say
- * in case of heterogeneous node clusters.  It should be noted that the system
- * may reassign the shards the when the number of nodes in the cluster changes
- * or the cluster is rebalanced.
- * 
- * @param[in] request_  Request object containing the parameters for the
- *                      operation.
- * @param[out] response_  Response object containing the results of the
- *                        operation.
- * 
- * @return Response object containing the result of the operation (initially
- *         passed in by reference).
- * 
- */
-
-AdminAlterShardsResponse& adminAlterShards( const AdminAlterShardsRequest& request_,
-                                            AdminAlterShardsResponse& response_ ) const;
-
-/**
- * Specify the mapping of the shards to the various ranks in the cluster. In
- * most cases, it should be sufficient to let the system automatically
- * distribute the shards evenly across the available ranks. However, this
- * endpoint can be used to move shards for various administrative reasons, say
- * in case of heterogeneous node clusters.  It should be noted that the system
- * may reassign the shards the when the number of nodes in the cluster changes
- * or the cluster is rebalanced.
- * 
- * @param version
- * @param useIndex  Set to true when only the shards being moved are specified
- *                  in the request.  The index must indicate the shards being
- *                  moved.
- * @param rank  node to which the shard will be moved.
- * @param tom  Toms to which the shard will be moved.
- * @param index  The shard being moved.  When use_index is set to true, size of
- *               this array must equal the size of rank/tom array.
- * @param backupMapList  List of rank_tom integers for which backup toms are
- *                       defined
- * @param backupMapValues  List of the backup rank_tom(s) for each rank_tom in
- *                         backup_map_list
- * @param options  Optional parameters.
- * 
- * @return Response object containing the result of the operation.
- * 
- */
-
-AdminAlterShardsResponse adminAlterShards( const int64_t version,
-                                           const bool useIndex,
-                                           const std::vector<int32_t>& rank,
-                                           const std::vector<int32_t>& tom,
-                                           const std::vector<int32_t>& index,
-                                           const std::vector<int32_t>& backupMapList,
-                                           const std::vector<std::vector<int32_t> >& backupMapValues,
-                                           const std::map<std::string, std::string>& options ) const;
-
-/**
- * Specify the mapping of the shards to the various ranks in the cluster. In
- * most cases, it should be sufficient to let the system automatically
- * distribute the shards evenly across the available ranks. However, this
- * endpoint can be used to move shards for various administrative reasons, say
- * in case of heterogeneous node clusters.  It should be noted that the system
- * may reassign the shards the when the number of nodes in the cluster changes
- * or the cluster is rebalanced.
- * 
- * @param version
- * @param useIndex  Set to true when only the shards being moved are specified
- *                  in the request.  The index must indicate the shards being
- *                  moved.
- * @param rank  node to which the shard will be moved.
- * @param tom  Toms to which the shard will be moved.
- * @param index  The shard being moved.  When use_index is set to true, size of
- *               this array must equal the size of rank/tom array.
- * @param backupMapList  List of rank_tom integers for which backup toms are
- *                       defined
- * @param backupMapValues  List of the backup rank_tom(s) for each rank_tom in
- *                         backup_map_list
- * @param options  Optional parameters.
- * @param[out] response_  Response object containing the results of the
- *                        operation.
- * 
- * @return Response object containing the result of the operation (initially
- *         passed in by reference).
- * 
- */
-
-AdminAlterShardsResponse& adminAlterShards( const int64_t version,
-                                            const bool useIndex,
-                                            const std::vector<int32_t>& rank,
-                                            const std::vector<int32_t>& tom,
-                                            const std::vector<int32_t>& index,
-                                            const std::vector<int32_t>& backupMapList,
-                                            const std::vector<std::vector<int32_t> >& backupMapValues,
-                                            const std::map<std::string, std::string>& options,
-                                            AdminAlterShardsResponse& response_ ) const;
-
-/**
  * Take the system offline. When the system is offline, no user operations can
  * be performed with the exception of a system shutdown.
  * 
@@ -453,240 +239,6 @@ AdminOfflineResponse adminOffline( const bool offline,
 AdminOfflineResponse& adminOffline( const bool offline,
                                     const std::map<std::string, std::string>& options,
                                     AdminOfflineResponse& response_ ) const;
-
-/**
- * Rebalance the cluster so that all the nodes contain approximately equal
- * number of records.  The rebalance will also cause the shards to be (as much
- * as possible) equally distributed across all the ranks. Note that the system
- * may move any shards that were moved by system administrator using {@link
- * #adminAlterShards(const AdminAlterShardsRequest&) const}
- * 
- * @param[in] request_  Request object containing the parameters for the
- *                      operation.
- * 
- * @return Response object containing the result of the operation.
- * 
- */
-
-AdminRebalanceResponse adminRebalance( const AdminRebalanceRequest& request_ ) const;
-
-/**
- * Rebalance the cluster so that all the nodes contain approximately equal
- * number of records.  The rebalance will also cause the shards to be (as much
- * as possible) equally distributed across all the ranks. Note that the system
- * may move any shards that were moved by system administrator using {@link
- * #adminAlterShards(const AdminAlterShardsRequest&,AdminAlterShardsResponse&) const}
- * 
- * @param[in] request_  Request object containing the parameters for the
- *                      operation.
- * @param[out] response_  Response object containing the results of the
- *                        operation.
- * 
- * @return Response object containing the result of the operation (initially
- *         passed in by reference).
- * 
- */
-
-AdminRebalanceResponse& adminRebalance( const AdminRebalanceRequest& request_,
-                                        AdminRebalanceResponse& response_ ) const;
-
-/**
- * Rebalance the cluster so that all the nodes contain approximately equal
- * number of records.  The rebalance will also cause the shards to be (as much
- * as possible) equally distributed across all the ranks. Note that the system
- * may move any shards that were moved by system administrator using {@link
- * #adminAlterShards(const int64_t,const bool,const std::vector<int32_t>&,const std::vector<int32_t>&,const std::vector<int32_t>&,const std::vector<int32_t>&,const std::vector<std::vector<int32_t> >&,const std::map<std::string, std::string>&) const}
- * 
- * @param tableNames  Specify the tables here if only specific tables have to
- *                    be rebalanced.  Leave this empty to rebalance all the
- *                    tables.  Note that only the tables which have no primary
- *                    or shard key can be rebalanced.
- * @param action  Specify 'start' to start rebalancing the cluster or 'stop' to
- *                prematurely stop a previsouly issued rebalance request.
- *                <ul>
- *                        <li> gpudb::admin_rebalance_start
- *                        <li> gpudb::admin_rebalance_stop
- *                </ul>
- * @param options  Optional parameters.
- *                 <ul>
- *                         <li> gpudb::admin_rebalance_reshard: If @a true,
- *                 then all the nodes in the cluster will be assigned
- *                 approximately the same number of shards. Note that for big
- *                 clusters, this data transfer could be time consuming and
- *                 also result in delay in responding to queries for busy
- *                 clusters.
- *                 <ul>
- *                         <li> gpudb::admin_rebalance_true
- *                         <li> gpudb::admin_rebalance_false
- *                 </ul>
- *                 The default value is gpudb::admin_rebalance_true.
- *                 </ul>
- * 
- * @return Response object containing the result of the operation.
- * 
- */
-
-AdminRebalanceResponse adminRebalance( const std::vector<std::string>& tableNames,
-                                       const std::string& action,
-                                       const std::map<std::string, std::string>& options ) const;
-
-/**
- * Rebalance the cluster so that all the nodes contain approximately equal
- * number of records.  The rebalance will also cause the shards to be (as much
- * as possible) equally distributed across all the ranks. Note that the system
- * may move any shards that were moved by system administrator using {@link
- * #adminAlterShards(const int64_t,const bool,const std::vector<int32_t>&,const std::vector<int32_t>&,const std::vector<int32_t>&,const std::vector<int32_t>&,const std::vector<std::vector<int32_t> >&,const std::map<std::string, std::string>&,AdminAlterShardsResponse&) const}
- * 
- * @param tableNames  Specify the tables here if only specific tables have to
- *                    be rebalanced.  Leave this empty to rebalance all the
- *                    tables.  Note that only the tables which have no primary
- *                    or shard key can be rebalanced.
- * @param action  Specify 'start' to start rebalancing the cluster or 'stop' to
- *                prematurely stop a previsouly issued rebalance request.
- *                <ul>
- *                        <li> gpudb::admin_rebalance_start
- *                        <li> gpudb::admin_rebalance_stop
- *                </ul>
- * @param options  Optional parameters.
- *                 <ul>
- *                         <li> gpudb::admin_rebalance_reshard: If @a true,
- *                 then all the nodes in the cluster will be assigned
- *                 approximately the same number of shards. Note that for big
- *                 clusters, this data transfer could be time consuming and
- *                 also result in delay in responding to queries for busy
- *                 clusters.
- *                 <ul>
- *                         <li> gpudb::admin_rebalance_true
- *                         <li> gpudb::admin_rebalance_false
- *                 </ul>
- *                 The default value is gpudb::admin_rebalance_true.
- *                 </ul>
- * @param[out] response_  Response object containing the results of the
- *                        operation.
- * 
- * @return Response object containing the result of the operation (initially
- *         passed in by reference).
- * 
- */
-
-AdminRebalanceResponse& adminRebalance( const std::vector<std::string>& tableNames,
-                                        const std::string& action,
-                                        const std::map<std::string, std::string>& options,
-                                        AdminRebalanceResponse& response_ ) const;
-
-/**
- * Remove a node from the cluster.  Note that this operation could take a long
- * time to complete for big clusters.  The data is transferred to other nodes
- * in the cluster before the node is removed.
- * 
- * @param[in] request_  Request object containing the parameters for the
- *                      operation.
- * 
- * @return Response object containing the result of the operation.
- * 
- */
-
-AdminRemoveNodeResponse adminRemoveNode( const AdminRemoveNodeRequest& request_ ) const;
-
-/**
- * Remove a node from the cluster.  Note that this operation could take a long
- * time to complete for big clusters.  The data is transferred to other nodes
- * in the cluster before the node is removed.
- * 
- * @param[in] request_  Request object containing the parameters for the
- *                      operation.
- * @param[out] response_  Response object containing the results of the
- *                        operation.
- * 
- * @return Response object containing the result of the operation (initially
- *         passed in by reference).
- * 
- */
-
-AdminRemoveNodeResponse& adminRemoveNode( const AdminRemoveNodeRequest& request_,
-                                          AdminRemoveNodeResponse& response_ ) const;
-
-/**
- * Remove a node from the cluster.  Note that this operation could take a long
- * time to complete for big clusters.  The data is transferred to other nodes
- * in the cluster before the node is removed.
- * 
- * @param rank  Rank number of the node being removed from the cluster.
- * @param options  Optional parameters.
- *                 <ul>
- *                         <li> gpudb::admin_remove_node_reshard: When @a true,
- *                 then the shards from nodes will be moved to the other nodes
- *                 in the cluster. When false, then the node will only be
- *                 removed from the cluster if the node does not contain any
- *                 data shards, otherwise an error is returned.  Note that for
- *                 big clusters, this data transfer could be time consuming and
- *                 also result in delay in responding to queries for busy
- *                 clusters.
- *                 <ul>
- *                         <li> gpudb::admin_remove_node_true
- *                         <li> gpudb::admin_remove_node_false
- *                 </ul>
- *                 The default value is gpudb::admin_remove_node_true.
- *                         <li> gpudb::admin_remove_node_force: When @a true,
- *                 the rank is immediately shutdown and removed from the
- *                 cluster.  This will result in loss of any data that is
- *                 present in the node at the time of the request.
- *                 <ul>
- *                         <li> gpudb::admin_remove_node_true
- *                         <li> gpudb::admin_remove_node_false
- *                 </ul>
- *                 The default value is gpudb::admin_remove_node_false.
- *                 </ul>
- * 
- * @return Response object containing the result of the operation.
- * 
- */
-
-AdminRemoveNodeResponse adminRemoveNode( const int32_t rank,
-                                         const std::map<std::string, std::string>& options ) const;
-
-/**
- * Remove a node from the cluster.  Note that this operation could take a long
- * time to complete for big clusters.  The data is transferred to other nodes
- * in the cluster before the node is removed.
- * 
- * @param rank  Rank number of the node being removed from the cluster.
- * @param options  Optional parameters.
- *                 <ul>
- *                         <li> gpudb::admin_remove_node_reshard: When @a true,
- *                 then the shards from nodes will be moved to the other nodes
- *                 in the cluster. When false, then the node will only be
- *                 removed from the cluster if the node does not contain any
- *                 data shards, otherwise an error is returned.  Note that for
- *                 big clusters, this data transfer could be time consuming and
- *                 also result in delay in responding to queries for busy
- *                 clusters.
- *                 <ul>
- *                         <li> gpudb::admin_remove_node_true
- *                         <li> gpudb::admin_remove_node_false
- *                 </ul>
- *                 The default value is gpudb::admin_remove_node_true.
- *                         <li> gpudb::admin_remove_node_force: When @a true,
- *                 the rank is immediately shutdown and removed from the
- *                 cluster.  This will result in loss of any data that is
- *                 present in the node at the time of the request.
- *                 <ul>
- *                         <li> gpudb::admin_remove_node_true
- *                         <li> gpudb::admin_remove_node_false
- *                 </ul>
- *                 The default value is gpudb::admin_remove_node_false.
- *                 </ul>
- * @param[out] response_  Response object containing the results of the
- *                        operation.
- * 
- * @return Response object containing the result of the operation (initially
- *         passed in by reference).
- * 
- */
-
-AdminRemoveNodeResponse& adminRemoveNode( const int32_t rank,
-                                          const std::map<std::string, std::string>& options,
-                                          AdminRemoveNodeResponse& response_ ) const;
 
 /**
  * Show the current system configuration file.
@@ -1130,7 +682,7 @@ AggregateConvexHullResponse& aggregateConvexHull( const std::string& tableName,
  * arg_max and count_distinct.
  * <p>
  * The response is returned as a dynamic schema. For details see: <a
- * href="../../concepts/dynamic_schemas.html" target="_top">dynamic schemas
+ * href="../../api/index.html#dynamic-schemas" target="_top">dynamic schemas
  * documentation</a>.
  * <p>
  * If a @a result_table name is specified in the @a options, the results are
@@ -1185,7 +737,7 @@ RawAggregateGroupByResponse aggregateGroupByRaw( const AggregateGroupByRequest& 
  * arg_max and count_distinct.
  * <p>
  * The response is returned as a dynamic schema. For details see: <a
- * href="../../concepts/dynamic_schemas.html" target="_top">dynamic schemas
+ * href="../../api/index.html#dynamic-schemas" target="_top">dynamic schemas
  * documentation</a>.
  * <p>
  * If a @a result_table name is specified in the @a options, the results are
@@ -1244,7 +796,7 @@ RawAggregateGroupByResponse& aggregateGroupByRaw( const AggregateGroupByRequest&
  * arg_max and count_distinct.
  * <p>
  * The response is returned as a dynamic schema. For details see: <a
- * href="../../concepts/dynamic_schemas.html" target="_top">dynamic schemas
+ * href="../../api/index.html#dynamic-schemas" target="_top">dynamic schemas
  * documentation</a>.
  * <p>
  * If a @a result_table name is specified in the @a options, the results are
@@ -1299,7 +851,7 @@ AggregateGroupByResponse aggregateGroupBy( const AggregateGroupByRequest& reques
  * arg_max and count_distinct.
  * <p>
  * The response is returned as a dynamic schema. For details see: <a
- * href="../../concepts/dynamic_schemas.html" target="_top">dynamic schemas
+ * href="../../api/index.html#dynamic-schemas" target="_top">dynamic schemas
  * documentation</a>.
  * <p>
  * If a @a result_table name is specified in the @a options, the results are
@@ -1358,7 +910,7 @@ AggregateGroupByResponse& aggregateGroupBy( const AggregateGroupByRequest& reque
  * arg_max and count_distinct.
  * <p>
  * The response is returned as a dynamic schema. For details see: <a
- * href="../../concepts/dynamic_schemas.html" target="_top">dynamic schemas
+ * href="../../api/index.html#dynamic-schemas" target="_top">dynamic schemas
  * documentation</a>.
  * <p>
  * If a @a result_table name is specified in the @a options, the results are
@@ -1512,7 +1064,7 @@ AggregateGroupByResponse aggregateGroupBy( const std::string& tableName,
  * arg_max and count_distinct.
  * <p>
  * The response is returned as a dynamic schema. For details see: <a
- * href="../../concepts/dynamic_schemas.html" target="_top">dynamic schemas
+ * href="../../api/index.html#dynamic-schemas" target="_top">dynamic schemas
  * documentation</a>.
  * <p>
  * If a @a result_table name is specified in the @a options, the results are
@@ -2554,8 +2106,8 @@ AggregateStatisticsByRangeResponse& aggregateStatisticsByRange( const std::strin
 
 /**
  * Returns all the unique values from a particular column (specified by @a
- * columnName) of a particular table (specified by @a tableName). If @a
- * columnName is a numeric column the values will be in @a
+ * columnName) of a particular table or collection (specified by @a tableName).
+ * If @a columnName is a numeric column the values will be in @a
  * binaryEncodedResponse. Otherwise if @a columnName is a string column the
  * values will be in @a jsonEncodedResponse.  The results can be paged via the
  * @a offset and @a limit parameters.
@@ -2569,7 +2121,7 @@ AggregateStatisticsByRangeResponse& aggregateStatisticsByRange( const std::strin
  * {"limit":"10","sort_order":"descending"}.
  * <p>
  * The response is returned as a dynamic schema. For details see: <a
- * href="../../concepts/dynamic_schemas.html" target="_top">dynamic schemas
+ * href="../../api/index.html#dynamic-schemas" target="_top">dynamic schemas
  * documentation</a>.
  * <p>
  * If a @a result_table name is specified in the @a options, the results are
@@ -2582,7 +2134,8 @@ AggregateStatisticsByRangeResponse& aggregateStatisticsByRange( const std::strin
  * will be sharded, in all other cases it will be replicated.  Sorting will
  * properly function only if the result table is replicated or if there is only
  * one processing node and should not be relied upon in other cases.  Not
- * available when the value of @a columnName is an unrestricted-length string.
+ * available if @a tableName is a collection or when the value of @a columnName
+ * is an unrestricted-length string.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -2595,8 +2148,8 @@ RawAggregateUniqueResponse aggregateUniqueRaw( const AggregateUniqueRequest& req
 
 /**
  * Returns all the unique values from a particular column (specified by @a
- * columnName) of a particular table (specified by @a tableName). If @a
- * columnName is a numeric column the values will be in @a
+ * columnName) of a particular table or collection (specified by @a tableName).
+ * If @a columnName is a numeric column the values will be in @a
  * binaryEncodedResponse. Otherwise if @a columnName is a string column the
  * values will be in @a jsonEncodedResponse.  The results can be paged via the
  * @a offset and @a limit parameters.
@@ -2610,7 +2163,7 @@ RawAggregateUniqueResponse aggregateUniqueRaw( const AggregateUniqueRequest& req
  * {"limit":"10","sort_order":"descending"}.
  * <p>
  * The response is returned as a dynamic schema. For details see: <a
- * href="../../concepts/dynamic_schemas.html" target="_top">dynamic schemas
+ * href="../../api/index.html#dynamic-schemas" target="_top">dynamic schemas
  * documentation</a>.
  * <p>
  * If a @a result_table name is specified in the @a options, the results are
@@ -2623,7 +2176,8 @@ RawAggregateUniqueResponse aggregateUniqueRaw( const AggregateUniqueRequest& req
  * will be sharded, in all other cases it will be replicated.  Sorting will
  * properly function only if the result table is replicated or if there is only
  * one processing node and should not be relied upon in other cases.  Not
- * available when the value of @a columnName is an unrestricted-length string.
+ * available if @a tableName is a collection or when the value of @a columnName
+ * is an unrestricted-length string.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -2640,8 +2194,8 @@ RawAggregateUniqueResponse& aggregateUniqueRaw( const AggregateUniqueRequest& re
 
 /**
  * Returns all the unique values from a particular column (specified by @a
- * columnName) of a particular table (specified by @a tableName). If @a
- * columnName is a numeric column the values will be in @a
+ * columnName) of a particular table or collection (specified by @a tableName).
+ * If @a columnName is a numeric column the values will be in @a
  * binaryEncodedResponse. Otherwise if @a columnName is a string column the
  * values will be in @a jsonEncodedResponse.  The results can be paged via the
  * @a offset and @a limit parameters.
@@ -2655,7 +2209,7 @@ RawAggregateUniqueResponse& aggregateUniqueRaw( const AggregateUniqueRequest& re
  * {"limit":"10","sort_order":"descending"}.
  * <p>
  * The response is returned as a dynamic schema. For details see: <a
- * href="../../concepts/dynamic_schemas.html" target="_top">dynamic schemas
+ * href="../../api/index.html#dynamic-schemas" target="_top">dynamic schemas
  * documentation</a>.
  * <p>
  * If a @a result_table name is specified in the @a options, the results are
@@ -2668,7 +2222,8 @@ RawAggregateUniqueResponse& aggregateUniqueRaw( const AggregateUniqueRequest& re
  * will be sharded, in all other cases it will be replicated.  Sorting will
  * properly function only if the result table is replicated or if there is only
  * one processing node and should not be relied upon in other cases.  Not
- * available when the value of @a columnName is an unrestricted-length string.
+ * available if @a tableName is a collection or when the value of @a columnName
+ * is an unrestricted-length string.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -2681,8 +2236,8 @@ AggregateUniqueResponse aggregateUnique( const AggregateUniqueRequest& request_ 
 
 /**
  * Returns all the unique values from a particular column (specified by @a
- * columnName) of a particular table (specified by @a tableName). If @a
- * columnName is a numeric column the values will be in @a
+ * columnName) of a particular table or collection (specified by @a tableName).
+ * If @a columnName is a numeric column the values will be in @a
  * binaryEncodedResponse. Otherwise if @a columnName is a string column the
  * values will be in @a jsonEncodedResponse.  The results can be paged via the
  * @a offset and @a limit parameters.
@@ -2696,7 +2251,7 @@ AggregateUniqueResponse aggregateUnique( const AggregateUniqueRequest& request_ 
  * {"limit":"10","sort_order":"descending"}.
  * <p>
  * The response is returned as a dynamic schema. For details see: <a
- * href="../../concepts/dynamic_schemas.html" target="_top">dynamic schemas
+ * href="../../api/index.html#dynamic-schemas" target="_top">dynamic schemas
  * documentation</a>.
  * <p>
  * If a @a result_table name is specified in the @a options, the results are
@@ -2709,7 +2264,8 @@ AggregateUniqueResponse aggregateUnique( const AggregateUniqueRequest& request_ 
  * will be sharded, in all other cases it will be replicated.  Sorting will
  * properly function only if the result table is replicated or if there is only
  * one processing node and should not be relied upon in other cases.  Not
- * available when the value of @a columnName is an unrestricted-length string.
+ * available if @a tableName is a collection or when the value of @a columnName
+ * is an unrestricted-length string.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -2726,8 +2282,8 @@ AggregateUniqueResponse& aggregateUnique( const AggregateUniqueRequest& request_
 
 /**
  * Returns all the unique values from a particular column (specified by @a
- * columnName) of a particular table (specified by @a tableName). If @a
- * columnName is a numeric column the values will be in @a
+ * columnName) of a particular table or collection (specified by @a tableName).
+ * If @a columnName is a numeric column the values will be in @a
  * binaryEncodedResponse. Otherwise if @a columnName is a string column the
  * values will be in @a jsonEncodedResponse.  The results can be paged via the
  * @a offset and @a limit parameters.
@@ -2741,7 +2297,7 @@ AggregateUniqueResponse& aggregateUnique( const AggregateUniqueRequest& request_
  * {"limit":"10","sort_order":"descending"}.
  * <p>
  * The response is returned as a dynamic schema. For details see: <a
- * href="../../concepts/dynamic_schemas.html" target="_top">dynamic schemas
+ * href="../../api/index.html#dynamic-schemas" target="_top">dynamic schemas
  * documentation</a>.
  * <p>
  * If a @a result_table name is specified in the @a options, the results are
@@ -2754,10 +2310,11 @@ AggregateUniqueResponse& aggregateUnique( const AggregateUniqueRequest& request_
  * will be sharded, in all other cases it will be replicated.  Sorting will
  * properly function only if the result table is replicated or if there is only
  * one processing node and should not be relied upon in other cases.  Not
- * available when the value of @a columnName is an unrestricted-length string.
+ * available if @a tableName is a collection or when the value of @a columnName
+ * is an unrestricted-length string.
  * 
- * @param tableName  Name of the table on which the operation will be
- *                   performed. Must be an existing table.
+ * @param tableName  Name of an existing table/collection on which the
+ *                   operation will be performed.
  * @param columnName  Name of the column or an expression containing one or
  *                    more column names on which the unique function would be
  *                    applied.
@@ -2789,7 +2346,9 @@ AggregateUniqueResponse& aggregateUnique( const AggregateUniqueRequest& request_
  *                 of the table used to store the results. If present, no
  *                 results are returned in the response. Has the same naming
  *                 restrictions as <a href="../../concepts/tables.html"
- *                 target="_top">tables</a>.
+ *                 target="_top">tables</a>.  Not available if @a tableName is
+ *                 a collection or when @a columnName is an unrestricted-length
+ *                 string.
  *                         <li> gpudb::aggregate_unique_result_table_persist:
  *                 If @a true, then the result table specified in @a
  *                 result_table will be persisted and will not expire unless a
@@ -2829,8 +2388,8 @@ AggregateUniqueResponse aggregateUnique( const std::string& tableName,
 
 /**
  * Returns all the unique values from a particular column (specified by @a
- * columnName) of a particular table (specified by @a tableName). If @a
- * columnName is a numeric column the values will be in @a
+ * columnName) of a particular table or collection (specified by @a tableName).
+ * If @a columnName is a numeric column the values will be in @a
  * binaryEncodedResponse. Otherwise if @a columnName is a string column the
  * values will be in @a jsonEncodedResponse.  The results can be paged via the
  * @a offset and @a limit parameters.
@@ -2844,7 +2403,7 @@ AggregateUniqueResponse aggregateUnique( const std::string& tableName,
  * {"limit":"10","sort_order":"descending"}.
  * <p>
  * The response is returned as a dynamic schema. For details see: <a
- * href="../../concepts/dynamic_schemas.html" target="_top">dynamic schemas
+ * href="../../api/index.html#dynamic-schemas" target="_top">dynamic schemas
  * documentation</a>.
  * <p>
  * If a @a result_table name is specified in the @a options, the results are
@@ -2857,10 +2416,11 @@ AggregateUniqueResponse aggregateUnique( const std::string& tableName,
  * will be sharded, in all other cases it will be replicated.  Sorting will
  * properly function only if the result table is replicated or if there is only
  * one processing node and should not be relied upon in other cases.  Not
- * available when the value of @a columnName is an unrestricted-length string.
+ * available if @a tableName is a collection or when the value of @a columnName
+ * is an unrestricted-length string.
  * 
- * @param tableName  Name of the table on which the operation will be
- *                   performed. Must be an existing table.
+ * @param tableName  Name of an existing table/collection on which the
+ *                   operation will be performed.
  * @param columnName  Name of the column or an expression containing one or
  *                    more column names on which the unique function would be
  *                    applied.
@@ -2892,7 +2452,9 @@ AggregateUniqueResponse aggregateUnique( const std::string& tableName,
  *                 of the table used to store the results. If present, no
  *                 results are returned in the response. Has the same naming
  *                 restrictions as <a href="../../concepts/tables.html"
- *                 target="_top">tables</a>.
+ *                 target="_top">tables</a>.  Not available if @a tableName is
+ *                 a collection or when @a columnName is an unrestricted-length
+ *                 string.
  *                         <li> gpudb::aggregate_unique_result_table_persist:
  *                 If @a true, then the result table specified in @a
  *                 result_table will be persisted and will not expire unless a
@@ -2945,7 +2507,7 @@ AggregateUniqueResponse& aggregateUnique( const std::string& tableName,
  * indicate the pivoted column name and values respectively.
  * <p>
  * The response is returned as a dynamic schema. For details see: <a
- * href="../../concepts/dynamic_schemas.html" target="_top">dynamic schemas
+ * href="../../api/index.html#dynamic-schemas" target="_top">dynamic schemas
  * documentation</a>.
  * 
  * @param[in] request_  Request object containing the parameters for the
@@ -2968,7 +2530,7 @@ RawAggregateUnpivotResponse aggregateUnpivotRaw( const AggregateUnpivotRequest& 
  * indicate the pivoted column name and values respectively.
  * <p>
  * The response is returned as a dynamic schema. For details see: <a
- * href="../../concepts/dynamic_schemas.html" target="_top">dynamic schemas
+ * href="../../api/index.html#dynamic-schemas" target="_top">dynamic schemas
  * documentation</a>.
  * 
  * @param[in] request_  Request object containing the parameters for the
@@ -2995,7 +2557,7 @@ RawAggregateUnpivotResponse& aggregateUnpivotRaw( const AggregateUnpivotRequest&
  * indicate the pivoted column name and values respectively.
  * <p>
  * The response is returned as a dynamic schema. For details see: <a
- * href="../../concepts/dynamic_schemas.html" target="_top">dynamic schemas
+ * href="../../api/index.html#dynamic-schemas" target="_top">dynamic schemas
  * documentation</a>.
  * 
  * @param[in] request_  Request object containing the parameters for the
@@ -3018,7 +2580,7 @@ AggregateUnpivotResponse aggregateUnpivot( const AggregateUnpivotRequest& reques
  * indicate the pivoted column name and values respectively.
  * <p>
  * The response is returned as a dynamic schema. For details see: <a
- * href="../../concepts/dynamic_schemas.html" target="_top">dynamic schemas
+ * href="../../api/index.html#dynamic-schemas" target="_top">dynamic schemas
  * documentation</a>.
  * 
  * @param[in] request_  Request object containing the parameters for the
@@ -3045,7 +2607,7 @@ AggregateUnpivotResponse& aggregateUnpivot( const AggregateUnpivotRequest& reque
  * indicate the pivoted column name and values respectively.
  * <p>
  * The response is returned as a dynamic schema. For details see: <a
- * href="../../concepts/dynamic_schemas.html" target="_top">dynamic schemas
+ * href="../../api/index.html#dynamic-schemas" target="_top">dynamic schemas
  * documentation</a>.
  * 
  * @param tableName  Name of the table on which the operation will be
@@ -3118,7 +2680,7 @@ AggregateUnpivotResponse aggregateUnpivot( const std::string& tableName,
  * indicate the pivoted column name and values respectively.
  * <p>
  * The response is returned as a dynamic schema. For details see: <a
- * href="../../concepts/dynamic_schemas.html" target="_top">dynamic schemas
+ * href="../../api/index.html#dynamic-schemas" target="_top">dynamic schemas
  * documentation</a>.
  * 
  * @param tableName  Name of the table on which the operation will be
@@ -9942,7 +9504,7 @@ GetRecordsResponse<TResponse>& getRecords( const Type& type_,
  * cannot be relied upon.
  * <p>
  * The response is returned as a dynamic schema. For details see: <a
- * href="../../concepts/dynamic_schemas.html" target="_top">dynamic schemas
+ * href="../../api/index.html#dynamic-schemas" target="_top">dynamic schemas
  * documentation</a>.
  * 
  * @param[in] request_  Request object containing the parameters for the
@@ -9967,7 +9529,7 @@ RawGetRecordsByColumnResponse getRecordsByColumnRaw( const GetRecordsByColumnReq
  * cannot be relied upon.
  * <p>
  * The response is returned as a dynamic schema. For details see: <a
- * href="../../concepts/dynamic_schemas.html" target="_top">dynamic schemas
+ * href="../../api/index.html#dynamic-schemas" target="_top">dynamic schemas
  * documentation</a>.
  * 
  * @param[in] request_  Request object containing the parameters for the
@@ -9996,7 +9558,7 @@ RawGetRecordsByColumnResponse& getRecordsByColumnRaw( const GetRecordsByColumnRe
  * cannot be relied upon.
  * <p>
  * The response is returned as a dynamic schema. For details see: <a
- * href="../../concepts/dynamic_schemas.html" target="_top">dynamic schemas
+ * href="../../api/index.html#dynamic-schemas" target="_top">dynamic schemas
  * documentation</a>.
  * 
  * @param[in] request_  Request object containing the parameters for the
@@ -10021,7 +9583,7 @@ GetRecordsByColumnResponse getRecordsByColumn( const GetRecordsByColumnRequest& 
  * cannot be relied upon.
  * <p>
  * The response is returned as a dynamic schema. For details see: <a
- * href="../../concepts/dynamic_schemas.html" target="_top">dynamic schemas
+ * href="../../api/index.html#dynamic-schemas" target="_top">dynamic schemas
  * documentation</a>.
  * 
  * @param[in] request_  Request object containing the parameters for the
@@ -10050,7 +9612,7 @@ GetRecordsByColumnResponse& getRecordsByColumn( const GetRecordsByColumnRequest&
  * cannot be relied upon.
  * <p>
  * The response is returned as a dynamic schema. For details see: <a
- * href="../../concepts/dynamic_schemas.html" target="_top">dynamic schemas
+ * href="../../api/index.html#dynamic-schemas" target="_top">dynamic schemas
  * documentation</a>.
  * 
  * @param tableName  Name of the table on which this operation will be
@@ -10073,8 +9635,8 @@ GetRecordsByColumnResponse& getRecordsByColumn( const GetRecordsByColumnRequest&
  *                 (i.e. no sorting is applied).
  *                         <li> gpudb::get_records_by_column_sort_order: String
  *                 indicating how the returned values should be sorted -
- *                 ascending or descending. Default is 'ascending'. If
- *                 sort_order is provided, sort_by has to be provided.
+ *                 ascending or descending. If sort_order is provided, sort_by
+ *                 has to be provided.
  *                 <ul>
  *                         <li> gpudb::get_records_by_column_ascending
  *                         <li> gpudb::get_records_by_column_descending
@@ -10111,7 +9673,7 @@ GetRecordsByColumnResponse getRecordsByColumn( const std::string& tableName,
  * cannot be relied upon.
  * <p>
  * The response is returned as a dynamic schema. For details see: <a
- * href="../../concepts/dynamic_schemas.html" target="_top">dynamic schemas
+ * href="../../api/index.html#dynamic-schemas" target="_top">dynamic schemas
  * documentation</a>.
  * 
  * @param tableName  Name of the table on which this operation will be
@@ -10134,8 +9696,8 @@ GetRecordsByColumnResponse getRecordsByColumn( const std::string& tableName,
  *                 (i.e. no sorting is applied).
  *                         <li> gpudb::get_records_by_column_sort_order: String
  *                 indicating how the returned values should be sorted -
- *                 ascending or descending. Default is 'ascending'. If
- *                 sort_order is provided, sort_by has to be provided.
+ *                 ascending or descending. If sort_order is provided, sort_by
+ *                 has to be provided.
  *                 <ul>
  *                         <li> gpudb::get_records_by_column_ascending
  *                         <li> gpudb::get_records_by_column_descending
