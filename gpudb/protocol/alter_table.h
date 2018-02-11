@@ -150,6 +150,27 @@ namespace gpudb
          *                     access mode in @a value. Valid modes are
          *                     'no_access', 'read_only', 'write_only' and
          *                     'read_write'.
+         *                             <li> gpudb::alter_table_refresh: Replay
+         *                     all the table creation commands required to
+         *                     create this view. Endpoints supported are
+         *                     filter, create_join_table, create_projection,
+         *                     create_union, aggregate_group_by, and
+         *                     aggregate_unique.
+         *                             <li>
+         *                     gpudb::alter_table_set_refresh_method: Set the
+         *                     method by which this view is refreshed - one of
+         *                     manual, periodic, on_change, on_query.
+         *                             <li>
+         *                     gpudb::alter_table_set_refresh_start_time: Set
+         *                     the time to start periodic refreshes to datetime
+         *                     string with format YYYY-MM-DD HH:MM:SS at which
+         *                     refresh is to be done.  Next refresh occurs at
+         *                     refresh_start_time + N*refresh_period
+         *                             <li>
+         *                     gpudb::alter_table_set_refresh_period: Set the
+         *                     time interval at which to refresh this view -
+         *                     set refresh method to periodic if not alreay
+         *                     set.
          *                     </ul>
          * @param[in] value_  The value of the modification. May be a column
          *                    name, 'true' or 'false', a TTL, or the global
@@ -159,7 +180,9 @@ namespace gpudb
          *                              <li>
          *                      gpudb::alter_table_column_default_value: When
          *                      adding a column, set a default value for
-         *                      existing records.
+         *                      existing records.  For nullable columns, the
+         *                      default value will be null, regardless of data
+         *                      type.
          *                              <li>
          *                      gpudb::alter_table_column_properties: When
          *                      adding or changing a column, set the column
@@ -185,11 +208,7 @@ namespace gpudb
          *                      The default value is gpudb::alter_table_snappy.
          *                              <li>
          *                      gpudb::alter_table_copy_values_from_column:
-         *                      When adding or changing a column, enter a
-         *                      column name from the same table being altered
-         *                      to use as a source for the column being
-         *                      added/changed; values will be copied from this
-         *                      source column into the new/modified column.
+         *                      please see add_column_expression instead.
          *                              <li> gpudb::alter_table_rename_column:
          *                      When changing a column, specify new column
          *                      name.
@@ -206,6 +225,11 @@ namespace gpudb
          *                              <li> gpudb::alter_table_false: false
          *                      </ul>
          *                      The default value is gpudb::alter_table_true.
+         *                              <li>
+         *                      gpudb::alter_table_add_column_expression:
+         *                      expression for new column's values (optional
+         *                      with add_column). Any valid expressions
+         *                      including existing columns.
          *                      </ul>
          * 
          */

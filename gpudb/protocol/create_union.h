@@ -124,6 +124,8 @@ namespace gpudb
          *                              <li> gpudb::create_union_false
          *                      </ul>
          *                      The default value is gpudb::create_union_false.
+         *                              <li> gpudb::create_union_view_id: view
+         *                      this union table is part of
          *                      </ul>
          * 
          */

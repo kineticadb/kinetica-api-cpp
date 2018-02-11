@@ -82,6 +82,13 @@ namespace gpudb
          * @param[in] args_  An array of command-line arguments that will be
          *                   passed to @a command when the proc is executed.
          * @param[in] options_  Optional parameters.
+         *                      <ul>
+         *                              <li>
+         *                      gpudb::create_proc_max_concurrency_per_node:
+         *                      The maximum number of concurrent instances of
+         *                      the proc that will be executed per node. 0
+         *                      allows unlimited concurrency.
+         *                      </ul>
          * 
          */
         CreateProcRequest(const std::string& procName_, const std::string& executionMode_, const std::map<std::string, std::vector<uint8_t> >& files_, const std::string& command_, const std::vector<std::string>& args_, const std::map<std::string, std::string>& options_):

@@ -3,11 +3,11 @@ Kinetica C++ API
 
 This project contains the source code of the C++ Kinetica API.
 
-The documentation can be found at http://www.kinetica.com/docs/6.1/index.html.  The
+The documentation can be found at http://www.kinetica.com/docs/6.2/index.html.  The
 C++ specific documentation can be found at:
 
-*   http://www.kinetica.com/docs/6.1/tutorials/cpp_guide.html
-*   http://www.kinetica.com/docs/6.1/api/c++/annotated.html
+*   http://www.kinetica.com/docs/6.2/tutorials/cpp_guide.html
+*   http://www.kinetica.com/docs/6.2/api/c++/annotated.html
 
 For the client-side API changes, please refer to CHANGELOG.md, and for GPUdb
 function changes, please refer to CHANGELOG-FUNCTIONS.md.
@@ -158,7 +158,7 @@ Editing and Building GPUdb API C++ with QTCreator
     -   `$ qtcreator -noload Welcome qtcreator-gpudb-api-cpp.creator`
 
 
-Instructions to build the Kinetica CPP API on Windows
+Instructions to build the Kinetica C++ API on Windows
 =====================================================
 
 
@@ -212,13 +212,21 @@ Third-party Libraries
 		-	Download avro-cpp-1.7.7.tar.gz.  See: http://www.apache.org/dyn/closer.cgi/avro/
 		-	Full instructions at: https://avro.apache.org/docs/current/api/cpp/html/index.html
 		-	Uncompress to: gpudb-api-cpp\thirdparty\avro-cpp-1.7.7
-		-	Copy "api" folder to "avro"
+            Note: The C++ API repository already contains the avro-cpp-1.7.7 directory which works
+            out-of-the-box for linux; but for Windows, delete that directory and then uncompress
+            the tar.gz file.
+		-	Copy "api" folder to "avro" (do not rename the directory; make a copy as the "api" directory
+            will be required later as well)
 			-	Building Avro requires CMake.  You can install this from the NuGet Console by typing: Install-Package CMake -Version 3.5.2
 			-	Add it to your path: gpudb-api-cpp\project\gpudbapidll\packages\CMake.3.5.2\bin (or, wherever you installed it)
-			-	Set BOOST_ROOT=<your_path>gpudb-api-cpp\thirdparty\boost_1_65_1
-			-	Set BOOST_INCLUDEDIR=<your_path>gpudb-api-cpp\thirdparty\boost_1_65_1\boost
-			-	Set BOOST_LIBRARYDIR=<your_path>gpudb-api-cpp\thirdparty\boost_1_65_1\lib64\lib
-		-	In VS Build Command-Prompt, change to the Avro folder: gpudb-api-cpp\thirdparty\avro-cpp-1.7.7
+            -   If the NuGet Console fails to install CMake, then download and run the latest CMake Windows installer
+                file from https://cmake.org/download/ (cmake-3.xx.y-win32-x86.msi for 32-bit Windows and
+                cmake-3.xx.y-win64-x64.msi for 64-bit Windows).
+			-	In the VS Build Command-Prompt, set the environment variable BOOST_ROOT:
+                > set BOOST_ROOT=<your_path>gpudb-api-cpp\thirdparty\boost_1_65_1
+			-	Similarly, set BOOST_INCLUDEDIR=<your_path>gpudb-api-cpp\thirdparty\boost_1_65_1\boost
+			-	Also, set BOOST_LIBRARYDIR=<your_path>gpudb-api-cpp\thirdparty\boost_1_65_1\lib64\lib
+		-	In the same VS Build Command-Prompt, change to the Avro folder: gpudb-api-cpp\thirdparty\avro-cpp-1.7.7
 		-	Run: cmake -G "Visual Studio 10"
 			-	Change "10" to "14" for VS 2015
 			-	This creates, among other things, Avro-cpp.sln file.

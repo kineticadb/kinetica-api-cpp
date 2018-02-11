@@ -63,6 +63,8 @@ namespace gpudb
          *                      is non-existent, the collection will be
          *                      automatically created. If empty, then the newly
          *                      created view will be top-level.
+         *                              <li> gpudb::filter_view_id: view this
+         *                      filtered-view is part of
          *                              <li> gpudb::filter_ttl: Sets the <a
          *                      href="../../concepts/ttl.html"
          *                      target="_top">TTL</a> of the view specified in

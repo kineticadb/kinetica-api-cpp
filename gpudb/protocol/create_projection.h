@@ -135,6 +135,8 @@ namespace gpudb
          *                      </ul>
          *                      The default value is
          *                      gpudb::create_projection_false.
+         *                              <li> gpudb::create_projection_view_id:
+         *                      view this projection is part of
          *                      </ul>
          * 
          */

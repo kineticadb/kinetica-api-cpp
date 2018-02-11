@@ -148,6 +148,8 @@ namespace gpudb
          *                      the chunk size to be used for the result table.
          *                      Must be used in combination with the @a
          *                      result_table option.
+         *                              <li> gpudb::aggregate_unique_view_id:
+         *                      view this result table is part of
          *                      </ul>
          * 
          */
@@ -256,6 +258,8 @@ namespace gpudb
          *                      the chunk size to be used for the result table.
          *                      Must be used in combination with the @a
          *                      result_table option.
+         *                              <li> gpudb::aggregate_unique_view_id:
+         *                      view this result table is part of
          *                      </ul>
          * 
          */

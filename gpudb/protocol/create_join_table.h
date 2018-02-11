@@ -138,6 +138,8 @@ namespace gpudb
          *                      the <a href="../../concepts/ttl.html"
          *                      target="_top">TTL</a> of the join table
          *                      specified in @a joinTableName.
+         *                              <li> gpudb::create_join_table_view_id:
+         *                      view this projection is part of
          *                      </ul>
          * 
          */

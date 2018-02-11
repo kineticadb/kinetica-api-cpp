@@ -1013,6 +1013,8 @@ AggregateGroupByResponse& aggregateGroupBy( const AggregateGroupByRequest& reque
  *                         <li> gpudb::aggregate_group_by_chunk_size: Indicates
  *                 the chunk size to be used for the result table. Must be used
  *                 in combination with the @a result_table option.
+ *                         <li> gpudb::aggregate_group_by_view_id: view this
+ *                 result table is part of
  *                         <li> gpudb::aggregate_group_by_materialize_on_gpu:
  *                 If @a true then the columns of the groupby result table will
  *                 be cached on the GPU. Must be used in combination with the
@@ -1167,6 +1169,8 @@ AggregateGroupByResponse aggregateGroupBy( const std::string& tableName,
  *                         <li> gpudb::aggregate_group_by_chunk_size: Indicates
  *                 the chunk size to be used for the result table. Must be used
  *                 in combination with the @a result_table option.
+ *                         <li> gpudb::aggregate_group_by_view_id: view this
+ *                 result table is part of
  *                         <li> gpudb::aggregate_group_by_materialize_on_gpu:
  *                 If @a true then the columns of the groupby result table will
  *                 be cached on the GPU. Must be used in combination with the
@@ -2374,6 +2378,8 @@ AggregateUniqueResponse& aggregateUnique( const AggregateUniqueRequest& request_
  *                         <li> gpudb::aggregate_unique_chunk_size: Indicates
  *                 the chunk size to be used for the result table. Must be used
  *                 in combination with the @a result_table option.
+ *                         <li> gpudb::aggregate_unique_view_id: view this
+ *                 result table is part of
  *                 </ul>
  * 
  * @return Response object containing the result of the operation.
@@ -2480,6 +2486,8 @@ AggregateUniqueResponse aggregateUnique( const std::string& tableName,
  *                         <li> gpudb::aggregate_unique_chunk_size: Indicates
  *                 the chunk size to be used for the result table. Must be used
  *                 in combination with the @a result_table option.
+ *                         <li> gpudb::aggregate_unique_view_id: view this
+ *                 result table is part of
  *                 </ul>
  * @param[out] response_  Response object containing the results of the
  *                        operation.
@@ -3241,6 +3249,20 @@ AlterTableResponse& alterTable( const AlterTableRequest& request_,
  *                in @a tableName. Specify the access mode in @a value. Valid
  *                modes are 'no_access', 'read_only', 'write_only' and
  *                'read_write'.
+ *                        <li> gpudb::alter_table_refresh: Replay all the table
+ *                creation commands required to create this view. Endpoints
+ *                supported are filter, create_join_table, create_projection,
+ *                create_union, aggregate_group_by, and aggregate_unique.
+ *                        <li> gpudb::alter_table_set_refresh_method: Set the
+ *                method by which this view is refreshed - one of manual,
+ *                periodic, on_change, on_query.
+ *                        <li> gpudb::alter_table_set_refresh_start_time: Set
+ *                the time to start periodic refreshes to datetime string with
+ *                format YYYY-MM-DD HH:MM:SS at which refresh is to be done.
+ *                Next refresh occurs at refresh_start_time + N*refresh_period
+ *                        <li> gpudb::alter_table_set_refresh_period: Set the
+ *                time interval at which to refresh this view - set refresh
+ *                method to periodic if not alreay set.
  *                </ul>
  * @param value  The value of the modification. May be a column name, 'true' or
  *               'false', a TTL, or the global access mode depending on @a
@@ -3249,6 +3271,8 @@ AlterTableResponse& alterTable( const AlterTableRequest& request_,
  *                 <ul>
  *                         <li> gpudb::alter_table_column_default_value: When
  *                 adding a column, set a default value for existing records.
+ *                 For nullable columns, the default value will be null,
+ *                 regardless of data type.
  *                         <li> gpudb::alter_table_column_properties: When
  *                 adding or changing a column, set the column properties
  *                 (strings, separated by a comma: data, store_only,
@@ -3268,10 +3292,7 @@ AlterTableResponse& alterTable( const AlterTableRequest& request_,
  *                 </ul>
  *                 The default value is gpudb::alter_table_snappy.
  *                         <li> gpudb::alter_table_copy_values_from_column:
- *                 When adding or changing a column, enter a column name from
- *                 the same table being altered to use as a source for the
- *                 column being added/changed; values will be copied from this
- *                 source column into the new/modified column.
+ *                 please see add_column_expression instead.
  *                         <li> gpudb::alter_table_rename_column: When changing
  *                 a column, specify new column name.
  *                         <li> gpudb::alter_table_validate_change_column: When
@@ -3285,6 +3306,10 @@ AlterTableResponse& alterTable( const AlterTableRequest& request_,
  *                         <li> gpudb::alter_table_false: false
  *                 </ul>
  *                 The default value is gpudb::alter_table_true.
+ *                         <li> gpudb::alter_table_add_column_expression:
+ *                 expression for new column's values (optional with
+ *                 add_column). Any valid expressions including existing
+ *                 columns.
  *                 </ul>
  * 
  * @return Response object containing the result of the operation.
@@ -3393,6 +3418,20 @@ AlterTableResponse alterTable( const std::string& tableName,
  *                in @a tableName. Specify the access mode in @a value. Valid
  *                modes are 'no_access', 'read_only', 'write_only' and
  *                'read_write'.
+ *                        <li> gpudb::alter_table_refresh: Replay all the table
+ *                creation commands required to create this view. Endpoints
+ *                supported are filter, create_join_table, create_projection,
+ *                create_union, aggregate_group_by, and aggregate_unique.
+ *                        <li> gpudb::alter_table_set_refresh_method: Set the
+ *                method by which this view is refreshed - one of manual,
+ *                periodic, on_change, on_query.
+ *                        <li> gpudb::alter_table_set_refresh_start_time: Set
+ *                the time to start periodic refreshes to datetime string with
+ *                format YYYY-MM-DD HH:MM:SS at which refresh is to be done.
+ *                Next refresh occurs at refresh_start_time + N*refresh_period
+ *                        <li> gpudb::alter_table_set_refresh_period: Set the
+ *                time interval at which to refresh this view - set refresh
+ *                method to periodic if not alreay set.
  *                </ul>
  * @param value  The value of the modification. May be a column name, 'true' or
  *               'false', a TTL, or the global access mode depending on @a
@@ -3401,6 +3440,8 @@ AlterTableResponse alterTable( const std::string& tableName,
  *                 <ul>
  *                         <li> gpudb::alter_table_column_default_value: When
  *                 adding a column, set a default value for existing records.
+ *                 For nullable columns, the default value will be null,
+ *                 regardless of data type.
  *                         <li> gpudb::alter_table_column_properties: When
  *                 adding or changing a column, set the column properties
  *                 (strings, separated by a comma: data, store_only,
@@ -3420,10 +3461,7 @@ AlterTableResponse alterTable( const std::string& tableName,
  *                 </ul>
  *                 The default value is gpudb::alter_table_snappy.
  *                         <li> gpudb::alter_table_copy_values_from_column:
- *                 When adding or changing a column, enter a column name from
- *                 the same table being altered to use as a source for the
- *                 column being added/changed; values will be copied from this
- *                 source column into the new/modified column.
+ *                 please see add_column_expression instead.
  *                         <li> gpudb::alter_table_rename_column: When changing
  *                 a column, specify new column name.
  *                         <li> gpudb::alter_table_validate_change_column: When
@@ -3437,6 +3475,10 @@ AlterTableResponse alterTable( const std::string& tableName,
  *                         <li> gpudb::alter_table_false: false
  *                 </ul>
  *                 The default value is gpudb::alter_table_true.
+ *                         <li> gpudb::alter_table_add_column_expression:
+ *                 expression for new column's values (optional with
+ *                 add_column). Any valid expressions including existing
+ *                 columns.
  *                 </ul>
  * @param[out] response_  Response object containing the results of the
  *                        operation.
@@ -3783,6 +3825,74 @@ AppendRecordsResponse& appendRecords( const std::string& tableName,
                                       AppendRecordsResponse& response_ ) const;
 
 /**
+ * Clears (drops) one or all column statistics of a tables.
+ * 
+ * @param[in] request_  Request object containing the parameters for the
+ *                      operation.
+ * 
+ * @return Response object containing the result of the operation.
+ * 
+ */
+
+ClearStatisticsResponse clearStatistics( const ClearStatisticsRequest& request_ ) const;
+
+/**
+ * Clears (drops) one or all column statistics of a tables.
+ * 
+ * @param[in] request_  Request object containing the parameters for the
+ *                      operation.
+ * @param[out] response_  Response object containing the results of the
+ *                        operation.
+ * 
+ * @return Response object containing the result of the operation (initially
+ *         passed in by reference).
+ * 
+ */
+
+ClearStatisticsResponse& clearStatistics( const ClearStatisticsRequest& request_,
+                                          ClearStatisticsResponse& response_ ) const;
+
+/**
+ * Clears (drops) one or all column statistics of a tables.
+ * 
+ * @param tableName  Name of the table to clear the statistics. Must be an
+ *                   existing table.
+ * @param columnName  Name of the column to be cleared. Must be an existing
+ *                    table. Empty string clears all available statistics of
+ *                    the table.
+ * @param options  Optional parameters.
+ * 
+ * @return Response object containing the result of the operation.
+ * 
+ */
+
+ClearStatisticsResponse clearStatistics( const std::string& tableName,
+                                         const std::string& columnName,
+                                         const std::map<std::string, std::string>& options ) const;
+
+/**
+ * Clears (drops) one or all column statistics of a tables.
+ * 
+ * @param tableName  Name of the table to clear the statistics. Must be an
+ *                   existing table.
+ * @param columnName  Name of the column to be cleared. Must be an existing
+ *                    table. Empty string clears all available statistics of
+ *                    the table.
+ * @param options  Optional parameters.
+ * @param[out] response_  Response object containing the results of the
+ *                        operation.
+ * 
+ * @return Response object containing the result of the operation (initially
+ *         passed in by reference).
+ * 
+ */
+
+ClearStatisticsResponse& clearStatistics( const std::string& tableName,
+                                          const std::string& columnName,
+                                          const std::map<std::string, std::string>& options,
+                                          ClearStatisticsResponse& response_ ) const;
+
+/**
  * Clears (drops) one or all tables in the database cluster. The operation is
  * synchronous meaning that the table will be cleared before the function
  * returns. The response payload returns the status of the operation along with
@@ -4011,6 +4121,184 @@ ClearTriggerResponse& clearTrigger( const std::string& triggerId,
                                     ClearTriggerResponse& response_ ) const;
 
 /**
+ * Collect the requested statistics of the given column(s) in a given table.
+ * 
+ * @param[in] request_  Request object containing the parameters for the
+ *                      operation.
+ * 
+ * @return Response object containing the result of the operation.
+ * 
+ */
+
+CollectStatisticsResponse collectStatistics( const CollectStatisticsRequest& request_ ) const;
+
+/**
+ * Collect the requested statistics of the given column(s) in a given table.
+ * 
+ * @param[in] request_  Request object containing the parameters for the
+ *                      operation.
+ * @param[out] response_  Response object containing the results of the
+ *                        operation.
+ * 
+ * @return Response object containing the result of the operation (initially
+ *         passed in by reference).
+ * 
+ */
+
+CollectStatisticsResponse& collectStatistics( const CollectStatisticsRequest& request_,
+                                              CollectStatisticsResponse& response_ ) const;
+
+/**
+ * Collect the requested statistics of the given column(s) in a given table.
+ * 
+ * @param tableName  Name of the table on which the statistics operation will
+ *                   be performed.
+ * @param columnNames  List of one or more column names.
+ * @param options  Optional parameters.
+ * 
+ * @return Response object containing the result of the operation.
+ * 
+ */
+
+CollectStatisticsResponse collectStatistics( const std::string& tableName,
+                                             const std::vector<std::string>& columnNames,
+                                             const std::map<std::string, std::string>& options ) const;
+
+/**
+ * Collect the requested statistics of the given column(s) in a given table.
+ * 
+ * @param tableName  Name of the table on which the statistics operation will
+ *                   be performed.
+ * @param columnNames  List of one or more column names.
+ * @param options  Optional parameters.
+ * @param[out] response_  Response object containing the results of the
+ *                        operation.
+ * 
+ * @return Response object containing the result of the operation (initially
+ *         passed in by reference).
+ * 
+ */
+
+CollectStatisticsResponse& collectStatistics( const std::string& tableName,
+                                              const std::vector<std::string>& columnNames,
+                                              const std::map<std::string, std::string>& options,
+                                              CollectStatisticsResponse& response_ ) const;
+
+/**
+ * Create a job which will run asynchronously. The response returns a job ID,
+ * which can be used to query the status and result of the job. The status and
+ * the result of the job upon completion can be requested by {@link
+ * #getJob(const GetJobRequest&) const}.
+ * 
+ * @param[in] request_  Request object containing the parameters for the
+ *                      operation.
+ * 
+ * @return Response object containing the result of the operation.
+ * 
+ */
+
+CreateJobResponse createJob( const CreateJobRequest& request_ ) const;
+
+/**
+ * Create a job which will run asynchronously. The response returns a job ID,
+ * which can be used to query the status and result of the job. The status and
+ * the result of the job upon completion can be requested by {@link
+ * #getJob(const GetJobRequest&,GetJobResponse&) const}.
+ * 
+ * @param[in] request_  Request object containing the parameters for the
+ *                      operation.
+ * @param[out] response_  Response object containing the results of the
+ *                        operation.
+ * 
+ * @return Response object containing the result of the operation (initially
+ *         passed in by reference).
+ * 
+ */
+
+CreateJobResponse& createJob( const CreateJobRequest& request_,
+                              CreateJobResponse& response_ ) const;
+
+/**
+ * Create a job which will run asynchronously. The response returns a job ID,
+ * which can be used to query the status and result of the job. The status and
+ * the result of the job upon completion can be requested by {@link
+ * #getJob(const int32_t,const std::map<std::string, std::string>&) const}.
+ * 
+ * @param endpoint  Indicates which endpoint to execute, e.g. '/alter/table'.
+ * @param requestEncoding  The encoding of the request payload for the job.
+ *                         <ul>
+ *                                 <li> gpudb::create_job_binary
+ *                                 <li> gpudb::create_job_json
+ *                                 <li> gpudb::create_job_snappy
+ *                         </ul>
+ *                         The default value is gpudb::create_job_binary.
+ * @param data  Binary-encoded payload for the job to be run asynchronously.
+ *              The payload must contain the relevant input parameters for the
+ *              endpoint indicated in @a endpoint.  Please see the
+ *              documentation for the appropriate endpoint to see what values
+ *              must (or can) be specified.  If this parameter is used, then @a
+ *              requestEncoding must be @a binary or @a snappy.
+ * @param dataStr  JSON-encoded payload for the job to be run asynchronously.
+ *                 The payload must contain the relevant input parameters for
+ *                 the endpoint indicated in @a endpoint.  Please see the
+ *                 documentation for the appropriate endpoint to see what
+ *                 values must (or can) be specified.  If this parameter is
+ *                 used, then @a requestEncoding must be @a json.
+ * @param options  Optional parameters.
+ * 
+ * @return Response object containing the result of the operation.
+ * 
+ */
+
+CreateJobResponse createJob( const std::string& endpoint,
+                             const std::string& requestEncoding,
+                             const std::vector<uint8_t>& data,
+                             const std::string& dataStr,
+                             const std::map<std::string, std::string>& options ) const;
+
+/**
+ * Create a job which will run asynchronously. The response returns a job ID,
+ * which can be used to query the status and result of the job. The status and
+ * the result of the job upon completion can be requested by {@link
+ * #getJob(const int32_t,const std::map<std::string, std::string>&,GetJobResponse&) const}.
+ * 
+ * @param endpoint  Indicates which endpoint to execute, e.g. '/alter/table'.
+ * @param requestEncoding  The encoding of the request payload for the job.
+ *                         <ul>
+ *                                 <li> gpudb::create_job_binary
+ *                                 <li> gpudb::create_job_json
+ *                                 <li> gpudb::create_job_snappy
+ *                         </ul>
+ *                         The default value is gpudb::create_job_binary.
+ * @param data  Binary-encoded payload for the job to be run asynchronously.
+ *              The payload must contain the relevant input parameters for the
+ *              endpoint indicated in @a endpoint.  Please see the
+ *              documentation for the appropriate endpoint to see what values
+ *              must (or can) be specified.  If this parameter is used, then @a
+ *              requestEncoding must be @a binary or @a snappy.
+ * @param dataStr  JSON-encoded payload for the job to be run asynchronously.
+ *                 The payload must contain the relevant input parameters for
+ *                 the endpoint indicated in @a endpoint.  Please see the
+ *                 documentation for the appropriate endpoint to see what
+ *                 values must (or can) be specified.  If this parameter is
+ *                 used, then @a requestEncoding must be @a json.
+ * @param options  Optional parameters.
+ * @param[out] response_  Response object containing the results of the
+ *                        operation.
+ * 
+ * @return Response object containing the result of the operation (initially
+ *         passed in by reference).
+ * 
+ */
+
+CreateJobResponse& createJob( const std::string& endpoint,
+                              const std::string& requestEncoding,
+                              const std::vector<uint8_t>& data,
+                              const std::string& dataStr,
+                              const std::map<std::string, std::string>& options,
+                              CreateJobResponse& response_ ) const;
+
+/**
  * Creates a table that is the result of a SQL JOIN.  For details see: <a
  * href="../../concepts/joins.html" target="_top">join concept
  * documentation</a>.
@@ -4127,6 +4415,8 @@ CreateJoinTableResponse& createJoinTable( const CreateJoinTableRequest& request_
  *                         <li> gpudb::create_join_table_ttl: Sets the <a
  *                 href="../../concepts/ttl.html" target="_top">TTL</a> of the
  *                 join table specified in @a joinTableName.
+ *                         <li> gpudb::create_join_table_view_id: view this
+ *                 projection is part of
  *                 </ul>
  * 
  * @return Response object containing the result of the operation.
@@ -4224,6 +4514,8 @@ CreateJoinTableResponse createJoinTable( const std::string& joinTableName,
  *                         <li> gpudb::create_join_table_ttl: Sets the <a
  *                 href="../../concepts/ttl.html" target="_top">TTL</a> of the
  *                 join table specified in @a joinTableName.
+ *                         <li> gpudb::create_join_table_view_id: view this
+ *                 projection is part of
  *                 </ul>
  * @param[out] response_  Response object containing the results of the
  *                        operation.
@@ -4239,6 +4531,186 @@ CreateJoinTableResponse& createJoinTable( const std::string& joinTableName,
                                           const std::vector<std::string>& expressions,
                                           const std::map<std::string, std::string>& options,
                                           CreateJoinTableResponse& response_ ) const;
+
+/**
+ * The create materialized view request does not create the actual table that
+ * will be the toplevel table of the view but instead registers the table name
+ * so no other views or tables can be created with that name.  The response
+ * contains a a view_id that is used to label the table creation requests
+ * (projection, union, group-by, filter, or join) that describes the view.
+ * 
+ * @param[in] request_  Request object containing the parameters for the
+ *                      operation.
+ * 
+ * @return Response object containing the result of the operation.
+ * 
+ */
+
+CreateMaterializedViewResponse createMaterializedView( const CreateMaterializedViewRequest& request_ ) const;
+
+/**
+ * The create materialized view request does not create the actual table that
+ * will be the toplevel table of the view but instead registers the table name
+ * so no other views or tables can be created with that name.  The response
+ * contains a a view_id that is used to label the table creation requests
+ * (projection, union, group-by, filter, or join) that describes the view.
+ * 
+ * @param[in] request_  Request object containing the parameters for the
+ *                      operation.
+ * @param[out] response_  Response object containing the results of the
+ *                        operation.
+ * 
+ * @return Response object containing the result of the operation (initially
+ *         passed in by reference).
+ * 
+ */
+
+CreateMaterializedViewResponse& createMaterializedView( const CreateMaterializedViewRequest& request_,
+                                                        CreateMaterializedViewResponse& response_ ) const;
+
+/**
+ * The create materialized view request does not create the actual table that
+ * will be the toplevel table of the view but instead registers the table name
+ * so no other views or tables can be created with that name.  The response
+ * contains a a view_id that is used to label the table creation requests
+ * (projection, union, group-by, filter, or join) that describes the view.
+ * 
+ * @param tableName  Name of the table to be created that is the top-level
+ *                   table of the materialized view.
+ * @param options  Optional parameters.
+ *                 <ul>
+ *                         <li>
+ *                 gpudb::create_materialized_view_collection_name: Name of a
+ *                 collection which is to contain the newly created view. If
+ *                 the collection provided is non-existent, the collection will
+ *                 be automatically created. If empty, then the newly created
+ *                 table will be a top-level table.
+ *                         <li> gpudb::create_materialized_view_ttl: Sets the
+ *                 <a href="../../concepts/ttl.html" target="_top">TTL</a> of
+ *                 the table specified in @a tableName.
+ *                         <li> gpudb::create_materialized_view_persist: If @a
+ *                 true, then the materialized view specified in @a tableName
+ *                 will be persisted and will not expire unless a @a ttl is
+ *                 specified.   If @a false, then the materialized view will be
+ *                 an in-memory table and will expire unless a @a ttl is
+ *                 specified otherwise.
+ *                 <ul>
+ *                         <li> gpudb::create_materialized_view_true
+ *                         <li> gpudb::create_materialized_view_false
+ *                 </ul>
+ *                 The default value is gpudb::create_materialized_view_false.
+ *                         <li> gpudb::create_materialized_view_refresh_method:
+ *                 Method by which the join can be refreshed when the data in
+ *                 underlying member tables have changed.
+ *                 <ul>
+ *                         <li> gpudb::create_materialized_view_manual: Refresh
+ *                 only occurs when manually requested by calling alter_table
+ *                 with action refresh_view
+ *                         <li> gpudb::create_materialized_view_on_query:
+ *                 Incrementally refresh (refresh just those records added)
+ *                 whenever a new query is issued and new data is inserted into
+ *                 the base table.  A full refresh of all the records occurs
+ *                 when a new query is issued and there have been inserts to
+ *                 any non-base-tables since the last query
+ *                         <li> gpudb::create_materialized_view_on_change: If
+ *                 possible, incrementally refresh (refresh just those records
+ *                 added) whenever an insert, update, delete or refresh of
+ *                 input table is done.  A full refresh on_query is done if an
+ *                 incremental refresh is not possible.
+ *                         <li> gpudb::create_materialized_view_periodic:
+ *                 Refresh table periodically at rate specified by
+ *                 refresh_period option
+ *                 </ul>
+ *                 The default value is gpudb::create_materialized_view_manual.
+ *                         <li> gpudb::create_materialized_view_refresh_period:
+ *                 When refresh_method is periodic specifies the period in
+ *                 seconds at which refresh occurs
+ *                         <li>
+ *                 gpudb::create_materialized_view_refresh_start_time: First
+ *                 time at which a periodic refresh is to be done.  Value is a
+ *                 datatime string with format YYYY-MM-DD HH:MM:SS.
+ *                 </ul>
+ * 
+ * @return Response object containing the result of the operation.
+ * 
+ */
+
+CreateMaterializedViewResponse createMaterializedView( const std::string& tableName,
+                                                       const std::map<std::string, std::string>& options ) const;
+
+/**
+ * The create materialized view request does not create the actual table that
+ * will be the toplevel table of the view but instead registers the table name
+ * so no other views or tables can be created with that name.  The response
+ * contains a a view_id that is used to label the table creation requests
+ * (projection, union, group-by, filter, or join) that describes the view.
+ * 
+ * @param tableName  Name of the table to be created that is the top-level
+ *                   table of the materialized view.
+ * @param options  Optional parameters.
+ *                 <ul>
+ *                         <li>
+ *                 gpudb::create_materialized_view_collection_name: Name of a
+ *                 collection which is to contain the newly created view. If
+ *                 the collection provided is non-existent, the collection will
+ *                 be automatically created. If empty, then the newly created
+ *                 table will be a top-level table.
+ *                         <li> gpudb::create_materialized_view_ttl: Sets the
+ *                 <a href="../../concepts/ttl.html" target="_top">TTL</a> of
+ *                 the table specified in @a tableName.
+ *                         <li> gpudb::create_materialized_view_persist: If @a
+ *                 true, then the materialized view specified in @a tableName
+ *                 will be persisted and will not expire unless a @a ttl is
+ *                 specified.   If @a false, then the materialized view will be
+ *                 an in-memory table and will expire unless a @a ttl is
+ *                 specified otherwise.
+ *                 <ul>
+ *                         <li> gpudb::create_materialized_view_true
+ *                         <li> gpudb::create_materialized_view_false
+ *                 </ul>
+ *                 The default value is gpudb::create_materialized_view_false.
+ *                         <li> gpudb::create_materialized_view_refresh_method:
+ *                 Method by which the join can be refreshed when the data in
+ *                 underlying member tables have changed.
+ *                 <ul>
+ *                         <li> gpudb::create_materialized_view_manual: Refresh
+ *                 only occurs when manually requested by calling alter_table
+ *                 with action refresh_view
+ *                         <li> gpudb::create_materialized_view_on_query:
+ *                 Incrementally refresh (refresh just those records added)
+ *                 whenever a new query is issued and new data is inserted into
+ *                 the base table.  A full refresh of all the records occurs
+ *                 when a new query is issued and there have been inserts to
+ *                 any non-base-tables since the last query
+ *                         <li> gpudb::create_materialized_view_on_change: If
+ *                 possible, incrementally refresh (refresh just those records
+ *                 added) whenever an insert, update, delete or refresh of
+ *                 input table is done.  A full refresh on_query is done if an
+ *                 incremental refresh is not possible.
+ *                         <li> gpudb::create_materialized_view_periodic:
+ *                 Refresh table periodically at rate specified by
+ *                 refresh_period option
+ *                 </ul>
+ *                 The default value is gpudb::create_materialized_view_manual.
+ *                         <li> gpudb::create_materialized_view_refresh_period:
+ *                 When refresh_method is periodic specifies the period in
+ *                 seconds at which refresh occurs
+ *                         <li>
+ *                 gpudb::create_materialized_view_refresh_start_time: First
+ *                 time at which a periodic refresh is to be done.  Value is a
+ *                 datatime string with format YYYY-MM-DD HH:MM:SS.
+ *                 </ul>
+ * @param[out] response_  Response object containing the results of the
+ *                        operation.
+ * 
+ * @return Response object containing the result of the operation (initially
+ *         passed in by reference).
+ * 
+ */
+
+CreateMaterializedViewResponse& createMaterializedView( const std::string& tableName,
+                                                        const std::map<std::string, std::string>& options,
+                                                        CreateMaterializedViewResponse& response_ ) const;
 
 /**
  * Creates an instance (proc) of the user-defined function (UDF) specified by
@@ -4316,6 +4788,11 @@ CreateProcResponse& createProc( const CreateProcRequest& request_,
  * @param args  An array of command-line arguments that will be passed to @a
  *              command when the proc is executed.
  * @param options  Optional parameters.
+ *                 <ul>
+ *                         <li> gpudb::create_proc_max_concurrency_per_node:
+ *                 The maximum number of concurrent instances of the proc that
+ *                 will be executed per node. 0 allows unlimited concurrency.
+ *                 </ul>
  * 
  * @return Response object containing the result of the operation.
  * 
@@ -4370,6 +4847,11 @@ CreateProcResponse createProc( const std::string& procName,
  * @param args  An array of command-line arguments that will be passed to @a
  *              command when the proc is executed.
  * @param options  Optional parameters.
+ *                 <ul>
+ *                         <li> gpudb::create_proc_max_concurrency_per_node:
+ *                 The maximum number of concurrent instances of the proc that
+ *                 will be executed per node. 0 allows unlimited concurrency.
+ *                 </ul>
  * @param[out] response_  Response object containing the results of the
  *                        operation.
  * 
@@ -4548,6 +5030,8 @@ CreateProjectionResponse& createProjection( const CreateProjectionRequest& reque
  *                         <li> gpudb::create_projection_false
  *                 </ul>
  *                 The default value is gpudb::create_projection_false.
+ *                         <li> gpudb::create_projection_view_id: view this
+ *                 projection is part of
  *                 </ul>
  * 
  * @return Response object containing the result of the operation.
@@ -4645,6 +5129,8 @@ CreateProjectionResponse createProjection( const std::string& tableName,
  *                         <li> gpudb::create_projection_false
  *                 </ul>
  *                 The default value is gpudb::create_projection_false.
+ *                         <li> gpudb::create_projection_view_id: view this
+ *                 projection is part of
  *                 </ul>
  * @param[out] response_  Response object containing the results of the
  *                        operation.
@@ -6019,6 +6505,8 @@ CreateUnionResponse& createUnion( const CreateUnionRequest& request_,
  *                         <li> gpudb::create_union_false
  *                 </ul>
  *                 The default value is gpudb::create_union_false.
+ *                         <li> gpudb::create_union_view_id: view this union
+ *                 table is part of
  *                 </ul>
  * 
  * @return Response object containing the result of the operation.
@@ -6109,6 +6597,8 @@ CreateUnionResponse createUnion( const std::string& tableName,
  *                         <li> gpudb::create_union_false
  *                 </ul>
  *                 The default value is gpudb::create_union_false.
+ *                         <li> gpudb::create_union_view_id: view this union
+ *                 table is part of
  *                 </ul>
  * @param[out] response_  Response object containing the results of the
  *                        operation.
@@ -6800,6 +7290,8 @@ FilterResponse& filter( const FilterRequest& request_,
  *                 the collection provided is non-existent, the collection will
  *                 be automatically created. If empty, then the newly created
  *                 view will be top-level.
+ *                         <li> gpudb::filter_view_id: view this filtered-view
+ *                 is part of
  *                         <li> gpudb::filter_ttl: Sets the <a
  *                 href="../../concepts/ttl.html" target="_top">TTL</a> of the
  *                 view specified in @a viewName.
@@ -6843,6 +7335,8 @@ FilterResponse filter( const std::string& tableName,
  *                 the collection provided is non-existent, the collection will
  *                 be automatically created. If empty, then the newly created
  *                 view will be top-level.
+ *                         <li> gpudb::filter_view_id: view this filtered-view
+ *                 is part of
  *                         <li> gpudb::filter_ttl: Sets the <a
  *                 href="../../concepts/ttl.html" target="_top">TTL</a> of the
  *                 view specified in @a viewName.
@@ -8690,6 +9184,62 @@ FilterByValueResponse& filterByValue( const std::string& tableName,
                                       const std::string& columnName,
                                       const std::map<std::string, std::string>& options,
                                       FilterByValueResponse& response_ ) const;
+
+/**
+ * 
+ * @param[in] request_  Request object containing the parameters for the
+ *                      operation.
+ * 
+ * @return Response object containing the result of the operation.
+ * 
+ */
+
+GetJobResponse getJob( const GetJobRequest& request_ ) const;
+
+/**
+ * 
+ * @param[in] request_  Request object containing the parameters for the
+ *                      operation.
+ * @param[out] response_  Response object containing the results of the
+ *                        operation.
+ * 
+ * @return Response object containing the result of the operation (initially
+ *         passed in by reference).
+ * 
+ */
+
+GetJobResponse& getJob( const GetJobRequest& request_,
+                        GetJobResponse& response_ ) const;
+
+/**
+ * 
+ * @param jobId  A unique identifier for the job whose status and result is to
+ *               be fetched.
+ * @param options  Optional parameters.
+ * 
+ * @return Response object containing the result of the operation.
+ * 
+ */
+
+GetJobResponse getJob( const int32_t jobId,
+                       const std::map<std::string, std::string>& options ) const;
+
+/**
+ * 
+ * @param jobId  A unique identifier for the job whose status and result is to
+ *               be fetched.
+ * @param options  Optional parameters.
+ * @param[out] response_  Response object containing the results of the
+ *                        operation.
+ * 
+ * @return Response object containing the result of the operation (initially
+ *         passed in by reference).
+ * 
+ */
+
+GetJobResponse& getJob( const int32_t jobId,
+                        const std::map<std::string, std::string>& options,
+                        GetJobResponse& response_ ) const;
 
 /**
  * Retrieves records from a given table, optionally filtered by an expression
@@ -13364,6 +13914,66 @@ ShowSecurityResponse showSecurity( const std::vector<std::string>& names,
 ShowSecurityResponse& showSecurity( const std::vector<std::string>& names,
                                     const std::map<std::string, std::string>& options,
                                     ShowSecurityResponse& response_ ) const;
+
+/**
+ * Retrieves the collected column statistics for the specified table.
+ * 
+ * @param[in] request_  Request object containing the parameters for the
+ *                      operation.
+ * 
+ * @return Response object containing the result of the operation.
+ * 
+ */
+
+ShowStatisticsResponse showStatistics( const ShowStatisticsRequest& request_ ) const;
+
+/**
+ * Retrieves the collected column statistics for the specified table.
+ * 
+ * @param[in] request_  Request object containing the parameters for the
+ *                      operation.
+ * @param[out] response_  Response object containing the results of the
+ *                        operation.
+ * 
+ * @return Response object containing the result of the operation (initially
+ *         passed in by reference).
+ * 
+ */
+
+ShowStatisticsResponse& showStatistics( const ShowStatisticsRequest& request_,
+                                        ShowStatisticsResponse& response_ ) const;
+
+/**
+ * Retrieves the collected column statistics for the specified table.
+ * 
+ * @param tableNames  Tables whose metadata will be fetched. All provided
+ *                    tables must exist, or an error is returned.
+ * @param options  Optional parameters.
+ * 
+ * @return Response object containing the result of the operation.
+ * 
+ */
+
+ShowStatisticsResponse showStatistics( const std::vector<std::string>& tableNames,
+                                       const std::map<std::string, std::string>& options ) const;
+
+/**
+ * Retrieves the collected column statistics for the specified table.
+ * 
+ * @param tableNames  Tables whose metadata will be fetched. All provided
+ *                    tables must exist, or an error is returned.
+ * @param options  Optional parameters.
+ * @param[out] response_  Response object containing the results of the
+ *                        operation.
+ * 
+ * @return Response object containing the result of the operation (initially
+ *         passed in by reference).
+ * 
+ */
+
+ShowStatisticsResponse& showStatistics( const std::vector<std::string>& tableNames,
+                                        const std::map<std::string, std::string>& options,
+                                        ShowStatisticsResponse& response_ ) const;
 
 /**
  * Returns server configuration and version related information to the caller.
