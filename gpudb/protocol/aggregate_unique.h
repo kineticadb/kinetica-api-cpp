@@ -16,11 +16,11 @@ namespace gpudb
      * #aggregateUniqueRaw(const AggregateUniqueRequest&) const}.
      * <p>
      * Returns all the unique values from a particular column (specified by @a
-     * columnName) of a particular table (specified by @a tableName). If @a
-     * columnName is a numeric column the values will be in @a
-     * binaryEncodedResponse. Otherwise if @a columnName is a string column the
-     * values will be in @a jsonEncodedResponse.  The results can be paged via
-     * the @a offset and @a limit parameters.
+     * columnName) of a particular table or collection (specified by @a
+     * tableName). If @a columnName is a numeric column the values will be in
+     * @a binaryEncodedResponse. Otherwise if @a columnName is a string column
+     * the values will be in @a jsonEncodedResponse.  The results can be paged
+     * via the @a offset and @a limit parameters.
      * <p>
      * Columns marked as <a href="../../concepts/types.html#data-handling"
      * target="_top">store-only</a> are unable to be used with this function.
@@ -31,8 +31,8 @@ namespace gpudb
      * {"limit":"10","sort_order":"descending"}.
      * <p>
      * The response is returned as a dynamic schema. For details see: <a
-     * href="../../concepts/dynamic_schemas.html" target="_top">dynamic schemas
-     * documentation</a>.
+     * href="../../api/index.html#dynamic-schemas" target="_top">dynamic
+     * schemas documentation</a>.
      * <p>
      * If a @a result_table name is specified in the @a options, the results
      * are stored in a new table with that name--no results are returned in the
@@ -44,8 +44,8 @@ namespace gpudb
      * table will be sharded, in all other cases it will be replicated.
      * Sorting will properly function only if the result table is replicated or
      * if there is only one processing node and should not be relied upon in
-     * other cases.  Not available when the value of @a columnName is an
-     * unrestricted-length string.
+     * other cases.  Not available if @a tableName is a collection or when the
+     * value of @a columnName is an unrestricted-length string.
      */
     struct AggregateUniqueRequest
     {
@@ -68,8 +68,8 @@ namespace gpudb
          * Constructs an AggregateUniqueRequest object with the specified
          * parameters.
          * 
-         * @param[in] tableName_  Name of the table on which the operation will
-         *                        be performed. Must be an existing table.
+         * @param[in] tableName_  Name of an existing table/collection on which
+         *                        the operation will be performed.
          * @param[in] columnName_  Name of the column or an expression
          *                         containing one or more column names on which
          *                         the unique function would be applied.
@@ -112,7 +112,9 @@ namespace gpudb
          *                      present, no results are returned in the
          *                      response. Has the same naming restrictions as
          *                      <a href="../../concepts/tables.html"
-         *                      target="_top">tables</a>.
+         *                      target="_top">tables</a>.  Not available if @a
+         *                      tableName is a collection or when @a columnName
+         *                      is an unrestricted-length string.
          *                              <li>
          *                      gpudb::aggregate_unique_result_table_persist:
          *                      If @a true, then the result table specified in
@@ -163,8 +165,8 @@ namespace gpudb
          * Constructs an AggregateUniqueRequest object with the specified
          * parameters.
          * 
-         * @param[in] tableName_  Name of the table on which the operation will
-         *                        be performed. Must be an existing table.
+         * @param[in] tableName_  Name of an existing table/collection on which
+         *                        the operation will be performed.
          * @param[in] columnName_  Name of the column or an expression
          *                         containing one or more column names on which
          *                         the unique function would be applied.
@@ -218,7 +220,9 @@ namespace gpudb
          *                      present, no results are returned in the
          *                      response. Has the same naming restrictions as
          *                      <a href="../../concepts/tables.html"
-         *                      target="_top">tables</a>.
+         *                      target="_top">tables</a>.  Not available if @a
+         *                      tableName is a collection or when @a columnName
+         *                      is an unrestricted-length string.
          *                              <li>
          *                      gpudb::aggregate_unique_result_table_persist:
          *                      If @a true, then the result table specified in
@@ -348,11 +352,11 @@ namespace gpudb
      * #aggregateUniqueRaw(const AggregateUniqueRequest&) const}.
      * <p>
      * Returns all the unique values from a particular column (specified by @a
-     * columnName) of a particular table (specified by @a tableName). If @a
-     * columnName is a numeric column the values will be in @a
-     * binaryEncodedResponse. Otherwise if @a columnName is a string column the
-     * values will be in @a jsonEncodedResponse.  The results can be paged via
-     * the @a offset and @a limit parameters.
+     * columnName) of a particular table or collection (specified by @a
+     * tableName). If @a columnName is a numeric column the values will be in
+     * @a binaryEncodedResponse. Otherwise if @a columnName is a string column
+     * the values will be in @a jsonEncodedResponse.  The results can be paged
+     * via the @a offset and @a limit parameters.
      * <p>
      * Columns marked as <a href="../../concepts/types.html#data-handling"
      * target="_top">store-only</a> are unable to be used with this function.
@@ -363,8 +367,8 @@ namespace gpudb
      * {"limit":"10","sort_order":"descending"}.
      * <p>
      * The response is returned as a dynamic schema. For details see: <a
-     * href="../../concepts/dynamic_schemas.html" target="_top">dynamic schemas
-     * documentation</a>.
+     * href="../../api/index.html#dynamic-schemas" target="_top">dynamic
+     * schemas documentation</a>.
      * <p>
      * If a @a result_table name is specified in the @a options, the results
      * are stored in a new table with that name--no results are returned in the
@@ -376,8 +380,8 @@ namespace gpudb
      * table will be sharded, in all other cases it will be replicated.
      * Sorting will properly function only if the result table is replicated or
      * if there is only one processing node and should not be relied upon in
-     * other cases.  Not available when the value of @a columnName is an
-     * unrestricted-length string.
+     * other cases.  Not available if @a tableName is a collection or when the
+     * value of @a columnName is an unrestricted-length string.
      */
     struct RawAggregateUniqueResponse
     {
@@ -471,11 +475,11 @@ namespace gpudb
      * #aggregateUnique(const AggregateUniqueRequest&) const}.
      * <p>
      * Returns all the unique values from a particular column (specified by @a
-     * columnName) of a particular table (specified by @a tableName). If @a
-     * columnName is a numeric column the values will be in @a
-     * binaryEncodedResponse. Otherwise if @a columnName is a string column the
-     * values will be in @a jsonEncodedResponse.  The results can be paged via
-     * the @a offset and @a limit parameters.
+     * columnName) of a particular table or collection (specified by @a
+     * tableName). If @a columnName is a numeric column the values will be in
+     * @a binaryEncodedResponse. Otherwise if @a columnName is a string column
+     * the values will be in @a jsonEncodedResponse.  The results can be paged
+     * via the @a offset and @a limit parameters.
      * <p>
      * Columns marked as <a href="../../concepts/types.html#data-handling"
      * target="_top">store-only</a> are unable to be used with this function.
@@ -486,8 +490,8 @@ namespace gpudb
      * {"limit":"10","sort_order":"descending"}.
      * <p>
      * The response is returned as a dynamic schema. For details see: <a
-     * href="../../concepts/dynamic_schemas.html" target="_top">dynamic schemas
-     * documentation</a>.
+     * href="../../api/index.html#dynamic-schemas" target="_top">dynamic
+     * schemas documentation</a>.
      * <p>
      * If a @a result_table name is specified in the @a options, the results
      * are stored in a new table with that name--no results are returned in the
@@ -499,8 +503,8 @@ namespace gpudb
      * table will be sharded, in all other cases it will be replicated.
      * Sorting will properly function only if the result table is replicated or
      * if there is only one processing node and should not be relied upon in
-     * other cases.  Not available when the value of @a columnName is an
-     * unrestricted-length string.
+     * other cases.  Not available if @a tableName is a collection or when the
+     * value of @a columnName is an unrestricted-length string.
      */
     struct AggregateUniqueResponse
     {

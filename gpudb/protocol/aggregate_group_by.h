@@ -47,8 +47,8 @@ namespace gpudb
      * arg_min, arg_max and count_distinct.
      * <p>
      * The response is returned as a dynamic schema. For details see: <a
-     * href="../../concepts/dynamic_schemas.html" target="_top">dynamic schemas
-     * documentation</a>.
+     * href="../../api/index.html#dynamic-schemas" target="_top">dynamic
+     * schemas documentation</a>.
      * <p>
      * If a @a result_table name is specified in the @a options, the results
      * are stored in a new table with that name--no results are returned in the
@@ -491,8 +491,8 @@ namespace gpudb
      * arg_min, arg_max and count_distinct.
      * <p>
      * The response is returned as a dynamic schema. For details see: <a
-     * href="../../concepts/dynamic_schemas.html" target="_top">dynamic schemas
-     * documentation</a>.
+     * href="../../api/index.html#dynamic-schemas" target="_top">dynamic
+     * schemas documentation</a>.
      * <p>
      * If a @a result_table name is specified in the @a options, the results
      * are stored in a new table with that name--no results are returned in the
@@ -630,8 +630,8 @@ namespace gpudb
      * arg_min, arg_max and count_distinct.
      * <p>
      * The response is returned as a dynamic schema. For details see: <a
-     * href="../../concepts/dynamic_schemas.html" target="_top">dynamic schemas
-     * documentation</a>.
+     * href="../../api/index.html#dynamic-schemas" target="_top">dynamic
+     * schemas documentation</a>.
      * <p>
      * If a @a result_table name is specified in the @a options, the results
      * are stored in a new table with that name--no results are returned in the

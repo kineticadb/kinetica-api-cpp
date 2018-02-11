@@ -9,13 +9,9 @@
 #include <avro/Specific.hh>
 
 #include "gpudb_wrapper.h"
-#include "admin_add_node.h"
 #include "admin_alter_configuration.h"
 #include "admin_alter_jobs.h"
-#include "admin_alter_shards.h"
 #include "admin_offline.h"
-#include "admin_rebalance.h"
-#include "admin_remove_node.h"
 #include "admin_show_configuration.h"
 #include "admin_show_jobs.h"
 #include "admin_show_shards.h"
