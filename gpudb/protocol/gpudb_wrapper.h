@@ -14,13 +14,13 @@ namespace gpudb
      * <p>
      * The wrapper used by the GPUdb server for all endpoint response.
      */
-    struct GpudbResponse
+    struct RawGpudbResponse
     {
 
         /**
-         * Constructs a GpudbResponse object with default parameter values.
+         * Constructs a RawGpudbResponse object with default parameter values.
          */
-        GpudbResponse() :
+        RawGpudbResponse() :
             status(std::string()),
             message(std::string()),
             dataType(std::string()),
@@ -39,9 +39,9 @@ namespace gpudb
 
 namespace avro
 {
-    template<> struct codec_traits<gpudb::GpudbResponse>
+    template<> struct codec_traits<gpudb::RawGpudbResponse>
     {
-        static void encode(Encoder& e, const gpudb::GpudbResponse& v)
+        static void encode(Encoder& e, const gpudb::RawGpudbResponse& v)
         {
             ::avro::encode(e, v.status);
             ::avro::encode(e, v.message);
@@ -50,7 +50,7 @@ namespace avro
             ::avro::encode(e, v.dataStr);
         }
 
-        static void decode(Decoder& d, gpudb::GpudbResponse& v)
+        static void decode(Decoder& d, gpudb::RawGpudbResponse& v)
         {
             if (::avro::ResolvingDecoder *rd = dynamic_cast< ::avro::ResolvingDecoder*>(&d))
             {

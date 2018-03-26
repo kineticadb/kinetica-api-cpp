@@ -4,11 +4,11 @@
 #include "gpudb/GPUdb.hpp"
 #include "gpudb/Http.hpp"
 #include "gpudb/Type.hpp"
+#include "gpudb/utils/GPUdbMultiHeadIOUtils.h"
 
 
 #include <atomic>
 #include <map>
-#include <regex>
 #include <string>
 #include <vector>
 
@@ -21,87 +21,6 @@ namespace gpudb
 
 // Forward declaration
 class GPUdb;
-
-void test_worker_list( std::string host );
-void test_record_key();
-void test_record_key_builder();
-void test_worker_queue();
-
-
-/*
- * A list of worker URLs to use for multi-head ingest.
- */
-class WorkerList
-{
-private:
-
-    typedef std::vector<gpudb::HttpUrl> worker_list;
-
-
-public:
-
-    /* Creates a <see cref="WorkerList"/> object and automatically populates it with the
-     * worker URLs from GPUdb to support multi-head ingest. ( If the
-     * specified GPUdb instance has multi-head ingest disabled, the worker
-     * list will be empty and multi-head ingest will not be used.) Note that
-     * in some cases, workers may be configured to use more than one IP
-     * address, not all of which may be accessible to the client; this
-     * constructor uses the first IP returned by the server for each worker.
-     * </summary>
-     *
-     * <param name="db">The <see cref="GPUdb"/> instance from which to
-     * obtain the worker URLs.</param>
-     */
-    WorkerList( const GPUdb &gpudb );
-
-    /* Creates a <see cref="WorkerList"/> object and automatically populates it with the
-     * worker URLs from GPUdb to support multi-head ingest. ( If the
-     * specified GPUdb instance has multi-head ingest disabled, the worker
-     * list will be empty and multi-head ingest will not be used.) Note that
-     * in some cases, workers may be configured to use more than one IP
-     * address, not all of which may be accessible to the client; this
-     * constructor uses the provided regular expression to match the workers in each
-     * group, and only uses matching workers, if any.
-     * </summary>
-     *
-     * <param name="db">The <see cref="GPUdb"/> instance from which to
-     * obtain the worker URLs.</param>
-     * <param name="ip_regex_str">A regular expression pattern for the IPs to match.</param>
-     */
-    WorkerList( const GPUdb &gpudb, const std::string& ip_regex_str );
-
-//    ~WorkerList();
-
-
-    // Return the size of this WorkerList
-    size_t size() const { return m_worker_urls.size(); }
-
-    // Iterator related stuff
-    typedef worker_list::const_iterator const_iterator;
-    const_iterator begin() const { return m_worker_urls.begin(); }
-    const_iterator end()   const { return m_worker_urls.end();   }
-
-    // Returns if this WorkerList is empty
-    bool empty() const { return m_worker_urls.empty(); }
-
-    // Returns a string representation of the workers contained within
-    std::string toString() const;
-
-
-private:
-
-    worker_list m_worker_urls;
-
-    static void split_string( const std::string &in_string,
-                              char delim,
-                              std::vector<std::string> &elements );
-};  // end class WorkerList
-
-
-
-// Internal classes
-class RecordKeyBuilder;
-class WorkerQueue;
 
 
 /*
@@ -137,20 +56,30 @@ public:
 
     ~GPUdbIngestor();
 
-    /*
+    /**
+     * Returns the name of the table on which this class operates.
+     */
+    const std::string& getTableName() const { return m_table_name; }
+
+    /**
+     * Returns the GPUdb client handle that this class uses internally.
+     */
+    const gpudb::GPUdb& getGPUdb() const { return m_db; }
+
+    /**
      * Returns the count of records inserted so far through this ingestor
      * instance;  An atomic operation.
      */
     size_t getCountInserted() const { return m_count_inserted; }
 
-    /*
+    /**
      * Returns the count of records updated so far through this ingestor
      * instance;  An atomic operation.
      */
     size_t getCountUpdated() const { return m_count_updated; }
 
 
-    /*
+    /**
      * Ensures that all queued records are inserted into the database.  If an error
      * occurs while inserting the records from any queue, the recoreds will no
      * longer be in that queue nor in the database; catch <see cref="GPUdbInsertException{T}" />
@@ -161,7 +90,7 @@ public:
     void flush();
 
 
-    /*
+    /**
      * Queues a record for insertion into GPUdb.  If the queue reaches
      * the <member cref="batch_size" />, all records in the queue will be
      * inserted into Kinetica before the method returns.  If an error occurs
@@ -174,7 +103,7 @@ public:
     void insert( gpudb::GenericRecord record );
 
 
-    /*
+    /**
      * Queues a list of records for insertion into Kientica.  If any queue reaches
      * the <member cref="batch_size" />, all records in the queue will be
      * inserted into Kinetica before the method returns.  If an error occurs
@@ -191,7 +120,6 @@ private:
 
     typedef std::map<std::string, std::string>          str_to_str_map_t;
     typedef boost::shared_ptr<gpudb::WorkerQueue>       worker_queue_ptr_t;
-//    typedef boost::shared_ptr<gpudb::RecordKeyBuilder>  record_key_buildter_ptr;
 
 
     GPUdbIngestor();

@@ -18,6 +18,16 @@ namespace gpudb
      * represents a subset of the columns (potentially including derived
      * columns) of a table.
      * <p>
+     * For projection details and examples, see <a
+     * href="../../concepts/projections.html" target="_top">Projections</a>.
+     * For limitations, see <a
+     * href="../../concepts/projections.html#limitations-and-cautions"
+     * target="_top">Projection Limitations and Cautions</a>.
+     * <p>
+     * <a href="../../concepts/window.html" target="_top">Window functions</a>
+     * are available through this endpoint as well as {@link
+     * #getRecordsByColumnRaw(const GetRecordsByColumnRequest&) const}.
+     * <p>
      * Notes:
      * <p>
      * A moving average can be calculated on a given column using the following
@@ -220,6 +230,16 @@ namespace gpudb
      * target="_top">projection</a> of an existing table. A projection
      * represents a subset of the columns (potentially including derived
      * columns) of a table.
+     * <p>
+     * For projection details and examples, see <a
+     * href="../../concepts/projections.html" target="_top">Projections</a>.
+     * For limitations, see <a
+     * href="../../concepts/projections.html#limitations-and-cautions"
+     * target="_top">Projection Limitations and Cautions</a>.
+     * <p>
+     * <a href="../../concepts/window.html" target="_top">Window functions</a>
+     * are available through this endpoint as well as {@link
+     * #getRecordsByColumnRaw(const GetRecordsByColumnRequest&) const}.
      * <p>
      * Notes:
      * <p>

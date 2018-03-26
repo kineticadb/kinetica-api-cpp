@@ -15,13 +15,19 @@ namespace gpudb
      * <p>
      * Create a new empty result table (specified by @a tableName), and insert
      * all records from source tables (specified by @a sourceTableNames) based
-     * on the field mapping information (specified by @a fieldMaps). The field
-     * map (specified by @a fieldMaps) holds the user specified maps of target
-     * table column names to source table columns. The array of @a fieldMaps
-     * must match one-to-one with the @a sourceTableNames, e.g., there's a map
-     * present in @a fieldMaps for each table listed in @a sourceTableNames.
-     * Read more about Merge Records <a
-     * href="../../concepts/merge_records.html" target="_top">here</a>.
+     * on the field mapping information (specified by @a fieldMaps).
+     * <p>
+     * For merge records details and examples, see <a
+     * href="../../concepts/merge_records.html" target="_top">Merge
+     * Records</a>.  For limitations, see <a
+     * href="../../concepts/merge_records.html#limitations-and-cautions"
+     * target="_top">Merge Records Limitations and Cautions</a>.
+
+     * The field map (specified by @a fieldMaps) holds the user-specified maps
+     * of target table column names to source table columns. The array of @a
+     * fieldMaps must match one-to-one with the @a sourceTableNames, e.g.,
+     * there's a map present in @a fieldMaps for each table listed in @a
+     * sourceTableNames.
      */
     struct MergeRecordsRequest
     {
@@ -53,11 +59,13 @@ namespace gpudb
          *                        into the target table specified by @a
          *                        tableName.  Each mapping contains the target
          *                        column names (as keys) that the data in the
-         *                        mapped source columns (as values) will be
-         *                        merged into.  All of the source columns being
-         *                        merged into a given target column must match
-         *                        in type, as that type will determine the type
-         *                        of the new target column.
+         *                        mapped source columns or column <a
+         *                        href="../../concepts/expressions.html"
+         *                        target="_top">expressions</a> (as values)
+         *                        will be merged into.  All of the source
+         *                        columns being merged into a given target
+         *                        column must match in type, as that type will
+         *                        determine the type of the new target column.
          * @param[in] options_  Optional parameters.
          *                      <ul>
          *                              <li>
@@ -93,6 +101,8 @@ namespace gpudb
          *                              <li> gpudb::merge_records_chunk_size:
          *                      Indicates the chunk size to be used for the
          *                      merged table specified in @a tableName.
+         *                              <li> gpudb::merge_records_view_id: view
+         *                      this result table is part of
          *                      </ul>
          * 
          */
@@ -174,13 +184,19 @@ namespace gpudb
      * <p>
      * Create a new empty result table (specified by @a tableName), and insert
      * all records from source tables (specified by @a sourceTableNames) based
-     * on the field mapping information (specified by @a fieldMaps). The field
-     * map (specified by @a fieldMaps) holds the user specified maps of target
-     * table column names to source table columns. The array of @a fieldMaps
-     * must match one-to-one with the @a sourceTableNames, e.g., there's a map
-     * present in @a fieldMaps for each table listed in @a sourceTableNames.
-     * Read more about Merge Records <a
-     * href="../../concepts/merge_records.html" target="_top">here</a>.
+     * on the field mapping information (specified by @a fieldMaps).
+     * <p>
+     * For merge records details and examples, see <a
+     * href="../../concepts/merge_records.html" target="_top">Merge
+     * Records</a>.  For limitations, see <a
+     * href="../../concepts/merge_records.html#limitations-and-cautions"
+     * target="_top">Merge Records Limitations and Cautions</a>.
+
+     * The field map (specified by @a fieldMaps) holds the user-specified maps
+     * of target table column names to source table columns. The array of @a
+     * fieldMaps must match one-to-one with the @a sourceTableNames, e.g.,
+     * there's a map present in @a fieldMaps for each table listed in @a
+     * sourceTableNames.
      */
     struct MergeRecordsResponse
     {

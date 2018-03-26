@@ -343,7 +343,7 @@ namespace gpudb {
 
     void GPUdb::submitRequestRaw(const std::string& endpoint,
                                  const std::vector<uint8_t>& request,
-                                 GpudbResponse& response,
+                                 RawGpudbResponse& response,
                                  const bool enableCompression) const
     {
         const HttpUrl* url = getUrlPointer();
@@ -382,7 +382,7 @@ namespace gpudb {
 
     void GPUdb::submitRequestRaw(const HttpUrl& url,
                                  const std::vector<uint8_t>& request,
-                                 GpudbResponse& response,
+                                 RawGpudbResponse& response,
                                  const bool enableCompression,
                                  const bool throwOnError) const
     {

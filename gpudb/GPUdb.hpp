@@ -129,7 +129,7 @@ namespace gpudb
             {
                 std::vector<uint8_t> requestBytes;
                 avro::encode(requestBytes, request);
-                GpudbResponse gpudbResponse;
+                RawGpudbResponse gpudbResponse;
                 submitRequestRaw(url, requestBytes, gpudbResponse, enableCompression);
                 avro::decode(response, gpudbResponse.data);
                 return response;
@@ -143,7 +143,7 @@ namespace gpudb
             {
                 std::vector<uint8_t> requestBytes;
                 avro::encode(requestBytes, request);
-                GpudbResponse gpudbResponse;
+                RawGpudbResponse gpudbResponse;
                 submitRequestRaw(endpoint, requestBytes, gpudbResponse, enableCompression);
                 avro::decode(response, gpudbResponse.data);
                 return response;
@@ -230,11 +230,11 @@ namespace gpudb
             void initHttpRequest(HttpRequest& httpRequest) const;
             void submitRequestRaw(const std::string& endpoint,
                                   const std::vector<uint8_t>& request,
-                                  GpudbResponse& response,
+                                  RawGpudbResponse& response,
                                   const bool enableCompression) const;
             void submitRequestRaw(const HttpUrl& url,
                                   const std::vector<uint8_t>& request,
-                                  GpudbResponse& response,
+                                  RawGpudbResponse& response,
                                   const bool enableCompression,
                                   const bool throwOnError = true) const;
             avro::DecoderPtr getDecoder(const std::string& typeId) const;

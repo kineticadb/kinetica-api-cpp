@@ -13,9 +13,12 @@ namespace gpudb
      * A set of input parameters for {@link
      * #createJoinTable(const CreateJoinTableRequest&) const}.
      * <p>
-     * Creates a table that is the result of a SQL JOIN.  For details see: <a
-     * href="../../concepts/joins.html" target="_top">join concept
-     * documentation</a>.
+     * Creates a table that is the result of a SQL JOIN.
+     * <p>
+     * For join details and examples see: <a href="../../concepts/joins.html"
+     * target="_top">Joins</a>.  For limitations, see <a
+     * href="../../concepts/joins.html#limitations-cautions" target="_top">Join
+     * Limitations and Cautions</a>.
      */
     struct CreateJoinTableRequest
     {
@@ -227,9 +230,12 @@ namespace gpudb
      * A set of output parameters for {@link
      * #createJoinTable(const CreateJoinTableRequest&) const}.
      * <p>
-     * Creates a table that is the result of a SQL JOIN.  For details see: <a
-     * href="../../concepts/joins.html" target="_top">join concept
-     * documentation</a>.
+     * Creates a table that is the result of a SQL JOIN.
+     * <p>
+     * For join details and examples see: <a href="../../concepts/joins.html"
+     * target="_top">Joins</a>.  For limitations, see <a
+     * href="../../concepts/joins.html#limitations-cautions" target="_top">Join
+     * Limitations and Cautions</a>.
      */
     struct CreateJoinTableResponse
     {

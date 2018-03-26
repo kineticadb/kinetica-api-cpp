@@ -1,5 +1,6 @@
 #include "gpudb/GPUdb.hpp"
 #include "gpudb/GPUdbIngestor.hpp"
+#include "gpudb/RecordRetriever.hpp"
 
 #include <exception>
 
@@ -291,6 +292,83 @@ inline std::string generate_decimal( int frac_only_percentage, int has_frac_perc
     // Put the sign, precision and scale together
     return (sign + precision_value + "." + scale);
 }  // end generate_decimal
+
+
+void test_worker_list( std::string host )
+{
+    std::cout << "Test WorkerList:" << std::endl;
+    std::cout << "================" << std::endl;
+    gpudb::GPUdb gpudb(host, gpudb::GPUdb::Options().setThreadCount(4));
+
+    // Test WorkerList
+    // ===============
+    // Case: Without a regex
+    std::cout << "Case: Without a regex" << std::endl;
+    gpudb::WorkerList workers( gpudb );
+    std::cout << "# workers: " << workers.size() << std::endl;
+    std::cout << workers.toString() << std::endl;
+    std::cout << std::endl;
+
+    // Case: Invalid regex
+    std::cout << "Case: Invalid regex" << std::endl;
+    try
+    {
+        std::string ip_regex_str(".*30\\!"); // Invalid regex
+        gpudb::WorkerList workers( gpudb, ip_regex_str );
+        std::cout << "Failure: Should not have gotten anything due to invalid regex";
+        std::cout << "# workers: " << workers.size() << std::endl;
+        std::cout << workers.toString() << std::endl;
+        std::cout << std::endl;
+    } catch (gpudb::GPUdbException& e)
+    {
+        std::cout << "Success: GPUdbException caught: " << e.what() << std::endl;
+        std::cout << std::endl;
+    }
+
+
+    // Case: Matching regex
+    std::cout << "Case: Matching regex" << std::endl;
+    try
+    {
+        std::string ip_regex_str(".*32\\.21.*");  // Valid regex; should match
+        gpudb::WorkerList workers( gpudb, ip_regex_str );
+        if (workers.size() > 0)
+        {
+            std::cout << "Success: Got matching addresses: ";
+            std::cout << "# workers: " << workers.size() << std::endl;
+            std::cout << workers.toString() << std::endl;
+        }
+        else
+            std::cout << "Failure: Should get matching addresses: but did not get any!";
+            
+        std::cout << std::endl;
+    } catch (gpudb::GPUdbException& e)
+    {
+        std::cout << "Failure: GPUdbException caught: " << e.what() << std::endl;
+        std::cout << std::endl;
+    }
+
+    // Case: Non-matching regex
+    std::cout << "Case: Non-matching regex" << std::endl;
+    try
+    {
+        std::string ip_regex_str(".*30\\.37.*");  // Valid regex, but no matching
+        gpudb::WorkerList workers( gpudb, ip_regex_str );
+        if (workers.size() > 0)
+        {
+            std::cout << "Failure: Should not get any matching address: but got: ";
+            std::cout << "# workers: " << workers.size() << std::endl;
+            std::cout << workers.toString() << std::endl;
+        }
+        else
+            std::cout << "Success: Should not get any matching address; and did not get any! ";
+        std::cout << std::endl;
+    } catch (gpudb::GPUdbException& e)
+    {
+        std::cout << "Success: Should not get any matching address; and did not get any! " << std::endl;
+        std::cout << std::endl;
+    }
+} // end test_worker_list
 
 
 
@@ -626,6 +704,7 @@ void test_all_columns_sharding( const gpudb::GPUdb &db )
             }
 
             // Insert this batch of records into the ingestor
+            std::cout << "Inserting " << num_records << " records" << std::endl;
             ingestor1.insert( records );
         }
 
@@ -643,7 +722,6 @@ void test_all_columns_sharding( const gpudb::GPUdb &db )
         // Print out the table size
         table_size = db.showTable( table_name, show_table_options ).totalSize;
         std::cout << "Final table size (after manual flushing): " << table_size << std::endl;
-
 
     } catch (gpudb::GPUdbInsertionException& e)
     {
@@ -781,6 +859,318 @@ void test_sharding_pk( const gpudb::GPUdb &db )
 
 
 
+void test_record_retrieval_by_key( const gpudb::GPUdb &db )
+{
+    std::cout << "Test multi-head ingestion with sharding on all possible column types" << std::endl;
+    std::cout << "====================================================================" << std::endl;
+
+    try
+    {
+        // Create a type with only a couple shard keys so that multiple records
+        // could be retrieved for a given shard key
+        std::vector<gpudb::Type::Column> columns;
+        columns.push_back( gpudb::Type::Column("a",  gpudb::Type::Column::INT) );
+        columns.push_back( gpudb::Type::Column("i",  gpudb::Type::Column::INT,         gpudb::ColumnProperty::NULLABLE ) );
+        columns.push_back( gpudb::Type::Column("i8", gpudb::Type::Column::INT,         gpudb::ColumnProperty::SHARD_KEY, gpudb::ColumnProperty::NULLABLE, gpudb::ColumnProperty::INT8 ) );
+        columns.push_back( gpudb::Type::Column("i16", gpudb::Type::Column::INT,        gpudb::ColumnProperty::NULLABLE,  gpudb::ColumnProperty::INT16 ) );
+        columns.push_back( gpudb::Type::Column("d", gpudb::Type::Column::DOUBLE,       gpudb::ColumnProperty::NULLABLE ) );
+        columns.push_back( gpudb::Type::Column("f", gpudb::Type::Column::FLOAT,        gpudb::ColumnProperty::NULLABLE ) );
+        columns.push_back( gpudb::Type::Column("l", gpudb::Type::Column::LONG,         gpudb::ColumnProperty::NULLABLE ) );
+        columns.push_back( gpudb::Type::Column("timestamp", gpudb::Type::Column::LONG, gpudb::ColumnProperty::NULLABLE, gpudb::ColumnProperty::TIMESTAMP ) );
+        columns.push_back( gpudb::Type::Column("s",    gpudb::Type::Column::STRING, gpudb::ColumnProperty::NULLABLE ) );
+        columns.push_back( gpudb::Type::Column("c1",   gpudb::Type::Column::STRING, gpudb::ColumnProperty::SHARD_KEY, gpudb::ColumnProperty::NULLABLE, gpudb::ColumnProperty::CHAR1   ) );
+        columns.push_back( gpudb::Type::Column("c2",   gpudb::Type::Column::STRING, gpudb::ColumnProperty::NULLABLE, gpudb::ColumnProperty::CHAR2   ) );
+        columns.push_back( gpudb::Type::Column("c4",   gpudb::Type::Column::STRING, gpudb::ColumnProperty::NULLABLE, gpudb::ColumnProperty::CHAR4   ) );
+        columns.push_back( gpudb::Type::Column("c8",   gpudb::Type::Column::STRING, gpudb::ColumnProperty::NULLABLE, gpudb::ColumnProperty::CHAR8   ) );
+        columns.push_back( gpudb::Type::Column("c16",  gpudb::Type::Column::STRING, gpudb::ColumnProperty::NULLABLE, gpudb::ColumnProperty::CHAR16  ) );
+        columns.push_back( gpudb::Type::Column("c32",  gpudb::Type::Column::STRING, gpudb::ColumnProperty::NULLABLE, gpudb::ColumnProperty::CHAR32  ) );
+        columns.push_back( gpudb::Type::Column("c64",  gpudb::Type::Column::STRING, gpudb::ColumnProperty::NULLABLE, gpudb::ColumnProperty::CHAR64  ) );
+        columns.push_back( gpudb::Type::Column("c128", gpudb::Type::Column::STRING, gpudb::ColumnProperty::NULLABLE, gpudb::ColumnProperty::CHAR128 ) );
+        columns.push_back( gpudb::Type::Column("c256", gpudb::Type::Column::STRING, gpudb::ColumnProperty::NULLABLE, gpudb::ColumnProperty::CHAR256 ) );
+        columns.push_back( gpudb::Type::Column("ipv4", gpudb::Type::Column::STRING, gpudb::ColumnProperty::NULLABLE, gpudb::ColumnProperty::IPV4    ) );
+        columns.push_back( gpudb::Type::Column("date", gpudb::Type::Column::STRING, gpudb::ColumnProperty::NULLABLE, gpudb::ColumnProperty::DATE    ) );
+        columns.push_back( gpudb::Type::Column("time", gpudb::Type::Column::STRING, gpudb::ColumnProperty::NULLABLE, gpudb::ColumnProperty::TIME    ) );
+        columns.push_back( gpudb::Type::Column("dt",   gpudb::Type::Column::STRING, gpudb::ColumnProperty::NULLABLE, gpudb::ColumnProperty::DATETIME ) );
+        columns.push_back( gpudb::Type::Column("decimal", gpudb::Type::Column::STRING, gpudb::ColumnProperty::NULLABLE, gpudb::ColumnProperty::DECIMAL ) );
+
+        gpudb::Type _type = gpudb::Type( "Test", columns );
+        std::string type_id = _type.create( db );
+
+        std::string table_name = "gpudb_key_lookup_test";
+
+        // Clear any existing table first
+        std::cout << "Clearing the table..." << std::endl;
+        std::map<std::string, std::string> clear_table_options;
+        clear_table_options[ gpudb::clear_table_no_error_if_not_exists ] = gpudb::clear_table_true;
+        db.clearTable( table_name, "", clear_table_options );
+
+        // Now create the table
+        std::cout << "Creating the table..." << std::endl;
+        std::map<std::string, std::string> options;
+        db.createTable( table_name, type_id, options );
+
+        // Create indices on the shard key columns so that we can do a look-up (6.2 requirement)
+        std::string action = "create_index";
+        std::map<std::string, std::string> options2;
+        db.alterTable( table_name, action, std::string("i8"), options2 );
+        db.alterTable( table_name, action, std::string("c1"), options2 );
+        
+        // Batch size; using this odd number so that there are some queues
+        // remaining at the very end (which will have to be manually flushed)
+        size_t batch_size = 1000;
+
+        // Get a multi-head ingestor
+        gpudb::GPUdbIngestor ingestor1( db, _type, table_name, batch_size );
+
+
+        // Test insertion
+        // ==============
+        // Create records and insert them
+        int32_t null_percentage      = 0;  // No nulls for key-lookup in 6.2
+        int32_t time_ms_percentage   = 50;  // 50%
+        int32_t time_percentage      = 70;  // 70%
+        int32_t frac_only_percentage = 35;  // 35%; for decimal
+        int32_t has_frac_percentage  = 70;  // 70%; for decimal
+        int32_t negative_percentage  = 40;  // 40%; for decimal
+        int32_t positive_percentage  = 10;  // 10%; for decimal
+
+        size_t num_batches = 10;
+        size_t num_records = 1000;
+
+        // Run # num_batches batches
+        std::vector<std::vector<gpudb::GenericRecord> > list_of_records;
+        for ( size_t i = 0; i < num_batches; ++i )
+        {
+            std::vector<gpudb::GenericRecord> records;
+
+            // Generate # num_records records for each batch
+            for ( size_t j = 0; j < num_records; ++j )
+            {
+                std::cout << "outer loop #: " << i << " inner loop #: " << j << std::endl;  // degug~~~~~~~
+                gpudb::GenericRecord record( _type );
+                // Regular int, no sharding
+                record.intValue("a") = 1;
+
+                // int, regular
+                if ( USE_NULL_VALUE( null_percentage ) )
+                    record.setNull( "i" );
+                else
+                    record.setAsNullableInt( "i", boost::optional<int32_t>( std::rand() ) );
+
+                // int8
+                if ( USE_NULL_VALUE( null_percentage ) )
+                    record.setNull( "i8" );
+                else
+                    record.setAsNullableInt( "i8", boost::optional<int32_t>( GENERATE_INT8() ) );
+
+                // int16
+                if ( USE_NULL_VALUE( null_percentage ) )
+                    record.setNull( "i16" );
+                else
+                    record.setAsNullableInt( "i16", boost::optional<int32_t>( GENERATE_INT16() ) );
+
+                // double
+                if ( USE_NULL_VALUE( null_percentage ) )
+                    record.setNull( "d" );
+                else
+                    record.setAsNullableDouble( "d", boost::optional<double>( GENERATE_DOUBLE() ) );
+
+                // float
+                if ( USE_NULL_VALUE( null_percentage ) )
+                    record.setNull( "f" );
+                else
+                    record.setAsNullableFloat( "f", boost::optional<float>( GENERATE_FLOAT() ) );
+
+                // long
+                if ( USE_NULL_VALUE( null_percentage ) )
+                    record.setNull( "l" );
+                else
+                    record.setAsNullableLong( "l", boost::optional<int64_t>( (long)std::rand() ) );
+
+                // timestamp (long)
+                if ( USE_NULL_VALUE( null_percentage ) )
+                    record.setNull( "timestamp" );
+                else
+                    record.setAsNullableLong( "timestamp", boost::optional<int64_t>( GENERATE_TIMESTAMP() ) );
+
+                // string (regular)
+                if ( USE_NULL_VALUE( null_percentage ) )
+                    record.setNull( "s" );
+                else
+                    record.setAsNullableString( "s", boost::optional<std::string>( generate_random_string() ) );
+
+                // char1
+                if ( USE_NULL_VALUE( null_percentage ) )
+                    record.setNull( "c1" );
+                else
+                    record.setAsNullableString( "c1", boost::optional<std::string>( generate_charN( 1 ) ) );
+
+                // char2
+                if ( USE_NULL_VALUE( null_percentage ) )
+                    record.setNull( "c2" );
+                else
+                    record.setAsNullableString( "c2", boost::optional<std::string>( generate_charN( 2 ) ) );
+
+                // char4
+                if ( USE_NULL_VALUE( null_percentage ) )
+                    record.setNull( "c4" );
+                else
+                    record.setAsNullableString( "c4", boost::optional<std::string>( generate_charN( 4 ) ) );
+
+                // char8
+                if ( USE_NULL_VALUE( null_percentage ) )
+                    record.setNull( "c8" );
+                else
+                    record.setAsNullableString( "c8", boost::optional<std::string>( generate_charN( 8 ) ) );
+
+                // char16
+                if ( USE_NULL_VALUE( null_percentage ) )
+                    record.setNull( "c16" );
+                else
+                    record.setAsNullableString( "c16", boost::optional<std::string>( generate_charN( 16 ) ) );
+
+                // char32
+                if ( USE_NULL_VALUE( null_percentage ) )
+                    record.setNull( "c32" );
+                else
+                    record.setAsNullableString( "c32", boost::optional<std::string>( generate_charN( 32 ) ) );
+
+                // char64
+                if ( USE_NULL_VALUE( null_percentage ) )
+                    record.setNull( "c64" );
+                else
+                {
+                    record.setAsNullableString( "c64", boost::optional<std::string>( generate_charN( 64 ) ) );
+                }
+
+                // char128
+                if ( USE_NULL_VALUE( null_percentage ) )
+                    record.setNull( "c128" );
+                else
+                {
+                    record.setAsNullableString( "c128", boost::optional<std::string>( generate_charN( 128 ) ) );
+                }
+
+                // char256
+                if ( USE_NULL_VALUE( null_percentage ) )
+                    record.setNull( "c256" );
+                else
+                {
+                    record.setAsNullableString( "c256", boost::optional<std::string>( generate_charN( 256 ) ) );
+                }
+
+                // IPv4
+                if ( USE_NULL_VALUE( null_percentage ) )
+                    record.setNull( "ipv4" );
+                else
+                {
+                    record.setAsNullableString( "ipv4", boost::optional<std::string>( GENERATE_IPV4() ) );
+                }
+
+                // Date
+                if ( USE_NULL_VALUE( null_percentage ) )
+                    record.setNull( "date" );
+                else
+                {
+                    record.setAsNullableString( "date", boost::optional<std::string>( generate_date() ) );
+                }
+
+                // Time
+                if ( USE_NULL_VALUE( null_percentage ) )
+                    record.setNull( "time" );
+                else
+                {
+                    record.setAsNullableString( "time", boost::optional<std::string>( generate_time( time_ms_percentage ) ) );
+                }
+
+                // Datetime
+                if ( USE_NULL_VALUE( null_percentage ) )
+                    record.setNull( "dt" );
+                else
+                {
+                    record.setAsNullableString( "dt", boost::optional<std::string>( generate_datetime( time_percentage, time_ms_percentage ) ) );
+                }
+
+                // Decimal
+                if ( USE_NULL_VALUE( null_percentage ) )
+                    record.setNull( "decimal" );
+                else
+                {
+                    record.setAsNullableString( "decimal", boost::optional<std::string>( generate_decimal( frac_only_percentage, has_frac_percentage, negative_percentage, positive_percentage ) ) );
+                }
+
+                std::cout << "generated record " << record << std::endl << std::endl;  // degug~~~~~~~
+
+                records.push_back( record );
+
+    //                ingestor1.insert( record );
+    //                std::cout << "inserted record" << std::endl;  // degug~~~~~~~
+    //                ingestor1.flush(); // debug~~~~~~~~~~~~~~
+    //                std::cout << "flushed record--------------" << std::endl << std::endl;  // degug~~~~~~~
+            }
+
+            // Insert this batch of records into the ingestor
+            std::cout << "Inserting " << num_records << " records" << std::endl;
+            ingestor1.insert( records );
+
+            // Save the records for later use
+            list_of_records.push_back( records );
+        }
+
+        // Print out the table size
+        std::map<std::string, std::string> show_table_options;
+        show_table_options[ gpudb::show_table_get_sizes ] = gpudb::show_table_true;
+        size_t table_size = db.showTable( table_name, show_table_options ).totalSize;
+        std::cout << "Table size (some are probably still in the queue): " << table_size << std::endl;
+
+        // Flush the remaining records
+        std::printf("\ntrying to flush the remaining records...\n"); // debug~~~~~~
+        ingestor1.flush();
+        std::printf("done flushing...\n\n"); // debug~~~~~~
+
+        // Print out the table size
+        table_size = db.showTable( table_name, show_table_options ).totalSize;
+        std::cout << "Final table size (after manual flushing): " << table_size << std::endl;
+
+        // Test multi-head key-lookup
+        // --------------------------
+        std::cout << "Test multi-head key-lookup" << std::endl;
+        std::cout << "==========================" << std::endl;
+
+        // Create a record retriever object
+        gpudb::RecordRetriever retriever( db, _type, table_name );
+
+        // Get a 'random' record to try to get data out
+        const gpudb::GenericRecord& r1 = list_of_records[ 0 ][ 0 ];
+
+        // Perform the key lookup operations
+        gpudb::GetRecordsResponse<gpudb::GenericRecord> response = retriever.getRecordsByKey( r1 );
+        std::cout << "Number of records fetched: " << response.totalNumberOfRecords << std::endl;
+        std::cout << "Records fetched: " << std::endl;
+        std::vector<gpudb::GenericRecord>::const_iterator iter;
+        for ( iter =  response.data.begin(); iter != response.data.end(); ++iter )
+            std::cout << *iter << std::endl;
+        
+        std::cout << std::endl
+                  << "Are there more records to fetch?: " << response.hasMoreRecords << std::endl;
+
+    } catch (gpudb::GPUdbInsertionException& e)
+    {
+        std::cout << "GPUdbInsertionException caught: " << e.what() << std::endl;
+    } catch (gpudb::GPUdbException& e)
+    {
+        std::cout << "GPUdbException caught: " << e.what() << std::endl;
+    } catch (std::exception& e)
+    {
+        std::cout << "Exception caught: " << e.what() << std::endl;
+    }
+
+}  // end test_record_retrieval_by_key
+
+
+
+
+
 void test_type_compatibility( const gpudb::GPUdb &db )
 {
     std::cout << "Test type compatibilty" << std::endl;
@@ -840,6 +1230,9 @@ int main(int argc, char* argv[])
         // Simple type compatibility test
         test_type_compatibility( db );
 
+        // Test the WorkerList class
+        test_worker_list( host );
+        
         std::cout << "Test GPUdbIngestor:" << std::endl;
         std::cout << "===================" << std::endl;
         // Create a worker list
@@ -850,6 +1243,7 @@ int main(int argc, char* argv[])
 
         test_all_columns_sharding( db );
         test_sharding_pk( db );
+        test_record_retrieval_by_key( db );
 
     } catch (gpudb::GPUdbException& e)
     {

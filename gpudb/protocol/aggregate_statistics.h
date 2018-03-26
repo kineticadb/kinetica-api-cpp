@@ -30,6 +30,10 @@ namespace gpudb
      * value must be specified separately (i.e.
      * 'percentile(75.0),percentile(99.0),percentile_rank(1234.56),percentile_rank(-5)').
      * <p>
+     * A second, comma-separated value can be added to the {percentile}@{choise
+     * of input stats} statistic to calculate percentile resolution, e.g., a
+     * 50th percentile with 200 resolution would be 'percentile(50,200)'.
+     * <p>
      * The weighted average statistic requires a @a weight_column_name to be
      * specified in @a options. The weighted average is then defined as the sum
      * of the products of @a columnName times the @a weight_column_name values
@@ -111,7 +115,9 @@ namespace gpudb
          *                    gpudb::aggregate_statistics_percentile: Estimate
          *                    (via t-digest) of the given percentile of the
          *                    column(s) (percentile(50.0) will be an
-         *                    approximation of the median).
+         *                    approximation of the median). Add a second,
+         *                    comma-separated value to calculate percentile
+         *                    resolution, e.g., 'percentile(75,150)'
          *                            <li>
          *                    gpudb::aggregate_statistics_percentile_rank:
          *                    Estimate (via t-digest) of the percentile rank of
@@ -229,6 +235,10 @@ namespace gpudb
      * percentile/@a percentile_rank. To compute multiple percentiles each
      * value must be specified separately (i.e.
      * 'percentile(75.0),percentile(99.0),percentile_rank(1234.56),percentile_rank(-5)').
+     * <p>
+     * A second, comma-separated value can be added to the {percentile}@{choise
+     * of input stats} statistic to calculate percentile resolution, e.g., a
+     * 50th percentile with 200 resolution would be 'percentile(50,200)'.
      * <p>
      * The weighted average statistic requires a @a weight_column_name to be
      * specified in @a options. The weighted average is then defined as the sum

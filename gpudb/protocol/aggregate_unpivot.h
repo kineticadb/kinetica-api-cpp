@@ -17,13 +17,17 @@ namespace gpudb
      * <p>
      * Rotate the column values into rows values.
      * <p>
-     * The aggregate unpivot is used to normalize tables that are built for
-     * cross tabular reporting purposes. The unpivot operator rotates the
-     * column values for all the pivoted columns. A variable column, value
-     * column and all columns from the source table except the unpivot columns
-     * are projected into the result table. The variable column and value
-     * columns in the result table indicate the pivoted column name and values
-     * respectively.
+     * For unpivot details and examples, see <a
+     * href="../../concepts/unpivot.html" target="_top">Unpivot</a>.  For
+     * limitations, see <a href="../../concepts/unpivot.html#limitations"
+     * target="_top">Unpivot Limitations</a>.
+     * <p>
+     * Unpivot is used to normalize tables that are built for cross tabular
+     * reporting purposes. The unpivot operator rotates the column values for
+     * all the pivoted columns. A variable column, value column and all columns
+     * from the source table except the unpivot columns are projected into the
+     * result table. The variable column and value columns in the result table
+     * indicate the pivoted column name and values respectively.
      * <p>
      * The response is returned as a dynamic schema. For details see: <a
      * href="../../api/index.html#dynamic-schemas" target="_top">dynamic
@@ -111,6 +115,18 @@ namespace gpudb
          *                      the <a href="../../concepts/ttl.html"
          *                      target="_top">TTL</a> of the table specified in
          *                      @a result_table.
+         *                              <li> gpudb::aggregate_unpivot_view_id:
+         *                      view this result table is part of
+         *                              <li>
+         *                      gpudb::aggregate_unpivot_materialize_on_gpu: If
+         *                      @a true then the output columns will be cached
+         *                      on the GPU.
+         *                      <ul>
+         *                              <li> gpudb::aggregate_unpivot_true
+         *                              <li> gpudb::aggregate_unpivot_false
+         *                      </ul>
+         *                      The default value is
+         *                      gpudb::aggregate_unpivot_false.
          *                      </ul>
          * 
          */
@@ -200,6 +216,18 @@ namespace gpudb
          *                      the <a href="../../concepts/ttl.html"
          *                      target="_top">TTL</a> of the table specified in
          *                      @a result_table.
+         *                              <li> gpudb::aggregate_unpivot_view_id:
+         *                      view this result table is part of
+         *                              <li>
+         *                      gpudb::aggregate_unpivot_materialize_on_gpu: If
+         *                      @a true then the output columns will be cached
+         *                      on the GPU.
+         *                      <ul>
+         *                              <li> gpudb::aggregate_unpivot_true
+         *                              <li> gpudb::aggregate_unpivot_false
+         *                      </ul>
+         *                      The default value is
+         *                      gpudb::aggregate_unpivot_false.
          *                      </ul>
          * 
          */
@@ -297,13 +325,17 @@ namespace gpudb
      * <p>
      * Rotate the column values into rows values.
      * <p>
-     * The aggregate unpivot is used to normalize tables that are built for
-     * cross tabular reporting purposes. The unpivot operator rotates the
-     * column values for all the pivoted columns. A variable column, value
-     * column and all columns from the source table except the unpivot columns
-     * are projected into the result table. The variable column and value
-     * columns in the result table indicate the pivoted column name and values
-     * respectively.
+     * For unpivot details and examples, see <a
+     * href="../../concepts/unpivot.html" target="_top">Unpivot</a>.  For
+     * limitations, see <a href="../../concepts/unpivot.html#limitations"
+     * target="_top">Unpivot Limitations</a>.
+     * <p>
+     * Unpivot is used to normalize tables that are built for cross tabular
+     * reporting purposes. The unpivot operator rotates the column values for
+     * all the pivoted columns. A variable column, value column and all columns
+     * from the source table except the unpivot columns are projected into the
+     * result table. The variable column and value columns in the result table
+     * indicate the pivoted column name and values respectively.
      * <p>
      * The response is returned as a dynamic schema. For details see: <a
      * href="../../api/index.html#dynamic-schemas" target="_top">dynamic
@@ -410,13 +442,17 @@ namespace gpudb
      * <p>
      * Rotate the column values into rows values.
      * <p>
-     * The aggregate unpivot is used to normalize tables that are built for
-     * cross tabular reporting purposes. The unpivot operator rotates the
-     * column values for all the pivoted columns. A variable column, value
-     * column and all columns from the source table except the unpivot columns
-     * are projected into the result table. The variable column and value
-     * columns in the result table indicate the pivoted column name and values
-     * respectively.
+     * For unpivot details and examples, see <a
+     * href="../../concepts/unpivot.html" target="_top">Unpivot</a>.  For
+     * limitations, see <a href="../../concepts/unpivot.html#limitations"
+     * target="_top">Unpivot Limitations</a>.
+     * <p>
+     * Unpivot is used to normalize tables that are built for cross tabular
+     * reporting purposes. The unpivot operator rotates the column values for
+     * all the pivoted columns. A variable column, value column and all columns
+     * from the source table except the unpivot columns are projected into the
+     * result table. The variable column and value columns in the result table
+     * indicate the pivoted column name and values respectively.
      * <p>
      * The response is returned as a dynamic schema. For details see: <a
      * href="../../api/index.html#dynamic-schemas" target="_top">dynamic

@@ -13,14 +13,35 @@ namespace gpudb
      * A set of input parameters for {@link
      * #createUnion(const CreateUnionRequest&) const}.
      * <p>
-     * Performs a <a href="../../concepts/unions.html" target="_top">union</a>
-     * (concatenation) of one or more existing tables or views, the results of
-     * which are stored in a new table. It is equivalent to the SQL UNION ALL
-     * operator.  Non-charN 'string' and 'bytes' column types cannot be
-     * included in a union, neither can columns with the property 'store_only'.
-     * Though not explicitly unions, <a href="../../concepts/intersect.html"
-     * target="_top">intersect</a> and <a href="../../concepts/except.html"
-     * target="_top">except</a> are also available from this endpoint.
+     * Merges data from one or more tables with comparable data types into a
+     * new table.
+     * <p>
+     * The following merges are supported:
+     * <p>
+     * UNION (DISTINCT/ALL) - For data set union details and examples, see <a
+     * href="../../concepts/unions.html" target="_top">Union</a>.  For
+     * limitations, see <a
+     * href="../../concepts/unions.html#limitations-and-cautions"
+     * target="_top">Union Limitations and Cautions</a>.
+     * <p>
+     * INTERSECT (DISTINCT) - For data set intersection details and examples,
+     * see <a href="../../concepts/intersect.html" target="_top">Intersect</a>.
+     * For limitations, see <a href="../../concepts/intersect.html#limitations"
+     * target="_top">Intersect Limitations</a>.
+     * <p>
+     * EXCEPT (DISTINCT) - For data set subtraction details and examples, see
+     * <a href="../../concepts/except.html" target="_top">Except</a>.  For
+     * limitations, see <a href="../../concepts/except.html#limitations"
+     * target="_top">Except Limitations</a>.
+     * <p>
+     * MERGE VIEWS - For a given set of <a
+     * href="../../concepts/filtered_views.html" target="_top">filtered
+     * views</a> on a single table, creates a single filtered view containing
+     * all of the unique records across all of the given filtered data sets.
+     * <p>
+     * Non-charN 'string' and 'bytes' column types cannot be merged, nor can
+     * columns marked as <a href="../../concepts/types.html#data-handling"
+     * target="_top">store-only</a>.
      */
     struct CreateUnionRequest
     {
@@ -46,42 +67,41 @@ namespace gpudb
          *                        naming restrictions as <a
          *                        href="../../concepts/tables.html"
          *                        target="_top">tables</a>.
-         * @param[in] tableNames_  The list of table names making up the union.
-         *                         Must contain the names of one or more
-         *                         existing tables.
+         * @param[in] tableNames_  The list of table names to merge. Must
+         *                         contain the names of one or more existing
+         *                         tables.
          * @param[in] inputColumnNames_  The list of columns from each of the
          *                               corresponding input tables.
          * @param[in] outputColumnNames_  The list of names of the columns to
-         *                                be stored in the union.
+         *                                be stored in the output table.
          * @param[in] options_  Optional parameters.
          *                      <ul>
          *                              <li>
          *                      gpudb::create_union_collection_name: Name of a
-         *                      collection which is to contain the union. If
-         *                      the collection provided is non-existent, the
-         *                      collection will be automatically created. If
-         *                      empty, then the union will be a top-level
-         *                      table.
+         *                      collection which is to contain the output
+         *                      table. If the collection provided is
+         *                      non-existent, the collection will be
+         *                      automatically created. If empty, the output
+         *                      table will be a top-level table.
          *                              <li>
-         *                      gpudb::create_union_materialize_on_gpu: If
-         *                      'true' then the columns of the union will be
-         *                      cached on the GPU.
+         *                      gpudb::create_union_materialize_on_gpu: If @a
+         *                      true, then the columns of the output table will
+         *                      be cached on the GPU.
          *                      <ul>
          *                              <li> gpudb::create_union_true
          *                              <li> gpudb::create_union_false
          *                      </ul>
          *                      The default value is gpudb::create_union_false.
-         *                              <li> gpudb::create_union_mode: If
-         *                      'merge_views' then this operation will merge
-         *                      (i.e. union) the provided views. All
-         *                      'table_names' must be views from the same
-         *                      underlying base table.
+         *                              <li> gpudb::create_union_mode: If @a
+         *                      merge_views, then this operation will merge the
+         *                      provided views. All @a tableNames must be views
+         *                      from the same underlying base table.
          *                      <ul>
          *                              <li> gpudb::create_union_union_all:
          *                      Retains all rows from the specified tables.
          *                              <li> gpudb::create_union_union: Retains
          *                      all unique rows from the specified tables
-         *                      (synonym for 'union_distinct').
+         *                      (synonym for @a union_distinct).
          *                              <li>
          *                      gpudb::create_union_union_distinct: Retains all
          *                      unique rows from the specified tables.
@@ -99,10 +119,10 @@ namespace gpudb
          *                      outputColumnNames must be empty. The resulting
          *                      view would match the results of a SQL OR
          *                      operation, e.g., if filter 1 creates a view
-         *                      using the expression 'x = 10' and filter 2
+         *                      using the expression 'x = 20' and filter 2
          *                      creates a view using the expression 'x <= 10',
          *                      then the merge views operation creates a new
-         *                      view using the expression 'x = 10 OR x <= 10'.
+         *                      view using the expression 'x = 20 OR x <= 10'.
          *                      </ul>
          *                      The default value is
          *                      gpudb::create_union_union_all.
@@ -114,10 +134,10 @@ namespace gpudb
          *                      target="_top">TTL</a> of the table specified in
          *                      @a tableName.
          *                              <li> gpudb::create_union_persist: If @a
-         *                      true, then the union specified in @a tableName
+         *                      true, then the table specified in @a tableName
          *                      will be persisted and will not expire unless a
          *                      @a ttl is specified.   If @a false, then the
-         *                      union will be an in-memory table and will
+         *                      table will be an in-memory table and will
          *                      expire unless a @a ttl is specified otherwise.
          *                      <ul>
          *                              <li> gpudb::create_union_true
@@ -125,7 +145,7 @@ namespace gpudb
          *                      </ul>
          *                      The default value is gpudb::create_union_false.
          *                              <li> gpudb::create_union_view_id: view
-         *                      this union table is part of
+         *                      the output table will be a part of
          *                      </ul>
          * 
          */
@@ -213,14 +233,35 @@ namespace gpudb
      * A set of output parameters for {@link
      * #createUnion(const CreateUnionRequest&) const}.
      * <p>
-     * Performs a <a href="../../concepts/unions.html" target="_top">union</a>
-     * (concatenation) of one or more existing tables or views, the results of
-     * which are stored in a new table. It is equivalent to the SQL UNION ALL
-     * operator.  Non-charN 'string' and 'bytes' column types cannot be
-     * included in a union, neither can columns with the property 'store_only'.
-     * Though not explicitly unions, <a href="../../concepts/intersect.html"
-     * target="_top">intersect</a> and <a href="../../concepts/except.html"
-     * target="_top">except</a> are also available from this endpoint.
+     * Merges data from one or more tables with comparable data types into a
+     * new table.
+     * <p>
+     * The following merges are supported:
+     * <p>
+     * UNION (DISTINCT/ALL) - For data set union details and examples, see <a
+     * href="../../concepts/unions.html" target="_top">Union</a>.  For
+     * limitations, see <a
+     * href="../../concepts/unions.html#limitations-and-cautions"
+     * target="_top">Union Limitations and Cautions</a>.
+     * <p>
+     * INTERSECT (DISTINCT) - For data set intersection details and examples,
+     * see <a href="../../concepts/intersect.html" target="_top">Intersect</a>.
+     * For limitations, see <a href="../../concepts/intersect.html#limitations"
+     * target="_top">Intersect Limitations</a>.
+     * <p>
+     * EXCEPT (DISTINCT) - For data set subtraction details and examples, see
+     * <a href="../../concepts/except.html" target="_top">Except</a>.  For
+     * limitations, see <a href="../../concepts/except.html#limitations"
+     * target="_top">Except Limitations</a>.
+     * <p>
+     * MERGE VIEWS - For a given set of <a
+     * href="../../concepts/filtered_views.html" target="_top">filtered
+     * views</a> on a single table, creates a single filtered view containing
+     * all of the unique records across all of the given filtered data sets.
+     * <p>
+     * Non-charN 'string' and 'bytes' column types cannot be merged, nor can
+     * columns marked as <a href="../../concepts/types.html#data-handling"
+     * target="_top">store-only</a>.
      */
     struct CreateUnionResponse
     {

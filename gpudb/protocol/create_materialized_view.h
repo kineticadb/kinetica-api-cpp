@@ -13,12 +13,17 @@ namespace gpudb
      * A set of input parameters for {@link
      * #createMaterializedView(const CreateMaterializedViewRequest&) const}.
      * <p>
-     * The create materialized view request does not create the actual table
-     * that will be the toplevel table of the view but instead registers the
-     * table name so no other views or tables can be created with that name.
-     * The response contains a a view_id that is used to label the table
-     * creation requests (projection, union, group-by, filter, or join) that
-     * describes the view.
+     * Initiates the process of creating a materialized view, reserving the
+     * view's name to prevent other views or tables from being created with
+     * that name.
+     * <p>
+     * For materialized view details and examples, see <a
+     * href="../../concepts/materialized_views.html" target="_top">Materialized
+     * Views</a>.
+     * <p>
+     * The response contains @a viewId, which is used to tag each subsequent
+     * operation (projection, union, group-by, filter, or join) that will
+     * compose the view.
      */
     struct CreateMaterializedViewRequest
     {
@@ -173,12 +178,17 @@ namespace gpudb
      * A set of output parameters for {@link
      * #createMaterializedView(const CreateMaterializedViewRequest&) const}.
      * <p>
-     * The create materialized view request does not create the actual table
-     * that will be the toplevel table of the view but instead registers the
-     * table name so no other views or tables can be created with that name.
-     * The response contains a a view_id that is used to label the table
-     * creation requests (projection, union, group-by, filter, or join) that
-     * describes the view.
+     * Initiates the process of creating a materialized view, reserving the
+     * view's name to prevent other views or tables from being created with
+     * that name.
+     * <p>
+     * For materialized view details and examples, see <a
+     * href="../../concepts/materialized_views.html" target="_top">Materialized
+     * Views</a>.
+     * <p>
+     * The response contains @a viewId, which is used to tag each subsequent
+     * operation (projection, union, group-by, filter, or join) that will
+     * compose the view.
      */
     struct CreateMaterializedViewResponse
     {

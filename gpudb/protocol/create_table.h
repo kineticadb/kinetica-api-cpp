@@ -116,9 +116,9 @@ namespace gpudb
          *                      Semicolon-separated list of <a
          *                      href="../../concepts/tables.html#foreign-keys"
          *                      target="_top">foreign keys</a>, of the format
-         *                      'source_column references
-         *                      target_table(primary_key_column) [ as
-         *                      <foreign_key_name> ]'.
+         *                      '(source_column_name [, ...]) references
+         *                      target_table_name(primary_key_column_name [,
+         *                      ...]) [as foreign_key_name]'.
          *                              <li>
          *                      gpudb::create_table_foreign_shard_key: Foreign
          *                      shard key of the format 'source_column

@@ -934,8 +934,65 @@ namespace gpudb
         }
 
         return os;
-    }
+    } // << overload
 
+
+    std::ostream &operator << (std::ostream  &os, const GenericRecord &record)
+    {
+        std::vector<Type::Column> columns = record.getType().getColumns();
+
+        std::vector<Type::Column>::const_iterator it;
+        size_t i = 0;
+        for ( it = columns.begin(); it != columns.end(); ++it )
+        {
+
+            os << " " << it->getName() << ": ";
+
+            // Handle nulls
+            if ( record.isNull( i ) )
+            {
+                os << "<NULL>";
+            }
+            else // not a nullable, or if so, not a null
+            {
+                switch ( it->getType() )
+                {
+                    case Type::Column::INT:
+                    {
+                        os << record.getAsInt( i ); break;
+                    }
+                    case Type::Column::LONG:
+                    {
+                        os << record.getAsLong( i ); break;
+                    }
+                    case Type::Column::FLOAT:
+                    {
+                        os << record.getAsFloat( i ); break;
+                    }
+                    case Type::Column::DOUBLE:
+                    {
+                        os << record.getAsDouble( i ); break;
+                    }
+                    case Type::Column::STRING:
+                    {
+                        os << record.getAsString( i ); break;
+                    }
+                    case Type::Column::BYTES:
+                    {
+                        std::vector<unsigned char> bytes = record.getAsBytes( i );
+                        std::vector<unsigned char>::const_iterator it2;
+                        for ( it2 = bytes.begin(); it2 != bytes.end(); ++it2 )
+                            os << *it2;
+                        break;
+                    }
+                }  // end switch
+            }  // end else
+            ++i;
+        }
+
+        return os;
+    }  // << overload
+    
 
 
 } // namespace gpudb

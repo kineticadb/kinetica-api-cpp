@@ -312,10 +312,12 @@ ADD_LIBRARY_FULL( gpudb_api_cpp_lib_${STATIC_OR_SHARED} ${STATIC_OR_SHARED}
         GPUdbTemplates.hpp
         GPUdbIngestor.hpp
         Http.hpp
+        RecordRetriever.hpp
         Type.hpp
         protocol/EndpointKeywords.h
         protocol/GPUdbProtocol.h
         utils/MurmurHash3.h
+        utils/GPUdbMultiHeadIOUtils.h
     SOURCES
         Avro.cpp
         ColumnProperties.cpp
@@ -324,9 +326,11 @@ ADD_LIBRARY_FULL( gpudb_api_cpp_lib_${STATIC_OR_SHARED} ${STATIC_OR_SHARED}
         GPUdbException.cpp
         GPUdbIngestor.cpp
         Http.cpp
+        RecordRetriever.cpp
         Type.cpp
         protocol/EndpointKeywords.cpp
         utils/MurmurHash3.cpp
+        utils/GPUdbMultiHeadIOUtils.cpp
     LINK_LIBRARIES
         ${GPUDB_API_CPP_LINK_LIBRARIES}
     PROPERTIES FOLDER "Library"

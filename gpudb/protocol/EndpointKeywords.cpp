@@ -36,17 +36,22 @@ namespace gpudb
     const std::string aggregate_group_by_binary                       ( "binary"                        );
     const std::string aggregate_group_by_chunk_size                   ( "chunk_size"                    );
     const std::string aggregate_group_by_collection_name              ( "collection_name"               );
+    const std::string aggregate_group_by_cube                         ( "cube"                          );
     const std::string aggregate_group_by_descending                   ( "descending"                    );
     const std::string aggregate_group_by_expression                   ( "expression"                    );
     const std::string aggregate_group_by_false                        ( "false"                         );
+    const std::string aggregate_group_by_grouping_sets                ( "grouping_sets"                 );
     const std::string aggregate_group_by_having                       ( "having"                        );
     const std::string aggregate_group_by_json                         ( "json"                          );
     const std::string aggregate_group_by_key                          ( "key"                           );
     const std::string aggregate_group_by_materialize_on_gpu           ( "materialize_on_gpu"            );
+    const std::string aggregate_group_by_pivot                        ( "pivot"                         );
+    const std::string aggregate_group_by_pivot_values                 ( "pivot_values"                  );
     const std::string aggregate_group_by_result_table                 ( "result_table"                  );
     const std::string aggregate_group_by_result_table_force_replicated( "result_table_force_replicated" );
     const std::string aggregate_group_by_result_table_generate_pk     ( "result_table_generate_pk"      );
     const std::string aggregate_group_by_result_table_persist         ( "result_table_persist"          );
+    const std::string aggregate_group_by_rollup                       ( "rollup"                        );
     const std::string aggregate_group_by_sort_by                      ( "sort_by"                       );
     const std::string aggregate_group_by_sort_order                   ( "sort_order"                    );
     const std::string aggregate_group_by_true                         ( "true"                          );
@@ -117,11 +122,13 @@ namespace gpudb
     const std::string aggregate_unpivot_false               ( "false"                );
     const std::string aggregate_unpivot_json                ( "json"                 );
     const std::string aggregate_unpivot_limit               ( "limit"                );
+    const std::string aggregate_unpivot_materialize_on_gpu  ( "materialize_on_gpu"   );
     const std::string aggregate_unpivot_order_by            ( "order_by"             );
     const std::string aggregate_unpivot_result_table        ( "result_table"         );
     const std::string aggregate_unpivot_result_table_persist( "result_table_persist" );
     const std::string aggregate_unpivot_true                ( "true"                 );
     const std::string aggregate_unpivot_ttl                 ( "ttl"                  );
+    const std::string aggregate_unpivot_view_id             ( "view_id"              );
 
     // Keywords for /alter/system/properties request
     const std::string alter_system_properties_audit_body                 ( "audit_body"                  );
@@ -262,6 +269,7 @@ namespace gpudb
     const std::string create_table_is_filter_view             ( "is_filter_view"              );
     const std::string create_table_is_group_by                ( "is_group_by"                 );
     const std::string create_table_is_join                    ( "is_join"                     );
+    const std::string create_table_is_merge                   ( "is_merge"                    );
     const std::string create_table_is_other_view              ( "is_other_view"               );
     const std::string create_table_is_projection              ( "is_projection"               );
     const std::string create_table_is_replicated              ( "is_replicated"               );
@@ -269,6 +277,7 @@ namespace gpudb
     const std::string create_table_is_table                   ( "is_table"                    );
     const std::string create_table_is_union                   ( "is_union"                    );
     const std::string create_table_is_unique                  ( "is_unique"                   );
+    const std::string create_table_is_unpivot                 ( "is_unpivot"                  );
     const std::string create_table_no_error_if_exists         ( "no_error_if_exists"          );
     const std::string create_table_true                       ( "true"                        );
     const std::string create_table_ttl                        ( "ttl"                         );
@@ -484,6 +493,7 @@ namespace gpudb
     const std::string merge_records_is_replicated  ( "is_replicated"   );
     const std::string merge_records_true           ( "true"            );
     const std::string merge_records_ttl            ( "ttl"             );
+    const std::string merge_records_view_id        ( "view_id"         );
 
     // Keywords for /revoke/permission/system request
     const std::string revoke_permission_system_system_admin( "system_admin" );

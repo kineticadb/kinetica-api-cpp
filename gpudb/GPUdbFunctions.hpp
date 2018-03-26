@@ -241,6 +241,76 @@ AdminOfflineResponse& adminOffline( const bool offline,
                                     AdminOfflineResponse& response_ ) const;
 
 /**
+ * Retrieves a list of the most recent alerts generated.  The number of alerts
+ * to retrieve is specified in this request.
+ * Returns lists of alert data, earliest to latest
+ * 
+ * @param[in] request_  Request object containing the parameters for the
+ *                      operation.
+ * 
+ * @return Response object containing the result of the operation.
+ * 
+ */
+
+AdminShowAlertsResponse adminShowAlerts( const AdminShowAlertsRequest& request_ ) const;
+
+/**
+ * Retrieves a list of the most recent alerts generated.  The number of alerts
+ * to retrieve is specified in this request.
+ * Returns lists of alert data, earliest to latest
+ * 
+ * @param[in] request_  Request object containing the parameters for the
+ *                      operation.
+ * @param[out] response_  Response object containing the results of the
+ *                        operation.
+ * 
+ * @return Response object containing the result of the operation (initially
+ *         passed in by reference).
+ * 
+ */
+
+AdminShowAlertsResponse& adminShowAlerts( const AdminShowAlertsRequest& request_,
+                                          AdminShowAlertsResponse& response_ ) const;
+
+/**
+ * Retrieves a list of the most recent alerts generated.  The number of alerts
+ * to retrieve is specified in this request.
+ * Returns lists of alert data, earliest to latest
+ * 
+ * @param numAlerts  Number of most recent alerts to request. The response will
+ *                   return @a numAlerts alerts, or less if there are less in
+ *                   the system. A value of 0 returns all stored alerts.
+ * @param options  Optional parameters.
+ * 
+ * @return Response object containing the result of the operation.
+ * 
+ */
+
+AdminShowAlertsResponse adminShowAlerts( const int32_t numAlerts,
+                                         const std::map<std::string, std::string>& options ) const;
+
+/**
+ * Retrieves a list of the most recent alerts generated.  The number of alerts
+ * to retrieve is specified in this request.
+ * Returns lists of alert data, earliest to latest
+ * 
+ * @param numAlerts  Number of most recent alerts to request. The response will
+ *                   return @a numAlerts alerts, or less if there are less in
+ *                   the system. A value of 0 returns all stored alerts.
+ * @param options  Optional parameters.
+ * @param[out] response_  Response object containing the results of the
+ *                        operation.
+ * 
+ * @return Response object containing the result of the operation (initially
+ *         passed in by reference).
+ * 
+ */
+
+AdminShowAlertsResponse& adminShowAlerts( const int32_t numAlerts,
+                                          const std::map<std::string, std::string>& options,
+                                          AdminShowAlertsResponse& response_ ) const;
+
+/**
  * Show the current system configuration file.
  * 
  * @param[in] request_  Request object containing the parameters for the
@@ -657,6 +727,11 @@ AggregateConvexHullResponse& aggregateConvexHull( const std::string& tableName,
  * given table/view/collection and computes aggregates on each unique
  * combination. This is somewhat analogous to an SQL-style SELECT...GROUP BY.
  * <p>
+ * For aggregation details and examples, see <a
+ * href="../../concepts/aggregation.html" target="_top">Aggregation</a>.  For
+ * limitations, see <a href="../../concepts/aggregation.html#limitations"
+ * target="_top">Aggregation Limitations</a>.
+ * <p>
  * Any column(s) can be grouped on, and all column types except
  * unrestricted-length strings may be used for computing applicable aggregates;
  * columns marked as <a href="../../concepts/types.html#data-handling"
@@ -680,6 +755,18 @@ AggregateConvexHullResponse& aggregateConvexHull( const std::string& tableName,
  * target="_top">aggregation functions</a> are: count(*), sum, min, max, avg,
  * mean, stddev, stddev_pop, stddev_samp, var, var_pop, var_samp, arg_min,
  * arg_max and count_distinct.
+ * <p>
+ * Available grouping functions are <a href="../../concepts/rollup.html"
+ * target="_top">Rollup</a>, <a href="../../concepts/cube.html"
+ * target="_top">Cube</a>, and <a href="../../concepts/grouping_sets.html"
+ * target="_top">Grouping Sets</a>
+ * <p>
+ * This service also provides support for <a href="../../concepts/pivot.html"
+ * target="_top">Pivot</a> operations.
+ * <p>
+ * Filtering on aggregates is supported via expressions using <a
+ * href="../../concepts/expressions.html#aggregate-expressions"
+ * target="_top">aggregation functions</a> supplied to @a having.
  * <p>
  * The response is returned as a dynamic schema. For details see: <a
  * href="../../api/index.html#dynamic-schemas" target="_top">dynamic schemas
@@ -712,6 +799,11 @@ RawAggregateGroupByResponse aggregateGroupByRaw( const AggregateGroupByRequest& 
  * given table/view/collection and computes aggregates on each unique
  * combination. This is somewhat analogous to an SQL-style SELECT...GROUP BY.
  * <p>
+ * For aggregation details and examples, see <a
+ * href="../../concepts/aggregation.html" target="_top">Aggregation</a>.  For
+ * limitations, see <a href="../../concepts/aggregation.html#limitations"
+ * target="_top">Aggregation Limitations</a>.
+ * <p>
  * Any column(s) can be grouped on, and all column types except
  * unrestricted-length strings may be used for computing applicable aggregates;
  * columns marked as <a href="../../concepts/types.html#data-handling"
@@ -735,6 +827,18 @@ RawAggregateGroupByResponse aggregateGroupByRaw( const AggregateGroupByRequest& 
  * target="_top">aggregation functions</a> are: count(*), sum, min, max, avg,
  * mean, stddev, stddev_pop, stddev_samp, var, var_pop, var_samp, arg_min,
  * arg_max and count_distinct.
+ * <p>
+ * Available grouping functions are <a href="../../concepts/rollup.html"
+ * target="_top">Rollup</a>, <a href="../../concepts/cube.html"
+ * target="_top">Cube</a>, and <a href="../../concepts/grouping_sets.html"
+ * target="_top">Grouping Sets</a>
+ * <p>
+ * This service also provides support for <a href="../../concepts/pivot.html"
+ * target="_top">Pivot</a> operations.
+ * <p>
+ * Filtering on aggregates is supported via expressions using <a
+ * href="../../concepts/expressions.html#aggregate-expressions"
+ * target="_top">aggregation functions</a> supplied to @a having.
  * <p>
  * The response is returned as a dynamic schema. For details see: <a
  * href="../../api/index.html#dynamic-schemas" target="_top">dynamic schemas
@@ -771,6 +875,11 @@ RawAggregateGroupByResponse& aggregateGroupByRaw( const AggregateGroupByRequest&
  * given table/view/collection and computes aggregates on each unique
  * combination. This is somewhat analogous to an SQL-style SELECT...GROUP BY.
  * <p>
+ * For aggregation details and examples, see <a
+ * href="../../concepts/aggregation.html" target="_top">Aggregation</a>.  For
+ * limitations, see <a href="../../concepts/aggregation.html#limitations"
+ * target="_top">Aggregation Limitations</a>.
+ * <p>
  * Any column(s) can be grouped on, and all column types except
  * unrestricted-length strings may be used for computing applicable aggregates;
  * columns marked as <a href="../../concepts/types.html#data-handling"
@@ -794,6 +903,18 @@ RawAggregateGroupByResponse& aggregateGroupByRaw( const AggregateGroupByRequest&
  * target="_top">aggregation functions</a> are: count(*), sum, min, max, avg,
  * mean, stddev, stddev_pop, stddev_samp, var, var_pop, var_samp, arg_min,
  * arg_max and count_distinct.
+ * <p>
+ * Available grouping functions are <a href="../../concepts/rollup.html"
+ * target="_top">Rollup</a>, <a href="../../concepts/cube.html"
+ * target="_top">Cube</a>, and <a href="../../concepts/grouping_sets.html"
+ * target="_top">Grouping Sets</a>
+ * <p>
+ * This service also provides support for <a href="../../concepts/pivot.html"
+ * target="_top">Pivot</a> operations.
+ * <p>
+ * Filtering on aggregates is supported via expressions using <a
+ * href="../../concepts/expressions.html#aggregate-expressions"
+ * target="_top">aggregation functions</a> supplied to @a having.
  * <p>
  * The response is returned as a dynamic schema. For details see: <a
  * href="../../api/index.html#dynamic-schemas" target="_top">dynamic schemas
@@ -826,6 +947,11 @@ AggregateGroupByResponse aggregateGroupBy( const AggregateGroupByRequest& reques
  * given table/view/collection and computes aggregates on each unique
  * combination. This is somewhat analogous to an SQL-style SELECT...GROUP BY.
  * <p>
+ * For aggregation details and examples, see <a
+ * href="../../concepts/aggregation.html" target="_top">Aggregation</a>.  For
+ * limitations, see <a href="../../concepts/aggregation.html#limitations"
+ * target="_top">Aggregation Limitations</a>.
+ * <p>
  * Any column(s) can be grouped on, and all column types except
  * unrestricted-length strings may be used for computing applicable aggregates;
  * columns marked as <a href="../../concepts/types.html#data-handling"
@@ -849,6 +975,18 @@ AggregateGroupByResponse aggregateGroupBy( const AggregateGroupByRequest& reques
  * target="_top">aggregation functions</a> are: count(*), sum, min, max, avg,
  * mean, stddev, stddev_pop, stddev_samp, var, var_pop, var_samp, arg_min,
  * arg_max and count_distinct.
+ * <p>
+ * Available grouping functions are <a href="../../concepts/rollup.html"
+ * target="_top">Rollup</a>, <a href="../../concepts/cube.html"
+ * target="_top">Cube</a>, and <a href="../../concepts/grouping_sets.html"
+ * target="_top">Grouping Sets</a>
+ * <p>
+ * This service also provides support for <a href="../../concepts/pivot.html"
+ * target="_top">Pivot</a> operations.
+ * <p>
+ * Filtering on aggregates is supported via expressions using <a
+ * href="../../concepts/expressions.html#aggregate-expressions"
+ * target="_top">aggregation functions</a> supplied to @a having.
  * <p>
  * The response is returned as a dynamic schema. For details see: <a
  * href="../../api/index.html#dynamic-schemas" target="_top">dynamic schemas
@@ -885,6 +1023,11 @@ AggregateGroupByResponse& aggregateGroupBy( const AggregateGroupByRequest& reque
  * given table/view/collection and computes aggregates on each unique
  * combination. This is somewhat analogous to an SQL-style SELECT...GROUP BY.
  * <p>
+ * For aggregation details and examples, see <a
+ * href="../../concepts/aggregation.html" target="_top">Aggregation</a>.  For
+ * limitations, see <a href="../../concepts/aggregation.html#limitations"
+ * target="_top">Aggregation Limitations</a>.
+ * <p>
  * Any column(s) can be grouped on, and all column types except
  * unrestricted-length strings may be used for computing applicable aggregates;
  * columns marked as <a href="../../concepts/types.html#data-handling"
@@ -908,6 +1051,18 @@ AggregateGroupByResponse& aggregateGroupBy( const AggregateGroupByRequest& reque
  * target="_top">aggregation functions</a> are: count(*), sum, min, max, avg,
  * mean, stddev, stddev_pop, stddev_samp, var, var_pop, var_samp, arg_min,
  * arg_max and count_distinct.
+ * <p>
+ * Available grouping functions are <a href="../../concepts/rollup.html"
+ * target="_top">Rollup</a>, <a href="../../concepts/cube.html"
+ * target="_top">Cube</a>, and <a href="../../concepts/grouping_sets.html"
+ * target="_top">Grouping Sets</a>
+ * <p>
+ * This service also provides support for <a href="../../concepts/pivot.html"
+ * target="_top">Pivot</a> operations.
+ * <p>
+ * Filtering on aggregates is supported via expressions using <a
+ * href="../../concepts/expressions.html#aggregate-expressions"
+ * target="_top">aggregation functions</a> supplied to @a having.
  * <p>
  * The response is returned as a dynamic schema. For details see: <a
  * href="../../api/index.html#dynamic-schemas" target="_top">dynamic schemas
@@ -1024,6 +1179,21 @@ AggregateGroupByResponse& aggregateGroupBy( const AggregateGroupByRequest& reque
  *                         <li> gpudb::aggregate_group_by_false
  *                 </ul>
  *                 The default value is gpudb::aggregate_group_by_false.
+ *                         <li> gpudb::aggregate_group_by_pivot: pivot column
+ *                         <li> gpudb::aggregate_group_by_pivot_values: The
+ *                 value list provided will become the column headers in the
+ *                 output. Should be the values from the pivot_column.
+ *                         <li> gpudb::aggregate_group_by_grouping_sets:
+ *                 Customize the grouping attribute sets to compute the
+ *                 aggregates. These sets can include ROLLUP or CUBE
+ *                 operartors. The attribute sets should be enclosed in
+ *                 paranthesis and can include composite attributes. All
+ *                 attributes specified in the grouping sets must present in
+ *                 the groupby attributes.
+ *                         <li> gpudb::aggregate_group_by_rollup: This option
+ *                 is used to specify the multilevel aggregates.
+ *                         <li> gpudb::aggregate_group_by_cube: This option is
+ *                 used to specify the multidimensional aggregates.
  *                 </ul>
  * 
  * @return Response object containing the result of the operation.
@@ -1041,6 +1211,11 @@ AggregateGroupByResponse aggregateGroupBy( const std::string& tableName,
  * given table/view/collection and computes aggregates on each unique
  * combination. This is somewhat analogous to an SQL-style SELECT...GROUP BY.
  * <p>
+ * For aggregation details and examples, see <a
+ * href="../../concepts/aggregation.html" target="_top">Aggregation</a>.  For
+ * limitations, see <a href="../../concepts/aggregation.html#limitations"
+ * target="_top">Aggregation Limitations</a>.
+ * <p>
  * Any column(s) can be grouped on, and all column types except
  * unrestricted-length strings may be used for computing applicable aggregates;
  * columns marked as <a href="../../concepts/types.html#data-handling"
@@ -1064,6 +1239,18 @@ AggregateGroupByResponse aggregateGroupBy( const std::string& tableName,
  * target="_top">aggregation functions</a> are: count(*), sum, min, max, avg,
  * mean, stddev, stddev_pop, stddev_samp, var, var_pop, var_samp, arg_min,
  * arg_max and count_distinct.
+ * <p>
+ * Available grouping functions are <a href="../../concepts/rollup.html"
+ * target="_top">Rollup</a>, <a href="../../concepts/cube.html"
+ * target="_top">Cube</a>, and <a href="../../concepts/grouping_sets.html"
+ * target="_top">Grouping Sets</a>
+ * <p>
+ * This service also provides support for <a href="../../concepts/pivot.html"
+ * target="_top">Pivot</a> operations.
+ * <p>
+ * Filtering on aggregates is supported via expressions using <a
+ * href="../../concepts/expressions.html#aggregate-expressions"
+ * target="_top">aggregation functions</a> supplied to @a having.
  * <p>
  * The response is returned as a dynamic schema. For details see: <a
  * href="../../api/index.html#dynamic-schemas" target="_top">dynamic schemas
@@ -1180,6 +1367,21 @@ AggregateGroupByResponse aggregateGroupBy( const std::string& tableName,
  *                         <li> gpudb::aggregate_group_by_false
  *                 </ul>
  *                 The default value is gpudb::aggregate_group_by_false.
+ *                         <li> gpudb::aggregate_group_by_pivot: pivot column
+ *                         <li> gpudb::aggregate_group_by_pivot_values: The
+ *                 value list provided will become the column headers in the
+ *                 output. Should be the values from the pivot_column.
+ *                         <li> gpudb::aggregate_group_by_grouping_sets:
+ *                 Customize the grouping attribute sets to compute the
+ *                 aggregates. These sets can include ROLLUP or CUBE
+ *                 operartors. The attribute sets should be enclosed in
+ *                 paranthesis and can include composite attributes. All
+ *                 attributes specified in the grouping sets must present in
+ *                 the groupby attributes.
+ *                         <li> gpudb::aggregate_group_by_rollup: This option
+ *                 is used to specify the multilevel aggregates.
+ *                         <li> gpudb::aggregate_group_by_cube: This option is
+ *                 used to specify the multidimensional aggregates.
  *                 </ul>
  * @param[out] response_  Response object containing the results of the
  *                        operation.
@@ -1607,6 +1809,10 @@ AggregateMinMaxGeometryResponse& aggregateMinMaxGeometry( const std::string& tab
  * specified separately (i.e.
  * 'percentile(75.0),percentile(99.0),percentile_rank(1234.56),percentile_rank(-5)').
  * <p>
+ * A second, comma-separated value can be added to the {percentile}@{choise of
+ * input stats} statistic to calculate percentile resolution, e.g., a 50th
+ * percentile with 200 resolution would be 'percentile(50,200)'.
+ * <p>
  * The weighted average statistic requires a @a weight_column_name to be
  * specified in @a options. The weighted average is then defined as the sum of
  * the products of @a columnName times the @a weight_column_name values divided
@@ -1649,6 +1855,10 @@ AggregateStatisticsResponse aggregateStatistics( const AggregateStatisticsReques
  * percentile_rank. To compute multiple percentiles each value must be
  * specified separately (i.e.
  * 'percentile(75.0),percentile(99.0),percentile_rank(1234.56),percentile_rank(-5)').
+ * <p>
+ * A second, comma-separated value can be added to the {percentile}@{choise of
+ * input stats} statistic to calculate percentile resolution, e.g., a 50th
+ * percentile with 200 resolution would be 'percentile(50,200)'.
  * <p>
  * The weighted average statistic requires a @a weight_column_name to be
  * specified in @a options. The weighted average is then defined as the sum of
@@ -1697,6 +1907,10 @@ AggregateStatisticsResponse& aggregateStatistics( const AggregateStatisticsReque
  * specified separately (i.e.
  * 'percentile(75.0),percentile(99.0),percentile_rank(1234.56),percentile_rank(-5)').
  * <p>
+ * A second, comma-separated value can be added to the {percentile}@{choise of
+ * input stats} statistic to calculate percentile resolution, e.g., a 50th
+ * percentile with 200 resolution would be 'percentile(50,200)'.
+ * <p>
  * The weighted average statistic requires a @a weight_column_name to be
  * specified in @a options. The weighted average is then defined as the sum of
  * the products of @a columnName times the @a weight_column_name values divided
@@ -1750,7 +1964,9 @@ AggregateStatisticsResponse& aggregateStatistics( const AggregateStatisticsReque
  *               the column(s).
  *                       <li> gpudb::aggregate_statistics_percentile: Estimate
  *               (via t-digest) of the given percentile of the column(s)
- *               (percentile(50.0) will be an approximation of the median).
+ *               (percentile(50.0) will be an approximation of the median). Add
+ *               a second, comma-separated value to calculate percentile
+ *               resolution, e.g., 'percentile(75,150)'
  *                       <li> gpudb::aggregate_statistics_percentile_rank:
  *               Estimate (via t-digest) of the percentile rank of the given
  *               value in the column(s) (if the given value is the median of
@@ -1797,6 +2013,10 @@ AggregateStatisticsResponse aggregateStatistics( const std::string& tableName,
  * specified separately (i.e.
  * 'percentile(75.0),percentile(99.0),percentile_rank(1234.56),percentile_rank(-5)').
  * <p>
+ * A second, comma-separated value can be added to the {percentile}@{choise of
+ * input stats} statistic to calculate percentile resolution, e.g., a 50th
+ * percentile with 200 resolution would be 'percentile(50,200)'.
+ * <p>
  * The weighted average statistic requires a @a weight_column_name to be
  * specified in @a options. The weighted average is then defined as the sum of
  * the products of @a columnName times the @a weight_column_name values divided
@@ -1850,7 +2070,9 @@ AggregateStatisticsResponse aggregateStatistics( const std::string& tableName,
  *               the column(s).
  *                       <li> gpudb::aggregate_statistics_percentile: Estimate
  *               (via t-digest) of the given percentile of the column(s)
- *               (percentile(50.0) will be an approximation of the median).
+ *               (percentile(50.0) will be an approximation of the median). Add
+ *               a second, comma-separated value to calculate percentile
+ *               resolution, e.g., 'percentile(75,150)'
  *                       <li> gpudb::aggregate_statistics_percentile_rank:
  *               Estimate (via t-digest) of the percentile rank of the given
  *               value in the column(s) (if the given value is the median of
@@ -2507,12 +2729,17 @@ AggregateUniqueResponse& aggregateUnique( const std::string& tableName,
 /**
  * Rotate the column values into rows values.
  * <p>
- * The aggregate unpivot is used to normalize tables that are built for cross
- * tabular reporting purposes. The unpivot operator rotates the column values
- * for all the pivoted columns. A variable column, value column and all columns
- * from the source table except the unpivot columns are projected into the
- * result table. The variable column and value columns in the result table
- * indicate the pivoted column name and values respectively.
+ * For unpivot details and examples, see <a href="../../concepts/unpivot.html"
+ * target="_top">Unpivot</a>.  For limitations, see <a
+ * href="../../concepts/unpivot.html#limitations" target="_top">Unpivot
+ * Limitations</a>.
+ * <p>
+ * Unpivot is used to normalize tables that are built for cross tabular
+ * reporting purposes. The unpivot operator rotates the column values for all
+ * the pivoted columns. A variable column, value column and all columns from
+ * the source table except the unpivot columns are projected into the result
+ * table. The variable column and value columns in the result table indicate
+ * the pivoted column name and values respectively.
  * <p>
  * The response is returned as a dynamic schema. For details see: <a
  * href="../../api/index.html#dynamic-schemas" target="_top">dynamic schemas
@@ -2530,12 +2757,17 @@ RawAggregateUnpivotResponse aggregateUnpivotRaw( const AggregateUnpivotRequest& 
 /**
  * Rotate the column values into rows values.
  * <p>
- * The aggregate unpivot is used to normalize tables that are built for cross
- * tabular reporting purposes. The unpivot operator rotates the column values
- * for all the pivoted columns. A variable column, value column and all columns
- * from the source table except the unpivot columns are projected into the
- * result table. The variable column and value columns in the result table
- * indicate the pivoted column name and values respectively.
+ * For unpivot details and examples, see <a href="../../concepts/unpivot.html"
+ * target="_top">Unpivot</a>.  For limitations, see <a
+ * href="../../concepts/unpivot.html#limitations" target="_top">Unpivot
+ * Limitations</a>.
+ * <p>
+ * Unpivot is used to normalize tables that are built for cross tabular
+ * reporting purposes. The unpivot operator rotates the column values for all
+ * the pivoted columns. A variable column, value column and all columns from
+ * the source table except the unpivot columns are projected into the result
+ * table. The variable column and value columns in the result table indicate
+ * the pivoted column name and values respectively.
  * <p>
  * The response is returned as a dynamic schema. For details see: <a
  * href="../../api/index.html#dynamic-schemas" target="_top">dynamic schemas
@@ -2557,12 +2789,17 @@ RawAggregateUnpivotResponse& aggregateUnpivotRaw( const AggregateUnpivotRequest&
 /**
  * Rotate the column values into rows values.
  * <p>
- * The aggregate unpivot is used to normalize tables that are built for cross
- * tabular reporting purposes. The unpivot operator rotates the column values
- * for all the pivoted columns. A variable column, value column and all columns
- * from the source table except the unpivot columns are projected into the
- * result table. The variable column and value columns in the result table
- * indicate the pivoted column name and values respectively.
+ * For unpivot details and examples, see <a href="../../concepts/unpivot.html"
+ * target="_top">Unpivot</a>.  For limitations, see <a
+ * href="../../concepts/unpivot.html#limitations" target="_top">Unpivot
+ * Limitations</a>.
+ * <p>
+ * Unpivot is used to normalize tables that are built for cross tabular
+ * reporting purposes. The unpivot operator rotates the column values for all
+ * the pivoted columns. A variable column, value column and all columns from
+ * the source table except the unpivot columns are projected into the result
+ * table. The variable column and value columns in the result table indicate
+ * the pivoted column name and values respectively.
  * <p>
  * The response is returned as a dynamic schema. For details see: <a
  * href="../../api/index.html#dynamic-schemas" target="_top">dynamic schemas
@@ -2580,12 +2817,17 @@ AggregateUnpivotResponse aggregateUnpivot( const AggregateUnpivotRequest& reques
 /**
  * Rotate the column values into rows values.
  * <p>
- * The aggregate unpivot is used to normalize tables that are built for cross
- * tabular reporting purposes. The unpivot operator rotates the column values
- * for all the pivoted columns. A variable column, value column and all columns
- * from the source table except the unpivot columns are projected into the
- * result table. The variable column and value columns in the result table
- * indicate the pivoted column name and values respectively.
+ * For unpivot details and examples, see <a href="../../concepts/unpivot.html"
+ * target="_top">Unpivot</a>.  For limitations, see <a
+ * href="../../concepts/unpivot.html#limitations" target="_top">Unpivot
+ * Limitations</a>.
+ * <p>
+ * Unpivot is used to normalize tables that are built for cross tabular
+ * reporting purposes. The unpivot operator rotates the column values for all
+ * the pivoted columns. A variable column, value column and all columns from
+ * the source table except the unpivot columns are projected into the result
+ * table. The variable column and value columns in the result table indicate
+ * the pivoted column name and values respectively.
  * <p>
  * The response is returned as a dynamic schema. For details see: <a
  * href="../../api/index.html#dynamic-schemas" target="_top">dynamic schemas
@@ -2607,12 +2849,17 @@ AggregateUnpivotResponse& aggregateUnpivot( const AggregateUnpivotRequest& reque
 /**
  * Rotate the column values into rows values.
  * <p>
- * The aggregate unpivot is used to normalize tables that are built for cross
- * tabular reporting purposes. The unpivot operator rotates the column values
- * for all the pivoted columns. A variable column, value column and all columns
- * from the source table except the unpivot columns are projected into the
- * result table. The variable column and value columns in the result table
- * indicate the pivoted column name and values respectively.
+ * For unpivot details and examples, see <a href="../../concepts/unpivot.html"
+ * target="_top">Unpivot</a>.  For limitations, see <a
+ * href="../../concepts/unpivot.html#limitations" target="_top">Unpivot
+ * Limitations</a>.
+ * <p>
+ * Unpivot is used to normalize tables that are built for cross tabular
+ * reporting purposes. The unpivot operator rotates the column values for all
+ * the pivoted columns. A variable column, value column and all columns from
+ * the source table except the unpivot columns are projected into the result
+ * table. The variable column and value columns in the result table indicate
+ * the pivoted column name and values respectively.
  * <p>
  * The response is returned as a dynamic schema. For details see: <a
  * href="../../api/index.html#dynamic-schemas" target="_top">dynamic schemas
@@ -2665,6 +2912,15 @@ AggregateUnpivotResponse& aggregateUnpivot( const AggregateUnpivotRequest& reque
  *                         <li> gpudb::aggregate_unpivot_ttl: Sets the <a
  *                 href="../../concepts/ttl.html" target="_top">TTL</a> of the
  *                 table specified in @a result_table.
+ *                         <li> gpudb::aggregate_unpivot_view_id: view this
+ *                 result table is part of
+ *                         <li> gpudb::aggregate_unpivot_materialize_on_gpu: If
+ *                 @a true then the output columns will be cached on the GPU.
+ *                 <ul>
+ *                         <li> gpudb::aggregate_unpivot_true
+ *                         <li> gpudb::aggregate_unpivot_false
+ *                 </ul>
+ *                 The default value is gpudb::aggregate_unpivot_false.
  *                 </ul>
  * 
  * @return Response object containing the result of the operation.
@@ -2680,12 +2936,17 @@ AggregateUnpivotResponse aggregateUnpivot( const std::string& tableName,
 /**
  * Rotate the column values into rows values.
  * <p>
- * The aggregate unpivot is used to normalize tables that are built for cross
- * tabular reporting purposes. The unpivot operator rotates the column values
- * for all the pivoted columns. A variable column, value column and all columns
- * from the source table except the unpivot columns are projected into the
- * result table. The variable column and value columns in the result table
- * indicate the pivoted column name and values respectively.
+ * For unpivot details and examples, see <a href="../../concepts/unpivot.html"
+ * target="_top">Unpivot</a>.  For limitations, see <a
+ * href="../../concepts/unpivot.html#limitations" target="_top">Unpivot
+ * Limitations</a>.
+ * <p>
+ * Unpivot is used to normalize tables that are built for cross tabular
+ * reporting purposes. The unpivot operator rotates the column values for all
+ * the pivoted columns. A variable column, value column and all columns from
+ * the source table except the unpivot columns are projected into the result
+ * table. The variable column and value columns in the result table indicate
+ * the pivoted column name and values respectively.
  * <p>
  * The response is returned as a dynamic schema. For details see: <a
  * href="../../api/index.html#dynamic-schemas" target="_top">dynamic schemas
@@ -2738,6 +2999,15 @@ AggregateUnpivotResponse aggregateUnpivot( const std::string& tableName,
  *                         <li> gpudb::aggregate_unpivot_ttl: Sets the <a
  *                 href="../../concepts/ttl.html" target="_top">TTL</a> of the
  *                 table specified in @a result_table.
+ *                         <li> gpudb::aggregate_unpivot_view_id: view this
+ *                 result table is part of
+ *                         <li> gpudb::aggregate_unpivot_materialize_on_gpu: If
+ *                 @a true then the output columns will be cached on the GPU.
+ *                 <ul>
+ *                         <li> gpudb::aggregate_unpivot_true
+ *                         <li> gpudb::aggregate_unpivot_false
+ *                 </ul>
+ *                 The default value is gpudb::aggregate_unpivot_false.
  *                 </ul>
  * @param[out] response_  Response object containing the results of the
  *                        operation.
@@ -3236,13 +3506,14 @@ AlterTableResponse& alterTable( const AlterTableRequest& request_,
  *                tableName.
  *                        <li> gpudb::alter_table_create_foreign_key: Creates a
  *                <a href="../../concepts/tables.html#foreign-key"
- *                target="_top">foreign key</a> using the format 'source_column
- *                references target_table(primary_key_column) [ as
- *                <foreign_key_name> ]'.
+ *                target="_top">foreign key</a> using the format
+ *                '(source_column_name [, ...]) references
+ *                target_table_name(primary_key_column_name [, ...]) [as
+ *                foreign_key_name]'.
  *                        <li> gpudb::alter_table_delete_foreign_key: Deletes a
  *                <a href="../../concepts/tables.html#foreign-key"
  *                target="_top">foreign key</a>.  The @a value should be the
- *                <foreign_key_name> specified when creating the key or the
+ *                foreign_key_name specified when creating the key or the
  *                complete string used to define it.
  *                        <li> gpudb::alter_table_set_global_access_mode: Sets
  *                the global access mode (i.e. locking) for the table specified
@@ -3251,18 +3522,18 @@ AlterTableResponse& alterTable( const AlterTableRequest& request_,
  *                'read_write'.
  *                        <li> gpudb::alter_table_refresh: Replay all the table
  *                creation commands required to create this view. Endpoints
- *                supported are filter, create_join_table, create_projection,
- *                create_union, aggregate_group_by, and aggregate_unique.
+ *                supported are /filter, /create/jointable, /create/projection,
+ *                /create/union, /aggregate/groupby, and /aggregate/unique.
  *                        <li> gpudb::alter_table_set_refresh_method: Set the
- *                method by which this view is refreshed - one of manual,
- *                periodic, on_change, on_query.
+ *                method by which this view is refreshed - one of 'manual',
+ *                'periodic', 'on_change', 'on_query'.
  *                        <li> gpudb::alter_table_set_refresh_start_time: Set
  *                the time to start periodic refreshes to datetime string with
  *                format YYYY-MM-DD HH:MM:SS at which refresh is to be done.
  *                Next refresh occurs at refresh_start_time + N*refresh_period
  *                        <li> gpudb::alter_table_set_refresh_period: Set the
- *                time interval at which to refresh this view - set refresh
- *                method to periodic if not alreay set.
+ *                time interval in seconds at which to refresh this view - sets
+ *                the refresh method to periodic if not alreay set.
  *                </ul>
  * @param value  The value of the modification. May be a column name, 'true' or
  *               'false', a TTL, or the global access mode depending on @a
@@ -3405,13 +3676,14 @@ AlterTableResponse alterTable( const std::string& tableName,
  *                tableName.
  *                        <li> gpudb::alter_table_create_foreign_key: Creates a
  *                <a href="../../concepts/tables.html#foreign-key"
- *                target="_top">foreign key</a> using the format 'source_column
- *                references target_table(primary_key_column) [ as
- *                <foreign_key_name> ]'.
+ *                target="_top">foreign key</a> using the format
+ *                '(source_column_name [, ...]) references
+ *                target_table_name(primary_key_column_name [, ...]) [as
+ *                foreign_key_name]'.
  *                        <li> gpudb::alter_table_delete_foreign_key: Deletes a
  *                <a href="../../concepts/tables.html#foreign-key"
  *                target="_top">foreign key</a>.  The @a value should be the
- *                <foreign_key_name> specified when creating the key or the
+ *                foreign_key_name specified when creating the key or the
  *                complete string used to define it.
  *                        <li> gpudb::alter_table_set_global_access_mode: Sets
  *                the global access mode (i.e. locking) for the table specified
@@ -3420,18 +3692,18 @@ AlterTableResponse alterTable( const std::string& tableName,
  *                'read_write'.
  *                        <li> gpudb::alter_table_refresh: Replay all the table
  *                creation commands required to create this view. Endpoints
- *                supported are filter, create_join_table, create_projection,
- *                create_union, aggregate_group_by, and aggregate_unique.
+ *                supported are /filter, /create/jointable, /create/projection,
+ *                /create/union, /aggregate/groupby, and /aggregate/unique.
  *                        <li> gpudb::alter_table_set_refresh_method: Set the
- *                method by which this view is refreshed - one of manual,
- *                periodic, on_change, on_query.
+ *                method by which this view is refreshed - one of 'manual',
+ *                'periodic', 'on_change', 'on_query'.
  *                        <li> gpudb::alter_table_set_refresh_start_time: Set
  *                the time to start periodic refreshes to datetime string with
  *                format YYYY-MM-DD HH:MM:SS at which refresh is to be done.
  *                Next refresh occurs at refresh_start_time + N*refresh_period
  *                        <li> gpudb::alter_table_set_refresh_period: Set the
- *                time interval at which to refresh this view - set refresh
- *                method to periodic if not alreay set.
+ *                time interval in seconds at which to refresh this view - sets
+ *                the refresh method to periodic if not alreay set.
  *                </ul>
  * @param value  The value of the modification. May be a column name, 'true' or
  *               'false', a TTL, or the global access mode depending on @a
@@ -3700,9 +3972,12 @@ AppendRecordsResponse& appendRecords( const AppendRecordsRequest& request_,
  *                         an existing table name.
  * @param fieldMap  Contains the mapping of column names from the target table
  *                  (specified by @a tableName) as the keys, and corresponding
- *                  column names from the source table (specified by @a
- *                  sourceTableName). Must be existing column names in source
- *                  table and target table, and their types must be matched.
+ *                  column names or expressions (e.g., 'col_name+1') from the
+ *                  source table (specified by @a sourceTableName). Must be
+ *                  existing column names in source table and target table, and
+ *                  their types must be matched. For details on using
+ *                  expressions, see <a href="../../concepts/expressions.html"
+ *                  target="_top">Expressions</a>.
  * @param options  Optional parameters.
  *                 <ul>
  *                         <li> gpudb::append_records_offset: A positive
@@ -3766,9 +4041,12 @@ AppendRecordsResponse appendRecords( const std::string& tableName,
  *                         an existing table name.
  * @param fieldMap  Contains the mapping of column names from the target table
  *                  (specified by @a tableName) as the keys, and corresponding
- *                  column names from the source table (specified by @a
- *                  sourceTableName). Must be existing column names in source
- *                  table and target table, and their types must be matched.
+ *                  column names or expressions (e.g., 'col_name+1') from the
+ *                  source table (specified by @a sourceTableName). Must be
+ *                  existing column names in source table and target table, and
+ *                  their types must be matched. For details on using
+ *                  expressions, see <a href="../../concepts/expressions.html"
+ *                  target="_top">Expressions</a>.
  * @param options  Optional parameters.
  *                 <ul>
  *                         <li> gpudb::append_records_offset: A positive
@@ -3823,74 +4101,6 @@ AppendRecordsResponse& appendRecords( const std::string& tableName,
                                       const std::map<std::string, std::string>& fieldMap,
                                       const std::map<std::string, std::string>& options,
                                       AppendRecordsResponse& response_ ) const;
-
-/**
- * Clears (drops) one or all column statistics of a tables.
- * 
- * @param[in] request_  Request object containing the parameters for the
- *                      operation.
- * 
- * @return Response object containing the result of the operation.
- * 
- */
-
-ClearStatisticsResponse clearStatistics( const ClearStatisticsRequest& request_ ) const;
-
-/**
- * Clears (drops) one or all column statistics of a tables.
- * 
- * @param[in] request_  Request object containing the parameters for the
- *                      operation.
- * @param[out] response_  Response object containing the results of the
- *                        operation.
- * 
- * @return Response object containing the result of the operation (initially
- *         passed in by reference).
- * 
- */
-
-ClearStatisticsResponse& clearStatistics( const ClearStatisticsRequest& request_,
-                                          ClearStatisticsResponse& response_ ) const;
-
-/**
- * Clears (drops) one or all column statistics of a tables.
- * 
- * @param tableName  Name of the table to clear the statistics. Must be an
- *                   existing table.
- * @param columnName  Name of the column to be cleared. Must be an existing
- *                    table. Empty string clears all available statistics of
- *                    the table.
- * @param options  Optional parameters.
- * 
- * @return Response object containing the result of the operation.
- * 
- */
-
-ClearStatisticsResponse clearStatistics( const std::string& tableName,
-                                         const std::string& columnName,
-                                         const std::map<std::string, std::string>& options ) const;
-
-/**
- * Clears (drops) one or all column statistics of a tables.
- * 
- * @param tableName  Name of the table to clear the statistics. Must be an
- *                   existing table.
- * @param columnName  Name of the column to be cleared. Must be an existing
- *                    table. Empty string clears all available statistics of
- *                    the table.
- * @param options  Optional parameters.
- * @param[out] response_  Response object containing the results of the
- *                        operation.
- * 
- * @return Response object containing the result of the operation (initially
- *         passed in by reference).
- * 
- */
-
-ClearStatisticsResponse& clearStatistics( const std::string& tableName,
-                                          const std::string& columnName,
-                                          const std::map<std::string, std::string>& options,
-                                          ClearStatisticsResponse& response_ ) const;
 
 /**
  * Clears (drops) one or all tables in the database cluster. The operation is
@@ -4121,70 +4331,6 @@ ClearTriggerResponse& clearTrigger( const std::string& triggerId,
                                     ClearTriggerResponse& response_ ) const;
 
 /**
- * Collect the requested statistics of the given column(s) in a given table.
- * 
- * @param[in] request_  Request object containing the parameters for the
- *                      operation.
- * 
- * @return Response object containing the result of the operation.
- * 
- */
-
-CollectStatisticsResponse collectStatistics( const CollectStatisticsRequest& request_ ) const;
-
-/**
- * Collect the requested statistics of the given column(s) in a given table.
- * 
- * @param[in] request_  Request object containing the parameters for the
- *                      operation.
- * @param[out] response_  Response object containing the results of the
- *                        operation.
- * 
- * @return Response object containing the result of the operation (initially
- *         passed in by reference).
- * 
- */
-
-CollectStatisticsResponse& collectStatistics( const CollectStatisticsRequest& request_,
-                                              CollectStatisticsResponse& response_ ) const;
-
-/**
- * Collect the requested statistics of the given column(s) in a given table.
- * 
- * @param tableName  Name of the table on which the statistics operation will
- *                   be performed.
- * @param columnNames  List of one or more column names.
- * @param options  Optional parameters.
- * 
- * @return Response object containing the result of the operation.
- * 
- */
-
-CollectStatisticsResponse collectStatistics( const std::string& tableName,
-                                             const std::vector<std::string>& columnNames,
-                                             const std::map<std::string, std::string>& options ) const;
-
-/**
- * Collect the requested statistics of the given column(s) in a given table.
- * 
- * @param tableName  Name of the table on which the statistics operation will
- *                   be performed.
- * @param columnNames  List of one or more column names.
- * @param options  Optional parameters.
- * @param[out] response_  Response object containing the results of the
- *                        operation.
- * 
- * @return Response object containing the result of the operation (initially
- *         passed in by reference).
- * 
- */
-
-CollectStatisticsResponse& collectStatistics( const std::string& tableName,
-                                              const std::vector<std::string>& columnNames,
-                                              const std::map<std::string, std::string>& options,
-                                              CollectStatisticsResponse& response_ ) const;
-
-/**
  * Create a job which will run asynchronously. The response returns a job ID,
  * which can be used to query the status and result of the job. The status and
  * the result of the job upon completion can be requested by {@link
@@ -4299,9 +4445,12 @@ CreateJobResponse& createJob( const std::string& endpoint,
                               CreateJobResponse& response_ ) const;
 
 /**
- * Creates a table that is the result of a SQL JOIN.  For details see: <a
- * href="../../concepts/joins.html" target="_top">join concept
- * documentation</a>.
+ * Creates a table that is the result of a SQL JOIN.
+ * <p>
+ * For join details and examples see: <a href="../../concepts/joins.html"
+ * target="_top">Joins</a>.  For limitations, see <a
+ * href="../../concepts/joins.html#limitations-cautions" target="_top">Join
+ * Limitations and Cautions</a>.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -4313,9 +4462,12 @@ CreateJobResponse& createJob( const std::string& endpoint,
 CreateJoinTableResponse createJoinTable( const CreateJoinTableRequest& request_ ) const;
 
 /**
- * Creates a table that is the result of a SQL JOIN.  For details see: <a
- * href="../../concepts/joins.html" target="_top">join concept
- * documentation</a>.
+ * Creates a table that is the result of a SQL JOIN.
+ * <p>
+ * For join details and examples see: <a href="../../concepts/joins.html"
+ * target="_top">Joins</a>.  For limitations, see <a
+ * href="../../concepts/joins.html#limitations-cautions" target="_top">Join
+ * Limitations and Cautions</a>.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -4331,9 +4483,12 @@ CreateJoinTableResponse& createJoinTable( const CreateJoinTableRequest& request_
                                           CreateJoinTableResponse& response_ ) const;
 
 /**
- * Creates a table that is the result of a SQL JOIN.  For details see: <a
- * href="../../concepts/joins.html" target="_top">join concept
- * documentation</a>.
+ * Creates a table that is the result of a SQL JOIN.
+ * <p>
+ * For join details and examples see: <a href="../../concepts/joins.html"
+ * target="_top">Joins</a>.  For limitations, see <a
+ * href="../../concepts/joins.html#limitations-cautions" target="_top">Join
+ * Limitations and Cautions</a>.
  * 
  * @param joinTableName  Name of the join table to be created.  Has the same
  *                       naming restrictions as <a
@@ -4430,9 +4585,12 @@ CreateJoinTableResponse createJoinTable( const std::string& joinTableName,
                                          const std::map<std::string, std::string>& options ) const;
 
 /**
- * Creates a table that is the result of a SQL JOIN.  For details see: <a
- * href="../../concepts/joins.html" target="_top">join concept
- * documentation</a>.
+ * Creates a table that is the result of a SQL JOIN.
+ * <p>
+ * For join details and examples see: <a href="../../concepts/joins.html"
+ * target="_top">Joins</a>.  For limitations, see <a
+ * href="../../concepts/joins.html#limitations-cautions" target="_top">Join
+ * Limitations and Cautions</a>.
  * 
  * @param joinTableName  Name of the join table to be created.  Has the same
  *                       naming restrictions as <a
@@ -4533,11 +4691,16 @@ CreateJoinTableResponse& createJoinTable( const std::string& joinTableName,
                                           CreateJoinTableResponse& response_ ) const;
 
 /**
- * The create materialized view request does not create the actual table that
- * will be the toplevel table of the view but instead registers the table name
- * so no other views or tables can be created with that name.  The response
- * contains a a view_id that is used to label the table creation requests
- * (projection, union, group-by, filter, or join) that describes the view.
+ * Initiates the process of creating a materialized view, reserving the view's
+ * name to prevent other views or tables from being created with that name.
+ * <p>
+ * For materialized view details and examples, see <a
+ * href="../../concepts/materialized_views.html" target="_top">Materialized
+ * Views</a>.
+ * <p>
+ * The response contains @a viewId, which is used to tag each subsequent
+ * operation (projection, union, group-by, filter, or join) that will compose
+ * the view.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -4549,11 +4712,16 @@ CreateJoinTableResponse& createJoinTable( const std::string& joinTableName,
 CreateMaterializedViewResponse createMaterializedView( const CreateMaterializedViewRequest& request_ ) const;
 
 /**
- * The create materialized view request does not create the actual table that
- * will be the toplevel table of the view but instead registers the table name
- * so no other views or tables can be created with that name.  The response
- * contains a a view_id that is used to label the table creation requests
- * (projection, union, group-by, filter, or join) that describes the view.
+ * Initiates the process of creating a materialized view, reserving the view's
+ * name to prevent other views or tables from being created with that name.
+ * <p>
+ * For materialized view details and examples, see <a
+ * href="../../concepts/materialized_views.html" target="_top">Materialized
+ * Views</a>.
+ * <p>
+ * The response contains @a viewId, which is used to tag each subsequent
+ * operation (projection, union, group-by, filter, or join) that will compose
+ * the view.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -4569,11 +4737,16 @@ CreateMaterializedViewResponse& createMaterializedView( const CreateMaterialized
                                                         CreateMaterializedViewResponse& response_ ) const;
 
 /**
- * The create materialized view request does not create the actual table that
- * will be the toplevel table of the view but instead registers the table name
- * so no other views or tables can be created with that name.  The response
- * contains a a view_id that is used to label the table creation requests
- * (projection, union, group-by, filter, or join) that describes the view.
+ * Initiates the process of creating a materialized view, reserving the view's
+ * name to prevent other views or tables from being created with that name.
+ * <p>
+ * For materialized view details and examples, see <a
+ * href="../../concepts/materialized_views.html" target="_top">Materialized
+ * Views</a>.
+ * <p>
+ * The response contains @a viewId, which is used to tag each subsequent
+ * operation (projection, union, group-by, filter, or join) that will compose
+ * the view.
  * 
  * @param tableName  Name of the table to be created that is the top-level
  *                   table of the materialized view.
@@ -4639,11 +4812,16 @@ CreateMaterializedViewResponse createMaterializedView( const std::string& tableN
                                                        const std::map<std::string, std::string>& options ) const;
 
 /**
- * The create materialized view request does not create the actual table that
- * will be the toplevel table of the view but instead registers the table name
- * so no other views or tables can be created with that name.  The response
- * contains a a view_id that is used to label the table creation requests
- * (projection, union, group-by, filter, or join) that describes the view.
+ * Initiates the process of creating a materialized view, reserving the view's
+ * name to prevent other views or tables from being created with that name.
+ * <p>
+ * For materialized view details and examples, see <a
+ * href="../../concepts/materialized_views.html" target="_top">Materialized
+ * Views</a>.
+ * <p>
+ * The response contains @a viewId, which is used to tag each subsequent
+ * operation (projection, union, group-by, filter, or join) that will compose
+ * the view.
  * 
  * @param tableName  Name of the table to be created that is the top-level
  *                   table of the materialized view.
@@ -4873,6 +5051,16 @@ CreateProcResponse& createProc( const std::string& procName,
  * target="_top">projection</a> of an existing table. A projection represents a
  * subset of the columns (potentially including derived columns) of a table.
  * <p>
+ * For projection details and examples, see <a
+ * href="../../concepts/projections.html" target="_top">Projections</a>.  For
+ * limitations, see <a
+ * href="../../concepts/projections.html#limitations-and-cautions"
+ * target="_top">Projection Limitations and Cautions</a>.
+ * <p>
+ * <a href="../../concepts/window.html" target="_top">Window functions</a> are
+ * available through this endpoint as well as {@link
+ * #getRecordsByColumnRaw(const GetRecordsByColumnRequest&) const}.
+ * <p>
  * Notes:
  * <p>
  * A moving average can be calculated on a given column using the following
@@ -4908,6 +5096,16 @@ CreateProjectionResponse createProjection( const CreateProjectionRequest& reques
  * Creates a new <a href="../../concepts/projections.html"
  * target="_top">projection</a> of an existing table. A projection represents a
  * subset of the columns (potentially including derived columns) of a table.
+ * <p>
+ * For projection details and examples, see <a
+ * href="../../concepts/projections.html" target="_top">Projections</a>.  For
+ * limitations, see <a
+ * href="../../concepts/projections.html#limitations-and-cautions"
+ * target="_top">Projection Limitations and Cautions</a>.
+ * <p>
+ * <a href="../../concepts/window.html" target="_top">Window functions</a> are
+ * available through this endpoint as well as {@link
+ * #getRecordsByColumnRaw(const GetRecordsByColumnRequest&,RawGetRecordsByColumnResponse&) const}.
  * <p>
  * Notes:
  * <p>
@@ -4948,6 +5146,16 @@ CreateProjectionResponse& createProjection( const CreateProjectionRequest& reque
  * Creates a new <a href="../../concepts/projections.html"
  * target="_top">projection</a> of an existing table. A projection represents a
  * subset of the columns (potentially including derived columns) of a table.
+ * <p>
+ * For projection details and examples, see <a
+ * href="../../concepts/projections.html" target="_top">Projections</a>.  For
+ * limitations, see <a
+ * href="../../concepts/projections.html#limitations-and-cautions"
+ * target="_top">Projection Limitations and Cautions</a>.
+ * <p>
+ * <a href="../../concepts/window.html" target="_top">Window functions</a> are
+ * available through this endpoint as well as {@link
+ * #getRecordsByColumnRaw(const GetRecordsByColumnRequest&) const}.
  * <p>
  * Notes:
  * <p>
@@ -5047,6 +5255,16 @@ CreateProjectionResponse createProjection( const std::string& tableName,
  * Creates a new <a href="../../concepts/projections.html"
  * target="_top">projection</a> of an existing table. A projection represents a
  * subset of the columns (potentially including derived columns) of a table.
+ * <p>
+ * For projection details and examples, see <a
+ * href="../../concepts/projections.html" target="_top">Projections</a>.  For
+ * limitations, see <a
+ * href="../../concepts/projections.html#limitations-and-cautions"
+ * target="_top">Projection Limitations and Cautions</a>.
+ * <p>
+ * <a href="../../concepts/window.html" target="_top">Window functions</a> are
+ * available through this endpoint as well as {@link
+ * #getRecordsByColumnRaw(const GetRecordsByColumnRequest&) const}.
  * <p>
  * Notes:
  * <p>
@@ -5331,9 +5549,10 @@ CreateTableResponse& createTable( const CreateTableRequest& request_,
  *                         <li> gpudb::create_table_foreign_keys:
  *                 Semicolon-separated list of <a
  *                 href="../../concepts/tables.html#foreign-keys"
- *                 target="_top">foreign keys</a>, of the format 'source_column
- *                 references target_table(primary_key_column) [ as
- *                 <foreign_key_name> ]'.
+ *                 target="_top">foreign keys</a>, of the format
+ *                 '(source_column_name [, ...]) references
+ *                 target_table_name(primary_key_column_name [, ...]) [as
+ *                 foreign_key_name]'.
  *                         <li> gpudb::create_table_foreign_shard_key: Foreign
  *                 shard key of the format 'source_column references
  *                 shard_by_column from target_table(primary_key_column)'
@@ -5439,9 +5658,10 @@ CreateTableResponse createTable( const std::string& tableName,
  *                         <li> gpudb::create_table_foreign_keys:
  *                 Semicolon-separated list of <a
  *                 href="../../concepts/tables.html#foreign-keys"
- *                 target="_top">foreign keys</a>, of the format 'source_column
- *                 references target_table(primary_key_column) [ as
- *                 <foreign_key_name> ]'.
+ *                 target="_top">foreign keys</a>, of the format
+ *                 '(source_column_name [, ...]) references
+ *                 target_table_name(primary_key_column_name [, ...]) [as
+ *                 foreign_key_name]'.
  *                         <li> gpudb::create_table_foreign_shard_key: Foreign
  *                 shard key of the format 'source_column references
  *                 shard_by_column from target_table(primary_key_column)'
@@ -6386,14 +6606,34 @@ CreateTypeResponse& createType( const std::string& typeDefinition,
                                 CreateTypeResponse& response_ ) const;
 
 /**
- * Performs a <a href="../../concepts/unions.html" target="_top">union</a>
- * (concatenation) of one or more existing tables or views, the results of
- * which are stored in a new table. It is equivalent to the SQL UNION ALL
- * operator.  Non-charN 'string' and 'bytes' column types cannot be included in
- * a union, neither can columns with the property 'store_only'. Though not
- * explicitly unions, <a href="../../concepts/intersect.html"
- * target="_top">intersect</a> and <a href="../../concepts/except.html"
- * target="_top">except</a> are also available from this endpoint.
+ * Merges data from one or more tables with comparable data types into a new
+ * table.
+ * <p>
+ * The following merges are supported:
+ * <p>
+ * UNION (DISTINCT/ALL) - For data set union details and examples, see <a
+ * href="../../concepts/unions.html" target="_top">Union</a>.  For limitations,
+ * see <a href="../../concepts/unions.html#limitations-and-cautions"
+ * target="_top">Union Limitations and Cautions</a>.
+ * <p>
+ * INTERSECT (DISTINCT) - For data set intersection details and examples, see
+ * <a href="../../concepts/intersect.html" target="_top">Intersect</a>.  For
+ * limitations, see <a href="../../concepts/intersect.html#limitations"
+ * target="_top">Intersect Limitations</a>.
+ * <p>
+ * EXCEPT (DISTINCT) - For data set subtraction details and examples, see <a
+ * href="../../concepts/except.html" target="_top">Except</a>.  For
+ * limitations, see <a href="../../concepts/except.html#limitations"
+ * target="_top">Except Limitations</a>.
+ * <p>
+ * MERGE VIEWS - For a given set of <a
+ * href="../../concepts/filtered_views.html" target="_top">filtered views</a>
+ * on a single table, creates a single filtered view containing all of the
+ * unique records across all of the given filtered data sets.
+ * <p>
+ * Non-charN 'string' and 'bytes' column types cannot be merged, nor can
+ * columns marked as <a href="../../concepts/types.html#data-handling"
+ * target="_top">store-only</a>.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -6405,14 +6645,34 @@ CreateTypeResponse& createType( const std::string& typeDefinition,
 CreateUnionResponse createUnion( const CreateUnionRequest& request_ ) const;
 
 /**
- * Performs a <a href="../../concepts/unions.html" target="_top">union</a>
- * (concatenation) of one or more existing tables or views, the results of
- * which are stored in a new table. It is equivalent to the SQL UNION ALL
- * operator.  Non-charN 'string' and 'bytes' column types cannot be included in
- * a union, neither can columns with the property 'store_only'. Though not
- * explicitly unions, <a href="../../concepts/intersect.html"
- * target="_top">intersect</a> and <a href="../../concepts/except.html"
- * target="_top">except</a> are also available from this endpoint.
+ * Merges data from one or more tables with comparable data types into a new
+ * table.
+ * <p>
+ * The following merges are supported:
+ * <p>
+ * UNION (DISTINCT/ALL) - For data set union details and examples, see <a
+ * href="../../concepts/unions.html" target="_top">Union</a>.  For limitations,
+ * see <a href="../../concepts/unions.html#limitations-and-cautions"
+ * target="_top">Union Limitations and Cautions</a>.
+ * <p>
+ * INTERSECT (DISTINCT) - For data set intersection details and examples, see
+ * <a href="../../concepts/intersect.html" target="_top">Intersect</a>.  For
+ * limitations, see <a href="../../concepts/intersect.html#limitations"
+ * target="_top">Intersect Limitations</a>.
+ * <p>
+ * EXCEPT (DISTINCT) - For data set subtraction details and examples, see <a
+ * href="../../concepts/except.html" target="_top">Except</a>.  For
+ * limitations, see <a href="../../concepts/except.html#limitations"
+ * target="_top">Except Limitations</a>.
+ * <p>
+ * MERGE VIEWS - For a given set of <a
+ * href="../../concepts/filtered_views.html" target="_top">filtered views</a>
+ * on a single table, creates a single filtered view containing all of the
+ * unique records across all of the given filtered data sets.
+ * <p>
+ * Non-charN 'string' and 'bytes' column types cannot be merged, nor can
+ * columns marked as <a href="../../concepts/types.html#data-handling"
+ * target="_top">store-only</a>.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -6428,49 +6688,69 @@ CreateUnionResponse& createUnion( const CreateUnionRequest& request_,
                                   CreateUnionResponse& response_ ) const;
 
 /**
- * Performs a <a href="../../concepts/unions.html" target="_top">union</a>
- * (concatenation) of one or more existing tables or views, the results of
- * which are stored in a new table. It is equivalent to the SQL UNION ALL
- * operator.  Non-charN 'string' and 'bytes' column types cannot be included in
- * a union, neither can columns with the property 'store_only'. Though not
- * explicitly unions, <a href="../../concepts/intersect.html"
- * target="_top">intersect</a> and <a href="../../concepts/except.html"
- * target="_top">except</a> are also available from this endpoint.
+ * Merges data from one or more tables with comparable data types into a new
+ * table.
+ * <p>
+ * The following merges are supported:
+ * <p>
+ * UNION (DISTINCT/ALL) - For data set union details and examples, see <a
+ * href="../../concepts/unions.html" target="_top">Union</a>.  For limitations,
+ * see <a href="../../concepts/unions.html#limitations-and-cautions"
+ * target="_top">Union Limitations and Cautions</a>.
+ * <p>
+ * INTERSECT (DISTINCT) - For data set intersection details and examples, see
+ * <a href="../../concepts/intersect.html" target="_top">Intersect</a>.  For
+ * limitations, see <a href="../../concepts/intersect.html#limitations"
+ * target="_top">Intersect Limitations</a>.
+ * <p>
+ * EXCEPT (DISTINCT) - For data set subtraction details and examples, see <a
+ * href="../../concepts/except.html" target="_top">Except</a>.  For
+ * limitations, see <a href="../../concepts/except.html#limitations"
+ * target="_top">Except Limitations</a>.
+ * <p>
+ * MERGE VIEWS - For a given set of <a
+ * href="../../concepts/filtered_views.html" target="_top">filtered views</a>
+ * on a single table, creates a single filtered view containing all of the
+ * unique records across all of the given filtered data sets.
+ * <p>
+ * Non-charN 'string' and 'bytes' column types cannot be merged, nor can
+ * columns marked as <a href="../../concepts/types.html#data-handling"
+ * target="_top">store-only</a>.
  * 
  * @param tableName  Name of the table to be created. Has the same naming
  *                   restrictions as <a href="../../concepts/tables.html"
  *                   target="_top">tables</a>.
- * @param tableNames  The list of table names making up the union. Must contain
- *                    the names of one or more existing tables.
+ * @param tableNames  The list of table names to merge. Must contain the names
+ *                    of one or more existing tables.
  * @param inputColumnNames  The list of columns from each of the corresponding
  *                          input tables.
  * @param outputColumnNames  The list of names of the columns to be stored in
- *                           the union.
+ *                           the output table.
  * @param options  Optional parameters.
  *                 <ul>
  *                         <li> gpudb::create_union_collection_name: Name of a
- *                 collection which is to contain the union. If the collection
- *                 provided is non-existent, the collection will be
- *                 automatically created. If empty, then the union will be a
+ *                 collection which is to contain the output table. If the
+ *                 collection provided is non-existent, the collection will be
+ *                 automatically created. If empty, the output table will be a
  *                 top-level table.
- *                         <li> gpudb::create_union_materialize_on_gpu: If
- *                 'true' then the columns of the union will be cached on the
- *                 GPU.
+ *                         <li> gpudb::create_union_materialize_on_gpu: If @a
+ *                 true, then the columns of the output table will be cached on
+ *                 the GPU.
  *                 <ul>
  *                         <li> gpudb::create_union_true
  *                         <li> gpudb::create_union_false
  *                 </ul>
  *                 The default value is gpudb::create_union_false.
- *                         <li> gpudb::create_union_mode: If 'merge_views' then
- *                 this operation will merge (i.e. union) the provided views.
- *                 All 'table_names' must be views from the same underlying
- *                 base table.
+ *                         <li> gpudb::create_union_mode: If @a merge_views,
+ *                 then this operation will merge the provided views. All @a
+ *                 tableNames must be views from the same underlying base
+ *                 table.
  *                 <ul>
  *                         <li> gpudb::create_union_union_all: Retains all rows
  *                 from the specified tables.
  *                         <li> gpudb::create_union_union: Retains all unique
- *                 rows from the specified tables (synonym for
- *                 'union_distinct').
+ *                 rows from the specified tables (synonym for @a
+ *                 union_distinct).
  *                         <li> gpudb::create_union_union_distinct: Retains all
  *                 unique rows from the specified tables.
  *                         <li> gpudb::create_union_except: Retains all unique
@@ -6485,9 +6765,9 @@ CreateUnionResponse& createUnion( const CreateUnionRequest& request_,
  *                 inputColumnNames AND @a outputColumnNames must be empty. The
  *                 resulting view would match the results of a SQL OR
  *                 operation, e.g., if filter 1 creates a view using the
- *                 expression 'x = 10' and filter 2 creates a view using the
+ *                 expression 'x = 20' and filter 2 creates a view using the
  *                 expression 'x <= 10', then the merge views operation creates
- *                 a new view using the expression 'x = 10 OR x <= 10'.
+ *                 a new view using the expression 'x = 20 OR x <= 10'.
  *                 </ul>
  *                 The default value is gpudb::create_union_union_all.
  *                         <li> gpudb::create_union_chunk_size: Indicates the
@@ -6496,17 +6776,17 @@ CreateUnionResponse& createUnion( const CreateUnionRequest& request_,
  *                 href="../../concepts/ttl.html" target="_top">TTL</a> of the
  *                 table specified in @a tableName.
  *                         <li> gpudb::create_union_persist: If @a true, then
- *                 the union specified in @a tableName will be persisted and
+ *                 the table specified in @a tableName will be persisted and
  *                 will not expire unless a @a ttl is specified.   If @a false,
- *                 then the union will be an in-memory table and will expire
+ *                 then the table will be an in-memory table and will expire
  *                 unless a @a ttl is specified otherwise.
  *                 <ul>
  *                         <li> gpudb::create_union_true
  *                         <li> gpudb::create_union_false
  *                 </ul>
  *                 The default value is gpudb::create_union_false.
- *                         <li> gpudb::create_union_view_id: view this union
- *                 table is part of
+ *                         <li> gpudb::create_union_view_id: view the output
+ *                 table will be a part of
  *                 </ul>
  * 
  * @return Response object containing the result of the operation.
@@ -6520,49 +6800,69 @@ CreateUnionResponse createUnion( const std::string& tableName,
                                  const std::map<std::string, std::string>& options ) const;
 
 /**
- * Performs a <a href="../../concepts/unions.html" target="_top">union</a>
- * (concatenation) of one or more existing tables or views, the results of
- * which are stored in a new table. It is equivalent to the SQL UNION ALL
- * operator.  Non-charN 'string' and 'bytes' column types cannot be included in
- * a union, neither can columns with the property 'store_only'. Though not
- * explicitly unions, <a href="../../concepts/intersect.html"
- * target="_top">intersect</a> and <a href="../../concepts/except.html"
- * target="_top">except</a> are also available from this endpoint.
+ * Merges data from one or more tables with comparable data types into a new
+ * table.
+ * <p>
+ * The following merges are supported:
+ * <p>
+ * UNION (DISTINCT/ALL) - For data set union details and examples, see <a
+ * href="../../concepts/unions.html" target="_top">Union</a>.  For limitations,
+ * see <a href="../../concepts/unions.html#limitations-and-cautions"
+ * target="_top">Union Limitations and Cautions</a>.
+ * <p>
+ * INTERSECT (DISTINCT) - For data set intersection details and examples, see
+ * <a href="../../concepts/intersect.html" target="_top">Intersect</a>.  For
+ * limitations, see <a href="../../concepts/intersect.html#limitations"
+ * target="_top">Intersect Limitations</a>.
+ * <p>
+ * EXCEPT (DISTINCT) - For data set subtraction details and examples, see <a
+ * href="../../concepts/except.html" target="_top">Except</a>.  For
+ * limitations, see <a href="../../concepts/except.html#limitations"
+ * target="_top">Except Limitations</a>.
+ * <p>
+ * MERGE VIEWS - For a given set of <a
+ * href="../../concepts/filtered_views.html" target="_top">filtered views</a>
+ * on a single table, creates a single filtered view containing all of the
+ * unique records across all of the given filtered data sets.
+ * <p>
+ * Non-charN 'string' and 'bytes' column types cannot be merged, nor can
+ * columns marked as <a href="../../concepts/types.html#data-handling"
+ * target="_top">store-only</a>.
  * 
  * @param tableName  Name of the table to be created. Has the same naming
  *                   restrictions as <a href="../../concepts/tables.html"
  *                   target="_top">tables</a>.
- * @param tableNames  The list of table names making up the union. Must contain
- *                    the names of one or more existing tables.
+ * @param tableNames  The list of table names to merge. Must contain the names
+ *                    of one or more existing tables.
  * @param inputColumnNames  The list of columns from each of the corresponding
  *                          input tables.
  * @param outputColumnNames  The list of names of the columns to be stored in
- *                           the union.
+ *                           the output table.
  * @param options  Optional parameters.
  *                 <ul>
  *                         <li> gpudb::create_union_collection_name: Name of a
- *                 collection which is to contain the union. If the collection
- *                 provided is non-existent, the collection will be
- *                 automatically created. If empty, then the union will be a
+ *                 collection which is to contain the output table. If the
+ *                 collection provided is non-existent, the collection will be
+ *                 automatically created. If empty, the output table will be a
  *                 top-level table.
- *                         <li> gpudb::create_union_materialize_on_gpu: If
- *                 'true' then the columns of the union will be cached on the
- *                 GPU.
+ *                         <li> gpudb::create_union_materialize_on_gpu: If @a
+ *                 true, then the columns of the output table will be cached on
+ *                 the GPU.
  *                 <ul>
  *                         <li> gpudb::create_union_true
  *                         <li> gpudb::create_union_false
  *                 </ul>
  *                 The default value is gpudb::create_union_false.
- *                         <li> gpudb::create_union_mode: If 'merge_views' then
- *                 this operation will merge (i.e. union) the provided views.
- *                 All 'table_names' must be views from the same underlying
- *                 base table.
+ *                         <li> gpudb::create_union_mode: If @a merge_views,
+ *                 then this operation will merge the provided views. All @a
+ *                 tableNames must be views from the same underlying base
+ *                 table.
  *                 <ul>
  *                         <li> gpudb::create_union_union_all: Retains all rows
  *                 from the specified tables.
  *                         <li> gpudb::create_union_union: Retains all unique
- *                 rows from the specified tables (synonym for
- *                 'union_distinct').
+ *                 rows from the specified tables (synonym for @a
+ *                 union_distinct).
  *                         <li> gpudb::create_union_union_distinct: Retains all
  *                 unique rows from the specified tables.
  *                         <li> gpudb::create_union_except: Retains all unique
@@ -6577,9 +6877,9 @@ CreateUnionResponse createUnion( const std::string& tableName,
  *                 inputColumnNames AND @a outputColumnNames must be empty. The
  *                 resulting view would match the results of a SQL OR
  *                 operation, e.g., if filter 1 creates a view using the
- *                 expression 'x = 10' and filter 2 creates a view using the
+ *                 expression 'x = 20' and filter 2 creates a view using the
  *                 expression 'x <= 10', then the merge views operation creates
- *                 a new view using the expression 'x = 10 OR x <= 10'.
+ *                 a new view using the expression 'x = 20 OR x <= 10'.
  *                 </ul>
  *                 The default value is gpudb::create_union_union_all.
  *                         <li> gpudb::create_union_chunk_size: Indicates the
@@ -6588,17 +6888,17 @@ CreateUnionResponse createUnion( const std::string& tableName,
  *                 href="../../concepts/ttl.html" target="_top">TTL</a> of the
  *                 table specified in @a tableName.
  *                         <li> gpudb::create_union_persist: If @a true, then
- *                 the union specified in @a tableName will be persisted and
+ *                 the table specified in @a tableName will be persisted and
  *                 will not expire unless a @a ttl is specified.   If @a false,
- *                 then the union will be an in-memory table and will expire
+ *                 then the table will be an in-memory table and will expire
  *                 unless a @a ttl is specified otherwise.
  *                 <ul>
  *                         <li> gpudb::create_union_true
  *                         <li> gpudb::create_union_false
  *                 </ul>
  *                 The default value is gpudb::create_union_false.
- *                         <li> gpudb::create_union_view_id: view this union
- *                 table is part of
+ *                         <li> gpudb::create_union_view_id: view the output
+ *                 table will be a part of
  *                 </ul>
  * @param[out] response_  Response object containing the results of the
  *                        operation.
@@ -10047,6 +10347,10 @@ GetRecordsResponse<TResponse>& getRecords( const Type& type_,
  * returned. This endpoint supports pagination with the @a offset and @a limit
  * parameters.
  * <p>
+ * <a href="../../concepts/window.html" target="_top">Window functions</a> are
+ * available through this endpoint as well as {@link
+ * #createProjection(const CreateProjectionRequest&) const}.
+ * <p>
  * When using pagination, if the table (or the underlying table in the case of
  * a view) is modified (records are inserted, updated, or deleted) during a
  * call to the endpoint, the records or values retrieved may differ between
@@ -10071,6 +10375,10 @@ RawGetRecordsByColumnResponse getRecordsByColumnRaw( const GetRecordsByColumnReq
  * of column name to the array of values as well as the column data type are
  * returned. This endpoint supports pagination with the @a offset and @a limit
  * parameters.
+ * <p>
+ * <a href="../../concepts/window.html" target="_top">Window functions</a> are
+ * available through this endpoint as well as {@link
+ * #createProjection(const CreateProjectionRequest&,CreateProjectionResponse&) const}.
  * <p>
  * When using pagination, if the table (or the underlying table in the case of
  * a view) is modified (records are inserted, updated, or deleted) during a
@@ -10101,6 +10409,10 @@ RawGetRecordsByColumnResponse& getRecordsByColumnRaw( const GetRecordsByColumnRe
  * returned. This endpoint supports pagination with the @a offset and @a limit
  * parameters.
  * <p>
+ * <a href="../../concepts/window.html" target="_top">Window functions</a> are
+ * available through this endpoint as well as {@link
+ * #createProjection(const CreateProjectionRequest&) const}.
+ * <p>
  * When using pagination, if the table (or the underlying table in the case of
  * a view) is modified (records are inserted, updated, or deleted) during a
  * call to the endpoint, the records or values retrieved may differ between
@@ -10125,6 +10437,10 @@ GetRecordsByColumnResponse getRecordsByColumn( const GetRecordsByColumnRequest& 
  * of column name to the array of values as well as the column data type are
  * returned. This endpoint supports pagination with the @a offset and @a limit
  * parameters.
+ * <p>
+ * <a href="../../concepts/window.html" target="_top">Window functions</a> are
+ * available through this endpoint as well as {@link
+ * #createProjection(const CreateProjectionRequest&) const}.
  * <p>
  * When using pagination, if the table (or the underlying table in the case of
  * a view) is modified (records are inserted, updated, or deleted) during a
@@ -10154,6 +10470,10 @@ GetRecordsByColumnResponse& getRecordsByColumn( const GetRecordsByColumnRequest&
  * of column name to the array of values as well as the column data type are
  * returned. This endpoint supports pagination with the @a offset and @a limit
  * parameters.
+ * <p>
+ * <a href="../../concepts/window.html" target="_top">Window functions</a> are
+ * available through this endpoint as well as {@link
+ * #createProjection(const std::string&,const std::string&,const std::vector<std::string>&,const std::map<std::string, std::string>&) const}.
  * <p>
  * When using pagination, if the table (or the underlying table in the case of
  * a view) is modified (records are inserted, updated, or deleted) during a
@@ -10215,6 +10535,10 @@ GetRecordsByColumnResponse getRecordsByColumn( const std::string& tableName,
  * of column name to the array of values as well as the column data type are
  * returned. This endpoint supports pagination with the @a offset and @a limit
  * parameters.
+ * <p>
+ * <a href="../../concepts/window.html" target="_top">Window functions</a> are
+ * available through this endpoint as well as {@link
+ * #createProjection(const std::string&,const std::string&,const std::vector<std::string>&,const std::map<std::string, std::string>&) const}.
  * <p>
  * When using pagination, if the table (or the underlying table in the case of
  * a view) is modified (records are inserted, updated, or deleted) during a
@@ -13188,13 +13512,18 @@ LockTableResponse& lockTable( const std::string& tableName,
 /**
  * Create a new empty result table (specified by @a tableName), and insert all
  * records from source tables (specified by @a sourceTableNames) based on the
- * field mapping information (specified by @a fieldMaps). The field map
- * (specified by @a fieldMaps) holds the user specified maps of target table
- * column names to source table columns. The array of @a fieldMaps must match
- * one-to-one with the @a sourceTableNames, e.g., there's a map present in @a
- * fieldMaps for each table listed in @a sourceTableNames. Read more about
- * Merge Records <a href="../../concepts/merge_records.html"
- * target="_top">here</a>.
+ * field mapping information (specified by @a fieldMaps).
+ * <p>
+ * For merge records details and examples, see <a
+ * href="../../concepts/merge_records.html" target="_top">Merge Records</a>.
+ * For limitations, see <a
+ * href="../../concepts/merge_records.html#limitations-and-cautions"
+ * target="_top">Merge Records Limitations and Cautions</a>.
+
+ * The field map (specified by @a fieldMaps) holds the user-specified maps of
+ * target table column names to source table columns. The array of @a fieldMaps
+ * must match one-to-one with the @a sourceTableNames, e.g., there's a map
+ * present in @a fieldMaps for each table listed in @a sourceTableNames.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -13208,13 +13537,18 @@ MergeRecordsResponse mergeRecords( const MergeRecordsRequest& request_ ) const;
 /**
  * Create a new empty result table (specified by @a tableName), and insert all
  * records from source tables (specified by @a sourceTableNames) based on the
- * field mapping information (specified by @a fieldMaps). The field map
- * (specified by @a fieldMaps) holds the user specified maps of target table
- * column names to source table columns. The array of @a fieldMaps must match
- * one-to-one with the @a sourceTableNames, e.g., there's a map present in @a
- * fieldMaps for each table listed in @a sourceTableNames. Read more about
- * Merge Records <a href="../../concepts/merge_records.html"
- * target="_top">here</a>.
+ * field mapping information (specified by @a fieldMaps).
+ * <p>
+ * For merge records details and examples, see <a
+ * href="../../concepts/merge_records.html" target="_top">Merge Records</a>.
+ * For limitations, see <a
+ * href="../../concepts/merge_records.html#limitations-and-cautions"
+ * target="_top">Merge Records Limitations and Cautions</a>.
+
+ * The field map (specified by @a fieldMaps) holds the user-specified maps of
+ * target table column names to source table columns. The array of @a fieldMaps
+ * must match one-to-one with the @a sourceTableNames, e.g., there's a map
+ * present in @a fieldMaps for each table listed in @a sourceTableNames.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -13232,13 +13566,18 @@ MergeRecordsResponse& mergeRecords( const MergeRecordsRequest& request_,
 /**
  * Create a new empty result table (specified by @a tableName), and insert all
  * records from source tables (specified by @a sourceTableNames) based on the
- * field mapping information (specified by @a fieldMaps). The field map
- * (specified by @a fieldMaps) holds the user specified maps of target table
- * column names to source table columns. The array of @a fieldMaps must match
- * one-to-one with the @a sourceTableNames, e.g., there's a map present in @a
- * fieldMaps for each table listed in @a sourceTableNames. Read more about
- * Merge Records <a href="../../concepts/merge_records.html"
- * target="_top">here</a>.
+ * field mapping information (specified by @a fieldMaps).
+ * <p>
+ * For merge records details and examples, see <a
+ * href="../../concepts/merge_records.html" target="_top">Merge Records</a>.
+ * For limitations, see <a
+ * href="../../concepts/merge_records.html#limitations-and-cautions"
+ * target="_top">Merge Records Limitations and Cautions</a>.
+
+ * The field map (specified by @a fieldMaps) holds the user-specified maps of
+ * target table column names to source table columns. The array of @a fieldMaps
+ * must match one-to-one with the @a sourceTableNames, e.g., there's a map
+ * present in @a fieldMaps for each table listed in @a sourceTableNames.
  * 
  * @param tableName  The new result table name for the records to be merged.
  *                   Must NOT be an existing table.
@@ -13249,10 +13588,12 @@ MergeRecordsResponse& mergeRecords( const MergeRecordsRequest& request_,
  *                   sourceTableNames being merged into the target table
  *                   specified by @a tableName.  Each mapping contains the
  *                   target column names (as keys) that the data in the mapped
- *                   source columns (as values) will be merged into.  All of
- *                   the source columns being merged into a given target column
- *                   must match in type, as that type will determine the type
- *                   of the new target column.
+ *                   source columns or column <a
+ *                   href="../../concepts/expressions.html"
+ *                   target="_top">expressions</a> (as values) will be merged
+ *                   into.  All of the source columns being merged into a given
+ *                   target column must match in type, as that type will
+ *                   determine the type of the new target column.
  * @param options  Optional parameters.
  *                 <ul>
  *                         <li> gpudb::merge_records_collection_name: Name of a
@@ -13280,6 +13621,8 @@ MergeRecordsResponse& mergeRecords( const MergeRecordsRequest& request_,
  *                         <li> gpudb::merge_records_chunk_size: Indicates the
  *                 chunk size to be used for the merged table specified in @a
  *                 tableName.
+ *                         <li> gpudb::merge_records_view_id: view this result
+ *                 table is part of
  *                 </ul>
  * 
  * @return Response object containing the result of the operation.
@@ -13294,13 +13637,18 @@ MergeRecordsResponse mergeRecords( const std::string& tableName,
 /**
  * Create a new empty result table (specified by @a tableName), and insert all
  * records from source tables (specified by @a sourceTableNames) based on the
- * field mapping information (specified by @a fieldMaps). The field map
- * (specified by @a fieldMaps) holds the user specified maps of target table
- * column names to source table columns. The array of @a fieldMaps must match
- * one-to-one with the @a sourceTableNames, e.g., there's a map present in @a
- * fieldMaps for each table listed in @a sourceTableNames. Read more about
- * Merge Records <a href="../../concepts/merge_records.html"
- * target="_top">here</a>.
+ * field mapping information (specified by @a fieldMaps).
+ * <p>
+ * For merge records details and examples, see <a
+ * href="../../concepts/merge_records.html" target="_top">Merge Records</a>.
+ * For limitations, see <a
+ * href="../../concepts/merge_records.html#limitations-and-cautions"
+ * target="_top">Merge Records Limitations and Cautions</a>.
+
+ * The field map (specified by @a fieldMaps) holds the user-specified maps of
+ * target table column names to source table columns. The array of @a fieldMaps
+ * must match one-to-one with the @a sourceTableNames, e.g., there's a map
+ * present in @a fieldMaps for each table listed in @a sourceTableNames.
  * 
  * @param tableName  The new result table name for the records to be merged.
  *                   Must NOT be an existing table.
@@ -13311,10 +13659,12 @@ MergeRecordsResponse mergeRecords( const std::string& tableName,
  *                   sourceTableNames being merged into the target table
  *                   specified by @a tableName.  Each mapping contains the
  *                   target column names (as keys) that the data in the mapped
- *                   source columns (as values) will be merged into.  All of
- *                   the source columns being merged into a given target column
- *                   must match in type, as that type will determine the type
- *                   of the new target column.
+ *                   source columns or column <a
+ *                   href="../../concepts/expressions.html"
+ *                   target="_top">expressions</a> (as values) will be merged
+ *                   into.  All of the source columns being merged into a given
+ *                   target column must match in type, as that type will
+ *                   determine the type of the new target column.
  * @param options  Optional parameters.
  *                 <ul>
  *                         <li> gpudb::merge_records_collection_name: Name of a
@@ -13342,6 +13692,8 @@ MergeRecordsResponse mergeRecords( const std::string& tableName,
  *                         <li> gpudb::merge_records_chunk_size: Indicates the
  *                 chunk size to be used for the merged table specified in @a
  *                 tableName.
+ *                         <li> gpudb::merge_records_view_id: view this result
+ *                 table is part of
  *                 </ul>
  * @param[out] response_  Response object containing the results of the
  *                        operation.
@@ -13914,66 +14266,6 @@ ShowSecurityResponse showSecurity( const std::vector<std::string>& names,
 ShowSecurityResponse& showSecurity( const std::vector<std::string>& names,
                                     const std::map<std::string, std::string>& options,
                                     ShowSecurityResponse& response_ ) const;
-
-/**
- * Retrieves the collected column statistics for the specified table.
- * 
- * @param[in] request_  Request object containing the parameters for the
- *                      operation.
- * 
- * @return Response object containing the result of the operation.
- * 
- */
-
-ShowStatisticsResponse showStatistics( const ShowStatisticsRequest& request_ ) const;
-
-/**
- * Retrieves the collected column statistics for the specified table.
- * 
- * @param[in] request_  Request object containing the parameters for the
- *                      operation.
- * @param[out] response_  Response object containing the results of the
- *                        operation.
- * 
- * @return Response object containing the result of the operation (initially
- *         passed in by reference).
- * 
- */
-
-ShowStatisticsResponse& showStatistics( const ShowStatisticsRequest& request_,
-                                        ShowStatisticsResponse& response_ ) const;
-
-/**
- * Retrieves the collected column statistics for the specified table.
- * 
- * @param tableNames  Tables whose metadata will be fetched. All provided
- *                    tables must exist, or an error is returned.
- * @param options  Optional parameters.
- * 
- * @return Response object containing the result of the operation.
- * 
- */
-
-ShowStatisticsResponse showStatistics( const std::vector<std::string>& tableNames,
-                                       const std::map<std::string, std::string>& options ) const;
-
-/**
- * Retrieves the collected column statistics for the specified table.
- * 
- * @param tableNames  Tables whose metadata will be fetched. All provided
- *                    tables must exist, or an error is returned.
- * @param options  Optional parameters.
- * @param[out] response_  Response object containing the results of the
- *                        operation.
- * 
- * @return Response object containing the result of the operation (initially
- *         passed in by reference).
- * 
- */
-
-ShowStatisticsResponse& showStatistics( const std::vector<std::string>& tableNames,
-                                        const std::map<std::string, std::string>& options,
-                                        ShowStatisticsResponse& response_ ) const;
 
 /**
  * Returns server configuration and version related information to the caller.

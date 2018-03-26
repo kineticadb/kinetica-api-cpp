@@ -44,11 +44,15 @@ namespace gpudb
          *                              from. Must be an existing table name.
          * @param[in] fieldMap_  Contains the mapping of column names from the
          *                       target table (specified by @a tableName) as
-         *                       the keys, and corresponding column names from
-         *                       the source table (specified by @a
+         *                       the keys, and corresponding column names or
+         *                       expressions (e.g., 'col_name+1') from the
+         *                       source table (specified by @a
          *                       sourceTableName). Must be existing column
          *                       names in source table and target table, and
-         *                       their types must be matched.
+         *                       their types must be matched. For details on
+         *                       using expressions, see <a
+         *                       href="../../concepts/expressions.html"
+         *                       target="_top">Expressions</a>.
          * @param[in] options_  Optional parameters.
          *                      <ul>
          *                              <li> gpudb::append_records_offset: A

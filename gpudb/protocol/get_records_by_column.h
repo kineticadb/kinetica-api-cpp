@@ -20,6 +20,10 @@ namespace gpudb
      * type are returned. This endpoint supports pagination with the @a offset
      * and @a limit parameters.
      * <p>
+     * <a href="../../concepts/window.html" target="_top">Window functions</a>
+     * are available through this endpoint as well as {@link
+     * #createProjection(const CreateProjectionRequest&) const}.
+     * <p>
      * When using pagination, if the table (or the underlying table in the case
      * of a view) is modified (records are inserted, updated, or deleted)
      * during a call to the endpoint, the records or values retrieved may
@@ -267,6 +271,10 @@ namespace gpudb
      * type are returned. This endpoint supports pagination with the @a offset
      * and @a limit parameters.
      * <p>
+     * <a href="../../concepts/window.html" target="_top">Window functions</a>
+     * are available through this endpoint as well as {@link
+     * #createProjection(const CreateProjectionRequest&) const}.
+     * <p>
      * When using pagination, if the table (or the underlying table in the case
      * of a view) is modified (records are inserted, updated, or deleted)
      * during a call to the endpoint, the records or values retrieved may
@@ -380,6 +388,10 @@ namespace gpudb
      * Maps of column name to the array of values as well as the column data
      * type are returned. This endpoint supports pagination with the @a offset
      * and @a limit parameters.
+     * <p>
+     * <a href="../../concepts/window.html" target="_top">Window functions</a>
+     * are available through this endpoint as well as {@link
+     * #createProjection(const CreateProjectionRequest&) const}.
      * <p>
      * When using pagination, if the table (or the underlying table in the case
      * of a view) is modified (records are inserted, updated, or deleted)

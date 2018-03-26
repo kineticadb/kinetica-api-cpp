@@ -36,17 +36,22 @@ namespace gpudb
     extern const std::string aggregate_group_by_binary;
     extern const std::string aggregate_group_by_chunk_size;
     extern const std::string aggregate_group_by_collection_name;
+    extern const std::string aggregate_group_by_cube;
     extern const std::string aggregate_group_by_descending;
     extern const std::string aggregate_group_by_expression;
     extern const std::string aggregate_group_by_false;
+    extern const std::string aggregate_group_by_grouping_sets;
     extern const std::string aggregate_group_by_having;
     extern const std::string aggregate_group_by_json;
     extern const std::string aggregate_group_by_key;
     extern const std::string aggregate_group_by_materialize_on_gpu;
+    extern const std::string aggregate_group_by_pivot;
+    extern const std::string aggregate_group_by_pivot_values;
     extern const std::string aggregate_group_by_result_table;
     extern const std::string aggregate_group_by_result_table_force_replicated;
     extern const std::string aggregate_group_by_result_table_generate_pk;
     extern const std::string aggregate_group_by_result_table_persist;
+    extern const std::string aggregate_group_by_rollup;
     extern const std::string aggregate_group_by_sort_by;
     extern const std::string aggregate_group_by_sort_order;
     extern const std::string aggregate_group_by_true;
@@ -117,11 +122,13 @@ namespace gpudb
     extern const std::string aggregate_unpivot_false;
     extern const std::string aggregate_unpivot_json;
     extern const std::string aggregate_unpivot_limit;
+    extern const std::string aggregate_unpivot_materialize_on_gpu;
     extern const std::string aggregate_unpivot_order_by;
     extern const std::string aggregate_unpivot_result_table;
     extern const std::string aggregate_unpivot_result_table_persist;
     extern const std::string aggregate_unpivot_true;
     extern const std::string aggregate_unpivot_ttl;
+    extern const std::string aggregate_unpivot_view_id;
 
     // Keywords for /alter/system/properties request
     extern const std::string alter_system_properties_audit_body;
@@ -262,6 +269,7 @@ namespace gpudb
     extern const std::string create_table_is_filter_view;
     extern const std::string create_table_is_group_by;
     extern const std::string create_table_is_join;
+    extern const std::string create_table_is_merge;
     extern const std::string create_table_is_other_view;
     extern const std::string create_table_is_projection;
     extern const std::string create_table_is_replicated;
@@ -269,6 +277,7 @@ namespace gpudb
     extern const std::string create_table_is_table;
     extern const std::string create_table_is_union;
     extern const std::string create_table_is_unique;
+    extern const std::string create_table_is_unpivot;
     extern const std::string create_table_no_error_if_exists;
     extern const std::string create_table_true;
     extern const std::string create_table_ttl;
@@ -484,6 +493,7 @@ namespace gpudb
     extern const std::string merge_records_is_replicated;
     extern const std::string merge_records_true;
     extern const std::string merge_records_ttl;
+    extern const std::string merge_records_view_id;
 
     // Keywords for /revoke/permission/system request
     extern const std::string revoke_permission_system_system_admin;

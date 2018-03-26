@@ -133,14 +133,14 @@ namespace gpudb
          *                     gpudb::alter_table_create_foreign_key: Creates a
          *                     <a href="../../concepts/tables.html#foreign-key"
          *                     target="_top">foreign key</a> using the format
-         *                     'source_column references
-         *                     target_table(primary_key_column) [ as
-         *                     <foreign_key_name> ]'.
+         *                     '(source_column_name [, ...]) references
+         *                     target_table_name(primary_key_column_name [,
+         *                     ...]) [as foreign_key_name]'.
          *                             <li>
          *                     gpudb::alter_table_delete_foreign_key: Deletes a
          *                     <a href="../../concepts/tables.html#foreign-key"
          *                     target="_top">foreign key</a>.  The @a value
-         *                     should be the <foreign_key_name> specified when
+         *                     should be the foreign_key_name specified when
          *                     creating the key or the complete string used to
          *                     define it.
          *                             <li>
@@ -153,13 +153,13 @@ namespace gpudb
          *                             <li> gpudb::alter_table_refresh: Replay
          *                     all the table creation commands required to
          *                     create this view. Endpoints supported are
-         *                     filter, create_join_table, create_projection,
-         *                     create_union, aggregate_group_by, and
-         *                     aggregate_unique.
+         *                     /filter, /create/jointable, /create/projection,
+         *                     /create/union, /aggregate/groupby, and
+         *                     /aggregate/unique.
          *                             <li>
          *                     gpudb::alter_table_set_refresh_method: Set the
          *                     method by which this view is refreshed - one of
-         *                     manual, periodic, on_change, on_query.
+         *                     'manual', 'periodic', 'on_change', 'on_query'.
          *                             <li>
          *                     gpudb::alter_table_set_refresh_start_time: Set
          *                     the time to start periodic refreshes to datetime
@@ -168,9 +168,9 @@ namespace gpudb
          *                     refresh_start_time + N*refresh_period
          *                             <li>
          *                     gpudb::alter_table_set_refresh_period: Set the
-         *                     time interval at which to refresh this view -
-         *                     set refresh method to periodic if not alreay
-         *                     set.
+         *                     time interval in seconds at which to refresh
+         *                     this view - sets the refresh method to periodic
+         *                     if not alreay set.
          *                     </ul>
          * @param[in] value_  The value of the modification. May be a column
          *                    name, 'true' or 'false', a TTL, or the global
