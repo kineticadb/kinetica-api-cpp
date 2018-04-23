@@ -66,6 +66,15 @@ namespace gpudb
          *                   rectangular box. Must be greater than or equal to
          *                   @a minY.
          * @param[in] options_  Optional parameters.
+         *                      <ul>
+         *                              <li>
+         *                      gpudb::filter_by_box_geometry_collection_name:
+         *                      Name of a collection which is to contain the
+         *                      newly created view. If the collection provided
+         *                      is non-existent, the collection will be
+         *                      automatically created. If empty, then the newly
+         *                      created view will be top-level.
+         *                      </ul>
          * 
          */
         FilterByBoxGeometryRequest(const std::string& tableName_, const std::string& viewName_, const std::string& columnName_, const double minX_, const double maxX_, const double minY_, const double maxY_, const std::map<std::string, std::string>& options_):

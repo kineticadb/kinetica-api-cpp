@@ -215,6 +215,7 @@ namespace gpudb
     const std::string create_join_table_full_refresh        ( "full_refresh"         );
     const std::string create_join_table_manual              ( "manual"               );
     const std::string create_join_table_max_query_dimensions( "max_query_dimensions" );
+    const std::string create_join_table_no_count            ( "no_count"             );
     const std::string create_join_table_no_refresh          ( "no_refresh"           );
     const std::string create_join_table_on_insert           ( "on_insert"            );
     const std::string create_join_table_on_query            ( "on_query"             );
@@ -245,18 +246,19 @@ namespace gpudb
     const std::string create_proc_nondistributed          ( "nondistributed"           );
 
     // Keywords for /create/projection request
-    const std::string create_projection_chunk_size        ( "chunk_size"         );
-    const std::string create_projection_collection_name   ( "collection_name"    );
-    const std::string create_projection_expression        ( "expression"         );
-    const std::string create_projection_false             ( "false"              );
-    const std::string create_projection_limit             ( "limit"              );
-    const std::string create_projection_materialize_on_gpu( "materialize_on_gpu" );
-    const std::string create_projection_order_by          ( "order_by"           );
-    const std::string create_projection_persist           ( "persist"            );
-    const std::string create_projection_shard_key         ( "shard_key"          );
-    const std::string create_projection_true              ( "true"               );
-    const std::string create_projection_ttl               ( "ttl"                );
-    const std::string create_projection_view_id           ( "view_id"            );
+    const std::string create_projection_chunk_size            ( "chunk_size"             );
+    const std::string create_projection_collection_name       ( "collection_name"        );
+    const std::string create_projection_expression            ( "expression"             );
+    const std::string create_projection_false                 ( "false"                  );
+    const std::string create_projection_limit                 ( "limit"                  );
+    const std::string create_projection_materialize_on_gpu    ( "materialize_on_gpu"     );
+    const std::string create_projection_order_by              ( "order_by"               );
+    const std::string create_projection_persist               ( "persist"                );
+    const std::string create_projection_preserve_dict_encoding( "preserve_dict_encoding" );
+    const std::string create_projection_shard_key             ( "shard_key"              );
+    const std::string create_projection_true                  ( "true"                   );
+    const std::string create_projection_ttl                   ( "ttl"                    );
+    const std::string create_projection_view_id               ( "view_id"                );
 
     // Keywords for /create/table request
     const std::string create_table_chunk_size                 ( "chunk_size"                  );
@@ -340,22 +342,46 @@ namespace gpudb
     const std::string filter_ttl            ( "ttl"             );
     const std::string filter_view_id        ( "view_id"         );
 
+    // Keywords for /filter/byarea request
+    const std::string filter_by_area_collection_name( "collection_name" );
+
+    // Keywords for /filter/byarea/geometry request
+    const std::string filter_by_area_geometry_collection_name( "collection_name" );
+
+    // Keywords for /filter/bybox request
+    const std::string filter_by_box_collection_name( "collection_name" );
+
+    // Keywords for /filter/bybox/geometry request
+    const std::string filter_by_box_geometry_collection_name( "collection_name" );
+
     // Keywords for /filter/bygeometry request
-    const std::string filter_by_geometry_contains  ( "contains"   );
-    const std::string filter_by_geometry_crosses   ( "crosses"    );
-    const std::string filter_by_geometry_disjoint  ( "disjoint"   );
-    const std::string filter_by_geometry_equals    ( "equals"     );
-    const std::string filter_by_geometry_intersects( "intersects" );
-    const std::string filter_by_geometry_overlaps  ( "overlaps"   );
-    const std::string filter_by_geometry_touches   ( "touches"    );
-    const std::string filter_by_geometry_within    ( "within"     );
+    const std::string filter_by_geometry_collection_name( "collection_name" );
+    const std::string filter_by_geometry_contains       ( "contains"        );
+    const std::string filter_by_geometry_crosses        ( "crosses"         );
+    const std::string filter_by_geometry_disjoint       ( "disjoint"        );
+    const std::string filter_by_geometry_equals         ( "equals"          );
+    const std::string filter_by_geometry_intersects     ( "intersects"      );
+    const std::string filter_by_geometry_overlaps       ( "overlaps"        );
+    const std::string filter_by_geometry_touches        ( "touches"         );
+    const std::string filter_by_geometry_within         ( "within"          );
 
     // Keywords for /filter/bylist request
-    const std::string filter_by_list_filter_mode( "filter_mode" );
-    const std::string filter_by_list_in_list    ( "in_list"     );
-    const std::string filter_by_list_not_in_list( "not_in_list" );
+    const std::string filter_by_list_collection_name( "collection_name" );
+    const std::string filter_by_list_filter_mode    ( "filter_mode"     );
+    const std::string filter_by_list_in_list        ( "in_list"         );
+    const std::string filter_by_list_not_in_list    ( "not_in_list"     );
+
+    // Keywords for /filter/byradius request
+    const std::string filter_by_radius_collection_name( "collection_name" );
+
+    // Keywords for /filter/byradius/geometry request
+    const std::string filter_by_radius_geometry_collection_name( "collection_name" );
+
+    // Keywords for /filter/byrange request
+    const std::string filter_by_range_collection_name( "collection_name" );
 
     // Keywords for /filter/byseries request
+    const std::string filter_by_series_collection_name        ( "collection_name"         );
     const std::string filter_by_series_euclidean              ( "euclidean"               );
     const std::string filter_by_series_great_circle           ( "great_circle"            );
     const std::string filter_by_series_spatial_distance_metric( "spatial_distance_metric" );
@@ -363,18 +389,20 @@ namespace gpudb
     const std::string filter_by_series_time_radius            ( "time_radius"             );
 
     // Keywords for /filter/bystring request
-    const std::string filter_by_string_case_sensitive( "case_sensitive" );
-    const std::string filter_by_string_contains      ( "contains"       );
-    const std::string filter_by_string_equals        ( "equals"         );
-    const std::string filter_by_string_false         ( "false"          );
-    const std::string filter_by_string_regex         ( "regex"          );
-    const std::string filter_by_string_search        ( "search"         );
-    const std::string filter_by_string_starts_with   ( "starts_with"    );
-    const std::string filter_by_string_true          ( "true"           );
+    const std::string filter_by_string_case_sensitive ( "case_sensitive"  );
+    const std::string filter_by_string_collection_name( "collection_name" );
+    const std::string filter_by_string_contains       ( "contains"        );
+    const std::string filter_by_string_equals         ( "equals"          );
+    const std::string filter_by_string_false          ( "false"           );
+    const std::string filter_by_string_regex          ( "regex"           );
+    const std::string filter_by_string_search         ( "search"          );
+    const std::string filter_by_string_starts_with    ( "starts_with"     );
+    const std::string filter_by_string_true           ( "true"            );
 
     // Keywords for /filter/bytable request
     const std::string filter_by_table_buffer             ( "buffer"              );
     const std::string filter_by_table_buffer_method      ( "buffer_method"       );
+    const std::string filter_by_table_collection_name    ( "collection_name"     );
     const std::string filter_by_table_filter_mode        ( "filter_mode"         );
     const std::string filter_by_table_geos               ( "geos"                );
     const std::string filter_by_table_in_table           ( "in_table"            );
@@ -386,6 +414,9 @@ namespace gpudb
     const std::string filter_by_table_spatial            ( "spatial"             );
     const std::string filter_by_table_x_column_name      ( "x_column_name"       );
     const std::string filter_by_table_y_column_name      ( "y_column_name"       );
+
+    // Keywords for /filter/byvalue request
+    const std::string filter_by_value_collection_name( "collection_name" );
 
     // Keywords for /get/job response
     const std::string get_job_CANCELLED    ( "CANCELLED"     );
@@ -403,6 +434,7 @@ namespace gpudb
     const std::string get_records_expression       ( "expression"        );
     const std::string get_records_false            ( "false"             );
     const std::string get_records_fast_index_lookup( "fast_index_lookup" );
+    const std::string get_records_geojson          ( "geojson"           );
     const std::string get_records_json             ( "json"              );
     const std::string get_records_sort_by          ( "sort_by"           );
     const std::string get_records_sort_order       ( "sort_order"        );
@@ -491,6 +523,7 @@ namespace gpudb
     const std::string merge_records_collection_name( "collection_name" );
     const std::string merge_records_false          ( "false"           );
     const std::string merge_records_is_replicated  ( "is_replicated"   );
+    const std::string merge_records_persist        ( "persist"         );
     const std::string merge_records_true           ( "true"            );
     const std::string merge_records_ttl            ( "ttl"             );
     const std::string merge_records_view_id        ( "view_id"         );
@@ -543,6 +576,7 @@ namespace gpudb
     const std::string show_system_properties_conf_worker_http_server_ports  ( "conf.worker_http_server_ports"   );
 
     // Keywords for /show/table request
+    const std::string show_table_force_synchronous     ( "force_synchronous"      );
     const std::string show_table_get_column_info       ( "get_column_info"        );
     const std::string show_table_get_sizes             ( "get_sizes"              );
     const std::string show_table_no_error_if_not_exists( "no_error_if_not_exists" );

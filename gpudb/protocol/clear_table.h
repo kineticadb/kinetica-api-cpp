@@ -36,7 +36,9 @@ namespace gpudb
          * 
          * @param[in] tableName_  Name of the table to be cleared. Must be an
          *                        existing table. Empty string clears all
-         *                        available tables.
+         *                        available tables, though this behavior is be
+         *                        prevented by default via gpudb.conf parameter
+         *                        'disable_clear_all'.
          * @param[in] authorization_  No longer used. User can pass an empty
          *                            string.
          * @param[in] options_  Optional parameters.

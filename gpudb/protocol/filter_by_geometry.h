@@ -81,6 +81,15 @@ namespace gpudb
          *                        records that are within the given WKT.
          *                        </ul>
          * @param[in] options_  Optional parameters.
+         *                      <ul>
+         *                              <li>
+         *                      gpudb::filter_by_geometry_collection_name: Name
+         *                      of a collection which is to contain the newly
+         *                      created view. If the collection provided is
+         *                      non-existent, the collection will be
+         *                      automatically created. If empty, then the newly
+         *                      created view will be top-level.
+         *                      </ul>
          * 
          */
         FilterByGeometryRequest(const std::string& tableName_, const std::string& viewName_, const std::string& columnName_, const std::string& inputWkt_, const std::string& operation_, const std::map<std::string, std::string>& options_):

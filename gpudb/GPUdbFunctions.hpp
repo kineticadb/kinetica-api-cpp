@@ -1158,10 +1158,20 @@ AggregateGroupByResponse& aggregateGroupBy( const AggregateGroupByRequest& reque
  *                 Force the result table to be replicated (ignores any
  *                 sharding). Must be used in combination with the @a
  *                 result_table option.
+ *                 <ul>
+ *                         <li> gpudb::aggregate_group_by_true
+ *                         <li> gpudb::aggregate_group_by_false
+ *                 </ul>
+ *                 The default value is gpudb::aggregate_group_by_false.
  *                         <li>
  *                 gpudb::aggregate_group_by_result_table_generate_pk: If
  *                 'true' then set a primary key for the result table. Must be
  *                 used in combination with the @a result_table option.
+ *                 <ul>
+ *                         <li> gpudb::aggregate_group_by_true
+ *                         <li> gpudb::aggregate_group_by_false
+ *                 </ul>
+ *                 The default value is gpudb::aggregate_group_by_false.
  *                         <li> gpudb::aggregate_group_by_ttl: Sets the <a
  *                 href="../../concepts/ttl.html" target="_top">TTL</a> of the
  *                 table specified in @a result_table.
@@ -1346,10 +1356,20 @@ AggregateGroupByResponse aggregateGroupBy( const std::string& tableName,
  *                 Force the result table to be replicated (ignores any
  *                 sharding). Must be used in combination with the @a
  *                 result_table option.
+ *                 <ul>
+ *                         <li> gpudb::aggregate_group_by_true
+ *                         <li> gpudb::aggregate_group_by_false
+ *                 </ul>
+ *                 The default value is gpudb::aggregate_group_by_false.
  *                         <li>
  *                 gpudb::aggregate_group_by_result_table_generate_pk: If
  *                 'true' then set a primary key for the result table. Must be
  *                 used in combination with the @a result_table option.
+ *                 <ul>
+ *                         <li> gpudb::aggregate_group_by_true
+ *                         <li> gpudb::aggregate_group_by_false
+ *                 </ul>
+ *                 The default value is gpudb::aggregate_group_by_false.
  *                         <li> gpudb::aggregate_group_by_ttl: Sets the <a
  *                 href="../../concepts/ttl.html" target="_top">TTL</a> of the
  *                 table specified in @a result_table.
@@ -2590,10 +2610,20 @@ AggregateUniqueResponse& aggregateUnique( const AggregateUniqueRequest& request_
  *                 gpudb::aggregate_unique_result_table_force_replicated: Force
  *                 the result table to be replicated (ignores any sharding).
  *                 Must be used in combination with the @a result_table option.
+ *                 <ul>
+ *                         <li> gpudb::aggregate_unique_true
+ *                         <li> gpudb::aggregate_unique_false
+ *                 </ul>
+ *                 The default value is gpudb::aggregate_unique_false.
  *                         <li>
  *                 gpudb::aggregate_unique_result_table_generate_pk: If 'true'
  *                 then set a primary key for the result table. Must be used in
  *                 combination with the @a result_table option.
+ *                 <ul>
+ *                         <li> gpudb::aggregate_unique_true
+ *                         <li> gpudb::aggregate_unique_false
+ *                 </ul>
+ *                 The default value is gpudb::aggregate_unique_false.
  *                         <li> gpudb::aggregate_unique_ttl: Sets the <a
  *                 href="../../concepts/ttl.html" target="_top">TTL</a> of the
  *                 table specified in @a result_table.
@@ -2698,10 +2728,20 @@ AggregateUniqueResponse aggregateUnique( const std::string& tableName,
  *                 gpudb::aggregate_unique_result_table_force_replicated: Force
  *                 the result table to be replicated (ignores any sharding).
  *                 Must be used in combination with the @a result_table option.
+ *                 <ul>
+ *                         <li> gpudb::aggregate_unique_true
+ *                         <li> gpudb::aggregate_unique_false
+ *                 </ul>
+ *                 The default value is gpudb::aggregate_unique_false.
  *                         <li>
  *                 gpudb::aggregate_unique_result_table_generate_pk: If 'true'
  *                 then set a primary key for the result table. Must be used in
  *                 combination with the @a result_table option.
+ *                 <ul>
+ *                         <li> gpudb::aggregate_unique_true
+ *                         <li> gpudb::aggregate_unique_false
+ *                 </ul>
+ *                 The default value is gpudb::aggregate_unique_false.
  *                         <li> gpudb::aggregate_unique_ttl: Sets the <a
  *                 href="../../concepts/ttl.html" target="_top">TTL</a> of the
  *                 table specified in @a result_table.
@@ -2867,6 +2907,9 @@ AggregateUnpivotResponse& aggregateUnpivot( const AggregateUnpivotRequest& reque
  * 
  * @param tableName  Name of the table on which the operation will be
  *                   performed. Must be an existing table/view.
+ * @param columnNames  List of column names or expressions. A wildcard '*' can
+ *                     be used to include all the non-pivoted columns from the
+ *                     source table.
  * @param variableColumnName  Specifies the variable/parameter column name.
  * @param valueColumnName  Specifies the value column name.
  * @param pivotedColumns  List of one or more values typically the column names
@@ -2928,6 +2971,7 @@ AggregateUnpivotResponse& aggregateUnpivot( const AggregateUnpivotRequest& reque
  */
 
 AggregateUnpivotResponse aggregateUnpivot( const std::string& tableName,
+                                           const std::vector<std::string>& columnNames,
                                            const std::string& variableColumnName,
                                            const std::string& valueColumnName,
                                            const std::vector<std::string>& pivotedColumns,
@@ -2954,6 +2998,9 @@ AggregateUnpivotResponse aggregateUnpivot( const std::string& tableName,
  * 
  * @param tableName  Name of the table on which the operation will be
  *                   performed. Must be an existing table/view.
+ * @param columnNames  List of column names or expressions. A wildcard '*' can
+ *                     be used to include all the non-pivoted columns from the
+ *                     source table.
  * @param variableColumnName  Specifies the variable/parameter column name.
  * @param valueColumnName  Specifies the value column name.
  * @param pivotedColumns  List of one or more values typically the column names
@@ -3018,6 +3065,7 @@ AggregateUnpivotResponse aggregateUnpivot( const std::string& tableName,
  */
 
 AggregateUnpivotResponse& aggregateUnpivot( const std::string& tableName,
+                                            const std::vector<std::string>& columnNames,
                                             const std::string& variableColumnName,
                                             const std::string& valueColumnName,
                                             const std::vector<std::string>& pivotedColumns,
@@ -4143,7 +4191,9 @@ ClearTableResponse& clearTable( const ClearTableRequest& request_,
  * the name of the table that was cleared.
  * 
  * @param tableName  Name of the table to be cleared. Must be an existing
- *                   table. Empty string clears all available tables.
+ *                   table. Empty string clears all available tables, though
+ *                   this behavior is be prevented by default via gpudb.conf
+ *                   parameter 'disable_clear_all'.
  * @param authorization  No longer used. User can pass an empty string.
  * @param options  Optional parameters.
  *                 <ul>
@@ -4174,7 +4224,9 @@ ClearTableResponse clearTable( const std::string& tableName,
  * the name of the table that was cleared.
  * 
  * @param tableName  Name of the table to be cleared. Must be an existing
- *                   table. Empty string clears all available tables.
+ *                   table. Empty string clears all available tables, though
+ *                   this behavior is be prevented by default via gpudb.conf
+ *                   parameter 'disable_clear_all'.
  * @param authorization  No longer used. User can pass an empty string.
  * @param options  Optional parameters.
  *                 <ul>
@@ -4572,6 +4624,10 @@ CreateJoinTableResponse& createJoinTable( const CreateJoinTableRequest& request_
  *                 join table specified in @a joinTableName.
  *                         <li> gpudb::create_join_table_view_id: view this
  *                 projection is part of
+ *                         <li> gpudb::create_join_table_no_count: return a
+ *                 count of 0 for the join table for logging and for
+ *                 show_table. optimization needed for large overlapped
+ *                 equi-join stencils
  *                 </ul>
  * 
  * @return Response object containing the result of the operation.
@@ -4674,6 +4730,10 @@ CreateJoinTableResponse createJoinTable( const std::string& joinTableName,
  *                 join table specified in @a joinTableName.
  *                         <li> gpudb::create_join_table_view_id: view this
  *                 projection is part of
+ *                         <li> gpudb::create_join_table_no_count: return a
+ *                 count of 0 for the join table for logging and for
+ *                 show_table. optimization needed for large overlapped
+ *                 equi-join stencils
  *                 </ul>
  * @param[out] response_  Response object containing the results of the
  *                        operation.
@@ -5238,6 +5298,15 @@ CreateProjectionResponse& createProjection( const CreateProjectionRequest& reque
  *                         <li> gpudb::create_projection_false
  *                 </ul>
  *                 The default value is gpudb::create_projection_false.
+ *                         <li>
+ *                 gpudb::create_projection_preserve_dict_encoding: If @a true,
+ *                 then columns that were dict encoded in the source table will
+ *                 be dict encoded in the projection table.
+ *                 <ul>
+ *                         <li> gpudb::create_projection_true
+ *                         <li> gpudb::create_projection_false
+ *                 </ul>
+ *                 The default value is gpudb::create_projection_true.
  *                         <li> gpudb::create_projection_view_id: view this
  *                 projection is part of
  *                 </ul>
@@ -5347,6 +5416,15 @@ CreateProjectionResponse createProjection( const std::string& tableName,
  *                         <li> gpudb::create_projection_false
  *                 </ul>
  *                 The default value is gpudb::create_projection_false.
+ *                         <li>
+ *                 gpudb::create_projection_preserve_dict_encoding: If @a true,
+ *                 then columns that were dict encoded in the source table will
+ *                 be dict encoded in the projection table.
+ *                 <ul>
+ *                         <li> gpudb::create_projection_true
+ *                         <li> gpudb::create_projection_false
+ *                 </ul>
+ *                 The default value is gpudb::create_projection_true.
  *                         <li> gpudb::create_projection_view_id: view this
  *                 projection is part of
  *                 </ul>
@@ -7718,6 +7796,13 @@ FilterByAreaResponse& filterByArea( const FilterByAreaRequest& request_,
  * @param yVector  List of y coordinates of the vertices of the polygon
  *                 representing the area to be filtered.
  * @param options  Optional parameters.
+ *                 <ul>
+ *                         <li> gpudb::filter_by_area_collection_name: Name of
+ *                 a collection which is to contain the newly created view. If
+ *                 the collection provided is non-existent, the collection will
+ *                 be automatically created.  If empty, then the newly created
+ *                 view will be top-level.
+ *                 </ul>
  * 
  * @return Response object containing the result of the operation.
  * 
@@ -7756,6 +7841,13 @@ FilterByAreaResponse filterByArea( const std::string& tableName,
  * @param yVector  List of y coordinates of the vertices of the polygon
  *                 representing the area to be filtered.
  * @param options  Optional parameters.
+ *                 <ul>
+ *                         <li> gpudb::filter_by_area_collection_name: Name of
+ *                 a collection which is to contain the newly created view. If
+ *                 the collection provided is non-existent, the collection will
+ *                 be automatically created.  If empty, then the newly created
+ *                 view will be top-level.
+ *                 </ul>
  * @param[out] response_  Response object containing the results of the
  *                        operation.
  * 
@@ -7835,6 +7927,13 @@ FilterByAreaGeometryResponse& filterByAreaGeometry( const FilterByAreaGeometryRe
  * @param yVector  List of y coordinates of the vertices of the polygon
  *                 representing the area to be filtered.
  * @param options  Optional parameters.
+ *                 <ul>
+ *                         <li> gpudb::filter_by_area_geometry_collection_name:
+ *                 Name of a collection which is to contain the newly created
+ *                 view. If the collection provided is non-existent, the
+ *                 collection will be automatically created. If empty, then the
+ *                 newly created view will be top-level.
+ *                 </ul>
  * 
  * @return Response object containing the result of the operation.
  * 
@@ -7869,6 +7968,13 @@ FilterByAreaGeometryResponse filterByAreaGeometry( const std::string& tableName,
  * @param yVector  List of y coordinates of the vertices of the polygon
  *                 representing the area to be filtered.
  * @param options  Optional parameters.
+ *                 <ul>
+ *                         <li> gpudb::filter_by_area_geometry_collection_name:
+ *                 Name of a collection which is to contain the newly created
+ *                 view. If the collection provided is non-existent, the
+ *                 collection will be automatically created. If empty, then the
+ *                 newly created view will be top-level.
+ *                 </ul>
  * @param[out] response_  Response object containing the results of the
  *                        operation.
  * 
@@ -7950,6 +8056,13 @@ FilterByBoxResponse& filterByBox( const FilterByBoxRequest& request_,
  * @param maxY  Upper bound for @a yColumnName. Must be greater than or equal
  *              to @a minY.
  * @param options  Optional parameters.
+ *                 <ul>
+ *                         <li> gpudb::filter_by_box_collection_name: Name of a
+ *                 collection which is to contain the newly created view. If
+ *                 the collection provided is non-existent, the collection will
+ *                 be automatically created. If empty, then the newly created
+ *                 view will be top-level.
+ *                 </ul>
  * 
  * @return Response object containing the result of the operation.
  * 
@@ -7992,6 +8105,13 @@ FilterByBoxResponse filterByBox( const std::string& tableName,
  * @param maxY  Upper bound for @a yColumnName. Must be greater than or equal
  *              to @a minY.
  * @param options  Optional parameters.
+ *                 <ul>
+ *                         <li> gpudb::filter_by_box_collection_name: Name of a
+ *                 collection which is to contain the newly created view. If
+ *                 the collection provided is non-existent, the collection will
+ *                 be automatically created. If empty, then the newly created
+ *                 view will be top-level.
+ *                 </ul>
  * @param[out] response_  Response object containing the results of the
  *                        operation.
  * 
@@ -8072,6 +8192,13 @@ FilterByBoxGeometryResponse& filterByBoxGeometry( const FilterByBoxGeometryReque
  * @param maxY  Upper bound for the y-coordinate of the rectangular box. Must
  *              be greater than or equal to @a minY.
  * @param options  Optional parameters.
+ *                 <ul>
+ *                         <li> gpudb::filter_by_box_geometry_collection_name:
+ *                 Name of a collection which is to contain the newly created
+ *                 view. If the collection provided is non-existent, the
+ *                 collection will be automatically created. If empty, then the
+ *                 newly created view will be top-level.
+ *                 </ul>
  * 
  * @return Response object containing the result of the operation.
  * 
@@ -8109,6 +8236,13 @@ FilterByBoxGeometryResponse filterByBoxGeometry( const std::string& tableName,
  * @param maxY  Upper bound for the y-coordinate of the rectangular box. Must
  *              be greater than or equal to @a minY.
  * @param options  Optional parameters.
+ *                 <ul>
+ *                         <li> gpudb::filter_by_box_geometry_collection_name:
+ *                 Name of a collection which is to contain the newly created
+ *                 view. If the collection provided is non-existent, the
+ *                 collection will be automatically created. If empty, then the
+ *                 newly created view will be top-level.
+ *                 </ul>
  * @param[out] response_  Response object containing the results of the
  *                        operation.
  * 
@@ -8196,6 +8330,13 @@ FilterByGeometryResponse& filterByGeometry( const FilterByGeometryRequest& reque
  *                   records that are within the given WKT.
  *                   </ul>
  * @param options  Optional parameters.
+ *                 <ul>
+ *                         <li> gpudb::filter_by_geometry_collection_name: Name
+ *                 of a collection which is to contain the newly created view.
+ *                 If the collection provided is non-existent, the collection
+ *                 will be automatically created. If empty, then the newly
+ *                 created view will be top-level.
+ *                 </ul>
  * 
  * @return Response object containing the result of the operation.
  * 
@@ -8245,6 +8386,13 @@ FilterByGeometryResponse filterByGeometry( const std::string& tableName,
  *                   records that are within the given WKT.
  *                   </ul>
  * @param options  Optional parameters.
+ *                 <ul>
+ *                         <li> gpudb::filter_by_geometry_collection_name: Name
+ *                 of a collection which is to contain the newly created view.
+ *                 If the collection provided is non-existent, the collection
+ *                 will be automatically created. If empty, then the newly
+ *                 created view will be top-level.
+ *                 </ul>
  * @param[out] response_  Response object containing the results of the
  *                        operation.
  * 
@@ -8343,6 +8491,11 @@ FilterByListResponse& filterByList( const FilterByListRequest& request_,
  *                         table
  * @param options  Optional parameters.
  *                 <ul>
+ *                         <li> gpudb::filter_by_list_collection_name: Name of
+ *                 a collection which is to contain the newly created view. If
+ *                 the collection provided is non-existent, the collection will
+ *                 be automatically created. If empty, then the newly created
+ *                 view will be top-level.
  *                         <li> gpudb::filter_by_list_filter_mode: String
  *                 indicating the filter mode, either 'in_list' or
  *                 'not_in_list'.
@@ -8392,6 +8545,11 @@ FilterByListResponse filterByList( const std::string& tableName,
  *                         table
  * @param options  Optional parameters.
  *                 <ul>
+ *                         <li> gpudb::filter_by_list_collection_name: Name of
+ *                 a collection which is to contain the newly created view. If
+ *                 the collection provided is non-existent, the collection will
+ *                 be automatically created. If empty, then the newly created
+ *                 view will be top-level.
  *                         <li> gpudb::filter_by_list_filter_mode: String
  *                 indicating the filter mode, either 'in_list' or
  *                 'not_in_list'.
@@ -8500,6 +8658,13 @@ FilterByRadiusResponse& filterByRadius( const FilterByRadiusRequest& request_,
  *                minimum allowed value is 0. The maximum allowed value is
  *                MAX_INT.
  * @param options  Optional parameters.
+ *                 <ul>
+ *                         <li> gpudb::filter_by_radius_collection_name: Name
+ *                 of a collection which is to contain the newly created view.
+ *                 If the collection provided is non-existent, the collection
+ *                 will be automatically created. If empty, then the newly
+ *                 created view will be top-level.
+ *                 </ul>
  * 
  * @return Response object containing the result of the operation.
  * 
@@ -8549,6 +8714,13 @@ FilterByRadiusResponse filterByRadius( const std::string& tableName,
  *                minimum allowed value is 0. The maximum allowed value is
  *                MAX_INT.
  * @param options  Optional parameters.
+ *                 <ul>
+ *                         <li> gpudb::filter_by_radius_collection_name: Name
+ *                 of a collection which is to contain the newly created view.
+ *                 If the collection provided is non-existent, the collection
+ *                 will be automatically created. If empty, then the newly
+ *                 created view will be top-level.
+ *                 </ul>
  * @param[out] response_  Response object containing the results of the
  *                        operation.
  * 
@@ -8634,6 +8806,14 @@ FilterByRadiusGeometryResponse& filterByRadiusGeometry( const FilterByRadiusGeom
  *                minimum allowed value is 0. The maximum allowed value is
  *                MAX_INT.
  * @param options  Optional parameters.
+ *                 <ul>
+ *                         <li>
+ *                 gpudb::filter_by_radius_geometry_collection_name: Name of a
+ *                 collection which is to contain the newly created view. If
+ *                 the collection provided is non-existent, the collection will
+ *                 be automatically created. If empty, then the newly created
+ *                 view will be top-level.
+ *                 </ul>
  * 
  * @return Response object containing the result of the operation.
  * 
@@ -8674,6 +8854,14 @@ FilterByRadiusGeometryResponse filterByRadiusGeometry( const std::string& tableN
  *                minimum allowed value is 0. The maximum allowed value is
  *                MAX_INT.
  * @param options  Optional parameters.
+ *                 <ul>
+ *                         <li>
+ *                 gpudb::filter_by_radius_geometry_collection_name: Name of a
+ *                 collection which is to contain the newly created view. If
+ *                 the collection provided is non-existent, the collection will
+ *                 be automatically created. If empty, then the newly created
+ *                 view will be top-level.
+ *                 </ul>
  * @param[out] response_  Response object containing the results of the
  *                        operation.
  * 
@@ -8759,6 +8947,13 @@ FilterByRangeResponse& filterByRange( const FilterByRangeRequest& request_,
  * @param lowerBound  Value of the lower bound (inclusive).
  * @param upperBound  Value of the upper bound (inclusive).
  * @param options  Optional parameters.
+ *                 <ul>
+ *                         <li> gpudb::filter_by_range_collection_name: Name of
+ *                 a collection which is to contain the newly created view. If
+ *                 the collection provided is non-existent, the collection will
+ *                 be automatically created. If empty, then the newly created
+ *                 view will be top-level.
+ *                 </ul>
  * 
  * @return Response object containing the result of the operation.
  * 
@@ -8793,6 +8988,13 @@ FilterByRangeResponse filterByRange( const std::string& tableName,
  * @param lowerBound  Value of the lower bound (inclusive).
  * @param upperBound  Value of the upper bound (inclusive).
  * @param options  Optional parameters.
+ *                 <ul>
+ *                         <li> gpudb::filter_by_range_collection_name: Name of
+ *                 a collection which is to contain the newly created view. If
+ *                 the collection provided is non-existent, the collection will
+ *                 be automatically created. If empty, then the newly created
+ *                 view will be top-level.
+ *                 </ul>
  * @param[out] response_  Response object containing the results of the
  *                        operation.
  * 
@@ -8893,6 +9095,11 @@ FilterBySeriesResponse& filterBySeries( const FilterBySeriesRequest& request_,
  *                        within the given set.
  * @param options  Optional parameters.
  *                 <ul>
+ *                         <li> gpudb::filter_by_series_collection_name: Name
+ *                 of a collection which is to contain the newly created view.
+ *                 If the collection provided is non-existent, the collection
+ *                 will be automatically created. If empty, then the newly
+ *                 created view will be top-level.
  *                         <li> gpudb::filter_by_series_spatial_radius: A
  *                 positive number passed as a string representing the radius
  *                 of the search area centered around each track point's
@@ -8954,6 +9161,11 @@ FilterBySeriesResponse filterBySeries( const std::string& tableName,
  *                        within the given set.
  * @param options  Optional parameters.
  *                 <ul>
+ *                         <li> gpudb::filter_by_series_collection_name: Name
+ *                 of a collection which is to contain the newly created view.
+ *                 If the collection provided is non-existent, the collection
+ *                 will be automatically created. If empty, then the newly
+ *                 created view will be top-level.
  *                         <li> gpudb::filter_by_series_spatial_radius: A
  *                 positive number passed as a string representing the radius
  *                 of the search area centered around each track point's
@@ -9065,6 +9277,11 @@ FilterByStringResponse& filterByString( const FilterByStringRequest& request_,
  *                     for 'search' mode.
  * @param options  Optional parameters.
  *                 <ul>
+ *                         <li> gpudb::filter_by_string_collection_name: Name
+ *                 of a collection which is to contain the newly created view.
+ *                 If the collection provided is non-existent, the collection
+ *                 will be automatically created. If empty, then the newly
+ *                 created view will be top-level.
  *                         <li> gpudb::filter_by_string_case_sensitive: If
  *                 'false' then string filtering will ignore case. Does not
  *                 apply to 'search' mode.
@@ -9126,6 +9343,11 @@ FilterByStringResponse filterByString( const std::string& tableName,
  *                     for 'search' mode.
  * @param options  Optional parameters.
  *                 <ul>
+ *                         <li> gpudb::filter_by_string_collection_name: Name
+ *                 of a collection which is to contain the newly created view.
+ *                 If the collection provided is non-existent, the collection
+ *                 will be automatically created. If empty, then the newly
+ *                 created view will be top-level.
  *                         <li> gpudb::filter_by_string_case_sensitive: If
  *                 'false' then string filtering will ignore case. Does not
  *                 apply to 'search' mode.
@@ -9225,6 +9447,11 @@ FilterByTableResponse& filterByTable( const FilterByTableRequest& request_,
  *                               columnName.
  * @param options  Optional parameters.
  *                 <ul>
+ *                         <li> gpudb::filter_by_table_collection_name: Name of
+ *                 a collection which is to contain the newly created view. If
+ *                 the collection provided is non-existent, the collection will
+ *                 be automatically created. If empty, then the newly created
+ *                 view will be top-level.
  *                         <li> gpudb::filter_by_table_filter_mode: String
  *                 indicating the filter mode, either @a in_table or @a
  *                 not_in_table.
@@ -9305,6 +9532,11 @@ FilterByTableResponse filterByTable( const std::string& tableName,
  *                               columnName.
  * @param options  Optional parameters.
  *                 <ul>
+ *                         <li> gpudb::filter_by_table_collection_name: Name of
+ *                 a collection which is to contain the newly created view. If
+ *                 the collection provided is non-existent, the collection will
+ *                 be automatically created. If empty, then the newly created
+ *                 view will be top-level.
  *                         <li> gpudb::filter_by_table_filter_mode: String
  *                 indicating the filter mode, either @a in_table or @a
  *                 not_in_table.
@@ -9430,6 +9662,13 @@ FilterByValueResponse& filterByValue( const FilterByValueRequest& request_,
  * @param columnName  Name of a column on which the filter by value would be
  *                    applied.
  * @param options  Optional parameters.
+ *                 <ul>
+ *                         <li> gpudb::filter_by_value_collection_name: Name of
+ *                 a collection which is to contain the newly created view. If
+ *                 the collection provided is non-existent, the collection will
+ *                 be automatically created. If empty, then the newly created
+ *                 view will be top-level.
+ *                 </ul>
  * 
  * @return Response object containing the result of the operation.
  * 
@@ -9468,6 +9707,13 @@ FilterByValueResponse filterByValue( const std::string& tableName,
  * @param columnName  Name of a column on which the filter by value would be
  *                    applied.
  * @param options  Optional parameters.
+ *                 <ul>
+ *                         <li> gpudb::filter_by_value_collection_name: Name of
+ *                 a collection which is to contain the newly created view. If
+ *                 the collection provided is non-existent, the collection will
+ *                 be automatically created. If empty, then the newly created
+ *                 view will be top-level.
+ *                 </ul>
  * @param[out] response_  Response object containing the results of the
  *                        operation.
  * 
@@ -9545,7 +9791,7 @@ GetJobResponse& getJob( const int32_t jobId,
  * Retrieves records from a given table, optionally filtered by an expression
  * and/or sorted by a column. This operation can be performed on tables, views,
  * or on homogeneous collections (collections containing tables of all the same
- * type). Records can be returned encoded as binary or json.
+ * type). Records can be returned encoded as binary, json or geojson.
  * <p>
  * This operation supports paging through the data via the @a offset and @a
  * limit parameters. Note that when paging through a table, if the table (or
@@ -9566,7 +9812,7 @@ RawGetRecordsResponse getRecordsRaw( const GetRecordsRequest& request_ ) const;
  * Retrieves records from a given table, optionally filtered by an expression
  * and/or sorted by a column. This operation can be performed on tables, views,
  * or on homogeneous collections (collections containing tables of all the same
- * type). Records can be returned encoded as binary or json.
+ * type). Records can be returned encoded as binary, json or geojson.
  * <p>
  * This operation supports paging through the data via the @a offset and @a
  * limit parameters. Note that when paging through a table, if the table (or
@@ -9591,7 +9837,7 @@ RawGetRecordsResponse& getRecordsRaw( const GetRecordsRequest& request_,
  * Retrieves records from a given table, optionally filtered by an expression
  * and/or sorted by a column. This operation can be performed on tables, views,
  * or on homogeneous collections (collections containing tables of all the same
- * type). Records can be returned encoded as binary or json.
+ * type). Records can be returned encoded as binary, json or geojson.
  * <p>
  * This operation supports paging through the data via the @a offset and @a
  * limit parameters. Note that when paging through a table, if the table (or
@@ -9631,7 +9877,7 @@ GetRecordsResponse<TResponse> getRecords( const GetRecordsRequest& request_ ) co
  * Retrieves records from a given table, optionally filtered by an expression
  * and/or sorted by a column. This operation can be performed on tables, views,
  * or on homogeneous collections (collections containing tables of all the same
- * type). Records can be returned encoded as binary or json.
+ * type). Records can be returned encoded as binary, json or geojson.
  * <p>
  * This operation supports paging through the data via the @a offset and @a
  * limit parameters. Note that when paging through a table, if the table (or
@@ -9674,7 +9920,7 @@ GetRecordsResponse<TResponse>& getRecords( const GetRecordsRequest& request_,
  * Retrieves records from a given table, optionally filtered by an expression
  * and/or sorted by a column. This operation can be performed on tables, views,
  * or on homogeneous collections (collections containing tables of all the same
- * type). Records can be returned encoded as binary or json.
+ * type). Records can be returned encoded as binary, json or geojson.
  * <p>
  * This operation supports paging through the data via the @a offset and @a
  * limit parameters. Note that when paging through a table, if the table (or
@@ -9754,7 +10000,7 @@ GetRecordsResponse<TResponse> getRecords( const std::string& tableName,
  * Retrieves records from a given table, optionally filtered by an expression
  * and/or sorted by a column. This operation can be performed on tables, views,
  * or on homogeneous collections (collections containing tables of all the same
- * type). Records can be returned encoded as binary or json.
+ * type). Records can be returned encoded as binary, json or geojson.
  * <p>
  * This operation supports paging through the data via the @a offset and @a
  * limit parameters. Note that when paging through a table, if the table (or
@@ -9837,7 +10083,7 @@ GetRecordsResponse<TResponse>& getRecords( const std::string& tableName,
  * Retrieves records from a given table, optionally filtered by an expression
  * and/or sorted by a column. This operation can be performed on tables, views,
  * or on homogeneous collections (collections containing tables of all the same
- * type). Records can be returned encoded as binary or json.
+ * type). Records can be returned encoded as binary, json or geojson.
  * <p>
  * This operation supports paging through the data via the @a offset and @a
  * limit parameters. Note that when paging through a table, if the table (or
@@ -9879,7 +10125,7 @@ GetRecordsResponse<TResponse> getRecords( const ::avro::ValidSchema& schema_,
  * Retrieves records from a given table, optionally filtered by an expression
  * and/or sorted by a column. This operation can be performed on tables, views,
  * or on homogeneous collections (collections containing tables of all the same
- * type). Records can be returned encoded as binary or json.
+ * type). Records can be returned encoded as binary, json or geojson.
  * <p>
  * This operation supports paging through the data via the @a offset and @a
  * limit parameters. Note that when paging through a table, if the table (or
@@ -9921,7 +10167,7 @@ GetRecordsResponse<TResponse> getRecords( const Type& type_,
  * Retrieves records from a given table, optionally filtered by an expression
  * and/or sorted by a column. This operation can be performed on tables, views,
  * or on homogeneous collections (collections containing tables of all the same
- * type). Records can be returned encoded as binary or json.
+ * type). Records can be returned encoded as binary, json or geojson.
  * <p>
  * This operation supports paging through the data via the @a offset and @a
  * limit parameters. Note that when paging through a table, if the table (or
@@ -9966,7 +10212,7 @@ GetRecordsResponse<TResponse>& getRecords( const ::avro::ValidSchema& schema_,
  * Retrieves records from a given table, optionally filtered by an expression
  * and/or sorted by a column. This operation can be performed on tables, views,
  * or on homogeneous collections (collections containing tables of all the same
- * type). Records can be returned encoded as binary or json.
+ * type). Records can be returned encoded as binary, json or geojson.
  * <p>
  * This operation supports paging through the data via the @a offset and @a
  * limit parameters. Note that when paging through a table, if the table (or
@@ -10011,7 +10257,7 @@ GetRecordsResponse<TResponse>& getRecords( const Type& type_,
  * Retrieves records from a given table, optionally filtered by an expression
  * and/or sorted by a column. This operation can be performed on tables, views,
  * or on homogeneous collections (collections containing tables of all the same
- * type). Records can be returned encoded as binary or json.
+ * type). Records can be returned encoded as binary, json or geojson.
  * <p>
  * This operation supports paging through the data via the @a offset and @a
  * limit parameters. Note that when paging through a table, if the table (or
@@ -10093,7 +10339,7 @@ GetRecordsResponse<TResponse> getRecords( const ::avro::ValidSchema& schema_,
  * Retrieves records from a given table, optionally filtered by an expression
  * and/or sorted by a column. This operation can be performed on tables, views,
  * or on homogeneous collections (collections containing tables of all the same
- * type). Records can be returned encoded as binary or json.
+ * type). Records can be returned encoded as binary, json or geojson.
  * <p>
  * This operation supports paging through the data via the @a offset and @a
  * limit parameters. Note that when paging through a table, if the table (or
@@ -10175,7 +10421,7 @@ GetRecordsResponse<TResponse> getRecords( const Type& type_,
  * Retrieves records from a given table, optionally filtered by an expression
  * and/or sorted by a column. This operation can be performed on tables, views,
  * or on homogeneous collections (collections containing tables of all the same
- * type). Records can be returned encoded as binary or json.
+ * type). Records can be returned encoded as binary, json or geojson.
  * <p>
  * This operation supports paging through the data via the @a offset and @a
  * limit parameters. Note that when paging through a table, if the table (or
@@ -10260,7 +10506,7 @@ GetRecordsResponse<TResponse>& getRecords( const ::avro::ValidSchema& schema_,
  * Retrieves records from a given table, optionally filtered by an expression
  * and/or sorted by a column. This operation can be performed on tables, views,
  * or on homogeneous collections (collections containing tables of all the same
- * type). Records can be returned encoded as binary or json.
+ * type). Records can be returned encoded as binary, json or geojson.
  * <p>
  * This operation supports paging through the data via the @a offset and @a
  * limit parameters. Note that when paging through a table, if the table (or
@@ -13618,6 +13864,16 @@ MergeRecordsResponse& mergeRecords( const MergeRecordsRequest& request_,
  *                         <li> gpudb::merge_records_ttl: Sets the <a
  *                 href="../../concepts/ttl.html" target="_top">TTL</a> of the
  *                 merged table specified in @a tableName.
+ *                         <li> gpudb::merge_records_persist: If @a true, then
+ *                 the table specified in @a tableName will be persisted and
+ *                 will not expire unless a @a ttl is specified.   If @a false,
+ *                 then the table will be an in-memory table and will expire
+ *                 unless a @a ttl is specified otherwise.
+ *                 <ul>
+ *                         <li> gpudb::merge_records_true
+ *                         <li> gpudb::merge_records_false
+ *                 </ul>
+ *                 The default value is gpudb::merge_records_true.
  *                         <li> gpudb::merge_records_chunk_size: Indicates the
  *                 chunk size to be used for the merged table specified in @a
  *                 tableName.
@@ -13689,6 +13945,16 @@ MergeRecordsResponse mergeRecords( const std::string& tableName,
  *                         <li> gpudb::merge_records_ttl: Sets the <a
  *                 href="../../concepts/ttl.html" target="_top">TTL</a> of the
  *                 merged table specified in @a tableName.
+ *                         <li> gpudb::merge_records_persist: If @a true, then
+ *                 the table specified in @a tableName will be persisted and
+ *                 will not expire unless a @a ttl is specified.   If @a false,
+ *                 then the table will be an in-memory table and will expire
+ *                 unless a @a ttl is specified otherwise.
+ *                 <ul>
+ *                         <li> gpudb::merge_records_true
+ *                         <li> gpudb::merge_records_false
+ *                 </ul>
+ *                 The default value is gpudb::merge_records_true.
  *                         <li> gpudb::merge_records_chunk_size: Indicates the
  *                 chunk size to be used for the merged table specified in @a
  *                 tableName.
@@ -14533,6 +14799,14 @@ ShowTableResponse& showTable( const ShowTableRequest& request_,
  *                   top-level tables and views is returned.
  * @param options  Optional parameters.
  *                 <ul>
+ *                         <li> gpudb::show_table_force_synchronous: If @a true
+ *                 then the table sizes will wait for read lock before
+ *                 returning.
+ *                 <ul>
+ *                         <li> gpudb::show_table_true
+ *                         <li> gpudb::show_table_false
+ *                 </ul>
+ *                 The default value is gpudb::show_table_true.
  *                         <li> gpudb::show_table_get_sizes: If @a true then
  *                 the table sizes will be returned; blank, otherwise.
  *                 <ul>
@@ -14598,6 +14872,14 @@ ShowTableResponse showTable( const std::string& tableName,
  *                   top-level tables and views is returned.
  * @param options  Optional parameters.
  *                 <ul>
+ *                         <li> gpudb::show_table_force_synchronous: If @a true
+ *                 then the table sizes will wait for read lock before
+ *                 returning.
+ *                 <ul>
+ *                         <li> gpudb::show_table_true
+ *                         <li> gpudb::show_table_false
+ *                 </ul>
+ *                 The default value is gpudb::show_table_true.
  *                         <li> gpudb::show_table_get_sizes: If @a true then
  *                 the table sizes will be returned; blank, otherwise.
  *                 <ul>

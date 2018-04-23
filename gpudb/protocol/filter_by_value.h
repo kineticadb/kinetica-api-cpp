@@ -60,6 +60,15 @@ namespace gpudb
          * @param[in] columnName_  Name of a column on which the filter by
          *                         value would be applied.
          * @param[in] options_  Optional parameters.
+         *                      <ul>
+         *                              <li>
+         *                      gpudb::filter_by_value_collection_name: Name of
+         *                      a collection which is to contain the newly
+         *                      created view. If the collection provided is
+         *                      non-existent, the collection will be
+         *                      automatically created. If empty, then the newly
+         *                      created view will be top-level.
+         *                      </ul>
          * 
          */
         FilterByValueRequest(const std::string& tableName_, const std::string& viewName_, const bool isString_, const double value_, const std::string& valueStr_, const std::string& columnName_, const std::map<std::string, std::string>& options_):

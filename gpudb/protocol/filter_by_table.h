@@ -68,6 +68,13 @@ namespace gpudb
          * @param[in] options_  Optional parameters.
          *                      <ul>
          *                              <li>
+         *                      gpudb::filter_by_table_collection_name: Name of
+         *                      a collection which is to contain the newly
+         *                      created view. If the collection provided is
+         *                      non-existent, the collection will be
+         *                      automatically created. If empty, then the newly
+         *                      created view will be top-level.
+         *                              <li>
          *                      gpudb::filter_by_table_filter_mode: String
          *                      indicating the filter mode, either @a in_table
          *                      or @a not_in_table.

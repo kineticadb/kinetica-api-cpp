@@ -98,6 +98,18 @@ namespace gpudb
          *                      <a href="../../concepts/ttl.html"
          *                      target="_top">TTL</a> of the merged table
          *                      specified in @a tableName.
+         *                              <li> gpudb::merge_records_persist: If
+         *                      @a true, then the table specified in @a
+         *                      tableName will be persisted and will not expire
+         *                      unless a @a ttl is specified.   If @a false,
+         *                      then the table will be an in-memory table and
+         *                      will expire unless a @a ttl is specified
+         *                      otherwise.
+         *                      <ul>
+         *                              <li> gpudb::merge_records_true
+         *                              <li> gpudb::merge_records_false
+         *                      </ul>
+         *                      The default value is gpudb::merge_records_true.
          *                              <li> gpudb::merge_records_chunk_size:
          *                      Indicates the chunk size to be used for the
          *                      merged table specified in @a tableName.

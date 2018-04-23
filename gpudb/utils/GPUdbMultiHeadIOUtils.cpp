@@ -4,7 +4,18 @@
 
 #include <cstdlib>  // srand, rand
 #include <cstring>
-#include <endian.h>
+#ifdef _MSC_VER
+    // See: https://gist.github.com/panzi/6856583
+    #define INCL_EXTRA_HTON_FUNCTIONS
+    #include <WinSock2.h>
+    #define htobe16(x)  htons(x)
+    #define htobe32(x)  htonl(x)
+    #define htobe64(x)  htonll(x)
+
+    #undef min  // Don't interfere with std::min
+#else
+    #include <endian.h>
+#endif
 #include <map>
 #include <sstream>
 #include <time.h>   // time for seeding the rng
@@ -51,8 +62,7 @@ WorkerList::WorkerList( const GPUdb &gpudb )
     // so, is multi-head ingestion enabled?
     bool multi_head_ingest_enabled = ( it->second == gpudb::show_system_properties_TRUE );
     if ( !multi_head_ingest_enabled )
-    {   // nope, it is NOT enabled; add the current head node's url
-        m_worker_urls.push_back( gpudb.getUrl() );
+    {   // nope, it is NOT enabled
         return; // nothing more to do
     }
 
@@ -199,15 +209,7 @@ WorkerList::WorkerList(const GPUdb &gpudb, const std::string &ip_regex_str )
     // so, is multi-head ingestion enabled?
     bool multi_head_ingest_enabled = ( it->second == gpudb::show_system_properties_TRUE );
     if ( !multi_head_ingest_enabled )
-    {   // nope, it is NOT enabled; add the current head node's url
-        const gpudb::HttpUrl& url = gpudb.getUrl();
-        // See if the head node URL is a match for the given REGEX
-        if ( std::regex_match( url.getUrl(), ip_regex ) )
-        {
-            m_worker_urls.push_back( gpudb.getUrl() );
-        }
-        else
-            throw GPUdbException( "No matching HTTP servers found." );
+    {   // nope, it is NOT enabled
         return; // nothing more to do
     }
 
@@ -353,10 +355,14 @@ WorkerList::WorkerList(const GPUdb &gpudb, const std::string &ip_regex_str )
 std::string WorkerList::toString() const
 {
     std::ostringstream ss;
+    size_t i = 0;
     for ( const_iterator it = m_worker_urls.begin();
           it != m_worker_urls.end(); ++it )
     {
         ss << *it << "; ";
+        if (i > 0) // Use a separator as needed
+            ss << "; ";
+        ++i;
     }
     return ss.str();
 }
@@ -1043,7 +1049,7 @@ void RecordKey::reset( size_t buffer_size )
 
     // Delete old buffer content, and allocate enough for the new key
     m_buffer.clear();
-    m_buffer.reserve( m_buffer_size );
+    m_buffer.resize( m_buffer_size );
 }  // end reset
 
 

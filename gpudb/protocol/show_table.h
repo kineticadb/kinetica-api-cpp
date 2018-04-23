@@ -50,6 +50,15 @@ namespace gpudb
          *                        views is returned.
          * @param[in] options_  Optional parameters.
          *                      <ul>
+         *                              <li>
+         *                      gpudb::show_table_force_synchronous: If @a true
+         *                      then the table sizes will wait for read lock
+         *                      before returning.
+         *                      <ul>
+         *                              <li> gpudb::show_table_true
+         *                              <li> gpudb::show_table_false
+         *                      </ul>
+         *                      The default value is gpudb::show_table_true.
          *                              <li> gpudb::show_table_get_sizes: If @a
          *                      true then the table sizes will be returned;
          *                      blank, otherwise.

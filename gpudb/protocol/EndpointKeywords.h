@@ -215,6 +215,7 @@ namespace gpudb
     extern const std::string create_join_table_full_refresh;
     extern const std::string create_join_table_manual;
     extern const std::string create_join_table_max_query_dimensions;
+    extern const std::string create_join_table_no_count;
     extern const std::string create_join_table_no_refresh;
     extern const std::string create_join_table_on_insert;
     extern const std::string create_join_table_on_query;
@@ -253,6 +254,7 @@ namespace gpudb
     extern const std::string create_projection_materialize_on_gpu;
     extern const std::string create_projection_order_by;
     extern const std::string create_projection_persist;
+    extern const std::string create_projection_preserve_dict_encoding;
     extern const std::string create_projection_shard_key;
     extern const std::string create_projection_true;
     extern const std::string create_projection_ttl;
@@ -340,7 +342,20 @@ namespace gpudb
     extern const std::string filter_ttl;
     extern const std::string filter_view_id;
 
+    // Keywords for /filter/byarea request
+    extern const std::string filter_by_area_collection_name;
+
+    // Keywords for /filter/byarea/geometry request
+    extern const std::string filter_by_area_geometry_collection_name;
+
+    // Keywords for /filter/bybox request
+    extern const std::string filter_by_box_collection_name;
+
+    // Keywords for /filter/bybox/geometry request
+    extern const std::string filter_by_box_geometry_collection_name;
+
     // Keywords for /filter/bygeometry request
+    extern const std::string filter_by_geometry_collection_name;
     extern const std::string filter_by_geometry_contains;
     extern const std::string filter_by_geometry_crosses;
     extern const std::string filter_by_geometry_disjoint;
@@ -351,11 +366,22 @@ namespace gpudb
     extern const std::string filter_by_geometry_within;
 
     // Keywords for /filter/bylist request
+    extern const std::string filter_by_list_collection_name;
     extern const std::string filter_by_list_filter_mode;
     extern const std::string filter_by_list_in_list;
     extern const std::string filter_by_list_not_in_list;
 
+    // Keywords for /filter/byradius request
+    extern const std::string filter_by_radius_collection_name;
+
+    // Keywords for /filter/byradius/geometry request
+    extern const std::string filter_by_radius_geometry_collection_name;
+
+    // Keywords for /filter/byrange request
+    extern const std::string filter_by_range_collection_name;
+
     // Keywords for /filter/byseries request
+    extern const std::string filter_by_series_collection_name;
     extern const std::string filter_by_series_euclidean;
     extern const std::string filter_by_series_great_circle;
     extern const std::string filter_by_series_spatial_distance_metric;
@@ -364,6 +390,7 @@ namespace gpudb
 
     // Keywords for /filter/bystring request
     extern const std::string filter_by_string_case_sensitive;
+    extern const std::string filter_by_string_collection_name;
     extern const std::string filter_by_string_contains;
     extern const std::string filter_by_string_equals;
     extern const std::string filter_by_string_false;
@@ -375,6 +402,7 @@ namespace gpudb
     // Keywords for /filter/bytable request
     extern const std::string filter_by_table_buffer;
     extern const std::string filter_by_table_buffer_method;
+    extern const std::string filter_by_table_collection_name;
     extern const std::string filter_by_table_filter_mode;
     extern const std::string filter_by_table_geos;
     extern const std::string filter_by_table_in_table;
@@ -386,6 +414,9 @@ namespace gpudb
     extern const std::string filter_by_table_spatial;
     extern const std::string filter_by_table_x_column_name;
     extern const std::string filter_by_table_y_column_name;
+
+    // Keywords for /filter/byvalue request
+    extern const std::string filter_by_value_collection_name;
 
     // Keywords for /get/job response
     extern const std::string get_job_CANCELLED;
@@ -403,6 +434,7 @@ namespace gpudb
     extern const std::string get_records_expression;
     extern const std::string get_records_false;
     extern const std::string get_records_fast_index_lookup;
+    extern const std::string get_records_geojson;
     extern const std::string get_records_json;
     extern const std::string get_records_sort_by;
     extern const std::string get_records_sort_order;
@@ -491,6 +523,7 @@ namespace gpudb
     extern const std::string merge_records_collection_name;
     extern const std::string merge_records_false;
     extern const std::string merge_records_is_replicated;
+    extern const std::string merge_records_persist;
     extern const std::string merge_records_true;
     extern const std::string merge_records_ttl;
     extern const std::string merge_records_view_id;
@@ -543,6 +576,7 @@ namespace gpudb
     extern const std::string show_system_properties_conf_worker_http_server_ports;
 
     // Keywords for /show/table request
+    extern const std::string show_table_force_synchronous;
     extern const std::string show_table_get_column_info;
     extern const std::string show_table_get_sizes;
     extern const std::string show_table_no_error_if_not_exists;

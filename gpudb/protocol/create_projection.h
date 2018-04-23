@@ -145,6 +145,17 @@ namespace gpudb
          *                      </ul>
          *                      The default value is
          *                      gpudb::create_projection_false.
+         *                              <li>
+         *                      gpudb::create_projection_preserve_dict_encoding:
+         *                      If @a true, then columns that were dict encoded
+         *                      in the source table will be dict encoded in the
+         *                      projection table.
+         *                      <ul>
+         *                              <li> gpudb::create_projection_true
+         *                              <li> gpudb::create_projection_false
+         *                      </ul>
+         *                      The default value is
+         *                      gpudb::create_projection_true.
          *                              <li> gpudb::create_projection_view_id:
          *                      view this projection is part of
          *                      </ul>

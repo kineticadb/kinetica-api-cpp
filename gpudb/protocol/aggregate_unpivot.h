@@ -42,6 +42,7 @@ namespace gpudb
          */
         AggregateUnpivotRequest() :
             tableName(std::string()),
+            columnNames(std::vector<std::string>()),
             variableColumnName(std::string()),
             valueColumnName(std::string()),
             pivotedColumns(std::vector<std::string>()),
@@ -56,6 +57,9 @@ namespace gpudb
          * 
          * @param[in] tableName_  Name of the table on which the operation will
          *                        be performed. Must be an existing table/view.
+         * @param[in] columnNames_  List of column names or expressions. A
+         *                          wildcard '*' can be used to include all the
+         *                          non-pivoted columns from the source table.
          * @param[in] variableColumnName_  Specifies the variable/parameter
          *                                 column name.
          * @param[in] valueColumnName_  Specifies the value column name.
@@ -130,8 +134,9 @@ namespace gpudb
          *                      </ul>
          * 
          */
-        AggregateUnpivotRequest(const std::string& tableName_, const std::string& variableColumnName_, const std::string& valueColumnName_, const std::vector<std::string>& pivotedColumns_, const std::map<std::string, std::string>& options_):
+        AggregateUnpivotRequest(const std::string& tableName_, const std::vector<std::string>& columnNames_, const std::string& variableColumnName_, const std::string& valueColumnName_, const std::vector<std::string>& pivotedColumns_, const std::map<std::string, std::string>& options_):
             tableName( tableName_ ),
+            columnNames( columnNames_ ),
             variableColumnName( variableColumnName_ ),
             valueColumnName( valueColumnName_ ),
             pivotedColumns( pivotedColumns_ ),
@@ -146,6 +151,9 @@ namespace gpudb
          * 
          * @param[in] tableName_  Name of the table on which the operation will
          *                        be performed. Must be an existing table/view.
+         * @param[in] columnNames_  List of column names or expressions. A
+         *                          wildcard '*' can be used to include all the
+         *                          non-pivoted columns from the source table.
          * @param[in] variableColumnName_  Specifies the variable/parameter
          *                                 column name.
          * @param[in] valueColumnName_  Specifies the value column name.
@@ -231,8 +239,9 @@ namespace gpudb
          *                      </ul>
          * 
          */
-        AggregateUnpivotRequest(const std::string& tableName_, const std::string& variableColumnName_, const std::string& valueColumnName_, const std::vector<std::string>& pivotedColumns_, const std::string& encoding_, const std::map<std::string, std::string>& options_):
+        AggregateUnpivotRequest(const std::string& tableName_, const std::vector<std::string>& columnNames_, const std::string& variableColumnName_, const std::string& valueColumnName_, const std::vector<std::string>& pivotedColumns_, const std::string& encoding_, const std::map<std::string, std::string>& options_):
             tableName( tableName_ ),
+            columnNames( columnNames_ ),
             variableColumnName( variableColumnName_ ),
             valueColumnName( valueColumnName_ ),
             pivotedColumns( pivotedColumns_ ),
@@ -242,6 +251,7 @@ namespace gpudb
         }
 
         std::string tableName;
+        std::vector<std::string> columnNames;
         std::string variableColumnName;
         std::string valueColumnName;
         std::vector<std::string> pivotedColumns;
@@ -257,6 +267,7 @@ namespace avro
         static void encode(Encoder& e, const gpudb::AggregateUnpivotRequest& v)
         {
             ::avro::encode(e, v.tableName);
+            ::avro::encode(e, v.columnNames);
             ::avro::encode(e, v.variableColumnName);
             ::avro::encode(e, v.valueColumnName);
             ::avro::encode(e, v.pivotedColumns);
@@ -279,22 +290,26 @@ namespace avro
                             break;
 
                         case 1:
-                            ::avro::decode(d, v.variableColumnName);
+                            ::avro::decode(d, v.columnNames);
                             break;
 
                         case 2:
-                            ::avro::decode(d, v.valueColumnName);
+                            ::avro::decode(d, v.variableColumnName);
                             break;
 
                         case 3:
-                            ::avro::decode(d, v.pivotedColumns);
+                            ::avro::decode(d, v.valueColumnName);
                             break;
 
                         case 4:
-                            ::avro::decode(d, v.encoding);
+                            ::avro::decode(d, v.pivotedColumns);
                             break;
 
                         case 5:
+                            ::avro::decode(d, v.encoding);
+                            break;
+
+                        case 6:
                             ::avro::decode(d, v.options);
                             break;
 
@@ -306,6 +321,7 @@ namespace avro
             else
             {
                 ::avro::decode(d, v.tableName);
+                ::avro::decode(d, v.columnNames);
                 ::avro::decode(d, v.variableColumnName);
                 ::avro::decode(d, v.valueColumnName);
                 ::avro::decode(d, v.pivotedColumns);

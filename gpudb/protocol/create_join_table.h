@@ -143,6 +143,10 @@ namespace gpudb
          *                      specified in @a joinTableName.
          *                              <li> gpudb::create_join_table_view_id:
          *                      view this projection is part of
+         *                              <li> gpudb::create_join_table_no_count:
+         *                      return a count of 0 for the join table for
+         *                      logging and for show_table. optimization needed
+         *                      for large overlapped equi-join stencils
          *                      </ul>
          * 
          */

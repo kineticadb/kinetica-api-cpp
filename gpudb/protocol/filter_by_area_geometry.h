@@ -57,6 +57,15 @@ namespace gpudb
          * @param[in] yVector_  List of y coordinates of the vertices of the
          *                      polygon representing the area to be filtered.
          * @param[in] options_  Optional parameters.
+         *                      <ul>
+         *                              <li>
+         *                      gpudb::filter_by_area_geometry_collection_name:
+         *                      Name of a collection which is to contain the
+         *                      newly created view. If the collection provided
+         *                      is non-existent, the collection will be
+         *                      automatically created. If empty, then the newly
+         *                      created view will be top-level.
+         *                      </ul>
          * 
          */
         FilterByAreaGeometryRequest(const std::string& tableName_, const std::string& viewName_, const std::string& columnName_, const std::vector<double>& xVector_, const std::vector<double>& yVector_, const std::map<std::string, std::string>& options_):

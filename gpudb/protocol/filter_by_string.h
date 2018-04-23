@@ -81,6 +81,13 @@ namespace gpudb
          * @param[in] options_  Optional parameters.
          *                      <ul>
          *                              <li>
+         *                      gpudb::filter_by_string_collection_name: Name
+         *                      of a collection which is to contain the newly
+         *                      created view. If the collection provided is
+         *                      non-existent, the collection will be
+         *                      automatically created. If empty, then the newly
+         *                      created view will be top-level.
+         *                              <li>
          *                      gpudb::filter_by_string_case_sensitive: If
          *                      'false' then string filtering will ignore case.
          *                      Does not apply to 'search' mode.

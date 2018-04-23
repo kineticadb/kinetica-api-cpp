@@ -16,8 +16,8 @@ namespace gpudb
      * Retrieves records from a given table, optionally filtered by an
      * expression and/or sorted by a column. This operation can be performed on
      * tables, views, or on homogeneous collections (collections containing
-     * tables of all the same type). Records can be returned encoded as binary
-     * or json.
+     * tables of all the same type). Records can be returned encoded as binary,
+     * json or geojson.
      * <p>
      * This operation supports paging through the data via the @a offset and @a
      * limit parameters. Note that when paging through a table, if the table
@@ -120,6 +120,7 @@ namespace gpudb
          *                       <ul>
          *                               <li> gpudb::get_records_binary
          *                               <li> gpudb::get_records_json
+         *                               <li> gpudb::get_records_geojson
          *                       </ul>
          *                       The default value is
          *                       gpudb::get_records_binary.
@@ -247,8 +248,8 @@ namespace gpudb
      * Retrieves records from a given table, optionally filtered by an
      * expression and/or sorted by a column. This operation can be performed on
      * tables, views, or on homogeneous collections (collections containing
-     * tables of all the same type). Records can be returned encoded as binary
-     * or json.
+     * tables of all the same type). Records can be returned encoded as binary,
+     * json or geojson.
      * <p>
      * This operation supports paging through the data via the @a offset and @a
      * limit parameters. Note that when paging through a table, if the table
@@ -366,8 +367,8 @@ namespace gpudb
      * Retrieves records from a given table, optionally filtered by an
      * expression and/or sorted by a column. This operation can be performed on
      * tables, views, or on homogeneous collections (collections containing
-     * tables of all the same type). Records can be returned encoded as binary
-     * or json.
+     * tables of all the same type). Records can be returned encoded as binary,
+     * json or geojson.
      * <p>
      * This operation supports paging through the data via the @a offset and @a
      * limit parameters. Note that when paging through a table, if the table

@@ -162,9 +162,12 @@
     <ClCompile Include="..\..\gpudb\GenericRecord.cpp" />
     <ClCompile Include="..\..\gpudb\GPUdb.cpp" />
     <ClCompile Include="..\..\gpudb\GPUdbException.cpp" />
+    <ClCompile Include="..\..\gpudb\GPUdbIngestor.cpp" />
     <ClCompile Include="..\..\gpudb\Http.cpp" />
     <ClCompile Include="..\..\gpudb\protocol\EndpointKeywords.cpp" />
     <ClCompile Include="..\..\gpudb\Type.cpp" />
+    <ClCompile Include="..\..\gpudb\utils\GPUdbMultiHeadIOUtils.cpp" />
+    <ClCompile Include="..\..\gpudb\utils\MurmurHash3.cpp" />
     <ClCompile Include="..\..\thirdparty\snappy-windows-1.1.1.8\src\snappy-c.cc" />
     <ClCompile Include="..\..\thirdparty\snappy-windows-1.1.1.8\src\snappy-sinksource.cc" />
     <ClCompile Include="..\..\thirdparty\snappy-windows-1.1.1.8\src\snappy-stubs-internal.cc" />
@@ -181,6 +184,7 @@
     <ClInclude Include="..\..\gpudb\GPUdbTemplates.hpp" />
     <ClInclude Include="..\..\gpudb\Http.hpp" />
     <ClInclude Include="..\..\gpudb\Type.hpp" />
+    <ClInclude Include="..\..\gpudb\utils\GPUdbMultiHeadIOUtils.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\README.md" />

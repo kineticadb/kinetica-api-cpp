@@ -74,6 +74,15 @@ namespace gpudb
          *                     value is 0. The maximum allowed value is
          *                     MAX_INT.
          * @param[in] options_  Optional parameters.
+         *                      <ul>
+         *                              <li>
+         *                      gpudb::filter_by_radius_collection_name: Name
+         *                      of a collection which is to contain the newly
+         *                      created view. If the collection provided is
+         *                      non-existent, the collection will be
+         *                      automatically created. If empty, then the newly
+         *                      created view will be top-level.
+         *                      </ul>
          * 
          */
         FilterByRadiusRequest(const std::string& tableName_, const std::string& viewName_, const std::string& xColumnName_, const double xCenter_, const std::string& yColumnName_, const double yCenter_, const double radius_, const std::map<std::string, std::string>& options_):

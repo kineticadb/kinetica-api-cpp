@@ -59,6 +59,15 @@ namespace gpudb
          * @param[in] lowerBound_  Value of the lower bound (inclusive).
          * @param[in] upperBound_  Value of the upper bound (inclusive).
          * @param[in] options_  Optional parameters.
+         *                      <ul>
+         *                              <li>
+         *                      gpudb::filter_by_range_collection_name: Name of
+         *                      a collection which is to contain the newly
+         *                      created view. If the collection provided is
+         *                      non-existent, the collection will be
+         *                      automatically created. If empty, then the newly
+         *                      created view will be top-level.
+         *                      </ul>
          * 
          */
         FilterByRangeRequest(const std::string& tableName_, const std::string& viewName_, const std::string& columnName_, const double lowerBound_, const double upperBound_, const std::map<std::string, std::string>& options_):

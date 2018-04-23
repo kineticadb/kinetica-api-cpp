@@ -134,11 +134,23 @@ namespace gpudb
          *                      Force the result table to be replicated
          *                      (ignores any sharding). Must be used in
          *                      combination with the @a result_table option.
+         *                      <ul>
+         *                              <li> gpudb::aggregate_unique_true
+         *                              <li> gpudb::aggregate_unique_false
+         *                      </ul>
+         *                      The default value is
+         *                      gpudb::aggregate_unique_false.
          *                              <li>
          *                      gpudb::aggregate_unique_result_table_generate_pk:
          *                      If 'true' then set a primary key for the result
          *                      table. Must be used in combination with the @a
          *                      result_table option.
+         *                      <ul>
+         *                              <li> gpudb::aggregate_unique_true
+         *                              <li> gpudb::aggregate_unique_false
+         *                      </ul>
+         *                      The default value is
+         *                      gpudb::aggregate_unique_false.
          *                              <li> gpudb::aggregate_unique_ttl: Sets
          *                      the <a href="../../concepts/ttl.html"
          *                      target="_top">TTL</a> of the table specified in
@@ -244,11 +256,23 @@ namespace gpudb
          *                      Force the result table to be replicated
          *                      (ignores any sharding). Must be used in
          *                      combination with the @a result_table option.
+         *                      <ul>
+         *                              <li> gpudb::aggregate_unique_true
+         *                              <li> gpudb::aggregate_unique_false
+         *                      </ul>
+         *                      The default value is
+         *                      gpudb::aggregate_unique_false.
          *                              <li>
          *                      gpudb::aggregate_unique_result_table_generate_pk:
          *                      If 'true' then set a primary key for the result
          *                      table. Must be used in combination with the @a
          *                      result_table option.
+         *                      <ul>
+         *                              <li> gpudb::aggregate_unique_true
+         *                              <li> gpudb::aggregate_unique_false
+         *                      </ul>
+         *                      The default value is
+         *                      gpudb::aggregate_unique_false.
          *                              <li> gpudb::aggregate_unique_ttl: Sets
          *                      the <a href="../../concepts/ttl.html"
          *                      target="_top">TTL</a> of the table specified in
