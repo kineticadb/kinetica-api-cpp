@@ -50,8 +50,9 @@ namespace gpudb
          * 
          * @param[in] tableName_  Name of the table on which the filter by
          *                        track operation will be performed. Must be a
-         *                        currently existing table with track semantic
-         *                        type.
+         *                        currently existing table with a <a
+         *                        href="../../geospatial/geo_objects.html"
+         *                        target="_top">track</a> present.
          * @param[in] viewName_  If provided, then this will be the name of the
          *                       view containing the results. Has the same
          *                       naming restrictions as <a

@@ -179,6 +179,14 @@ namespace gpudb
          *                                 Enable JobManager to enforce
          *                                 processing of requests in the order
          *                                 received.
+         *                                         <li>
+         *                                 gpudb::alter_system_properties_chunk_cache_enabled:
+         *                                 Enable chunk level query caching.
+         *                                 Flushes the chunk cache when value
+         *                                 is false
+         *                                         <li>
+         *                                 gpudb::alter_system_properties_chunk_cache_size:
+         *                                 Size of the chunk cache in bytes.
          *                                 </ul>
          * @param[in] options_  Optional parameters.
          * 

@@ -9,11 +9,9 @@
 #include <avro/Specific.hh>
 
 #include "gpudb_wrapper.h"
-#include "admin_alter_configuration.h"
 #include "admin_alter_jobs.h"
 #include "admin_offline.h"
 #include "admin_show_alerts.h"
-#include "admin_show_configuration.h"
 #include "admin_show_jobs.h"
 #include "admin_show_shards.h"
 #include "admin_shutdown.h"
@@ -106,6 +104,7 @@
 #include "visualize_image.h"
 #include "visualize_image_chart.h"
 #include "visualize_image_classbreak.h"
+#include "visualize_image_contour.h"
 #include "visualize_image_heatmap.h"
 #include "visualize_image_labels.h"
 #include "visualize_video.h"

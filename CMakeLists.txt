@@ -318,6 +318,7 @@ ADD_LIBRARY_FULL( gpudb_api_cpp_lib_${STATIC_OR_SHARED} ${STATIC_OR_SHARED}
         protocol/GPUdbProtocol.h
         utils/MurmurHash3.h
         utils/GPUdbMultiHeadIOUtils.h
+        utils/Utils.h
     SOURCES
         Avro.cpp
         ColumnProperties.cpp
@@ -362,7 +363,7 @@ endfunction( gpudb_api_cpp_example_TARGETS )
 
 
 # ---------------------------------------------------------------------------
-# test executable
+# test executables
 # ---------------------------------------------------------------------------
 
 function( gpudb_api_cpp_multihead_ingest_TARGETS )
@@ -381,12 +382,31 @@ ADD_EXECUTABLE_FULL( test_multihead_ingest
 
 endfunction( gpudb_api_cpp_multihead_ingest_TARGETS )
 
+function( gpudb_api_cpp_tests_TARGETS )
+
+ADD_EXECUTABLE_FULL( test_api
+    HEADERS
+        test_utils.h
+    SOURCES
+        test_api.cpp
+        test_utils.cpp
+    LINK_LIBRARIES
+        gpudb_api_cpp_lib_STATIC
+        ${GPUDB_API_CPP_LINK_LIBRARIES}
+    PROPERTIES COMPILE_FLAGS "-std=c++0x"
+    PROPERTIES FOLDER "Example"
+    PROPERTIES OUTPUT_NAME "test_api"
+)
+
+endfunction( gpudb_api_cpp_tests_TARGETS )
+
 # ===========================================================================
 # Add the subdirectories with their projects in them
 # ===========================================================================
 
 add_subdirectory(gpudb)
 add_subdirectory(example)
+add_subdirectory(tests)
 
 MESSAGE(STATUS "*")
 PRINT_ADD_LIBRARY(TRUE)

@@ -56,7 +56,7 @@ namespace gpudb
          *                          include all columns across member tables or
          *                          'table_id.*' for all of a single table's
          *                          columns.  Columns and column expressions
-         *                          comprising the join must be uniquely named
+         *                          composing the join must be uniquely named
          *                          or aliased--therefore, the '*' wild card
          *                          cannot be used if column names aren't
          *                          unique across all tables.
@@ -103,7 +103,10 @@ namespace gpudb
          *                      and new data is inserted into the base table.
          *                      A full refresh of all the records occurs when a
          *                      new query is issued and there have been inserts
-         *                      to any non-base-tables since the last query
+         *                      to any non-base-tables since the last query.
+         *                      <a href="../../concepts/ttl.html"
+         *                      target="_top">TTL</a> will be set to not
+         *                      expire; any @a ttl specified will be ignored.
          *                              <li>
          *                      gpudb::create_join_table_on_insert:
          *                      incrementally refresh (refresh just those
@@ -111,7 +114,10 @@ namespace gpudb
          *                      into a base table.  A full refresh of all the
          *                      records occurs when a new query is issued and
          *                      there have been inserts to any non-base-tables
-         *                      since the last query
+         *                      since the last query.  <a
+         *                      href="../../concepts/ttl.html"
+         *                      target="_top">TTL</a> will be set to not
+         *                      expire; any @a ttl specified will be ignored.
          *                      </ul>
          *                      The default value is
          *                      gpudb::create_join_table_manual.
@@ -140,7 +146,9 @@ namespace gpudb
          *                              <li> gpudb::create_join_table_ttl: Sets
          *                      the <a href="../../concepts/ttl.html"
          *                      target="_top">TTL</a> of the join table
-         *                      specified in @a joinTableName.
+         *                      specified in @a joinTableName.  Ignored if @a
+         *                      refresh_method is either @a on_insert or @a
+         *                      on_query.
          *                              <li> gpudb::create_join_table_view_id:
          *                      view this projection is part of
          *                              <li> gpudb::create_join_table_no_count:

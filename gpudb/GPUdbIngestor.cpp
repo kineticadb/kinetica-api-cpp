@@ -1,7 +1,7 @@
 #include "gpudb/GPUdbIngestor.hpp"
 
 #include "gpudb/utils/GPUdbMultiHeadIOUtils.h"
-
+#include "gpudb/utils/Utils.h"
 
 
 
@@ -67,12 +67,25 @@ void GPUdbIngestor::construct( const gpudb::GPUdb& db,
 {
     m_table_name  = table_name;
 
+    // Check that the table exists
+    str_to_str_map_t  opts;
+    if ( !db.hasTable( table_name, opts ).tableExists )
+    {
+        throw GPUdbException( GPUDB_STREAM_TO_STRING( "Table '" << table_name
+                                                      << "' does not exist!" ) );
+    }
+
+    // Check if it is a replicated table (if so, then can't do
+    // multi-head ingestion; will have to force rank-0 ingestion)
+    bool is_replicated_table = false;
+    std::vector<std::string> table_descriptions = db.showTable( table_name, opts ).tableDescriptions[ 0 ];
+    is_replicated_table  = (std::find( table_descriptions.begin(), table_descriptions.end(), gpudb::show_table_REPLICATED )
+                            != table_descriptions.end() );
+
     // The batch size must be greater than or equal to 1
     if ( batch_size < 1 )
     {
-        std::ostringstream ss;
-        ss << "Batch size must be greater than one; given " << batch_size;
-        throw GPUdbException( ss.str() );
+        throw GPUdbException( GPUDB_STREAM_TO_STRING( "Batch size must be greater than one; given " << batch_size ) );
     }
     m_batch_size = batch_size;
 
@@ -89,7 +102,8 @@ void GPUdbIngestor::construct( const gpudb::GPUdb& db,
         // Now check if there is a distinct shard key
         if ( !m_shard_key_builder_ptr->has_key()
              || (*m_shard_key_builder_ptr == *m_primary_key_builder_ptr) )
-        {  // No distinct shard key
+        {   // No distinct shard key
+            delete m_shard_key_builder_ptr; // release resources
             m_shard_key_builder_ptr = m_primary_key_builder_ptr;
         }
     }
@@ -98,13 +112,13 @@ void GPUdbIngestor::construct( const gpudb::GPUdb& db,
         // Release the source and set to null
         delete m_primary_key_builder_ptr;
         m_primary_key_builder_ptr = NULL;
+    }
 
-        // Check if there are shard keys
-        if ( !m_shard_key_builder_ptr->has_key() )
-        {   // release the source
-            delete m_shard_key_builder_ptr;
-            m_shard_key_builder_ptr = NULL;
-        }
+    // Check if there are shard keys
+    if ( !m_shard_key_builder_ptr->has_key() )
+    {   // release the source
+        delete m_shard_key_builder_ptr;
+        m_shard_key_builder_ptr = NULL;
     }
 
     // Set up the worker queues
@@ -122,8 +136,9 @@ void GPUdbIngestor::construct( const gpudb::GPUdb& db,
     bool has_primary_key = (m_primary_key_builder_ptr != NULL);
     try
     {
-        // If we have multiple workers, then use those
-        if ( !worker_list.empty() )
+        // If we have multiple workers, then use those (unless the table
+        // is replicated)
+        if ( !worker_list.empty() && !is_replicated_table )
         {
             // Add a worker (record) queue per worker rank of the database
             for ( WorkerList::const_iterator it = worker_list.begin(); it != worker_list.end(); ++it )
@@ -173,12 +188,23 @@ void GPUdbIngestor::construct( const gpudb::GPUdb& db,
 
 GPUdbIngestor::~GPUdbIngestor()
 {
-    // Release resources
-    delete m_primary_key_builder_ptr;
-    delete m_shard_key_builder_ptr;
-
     m_worker_queues.clear();
     m_routing_table.clear();
+
+    // Release resources
+    if ( (m_primary_key_builder_ptr == m_shard_key_builder_ptr)
+         && (m_primary_key_builder_ptr != NULL) )
+    {
+        // The primary key and the shard key builders are the same
+        delete m_primary_key_builder_ptr;
+    }
+    else
+    {
+        if (m_primary_key_builder_ptr != NULL)
+            delete m_primary_key_builder_ptr;
+        if (m_shard_key_builder_ptr != NULL)
+            delete m_shard_key_builder_ptr;
+    }
 }  // end destructor
 
 /*

@@ -36,6 +36,7 @@ namespace gpudb
     const std::string aggregate_group_by_binary                       ( "binary"                        );
     const std::string aggregate_group_by_chunk_size                   ( "chunk_size"                    );
     const std::string aggregate_group_by_collection_name              ( "collection_name"               );
+    const std::string aggregate_group_by_create_indexes               ( "create_indexes"                );
     const std::string aggregate_group_by_cube                         ( "cube"                          );
     const std::string aggregate_group_by_descending                   ( "descending"                    );
     const std::string aggregate_group_by_expression                   ( "expression"                    );
@@ -135,6 +136,8 @@ namespace gpudb
     const std::string alter_system_properties_audit_data                 ( "audit_data"                  );
     const std::string alter_system_properties_audit_headers              ( "audit_headers"               );
     const std::string alter_system_properties_bulk_add_test              ( "bulk_add_test"               );
+    const std::string alter_system_properties_chunk_cache_enabled        ( "chunk_cache_enabled"         );
+    const std::string alter_system_properties_chunk_cache_size           ( "chunk_cache_size"            );
     const std::string alter_system_properties_chunk_size                 ( "chunk_size"                  );
     const std::string alter_system_properties_clear_cache                ( "clear_cache"                 );
     const std::string alter_system_properties_communicator_test          ( "communicator_test"           );
@@ -171,6 +174,7 @@ namespace gpudb
     const std::string alter_table_false                   ( "false"                    );
     const std::string alter_table_lz4                     ( "lz4"                      );
     const std::string alter_table_lz4hc                   ( "lz4hc"                    );
+    const std::string alter_table_memory_ttl              ( "memory_ttl"               );
     const std::string alter_table_move_to_collection      ( "move_to_collection"       );
     const std::string alter_table_none                    ( "none"                     );
     const std::string alter_table_protected               ( "protected"                );
@@ -248,8 +252,10 @@ namespace gpudb
     // Keywords for /create/projection request
     const std::string create_projection_chunk_size            ( "chunk_size"             );
     const std::string create_projection_collection_name       ( "collection_name"        );
+    const std::string create_projection_create_indexes        ( "create_indexes"         );
     const std::string create_projection_expression            ( "expression"             );
     const std::string create_projection_false                 ( "false"                  );
+    const std::string create_projection_is_replicated         ( "is_replicated"          );
     const std::string create_projection_limit                 ( "limit"                  );
     const std::string create_projection_materialize_on_gpu    ( "materialize_on_gpu"     );
     const std::string create_projection_order_by              ( "order_by"               );
@@ -315,6 +321,7 @@ namespace gpudb
     // Keywords for /create/union request
     const std::string create_union_chunk_size        ( "chunk_size"         );
     const std::string create_union_collection_name   ( "collection_name"    );
+    const std::string create_union_create_indexes    ( "create_indexes"     );
     const std::string create_union_except            ( "except"             );
     const std::string create_union_false             ( "false"              );
     const std::string create_union_intersect         ( "intersect"          );
@@ -330,11 +337,15 @@ namespace gpudb
     const std::string create_union_view_id           ( "view_id"            );
 
     // Keywords for /delete/records request
-    const std::string delete_records_global_expression( "global_expression" );
-    const std::string delete_records_record_id        ( "record_id"         );
+    const std::string delete_records_delete_all_records( "delete_all_records" );
+    const std::string delete_records_false             ( "false"              );
+    const std::string delete_records_global_expression ( "global_expression"  );
+    const std::string delete_records_record_id         ( "record_id"          );
+    const std::string delete_records_true              ( "true"               );
 
     // Keywords for /execute/proc request
     const std::string execute_proc_cache_input     ( "cache_input"      );
+    const std::string execute_proc_kifs_input_dirs ( "kifs_input_dirs"  );
     const std::string execute_proc_use_cached_input( "use_cached_input" );
 
     // Keywords for /filter request
@@ -602,6 +613,7 @@ namespace gpudb
     const std::string show_table_is_dirty                ( "is_dirty"                 );
     const std::string show_table_is_view_persisted       ( "is_view_persisted"        );
     const std::string show_table_last_refresh_time       ( "last_refresh_time"        );
+    const std::string show_table_memory_ttl              ( "memory_ttl"               );
     const std::string show_table_next_refresh_time       ( "next_refresh_time"        );
     const std::string show_table_no_access               ( "no_access"                );
     const std::string show_table_protected               ( "protected"                );
@@ -757,6 +769,45 @@ namespace gpudb
     const std::string visualize_image_classbreak_trackmarkershapes  ( "trackmarkershapes"   );
     const std::string visualize_image_classbreak_trackmarkersizes   ( "trackmarkersizes"    );
     const std::string visualize_image_classbreak_true               ( "true"                );
+
+    // Keywords for /visualize/image/contour request
+    const std::string visualize_image_contour_102100            ( "102100"             );
+    const std::string visualize_image_contour_3857              ( "3857"               );
+    const std::string visualize_image_contour_900913            ( "900913"             );
+    const std::string visualize_image_contour_EPSG_102100       ( "EPSG:102100"        );
+    const std::string visualize_image_contour_EPSG_3857         ( "EPSG:3857"          );
+    const std::string visualize_image_contour_EPSG_4326         ( "EPSG:4326"          );
+    const std::string visualize_image_contour_EPSG_900913       ( "EPSG:900913"        );
+    const std::string visualize_image_contour_INV_DST_POW       ( "INV_DST_POW"        );
+    const std::string visualize_image_contour_KRIGING           ( "KRIGING"            );
+    const std::string visualize_image_contour_MIN_CURV          ( "MIN_CURV"           );
+    const std::string visualize_image_contour_PASS_THROUGH      ( "PASS_THROUGH"       );
+    const std::string visualize_image_contour_PLATE_CARREE      ( "PLATE_CARREE"       );
+    const std::string visualize_image_contour_WEB_MERCATOR      ( "WEB_MERCATOR"       );
+    const std::string visualize_image_contour_bg_color          ( "bg_color"           );
+    const std::string visualize_image_contour_blues             ( "blues"              );
+    const std::string visualize_image_contour_color             ( "color"              );
+    const std::string visualize_image_contour_colormap          ( "colormap"           );
+    const std::string visualize_image_contour_gray              ( "gray"               );
+    const std::string visualize_image_contour_greens            ( "greens"             );
+    const std::string visualize_image_contour_greys             ( "greys"              );
+    const std::string visualize_image_contour_grid_columns      ( "grid_columns"       );
+    const std::string visualize_image_contour_grid_rows         ( "grid_rows"          );
+    const std::string visualize_image_contour_gridding_method   ( "gridding_method"    );
+    const std::string visualize_image_contour_hot               ( "hot"                );
+    const std::string visualize_image_contour_hsv               ( "hsv"                );
+    const std::string visualize_image_contour_jet               ( "jet"                );
+    const std::string visualize_image_contour_line_size         ( "line_size"          );
+    const std::string visualize_image_contour_max_level         ( "max_level"          );
+    const std::string visualize_image_contour_min_level         ( "min_level"          );
+    const std::string visualize_image_contour_num_levels        ( "num_levels"         );
+    const std::string visualize_image_contour_oranges           ( "oranges"            );
+    const std::string visualize_image_contour_purples           ( "purples"            );
+    const std::string visualize_image_contour_reds              ( "reds"               );
+    const std::string visualize_image_contour_render_output_grid( "render_output_grid" );
+    const std::string visualize_image_contour_search_radius     ( "search_radius"      );
+    const std::string visualize_image_contour_smoothing_factor  ( "smoothing_factor"   );
+    const std::string visualize_image_contour_viridis           ( "viridis"            );
 
     // Keywords for /visualize/image/heatmap request
     const std::string visualize_image_heatmap_102100              ( "102100"               );

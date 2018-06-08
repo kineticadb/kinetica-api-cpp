@@ -5,68 +5,6 @@
  */
 
 /**
- * Update the system config file.  Updates to the config file are only
- * permitted when the system is stopped.
- * 
- * @param[in] request_  Request object containing the parameters for the
- *                      operation.
- * 
- * @return Response object containing the result of the operation.
- * 
- */
-
-AdminAlterConfigurationResponse adminAlterConfiguration( const AdminAlterConfigurationRequest& request_ ) const;
-
-/**
- * Update the system config file.  Updates to the config file are only
- * permitted when the system is stopped.
- * 
- * @param[in] request_  Request object containing the parameters for the
- *                      operation.
- * @param[out] response_  Response object containing the results of the
- *                        operation.
- * 
- * @return Response object containing the result of the operation (initially
- *         passed in by reference).
- * 
- */
-
-AdminAlterConfigurationResponse& adminAlterConfiguration( const AdminAlterConfigurationRequest& request_,
-                                                          AdminAlterConfigurationResponse& response_ ) const;
-
-/**
- * Update the system config file.  Updates to the config file are only
- * permitted when the system is stopped.
- * 
- * @param configString  updated contents of the config file.
- * @param options  Optional parameters.
- * 
- * @return Response object containing the result of the operation.
- * 
- */
-
-AdminAlterConfigurationResponse adminAlterConfiguration( const std::string& configString,
-                                                         const std::map<std::string, std::string>& options ) const;
-
-/**
- * Update the system config file.  Updates to the config file are only
- * permitted when the system is stopped.
- * 
- * @param configString  updated contents of the config file.
- * @param options  Optional parameters.
- * @param[out] response_  Response object containing the results of the
- *                        operation.
- * 
- * @return Response object containing the result of the operation (initially
- *         passed in by reference).
- * 
- */
-
-AdminAlterConfigurationResponse& adminAlterConfiguration( const std::string& configString,
-                                                          const std::map<std::string, std::string>& options,
-                                                          AdminAlterConfigurationResponse& response_ ) const;
-
-/**
  * Perform the requested action on a list of one or more job(s). Based on the
  * type of job and the current state of execution, the action may not be
  * successfully executed. The final result of the attempted actions for each
@@ -243,6 +181,15 @@ AdminOfflineResponse& adminOffline( const bool offline,
 /**
  * Retrieves a list of the most recent alerts generated.  The number of alerts
  * to retrieve is specified in this request.
+ * <p>
+ * Important: This endpoint is accessed via the host manager port rather than
+ * the primary database port; the default ports for host manager and the
+ * primary database can be found <a
+ * href="../../install/index.html#default-ports" target="_top">here</a>.  If
+ * you are invoking this endpoint via a GPUdb API object, you must instantiate
+ * that object using the host manager port instead of the database port. The
+ * same IP address is used for both ports.
+
  * Returns lists of alert data, earliest to latest
  * 
  * @param[in] request_  Request object containing the parameters for the
@@ -257,6 +204,15 @@ AdminShowAlertsResponse adminShowAlerts( const AdminShowAlertsRequest& request_ 
 /**
  * Retrieves a list of the most recent alerts generated.  The number of alerts
  * to retrieve is specified in this request.
+ * <p>
+ * Important: This endpoint is accessed via the host manager port rather than
+ * the primary database port; the default ports for host manager and the
+ * primary database can be found <a
+ * href="../../install/index.html#default-ports" target="_top">here</a>.  If
+ * you are invoking this endpoint via a GPUdb API object, you must instantiate
+ * that object using the host manager port instead of the database port. The
+ * same IP address is used for both ports.
+
  * Returns lists of alert data, earliest to latest
  * 
  * @param[in] request_  Request object containing the parameters for the
@@ -275,6 +231,15 @@ AdminShowAlertsResponse& adminShowAlerts( const AdminShowAlertsRequest& request_
 /**
  * Retrieves a list of the most recent alerts generated.  The number of alerts
  * to retrieve is specified in this request.
+ * <p>
+ * Important: This endpoint is accessed via the host manager port rather than
+ * the primary database port; the default ports for host manager and the
+ * primary database can be found <a
+ * href="../../install/index.html#default-ports" target="_top">here</a>.  If
+ * you are invoking this endpoint via a GPUdb API object, you must instantiate
+ * that object using the host manager port instead of the database port. The
+ * same IP address is used for both ports.
+
  * Returns lists of alert data, earliest to latest
  * 
  * @param numAlerts  Number of most recent alerts to request. The response will
@@ -292,6 +257,15 @@ AdminShowAlertsResponse adminShowAlerts( const int32_t numAlerts,
 /**
  * Retrieves a list of the most recent alerts generated.  The number of alerts
  * to retrieve is specified in this request.
+ * <p>
+ * Important: This endpoint is accessed via the host manager port rather than
+ * the primary database port; the default ports for host manager and the
+ * primary database can be found <a
+ * href="../../install/index.html#default-ports" target="_top">here</a>.  If
+ * you are invoking this endpoint via a GPUdb API object, you must instantiate
+ * that object using the host manager port instead of the database port. The
+ * same IP address is used for both ports.
+
  * Returns lists of alert data, earliest to latest
  * 
  * @param numAlerts  Number of most recent alerts to request. The response will
@@ -309,60 +283,6 @@ AdminShowAlertsResponse adminShowAlerts( const int32_t numAlerts,
 AdminShowAlertsResponse& adminShowAlerts( const int32_t numAlerts,
                                           const std::map<std::string, std::string>& options,
                                           AdminShowAlertsResponse& response_ ) const;
-
-/**
- * Show the current system configuration file.
- * 
- * @param[in] request_  Request object containing the parameters for the
- *                      operation.
- * 
- * @return Response object containing the result of the operation.
- * 
- */
-
-AdminShowConfigurationResponse adminShowConfiguration( const AdminShowConfigurationRequest& request_ ) const;
-
-/**
- * Show the current system configuration file.
- * 
- * @param[in] request_  Request object containing the parameters for the
- *                      operation.
- * @param[out] response_  Response object containing the results of the
- *                        operation.
- * 
- * @return Response object containing the result of the operation (initially
- *         passed in by reference).
- * 
- */
-
-AdminShowConfigurationResponse& adminShowConfiguration( const AdminShowConfigurationRequest& request_,
-                                                        AdminShowConfigurationResponse& response_ ) const;
-
-/**
- * Show the current system configuration file.
- * 
- * @param options  Optional parameters.
- * 
- * @return Response object containing the result of the operation.
- * 
- */
-
-AdminShowConfigurationResponse adminShowConfiguration( const std::map<std::string, std::string>& options ) const;
-
-/**
- * Show the current system configuration file.
- * 
- * @param options  Optional parameters.
- * @param[out] response_  Response object containing the results of the
- *                        operation.
- * 
- * @return Response object containing the result of the operation (initially
- *         passed in by reference).
- * 
- */
-
-AdminShowConfigurationResponse& adminShowConfiguration( const std::map<std::string, std::string>& options,
-                                                        AdminShowConfigurationResponse& response_ ) const;
 
 /**
  * Get a list of the current jobs in GPUdb.
@@ -1178,6 +1098,10 @@ AggregateGroupByResponse& aggregateGroupBy( const AggregateGroupByRequest& reque
  *                         <li> gpudb::aggregate_group_by_chunk_size: Indicates
  *                 the chunk size to be used for the result table. Must be used
  *                 in combination with the @a result_table option.
+ *                         <li> gpudb::aggregate_group_by_create_indexes:
+ *                 Comma-separated list of columns on which to create indexes
+ *                 on the result table. Must be used in combination with the @a
+ *                 result_table option.
  *                         <li> gpudb::aggregate_group_by_view_id: view this
  *                 result table is part of
  *                         <li> gpudb::aggregate_group_by_materialize_on_gpu:
@@ -1376,6 +1300,10 @@ AggregateGroupByResponse aggregateGroupBy( const std::string& tableName,
  *                         <li> gpudb::aggregate_group_by_chunk_size: Indicates
  *                 the chunk size to be used for the result table. Must be used
  *                 in combination with the @a result_table option.
+ *                         <li> gpudb::aggregate_group_by_create_indexes:
+ *                 Comma-separated list of columns on which to create indexes
+ *                 on the result table. Must be used in combination with the @a
+ *                 result_table option.
  *                         <li> gpudb::aggregate_group_by_view_id: view this
  *                 result table is part of
  *                         <li> gpudb::aggregate_group_by_materialize_on_gpu:
@@ -1427,7 +1355,8 @@ AggregateGroupByResponse& aggregateGroupBy( const std::string& tableName,
  * inclusive.  The value returned for each bin is the number of records in it,
  * except when a column name is provided as a *value_column* in @a options.  In
  * this latter case the sum of the values corresponding to the *value_column*
- * is used as the result instead.
+ * is used as the result instead.  The total number of bins requested cannot
+ * exceed 10,000.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -1447,7 +1376,8 @@ AggregateHistogramResponse aggregateHistogram( const AggregateHistogramRequest& 
  * inclusive.  The value returned for each bin is the number of records in it,
  * except when a column name is provided as a *value_column* in @a options.  In
  * this latter case the sum of the values corresponding to the *value_column*
- * is used as the result instead.
+ * is used as the result instead.  The total number of bins requested cannot
+ * exceed 10,000.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -1471,7 +1401,8 @@ AggregateHistogramResponse& aggregateHistogram( const AggregateHistogramRequest&
  * inclusive.  The value returned for each bin is the number of records in it,
  * except when a column name is provided as a *value_column* in @a options.  In
  * this latter case the sum of the values corresponding to the *value_column*
- * is used as the result instead.
+ * is used as the result instead.  The total number of bins requested cannot
+ * exceed 10,000.
  * 
  * @param tableName  Name of the table on which the operation will be
  *                   performed. Must be an existing table or collection.
@@ -1508,7 +1439,8 @@ AggregateHistogramResponse aggregateHistogram( const std::string& tableName,
  * inclusive.  The value returned for each bin is the number of records in it,
  * except when a column name is provided as a *value_column* in @a options.  In
  * this latter case the sum of the values corresponding to the *value_column*
- * is used as the result instead.
+ * is used as the result instead.  The total number of bins requested cannot
+ * exceed 10,000.
  * 
  * @param tableName  Name of the table on which the operation will be
  *                   performed. Must be an existing table or collection.
@@ -1829,9 +1761,9 @@ AggregateMinMaxGeometryResponse& aggregateMinMaxGeometry( const std::string& tab
  * specified separately (i.e.
  * 'percentile(75.0),percentile(99.0),percentile_rank(1234.56),percentile_rank(-5)').
  * <p>
- * A second, comma-separated value can be added to the {percentile}@{choise of
- * input stats} statistic to calculate percentile resolution, e.g., a 50th
- * percentile with 200 resolution would be 'percentile(50,200)'.
+ * A second, comma-separated value can be added to the @a percentile statistic
+ * to calculate percentile resolution, e.g., a 50th percentile with 200
+ * resolution would be 'percentile(50,200)'.
  * <p>
  * The weighted average statistic requires a @a weight_column_name to be
  * specified in @a options. The weighted average is then defined as the sum of
@@ -1876,9 +1808,9 @@ AggregateStatisticsResponse aggregateStatistics( const AggregateStatisticsReques
  * specified separately (i.e.
  * 'percentile(75.0),percentile(99.0),percentile_rank(1234.56),percentile_rank(-5)').
  * <p>
- * A second, comma-separated value can be added to the {percentile}@{choise of
- * input stats} statistic to calculate percentile resolution, e.g., a 50th
- * percentile with 200 resolution would be 'percentile(50,200)'.
+ * A second, comma-separated value can be added to the @a percentile statistic
+ * to calculate percentile resolution, e.g., a 50th percentile with 200
+ * resolution would be 'percentile(50,200)'.
  * <p>
  * The weighted average statistic requires a @a weight_column_name to be
  * specified in @a options. The weighted average is then defined as the sum of
@@ -1927,9 +1859,9 @@ AggregateStatisticsResponse& aggregateStatistics( const AggregateStatisticsReque
  * specified separately (i.e.
  * 'percentile(75.0),percentile(99.0),percentile_rank(1234.56),percentile_rank(-5)').
  * <p>
- * A second, comma-separated value can be added to the {percentile}@{choise of
- * input stats} statistic to calculate percentile resolution, e.g., a 50th
- * percentile with 200 resolution would be 'percentile(50,200)'.
+ * A second, comma-separated value can be added to the @a percentile statistic
+ * to calculate percentile resolution, e.g., a 50th percentile with 200
+ * resolution would be 'percentile(50,200)'.
  * <p>
  * The weighted average statistic requires a @a weight_column_name to be
  * specified in @a options. The weighted average is then defined as the sum of
@@ -2033,9 +1965,9 @@ AggregateStatisticsResponse aggregateStatistics( const std::string& tableName,
  * specified separately (i.e.
  * 'percentile(75.0),percentile(99.0),percentile_rank(1234.56),percentile_rank(-5)').
  * <p>
- * A second, comma-separated value can be added to the {percentile}@{choise of
- * input stats} statistic to calculate percentile resolution, e.g., a 50th
- * percentile with 200 resolution would be 'percentile(50,200)'.
+ * A second, comma-separated value can be added to the @a percentile statistic
+ * to calculate percentile resolution, e.g., a 50th percentile with 200
+ * resolution would be 'percentile(50,200)'.
  * <p>
  * The weighted average statistic requires a @a weight_column_name to be
  * specified in @a options. The weighted average is then defined as the sum of
@@ -3233,6 +3165,13 @@ AlterSystemPropertiesResponse& alterSystemProperties( const AlterSystemPropertie
  *                            gpudb::alter_system_properties_enable_job_manager:
  *                            Enable JobManager to enforce processing of
  *                            requests in the order received.
+ *                                    <li>
+ *                            gpudb::alter_system_properties_chunk_cache_enabled:
+ *                            Enable chunk level query caching. Flushes the
+ *                            chunk cache when value is false
+ *                                    <li>
+ *                            gpudb::alter_system_properties_chunk_cache_size:
+ *                            Size of the chunk cache in bytes.
  *                            </ul>
  * @param options  Optional parameters.
  * 
@@ -3364,6 +3303,13 @@ AlterSystemPropertiesResponse alterSystemProperties( const std::map<std::string,
  *                            gpudb::alter_system_properties_enable_job_manager:
  *                            Enable JobManager to enforce processing of
  *                            requests in the order received.
+ *                                    <li>
+ *                            gpudb::alter_system_properties_chunk_cache_enabled:
+ *                            Enable chunk level query caching. Flushes the
+ *                            chunk cache when value is false
+ *                                    <li>
+ *                            gpudb::alter_system_properties_chunk_cache_size:
+ *                            Size of the chunk cache in bytes.
  *                            </ul>
  * @param options  Optional parameters.
  * @param[out] response_  Response object containing the results of the
@@ -3395,9 +3341,13 @@ AlterSystemPropertiesResponse& alterSystemProperties( const std::map<std::string
  * contained
  * table & view that is not protected will have its TTL set to the given value.
  * <p>
- * Set the global access mode (i.e. locking) for a table. The mode can be set
- * to
- * 'no_access', 'read_only', 'write_only' or 'read_write'.
+ * Set the global access mode (i.e. locking) for a table. This setting trumps
+ * any
+ * role-based access controls that may be in place; e.g., a user with write
+ * access
+ * to a table marked read-only will not be able to insert records into it. The
+ * mode
+ * can be set to read-only, write-only, read/write, and no access.
  * <p>
  * Change the <a href="../../concepts/protection.html"
  * target="_top">protection</a> mode to prevent or
@@ -3439,9 +3389,13 @@ AlterTableResponse alterTable( const AlterTableRequest& request_ ) const;
  * contained
  * table & view that is not protected will have its TTL set to the given value.
  * <p>
- * Set the global access mode (i.e. locking) for a table. The mode can be set
- * to
- * 'no_access', 'read_only', 'write_only' or 'read_write'.
+ * Set the global access mode (i.e. locking) for a table. This setting trumps
+ * any
+ * role-based access controls that may be in place; e.g., a user with write
+ * access
+ * to a table marked read-only will not be able to insert records into it. The
+ * mode
+ * can be set to read-only, write-only, read/write, and no access.
  * <p>
  * Change the <a href="../../concepts/protection.html"
  * target="_top">protection</a> mode to prevent or
@@ -3487,9 +3441,13 @@ AlterTableResponse& alterTable( const AlterTableRequest& request_,
  * contained
  * table & view that is not protected will have its TTL set to the given value.
  * <p>
- * Set the global access mode (i.e. locking) for a table. The mode can be set
- * to
- * 'no_access', 'read_only', 'write_only' or 'read_write'.
+ * Set the global access mode (i.e. locking) for a table. This setting trumps
+ * any
+ * role-based access controls that may be in place; e.g., a user with write
+ * access
+ * to a table marked read-only will not be able to insert records into it. The
+ * mode
+ * can be set to read-only, write-only, read/write, and no access.
  * <p>
  * Change the <a href="../../concepts/protection.html"
  * target="_top">protection</a> mode to prevent or
@@ -3535,8 +3493,16 @@ AlterTableResponse& alterTable( const AlterTableRequest& request_,
  *                restrictions as <a href="../../concepts/tables.html"
  *                target="_top">tables</a>.
  *                        <li> gpudb::alter_table_ttl: Sets the <a
- *                href="../../concepts/ttl.html" target="_top">TTL</a> of the
- *                table, view, or collection specified in @a tableName.
+ *                href="../../concepts/ttl.html" target="_top">time-to-live</a>
+ *                in minutes of the table, view, or collection specified in @a
+ *                tableName.
+ *                        <li> gpudb::alter_table_memory_ttl: Sets the
+ *                time-to-live in minutes for the individual chunks of the
+ *                columns of the table, view, or collection specified in @a
+ *                tableName to free their memory if unused longer than the
+ *                given time. Specify an empty string to restore the global
+ *                memory_ttl setting and a value of '-1' for an infinite
+ *                timeout.
  *                        <li> gpudb::alter_table_add_column: Adds the column
  *                specified in @a value to the table specified in @a tableName.
  *                Use @a column_type and @a column_properties in @a options to
@@ -3544,7 +3510,12 @@ AlterTableResponse& alterTable( const AlterTableRequest& request_,
  *                        <li> gpudb::alter_table_change_column: Changes type
  *                and properties of the column specified in @a value.  Use @a
  *                column_type and @a column_properties in @a options to set the
- *                column's type and properties, respectively.
+ *                column's type and properties, respectively. Note that primary
+ *                key and/or shard key columns cannot be changed. All
+ *                unchanging column properties must be listed for the change to
+ *                take place, e.g., to add dictionary encoding to an existing
+ *                'char4' column, both 'char4' and 'dict' must be specified in
+ *                the @a options map.
  *                        <li> gpudb::alter_table_set_column_compression:
  *                Modifies the <a href="../../concepts/compression.html"
  *                target="_top">compression</a> setting on the column specified
@@ -3568,20 +3539,26 @@ AlterTableResponse& alterTable( const AlterTableRequest& request_,
  *                in @a tableName. Specify the access mode in @a value. Valid
  *                modes are 'no_access', 'read_only', 'write_only' and
  *                'read_write'.
- *                        <li> gpudb::alter_table_refresh: Replay all the table
- *                creation commands required to create this view. Endpoints
- *                supported are /filter, /create/jointable, /create/projection,
- *                /create/union, /aggregate/groupby, and /aggregate/unique.
- *                        <li> gpudb::alter_table_set_refresh_method: Set the
- *                method by which this view is refreshed - one of 'manual',
- *                'periodic', 'on_change', 'on_query'.
- *                        <li> gpudb::alter_table_set_refresh_start_time: Set
- *                the time to start periodic refreshes to datetime string with
- *                format YYYY-MM-DD HH:MM:SS at which refresh is to be done.
- *                Next refresh occurs at refresh_start_time + N*refresh_period
- *                        <li> gpudb::alter_table_set_refresh_period: Set the
- *                time interval in seconds at which to refresh this view - sets
- *                the refresh method to periodic if not alreay set.
+ *                        <li> gpudb::alter_table_refresh: Replays all the
+ *                table creation commands required to create this <a
+ *                href="../../concepts/materialized_views.html"
+ *                target="_top">materialized view</a>.
+ *                        <li> gpudb::alter_table_set_refresh_method: Sets the
+ *                method by which this <a
+ *                href="../../concepts/materialized_views.html"
+ *                target="_top">materialized view</a> is refreshed - one of
+ *                'manual', 'periodic', 'on_change'.
+ *                        <li> gpudb::alter_table_set_refresh_start_time: Sets
+ *                the time to start periodic refreshes of this <a
+ *                href="../../concepts/materialized_views.html"
+ *                target="_top">materialized view</a> to datetime string with
+ *                format 'YYYY-MM-DD HH:MM:SS'.  Subsequent refreshes occur at
+ *                the specified time + N * the refresh period.
+ *                        <li> gpudb::alter_table_set_refresh_period: Sets the
+ *                time interval in seconds at which to refresh this <a
+ *                href="../../concepts/materialized_views.html"
+ *                target="_top">materialized view</a>.  Also, sets the refresh
+ *                method to periodic if not alreay set.
  *                </ul>
  * @param value  The value of the modification. May be a column name, 'true' or
  *               'false', a TTL, or the global access mode depending on @a
@@ -3657,9 +3634,13 @@ AlterTableResponse alterTable( const std::string& tableName,
  * contained
  * table & view that is not protected will have its TTL set to the given value.
  * <p>
- * Set the global access mode (i.e. locking) for a table. The mode can be set
- * to
- * 'no_access', 'read_only', 'write_only' or 'read_write'.
+ * Set the global access mode (i.e. locking) for a table. This setting trumps
+ * any
+ * role-based access controls that may be in place; e.g., a user with write
+ * access
+ * to a table marked read-only will not be able to insert records into it. The
+ * mode
+ * can be set to read-only, write-only, read/write, and no access.
  * <p>
  * Change the <a href="../../concepts/protection.html"
  * target="_top">protection</a> mode to prevent or
@@ -3705,8 +3686,16 @@ AlterTableResponse alterTable( const std::string& tableName,
  *                restrictions as <a href="../../concepts/tables.html"
  *                target="_top">tables</a>.
  *                        <li> gpudb::alter_table_ttl: Sets the <a
- *                href="../../concepts/ttl.html" target="_top">TTL</a> of the
- *                table, view, or collection specified in @a tableName.
+ *                href="../../concepts/ttl.html" target="_top">time-to-live</a>
+ *                in minutes of the table, view, or collection specified in @a
+ *                tableName.
+ *                        <li> gpudb::alter_table_memory_ttl: Sets the
+ *                time-to-live in minutes for the individual chunks of the
+ *                columns of the table, view, or collection specified in @a
+ *                tableName to free their memory if unused longer than the
+ *                given time. Specify an empty string to restore the global
+ *                memory_ttl setting and a value of '-1' for an infinite
+ *                timeout.
  *                        <li> gpudb::alter_table_add_column: Adds the column
  *                specified in @a value to the table specified in @a tableName.
  *                Use @a column_type and @a column_properties in @a options to
@@ -3714,7 +3703,12 @@ AlterTableResponse alterTable( const std::string& tableName,
  *                        <li> gpudb::alter_table_change_column: Changes type
  *                and properties of the column specified in @a value.  Use @a
  *                column_type and @a column_properties in @a options to set the
- *                column's type and properties, respectively.
+ *                column's type and properties, respectively. Note that primary
+ *                key and/or shard key columns cannot be changed. All
+ *                unchanging column properties must be listed for the change to
+ *                take place, e.g., to add dictionary encoding to an existing
+ *                'char4' column, both 'char4' and 'dict' must be specified in
+ *                the @a options map.
  *                        <li> gpudb::alter_table_set_column_compression:
  *                Modifies the <a href="../../concepts/compression.html"
  *                target="_top">compression</a> setting on the column specified
@@ -3738,20 +3732,26 @@ AlterTableResponse alterTable( const std::string& tableName,
  *                in @a tableName. Specify the access mode in @a value. Valid
  *                modes are 'no_access', 'read_only', 'write_only' and
  *                'read_write'.
- *                        <li> gpudb::alter_table_refresh: Replay all the table
- *                creation commands required to create this view. Endpoints
- *                supported are /filter, /create/jointable, /create/projection,
- *                /create/union, /aggregate/groupby, and /aggregate/unique.
- *                        <li> gpudb::alter_table_set_refresh_method: Set the
- *                method by which this view is refreshed - one of 'manual',
- *                'periodic', 'on_change', 'on_query'.
- *                        <li> gpudb::alter_table_set_refresh_start_time: Set
- *                the time to start periodic refreshes to datetime string with
- *                format YYYY-MM-DD HH:MM:SS at which refresh is to be done.
- *                Next refresh occurs at refresh_start_time + N*refresh_period
- *                        <li> gpudb::alter_table_set_refresh_period: Set the
- *                time interval in seconds at which to refresh this view - sets
- *                the refresh method to periodic if not alreay set.
+ *                        <li> gpudb::alter_table_refresh: Replays all the
+ *                table creation commands required to create this <a
+ *                href="../../concepts/materialized_views.html"
+ *                target="_top">materialized view</a>.
+ *                        <li> gpudb::alter_table_set_refresh_method: Sets the
+ *                method by which this <a
+ *                href="../../concepts/materialized_views.html"
+ *                target="_top">materialized view</a> is refreshed - one of
+ *                'manual', 'periodic', 'on_change'.
+ *                        <li> gpudb::alter_table_set_refresh_start_time: Sets
+ *                the time to start periodic refreshes of this <a
+ *                href="../../concepts/materialized_views.html"
+ *                target="_top">materialized view</a> to datetime string with
+ *                format 'YYYY-MM-DD HH:MM:SS'.  Subsequent refreshes occur at
+ *                the specified time + N * the refresh period.
+ *                        <li> gpudb::alter_table_set_refresh_period: Sets the
+ *                time interval in seconds at which to refresh this <a
+ *                href="../../concepts/materialized_views.html"
+ *                target="_top">materialized view</a>.  Also, sets the refresh
+ *                method to periodic if not alreay set.
  *                </ul>
  * @param value  The value of the modification. May be a column name, 'true' or
  *               'false', a TTL, or the global access mode depending on @a
@@ -4555,9 +4555,9 @@ CreateJoinTableResponse& createJoinTable( const CreateJoinTableRequest& request_
  *                     'column_name as alias'. Wild cards '*' can be used to
  *                     include all columns across member tables or 'table_id.*'
  *                     for all of a single table's columns.  Columns and column
- *                     expressions comprising the join must be uniquely named
- *                     or aliased--therefore, the '*' wild card cannot be used
- *                     if column names aren't unique across all tables.
+ *                     expressions composing the join must be uniquely named or
+ *                     aliased--therefore, the '*' wild card cannot be used if
+ *                     column names aren't unique across all tables.
  * @param expressions  An optional list of expressions to combine and filter
  *                     the joined tables.  Corresponds to a SQL statement WHERE
  *                     clause. For details see: <a
@@ -4593,13 +4593,17 @@ CreateJoinTableResponse& createJoinTable( const CreateJoinTableRequest& request_
  *                 whenever a new query is issued and new data is inserted into
  *                 the base table.  A full refresh of all the records occurs
  *                 when a new query is issued and there have been inserts to
- *                 any non-base-tables since the last query
+ *                 any non-base-tables since the last query.  <a
+ *                 href="../../concepts/ttl.html" target="_top">TTL</a> will be
+ *                 set to not expire; any @a ttl specified will be ignored.
  *                         <li> gpudb::create_join_table_on_insert:
  *                 incrementally refresh (refresh just those records added)
  *                 whenever new data is inserted into a base table.  A full
  *                 refresh of all the records occurs when a new query is issued
  *                 and there have been inserts to any non-base-tables since the
- *                 last query
+ *                 last query.  <a href="../../concepts/ttl.html"
+ *                 target="_top">TTL</a> will be set to not expire; any @a ttl
+ *                 specified will be ignored.
  *                 </ul>
  *                 The default value is gpudb::create_join_table_manual.
  *                         <li> gpudb::create_join_table_refresh: Do a manual
@@ -4621,7 +4625,8 @@ CreateJoinTableResponse& createJoinTable( const CreateJoinTableRequest& request_
  *                 The default value is gpudb::create_join_table_no_refresh.
  *                         <li> gpudb::create_join_table_ttl: Sets the <a
  *                 href="../../concepts/ttl.html" target="_top">TTL</a> of the
- *                 join table specified in @a joinTableName.
+ *                 join table specified in @a joinTableName.  Ignored if @a
+ *                 refresh_method is either @a on_insert or @a on_query.
  *                         <li> gpudb::create_join_table_view_id: view this
  *                 projection is part of
  *                         <li> gpudb::create_join_table_no_count: return a
@@ -4661,9 +4666,9 @@ CreateJoinTableResponse createJoinTable( const std::string& joinTableName,
  *                     'column_name as alias'. Wild cards '*' can be used to
  *                     include all columns across member tables or 'table_id.*'
  *                     for all of a single table's columns.  Columns and column
- *                     expressions comprising the join must be uniquely named
- *                     or aliased--therefore, the '*' wild card cannot be used
- *                     if column names aren't unique across all tables.
+ *                     expressions composing the join must be uniquely named or
+ *                     aliased--therefore, the '*' wild card cannot be used if
+ *                     column names aren't unique across all tables.
  * @param expressions  An optional list of expressions to combine and filter
  *                     the joined tables.  Corresponds to a SQL statement WHERE
  *                     clause. For details see: <a
@@ -4699,13 +4704,17 @@ CreateJoinTableResponse createJoinTable( const std::string& joinTableName,
  *                 whenever a new query is issued and new data is inserted into
  *                 the base table.  A full refresh of all the records occurs
  *                 when a new query is issued and there have been inserts to
- *                 any non-base-tables since the last query
+ *                 any non-base-tables since the last query.  <a
+ *                 href="../../concepts/ttl.html" target="_top">TTL</a> will be
+ *                 set to not expire; any @a ttl specified will be ignored.
  *                         <li> gpudb::create_join_table_on_insert:
  *                 incrementally refresh (refresh just those records added)
  *                 whenever new data is inserted into a base table.  A full
  *                 refresh of all the records occurs when a new query is issued
  *                 and there have been inserts to any non-base-tables since the
- *                 last query
+ *                 last query.  <a href="../../concepts/ttl.html"
+ *                 target="_top">TTL</a> will be set to not expire; any @a ttl
+ *                 specified will be ignored.
  *                 </ul>
  *                 The default value is gpudb::create_join_table_manual.
  *                         <li> gpudb::create_join_table_refresh: Do a manual
@@ -4727,7 +4736,8 @@ CreateJoinTableResponse createJoinTable( const std::string& joinTableName,
  *                 The default value is gpudb::create_join_table_no_refresh.
  *                         <li> gpudb::create_join_table_ttl: Sets the <a
  *                 href="../../concepts/ttl.html" target="_top">TTL</a> of the
- *                 join table specified in @a joinTableName.
+ *                 join table specified in @a joinTableName.  Ignored if @a
+ *                 refresh_method is either @a on_insert or @a on_query.
  *                         <li> gpudb::create_join_table_view_id: view this
  *                 projection is part of
  *                         <li> gpudb::create_join_table_no_count: return a
@@ -4759,8 +4769,8 @@ CreateJoinTableResponse& createJoinTable( const std::string& joinTableName,
  * Views</a>.
  * <p>
  * The response contains @a viewId, which is used to tag each subsequent
- * operation (projection, union, group-by, filter, or join) that will compose
- * the view.
+ * operation (projection, union, aggregation, filter, or join) that will
+ * compose the view.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -4780,8 +4790,8 @@ CreateMaterializedViewResponse createMaterializedView( const CreateMaterializedV
  * Views</a>.
  * <p>
  * The response contains @a viewId, which is used to tag each subsequent
- * operation (projection, union, group-by, filter, or join) that will compose
- * the view.
+ * operation (projection, union, aggregation, filter, or join) that will
+ * compose the view.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -4805,8 +4815,8 @@ CreateMaterializedViewResponse& createMaterializedView( const CreateMaterialized
  * Views</a>.
  * <p>
  * The response contains @a viewId, which is used to tag each subsequent
- * operation (projection, union, group-by, filter, or join) that will compose
- * the view.
+ * operation (projection, union, aggregation, filter, or join) that will
+ * compose the view.
  * 
  * @param tableName  Name of the table to be created that is the top-level
  *                   table of the materialized view.
@@ -4837,31 +4847,28 @@ CreateMaterializedViewResponse& createMaterializedView( const CreateMaterialized
  *                 underlying member tables have changed.
  *                 <ul>
  *                         <li> gpudb::create_materialized_view_manual: Refresh
- *                 only occurs when manually requested by calling alter_table
- *                 with action refresh_view
- *                         <li> gpudb::create_materialized_view_on_query:
- *                 Incrementally refresh (refresh just those records added)
- *                 whenever a new query is issued and new data is inserted into
- *                 the base table.  A full refresh of all the records occurs
- *                 when a new query is issued and there have been inserts to
- *                 any non-base-tables since the last query
+ *                 only occurs when manually requested by calling /alter/table
+ *                 with an 'action' of 'refresh'
+ *                         <li> gpudb::create_materialized_view_on_query: For
+ *                 future use.
  *                         <li> gpudb::create_materialized_view_on_change: If
  *                 possible, incrementally refresh (refresh just those records
  *                 added) whenever an insert, update, delete or refresh of
- *                 input table is done.  A full refresh on_query is done if an
+ *                 input table is done.  A full refresh is done if an
  *                 incremental refresh is not possible.
  *                         <li> gpudb::create_materialized_view_periodic:
- *                 Refresh table periodically at rate specified by
- *                 refresh_period option
+ *                 Refresh table periodically at rate specified by @a
+ *                 refresh_period
  *                 </ul>
  *                 The default value is gpudb::create_materialized_view_manual.
  *                         <li> gpudb::create_materialized_view_refresh_period:
- *                 When refresh_method is periodic specifies the period in
- *                 seconds at which refresh occurs
+ *                 When @a refresh_method is @a periodic, specifies the period
+ *                 in seconds at which refresh occurs
  *                         <li>
- *                 gpudb::create_materialized_view_refresh_start_time: First
- *                 time at which a periodic refresh is to be done.  Value is a
- *                 datatime string with format YYYY-MM-DD HH:MM:SS.
+ *                 gpudb::create_materialized_view_refresh_start_time: When @a
+ *                 refresh_method is @a periodic, specifies the first time at
+ *                 which a refresh is to be done.  Value is a datetime string
+ *                 with format 'YYYY-MM-DD HH:MM:SS'.
  *                 </ul>
  * 
  * @return Response object containing the result of the operation.
@@ -4880,8 +4887,8 @@ CreateMaterializedViewResponse createMaterializedView( const std::string& tableN
  * Views</a>.
  * <p>
  * The response contains @a viewId, which is used to tag each subsequent
- * operation (projection, union, group-by, filter, or join) that will compose
- * the view.
+ * operation (projection, union, aggregation, filter, or join) that will
+ * compose the view.
  * 
  * @param tableName  Name of the table to be created that is the top-level
  *                   table of the materialized view.
@@ -4912,31 +4919,28 @@ CreateMaterializedViewResponse createMaterializedView( const std::string& tableN
  *                 underlying member tables have changed.
  *                 <ul>
  *                         <li> gpudb::create_materialized_view_manual: Refresh
- *                 only occurs when manually requested by calling alter_table
- *                 with action refresh_view
- *                         <li> gpudb::create_materialized_view_on_query:
- *                 Incrementally refresh (refresh just those records added)
- *                 whenever a new query is issued and new data is inserted into
- *                 the base table.  A full refresh of all the records occurs
- *                 when a new query is issued and there have been inserts to
- *                 any non-base-tables since the last query
+ *                 only occurs when manually requested by calling /alter/table
+ *                 with an 'action' of 'refresh'
+ *                         <li> gpudb::create_materialized_view_on_query: For
+ *                 future use.
  *                         <li> gpudb::create_materialized_view_on_change: If
  *                 possible, incrementally refresh (refresh just those records
  *                 added) whenever an insert, update, delete or refresh of
- *                 input table is done.  A full refresh on_query is done if an
+ *                 input table is done.  A full refresh is done if an
  *                 incremental refresh is not possible.
  *                         <li> gpudb::create_materialized_view_periodic:
- *                 Refresh table periodically at rate specified by
- *                 refresh_period option
+ *                 Refresh table periodically at rate specified by @a
+ *                 refresh_period
  *                 </ul>
  *                 The default value is gpudb::create_materialized_view_manual.
  *                         <li> gpudb::create_materialized_view_refresh_period:
- *                 When refresh_method is periodic specifies the period in
- *                 seconds at which refresh occurs
+ *                 When @a refresh_method is @a periodic, specifies the period
+ *                 in seconds at which refresh occurs
  *                         <li>
- *                 gpudb::create_materialized_view_refresh_start_time: First
- *                 time at which a periodic refresh is to be done.  Value is a
- *                 datatime string with format YYYY-MM-DD HH:MM:SS.
+ *                 gpudb::create_materialized_view_refresh_start_time: When @a
+ *                 refresh_method is @a periodic, specifies the first time at
+ *                 which a refresh is to be done.  Value is a datetime string
+ *                 with format 'YYYY-MM-DD HH:MM:SS'.
  *                 </ul>
  * @param[out] response_  Response object containing the results of the
  *                        operation.
@@ -5261,6 +5265,14 @@ CreateProjectionResponse& createProjection( const CreateProjectionRequest& reque
  *                 optional filter <a href="../../concepts/expressions.html"
  *                 target="_top">expression</a> to be applied to the source
  *                 table prior to the projection.
+ *                         <li> gpudb::create_projection_is_replicated: If @a
+ *                 true then the projection will be replicated even if the
+ *                 source table is not.
+ *                 <ul>
+ *                         <li> gpudb::create_projection_true
+ *                         <li> gpudb::create_projection_false
+ *                 </ul>
+ *                 The default value is gpudb::create_projection_false.
  *                         <li> gpudb::create_projection_limit: The number of
  *                 records to keep.
  *                         <li> gpudb::create_projection_order_by:
@@ -5279,6 +5291,12 @@ CreateProjectionResponse& createProjection( const CreateProjectionRequest& reque
  *                 The default value is gpudb::create_projection_false.
  *                         <li> gpudb::create_projection_chunk_size: Indicates
  *                 the chunk size to be used for this table.
+ *                         <li> gpudb::create_projection_create_indexes:
+ *                 Comma-separated list of columns on which to create indexes
+ *                 on the output table.  The columns specified must be present
+ *                 in @a columnNames.  If any alias is given for any column
+ *                 name, the alias must be used, rather than the original
+ *                 column name.
  *                         <li> gpudb::create_projection_ttl: Sets the <a
  *                 href="../../concepts/ttl.html" target="_top">TTL</a> of the
  *                 projection specified in @a projectionName.
@@ -5379,6 +5397,14 @@ CreateProjectionResponse createProjection( const std::string& tableName,
  *                 optional filter <a href="../../concepts/expressions.html"
  *                 target="_top">expression</a> to be applied to the source
  *                 table prior to the projection.
+ *                         <li> gpudb::create_projection_is_replicated: If @a
+ *                 true then the projection will be replicated even if the
+ *                 source table is not.
+ *                 <ul>
+ *                         <li> gpudb::create_projection_true
+ *                         <li> gpudb::create_projection_false
+ *                 </ul>
+ *                 The default value is gpudb::create_projection_false.
  *                         <li> gpudb::create_projection_limit: The number of
  *                 records to keep.
  *                         <li> gpudb::create_projection_order_by:
@@ -5397,6 +5423,12 @@ CreateProjectionResponse createProjection( const std::string& tableName,
  *                 The default value is gpudb::create_projection_false.
  *                         <li> gpudb::create_projection_chunk_size: Indicates
  *                 the chunk size to be used for this table.
+ *                         <li> gpudb::create_projection_create_indexes:
+ *                 Comma-separated list of columns on which to create indexes
+ *                 on the output table.  The columns specified must be present
+ *                 in @a columnNames.  If any alias is given for any column
+ *                 name, the alias must be used, rather than the original
+ *                 column name.
  *                         <li> gpudb::create_projection_ttl: Sets the <a
  *                 href="../../concepts/ttl.html" target="_top">TTL</a> of the
  *                 projection specified in @a projectionName.
@@ -6174,15 +6206,17 @@ CreateTriggerByRangeResponse& createTriggerByRange( const std::string& requestId
  * simultaneously.  One example of mutually exclusive properties are @a data
  * and @a store_only.
  * <p>
- * To set a *primary key* on one or more columns include the property
- * 'primary_key' on the desired column_names. If a primary key is specified,
- * then a uniqueness constraint is enforced, in that only a single object can
- * exist with a given primary key. When {@link
+ * A single <a href="../../concepts/tables.html#primary-keys"
+ * target="_top">primary key</a> and/or single <a
+ * href="../../concepts/tables.html#shard-keys" target="_top">shard key</a> can
+ * be set across one or more columns. If a primary key is specified, then a
+ * uniqueness constraint is enforced, in that only a single object can exist
+ * with a given primary key. When {@link
  * #insertRecordsRaw(const RawInsertRecordsRequest&) const inserting} data
  * into a table with a primary key, depending on the parameters in the request,
- * incoming objects with primary keys that match existing objects will either
- * overwrite (i.e. update) the existing object or will be skipped and not added
- * into the set.
+ * incoming objects with primary key values that match existing objects will
+ * either overwrite (i.e. update) the existing object or will be skipped and
+ * not added into the set.
  * <p>
  * Example of a type definition with some of the parameters::
  * <p>
@@ -6223,13 +6257,15 @@ CreateTypeResponse createType( const CreateTypeRequest& request_ ) const;
  * simultaneously.  One example of mutually exclusive properties are @a data
  * and @a store_only.
  * <p>
- * To set a *primary key* on one or more columns include the property
- * 'primary_key' on the desired column_names. If a primary key is specified,
- * then a uniqueness constraint is enforced, in that only a single object can
- * exist with a given primary key. When {@link
+ * A single <a href="../../concepts/tables.html#primary-keys"
+ * target="_top">primary key</a> and/or single <a
+ * href="../../concepts/tables.html#shard-keys" target="_top">shard key</a> can
+ * be set across one or more columns. If a primary key is specified, then a
+ * uniqueness constraint is enforced, in that only a single object can exist
+ * with a given primary key. When {@link
  * #insertRecordsRaw(const RawInsertRecordsRequest&,InsertRecordsResponse&) const
  * inserting} data into a table with a primary key, depending on the parameters
- * in the request, incoming objects with primary keys that match existing
+ * in the request, incoming objects with primary key values that match existing
  * objects will either overwrite (i.e. update) the existing object or will be
  * skipped and not added into the set.
  * <p>
@@ -6276,15 +6312,17 @@ CreateTypeResponse& createType( const CreateTypeRequest& request_,
  * simultaneously.  One example of mutually exclusive properties are @a data
  * and @a store_only.
  * <p>
- * To set a *primary key* on one or more columns include the property
- * 'primary_key' on the desired column_names. If a primary key is specified,
- * then a uniqueness constraint is enforced, in that only a single object can
- * exist with a given primary key. When {@link
+ * A single <a href="../../concepts/tables.html#primary-keys"
+ * target="_top">primary key</a> and/or single <a
+ * href="../../concepts/tables.html#shard-keys" target="_top">shard key</a> can
+ * be set across one or more columns. If a primary key is specified, then a
+ * uniqueness constraint is enforced, in that only a single object can exist
+ * with a given primary key. When {@link
  * #insertRecordsRaw(const RawInsertRecordsRequest&) const inserting} data
  * into a table with a primary key, depending on the parameters in the request,
- * incoming objects with primary keys that match existing objects will either
- * overwrite (i.e. update) the existing object or will be skipped and not added
- * into the set.
+ * incoming objects with primary key values that match existing objects will
+ * either overwrite (i.e. update) the existing object or will be skipped and
+ * not added into the set.
  * <p>
  * Example of a type definition with some of the parameters::
  * <p>
@@ -6322,16 +6360,16 @@ CreateTypeResponse& createType( const CreateTypeRequest& request_,
  *                    available for GPU queries.
  *                            <li> gpudb::create_type_text_search: Valid only
  *                    for 'string' columns. Enables full text search for string
- *                    columns. Can be set independently of *data* and
- *                    *store_only*.
+ *                    columns. Can be set independently of @a data and @a
+ *                    store_only.
  *                            <li> gpudb::create_type_store_only: Persist the
  *                    column value but do not make it available to queries
- *                    (e.g. /filter)-i.e. it is mutually exclusive to the
- *                    'data' property. Any 'bytes' type column must have a
- *                    'store_only' property. This property reduces system
- *                    memory usage.
+ *                    (e.g. /filter)-i.e. it is mutually exclusive to the @a
+ *                    data property. Any 'bytes' type column must have a @a
+ *                    store_only property. This property reduces system memory
+ *                    usage.
  *                            <li> gpudb::create_type_disk_optimized: Works in
- *                    conjunction with the 'data' property for string columns.
+ *                    conjunction with the @a data property for string columns.
  *                    This property reduces system disk usage by disabling
  *                    reverse string lookups. Queries like /filter,
  *                    /filter/bylist, and /filter/byvalue work as usual but
@@ -6350,71 +6388,62 @@ CreateTypeResponse& createType( const CreateTypeRequest& request_,
  *                    decimal point and up to four digits in the fractional
  *                    part.  The value can be positive or negative (indicated
  *                    by a minus sign at the beginning).  This property is
- *                    mutually exclusive with the 'text_search' property.
+ *                    mutually exclusive with the @a text_search property.
  *                            <li> gpudb::create_type_date: Valid only for
  *                    'string' columns.  Indicates that this field represents a
  *                    date and will be provided in the format 'YYYY-MM-DD'.
  *                    The allowable range is 1000-01-01 through 2900-01-01.
- *                    This property is mutually exclusive with the
- *                    *text_search* property.
+ *                    This property is mutually exclusive with the @a
+ *                    text_search property.
  *                            <li> gpudb::create_type_time: Valid only for
  *                    'string' columns.  Indicates that this field represents a
  *                    time-of-day and will be provided in the format
  *                    'HH:MM:SS.mmm'.  The allowable range is 00:00:00.000
  *                    through 23:59:59.999.  This property is mutually
- *                    exclusive with the *text_search* property.
+ *                    exclusive with the @a text_search property.
  *                            <li> gpudb::create_type_datetime: Valid only for
  *                    'string' columns.  Indicates that this field represents a
  *                    datetime and will be provided in the format 'YYYY-MM-DD
  *                    HH:MM:SS.mmm'.  The allowable range is 1000-01-01
  *                    00:00:00.000 through 2900-01-01 23:59:59.999.  This
- *                    property is mutually exclusive with the *text_search*
+ *                    property is mutually exclusive with the @a text_search
  *                    property.
  *                            <li> gpudb::create_type_char1: This property
  *                    provides optimized memory, disk and query performance for
  *                    string columns. Strings with this property must be no
- *                    longer than 1 character. This property cannot be combined
- *                    with *text_search*
+ *                    longer than 1 character.
  *                            <li> gpudb::create_type_char2: This property
  *                    provides optimized memory, disk and query performance for
  *                    string columns. Strings with this property must be no
- *                    longer than 2 characters. This property cannot be
- *                    combined with *text_search*
+ *                    longer than 2 characters.
  *                            <li> gpudb::create_type_char4: This property
  *                    provides optimized memory, disk and query performance for
  *                    string columns. Strings with this property must be no
- *                    longer than 4 characters. This property cannot be
- *                    combined with *text_search*
+ *                    longer than 4 characters.
  *                            <li> gpudb::create_type_char8: This property
  *                    provides optimized memory, disk and query performance for
  *                    string columns. Strings with this property must be no
- *                    longer than 8 characters. This property cannot be
- *                    combined with *text_search*
+ *                    longer than 8 characters.
  *                            <li> gpudb::create_type_char16: This property
  *                    provides optimized memory, disk and query performance for
  *                    string columns. Strings with this property must be no
- *                    longer than 16 characters. This property cannot be
- *                    combined with *text_search*
+ *                    longer than 16 characters.
  *                            <li> gpudb::create_type_char32: This property
  *                    provides optimized memory, disk and query performance for
  *                    string columns. Strings with this property must be no
- *                    longer than 32 characters. This property cannot be
- *                    combined with *text_search*
+ *                    longer than 32 characters.
  *                            <li> gpudb::create_type_char64: This property
  *                    provides optimized memory, disk and query performance for
  *                    string columns. Strings with this property must be no
- *                    longer than 64 characters. This property cannot be
- *                    combined with *text_search*
+ *                    longer than 64 characters.
  *                            <li> gpudb::create_type_char128: This property
  *                    provides optimized memory, disk and query performance for
  *                    string columns. Strings with this property must be no
- *                    longer than 128 characters. This property cannot be
- *                    combined with *text_search*
+ *                    longer than 128 characters.
  *                            <li> gpudb::create_type_char256: This property
  *                    provides optimized memory, disk and query performance for
  *                    string columns. Strings with this property must be no
- *                    longer than 256 characters. This property cannot be
- *                    combined with *text_search*
+ *                    longer than 256 characters.
  *                            <li> gpudb::create_type_int8: This property
  *                    provides optimized memory and query performance for int
  *                    columns. Ints with this property must be between -128 and
@@ -6435,10 +6464,13 @@ CreateTypeResponse& createType( const CreateTypeRequest& request_,
  *                    (WKT) or Well-Known Binary (WKB) format.
  *                            <li> gpudb::create_type_primary_key: This
  *                    property indicates that this column will be part of (or
- *                    the entire) primary key.
+ *                    the entire) <a
+ *                    href="../../concepts/tables.html#primary-keys"
+ *                    target="_top">primary key</a>.
  *                            <li> gpudb::create_type_shard_key: This property
  *                    indicates that this column will be part of (or the
- *                    entire) shard key.
+ *                    entire) <a href="../../concepts/tables.html#shard-keys"
+ *                    target="_top">shard key</a>.
  *                            <li> gpudb::create_type_nullable: This property
  *                    indicates that this column is nullable.  However, setting
  *                    this property is insufficient for making the column
@@ -6450,9 +6482,9 @@ CreateTypeResponse& createType( const CreateTypeRequest& request_,
  *                    schema must be: ['int', 'null'].
  *                    The C++, C#, Java, and Python APIs have built-in
  *                    convenience for bypassing setting the avro schema by
- *                    hand.  For those two languages, one can use this property
- *                    as usual and not have to worry about the avro schema for
- *                    the record.
+ *                    hand.  For those languages, one can use this property as
+ *                    usual and not have to worry about the avro schema for the
+ *                    record.
  *                            <li> gpudb::create_type_dict: This property
  *                    indicates that this column should be dictionary encoded.
  *                    It can only be used in conjunction with string columns
@@ -6483,15 +6515,17 @@ CreateTypeResponse createType( const std::string& typeDefinition,
  * simultaneously.  One example of mutually exclusive properties are @a data
  * and @a store_only.
  * <p>
- * To set a *primary key* on one or more columns include the property
- * 'primary_key' on the desired column_names. If a primary key is specified,
- * then a uniqueness constraint is enforced, in that only a single object can
- * exist with a given primary key. When {@link
+ * A single <a href="../../concepts/tables.html#primary-keys"
+ * target="_top">primary key</a> and/or single <a
+ * href="../../concepts/tables.html#shard-keys" target="_top">shard key</a> can
+ * be set across one or more columns. If a primary key is specified, then a
+ * uniqueness constraint is enforced, in that only a single object can exist
+ * with a given primary key. When {@link
  * #insertRecordsRaw(const RawInsertRecordsRequest&) const inserting} data
  * into a table with a primary key, depending on the parameters in the request,
- * incoming objects with primary keys that match existing objects will either
- * overwrite (i.e. update) the existing object or will be skipped and not added
- * into the set.
+ * incoming objects with primary key values that match existing objects will
+ * either overwrite (i.e. update) the existing object or will be skipped and
+ * not added into the set.
  * <p>
  * Example of a type definition with some of the parameters::
  * <p>
@@ -6529,16 +6563,16 @@ CreateTypeResponse createType( const std::string& typeDefinition,
  *                    available for GPU queries.
  *                            <li> gpudb::create_type_text_search: Valid only
  *                    for 'string' columns. Enables full text search for string
- *                    columns. Can be set independently of *data* and
- *                    *store_only*.
+ *                    columns. Can be set independently of @a data and @a
+ *                    store_only.
  *                            <li> gpudb::create_type_store_only: Persist the
  *                    column value but do not make it available to queries
- *                    (e.g. /filter)-i.e. it is mutually exclusive to the
- *                    'data' property. Any 'bytes' type column must have a
- *                    'store_only' property. This property reduces system
- *                    memory usage.
+ *                    (e.g. /filter)-i.e. it is mutually exclusive to the @a
+ *                    data property. Any 'bytes' type column must have a @a
+ *                    store_only property. This property reduces system memory
+ *                    usage.
  *                            <li> gpudb::create_type_disk_optimized: Works in
- *                    conjunction with the 'data' property for string columns.
+ *                    conjunction with the @a data property for string columns.
  *                    This property reduces system disk usage by disabling
  *                    reverse string lookups. Queries like /filter,
  *                    /filter/bylist, and /filter/byvalue work as usual but
@@ -6557,71 +6591,62 @@ CreateTypeResponse createType( const std::string& typeDefinition,
  *                    decimal point and up to four digits in the fractional
  *                    part.  The value can be positive or negative (indicated
  *                    by a minus sign at the beginning).  This property is
- *                    mutually exclusive with the 'text_search' property.
+ *                    mutually exclusive with the @a text_search property.
  *                            <li> gpudb::create_type_date: Valid only for
  *                    'string' columns.  Indicates that this field represents a
  *                    date and will be provided in the format 'YYYY-MM-DD'.
  *                    The allowable range is 1000-01-01 through 2900-01-01.
- *                    This property is mutually exclusive with the
- *                    *text_search* property.
+ *                    This property is mutually exclusive with the @a
+ *                    text_search property.
  *                            <li> gpudb::create_type_time: Valid only for
  *                    'string' columns.  Indicates that this field represents a
  *                    time-of-day and will be provided in the format
  *                    'HH:MM:SS.mmm'.  The allowable range is 00:00:00.000
  *                    through 23:59:59.999.  This property is mutually
- *                    exclusive with the *text_search* property.
+ *                    exclusive with the @a text_search property.
  *                            <li> gpudb::create_type_datetime: Valid only for
  *                    'string' columns.  Indicates that this field represents a
  *                    datetime and will be provided in the format 'YYYY-MM-DD
  *                    HH:MM:SS.mmm'.  The allowable range is 1000-01-01
  *                    00:00:00.000 through 2900-01-01 23:59:59.999.  This
- *                    property is mutually exclusive with the *text_search*
+ *                    property is mutually exclusive with the @a text_search
  *                    property.
  *                            <li> gpudb::create_type_char1: This property
  *                    provides optimized memory, disk and query performance for
  *                    string columns. Strings with this property must be no
- *                    longer than 1 character. This property cannot be combined
- *                    with *text_search*
+ *                    longer than 1 character.
  *                            <li> gpudb::create_type_char2: This property
  *                    provides optimized memory, disk and query performance for
  *                    string columns. Strings with this property must be no
- *                    longer than 2 characters. This property cannot be
- *                    combined with *text_search*
+ *                    longer than 2 characters.
  *                            <li> gpudb::create_type_char4: This property
  *                    provides optimized memory, disk and query performance for
  *                    string columns. Strings with this property must be no
- *                    longer than 4 characters. This property cannot be
- *                    combined with *text_search*
+ *                    longer than 4 characters.
  *                            <li> gpudb::create_type_char8: This property
  *                    provides optimized memory, disk and query performance for
  *                    string columns. Strings with this property must be no
- *                    longer than 8 characters. This property cannot be
- *                    combined with *text_search*
+ *                    longer than 8 characters.
  *                            <li> gpudb::create_type_char16: This property
  *                    provides optimized memory, disk and query performance for
  *                    string columns. Strings with this property must be no
- *                    longer than 16 characters. This property cannot be
- *                    combined with *text_search*
+ *                    longer than 16 characters.
  *                            <li> gpudb::create_type_char32: This property
  *                    provides optimized memory, disk and query performance for
  *                    string columns. Strings with this property must be no
- *                    longer than 32 characters. This property cannot be
- *                    combined with *text_search*
+ *                    longer than 32 characters.
  *                            <li> gpudb::create_type_char64: This property
  *                    provides optimized memory, disk and query performance for
  *                    string columns. Strings with this property must be no
- *                    longer than 64 characters. This property cannot be
- *                    combined with *text_search*
+ *                    longer than 64 characters.
  *                            <li> gpudb::create_type_char128: This property
  *                    provides optimized memory, disk and query performance for
  *                    string columns. Strings with this property must be no
- *                    longer than 128 characters. This property cannot be
- *                    combined with *text_search*
+ *                    longer than 128 characters.
  *                            <li> gpudb::create_type_char256: This property
  *                    provides optimized memory, disk and query performance for
  *                    string columns. Strings with this property must be no
- *                    longer than 256 characters. This property cannot be
- *                    combined with *text_search*
+ *                    longer than 256 characters.
  *                            <li> gpudb::create_type_int8: This property
  *                    provides optimized memory and query performance for int
  *                    columns. Ints with this property must be between -128 and
@@ -6642,10 +6667,13 @@ CreateTypeResponse createType( const std::string& typeDefinition,
  *                    (WKT) or Well-Known Binary (WKB) format.
  *                            <li> gpudb::create_type_primary_key: This
  *                    property indicates that this column will be part of (or
- *                    the entire) primary key.
+ *                    the entire) <a
+ *                    href="../../concepts/tables.html#primary-keys"
+ *                    target="_top">primary key</a>.
  *                            <li> gpudb::create_type_shard_key: This property
  *                    indicates that this column will be part of (or the
- *                    entire) shard key.
+ *                    entire) <a href="../../concepts/tables.html#shard-keys"
+ *                    target="_top">shard key</a>.
  *                            <li> gpudb::create_type_nullable: This property
  *                    indicates that this column is nullable.  However, setting
  *                    this property is insufficient for making the column
@@ -6657,9 +6685,9 @@ CreateTypeResponse createType( const std::string& typeDefinition,
  *                    schema must be: ['int', 'null'].
  *                    The C++, C#, Java, and Python APIs have built-in
  *                    convenience for bypassing setting the avro schema by
- *                    hand.  For those two languages, one can use this property
- *                    as usual and not have to worry about the avro schema for
- *                    the record.
+ *                    hand.  For those languages, one can use this property as
+ *                    usual and not have to worry about the avro schema for the
+ *                    record.
  *                            <li> gpudb::create_type_dict: This property
  *                    indicates that this column should be dictionary encoded.
  *                    It can only be used in conjunction with string columns
@@ -6850,6 +6878,10 @@ CreateUnionResponse& createUnion( const CreateUnionRequest& request_,
  *                 The default value is gpudb::create_union_union_all.
  *                         <li> gpudb::create_union_chunk_size: Indicates the
  *                 chunk size to be used for this table.
+ *                         <li> gpudb::create_union_create_indexes:
+ *                 Comma-separated list of columns on which to create indexes
+ *                 on the output table.  The columns specified must be present
+ *                 in @a outputColumnNames.
  *                         <li> gpudb::create_union_ttl: Sets the <a
  *                 href="../../concepts/ttl.html" target="_top">TTL</a> of the
  *                 table specified in @a tableName.
@@ -6962,6 +6994,10 @@ CreateUnionResponse createUnion( const std::string& tableName,
  *                 The default value is gpudb::create_union_union_all.
  *                         <li> gpudb::create_union_chunk_size: Indicates the
  *                 chunk size to be used for this table.
+ *                         <li> gpudb::create_union_create_indexes:
+ *                 Comma-separated list of columns on which to create indexes
+ *                 on the output table.  The columns specified must be present
+ *                 in @a outputColumnNames.
  *                         <li> gpudb::create_union_ttl: Sets the <a
  *                 href="../../concepts/ttl.html" target="_top">TTL</a> of the
  *                 table specified in @a tableName.
@@ -7194,11 +7230,12 @@ DeleteProcResponse& deleteProc( const std::string& procName,
 /**
  * Deletes record(s) matching the provided criteria from the given table. The
  * record selection criteria can either be one or more  @a expressions
- * (matching multiple records) or a single record identified by @a record_id
- * options.  Note that the two selection criteria are mutually exclusive.  This
- * operation cannot be run on a collection or a view.  The operation is
- * synchronous meaning that a response will not be available until the request
- * is completely processed and all the matching records are deleted.
+ * (matching multiple records), a single record identified by @a record_id
+ * options, or all records when using @a delete_all_records.  Note that the
+ * three selection criteria are mutually exclusive.  This operation cannot be
+ * run on a collection or a view.  The operation is synchronous meaning that a
+ * response will not be available until the request is completely processed and
+ * all the matching records are deleted.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -7212,11 +7249,12 @@ DeleteRecordsResponse deleteRecords( const DeleteRecordsRequest& request_ ) cons
 /**
  * Deletes record(s) matching the provided criteria from the given table. The
  * record selection criteria can either be one or more  @a expressions
- * (matching multiple records) or a single record identified by @a record_id
- * options.  Note that the two selection criteria are mutually exclusive.  This
- * operation cannot be run on a collection or a view.  The operation is
- * synchronous meaning that a response will not be available until the request
- * is completely processed and all the matching records are deleted.
+ * (matching multiple records), a single record identified by @a record_id
+ * options, or all records when using @a delete_all_records.  Note that the
+ * three selection criteria are mutually exclusive.  This operation cannot be
+ * run on a collection or a view.  The operation is synchronous meaning that a
+ * response will not be available until the request is completely processed and
+ * all the matching records are deleted.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -7234,11 +7272,12 @@ DeleteRecordsResponse& deleteRecords( const DeleteRecordsRequest& request_,
 /**
  * Deletes record(s) matching the provided criteria from the given table. The
  * record selection criteria can either be one or more  @a expressions
- * (matching multiple records) or a single record identified by @a record_id
- * options.  Note that the two selection criteria are mutually exclusive.  This
- * operation cannot be run on a collection or a view.  The operation is
- * synchronous meaning that a response will not be available until the request
- * is completely processed and all the matching records are deleted.
+ * (matching multiple records), a single record identified by @a record_id
+ * options, or all records when using @a delete_all_records.  Note that the
+ * three selection criteria are mutually exclusive.  This operation cannot be
+ * run on a collection or a view.  The operation is synchronous meaning that a
+ * response will not be available until the request is completely processed and
+ * all the matching records are deleted.
  * 
  * @param tableName  Name of the table from which to delete records. The set
  *                   must be a currently existing table and not a collection or
@@ -7258,6 +7297,14 @@ DeleteRecordsResponse& deleteRecords( const DeleteRecordsRequest& request_,
  *                 identifying a single record, obtained at the time of
  *                 /insert/records or by calling /get/records/fromcollection
  *                 with the *return_record_ids* option.
+ *                         <li> gpudb::delete_records_delete_all_records: If
+ *                 set to @a true, all records in the table will be deleted. If
+ *                 set to @a false, then the option is effectively ignored.
+ *                 <ul>
+ *                         <li> gpudb::delete_records_true
+ *                         <li> gpudb::delete_records_false
+ *                 </ul>
+ *                 The default value is gpudb::delete_records_false.
  *                 </ul>
  * 
  * @return Response object containing the result of the operation.
@@ -7271,11 +7318,12 @@ DeleteRecordsResponse deleteRecords( const std::string& tableName,
 /**
  * Deletes record(s) matching the provided criteria from the given table. The
  * record selection criteria can either be one or more  @a expressions
- * (matching multiple records) or a single record identified by @a record_id
- * options.  Note that the two selection criteria are mutually exclusive.  This
- * operation cannot be run on a collection or a view.  The operation is
- * synchronous meaning that a response will not be available until the request
- * is completely processed and all the matching records are deleted.
+ * (matching multiple records), a single record identified by @a record_id
+ * options, or all records when using @a delete_all_records.  Note that the
+ * three selection criteria are mutually exclusive.  This operation cannot be
+ * run on a collection or a view.  The operation is synchronous meaning that a
+ * response will not be available until the request is completely processed and
+ * all the matching records are deleted.
  * 
  * @param tableName  Name of the table from which to delete records. The set
  *                   must be a currently existing table and not a collection or
@@ -7295,6 +7343,14 @@ DeleteRecordsResponse deleteRecords( const std::string& tableName,
  *                 identifying a single record, obtained at the time of
  *                 /insert/records or by calling /get/records/fromcollection
  *                 with the *return_record_ids* option.
+ *                         <li> gpudb::delete_records_delete_all_records: If
+ *                 set to @a true, all records in the table will be deleted. If
+ *                 set to @a false, then the option is effectively ignored.
+ *                 <ul>
+ *                         <li> gpudb::delete_records_true
+ *                         <li> gpudb::delete_records_false
+ *                 </ul>
+ *                 The default value is gpudb::delete_records_false.
  *                 </ul>
  * @param[out] response_  Response object containing the results of the
  *                        operation.
@@ -7509,6 +7565,12 @@ ExecuteProcResponse& executeProc( const ExecuteProcRequest& request_,
  *                 multiple specified run IDs, the cached data from the first
  *                 run ID specified in the list that includes that table will
  *                 be used.
+ *                         <li> gpudb::execute_proc_kifs_input_dirs: A
+ *                 comma-delimited list of KiFS directories whose local files
+ *                 will be made directly accessible to the proc through the
+ *                 API. (All KiFS files, local or not, are also accessible
+ *                 through the file system below the KiFS mount point.) Each
+ *                 name specified must the name of an existing KiFS directory.
  *                 </ul>
  * 
  * @return Response object containing the result of the operation.
@@ -7577,6 +7639,12 @@ ExecuteProcResponse executeProc( const std::string& procName,
  *                 multiple specified run IDs, the cached data from the first
  *                 run ID specified in the list that includes that table will
  *                 be used.
+ *                         <li> gpudb::execute_proc_kifs_input_dirs: A
+ *                 comma-delimited list of KiFS directories whose local files
+ *                 will be made directly accessible to the proc through the
+ *                 API. (All KiFS files, local or not, are also accessible
+ *                 through the file system below the KiFS mount point.) Each
+ *                 name specified must the name of an existing KiFS directory.
  *                 </ul>
  * @param[out] response_  Response object containing the results of the
  *                        operation.
@@ -9083,7 +9151,8 @@ FilterBySeriesResponse& filterBySeries( const FilterBySeriesRequest& request_,
  * 
  * @param tableName  Name of the table on which the filter by track operation
  *                   will be performed. Must be a currently existing table with
- *                   track semantic type.
+ *                   a <a href="../../geospatial/geo_objects.html"
+ *                   target="_top">track</a> present.
  * @param viewName  If provided, then this will be the name of the view
  *                  containing the results. Has the same naming restrictions as
  *                  <a href="../../concepts/tables.html"
@@ -9149,7 +9218,8 @@ FilterBySeriesResponse filterBySeries( const std::string& tableName,
  * 
  * @param tableName  Name of the table on which the filter by track operation
  *                   will be performed. Must be a currently existing table with
- *                   track semantic type.
+ *                   a <a href="../../geospatial/geo_objects.html"
+ *                   target="_top">track</a> present.
  * @param viewName  If provided, then this will be the name of the view
  *                  containing the results. Has the same naming restrictions as
  *                  <a href="../../concepts/tables.html"
@@ -13098,36 +13168,36 @@ InsertRecordsRandomResponse& insertRecordsRandom( const InsertRecordsRandomReque
  *                         <li> gpudb::insert_records_random_min: For numerical
  *                 columns, the minimum of the generated values is set to this
  *                 value.  Default is -99999.  For point, shape, and track
- *                 semantic types, min for numeric 'x' and 'y' columns needs to
- *                 be within [-180, 180] and [-90, 90], respectively. The
- *                 default minimum possible values for these columns in such
- *                 cases are -180.0 and -90.0. For the 'TIMESTAMP' column, the
- *                 default minimum corresponds to Jan 1, 2010.
+ *                 columns, min for numeric 'x' and 'y' columns needs to be
+ *                 within [-180, 180] and [-90, 90], respectively. The default
+ *                 minimum possible values for these columns in such cases are
+ *                 -180.0 and -90.0. For the 'TIMESTAMP' column, the default
+ *                 minimum corresponds to Jan 1, 2010.
  *                 For string columns, the minimum length of the randomly
  *                 generated strings is set to this value (default is 0). If
  *                 both minimum and maximum are provided, minimum must be less
  *                 than or equal to max. Value needs to be within [0, 200].
  *                 If the min is outside the accepted ranges for strings
- *                 columns and 'x' and 'y' columns for point/shape/track types,
- *                 then those parameters will not be set; however, an error
- *                 will not be thrown in such a case. It is the responsibility
- *                 of the user to use the @a all parameter judiciously.
+ *                 columns and 'x' and 'y' columns for point/shape/track, then
+ *                 those parameters will not be set; however, an error will not
+ *                 be thrown in such a case. It is the responsibility of the
+ *                 user to use the @a all parameter judiciously.
  *                         <li> gpudb::insert_records_random_max: For numerical
  *                 columns, the maximum of the generated values is set to this
  *                 value. Default is 99999. For point, shape, and track
- *                 semantic types, max for numeric 'x' and 'y' columns needs to
- *                 be within [-180, 180] and [-90, 90], respectively. The
- *                 default minimum possible values for these columns in such
- *                 cases are 180.0 and 90.0.
+ *                 columns, max for numeric 'x' and 'y' columns needs to be
+ *                 within [-180, 180] and [-90, 90], respectively. The default
+ *                 minimum possible values for these columns in such cases are
+ *                 180.0 and 90.0.
  *                 For string columns, the maximum length of the randomly
  *                 generated strings is set to this value (default is 200). If
  *                 both minimum and maximum are provided, *max* must be greater
  *                 than or equal to *min*. Value needs to be within [0, 200].
  *                 If the *max* is outside the accepted ranges for strings
- *                 columns and 'x' and 'y' columns for point/shape/track types,
- *                 then those parameters will not be set; however, an error
- *                 will not be thrown in such a case. It is the responsibility
- *                 of the user to use the @a all parameter judiciously.
+ *                 columns and 'x' and 'y' columns for point/shape/track, then
+ *                 those parameters will not be set; however, an error will not
+ *                 be thrown in such a case. It is the responsibility of the
+ *                 user to use the @a all parameter judiciously.
  *                         <li> gpudb::insert_records_random_interval: If
  *                 specified, generate values for all columns evenly spaced
  *                 with the given interval value. If a max value is specified
@@ -13161,36 +13231,36 @@ InsertRecordsRandomResponse& insertRecordsRandom( const InsertRecordsRandomReque
  *                         <li> gpudb::insert_records_random_min: For numerical
  *                 columns, the minimum of the generated values is set to this
  *                 value.  Default is -99999.  For point, shape, and track
- *                 semantic types, min for numeric 'x' and 'y' columns needs to
- *                 be within [-180, 180] and [-90, 90], respectively. The
- *                 default minimum possible values for these columns in such
- *                 cases are -180.0 and -90.0. For the 'TIMESTAMP' column, the
- *                 default minimum corresponds to Jan 1, 2010.
+ *                 columns, min for numeric 'x' and 'y' columns needs to be
+ *                 within [-180, 180] and [-90, 90], respectively. The default
+ *                 minimum possible values for these columns in such cases are
+ *                 -180.0 and -90.0. For the 'TIMESTAMP' column, the default
+ *                 minimum corresponds to Jan 1, 2010.
  *                 For string columns, the minimum length of the randomly
  *                 generated strings is set to this value (default is 0). If
  *                 both minimum and maximum are provided, minimum must be less
  *                 than or equal to max. Value needs to be within [0, 200].
  *                 If the min is outside the accepted ranges for strings
- *                 columns and 'x' and 'y' columns for point/shape/track types,
- *                 then those parameters will not be set; however, an error
- *                 will not be thrown in such a case. It is the responsibility
- *                 of the user to use the @a all parameter judiciously.
+ *                 columns and 'x' and 'y' columns for point/shape/track, then
+ *                 those parameters will not be set; however, an error will not
+ *                 be thrown in such a case. It is the responsibility of the
+ *                 user to use the @a all parameter judiciously.
  *                         <li> gpudb::insert_records_random_max: For numerical
  *                 columns, the maximum of the generated values is set to this
  *                 value. Default is 99999. For point, shape, and track
- *                 semantic types, max for numeric 'x' and 'y' columns needs to
- *                 be within [-180, 180] and [-90, 90], respectively. The
- *                 default minimum possible values for these columns in such
- *                 cases are 180.0 and 90.0.
+ *                 columns, max for numeric 'x' and 'y' columns needs to be
+ *                 within [-180, 180] and [-90, 90], respectively. The default
+ *                 minimum possible values for these columns in such cases are
+ *                 180.0 and 90.0.
  *                 For string columns, the maximum length of the randomly
  *                 generated strings is set to this value (default is 200). If
  *                 both minimum and maximum are provided, *max* must be greater
  *                 than or equal to *min*. Value needs to be within [0, 200].
  *                 If the *max* is outside the accepted ranges for strings
- *                 columns and 'x' and 'y' columns for point/shape/track types,
- *                 then those parameters will not be set; however, an error
- *                 will not be thrown in such a case. It is the responsibility
- *                 of the user to use the @a all parameter judiciously.
+ *                 columns and 'x' and 'y' columns for point/shape/track, then
+ *                 those parameters will not be set; however, an error will not
+ *                 be thrown in such a case. It is the responsibility of the
+ *                 user to use the @a all parameter judiciously.
  *                         <li> gpudb::insert_records_random_interval: If
  *                 specified, generate values for all columns evenly spaced
  *                 with the given interval value. If a max value is specified
@@ -13218,9 +13288,9 @@ InsertRecordsRandomResponse& insertRecordsRandom( const InsertRecordsRandomReque
  *                 must be greater than 0. This option is disabled by default.
  *                 </ul>
  *                         <li> gpudb::insert_records_random_track_length: This
- *                 key-map pair is only valid for track type data sets (an
- *                 error is thrown otherwise).  No nulls would be generated for
- *                 nullable columns.
+ *                 key-map pair is only valid for track data sets (an error is
+ *                 thrown otherwise).  No nulls would be generated for nullable
+ *                 columns.
  *                 <ul>
  *                         <li> gpudb::insert_records_random_min: Minimum
  *                 possible length for generated series; default is 100 records
@@ -13290,36 +13360,36 @@ InsertRecordsRandomResponse insertRecordsRandom( const std::string& tableName,
  *                         <li> gpudb::insert_records_random_min: For numerical
  *                 columns, the minimum of the generated values is set to this
  *                 value.  Default is -99999.  For point, shape, and track
- *                 semantic types, min for numeric 'x' and 'y' columns needs to
- *                 be within [-180, 180] and [-90, 90], respectively. The
- *                 default minimum possible values for these columns in such
- *                 cases are -180.0 and -90.0. For the 'TIMESTAMP' column, the
- *                 default minimum corresponds to Jan 1, 2010.
+ *                 columns, min for numeric 'x' and 'y' columns needs to be
+ *                 within [-180, 180] and [-90, 90], respectively. The default
+ *                 minimum possible values for these columns in such cases are
+ *                 -180.0 and -90.0. For the 'TIMESTAMP' column, the default
+ *                 minimum corresponds to Jan 1, 2010.
  *                 For string columns, the minimum length of the randomly
  *                 generated strings is set to this value (default is 0). If
  *                 both minimum and maximum are provided, minimum must be less
  *                 than or equal to max. Value needs to be within [0, 200].
  *                 If the min is outside the accepted ranges for strings
- *                 columns and 'x' and 'y' columns for point/shape/track types,
- *                 then those parameters will not be set; however, an error
- *                 will not be thrown in such a case. It is the responsibility
- *                 of the user to use the @a all parameter judiciously.
+ *                 columns and 'x' and 'y' columns for point/shape/track, then
+ *                 those parameters will not be set; however, an error will not
+ *                 be thrown in such a case. It is the responsibility of the
+ *                 user to use the @a all parameter judiciously.
  *                         <li> gpudb::insert_records_random_max: For numerical
  *                 columns, the maximum of the generated values is set to this
  *                 value. Default is 99999. For point, shape, and track
- *                 semantic types, max for numeric 'x' and 'y' columns needs to
- *                 be within [-180, 180] and [-90, 90], respectively. The
- *                 default minimum possible values for these columns in such
- *                 cases are 180.0 and 90.0.
+ *                 columns, max for numeric 'x' and 'y' columns needs to be
+ *                 within [-180, 180] and [-90, 90], respectively. The default
+ *                 minimum possible values for these columns in such cases are
+ *                 180.0 and 90.0.
  *                 For string columns, the maximum length of the randomly
  *                 generated strings is set to this value (default is 200). If
  *                 both minimum and maximum are provided, *max* must be greater
  *                 than or equal to *min*. Value needs to be within [0, 200].
  *                 If the *max* is outside the accepted ranges for strings
- *                 columns and 'x' and 'y' columns for point/shape/track types,
- *                 then those parameters will not be set; however, an error
- *                 will not be thrown in such a case. It is the responsibility
- *                 of the user to use the @a all parameter judiciously.
+ *                 columns and 'x' and 'y' columns for point/shape/track, then
+ *                 those parameters will not be set; however, an error will not
+ *                 be thrown in such a case. It is the responsibility of the
+ *                 user to use the @a all parameter judiciously.
  *                         <li> gpudb::insert_records_random_interval: If
  *                 specified, generate values for all columns evenly spaced
  *                 with the given interval value. If a max value is specified
@@ -13353,36 +13423,36 @@ InsertRecordsRandomResponse insertRecordsRandom( const std::string& tableName,
  *                         <li> gpudb::insert_records_random_min: For numerical
  *                 columns, the minimum of the generated values is set to this
  *                 value.  Default is -99999.  For point, shape, and track
- *                 semantic types, min for numeric 'x' and 'y' columns needs to
- *                 be within [-180, 180] and [-90, 90], respectively. The
- *                 default minimum possible values for these columns in such
- *                 cases are -180.0 and -90.0. For the 'TIMESTAMP' column, the
- *                 default minimum corresponds to Jan 1, 2010.
+ *                 columns, min for numeric 'x' and 'y' columns needs to be
+ *                 within [-180, 180] and [-90, 90], respectively. The default
+ *                 minimum possible values for these columns in such cases are
+ *                 -180.0 and -90.0. For the 'TIMESTAMP' column, the default
+ *                 minimum corresponds to Jan 1, 2010.
  *                 For string columns, the minimum length of the randomly
  *                 generated strings is set to this value (default is 0). If
  *                 both minimum and maximum are provided, minimum must be less
  *                 than or equal to max. Value needs to be within [0, 200].
  *                 If the min is outside the accepted ranges for strings
- *                 columns and 'x' and 'y' columns for point/shape/track types,
- *                 then those parameters will not be set; however, an error
- *                 will not be thrown in such a case. It is the responsibility
- *                 of the user to use the @a all parameter judiciously.
+ *                 columns and 'x' and 'y' columns for point/shape/track, then
+ *                 those parameters will not be set; however, an error will not
+ *                 be thrown in such a case. It is the responsibility of the
+ *                 user to use the @a all parameter judiciously.
  *                         <li> gpudb::insert_records_random_max: For numerical
  *                 columns, the maximum of the generated values is set to this
  *                 value. Default is 99999. For point, shape, and track
- *                 semantic types, max for numeric 'x' and 'y' columns needs to
- *                 be within [-180, 180] and [-90, 90], respectively. The
- *                 default minimum possible values for these columns in such
- *                 cases are 180.0 and 90.0.
+ *                 columns, max for numeric 'x' and 'y' columns needs to be
+ *                 within [-180, 180] and [-90, 90], respectively. The default
+ *                 minimum possible values for these columns in such cases are
+ *                 180.0 and 90.0.
  *                 For string columns, the maximum length of the randomly
  *                 generated strings is set to this value (default is 200). If
  *                 both minimum and maximum are provided, *max* must be greater
  *                 than or equal to *min*. Value needs to be within [0, 200].
  *                 If the *max* is outside the accepted ranges for strings
- *                 columns and 'x' and 'y' columns for point/shape/track types,
- *                 then those parameters will not be set; however, an error
- *                 will not be thrown in such a case. It is the responsibility
- *                 of the user to use the @a all parameter judiciously.
+ *                 columns and 'x' and 'y' columns for point/shape/track, then
+ *                 those parameters will not be set; however, an error will not
+ *                 be thrown in such a case. It is the responsibility of the
+ *                 user to use the @a all parameter judiciously.
  *                         <li> gpudb::insert_records_random_interval: If
  *                 specified, generate values for all columns evenly spaced
  *                 with the given interval value. If a max value is specified
@@ -13410,9 +13480,9 @@ InsertRecordsRandomResponse insertRecordsRandom( const std::string& tableName,
  *                 must be greater than 0. This option is disabled by default.
  *                 </ul>
  *                         <li> gpudb::insert_records_random_track_length: This
- *                 key-map pair is only valid for track type data sets (an
- *                 error is thrown otherwise).  No nulls would be generated for
- *                 nullable columns.
+ *                 key-map pair is only valid for track data sets (an error is
+ *                 thrown otherwise).  No nulls would be generated for nullable
+ *                 columns.
  *                 <ul>
  *                         <li> gpudb::insert_records_random_min: Minimum
  *                 possible length for generated series; default is 100 records
@@ -14989,10 +15059,10 @@ ShowTableMetadataResponse& showTableMetadata( const std::vector<std::string>& ta
 
 /**
  * Gets names of the tables whose type matches the given criteria. Each table
- * has a particular type. This type is made out of the type label, schema of
- * the table, and the semantic type of the table. This function allows a look
- * up of the existing tables based on full or partial type information. The
- * operation is synchronous.
+ * has a particular type. This type comprises the schema and properties of the
+ * table and sometimes a type label. This function allows a look up of the
+ * existing tables based on full or partial type information. The operation is
+ * synchronous.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -15005,10 +15075,10 @@ ShowTablesByTypeResponse showTablesByType( const ShowTablesByTypeRequest& reques
 
 /**
  * Gets names of the tables whose type matches the given criteria. Each table
- * has a particular type. This type is made out of the type label, schema of
- * the table, and the semantic type of the table. This function allows a look
- * up of the existing tables based on full or partial type information. The
- * operation is synchronous.
+ * has a particular type. This type comprises the schema and properties of the
+ * table and sometimes a type label. This function allows a look up of the
+ * existing tables based on full or partial type information. The operation is
+ * synchronous.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -15025,10 +15095,10 @@ ShowTablesByTypeResponse& showTablesByType( const ShowTablesByTypeRequest& reque
 
 /**
  * Gets names of the tables whose type matches the given criteria. Each table
- * has a particular type. This type is made out of the type label, schema of
- * the table, and the semantic type of the table. This function allows a look
- * up of the existing tables based on full or partial type information. The
- * operation is synchronous.
+ * has a particular type. This type comprises the schema and properties of the
+ * table and sometimes a type label. This function allows a look up of the
+ * existing tables based on full or partial type information. The operation is
+ * synchronous.
  * 
  * @param typeId  Type id returned by a call to /create/type.
  * @param label  Optional user supplied label which can be used instead of the
@@ -15045,10 +15115,10 @@ ShowTablesByTypeResponse showTablesByType( const std::string& typeId,
 
 /**
  * Gets names of the tables whose type matches the given criteria. Each table
- * has a particular type. This type is made out of the type label, schema of
- * the table, and the semantic type of the table. This function allows a look
- * up of the existing tables based on full or partial type information. The
- * operation is synchronous.
+ * has a particular type. This type comprises the schema and properties of the
+ * table and sometimes a type label. This function allows a look up of the
+ * existing tables based on full or partial type information. The operation is
+ * synchronous.
  * 
  * @param typeId  Type id returned by a call to /create/type.
  * @param label  Optional user supplied label which can be used instead of the
@@ -15134,11 +15204,9 @@ ShowTriggersResponse& showTriggers( const std::vector<std::string>& triggerIds,
                                     ShowTriggersResponse& response_ ) const;
 
 /**
- * Retrieves information for the specified data type. Given a type ID, the
- * database returns the data type schema, the label, and the semantic type
- * along with the type ID. If the user provides any combination of label and
- * semantic type, then the database returns the pertinent information for all
- * data types that match the input criteria.
+ * Retrieves information for the specified data type ID or type label. For all
+ * data types that match the input criteria, the database returns the type ID,
+ * the type schema, the label (if available), and the type's column properties.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -15150,11 +15218,9 @@ ShowTriggersResponse& showTriggers( const std::vector<std::string>& triggerIds,
 ShowTypesResponse showTypes( const ShowTypesRequest& request_ ) const;
 
 /**
- * Retrieves information for the specified data type. Given a type ID, the
- * database returns the data type schema, the label, and the semantic type
- * along with the type ID. If the user provides any combination of label and
- * semantic type, then the database returns the pertinent information for all
- * data types that match the input criteria.
+ * Retrieves information for the specified data type ID or type label. For all
+ * data types that match the input criteria, the database returns the type ID,
+ * the type schema, the label (if available), and the type's column properties.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -15170,11 +15236,9 @@ ShowTypesResponse& showTypes( const ShowTypesRequest& request_,
                               ShowTypesResponse& response_ ) const;
 
 /**
- * Retrieves information for the specified data type. Given a type ID, the
- * database returns the data type schema, the label, and the semantic type
- * along with the type ID. If the user provides any combination of label and
- * semantic type, then the database returns the pertinent information for all
- * data types that match the input criteria.
+ * Retrieves information for the specified data type ID or type label. For all
+ * data types that match the input criteria, the database returns the type ID,
+ * the type schema, the label (if available), and the type's column properties.
  * 
  * @param typeId  Type Id returned in response to a call to /create/type.
  * @param label  Option string that was supplied by user in a call to
@@ -15190,11 +15254,9 @@ ShowTypesResponse showTypes( const std::string& typeId,
                              const std::map<std::string, std::string>& options ) const;
 
 /**
- * Retrieves information for the specified data type. Given a type ID, the
- * database returns the data type schema, the label, and the semantic type
- * along with the type ID. If the user provides any combination of label and
- * semantic type, then the database returns the pertinent information for all
- * data types that match the input criteria.
+ * Retrieves information for the specified data type ID or type label. For all
+ * data types that match the input criteria, the database returns the type ID,
+ * the type schema, the label (if available), and the type's column properties.
  * 
  * @param typeId  Type Id returned in response to a call to /create/type.
  * @param label  Option string that was supplied by user in a call to
@@ -16636,6 +16698,216 @@ VisualizeImageClassbreakResponse& visualizeImageClassbreak( const std::vector<st
                                                             const std::map<std::string, std::vector<std::string> >& styleOptions,
                                                             const std::map<std::string, std::string>& options,
                                                             VisualizeImageClassbreakResponse& response_ ) const;
+
+/**
+ * @private
+ * 
+ * @param[in] request_  Request object containing the parameters for the
+ *                      operation.
+ * 
+ * @return Response object containing the result of the operation.
+ * 
+ */
+
+VisualizeImageContourResponse visualizeImageContour( const VisualizeImageContourRequest& request_ ) const;
+
+/**
+ * @private
+ * 
+ * @param[in] request_  Request object containing the parameters for the
+ *                      operation.
+ * @param[out] response_  Response object containing the results of the
+ *                        operation.
+ * 
+ * @return Response object containing the result of the operation (initially
+ *         passed in by reference).
+ * 
+ */
+
+VisualizeImageContourResponse& visualizeImageContour( const VisualizeImageContourRequest& request_,
+                                                      VisualizeImageContourResponse& response_ ) const;
+
+/**
+ * @private
+ * 
+ * @param tableNames
+ * @param xColumnName
+ * @param yColumnName
+ * @param valueColumnName
+ * @param minX
+ * @param maxX
+ * @param minY
+ * @param maxY
+ * @param width
+ * @param height
+ * @param projection
+ *                    <ul>
+ *                            <li> gpudb::visualize_image_contour_3857
+ *                            <li> gpudb::visualize_image_contour_102100
+ *                            <li> gpudb::visualize_image_contour_900913
+ *                            <li> gpudb::visualize_image_contour_EPSG_4326
+ *                            <li> gpudb::visualize_image_contour_PLATE_CARREE
+ *                            <li> gpudb::visualize_image_contour_EPSG_900913
+ *                            <li> gpudb::visualize_image_contour_EPSG_102100
+ *                            <li> gpudb::visualize_image_contour_EPSG_3857
+ *                            <li> gpudb::visualize_image_contour_WEB_MERCATOR
+ *                    </ul>
+ *                    The default value is
+ *                    gpudb::visualize_image_contour_PLATE_CARREE.
+ * @param styleOptions
+ *                      <ul>
+ *                              <li> gpudb::visualize_image_contour_line_size
+ *                              <li> gpudb::visualize_image_contour_color
+ *                              <li> gpudb::visualize_image_contour_bg_color
+ *                              <li> gpudb::visualize_image_contour_colormap:
+ *                      <ul>
+ *                              <li> gpudb::visualize_image_contour_jet
+ *                              <li> gpudb::visualize_image_contour_hot
+ *                              <li> gpudb::visualize_image_contour_hsv
+ *                              <li> gpudb::visualize_image_contour_gray
+ *                              <li> gpudb::visualize_image_contour_blues
+ *                              <li> gpudb::visualize_image_contour_greens
+ *                              <li> gpudb::visualize_image_contour_greys
+ *                              <li> gpudb::visualize_image_contour_oranges
+ *                              <li> gpudb::visualize_image_contour_purples
+ *                              <li> gpudb::visualize_image_contour_reds
+ *                              <li> gpudb::visualize_image_contour_viridis
+ *                      </ul>
+ *                      The default value is
+ *                      gpudb::visualize_image_contour_jet.
+ *                      </ul>
+ * @param options
+ *                 <ul>
+ *                         <li> gpudb::visualize_image_contour_min_level
+ *                         <li> gpudb::visualize_image_contour_max_level
+ *                         <li> gpudb::visualize_image_contour_num_levels
+ *                         <li> gpudb::visualize_image_contour_search_radius
+ *                         <li> gpudb::visualize_image_contour_gridding_method:
+ *                 <ul>
+ *                         <li> gpudb::visualize_image_contour_INV_DST_POW
+ *                         <li> gpudb::visualize_image_contour_MIN_CURV
+ *                         <li> gpudb::visualize_image_contour_KRIGING
+ *                         <li> gpudb::visualize_image_contour_PASS_THROUGH
+ *                 </ul>
+ *                 The default value is
+ *                 gpudb::visualize_image_contour_INV_DST_POW.
+ *                         <li> gpudb::visualize_image_contour_smoothing_factor
+ *                         <li> gpudb::visualize_image_contour_grid_rows
+ *                         <li> gpudb::visualize_image_contour_grid_columns
+ *                         <li>
+ *                 gpudb::visualize_image_contour_render_output_grid
+ *                 </ul>
+ * 
+ * @return Response object containing the result of the operation.
+ * 
+ */
+
+VisualizeImageContourResponse visualizeImageContour( const std::vector<std::string>& tableNames,
+                                                     const std::string& xColumnName,
+                                                     const std::string& yColumnName,
+                                                     const std::string& valueColumnName,
+                                                     const double minX,
+                                                     const double maxX,
+                                                     const double minY,
+                                                     const double maxY,
+                                                     const int32_t width,
+                                                     const int32_t height,
+                                                     const std::string& projection,
+                                                     const std::map<std::string, std::string>& styleOptions,
+                                                     const std::map<std::string, std::string>& options ) const;
+
+/**
+ * @private
+ * 
+ * @param tableNames
+ * @param xColumnName
+ * @param yColumnName
+ * @param valueColumnName
+ * @param minX
+ * @param maxX
+ * @param minY
+ * @param maxY
+ * @param width
+ * @param height
+ * @param projection
+ *                    <ul>
+ *                            <li> gpudb::visualize_image_contour_3857
+ *                            <li> gpudb::visualize_image_contour_102100
+ *                            <li> gpudb::visualize_image_contour_900913
+ *                            <li> gpudb::visualize_image_contour_EPSG_4326
+ *                            <li> gpudb::visualize_image_contour_PLATE_CARREE
+ *                            <li> gpudb::visualize_image_contour_EPSG_900913
+ *                            <li> gpudb::visualize_image_contour_EPSG_102100
+ *                            <li> gpudb::visualize_image_contour_EPSG_3857
+ *                            <li> gpudb::visualize_image_contour_WEB_MERCATOR
+ *                    </ul>
+ *                    The default value is
+ *                    gpudb::visualize_image_contour_PLATE_CARREE.
+ * @param styleOptions
+ *                      <ul>
+ *                              <li> gpudb::visualize_image_contour_line_size
+ *                              <li> gpudb::visualize_image_contour_color
+ *                              <li> gpudb::visualize_image_contour_bg_color
+ *                              <li> gpudb::visualize_image_contour_colormap:
+ *                      <ul>
+ *                              <li> gpudb::visualize_image_contour_jet
+ *                              <li> gpudb::visualize_image_contour_hot
+ *                              <li> gpudb::visualize_image_contour_hsv
+ *                              <li> gpudb::visualize_image_contour_gray
+ *                              <li> gpudb::visualize_image_contour_blues
+ *                              <li> gpudb::visualize_image_contour_greens
+ *                              <li> gpudb::visualize_image_contour_greys
+ *                              <li> gpudb::visualize_image_contour_oranges
+ *                              <li> gpudb::visualize_image_contour_purples
+ *                              <li> gpudb::visualize_image_contour_reds
+ *                              <li> gpudb::visualize_image_contour_viridis
+ *                      </ul>
+ *                      The default value is
+ *                      gpudb::visualize_image_contour_jet.
+ *                      </ul>
+ * @param options
+ *                 <ul>
+ *                         <li> gpudb::visualize_image_contour_min_level
+ *                         <li> gpudb::visualize_image_contour_max_level
+ *                         <li> gpudb::visualize_image_contour_num_levels
+ *                         <li> gpudb::visualize_image_contour_search_radius
+ *                         <li> gpudb::visualize_image_contour_gridding_method:
+ *                 <ul>
+ *                         <li> gpudb::visualize_image_contour_INV_DST_POW
+ *                         <li> gpudb::visualize_image_contour_MIN_CURV
+ *                         <li> gpudb::visualize_image_contour_KRIGING
+ *                         <li> gpudb::visualize_image_contour_PASS_THROUGH
+ *                 </ul>
+ *                 The default value is
+ *                 gpudb::visualize_image_contour_INV_DST_POW.
+ *                         <li> gpudb::visualize_image_contour_smoothing_factor
+ *                         <li> gpudb::visualize_image_contour_grid_rows
+ *                         <li> gpudb::visualize_image_contour_grid_columns
+ *                         <li>
+ *                 gpudb::visualize_image_contour_render_output_grid
+ *                 </ul>
+ * @param[out] response_  Response object containing the results of the
+ *                        operation.
+ * 
+ * @return Response object containing the result of the operation (initially
+ *         passed in by reference).
+ * 
+ */
+
+VisualizeImageContourResponse& visualizeImageContour( const std::vector<std::string>& tableNames,
+                                                      const std::string& xColumnName,
+                                                      const std::string& yColumnName,
+                                                      const std::string& valueColumnName,
+                                                      const double minX,
+                                                      const double maxX,
+                                                      const double minY,
+                                                      const double maxY,
+                                                      const int32_t width,
+                                                      const int32_t height,
+                                                      const std::string& projection,
+                                                      const std::map<std::string, std::string>& styleOptions,
+                                                      const std::map<std::string, std::string>& options,
+                                                      VisualizeImageContourResponse& response_ ) const;
 
 /**
  * @private

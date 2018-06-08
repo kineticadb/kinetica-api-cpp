@@ -32,9 +32,13 @@ namespace gpudb
      * table & view that is not protected will have its TTL set to the given
      * value.
      * <p>
-     * Set the global access mode (i.e. locking) for a table. The mode can be
-     * set to
-     * 'no_access', 'read_only', 'write_only' or 'read_write'.
+     * Set the global access mode (i.e. locking) for a table. This setting
+     * trumps any
+     * role-based access controls that may be in place; e.g., a user with write
+     * access
+     * to a table marked read-only will not be able to insert records into it.
+     * The mode
+     * can be set to read-only, write-only, read/write, and no access.
      * <p>
      * Change the <a href="../../concepts/protection.html"
      * target="_top">protection</a> mode to prevent or
@@ -108,8 +112,17 @@ namespace gpudb
          *                     target="_top">tables</a>.
          *                             <li> gpudb::alter_table_ttl: Sets the <a
          *                     href="../../concepts/ttl.html"
-         *                     target="_top">TTL</a> of the table, view, or
-         *                     collection specified in @a tableName.
+         *                     target="_top">time-to-live</a> in minutes of the
+         *                     table, view, or collection specified in @a
+         *                     tableName.
+         *                             <li> gpudb::alter_table_memory_ttl: Sets
+         *                     the time-to-live in minutes for the individual
+         *                     chunks of the columns of the table, view, or
+         *                     collection specified in @a tableName to free
+         *                     their memory if unused longer than the given
+         *                     time. Specify an empty string to restore the
+         *                     global memory_ttl setting and a value of '-1'
+         *                     for an infinite timeout.
          *                             <li> gpudb::alter_table_add_column: Adds
          *                     the column specified in @a value to the table
          *                     specified in @a tableName.  Use @a column_type
@@ -119,7 +132,13 @@ namespace gpudb
          *                     Changes type and properties of the column
          *                     specified in @a value.  Use @a column_type and
          *                     @a column_properties in @a options to set the
-         *                     column's type and properties, respectively.
+         *                     column's type and properties, respectively. Note
+         *                     that primary key and/or shard key columns cannot
+         *                     be changed. All unchanging column properties
+         *                     must be listed for the change to take place,
+         *                     e.g., to add dictionary encoding to an existing
+         *                     'char4' column, both 'char4' and 'dict' must be
+         *                     specified in the @a options map.
          *                             <li>
          *                     gpudb::alter_table_set_column_compression:
          *                     Modifies the <a
@@ -150,27 +169,33 @@ namespace gpudb
          *                     access mode in @a value. Valid modes are
          *                     'no_access', 'read_only', 'write_only' and
          *                     'read_write'.
-         *                             <li> gpudb::alter_table_refresh: Replay
+         *                             <li> gpudb::alter_table_refresh: Replays
          *                     all the table creation commands required to
-         *                     create this view. Endpoints supported are
-         *                     /filter, /create/jointable, /create/projection,
-         *                     /create/union, /aggregate/groupby, and
-         *                     /aggregate/unique.
+         *                     create this <a
+         *                     href="../../concepts/materialized_views.html"
+         *                     target="_top">materialized view</a>.
          *                             <li>
-         *                     gpudb::alter_table_set_refresh_method: Set the
-         *                     method by which this view is refreshed - one of
-         *                     'manual', 'periodic', 'on_change', 'on_query'.
+         *                     gpudb::alter_table_set_refresh_method: Sets the
+         *                     method by which this <a
+         *                     href="../../concepts/materialized_views.html"
+         *                     target="_top">materialized view</a> is refreshed
+         *                     - one of 'manual', 'periodic', 'on_change'.
          *                             <li>
-         *                     gpudb::alter_table_set_refresh_start_time: Set
-         *                     the time to start periodic refreshes to datetime
-         *                     string with format YYYY-MM-DD HH:MM:SS at which
-         *                     refresh is to be done.  Next refresh occurs at
-         *                     refresh_start_time + N*refresh_period
+         *                     gpudb::alter_table_set_refresh_start_time: Sets
+         *                     the time to start periodic refreshes of this <a
+         *                     href="../../concepts/materialized_views.html"
+         *                     target="_top">materialized view</a> to datetime
+         *                     string with format 'YYYY-MM-DD HH:MM:SS'.
+         *                     Subsequent refreshes occur at the specified time
+         *                     + N * the refresh period.
          *                             <li>
-         *                     gpudb::alter_table_set_refresh_period: Set the
+         *                     gpudb::alter_table_set_refresh_period: Sets the
          *                     time interval in seconds at which to refresh
-         *                     this view - sets the refresh method to periodic
-         *                     if not alreay set.
+         *                     this <a
+         *                     href="../../concepts/materialized_views.html"
+         *                     target="_top">materialized view</a>.  Also, sets
+         *                     the refresh method to periodic if not alreay
+         *                     set.
          *                     </ul>
          * @param[in] value_  The value of the modification. May be a column
          *                    name, 'true' or 'false', a TTL, or the global
@@ -328,9 +353,13 @@ namespace gpudb
      * table & view that is not protected will have its TTL set to the given
      * value.
      * <p>
-     * Set the global access mode (i.e. locking) for a table. The mode can be
-     * set to
-     * 'no_access', 'read_only', 'write_only' or 'read_write'.
+     * Set the global access mode (i.e. locking) for a table. This setting
+     * trumps any
+     * role-based access controls that may be in place; e.g., a user with write
+     * access
+     * to a table marked read-only will not be able to insert records into it.
+     * The mode
+     * can be set to read-only, write-only, read/write, and no access.
      * <p>
      * Change the <a href="../../concepts/protection.html"
      * target="_top">protection</a> mode to prevent or

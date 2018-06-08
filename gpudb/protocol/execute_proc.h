@@ -101,6 +101,15 @@ namespace gpudb
          *                      multiple specified run IDs, the cached data
          *                      from the first run ID specified in the list
          *                      that includes that table will be used.
+         *                              <li>
+         *                      gpudb::execute_proc_kifs_input_dirs: A
+         *                      comma-delimited list of KiFS directories whose
+         *                      local files will be made directly accessible to
+         *                      the proc through the API. (All KiFS files,
+         *                      local or not, are also accessible through the
+         *                      file system below the KiFS mount point.) Each
+         *                      name specified must the name of an existing
+         *                      KiFS directory.
          *                      </ul>
          * 
          */

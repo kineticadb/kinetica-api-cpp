@@ -22,7 +22,7 @@ namespace gpudb
      * Views</a>.
      * <p>
      * The response contains @a viewId, which is used to tag each subsequent
-     * operation (projection, union, group-by, filter, or join) that will
+     * operation (projection, union, aggregation, filter, or join) that will
      * compose the view.
      */
     struct CreateMaterializedViewRequest
@@ -83,38 +83,35 @@ namespace gpudb
          *                              <li>
          *                      gpudb::create_materialized_view_manual: Refresh
          *                      only occurs when manually requested by calling
-         *                      alter_table with action refresh_view
+         *                      /alter/table with an 'action' of 'refresh'
          *                              <li>
-         *                      gpudb::create_materialized_view_on_query:
-         *                      Incrementally refresh (refresh just those
-         *                      records added) whenever a new query is issued
-         *                      and new data is inserted into the base table.
-         *                      A full refresh of all the records occurs when a
-         *                      new query is issued and there have been inserts
-         *                      to any non-base-tables since the last query
+         *                      gpudb::create_materialized_view_on_query: For
+         *                      future use.
          *                              <li>
          *                      gpudb::create_materialized_view_on_change: If
          *                      possible, incrementally refresh (refresh just
          *                      those records added) whenever an insert,
          *                      update, delete or refresh of input table is
-         *                      done.  A full refresh on_query is done if an
-         *                      incremental refresh is not possible.
+         *                      done.  A full refresh is done if an incremental
+         *                      refresh is not possible.
          *                              <li>
          *                      gpudb::create_materialized_view_periodic:
          *                      Refresh table periodically at rate specified by
-         *                      refresh_period option
+         *                      @a refresh_period
          *                      </ul>
          *                      The default value is
          *                      gpudb::create_materialized_view_manual.
          *                              <li>
          *                      gpudb::create_materialized_view_refresh_period:
-         *                      When refresh_method is periodic specifies the
-         *                      period in seconds at which refresh occurs
+         *                      When @a refresh_method is @a periodic,
+         *                      specifies the period in seconds at which
+         *                      refresh occurs
          *                              <li>
          *                      gpudb::create_materialized_view_refresh_start_time:
-         *                      First time at which a periodic refresh is to be
-         *                      done.  Value is a datatime string with format
-         *                      YYYY-MM-DD HH:MM:SS.
+         *                      When @a refresh_method is @a periodic,
+         *                      specifies the first time at which a refresh is
+         *                      to be done.  Value is a datetime string with
+         *                      format 'YYYY-MM-DD HH:MM:SS'.
          *                      </ul>
          * 
          */
@@ -187,7 +184,7 @@ namespace gpudb
      * Views</a>.
      * <p>
      * The response contains @a viewId, which is used to tag each subsequent
-     * operation (projection, union, group-by, filter, or join) that will
+     * operation (projection, union, aggregation, filter, or join) that will
      * compose the view.
      */
     struct CreateMaterializedViewResponse

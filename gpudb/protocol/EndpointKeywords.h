@@ -36,6 +36,7 @@ namespace gpudb
     extern const std::string aggregate_group_by_binary;
     extern const std::string aggregate_group_by_chunk_size;
     extern const std::string aggregate_group_by_collection_name;
+    extern const std::string aggregate_group_by_create_indexes;
     extern const std::string aggregate_group_by_cube;
     extern const std::string aggregate_group_by_descending;
     extern const std::string aggregate_group_by_expression;
@@ -135,6 +136,8 @@ namespace gpudb
     extern const std::string alter_system_properties_audit_data;
     extern const std::string alter_system_properties_audit_headers;
     extern const std::string alter_system_properties_bulk_add_test;
+    extern const std::string alter_system_properties_chunk_cache_enabled;
+    extern const std::string alter_system_properties_chunk_cache_size;
     extern const std::string alter_system_properties_chunk_size;
     extern const std::string alter_system_properties_clear_cache;
     extern const std::string alter_system_properties_communicator_test;
@@ -171,6 +174,7 @@ namespace gpudb
     extern const std::string alter_table_false;
     extern const std::string alter_table_lz4;
     extern const std::string alter_table_lz4hc;
+    extern const std::string alter_table_memory_ttl;
     extern const std::string alter_table_move_to_collection;
     extern const std::string alter_table_none;
     extern const std::string alter_table_protected;
@@ -248,8 +252,10 @@ namespace gpudb
     // Keywords for /create/projection request
     extern const std::string create_projection_chunk_size;
     extern const std::string create_projection_collection_name;
+    extern const std::string create_projection_create_indexes;
     extern const std::string create_projection_expression;
     extern const std::string create_projection_false;
+    extern const std::string create_projection_is_replicated;
     extern const std::string create_projection_limit;
     extern const std::string create_projection_materialize_on_gpu;
     extern const std::string create_projection_order_by;
@@ -315,6 +321,7 @@ namespace gpudb
     // Keywords for /create/union request
     extern const std::string create_union_chunk_size;
     extern const std::string create_union_collection_name;
+    extern const std::string create_union_create_indexes;
     extern const std::string create_union_except;
     extern const std::string create_union_false;
     extern const std::string create_union_intersect;
@@ -330,11 +337,15 @@ namespace gpudb
     extern const std::string create_union_view_id;
 
     // Keywords for /delete/records request
+    extern const std::string delete_records_delete_all_records;
+    extern const std::string delete_records_false;
     extern const std::string delete_records_global_expression;
     extern const std::string delete_records_record_id;
+    extern const std::string delete_records_true;
 
     // Keywords for /execute/proc request
     extern const std::string execute_proc_cache_input;
+    extern const std::string execute_proc_kifs_input_dirs;
     extern const std::string execute_proc_use_cached_input;
 
     // Keywords for /filter request
@@ -602,6 +613,7 @@ namespace gpudb
     extern const std::string show_table_is_dirty;
     extern const std::string show_table_is_view_persisted;
     extern const std::string show_table_last_refresh_time;
+    extern const std::string show_table_memory_ttl;
     extern const std::string show_table_next_refresh_time;
     extern const std::string show_table_no_access;
     extern const std::string show_table_protected;
@@ -757,6 +769,45 @@ namespace gpudb
     extern const std::string visualize_image_classbreak_trackmarkershapes;
     extern const std::string visualize_image_classbreak_trackmarkersizes;
     extern const std::string visualize_image_classbreak_true;
+
+    // Keywords for /visualize/image/contour request
+    extern const std::string visualize_image_contour_102100;
+    extern const std::string visualize_image_contour_3857;
+    extern const std::string visualize_image_contour_900913;
+    extern const std::string visualize_image_contour_EPSG_102100;
+    extern const std::string visualize_image_contour_EPSG_3857;
+    extern const std::string visualize_image_contour_EPSG_4326;
+    extern const std::string visualize_image_contour_EPSG_900913;
+    extern const std::string visualize_image_contour_INV_DST_POW;
+    extern const std::string visualize_image_contour_KRIGING;
+    extern const std::string visualize_image_contour_MIN_CURV;
+    extern const std::string visualize_image_contour_PASS_THROUGH;
+    extern const std::string visualize_image_contour_PLATE_CARREE;
+    extern const std::string visualize_image_contour_WEB_MERCATOR;
+    extern const std::string visualize_image_contour_bg_color;
+    extern const std::string visualize_image_contour_blues;
+    extern const std::string visualize_image_contour_color;
+    extern const std::string visualize_image_contour_colormap;
+    extern const std::string visualize_image_contour_gray;
+    extern const std::string visualize_image_contour_greens;
+    extern const std::string visualize_image_contour_greys;
+    extern const std::string visualize_image_contour_grid_columns;
+    extern const std::string visualize_image_contour_grid_rows;
+    extern const std::string visualize_image_contour_gridding_method;
+    extern const std::string visualize_image_contour_hot;
+    extern const std::string visualize_image_contour_hsv;
+    extern const std::string visualize_image_contour_jet;
+    extern const std::string visualize_image_contour_line_size;
+    extern const std::string visualize_image_contour_max_level;
+    extern const std::string visualize_image_contour_min_level;
+    extern const std::string visualize_image_contour_num_levels;
+    extern const std::string visualize_image_contour_oranges;
+    extern const std::string visualize_image_contour_purples;
+    extern const std::string visualize_image_contour_reds;
+    extern const std::string visualize_image_contour_render_output_grid;
+    extern const std::string visualize_image_contour_search_radius;
+    extern const std::string visualize_image_contour_smoothing_factor;
+    extern const std::string visualize_image_contour_viridis;
 
     // Keywords for /visualize/image/heatmap request
     extern const std::string visualize_image_heatmap_102100;

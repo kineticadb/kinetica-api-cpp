@@ -15,12 +15,12 @@ namespace gpudb
      * <p>
      * Deletes record(s) matching the provided criteria from the given table.
      * The record selection criteria can either be one or more  @a expressions
-     * (matching multiple records) or a single record identified by @a
-     * record_id options.  Note that the two selection criteria are mutually
-     * exclusive.  This operation cannot be run on a collection or a view.  The
-     * operation is synchronous meaning that a response will not be available
-     * until the request is completely processed and all the matching records
-     * are deleted.
+     * (matching multiple records), a single record identified by @a record_id
+     * options, or all records when using @a delete_all_records.  Note that the
+     * three selection criteria are mutually exclusive.  This operation cannot
+     * be run on a collection or a view.  The operation is synchronous meaning
+     * that a response will not be available until the request is completely
+     * processed and all the matching records are deleted.
      */
     struct DeleteRecordsRequest
     {
@@ -62,6 +62,17 @@ namespace gpudb
          *                      at the time of /insert/records or by calling
          *                      /get/records/fromcollection with the
          *                      *return_record_ids* option.
+         *                              <li>
+         *                      gpudb::delete_records_delete_all_records: If
+         *                      set to @a true, all records in the table will
+         *                      be deleted. If set to @a false, then the option
+         *                      is effectively ignored.
+         *                      <ul>
+         *                              <li> gpudb::delete_records_true
+         *                              <li> gpudb::delete_records_false
+         *                      </ul>
+         *                      The default value is
+         *                      gpudb::delete_records_false.
          *                      </ul>
          * 
          */
@@ -135,12 +146,12 @@ namespace gpudb
      * <p>
      * Deletes record(s) matching the provided criteria from the given table.
      * The record selection criteria can either be one or more  @a expressions
-     * (matching multiple records) or a single record identified by @a
-     * record_id options.  Note that the two selection criteria are mutually
-     * exclusive.  This operation cannot be run on a collection or a view.  The
-     * operation is synchronous meaning that a response will not be available
-     * until the request is completely processed and all the matching records
-     * are deleted.
+     * (matching multiple records), a single record identified by @a record_id
+     * options, or all records when using @a delete_all_records.  Note that the
+     * three selection criteria are mutually exclusive.  This operation cannot
+     * be run on a collection or a view.  The operation is synchronous meaning
+     * that a response will not be available until the request is completely
+     * processed and all the matching records are deleted.
      */
     struct DeleteRecordsResponse
     {

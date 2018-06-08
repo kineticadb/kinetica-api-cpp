@@ -23,15 +23,17 @@ namespace gpudb
      * given column simultaneously.  One example of mutually exclusive
      * properties are @a data and @a store_only.
      * <p>
-     * To set a *primary key* on one or more columns include the property
-     * 'primary_key' on the desired column_names. If a primary key is
-     * specified, then a uniqueness constraint is enforced, in that only a
-     * single object can exist with a given primary key. When {@link
+     * A single <a href="../../concepts/tables.html#primary-keys"
+     * target="_top">primary key</a> and/or single <a
+     * href="../../concepts/tables.html#shard-keys" target="_top">shard key</a>
+     * can be set across one or more columns. If a primary key is specified,
+     * then a uniqueness constraint is enforced, in that only a single object
+     * can exist with a given primary key. When {@link
      * #insertRecordsRaw(const RawInsertRecordsRequest&) const inserting}
      * data into a table with a primary key, depending on the parameters in the
-     * request, incoming objects with primary keys that match existing objects
-     * will either overwrite (i.e. update) the existing object or will be
-     * skipped and not added into the set.
+     * request, incoming objects with primary key values that match existing
+     * objects will either overwrite (i.e. update) the existing object or will
+     * be skipped and not added into the set.
      * <p>
      * Example of a type definition with some of the parameters::
      * <p>
@@ -89,18 +91,18 @@ namespace gpudb
          *                                 <li> gpudb::create_type_text_search:
          *                         Valid only for 'string' columns. Enables
          *                         full text search for string columns. Can be
-         *                         set independently of *data* and
-         *                         *store_only*.
+         *                         set independently of @a data and @a
+         *                         store_only.
          *                                 <li> gpudb::create_type_store_only:
          *                         Persist the column value but do not make it
          *                         available to queries (e.g. /filter)-i.e. it
-         *                         is mutually exclusive to the 'data'
+         *                         is mutually exclusive to the @a data
          *                         property. Any 'bytes' type column must have
-         *                         a 'store_only' property. This property
+         *                         a @a store_only property. This property
          *                         reduces system memory usage.
          *                                 <li>
          *                         gpudb::create_type_disk_optimized: Works in
-         *                         conjunction with the 'data' property for
+         *                         conjunction with the @a data property for
          *                         string columns. This property reduces system
          *                         disk usage by disabling reverse string
          *                         lookups. Queries like /filter,
@@ -124,7 +126,7 @@ namespace gpudb
          *                         the fractional part.  The value can be
          *                         positive or negative (indicated by a minus
          *                         sign at the beginning).  This property is
-         *                         mutually exclusive with the 'text_search'
+         *                         mutually exclusive with the @a text_search
          *                         property.
          *                                 <li> gpudb::create_type_date: Valid
          *                         only for 'string' columns.  Indicates that
@@ -132,14 +134,14 @@ namespace gpudb
          *                         provided in the format 'YYYY-MM-DD'.  The
          *                         allowable range is 1000-01-01 through
          *                         2900-01-01.  This property is mutually
-         *                         exclusive with the *text_search* property.
+         *                         exclusive with the @a text_search property.
          *                                 <li> gpudb::create_type_time: Valid
          *                         only for 'string' columns.  Indicates that
          *                         this field represents a time-of-day and will
          *                         be provided in the format 'HH:MM:SS.mmm'.
          *                         The allowable range is 00:00:00.000 through
          *                         23:59:59.999.  This property is mutually
-         *                         exclusive with the *text_search* property.
+         *                         exclusive with the @a text_search property.
          *                                 <li> gpudb::create_type_datetime:
          *                         Valid only for 'string' columns.  Indicates
          *                         that this field represents a datetime and
@@ -147,61 +149,52 @@ namespace gpudb
          *                         HH:MM:SS.mmm'.  The allowable range is
          *                         1000-01-01 00:00:00.000 through 2900-01-01
          *                         23:59:59.999.  This property is mutually
-         *                         exclusive with the *text_search* property.
+         *                         exclusive with the @a text_search property.
          *                                 <li> gpudb::create_type_char1: This
          *                         property provides optimized memory, disk and
          *                         query performance for string columns.
          *                         Strings with this property must be no longer
-         *                         than 1 character. This property cannot be
-         *                         combined with *text_search*
+         *                         than 1 character.
          *                                 <li> gpudb::create_type_char2: This
          *                         property provides optimized memory, disk and
          *                         query performance for string columns.
          *                         Strings with this property must be no longer
-         *                         than 2 characters. This property cannot be
-         *                         combined with *text_search*
+         *                         than 2 characters.
          *                                 <li> gpudb::create_type_char4: This
          *                         property provides optimized memory, disk and
          *                         query performance for string columns.
          *                         Strings with this property must be no longer
-         *                         than 4 characters. This property cannot be
-         *                         combined with *text_search*
+         *                         than 4 characters.
          *                                 <li> gpudb::create_type_char8: This
          *                         property provides optimized memory, disk and
          *                         query performance for string columns.
          *                         Strings with this property must be no longer
-         *                         than 8 characters. This property cannot be
-         *                         combined with *text_search*
+         *                         than 8 characters.
          *                                 <li> gpudb::create_type_char16: This
          *                         property provides optimized memory, disk and
          *                         query performance for string columns.
          *                         Strings with this property must be no longer
-         *                         than 16 characters. This property cannot be
-         *                         combined with *text_search*
+         *                         than 16 characters.
          *                                 <li> gpudb::create_type_char32: This
          *                         property provides optimized memory, disk and
          *                         query performance for string columns.
          *                         Strings with this property must be no longer
-         *                         than 32 characters. This property cannot be
-         *                         combined with *text_search*
+         *                         than 32 characters.
          *                                 <li> gpudb::create_type_char64: This
          *                         property provides optimized memory, disk and
          *                         query performance for string columns.
          *                         Strings with this property must be no longer
-         *                         than 64 characters. This property cannot be
-         *                         combined with *text_search*
+         *                         than 64 characters.
          *                                 <li> gpudb::create_type_char128:
          *                         This property provides optimized memory,
          *                         disk and query performance for string
          *                         columns. Strings with this property must be
-         *                         no longer than 128 characters. This property
-         *                         cannot be combined with *text_search*
+         *                         no longer than 128 characters.
          *                                 <li> gpudb::create_type_char256:
          *                         This property provides optimized memory,
          *                         disk and query performance for string
          *                         columns. Strings with this property must be
-         *                         no longer than 256 characters. This property
-         *                         cannot be combined with *text_search*
+         *                         no longer than 256 characters.
          *                                 <li> gpudb::create_type_int8: This
          *                         property provides optimized memory and query
          *                         performance for int columns. Ints with this
@@ -227,10 +220,14 @@ namespace gpudb
          *                         format.
          *                                 <li> gpudb::create_type_primary_key:
          *                         This property indicates that this column
-         *                         will be part of (or the entire) primary key.
+         *                         will be part of (or the entire) <a
+         *                         href="../../concepts/tables.html#primary-keys"
+         *                         target="_top">primary key</a>.
          *                                 <li> gpudb::create_type_shard_key:
          *                         This property indicates that this column
-         *                         will be part of (or the entire) shard key.
+         *                         will be part of (or the entire) <a
+         *                         href="../../concepts/tables.html#shard-keys"
+         *                         target="_top">shard key</a>.
          *                                 <li> gpudb::create_type_nullable:
          *                         This property indicates that this column is
          *                         nullable.  However, setting this property is
@@ -244,7 +241,7 @@ namespace gpudb
          *                         schema must be: ['int', 'null'].
          *                         The C++, C#, Java, and Python APIs have
          *                         built-in convenience for bypassing setting
-         *                         the avro schema by hand.  For those two
+         *                         the avro schema by hand.  For those
          *                         languages, one can use this property as
          *                         usual and not have to worry about the avro
          *                         schema for the record.
@@ -347,15 +344,17 @@ namespace gpudb
      * given column simultaneously.  One example of mutually exclusive
      * properties are @a data and @a store_only.
      * <p>
-     * To set a *primary key* on one or more columns include the property
-     * 'primary_key' on the desired column_names. If a primary key is
-     * specified, then a uniqueness constraint is enforced, in that only a
-     * single object can exist with a given primary key. When {@link
+     * A single <a href="../../concepts/tables.html#primary-keys"
+     * target="_top">primary key</a> and/or single <a
+     * href="../../concepts/tables.html#shard-keys" target="_top">shard key</a>
+     * can be set across one or more columns. If a primary key is specified,
+     * then a uniqueness constraint is enforced, in that only a single object
+     * can exist with a given primary key. When {@link
      * #insertRecordsRaw(const RawInsertRecordsRequest&) const inserting}
      * data into a table with a primary key, depending on the parameters in the
-     * request, incoming objects with primary keys that match existing objects
-     * will either overwrite (i.e. update) the existing object or will be
-     * skipped and not added into the set.
+     * request, incoming objects with primary key values that match existing
+     * objects will either overwrite (i.e. update) the existing object or will
+     * be skipped and not added into the set.
      * <p>
      * Example of a type definition with some of the parameters::
      * <p>

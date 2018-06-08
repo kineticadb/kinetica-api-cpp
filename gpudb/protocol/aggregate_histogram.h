@@ -21,7 +21,8 @@ namespace gpudb
      * also inclusive.  The value returned for each bin is the number of
      * records in it, except when a column name is provided as a *value_column*
      * in @a options.  In this latter case the sum of the values corresponding
-     * to the *value_column* is used as the result instead.
+     * to the *value_column* is used as the result instead.  The total number
+     * of bins requested cannot exceed 10,000.
      */
     struct AggregateHistogramRequest
     {
@@ -167,7 +168,8 @@ namespace gpudb
      * also inclusive.  The value returned for each bin is the number of
      * records in it, except when a column name is provided as a *value_column*
      * in @a options.  In this latter case the sum of the values corresponding
-     * to the *value_column* is used as the result instead.
+     * to the *value_column* is used as the result instead.  The total number
+     * of bins requested cannot exceed 10,000.
      */
     struct AggregateHistogramResponse
     {

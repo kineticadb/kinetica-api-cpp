@@ -228,6 +228,12 @@ namespace gpudb
          *                      the chunk size to be used for the result table.
          *                      Must be used in combination with the @a
          *                      result_table option.
+         *                              <li>
+         *                      gpudb::aggregate_group_by_create_indexes:
+         *                      Comma-separated list of columns on which to
+         *                      create indexes on the result table. Must be
+         *                      used in combination with the @a result_table
+         *                      option.
          *                              <li> gpudb::aggregate_group_by_view_id:
          *                      view this result table is part of
          *                              <li>
@@ -418,6 +424,12 @@ namespace gpudb
          *                      the chunk size to be used for the result table.
          *                      Must be used in combination with the @a
          *                      result_table option.
+         *                              <li>
+         *                      gpudb::aggregate_group_by_create_indexes:
+         *                      Comma-separated list of columns on which to
+         *                      create indexes on the result table. Must be
+         *                      used in combination with the @a result_table
+         *                      option.
          *                              <li> gpudb::aggregate_group_by_view_id:
          *                      view this result table is part of
          *                              <li>

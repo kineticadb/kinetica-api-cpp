@@ -98,6 +98,16 @@ namespace gpudb
          *                      href="../../concepts/expressions.html"
          *                      target="_top">expression</a> to be applied to
          *                      the source table prior to the projection.
+         *                              <li>
+         *                      gpudb::create_projection_is_replicated: If @a
+         *                      true then the projection will be replicated
+         *                      even if the source table is not.
+         *                      <ul>
+         *                              <li> gpudb::create_projection_true
+         *                              <li> gpudb::create_projection_false
+         *                      </ul>
+         *                      The default value is
+         *                      gpudb::create_projection_false.
          *                              <li> gpudb::create_projection_limit:
          *                      The number of records to keep.
          *                              <li> gpudb::create_projection_order_by:
@@ -120,6 +130,14 @@ namespace gpudb
          *                              <li>
          *                      gpudb::create_projection_chunk_size: Indicates
          *                      the chunk size to be used for this table.
+         *                              <li>
+         *                      gpudb::create_projection_create_indexes:
+         *                      Comma-separated list of columns on which to
+         *                      create indexes on the output table.  The
+         *                      columns specified must be present in @a
+         *                      columnNames.  If any alias is given for any
+         *                      column name, the alias must be used, rather
+         *                      than the original column name.
          *                              <li> gpudb::create_projection_ttl: Sets
          *                      the <a href="../../concepts/ttl.html"
          *                      target="_top">TTL</a> of the projection

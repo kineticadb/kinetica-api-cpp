@@ -23,22 +23,22 @@ namespace gpudb
 
         /**
          * Valid only for 'string' columns. Enables full text search for string
-         * columns. Can be set independently of *data* and *store_only*.
+         * columns. Can be set independently of @a data and @a store_only.
          */
         extern const std::string TEXT_SEARCH;
 
 
         /**
          * Persist the column value but do not make it available to queries
-         * (e.g. /filter)-i.e. it is mutually exclusive to the 'data' property.
-         * Any 'bytes' type column must have a 'store_only' property. This
-         * property reduces system memory usage.
+         * (e.g. /filter)-i.e. it is mutually exclusive to the @a data
+         * property. Any 'bytes' type column must have a @a store_only
+         * property. This property reduces system memory usage.
          */
         extern const std::string STORE_ONLY;
 
 
         /**
-         * Works in conjunction with the 'data' property for string columns.
+         * Works in conjunction with the @a data property for string columns.
          * This property reduces system disk usage by disabling reverse string
          * lookups. Queries like /filter, /filter/bylist, and /filter/byvalue
          * work as usual but /aggregate/unique, /aggregate/groupby and
@@ -61,8 +61,8 @@ namespace gpudb
          * NUMERIC(19, 4) data type.  There can be up to 15 digits before the
          * decimal point and up to four digits in the fractional part.  The
          * value can be positive or negative (indicated by a minus sign at the
-         * beginning).  This property is mutually exclusive with the
-         * 'text_search' property.
+         * beginning).  This property is mutually exclusive with the @a
+         * text_search property.
          */
         extern const std::string DECIMAL;
 
@@ -71,7 +71,7 @@ namespace gpudb
          * Valid only for 'string' columns.  Indicates that this field
          * represents a date and will be provided in the format 'YYYY-MM-DD'.
          * The allowable range is 1000-01-01 through 2900-01-01.  This property
-         * is mutually exclusive with the *text_search* property.
+         * is mutually exclusive with the @a text_search property.
          */
         extern const std::string DATE;
 
@@ -80,8 +80,8 @@ namespace gpudb
          * Valid only for 'string' columns.  Indicates that this field
          * represents a time-of-day and will be provided in the format
          * 'HH:MM:SS.mmm'.  The allowable range is 00:00:00.000 through
-         * 23:59:59.999.  This property is mutually exclusive with the
-         * *text_search* property.
+         * 23:59:59.999.  This property is mutually exclusive with the @a
+         * text_search property.
          */
         extern const std::string TIME;
 
@@ -91,7 +91,7 @@ namespace gpudb
          * represents a datetime and will be provided in the format 'YYYY-MM-DD
          * HH:MM:SS.mmm'.  The allowable range is 1000-01-01 00:00:00.000
          * through 2900-01-01 23:59:59.999.  This property is mutually
-         * exclusive with the *text_search* property.
+         * exclusive with the @a text_search property.
          */
         extern const std::string DATETIME;
 
@@ -99,8 +99,7 @@ namespace gpudb
         /**
          * This property provides optimized memory, disk and query performance
          * for string columns. Strings with this property must be no longer
-         * than 1 character. This property cannot be combined with
-         * *text_search*
+         * than 1 character.
          */
         extern const std::string CHAR1;
 
@@ -108,8 +107,7 @@ namespace gpudb
         /**
          * This property provides optimized memory, disk and query performance
          * for string columns. Strings with this property must be no longer
-         * than 2 characters. This property cannot be combined with
-         * *text_search*
+         * than 2 characters.
          */
         extern const std::string CHAR2;
 
@@ -117,8 +115,7 @@ namespace gpudb
         /**
          * This property provides optimized memory, disk and query performance
          * for string columns. Strings with this property must be no longer
-         * than 4 characters. This property cannot be combined with
-         * *text_search*
+         * than 4 characters.
          */
         extern const std::string CHAR4;
 
@@ -126,8 +123,7 @@ namespace gpudb
         /**
          * This property provides optimized memory, disk and query performance
          * for string columns. Strings with this property must be no longer
-         * than 8 characters. This property cannot be combined with
-         * *text_search*
+         * than 8 characters.
          */
         extern const std::string CHAR8;
 
@@ -135,8 +131,7 @@ namespace gpudb
         /**
          * This property provides optimized memory, disk and query performance
          * for string columns. Strings with this property must be no longer
-         * than 16 characters. This property cannot be combined with
-         * *text_search*
+         * than 16 characters.
          */
         extern const std::string CHAR16;
 
@@ -144,8 +139,7 @@ namespace gpudb
         /**
          * This property provides optimized memory, disk and query performance
          * for string columns. Strings with this property must be no longer
-         * than 32 characters. This property cannot be combined with
-         * *text_search*
+         * than 32 characters.
          */
         extern const std::string CHAR32;
 
@@ -153,8 +147,7 @@ namespace gpudb
         /**
          * This property provides optimized memory, disk and query performance
          * for string columns. Strings with this property must be no longer
-         * than 64 characters. This property cannot be combined with
-         * *text_search*
+         * than 64 characters.
          */
         extern const std::string CHAR64;
 
@@ -162,8 +155,7 @@ namespace gpudb
         /**
          * This property provides optimized memory, disk and query performance
          * for string columns. Strings with this property must be no longer
-         * than 128 characters. This property cannot be combined with
-         * *text_search*
+         * than 128 characters.
          */
         extern const std::string CHAR128;
 
@@ -171,8 +163,7 @@ namespace gpudb
         /**
          * This property provides optimized memory, disk and query performance
          * for string columns. Strings with this property must be no longer
-         * than 256 characters. This property cannot be combined with
-         * *text_search*
+         * than 256 characters.
          */
         extern const std::string CHAR256;
 
@@ -212,14 +203,16 @@ namespace gpudb
 
         /**
          * This property indicates that this column will be part of (or the
-         * entire) primary key.
+         * entire) <a href="../../concepts/tables.html#primary-keys"
+         * target="_top">primary key</a>.
          */
         extern const std::string PRIMARY_KEY;
 
 
         /**
          * This property indicates that this column will be part of (or the
-         * entire) shard key.
+         * entire) <a href="../../concepts/tables.html#shard-keys"
+         * target="_top">shard key</a>.
          */
         extern const std::string SHARD_KEY;
 
@@ -234,9 +227,9 @@ namespace gpudb
          * avro schema must be: ['int', 'null'].
          * <p>
          * The C++, C#, Java, and Python APIs have built-in convenience for
-         * bypassing setting the avro schema by hand.  For those two languages,
-         * one can use this property as usual and not have to worry about the
-         * avro schema for the record.
+         * bypassing setting the avro schema by hand.  For those languages, one
+         * can use this property as usual and not have to worry about the avro
+         * schema for the record.
          */
         extern const std::string NULLABLE;
 

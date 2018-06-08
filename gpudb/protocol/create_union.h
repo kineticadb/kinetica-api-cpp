@@ -129,6 +129,12 @@ namespace gpudb
          *                              <li> gpudb::create_union_chunk_size:
          *                      Indicates the chunk size to be used for this
          *                      table.
+         *                              <li>
+         *                      gpudb::create_union_create_indexes:
+         *                      Comma-separated list of columns on which to
+         *                      create indexes on the output table.  The
+         *                      columns specified must be present in @a
+         *                      outputColumnNames.
          *                              <li> gpudb::create_union_ttl: Sets the
          *                      <a href="../../concepts/ttl.html"
          *                      target="_top">TTL</a> of the table specified in
