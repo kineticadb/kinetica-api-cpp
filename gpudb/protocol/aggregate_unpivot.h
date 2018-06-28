@@ -131,6 +131,25 @@ namespace gpudb
          *                      </ul>
          *                      The default value is
          *                      gpudb::aggregate_unpivot_false.
+         *                              <li>
+         *                      gpudb::aggregate_unpivot_create_indexes:
+         *                      Comma-separated list of columns on which to
+         *                      create indexes on the table specified in @a
+         *                      result_table. The columns specified must be
+         *                      present in output column names.  If any alias
+         *                      is given for any column name, the alias must be
+         *                      used, rather than the original column name.
+         *                              <li>
+         *                      gpudb::aggregate_unpivot_result_table_force_replicated:
+         *                      Force the result table to be replicated
+         *                      (ignores any sharding). Must be used in
+         *                      combination with the @a result_table option.
+         *                      <ul>
+         *                              <li> gpudb::aggregate_unpivot_true
+         *                              <li> gpudb::aggregate_unpivot_false
+         *                      </ul>
+         *                      The default value is
+         *                      gpudb::aggregate_unpivot_false.
          *                      </ul>
          * 
          */
@@ -230,6 +249,25 @@ namespace gpudb
          *                      gpudb::aggregate_unpivot_materialize_on_gpu: If
          *                      @a true then the output columns will be cached
          *                      on the GPU.
+         *                      <ul>
+         *                              <li> gpudb::aggregate_unpivot_true
+         *                              <li> gpudb::aggregate_unpivot_false
+         *                      </ul>
+         *                      The default value is
+         *                      gpudb::aggregate_unpivot_false.
+         *                              <li>
+         *                      gpudb::aggregate_unpivot_create_indexes:
+         *                      Comma-separated list of columns on which to
+         *                      create indexes on the table specified in @a
+         *                      result_table. The columns specified must be
+         *                      present in output column names.  If any alias
+         *                      is given for any column name, the alias must be
+         *                      used, rather than the original column name.
+         *                              <li>
+         *                      gpudb::aggregate_unpivot_result_table_force_replicated:
+         *                      Force the result table to be replicated
+         *                      (ignores any sharding). Must be used in
+         *                      combination with the @a result_table option.
          *                      <ul>
          *                              <li> gpudb::aggregate_unpivot_true
          *                              <li> gpudb::aggregate_unpivot_false

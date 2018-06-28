@@ -240,6 +240,11 @@ function build_boost
                 if [[ "$IS_PPC64LE" == "1" ]]; then
                     # This func is macro in ppc64le, https://bugzilla.redhat.com/show_bug.cgi?id=1262444
                     run_cmd "sed -i 's/::feclearexcept/feclearexcept/g' ./boost/test/impl/execution_monitor.ipp"
+
+                    # Fix ppc/gcc5.4/boost 1.65 "unresolvable R_PPC64_ADDR64 against `rand@@GLIBC_2.17'" link error using uuid generator
+                    # https://bugzilla.suse.com/show_bug.cgi?id=955832
+                    run_cmd "sed -i 's@^[ \t]*sha.process_bytes( (unsigned char const\*)&std::rand@  // (disabled for ppc) sha.process_bytes( (unsigned char const*)&std::rand@g' boost/uuid/seed_rng.hpp"
+                    run_cmd "grep '// (disabled for ppc) sha.process_bytes' boost/uuid/seed_rng.hpp"
                 fi
 
                 # system and thread for us

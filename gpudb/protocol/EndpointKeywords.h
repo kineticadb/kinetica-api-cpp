@@ -119,6 +119,7 @@ namespace gpudb
     extern const std::string aggregate_unpivot_binary;
     extern const std::string aggregate_unpivot_chunk_size;
     extern const std::string aggregate_unpivot_collection_name;
+    extern const std::string aggregate_unpivot_create_indexes;
     extern const std::string aggregate_unpivot_expression;
     extern const std::string aggregate_unpivot_false;
     extern const std::string aggregate_unpivot_json;
@@ -126,6 +127,7 @@ namespace gpudb
     extern const std::string aggregate_unpivot_materialize_on_gpu;
     extern const std::string aggregate_unpivot_order_by;
     extern const std::string aggregate_unpivot_result_table;
+    extern const std::string aggregate_unpivot_result_table_force_replicated;
     extern const std::string aggregate_unpivot_result_table_persist;
     extern const std::string aggregate_unpivot_true;
     extern const std::string aggregate_unpivot_ttl;
@@ -323,8 +325,11 @@ namespace gpudb
     extern const std::string create_union_collection_name;
     extern const std::string create_union_create_indexes;
     extern const std::string create_union_except;
+    extern const std::string create_union_except_all;
     extern const std::string create_union_false;
+    extern const std::string create_union_force_replicated;
     extern const std::string create_union_intersect;
+    extern const std::string create_union_intersect_all;
     extern const std::string create_union_materialize_on_gpu;
     extern const std::string create_union_merge_views;
     extern const std::string create_union_mode;

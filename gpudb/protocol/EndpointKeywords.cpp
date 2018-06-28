@@ -116,20 +116,22 @@ namespace gpudb
     const std::string aggregate_unique_view_id                      ( "view_id"                       );
 
     // Keywords for /aggregate/unpivot request
-    const std::string aggregate_unpivot_binary              ( "binary"               );
-    const std::string aggregate_unpivot_chunk_size          ( "chunk_size"           );
-    const std::string aggregate_unpivot_collection_name     ( "collection_name"      );
-    const std::string aggregate_unpivot_expression          ( "expression"           );
-    const std::string aggregate_unpivot_false               ( "false"                );
-    const std::string aggregate_unpivot_json                ( "json"                 );
-    const std::string aggregate_unpivot_limit               ( "limit"                );
-    const std::string aggregate_unpivot_materialize_on_gpu  ( "materialize_on_gpu"   );
-    const std::string aggregate_unpivot_order_by            ( "order_by"             );
-    const std::string aggregate_unpivot_result_table        ( "result_table"         );
-    const std::string aggregate_unpivot_result_table_persist( "result_table_persist" );
-    const std::string aggregate_unpivot_true                ( "true"                 );
-    const std::string aggregate_unpivot_ttl                 ( "ttl"                  );
-    const std::string aggregate_unpivot_view_id             ( "view_id"              );
+    const std::string aggregate_unpivot_binary                       ( "binary"                        );
+    const std::string aggregate_unpivot_chunk_size                   ( "chunk_size"                    );
+    const std::string aggregate_unpivot_collection_name              ( "collection_name"               );
+    const std::string aggregate_unpivot_create_indexes               ( "create_indexes"                );
+    const std::string aggregate_unpivot_expression                   ( "expression"                    );
+    const std::string aggregate_unpivot_false                        ( "false"                         );
+    const std::string aggregate_unpivot_json                         ( "json"                          );
+    const std::string aggregate_unpivot_limit                        ( "limit"                         );
+    const std::string aggregate_unpivot_materialize_on_gpu           ( "materialize_on_gpu"            );
+    const std::string aggregate_unpivot_order_by                     ( "order_by"                      );
+    const std::string aggregate_unpivot_result_table                 ( "result_table"                  );
+    const std::string aggregate_unpivot_result_table_force_replicated( "result_table_force_replicated" );
+    const std::string aggregate_unpivot_result_table_persist         ( "result_table_persist"          );
+    const std::string aggregate_unpivot_true                         ( "true"                          );
+    const std::string aggregate_unpivot_ttl                          ( "ttl"                           );
+    const std::string aggregate_unpivot_view_id                      ( "view_id"                       );
 
     // Keywords for /alter/system/properties request
     const std::string alter_system_properties_audit_body                 ( "audit_body"                  );
@@ -323,8 +325,11 @@ namespace gpudb
     const std::string create_union_collection_name   ( "collection_name"    );
     const std::string create_union_create_indexes    ( "create_indexes"     );
     const std::string create_union_except            ( "except"             );
+    const std::string create_union_except_all        ( "except_all"         );
     const std::string create_union_false             ( "false"              );
+    const std::string create_union_force_replicated  ( "force_replicated"   );
     const std::string create_union_intersect         ( "intersect"          );
+    const std::string create_union_intersect_all     ( "intersect_all"      );
     const std::string create_union_materialize_on_gpu( "materialize_on_gpu" );
     const std::string create_union_merge_views       ( "merge_views"        );
     const std::string create_union_mode              ( "mode"               );

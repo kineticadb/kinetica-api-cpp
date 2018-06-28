@@ -109,9 +109,17 @@ namespace gpudb
          *                      Retains all unique rows from the first table
          *                      that do not appear in the second table (only
          *                      works on 2 tables).
+         *                              <li> gpudb::create_union_except_all:
+         *                      Retains all rows(including duplicates) from the
+         *                      first table that do not appear in the second
+         *                      table (only works on 2 tables).
          *                              <li> gpudb::create_union_intersect:
          *                      Retains all unique rows that appear in both of
          *                      the specified tables (only works on 2 tables).
+         *                              <li> gpudb::create_union_intersect_all:
+         *                      Retains all rows(including duplicates) that
+         *                      appear in both of the specified tables (only
+         *                      works on 2 tables).
          *                              <li> gpudb::create_union_merge_views:
          *                      Merge two or more views (or views of views) of
          *                      the same base data set into a new view. If this
@@ -152,6 +160,16 @@ namespace gpudb
          *                      The default value is gpudb::create_union_false.
          *                              <li> gpudb::create_union_view_id: view
          *                      the output table will be a part of
+         *                              <li>
+         *                      gpudb::create_union_force_replicated: If @a
+         *                      true, then the table specified in @a tableName
+         *                      will be replicated even if the source tables
+         *                      are not.
+         *                      <ul>
+         *                              <li> gpudb::create_union_true
+         *                              <li> gpudb::create_union_false
+         *                      </ul>
+         *                      The default value is gpudb::create_union_false.
          *                      </ul>
          * 
          */

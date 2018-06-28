@@ -2896,6 +2896,22 @@ AggregateUnpivotResponse& aggregateUnpivot( const AggregateUnpivotRequest& reque
  *                         <li> gpudb::aggregate_unpivot_false
  *                 </ul>
  *                 The default value is gpudb::aggregate_unpivot_false.
+ *                         <li> gpudb::aggregate_unpivot_create_indexes:
+ *                 Comma-separated list of columns on which to create indexes
+ *                 on the table specified in @a result_table. The columns
+ *                 specified must be present in output column names.  If any
+ *                 alias is given for any column name, the alias must be used,
+ *                 rather than the original column name.
+ *                         <li>
+ *                 gpudb::aggregate_unpivot_result_table_force_replicated:
+ *                 Force the result table to be replicated (ignores any
+ *                 sharding). Must be used in combination with the @a
+ *                 result_table option.
+ *                 <ul>
+ *                         <li> gpudb::aggregate_unpivot_true
+ *                         <li> gpudb::aggregate_unpivot_false
+ *                 </ul>
+ *                 The default value is gpudb::aggregate_unpivot_false.
  *                 </ul>
  * 
  * @return Response object containing the result of the operation.
@@ -2982,6 +2998,22 @@ AggregateUnpivotResponse aggregateUnpivot( const std::string& tableName,
  *                 result table is part of
  *                         <li> gpudb::aggregate_unpivot_materialize_on_gpu: If
  *                 @a true then the output columns will be cached on the GPU.
+ *                 <ul>
+ *                         <li> gpudb::aggregate_unpivot_true
+ *                         <li> gpudb::aggregate_unpivot_false
+ *                 </ul>
+ *                 The default value is gpudb::aggregate_unpivot_false.
+ *                         <li> gpudb::aggregate_unpivot_create_indexes:
+ *                 Comma-separated list of columns on which to create indexes
+ *                 on the table specified in @a result_table. The columns
+ *                 specified must be present in output column names.  If any
+ *                 alias is given for any column name, the alias must be used,
+ *                 rather than the original column name.
+ *                         <li>
+ *                 gpudb::aggregate_unpivot_result_table_force_replicated:
+ *                 Force the result table to be replicated (ignores any
+ *                 sharding). Must be used in combination with the @a
+ *                 result_table option.
  *                 <ul>
  *                         <li> gpudb::aggregate_unpivot_true
  *                         <li> gpudb::aggregate_unpivot_false
@@ -6862,9 +6894,15 @@ CreateUnionResponse& createUnion( const CreateUnionRequest& request_,
  *                         <li> gpudb::create_union_except: Retains all unique
  *                 rows from the first table that do not appear in the second
  *                 table (only works on 2 tables).
+ *                         <li> gpudb::create_union_except_all: Retains all
+ *                 rows(including duplicates) from the first table that do not
+ *                 appear in the second table (only works on 2 tables).
  *                         <li> gpudb::create_union_intersect: Retains all
  *                 unique rows that appear in both of the specified tables
  *                 (only works on 2 tables).
+ *                         <li> gpudb::create_union_intersect_all: Retains all
+ *                 rows(including duplicates) that appear in both of the
+ *                 specified tables (only works on 2 tables).
  *                         <li> gpudb::create_union_merge_views: Merge two or
  *                 more views (or views of views) of the same base data set
  *                 into a new view. If this mode is selected @a
@@ -6897,6 +6935,14 @@ CreateUnionResponse& createUnion( const CreateUnionRequest& request_,
  *                 The default value is gpudb::create_union_false.
  *                         <li> gpudb::create_union_view_id: view the output
  *                 table will be a part of
+ *                         <li> gpudb::create_union_force_replicated: If @a
+ *                 true, then the table specified in @a tableName will be
+ *                 replicated even if the source tables are not.
+ *                 <ul>
+ *                         <li> gpudb::create_union_true
+ *                         <li> gpudb::create_union_false
+ *                 </ul>
+ *                 The default value is gpudb::create_union_false.
  *                 </ul>
  * 
  * @return Response object containing the result of the operation.
@@ -6978,9 +7024,15 @@ CreateUnionResponse createUnion( const std::string& tableName,
  *                         <li> gpudb::create_union_except: Retains all unique
  *                 rows from the first table that do not appear in the second
  *                 table (only works on 2 tables).
+ *                         <li> gpudb::create_union_except_all: Retains all
+ *                 rows(including duplicates) from the first table that do not
+ *                 appear in the second table (only works on 2 tables).
  *                         <li> gpudb::create_union_intersect: Retains all
  *                 unique rows that appear in both of the specified tables
  *                 (only works on 2 tables).
+ *                         <li> gpudb::create_union_intersect_all: Retains all
+ *                 rows(including duplicates) that appear in both of the
+ *                 specified tables (only works on 2 tables).
  *                         <li> gpudb::create_union_merge_views: Merge two or
  *                 more views (or views of views) of the same base data set
  *                 into a new view. If this mode is selected @a
@@ -7013,6 +7065,14 @@ CreateUnionResponse createUnion( const std::string& tableName,
  *                 The default value is gpudb::create_union_false.
  *                         <li> gpudb::create_union_view_id: view the output
  *                 table will be a part of
+ *                         <li> gpudb::create_union_force_replicated: If @a
+ *                 true, then the table specified in @a tableName will be
+ *                 replicated even if the source tables are not.
+ *                 <ul>
+ *                         <li> gpudb::create_union_true
+ *                         <li> gpudb::create_union_false
+ *                 </ul>
+ *                 The default value is gpudb::create_union_false.
  *                 </ul>
  * @param[out] response_  Response object containing the results of the
  *                        operation.
@@ -16324,8 +16384,14 @@ VisualizeImageClassbreakResponse& visualizeImageClassbreak( const VisualizeImage
  * @param yColumnName
  * @param geometryColumnName
  * @param trackIds
- * @param cbColumnName
+ * @param cbAttr
  * @param cbVals
+ * @param cbPointcolorAttr
+ * @param cbPointcolorVals
+ * @param cbPointsizeAttr
+ * @param cbPointsizeVals
+ * @param cbPointshapeAttr
+ * @param cbPointshapeVals
  * @param minX
  * @param maxX
  * @param minY
@@ -16492,8 +16558,14 @@ VisualizeImageClassbreakResponse visualizeImageClassbreak( const std::vector<std
                                                            const std::string& yColumnName,
                                                            const std::string& geometryColumnName,
                                                            const std::vector<std::vector<std::string> >& trackIds,
-                                                           const std::string& cbColumnName,
+                                                           const std::string& cbAttr,
                                                            const std::vector<std::string>& cbVals,
+                                                           const std::string& cbPointcolorAttr,
+                                                           const std::vector<std::string>& cbPointcolorVals,
+                                                           const std::string& cbPointsizeAttr,
+                                                           const std::vector<std::string>& cbPointsizeVals,
+                                                           const std::string& cbPointshapeAttr,
+                                                           const std::vector<std::string>& cbPointshapeVals,
                                                            const double minX,
                                                            const double maxX,
                                                            const double minY,
@@ -16514,8 +16586,14 @@ VisualizeImageClassbreakResponse visualizeImageClassbreak( const std::vector<std
  * @param yColumnName
  * @param geometryColumnName
  * @param trackIds
- * @param cbColumnName
+ * @param cbAttr
  * @param cbVals
+ * @param cbPointcolorAttr
+ * @param cbPointcolorVals
+ * @param cbPointsizeAttr
+ * @param cbPointsizeVals
+ * @param cbPointshapeAttr
+ * @param cbPointshapeVals
  * @param minX
  * @param maxX
  * @param minY
@@ -16685,8 +16763,14 @@ VisualizeImageClassbreakResponse& visualizeImageClassbreak( const std::vector<st
                                                             const std::string& yColumnName,
                                                             const std::string& geometryColumnName,
                                                             const std::vector<std::vector<std::string> >& trackIds,
-                                                            const std::string& cbColumnName,
+                                                            const std::string& cbAttr,
                                                             const std::vector<std::string>& cbVals,
+                                                            const std::string& cbPointcolorAttr,
+                                                            const std::vector<std::string>& cbPointcolorVals,
+                                                            const std::string& cbPointsizeAttr,
+                                                            const std::vector<std::string>& cbPointsizeVals,
+                                                            const std::string& cbPointshapeAttr,
+                                                            const std::vector<std::string>& cbPointshapeVals,
                                                             const double minX,
                                                             const double maxX,
                                                             const double minY,

@@ -34,8 +34,14 @@ namespace gpudb
             yColumnName(std::string()),
             geometryColumnName(std::string()),
             trackIds(std::vector<std::vector<std::string> >()),
-            cbColumnName(std::string()),
+            cbAttr(std::string()),
             cbVals(std::vector<std::string>()),
+            cbPointcolorAttr(std::string()),
+            cbPointcolorVals(std::vector<std::string>()),
+            cbPointsizeAttr(std::string()),
+            cbPointsizeVals(std::vector<std::string>()),
+            cbPointshapeAttr(std::string()),
+            cbPointshapeVals(std::vector<std::string>()),
             minX(double()),
             maxX(double()),
             minY(double()),
@@ -60,8 +66,14 @@ namespace gpudb
          * @param[in] yColumnName_
          * @param[in] geometryColumnName_
          * @param[in] trackIds_
-         * @param[in] cbColumnName_
+         * @param[in] cbAttr_
          * @param[in] cbVals_
+         * @param[in] cbPointcolorAttr_
+         * @param[in] cbPointcolorVals_
+         * @param[in] cbPointsizeAttr_
+         * @param[in] cbPointsizeVals_
+         * @param[in] cbPointshapeAttr_
+         * @param[in] cbPointshapeVals_
          * @param[in] minX_
          * @param[in] maxX_
          * @param[in] minY_
@@ -244,15 +256,21 @@ namespace gpudb
          * @param[in] options_
          * 
          */
-        VisualizeImageClassbreakRequest(const std::vector<std::string>& tableNames_, const std::vector<std::string>& worldTableNames_, const std::string& xColumnName_, const std::string& yColumnName_, const std::string& geometryColumnName_, const std::vector<std::vector<std::string> >& trackIds_, const std::string& cbColumnName_, const std::vector<std::string>& cbVals_, const double minX_, const double maxX_, const double minY_, const double maxY_, const int32_t width_, const int32_t height_, const std::string& projection_, const int64_t bgColor_, const std::map<std::string, std::vector<std::string> >& styleOptions_, const std::map<std::string, std::string>& options_):
+        VisualizeImageClassbreakRequest(const std::vector<std::string>& tableNames_, const std::vector<std::string>& worldTableNames_, const std::string& xColumnName_, const std::string& yColumnName_, const std::string& geometryColumnName_, const std::vector<std::vector<std::string> >& trackIds_, const std::string& cbAttr_, const std::vector<std::string>& cbVals_, const std::string& cbPointcolorAttr_, const std::vector<std::string>& cbPointcolorVals_, const std::string& cbPointsizeAttr_, const std::vector<std::string>& cbPointsizeVals_, const std::string& cbPointshapeAttr_, const std::vector<std::string>& cbPointshapeVals_, const double minX_, const double maxX_, const double minY_, const double maxY_, const int32_t width_, const int32_t height_, const std::string& projection_, const int64_t bgColor_, const std::map<std::string, std::vector<std::string> >& styleOptions_, const std::map<std::string, std::string>& options_):
             tableNames( tableNames_ ),
             worldTableNames( worldTableNames_ ),
             xColumnName( xColumnName_ ),
             yColumnName( yColumnName_ ),
             geometryColumnName( geometryColumnName_ ),
             trackIds( trackIds_ ),
-            cbColumnName( cbColumnName_ ),
+            cbAttr( cbAttr_ ),
             cbVals( cbVals_ ),
+            cbPointcolorAttr( cbPointcolorAttr_ ),
+            cbPointcolorVals( cbPointcolorVals_ ),
+            cbPointsizeAttr( cbPointsizeAttr_ ),
+            cbPointsizeVals( cbPointsizeVals_ ),
+            cbPointshapeAttr( cbPointshapeAttr_ ),
+            cbPointshapeVals( cbPointshapeVals_ ),
             minX( minX_ ),
             maxX( maxX_ ),
             minY( minY_ ),
@@ -276,8 +294,14 @@ namespace gpudb
         std::string yColumnName;
         std::string geometryColumnName;
         std::vector<std::vector<std::string> > trackIds;
-        std::string cbColumnName;
+        std::string cbAttr;
         std::vector<std::string> cbVals;
+        std::string cbPointcolorAttr;
+        std::vector<std::string> cbPointcolorVals;
+        std::string cbPointsizeAttr;
+        std::vector<std::string> cbPointsizeVals;
+        std::string cbPointshapeAttr;
+        std::vector<std::string> cbPointshapeVals;
         double minX;
         double maxX;
         double minY;
@@ -307,8 +331,14 @@ namespace avro
             ::avro::encode(e, v.yColumnName);
             ::avro::encode(e, v.geometryColumnName);
             ::avro::encode(e, v.trackIds);
-            ::avro::encode(e, v.cbColumnName);
+            ::avro::encode(e, v.cbAttr);
             ::avro::encode(e, v.cbVals);
+            ::avro::encode(e, v.cbPointcolorAttr);
+            ::avro::encode(e, v.cbPointcolorVals);
+            ::avro::encode(e, v.cbPointsizeAttr);
+            ::avro::encode(e, v.cbPointsizeVals);
+            ::avro::encode(e, v.cbPointshapeAttr);
+            ::avro::encode(e, v.cbPointshapeVals);
             ::avro::encode(e, v.minX);
             ::avro::encode(e, v.maxX);
             ::avro::encode(e, v.minY);
@@ -356,7 +386,7 @@ namespace avro
                             break;
 
                         case 6:
-                            ::avro::decode(d, v.cbColumnName);
+                            ::avro::decode(d, v.cbAttr);
                             break;
 
                         case 7:
@@ -364,42 +394,66 @@ namespace avro
                             break;
 
                         case 8:
-                            ::avro::decode(d, v.minX);
+                            ::avro::decode(d, v.cbPointcolorAttr);
                             break;
 
                         case 9:
-                            ::avro::decode(d, v.maxX);
+                            ::avro::decode(d, v.cbPointcolorVals);
                             break;
 
                         case 10:
-                            ::avro::decode(d, v.minY);
+                            ::avro::decode(d, v.cbPointsizeAttr);
                             break;
 
                         case 11:
-                            ::avro::decode(d, v.maxY);
+                            ::avro::decode(d, v.cbPointsizeVals);
                             break;
 
                         case 12:
-                            ::avro::decode(d, v.width);
+                            ::avro::decode(d, v.cbPointshapeAttr);
                             break;
 
                         case 13:
-                            ::avro::decode(d, v.height);
+                            ::avro::decode(d, v.cbPointshapeVals);
                             break;
 
                         case 14:
-                            ::avro::decode(d, v.projection);
+                            ::avro::decode(d, v.minX);
                             break;
 
                         case 15:
-                            ::avro::decode(d, v.bgColor);
+                            ::avro::decode(d, v.maxX);
                             break;
 
                         case 16:
-                            ::avro::decode(d, v.styleOptions);
+                            ::avro::decode(d, v.minY);
                             break;
 
                         case 17:
+                            ::avro::decode(d, v.maxY);
+                            break;
+
+                        case 18:
+                            ::avro::decode(d, v.width);
+                            break;
+
+                        case 19:
+                            ::avro::decode(d, v.height);
+                            break;
+
+                        case 20:
+                            ::avro::decode(d, v.projection);
+                            break;
+
+                        case 21:
+                            ::avro::decode(d, v.bgColor);
+                            break;
+
+                        case 22:
+                            ::avro::decode(d, v.styleOptions);
+                            break;
+
+                        case 23:
                             ::avro::decode(d, v.options);
                             break;
 
@@ -416,8 +470,14 @@ namespace avro
                 ::avro::decode(d, v.yColumnName);
                 ::avro::decode(d, v.geometryColumnName);
                 ::avro::decode(d, v.trackIds);
-                ::avro::decode(d, v.cbColumnName);
+                ::avro::decode(d, v.cbAttr);
                 ::avro::decode(d, v.cbVals);
+                ::avro::decode(d, v.cbPointcolorAttr);
+                ::avro::decode(d, v.cbPointcolorVals);
+                ::avro::decode(d, v.cbPointsizeAttr);
+                ::avro::decode(d, v.cbPointsizeVals);
+                ::avro::decode(d, v.cbPointshapeAttr);
+                ::avro::decode(d, v.cbPointshapeVals);
                 ::avro::decode(d, v.minX);
                 ::avro::decode(d, v.maxX);
                 ::avro::decode(d, v.minY);
