@@ -1,3 +1,6 @@
+#define INCL_EXTRA_HTON_FUNCTIONS
+#define NOMINMAX // On Windows, prevent defining min/max macros
+
 #include "gpudb/utils/GPUdbMultiHeadIOUtils.h"
 
 #include "gpudb/utils/MurmurHash3.h"
@@ -6,13 +9,10 @@
 #include <cstring>
 #ifdef _MSC_VER
     // See: https://gist.github.com/panzi/6856583
-    #define INCL_EXTRA_HTON_FUNCTIONS
     #include <WinSock2.h>
     #define htobe16(x)  htons(x)
     #define htobe32(x)  htonl(x)
     #define htobe64(x)  htonll(x)
-
-    #undef min  // Don't interfere with std::min
 #else
     #include <endian.h>
 #endif

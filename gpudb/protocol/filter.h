@@ -43,9 +43,11 @@ namespace gpudb
          * 
          * @param[in] tableName_  Name of the table to filter.  This may be the
          *                        ID of a collection, table or a result set
-         *                        (for chaining queries).  Collections may be
-         *                        filtered only if all tables within the
-         *                        collection have the same type ID.
+         *                        (for chaining queries). If filtering a
+         *                        collection, all child tables where the filter
+         *                        expression is valid will be filtered; the
+         *                        filtered result tables will then be placed in
+         *                        a collection specified by @a viewName.
          * @param[in] viewName_  If provided, then this will be the name of the
          *                       view containing the results. Has the same
          *                       naming restrictions as <a

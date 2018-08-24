@@ -66,6 +66,9 @@
     <ClCompile Include="..\..\gpudb\utils\GPUdbMultiHeadIOUtils.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\gpudb\utils\Utils.h">
+      <Filter>Header Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\gpudb\Avro.hpp">
@@ -101,7 +104,7 @@
     <ClInclude Include="..\..\gpudb\utils\GPUdbMultiHeadIOUtils.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\gpudb\utils\Utils.h">
+    <ClInclude Include="..\..\gpudb\protocol\EndpointKeywords.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

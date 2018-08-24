@@ -181,6 +181,7 @@ namespace gpudb
     extern const std::string alter_table_none;
     extern const std::string alter_table_protected;
     extern const std::string alter_table_refresh;
+    extern const std::string alter_table_remove_text_search_attributes;
     extern const std::string alter_table_rename_column;
     extern const std::string alter_table_rename_table;
     extern const std::string alter_table_set_column_compression;
@@ -191,6 +192,7 @@ namespace gpudb
     extern const std::string alter_table_snappy;
     extern const std::string alter_table_true;
     extern const std::string alter_table_ttl;
+    extern const std::string alter_table_update_last_access_time;
     extern const std::string alter_table_validate_change_column;
 
     // Keywords for /alter/user request
@@ -459,12 +461,15 @@ namespace gpudb
     // Keywords for /get/records/bycolumn request
     extern const std::string get_records_by_column_ascending;
     extern const std::string get_records_by_column_binary;
+    extern const std::string get_records_by_column_convert_wkts_to_wkbs;
     extern const std::string get_records_by_column_descending;
     extern const std::string get_records_by_column_expression;
+    extern const std::string get_records_by_column_false;
     extern const std::string get_records_by_column_json;
     extern const std::string get_records_by_column_order_by;
     extern const std::string get_records_by_column_sort_by;
     extern const std::string get_records_by_column_sort_order;
+    extern const std::string get_records_by_column_true;
 
     // Keywords for /get/records/byseries request
     extern const std::string get_records_by_series_binary;
@@ -506,7 +511,6 @@ namespace gpudb
     extern const std::string insert_records_false;
     extern const std::string insert_records_json;
     extern const std::string insert_records_return_record_ids;
-    extern const std::string insert_records_route_to_address;
     extern const std::string insert_records_true;
     extern const std::string insert_records_update_on_existing_pk;
 
@@ -639,6 +643,11 @@ namespace gpudb
     extern const std::string show_table_false;
     extern const std::string show_table_true;
 
+    // Keywords for /show/types request
+    extern const std::string show_types_false;
+    extern const std::string show_types_no_join_types;
+    extern const std::string show_types_true;
+
     // Keywords for /update/records request
     extern const std::string update_records_binary;
     extern const std::string update_records_bypass_safety_checks;
@@ -648,6 +657,7 @@ namespace gpudb
     extern const std::string update_records_record_id;
     extern const std::string update_records_true;
     extern const std::string update_records_update_on_existing_pk;
+    extern const std::string update_records_use_expressions_in_new_values_maps;
 
     // Keywords for /visualize/image request
     extern const std::string visualize_image_102100;
@@ -712,11 +722,14 @@ namespace gpudb
     extern const std::string visualize_image_chart_hollowsquare;
     extern const std::string visualize_image_chart_jitter_x;
     extern const std::string visualize_image_chart_jitter_y;
+    extern const std::string visualize_image_chart_log;
     extern const std::string visualize_image_chart_none;
     extern const std::string visualize_image_chart_plot_all;
     extern const std::string visualize_image_chart_pointcolor;
     extern const std::string visualize_image_chart_pointshape;
     extern const std::string visualize_image_chart_pointsize;
+    extern const std::string visualize_image_chart_scale_type_x;
+    extern const std::string visualize_image_chart_scale_type_y;
     extern const std::string visualize_image_chart_square;
     extern const std::string visualize_image_chart_x_order_by;
     extern const std::string visualize_image_chart_y_order_by;
@@ -783,12 +796,17 @@ namespace gpudb
     extern const std::string visualize_image_contour_EPSG_3857;
     extern const std::string visualize_image_contour_EPSG_4326;
     extern const std::string visualize_image_contour_EPSG_900913;
+    extern const std::string visualize_image_contour_FILL_RATIO;
     extern const std::string visualize_image_contour_INV_DST_POW;
     extern const std::string visualize_image_contour_KRIGING;
     extern const std::string visualize_image_contour_MIN_CURV;
     extern const std::string visualize_image_contour_PASS_THROUGH;
     extern const std::string visualize_image_contour_PLATE_CARREE;
     extern const std::string visualize_image_contour_WEB_MERCATOR;
+    extern const std::string visualize_image_contour_adjust_grid;
+    extern const std::string visualize_image_contour_adjust_grid_neigh;
+    extern const std::string visualize_image_contour_adjust_grid_size;
+    extern const std::string visualize_image_contour_adjust_levels;
     extern const std::string visualize_image_contour_bg_color;
     extern const std::string visualize_image_contour_blues;
     extern const std::string visualize_image_contour_color;
@@ -796,14 +814,16 @@ namespace gpudb
     extern const std::string visualize_image_contour_gray;
     extern const std::string visualize_image_contour_greens;
     extern const std::string visualize_image_contour_greys;
-    extern const std::string visualize_image_contour_grid_columns;
-    extern const std::string visualize_image_contour_grid_rows;
+    extern const std::string visualize_image_contour_grid_size;
     extern const std::string visualize_image_contour_gridding_method;
     extern const std::string visualize_image_contour_hot;
     extern const std::string visualize_image_contour_hsv;
     extern const std::string visualize_image_contour_jet;
     extern const std::string visualize_image_contour_line_size;
+    extern const std::string visualize_image_contour_max_grid_size;
     extern const std::string visualize_image_contour_max_level;
+    extern const std::string visualize_image_contour_max_search_cells;
+    extern const std::string visualize_image_contour_min_grid_size;
     extern const std::string visualize_image_contour_min_level;
     extern const std::string visualize_image_contour_num_levels;
     extern const std::string visualize_image_contour_oranges;

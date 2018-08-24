@@ -70,18 +70,19 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <OutDir>$(ProjectDir)..\$(Platform)\$(Configuration)\</OutDir>
     <IntDir>$(Platform)\$(Configuration)\</IntDir>
-    <TargetName>gpudbalilib</TargetName>
+    <TargetName>gpudbapilib</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <OutDir>$(ProjectDir)..\$(Platform)\$(Configuration)\</OutDir>
-    <TargetName>gpudbalilib</TargetName>
+    <TargetName>gpudbapilib</TargetName>
+    <IntDir>$(Platform)\$(Configuration)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <TargetName>gpudbapilib</TargetName>
     <OutDir>$(ProjectDir)..\$(Platform)\$(Configuration)\</OutDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <TargetName>gpudbalilib</TargetName>
+    <TargetName>gpudbapilib</TargetName>
     <OutDir>$(ProjectDir)..\$(Platform)\$(Configuration)\</OutDir>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -105,7 +106,7 @@
       </PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <PreprocessorDefinitions>WIN32;_DEBUG;_LIB;GPUDB_NO_HTTPS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>..\..;..\..\thirdparty\boost_1_65_1;..\..\thirdparty\avro-cpp-1.7.7;..\..\thirdparty\snappy-windows-1.1.1.8\src;$(ProjectDir)..\gpudbapidll\packages\zeroc.openssl.v120.1.0.2.4\build\native\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalOptions>-D_WIN32_WINNT=0x0501 %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
@@ -184,6 +185,7 @@
     <ClInclude Include="..\..\gpudb\GPUdbIngestor.hpp" />
     <ClInclude Include="..\..\gpudb\GPUdbTemplates.hpp" />
     <ClInclude Include="..\..\gpudb\Http.hpp" />
+    <ClInclude Include="..\..\gpudb\protocol\EndpointKeywords.h" />
     <ClInclude Include="..\..\gpudb\Type.hpp" />
     <ClInclude Include="..\..\gpudb\utils\GPUdbMultiHeadIOUtils.h" />
   </ItemGroup>

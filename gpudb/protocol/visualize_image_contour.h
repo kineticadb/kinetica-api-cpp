@@ -128,7 +128,11 @@ namespace gpudb
          *                              <li>
          *                      gpudb::visualize_image_contour_num_levels
          *                              <li>
+         *                      gpudb::visualize_image_contour_adjust_levels
+         *                              <li>
          *                      gpudb::visualize_image_contour_search_radius
+         *                              <li>
+         *                      gpudb::visualize_image_contour_max_search_cells
          *                              <li>
          *                      gpudb::visualize_image_contour_gridding_method:
          *                      <ul>
@@ -140,15 +144,25 @@ namespace gpudb
          *                      gpudb::visualize_image_contour_KRIGING
          *                              <li>
          *                      gpudb::visualize_image_contour_PASS_THROUGH
+         *                              <li>
+         *                      gpudb::visualize_image_contour_FILL_RATIO
          *                      </ul>
          *                      The default value is
          *                      gpudb::visualize_image_contour_INV_DST_POW.
          *                              <li>
          *                      gpudb::visualize_image_contour_smoothing_factor
          *                              <li>
-         *                      gpudb::visualize_image_contour_grid_rows
+         *                      gpudb::visualize_image_contour_grid_size
          *                              <li>
-         *                      gpudb::visualize_image_contour_grid_columns
+         *                      gpudb::visualize_image_contour_adjust_grid
+         *                              <li>
+         *                      gpudb::visualize_image_contour_adjust_grid_neigh
+         *                              <li>
+         *                      gpudb::visualize_image_contour_adjust_grid_size
+         *                              <li>
+         *                      gpudb::visualize_image_contour_max_grid_size
+         *                              <li>
+         *                      gpudb::visualize_image_contour_min_grid_size
          *                              <li>
          *                      gpudb::visualize_image_contour_render_output_grid
          *                      </ul>
@@ -329,7 +343,12 @@ namespace gpudb
             height(int32_t()),
             bgColor(int64_t()),
             imageData(std::vector<uint8_t>()),
-            gridData(std::vector<uint8_t>())
+            gridData(std::vector<uint8_t>()),
+            fillN0(double()),
+            fillNn(double()),
+            minLevel(double()),
+            maxLevel(double()),
+            samplesUsed(int64_t())
         {
         }
 
@@ -342,6 +361,11 @@ namespace gpudb
         int64_t bgColor;
         std::vector<uint8_t> imageData;
         std::vector<uint8_t> gridData;
+        double fillN0;
+        double fillNn;
+        double minLevel;
+        double maxLevel;
+        int64_t samplesUsed;
     };
 }
 
@@ -360,6 +384,11 @@ namespace avro
             ::avro::encode(e, v.bgColor);
             ::avro::encode(e, v.imageData);
             ::avro::encode(e, v.gridData);
+            ::avro::encode(e, v.fillN0);
+            ::avro::encode(e, v.fillNn);
+            ::avro::encode(e, v.minLevel);
+            ::avro::encode(e, v.maxLevel);
+            ::avro::encode(e, v.samplesUsed);
         }
 
         static void decode(Decoder& d, gpudb::VisualizeImageContourResponse& v)
@@ -392,6 +421,26 @@ namespace avro
                             ::avro::decode(d, v.gridData);
                             break;
 
+                        case 5:
+                            ::avro::decode(d, v.fillN0);
+                            break;
+
+                        case 6:
+                            ::avro::decode(d, v.fillNn);
+                            break;
+
+                        case 7:
+                            ::avro::decode(d, v.minLevel);
+                            break;
+
+                        case 8:
+                            ::avro::decode(d, v.maxLevel);
+                            break;
+
+                        case 9:
+                            ::avro::decode(d, v.samplesUsed);
+                            break;
+
                         default:
                             break;
                     }
@@ -404,6 +453,11 @@ namespace avro
                 ::avro::decode(d, v.bgColor);
                 ::avro::decode(d, v.imageData);
                 ::avro::decode(d, v.gridData);
+                ::avro::decode(d, v.fillN0);
+                ::avro::decode(d, v.fillNn);
+                ::avro::decode(d, v.minLevel);
+                ::avro::decode(d, v.maxLevel);
+                ::avro::decode(d, v.samplesUsed);
             }
         }
     };

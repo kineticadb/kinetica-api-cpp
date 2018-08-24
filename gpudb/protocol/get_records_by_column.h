@@ -77,8 +77,8 @@ namespace gpudb
          *                      table.
          *                              <li>
          *                      gpudb::get_records_by_column_sort_by: Optional
-         *                      column that the data should be sorted by. Empty
-         *                      by default (i.e. no sorting is applied).
+         *                      column(s) that the data should be sorted by.
+         *                      Empty by default (i.e. no sorting is applied).
          *                              <li>
          *                      gpudb::get_records_by_column_sort_order: String
          *                      indicating how the returned values should be
@@ -95,11 +95,17 @@ namespace gpudb
          *                              <li>
          *                      gpudb::get_records_by_column_order_by:
          *                      Comma-separated list of the columns to be
-         *                      sorted by; e.g. 'timestamp asc, x desc'.  The
-         *                      columns specified must be present in @a
-         *                      columnNames.  If any alias is given for any
-         *                      column name, the alias must be used, rather
-         *                      than the original column name.
+         *                      sorted by; e.g. 'timestamp asc, x desc'.
+         *                              <li>
+         *                      gpudb::get_records_by_column_convert_wkts_to_wkbs:
+         *                      If true, then WKT string columns will be
+         *                      returned as WKB bytes.
+         *                      <ul>
+         *                              <li> gpudb::get_records_by_column_true
+         *                              <li> gpudb::get_records_by_column_false
+         *                      </ul>
+         *                      The default value is
+         *                      gpudb::get_records_by_column_false.
          *                      </ul>
          * 
          */
@@ -148,8 +154,8 @@ namespace gpudb
          *                      table.
          *                              <li>
          *                      gpudb::get_records_by_column_sort_by: Optional
-         *                      column that the data should be sorted by. Empty
-         *                      by default (i.e. no sorting is applied).
+         *                      column(s) that the data should be sorted by.
+         *                      Empty by default (i.e. no sorting is applied).
          *                              <li>
          *                      gpudb::get_records_by_column_sort_order: String
          *                      indicating how the returned values should be
@@ -166,11 +172,17 @@ namespace gpudb
          *                              <li>
          *                      gpudb::get_records_by_column_order_by:
          *                      Comma-separated list of the columns to be
-         *                      sorted by; e.g. 'timestamp asc, x desc'.  The
-         *                      columns specified must be present in @a
-         *                      columnNames.  If any alias is given for any
-         *                      column name, the alias must be used, rather
-         *                      than the original column name.
+         *                      sorted by; e.g. 'timestamp asc, x desc'.
+         *                              <li>
+         *                      gpudb::get_records_by_column_convert_wkts_to_wkbs:
+         *                      If true, then WKT string columns will be
+         *                      returned as WKB bytes.
+         *                      <ul>
+         *                              <li> gpudb::get_records_by_column_true
+         *                              <li> gpudb::get_records_by_column_false
+         *                      </ul>
+         *                      The default value is
+         *                      gpudb::get_records_by_column_false.
          *                      </ul>
          * 
          */

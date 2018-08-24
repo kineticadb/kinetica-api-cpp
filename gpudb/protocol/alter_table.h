@@ -196,6 +196,10 @@ namespace gpudb
          *                     target="_top">materialized view</a>.  Also, sets
          *                     the refresh method to periodic if not alreay
          *                     set.
+         *                             <li>
+         *                     gpudb::alter_table_remove_text_search_attributes:
+         *                     remove text_search attribute from all columns,
+         *                     if exists.
          *                     </ul>
          * @param[in] value_  The value of the modification. May be a column
          *                    name, 'true' or 'false', a TTL, or the global
@@ -248,6 +252,15 @@ namespace gpudb
          *                      <ul>
          *                              <li> gpudb::alter_table_true: true
          *                              <li> gpudb::alter_table_false: false
+         *                      </ul>
+         *                      The default value is gpudb::alter_table_true.
+         *                              <li>
+         *                      gpudb::alter_table_update_last_access_time:
+         *                      Indicates whether need to update the
+         *                      last_access_time.
+         *                      <ul>
+         *                              <li> gpudb::alter_table_true
+         *                              <li> gpudb::alter_table_false
          *                      </ul>
          *                      The default value is gpudb::alter_table_true.
          *                              <li>

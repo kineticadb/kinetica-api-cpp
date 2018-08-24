@@ -112,6 +112,18 @@ namespace gpudb
          *                      </ul>
          *                      The default value is
          *                      gpudb::update_records_false.
+         *                              <li>
+         *                      gpudb::update_records_use_expressions_in_new_values_maps:
+         *                      When set to 'true', all new_values in
+         *                      new_values_maps are considered as expression
+         *                      values. When set to 'false', all new_values in
+         *                      new_values_maps are considered as constants.
+         *                      <ul>
+         *                              <li> gpudb::update_records_true
+         *                              <li> gpudb::update_records_false
+         *                      </ul>
+         *                      The default value is
+         *                      gpudb::update_records_false.
          *                              <li> gpudb::update_records_record_id:
          *                      ID of a single record to be updated (returned
          *                      in the call to /insert/records or
@@ -199,6 +211,18 @@ namespace gpudb
          *                      Can be used to customize behavior when the
          *                      updated primary key value already exists as
          *                      described in /insert/records.
+         *                      <ul>
+         *                              <li> gpudb::update_records_true
+         *                              <li> gpudb::update_records_false
+         *                      </ul>
+         *                      The default value is
+         *                      gpudb::update_records_false.
+         *                              <li>
+         *                      gpudb::update_records_use_expressions_in_new_values_maps:
+         *                      When set to 'true', all new_values in
+         *                      new_values_maps are considered as expression
+         *                      values. When set to 'false', all new_values in
+         *                      new_values_maps are considered as constants.
          *                      <ul>
          *                              <li> gpudb::update_records_true
          *                              <li> gpudb::update_records_false
@@ -404,6 +428,18 @@ namespace gpudb
          *                      Can be used to customize behavior when the
          *                      updated primary key value already exists as
          *                      described in /insert/records.
+         *                      <ul>
+         *                              <li> gpudb::update_records_true
+         *                              <li> gpudb::update_records_false
+         *                      </ul>
+         *                      The default value is
+         *                      gpudb::update_records_false.
+         *                              <li>
+         *                      gpudb::update_records_use_expressions_in_new_values_maps:
+         *                      When set to 'true', all new_values in
+         *                      new_values_maps are considered as expression
+         *                      values. When set to 'false', all new_values in
+         *                      new_values_maps are considered as constants.
          *                      <ul>
          *                              <li> gpudb::update_records_true
          *                              <li> gpudb::update_records_false

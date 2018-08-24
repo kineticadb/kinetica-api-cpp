@@ -4285,6 +4285,9 @@ AlterTableResponse& GPUdb::alterTable( const AlterTableRequest& request_,
  *                href="../../concepts/materialized_views.html"
  *                target="_top">materialized view</a>.  Also, sets the refresh
  *                method to periodic if not alreay set.
+ *                        <li>
+ *                gpudb::alter_table_remove_text_search_attributes: remove
+ *                text_search attribute from all columns, if exists.
  *                </ul>
  * @param value  The value of the modification. May be a column name, 'true' or
  *               'false', a TTL, or the global access mode depending on @a
@@ -4326,6 +4329,13 @@ AlterTableResponse& GPUdb::alterTable( const AlterTableRequest& request_,
  *                 <ul>
  *                         <li> gpudb::alter_table_true: true
  *                         <li> gpudb::alter_table_false: false
+ *                 </ul>
+ *                 The default value is gpudb::alter_table_true.
+ *                         <li> gpudb::alter_table_update_last_access_time:
+ *                 Indicates whether need to update the last_access_time.
+ *                 <ul>
+ *                         <li> gpudb::alter_table_true
+ *                         <li> gpudb::alter_table_false
  *                 </ul>
  *                 The default value is gpudb::alter_table_true.
  *                         <li> gpudb::alter_table_add_column_expression:
@@ -4489,6 +4499,9 @@ AlterTableResponse GPUdb::alterTable( const std::string& tableName,
  *                href="../../concepts/materialized_views.html"
  *                target="_top">materialized view</a>.  Also, sets the refresh
  *                method to periodic if not alreay set.
+ *                        <li>
+ *                gpudb::alter_table_remove_text_search_attributes: remove
+ *                text_search attribute from all columns, if exists.
  *                </ul>
  * @param value  The value of the modification. May be a column name, 'true' or
  *               'false', a TTL, or the global access mode depending on @a
@@ -4530,6 +4543,13 @@ AlterTableResponse GPUdb::alterTable( const std::string& tableName,
  *                 <ul>
  *                         <li> gpudb::alter_table_true: true
  *                         <li> gpudb::alter_table_false: false
+ *                 </ul>
+ *                 The default value is gpudb::alter_table_true.
+ *                         <li> gpudb::alter_table_update_last_access_time:
+ *                 Indicates whether need to update the last_access_time.
+ *                 <ul>
+ *                         <li> gpudb::alter_table_true
+ *                         <li> gpudb::alter_table_false
  *                 </ul>
  *                 The default value is gpudb::alter_table_true.
  *                         <li> gpudb::alter_table_add_column_expression:
@@ -4862,11 +4882,10 @@ AppendRecordsResponse& GPUdb::appendRecords( const AppendRecordsRequest& request
  *                 filter expression to apply to the source table (specified by
  *                 @a sourceTableName). Empty by default.
  *                         <li> gpudb::append_records_order_by: Comma-separated
- *                 list of the columns to be sorted from source table
- *                 (specified by @a sourceTableName) by; e.g. 'timestamp asc, x
- *                 desc'.  The columns specified must be present in @a
- *                 fieldMap.  If any alias is given for any column name, the
- *                 alias must be used, rather than the original column name.
+ *                 list of the columns and expressions to be sorted by from the
+ *                 source table (specified by @a sourceTableName); e.g.
+ *                 'timestamp asc, x desc'.  The @a order_by columns do not
+ *                 have to be present in @a fieldMap.
  *                         <li> gpudb::append_records_update_on_existing_pk:
  *                 Specifies the record collision policy for inserting the
  *                 source table records (specified by @a sourceTableName) into
@@ -4942,11 +4961,10 @@ AppendRecordsResponse GPUdb::appendRecords( const std::string& tableName,
  *                 filter expression to apply to the source table (specified by
  *                 @a sourceTableName). Empty by default.
  *                         <li> gpudb::append_records_order_by: Comma-separated
- *                 list of the columns to be sorted from source table
- *                 (specified by @a sourceTableName) by; e.g. 'timestamp asc, x
- *                 desc'.  The columns specified must be present in @a
- *                 fieldMap.  If any alias is given for any column name, the
- *                 alias must be used, rather than the original column name.
+ *                 list of the columns and expressions to be sorted by from the
+ *                 source table (specified by @a sourceTableName); e.g.
+ *                 'timestamp asc, x desc'.  The @a order_by columns do not
+ *                 have to be present in @a fieldMap.
  *                         <li> gpudb::append_records_update_on_existing_pk:
  *                 Specifies the record collision policy for inserting the
  *                 source table records (specified by @a sourceTableName) into
@@ -8021,13 +8039,13 @@ CreateTypeResponse& GPUdb::createType( const std::string& typeDefinition,
  * see <a href="../../concepts/unions.html#limitations-and-cautions"
  * target="_top">Union Limitations and Cautions</a>.
  * <p>
- * INTERSECT (DISTINCT) - For data set intersection details and examples, see
- * <a href="../../concepts/intersect.html" target="_top">Intersect</a>.  For
- * limitations, see <a href="../../concepts/intersect.html#limitations"
+ * INTERSECT (DISTINCT/ALL) - For data set intersection details and examples,
+ * see <a href="../../concepts/intersect.html" target="_top">Intersect</a>.
+ * For limitations, see <a href="../../concepts/intersect.html#limitations"
  * target="_top">Intersect Limitations</a>.
  * <p>
- * EXCEPT (DISTINCT) - For data set subtraction details and examples, see <a
- * href="../../concepts/except.html" target="_top">Except</a>.  For
+ * EXCEPT (DISTINCT/ALL) - For data set subtraction details and examples, see
+ * <a href="../../concepts/except.html" target="_top">Except</a>.  For
  * limitations, see <a href="../../concepts/except.html#limitations"
  * target="_top">Except Limitations</a>.
  * <p>
@@ -8066,13 +8084,13 @@ CreateUnionResponse GPUdb::createUnion( const CreateUnionRequest& request_ ) con
  * see <a href="../../concepts/unions.html#limitations-and-cautions"
  * target="_top">Union Limitations and Cautions</a>.
  * <p>
- * INTERSECT (DISTINCT) - For data set intersection details and examples, see
- * <a href="../../concepts/intersect.html" target="_top">Intersect</a>.  For
- * limitations, see <a href="../../concepts/intersect.html#limitations"
+ * INTERSECT (DISTINCT/ALL) - For data set intersection details and examples,
+ * see <a href="../../concepts/intersect.html" target="_top">Intersect</a>.
+ * For limitations, see <a href="../../concepts/intersect.html#limitations"
  * target="_top">Intersect Limitations</a>.
  * <p>
- * EXCEPT (DISTINCT) - For data set subtraction details and examples, see <a
- * href="../../concepts/except.html" target="_top">Except</a>.  For
+ * EXCEPT (DISTINCT/ALL) - For data set subtraction details and examples, see
+ * <a href="../../concepts/except.html" target="_top">Except</a>.  For
  * limitations, see <a href="../../concepts/except.html#limitations"
  * target="_top">Except Limitations</a>.
  * <p>
@@ -8114,13 +8132,13 @@ CreateUnionResponse& GPUdb::createUnion( const CreateUnionRequest& request_,
  * see <a href="../../concepts/unions.html#limitations-and-cautions"
  * target="_top">Union Limitations and Cautions</a>.
  * <p>
- * INTERSECT (DISTINCT) - For data set intersection details and examples, see
- * <a href="../../concepts/intersect.html" target="_top">Intersect</a>.  For
- * limitations, see <a href="../../concepts/intersect.html#limitations"
+ * INTERSECT (DISTINCT/ALL) - For data set intersection details and examples,
+ * see <a href="../../concepts/intersect.html" target="_top">Intersect</a>.
+ * For limitations, see <a href="../../concepts/intersect.html#limitations"
  * target="_top">Intersect Limitations</a>.
  * <p>
- * EXCEPT (DISTINCT) - For data set subtraction details and examples, see <a
- * href="../../concepts/except.html" target="_top">Except</a>.  For
+ * EXCEPT (DISTINCT/ALL) - For data set subtraction details and examples, see
+ * <a href="../../concepts/except.html" target="_top">Except</a>.  For
  * limitations, see <a href="../../concepts/except.html#limitations"
  * target="_top">Except Limitations</a>.
  * <p>
@@ -8256,13 +8274,13 @@ CreateUnionResponse GPUdb::createUnion( const std::string& tableName,
  * see <a href="../../concepts/unions.html#limitations-and-cautions"
  * target="_top">Union Limitations and Cautions</a>.
  * <p>
- * INTERSECT (DISTINCT) - For data set intersection details and examples, see
- * <a href="../../concepts/intersect.html" target="_top">Intersect</a>.  For
- * limitations, see <a href="../../concepts/intersect.html#limitations"
+ * INTERSECT (DISTINCT/ALL) - For data set intersection details and examples,
+ * see <a href="../../concepts/intersect.html" target="_top">Intersect</a>.
+ * For limitations, see <a href="../../concepts/intersect.html#limitations"
  * target="_top">Intersect Limitations</a>.
  * <p>
- * EXCEPT (DISTINCT) - For data set subtraction details and examples, see <a
- * href="../../concepts/except.html" target="_top">Except</a>.  For
+ * EXCEPT (DISTINCT/ALL) - For data set subtraction details and examples, see
+ * <a href="../../concepts/except.html" target="_top">Except</a>.  For
  * limitations, see <a href="../../concepts/except.html#limitations"
  * target="_top">Except Limitations</a>.
  * <p>
@@ -9302,8 +9320,10 @@ FilterResponse& GPUdb::filter( const FilterRequest& request_,
  * 
  * @param tableName  Name of the table to filter.  This may be the ID of a
  *                   collection, table or a result set (for chaining queries).
- *                   Collections may be filtered only if all tables within the
- *                   collection have the same type ID.
+ *                   If filtering a collection, all child tables where the
+ *                   filter expression is valid will be filtered; the filtered
+ *                   result tables will then be placed in a collection
+ *                   specified by @a viewName.
  * @param viewName  If provided, then this will be the name of the view
  *                  containing the results. Has the same naming restrictions as
  *                  <a href="../../concepts/tables.html"
@@ -9358,8 +9378,10 @@ FilterResponse GPUdb::filter( const std::string& tableName,
  * 
  * @param tableName  Name of the table to filter.  This may be the ID of a
  *                   collection, table or a result set (for chaining queries).
- *                   Collections may be filtered only if all tables within the
- *                   collection have the same type ID.
+ *                   If filtering a collection, all child tables where the
+ *                   filter expression is valid will be filtered; the filtered
+ *                   result tables will then be placed in a collection
+ *                   specified by @a viewName.
  * @param viewName  If provided, then this will be the name of the view
  *                  containing the results. Has the same naming restrictions as
  *                  <a href="../../concepts/tables.html"
@@ -9462,9 +9484,11 @@ FilterByAreaResponse& GPUdb::filterByArea( const FilterByAreaRequest& request_,
  * created with the name @a viewName passed in as part of the input.
  * 
  * @param tableName  Name of the table to filter.  This may be the name of a
- *                   collection, a table or a view (when chaining queries).
- *                   Collections may be filtered only if all tables within the
- *                   collection have the same type ID.
+ *                   collection, a table or a view (when chaining queries). If
+ *                   filtering a collection, all child tables where the filter
+ *                   expression is valid will be filtered; the filtered result
+ *                   tables will then be placed in a collection specified by @a
+ *                   viewName.
  * @param viewName  If provided, then this will be the name of the view
  *                  containing the results. Has the same naming restrictions as
  *                  <a href="../../concepts/tables.html"
@@ -9521,9 +9545,11 @@ FilterByAreaResponse GPUdb::filterByArea( const std::string& tableName,
  * created with the name @a viewName passed in as part of the input.
  * 
  * @param tableName  Name of the table to filter.  This may be the name of a
- *                   collection, a table or a view (when chaining queries).
- *                   Collections may be filtered only if all tables within the
- *                   collection have the same type ID.
+ *                   collection, a table or a view (when chaining queries). If
+ *                   filtering a collection, all child tables where the filter
+ *                   expression is valid will be filtered; the filtered result
+ *                   tables will then be placed in a collection specified by @a
+ *                   viewName.
  * @param viewName  If provided, then this will be the name of the view
  *                  containing the results. Has the same naming restrictions as
  *                  <a href="../../concepts/tables.html"
@@ -9635,9 +9661,11 @@ FilterByAreaGeometryResponse& GPUdb::filterByAreaGeometry( const FilterByAreaGeo
  * input.
  * 
  * @param tableName  Name of the table to filter.  This may be the name of a
- *                   collection, a table or a view (when chaining queries).
- *                   Collections may be filtered only if all tables within the
- *                   collection have the same type ID.
+ *                   collection, a table or a view (when chaining queries).  If
+ *                   filtering a collection, all child tables where the filter
+ *                   expression is valid will be filtered; the filtered result
+ *                   tables will then be placed in a collection specified by @a
+ *                   viewName.
  * @param viewName  If provided, then this will be the name of the view
  *                  containing the results. Must not be an already existing
  *                  collection, table or view.
@@ -9689,9 +9717,11 @@ FilterByAreaGeometryResponse GPUdb::filterByAreaGeometry( const std::string& tab
  * input.
  * 
  * @param tableName  Name of the table to filter.  This may be the name of a
- *                   collection, a table or a view (when chaining queries).
- *                   Collections may be filtered only if all tables within the
- *                   collection have the same type ID.
+ *                   collection, a table or a view (when chaining queries).  If
+ *                   filtering a collection, all child tables where the filter
+ *                   expression is valid will be filtered; the filtered result
+ *                   tables will then be placed in a collection specified by @a
+ *                   viewName.
  * @param viewName  If provided, then this will be the name of the view
  *                  containing the results. Must not be an already existing
  *                  collection, table or view.
@@ -10355,8 +10385,10 @@ FilterByListResponse& GPUdb::filterByList( const FilterByListRequest& request_,
  * 
  * @param tableName  Name of the table to filter.  This may be the ID of a
  *                   collection, table or a result set (for chaining queries).
- *                   Collections may be filtered only if all tables within the
- *                   collection have the same type ID.
+ *                   If filtering a collection, all child tables where the
+ *                   filter expression is valid will be filtered; the filtered
+ *                   result tables will then be placed in a collection
+ *                   specified by @a viewName.
  * @param viewName  If provided, then this will be the name of the view
  *                  containing the results. Has the same naming restrictions as
  *                  <a href="../../concepts/tables.html"
@@ -10420,8 +10452,10 @@ FilterByListResponse GPUdb::filterByList( const std::string& tableName,
  * 
  * @param tableName  Name of the table to filter.  This may be the ID of a
  *                   collection, table or a result set (for chaining queries).
- *                   Collections may be filtered only if all tables within the
- *                   collection have the same type ID.
+ *                   If filtering a collection, all child tables where the
+ *                   filter expression is valid will be filtered; the filtered
+ *                   result tables will then be placed in a collection
+ *                   specified by @a viewName.
  * @param viewName  If provided, then this will be the name of the view
  *                  containing the results. Has the same naming restrictions as
  *                  <a href="../../concepts/tables.html"
@@ -12469,8 +12503,8 @@ GetRecordsByColumnResponse& GPUdb::getRecordsByColumn( const GetRecordsByColumnR
  *                         <li> gpudb::get_records_by_column_expression:
  *                 Optional filter expression to apply to the table.
  *                         <li> gpudb::get_records_by_column_sort_by: Optional
- *                 column that the data should be sorted by. Empty by default
- *                 (i.e. no sorting is applied).
+ *                 column(s) that the data should be sorted by. Empty by
+ *                 default (i.e. no sorting is applied).
  *                         <li> gpudb::get_records_by_column_sort_order: String
  *                 indicating how the returned values should be sorted -
  *                 ascending or descending. If sort_order is provided, sort_by
@@ -12482,10 +12516,15 @@ GetRecordsByColumnResponse& GPUdb::getRecordsByColumn( const GetRecordsByColumnR
  *                 The default value is gpudb::get_records_by_column_ascending.
  *                         <li> gpudb::get_records_by_column_order_by:
  *                 Comma-separated list of the columns to be sorted by; e.g.
- *                 'timestamp asc, x desc'.  The columns specified must be
- *                 present in @a columnNames.  If any alias is given for any
- *                 column name, the alias must be used, rather than the
- *                 original column name.
+ *                 'timestamp asc, x desc'.
+ *                         <li>
+ *                 gpudb::get_records_by_column_convert_wkts_to_wkbs: If true,
+ *                 then WKT string columns will be returned as WKB bytes.
+ *                 <ul>
+ *                         <li> gpudb::get_records_by_column_true
+ *                         <li> gpudb::get_records_by_column_false
+ *                 </ul>
+ *                 The default value is gpudb::get_records_by_column_false.
  *                 </ul>
  * 
  * @return Response object containing the result of the operation.
@@ -12552,8 +12591,8 @@ GetRecordsByColumnResponse GPUdb::getRecordsByColumn( const std::string& tableNa
  *                         <li> gpudb::get_records_by_column_expression:
  *                 Optional filter expression to apply to the table.
  *                         <li> gpudb::get_records_by_column_sort_by: Optional
- *                 column that the data should be sorted by. Empty by default
- *                 (i.e. no sorting is applied).
+ *                 column(s) that the data should be sorted by. Empty by
+ *                 default (i.e. no sorting is applied).
  *                         <li> gpudb::get_records_by_column_sort_order: String
  *                 indicating how the returned values should be sorted -
  *                 ascending or descending. If sort_order is provided, sort_by
@@ -12565,10 +12604,15 @@ GetRecordsByColumnResponse GPUdb::getRecordsByColumn( const std::string& tableNa
  *                 The default value is gpudb::get_records_by_column_ascending.
  *                         <li> gpudb::get_records_by_column_order_by:
  *                 Comma-separated list of the columns to be sorted by; e.g.
- *                 'timestamp asc, x desc'.  The columns specified must be
- *                 present in @a columnNames.  If any alias is given for any
- *                 column name, the alias must be used, rather than the
- *                 original column name.
+ *                 'timestamp asc, x desc'.
+ *                         <li>
+ *                 gpudb::get_records_by_column_convert_wkts_to_wkbs: If true,
+ *                 then WKT string columns will be returned as WKB bytes.
+ *                 <ul>
+ *                         <li> gpudb::get_records_by_column_true
+ *                         <li> gpudb::get_records_by_column_false
+ *                 </ul>
+ *                 The default value is gpudb::get_records_by_column_false.
  *                 </ul>
  * @param[out] response_  Response object containing the results of the
  *                        operation.
@@ -13869,9 +13913,6 @@ HasTypeResponse& GPUdb::hasType( const std::string& typeId,
  * <p>
  * The @a return_record_ids option indicates that the database should return
  * the unique identifiers of inserted records.
- * <p>
- * The @a route_to_address option directs that inserted records should be
- * targeted for a particular database node.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -13904,9 +13945,6 @@ InsertRecordsResponse GPUdb::insertRecordsRaw( const RawInsertRecordsRequest& re
  * <p>
  * The @a return_record_ids option indicates that the database should return
  * the unique identifiers of inserted records.
- * <p>
- * The @a route_to_address option directs that inserted records should be
- * targeted for a particular database node.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -16712,6 +16750,15 @@ ShowTypesResponse& GPUdb::showTypes( const ShowTypesRequest& request_,
  * @param label  Option string that was supplied by user in a call to
  *               /create/type.
  * @param options  Optional parameters.
+ *                 <ul>
+ *                         <li> gpudb::show_types_no_join_types: When set to
+ *                 'true', no join types will be included.
+ *                 <ul>
+ *                         <li> gpudb::show_types_true
+ *                         <li> gpudb::show_types_false
+ *                 </ul>
+ *                 The default value is gpudb::show_types_false.
+ *                 </ul>
  * 
  * @return Response object containing the result of the operation.
  * 
@@ -16750,6 +16797,15 @@ ShowTypesResponse GPUdb::showTypes( const std::string& typeId,
  * @param label  Option string that was supplied by user in a call to
  *               /create/type.
  * @param options  Optional parameters.
+ *                 <ul>
+ *                         <li> gpudb::show_types_no_join_types: When set to
+ *                 'true', no join types will be included.
+ *                 <ul>
+ *                         <li> gpudb::show_types_true
+ *                         <li> gpudb::show_types_false
+ *                 </ul>
+ *                 The default value is gpudb::show_types_false.
+ *                 </ul>
  * @param[out] response_  Response object containing the results of the
  *                        operation.
  * 
@@ -17397,10 +17453,10 @@ VisualizeImageChartResponse& GPUdb::visualizeImageChart( const VisualizeImageCha
  * 
  * @param tableName  Name of the table containing the data to be drawn as a
  *                   chart.
- * @param xColumnName  Name of the column containing the data mapped to the x
- *                     axis of a chart.
- * @param yColumnName  Name of the column containing the data mapped to the y
- *                     axis of a chart.
+ * @param xColumnNames  Names of the columns containing the data mapped to the
+ *                      x axis of a chart.
+ * @param yColumnNames  Names of the columns containing the data mapped to the
+ *                      y axis of a chart.
  * @param minX  Lower bound for the x column values. For non-numeric x column,
  *              each x column item is mapped to an integral value starting from
  *              0.
@@ -17477,6 +17533,24 @@ VisualizeImageChartResponse& GPUdb::visualizeImageChart( const VisualizeImageCha
  *                      An expression or aggregate expression by which
  *                      non-numeric y column values are sorted, e.g.
  *                      "avg(price)", which defaults to "avg(price) ascending".
+ *                              <li> gpudb::visualize_image_chart_scale_type_x:
+ *                      Type of x axis scale.
+ *                      <ul>
+ *                              <li> gpudb::visualize_image_chart_none: No
+ *                      scale is applied to the x axis.
+ *                              <li> gpudb::visualize_image_chart_log: A
+ *                      base-10 log scale is applied to the x axis.
+ *                      </ul>
+ *                      The default value is gpudb::visualize_image_chart_none.
+ *                              <li> gpudb::visualize_image_chart_scale_type_y:
+ *                      Type of y axis scale.
+ *                      <ul>
+ *                              <li> gpudb::visualize_image_chart_none: No
+ *                      scale is applied to the y axis.
+ *                              <li> gpudb::visualize_image_chart_log: A
+ *                      base-10 log scale is applied to the y axis.
+ *                      </ul>
+ *                      The default value is gpudb::visualize_image_chart_none.
  *                              <li> gpudb::visualize_image_chart_jitter_x:
  *                      Amplitude of horizontal jitter applied to non-numaric x
  *                      column values.
@@ -17495,8 +17569,8 @@ VisualizeImageChartResponse& GPUdb::visualizeImageChart( const VisualizeImageCha
  */
 
 VisualizeImageChartResponse GPUdb::visualizeImageChart( const std::string& tableName,
-                                                        const std::string& xColumnName,
-                                                        const std::string& yColumnName,
+                                                        const std::vector<std::string>& xColumnNames,
+                                                        const std::vector<std::string>& yColumnNames,
                                                         const double minX,
                                                         const double maxX,
                                                         const double minY,
@@ -17509,8 +17583,8 @@ VisualizeImageChartResponse GPUdb::visualizeImageChart( const std::string& table
 {
     VisualizeImageChartRequest actualRequest_;
     actualRequest_.tableName = tableName;
-    actualRequest_.xColumnName = xColumnName;
-    actualRequest_.yColumnName = yColumnName;
+    actualRequest_.xColumnNames = xColumnNames;
+    actualRequest_.yColumnNames = yColumnNames;
     actualRequest_.minX = minX;
     actualRequest_.maxX = maxX;
     actualRequest_.minY = minY;
@@ -17535,10 +17609,10 @@ VisualizeImageChartResponse GPUdb::visualizeImageChart( const std::string& table
  * 
  * @param tableName  Name of the table containing the data to be drawn as a
  *                   chart.
- * @param xColumnName  Name of the column containing the data mapped to the x
- *                     axis of a chart.
- * @param yColumnName  Name of the column containing the data mapped to the y
- *                     axis of a chart.
+ * @param xColumnNames  Names of the columns containing the data mapped to the
+ *                      x axis of a chart.
+ * @param yColumnNames  Names of the columns containing the data mapped to the
+ *                      y axis of a chart.
  * @param minX  Lower bound for the x column values. For non-numeric x column,
  *              each x column item is mapped to an integral value starting from
  *              0.
@@ -17615,6 +17689,24 @@ VisualizeImageChartResponse GPUdb::visualizeImageChart( const std::string& table
  *                      An expression or aggregate expression by which
  *                      non-numeric y column values are sorted, e.g.
  *                      "avg(price)", which defaults to "avg(price) ascending".
+ *                              <li> gpudb::visualize_image_chart_scale_type_x:
+ *                      Type of x axis scale.
+ *                      <ul>
+ *                              <li> gpudb::visualize_image_chart_none: No
+ *                      scale is applied to the x axis.
+ *                              <li> gpudb::visualize_image_chart_log: A
+ *                      base-10 log scale is applied to the x axis.
+ *                      </ul>
+ *                      The default value is gpudb::visualize_image_chart_none.
+ *                              <li> gpudb::visualize_image_chart_scale_type_y:
+ *                      Type of y axis scale.
+ *                      <ul>
+ *                              <li> gpudb::visualize_image_chart_none: No
+ *                      scale is applied to the y axis.
+ *                              <li> gpudb::visualize_image_chart_log: A
+ *                      base-10 log scale is applied to the y axis.
+ *                      </ul>
+ *                      The default value is gpudb::visualize_image_chart_none.
  *                              <li> gpudb::visualize_image_chart_jitter_x:
  *                      Amplitude of horizontal jitter applied to non-numaric x
  *                      column values.
@@ -17636,8 +17728,8 @@ VisualizeImageChartResponse GPUdb::visualizeImageChart( const std::string& table
  */
 
 VisualizeImageChartResponse& GPUdb::visualizeImageChart( const std::string& tableName,
-                                                         const std::string& xColumnName,
-                                                         const std::string& yColumnName,
+                                                         const std::vector<std::string>& xColumnNames,
+                                                         const std::vector<std::string>& yColumnNames,
                                                          const double minX,
                                                          const double maxX,
                                                          const double minY,
@@ -17651,8 +17743,8 @@ VisualizeImageChartResponse& GPUdb::visualizeImageChart( const std::string& tabl
 {
     VisualizeImageChartRequest actualRequest_;
     actualRequest_.tableName = tableName;
-    actualRequest_.xColumnName = xColumnName;
-    actualRequest_.yColumnName = yColumnName;
+    actualRequest_.xColumnNames = xColumnNames;
+    actualRequest_.yColumnNames = yColumnNames;
     actualRequest_.minX = minX;
     actualRequest_.maxX = maxX;
     actualRequest_.minY = minY;
@@ -18268,19 +18360,27 @@ VisualizeImageContourResponse& GPUdb::visualizeImageContour( const VisualizeImag
  *                         <li> gpudb::visualize_image_contour_min_level
  *                         <li> gpudb::visualize_image_contour_max_level
  *                         <li> gpudb::visualize_image_contour_num_levels
+ *                         <li> gpudb::visualize_image_contour_adjust_levels
  *                         <li> gpudb::visualize_image_contour_search_radius
+ *                         <li> gpudb::visualize_image_contour_max_search_cells
  *                         <li> gpudb::visualize_image_contour_gridding_method:
  *                 <ul>
  *                         <li> gpudb::visualize_image_contour_INV_DST_POW
  *                         <li> gpudb::visualize_image_contour_MIN_CURV
  *                         <li> gpudb::visualize_image_contour_KRIGING
  *                         <li> gpudb::visualize_image_contour_PASS_THROUGH
+ *                         <li> gpudb::visualize_image_contour_FILL_RATIO
  *                 </ul>
  *                 The default value is
  *                 gpudb::visualize_image_contour_INV_DST_POW.
  *                         <li> gpudb::visualize_image_contour_smoothing_factor
- *                         <li> gpudb::visualize_image_contour_grid_rows
- *                         <li> gpudb::visualize_image_contour_grid_columns
+ *                         <li> gpudb::visualize_image_contour_grid_size
+ *                         <li> gpudb::visualize_image_contour_adjust_grid
+ *                         <li>
+ *                 gpudb::visualize_image_contour_adjust_grid_neigh
+ *                         <li> gpudb::visualize_image_contour_adjust_grid_size
+ *                         <li> gpudb::visualize_image_contour_max_grid_size
+ *                         <li> gpudb::visualize_image_contour_min_grid_size
  *                         <li>
  *                 gpudb::visualize_image_contour_render_output_grid
  *                 </ul>
@@ -18377,19 +18477,27 @@ VisualizeImageContourResponse GPUdb::visualizeImageContour( const std::vector<st
  *                         <li> gpudb::visualize_image_contour_min_level
  *                         <li> gpudb::visualize_image_contour_max_level
  *                         <li> gpudb::visualize_image_contour_num_levels
+ *                         <li> gpudb::visualize_image_contour_adjust_levels
  *                         <li> gpudb::visualize_image_contour_search_radius
+ *                         <li> gpudb::visualize_image_contour_max_search_cells
  *                         <li> gpudb::visualize_image_contour_gridding_method:
  *                 <ul>
  *                         <li> gpudb::visualize_image_contour_INV_DST_POW
  *                         <li> gpudb::visualize_image_contour_MIN_CURV
  *                         <li> gpudb::visualize_image_contour_KRIGING
  *                         <li> gpudb::visualize_image_contour_PASS_THROUGH
+ *                         <li> gpudb::visualize_image_contour_FILL_RATIO
  *                 </ul>
  *                 The default value is
  *                 gpudb::visualize_image_contour_INV_DST_POW.
  *                         <li> gpudb::visualize_image_contour_smoothing_factor
- *                         <li> gpudb::visualize_image_contour_grid_rows
- *                         <li> gpudb::visualize_image_contour_grid_columns
+ *                         <li> gpudb::visualize_image_contour_grid_size
+ *                         <li> gpudb::visualize_image_contour_adjust_grid
+ *                         <li>
+ *                 gpudb::visualize_image_contour_adjust_grid_neigh
+ *                         <li> gpudb::visualize_image_contour_adjust_grid_size
+ *                         <li> gpudb::visualize_image_contour_max_grid_size
+ *                         <li> gpudb::visualize_image_contour_min_grid_size
  *                         <li>
  *                 gpudb::visualize_image_contour_render_output_grid
  *                 </ul>

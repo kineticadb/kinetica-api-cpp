@@ -72,13 +72,12 @@ namespace gpudb
          *                      source table (specified by @a sourceTableName).
          *                      Empty by default.
          *                              <li> gpudb::append_records_order_by:
-         *                      Comma-separated list of the columns to be
-         *                      sorted from source table (specified by @a
-         *                      sourceTableName) by; e.g. 'timestamp asc, x
-         *                      desc'.  The columns specified must be present
-         *                      in @a fieldMap.  If any alias is given for any
-         *                      column name, the alias must be used, rather
-         *                      than the original column name.
+         *                      Comma-separated list of the columns and
+         *                      expressions to be sorted by from the source
+         *                      table (specified by @a sourceTableName); e.g.
+         *                      'timestamp asc, x desc'.  The @a order_by
+         *                      columns do not have to be present in @a
+         *                      fieldMap.
          *                              <li>
          *                      gpudb::append_records_update_on_existing_pk:
          *                      Specifies the record collision policy for

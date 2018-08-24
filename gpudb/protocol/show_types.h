@@ -39,6 +39,16 @@ namespace gpudb
          * @param[in] label_  Option string that was supplied by user in a call
          *                    to /create/type.
          * @param[in] options_  Optional parameters.
+         *                      <ul>
+         *                              <li> gpudb::show_types_no_join_types:
+         *                      When set to 'true', no join types will be
+         *                      included.
+         *                      <ul>
+         *                              <li> gpudb::show_types_true
+         *                              <li> gpudb::show_types_false
+         *                      </ul>
+         *                      The default value is gpudb::show_types_false.
+         *                      </ul>
          * 
          */
         ShowTypesRequest(const std::string& typeId_, const std::string& label_, const std::map<std::string, std::string>& options_):

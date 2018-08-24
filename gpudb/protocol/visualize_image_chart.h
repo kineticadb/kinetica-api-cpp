@@ -28,8 +28,8 @@ namespace gpudb
          */
         VisualizeImageChartRequest() :
             tableName(std::string()),
-            xColumnName(std::string()),
-            yColumnName(std::string()),
+            xColumnNames(std::vector<std::string>()),
+            yColumnNames(std::vector<std::string>()),
             minX(double()),
             maxX(double()),
             minY(double()),
@@ -48,10 +48,10 @@ namespace gpudb
          * 
          * @param[in] tableName_  Name of the table containing the data to be
          *                        drawn as a chart.
-         * @param[in] xColumnName_  Name of the column containing the data
-         *                          mapped to the x axis of a chart.
-         * @param[in] yColumnName_  Name of the column containing the data
-         *                          mapped to the y axis of a chart.
+         * @param[in] xColumnNames_  Names of the columns containing the data
+         *                           mapped to the x axis of a chart.
+         * @param[in] yColumnNames_  Names of the columns containing the data
+         *                           mapped to the y axis of a chart.
          * @param[in] minX_  Lower bound for the x column values. For
          *                   non-numeric x column, each x column item is mapped
          *                   to an integral value starting from 0.
@@ -153,6 +153,34 @@ namespace gpudb
          *                           sorted, e.g. "avg(price)", which defaults
          *                           to "avg(price) ascending".
          *                                   <li>
+         *                           gpudb::visualize_image_chart_scale_type_x:
+         *                           Type of x axis scale.
+         *                           <ul>
+         *                                   <li>
+         *                           gpudb::visualize_image_chart_none: No
+         *                           scale is applied to the x axis.
+         *                                   <li>
+         *                           gpudb::visualize_image_chart_log: A
+         *                           base-10 log scale is applied to the x
+         *                           axis.
+         *                           </ul>
+         *                           The default value is
+         *                           gpudb::visualize_image_chart_none.
+         *                                   <li>
+         *                           gpudb::visualize_image_chart_scale_type_y:
+         *                           Type of y axis scale.
+         *                           <ul>
+         *                                   <li>
+         *                           gpudb::visualize_image_chart_none: No
+         *                           scale is applied to the y axis.
+         *                                   <li>
+         *                           gpudb::visualize_image_chart_log: A
+         *                           base-10 log scale is applied to the y
+         *                           axis.
+         *                           </ul>
+         *                           The default value is
+         *                           gpudb::visualize_image_chart_none.
+         *                                   <li>
          *                           gpudb::visualize_image_chart_jitter_x:
          *                           Amplitude of horizontal jitter applied to
          *                           non-numaric x column values.
@@ -170,10 +198,10 @@ namespace gpudb
          * @param[in] options_  Optional parameters.
          * 
          */
-        VisualizeImageChartRequest(const std::string& tableName_, const std::string& xColumnName_, const std::string& yColumnName_, const double minX_, const double maxX_, const double minY_, const double maxY_, const int32_t width_, const int32_t height_, const std::string& bgColor_, const std::map<std::string, std::vector<std::string> >& styleOptions_, const std::map<std::string, std::string>& options_):
+        VisualizeImageChartRequest(const std::string& tableName_, const std::vector<std::string>& xColumnNames_, const std::vector<std::string>& yColumnNames_, const double minX_, const double maxX_, const double minY_, const double maxY_, const int32_t width_, const int32_t height_, const std::string& bgColor_, const std::map<std::string, std::vector<std::string> >& styleOptions_, const std::map<std::string, std::string>& options_):
             tableName( tableName_ ),
-            xColumnName( xColumnName_ ),
-            yColumnName( yColumnName_ ),
+            xColumnNames( xColumnNames_ ),
+            yColumnNames( yColumnNames_ ),
             minX( minX_ ),
             maxX( maxX_ ),
             minY( minY_ ),
@@ -187,8 +215,8 @@ namespace gpudb
         }
 
         std::string tableName;
-        std::string xColumnName;
-        std::string yColumnName;
+        std::vector<std::string> xColumnNames;
+        std::vector<std::string> yColumnNames;
         double minX;
         double maxX;
         double minY;
@@ -208,8 +236,8 @@ namespace avro
         static void encode(Encoder& e, const gpudb::VisualizeImageChartRequest& v)
         {
             ::avro::encode(e, v.tableName);
-            ::avro::encode(e, v.xColumnName);
-            ::avro::encode(e, v.yColumnName);
+            ::avro::encode(e, v.xColumnNames);
+            ::avro::encode(e, v.yColumnNames);
             ::avro::encode(e, v.minX);
             ::avro::encode(e, v.maxX);
             ::avro::encode(e, v.minY);
@@ -236,11 +264,11 @@ namespace avro
                             break;
 
                         case 1:
-                            ::avro::decode(d, v.xColumnName);
+                            ::avro::decode(d, v.xColumnNames);
                             break;
 
                         case 2:
-                            ::avro::decode(d, v.yColumnName);
+                            ::avro::decode(d, v.yColumnNames);
                             break;
 
                         case 3:
@@ -287,8 +315,8 @@ namespace avro
             else
             {
                 ::avro::decode(d, v.tableName);
-                ::avro::decode(d, v.xColumnName);
-                ::avro::decode(d, v.yColumnName);
+                ::avro::decode(d, v.xColumnNames);
+                ::avro::decode(d, v.yColumnNames);
                 ::avro::decode(d, v.minX);
                 ::avro::decode(d, v.maxX);
                 ::avro::decode(d, v.minY);

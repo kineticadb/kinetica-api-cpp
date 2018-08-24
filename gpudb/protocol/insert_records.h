@@ -29,9 +29,6 @@ namespace gpudb
      * <p>
      * The @a return_record_ids option indicates that the database should
      * return the unique identifiers of inserted records.
-     * <p>
-     * The @a route_to_address option directs that inserted records should be
-     * targeted for a particular database node.
      */
     struct RawInsertRecordsRequest
     {
@@ -92,10 +89,6 @@ namespace gpudb
          *                      </ul>
          *                      The default value is
          *                      gpudb::insert_records_false.
-         *                              <li>
-         *                      gpudb::insert_records_route_to_address: Route
-         *                      to a specific rank/tom. Option not suitable for
-         *                      tables using primary/shard keys
          *                      </ul>
          * 
          */
@@ -163,10 +156,6 @@ namespace gpudb
          *                      </ul>
          *                      The default value is
          *                      gpudb::insert_records_false.
-         *                              <li>
-         *                      gpudb::insert_records_route_to_address: Route
-         *                      to a specific rank/tom. Option not suitable for
-         *                      tables using primary/shard keys
          *                      </ul>
          * 
          */
@@ -270,9 +259,6 @@ namespace gpudb
      * <p>
      * The @a return_record_ids option indicates that the database should
      * return the unique identifiers of inserted records.
-     * <p>
-     * The @a route_to_address option directs that inserted records should be
-     * targeted for a particular database node.
      * 
      * @param <T>  The type of object being processed.
      * 
@@ -334,10 +320,6 @@ namespace gpudb
          *                      </ul>
          *                      The default value is
          *                      gpudb::insert_records_false.
-         *                              <li>
-         *                      gpudb::insert_records_route_to_address: Route
-         *                      to a specific rank/tom. Option not suitable for
-         *                      tables using primary/shard keys
          *                      </ul>
          * 
          */
@@ -377,9 +359,6 @@ namespace gpudb
      * <p>
      * The @a return_record_ids option indicates that the database should
      * return the unique identifiers of inserted records.
-     * <p>
-     * The @a route_to_address option directs that inserted records should be
-     * targeted for a particular database node.
      */
     struct InsertRecordsResponse
     {

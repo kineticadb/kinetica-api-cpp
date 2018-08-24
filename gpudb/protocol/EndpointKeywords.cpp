@@ -159,39 +159,41 @@ namespace gpudb
     const std::string alter_system_properties_true                       ( "true"                        );
 
     // Keywords for /alter/table request
-    const std::string alter_table_add_column              ( "add_column"               );
-    const std::string alter_table_add_column_expression   ( "add_column_expression"    );
-    const std::string alter_table_allow_homogeneous_tables( "allow_homogeneous_tables" );
-    const std::string alter_table_change_column           ( "change_column"            );
-    const std::string alter_table_column_default_value    ( "column_default_value"     );
-    const std::string alter_table_column_properties       ( "column_properties"        );
-    const std::string alter_table_column_type             ( "column_type"              );
-    const std::string alter_table_compression_type        ( "compression_type"         );
-    const std::string alter_table_copy_values_from_column ( "copy_values_from_column"  );
-    const std::string alter_table_create_foreign_key      ( "create_foreign_key"       );
-    const std::string alter_table_create_index            ( "create_index"             );
-    const std::string alter_table_delete_column           ( "delete_column"            );
-    const std::string alter_table_delete_foreign_key      ( "delete_foreign_key"       );
-    const std::string alter_table_delete_index            ( "delete_index"             );
-    const std::string alter_table_false                   ( "false"                    );
-    const std::string alter_table_lz4                     ( "lz4"                      );
-    const std::string alter_table_lz4hc                   ( "lz4hc"                    );
-    const std::string alter_table_memory_ttl              ( "memory_ttl"               );
-    const std::string alter_table_move_to_collection      ( "move_to_collection"       );
-    const std::string alter_table_none                    ( "none"                     );
-    const std::string alter_table_protected               ( "protected"                );
-    const std::string alter_table_refresh                 ( "refresh"                  );
-    const std::string alter_table_rename_column           ( "rename_column"            );
-    const std::string alter_table_rename_table            ( "rename_table"             );
-    const std::string alter_table_set_column_compression  ( "set_column_compression"   );
-    const std::string alter_table_set_global_access_mode  ( "set_global_access_mode"   );
-    const std::string alter_table_set_refresh_method      ( "set_refresh_method"       );
-    const std::string alter_table_set_refresh_period      ( "set_refresh_period"       );
-    const std::string alter_table_set_refresh_start_time  ( "set_refresh_start_time"   );
-    const std::string alter_table_snappy                  ( "snappy"                   );
-    const std::string alter_table_true                    ( "true"                     );
-    const std::string alter_table_ttl                     ( "ttl"                      );
-    const std::string alter_table_validate_change_column  ( "validate_change_column"   );
+    const std::string alter_table_add_column                   ( "add_column"                    );
+    const std::string alter_table_add_column_expression        ( "add_column_expression"         );
+    const std::string alter_table_allow_homogeneous_tables     ( "allow_homogeneous_tables"      );
+    const std::string alter_table_change_column                ( "change_column"                 );
+    const std::string alter_table_column_default_value         ( "column_default_value"          );
+    const std::string alter_table_column_properties            ( "column_properties"             );
+    const std::string alter_table_column_type                  ( "column_type"                   );
+    const std::string alter_table_compression_type             ( "compression_type"              );
+    const std::string alter_table_copy_values_from_column      ( "copy_values_from_column"       );
+    const std::string alter_table_create_foreign_key           ( "create_foreign_key"            );
+    const std::string alter_table_create_index                 ( "create_index"                  );
+    const std::string alter_table_delete_column                ( "delete_column"                 );
+    const std::string alter_table_delete_foreign_key           ( "delete_foreign_key"            );
+    const std::string alter_table_delete_index                 ( "delete_index"                  );
+    const std::string alter_table_false                        ( "false"                         );
+    const std::string alter_table_lz4                          ( "lz4"                           );
+    const std::string alter_table_lz4hc                        ( "lz4hc"                         );
+    const std::string alter_table_memory_ttl                   ( "memory_ttl"                    );
+    const std::string alter_table_move_to_collection           ( "move_to_collection"            );
+    const std::string alter_table_none                         ( "none"                          );
+    const std::string alter_table_protected                    ( "protected"                     );
+    const std::string alter_table_refresh                      ( "refresh"                       );
+    const std::string alter_table_remove_text_search_attributes( "remove_text_search_attributes" );
+    const std::string alter_table_rename_column                ( "rename_column"                 );
+    const std::string alter_table_rename_table                 ( "rename_table"                  );
+    const std::string alter_table_set_column_compression       ( "set_column_compression"        );
+    const std::string alter_table_set_global_access_mode       ( "set_global_access_mode"        );
+    const std::string alter_table_set_refresh_method           ( "set_refresh_method"            );
+    const std::string alter_table_set_refresh_period           ( "set_refresh_period"            );
+    const std::string alter_table_set_refresh_start_time       ( "set_refresh_start_time"        );
+    const std::string alter_table_snappy                       ( "snappy"                        );
+    const std::string alter_table_true                         ( "true"                          );
+    const std::string alter_table_ttl                          ( "ttl"                           );
+    const std::string alter_table_update_last_access_time      ( "update_last_access_time"       );
+    const std::string alter_table_validate_change_column       ( "validate_change_column"        );
 
     // Keywords for /alter/user request
     const std::string alter_user_set_password( "set_password" );
@@ -457,14 +459,17 @@ namespace gpudb
     const std::string get_records_true             ( "true"              );
 
     // Keywords for /get/records/bycolumn request
-    const std::string get_records_by_column_ascending ( "ascending"  );
-    const std::string get_records_by_column_binary    ( "binary"     );
-    const std::string get_records_by_column_descending( "descending" );
-    const std::string get_records_by_column_expression( "expression" );
-    const std::string get_records_by_column_json      ( "json"       );
-    const std::string get_records_by_column_order_by  ( "order_by"   );
-    const std::string get_records_by_column_sort_by   ( "sort_by"    );
-    const std::string get_records_by_column_sort_order( "sort_order" );
+    const std::string get_records_by_column_ascending           ( "ascending"            );
+    const std::string get_records_by_column_binary              ( "binary"               );
+    const std::string get_records_by_column_convert_wkts_to_wkbs( "convert_wkts_to_wkbs" );
+    const std::string get_records_by_column_descending          ( "descending"           );
+    const std::string get_records_by_column_expression          ( "expression"           );
+    const std::string get_records_by_column_false               ( "false"                );
+    const std::string get_records_by_column_json                ( "json"                 );
+    const std::string get_records_by_column_order_by            ( "order_by"             );
+    const std::string get_records_by_column_sort_by             ( "sort_by"              );
+    const std::string get_records_by_column_sort_order          ( "sort_order"           );
+    const std::string get_records_by_column_true                ( "true"                 );
 
     // Keywords for /get/records/byseries request
     const std::string get_records_by_series_binary( "binary" );
@@ -506,7 +511,6 @@ namespace gpudb
     const std::string insert_records_false                ( "false"                 );
     const std::string insert_records_json                 ( "json"                  );
     const std::string insert_records_return_record_ids    ( "return_record_ids"     );
-    const std::string insert_records_route_to_address     ( "route_to_address"      );
     const std::string insert_records_true                 ( "true"                  );
     const std::string insert_records_update_on_existing_pk( "update_on_existing_pk" );
 
@@ -639,15 +643,21 @@ namespace gpudb
     const std::string show_table_false( "false" );
     const std::string show_table_true ( "true"  );
 
+    // Keywords for /show/types request
+    const std::string show_types_false        ( "false"         );
+    const std::string show_types_no_join_types( "no_join_types" );
+    const std::string show_types_true         ( "true"          );
+
     // Keywords for /update/records request
-    const std::string update_records_binary               ( "binary"                );
-    const std::string update_records_bypass_safety_checks ( "bypass_safety_checks"  );
-    const std::string update_records_false                ( "false"                 );
-    const std::string update_records_global_expression    ( "global_expression"     );
-    const std::string update_records_json                 ( "json"                  );
-    const std::string update_records_record_id            ( "record_id"             );
-    const std::string update_records_true                 ( "true"                  );
-    const std::string update_records_update_on_existing_pk( "update_on_existing_pk" );
+    const std::string update_records_binary                            ( "binary"                             );
+    const std::string update_records_bypass_safety_checks              ( "bypass_safety_checks"               );
+    const std::string update_records_false                             ( "false"                              );
+    const std::string update_records_global_expression                 ( "global_expression"                  );
+    const std::string update_records_json                              ( "json"                               );
+    const std::string update_records_record_id                         ( "record_id"                          );
+    const std::string update_records_true                              ( "true"                               );
+    const std::string update_records_update_on_existing_pk             ( "update_on_existing_pk"              );
+    const std::string update_records_use_expressions_in_new_values_maps( "use_expressions_in_new_values_maps" );
 
     // Keywords for /visualize/image request
     const std::string visualize_image_102100             ( "102100"              );
@@ -712,11 +722,14 @@ namespace gpudb
     const std::string visualize_image_chart_hollowsquare  ( "hollowsquare"   );
     const std::string visualize_image_chart_jitter_x      ( "jitter_x"       );
     const std::string visualize_image_chart_jitter_y      ( "jitter_y"       );
+    const std::string visualize_image_chart_log           ( "log"            );
     const std::string visualize_image_chart_none          ( "none"           );
     const std::string visualize_image_chart_plot_all      ( "plot_all"       );
     const std::string visualize_image_chart_pointcolor    ( "pointcolor"     );
     const std::string visualize_image_chart_pointshape    ( "pointshape"     );
     const std::string visualize_image_chart_pointsize     ( "pointsize"      );
+    const std::string visualize_image_chart_scale_type_x  ( "scale_type_x"   );
+    const std::string visualize_image_chart_scale_type_y  ( "scale_type_y"   );
     const std::string visualize_image_chart_square        ( "square"         );
     const std::string visualize_image_chart_x_order_by    ( "x_order_by"     );
     const std::string visualize_image_chart_y_order_by    ( "y_order_by"     );
@@ -783,12 +796,17 @@ namespace gpudb
     const std::string visualize_image_contour_EPSG_3857         ( "EPSG:3857"          );
     const std::string visualize_image_contour_EPSG_4326         ( "EPSG:4326"          );
     const std::string visualize_image_contour_EPSG_900913       ( "EPSG:900913"        );
+    const std::string visualize_image_contour_FILL_RATIO        ( "FILL_RATIO"         );
     const std::string visualize_image_contour_INV_DST_POW       ( "INV_DST_POW"        );
     const std::string visualize_image_contour_KRIGING           ( "KRIGING"            );
     const std::string visualize_image_contour_MIN_CURV          ( "MIN_CURV"           );
     const std::string visualize_image_contour_PASS_THROUGH      ( "PASS_THROUGH"       );
     const std::string visualize_image_contour_PLATE_CARREE      ( "PLATE_CARREE"       );
     const std::string visualize_image_contour_WEB_MERCATOR      ( "WEB_MERCATOR"       );
+    const std::string visualize_image_contour_adjust_grid       ( "adjust_grid"        );
+    const std::string visualize_image_contour_adjust_grid_neigh ( "adjust_grid_neigh"  );
+    const std::string visualize_image_contour_adjust_grid_size  ( "adjust_grid_size"   );
+    const std::string visualize_image_contour_adjust_levels     ( "adjust_levels"      );
     const std::string visualize_image_contour_bg_color          ( "bg_color"           );
     const std::string visualize_image_contour_blues             ( "blues"              );
     const std::string visualize_image_contour_color             ( "color"              );
@@ -796,14 +814,16 @@ namespace gpudb
     const std::string visualize_image_contour_gray              ( "gray"               );
     const std::string visualize_image_contour_greens            ( "greens"             );
     const std::string visualize_image_contour_greys             ( "greys"              );
-    const std::string visualize_image_contour_grid_columns      ( "grid_columns"       );
-    const std::string visualize_image_contour_grid_rows         ( "grid_rows"          );
+    const std::string visualize_image_contour_grid_size         ( "grid_size"          );
     const std::string visualize_image_contour_gridding_method   ( "gridding_method"    );
     const std::string visualize_image_contour_hot               ( "hot"                );
     const std::string visualize_image_contour_hsv               ( "hsv"                );
     const std::string visualize_image_contour_jet               ( "jet"                );
     const std::string visualize_image_contour_line_size         ( "line_size"          );
+    const std::string visualize_image_contour_max_grid_size     ( "max_grid_size"      );
     const std::string visualize_image_contour_max_level         ( "max_level"          );
+    const std::string visualize_image_contour_max_search_cells  ( "max_search_cells"   );
+    const std::string visualize_image_contour_min_grid_size     ( "min_grid_size"      );
     const std::string visualize_image_contour_min_level         ( "min_level"          );
     const std::string visualize_image_contour_num_levels        ( "num_levels"         );
     const std::string visualize_image_contour_oranges           ( "oranges"            );
