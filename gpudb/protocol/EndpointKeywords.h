@@ -592,6 +592,7 @@ namespace gpudb
     extern const std::string show_system_properties_FALSE;
     extern const std::string show_system_properties_TRUE;
     extern const std::string show_system_properties_conf_enable_worker_http_servers;
+    extern const std::string show_system_properties_conf_hm_http_port;
     extern const std::string show_system_properties_conf_worker_http_server_ips;
     extern const std::string show_system_properties_conf_worker_http_server_ports;
 
@@ -803,6 +804,7 @@ namespace gpudb
     extern const std::string visualize_image_contour_PASS_THROUGH;
     extern const std::string visualize_image_contour_PLATE_CARREE;
     extern const std::string visualize_image_contour_WEB_MERCATOR;
+    extern const std::string visualize_image_contour_add_labels;
     extern const std::string visualize_image_contour_adjust_grid;
     extern const std::string visualize_image_contour_adjust_grid_neigh;
     extern const std::string visualize_image_contour_adjust_grid_size;
@@ -810,6 +812,7 @@ namespace gpudb
     extern const std::string visualize_image_contour_bg_color;
     extern const std::string visualize_image_contour_blues;
     extern const std::string visualize_image_contour_color;
+    extern const std::string visualize_image_contour_color_isolines;
     extern const std::string visualize_image_contour_colormap;
     extern const std::string visualize_image_contour_gray;
     extern const std::string visualize_image_contour_greens;
@@ -819,6 +822,12 @@ namespace gpudb
     extern const std::string visualize_image_contour_hot;
     extern const std::string visualize_image_contour_hsv;
     extern const std::string visualize_image_contour_jet;
+    extern const std::string visualize_image_contour_labels_font_family;
+    extern const std::string visualize_image_contour_labels_font_size;
+    extern const std::string visualize_image_contour_labels_interlevel_separation;
+    extern const std::string visualize_image_contour_labels_intralevel_separation;
+    extern const std::string visualize_image_contour_labels_max_angle;
+    extern const std::string visualize_image_contour_labels_search_window;
     extern const std::string visualize_image_contour_line_size;
     extern const std::string visualize_image_contour_max_grid_size;
     extern const std::string visualize_image_contour_max_level;

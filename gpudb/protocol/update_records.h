@@ -85,7 +85,7 @@ namespace gpudb
          *                      expressions.
          *                              <li>
          *                      gpudb::update_records_bypass_safety_checks:
-         *                      When set to 'true', all predicates are
+         *                      When set to @a true, all predicates are
          *                      available for primary key updates.  Keep in
          *                      mind that it is possible to destroy data in
          *                      this case, since a single predicate may match
@@ -114,10 +114,13 @@ namespace gpudb
          *                      gpudb::update_records_false.
          *                              <li>
          *                      gpudb::update_records_use_expressions_in_new_values_maps:
-         *                      When set to 'true', all new_values in
-         *                      new_values_maps are considered as expression
-         *                      values. When set to 'false', all new_values in
-         *                      new_values_maps are considered as constants.
+         *                      When set to @a true, all new values in @a
+         *                      newValuesMaps are considered as expression
+         *                      values. When set to @a false, all new values in
+         *                      @a newValuesMaps are considered as constants.
+         *                      NOTE:  When @a true, string constants will need
+         *                      to be quoted to avoid being evaluated as
+         *                      expressions.
          *                      <ul>
          *                              <li> gpudb::update_records_true
          *                              <li> gpudb::update_records_false
@@ -190,7 +193,7 @@ namespace gpudb
          *                      expressions.
          *                              <li>
          *                      gpudb::update_records_bypass_safety_checks:
-         *                      When set to 'true', all predicates are
+         *                      When set to @a true, all predicates are
          *                      available for primary key updates.  Keep in
          *                      mind that it is possible to destroy data in
          *                      this case, since a single predicate may match
@@ -219,10 +222,13 @@ namespace gpudb
          *                      gpudb::update_records_false.
          *                              <li>
          *                      gpudb::update_records_use_expressions_in_new_values_maps:
-         *                      When set to 'true', all new_values in
-         *                      new_values_maps are considered as expression
-         *                      values. When set to 'false', all new_values in
-         *                      new_values_maps are considered as constants.
+         *                      When set to @a true, all new values in @a
+         *                      newValuesMaps are considered as expression
+         *                      values. When set to @a false, all new values in
+         *                      @a newValuesMaps are considered as constants.
+         *                      NOTE:  When @a true, string constants will need
+         *                      to be quoted to avoid being evaluated as
+         *                      expressions.
          *                      <ul>
          *                              <li> gpudb::update_records_true
          *                              <li> gpudb::update_records_false
@@ -407,7 +413,7 @@ namespace gpudb
          *                      expressions.
          *                              <li>
          *                      gpudb::update_records_bypass_safety_checks:
-         *                      When set to 'true', all predicates are
+         *                      When set to @a true, all predicates are
          *                      available for primary key updates.  Keep in
          *                      mind that it is possible to destroy data in
          *                      this case, since a single predicate may match
@@ -436,10 +442,13 @@ namespace gpudb
          *                      gpudb::update_records_false.
          *                              <li>
          *                      gpudb::update_records_use_expressions_in_new_values_maps:
-         *                      When set to 'true', all new_values in
-         *                      new_values_maps are considered as expression
-         *                      values. When set to 'false', all new_values in
-         *                      new_values_maps are considered as constants.
+         *                      When set to @a true, all new values in @a
+         *                      newValuesMaps are considered as expression
+         *                      values. When set to @a false, all new values in
+         *                      @a newValuesMaps are considered as constants.
+         *                      NOTE:  When @a true, string constants will need
+         *                      to be quoted to avoid being evaluated as
+         *                      expressions.
          *                      <ul>
          *                              <li> gpudb::update_records_true
          *                              <li> gpudb::update_records_false

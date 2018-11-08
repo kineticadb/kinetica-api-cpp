@@ -6,18 +6,14 @@
 #ifndef __VISUALIZE_IMAGE_H__
 #define __VISUALIZE_IMAGE_H__
 
-    /**
-     * @private
-     */
-
 namespace gpudb
 {
 
     /**
-     * @private
      * A set of input parameters for {@link
      * #visualizeImage(const VisualizeImageRequest&) const}.
      * <p>
+     * @private
      */
     struct VisualizeImageRequest
     {
@@ -246,10 +242,6 @@ namespace gpudb
         {
         }
 
-    /**
-     * @private
-     */
-
         std::vector<std::string> tableNames;
         std::vector<std::string> worldTableNames;
         std::string xColumnName;
@@ -399,18 +391,14 @@ namespace avro
     };
 }
 
-    /**
-     * @private
-     */
-
 namespace gpudb
 {
 
     /**
-     * @private
      * A set of output parameters for {@link
      * #visualizeImage(const VisualizeImageRequest&) const}.
      * <p>
+     * @private
      */
     struct VisualizeImageResponse
     {
@@ -427,10 +415,6 @@ namespace gpudb
             imageData(std::vector<uint8_t>())
         {
         }
-
-    /**
-     * @private
-     */
 
         double width;
         double height;

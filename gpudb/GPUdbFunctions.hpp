@@ -181,15 +181,6 @@ AdminOfflineResponse& adminOffline( const bool offline,
 /**
  * Retrieves a list of the most recent alerts generated.  The number of alerts
  * to retrieve is specified in this request.
- * <p>
- * Important: This endpoint is accessed via the host manager port rather than
- * the primary database port; the default ports for host manager and the
- * primary database can be found <a
- * href="../../install/index.html#default-ports" target="_top">here</a>.  If
- * you are invoking this endpoint via a GPUdb API object, you must instantiate
- * that object using the host manager port instead of the database port. The
- * same IP address is used for both ports.
-
  * Returns lists of alert data, earliest to latest
  * 
  * @param[in] request_  Request object containing the parameters for the
@@ -204,15 +195,6 @@ AdminShowAlertsResponse adminShowAlerts( const AdminShowAlertsRequest& request_ 
 /**
  * Retrieves a list of the most recent alerts generated.  The number of alerts
  * to retrieve is specified in this request.
- * <p>
- * Important: This endpoint is accessed via the host manager port rather than
- * the primary database port; the default ports for host manager and the
- * primary database can be found <a
- * href="../../install/index.html#default-ports" target="_top">here</a>.  If
- * you are invoking this endpoint via a GPUdb API object, you must instantiate
- * that object using the host manager port instead of the database port. The
- * same IP address is used for both ports.
-
  * Returns lists of alert data, earliest to latest
  * 
  * @param[in] request_  Request object containing the parameters for the
@@ -231,15 +213,6 @@ AdminShowAlertsResponse& adminShowAlerts( const AdminShowAlertsRequest& request_
 /**
  * Retrieves a list of the most recent alerts generated.  The number of alerts
  * to retrieve is specified in this request.
- * <p>
- * Important: This endpoint is accessed via the host manager port rather than
- * the primary database port; the default ports for host manager and the
- * primary database can be found <a
- * href="../../install/index.html#default-ports" target="_top">here</a>.  If
- * you are invoking this endpoint via a GPUdb API object, you must instantiate
- * that object using the host manager port instead of the database port. The
- * same IP address is used for both ports.
-
  * Returns lists of alert data, earliest to latest
  * 
  * @param numAlerts  Number of most recent alerts to request. The response will
@@ -257,15 +230,6 @@ AdminShowAlertsResponse adminShowAlerts( const int32_t numAlerts,
 /**
  * Retrieves a list of the most recent alerts generated.  The number of alerts
  * to retrieve is specified in this request.
- * <p>
- * Important: This endpoint is accessed via the host manager port rather than
- * the primary database port; the default ports for host manager and the
- * primary database can be found <a
- * href="../../install/index.html#default-ports" target="_top">here</a>.  If
- * you are invoking this endpoint via a GPUdb API object, you must instantiate
- * that object using the host manager port instead of the database port. The
- * same IP address is used for both ports.
-
  * Returns lists of alert data, earliest to latest
  * 
  * @param numAlerts  Number of most recent alerts to request. The response will
@@ -6538,10 +6502,10 @@ CreateTypeResponse& createType( const CreateTypeRequest& request_,
  *                            <li> gpudb::create_type_dict: This property
  *                    indicates that this column should be dictionary encoded.
  *                    It can only be used in conjunction with string columns
- *                    marked with a charN property. This property is
- *                    appropriate for columns where the cardinality (the number
- *                    of unique values) is expected to be low, and can save a
- *                    large amount of memory.
+ *                    marked with a charN property or with int or long columns.
+ *                    This property is appropriate for columns where the
+ *                    cardinality (the number of unique values) is expected to
+ *                    be low, and can save a large amount of memory.
  *                    </ul>
  * @param options  Optional parameters.
  * 
@@ -6741,10 +6705,10 @@ CreateTypeResponse createType( const std::string& typeDefinition,
  *                            <li> gpudb::create_type_dict: This property
  *                    indicates that this column should be dictionary encoded.
  *                    It can only be used in conjunction with string columns
- *                    marked with a charN property. This property is
- *                    appropriate for columns where the cardinality (the number
- *                    of unique values) is expected to be low, and can save a
- *                    large amount of memory.
+ *                    marked with a charN property or with int or long columns.
+ *                    This property is appropriate for columns where the
+ *                    cardinality (the number of unique values) is expected to
+ *                    be low, and can save a large amount of memory.
  *                    </ul>
  * @param options  Optional parameters.
  * @param[out] response_  Response object containing the results of the
@@ -15571,12 +15535,12 @@ UpdateRecordsResponse& updateRecords( const UpdateRecordsRequest<TRequest>& requ
  *                 optional global expression to reduce the search space of the
  *                 predicates listed in @a expressions.
  *                         <li> gpudb::update_records_bypass_safety_checks:
- *                 When set to 'true', all predicates are available for primary
- *                 key updates.  Keep in mind that it is possible to destroy
- *                 data in this case, since a single predicate may match
- *                 multiple objects (potentially all of records of a table),
- *                 and then updating all of those records to have the same
- *                 primary key will, due to the primary key uniqueness
+ *                 When set to @a true, all predicates are available for
+ *                 primary key updates.  Keep in mind that it is possible to
+ *                 destroy data in this case, since a single predicate may
+ *                 match multiple objects (potentially all of records of a
+ *                 table), and then updating all of those records to have the
+ *                 same primary key will, due to the primary key uniqueness
  *                 constraints, effectively delete all but one of those updated
  *                 records.
  *                 <ul>
@@ -15594,9 +15558,11 @@ UpdateRecordsResponse& updateRecords( const UpdateRecordsRequest<TRequest>& requ
  *                 The default value is gpudb::update_records_false.
  *                         <li>
  *                 gpudb::update_records_use_expressions_in_new_values_maps:
- *                 When set to 'true', all new_values in new_values_maps are
- *                 considered as expression values. When set to 'false', all
- *                 new_values in new_values_maps are considered as constants.
+ *                 When set to @a true, all new values in @a newValuesMaps are
+ *                 considered as expression values. When set to @a false, all
+ *                 new values in @a newValuesMaps are considered as constants.
+ *                 NOTE:  When @a true, string constants will need to be quoted
+ *                 to avoid being evaluated as expressions.
  *                 <ul>
  *                         <li> gpudb::update_records_true
  *                         <li> gpudb::update_records_false
@@ -15672,12 +15638,12 @@ UpdateRecordsResponse updateRecords( const std::string& tableName,
  *                 optional global expression to reduce the search space of the
  *                 predicates listed in @a expressions.
  *                         <li> gpudb::update_records_bypass_safety_checks:
- *                 When set to 'true', all predicates are available for primary
- *                 key updates.  Keep in mind that it is possible to destroy
- *                 data in this case, since a single predicate may match
- *                 multiple objects (potentially all of records of a table),
- *                 and then updating all of those records to have the same
- *                 primary key will, due to the primary key uniqueness
+ *                 When set to @a true, all predicates are available for
+ *                 primary key updates.  Keep in mind that it is possible to
+ *                 destroy data in this case, since a single predicate may
+ *                 match multiple objects (potentially all of records of a
+ *                 table), and then updating all of those records to have the
+ *                 same primary key will, due to the primary key uniqueness
  *                 constraints, effectively delete all but one of those updated
  *                 records.
  *                 <ul>
@@ -15695,9 +15661,11 @@ UpdateRecordsResponse updateRecords( const std::string& tableName,
  *                 The default value is gpudb::update_records_false.
  *                         <li>
  *                 gpudb::update_records_use_expressions_in_new_values_maps:
- *                 When set to 'true', all new_values in new_values_maps are
- *                 considered as expression values. When set to 'false', all
- *                 new_values in new_values_maps are considered as constants.
+ *                 When set to @a true, all new values in @a newValuesMaps are
+ *                 considered as expression values. When set to @a false, all
+ *                 new values in @a newValuesMaps are considered as constants.
+ *                 NOTE:  When @a true, string constants will need to be quoted
+ *                 to avoid being evaluated as expressions.
  *                 <ul>
  *                         <li> gpudb::update_records_true
  *                         <li> gpudb::update_records_false
@@ -16982,6 +16950,18 @@ VisualizeImageContourResponse& visualizeImageContour( const VisualizeImageContou
  *                         <li> gpudb::visualize_image_contour_min_grid_size
  *                         <li>
  *                 gpudb::visualize_image_contour_render_output_grid
+ *                         <li> gpudb::visualize_image_contour_color_isolines
+ *                         <li> gpudb::visualize_image_contour_add_labels
+ *                         <li> gpudb::visualize_image_contour_labels_font_size
+ *                         <li>
+ *                 gpudb::visualize_image_contour_labels_font_family
+ *                         <li>
+ *                 gpudb::visualize_image_contour_labels_search_window
+ *                         <li>
+ *                 gpudb::visualize_image_contour_labels_intralevel_separation
+ *                         <li>
+ *                 gpudb::visualize_image_contour_labels_interlevel_separation
+ *                         <li> gpudb::visualize_image_contour_labels_max_angle
  *                 </ul>
  * 
  * @return Response object containing the result of the operation.
@@ -17079,6 +17059,18 @@ VisualizeImageContourResponse visualizeImageContour( const std::vector<std::stri
  *                         <li> gpudb::visualize_image_contour_min_grid_size
  *                         <li>
  *                 gpudb::visualize_image_contour_render_output_grid
+ *                         <li> gpudb::visualize_image_contour_color_isolines
+ *                         <li> gpudb::visualize_image_contour_add_labels
+ *                         <li> gpudb::visualize_image_contour_labels_font_size
+ *                         <li>
+ *                 gpudb::visualize_image_contour_labels_font_family
+ *                         <li>
+ *                 gpudb::visualize_image_contour_labels_search_window
+ *                         <li>
+ *                 gpudb::visualize_image_contour_labels_intralevel_separation
+ *                         <li>
+ *                 gpudb::visualize_image_contour_labels_interlevel_separation
+ *                         <li> gpudb::visualize_image_contour_labels_max_angle
  *                 </ul>
  * @param[out] response_  Response object containing the results of the
  *                        operation.

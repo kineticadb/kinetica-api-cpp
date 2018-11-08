@@ -795,7 +795,8 @@ namespace gpudb
             responseSchemaStr(std::string()),
             data(std::vector<gpudb::GenericRecord>()),
             totalNumberOfRecords(int64_t()),
-            hasMoreRecords(bool())
+            hasMoreRecords(bool()),
+            dataTypePtr((gpudb::Type*)NULL)
         {
         }
 
@@ -803,6 +804,7 @@ namespace gpudb
         std::vector<gpudb::GenericRecord> data;
         int64_t totalNumberOfRecords;
         bool hasMoreRecords;
+        gpudb_type_ptr_t dataTypePtr;
     };
 }
 

@@ -7,6 +7,8 @@
 #include <boost/asio/ssl.hpp>
 #endif
 
+#include <stdint.h>
+
 #include <boost/thread/mutex.hpp>
 
 namespace gpudb
@@ -50,201 +52,285 @@ namespace gpudb
 
 namespace gpudb
 {
-    class GPUdb : private boost::noncopyable
+class GPUdb : private boost::noncopyable
+{
+public:
+
+    class Options
     {
-        public:
-            class Options
-            {
-                public:
-                    Options();
+    public:
+        Options();
 
-                    #ifndef GPUDB_NO_HTTPS
-                    boost::asio::ssl::context* getSslContext() const;
-                    #endif
+#ifndef GPUDB_NO_HTTPS
+        boost::asio::ssl::context* getSslContext() const;
+#endif
 
-                    std::string getUsername() const;
-                    std::string getPassword() const;
-                    bool getUseSnappy() const;
-                    size_t getThreadCount() const;
-                    avro::ExecutorPtr getExecutor() const;
-                    std::map<std::string, std::string>& getHttpHeaders();
-                    const std::map<std::string, std::string>& getHttpHeaders() const;
-                    size_t getTimeout() const;
+        std::string getUsername() const;
+        std::string getPassword() const;
+        bool getUseSnappy() const;
+        size_t getThreadCount() const;
+        avro::ExecutorPtr getExecutor() const;
+        std::map<std::string, std::string>& getHttpHeaders();
+        const std::map<std::string, std::string>& getHttpHeaders() const;
+        size_t getTimeout() const;
+        uint16_t getHostManagerPort() const;
 
-                    #ifndef GPUDB_NO_HTTPS
-                    Options& setSslContext(boost::asio::ssl::context* value);
-                    #endif
+#ifndef GPUDB_NO_HTTPS
+        Options& setSslContext(boost::asio::ssl::context* value);
+#endif
 
-                    Options& setUsername(const std::string& value);
-                    Options& setPassword(const std::string& value);
-                    Options& setUseSnappy(const bool value);
-                    Options& setThreadCount(const size_t value);
-                    Options& setExecutor(const avro::ExecutorPtr value);
-                    Options& setHttpHeaders(const std::map<std::string, std::string>& value);
-                    Options& addHttpHeader(const std::string& header, const std::string& value);
-                    Options& setTimeout(const size_t value);
+        Options& setUsername(const std::string& value);
+        Options& setPassword(const std::string& value);
+        Options& setUseSnappy(const bool value);
+        Options& setThreadCount(const size_t value);
+        Options& setExecutor(const avro::ExecutorPtr value);
+        Options& setHttpHeaders(const std::map<std::string, std::string>& value);
+        Options& addHttpHeader(const std::string& header, const std::string& value);
+        Options& setTimeout(const size_t value);
+        Options& setHostManagerPort(const uint16_t value);
 
-                private:
-                    #ifndef GPUDB_NO_HTTPS
-                    boost::asio::ssl::context* m_sslContext;
-                    #endif
+    private:
 
-                    std::string m_username;
-                    std::string m_password;
-                    bool m_useSnappy;
-                    size_t m_threadCount;
-                    avro::ExecutorPtr m_executor;
-                    std::map<std::string, std::string> m_httpHeaders;
-                    size_t m_timeout;
-            };
+#ifndef GPUDB_NO_HTTPS
+        boost::asio::ssl::context* m_sslContext;
+#endif
 
-            static const int64_t END_OF_SET = -9999;
-
-            static inline std::string getApiVersion() { return GPUdb::API_VERSION; }
-
-            GPUdb(const HttpUrl& url, const Options& options = Options());
-            GPUdb(const std::string& url, const Options& options = Options());
-            GPUdb(const std::vector<HttpUrl>& urls, const Options& options = Options());
-            GPUdb(const std::vector<std::string>& urls, const Options& options = Options());
-            const HttpUrl& getUrl() const;
-            const std::vector<HttpUrl>& getUrls() const;
-
-            #ifndef GPUDB_NO_HTTPS
-            boost::asio::ssl::context* getSslContext() const;
-            #endif
-
-            const std::string& getUsername() const;
-            const std::string& getPassword() const;
-            bool getUseSnappy() const;
-            size_t getThreadCount() const;
-            avro::ExecutorPtr getExecutor() const;
-            const std::map<std::string, std::string>& getHttpHeaders() const;
-            size_t getTimeout() const;
-
-            template<typename TRequest, typename TResponse>
-            TResponse& submitRequest(const HttpUrl& url,
-                                     const TRequest& request,
-                                     TResponse& response,
-                                     const bool enableCompression = false) const
-            {
-                std::vector<uint8_t> requestBytes;
-                avro::encode(requestBytes, request);
-                RawGpudbResponse gpudbResponse;
-                submitRequestRaw(url, requestBytes, gpudbResponse, enableCompression);
-                avro::decode(response, gpudbResponse.data);
-                return response;
-            }
-
-            template<typename TRequest, typename TResponse>
-            TResponse& submitRequest(const std::string& endpoint,
-                                     const TRequest& request,
-                                     TResponse& response,
-                                     const bool enableCompression = false) const
-            {
-                std::vector<uint8_t> requestBytes;
-                avro::encode(requestBytes, request);
-                RawGpudbResponse gpudbResponse;
-                submitRequestRaw(endpoint, requestBytes, gpudbResponse, enableCompression);
-                avro::decode(response, gpudbResponse.data);
-                return response;
-            }
-
-            template<typename TRequest, typename TResponse>
-            TResponse& submitRequest(const char* endpoint,
-                                     const TRequest& request,
-                                     TResponse& response,
-                                     const bool enableCompression = false) const
-            {
-                submitRequest( (std::string) endpoint, request, response, enableCompression );
-                return response;
-            }
-
-
-            #include "gpudb/GPUdbFunctions.hpp"
-
-            void addKnownType(const std::string& typeId, const avro::DecoderPtr& decoder);
-
-            template<typename T>
-            void addKnownType(const std::string& typeId)
-            {
-                addKnownType(typeId, avro::createDecoder<T>());
-            }
-
-            template<typename T>
-            void addKnownType(const std::string& typeId, const std::string& schemaString)
-            {
-                addKnownType(typeId, avro::createDecoder<T>(schemaString));
-            }
-
-            template<typename T>
-            void addKnownType(const std::string& typeId, const ::avro::ValidSchema& schema)
-            {
-                addKnownType(typeId, avro::createDecoder<T>(schema));
-            }
-
-            void addKnownTypeFromTable(const std::string& tableName, const avro::DecoderPtr& decoder);
-
-            template<typename T>
-            void addKnownTypeFromTable(const std::string& tableName)
-            {
-                addKnownTypeFromTable(tableName, avro::createDecoder<T>());
-            }
-
-            template<typename T>
-            void addKnownTypeFromTable(const std::string& tableName, const std::string& schemaString)
-            {
-                addKnownTypeFromTable(tableName, avro::createDecoder<T>(schemaString));
-            }
-
-            template<typename T>
-            void addKnownTypeFromTable(const std::string& tableName, const ::avro::ValidSchema& schema)
-            {
-                addKnownTypeFromTable(tableName, avro::createDecoder<T>(schema));
-            }
-
-        private:
-            static const std::string API_VERSION;
-
-            std::vector<HttpUrl> m_urls;
-            mutable boost::mutex m_urlMutex;
-            mutable size_t m_currentUrl;
-
-            #ifndef GPUDB_NO_HTTPS
-            boost::asio::ssl::context* m_sslContext;
-            #endif
-
-            std::string m_username;
-            std::string m_password;
-            std::string m_authorization;
-            bool m_useSnappy;
-            size_t m_threadCount;
-            avro::ExecutorPtr m_executor;
-            std::map<std::string, std::string> m_httpHeaders;
-            size_t m_timeout;
-
-            mutable std::map<std::string, avro::DecoderPtr> m_knownTypes;
-            mutable boost::mutex m_knownTypesMutex;
-
-            const HttpUrl* getUrlPointer() const;
-            const HttpUrl* switchUrl(const HttpUrl* oldUrl) const;
-            void initHttpRequest(HttpRequest& httpRequest) const;
-            void submitRequestRaw(const std::string& endpoint,
-                                  const std::vector<uint8_t>& request,
-                                  RawGpudbResponse& response,
-                                  const bool enableCompression) const;
-            void submitRequestRaw(const HttpUrl& url,
-                                  const std::vector<uint8_t>& request,
-                                  RawGpudbResponse& response,
-                                  const bool enableCompression,
-                                  const bool throwOnError = true) const;
-            avro::DecoderPtr getDecoder(const std::string& typeId) const;
-            void setDecoderIfMissing(const std::string& typeId,
-                                     const std::string& label,
-                                     const std::string& schemaString,
-                                     const std::map<std::string, std::vector<std::string> >& properties) const;
+        std::string m_username;
+        std::string m_password;
+        bool m_useSnappy;
+        size_t m_threadCount;
+        avro::ExecutorPtr m_executor;
+        std::map<std::string, std::string> m_httpHeaders;
+        size_t   m_timeout;
+        uint16_t m_hmPort;
     };
 
-    #include "gpudb/GPUdbTemplates.hpp"
-}
+    static const int64_t END_OF_SET = -9999;
+
+    static inline std::string getApiVersion() { return GPUdb::API_VERSION; }
+
+    GPUdb(const HttpUrl& url, const Options& options = Options());
+    GPUdb(const std::string& url, const Options& options = Options());
+    GPUdb(const std::vector<HttpUrl>& urls, const Options& options = Options());
+    GPUdb(const std::vector<std::string>& urls, const Options& options = Options());
+
+    /// Some getters
+    const HttpUrl& getUrl() const;
+    const std::vector<HttpUrl>& getUrls() const;
+    const HttpUrl& getHmUrl() const;
+    const std::vector<HttpUrl>& getHmUrls() const;
+
+#ifndef GPUDB_NO_HTTPS
+    boost::asio::ssl::context* getSslContext() const;
+#endif
+
+    const std::string& getUsername() const;
+    const std::string& getPassword() const;
+    bool getUseSnappy() const;
+    size_t getThreadCount() const;
+    avro::ExecutorPtr getExecutor() const;
+    const std::map<std::string, std::string>& getHttpHeaders() const;
+    size_t getTimeout() const;
+
+    /// Update the host manager port by inquiring the server
+    void updateHostManagerPort();
+    
+    template<typename TRequest, typename TResponse>
+    TResponse& submitRequest(const HttpUrl& url,
+                             const TRequest& request,
+                             TResponse& response,
+                             const bool enableCompression = false) const
+    {
+        std::vector<uint8_t> requestBytes;
+        avro::encode(requestBytes, request);
+        RawGpudbResponse gpudbResponse;
+        submitRequestRaw(url, requestBytes, gpudbResponse, enableCompression);
+        avro::decode(response, gpudbResponse.data);
+        return response;
+    }
+
+    template<typename TRequest, typename TResponse>
+    TResponse& submitRequest(const std::string& endpoint,
+                             const TRequest& request,
+                             TResponse& response,
+                             const bool enableCompression = false) const
+    {
+        std::vector<uint8_t> requestBytes;
+        avro::encode(requestBytes, request);
+        RawGpudbResponse gpudbResponse;
+        submitRequestRaw(endpoint, requestBytes, gpudbResponse, enableCompression);
+        avro::decode(response, gpudbResponse.data);
+        return response;
+    }
+
+    template<typename TRequest, typename TResponse>
+    TResponse& submitRequest(const char* endpoint,
+                             const TRequest& request,
+                             TResponse& response,
+                             const bool enableCompression = false) const
+    {
+        submitRequest( (std::string) endpoint, request, response, enableCompression );
+        return response;
+    }
+
+
+    /**
+     * Submit an HTTP request to the host manager.
+     * @param[in]  endpoint  The endpoint for which the request is made.
+     * @param[in]  request   The request object containing the parameters for
+     *                       the operation.
+     * @param[out] response  The response object in which the return values will
+     *                       be saved.
+     * @param[in]  enableCompression  Optional boolean flag indicating whether
+     *                                any compression should be used.  Default is
+     *                                false.
+     *
+     * @return a reference to the response object.
+     */
+    template<typename TRequest, typename TResponse>
+    TResponse& submitRequestToHostManager(const std::string& endpoint,
+                                          const TRequest& request,
+                                          TResponse& response,
+                                          const bool enableCompression = false) const
+    {
+        // Handle host manager stuff here
+        std::vector<uint8_t> requestBytes;
+        avro::encode(requestBytes, request);
+        RawGpudbResponse gpudbResponse;
+        submitRequestToHostManagerRaw(endpoint, requestBytes, gpudbResponse, enableCompression);
+        avro::decode(response, gpudbResponse.data);
+        return response;
+    }   // end submitRequestToHostManager
+
+
+    /**
+     * Submit an HTTP request to the host manager.
+     * @param[in]  endpoint  The endpoint for which the request is made.
+     * @param[in]  request   The request object containing the parameters for
+     *                       the operation.
+     * @param[out] response  The response object in which the return values will
+     *                       be saved.
+     * @param[in]  enableCompression  Optional boolean flag indicating whether
+     *                                any compression should be used.  Default is
+     *                                false.
+     *
+     * @return a reference to the response object.
+     */
+    template<typename TRequest, typename TResponse>
+    TResponse& submitRequestToHostManager(const char* endpoint,
+                                          const TRequest& request,
+                                          TResponse& response,
+                                          const bool enableCompression = false) const
+    {
+        submitRequestToHostManager( (std::string) endpoint, request, response, enableCompression );
+        return response;
+    }   // end submitRequestToHostManager
+
+
+#include "gpudb/GPUdbFunctions.hpp"
+
+    void addKnownType(const std::string& typeId, const avro::DecoderPtr& decoder);
+
+    template<typename T>
+    void addKnownType(const std::string& typeId)
+    {
+        addKnownType(typeId, avro::createDecoder<T>());
+    }
+
+    template<typename T>
+    void addKnownType(const std::string& typeId, const std::string& schemaString)
+    {
+        addKnownType(typeId, avro::createDecoder<T>(schemaString));
+    }
+
+    template<typename T>
+    void addKnownType(const std::string& typeId, const ::avro::ValidSchema& schema)
+    {
+        addKnownType(typeId, avro::createDecoder<T>(schema));
+    }
+
+    void addKnownTypeFromTable(const std::string& tableName, const avro::DecoderPtr& decoder);
+
+    template<typename T>
+    void addKnownTypeFromTable(const std::string& tableName)
+    {
+        addKnownTypeFromTable(tableName, avro::createDecoder<T>());
+    }
+
+    template<typename T>
+    void addKnownTypeFromTable(const std::string& tableName, const std::string& schemaString)
+    {
+        addKnownTypeFromTable(tableName, avro::createDecoder<T>(schemaString));
+    }
+
+    template<typename T>
+    void addKnownTypeFromTable(const std::string& tableName, const ::avro::ValidSchema& schema)
+    {
+        addKnownTypeFromTable(tableName, avro::createDecoder<T>(schema));
+    }
+
+private:
+    static const std::string API_VERSION;
+
+    std::vector<HttpUrl> m_urls;
+    std::vector<HttpUrl> m_hmUrls;
+    mutable boost::mutex m_urlMutex;
+    mutable size_t m_currentUrl;
+    mutable size_t m_currentHmUrl;
+
+#ifndef GPUDB_NO_HTTPS
+    boost::asio::ssl::context* m_sslContext;
+#endif
+
+    std::string m_username;
+    std::string m_password;
+    std::string m_authorization;
+    bool m_useSnappy;
+    size_t m_threadCount;
+    avro::ExecutorPtr m_executor;
+    std::map<std::string, std::string> m_httpHeaders;
+    size_t m_timeout;
+
+    mutable std::map<std::string, avro::DecoderPtr> m_knownTypes;
+    mutable boost::mutex m_knownTypesMutex;
+
+    /// Some getters
+    const HttpUrl* getUrlPointer() const;
+    const HttpUrl* getHmUrlPointer() const;
+    const HttpUrl* switchUrl(const HttpUrl* oldUrl) const;
+    const HttpUrl* switchHmUrl(const HttpUrl* oldUrl) const;
+
+    /// Request related methods
+    void initHttpRequest(HttpRequest& httpRequest) const;
+    void submitRequestRaw(const std::string& endpoint,
+                          const std::vector<uint8_t>& request,
+                          RawGpudbResponse& response,
+                          const bool enableCompression) const;
+    void submitRequestToHostManagerRaw(const std::string& endpoint,
+                                       const std::vector<uint8_t>& request,
+                                       RawGpudbResponse& response,
+                                       const bool enableCompression) const;
+    void submitRequestRaw(const HttpUrl& url,
+                          const std::vector<uint8_t>& request,
+                          RawGpudbResponse& response,
+                          const bool enableCompression,
+                          const bool throwOnError = true) const;
+
+    /// Encoding related methods
+    avro::DecoderPtr getDecoder(const std::string& typeId) const;
+    void setDecoderIfMissing(const std::string& typeId,
+                             const std::string& label,
+                             const std::string& schemaString,
+                             const std::map<std::string, std::vector<std::string> >& properties) const;
+
+    /// Host manager related methods
+    void createHostManagerUrl( const HttpUrl& url, uint16_t hostManagerPort );
+    void createHostManagerUrls( const std::vector<HttpUrl>& urls, uint16_t hostManagerPort );
+    void setHostManagerPort(uint16_t value);
+};
+
+#include "gpudb/GPUdbTemplates.hpp"
+    
+}  // end namespace gpudb
 
 #endif

@@ -6,7 +6,7 @@
 
 
 // GPUdb Version
-const std::string GPUdb::API_VERSION( "6.2.0.0" );
+const std::string GPUdb::API_VERSION( "6.2.0.1" );
 
 
 
@@ -245,15 +245,6 @@ AdminOfflineResponse& GPUdb::adminOffline( const bool offline,
 /**
  * Retrieves a list of the most recent alerts generated.  The number of alerts
  * to retrieve is specified in this request.
- * <p>
- * Important: This endpoint is accessed via the host manager port rather than
- * the primary database port; the default ports for host manager and the
- * primary database can be found <a
- * href="../../install/index.html#default-ports" target="_top">here</a>.  If
- * you are invoking this endpoint via a GPUdb API object, you must instantiate
- * that object using the host manager port instead of the database port. The
- * same IP address is used for both ports.
-
  * Returns lists of alert data, earliest to latest
  * 
  * @param[in] request_  Request object containing the parameters for the
@@ -266,7 +257,7 @@ AdminOfflineResponse& GPUdb::adminOffline( const bool offline,
 AdminShowAlertsResponse GPUdb::adminShowAlerts( const AdminShowAlertsRequest& request_ ) const
 {
     AdminShowAlertsResponse actualResponse_;
-    submitRequest("/admin/show/alerts", request_, actualResponse_, false);
+    submitRequestToHostManager("/admin/show/alerts", request_, actualResponse_, false);
     return actualResponse_;
 }
 
@@ -274,15 +265,6 @@ AdminShowAlertsResponse GPUdb::adminShowAlerts( const AdminShowAlertsRequest& re
 /**
  * Retrieves a list of the most recent alerts generated.  The number of alerts
  * to retrieve is specified in this request.
- * <p>
- * Important: This endpoint is accessed via the host manager port rather than
- * the primary database port; the default ports for host manager and the
- * primary database can be found <a
- * href="../../install/index.html#default-ports" target="_top">here</a>.  If
- * you are invoking this endpoint via a GPUdb API object, you must instantiate
- * that object using the host manager port instead of the database port. The
- * same IP address is used for both ports.
-
  * Returns lists of alert data, earliest to latest
  * 
  * @param[in] request_  Request object containing the parameters for the
@@ -298,7 +280,7 @@ AdminShowAlertsResponse GPUdb::adminShowAlerts( const AdminShowAlertsRequest& re
 AdminShowAlertsResponse& GPUdb::adminShowAlerts( const AdminShowAlertsRequest& request_,
                                                  AdminShowAlertsResponse& response_ ) const
 {
-    submitRequest("/admin/show/alerts", request_, response_, false);
+    submitRequestToHostManager("/admin/show/alerts", request_, response_, false);
     return response_;
 }
 
@@ -306,15 +288,6 @@ AdminShowAlertsResponse& GPUdb::adminShowAlerts( const AdminShowAlertsRequest& r
 /**
  * Retrieves a list of the most recent alerts generated.  The number of alerts
  * to retrieve is specified in this request.
- * <p>
- * Important: This endpoint is accessed via the host manager port rather than
- * the primary database port; the default ports for host manager and the
- * primary database can be found <a
- * href="../../install/index.html#default-ports" target="_top">here</a>.  If
- * you are invoking this endpoint via a GPUdb API object, you must instantiate
- * that object using the host manager port instead of the database port. The
- * same IP address is used for both ports.
-
  * Returns lists of alert data, earliest to latest
  * 
  * @param numAlerts  Number of most recent alerts to request. The response will
@@ -333,7 +306,7 @@ AdminShowAlertsResponse GPUdb::adminShowAlerts( const int32_t numAlerts,
     actualRequest_.numAlerts = numAlerts;
     actualRequest_.options = options;
     AdminShowAlertsResponse actualResponse_;
-    submitRequest("/admin/show/alerts", actualRequest_, actualResponse_, false);
+    submitRequestToHostManager("/admin/show/alerts", actualRequest_, actualResponse_, false);
     return actualResponse_;
 }
 
@@ -341,15 +314,6 @@ AdminShowAlertsResponse GPUdb::adminShowAlerts( const int32_t numAlerts,
 /**
  * Retrieves a list of the most recent alerts generated.  The number of alerts
  * to retrieve is specified in this request.
- * <p>
- * Important: This endpoint is accessed via the host manager port rather than
- * the primary database port; the default ports for host manager and the
- * primary database can be found <a
- * href="../../install/index.html#default-ports" target="_top">here</a>.  If
- * you are invoking this endpoint via a GPUdb API object, you must instantiate
- * that object using the host manager port instead of the database port. The
- * same IP address is used for both ports.
-
  * Returns lists of alert data, earliest to latest
  * 
  * @param numAlerts  Number of most recent alerts to request. The response will
@@ -371,7 +335,7 @@ AdminShowAlertsResponse& GPUdb::adminShowAlerts( const int32_t numAlerts,
     AdminShowAlertsRequest actualRequest_;
     actualRequest_.numAlerts = numAlerts;
     actualRequest_.options = options;
-    submitRequest("/admin/show/alerts", actualRequest_, response_, false);
+    submitRequestToHostManager("/admin/show/alerts", actualRequest_, response_, false);
     return response_;
 }
 
@@ -1112,7 +1076,7 @@ AggregateGroupByResponse GPUdb::aggregateGroupBy( const AggregateGroupByRequest&
     submitRequest("/aggregate/groupby", request_, actualResponse_, false);
     AggregateGroupByResponse response_;
     response_.responseSchemaStr = actualResponse_.responseSchemaStr;
-    gpudb::GenericRecord::transpose( actualResponse_.responseSchemaStr, actualResponse_.binaryEncodedResponse, response_.data );
+    gpudb::GenericRecord::transpose( actualResponse_.responseSchemaStr, actualResponse_.binaryEncodedResponse, response_.data, response_.dataTypePtr );
     response_.totalNumberOfRecords = actualResponse_.totalNumberOfRecords;
     response_.hasMoreRecords = actualResponse_.hasMoreRecords;
     return response_;
@@ -1201,7 +1165,7 @@ AggregateGroupByResponse& GPUdb::aggregateGroupBy( const AggregateGroupByRequest
     RawAggregateGroupByResponse actualResponse_;
     submitRequest("/aggregate/groupby", request_, actualResponse_, false);
     response_.responseSchemaStr = actualResponse_.responseSchemaStr;
-    gpudb::GenericRecord::transpose( actualResponse_.responseSchemaStr, actualResponse_.binaryEncodedResponse, response_.data );
+    gpudb::GenericRecord::transpose( actualResponse_.responseSchemaStr, actualResponse_.binaryEncodedResponse, response_.data, response_.dataTypePtr );
     response_.totalNumberOfRecords = actualResponse_.totalNumberOfRecords;
     response_.hasMoreRecords = actualResponse_.hasMoreRecords;
     return response_;
@@ -1420,7 +1384,7 @@ AggregateGroupByResponse GPUdb::aggregateGroupBy( const std::string& tableName,
     submitRequest("/aggregate/groupby", actualRequest_, actualResponse_, false);
     AggregateGroupByResponse response_;
     response_.responseSchemaStr = actualResponse_.responseSchemaStr;
-    gpudb::GenericRecord::transpose( actualResponse_.responseSchemaStr, actualResponse_.binaryEncodedResponse, response_.data );
+    gpudb::GenericRecord::transpose( actualResponse_.responseSchemaStr, actualResponse_.binaryEncodedResponse, response_.data, response_.dataTypePtr );
     response_.totalNumberOfRecords = actualResponse_.totalNumberOfRecords;
     response_.hasMoreRecords = actualResponse_.hasMoreRecords;
     return response_;
@@ -1642,7 +1606,7 @@ AggregateGroupByResponse& GPUdb::aggregateGroupBy( const std::string& tableName,
     RawAggregateGroupByResponse actualResponse_;
     submitRequest("/aggregate/groupby", actualRequest_, actualResponse_, false);
     response_.responseSchemaStr = actualResponse_.responseSchemaStr;
-    gpudb::GenericRecord::transpose( actualResponse_.responseSchemaStr, actualResponse_.binaryEncodedResponse, response_.data );
+    gpudb::GenericRecord::transpose( actualResponse_.responseSchemaStr, actualResponse_.binaryEncodedResponse, response_.data, response_.dataTypePtr );
     response_.totalNumberOfRecords = actualResponse_.totalNumberOfRecords;
     response_.hasMoreRecords = actualResponse_.hasMoreRecords;
     return response_;
@@ -2938,7 +2902,7 @@ AggregateUniqueResponse GPUdb::aggregateUnique( const AggregateUniqueRequest& re
     AggregateUniqueResponse response_;
     response_.tableName = actualResponse_.tableName;
     response_.responseSchemaStr = actualResponse_.responseSchemaStr;
-    gpudb::GenericRecord::transpose( actualResponse_.responseSchemaStr, actualResponse_.binaryEncodedResponse, response_.data );
+    gpudb::GenericRecord::transpose( actualResponse_.responseSchemaStr, actualResponse_.binaryEncodedResponse, response_.data, response_.dataTypePtr );
     response_.hasMoreRecords = actualResponse_.hasMoreRecords;
     return response_;
 }
@@ -2997,7 +2961,7 @@ AggregateUniqueResponse& GPUdb::aggregateUnique( const AggregateUniqueRequest& r
     submitRequest("/aggregate/unique", request_, actualResponse_, false);
     response_.tableName = actualResponse_.tableName;
     response_.responseSchemaStr = actualResponse_.responseSchemaStr;
-    gpudb::GenericRecord::transpose( actualResponse_.responseSchemaStr, actualResponse_.binaryEncodedResponse, response_.data );
+    gpudb::GenericRecord::transpose( actualResponse_.responseSchemaStr, actualResponse_.binaryEncodedResponse, response_.data, response_.dataTypePtr );
     response_.hasMoreRecords = actualResponse_.hasMoreRecords;
     return response_;
 }
@@ -3132,7 +3096,7 @@ AggregateUniqueResponse GPUdb::aggregateUnique( const std::string& tableName,
     AggregateUniqueResponse response_;
     response_.tableName = actualResponse_.tableName;
     response_.responseSchemaStr = actualResponse_.responseSchemaStr;
-    gpudb::GenericRecord::transpose( actualResponse_.responseSchemaStr, actualResponse_.binaryEncodedResponse, response_.data );
+    gpudb::GenericRecord::transpose( actualResponse_.responseSchemaStr, actualResponse_.binaryEncodedResponse, response_.data, response_.dataTypePtr );
     response_.hasMoreRecords = actualResponse_.hasMoreRecords;
     return response_;
 }
@@ -3270,7 +3234,7 @@ AggregateUniqueResponse& GPUdb::aggregateUnique( const std::string& tableName,
     submitRequest("/aggregate/unique", actualRequest_, actualResponse_, false);
     response_.tableName = actualResponse_.tableName;
     response_.responseSchemaStr = actualResponse_.responseSchemaStr;
-    gpudb::GenericRecord::transpose( actualResponse_.responseSchemaStr, actualResponse_.binaryEncodedResponse, response_.data );
+    gpudb::GenericRecord::transpose( actualResponse_.responseSchemaStr, actualResponse_.binaryEncodedResponse, response_.data, response_.dataTypePtr );
     response_.hasMoreRecords = actualResponse_.hasMoreRecords;
     return response_;
 }
@@ -3383,7 +3347,7 @@ AggregateUnpivotResponse GPUdb::aggregateUnpivot( const AggregateUnpivotRequest&
     AggregateUnpivotResponse response_;
     response_.tableName = actualResponse_.tableName;
     response_.responseSchemaStr = actualResponse_.responseSchemaStr;
-    gpudb::GenericRecord::transpose( actualResponse_.responseSchemaStr, actualResponse_.binaryEncodedResponse, response_.data );
+    gpudb::GenericRecord::transpose( actualResponse_.responseSchemaStr, actualResponse_.binaryEncodedResponse, response_.data, response_.dataTypePtr );
     response_.totalNumberOfRecords = actualResponse_.totalNumberOfRecords;
     response_.hasMoreRecords = actualResponse_.hasMoreRecords;
     return response_;
@@ -3429,7 +3393,7 @@ AggregateUnpivotResponse& GPUdb::aggregateUnpivot( const AggregateUnpivotRequest
     submitRequest("/aggregate/unpivot", request_, actualResponse_, false);
     response_.tableName = actualResponse_.tableName;
     response_.responseSchemaStr = actualResponse_.responseSchemaStr;
-    gpudb::GenericRecord::transpose( actualResponse_.responseSchemaStr, actualResponse_.binaryEncodedResponse, response_.data );
+    gpudb::GenericRecord::transpose( actualResponse_.responseSchemaStr, actualResponse_.binaryEncodedResponse, response_.data, response_.dataTypePtr );
     response_.totalNumberOfRecords = actualResponse_.totalNumberOfRecords;
     response_.hasMoreRecords = actualResponse_.hasMoreRecords;
     return response_;
@@ -3555,7 +3519,7 @@ AggregateUnpivotResponse GPUdb::aggregateUnpivot( const std::string& tableName,
     AggregateUnpivotResponse response_;
     response_.tableName = actualResponse_.tableName;
     response_.responseSchemaStr = actualResponse_.responseSchemaStr;
-    gpudb::GenericRecord::transpose( actualResponse_.responseSchemaStr, actualResponse_.binaryEncodedResponse, response_.data );
+    gpudb::GenericRecord::transpose( actualResponse_.responseSchemaStr, actualResponse_.binaryEncodedResponse, response_.data, response_.dataTypePtr );
     response_.totalNumberOfRecords = actualResponse_.totalNumberOfRecords;
     response_.hasMoreRecords = actualResponse_.hasMoreRecords;
     return response_;
@@ -3684,7 +3648,7 @@ AggregateUnpivotResponse& GPUdb::aggregateUnpivot( const std::string& tableName,
     submitRequest("/aggregate/unpivot", actualRequest_, actualResponse_, false);
     response_.tableName = actualResponse_.tableName;
     response_.responseSchemaStr = actualResponse_.responseSchemaStr;
-    gpudb::GenericRecord::transpose( actualResponse_.responseSchemaStr, actualResponse_.binaryEncodedResponse, response_.data );
+    gpudb::GenericRecord::transpose( actualResponse_.responseSchemaStr, actualResponse_.binaryEncodedResponse, response_.data, response_.dataTypePtr );
     response_.totalNumberOfRecords = actualResponse_.totalNumberOfRecords;
     response_.hasMoreRecords = actualResponse_.hasMoreRecords;
     return response_;
@@ -7776,10 +7740,10 @@ CreateTypeResponse& GPUdb::createType( const CreateTypeRequest& request_,
  *                            <li> gpudb::create_type_dict: This property
  *                    indicates that this column should be dictionary encoded.
  *                    It can only be used in conjunction with string columns
- *                    marked with a charN property. This property is
- *                    appropriate for columns where the cardinality (the number
- *                    of unique values) is expected to be low, and can save a
- *                    large amount of memory.
+ *                    marked with a charN property or with int or long columns.
+ *                    This property is appropriate for columns where the
+ *                    cardinality (the number of unique values) is expected to
+ *                    be low, and can save a large amount of memory.
  *                    </ul>
  * @param options  Optional parameters.
  * 
@@ -7994,10 +7958,10 @@ CreateTypeResponse GPUdb::createType( const std::string& typeDefinition,
  *                            <li> gpudb::create_type_dict: This property
  *                    indicates that this column should be dictionary encoded.
  *                    It can only be used in conjunction with string columns
- *                    marked with a charN property. This property is
- *                    appropriate for columns where the cardinality (the number
- *                    of unique values) is expected to be low, and can save a
- *                    large amount of memory.
+ *                    marked with a charN property or with int or long columns.
+ *                    This property is appropriate for columns where the
+ *                    cardinality (the number of unique values) is expected to
+ *                    be low, and can save a large amount of memory.
  *                    </ul>
  * @param options  Optional parameters.
  * @param[out] response_  Response object containing the results of the
@@ -12413,7 +12377,7 @@ GetRecordsByColumnResponse GPUdb::getRecordsByColumn( const GetRecordsByColumnRe
     GetRecordsByColumnResponse response_;
     response_.tableName = actualResponse_.tableName;
     response_.responseSchemaStr = actualResponse_.responseSchemaStr;
-    gpudb::GenericRecord::transpose( actualResponse_.responseSchemaStr, actualResponse_.binaryEncodedResponse, response_.data );
+    gpudb::GenericRecord::transpose( actualResponse_.responseSchemaStr, actualResponse_.binaryEncodedResponse, response_.data, response_.dataTypePtr );
     response_.totalNumberOfRecords = actualResponse_.totalNumberOfRecords;
     response_.hasMoreRecords = actualResponse_.hasMoreRecords;
     return response_;
@@ -12460,7 +12424,7 @@ GetRecordsByColumnResponse& GPUdb::getRecordsByColumn( const GetRecordsByColumnR
     submitRequest("/get/records/bycolumn", request_, actualResponse_, false);
     response_.tableName = actualResponse_.tableName;
     response_.responseSchemaStr = actualResponse_.responseSchemaStr;
-    gpudb::GenericRecord::transpose( actualResponse_.responseSchemaStr, actualResponse_.binaryEncodedResponse, response_.data );
+    gpudb::GenericRecord::transpose( actualResponse_.responseSchemaStr, actualResponse_.binaryEncodedResponse, response_.data, response_.dataTypePtr );
     response_.totalNumberOfRecords = actualResponse_.totalNumberOfRecords;
     response_.hasMoreRecords = actualResponse_.hasMoreRecords;
     return response_;
@@ -12548,7 +12512,7 @@ GetRecordsByColumnResponse GPUdb::getRecordsByColumn( const std::string& tableNa
     GetRecordsByColumnResponse response_;
     response_.tableName = actualResponse_.tableName;
     response_.responseSchemaStr = actualResponse_.responseSchemaStr;
-    gpudb::GenericRecord::transpose( actualResponse_.responseSchemaStr, actualResponse_.binaryEncodedResponse, response_.data );
+    gpudb::GenericRecord::transpose( actualResponse_.responseSchemaStr, actualResponse_.binaryEncodedResponse, response_.data, response_.dataTypePtr );
     response_.totalNumberOfRecords = actualResponse_.totalNumberOfRecords;
     response_.hasMoreRecords = actualResponse_.hasMoreRecords;
     return response_;
@@ -12639,7 +12603,7 @@ GetRecordsByColumnResponse& GPUdb::getRecordsByColumn( const std::string& tableN
     submitRequest("/get/records/bycolumn", actualRequest_, actualResponse_, false);
     response_.tableName = actualResponse_.tableName;
     response_.responseSchemaStr = actualResponse_.responseSchemaStr;
-    gpudb::GenericRecord::transpose( actualResponse_.responseSchemaStr, actualResponse_.binaryEncodedResponse, response_.data );
+    gpudb::GenericRecord::transpose( actualResponse_.responseSchemaStr, actualResponse_.binaryEncodedResponse, response_.data, response_.dataTypePtr );
     response_.totalNumberOfRecords = actualResponse_.totalNumberOfRecords;
     response_.hasMoreRecords = actualResponse_.hasMoreRecords;
     return response_;
@@ -18383,6 +18347,18 @@ VisualizeImageContourResponse& GPUdb::visualizeImageContour( const VisualizeImag
  *                         <li> gpudb::visualize_image_contour_min_grid_size
  *                         <li>
  *                 gpudb::visualize_image_contour_render_output_grid
+ *                         <li> gpudb::visualize_image_contour_color_isolines
+ *                         <li> gpudb::visualize_image_contour_add_labels
+ *                         <li> gpudb::visualize_image_contour_labels_font_size
+ *                         <li>
+ *                 gpudb::visualize_image_contour_labels_font_family
+ *                         <li>
+ *                 gpudb::visualize_image_contour_labels_search_window
+ *                         <li>
+ *                 gpudb::visualize_image_contour_labels_intralevel_separation
+ *                         <li>
+ *                 gpudb::visualize_image_contour_labels_interlevel_separation
+ *                         <li> gpudb::visualize_image_contour_labels_max_angle
  *                 </ul>
  * 
  * @return Response object containing the result of the operation.
@@ -18500,6 +18476,18 @@ VisualizeImageContourResponse GPUdb::visualizeImageContour( const std::vector<st
  *                         <li> gpudb::visualize_image_contour_min_grid_size
  *                         <li>
  *                 gpudb::visualize_image_contour_render_output_grid
+ *                         <li> gpudb::visualize_image_contour_color_isolines
+ *                         <li> gpudb::visualize_image_contour_add_labels
+ *                         <li> gpudb::visualize_image_contour_labels_font_size
+ *                         <li>
+ *                 gpudb::visualize_image_contour_labels_font_family
+ *                         <li>
+ *                 gpudb::visualize_image_contour_labels_search_window
+ *                         <li>
+ *                 gpudb::visualize_image_contour_labels_intralevel_separation
+ *                         <li>
+ *                 gpudb::visualize_image_contour_labels_interlevel_separation
+ *                         <li> gpudb::visualize_image_contour_labels_max_angle
  *                 </ul>
  * @param[out] response_  Response object containing the results of the
  *                        operation.

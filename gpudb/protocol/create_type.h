@@ -249,11 +249,11 @@ namespace gpudb
          *                         property indicates that this column should
          *                         be dictionary encoded. It can only be used
          *                         in conjunction with string columns marked
-         *                         with a charN property. This property is
-         *                         appropriate for columns where the
-         *                         cardinality (the number of unique values) is
-         *                         expected to be low, and can save a large
-         *                         amount of memory.
+         *                         with a charN property or with int or long
+         *                         columns. This property is appropriate for
+         *                         columns where the cardinality (the number of
+         *                         unique values) is expected to be low, and
+         *                         can save a large amount of memory.
          *                         </ul>
          * @param[in] options_  Optional parameters.
          * 

@@ -6,18 +6,14 @@
 #ifndef __ADMIN_REPLACE_TOM_H__
 #define __ADMIN_REPLACE_TOM_H__
 
-    /**
-     * @private
-     */
-
 namespace gpudb
 {
 
     /**
-     * @private
      * A set of input parameters for {@link
      * #adminReplaceTom(const AdminReplaceTomRequest&) const}.
      * <p>
+     * @private
      */
     struct AdminReplaceTomRequest
     {
@@ -47,10 +43,6 @@ namespace gpudb
             newRankTom( newRankTom_ )
         {
         }
-
-    /**
-     * @private
-     */
 
         int64_t oldRankTom;
         int64_t newRankTom;
@@ -103,18 +95,14 @@ namespace avro
     };
 }
 
-    /**
-     * @private
-     */
-
 namespace gpudb
 {
 
     /**
-     * @private
      * A set of output parameters for {@link
      * #adminReplaceTom(const AdminReplaceTomRequest&) const}.
      * <p>
+     * @private
      */
     struct AdminReplaceTomResponse
     {
@@ -129,10 +117,6 @@ namespace gpudb
             newRankTom(int64_t())
         {
         }
-
-    /**
-     * @private
-     */
 
         int64_t oldRankTom;
         int64_t newRankTom;

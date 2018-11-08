@@ -545,7 +545,8 @@ namespace gpudb
             tableName(std::string()),
             responseSchemaStr(std::string()),
             data(std::vector<gpudb::GenericRecord>()),
-            hasMoreRecords(bool())
+            hasMoreRecords(bool()),
+            dataTypePtr((gpudb::Type*)NULL)
         {
         }
 
@@ -553,6 +554,7 @@ namespace gpudb
         std::string responseSchemaStr;
         std::vector<gpudb::GenericRecord> data;
         bool hasMoreRecords;
+        gpudb_type_ptr_t dataTypePtr;
     };
 }
 

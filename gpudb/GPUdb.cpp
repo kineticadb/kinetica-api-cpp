@@ -44,28 +44,34 @@ namespace gpudb {
     }
 
     GPUdb::GPUdb(const HttpUrl& url, const Options& options) :
-        m_currentUrl(0),
+        m_currentUrl( 0 ),
+        m_currentHmUrl( 0 ),
 
         #ifndef GPUDB_NO_HTTPS
-        m_sslContext(options.getSslContext()),
+        m_sslContext( options.getSslContext() ),
         #endif
 
-        m_username(options.getUsername()),
-        m_password(options.getPassword()),
-        m_authorization((!options.getUsername().empty() || !options.getPassword().empty())
-                        ? base64Encode(options.getUsername() + ":" + options.getPassword())
+        m_username( options.getUsername() ),
+        m_password( options.getPassword() ),
+        m_authorization( ( !options.getUsername().empty() || !options.getPassword().empty() )
+                        ? base64Encode(options.getUsername() + ":" + options.getPassword() )
                         : ""),
-        m_useSnappy(options.getUseSnappy()),
-        m_threadCount(options.getThreadCount()),
-        m_executor(options.getExecutor()),
-        m_httpHeaders(options.getHttpHeaders()),
-        m_timeout(options.getTimeout())
+        m_useSnappy( options.getUseSnappy() ),
+        m_threadCount( options.getThreadCount() ),
+        m_executor( options.getExecutor() ),
+        m_httpHeaders( options.getHttpHeaders() ),
+        m_timeout( options.getTimeout() )
     {
+        // Head node URLs
         m_urls.push_back(url);
+
+        // Host manager URLs
+        createHostManagerUrl( url, options.getHostManagerPort() );
     }
 
     GPUdb::GPUdb(const std::string& url, const Options& options) :
         m_currentUrl(0),
+        m_currentHmUrl(0),
 
         #ifndef GPUDB_NO_HTTPS
         m_sslContext(options.getSslContext()),
@@ -82,12 +88,17 @@ namespace gpudb {
         m_httpHeaders(options.getHttpHeaders()),
         m_timeout(options.getTimeout())
     {
-        m_urls.push_back(HttpUrl(url));
+        HttpUrl url_ = HttpUrl(url);
+        m_urls.push_back( url_ );
+
+        // Host manager URLs
+        createHostManagerUrl( url_, options.getHostManagerPort() );
     }
 
     GPUdb::GPUdb(const std::vector<HttpUrl>& urls, const Options& options) :
         m_urls(urls),
         m_currentUrl(randomItem(urls.size())),
+        m_currentHmUrl(randomItem(urls.size())),
 
         #ifndef GPUDB_NO_HTTPS
         m_sslContext(options.getSslContext()),
@@ -108,10 +119,14 @@ namespace gpudb {
         {
             throw std::invalid_argument("At least one URL must be specified.");
         }
+
+        // Host manager URLs
+        createHostManagerUrls( urls, options.getHostManagerPort() );
     }
 
     GPUdb::GPUdb(const std::vector<std::string>& urls, const Options& options) :
         m_currentUrl(randomItem(urls.size())),
+        m_currentHmUrl(randomItem(urls.size())),
 
         #ifndef GPUDB_NO_HTTPS
         m_sslContext(options.getSslContext()),
@@ -135,6 +150,9 @@ namespace gpudb {
 
         m_urls.reserve(urls.size());
         m_urls.insert(m_urls.end(), urls.begin(), urls.end());
+
+        // Host manager URLs
+        createHostManagerUrls( m_urls, options.getHostManagerPort() );
     }
 
     void GPUdb::addKnownType(const std::string& typeId, const avro::DecoderPtr& decoder)
@@ -276,6 +294,39 @@ namespace gpudb {
         return m_urls;
     }
 
+    const HttpUrl& GPUdb::getHmUrl() const
+    {
+        if (m_hmUrls.size() == 1)
+        {
+            return m_hmUrls[0];
+        }
+        else
+        {
+            boost::mutex::scoped_lock lock( m_urlMutex );
+
+            return m_hmUrls[ m_currentHmUrl ];
+        }
+    }
+
+    const HttpUrl* GPUdb::getHmUrlPointer() const
+    {
+        if (m_hmUrls.size() == 1)
+        {
+            return &m_hmUrls[0];
+        }
+        else
+        {
+            boost::mutex::scoped_lock lock(m_urlMutex);
+
+            return &m_hmUrls[ m_currentHmUrl ];
+        }
+    }
+
+    const std::vector<HttpUrl>& GPUdb::getHmUrls() const
+    {
+        return m_hmUrls;
+    }
+
     bool GPUdb::getUseSnappy() const
     {
         return m_useSnappy;
@@ -306,6 +357,103 @@ namespace gpudb {
             httpRequest.addRequestHeader("Authorization", "Basic " + m_authorization);
         }
     }
+
+
+    /*
+     * Create a host manager URL from a head node URL, and store it in m_hmUrls.
+     */
+    void GPUdb::createHostManagerUrl( const HttpUrl& url, uint16_t hostManagerPort )
+    {
+        HttpUrl hmUrl = HttpUrl( url.getProtocol(),
+                                 url.getHost(),
+                                 hostManagerPort,
+                                 url.getPath(),
+                                 url.getQuery() );
+        m_hmUrls.push_back( hmUrl );
+    }
+
+    /*
+     * Create host manager URLs from head node URLs and a given
+     * host manager port number.
+     */
+    void GPUdb::createHostManagerUrls( const std::vector<HttpUrl>& urls,
+                                       uint16_t hostManagerPort )
+    {
+        for( std::vector<HttpUrl>::const_iterator iter = urls.begin();
+             iter != urls.end(); ++iter )
+        {
+            createHostManagerUrl( *iter, hostManagerPort );
+        }
+    }
+    
+    /**
+     * Re-sets the host manager port number for the host manager URLs. Some
+     * endpoints are supported only at the host manager, rather than the
+     * head node of the database.
+     *
+     * @param[in] value  the host manager port number
+     */
+    void GPUdb::setHostManagerPort(uint16_t value)
+    {
+        // Reset the port for all the host manager URLs
+        for ( size_t i = 0; i < m_hmUrls.size(); ++i )
+        {
+            try
+            {
+                HttpUrl oldUrl = m_hmUrls.at( i );
+                // Change only the port to be the host manager port
+                HttpUrl newUrl = HttpUrl( oldUrl.getProtocol(),
+                                          oldUrl.getHost(),
+                                          value,
+                                          oldUrl.getPath(),
+                                          oldUrl.getQuery() );
+                m_hmUrls[ i ] = newUrl;
+            } catch ( std::invalid_argument ex )
+            {
+                throw new GPUdbException( ex.what() );
+            }
+        }
+    }
+
+    /**
+     * Automatically resets the host manager port number for the host manager
+     * URLs by finding out what the host manager port is.
+     */
+    void GPUdb::updateHostManagerPort()
+    {
+        // Find out from the database server what the correct port
+        // number is
+        ShowSystemPropertiesRequest request;
+        ShowSystemPropertiesResponse response;
+        submitRequest("/show/system/properties", request, response );
+        const std::string& port_str = response.propertyMap[ gpudb::show_system_properties_conf_hm_http_port ];
+
+        if ( port_str.empty() )
+        {
+            throw new GPUdbException("Missing value for '"
+                                     + show_system_properties_conf_hm_http_port
+                                     + "'" );
+        }
+
+        
+        // Parse the integer value from the string
+        uint16_t hmPort;
+        try
+        {
+            std::istringstream iss( port_str );
+            iss >> hmPort;
+        } catch (std::exception ex)
+        {
+            throw new GPUdbException( "No parsable value found for host manager port number." );
+            // throw new GPUdbException( "No parsable value found for host manager port number "
+            //                           + "(expected integer, given '" + port_str + "')" );
+        }
+
+        // Update the host manager URLs with the correct port number
+        setHostManagerPort( hmPort );
+        return;
+    }
+
 
     void GPUdb::setDecoderIfMissing(const std::string& typeId,
                                     const std::string& label,
@@ -340,6 +488,7 @@ namespace gpudb {
 
         m_knownTypes[typeId] = decoder;
     }
+
 
     void GPUdb::submitRequestRaw(const std::string& endpoint,
                                  const std::vector<uint8_t>& request,
@@ -379,6 +528,47 @@ namespace gpudb {
             throw GPUdbException(response.message);
         }
     }
+
+    
+    void GPUdb::submitRequestToHostManagerRaw(const std::string& endpoint,
+                                              const std::vector<uint8_t>& request,
+                                              RawGpudbResponse& response,
+                                              const bool enableCompression) const
+    {
+        const HttpUrl* hmUrl = getHmUrlPointer();
+        const HttpUrl* originalHmUrl = hmUrl;
+
+        while (true)
+        {
+            try
+            {
+                submitRequestRaw(HttpUrl(*hmUrl, endpoint), request, response, enableCompression, false);
+                break;
+            }
+            catch (const std::exception& ex)
+            {
+                if (m_hmUrls.size() == 1)
+                {
+                    throw;
+                }
+                else
+                {
+                    hmUrl = switchHmUrl( hmUrl );
+
+                    if (hmUrl == originalHmUrl)
+                    {
+                        throw;
+                    }
+                }
+            }  // end try-catch
+        }  // end while
+
+        if (response.status == "ERROR")
+        {
+            throw GPUdbException( response.message );
+        }
+    }
+
 
     void GPUdb::submitRequestRaw(const HttpUrl& url,
                                  const std::vector<uint8_t>& request,
@@ -439,14 +629,32 @@ namespace gpudb {
         return &m_urls[m_currentUrl];
     }
 
+    const HttpUrl* GPUdb::switchHmUrl(const HttpUrl* oldUrl) const
+    {
+        boost::mutex::scoped_lock lock(m_urlMutex);
+
+        if (&m_hmUrls[ m_currentHmUrl ] == oldUrl)
+        {
+            m_currentHmUrl++;
+
+            if (m_currentHmUrl >= m_hmUrls.size())
+            {
+                m_currentHmUrl = 0;
+            }
+        }
+
+        return &m_hmUrls[ m_currentHmUrl ];
+    }
+
     GPUdb::Options::Options() :
         #ifndef GPUDB_NO_HTTPS
-        m_sslContext(NULL),
+        m_sslContext( NULL ),
         #endif
 
-        m_useSnappy(true),
-        m_threadCount(1),
-        m_timeout(0)
+        m_useSnappy( true ),
+        m_threadCount( 1 ),
+        m_timeout( 0 ),
+        m_hmPort( 9300 )
     {
     }
 
@@ -491,6 +699,11 @@ namespace gpudb {
     size_t GPUdb::Options::getTimeout() const
     {
         return m_timeout;
+    }
+
+    uint16_t GPUdb::Options::getHostManagerPort() const
+    {
+        return m_hmPort;
     }
 
     bool GPUdb::Options::getUseSnappy() const
@@ -543,6 +756,12 @@ namespace gpudb {
     GPUdb::Options& GPUdb::Options::setTimeout(const size_t value)
     {
         m_timeout = value;
+        return *this;
+    }
+
+    GPUdb::Options& GPUdb::Options::setHostManagerPort(const uint16_t value)
+    {
+        m_hmPort = value;
         return *this;
     }
 

@@ -6,18 +6,14 @@
 #ifndef __VISUALIZE_IMAGE_HEATMAP_H__
 #define __VISUALIZE_IMAGE_HEATMAP_H__
 
-    /**
-     * @private
-     */
-
 namespace gpudb
 {
 
     /**
-     * @private
      * A set of input parameters for {@link
      * #visualizeImageHeatmap(const VisualizeImageHeatmapRequest&) const}.
      * <p>
+     * @private
      */
     struct VisualizeImageHeatmapRequest
     {
@@ -143,10 +139,6 @@ namespace gpudb
             options( options_ )
         {
         }
-
-    /**
-     * @private
-     */
 
         std::vector<std::string> tableNames;
         std::string xColumnName;
@@ -283,18 +275,14 @@ namespace avro
     };
 }
 
-    /**
-     * @private
-     */
-
 namespace gpudb
 {
 
     /**
-     * @private
      * A set of output parameters for {@link
      * #visualizeImageHeatmap(const VisualizeImageHeatmapRequest&) const}.
      * <p>
+     * @private
      */
     struct VisualizeImageHeatmapResponse
     {
@@ -311,10 +299,6 @@ namespace gpudb
             imageData(std::vector<uint8_t>())
         {
         }
-
-    /**
-     * @private
-     */
 
         int32_t width;
         int32_t height;

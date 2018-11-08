@@ -6,18 +6,14 @@
 #ifndef __VISUALIZE_IMAGE_CONTOUR_H__
 #define __VISUALIZE_IMAGE_CONTOUR_H__
 
-    /**
-     * @private
-     */
-
 namespace gpudb
 {
 
     /**
-     * @private
      * A set of input parameters for {@link
      * #visualizeImageContour(const VisualizeImageContourRequest&) const}.
      * <p>
+     * @private
      */
     struct VisualizeImageContourRequest
     {
@@ -165,6 +161,22 @@ namespace gpudb
          *                      gpudb::visualize_image_contour_min_grid_size
          *                              <li>
          *                      gpudb::visualize_image_contour_render_output_grid
+         *                              <li>
+         *                      gpudb::visualize_image_contour_color_isolines
+         *                              <li>
+         *                      gpudb::visualize_image_contour_add_labels
+         *                              <li>
+         *                      gpudb::visualize_image_contour_labels_font_size
+         *                              <li>
+         *                      gpudb::visualize_image_contour_labels_font_family
+         *                              <li>
+         *                      gpudb::visualize_image_contour_labels_search_window
+         *                              <li>
+         *                      gpudb::visualize_image_contour_labels_intralevel_separation
+         *                              <li>
+         *                      gpudb::visualize_image_contour_labels_interlevel_separation
+         *                              <li>
+         *                      gpudb::visualize_image_contour_labels_max_angle
          *                      </ul>
          * 
          */
@@ -184,10 +196,6 @@ namespace gpudb
             options( options_ )
         {
         }
-
-    /**
-     * @private
-     */
 
         std::vector<std::string> tableNames;
         std::string xColumnName;
@@ -317,18 +325,14 @@ namespace avro
     };
 }
 
-    /**
-     * @private
-     */
-
 namespace gpudb
 {
 
     /**
-     * @private
      * A set of output parameters for {@link
      * #visualizeImageContour(const VisualizeImageContourRequest&) const}.
      * <p>
+     * @private
      */
     struct VisualizeImageContourResponse
     {
@@ -351,10 +355,6 @@ namespace gpudb
             samplesUsed(int64_t())
         {
         }
-
-    /**
-     * @private
-     */
 
         int32_t width;
         int32_t height;

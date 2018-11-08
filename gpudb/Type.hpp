@@ -34,6 +34,7 @@ namespace gpudb
                     Column(const std::string& name, const ColumnType type, const std::vector<std::string>& properties);
                     const std::string& getName() const;
                     ColumnType getType() const;
+                    std::string getTypeName() const;
                     bool isNullable() const;
                     const std::vector<std::string>& getProperties() const;
                     bool hasProperty( std::string property ) const;
@@ -57,7 +58,9 @@ namespace gpudb
                     void initialize();
             };
 
+            /// Create a Type object from a GPUdb table
             static Type fromTable(const GPUdb& gpudb, const std::string& tableName);
+            /// Create a Type object from a GPUdb type
             static Type fromType(const GPUdb& gpudb, const std::string& typeId);
 
             Type(const std::vector<Column>& columns);
@@ -79,6 +82,10 @@ namespace gpudb
             /// By default, does not check query compatibility (e.g. 'data',
             /// 'disk_optimized', 'store_only', and 'text_search'.), but will if specified.
             bool isTypeCompatible(const Type &other, bool check_query_compatibility = false ) const;
+
+            friend std::ostream &operator << (std::ostream  &os, Type &type);
+            friend std::ostream &operator << (std::ostream  &os, const Type &type);
+
 
         private:
             struct TypeData

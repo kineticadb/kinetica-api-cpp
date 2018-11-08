@@ -6,18 +6,14 @@
 #ifndef __VISUALIZE_IMAGE_LABELS_H__
 #define __VISUALIZE_IMAGE_LABELS_H__
 
-    /**
-     * @private
-     */
-
 namespace gpudb
 {
 
     /**
-     * @private
      * A set of input parameters for {@link
      * #visualizeImageLabels(const VisualizeImageLabelsRequest&) const}.
      * <p>
+     * @private
      */
     struct VisualizeImageLabelsRequest
     {
@@ -141,10 +137,6 @@ namespace gpudb
             options( options_ )
         {
         }
-
-    /**
-     * @private
-     */
 
         std::string tableName;
         std::string xColumnName;
@@ -365,18 +357,14 @@ namespace avro
     };
 }
 
-    /**
-     * @private
-     */
-
 namespace gpudb
 {
 
     /**
-     * @private
      * A set of output parameters for {@link
      * #visualizeImageLabels(const VisualizeImageLabelsRequest&) const}.
      * <p>
+     * @private
      */
     struct VisualizeImageLabelsResponse
     {
@@ -393,10 +381,6 @@ namespace gpudb
             imageData(std::vector<uint8_t>())
         {
         }
-
-    /**
-     * @private
-     */
 
         double width;
         double height;

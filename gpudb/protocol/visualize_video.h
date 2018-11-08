@@ -6,18 +6,14 @@
 #ifndef __VISUALIZE_VIDEO_H__
 #define __VISUALIZE_VIDEO_H__
 
-    /**
-     * @private
-     */
-
 namespace gpudb
 {
 
     /**
-     * @private
      * A set of input parameters for {@link
      * #visualizeVideo(const VisualizeVideoRequest&) const}.
      * <p>
+     * @private
      */
     struct VisualizeVideoRequest
     {
@@ -221,10 +217,6 @@ namespace gpudb
         {
         }
 
-    /**
-     * @private
-     */
-
         std::vector<std::string> tableNames;
         std::vector<std::string> worldTableNames;
         std::vector<std::vector<std::string> > trackIds;
@@ -395,18 +387,14 @@ namespace avro
     };
 }
 
-    /**
-     * @private
-     */
-
 namespace gpudb
 {
 
     /**
-     * @private
      * A set of output parameters for {@link
      * #visualizeVideo(const VisualizeVideoRequest&) const}.
      * <p>
+     * @private
      */
     struct VisualizeVideoResponse
     {
@@ -425,10 +413,6 @@ namespace gpudb
             data(std::vector<std::vector<uint8_t> >())
         {
         }
-
-    /**
-     * @private
-     */
 
         double width;
         double height;

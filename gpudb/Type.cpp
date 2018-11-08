@@ -54,6 +54,20 @@ namespace gpudb
         return m_type;
     }
 
+    std::string Type::Column::getTypeName() const
+    {
+        switch ( m_type )
+        {
+            case ColumnType::BYTES:    return "bytes";
+            case ColumnType::DOUBLE:   return "double";
+            case ColumnType::FLOAT:    return "float";
+            case ColumnType::INT:      return "int";
+            case ColumnType::LONG:     return "long";
+            case ColumnType::STRING:   return "string";
+            default:                   return "unknown";
+        }
+    }
+
     bool Type::Column::isNullable() const
     {
         return m_isNullable;
@@ -170,31 +184,33 @@ namespace gpudb
 
     std::ostream &operator << (std::ostream &os, const gpudb::Type::Column &column)
     {
-        os << " (" << column.getName() << ", " << column.getType() << ", nullable: " << column.m_isNullable;
+        os << " ( " << column.getName() << ", " << column.getTypeName() << ", nullable: " << column.m_isNullable;
 
         if ( !column.m_properties.empty() )
         {
-            os << " properties: ";
+            os << " properties: [";
             std::vector<std::string>::const_iterator iter;
             for ( iter = column.m_properties.begin(); iter != column.m_properties.end(); ++iter )
                 os << *iter << ", ";
+            os << "]";
         }
-        os << std::endl;
+        os << " )" << std::endl;
         return os;
     }
 
     std::ostream &operator << (std::ostream &os, gpudb::Type::Column &column)
     {
-        os << " (" << column.getName() << ", " << column.getType() << ", nullable: " << column.m_isNullable;
+        os << " ( " << column.getName() << ", " << column.getTypeName() << ", nullable: " << column.m_isNullable;
 
         if ( !column.m_properties.empty() )
         {
-            os << " properties: ";
+            os << " properties: [";
             std::vector<std::string>::const_iterator iter;
             for ( iter = column.m_properties.begin(); iter != column.m_properties.end(); ++iter )
                 os << *iter << ", ";
+            os << "]";
         }
-        os << std::endl;
+        os << " )" << std::endl;
         return os;
     }
 
@@ -705,5 +721,34 @@ namespace gpudb
         }
 
         m_data->schema.setSchema(recordSchema);
+    }   // end createSchema
+
+
+    std::ostream &operator << (std::ostream  &os, gpudb::Type &type)
+    {
+        os << "[ ";
+        std::vector<Type::Column>::const_iterator iter;
+        for ( iter = type.m_data->columns.begin();
+              iter != type.m_data->columns.end(); ++ iter )
+        {
+            os << *iter;
+        }
+        os << " ]" << std::endl;
+        return os;
     }
-}
+
+    std::ostream &operator << (std::ostream  &os, const gpudb::Type &type)
+    {
+        os << "[ ";
+        std::vector<Type::Column>::const_iterator iter;
+        for ( iter = type.m_data->columns.begin();
+              iter != type.m_data->columns.end(); ++ iter )
+        {
+            os << *iter;
+        }
+        os << " ]" << std::endl;
+        return os;
+    }
+    
+    
+}   // end namespace gpudb

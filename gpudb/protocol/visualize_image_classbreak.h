@@ -6,18 +6,14 @@
 #ifndef __VISUALIZE_IMAGE_CLASSBREAK_H__
 #define __VISUALIZE_IMAGE_CLASSBREAK_H__
 
-    /**
-     * @private
-     */
-
 namespace gpudb
 {
 
     /**
-     * @private
      * A set of input parameters for {@link
      * #visualizeImageClassbreak(const VisualizeImageClassbreakRequest&) const}.
      * <p>
+     * @private
      */
     struct VisualizeImageClassbreakRequest
     {
@@ -284,10 +280,6 @@ namespace gpudb
         {
         }
 
-    /**
-     * @private
-     */
-
         std::vector<std::string> tableNames;
         std::vector<std::string> worldTableNames;
         std::string xColumnName;
@@ -493,18 +485,14 @@ namespace avro
     };
 }
 
-    /**
-     * @private
-     */
-
 namespace gpudb
 {
 
     /**
-     * @private
      * A set of output parameters for {@link
      * #visualizeImageClassbreak(const VisualizeImageClassbreakRequest&) const}.
      * <p>
+     * @private
      */
     struct VisualizeImageClassbreakResponse
     {
@@ -521,10 +509,6 @@ namespace gpudb
             imageData(std::vector<uint8_t>())
         {
         }
-
-    /**
-     * @private
-     */
 
         double width;
         double height;

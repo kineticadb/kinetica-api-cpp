@@ -2,6 +2,7 @@
 
 #include "gpudb/Avro.hpp"
 #include "gpudb/GPUdbException.hpp"
+#include "gpudb/Type.hpp"
 
 #include <iomanip>
 
@@ -623,7 +624,10 @@ namespace gpudb
         }
     }
 
-    void GenericRecord::transpose(const std::string& schemaString, const std::vector<uint8_t>& encodedData, std::vector<GenericRecord>& result)
+    void GenericRecord::transpose( const std::string& schemaString,
+                                   const std::vector<uint8_t>& encodedData,
+                                   std::vector<GenericRecord>& data,
+                                   gpudb_type_ptr_t &dataTypePtr )
     {
         ::avro::ValidSchema schema;
 
@@ -717,14 +721,14 @@ namespace gpudb
                     if ((i == 0) && (recordNumber + j > recordCount))
                     {
                         recordCount += j;
-                        result.resize(recordCount, GenericRecord(columnTypes));
+                        data.resize(recordCount, GenericRecord(columnTypes));
                     }
 
                     for (size_t k = 0; k < j; ++k)
                     {
                         if (recordNumber < recordCount)
                         {
-                            decodeValue(*decoder, columnType.first, columnType.second, result[recordNumber].m_values[i]);
+                            decodeValue(*decoder, columnType.first, columnType.second, data[recordNumber].m_values[i]);
                         }
 
                         ++recordNumber;
@@ -834,10 +838,10 @@ namespace gpudb
             columns.push_back(Type::Column(expressions[i], columnType.first, columnProperties));
         }
 
-        Type type(columns);
+        dataTypePtr = gpudb_type_ptr_t( new Type( columns ) );
 
-        for (size_t i = 0; i < result.size(); ++i) {
-            result[i].m_type = type;
+        for (size_t i = 0; i < data.size(); ++i) {
+            data[i].m_type = *dataTypePtr;
         }
     }
 

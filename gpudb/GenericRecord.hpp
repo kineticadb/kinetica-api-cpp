@@ -8,6 +8,9 @@
 
 namespace gpudb
 {
+
+    typedef boost::shared_ptr<Type> gpudb_type_ptr_t;
+    
     class GenericRecord
     {
         friend class GPUdb;
@@ -210,7 +213,7 @@ namespace gpudb
             friend std::ostream &operator << (std::ostream  &os, const GenericRecord &gr);
 
         private:
-            static void transpose(const std::string& schemaString, const std::vector<uint8_t>& encodedData, std::vector<GenericRecord>& data);
+            static void transpose(const std::string& schemaString, const std::vector<uint8_t>& encodedData, std::vector<GenericRecord>& data, gpudb_type_ptr_t &dataTypePtr );
 
             Type m_type;
             std::vector<boost::any> m_values;

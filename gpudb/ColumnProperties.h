@@ -237,9 +237,10 @@ namespace gpudb
         /**
          * This property indicates that this column should be dictionary
          * encoded. It can only be used in conjunction with string columns
-         * marked with a charN property. This property is appropriate for
-         * columns where the cardinality (the number of unique values) is
-         * expected to be low, and can save a large amount of memory.
+         * marked with a charN property or with int or long columns. This
+         * property is appropriate for columns where the cardinality (the
+         * number of unique values) is expected to be low, and can save a large
+         * amount of memory.
          */
         extern const std::string DICT;
 

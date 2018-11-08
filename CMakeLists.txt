@@ -44,19 +44,28 @@ include( build/CMakeFunctions.cmake )
 message(STATUS "* ---------------------------------------------------------------------------" )
 message(STATUS "* GPUdb API C++ CMake command line options" )
 message(STATUS "* " )
+message(STATUS "* -DGPUDB_NO_HTTPS=TRUE" )
+message(STATUS "*   Do not use SSL, else do use it. (Default FALSE)" )
+message(STATUS "* " )
 message(STATUS "* -DGPUDB_API_CPP_LIBS_DIR=${GPUDB_API_CPP_SOURCE_DIR}/thirdparty/install" )
 message(STATUS "*   Specify the location of the 3rd party avro and snappy development libraries." )
 message(STATUS "*   Please build them first using the thirdparty/build-thrirdparty-libs.sh script first." )
 message(STATUS "*   The install/ dir should contain 'include/' and 'lib/' subdirectories." )
 message(STATUS "* " )
-message(STATUS "* -DGPUDB_NO_HTTPS=TRUE" )
-message(STATUS "*   Do not use SSL, else do use it. (Default FALSE)" )
+message(STATUS "* -DGPUDB_BUILD_TESTS=TRUE" )
+message(STATUS "*   Compile the tests. Default is FALSE.  Must pass in -DGPUDB_API_CPP_TEST_LIBS_DIR in" )
+message(STATUS "*   conjunction with this flag to build the tests." )
+message(STATUS "* " )
+message(STATUS "* -DGPUDB_API_CPP_TEST_LIBS_DIR=location/of/internal/test/library/dependencies" )
+message(STATUS "*   Specify the location of the 3rd party libraries needed as dependencies for the test suite." )
+message(STATUS "*   The end user generally does not need to set it and only internal developers need to use it." )
 message(STATUS "* " )
 message(STATUS "* ---------------------------------------------------------------------------" )
 message(STATUS " " )
 
 EXIT_IF_HELP_REQUESTED()
 
+# Parse GPUDB_NO_HTTPS
 if (NOT DEFINED GPUDB_NO_HTTPS)
     set(GPUDB_NO_HTTPS "FALSE")
 endif()
@@ -64,6 +73,21 @@ set(GPUDB_NO_HTTPS ${GPUDB_NO_HTTPS} CACHE STRING
     "Turn SSL usage on/off." FORCE)
 
 MESSAGE(STATUS "* GPUDB_NO_HTTPS = '${GPUDB_NO_HTTPS}'")
+
+# Parse GPUDB_BUILD_TESTS
+if (NOT DEFINED GPUDB_BUILD_TESTS)
+  set(GPUDB_BUILD_TESTS "FALSE")
+else()
+  if ((("${GPUDB_BUILD_TESTS}" STREQUAL "TRUE")) AND (NOT DEFINED GPUDB_API_CPP_TEST_LIBS_DIR))
+      MESSAGE(FATAL_ERROR "-DGPUDB_BUILD_TESTS defined, but -DGPUDB_API_CPP_TEST_LIBS_DIR not defined. Please specify a valid -DGPUDB_API_CPP_TEST_LIBS_DIR=/path on cmd line, see above for info.")
+  endif()
+endif()
+  
+set(GPUDB_BUILD_TESTS ${GPUDB_BUILD_TESTS} CACHE STRING
+    "Build the C++ API tests." FORCE)
+
+MESSAGE(STATUS "* GPUDB_BUILD_TESTS = '${GPUDB_BUILD_TESTS}'")
+
 
 # ===========================================================================
 # GPUDB_API_CPP version
@@ -139,8 +163,22 @@ set(GPUDB_API_CPP_LIBS_DIR ${GPUDB_API_CPP_LIBS_DIR} CACHE PATH
 MESSAGE(STATUS "* GPUDB_API_CPP_LIBS_DIR = '${GPUDB_API_CPP_LIBS_DIR}'")
 
 if (NOT EXISTS ${GPUDB_API_CPP_LIBS_DIR}/include/)
-    MESSAGE(FATAL_ERROR "Please specify a valid -DGPUDB_API_CPP_LIBS_DIR=/path on cmd line, see above for info.")
+    MESSAGE(FATAL_ERROR "No 'include' subdirectory exists in ${GPUDB_API_CPP_LIBS_DIR}. Please specify a valid -DGPUDB_API_CPP_LIBS_DIR=/path on cmd line, see above for info.")
 endif()
+
+# For testing purposes
+if (DEFINED GPUDB_API_CPP_TEST_LIBS_DIR)
+  set(GPUDB_API_CPP_TEST_LIBS_DIR ${GPUDB_API_CPP_TEST_LIBS_DIR} CACHE PATH
+      "Specify the location of the 3rd party test dependency libraries." FORCE)
+  MESSAGE(STATUS "* GPUDB_API_CPP_TEST_LIBS_DIR = '${GPUDB_API_CPP_TEST_LIBS_DIR}'")
+
+  if (NOT EXISTS ${GPUDB_API_CPP_TEST_LIBS_DIR}/include/)
+      MESSAGE(FATAL_ERROR "${GPUDB_API_CPP_TEST_LIBS_DIR}/include/ does not exist. Please specify a valid -DGPUDB_API_CPP_TEST_LIBS_DIR=/path on cmd line, see above for info.")
+  endif()
+
+endif()
+
+
 
 # ---------------------------------------------------------------------------
 # Find Boost lib
@@ -167,11 +205,18 @@ endif()
 # ---------------------------------------------------------------------------
 # Include and Link directories and libs.
 
+# Include directories
 set(GPUDB_API_CPP_INCLUDE_DIRS
     ${CMAKE_SOURCE_DIR}
     ${GPUDB_API_CPP_LIBS_DIR}/include
     ${Boost_INCLUDE_DIRS}
 )
+
+# Include the test dependency include directory
+if (DEFINED GPUDB_API_CPP_TEST_LIBS_DIR)
+  set(GPUDB_API_CPP_INCLUDE_DIRS ${GPUDB_API_CPP_INCLUDE_DIRS} "${GPUDB_API_CPP_TEST_LIBS_DIR}/include")
+endif()
+
 
 foreach( d ${GPUDB_API_CPP_INCLUDE_DIRS})
     if (NOT EXISTS ${d})
@@ -179,27 +224,52 @@ foreach( d ${GPUDB_API_CPP_INCLUDE_DIRS})
     endif()
 endforeach()
 
-
-# Link order is from bottom up.
-# i.e. Put libA that depends on libB above libB in the list below.
-set(GPUDB_API_CPP_LINK_LIBRARIES
-    ssl
-    crypto
-    snappy
-    avrocpp # dep on boost
-    ${Boost_LIBRARIES}
-    #boost_system boost_thread # boost_timer boost_filesystem boost_regex boost_chrono
+# Link directories
+set(GPUDB_API_LIBRARY_DIRECTORIES
+    /usr/lib/
+    /usr/lib64
+    ${GPUDB_API_CPP_LIBS_DIR}/lib
+    ${Boost_LIBRARY_DIRS}
 )
+
+# Include the test dependency include directory
+if (DEFINED GPUDB_API_CPP_TEST_LIBS_DIR)
+  set(GPUDB_API_LIBRARY_DIRECTORIES ${GPUDB_API_LIBRARY_DIRECTORIES} "${GPUDB_API_CPP_TEST_LIBS_DIR}/lib")
+endif()
+
+
+# Link libraries
+if (GPUDB_NO_HTTPS)
+    # Link order is from bottom up.
+    # i.e. Put libA that depends on libB above libB in the list below.
+    set(GPUDB_API_CPP_LINK_LIBRARIES
+        snappy
+        avrocpp # dep on boost
+        ${Boost_LIBRARIES}
+        #boost_system boost_thread # boost_timer boost_filesystem boost_regex boost_chrono
+    )
+else()  
+    # Link order is from bottom up.
+    # i.e. Put libA that depends on libB above libB in the list below.
+    set(GPUDB_API_CPP_LINK_LIBRARIES
+        ssl
+        crypto
+        snappy
+        avrocpp # dep on boost
+        ${Boost_LIBRARIES}
+        #boost_system boost_thread # boost_timer boost_filesystem boost_regex boost_chrono
+    )
+endif()
 
 # ---------------------------------------------------------------------------
 # All projects search these #include and linker paths
 
 include_directories(SYSTEM ${GPUDB_API_CPP_INCLUDE_DIRS})
 
-link_directories(/usr/lib/
-                 /usr/lib64
-                 ${GPUDB_API_CPP_LIBS_DIR}/lib
-                 ${Boost_LIBRARY_DIRS})
+
+link_directories(/${GPUDB_API_LIBRARY_DIRECTORIES})
+
+
 
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fopenmp -rdynamic")
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -D__STDC_LIMIT_MACROS") # For MAX_INTXX when including <stdint.h>
@@ -382,31 +452,17 @@ ADD_EXECUTABLE_FULL( test_multihead_ingest
 
 endfunction( gpudb_api_cpp_multihead_ingest_TARGETS )
 
-function( gpudb_api_cpp_tests_TARGETS )
-
-ADD_EXECUTABLE_FULL( test_api
-    HEADERS
-        test_utils.h
-    SOURCES
-        test_api.cpp
-        test_utils.cpp
-    LINK_LIBRARIES
-        gpudb_api_cpp_lib_STATIC
-        ${GPUDB_API_CPP_LINK_LIBRARIES}
-    PROPERTIES COMPILE_FLAGS "-std=c++0x"
-    PROPERTIES FOLDER "Example"
-    PROPERTIES OUTPUT_NAME "test_api"
-)
-
-endfunction( gpudb_api_cpp_tests_TARGETS )
-
 # ===========================================================================
 # Add the subdirectories with their projects in them
 # ===========================================================================
 
 add_subdirectory(gpudb)
 add_subdirectory(example)
-add_subdirectory(tests)
+
+set(TEST_SUBDIRECTORY "${GPUDB_API_CPP_SOURCE_DIR}/tests")
+if(("${GPUDB_BUILD_TESTS}" STREQUAL "TRUE") AND EXISTS "${TEST_SUBDIRECTORY}" AND IS_DIRECTORY "${TEST_SUBDIRECTORY}" )
+  add_subdirectory( ${TEST_SUBDIRECTORY} )
+endif()  
 
 MESSAGE(STATUS "*")
 PRINT_ADD_LIBRARY(TRUE)
