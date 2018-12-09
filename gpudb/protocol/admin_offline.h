@@ -121,11 +121,13 @@ namespace gpudb
          * values.
          */
         AdminOfflineResponse() :
-            isOffline(bool())
+            isOffline(bool()),
+            info(std::map<std::string, std::string>())
         {
         }
 
         bool isOffline;
+        std::map<std::string, std::string> info;
     };
 }
 
@@ -136,6 +138,7 @@ namespace avro
         static void encode(Encoder& e, const gpudb::AdminOfflineResponse& v)
         {
             ::avro::encode(e, v.isOffline);
+            ::avro::encode(e, v.info);
         }
 
         static void decode(Decoder& d, gpudb::AdminOfflineResponse& v)
@@ -152,6 +155,10 @@ namespace avro
                             ::avro::decode(d, v.isOffline);
                             break;
 
+                        case 1:
+                            ::avro::decode(d, v.info);
+                            break;
+
                         default:
                             break;
                     }
@@ -160,6 +167,7 @@ namespace avro
             else
             {
                 ::avro::decode(d, v.isOffline);
+                ::avro::decode(d, v.info);
             }
         }
     };

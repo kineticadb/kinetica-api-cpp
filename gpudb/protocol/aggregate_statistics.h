@@ -265,11 +265,13 @@ namespace gpudb
          * parameter values.
          */
         AggregateStatisticsResponse() :
-            stats(std::map<std::string, double>())
+            stats(std::map<std::string, double>()),
+            info(std::map<std::string, std::string>())
         {
         }
 
         std::map<std::string, double> stats;
+        std::map<std::string, std::string> info;
     };
 }
 
@@ -280,6 +282,7 @@ namespace avro
         static void encode(Encoder& e, const gpudb::AggregateStatisticsResponse& v)
         {
             ::avro::encode(e, v.stats);
+            ::avro::encode(e, v.info);
         }
 
         static void decode(Decoder& d, gpudb::AggregateStatisticsResponse& v)
@@ -296,6 +299,10 @@ namespace avro
                             ::avro::decode(d, v.stats);
                             break;
 
+                        case 1:
+                            ::avro::decode(d, v.info);
+                            break;
+
                         default:
                             break;
                     }
@@ -304,6 +311,7 @@ namespace avro
             else
             {
                 ::avro::decode(d, v.stats);
+                ::avro::decode(d, v.info);
             }
         }
     };

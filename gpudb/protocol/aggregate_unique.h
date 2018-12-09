@@ -423,7 +423,8 @@ namespace gpudb
             responseSchemaStr(std::string()),
             binaryEncodedResponse(std::vector<uint8_t>()),
             jsonEncodedResponse(std::string()),
-            hasMoreRecords(bool())
+            hasMoreRecords(bool()),
+            info(std::map<std::string, std::string>())
         {
         }
 
@@ -432,6 +433,7 @@ namespace gpudb
         std::vector<uint8_t> binaryEncodedResponse;
         std::string jsonEncodedResponse;
         bool hasMoreRecords;
+        std::map<std::string, std::string> info;
     };
 }
 
@@ -446,6 +448,7 @@ namespace avro
             ::avro::encode(e, v.binaryEncodedResponse);
             ::avro::encode(e, v.jsonEncodedResponse);
             ::avro::encode(e, v.hasMoreRecords);
+            ::avro::encode(e, v.info);
         }
 
         static void decode(Decoder& d, gpudb::RawAggregateUniqueResponse& v)
@@ -478,6 +481,10 @@ namespace avro
                             ::avro::decode(d, v.hasMoreRecords);
                             break;
 
+                        case 5:
+                            ::avro::decode(d, v.info);
+                            break;
+
                         default:
                             break;
                     }
@@ -490,6 +497,7 @@ namespace avro
                 ::avro::decode(d, v.binaryEncodedResponse);
                 ::avro::decode(d, v.jsonEncodedResponse);
                 ::avro::decode(d, v.hasMoreRecords);
+                ::avro::decode(d, v.info);
             }
         }
     };
@@ -546,6 +554,7 @@ namespace gpudb
             responseSchemaStr(std::string()),
             data(std::vector<gpudb::GenericRecord>()),
             hasMoreRecords(bool()),
+            info(std::map<std::string, std::string>()),
             dataTypePtr((gpudb::Type*)NULL)
         {
         }
@@ -554,6 +563,7 @@ namespace gpudb
         std::string responseSchemaStr;
         std::vector<gpudb::GenericRecord> data;
         bool hasMoreRecords;
+        std::map<std::string, std::string> info;
         gpudb_type_ptr_t dataTypePtr;
     };
 }

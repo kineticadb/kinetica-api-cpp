@@ -149,13 +149,15 @@ namespace gpudb
         RevokePermissionTableResponse() :
             name(std::string()),
             permission(std::string()),
-            tableName(std::string())
+            tableName(std::string()),
+            info(std::map<std::string, std::string>())
         {
         }
 
         std::string name;
         std::string permission;
         std::string tableName;
+        std::map<std::string, std::string> info;
     };
 }
 
@@ -168,6 +170,7 @@ namespace avro
             ::avro::encode(e, v.name);
             ::avro::encode(e, v.permission);
             ::avro::encode(e, v.tableName);
+            ::avro::encode(e, v.info);
         }
 
         static void decode(Decoder& d, gpudb::RevokePermissionTableResponse& v)
@@ -192,6 +195,10 @@ namespace avro
                             ::avro::decode(d, v.tableName);
                             break;
 
+                        case 3:
+                            ::avro::decode(d, v.info);
+                            break;
+
                         default:
                             break;
                     }
@@ -202,6 +209,7 @@ namespace avro
                 ::avro::decode(d, v.name);
                 ::avro::decode(d, v.permission);
                 ::avro::decode(d, v.tableName);
+                ::avro::decode(d, v.info);
             }
         }
     };

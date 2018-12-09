@@ -127,13 +127,15 @@ namespace gpudb
         CreateTableMonitorResponse() :
             topicId(std::string()),
             tableName(std::string()),
-            typeSchema(std::string())
+            typeSchema(std::string()),
+            info(std::map<std::string, std::string>())
         {
         }
 
         std::string topicId;
         std::string tableName;
         std::string typeSchema;
+        std::map<std::string, std::string> info;
     };
 }
 
@@ -146,6 +148,7 @@ namespace avro
             ::avro::encode(e, v.topicId);
             ::avro::encode(e, v.tableName);
             ::avro::encode(e, v.typeSchema);
+            ::avro::encode(e, v.info);
         }
 
         static void decode(Decoder& d, gpudb::CreateTableMonitorResponse& v)
@@ -170,6 +173,10 @@ namespace avro
                             ::avro::decode(d, v.typeSchema);
                             break;
 
+                        case 3:
+                            ::avro::decode(d, v.info);
+                            break;
+
                         default:
                             break;
                     }
@@ -180,6 +187,7 @@ namespace avro
                 ::avro::decode(d, v.topicId);
                 ::avro::decode(d, v.tableName);
                 ::avro::decode(d, v.typeSchema);
+                ::avro::decode(d, v.info);
             }
         }
     };

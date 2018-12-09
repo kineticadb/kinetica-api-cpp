@@ -126,11 +126,13 @@ namespace gpudb
          * values.
          */
         ShowTablesByTypeResponse() :
-            tableNames(std::vector<std::string>())
+            tableNames(std::vector<std::string>()),
+            info(std::map<std::string, std::string>())
         {
         }
 
         std::vector<std::string> tableNames;
+        std::map<std::string, std::string> info;
     };
 }
 
@@ -141,6 +143,7 @@ namespace avro
         static void encode(Encoder& e, const gpudb::ShowTablesByTypeResponse& v)
         {
             ::avro::encode(e, v.tableNames);
+            ::avro::encode(e, v.info);
         }
 
         static void decode(Decoder& d, gpudb::ShowTablesByTypeResponse& v)
@@ -157,6 +160,10 @@ namespace avro
                             ::avro::decode(d, v.tableNames);
                             break;
 
+                        case 1:
+                            ::avro::decode(d, v.info);
+                            break;
+
                         default:
                             break;
                     }
@@ -165,6 +172,7 @@ namespace avro
             else
             {
                 ::avro::decode(d, v.tableNames);
+                ::avro::decode(d, v.info);
             }
         }
     };

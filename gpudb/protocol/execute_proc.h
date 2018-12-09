@@ -224,11 +224,13 @@ namespace gpudb
          * values.
          */
         ExecuteProcResponse() :
-            runId(std::string())
+            runId(std::string()),
+            info(std::map<std::string, std::string>())
         {
         }
 
         std::string runId;
+        std::map<std::string, std::string> info;
     };
 }
 
@@ -239,6 +241,7 @@ namespace avro
         static void encode(Encoder& e, const gpudb::ExecuteProcResponse& v)
         {
             ::avro::encode(e, v.runId);
+            ::avro::encode(e, v.info);
         }
 
         static void decode(Decoder& d, gpudb::ExecuteProcResponse& v)
@@ -255,6 +258,10 @@ namespace avro
                             ::avro::decode(d, v.runId);
                             break;
 
+                        case 1:
+                            ::avro::decode(d, v.info);
+                            break;
+
                         default:
                             break;
                     }
@@ -263,6 +270,7 @@ namespace avro
             else
             {
                 ::avro::decode(d, v.runId);
+                ::avro::decode(d, v.info);
             }
         }
     };

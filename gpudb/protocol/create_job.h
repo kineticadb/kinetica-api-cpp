@@ -162,11 +162,13 @@ namespace gpudb
          * Constructs a CreateJobResponse object with default parameter values.
          */
         CreateJobResponse() :
-            jobId(int32_t())
+            jobId(int64_t()),
+            info(std::map<std::string, std::string>())
         {
         }
 
-        int32_t jobId;
+        int64_t jobId;
+        std::map<std::string, std::string> info;
     };
 }
 
@@ -177,6 +179,7 @@ namespace avro
         static void encode(Encoder& e, const gpudb::CreateJobResponse& v)
         {
             ::avro::encode(e, v.jobId);
+            ::avro::encode(e, v.info);
         }
 
         static void decode(Decoder& d, gpudb::CreateJobResponse& v)
@@ -193,6 +196,10 @@ namespace avro
                             ::avro::decode(d, v.jobId);
                             break;
 
+                        case 1:
+                            ::avro::decode(d, v.info);
+                            break;
+
                         default:
                             break;
                     }
@@ -201,6 +208,7 @@ namespace avro
             else
             {
                 ::avro::decode(d, v.jobId);
+                ::avro::decode(d, v.info);
             }
         }
     };

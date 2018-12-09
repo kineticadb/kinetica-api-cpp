@@ -107,11 +107,13 @@ namespace gpudb
          * Constructs a KillProcResponse object with default parameter values.
          */
         KillProcResponse() :
-            runIds(std::vector<std::string>())
+            runIds(std::vector<std::string>()),
+            info(std::map<std::string, std::string>())
         {
         }
 
         std::vector<std::string> runIds;
+        std::map<std::string, std::string> info;
     };
 }
 
@@ -122,6 +124,7 @@ namespace avro
         static void encode(Encoder& e, const gpudb::KillProcResponse& v)
         {
             ::avro::encode(e, v.runIds);
+            ::avro::encode(e, v.info);
         }
 
         static void decode(Decoder& d, gpudb::KillProcResponse& v)
@@ -138,6 +141,10 @@ namespace avro
                             ::avro::decode(d, v.runIds);
                             break;
 
+                        case 1:
+                            ::avro::decode(d, v.info);
+                            break;
+
                         default:
                             break;
                     }
@@ -146,6 +153,7 @@ namespace avro
             else
             {
                 ::avro::decode(d, v.runIds);
+                ::avro::decode(d, v.info);
             }
         }
     };

@@ -5,6 +5,184 @@
  */
 
 /**
+ * Add one or more new ranks to the Kinetica cluster. The new ranks will not
+ * contain any data initially, other than replicated tables, and not be
+ * assigned any shards. To rebalance data across the cluster, which includes
+ * shifting some shard key assignments to newly added ranks, see {@link
+ * #adminRebalance(const AdminRebalanceRequest&) const}.
+ * <p>
+ * For example, if attempting to add three new ranks (two ranks on host
+ * 172.123.45.67 and one rank on host 172.123.45.68) to a Kinetica cluster with
+ * additional configuration parameters:
+ * <p>
+ * * @a hosts would be an array including 172.123.45.67 in the first two
+ * indices (signifying two ranks being added to host 172.123.45.67) and
+ * 172.123.45.68 in the last index (signifying one rank being added to host
+ * 172.123.45.67)
+ * <p>
+ * * @a configParams would be an array of maps, with each map corresponding to
+ * the ranks being added in @a hosts. The key of each map would be the
+ * configuration parameter name and the value would be the parameter's value,
+ * e.g. 'rank.gpu':'1'
+ * 
+ * @param[in] request_  Request object containing the parameters for the
+ *                      operation.
+ * 
+ * @return Response object containing the result of the operation.
+ * 
+ */
+
+AdminAddRanksResponse adminAddRanks( const AdminAddRanksRequest& request_ ) const;
+
+/**
+ * Add one or more new ranks to the Kinetica cluster. The new ranks will not
+ * contain any data initially, other than replicated tables, and not be
+ * assigned any shards. To rebalance data across the cluster, which includes
+ * shifting some shard key assignments to newly added ranks, see {@link
+ * #adminRebalance(const AdminRebalanceRequest&,AdminRebalanceResponse&) const}.
+ * <p>
+ * For example, if attempting to add three new ranks (two ranks on host
+ * 172.123.45.67 and one rank on host 172.123.45.68) to a Kinetica cluster with
+ * additional configuration parameters:
+ * <p>
+ * * @a hosts would be an array including 172.123.45.67 in the first two
+ * indices (signifying two ranks being added to host 172.123.45.67) and
+ * 172.123.45.68 in the last index (signifying one rank being added to host
+ * 172.123.45.67)
+ * <p>
+ * * @a configParams would be an array of maps, with each map corresponding to
+ * the ranks being added in @a hosts. The key of each map would be the
+ * configuration parameter name and the value would be the parameter's value,
+ * e.g. 'rank.gpu':'1'
+ * 
+ * @param[in] request_  Request object containing the parameters for the
+ *                      operation.
+ * @param[out] response_  Response object containing the results of the
+ *                        operation.
+ * 
+ * @return Response object containing the result of the operation (initially
+ *         passed in by reference).
+ * 
+ */
+
+AdminAddRanksResponse& adminAddRanks( const AdminAddRanksRequest& request_,
+                                      AdminAddRanksResponse& response_ ) const;
+
+/**
+ * Add one or more new ranks to the Kinetica cluster. The new ranks will not
+ * contain any data initially, other than replicated tables, and not be
+ * assigned any shards. To rebalance data across the cluster, which includes
+ * shifting some shard key assignments to newly added ranks, see {@link
+ * #adminRebalance(const std::map<std::string, std::string>&) const}.
+ * <p>
+ * For example, if attempting to add three new ranks (two ranks on host
+ * 172.123.45.67 and one rank on host 172.123.45.68) to a Kinetica cluster with
+ * additional configuration parameters:
+ * <p>
+ * * @a hosts would be an array including 172.123.45.67 in the first two
+ * indices (signifying two ranks being added to host 172.123.45.67) and
+ * 172.123.45.68 in the last index (signifying one rank being added to host
+ * 172.123.45.67)
+ * <p>
+ * * @a configParams would be an array of maps, with each map corresponding to
+ * the ranks being added in @a hosts. The key of each map would be the
+ * configuration parameter name and the value would be the parameter's value,
+ * e.g. 'rank.gpu':'1'
+ * 
+ * @param hosts  The IP address of each rank being added to the cluster. Insert
+ *               one entry per rank, even if they are on the same host. The
+ *               order of the hosts in the array only matters as it relates to
+ *               the @a configParams.
+ * @param configParams  Configuration parameters to apply to the new ranks,
+ *                      e.g., which GPU to use. Configuration parameters that
+ *                      start with 'rankN.', where N is the rank number, should
+ *                      omit the N, as the new rank number(s) are not allocated
+ *                      until the ranks are created. Each entry in this array
+ *                      corresponds to the entry at the same array index in the
+ *                      @a hosts. This array must either be completely empty or
+ *                      have the same number of elements as the hosts array.
+ *                      An empty array will result in the new ranks being set
+ *                      only with default parameters.
+ * @param options  Optional parameters.
+ *                 <ul>
+ *                         <li> gpudb::admin_add_ranks_dry_run: If @a true,
+ *                 only validation checks will be performed. No ranks are
+ *                 added.
+ *                 <ul>
+ *                         <li> gpudb::admin_add_ranks_true
+ *                         <li> gpudb::admin_add_ranks_false
+ *                 </ul>
+ *                 The default value is gpudb::admin_add_ranks_false.
+ *                 </ul>
+ * 
+ * @return Response object containing the result of the operation.
+ * 
+ */
+
+AdminAddRanksResponse adminAddRanks( const std::vector<std::string>& hosts,
+                                     const std::vector<std::map<std::string, std::string> >& configParams,
+                                     const std::map<std::string, std::string>& options ) const;
+
+/**
+ * Add one or more new ranks to the Kinetica cluster. The new ranks will not
+ * contain any data initially, other than replicated tables, and not be
+ * assigned any shards. To rebalance data across the cluster, which includes
+ * shifting some shard key assignments to newly added ranks, see {@link
+ * #adminRebalance(const std::map<std::string, std::string>&,AdminRebalanceResponse&) const}.
+ * <p>
+ * For example, if attempting to add three new ranks (two ranks on host
+ * 172.123.45.67 and one rank on host 172.123.45.68) to a Kinetica cluster with
+ * additional configuration parameters:
+ * <p>
+ * * @a hosts would be an array including 172.123.45.67 in the first two
+ * indices (signifying two ranks being added to host 172.123.45.67) and
+ * 172.123.45.68 in the last index (signifying one rank being added to host
+ * 172.123.45.67)
+ * <p>
+ * * @a configParams would be an array of maps, with each map corresponding to
+ * the ranks being added in @a hosts. The key of each map would be the
+ * configuration parameter name and the value would be the parameter's value,
+ * e.g. 'rank.gpu':'1'
+ * 
+ * @param hosts  The IP address of each rank being added to the cluster. Insert
+ *               one entry per rank, even if they are on the same host. The
+ *               order of the hosts in the array only matters as it relates to
+ *               the @a configParams.
+ * @param configParams  Configuration parameters to apply to the new ranks,
+ *                      e.g., which GPU to use. Configuration parameters that
+ *                      start with 'rankN.', where N is the rank number, should
+ *                      omit the N, as the new rank number(s) are not allocated
+ *                      until the ranks are created. Each entry in this array
+ *                      corresponds to the entry at the same array index in the
+ *                      @a hosts. This array must either be completely empty or
+ *                      have the same number of elements as the hosts array.
+ *                      An empty array will result in the new ranks being set
+ *                      only with default parameters.
+ * @param options  Optional parameters.
+ *                 <ul>
+ *                         <li> gpudb::admin_add_ranks_dry_run: If @a true,
+ *                 only validation checks will be performed. No ranks are
+ *                 added.
+ *                 <ul>
+ *                         <li> gpudb::admin_add_ranks_true
+ *                         <li> gpudb::admin_add_ranks_false
+ *                 </ul>
+ *                 The default value is gpudb::admin_add_ranks_false.
+ *                 </ul>
+ * @param[out] response_  Response object containing the results of the
+ *                        operation.
+ * 
+ * @return Response object containing the result of the operation (initially
+ *         passed in by reference).
+ * 
+ */
+
+AdminAddRanksResponse& adminAddRanks( const std::vector<std::string>& hosts,
+                                      const std::vector<std::map<std::string, std::string> >& configParams,
+                                      const std::map<std::string, std::string>& options,
+                                      AdminAddRanksResponse& response_ ) const;
+
+/**
  * Perform the requested action on a list of one or more job(s). Based on the
  * type of job and the current state of execution, the action may not be
  * successfully executed. The final result of the attempted actions for each
@@ -61,7 +239,7 @@ AdminAlterJobsResponse& adminAlterJobs( const AdminAlterJobsRequest& request_,
  * 
  */
 
-AdminAlterJobsResponse adminAlterJobs( const std::vector<int32_t>& jobIds,
+AdminAlterJobsResponse adminAlterJobs( const std::vector<int64_t>& jobIds,
                                        const std::string& action,
                                        const std::map<std::string, std::string>& options ) const;
 
@@ -87,10 +265,92 @@ AdminAlterJobsResponse adminAlterJobs( const std::vector<int32_t>& jobIds,
  * 
  */
 
-AdminAlterJobsResponse& adminAlterJobs( const std::vector<int32_t>& jobIds,
+AdminAlterJobsResponse& adminAlterJobs( const std::vector<int64_t>& jobIds,
                                         const std::string& action,
                                         const std::map<std::string, std::string>& options,
                                         AdminAlterJobsResponse& response_ ) const;
+
+/**
+ * @private
+ * 
+ * @param[in] request_  Request object containing the parameters for the
+ *                      operation.
+ * 
+ * @return Response object containing the result of the operation.
+ * 
+ */
+
+AdminAlterShardsResponse adminAlterShards( const AdminAlterShardsRequest& request_ ) const;
+
+/**
+ * @private
+ * 
+ * @param[in] request_  Request object containing the parameters for the
+ *                      operation.
+ * @param[out] response_  Response object containing the results of the
+ *                        operation.
+ * 
+ * @return Response object containing the result of the operation (initially
+ *         passed in by reference).
+ * 
+ */
+
+AdminAlterShardsResponse& adminAlterShards( const AdminAlterShardsRequest& request_,
+                                            AdminAlterShardsResponse& response_ ) const;
+
+/**
+ * @private
+ * 
+ * @param version
+ * @param useIndex
+ * @param rank
+ * @param tom
+ * @param index
+ * @param backupMapList
+ * @param backupMapValues
+ * @param options
+ * 
+ * @return Response object containing the result of the operation.
+ * 
+ */
+
+AdminAlterShardsResponse adminAlterShards( const int64_t version,
+                                           const bool useIndex,
+                                           const std::vector<int32_t>& rank,
+                                           const std::vector<int32_t>& tom,
+                                           const std::vector<int32_t>& index,
+                                           const std::vector<int32_t>& backupMapList,
+                                           const std::vector<std::vector<int32_t> >& backupMapValues,
+                                           const std::map<std::string, std::string>& options ) const;
+
+/**
+ * @private
+ * 
+ * @param version
+ * @param useIndex
+ * @param rank
+ * @param tom
+ * @param index
+ * @param backupMapList
+ * @param backupMapValues
+ * @param options
+ * @param[out] response_  Response object containing the results of the
+ *                        operation.
+ * 
+ * @return Response object containing the result of the operation (initially
+ *         passed in by reference).
+ * 
+ */
+
+AdminAlterShardsResponse& adminAlterShards( const int64_t version,
+                                            const bool useIndex,
+                                            const std::vector<int32_t>& rank,
+                                            const std::vector<int32_t>& tom,
+                                            const std::vector<int32_t>& index,
+                                            const std::vector<int32_t>& backupMapList,
+                                            const std::vector<std::vector<int32_t> >& backupMapValues,
+                                            const std::map<std::string, std::string>& options,
+                                            AdminAlterShardsResponse& response_ ) const;
 
 /**
  * Take the system offline. When the system is offline, no user operations can
@@ -179,9 +439,264 @@ AdminOfflineResponse& adminOffline( const bool offline,
                                     AdminOfflineResponse& response_ ) const;
 
 /**
- * Retrieves a list of the most recent alerts generated.  The number of alerts
- * to retrieve is specified in this request.
- * Returns lists of alert data, earliest to latest
+ * Rebalance the cluster so that all the nodes contain approximately an equal
+ * number of records.  The rebalance will also cause the shards to be equally
+ * distributed (as much as possible) across all the ranks.
+ * 
+ * @param[in] request_  Request object containing the parameters for the
+ *                      operation.
+ * 
+ * @return Response object containing the result of the operation.
+ * 
+ */
+
+AdminRebalanceResponse adminRebalance( const AdminRebalanceRequest& request_ ) const;
+
+/**
+ * Rebalance the cluster so that all the nodes contain approximately an equal
+ * number of records.  The rebalance will also cause the shards to be equally
+ * distributed (as much as possible) across all the ranks.
+ * 
+ * @param[in] request_  Request object containing the parameters for the
+ *                      operation.
+ * @param[out] response_  Response object containing the results of the
+ *                        operation.
+ * 
+ * @return Response object containing the result of the operation (initially
+ *         passed in by reference).
+ * 
+ */
+
+AdminRebalanceResponse& adminRebalance( const AdminRebalanceRequest& request_,
+                                        AdminRebalanceResponse& response_ ) const;
+
+/**
+ * Rebalance the cluster so that all the nodes contain approximately an equal
+ * number of records.  The rebalance will also cause the shards to be equally
+ * distributed (as much as possible) across all the ranks.
+ * 
+ * @param options  Optional parameters.
+ *                 <ul>
+ *                         <li> gpudb::admin_rebalance_rebalance_sharded_data:
+ *                 If @a true, sharded data will be rebalanced approximately
+ *                 equally across the cluster. Note that for big clusters, this
+ *                 data transfer could be time consuming and result in delayed
+ *                 query responses.
+ *                 <ul>
+ *                         <li> gpudb::admin_rebalance_true
+ *                         <li> gpudb::admin_rebalance_false
+ *                 </ul>
+ *                 The default value is gpudb::admin_rebalance_true.
+ *                         <li>
+ *                 gpudb::admin_rebalance_rebalance_unsharded_data: If @a true,
+ *                 unsharded data (data without primary keys and without shard
+ *                 keys) will be rebalanced approximately equally across the
+ *                 cluster. Note that for big clusters, this data transfer
+ *                 could be time consuming and result in delayed query
+ *                 responses.
+ *                 <ul>
+ *                         <li> gpudb::admin_rebalance_true
+ *                         <li> gpudb::admin_rebalance_false
+ *                 </ul>
+ *                 The default value is gpudb::admin_rebalance_true.
+ *                         <li> gpudb::admin_rebalance_table_whitelist:
+ *                 Comma-separated list of unsharded table names to rebalance.
+ *                 Not applicable to sharded tables because they are always
+ *                 balanced in accordance with their primary key or shard key.
+ *                 Cannot be used simultaneously with @a table_blacklist.
+ *                         <li> gpudb::admin_rebalance_table_blacklist:
+ *                 Comma-separated list of unsharded table names to not
+ *                 rebalance. Not applicable to sharded tables because they are
+ *                 always balanced in accordance with their primary key or
+ *                 shard key. Cannot be used simultaneously with @a
+ *                 table_whitelist.
+ *                 </ul>
+ * 
+ * @return Response object containing the result of the operation.
+ * 
+ */
+
+AdminRebalanceResponse adminRebalance( const std::map<std::string, std::string>& options ) const;
+
+/**
+ * Rebalance the cluster so that all the nodes contain approximately an equal
+ * number of records.  The rebalance will also cause the shards to be equally
+ * distributed (as much as possible) across all the ranks.
+ * 
+ * @param options  Optional parameters.
+ *                 <ul>
+ *                         <li> gpudb::admin_rebalance_rebalance_sharded_data:
+ *                 If @a true, sharded data will be rebalanced approximately
+ *                 equally across the cluster. Note that for big clusters, this
+ *                 data transfer could be time consuming and result in delayed
+ *                 query responses.
+ *                 <ul>
+ *                         <li> gpudb::admin_rebalance_true
+ *                         <li> gpudb::admin_rebalance_false
+ *                 </ul>
+ *                 The default value is gpudb::admin_rebalance_true.
+ *                         <li>
+ *                 gpudb::admin_rebalance_rebalance_unsharded_data: If @a true,
+ *                 unsharded data (data without primary keys and without shard
+ *                 keys) will be rebalanced approximately equally across the
+ *                 cluster. Note that for big clusters, this data transfer
+ *                 could be time consuming and result in delayed query
+ *                 responses.
+ *                 <ul>
+ *                         <li> gpudb::admin_rebalance_true
+ *                         <li> gpudb::admin_rebalance_false
+ *                 </ul>
+ *                 The default value is gpudb::admin_rebalance_true.
+ *                         <li> gpudb::admin_rebalance_table_whitelist:
+ *                 Comma-separated list of unsharded table names to rebalance.
+ *                 Not applicable to sharded tables because they are always
+ *                 balanced in accordance with their primary key or shard key.
+ *                 Cannot be used simultaneously with @a table_blacklist.
+ *                         <li> gpudb::admin_rebalance_table_blacklist:
+ *                 Comma-separated list of unsharded table names to not
+ *                 rebalance. Not applicable to sharded tables because they are
+ *                 always balanced in accordance with their primary key or
+ *                 shard key. Cannot be used simultaneously with @a
+ *                 table_whitelist.
+ *                 </ul>
+ * @param[out] response_  Response object containing the results of the
+ *                        operation.
+ * 
+ * @return Response object containing the result of the operation (initially
+ *         passed in by reference).
+ * 
+ */
+
+AdminRebalanceResponse& adminRebalance( const std::map<std::string, std::string>& options,
+                                        AdminRebalanceResponse& response_ ) const;
+
+/**
+ * Remove one or more ranks from the cluster.  Note that this operation could
+ * take a long time to complete for big clusters. All data in the ranks to be
+ * removed is rebalanced to other ranks before the node is removed unless the
+ * @a rebalance_sharded_data or @a rebalance_unsharded_data parameters are set
+ * to @a false in the @a options.
+ * 
+ * @param[in] request_  Request object containing the parameters for the
+ *                      operation.
+ * 
+ * @return Response object containing the result of the operation.
+ * 
+ */
+
+AdminRemoveRanksResponse adminRemoveRanks( const AdminRemoveRanksRequest& request_ ) const;
+
+/**
+ * Remove one or more ranks from the cluster.  Note that this operation could
+ * take a long time to complete for big clusters. All data in the ranks to be
+ * removed is rebalanced to other ranks before the node is removed unless the
+ * @a rebalance_sharded_data or @a rebalance_unsharded_data parameters are set
+ * to @a false in the @a options.
+ * 
+ * @param[in] request_  Request object containing the parameters for the
+ *                      operation.
+ * @param[out] response_  Response object containing the results of the
+ *                        operation.
+ * 
+ * @return Response object containing the result of the operation (initially
+ *         passed in by reference).
+ * 
+ */
+
+AdminRemoveRanksResponse& adminRemoveRanks( const AdminRemoveRanksRequest& request_,
+                                            AdminRemoveRanksResponse& response_ ) const;
+
+/**
+ * Remove one or more ranks from the cluster.  Note that this operation could
+ * take a long time to complete for big clusters. All data in the ranks to be
+ * removed is rebalanced to other ranks before the node is removed unless the
+ * @a rebalance_sharded_data or @a rebalance_unsharded_data parameters are set
+ * to @a false in the @a options.
+ * 
+ * @param ranks  Rank numbers of the ranks to be removed from the cluster.
+ * @param options  Optional parameters.
+ *                 <ul>
+ *                         <li>
+ *                 gpudb::admin_remove_ranks_rebalance_sharded_data: When @a
+ *                 true, data with primary keys or shard keys will be
+ *                 rebalanced to other ranks prior to rank removal. Note that
+ *                 for big clusters, this data transfer could be time consuming
+ *                 and result in delayed query responses.
+ *                 <ul>
+ *                         <li> gpudb::admin_remove_ranks_true
+ *                         <li> gpudb::admin_remove_ranks_false
+ *                 </ul>
+ *                 The default value is gpudb::admin_remove_ranks_true.
+ *                         <li>
+ *                 gpudb::admin_remove_ranks_rebalance_unsharded_data: When @a
+ *                 true, unsharded data (data without primary keys and without
+ *                 shard keys) will be rebalanced to other ranks prior to rank
+ *                 removal. Note that for big clusters, this data transfer
+ *                 could be time consuming and result in delayed query
+ *                 responses.
+ *                 <ul>
+ *                         <li> gpudb::admin_remove_ranks_true
+ *                         <li> gpudb::admin_remove_ranks_false
+ *                 </ul>
+ *                 The default value is gpudb::admin_remove_ranks_true.
+ *                 </ul>
+ * 
+ * @return Response object containing the result of the operation.
+ * 
+ */
+
+AdminRemoveRanksResponse adminRemoveRanks( const std::vector<int32_t>& ranks,
+                                           const std::map<std::string, std::string>& options ) const;
+
+/**
+ * Remove one or more ranks from the cluster.  Note that this operation could
+ * take a long time to complete for big clusters. All data in the ranks to be
+ * removed is rebalanced to other ranks before the node is removed unless the
+ * @a rebalance_sharded_data or @a rebalance_unsharded_data parameters are set
+ * to @a false in the @a options.
+ * 
+ * @param ranks  Rank numbers of the ranks to be removed from the cluster.
+ * @param options  Optional parameters.
+ *                 <ul>
+ *                         <li>
+ *                 gpudb::admin_remove_ranks_rebalance_sharded_data: When @a
+ *                 true, data with primary keys or shard keys will be
+ *                 rebalanced to other ranks prior to rank removal. Note that
+ *                 for big clusters, this data transfer could be time consuming
+ *                 and result in delayed query responses.
+ *                 <ul>
+ *                         <li> gpudb::admin_remove_ranks_true
+ *                         <li> gpudb::admin_remove_ranks_false
+ *                 </ul>
+ *                 The default value is gpudb::admin_remove_ranks_true.
+ *                         <li>
+ *                 gpudb::admin_remove_ranks_rebalance_unsharded_data: When @a
+ *                 true, unsharded data (data without primary keys and without
+ *                 shard keys) will be rebalanced to other ranks prior to rank
+ *                 removal. Note that for big clusters, this data transfer
+ *                 could be time consuming and result in delayed query
+ *                 responses.
+ *                 <ul>
+ *                         <li> gpudb::admin_remove_ranks_true
+ *                         <li> gpudb::admin_remove_ranks_false
+ *                 </ul>
+ *                 The default value is gpudb::admin_remove_ranks_true.
+ *                 </ul>
+ * @param[out] response_  Response object containing the results of the
+ *                        operation.
+ * 
+ * @return Response object containing the result of the operation (initially
+ *         passed in by reference).
+ * 
+ */
+
+AdminRemoveRanksResponse& adminRemoveRanks( const std::vector<int32_t>& ranks,
+                                            const std::map<std::string, std::string>& options,
+                                            AdminRemoveRanksResponse& response_ ) const;
+
+/**
+ * Requests a list of the most recent alerts.
+ * Returns lists of alert data, including timestamp and type.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -193,9 +708,8 @@ AdminOfflineResponse& adminOffline( const bool offline,
 AdminShowAlertsResponse adminShowAlerts( const AdminShowAlertsRequest& request_ ) const;
 
 /**
- * Retrieves a list of the most recent alerts generated.  The number of alerts
- * to retrieve is specified in this request.
- * Returns lists of alert data, earliest to latest
+ * Requests a list of the most recent alerts.
+ * Returns lists of alert data, including timestamp and type.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -211,13 +725,13 @@ AdminShowAlertsResponse& adminShowAlerts( const AdminShowAlertsRequest& request_
                                           AdminShowAlertsResponse& response_ ) const;
 
 /**
- * Retrieves a list of the most recent alerts generated.  The number of alerts
- * to retrieve is specified in this request.
- * Returns lists of alert data, earliest to latest
+ * Requests a list of the most recent alerts.
+ * Returns lists of alert data, including timestamp and type.
  * 
  * @param numAlerts  Number of most recent alerts to request. The response will
- *                   return @a numAlerts alerts, or less if there are less in
- *                   the system. A value of 0 returns all stored alerts.
+ *                   include up to @a numAlerts depending on how many alerts
+ *                   there are in the system. A value of 0 returns all stored
+ *                   alerts.
  * @param options  Optional parameters.
  * 
  * @return Response object containing the result of the operation.
@@ -228,13 +742,13 @@ AdminShowAlertsResponse adminShowAlerts( const int32_t numAlerts,
                                          const std::map<std::string, std::string>& options ) const;
 
 /**
- * Retrieves a list of the most recent alerts generated.  The number of alerts
- * to retrieve is specified in this request.
- * Returns lists of alert data, earliest to latest
+ * Requests a list of the most recent alerts.
+ * Returns lists of alert data, including timestamp and type.
  * 
  * @param numAlerts  Number of most recent alerts to request. The response will
- *                   return @a numAlerts alerts, or less if there are less in
- *                   the system. A value of 0 returns all stored alerts.
+ *                   include up to @a numAlerts depending on how many alerts
+ *                   there are in the system. A value of 0 returns all stored
+ *                   alerts.
  * @param options  Optional parameters.
  * @param[out] response_  Response object containing the results of the
  *                        operation.
@@ -247,6 +761,90 @@ AdminShowAlertsResponse adminShowAlerts( const int32_t numAlerts,
 AdminShowAlertsResponse& adminShowAlerts( const int32_t numAlerts,
                                           const std::map<std::string, std::string>& options,
                                           AdminShowAlertsResponse& response_ ) const;
+
+/**
+ * Shows detailed status of current or prior cluster operations.
+ * <p>
+ * By default will retrieve the current or most resent cluster operation.  The
+ * @{history_index} is used to specify which cluster operation to retrieve. A
+ * value of zero will return the most recent, one will return the second most
+ * recent, etc.  The response will also indicate how many cluster operations
+ * are stored in the history.
+ * 
+ * @param[in] request_  Request object containing the parameters for the
+ *                      operation.
+ * 
+ * @return Response object containing the result of the operation.
+ * 
+ */
+
+AdminShowClusterOperationsResponse adminShowClusterOperations( const AdminShowClusterOperationsRequest& request_ ) const;
+
+/**
+ * Shows detailed status of current or prior cluster operations.
+ * <p>
+ * By default will retrieve the current or most resent cluster operation.  The
+ * @{history_index} is used to specify which cluster operation to retrieve. A
+ * value of zero will return the most recent, one will return the second most
+ * recent, etc.  The response will also indicate how many cluster operations
+ * are stored in the history.
+ * 
+ * @param[in] request_  Request object containing the parameters for the
+ *                      operation.
+ * @param[out] response_  Response object containing the results of the
+ *                        operation.
+ * 
+ * @return Response object containing the result of the operation (initially
+ *         passed in by reference).
+ * 
+ */
+
+AdminShowClusterOperationsResponse& adminShowClusterOperations( const AdminShowClusterOperationsRequest& request_,
+                                                                AdminShowClusterOperationsResponse& response_ ) const;
+
+/**
+ * Shows detailed status of current or prior cluster operations.
+ * <p>
+ * By default will retrieve the current or most resent cluster operation.  The
+ * @{history_index} is used to specify which cluster operation to retrieve. A
+ * value of zero will return the most recent, one will return the second most
+ * recent, etc.  The response will also indicate how many cluster operations
+ * are stored in the history.
+ * 
+ * @param historyIndex  Indicates which cluster operation to retrieve.  Zero is
+ *                      most recent.
+ * @param options  Optional parameters.
+ * 
+ * @return Response object containing the result of the operation.
+ * 
+ */
+
+AdminShowClusterOperationsResponse adminShowClusterOperations( const int32_t historyIndex,
+                                                               const std::map<std::string, std::string>& options ) const;
+
+/**
+ * Shows detailed status of current or prior cluster operations.
+ * <p>
+ * By default will retrieve the current or most resent cluster operation.  The
+ * @{history_index} is used to specify which cluster operation to retrieve. A
+ * value of zero will return the most recent, one will return the second most
+ * recent, etc.  The response will also indicate how many cluster operations
+ * are stored in the history.
+ * 
+ * @param historyIndex  Indicates which cluster operation to retrieve.  Zero is
+ *                      most recent.
+ * @param options  Optional parameters.
+ * @param[out] response_  Response object containing the results of the
+ *                        operation.
+ * 
+ * @return Response object containing the result of the operation (initially
+ *         passed in by reference).
+ * 
+ */
+
+AdminShowClusterOperationsResponse& adminShowClusterOperations( const int32_t historyIndex,
+                                                                const std::map<std::string, std::string>& options,
+                                                                AdminShowClusterOperationsResponse& response_ ) const;
 
 /**
  * Get a list of the current jobs in GPUdb.
@@ -3001,6 +3599,136 @@ AggregateUnpivotResponse& aggregateUnpivot( const std::string& tableName,
                                             AggregateUnpivotResponse& response_ ) const;
 
 /**
+ * Alters properties of exisiting resource group to facilitate resource
+ * management.
+ * 
+ * @param[in] request_  Request object containing the parameters for the
+ *                      operation.
+ * 
+ * @return Response object containing the result of the operation.
+ * 
+ */
+
+AlterResourceGroupResponse alterResourceGroup( const AlterResourceGroupRequest& request_ ) const;
+
+/**
+ * Alters properties of exisiting resource group to facilitate resource
+ * management.
+ * 
+ * @param[in] request_  Request object containing the parameters for the
+ *                      operation.
+ * @param[out] response_  Response object containing the results of the
+ *                        operation.
+ * 
+ * @return Response object containing the result of the operation (initially
+ *         passed in by reference).
+ * 
+ */
+
+AlterResourceGroupResponse& alterResourceGroup( const AlterResourceGroupRequest& request_,
+                                                AlterResourceGroupResponse& response_ ) const;
+
+/**
+ * Alters properties of exisiting resource group to facilitate resource
+ * management.
+ * 
+ * @param name  Name of the group to be altered. Must match existing resource
+ *              group name.
+ * @param tierAttributes  Optional map containing group limits for
+ *                        tier-specific attributes such as memory.
+ *                        <ul>
+ *                                <li> gpudb::alter_resource_group_max_memory:
+ *                        Maximum amount of memory usable in the given tier at
+ *                        one time for this group.
+ *                        </ul>
+ * @param tierStrategy  Optional array that defines the default tiering
+ *                      strategy for this group. Each element pair defines an
+ *                      existing tier and its preferred priority. e.g. ['RAM
+ *                      50',VRAM 30']
+ * @param options  Optional parameters.
+ *                 <ul>
+ *                         <li>
+ *                 gpudb::alter_resource_group_max_cpu_concurrency: Maximum
+ *                 number of simultaneous threads that will be used to execute
+ *                 a request for this group.
+ *                         <li>
+ *                 gpudb::alter_resource_group_max_scheduling_priority: Maximum
+ *                 priority of a scheduled task for this group.
+ *                         <li> gpudb::alter_resource_group_max_tier_priority:
+ *                 Maximum priority of a tiered object for this group.
+ *                         <li> gpudb::alter_resource_group_is_default_group:
+ *                 If true this request applies to the global default resource
+ *                 group. It is an error for this field to be true when the @a
+ *                 name field is also populated.
+ *                 <ul>
+ *                         <li> gpudb::alter_resource_group_true
+ *                         <li> gpudb::alter_resource_group_false
+ *                 </ul>
+ *                 The default value is gpudb::alter_resource_group_false.
+ *                 </ul>
+ * 
+ * @return Response object containing the result of the operation.
+ * 
+ */
+
+AlterResourceGroupResponse alterResourceGroup( const std::string& name,
+                                               const std::map<std::string, std::map<std::string, std::string> >& tierAttributes,
+                                               const std::vector<std::string>& tierStrategy,
+                                               const std::map<std::string, std::string>& options ) const;
+
+/**
+ * Alters properties of exisiting resource group to facilitate resource
+ * management.
+ * 
+ * @param name  Name of the group to be altered. Must match existing resource
+ *              group name.
+ * @param tierAttributes  Optional map containing group limits for
+ *                        tier-specific attributes such as memory.
+ *                        <ul>
+ *                                <li> gpudb::alter_resource_group_max_memory:
+ *                        Maximum amount of memory usable in the given tier at
+ *                        one time for this group.
+ *                        </ul>
+ * @param tierStrategy  Optional array that defines the default tiering
+ *                      strategy for this group. Each element pair defines an
+ *                      existing tier and its preferred priority. e.g. ['RAM
+ *                      50',VRAM 30']
+ * @param options  Optional parameters.
+ *                 <ul>
+ *                         <li>
+ *                 gpudb::alter_resource_group_max_cpu_concurrency: Maximum
+ *                 number of simultaneous threads that will be used to execute
+ *                 a request for this group.
+ *                         <li>
+ *                 gpudb::alter_resource_group_max_scheduling_priority: Maximum
+ *                 priority of a scheduled task for this group.
+ *                         <li> gpudb::alter_resource_group_max_tier_priority:
+ *                 Maximum priority of a tiered object for this group.
+ *                         <li> gpudb::alter_resource_group_is_default_group:
+ *                 If true this request applies to the global default resource
+ *                 group. It is an error for this field to be true when the @a
+ *                 name field is also populated.
+ *                 <ul>
+ *                         <li> gpudb::alter_resource_group_true
+ *                         <li> gpudb::alter_resource_group_false
+ *                 </ul>
+ *                 The default value is gpudb::alter_resource_group_false.
+ *                 </ul>
+ * @param[out] response_  Response object containing the results of the
+ *                        operation.
+ * 
+ * @return Response object containing the result of the operation (initially
+ *         passed in by reference).
+ * 
+ */
+
+AlterResourceGroupResponse& alterResourceGroup( const std::string& name,
+                                                const std::map<std::string, std::map<std::string, std::string> >& tierAttributes,
+                                                const std::vector<std::string>& tierStrategy,
+                                                const std::map<std::string, std::string>& options,
+                                                AlterResourceGroupResponse& response_ ) const;
+
+/**
  * The {@link
  * #alterSystemProperties(const AlterSystemPropertiesRequest&) const}
  * endpoint is primarily used to simplify the testing of the system and is not
@@ -3321,8 +4049,8 @@ AlterSystemPropertiesResponse& alterSystemProperties( const std::map<std::string
                                                       AlterSystemPropertiesResponse& response_ ) const;
 
 /**
- * Apply various modifications to a table, view, or collection.  The available
- * modifications include the following:
+ * Apply various modifications to a table, view, or collection.  The
+ * available modifications include the following:
  * <p>
  * Create or delete an <a href="../../concepts/indexes.html#column-index"
  * target="_top">index</a> on a
@@ -3349,6 +4077,10 @@ AlterSystemPropertiesResponse& alterSystemProperties( const std::map<std::string
  * target="_top">protection</a> mode to prevent or
  * allow automatic expiration. This can be applied to tables, views, and
  * collections.
+ * <p>
+ * Manage a <a href="../../concepts/tables.html#partitioning"
+ * target="_top">range-partitioned</a>
+ * table's partitions.
  * <p>
  * Allow homogeneous tables within a collection.
  * <p>
@@ -3369,8 +4101,8 @@ AlterSystemPropertiesResponse& alterSystemProperties( const std::map<std::string
 AlterTableResponse alterTable( const AlterTableRequest& request_ ) const;
 
 /**
- * Apply various modifications to a table, view, or collection.  The available
- * modifications include the following:
+ * Apply various modifications to a table, view, or collection.  The
+ * available modifications include the following:
  * <p>
  * Create or delete an <a href="../../concepts/indexes.html#column-index"
  * target="_top">index</a> on a
@@ -3397,6 +4129,10 @@ AlterTableResponse alterTable( const AlterTableRequest& request_ ) const;
  * target="_top">protection</a> mode to prevent or
  * allow automatic expiration. This can be applied to tables, views, and
  * collections.
+ * <p>
+ * Manage a <a href="../../concepts/tables.html#partitioning"
+ * target="_top">range-partitioned</a>
+ * table's partitions.
  * <p>
  * Allow homogeneous tables within a collection.
  * <p>
@@ -3421,8 +4157,8 @@ AlterTableResponse& alterTable( const AlterTableRequest& request_,
                                 AlterTableResponse& response_ ) const;
 
 /**
- * Apply various modifications to a table, view, or collection.  The available
- * modifications include the following:
+ * Apply various modifications to a table, view, or collection.  The
+ * available modifications include the following:
  * <p>
  * Create or delete an <a href="../../concepts/indexes.html#column-index"
  * target="_top">index</a> on a
@@ -3450,6 +4186,10 @@ AlterTableResponse& alterTable( const AlterTableRequest& request_,
  * allow automatic expiration. This can be applied to tables, views, and
  * collections.
  * <p>
+ * Manage a <a href="../../concepts/tables.html#partitioning"
+ * target="_top">range-partitioned</a>
+ * table's partitions.
+ * <p>
  * Allow homogeneous tables within a collection.
  * <p>
  * Manage a table's columns--a column can be added, removed, or have its
@@ -3463,10 +4203,8 @@ AlterTableResponse& alterTable( const AlterTableRequest& request_,
  *                   existing table, view, or collection.
  * @param action  Modification operation to be applied
  *                <ul>
- *                        <li> gpudb::alter_table_allow_homogeneous_tables:
- *                Sets whether homogeneous tables are allowed in the given
- *                collection. This action is only valid if @a tableName is a
- *                collection. The @a value must be either 'true' or 'false'.
+ *                        <li> gpudb::alter_table_allow_homogeneous_tables: No
+ *                longer supported; action will be ignored.
  *                        <li> gpudb::alter_table_create_index: Creates an <a
  *                href="../../concepts/indexes.html#column-index"
  *                target="_top">index</a> on the column name specified in @a
@@ -3530,6 +4268,18 @@ AlterTableResponse& alterTable( const AlterTableRequest& request_,
  *                target="_top">foreign key</a>.  The @a value should be the
  *                foreign_key_name specified when creating the key or the
  *                complete string used to define it.
+ *                        <li> gpudb::alter_table_add_partition: Partition
+ *                definition to add (for range-partitioned tables only).  See
+ *                <a
+ *                href="../../concepts/tables.html#partitioning-by-range-example"
+ *                target="_top">range partitioning example</a> for example
+ *                format.
+ *                        <li> gpudb::alter_table_remove_partition: Name of
+ *                partition to remove (for range-partitioned tables only).  All
+ *                data in partition will be moved to the default partition
+ *                        <li> gpudb::alter_table_delete_partition: Name of
+ *                partition to delete (for range-partitioned tables only).  All
+ *                data in the partition will be deleted.
  *                        <li> gpudb::alter_table_set_global_access_mode: Sets
  *                the global access mode (i.e. locking) for the table specified
  *                in @a tableName. Specify the access mode in @a value. Valid
@@ -3564,6 +4314,9 @@ AlterTableResponse& alterTable( const AlterTableRequest& request_,
  *               action.
  * @param options  Optional parameters.
  *                 <ul>
+ *                         <li> gpudb::alter_table_action
+ *                         <li> gpudb::alter_table_column_name
+ *                         <li> gpudb::alter_table_table_name
  *                         <li> gpudb::alter_table_column_default_value: When
  *                 adding a column, set a default value for existing records.
  *                 For nullable columns, the default value will be null,
@@ -3624,8 +4377,8 @@ AlterTableResponse alterTable( const std::string& tableName,
                                const std::map<std::string, std::string>& options ) const;
 
 /**
- * Apply various modifications to a table, view, or collection.  The available
- * modifications include the following:
+ * Apply various modifications to a table, view, or collection.  The
+ * available modifications include the following:
  * <p>
  * Create or delete an <a href="../../concepts/indexes.html#column-index"
  * target="_top">index</a> on a
@@ -3653,6 +4406,10 @@ AlterTableResponse alterTable( const std::string& tableName,
  * allow automatic expiration. This can be applied to tables, views, and
  * collections.
  * <p>
+ * Manage a <a href="../../concepts/tables.html#partitioning"
+ * target="_top">range-partitioned</a>
+ * table's partitions.
+ * <p>
  * Allow homogeneous tables within a collection.
  * <p>
  * Manage a table's columns--a column can be added, removed, or have its
@@ -3666,10 +4423,8 @@ AlterTableResponse alterTable( const std::string& tableName,
  *                   existing table, view, or collection.
  * @param action  Modification operation to be applied
  *                <ul>
- *                        <li> gpudb::alter_table_allow_homogeneous_tables:
- *                Sets whether homogeneous tables are allowed in the given
- *                collection. This action is only valid if @a tableName is a
- *                collection. The @a value must be either 'true' or 'false'.
+ *                        <li> gpudb::alter_table_allow_homogeneous_tables: No
+ *                longer supported; action will be ignored.
  *                        <li> gpudb::alter_table_create_index: Creates an <a
  *                href="../../concepts/indexes.html#column-index"
  *                target="_top">index</a> on the column name specified in @a
@@ -3733,6 +4488,18 @@ AlterTableResponse alterTable( const std::string& tableName,
  *                target="_top">foreign key</a>.  The @a value should be the
  *                foreign_key_name specified when creating the key or the
  *                complete string used to define it.
+ *                        <li> gpudb::alter_table_add_partition: Partition
+ *                definition to add (for range-partitioned tables only).  See
+ *                <a
+ *                href="../../concepts/tables.html#partitioning-by-range-example"
+ *                target="_top">range partitioning example</a> for example
+ *                format.
+ *                        <li> gpudb::alter_table_remove_partition: Name of
+ *                partition to remove (for range-partitioned tables only).  All
+ *                data in partition will be moved to the default partition
+ *                        <li> gpudb::alter_table_delete_partition: Name of
+ *                partition to delete (for range-partitioned tables only).  All
+ *                data in the partition will be deleted.
  *                        <li> gpudb::alter_table_set_global_access_mode: Sets
  *                the global access mode (i.e. locking) for the table specified
  *                in @a tableName. Specify the access mode in @a value. Valid
@@ -3767,6 +4534,9 @@ AlterTableResponse alterTable( const std::string& tableName,
  *               action.
  * @param options  Optional parameters.
  *                 <ul>
+ *                         <li> gpudb::alter_table_action
+ *                         <li> gpudb::alter_table_column_name
+ *                         <li> gpudb::alter_table_table_name
  *                         <li> gpudb::alter_table_column_default_value: When
  *                 adding a column, set a default value for existing records.
  *                 For nullable columns, the default value will be null,
@@ -3829,6 +4599,152 @@ AlterTableResponse& alterTable( const std::string& tableName,
                                 const std::string& value,
                                 const std::map<std::string, std::string>& options,
                                 AlterTableResponse& response_ ) const;
+
+/**
+ * Apply various modifications to columns in a table, view.  The available
+ * modifications include the following:
+ * <p>
+ * Create or delete an <a href="../../concepts/indexes.html#column-index"
+ * target="_top">index</a> on a
+ * particular column. This can speed up certain operations when using
+ * expressions
+ * containing equality or relational operators on indexed columns. This only
+ * applies to tables.
+ * <p>
+ * Manage a table's columns--a column can be added, removed, or have its
+ * <a href="../../concepts/types.html" target="_top">type and properties</a>
+ * modified.
+ * <p>
+ * Set or unset <a href="../../concepts/compression.html"
+ * target="_top">compression</a> for a column.
+ * 
+ * @param[in] request_  Request object containing the parameters for the
+ *                      operation.
+ * 
+ * @return Response object containing the result of the operation.
+ * 
+ */
+
+AlterTableColumnsResponse alterTableColumns( const AlterTableColumnsRequest& request_ ) const;
+
+/**
+ * Apply various modifications to columns in a table, view.  The available
+ * modifications include the following:
+ * <p>
+ * Create or delete an <a href="../../concepts/indexes.html#column-index"
+ * target="_top">index</a> on a
+ * particular column. This can speed up certain operations when using
+ * expressions
+ * containing equality or relational operators on indexed columns. This only
+ * applies to tables.
+ * <p>
+ * Manage a table's columns--a column can be added, removed, or have its
+ * <a href="../../concepts/types.html" target="_top">type and properties</a>
+ * modified.
+ * <p>
+ * Set or unset <a href="../../concepts/compression.html"
+ * target="_top">compression</a> for a column.
+ * 
+ * @param[in] request_  Request object containing the parameters for the
+ *                      operation.
+ * @param[out] response_  Response object containing the results of the
+ *                        operation.
+ * 
+ * @return Response object containing the result of the operation (initially
+ *         passed in by reference).
+ * 
+ */
+
+AlterTableColumnsResponse& alterTableColumns( const AlterTableColumnsRequest& request_,
+                                              AlterTableColumnsResponse& response_ ) const;
+
+/**
+ * Apply various modifications to columns in a table, view.  The available
+ * modifications include the following:
+ * <p>
+ * Create or delete an <a href="../../concepts/indexes.html#column-index"
+ * target="_top">index</a> on a
+ * particular column. This can speed up certain operations when using
+ * expressions
+ * containing equality or relational operators on indexed columns. This only
+ * applies to tables.
+ * <p>
+ * Manage a table's columns--a column can be added, removed, or have its
+ * <a href="../../concepts/types.html" target="_top">type and properties</a>
+ * modified.
+ * <p>
+ * Set or unset <a href="../../concepts/compression.html"
+ * target="_top">compression</a> for a column.
+ * 
+ * @param tableName  Table on which the operation will be performed. Must be an
+ *                   existing table or view.
+ * @param columnAlterations  list of alter table add/delete/change column
+ *                           requests - all for the same table.
+ *                                           each request is a map that
+ *                           includes 'column_name', 'action' and the options
+ *                           specific for the action,
+ *                                           note that the same options as in
+ *                           alter table requests but in the same map as the
+ *                           column name and the action. For example:
+ *                           [{'column_name':'col_1','action':'change_column','rename_column':'col_2'},
+ *                           {'column_name':'col_1','action':'add_column',
+ *                           'type':'int','default_value':'1'}
+ *                                           ]
+ * @param options  Optional parameters.
+ * 
+ * @return Response object containing the result of the operation.
+ * 
+ */
+
+AlterTableColumnsResponse alterTableColumns( const std::string& tableName,
+                                             const std::vector<std::map<std::string, std::string> >& columnAlterations,
+                                             const std::map<std::string, std::string>& options ) const;
+
+/**
+ * Apply various modifications to columns in a table, view.  The available
+ * modifications include the following:
+ * <p>
+ * Create or delete an <a href="../../concepts/indexes.html#column-index"
+ * target="_top">index</a> on a
+ * particular column. This can speed up certain operations when using
+ * expressions
+ * containing equality or relational operators on indexed columns. This only
+ * applies to tables.
+ * <p>
+ * Manage a table's columns--a column can be added, removed, or have its
+ * <a href="../../concepts/types.html" target="_top">type and properties</a>
+ * modified.
+ * <p>
+ * Set or unset <a href="../../concepts/compression.html"
+ * target="_top">compression</a> for a column.
+ * 
+ * @param tableName  Table on which the operation will be performed. Must be an
+ *                   existing table or view.
+ * @param columnAlterations  list of alter table add/delete/change column
+ *                           requests - all for the same table.
+ *                                           each request is a map that
+ *                           includes 'column_name', 'action' and the options
+ *                           specific for the action,
+ *                                           note that the same options as in
+ *                           alter table requests but in the same map as the
+ *                           column name and the action. For example:
+ *                           [{'column_name':'col_1','action':'change_column','rename_column':'col_2'},
+ *                           {'column_name':'col_1','action':'add_column',
+ *                           'type':'int','default_value':'1'}
+ *                                           ]
+ * @param options  Optional parameters.
+ * @param[out] response_  Response object containing the results of the
+ *                        operation.
+ * 
+ * @return Response object containing the result of the operation (initially
+ *         passed in by reference).
+ * 
+ */
+
+AlterTableColumnsResponse& alterTableColumns( const std::string& tableName,
+                                              const std::vector<std::map<std::string, std::string> >& columnAlterations,
+                                              const std::map<std::string, std::string>& options,
+                                              AlterTableColumnsResponse& response_ ) const;
 
 /**
  * Updates (adds or changes) metadata for tables. The metadata key and values
@@ -3917,6 +4833,84 @@ AlterTableMetadataResponse& alterTableMetadata( const std::vector<std::string>& 
                                                 AlterTableMetadataResponse& response_ ) const;
 
 /**
+ * Alters properties of exisiting tier to facilitate resource management.
+ * 
+ * @param[in] request_  Request object containing the parameters for the
+ *                      operation.
+ * 
+ * @return Response object containing the result of the operation.
+ * 
+ */
+
+AlterTierResponse alterTier( const AlterTierRequest& request_ ) const;
+
+/**
+ * Alters properties of exisiting tier to facilitate resource management.
+ * 
+ * @param[in] request_  Request object containing the parameters for the
+ *                      operation.
+ * @param[out] response_  Response object containing the results of the
+ *                        operation.
+ * 
+ * @return Response object containing the result of the operation (initially
+ *         passed in by reference).
+ * 
+ */
+
+AlterTierResponse& alterTier( const AlterTierRequest& request_,
+                              AlterTierResponse& response_ ) const;
+
+/**
+ * Alters properties of exisiting tier to facilitate resource management.
+ * 
+ * @param name  Name of the tier to be altered. Must match tier group name.
+ * @param options  Optional parameters.
+ *                 <ul>
+ *                         <li> gpudb::alter_tier_capacity: Maximum size in
+ *                 bytes this tier may hold at once.
+ *                         <li> gpudb::alter_tier_high_watermark: Triggers
+ *                 asynchronous eviction once a tiers resource usage exceeds
+ *                 this percentage down to the low watermark.
+ *                         <li> gpudb::alter_tier_low_watermark: Percentage
+ *                 resource usage to evict down to once the high watermark has
+ *                 been hit.
+ *                 </ul>
+ * 
+ * @return Response object containing the result of the operation.
+ * 
+ */
+
+AlterTierResponse alterTier( const std::string& name,
+                             const std::map<std::string, std::string>& options ) const;
+
+/**
+ * Alters properties of exisiting tier to facilitate resource management.
+ * 
+ * @param name  Name of the tier to be altered. Must match tier group name.
+ * @param options  Optional parameters.
+ *                 <ul>
+ *                         <li> gpudb::alter_tier_capacity: Maximum size in
+ *                 bytes this tier may hold at once.
+ *                         <li> gpudb::alter_tier_high_watermark: Triggers
+ *                 asynchronous eviction once a tiers resource usage exceeds
+ *                 this percentage down to the low watermark.
+ *                         <li> gpudb::alter_tier_low_watermark: Percentage
+ *                 resource usage to evict down to once the high watermark has
+ *                 been hit.
+ *                 </ul>
+ * @param[out] response_  Response object containing the results of the
+ *                        operation.
+ * 
+ * @return Response object containing the result of the operation (initially
+ *         passed in by reference).
+ * 
+ */
+
+AlterTierResponse& alterTier( const std::string& name,
+                              const std::map<std::string, std::string>& options,
+                              AlterTierResponse& response_ ) const;
+
+/**
  * Alters a user.
  * 
  * @param[in] request_  Request object containing the parameters for the
@@ -3952,6 +4946,10 @@ AlterUserResponse& alterUser( const AlterUserRequest& request_,
  *                <ul>
  *                        <li> gpudb::alter_user_set_password: Sets the
  *                password of the user. The user must be an internal user.
+ *                        <li> gpudb::alter_user_set_resource_group: Sets the
+ *                resource group for an internal user. The resource group must
+ *                exist, otherwise, an empty string assigns the user to the
+ *                default resource group.
  *                </ul>
  * @param value  The value of the modification, depending on @a action.
  * @param options  Optional parameters.
@@ -3973,6 +4971,10 @@ AlterUserResponse alterUser( const std::string& name,
  *                <ul>
  *                        <li> gpudb::alter_user_set_password: Sets the
  *                password of the user. The user must be an internal user.
+ *                        <li> gpudb::alter_user_set_resource_group: Sets the
+ *                resource group for an internal user. The resource group must
+ *                exist, otherwise, an empty string assigns the user to the
+ *                default resource group.
  *                </ul>
  * @param value  The value of the modification, depending on @a action.
  * @param options  Optional parameters.
@@ -4046,22 +5048,19 @@ AppendRecordsResponse& appendRecords( const AppendRecordsRequest& request_,
  *                 <ul>
  *                         <li> gpudb::append_records_offset: A positive
  *                 integer indicating the number of initial results to skip
- *                 from source table (specified by @a sourceTableName). Default
- *                 is 0. The minimum allowed value is 0. The maximum allowed
- *                 value is MAX_INT.
+ *                 from @a sourceTableName. Default is 0. The minimum allowed
+ *                 value is 0. The maximum allowed value is MAX_INT.
  *                         <li> gpudb::append_records_limit: A positive integer
  *                 indicating the maximum number of results to be returned from
- *                 source table (specified by @a sourceTableName). Or
- *                 END_OF_SET (-9999) to indicate that the max number of
- *                 results should be returned.
+ *                 @a sourceTableName. Or END_OF_SET (-9999) to indicate that
+ *                 the max number of results should be returned.
  *                         <li> gpudb::append_records_expression: Optional
- *                 filter expression to apply to the source table (specified by
- *                 @a sourceTableName). Empty by default.
+ *                 filter expression to apply to the @a sourceTableName.
  *                         <li> gpudb::append_records_order_by: Comma-separated
- *                 list of the columns and expressions to be sorted by from the
- *                 source table (specified by @a sourceTableName); e.g.
- *                 'timestamp asc, x desc'.  The @a order_by columns do not
- *                 have to be present in @a fieldMap.
+ *                 list of the columns to be sorted by from source table
+ *                 (specified by @a sourceTableName), e.g., 'timestamp asc, x
+ *                 desc'. The @a order_by columns do not have to be present in
+ *                 @a fieldMap.
  *                         <li> gpudb::append_records_update_on_existing_pk:
  *                 Specifies the record collision policy for inserting the
  *                 source table records (specified by @a sourceTableName) into
@@ -4114,22 +5113,19 @@ AppendRecordsResponse appendRecords( const std::string& tableName,
  *                 <ul>
  *                         <li> gpudb::append_records_offset: A positive
  *                 integer indicating the number of initial results to skip
- *                 from source table (specified by @a sourceTableName). Default
- *                 is 0. The minimum allowed value is 0. The maximum allowed
- *                 value is MAX_INT.
+ *                 from @a sourceTableName. Default is 0. The minimum allowed
+ *                 value is 0. The maximum allowed value is MAX_INT.
  *                         <li> gpudb::append_records_limit: A positive integer
  *                 indicating the maximum number of results to be returned from
- *                 source table (specified by @a sourceTableName). Or
- *                 END_OF_SET (-9999) to indicate that the max number of
- *                 results should be returned.
+ *                 @a sourceTableName. Or END_OF_SET (-9999) to indicate that
+ *                 the max number of results should be returned.
  *                         <li> gpudb::append_records_expression: Optional
- *                 filter expression to apply to the source table (specified by
- *                 @a sourceTableName). Empty by default.
+ *                 filter expression to apply to the @a sourceTableName.
  *                         <li> gpudb::append_records_order_by: Comma-separated
- *                 list of the columns and expressions to be sorted by from the
- *                 source table (specified by @a sourceTableName); e.g.
- *                 'timestamp asc, x desc'.  The @a order_by columns do not
- *                 have to be present in @a fieldMap.
+ *                 list of the columns to be sorted by from source table
+ *                 (specified by @a sourceTableName), e.g., 'timestamp asc, x
+ *                 desc'. The @a order_by columns do not have to be present in
+ *                 @a fieldMap.
  *                         <li> gpudb::append_records_update_on_existing_pk:
  *                 Specifies the record collision policy for inserting the
  *                 source table records (specified by @a sourceTableName) into
@@ -4163,6 +5159,68 @@ AppendRecordsResponse& appendRecords( const std::string& tableName,
                                       const std::map<std::string, std::string>& fieldMap,
                                       const std::map<std::string, std::string>& options,
                                       AppendRecordsResponse& response_ ) const;
+
+/**
+ * @private
+ * 
+ * @param[in] request_  Request object containing the parameters for the
+ *                      operation.
+ * 
+ * @return Response object containing the result of the operation.
+ * 
+ */
+
+ClearStatisticsResponse clearStatistics( const ClearStatisticsRequest& request_ ) const;
+
+/**
+ * @private
+ * 
+ * @param[in] request_  Request object containing the parameters for the
+ *                      operation.
+ * @param[out] response_  Response object containing the results of the
+ *                        operation.
+ * 
+ * @return Response object containing the result of the operation (initially
+ *         passed in by reference).
+ * 
+ */
+
+ClearStatisticsResponse& clearStatistics( const ClearStatisticsRequest& request_,
+                                          ClearStatisticsResponse& response_ ) const;
+
+/**
+ * @private
+ * 
+ * @param tableName
+ * @param columnName
+ * @param options
+ * 
+ * @return Response object containing the result of the operation.
+ * 
+ */
+
+ClearStatisticsResponse clearStatistics( const std::string& tableName,
+                                         const std::string& columnName,
+                                         const std::map<std::string, std::string>& options ) const;
+
+/**
+ * @private
+ * 
+ * @param tableName
+ * @param columnName
+ * @param options
+ * @param[out] response_  Response object containing the results of the
+ *                        operation.
+ * 
+ * @return Response object containing the result of the operation (initially
+ *         passed in by reference).
+ * 
+ */
+
+ClearStatisticsResponse& clearStatistics( const std::string& tableName,
+                                          const std::string& columnName,
+                                          const std::map<std::string, std::string>& options,
+                                          ClearStatisticsResponse& response_ ) const;
 
 /**
  * Clears (drops) one or all tables in the database cluster. The operation is
@@ -4397,6 +5455,388 @@ ClearTriggerResponse& clearTrigger( const std::string& triggerId,
                                     ClearTriggerResponse& response_ ) const;
 
 /**
+ * @private
+ * 
+ * @param[in] request_  Request object containing the parameters for the
+ *                      operation.
+ * 
+ * @return Response object containing the result of the operation.
+ * 
+ */
+
+CollectStatisticsResponse collectStatistics( const CollectStatisticsRequest& request_ ) const;
+
+/**
+ * @private
+ * 
+ * @param[in] request_  Request object containing the parameters for the
+ *                      operation.
+ * @param[out] response_  Response object containing the results of the
+ *                        operation.
+ * 
+ * @return Response object containing the result of the operation (initially
+ *         passed in by reference).
+ * 
+ */
+
+CollectStatisticsResponse& collectStatistics( const CollectStatisticsRequest& request_,
+                                              CollectStatisticsResponse& response_ ) const;
+
+/**
+ * @private
+ * 
+ * @param tableName
+ * @param columnNames
+ * @param options
+ * 
+ * @return Response object containing the result of the operation.
+ * 
+ */
+
+CollectStatisticsResponse collectStatistics( const std::string& tableName,
+                                             const std::vector<std::string>& columnNames,
+                                             const std::map<std::string, std::string>& options ) const;
+
+/**
+ * @private
+ * 
+ * @param tableName
+ * @param columnNames
+ * @param options
+ * @param[out] response_  Response object containing the results of the
+ *                        operation.
+ * 
+ * @return Response object containing the result of the operation (initially
+ *         passed in by reference).
+ * 
+ */
+
+CollectStatisticsResponse& collectStatistics( const std::string& tableName,
+                                              const std::vector<std::string>& columnNames,
+                                              const std::map<std::string, std::string>& options,
+                                              CollectStatisticsResponse& response_ ) const;
+
+/**
+ * Creates a new graph network using given nodes, edges, weights, and
+ * restrictions. See <a href="../../graph_solver/network_graph_solver.html"
+ * target="_top">Network Graph Solvers</a> for more information.
+ * 
+ * @param[in] request_  Request object containing the parameters for the
+ *                      operation.
+ * 
+ * @return Response object containing the result of the operation.
+ * 
+ */
+
+CreateGraphResponse createGraph( const CreateGraphRequest& request_ ) const;
+
+/**
+ * Creates a new graph network using given nodes, edges, weights, and
+ * restrictions. See <a href="../../graph_solver/network_graph_solver.html"
+ * target="_top">Network Graph Solvers</a> for more information.
+ * 
+ * @param[in] request_  Request object containing the parameters for the
+ *                      operation.
+ * @param[out] response_  Response object containing the results of the
+ *                        operation.
+ * 
+ * @return Response object containing the result of the operation (initially
+ *         passed in by reference).
+ * 
+ */
+
+CreateGraphResponse& createGraph( const CreateGraphRequest& request_,
+                                  CreateGraphResponse& response_ ) const;
+
+/**
+ * Creates a new graph network using given nodes, edges, weights, and
+ * restrictions. See <a href="../../graph_solver/network_graph_solver.html"
+ * target="_top">Network Graph Solvers</a> for more information.
+ * 
+ * @param graphName  Name of the graph resource to generate.
+ * @param directedGraph  If set to @a true, the graph will be directed (0 to 1,
+ *                       1 to 2, etc.). If set to @a false, the graph will not
+ *                       be directed.
+ *                       <ul>
+ *                               <li> gpudb::create_graph_true
+ *                               <li> gpudb::create_graph_false
+ *                       </ul>
+ *                       The default value is gpudb::create_graph_true.
+ * @param nodes  Nodes represent fundamental topological units of a graph.
+ *               Nodes must be specified using <a
+ *               href="../../graph_solver/network_graph_solver.html#identifiers"
+ *               target="_top">identifiers</a>; identifiers are grouped as <a
+ *               href="../../graph_solver/network_graph_solver.html#id-combos"
+ *               target="_top">combinations</a>. Example format: 'table.column
+ *               AS NODE_ID'
+ * @param edges  Edges represent the required fundamental topological unit of a
+ *               graph that typically connect nodes. Edges must be specified
+ *               using <a
+ *               href="../../graph_solver/network_graph_solver.html#identifiers"
+ *               target="_top">identifiers</a>; identifiers are grouped as <a
+ *               href="../../graph_solver/network_graph_solver.html#id-combos"
+ *               target="_top">combinations</a>. Example format: 'table.column
+ *               AS EDGE_WKTLINE'
+ * @param weights  Weights represent a method of informing the graph solver of
+ *                 the cost of including a given edge in a solution. Weights
+ *                 must be specified using <a
+ *                 href="../../graph_solver/network_graph_solver.html#identifiers"
+ *                 target="_top">identifiers</a>; identifiers are grouped as <a
+ *                 href="../../graph_solver/network_graph_solver.html#id-combos"
+ *                 target="_top">combinations</a>. Example format:
+ *                 'table.column AS WEIGHTS_EDGE_ID'
+ * @param restrictions  Restrictions represent a method of informing the graph
+ *                      solver which edges and/or nodes should be ignored for
+ *                      the solution. Restrictions must be specified using <a
+ *                      href="../../graph_solver/network_graph_solver.html#identifiers"
+ *                      target="_top">identifiers</a>; identifiers are grouped
+ *                      as <a
+ *                      href="../../graph_solver/network_graph_solver.html#id-combos"
+ *                      target="_top">combinations</a>. Example format:
+ *                      'table.column AS RESTRICTIONS_EDGE_ID'
+ * @param options  Optional parameters.
+ *                 <ul>
+ *                         <li>
+ *                 gpudb::create_graph_restriction_threshold_value: Value-based
+ *                 restriction comparison. Any node or edge with a
+ *                 RESTRICTIONS_VALUECOMPARED value greater than the @a
+ *                 restriction_threshold_value will not be included in the
+ *                 graph.
+ *                         <li> gpudb::create_graph_merge_tolerance: If node
+ *                 geospatial positions are input (e.g., WKTPOINT, X, Y),
+ *                 determines the minimum separation allowed between unique
+ *                 nodes. If nodes are within the tolerance of each other, they
+ *                 will be merged as a single node.
+ *                         <li> gpudb::create_graph_min_x: Minimum x
+ *                 (longitude) value for spatial graph associations.
+ *                         <li> gpudb::create_graph_max_x: Maximum x
+ *                 (longitude) value for spatial graph associations.
+ *                         <li> gpudb::create_graph_min_y: Minimum y (latitude)
+ *                 value for spatial graph associations.
+ *                         <li> gpudb::create_graph_max_y: Maximum y (latitude)
+ *                 value for spatial graph associations.
+ *                         <li> gpudb::create_graph_recreate: If set to @a true
+ *                 and the graph (using @a graphName) already exists, the graph
+ *                 is deleted and recreated.
+ *                 <ul>
+ *                         <li> gpudb::create_graph_true
+ *                         <li> gpudb::create_graph_false
+ *                 </ul>
+ *                 The default value is gpudb::create_graph_false.
+ *                         <li> gpudb::create_graph_export_create_results: If
+ *                 set to @a true, returns the graph topology in the response
+ *                 as arrays.
+ *                 <ul>
+ *                         <li> gpudb::create_graph_true
+ *                         <li> gpudb::create_graph_false
+ *                 </ul>
+ *                 The default value is gpudb::create_graph_false.
+ *                         <li> gpudb::create_graph_enable_graph_draw: If set
+ *                 to @a true, adds a 'EDGE_WKTLINE' column identifier to the
+ *                 specified @a graph_table so the graph can be viewed via WMS;
+ *                 for social and non-geospatial graphs, the 'EDGE_WKTLINE'
+ *                 column identifier will be populated with spatial coordinates
+ *                 derived from a flattening layout algorithm so the graph can
+ *                 still be viewed.
+ *                 <ul>
+ *                         <li> gpudb::create_graph_true
+ *                         <li> gpudb::create_graph_false
+ *                 </ul>
+ *                 The default value is gpudb::create_graph_false.
+ *                         <li> gpudb::create_graph_save_persist: If set to @a
+ *                 true, the graph will be saved in the persist directory (see
+ *                 the <a href="../../config/index.html" target="_top">config
+ *                 reference</a> for more information). If set to @a false, the
+ *                 graph will be removed when the graph server is shutdown.
+ *                 <ul>
+ *                         <li> gpudb::create_graph_true
+ *                         <li> gpudb::create_graph_false
+ *                 </ul>
+ *                 The default value is gpudb::create_graph_false.
+ *                         <li> gpudb::create_graph_sync_db: If set to @a true,
+ *                 the graph will be updated if its source table(s) is updated.
+ *                 If set to @a false, the graph will not be updated if the
+ *                 source table(s) is updated.
+ *                 <ul>
+ *                         <li> gpudb::create_graph_true
+ *                         <li> gpudb::create_graph_false
+ *                 </ul>
+ *                 The default value is gpudb::create_graph_false.
+ *                         <li> gpudb::create_graph_add_table_monitor: Adds a
+ *                 table monitor to every table used in the creation of the
+ *                 graph. For more details on table monitors, see
+ *                 /create/tablemonitor.
+ *                 <ul>
+ *                         <li> gpudb::create_graph_true
+ *                         <li> gpudb::create_graph_false
+ *                 </ul>
+ *                 The default value is gpudb::create_graph_false.
+ *                         <li> gpudb::create_graph_graph_table: If the @a
+ *                 graph_table name is NOT left blank, the created graph is
+ *                 also created as a table with the given name and following
+ *                 identifier columns: 'EDGE_ID', 'EDGE_NODE1_ID',
+ *                 'EDGE_NODE2_ID'. If left blank, no table is created.
+ *                 </ul>
+ * 
+ * @return Response object containing the result of the operation.
+ * 
+ */
+
+CreateGraphResponse createGraph( const std::string& graphName,
+                                 const bool directedGraph,
+                                 const std::vector<std::string>& nodes,
+                                 const std::vector<std::string>& edges,
+                                 const std::vector<std::string>& weights,
+                                 const std::vector<std::string>& restrictions,
+                                 const std::map<std::string, std::string>& options ) const;
+
+/**
+ * Creates a new graph network using given nodes, edges, weights, and
+ * restrictions. See <a href="../../graph_solver/network_graph_solver.html"
+ * target="_top">Network Graph Solvers</a> for more information.
+ * 
+ * @param graphName  Name of the graph resource to generate.
+ * @param directedGraph  If set to @a true, the graph will be directed (0 to 1,
+ *                       1 to 2, etc.). If set to @a false, the graph will not
+ *                       be directed.
+ *                       <ul>
+ *                               <li> gpudb::create_graph_true
+ *                               <li> gpudb::create_graph_false
+ *                       </ul>
+ *                       The default value is gpudb::create_graph_true.
+ * @param nodes  Nodes represent fundamental topological units of a graph.
+ *               Nodes must be specified using <a
+ *               href="../../graph_solver/network_graph_solver.html#identifiers"
+ *               target="_top">identifiers</a>; identifiers are grouped as <a
+ *               href="../../graph_solver/network_graph_solver.html#id-combos"
+ *               target="_top">combinations</a>. Example format: 'table.column
+ *               AS NODE_ID'
+ * @param edges  Edges represent the required fundamental topological unit of a
+ *               graph that typically connect nodes. Edges must be specified
+ *               using <a
+ *               href="../../graph_solver/network_graph_solver.html#identifiers"
+ *               target="_top">identifiers</a>; identifiers are grouped as <a
+ *               href="../../graph_solver/network_graph_solver.html#id-combos"
+ *               target="_top">combinations</a>. Example format: 'table.column
+ *               AS EDGE_WKTLINE'
+ * @param weights  Weights represent a method of informing the graph solver of
+ *                 the cost of including a given edge in a solution. Weights
+ *                 must be specified using <a
+ *                 href="../../graph_solver/network_graph_solver.html#identifiers"
+ *                 target="_top">identifiers</a>; identifiers are grouped as <a
+ *                 href="../../graph_solver/network_graph_solver.html#id-combos"
+ *                 target="_top">combinations</a>. Example format:
+ *                 'table.column AS WEIGHTS_EDGE_ID'
+ * @param restrictions  Restrictions represent a method of informing the graph
+ *                      solver which edges and/or nodes should be ignored for
+ *                      the solution. Restrictions must be specified using <a
+ *                      href="../../graph_solver/network_graph_solver.html#identifiers"
+ *                      target="_top">identifiers</a>; identifiers are grouped
+ *                      as <a
+ *                      href="../../graph_solver/network_graph_solver.html#id-combos"
+ *                      target="_top">combinations</a>. Example format:
+ *                      'table.column AS RESTRICTIONS_EDGE_ID'
+ * @param options  Optional parameters.
+ *                 <ul>
+ *                         <li>
+ *                 gpudb::create_graph_restriction_threshold_value: Value-based
+ *                 restriction comparison. Any node or edge with a
+ *                 RESTRICTIONS_VALUECOMPARED value greater than the @a
+ *                 restriction_threshold_value will not be included in the
+ *                 graph.
+ *                         <li> gpudb::create_graph_merge_tolerance: If node
+ *                 geospatial positions are input (e.g., WKTPOINT, X, Y),
+ *                 determines the minimum separation allowed between unique
+ *                 nodes. If nodes are within the tolerance of each other, they
+ *                 will be merged as a single node.
+ *                         <li> gpudb::create_graph_min_x: Minimum x
+ *                 (longitude) value for spatial graph associations.
+ *                         <li> gpudb::create_graph_max_x: Maximum x
+ *                 (longitude) value for spatial graph associations.
+ *                         <li> gpudb::create_graph_min_y: Minimum y (latitude)
+ *                 value for spatial graph associations.
+ *                         <li> gpudb::create_graph_max_y: Maximum y (latitude)
+ *                 value for spatial graph associations.
+ *                         <li> gpudb::create_graph_recreate: If set to @a true
+ *                 and the graph (using @a graphName) already exists, the graph
+ *                 is deleted and recreated.
+ *                 <ul>
+ *                         <li> gpudb::create_graph_true
+ *                         <li> gpudb::create_graph_false
+ *                 </ul>
+ *                 The default value is gpudb::create_graph_false.
+ *                         <li> gpudb::create_graph_export_create_results: If
+ *                 set to @a true, returns the graph topology in the response
+ *                 as arrays.
+ *                 <ul>
+ *                         <li> gpudb::create_graph_true
+ *                         <li> gpudb::create_graph_false
+ *                 </ul>
+ *                 The default value is gpudb::create_graph_false.
+ *                         <li> gpudb::create_graph_enable_graph_draw: If set
+ *                 to @a true, adds a 'EDGE_WKTLINE' column identifier to the
+ *                 specified @a graph_table so the graph can be viewed via WMS;
+ *                 for social and non-geospatial graphs, the 'EDGE_WKTLINE'
+ *                 column identifier will be populated with spatial coordinates
+ *                 derived from a flattening layout algorithm so the graph can
+ *                 still be viewed.
+ *                 <ul>
+ *                         <li> gpudb::create_graph_true
+ *                         <li> gpudb::create_graph_false
+ *                 </ul>
+ *                 The default value is gpudb::create_graph_false.
+ *                         <li> gpudb::create_graph_save_persist: If set to @a
+ *                 true, the graph will be saved in the persist directory (see
+ *                 the <a href="../../config/index.html" target="_top">config
+ *                 reference</a> for more information). If set to @a false, the
+ *                 graph will be removed when the graph server is shutdown.
+ *                 <ul>
+ *                         <li> gpudb::create_graph_true
+ *                         <li> gpudb::create_graph_false
+ *                 </ul>
+ *                 The default value is gpudb::create_graph_false.
+ *                         <li> gpudb::create_graph_sync_db: If set to @a true,
+ *                 the graph will be updated if its source table(s) is updated.
+ *                 If set to @a false, the graph will not be updated if the
+ *                 source table(s) is updated.
+ *                 <ul>
+ *                         <li> gpudb::create_graph_true
+ *                         <li> gpudb::create_graph_false
+ *                 </ul>
+ *                 The default value is gpudb::create_graph_false.
+ *                         <li> gpudb::create_graph_add_table_monitor: Adds a
+ *                 table monitor to every table used in the creation of the
+ *                 graph. For more details on table monitors, see
+ *                 /create/tablemonitor.
+ *                 <ul>
+ *                         <li> gpudb::create_graph_true
+ *                         <li> gpudb::create_graph_false
+ *                 </ul>
+ *                 The default value is gpudb::create_graph_false.
+ *                         <li> gpudb::create_graph_graph_table: If the @a
+ *                 graph_table name is NOT left blank, the created graph is
+ *                 also created as a table with the given name and following
+ *                 identifier columns: 'EDGE_ID', 'EDGE_NODE1_ID',
+ *                 'EDGE_NODE2_ID'. If left blank, no table is created.
+ *                 </ul>
+ * @param[out] response_  Response object containing the results of the
+ *                        operation.
+ * 
+ * @return Response object containing the result of the operation (initially
+ *         passed in by reference).
+ * 
+ */
+
+CreateGraphResponse& createGraph( const std::string& graphName,
+                                  const bool directedGraph,
+                                  const std::vector<std::string>& nodes,
+                                  const std::vector<std::string>& edges,
+                                  const std::vector<std::string>& weights,
+                                  const std::vector<std::string>& restrictions,
+                                  const std::map<std::string, std::string>& options,
+                                  CreateGraphResponse& response_ ) const;
+
+/**
  * Create a job which will run asynchronously. The response returns a job ID,
  * which can be used to query the status and result of the job. The status and
  * the result of the job upon completion can be requested by {@link
@@ -4434,7 +5874,7 @@ CreateJobResponse& createJob( const CreateJobRequest& request_,
  * Create a job which will run asynchronously. The response returns a job ID,
  * which can be used to query the status and result of the job. The status and
  * the result of the job upon completion can be requested by {@link
- * #getJob(const int32_t,const std::map<std::string, std::string>&) const}.
+ * #getJob(const int64_t,const std::map<std::string, std::string>&) const}.
  * 
  * @param endpoint  Indicates which endpoint to execute, e.g. '/alter/table'.
  * @param requestEncoding  The encoding of the request payload for the job.
@@ -4472,7 +5912,7 @@ CreateJobResponse createJob( const std::string& endpoint,
  * Create a job which will run asynchronously. The response returns a job ID,
  * which can be used to query the status and result of the job. The status and
  * the result of the job upon completion can be requested by {@link
- * #getJob(const int32_t,const std::map<std::string, std::string>&,GetJobResponse&) const}.
+ * #getJob(const int64_t,const std::map<std::string, std::string>&,GetJobResponse&) const}.
  * 
  * @param endpoint  Indicates which endpoint to execute, e.g. '/alter/table'.
  * @param requestEncoding  The encoding of the request payload for the job.
@@ -5489,6 +6929,116 @@ CreateProjectionResponse& createProjection( const std::string& tableName,
                                             CreateProjectionResponse& response_ ) const;
 
 /**
+ * Creates a new resource group to facilitate resource management.
+ * 
+ * @param[in] request_  Request object containing the parameters for the
+ *                      operation.
+ * 
+ * @return Response object containing the result of the operation.
+ * 
+ */
+
+CreateResourceGroupResponse createResourceGroup( const CreateResourceGroupRequest& request_ ) const;
+
+/**
+ * Creates a new resource group to facilitate resource management.
+ * 
+ * @param[in] request_  Request object containing the parameters for the
+ *                      operation.
+ * @param[out] response_  Response object containing the results of the
+ *                        operation.
+ * 
+ * @return Response object containing the result of the operation (initially
+ *         passed in by reference).
+ * 
+ */
+
+CreateResourceGroupResponse& createResourceGroup( const CreateResourceGroupRequest& request_,
+                                                  CreateResourceGroupResponse& response_ ) const;
+
+/**
+ * Creates a new resource group to facilitate resource management.
+ * 
+ * @param name  Name of the group to be created. Must contain only letters,
+ *              digits, and underscores, and cannot begin with a digit. Must
+ *              not match existing resource group name.
+ * @param tierAttributes  Optional map containing group limits for
+ *                        tier-specific attributes such as memory.
+ *                        <ul>
+ *                                <li> gpudb::create_resource_group_max_memory:
+ *                        Maximum amount of memory usable in the given tier at
+ *                        one time for this group.
+ *                        </ul>
+ * @param tierStrategy  Optional array that defines the default tiering
+ *                      strategy for this group. Each element pair defines an
+ *                      existing tier and its preferred priority. e.g. ['RAM
+ *                      50',VRAM 30']
+ * @param options  Optional parameters.
+ *                 <ul>
+ *                         <li>
+ *                 gpudb::create_resource_group_max_cpu_concurrency: Maximum
+ *                 number of simultaneous threads that will be used to execute
+ *                 a request for this group.
+ *                         <li>
+ *                 gpudb::create_resource_group_max_scheduling_priority:
+ *                 Maximum priority of a scheduled task for this group.
+ *                         <li> gpudb::create_resource_group_max_tier_priority:
+ *                 Maximum priority of a tiered object for this group.
+ *                 </ul>
+ * 
+ * @return Response object containing the result of the operation.
+ * 
+ */
+
+CreateResourceGroupResponse createResourceGroup( const std::string& name,
+                                                 const std::map<std::string, std::map<std::string, std::string> >& tierAttributes,
+                                                 const std::vector<std::string>& tierStrategy,
+                                                 const std::map<std::string, std::string>& options ) const;
+
+/**
+ * Creates a new resource group to facilitate resource management.
+ * 
+ * @param name  Name of the group to be created. Must contain only letters,
+ *              digits, and underscores, and cannot begin with a digit. Must
+ *              not match existing resource group name.
+ * @param tierAttributes  Optional map containing group limits for
+ *                        tier-specific attributes such as memory.
+ *                        <ul>
+ *                                <li> gpudb::create_resource_group_max_memory:
+ *                        Maximum amount of memory usable in the given tier at
+ *                        one time for this group.
+ *                        </ul>
+ * @param tierStrategy  Optional array that defines the default tiering
+ *                      strategy for this group. Each element pair defines an
+ *                      existing tier and its preferred priority. e.g. ['RAM
+ *                      50',VRAM 30']
+ * @param options  Optional parameters.
+ *                 <ul>
+ *                         <li>
+ *                 gpudb::create_resource_group_max_cpu_concurrency: Maximum
+ *                 number of simultaneous threads that will be used to execute
+ *                 a request for this group.
+ *                         <li>
+ *                 gpudb::create_resource_group_max_scheduling_priority:
+ *                 Maximum priority of a scheduled task for this group.
+ *                         <li> gpudb::create_resource_group_max_tier_priority:
+ *                 Maximum priority of a tiered object for this group.
+ *                 </ul>
+ * @param[out] response_  Response object containing the results of the
+ *                        operation.
+ * 
+ * @return Response object containing the result of the operation (initially
+ *         passed in by reference).
+ * 
+ */
+
+CreateResourceGroupResponse& createResourceGroup( const std::string& name,
+                                                  const std::map<std::string, std::map<std::string, std::string> >& tierAttributes,
+                                                  const std::vector<std::string>& tierStrategy,
+                                                  const std::map<std::string, std::string>& options,
+                                                  CreateResourceGroupResponse& response_ ) const;
+
+/**
  * Creates a new role.
  * 
  * @param[in] request_  Request object containing the parameters for the
@@ -5551,16 +7101,27 @@ CreateRoleResponse& createRole( const std::string& name,
                                 CreateRoleResponse& response_ ) const;
 
 /**
- * Creates a new table or collection. If a new table is being created, the type
- * of the table is given by @a typeId, which must the be the ID of a currently
- * registered type (i.e. one created via {@link
- * #createType(const CreateTypeRequest&) const}). The table will be created
- * inside a collection if the option @a collection_name is specified. If that
- * collection does not already exist, it will be created.
+ * Creates a new table or collection. If a new table is being created,
+ * the type of the table is given by @a typeId, which must the be the ID of
+ * a currently registered type (i.e. one created via {@link
+ * #createType(const CreateTypeRequest&) const}). The
+ * table will be created inside a collection if the option
+ * @a collection_name is specified. If that collection does
+ * not already exist, it will be created.
  * <p>
- * To create a new collection, specify the name of the collection in @a
- * tableName and set the @a is_collection option to @a true; @a typeId will be
+ * To create a new collection, specify the name of the collection in
+ * @a tableName and set the @a is_collection option to
+ * @a true; @a typeId will be
  * ignored.
+ * <p>
+ * A table may optionally be designated to use a
+ * <a href="../../concepts/tables.html#replication"
+ * target="_top">replicated</a> distribution scheme,
+ * have <a href="../../concepts/tables.html#foreign-keys" target="_top">foreign
+ * keys</a> to other
+ * tables assigned, or be assigned a
+ * <a href="../../concepts/tables.html#partitioning"
+ * target="_top">partitioning</a> scheme.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -5572,16 +7133,27 @@ CreateRoleResponse& createRole( const std::string& name,
 CreateTableResponse createTable( const CreateTableRequest& request_ ) const;
 
 /**
- * Creates a new table or collection. If a new table is being created, the type
- * of the table is given by @a typeId, which must the be the ID of a currently
- * registered type (i.e. one created via {@link
+ * Creates a new table or collection. If a new table is being created,
+ * the type of the table is given by @a typeId, which must the be the ID of
+ * a currently registered type (i.e. one created via {@link
  * #createType(const CreateTypeRequest&,CreateTypeResponse&) const}). The
- * table will be created inside a collection if the option @a collection_name
- * is specified. If that collection does not already exist, it will be created.
+ * table will be created inside a collection if the option
+ * @a collection_name is specified. If that collection does
+ * not already exist, it will be created.
  * <p>
- * To create a new collection, specify the name of the collection in @a
- * tableName and set the @a is_collection option to @a true; @a typeId will be
+ * To create a new collection, specify the name of the collection in
+ * @a tableName and set the @a is_collection option to
+ * @a true; @a typeId will be
  * ignored.
+ * <p>
+ * A table may optionally be designated to use a
+ * <a href="../../concepts/tables.html#replication"
+ * target="_top">replicated</a> distribution scheme,
+ * have <a href="../../concepts/tables.html#foreign-keys" target="_top">foreign
+ * keys</a> to other
+ * tables assigned, or be assigned a
+ * <a href="../../concepts/tables.html#partitioning"
+ * target="_top">partitioning</a> scheme.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -5597,17 +7169,28 @@ CreateTableResponse& createTable( const CreateTableRequest& request_,
                                   CreateTableResponse& response_ ) const;
 
 /**
- * Creates a new table or collection. If a new table is being created, the type
- * of the table is given by @a typeId, which must the be the ID of a currently
- * registered type (i.e. one created via {@link
+ * Creates a new table or collection. If a new table is being created,
+ * the type of the table is given by @a typeId, which must the be the ID of
+ * a currently registered type (i.e. one created via {@link
  * #createType(const std::string&,const std::string&,const std::map<std::string, std::vector<std::string> >&,const std::map<std::string, std::string>&) const}).
- * The table will be created inside a collection if the option @a
- * collection_name is specified. If that collection does not already exist, it
- * will be created.
+ * The
+ * table will be created inside a collection if the option
+ * @a collection_name is specified. If that collection does
+ * not already exist, it will be created.
  * <p>
- * To create a new collection, specify the name of the collection in @a
- * tableName and set the @a is_collection option to @a true; @a typeId will be
+ * To create a new collection, specify the name of the collection in
+ * @a tableName and set the @a is_collection option to
+ * @a true; @a typeId will be
  * ignored.
+ * <p>
+ * A table may optionally be designated to use a
+ * <a href="../../concepts/tables.html#replication"
+ * target="_top">replicated</a> distribution scheme,
+ * have <a href="../../concepts/tables.html#foreign-keys" target="_top">foreign
+ * keys</a> to other
+ * tables assigned, or be assigned a
+ * <a href="../../concepts/tables.html#partitioning"
+ * target="_top">partitioning</a> scheme.
  * 
  * @param tableName  Name of the table to be created. Error for requests with
  *                   existing table of the same name and type id may be
@@ -5641,30 +7224,29 @@ CreateTableResponse& createTable( const CreateTableRequest& request_,
  *                 </ul>
  *                 The default value is gpudb::create_table_false.
  *                         <li>
- *                 gpudb::create_table_disallow_homogeneous_tables: For a
- *                 collection, indicates whether the collection prohibits
- *                 containment of multiple tables of exactly the same data
- *                 type.
+ *                 gpudb::create_table_disallow_homogeneous_tables: No longer
+ *                 supported; value will be ignored.
  *                 <ul>
  *                         <li> gpudb::create_table_true
  *                         <li> gpudb::create_table_false
  *                 </ul>
  *                 The default value is gpudb::create_table_false.
  *                         <li> gpudb::create_table_is_replicated: For a table,
- *                 indicates the <a
+ *                 affects the <a
  *                 href="../../concepts/tables.html#distribution"
  *                 target="_top">distribution scheme</a> for the table's data.
- *                 If true, the table will be <a
+ *                 If true and the given type has no explicit <a
+ *                 href="../../concepts/tables.html#shard-key"
+ *                 target="_top">shard key</a> defined, the table will be <a
  *                 href="../../concepts/tables.html#replication"
  *                 target="_top">replicated</a>.  If false, the table will be
  *                 <a href="../../concepts/tables.html#sharding"
- *                 target="_top">sharded</a> according to the <a
- *                 href="../../concepts/tables.html#shard-keys"
- *                 target="_top">shard key</a> specified in the given @a
- *                 typeId, or <a
+ *                 target="_top">sharded</a> according to the shard key
+ *                 specified in the given @a typeId, or <a
  *                 href="../../concepts/tables.html#random-sharding"
  *                 target="_top">randomly sharded</a>, if no shard key is
- *                 specified.
+ *                 specified.  Note that a type containing a shard key cannot
+ *                 be used to create a replicated table.
  *                 <ul>
  *                         <li> gpudb::create_table_true
  *                         <li> gpudb::create_table_false
@@ -5680,6 +7262,29 @@ CreateTableResponse& createTable( const CreateTableRequest& request_,
  *                         <li> gpudb::create_table_foreign_shard_key: Foreign
  *                 shard key of the format 'source_column references
  *                 shard_by_column from target_table(primary_key_column)'
+ *                         <li> gpudb::create_table_partition_type: <a
+ *                 href="../../concepts/tables.html#partitioning"
+ *                 target="_top">Partitioning</a> scheme to use
+ *                 <ul>
+ *                         <li> gpudb::create_table_RANGE: Use <a
+ *                 href="../../concepts/tables.html#partitioning-by-range"
+ *                 target="_top">range partitioning</a>
+ *                         <li> gpudb::create_table_INTERVAL: Use <a
+ *                 href="../../concepts/tables.html#partitioning-by-interval"
+ *                 target="_top">interval partitioning</a>
+ *                 </ul>
+ *                         <li> gpudb::create_table_partition_keys:
+ *                 Comma-separated list of partition keys, which are the
+ *                 columns or column expressions by which records will be
+ *                 assigned to partitions defined by @a partition_definitions
+ *                         <li> gpudb::create_table_partition_definitions:
+ *                 Comma-separated list of partition definitions, whose format
+ *                 depends on the choice of @a partition_type.  See <a
+ *                 href="../../concepts/tables.html#partitioning-by-range-example"
+ *                 target="_top">range partitioning example</a> or <a
+ *                 href="../../concepts/tables.html#partitioning-by-interval-example"
+ *                 target="_top">interval partitioning example</a> for example
+ *                 formats.
  *                         <li> gpudb::create_table_ttl: For a table, sets the
  *                 <a href="../../concepts/ttl.html" target="_top">TTL</a> of
  *                 the table specified in @a tableName.
@@ -5695,6 +7300,7 @@ CreateTableResponse& createTable( const CreateTableRequest& request_,
  *                         <li> gpudb::create_table_false
  *                 </ul>
  *                 The default value is gpudb::create_table_false.
+ *                         <li> gpudb::create_table_strategy_definition
  *                 </ul>
  * 
  * @return Response object containing the result of the operation.
@@ -5706,17 +7312,28 @@ CreateTableResponse createTable( const std::string& tableName,
                                  const std::map<std::string, std::string>& options ) const;
 
 /**
- * Creates a new table or collection. If a new table is being created, the type
- * of the table is given by @a typeId, which must the be the ID of a currently
- * registered type (i.e. one created via {@link
+ * Creates a new table or collection. If a new table is being created,
+ * the type of the table is given by @a typeId, which must the be the ID of
+ * a currently registered type (i.e. one created via {@link
  * #createType(const std::string&,const std::string&,const std::map<std::string, std::vector<std::string> >&,const std::map<std::string, std::string>&,CreateTypeResponse&) const}).
- * The table will be created inside a collection if the option @a
- * collection_name is specified. If that collection does not already exist, it
- * will be created.
+ * The
+ * table will be created inside a collection if the option
+ * @a collection_name is specified. If that collection does
+ * not already exist, it will be created.
  * <p>
- * To create a new collection, specify the name of the collection in @a
- * tableName and set the @a is_collection option to @a true; @a typeId will be
+ * To create a new collection, specify the name of the collection in
+ * @a tableName and set the @a is_collection option to
+ * @a true; @a typeId will be
  * ignored.
+ * <p>
+ * A table may optionally be designated to use a
+ * <a href="../../concepts/tables.html#replication"
+ * target="_top">replicated</a> distribution scheme,
+ * have <a href="../../concepts/tables.html#foreign-keys" target="_top">foreign
+ * keys</a> to other
+ * tables assigned, or be assigned a
+ * <a href="../../concepts/tables.html#partitioning"
+ * target="_top">partitioning</a> scheme.
  * 
  * @param tableName  Name of the table to be created. Error for requests with
  *                   existing table of the same name and type id may be
@@ -5750,30 +7367,29 @@ CreateTableResponse createTable( const std::string& tableName,
  *                 </ul>
  *                 The default value is gpudb::create_table_false.
  *                         <li>
- *                 gpudb::create_table_disallow_homogeneous_tables: For a
- *                 collection, indicates whether the collection prohibits
- *                 containment of multiple tables of exactly the same data
- *                 type.
+ *                 gpudb::create_table_disallow_homogeneous_tables: No longer
+ *                 supported; value will be ignored.
  *                 <ul>
  *                         <li> gpudb::create_table_true
  *                         <li> gpudb::create_table_false
  *                 </ul>
  *                 The default value is gpudb::create_table_false.
  *                         <li> gpudb::create_table_is_replicated: For a table,
- *                 indicates the <a
+ *                 affects the <a
  *                 href="../../concepts/tables.html#distribution"
  *                 target="_top">distribution scheme</a> for the table's data.
- *                 If true, the table will be <a
+ *                 If true and the given type has no explicit <a
+ *                 href="../../concepts/tables.html#shard-key"
+ *                 target="_top">shard key</a> defined, the table will be <a
  *                 href="../../concepts/tables.html#replication"
  *                 target="_top">replicated</a>.  If false, the table will be
  *                 <a href="../../concepts/tables.html#sharding"
- *                 target="_top">sharded</a> according to the <a
- *                 href="../../concepts/tables.html#shard-keys"
- *                 target="_top">shard key</a> specified in the given @a
- *                 typeId, or <a
+ *                 target="_top">sharded</a> according to the shard key
+ *                 specified in the given @a typeId, or <a
  *                 href="../../concepts/tables.html#random-sharding"
  *                 target="_top">randomly sharded</a>, if no shard key is
- *                 specified.
+ *                 specified.  Note that a type containing a shard key cannot
+ *                 be used to create a replicated table.
  *                 <ul>
  *                         <li> gpudb::create_table_true
  *                         <li> gpudb::create_table_false
@@ -5789,6 +7405,29 @@ CreateTableResponse createTable( const std::string& tableName,
  *                         <li> gpudb::create_table_foreign_shard_key: Foreign
  *                 shard key of the format 'source_column references
  *                 shard_by_column from target_table(primary_key_column)'
+ *                         <li> gpudb::create_table_partition_type: <a
+ *                 href="../../concepts/tables.html#partitioning"
+ *                 target="_top">Partitioning</a> scheme to use
+ *                 <ul>
+ *                         <li> gpudb::create_table_RANGE: Use <a
+ *                 href="../../concepts/tables.html#partitioning-by-range"
+ *                 target="_top">range partitioning</a>
+ *                         <li> gpudb::create_table_INTERVAL: Use <a
+ *                 href="../../concepts/tables.html#partitioning-by-interval"
+ *                 target="_top">interval partitioning</a>
+ *                 </ul>
+ *                         <li> gpudb::create_table_partition_keys:
+ *                 Comma-separated list of partition keys, which are the
+ *                 columns or column expressions by which records will be
+ *                 assigned to partitions defined by @a partition_definitions
+ *                         <li> gpudb::create_table_partition_definitions:
+ *                 Comma-separated list of partition definitions, whose format
+ *                 depends on the choice of @a partition_type.  See <a
+ *                 href="../../concepts/tables.html#partitioning-by-range-example"
+ *                 target="_top">range partitioning example</a> or <a
+ *                 href="../../concepts/tables.html#partitioning-by-interval-example"
+ *                 target="_top">interval partitioning example</a> for example
+ *                 formats.
  *                         <li> gpudb::create_table_ttl: For a table, sets the
  *                 <a href="../../concepts/ttl.html" target="_top">TTL</a> of
  *                 the table specified in @a tableName.
@@ -5804,6 +7443,7 @@ CreateTableResponse createTable( const std::string& tableName,
  *                         <li> gpudb::create_table_false
  *                 </ul>
  *                 The default value is gpudb::create_table_false.
+ *                         <li> gpudb::create_table_strategy_definition
  *                 </ul>
  * @param[out] response_  Response object containing the results of the
  *                        operation.
@@ -6500,12 +8140,14 @@ CreateTypeResponse& createType( const CreateTypeRequest& request_,
  *                    usual and not have to worry about the avro schema for the
  *                    record.
  *                            <li> gpudb::create_type_dict: This property
- *                    indicates that this column should be dictionary encoded.
- *                    It can only be used in conjunction with string columns
- *                    marked with a charN property or with int or long columns.
- *                    This property is appropriate for columns where the
- *                    cardinality (the number of unique values) is expected to
- *                    be low, and can save a large amount of memory.
+ *                    indicates that this column should be <a
+ *                    href="../../concepts/dictionary_encoding.html"
+ *                    target="_top">dictionary encoded</a>. It can only be used
+ *                    in conjunction with restricted string (charN), int, or
+ *                    long columns. Dictionary encoding is best for columns
+ *                    where the cardinality (the number of unique values) is
+ *                    expected to be low. This property can save a large amount
+ *                    of memory.
  *                    </ul>
  * @param options  Optional parameters.
  * 
@@ -6703,12 +8345,14 @@ CreateTypeResponse createType( const std::string& typeDefinition,
  *                    usual and not have to worry about the avro schema for the
  *                    record.
  *                            <li> gpudb::create_type_dict: This property
- *                    indicates that this column should be dictionary encoded.
- *                    It can only be used in conjunction with string columns
- *                    marked with a charN property or with int or long columns.
- *                    This property is appropriate for columns where the
- *                    cardinality (the number of unique values) is expected to
- *                    be low, and can save a large amount of memory.
+ *                    indicates that this column should be <a
+ *                    href="../../concepts/dictionary_encoding.html"
+ *                    target="_top">dictionary encoded</a>. It can only be used
+ *                    in conjunction with restricted string (charN), int, or
+ *                    long columns. Dictionary encoding is best for columns
+ *                    where the cardinality (the number of unique values) is
+ *                    expected to be low. This property can save a large amount
+ *                    of memory.
  *                    </ul>
  * @param options  Optional parameters.
  * @param[out] response_  Response object containing the results of the
@@ -7177,6 +8821,11 @@ CreateUserInternalResponse& createUserInternal( const CreateUserInternalRequest&
  * @param password  Initial password of the user to be created. May be an empty
  *                  string for no password.
  * @param options  Optional parameters.
+ *                 <ul>
+ *                         <li> gpudb::create_user_internal_resource_group:
+ *                 Name of an existing resource group to associate with this
+ *                 user
+ *                 </ul>
  * 
  * @return Response object containing the result of the operation.
  * 
@@ -7196,6 +8845,11 @@ CreateUserInternalResponse createUserInternal( const std::string& name,
  * @param password  Initial password of the user to be created. May be an empty
  *                  string for no password.
  * @param options  Optional parameters.
+ *                 <ul>
+ *                         <li> gpudb::create_user_internal_resource_group:
+ *                 Name of an existing resource group to associate with this
+ *                 user
+ *                 </ul>
  * @param[out] response_  Response object containing the results of the
  *                        operation.
  * 
@@ -7208,6 +8862,88 @@ CreateUserInternalResponse& createUserInternal( const std::string& name,
                                                 const std::string& password,
                                                 const std::map<std::string, std::string>& options,
                                                 CreateUserInternalResponse& response_ ) const;
+
+/**
+ * Deletes an existing graph from the graph server and/or persist.
+ * 
+ * @param[in] request_  Request object containing the parameters for the
+ *                      operation.
+ * 
+ * @return Response object containing the result of the operation.
+ * 
+ */
+
+DeleteGraphResponse deleteGraph( const DeleteGraphRequest& request_ ) const;
+
+/**
+ * Deletes an existing graph from the graph server and/or persist.
+ * 
+ * @param[in] request_  Request object containing the parameters for the
+ *                      operation.
+ * @param[out] response_  Response object containing the results of the
+ *                        operation.
+ * 
+ * @return Response object containing the result of the operation (initially
+ *         passed in by reference).
+ * 
+ */
+
+DeleteGraphResponse& deleteGraph( const DeleteGraphRequest& request_,
+                                  DeleteGraphResponse& response_ ) const;
+
+/**
+ * Deletes an existing graph from the graph server and/or persist.
+ * 
+ * @param graphName  Name of the graph to be deleted.
+ * @param options  Optional parameters.
+ *                 <ul>
+ *                         <li> gpudb::delete_graph_delete_persist: If set to
+ *                 @a true, the graph is removed from the server and persist.
+ *                 If set to @a false, the graph is removed from the server but
+ *                 is left in persist. The graph can be reloaded from persist
+ *                 if it is recreated with the same 'graph_name'.
+ *                 <ul>
+ *                         <li> gpudb::delete_graph_true
+ *                         <li> gpudb::delete_graph_false
+ *                 </ul>
+ *                 The default value is gpudb::delete_graph_true.
+ *                 </ul>
+ * 
+ * @return Response object containing the result of the operation.
+ * 
+ */
+
+DeleteGraphResponse deleteGraph( const std::string& graphName,
+                                 const std::map<std::string, std::string>& options ) const;
+
+/**
+ * Deletes an existing graph from the graph server and/or persist.
+ * 
+ * @param graphName  Name of the graph to be deleted.
+ * @param options  Optional parameters.
+ *                 <ul>
+ *                         <li> gpudb::delete_graph_delete_persist: If set to
+ *                 @a true, the graph is removed from the server and persist.
+ *                 If set to @a false, the graph is removed from the server but
+ *                 is left in persist. The graph can be reloaded from persist
+ *                 if it is recreated with the same 'graph_name'.
+ *                 <ul>
+ *                         <li> gpudb::delete_graph_true
+ *                         <li> gpudb::delete_graph_false
+ *                 </ul>
+ *                 The default value is gpudb::delete_graph_true.
+ *                 </ul>
+ * @param[out] response_  Response object containing the results of the
+ *                        operation.
+ * 
+ * @return Response object containing the result of the operation (initially
+ *         passed in by reference).
+ * 
+ */
+
+DeleteGraphResponse& deleteGraph( const std::string& graphName,
+                                  const std::map<std::string, std::string>& options,
+                                  DeleteGraphResponse& response_ ) const;
 
 /**
  * Deletes a proc. Any currently running instances of the proc will be killed.
@@ -7406,6 +9142,64 @@ DeleteRecordsResponse& deleteRecords( const std::string& tableName,
                                       const std::vector<std::string>& expressions,
                                       const std::map<std::string, std::string>& options,
                                       DeleteRecordsResponse& response_ ) const;
+
+/**
+ * Deletes a resource group.
+ * 
+ * @param[in] request_  Request object containing the parameters for the
+ *                      operation.
+ * 
+ * @return Response object containing the result of the operation.
+ * 
+ */
+
+DeleteResourceGroupResponse deleteResourceGroup( const DeleteResourceGroupRequest& request_ ) const;
+
+/**
+ * Deletes a resource group.
+ * 
+ * @param[in] request_  Request object containing the parameters for the
+ *                      operation.
+ * @param[out] response_  Response object containing the results of the
+ *                        operation.
+ * 
+ * @return Response object containing the result of the operation (initially
+ *         passed in by reference).
+ * 
+ */
+
+DeleteResourceGroupResponse& deleteResourceGroup( const DeleteResourceGroupRequest& request_,
+                                                  DeleteResourceGroupResponse& response_ ) const;
+
+/**
+ * Deletes a resource group.
+ * 
+ * @param name  Name of the group to be deleted.
+ * @param options  Optional parameters.
+ * 
+ * @return Response object containing the result of the operation.
+ * 
+ */
+
+DeleteResourceGroupResponse deleteResourceGroup( const std::string& name,
+                                                 const std::map<std::string, std::string>& options ) const;
+
+/**
+ * Deletes a resource group.
+ * 
+ * @param name  Name of the group to be deleted.
+ * @param options  Optional parameters.
+ * @param[out] response_  Response object containing the results of the
+ *                        operation.
+ * 
+ * @return Response object containing the result of the operation (initially
+ *         passed in by reference).
+ * 
+ */
+
+DeleteResourceGroupResponse& deleteResourceGroup( const std::string& name,
+                                                  const std::map<std::string, std::string>& options,
+                                                  DeleteResourceGroupResponse& response_ ) const;
 
 /**
  * Deletes an existing role.
@@ -7706,6 +9500,332 @@ ExecuteProcResponse& executeProc( const std::string& procName,
                                   ExecuteProcResponse& response_ ) const;
 
 /**
+ * SQL Request
+ * 
+ * @param[in] request_  Request object containing the parameters for the
+ *                      operation.
+ * 
+ * @return Response object containing the result of the operation.
+ * 
+ */
+
+RawExecuteSqlResponse executeSqlRaw( const ExecuteSqlRequest& request_ ) const;
+
+/**
+ * SQL Request
+ * 
+ * @param[in] request_  Request object containing the parameters for the
+ *                      operation.
+ * @param[out] response_  Response object containing the results of the
+ *                        operation.
+ * 
+ * @return Response object containing the result of the operation (initially
+ *         passed in by reference).
+ * 
+ */
+
+RawExecuteSqlResponse& executeSqlRaw( const ExecuteSqlRequest& request_,
+                                      RawExecuteSqlResponse& response_ ) const;
+
+/**
+ * SQL Request
+ * 
+ * @param[in] request_  Request object containing the parameters for the
+ *                      operation.
+ * 
+ * @return Response object containing the result of the operation.
+ * 
+ */
+
+ExecuteSqlResponse executeSql( const ExecuteSqlRequest& request_ ) const;
+
+/**
+ * SQL Request
+ * 
+ * @param[in] request_  Request object containing the parameters for the
+ *                      operation.
+ * @param[out] response_  Response object containing the results of the
+ *                        operation.
+ * 
+ * @return Response object containing the result of the operation (initially
+ *         passed in by reference).
+ * 
+ */
+
+ExecuteSqlResponse& executeSql( const ExecuteSqlRequest& request_,
+                                ExecuteSqlResponse& response_ ) const;
+
+/**
+ * SQL Request
+ * 
+ * @param statement  SQL statement (query, DML, or DDL) to be executed
+ * @param offset  A positive integer indicating the number of initial results
+ *                to skip (this can be useful for paging through the results).
+ *                The minimum allowed value is 0. The maximum allowed value is
+ *                MAX_INT.
+ * @param limit  A positive integer indicating the maximum number of results to
+ *               be returned (if not provided the default is 10000), or
+ *               END_OF_SET (-9999) to indicate that the maximum number of
+ *               results allowed by the server should be returned.
+ * @param requestSchemaStr  Avro schema of @a data.
+ * @param data  An array of binary-encoded data for the records to be binded to
+ *              the SQL query.
+ * @param options  Optional parameters.
+ *                 <ul>
+ *                         <li> gpudb::execute_sql_parallel_execution: If @a
+ *                 false, disables the parallel step execution of the given
+ *                 query.
+ *                 <ul>
+ *                         <li> gpudb::execute_sql_true
+ *                         <li> gpudb::execute_sql_false
+ *                 </ul>
+ *                 The default value is gpudb::execute_sql_true.
+ *                         <li> gpudb::execute_sql_cost_based_optimization: If
+ *                 @a false, disables the cost-based optimization of the given
+ *                 query.
+ *                 <ul>
+ *                         <li> gpudb::execute_sql_true
+ *                         <li> gpudb::execute_sql_false
+ *                 </ul>
+ *                 The default value is gpudb::execute_sql_false.
+ *                         <li> gpudb::execute_sql_plan_cache: If @a false,
+ *                 disables plan caching for the given query.
+ *                 <ul>
+ *                         <li> gpudb::execute_sql_true
+ *                         <li> gpudb::execute_sql_false
+ *                 </ul>
+ *                 The default value is gpudb::execute_sql_true.
+ *                         <li> gpudb::execute_sql_rule_based_optimization: If
+ *                 @a false, disables rule-based rewrite optimizations for the
+ *                 given query
+ *                 <ul>
+ *                         <li> gpudb::execute_sql_true
+ *                         <li> gpudb::execute_sql_false
+ *                 </ul>
+ *                 The default value is gpudb::execute_sql_true.
+ *                         <li> gpudb::execute_sql_results_caching: If @a
+ *                 false, disables caching of the results of the given query
+ *                 <ul>
+ *                         <li> gpudb::execute_sql_true
+ *                         <li> gpudb::execute_sql_false
+ *                 </ul>
+ *                 The default value is gpudb::execute_sql_true.
+ *                         <li> gpudb::execute_sql_paging_table: When empty or
+ *                 the specified paging table not exists, the system will
+ *                 create a paging table and return when query output has more
+ *                 records than the user asked. If the paging table exists in
+ *                 the system, the records from the paging table are returned
+ *                 without evaluating the query.
+ *                         <li> gpudb::execute_sql_paging_table_ttl: Sets the
+ *                 <a href="../../concepts/ttl.html" target="_top">TTL</a> of
+ *                 the paging table.
+ *                         <li> gpudb::execute_sql_distributed_joins: If @a
+ *                 false, disables the use of distributed joins in servicing
+ *                 the given query.  Any query requiring a distributed join to
+ *                 succeed will fail, though hints can be used in the query to
+ *                 change the distribution of the source data to allow the
+ *                 query to succeed.
+ *                 <ul>
+ *                         <li> gpudb::execute_sql_true
+ *                         <li> gpudb::execute_sql_false
+ *                 </ul>
+ *                 The default value is gpudb::execute_sql_true.
+ *                         <li> gpudb::execute_sql_ssq_optimization: If @a
+ *                 false, scalar subqueries will be translated into joins
+ *                 <ul>
+ *                         <li> gpudb::execute_sql_true
+ *                         <li> gpudb::execute_sql_false
+ *                 </ul>
+ *                 The default value is gpudb::execute_sql_true.
+ *                         <li> gpudb::execute_sql_late_materialization: If @a
+ *                 true, Joins/Filters results  will always be materialized (
+ *                 saved to result tables format)
+ *                 <ul>
+ *                         <li> gpudb::execute_sql_true
+ *                         <li> gpudb::execute_sql_false
+ *                 </ul>
+ *                 The default value is gpudb::execute_sql_false.
+ *                         <li> gpudb::execute_sql_ttl: Sets the <a
+ *                 href="../../concepts/ttl.html" target="_top">TTL</a> of the
+ *                 intermediate result tables used in query execution.
+ *                         <li> gpudb::execute_sql_update_on_existing_pk: Can
+ *                 be used to customize behavior when the updated primary key
+ *                 value already exists as described in /insert/records.
+ *                 <ul>
+ *                         <li> gpudb::execute_sql_true
+ *                         <li> gpudb::execute_sql_false
+ *                 </ul>
+ *                 The default value is gpudb::execute_sql_false.
+ *                         <li> gpudb::execute_sql_preserve_dict_encoding: If
+ *                 @a true, then columns that were dict encoded in the source
+ *                 table will be dict encoded in the projection table.
+ *                 <ul>
+ *                         <li> gpudb::execute_sql_true
+ *                         <li> gpudb::execute_sql_false
+ *                 </ul>
+ *                 The default value is gpudb::execute_sql_true.
+ *                         <li> gpudb::execute_sql_validate_change_column: When
+ *                 changing a column using alter table, validate the change
+ *                 before applying it. If @a true, then validate all values. A
+ *                 value too large (or too long) for the new type will prevent
+ *                 any change. If @a false, then when a value is too large or
+ *                 long, it will be truncated.
+ *                 <ul>
+ *                         <li> gpudb::execute_sql_true: true
+ *                         <li> gpudb::execute_sql_false: false
+ *                 </ul>
+ *                 The default value is gpudb::execute_sql_true.
+ *                 </ul>
+ * 
+ * @return Response object containing the result of the operation.
+ * 
+ */
+
+ExecuteSqlResponse executeSql( const std::string& statement,
+                               const int64_t offset,
+                               const int64_t limit,
+                               const std::string& requestSchemaStr,
+                               const std::vector<std::vector<uint8_t> >& data,
+                               const std::map<std::string, std::string>& options ) const;
+
+/**
+ * SQL Request
+ * 
+ * @param statement  SQL statement (query, DML, or DDL) to be executed
+ * @param offset  A positive integer indicating the number of initial results
+ *                to skip (this can be useful for paging through the results).
+ *                The minimum allowed value is 0. The maximum allowed value is
+ *                MAX_INT.
+ * @param limit  A positive integer indicating the maximum number of results to
+ *               be returned (if not provided the default is 10000), or
+ *               END_OF_SET (-9999) to indicate that the maximum number of
+ *               results allowed by the server should be returned.
+ * @param requestSchemaStr  Avro schema of @a data.
+ * @param data  An array of binary-encoded data for the records to be binded to
+ *              the SQL query.
+ * @param options  Optional parameters.
+ *                 <ul>
+ *                         <li> gpudb::execute_sql_parallel_execution: If @a
+ *                 false, disables the parallel step execution of the given
+ *                 query.
+ *                 <ul>
+ *                         <li> gpudb::execute_sql_true
+ *                         <li> gpudb::execute_sql_false
+ *                 </ul>
+ *                 The default value is gpudb::execute_sql_true.
+ *                         <li> gpudb::execute_sql_cost_based_optimization: If
+ *                 @a false, disables the cost-based optimization of the given
+ *                 query.
+ *                 <ul>
+ *                         <li> gpudb::execute_sql_true
+ *                         <li> gpudb::execute_sql_false
+ *                 </ul>
+ *                 The default value is gpudb::execute_sql_false.
+ *                         <li> gpudb::execute_sql_plan_cache: If @a false,
+ *                 disables plan caching for the given query.
+ *                 <ul>
+ *                         <li> gpudb::execute_sql_true
+ *                         <li> gpudb::execute_sql_false
+ *                 </ul>
+ *                 The default value is gpudb::execute_sql_true.
+ *                         <li> gpudb::execute_sql_rule_based_optimization: If
+ *                 @a false, disables rule-based rewrite optimizations for the
+ *                 given query
+ *                 <ul>
+ *                         <li> gpudb::execute_sql_true
+ *                         <li> gpudb::execute_sql_false
+ *                 </ul>
+ *                 The default value is gpudb::execute_sql_true.
+ *                         <li> gpudb::execute_sql_results_caching: If @a
+ *                 false, disables caching of the results of the given query
+ *                 <ul>
+ *                         <li> gpudb::execute_sql_true
+ *                         <li> gpudb::execute_sql_false
+ *                 </ul>
+ *                 The default value is gpudb::execute_sql_true.
+ *                         <li> gpudb::execute_sql_paging_table: When empty or
+ *                 the specified paging table not exists, the system will
+ *                 create a paging table and return when query output has more
+ *                 records than the user asked. If the paging table exists in
+ *                 the system, the records from the paging table are returned
+ *                 without evaluating the query.
+ *                         <li> gpudb::execute_sql_paging_table_ttl: Sets the
+ *                 <a href="../../concepts/ttl.html" target="_top">TTL</a> of
+ *                 the paging table.
+ *                         <li> gpudb::execute_sql_distributed_joins: If @a
+ *                 false, disables the use of distributed joins in servicing
+ *                 the given query.  Any query requiring a distributed join to
+ *                 succeed will fail, though hints can be used in the query to
+ *                 change the distribution of the source data to allow the
+ *                 query to succeed.
+ *                 <ul>
+ *                         <li> gpudb::execute_sql_true
+ *                         <li> gpudb::execute_sql_false
+ *                 </ul>
+ *                 The default value is gpudb::execute_sql_true.
+ *                         <li> gpudb::execute_sql_ssq_optimization: If @a
+ *                 false, scalar subqueries will be translated into joins
+ *                 <ul>
+ *                         <li> gpudb::execute_sql_true
+ *                         <li> gpudb::execute_sql_false
+ *                 </ul>
+ *                 The default value is gpudb::execute_sql_true.
+ *                         <li> gpudb::execute_sql_late_materialization: If @a
+ *                 true, Joins/Filters results  will always be materialized (
+ *                 saved to result tables format)
+ *                 <ul>
+ *                         <li> gpudb::execute_sql_true
+ *                         <li> gpudb::execute_sql_false
+ *                 </ul>
+ *                 The default value is gpudb::execute_sql_false.
+ *                         <li> gpudb::execute_sql_ttl: Sets the <a
+ *                 href="../../concepts/ttl.html" target="_top">TTL</a> of the
+ *                 intermediate result tables used in query execution.
+ *                         <li> gpudb::execute_sql_update_on_existing_pk: Can
+ *                 be used to customize behavior when the updated primary key
+ *                 value already exists as described in /insert/records.
+ *                 <ul>
+ *                         <li> gpudb::execute_sql_true
+ *                         <li> gpudb::execute_sql_false
+ *                 </ul>
+ *                 The default value is gpudb::execute_sql_false.
+ *                         <li> gpudb::execute_sql_preserve_dict_encoding: If
+ *                 @a true, then columns that were dict encoded in the source
+ *                 table will be dict encoded in the projection table.
+ *                 <ul>
+ *                         <li> gpudb::execute_sql_true
+ *                         <li> gpudb::execute_sql_false
+ *                 </ul>
+ *                 The default value is gpudb::execute_sql_true.
+ *                         <li> gpudb::execute_sql_validate_change_column: When
+ *                 changing a column using alter table, validate the change
+ *                 before applying it. If @a true, then validate all values. A
+ *                 value too large (or too long) for the new type will prevent
+ *                 any change. If @a false, then when a value is too large or
+ *                 long, it will be truncated.
+ *                 <ul>
+ *                         <li> gpudb::execute_sql_true: true
+ *                         <li> gpudb::execute_sql_false: false
+ *                 </ul>
+ *                 The default value is gpudb::execute_sql_true.
+ *                 </ul>
+ * @param[out] response_  Response object containing the results of the
+ *                        operation.
+ * 
+ * @return Response object containing the result of the operation (initially
+ *         passed in by reference).
+ * 
+ */
+
+ExecuteSqlResponse& executeSql( const std::string& statement,
+                                const int64_t offset,
+                                const int64_t limit,
+                                const std::string& requestSchemaStr,
+                                const std::vector<std::vector<uint8_t> >& data,
+                                const std::map<std::string, std::string>& options,
+                                ExecuteSqlResponse& response_ ) const;
+
+/**
  * Filters data based on the specified expression.  The results are stored in a
  * <a href="../../concepts/filtered_views.html" target="_top">result set</a>
  * with the given @a viewName.
@@ -7760,8 +9880,8 @@ FilterResponse& filter( const FilterRequest& request_,
  * The response message contains the number of points for which the expression
  * evaluated to be true, which is equivalent to the size of the result view.
  * 
- * @param tableName  Name of the table to filter.  This may be the ID of a
- *                   collection, table or a result set (for chaining queries).
+ * @param tableName  Name of the table to filter.  This may be the name of a
+ *                   collection, a table, or a view (when chaining queries).
  *                   If filtering a collection, all child tables where the
  *                   filter expression is valid will be filtered; the filtered
  *                   result tables will then be placed in a collection
@@ -7807,8 +9927,8 @@ FilterResponse filter( const std::string& tableName,
  * The response message contains the number of points for which the expression
  * evaluated to be true, which is equivalent to the size of the result view.
  * 
- * @param tableName  Name of the table to filter.  This may be the ID of a
- *                   collection, table or a result set (for chaining queries).
+ * @param tableName  Name of the table to filter.  This may be the name of a
+ *                   collection, a table, or a view (when chaining queries).
  *                   If filtering a collection, all child tables where the
  *                   filter expression is valid will be filtered; the filtered
  *                   result tables will then be placed in a collection
@@ -7894,11 +10014,11 @@ FilterByAreaResponse& filterByArea( const FilterByAreaRequest& request_,
  * created with the name @a viewName passed in as part of the input.
  * 
  * @param tableName  Name of the table to filter.  This may be the name of a
- *                   collection, a table or a view (when chaining queries). If
- *                   filtering a collection, all child tables where the filter
- *                   expression is valid will be filtered; the filtered result
- *                   tables will then be placed in a collection specified by @a
- *                   viewName.
+ *                   collection, a table, or a view (when chaining queries).
+ *                   If filtering a collection, all child tables where the
+ *                   filter expression is valid will be filtered; the filtered
+ *                   result tables will then be placed in a collection
+ *                   specified by @a viewName.
  * @param viewName  If provided, then this will be the name of the view
  *                  containing the results. Has the same naming restrictions as
  *                  <a href="../../concepts/tables.html"
@@ -7941,11 +10061,11 @@ FilterByAreaResponse filterByArea( const std::string& tableName,
  * created with the name @a viewName passed in as part of the input.
  * 
  * @param tableName  Name of the table to filter.  This may be the name of a
- *                   collection, a table or a view (when chaining queries). If
- *                   filtering a collection, all child tables where the filter
- *                   expression is valid will be filtered; the filtered result
- *                   tables will then be placed in a collection specified by @a
- *                   viewName.
+ *                   collection, a table, or a view (when chaining queries).
+ *                   If filtering a collection, all child tables where the
+ *                   filter expression is valid will be filtered; the filtered
+ *                   result tables will then be placed in a collection
+ *                   specified by @a viewName.
  * @param viewName  If provided, then this will be the name of the view
  *                  containing the results. Has the same naming restrictions as
  *                  <a href="../../concepts/tables.html"
@@ -8033,11 +10153,11 @@ FilterByAreaGeometryResponse& filterByAreaGeometry( const FilterByAreaGeometryRe
  * input.
  * 
  * @param tableName  Name of the table to filter.  This may be the name of a
- *                   collection, a table or a view (when chaining queries).  If
- *                   filtering a collection, all child tables where the filter
- *                   expression is valid will be filtered; the filtered result
- *                   tables will then be placed in a collection specified by @a
- *                   viewName.
+ *                   collection, a table, or a view (when chaining queries).
+ *                   If filtering a collection, all child tables where the
+ *                   filter expression is valid will be filtered; the filtered
+ *                   result tables will then be placed in a collection
+ *                   specified by @a viewName.
  * @param viewName  If provided, then this will be the name of the view
  *                  containing the results. Must not be an already existing
  *                  collection, table or view.
@@ -8076,11 +10196,11 @@ FilterByAreaGeometryResponse filterByAreaGeometry( const std::string& tableName,
  * input.
  * 
  * @param tableName  Name of the table to filter.  This may be the name of a
- *                   collection, a table or a view (when chaining queries).  If
- *                   filtering a collection, all child tables where the filter
- *                   expression is valid will be filtered; the filtered result
- *                   tables will then be placed in a collection specified by @a
- *                   viewName.
+ *                   collection, a table, or a view (when chaining queries).
+ *                   If filtering a collection, all child tables where the
+ *                   filter expression is valid will be filtered; the filtered
+ *                   result tables will then be placed in a collection
+ *                   specified by @a viewName.
  * @param viewName  If provided, then this will be the name of the view
  *                  containing the results. Must not be an already existing
  *                  collection, table or view.
@@ -8601,8 +10721,8 @@ FilterByListResponse& filterByList( const FilterByListRequest& request_,
  * "x = 2.3 and y = 0.0" would not be returned because the values in the given
  * lists do not correspond.
  * 
- * @param tableName  Name of the table to filter.  This may be the ID of a
- *                   collection, table or a result set (for chaining queries).
+ * @param tableName  Name of the table to filter.  This may be the name of a
+ *                   collection, a table, or a view (when chaining queries).
  *                   If filtering a collection, all child tables where the
  *                   filter expression is valid will be filtered; the filtered
  *                   result tables will then be placed in a collection
@@ -8657,8 +10777,8 @@ FilterByListResponse filterByList( const std::string& tableName,
  * "x = 2.3 and y = 0.0" would not be returned because the values in the given
  * lists do not correspond.
  * 
- * @param tableName  Name of the table to filter.  This may be the ID of a
- *                   collection, table or a result set (for chaining queries).
+ * @param tableName  Name of the table to filter.  This may be the name of a
+ *                   collection, a table, or a view (when chaining queries).
  *                   If filtering a collection, all child tables where the
  *                   filter expression is valid will be filtered; the filtered
  *                   result tables will then be placed in a collection
@@ -9895,7 +12015,7 @@ GetJobResponse& getJob( const GetJobRequest& request_,
  * 
  */
 
-GetJobResponse getJob( const int32_t jobId,
+GetJobResponse getJob( const int64_t jobId,
                        const std::map<std::string, std::string>& options ) const;
 
 /**
@@ -9911,7 +12031,7 @@ GetJobResponse getJob( const int32_t jobId,
  * 
  */
 
-GetJobResponse& getJob( const int32_t jobId,
+GetJobResponse& getJob( const int64_t jobId,
                         const std::map<std::string, std::string>& options,
                         GetJobResponse& response_ ) const;
 
@@ -9997,6 +12117,7 @@ GetRecordsResponse<TResponse> getRecords( const GetRecordsRequest& request_ ) co
     avro::decode(&response_.data[0], &actualResponse_.recordsBinary[0], actualResponse_.recordsBinary.size(), this->m_threadCount, this->m_executor);
     response_.totalNumberOfRecords = actualResponse_.totalNumberOfRecords;
     response_.hasMoreRecords = actualResponse_.hasMoreRecords;
+    response_.info = actualResponse_.info;
     return response_;
 }
 
@@ -10040,6 +12161,7 @@ GetRecordsResponse<TResponse>& getRecords( const GetRecordsRequest& request_,
     avro::decode(&response_.data[0], &actualResponse_.recordsBinary[0], actualResponse_.recordsBinary.size(), this->m_threadCount, this->m_executor);
     response_.totalNumberOfRecords = actualResponse_.totalNumberOfRecords;
     response_.hasMoreRecords = actualResponse_.hasMoreRecords;
+    response_.info = actualResponse_.info;
     return response_;
 }
 
@@ -10120,6 +12242,7 @@ GetRecordsResponse<TResponse> getRecords( const std::string& tableName,
     avro::decode(&response_.data[0], &actualResponse_.recordsBinary[0], actualResponse_.recordsBinary.size(), this->m_threadCount, this->m_executor);
     response_.totalNumberOfRecords = actualResponse_.totalNumberOfRecords;
     response_.hasMoreRecords = actualResponse_.hasMoreRecords;
+    response_.info = actualResponse_.info;
     return response_;
 }
 
@@ -10203,6 +12326,7 @@ GetRecordsResponse<TResponse>& getRecords( const std::string& tableName,
     avro::decode(&response_.data[0], &actualResponse_.recordsBinary[0], actualResponse_.recordsBinary.size(), this->m_threadCount, this->m_executor);
     response_.totalNumberOfRecords = actualResponse_.totalNumberOfRecords;
     response_.hasMoreRecords = actualResponse_.hasMoreRecords;
+    response_.info = actualResponse_.info;
     return response_;
 }
 
@@ -10245,6 +12369,7 @@ GetRecordsResponse<TResponse> getRecords( const ::avro::ValidSchema& schema_,
     avro::decode(&response_.data[0], &actualResponse_.recordsBinary[0], actualResponse_.recordsBinary.size(), this->m_threadCount, this->m_executor);
     response_.totalNumberOfRecords = actualResponse_.totalNumberOfRecords;
     response_.hasMoreRecords = actualResponse_.hasMoreRecords;
+    response_.info = actualResponse_.info;
     return response_;
 }
 
@@ -10287,6 +12412,7 @@ GetRecordsResponse<TResponse> getRecords( const Type& type_,
     avro::decode(&response_.data[0], &actualResponse_.recordsBinary[0], actualResponse_.recordsBinary.size(), this->m_threadCount, this->m_executor);
     response_.totalNumberOfRecords = actualResponse_.totalNumberOfRecords;
     response_.hasMoreRecords = actualResponse_.hasMoreRecords;
+    response_.info = actualResponse_.info;
     return response_;
 }
 
@@ -10332,6 +12458,7 @@ GetRecordsResponse<TResponse>& getRecords( const ::avro::ValidSchema& schema_,
     avro::decode(&response_.data[0], &actualResponse_.recordsBinary[0], actualResponse_.recordsBinary.size(), this->m_threadCount, this->m_executor);
     response_.totalNumberOfRecords = actualResponse_.totalNumberOfRecords;
     response_.hasMoreRecords = actualResponse_.hasMoreRecords;
+    response_.info = actualResponse_.info;
     return response_;
 }
 
@@ -10377,6 +12504,7 @@ GetRecordsResponse<TResponse>& getRecords( const Type& type_,
     avro::decode(&response_.data[0], &actualResponse_.recordsBinary[0], actualResponse_.recordsBinary.size(), this->m_threadCount, this->m_executor);
     response_.totalNumberOfRecords = actualResponse_.totalNumberOfRecords;
     response_.hasMoreRecords = actualResponse_.hasMoreRecords;
+    response_.info = actualResponse_.info;
     return response_;
 }
 
@@ -10459,6 +12587,7 @@ GetRecordsResponse<TResponse> getRecords( const ::avro::ValidSchema& schema_,
     avro::decode(&response_.data[0], &actualResponse_.recordsBinary[0], actualResponse_.recordsBinary.size(), this->m_threadCount, this->m_executor);
     response_.totalNumberOfRecords = actualResponse_.totalNumberOfRecords;
     response_.hasMoreRecords = actualResponse_.hasMoreRecords;
+    response_.info = actualResponse_.info;
     return response_;
 }
 
@@ -10541,6 +12670,7 @@ GetRecordsResponse<TResponse> getRecords( const Type& type_,
     avro::decode(&response_.data[0], &actualResponse_.recordsBinary[0], actualResponse_.recordsBinary.size(), this->m_threadCount, this->m_executor);
     response_.totalNumberOfRecords = actualResponse_.totalNumberOfRecords;
     response_.hasMoreRecords = actualResponse_.hasMoreRecords;
+    response_.info = actualResponse_.info;
     return response_;
 }
 
@@ -10626,6 +12756,7 @@ GetRecordsResponse<TResponse>& getRecords( const ::avro::ValidSchema& schema_,
     avro::decode(&response_.data[0], &actualResponse_.recordsBinary[0], actualResponse_.recordsBinary.size(), this->m_threadCount, this->m_executor);
     response_.totalNumberOfRecords = actualResponse_.totalNumberOfRecords;
     response_.hasMoreRecords = actualResponse_.hasMoreRecords;
+    response_.info = actualResponse_.info;
     return response_;
 }
 
@@ -10711,6 +12842,7 @@ GetRecordsResponse<TResponse>& getRecords( const Type& type_,
     avro::decode(&response_.data[0], &actualResponse_.recordsBinary[0], actualResponse_.recordsBinary.size(), this->m_threadCount, this->m_executor);
     response_.totalNumberOfRecords = actualResponse_.totalNumberOfRecords;
     response_.hasMoreRecords = actualResponse_.hasMoreRecords;
+    response_.info = actualResponse_.info;
     return response_;
 }
 
@@ -10875,20 +13007,21 @@ GetRecordsByColumnResponse& getRecordsByColumn( const GetRecordsByColumnRequest&
  *                         <li> gpudb::get_records_by_column_expression:
  *                 Optional filter expression to apply to the table.
  *                         <li> gpudb::get_records_by_column_sort_by: Optional
- *                 column(s) that the data should be sorted by. Empty by
- *                 default (i.e. no sorting is applied).
+ *                 column that the data should be sorted by. Used in
+ *                 conjunction with @a sort_order. The @a order_by option can
+ *                 be used in lieu of @a sort_by / @a sort_order.
  *                         <li> gpudb::get_records_by_column_sort_order: String
- *                 indicating how the returned values should be sorted -
- *                 ascending or descending. If sort_order is provided, sort_by
- *                 has to be provided.
+ *                 indicating how the returned values should be sorted - @a
+ *                 ascending or @a descending. If @a sort_order is provided, @a
+ *                 sort_by has to be provided.
  *                 <ul>
  *                         <li> gpudb::get_records_by_column_ascending
  *                         <li> gpudb::get_records_by_column_descending
  *                 </ul>
  *                 The default value is gpudb::get_records_by_column_ascending.
  *                         <li> gpudb::get_records_by_column_order_by:
- *                 Comma-separated list of the columns to be sorted by; e.g.
- *                 'timestamp asc, x desc'.
+ *                 Comma-separated list of the columns to be sorted by as well
+ *                 as the sort direction, e.g., 'timestamp asc, x desc'.
  *                         <li>
  *                 gpudb::get_records_by_column_convert_wkts_to_wkbs: If true,
  *                 then WKT string columns will be returned as WKB bytes.
@@ -10945,20 +13078,21 @@ GetRecordsByColumnResponse getRecordsByColumn( const std::string& tableName,
  *                         <li> gpudb::get_records_by_column_expression:
  *                 Optional filter expression to apply to the table.
  *                         <li> gpudb::get_records_by_column_sort_by: Optional
- *                 column(s) that the data should be sorted by. Empty by
- *                 default (i.e. no sorting is applied).
+ *                 column that the data should be sorted by. Used in
+ *                 conjunction with @a sort_order. The @a order_by option can
+ *                 be used in lieu of @a sort_by / @a sort_order.
  *                         <li> gpudb::get_records_by_column_sort_order: String
- *                 indicating how the returned values should be sorted -
- *                 ascending or descending. If sort_order is provided, sort_by
- *                 has to be provided.
+ *                 indicating how the returned values should be sorted - @a
+ *                 ascending or @a descending. If @a sort_order is provided, @a
+ *                 sort_by has to be provided.
  *                 <ul>
  *                         <li> gpudb::get_records_by_column_ascending
  *                         <li> gpudb::get_records_by_column_descending
  *                 </ul>
  *                 The default value is gpudb::get_records_by_column_ascending.
  *                         <li> gpudb::get_records_by_column_order_by:
- *                 Comma-separated list of the columns to be sorted by; e.g.
- *                 'timestamp asc, x desc'.
+ *                 Comma-separated list of the columns to be sorted by as well
+ *                 as the sort direction, e.g., 'timestamp asc, x desc'.
  *                         <li>
  *                 gpudb::get_records_by_column_convert_wkts_to_wkbs: If true,
  *                 then WKT string columns will be returned as WKB bytes.
@@ -11072,6 +13206,7 @@ GetRecordsBySeriesResponse<TResponse> getRecordsBySeries( const GetRecordsBySeri
         avro::decode(&response_.data[i_][0], &actualResponse_.listRecordsBinary[i_][0], actualResponse_.listRecordsBinary[i_].size(), this->m_threadCount, this->m_executor);
     }
 
+    response_.info = actualResponse_.info;
     return response_;
 }
 
@@ -11121,6 +13256,7 @@ GetRecordsBySeriesResponse<TResponse>& getRecordsBySeries( const GetRecordsBySer
         avro::decode(&response_.data[i_][0], &actualResponse_.listRecordsBinary[i_][0], actualResponse_.listRecordsBinary[i_].size(), this->m_threadCount, this->m_executor);
     }
 
+    response_.info = actualResponse_.info;
     return response_;
 }
 
@@ -11189,6 +13325,7 @@ GetRecordsBySeriesResponse<TResponse> getRecordsBySeries( const std::string& tab
         avro::decode(&response_.data[i_][0], &actualResponse_.listRecordsBinary[i_][0], actualResponse_.listRecordsBinary[i_].size(), this->m_threadCount, this->m_executor);
     }
 
+    response_.info = actualResponse_.info;
     return response_;
 }
 
@@ -11260,6 +13397,7 @@ GetRecordsBySeriesResponse<TResponse>& getRecordsBySeries( const std::string& ta
         avro::decode(&response_.data[i_][0], &actualResponse_.listRecordsBinary[i_][0], actualResponse_.listRecordsBinary[i_].size(), this->m_threadCount, this->m_executor);
     }
 
+    response_.info = actualResponse_.info;
     return response_;
 }
 
@@ -11308,6 +13446,7 @@ GetRecordsBySeriesResponse<TResponse> getRecordsBySeries( const ::avro::ValidSch
         avro::decode(&response_.data[i_][0], &actualResponse_.listRecordsBinary[i_][0], actualResponse_.listRecordsBinary[i_].size(), this->m_threadCount, this->m_executor);
     }
 
+    response_.info = actualResponse_.info;
     return response_;
 }
 
@@ -11355,6 +13494,7 @@ GetRecordsBySeriesResponse<TResponse> getRecordsBySeries( const Type& type_,
         avro::decode(&response_.data[i_][0], &actualResponse_.listRecordsBinary[i_][0], actualResponse_.listRecordsBinary[i_].size(), this->m_threadCount, this->m_executor);
     }
 
+    response_.info = actualResponse_.info;
     return response_;
 }
 
@@ -11406,6 +13546,7 @@ GetRecordsBySeriesResponse<TResponse>& getRecordsBySeries( const ::avro::ValidSc
         avro::decode(&response_.data[i_][0], &actualResponse_.listRecordsBinary[i_][0], actualResponse_.listRecordsBinary[i_].size(), this->m_threadCount, this->m_executor);
     }
 
+    response_.info = actualResponse_.info;
     return response_;
 }
 
@@ -11457,6 +13598,7 @@ GetRecordsBySeriesResponse<TResponse>& getRecordsBySeries( const Type& type_,
         avro::decode(&response_.data[i_][0], &actualResponse_.listRecordsBinary[i_][0], actualResponse_.listRecordsBinary[i_].size(), this->m_threadCount, this->m_executor);
     }
 
+    response_.info = actualResponse_.info;
     return response_;
 }
 
@@ -11527,6 +13669,7 @@ GetRecordsBySeriesResponse<TResponse> getRecordsBySeries( const ::avro::ValidSch
         avro::decode(&response_.data[i_][0], &actualResponse_.listRecordsBinary[i_][0], actualResponse_.listRecordsBinary[i_].size(), this->m_threadCount, this->m_executor);
     }
 
+    response_.info = actualResponse_.info;
     return response_;
 }
 
@@ -11597,6 +13740,7 @@ GetRecordsBySeriesResponse<TResponse> getRecordsBySeries( const Type& type_,
         avro::decode(&response_.data[i_][0], &actualResponse_.listRecordsBinary[i_][0], actualResponse_.listRecordsBinary[i_].size(), this->m_threadCount, this->m_executor);
     }
 
+    response_.info = actualResponse_.info;
     return response_;
 }
 
@@ -11670,6 +13814,7 @@ GetRecordsBySeriesResponse<TResponse>& getRecordsBySeries( const ::avro::ValidSc
         avro::decode(&response_.data[i_][0], &actualResponse_.listRecordsBinary[i_][0], actualResponse_.listRecordsBinary[i_].size(), this->m_threadCount, this->m_executor);
     }
 
+    response_.info = actualResponse_.info;
     return response_;
 }
 
@@ -11743,6 +13888,7 @@ GetRecordsBySeriesResponse<TResponse>& getRecordsBySeries( const Type& type_,
         avro::decode(&response_.data[i_][0], &actualResponse_.listRecordsBinary[i_][0], actualResponse_.listRecordsBinary[i_].size(), this->m_threadCount, this->m_executor);
     }
 
+    response_.info = actualResponse_.info;
     return response_;
 }
 
@@ -11824,6 +13970,7 @@ GetRecordsFromCollectionResponse<TResponse> getRecordsFromCollection( const GetR
     response_.data.resize(actualResponse_.recordsBinary.size(), TResponse());
     avro::decode(&response_.data[0], &actualResponse_.recordsBinary[0], actualResponse_.recordsBinary.size(), this->m_threadCount, this->m_executor);
     response_.recordIds = actualResponse_.recordIds;
+    response_.info = actualResponse_.info;
     return response_;
 }
 
@@ -11864,6 +14011,7 @@ GetRecordsFromCollectionResponse<TResponse>& getRecordsFromCollection( const Get
     response_.data.resize(actualResponse_.recordsBinary.size(), TResponse());
     avro::decode(&response_.data[0], &actualResponse_.recordsBinary[0], actualResponse_.recordsBinary.size(), this->m_threadCount, this->m_executor);
     response_.recordIds = actualResponse_.recordIds;
+    response_.info = actualResponse_.info;
     return response_;
 }
 
@@ -11926,6 +14074,7 @@ GetRecordsFromCollectionResponse<TResponse> getRecordsFromCollection( const std:
     response_.data.resize(actualResponse_.recordsBinary.size(), TResponse());
     avro::decode(&response_.data[0], &actualResponse_.recordsBinary[0], actualResponse_.recordsBinary.size(), this->m_threadCount, this->m_executor);
     response_.recordIds = actualResponse_.recordIds;
+    response_.info = actualResponse_.info;
     return response_;
 }
 
@@ -11991,6 +14140,7 @@ GetRecordsFromCollectionResponse<TResponse>& getRecordsFromCollection( const std
     response_.data.resize(actualResponse_.recordsBinary.size(), TResponse());
     avro::decode(&response_.data[0], &actualResponse_.recordsBinary[0], actualResponse_.recordsBinary.size(), this->m_threadCount, this->m_executor);
     response_.recordIds = actualResponse_.recordIds;
+    response_.info = actualResponse_.info;
     return response_;
 }
 
@@ -12030,6 +14180,7 @@ GetRecordsFromCollectionResponse<TResponse> getRecordsFromCollection( const ::av
     response_.data.resize(actualResponse_.recordsBinary.size(), TResponse(schema_));
     avro::decode(&response_.data[0], &actualResponse_.recordsBinary[0], actualResponse_.recordsBinary.size(), this->m_threadCount, this->m_executor);
     response_.recordIds = actualResponse_.recordIds;
+    response_.info = actualResponse_.info;
     return response_;
 }
 
@@ -12069,6 +14220,7 @@ GetRecordsFromCollectionResponse<TResponse> getRecordsFromCollection( const Type
     response_.data.resize(actualResponse_.recordsBinary.size(), TResponse(type_));
     avro::decode(&response_.data[0], &actualResponse_.recordsBinary[0], actualResponse_.recordsBinary.size(), this->m_threadCount, this->m_executor);
     response_.recordIds = actualResponse_.recordIds;
+    response_.info = actualResponse_.info;
     return response_;
 }
 
@@ -12111,6 +14263,7 @@ GetRecordsFromCollectionResponse<TResponse>& getRecordsFromCollection( const ::a
     response_.data.resize(actualResponse_.recordsBinary.size(), TResponse(schema_));
     avro::decode(&response_.data[0], &actualResponse_.recordsBinary[0], actualResponse_.recordsBinary.size(), this->m_threadCount, this->m_executor);
     response_.recordIds = actualResponse_.recordIds;
+    response_.info = actualResponse_.info;
     return response_;
 }
 
@@ -12153,6 +14306,7 @@ GetRecordsFromCollectionResponse<TResponse>& getRecordsFromCollection( const Typ
     response_.data.resize(actualResponse_.recordsBinary.size(), TResponse(type_));
     avro::decode(&response_.data[0], &actualResponse_.recordsBinary[0], actualResponse_.recordsBinary.size(), this->m_threadCount, this->m_executor);
     response_.recordIds = actualResponse_.recordIds;
+    response_.info = actualResponse_.info;
     return response_;
 }
 
@@ -12217,6 +14371,7 @@ GetRecordsFromCollectionResponse<TResponse> getRecordsFromCollection( const ::av
     response_.data.resize(actualResponse_.recordsBinary.size(), TResponse(schema_));
     avro::decode(&response_.data[0], &actualResponse_.recordsBinary[0], actualResponse_.recordsBinary.size(), this->m_threadCount, this->m_executor);
     response_.recordIds = actualResponse_.recordIds;
+    response_.info = actualResponse_.info;
     return response_;
 }
 
@@ -12281,6 +14436,7 @@ GetRecordsFromCollectionResponse<TResponse> getRecordsFromCollection( const Type
     response_.data.resize(actualResponse_.recordsBinary.size(), TResponse(type_));
     avro::decode(&response_.data[0], &actualResponse_.recordsBinary[0], actualResponse_.recordsBinary.size(), this->m_threadCount, this->m_executor);
     response_.recordIds = actualResponse_.recordIds;
+    response_.info = actualResponse_.info;
     return response_;
 }
 
@@ -12348,6 +14504,7 @@ GetRecordsFromCollectionResponse<TResponse>& getRecordsFromCollection( const ::a
     response_.data.resize(actualResponse_.recordsBinary.size(), TResponse(schema_));
     avro::decode(&response_.data[0], &actualResponse_.recordsBinary[0], actualResponse_.recordsBinary.size(), this->m_threadCount, this->m_executor);
     response_.recordIds = actualResponse_.recordIds;
+    response_.info = actualResponse_.info;
     return response_;
 }
 
@@ -12415,9 +14572,88 @@ GetRecordsFromCollectionResponse<TResponse>& getRecordsFromCollection( const Typ
     response_.data.resize(actualResponse_.recordsBinary.size(), TResponse(type_));
     avro::decode(&response_.data[0], &actualResponse_.recordsBinary[0], actualResponse_.recordsBinary.size(), this->m_threadCount, this->m_executor);
     response_.recordIds = actualResponse_.recordIds;
+    response_.info = actualResponse_.info;
     return response_;
 }
 
+
+/**
+ * @private
+ * 
+ * @param[in] request_  Request object containing the parameters for the
+ *                      operation.
+ * 
+ * @return Response object containing the result of the operation.
+ * 
+ */
+
+GetVectortileResponse getVectortile( const GetVectortileRequest& request_ ) const;
+
+/**
+ * @private
+ * 
+ * @param[in] request_  Request object containing the parameters for the
+ *                      operation.
+ * @param[out] response_  Response object containing the results of the
+ *                        operation.
+ * 
+ * @return Response object containing the result of the operation (initially
+ *         passed in by reference).
+ * 
+ */
+
+GetVectortileResponse& getVectortile( const GetVectortileRequest& request_,
+                                      GetVectortileResponse& response_ ) const;
+
+/**
+ * @private
+ * 
+ * @param tableNames
+ * @param columnNames
+ * @param layers
+ * @param tileX
+ * @param tileY
+ * @param zoom
+ * @param options
+ * 
+ * @return Response object containing the result of the operation.
+ * 
+ */
+
+GetVectortileResponse getVectortile( const std::vector<std::string>& tableNames,
+                                     const std::vector<std::string>& columnNames,
+                                     const std::map<std::string, std::vector<std::string> >& layers,
+                                     const int32_t tileX,
+                                     const int32_t tileY,
+                                     const int32_t zoom,
+                                     const std::map<std::string, std::string>& options ) const;
+
+/**
+ * @private
+ * 
+ * @param tableNames
+ * @param columnNames
+ * @param layers
+ * @param tileX
+ * @param tileY
+ * @param zoom
+ * @param options
+ * @param[out] response_  Response object containing the results of the
+ *                        operation.
+ * 
+ * @return Response object containing the result of the operation (initially
+ *         passed in by reference).
+ * 
+ */
+
+GetVectortileResponse& getVectortile( const std::vector<std::string>& tableNames,
+                                      const std::vector<std::string>& columnNames,
+                                      const std::map<std::string, std::vector<std::string> >& layers,
+                                      const int32_t tileX,
+                                      const int32_t tileY,
+                                      const int32_t zoom,
+                                      const std::map<std::string, std::string>& options,
+                                      GetVectortileResponse& response_ ) const;
 
 /**
  * Grants a system-level permission to a user or role.
@@ -13754,6 +15990,70 @@ KillProcResponse& killProc( const std::string& runId,
                             KillProcResponse& response_ ) const;
 
 /**
+ * Lists basic information about one or all graphs that exist on the graph
+ * server.
+ * 
+ * @param[in] request_  Request object containing the parameters for the
+ *                      operation.
+ * 
+ * @return Response object containing the result of the operation.
+ * 
+ */
+
+ListGraphResponse listGraph( const ListGraphRequest& request_ ) const;
+
+/**
+ * Lists basic information about one or all graphs that exist on the graph
+ * server.
+ * 
+ * @param[in] request_  Request object containing the parameters for the
+ *                      operation.
+ * @param[out] response_  Response object containing the results of the
+ *                        operation.
+ * 
+ * @return Response object containing the result of the operation (initially
+ *         passed in by reference).
+ * 
+ */
+
+ListGraphResponse& listGraph( const ListGraphRequest& request_,
+                              ListGraphResponse& response_ ) const;
+
+/**
+ * Lists basic information about one or all graphs that exist on the graph
+ * server.
+ * 
+ * @param graphName  Name of the graph on which to retrieve information. If
+ *                   empty, information about all graphs is returned.
+ * @param options  Optional parameters.
+ * 
+ * @return Response object containing the result of the operation.
+ * 
+ */
+
+ListGraphResponse listGraph( const std::string& graphName,
+                             const std::map<std::string, std::string>& options ) const;
+
+/**
+ * Lists basic information about one or all graphs that exist on the graph
+ * server.
+ * 
+ * @param graphName  Name of the graph on which to retrieve information. If
+ *                   empty, information about all graphs is returned.
+ * @param options  Optional parameters.
+ * @param[out] response_  Response object containing the results of the
+ *                        operation.
+ * 
+ * @return Response object containing the result of the operation (initially
+ *         passed in by reference).
+ * 
+ */
+
+ListGraphResponse& listGraph( const std::string& graphName,
+                              const std::map<std::string, std::string>& options,
+                              ListGraphResponse& response_ ) const;
+
+/**
  * Manages global access to a table's data.  By default a table has a @a
  * lockType of @a read_write, indicating all operations are permitted.  A user
  * may request a @a read_only or a @a write_only lock, after which only read or
@@ -14090,6 +16390,186 @@ MergeRecordsResponse& mergeRecords( const std::string& tableName,
                                     MergeRecordsResponse& response_ ) const;
 
 /**
+ * Employs a topological query on a network graph generated a-priori by {@link
+ * #createGraph(const CreateGraphRequest&) const}. See <a
+ * href="../../graph_solver/network_graph_solver.html" target="_top">Network
+ * Graph Solvers</a> for more information.
+ * 
+ * @param[in] request_  Request object containing the parameters for the
+ *                      operation.
+ * 
+ * @return Response object containing the result of the operation.
+ * 
+ */
+
+QueryGraphResponse queryGraph( const QueryGraphRequest& request_ ) const;
+
+/**
+ * Employs a topological query on a network graph generated a-priori by {@link
+ * #createGraph(const CreateGraphRequest&,CreateGraphResponse&) const}. See
+ * <a href="../../graph_solver/network_graph_solver.html" target="_top">Network
+ * Graph Solvers</a> for more information.
+ * 
+ * @param[in] request_  Request object containing the parameters for the
+ *                      operation.
+ * @param[out] response_  Response object containing the results of the
+ *                        operation.
+ * 
+ * @return Response object containing the result of the operation (initially
+ *         passed in by reference).
+ * 
+ */
+
+QueryGraphResponse& queryGraph( const QueryGraphRequest& request_,
+                                QueryGraphResponse& response_ ) const;
+
+/**
+ * Employs a topological query on a network graph generated a-priori by {@link
+ * #createGraph(const std::string&,const bool,const std::vector<std::string>&,const std::vector<std::string>&,const std::vector<std::string>&,const std::vector<std::string>&,const std::map<std::string, std::string>&) const}.
+ * See <a href="../../graph_solver/network_graph_solver.html"
+ * target="_top">Network Graph Solvers</a> for more information.
+ * 
+ * @param graphName  Name of the graph resource to query.
+ * @param edgeToNode  If set to @a true, the query gives the adjacency list
+ *                    from edge(s) to node(s); otherwise, the adjacency list is
+ *                    from node(s) to edge(s).
+ *                    <ul>
+ *                            <li> gpudb::query_graph_true
+ *                            <li> gpudb::query_graph_false
+ *                    </ul>
+ *                    The default value is gpudb::query_graph_true.
+ * @param edgeOrNodeIntIds  The unique list of edge or node integer identifiers
+ *                          that will be queried for adjacencies.
+ * @param edgeOrNodeStringIds  The unique list of edge or node string
+ *                             identifiers that will be queried for
+ *                             adjacencies.
+ * @param edgeOrNodeWktIds  The unique list of edge or node WKTPOINT or WKTLINE
+ *                          string identifiers that will be queried for
+ *                          adjacencies.
+ * @param adjacencyTable  Name of the table to store the resulting adjacencies.
+ *                        If left blank, the query results are instead returned
+ *                        in the response even if @a export_query_results is
+ *                        set to @a false.
+ * @param options  Additional parameters
+ *                 <ul>
+ *                         <li> gpudb::query_graph_number_of_rings: Sets the
+ *                 number of rings of edges around the node to query for
+ *                 adjacency, with '1' being the edges directly attached to the
+ *                 queried nodes. This setting is ignored if @a edgeToNode is
+ *                 set to @a true.
+ *                         <li> gpudb::query_graph_include_all_edges: Includes
+ *                 only the edges directed out of the node for the query if set
+ *                 to @a false. If set to @a true, all edges are queried.
+ *                 <ul>
+ *                         <li> gpudb::query_graph_true
+ *                         <li> gpudb::query_graph_false
+ *                 </ul>
+ *                 The default value is gpudb::query_graph_false.
+ *                         <li> gpudb::query_graph_export_query_results:
+ *                 Returns query results in the response if set to @a true.
+ *                 <ul>
+ *                         <li> gpudb::query_graph_true
+ *                         <li> gpudb::query_graph_false
+ *                 </ul>
+ *                 The default value is gpudb::query_graph_true.
+ *                         <li> gpudb::query_graph_enable_graph_draw: If set to
+ *                 @a true, adds an 'EDGE_WKTLINE' column identifier to the
+ *                 given @a adjacencyTable.
+ *                 <ul>
+ *                         <li> gpudb::query_graph_true
+ *                         <li> gpudb::query_graph_false
+ *                 </ul>
+ *                 The default value is gpudb::query_graph_false.
+ *                 </ul>
+ * 
+ * @return Response object containing the result of the operation.
+ * 
+ */
+
+QueryGraphResponse queryGraph( const std::string& graphName,
+                               const bool edgeToNode,
+                               const std::vector<int64_t>& edgeOrNodeIntIds,
+                               const std::vector<std::string>& edgeOrNodeStringIds,
+                               const std::vector<std::string>& edgeOrNodeWktIds,
+                               const std::string& adjacencyTable,
+                               const std::map<std::string, std::string>& options ) const;
+
+/**
+ * Employs a topological query on a network graph generated a-priori by {@link
+ * #createGraph(const std::string&,const bool,const std::vector<std::string>&,const std::vector<std::string>&,const std::vector<std::string>&,const std::vector<std::string>&,const std::map<std::string, std::string>&,CreateGraphResponse&) const}.
+ * See <a href="../../graph_solver/network_graph_solver.html"
+ * target="_top">Network Graph Solvers</a> for more information.
+ * 
+ * @param graphName  Name of the graph resource to query.
+ * @param edgeToNode  If set to @a true, the query gives the adjacency list
+ *                    from edge(s) to node(s); otherwise, the adjacency list is
+ *                    from node(s) to edge(s).
+ *                    <ul>
+ *                            <li> gpudb::query_graph_true
+ *                            <li> gpudb::query_graph_false
+ *                    </ul>
+ *                    The default value is gpudb::query_graph_true.
+ * @param edgeOrNodeIntIds  The unique list of edge or node integer identifiers
+ *                          that will be queried for adjacencies.
+ * @param edgeOrNodeStringIds  The unique list of edge or node string
+ *                             identifiers that will be queried for
+ *                             adjacencies.
+ * @param edgeOrNodeWktIds  The unique list of edge or node WKTPOINT or WKTLINE
+ *                          string identifiers that will be queried for
+ *                          adjacencies.
+ * @param adjacencyTable  Name of the table to store the resulting adjacencies.
+ *                        If left blank, the query results are instead returned
+ *                        in the response even if @a export_query_results is
+ *                        set to @a false.
+ * @param options  Additional parameters
+ *                 <ul>
+ *                         <li> gpudb::query_graph_number_of_rings: Sets the
+ *                 number of rings of edges around the node to query for
+ *                 adjacency, with '1' being the edges directly attached to the
+ *                 queried nodes. This setting is ignored if @a edgeToNode is
+ *                 set to @a true.
+ *                         <li> gpudb::query_graph_include_all_edges: Includes
+ *                 only the edges directed out of the node for the query if set
+ *                 to @a false. If set to @a true, all edges are queried.
+ *                 <ul>
+ *                         <li> gpudb::query_graph_true
+ *                         <li> gpudb::query_graph_false
+ *                 </ul>
+ *                 The default value is gpudb::query_graph_false.
+ *                         <li> gpudb::query_graph_export_query_results:
+ *                 Returns query results in the response if set to @a true.
+ *                 <ul>
+ *                         <li> gpudb::query_graph_true
+ *                         <li> gpudb::query_graph_false
+ *                 </ul>
+ *                 The default value is gpudb::query_graph_true.
+ *                         <li> gpudb::query_graph_enable_graph_draw: If set to
+ *                 @a true, adds an 'EDGE_WKTLINE' column identifier to the
+ *                 given @a adjacencyTable.
+ *                 <ul>
+ *                         <li> gpudb::query_graph_true
+ *                         <li> gpudb::query_graph_false
+ *                 </ul>
+ *                 The default value is gpudb::query_graph_false.
+ *                 </ul>
+ * @param[out] response_  Response object containing the results of the
+ *                        operation.
+ * 
+ * @return Response object containing the result of the operation (initially
+ *         passed in by reference).
+ * 
+ */
+
+QueryGraphResponse& queryGraph( const std::string& graphName,
+                                const bool edgeToNode,
+                                const std::vector<int64_t>& edgeOrNodeIntIds,
+                                const std::vector<std::string>& edgeOrNodeStringIds,
+                                const std::vector<std::string>& edgeOrNodeWktIds,
+                                const std::string& adjacencyTable,
+                                const std::map<std::string, std::string>& options,
+                                QueryGraphResponse& response_ ) const;
+
+/**
  * @private
  * 
  * @param[in] request_  Request object containing the parameters for the
@@ -14122,19 +16602,22 @@ AdminReplaceTomResponse& adminReplaceTom( const AdminReplaceTomRequest& request_
  * 
  * @param oldRankTom
  * @param newRankTom
+ * @param options
  * 
  * @return Response object containing the result of the operation.
  * 
  */
 
 AdminReplaceTomResponse adminReplaceTom( const int64_t oldRankTom,
-                                         const int64_t newRankTom ) const;
+                                         const int64_t newRankTom,
+                                         const std::map<std::string, std::string>& options ) const;
 
 /**
  * @private
  * 
  * @param oldRankTom
  * @param newRankTom
+ * @param options
  * @param[out] response_  Response object containing the results of the
  *                        operation.
  * 
@@ -14145,6 +16628,7 @@ AdminReplaceTomResponse adminReplaceTom( const int64_t oldRankTom,
 
 AdminReplaceTomResponse& adminReplaceTom( const int64_t oldRankTom,
                                           const int64_t newRankTom,
+                                          const std::map<std::string, std::string>& options,
                                           AdminReplaceTomResponse& response_ ) const;
 
 /**
@@ -14578,6 +17062,160 @@ ShowProcStatusResponse& showProcStatus( const std::string& runId,
                                         ShowProcStatusResponse& response_ ) const;
 
 /**
+ * Shows various statistics for storage/memory tiers and resource groups.
+ * Statistics are provided on a per rank basis.
+ * 
+ * @param[in] request_  Request object containing the parameters for the
+ *                      operation.
+ * 
+ * @return Response object containing the result of the operation.
+ * 
+ */
+
+ShowResourceStatisticsResponse showResourceStatistics( const ShowResourceStatisticsRequest& request_ ) const;
+
+/**
+ * Shows various statistics for storage/memory tiers and resource groups.
+ * Statistics are provided on a per rank basis.
+ * 
+ * @param[in] request_  Request object containing the parameters for the
+ *                      operation.
+ * @param[out] response_  Response object containing the results of the
+ *                        operation.
+ * 
+ * @return Response object containing the result of the operation (initially
+ *         passed in by reference).
+ * 
+ */
+
+ShowResourceStatisticsResponse& showResourceStatistics( const ShowResourceStatisticsRequest& request_,
+                                                        ShowResourceStatisticsResponse& response_ ) const;
+
+/**
+ * Shows various statistics for storage/memory tiers and resource groups.
+ * Statistics are provided on a per rank basis.
+ * 
+ * @param options  Optional parameters.
+ * 
+ * @return Response object containing the result of the operation.
+ * 
+ */
+
+ShowResourceStatisticsResponse showResourceStatistics( const std::map<std::string, std::string>& options ) const;
+
+/**
+ * Shows various statistics for storage/memory tiers and resource groups.
+ * Statistics are provided on a per rank basis.
+ * 
+ * @param options  Optional parameters.
+ * @param[out] response_  Response object containing the results of the
+ *                        operation.
+ * 
+ * @return Response object containing the result of the operation (initially
+ *         passed in by reference).
+ * 
+ */
+
+ShowResourceStatisticsResponse& showResourceStatistics( const std::map<std::string, std::string>& options,
+                                                        ShowResourceStatisticsResponse& response_ ) const;
+
+/**
+ * Shows resource group properties.
+ * 
+ * @param[in] request_  Request object containing the parameters for the
+ *                      operation.
+ * 
+ * @return Response object containing the result of the operation.
+ * 
+ */
+
+ShowResourceGroupsResponse showResourceGroups( const ShowResourceGroupsRequest& request_ ) const;
+
+/**
+ * Shows resource group properties.
+ * 
+ * @param[in] request_  Request object containing the parameters for the
+ *                      operation.
+ * @param[out] response_  Response object containing the results of the
+ *                        operation.
+ * 
+ * @return Response object containing the result of the operation (initially
+ *         passed in by reference).
+ * 
+ */
+
+ShowResourceGroupsResponse& showResourceGroups( const ShowResourceGroupsRequest& request_,
+                                                ShowResourceGroupsResponse& response_ ) const;
+
+/**
+ * Shows resource group properties.
+ * 
+ * @param names  List of names of groups to be shown. A single entry with an
+ *               empty string returns all groups.
+ * @param options  Optional parameters.
+ *                 <ul>
+ *                         <li>
+ *                 gpudb::show_resource_groups_show_default_values: If true
+ *                 include values of fields that are based on the default
+ *                 resource group.
+ *                 <ul>
+ *                         <li> gpudb::show_resource_groups_true
+ *                         <li> gpudb::show_resource_groups_false
+ *                 </ul>
+ *                 The default value is gpudb::show_resource_groups_true.
+ *                         <li> gpudb::show_resource_groups_show_default_group:
+ *                 If true include the default resource group in the response.
+ *                 <ul>
+ *                         <li> gpudb::show_resource_groups_true
+ *                         <li> gpudb::show_resource_groups_false
+ *                 </ul>
+ *                 The default value is gpudb::show_resource_groups_true.
+ *                 </ul>
+ * 
+ * @return Response object containing the result of the operation.
+ * 
+ */
+
+ShowResourceGroupsResponse showResourceGroups( const std::vector<std::string>& names,
+                                               const std::map<std::string, std::string>& options ) const;
+
+/**
+ * Shows resource group properties.
+ * 
+ * @param names  List of names of groups to be shown. A single entry with an
+ *               empty string returns all groups.
+ * @param options  Optional parameters.
+ *                 <ul>
+ *                         <li>
+ *                 gpudb::show_resource_groups_show_default_values: If true
+ *                 include values of fields that are based on the default
+ *                 resource group.
+ *                 <ul>
+ *                         <li> gpudb::show_resource_groups_true
+ *                         <li> gpudb::show_resource_groups_false
+ *                 </ul>
+ *                 The default value is gpudb::show_resource_groups_true.
+ *                         <li> gpudb::show_resource_groups_show_default_group:
+ *                 If true include the default resource group in the response.
+ *                 <ul>
+ *                         <li> gpudb::show_resource_groups_true
+ *                         <li> gpudb::show_resource_groups_false
+ *                 </ul>
+ *                 The default value is gpudb::show_resource_groups_true.
+ *                 </ul>
+ * @param[out] response_  Response object containing the results of the
+ *                        operation.
+ * 
+ * @return Response object containing the result of the operation (initially
+ *         passed in by reference).
+ * 
+ */
+
+ShowResourceGroupsResponse& showResourceGroups( const std::vector<std::string>& names,
+                                                const std::map<std::string, std::string>& options,
+                                                ShowResourceGroupsResponse& response_ ) const;
+
+/**
  * Shows security information relating to users and/or roles. If the caller is
  * not a system administrator, only information relating to the caller and
  * their roles is returned.
@@ -14646,6 +17284,64 @@ ShowSecurityResponse showSecurity( const std::vector<std::string>& names,
 ShowSecurityResponse& showSecurity( const std::vector<std::string>& names,
                                     const std::map<std::string, std::string>& options,
                                     ShowSecurityResponse& response_ ) const;
+
+/**
+ * @private
+ * 
+ * @param[in] request_  Request object containing the parameters for the
+ *                      operation.
+ * 
+ * @return Response object containing the result of the operation.
+ * 
+ */
+
+ShowStatisticsResponse showStatistics( const ShowStatisticsRequest& request_ ) const;
+
+/**
+ * @private
+ * 
+ * @param[in] request_  Request object containing the parameters for the
+ *                      operation.
+ * @param[out] response_  Response object containing the results of the
+ *                        operation.
+ * 
+ * @return Response object containing the result of the operation (initially
+ *         passed in by reference).
+ * 
+ */
+
+ShowStatisticsResponse& showStatistics( const ShowStatisticsRequest& request_,
+                                        ShowStatisticsResponse& response_ ) const;
+
+/**
+ * @private
+ * 
+ * @param tableNames
+ * @param options
+ * 
+ * @return Response object containing the result of the operation.
+ * 
+ */
+
+ShowStatisticsResponse showStatistics( const std::vector<std::string>& tableNames,
+                                       const std::map<std::string, std::string>& options ) const;
+
+/**
+ * @private
+ * 
+ * @param tableNames
+ * @param options
+ * @param[out] response_  Response object containing the results of the
+ *                        operation.
+ * 
+ * @return Response object containing the result of the operation (initially
+ *         passed in by reference).
+ * 
+ */
+
+ShowStatisticsResponse& showStatistics( const std::vector<std::string>& tableNames,
+                                        const std::map<std::string, std::string>& options,
+                                        ShowStatisticsResponse& response_ ) const;
 
 /**
  * Returns server configuration and version related information to the caller.
@@ -15338,6 +18034,342 @@ ShowTypesResponse& showTypes( const std::string& typeId,
                               ShowTypesResponse& response_ ) const;
 
 /**
+ * Solves an existing graph for a type of problem (e.g., shortest path, page
+ * rank, travelling salesman, etc.) using source nodes, destination nodes, and
+ * additional, optional weights and restrictions. See <a
+ * href="../../graph_solver/network_graph_solver.html" target="_top">Network
+ * Graph Solvers</a> for more information.
+ * 
+ * @param[in] request_  Request object containing the parameters for the
+ *                      operation.
+ * 
+ * @return Response object containing the result of the operation.
+ * 
+ */
+
+SolveGraphResponse solveGraph( const SolveGraphRequest& request_ ) const;
+
+/**
+ * Solves an existing graph for a type of problem (e.g., shortest path, page
+ * rank, travelling salesman, etc.) using source nodes, destination nodes, and
+ * additional, optional weights and restrictions. See <a
+ * href="../../graph_solver/network_graph_solver.html" target="_top">Network
+ * Graph Solvers</a> for more information.
+ * 
+ * @param[in] request_  Request object containing the parameters for the
+ *                      operation.
+ * @param[out] response_  Response object containing the results of the
+ *                        operation.
+ * 
+ * @return Response object containing the result of the operation (initially
+ *         passed in by reference).
+ * 
+ */
+
+SolveGraphResponse& solveGraph( const SolveGraphRequest& request_,
+                                SolveGraphResponse& response_ ) const;
+
+/**
+ * Solves an existing graph for a type of problem (e.g., shortest path, page
+ * rank, travelling salesman, etc.) using source nodes, destination nodes, and
+ * additional, optional weights and restrictions. See <a
+ * href="../../graph_solver/network_graph_solver.html" target="_top">Network
+ * Graph Solvers</a> for more information.
+ * 
+ * @param graphName  Name of the graph resource to solve.
+ * @param weightsOnEdges  Additional weights to apply to the edges of an
+ *                        existing graph. Example format: 'table.column AS
+ *                        WEIGHTS_EDGE_ID'. Any provided weights will be added
+ *                        (in the case of 'WEIGHTS_VALUESPECIFIED') to or
+ *                        multiplied with (in the case of
+ *                        'WEIGHTS_FACTORSPECIFIED') the existing weight(s).
+ * @param restrictions  Additional restrictions to apply to the nodes/edges of
+ *                      an existing graph. Example format: 'table.column AS
+ *                      RESTRICTIONS_NODE_ID'. If @a
+ *                      remove_previous_restrictions is set to @a true, any
+ *                      provided restrictions will replace the existing
+ *                      restrictions. If @a remove_previous_restrictions is set
+ *                      to @a false, any provided weights will be added (in the
+ *                      case of 'RESTRICTIONS_VALUECOMPARED') to or replaced
+ *                      (in the case of 'RESTRICTIONS_ONOFFCOMPARED').
+ * @param solverType  The type of solver to use for the graph.
+ *                    <ul>
+ *                            <li> gpudb::solve_graph_SHORTEST_PATH: Solves for
+ *                    the optimal (shortest) path based on weights and
+ *                    restrictions from one source to destinations nodes. Also
+ *                    known as the Dijkstra solver.
+ *                            <li> gpudb::solve_graph_PAGE_RANK: Solves for the
+ *                    probability of each destination node being visited based
+ *                    on the links of the graph topology.
+ *                            <li> gpudb::solve_graph_CENTRALITY: Solves for
+ *                    the degree of a node to depict how many pairs of
+ *                    individuals that would have to go through the node to
+ *                    reach one another in the minimum number of hops. Also
+ *                    known as betweenness.
+ *                            <li> gpudb::solve_graph_MULTIPLE_ROUTING: Solves
+ *                    for finding the minimum cost cumulative path for a
+ *                    round-trip starting from the given source and visiting
+ *                    each given destination node once then returning to the
+ *                    source. Also known as the travelling salesman problem.
+ *                            <li> gpudb::solve_graph_INVERSE_SHORTEST_PATH:
+ *                    Solves for finding the optimal path cost for each
+ *                    destination node to route to the source node. Also known
+ *                    as inverse Dijkstra or the service man routing problem.
+ *                            <li> gpudb::solve_graph_BACKHAUL_ROUTING: Solves
+ *                    for optimal routes that connect remote asset nodes to the
+ *                    fixed (backbone) asset nodes. When @a BACKHAUL_ROUTING is
+ *                    invoked, the @a destinationNodes or @a destinationNodeIds
+ *                    array is used for both fixed and remote asset nodes and
+ *                    the @a sourceNodeId represents the number of fixed asset
+ *                    nodes contained in @a destinationNodes / @a
+ *                    destinationNodeIds.
+ *                    </ul>
+ *                    The default value is gpudb::solve_graph_SHORTEST_PATH.
+ * @param sourceNodeId  If @a nodeType is @a NODE_ID, the node ID (integer) of
+ *                      the source (starting point) for the graph solution. If
+ *                      the @a solverType is set to @a BACKHAUL_ROUTING, this
+ *                      number represents the number of fixed asset nodes
+ *                      contained in @a destinationNodes, e.g., if @a
+ *                      sourceNodeId is set to 24, the first 24 nodes listed in
+ *                      @a destinationNodes / @a destinationNodeIds are the
+ *                      fixed asset nodes and the rest of the nodes in the
+ *                      array are remote assets.
+ * @param destinationNodeIds  List of destination node indices, or indices for
+ *                            pageranks. If the @a solverType is set to @a
+ *                            BACKHAUL_ROUTING, it is the list of all fixed and
+ *                            remote asset nodes.
+ * @param nodeType  Source and destination node identifier type.
+ *                  <ul>
+ *                          <li> gpudb::solve_graph_NODE_ID: The graph's nodes
+ *                  were identified as integers, e.g., 1234.
+ *                          <li> gpudb::solve_graph_NODE_WKTPOINT: The graph's
+ *                  nodes were identified as geospatial coordinates, e.g.,
+ *                  'POINT(1.0 2.0)'.
+ *                          <li> gpudb::solve_graph_NODE_NAME: The graph's
+ *                  nodes were identified as strings, e.g., 'Arlington'.
+ *                  </ul>
+ *                  The default value is gpudb::solve_graph_NODE_ID.
+ * @param sourceNode  If @a nodeType is @a NODE_WKTPOINT or @a NODE_NAME, the
+ *                    node (string) of the source (starting point) for the
+ *                    graph solution.
+ * @param destinationNodes  If @a nodeType is @a NODE_WKTPOINT or @a NODE_NAME,
+ *                          the list of destination node or page rank indices
+ *                          (strings) for the graph solution. If the @a
+ *                          solverType is set to @a BACKHAUL_ROUTING, it is the
+ *                          list of all fixed and remote asset nodes. The
+ *                          string type should be consistent with the @a
+ *                          nodeType parameter.
+ * @param solutionTable  Name of the table to store the solution.
+ * @param options  Additional parameters
+ *                 <ul>
+ *                         <li> gpudb::solve_graph_max_solution_radius: For @a
+ *                 SHORTEST_PATH and @a INVERSE_SHORTEST_PATH solvers only.
+ *                 Sets the maximum solution cost radius, which ignores the @a
+ *                 destinationNodeIds list and instead outputs the nodes within
+ *                 the radius sorted by ascending cost. If set to '0.0', the
+ *                 setting is ignored.
+ *                         <li> gpudb::solve_graph_max_solution_targets: For @a
+ *                 SHORTEST_PATH and @a INVERSE_SHORTEST_PATH solvers only.
+ *                 Sets the maximum number of solution targets, which ignores
+ *                 the @a destinationNodeIds list and instead outputs no more
+ *                 than n number of nodes sorted by ascending cost where n is
+ *                 equal to the setting value. If set to 0, the setting is
+ *                 ignored.
+ *                         <li> gpudb::solve_graph_export_solve_results:
+ *                 Returns solution results inside the @a
+ *                 resultPerDestinationNode array in the response if set to @a
+ *                 true.
+ *                 <ul>
+ *                         <li> gpudb::solve_graph_true
+ *                         <li> gpudb::solve_graph_false
+ *                 </ul>
+ *                 The default value is gpudb::solve_graph_false.
+ *                         <li>
+ *                 gpudb::solve_graph_remove_previous_restrictions: Ignore the
+ *                 restrictions applied to the graph during the creation stage
+ *                 and only use the restrictions specified in this request if
+ *                 set to @a true.
+ *                 <ul>
+ *                         <li> gpudb::solve_graph_true
+ *                         <li> gpudb::solve_graph_false
+ *                 </ul>
+ *                 The default value is gpudb::solve_graph_false.
+ *                         <li> gpudb::solve_graph_restriction_threshold_value:
+ *                 Value-based restriction comparison. Any node or edge with a
+ *                 RESTRICTIONS_VALUECOMPARED value greater than the @a
+ *                 restriction_threshold_value will not be included in the
+ *                 solution.
+ *                 </ul>
+ * 
+ * @return Response object containing the result of the operation.
+ * 
+ */
+
+SolveGraphResponse solveGraph( const std::string& graphName,
+                               const std::vector<std::string>& weightsOnEdges,
+                               const std::vector<std::string>& restrictions,
+                               const std::string& solverType,
+                               const int64_t sourceNodeId,
+                               const std::vector<int64_t>& destinationNodeIds,
+                               const std::string& nodeType,
+                               const std::string& sourceNode,
+                               const std::vector<std::string>& destinationNodes,
+                               const std::string& solutionTable,
+                               const std::map<std::string, std::string>& options ) const;
+
+/**
+ * Solves an existing graph for a type of problem (e.g., shortest path, page
+ * rank, travelling salesman, etc.) using source nodes, destination nodes, and
+ * additional, optional weights and restrictions. See <a
+ * href="../../graph_solver/network_graph_solver.html" target="_top">Network
+ * Graph Solvers</a> for more information.
+ * 
+ * @param graphName  Name of the graph resource to solve.
+ * @param weightsOnEdges  Additional weights to apply to the edges of an
+ *                        existing graph. Example format: 'table.column AS
+ *                        WEIGHTS_EDGE_ID'. Any provided weights will be added
+ *                        (in the case of 'WEIGHTS_VALUESPECIFIED') to or
+ *                        multiplied with (in the case of
+ *                        'WEIGHTS_FACTORSPECIFIED') the existing weight(s).
+ * @param restrictions  Additional restrictions to apply to the nodes/edges of
+ *                      an existing graph. Example format: 'table.column AS
+ *                      RESTRICTIONS_NODE_ID'. If @a
+ *                      remove_previous_restrictions is set to @a true, any
+ *                      provided restrictions will replace the existing
+ *                      restrictions. If @a remove_previous_restrictions is set
+ *                      to @a false, any provided weights will be added (in the
+ *                      case of 'RESTRICTIONS_VALUECOMPARED') to or replaced
+ *                      (in the case of 'RESTRICTIONS_ONOFFCOMPARED').
+ * @param solverType  The type of solver to use for the graph.
+ *                    <ul>
+ *                            <li> gpudb::solve_graph_SHORTEST_PATH: Solves for
+ *                    the optimal (shortest) path based on weights and
+ *                    restrictions from one source to destinations nodes. Also
+ *                    known as the Dijkstra solver.
+ *                            <li> gpudb::solve_graph_PAGE_RANK: Solves for the
+ *                    probability of each destination node being visited based
+ *                    on the links of the graph topology.
+ *                            <li> gpudb::solve_graph_CENTRALITY: Solves for
+ *                    the degree of a node to depict how many pairs of
+ *                    individuals that would have to go through the node to
+ *                    reach one another in the minimum number of hops. Also
+ *                    known as betweenness.
+ *                            <li> gpudb::solve_graph_MULTIPLE_ROUTING: Solves
+ *                    for finding the minimum cost cumulative path for a
+ *                    round-trip starting from the given source and visiting
+ *                    each given destination node once then returning to the
+ *                    source. Also known as the travelling salesman problem.
+ *                            <li> gpudb::solve_graph_INVERSE_SHORTEST_PATH:
+ *                    Solves for finding the optimal path cost for each
+ *                    destination node to route to the source node. Also known
+ *                    as inverse Dijkstra or the service man routing problem.
+ *                            <li> gpudb::solve_graph_BACKHAUL_ROUTING: Solves
+ *                    for optimal routes that connect remote asset nodes to the
+ *                    fixed (backbone) asset nodes. When @a BACKHAUL_ROUTING is
+ *                    invoked, the @a destinationNodes or @a destinationNodeIds
+ *                    array is used for both fixed and remote asset nodes and
+ *                    the @a sourceNodeId represents the number of fixed asset
+ *                    nodes contained in @a destinationNodes / @a
+ *                    destinationNodeIds.
+ *                    </ul>
+ *                    The default value is gpudb::solve_graph_SHORTEST_PATH.
+ * @param sourceNodeId  If @a nodeType is @a NODE_ID, the node ID (integer) of
+ *                      the source (starting point) for the graph solution. If
+ *                      the @a solverType is set to @a BACKHAUL_ROUTING, this
+ *                      number represents the number of fixed asset nodes
+ *                      contained in @a destinationNodes, e.g., if @a
+ *                      sourceNodeId is set to 24, the first 24 nodes listed in
+ *                      @a destinationNodes / @a destinationNodeIds are the
+ *                      fixed asset nodes and the rest of the nodes in the
+ *                      array are remote assets.
+ * @param destinationNodeIds  List of destination node indices, or indices for
+ *                            pageranks. If the @a solverType is set to @a
+ *                            BACKHAUL_ROUTING, it is the list of all fixed and
+ *                            remote asset nodes.
+ * @param nodeType  Source and destination node identifier type.
+ *                  <ul>
+ *                          <li> gpudb::solve_graph_NODE_ID: The graph's nodes
+ *                  were identified as integers, e.g., 1234.
+ *                          <li> gpudb::solve_graph_NODE_WKTPOINT: The graph's
+ *                  nodes were identified as geospatial coordinates, e.g.,
+ *                  'POINT(1.0 2.0)'.
+ *                          <li> gpudb::solve_graph_NODE_NAME: The graph's
+ *                  nodes were identified as strings, e.g., 'Arlington'.
+ *                  </ul>
+ *                  The default value is gpudb::solve_graph_NODE_ID.
+ * @param sourceNode  If @a nodeType is @a NODE_WKTPOINT or @a NODE_NAME, the
+ *                    node (string) of the source (starting point) for the
+ *                    graph solution.
+ * @param destinationNodes  If @a nodeType is @a NODE_WKTPOINT or @a NODE_NAME,
+ *                          the list of destination node or page rank indices
+ *                          (strings) for the graph solution. If the @a
+ *                          solverType is set to @a BACKHAUL_ROUTING, it is the
+ *                          list of all fixed and remote asset nodes. The
+ *                          string type should be consistent with the @a
+ *                          nodeType parameter.
+ * @param solutionTable  Name of the table to store the solution.
+ * @param options  Additional parameters
+ *                 <ul>
+ *                         <li> gpudb::solve_graph_max_solution_radius: For @a
+ *                 SHORTEST_PATH and @a INVERSE_SHORTEST_PATH solvers only.
+ *                 Sets the maximum solution cost radius, which ignores the @a
+ *                 destinationNodeIds list and instead outputs the nodes within
+ *                 the radius sorted by ascending cost. If set to '0.0', the
+ *                 setting is ignored.
+ *                         <li> gpudb::solve_graph_max_solution_targets: For @a
+ *                 SHORTEST_PATH and @a INVERSE_SHORTEST_PATH solvers only.
+ *                 Sets the maximum number of solution targets, which ignores
+ *                 the @a destinationNodeIds list and instead outputs no more
+ *                 than n number of nodes sorted by ascending cost where n is
+ *                 equal to the setting value. If set to 0, the setting is
+ *                 ignored.
+ *                         <li> gpudb::solve_graph_export_solve_results:
+ *                 Returns solution results inside the @a
+ *                 resultPerDestinationNode array in the response if set to @a
+ *                 true.
+ *                 <ul>
+ *                         <li> gpudb::solve_graph_true
+ *                         <li> gpudb::solve_graph_false
+ *                 </ul>
+ *                 The default value is gpudb::solve_graph_false.
+ *                         <li>
+ *                 gpudb::solve_graph_remove_previous_restrictions: Ignore the
+ *                 restrictions applied to the graph during the creation stage
+ *                 and only use the restrictions specified in this request if
+ *                 set to @a true.
+ *                 <ul>
+ *                         <li> gpudb::solve_graph_true
+ *                         <li> gpudb::solve_graph_false
+ *                 </ul>
+ *                 The default value is gpudb::solve_graph_false.
+ *                         <li> gpudb::solve_graph_restriction_threshold_value:
+ *                 Value-based restriction comparison. Any node or edge with a
+ *                 RESTRICTIONS_VALUECOMPARED value greater than the @a
+ *                 restriction_threshold_value will not be included in the
+ *                 solution.
+ *                 </ul>
+ * @param[out] response_  Response object containing the results of the
+ *                        operation.
+ * 
+ * @return Response object containing the result of the operation (initially
+ *         passed in by reference).
+ * 
+ */
+
+SolveGraphResponse& solveGraph( const std::string& graphName,
+                                const std::vector<std::string>& weightsOnEdges,
+                                const std::vector<std::string>& restrictions,
+                                const std::string& solverType,
+                                const int64_t sourceNodeId,
+                                const std::vector<int64_t>& destinationNodeIds,
+                                const std::string& nodeType,
+                                const std::string& sourceNode,
+                                const std::vector<std::string>& destinationNodes,
+                                const std::string& solutionTable,
+                                const std::map<std::string, std::string>& options,
+                                SolveGraphResponse& response_ ) const;
+
+/**
  * Runs multiple predicate-based updates in a single call.  With the list of
  * given expressions, any matching record's column values will be updated as
  * provided in @a newValuesMaps.  There is also an optional 'upsert' capability
@@ -15820,6 +18852,7 @@ VisualizeImageResponse& visualizeImage( const VisualizeImageRequest& request_,
  * @param worldTableNames
  * @param xColumnName
  * @param yColumnName
+ * @param symbolColumnName
  * @param geometryColumnName
  * @param trackIds
  * @param minX
@@ -15939,6 +18972,7 @@ VisualizeImageResponse visualizeImage( const std::vector<std::string>& tableName
                                        const std::vector<std::string>& worldTableNames,
                                        const std::string& xColumnName,
                                        const std::string& yColumnName,
+                                       const std::string& symbolColumnName,
                                        const std::string& geometryColumnName,
                                        const std::vector<std::vector<std::string> >& trackIds,
                                        const double minX,
@@ -15959,6 +18993,7 @@ VisualizeImageResponse visualizeImage( const std::vector<std::string>& tableName
  * @param worldTableNames
  * @param xColumnName
  * @param yColumnName
+ * @param symbolColumnName
  * @param geometryColumnName
  * @param trackIds
  * @param minX
@@ -16081,6 +19116,7 @@ VisualizeImageResponse& visualizeImage( const std::vector<std::string>& tableNam
                                         const std::vector<std::string>& worldTableNames,
                                         const std::string& xColumnName,
                                         const std::string& yColumnName,
+                                        const std::string& symbolColumnName,
                                         const std::string& geometryColumnName,
                                         const std::vector<std::vector<std::string> >& trackIds,
                                         const double minX,
@@ -16239,10 +19275,10 @@ VisualizeImageChartResponse& visualizeImageChart( const VisualizeImageChartReque
  *                      </ul>
  *                      The default value is gpudb::visualize_image_chart_none.
  *                              <li> gpudb::visualize_image_chart_jitter_x:
- *                      Amplitude of horizontal jitter applied to non-numaric x
+ *                      Amplitude of horizontal jitter applied to non-numeric x
  *                      column values.
  *                              <li> gpudb::visualize_image_chart_jitter_y:
- *                      Amplitude of vertical jitter applied to non-numaric y
+ *                      Amplitude of vertical jitter applied to non-numeric y
  *                      column values.
  *                              <li> gpudb::visualize_image_chart_plot_all: If
  *                      this options is set to "true", all non-numeric column
@@ -16376,10 +19412,10 @@ VisualizeImageChartResponse visualizeImageChart( const std::string& tableName,
  *                      </ul>
  *                      The default value is gpudb::visualize_image_chart_none.
  *                              <li> gpudb::visualize_image_chart_jitter_x:
- *                      Amplitude of horizontal jitter applied to non-numaric x
+ *                      Amplitude of horizontal jitter applied to non-numeric x
  *                      column values.
  *                              <li> gpudb::visualize_image_chart_jitter_y:
- *                      Amplitude of vertical jitter applied to non-numaric y
+ *                      Amplitude of vertical jitter applied to non-numeric y
  *                      column values.
  *                              <li> gpudb::visualize_image_chart_plot_all: If
  *                      this options is set to "true", all non-numeric column
@@ -17156,16 +20192,82 @@ VisualizeImageHeatmapResponse& visualizeImageHeatmap( const VisualizeImageHeatma
  *                              <li> gpudb::visualize_image_heatmap_colormap:
  *                      <ul>
  *                              <li> gpudb::visualize_image_heatmap_jet
- *                              <li> gpudb::visualize_image_heatmap_hot
- *                              <li> gpudb::visualize_image_heatmap_hsv
- *                              <li> gpudb::visualize_image_heatmap_gray
+ *                              <li> gpudb::visualize_image_heatmap_accent
+ *                              <li> gpudb::visualize_image_heatmap_afmhot
+ *                              <li> gpudb::visualize_image_heatmap_autumn
+ *                              <li> gpudb::visualize_image_heatmap_binary
  *                              <li> gpudb::visualize_image_heatmap_blues
+ *                              <li> gpudb::visualize_image_heatmap_bone
+ *                              <li> gpudb::visualize_image_heatmap_brbg
+ *                              <li> gpudb::visualize_image_heatmap_brg
+ *                              <li> gpudb::visualize_image_heatmap_bugn
+ *                              <li> gpudb::visualize_image_heatmap_bupu
+ *                              <li> gpudb::visualize_image_heatmap_bwr
+ *                              <li> gpudb::visualize_image_heatmap_cmrmap
+ *                              <li> gpudb::visualize_image_heatmap_cool
+ *                              <li> gpudb::visualize_image_heatmap_coolwarm
+ *                              <li> gpudb::visualize_image_heatmap_copper
+ *                              <li> gpudb::visualize_image_heatmap_cubehelix
+ *                              <li> gpudb::visualize_image_heatmap_dark2
+ *                              <li> gpudb::visualize_image_heatmap_flag
+ *                              <li> gpudb::visualize_image_heatmap_gist_earth
+ *                              <li> gpudb::visualize_image_heatmap_gist_gray
+ *                              <li> gpudb::visualize_image_heatmap_gist_heat
+ *                              <li> gpudb::visualize_image_heatmap_gist_ncar
+ *                              <li>
+ *                      gpudb::visualize_image_heatmap_gist_rainbow
+ *                              <li> gpudb::visualize_image_heatmap_gist_stern
+ *                              <li> gpudb::visualize_image_heatmap_gist_yarg
+ *                              <li> gpudb::visualize_image_heatmap_gnbu
+ *                              <li> gpudb::visualize_image_heatmap_gnuplot2
+ *                              <li> gpudb::visualize_image_heatmap_gnuplot
+ *                              <li> gpudb::visualize_image_heatmap_gray
  *                              <li> gpudb::visualize_image_heatmap_greens
  *                              <li> gpudb::visualize_image_heatmap_greys
+ *                              <li> gpudb::visualize_image_heatmap_hot
+ *                              <li> gpudb::visualize_image_heatmap_hsv
+ *                              <li> gpudb::visualize_image_heatmap_inferno
+ *                              <li> gpudb::visualize_image_heatmap_magma
+ *                              <li>
+ *                      gpudb::visualize_image_heatmap_nipy_spectral
+ *                              <li> gpudb::visualize_image_heatmap_ocean
  *                              <li> gpudb::visualize_image_heatmap_oranges
+ *                              <li> gpudb::visualize_image_heatmap_orrd
+ *                              <li> gpudb::visualize_image_heatmap_paired
+ *                              <li> gpudb::visualize_image_heatmap_pastel1
+ *                              <li> gpudb::visualize_image_heatmap_pastel2
+ *                              <li> gpudb::visualize_image_heatmap_pink
+ *                              <li> gpudb::visualize_image_heatmap_piyg
+ *                              <li> gpudb::visualize_image_heatmap_plasma
+ *                              <li> gpudb::visualize_image_heatmap_prgn
+ *                              <li> gpudb::visualize_image_heatmap_prism
+ *                              <li> gpudb::visualize_image_heatmap_pubu
+ *                              <li> gpudb::visualize_image_heatmap_pubugn
+ *                              <li> gpudb::visualize_image_heatmap_puor
+ *                              <li> gpudb::visualize_image_heatmap_purd
  *                              <li> gpudb::visualize_image_heatmap_purples
+ *                              <li> gpudb::visualize_image_heatmap_rainbow
+ *                              <li> gpudb::visualize_image_heatmap_rdbu
+ *                              <li> gpudb::visualize_image_heatmap_rdgy
+ *                              <li> gpudb::visualize_image_heatmap_rdpu
+ *                              <li> gpudb::visualize_image_heatmap_rdylbu
+ *                              <li> gpudb::visualize_image_heatmap_rdylgn
  *                              <li> gpudb::visualize_image_heatmap_reds
+ *                              <li> gpudb::visualize_image_heatmap_seismic
+ *                              <li> gpudb::visualize_image_heatmap_set1
+ *                              <li> gpudb::visualize_image_heatmap_set2
+ *                              <li> gpudb::visualize_image_heatmap_set3
+ *                              <li> gpudb::visualize_image_heatmap_spectral
+ *                              <li> gpudb::visualize_image_heatmap_spring
+ *                              <li> gpudb::visualize_image_heatmap_summer
+ *                              <li> gpudb::visualize_image_heatmap_terrain
  *                              <li> gpudb::visualize_image_heatmap_viridis
+ *                              <li> gpudb::visualize_image_heatmap_winter
+ *                              <li> gpudb::visualize_image_heatmap_wistia
+ *                              <li> gpudb::visualize_image_heatmap_ylgn
+ *                              <li> gpudb::visualize_image_heatmap_ylgnbu
+ *                              <li> gpudb::visualize_image_heatmap_ylorbr
+ *                              <li> gpudb::visualize_image_heatmap_ylorrd
  *                      </ul>
  *                      The default value is
  *                      gpudb::visualize_image_heatmap_jet.
@@ -17230,16 +20332,82 @@ VisualizeImageHeatmapResponse visualizeImageHeatmap( const std::vector<std::stri
  *                              <li> gpudb::visualize_image_heatmap_colormap:
  *                      <ul>
  *                              <li> gpudb::visualize_image_heatmap_jet
- *                              <li> gpudb::visualize_image_heatmap_hot
- *                              <li> gpudb::visualize_image_heatmap_hsv
- *                              <li> gpudb::visualize_image_heatmap_gray
+ *                              <li> gpudb::visualize_image_heatmap_accent
+ *                              <li> gpudb::visualize_image_heatmap_afmhot
+ *                              <li> gpudb::visualize_image_heatmap_autumn
+ *                              <li> gpudb::visualize_image_heatmap_binary
  *                              <li> gpudb::visualize_image_heatmap_blues
+ *                              <li> gpudb::visualize_image_heatmap_bone
+ *                              <li> gpudb::visualize_image_heatmap_brbg
+ *                              <li> gpudb::visualize_image_heatmap_brg
+ *                              <li> gpudb::visualize_image_heatmap_bugn
+ *                              <li> gpudb::visualize_image_heatmap_bupu
+ *                              <li> gpudb::visualize_image_heatmap_bwr
+ *                              <li> gpudb::visualize_image_heatmap_cmrmap
+ *                              <li> gpudb::visualize_image_heatmap_cool
+ *                              <li> gpudb::visualize_image_heatmap_coolwarm
+ *                              <li> gpudb::visualize_image_heatmap_copper
+ *                              <li> gpudb::visualize_image_heatmap_cubehelix
+ *                              <li> gpudb::visualize_image_heatmap_dark2
+ *                              <li> gpudb::visualize_image_heatmap_flag
+ *                              <li> gpudb::visualize_image_heatmap_gist_earth
+ *                              <li> gpudb::visualize_image_heatmap_gist_gray
+ *                              <li> gpudb::visualize_image_heatmap_gist_heat
+ *                              <li> gpudb::visualize_image_heatmap_gist_ncar
+ *                              <li>
+ *                      gpudb::visualize_image_heatmap_gist_rainbow
+ *                              <li> gpudb::visualize_image_heatmap_gist_stern
+ *                              <li> gpudb::visualize_image_heatmap_gist_yarg
+ *                              <li> gpudb::visualize_image_heatmap_gnbu
+ *                              <li> gpudb::visualize_image_heatmap_gnuplot2
+ *                              <li> gpudb::visualize_image_heatmap_gnuplot
+ *                              <li> gpudb::visualize_image_heatmap_gray
  *                              <li> gpudb::visualize_image_heatmap_greens
  *                              <li> gpudb::visualize_image_heatmap_greys
+ *                              <li> gpudb::visualize_image_heatmap_hot
+ *                              <li> gpudb::visualize_image_heatmap_hsv
+ *                              <li> gpudb::visualize_image_heatmap_inferno
+ *                              <li> gpudb::visualize_image_heatmap_magma
+ *                              <li>
+ *                      gpudb::visualize_image_heatmap_nipy_spectral
+ *                              <li> gpudb::visualize_image_heatmap_ocean
  *                              <li> gpudb::visualize_image_heatmap_oranges
+ *                              <li> gpudb::visualize_image_heatmap_orrd
+ *                              <li> gpudb::visualize_image_heatmap_paired
+ *                              <li> gpudb::visualize_image_heatmap_pastel1
+ *                              <li> gpudb::visualize_image_heatmap_pastel2
+ *                              <li> gpudb::visualize_image_heatmap_pink
+ *                              <li> gpudb::visualize_image_heatmap_piyg
+ *                              <li> gpudb::visualize_image_heatmap_plasma
+ *                              <li> gpudb::visualize_image_heatmap_prgn
+ *                              <li> gpudb::visualize_image_heatmap_prism
+ *                              <li> gpudb::visualize_image_heatmap_pubu
+ *                              <li> gpudb::visualize_image_heatmap_pubugn
+ *                              <li> gpudb::visualize_image_heatmap_puor
+ *                              <li> gpudb::visualize_image_heatmap_purd
  *                              <li> gpudb::visualize_image_heatmap_purples
+ *                              <li> gpudb::visualize_image_heatmap_rainbow
+ *                              <li> gpudb::visualize_image_heatmap_rdbu
+ *                              <li> gpudb::visualize_image_heatmap_rdgy
+ *                              <li> gpudb::visualize_image_heatmap_rdpu
+ *                              <li> gpudb::visualize_image_heatmap_rdylbu
+ *                              <li> gpudb::visualize_image_heatmap_rdylgn
  *                              <li> gpudb::visualize_image_heatmap_reds
+ *                              <li> gpudb::visualize_image_heatmap_seismic
+ *                              <li> gpudb::visualize_image_heatmap_set1
+ *                              <li> gpudb::visualize_image_heatmap_set2
+ *                              <li> gpudb::visualize_image_heatmap_set3
+ *                              <li> gpudb::visualize_image_heatmap_spectral
+ *                              <li> gpudb::visualize_image_heatmap_spring
+ *                              <li> gpudb::visualize_image_heatmap_summer
+ *                              <li> gpudb::visualize_image_heatmap_terrain
  *                              <li> gpudb::visualize_image_heatmap_viridis
+ *                              <li> gpudb::visualize_image_heatmap_winter
+ *                              <li> gpudb::visualize_image_heatmap_wistia
+ *                              <li> gpudb::visualize_image_heatmap_ylgn
+ *                              <li> gpudb::visualize_image_heatmap_ylgnbu
+ *                              <li> gpudb::visualize_image_heatmap_ylorbr
+ *                              <li> gpudb::visualize_image_heatmap_ylorrd
  *                      </ul>
  *                      The default value is
  *                      gpudb::visualize_image_heatmap_jet.

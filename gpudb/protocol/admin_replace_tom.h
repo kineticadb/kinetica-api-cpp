@@ -25,7 +25,8 @@ namespace gpudb
          */
         AdminReplaceTomRequest() :
             oldRankTom(int64_t()),
-            newRankTom(int64_t())
+            newRankTom(int64_t()),
+            options(std::map<std::string, std::string>())
         {
         }
 
@@ -36,16 +37,19 @@ namespace gpudb
          * 
          * @param[in] oldRankTom_
          * @param[in] newRankTom_
+         * @param[in] options_
          * 
          */
-        AdminReplaceTomRequest(const int64_t oldRankTom_, const int64_t newRankTom_):
+        AdminReplaceTomRequest(const int64_t oldRankTom_, const int64_t newRankTom_, const std::map<std::string, std::string>& options_):
             oldRankTom( oldRankTom_ ),
-            newRankTom( newRankTom_ )
+            newRankTom( newRankTom_ ),
+            options( options_ )
         {
         }
 
         int64_t oldRankTom;
         int64_t newRankTom;
+        std::map<std::string, std::string> options;
     };
 }
 
@@ -61,6 +65,7 @@ namespace avro
         {
             ::avro::encode(e, v.oldRankTom);
             ::avro::encode(e, v.newRankTom);
+            ::avro::encode(e, v.options);
         }
 
         static void decode(Decoder& d, gpudb::AdminReplaceTomRequest& v)
@@ -81,6 +86,10 @@ namespace avro
                             ::avro::decode(d, v.newRankTom);
                             break;
 
+                        case 2:
+                            ::avro::decode(d, v.options);
+                            break;
+
                         default:
                             break;
                     }
@@ -90,6 +99,7 @@ namespace avro
             {
                 ::avro::decode(d, v.oldRankTom);
                 ::avro::decode(d, v.newRankTom);
+                ::avro::decode(d, v.options);
             }
         }
     };
@@ -114,12 +124,14 @@ namespace gpudb
          */
         AdminReplaceTomResponse() :
             oldRankTom(int64_t()),
-            newRankTom(int64_t())
+            newRankTom(int64_t()),
+            info(std::map<std::string, std::string>())
         {
         }
 
         int64_t oldRankTom;
         int64_t newRankTom;
+        std::map<std::string, std::string> info;
     };
 }
 
@@ -135,6 +147,7 @@ namespace avro
         {
             ::avro::encode(e, v.oldRankTom);
             ::avro::encode(e, v.newRankTom);
+            ::avro::encode(e, v.info);
         }
 
         static void decode(Decoder& d, gpudb::AdminReplaceTomResponse& v)
@@ -155,6 +168,10 @@ namespace avro
                             ::avro::decode(d, v.newRankTom);
                             break;
 
+                        case 2:
+                            ::avro::decode(d, v.info);
+                            break;
+
                         default:
                             break;
                     }
@@ -164,6 +181,7 @@ namespace avro
             {
                 ::avro::decode(d, v.oldRankTom);
                 ::avro::decode(d, v.newRankTom);
+                ::avro::decode(d, v.info);
             }
         }
     };

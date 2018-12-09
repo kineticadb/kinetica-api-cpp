@@ -107,11 +107,13 @@ namespace gpudb
          * parameter values.
          */
         ShowSystemPropertiesResponse() :
-            propertyMap(std::map<std::string, std::string>())
+            propertyMap(std::map<std::string, std::string>()),
+            info(std::map<std::string, std::string>())
         {
         }
 
         std::map<std::string, std::string> propertyMap;
+        std::map<std::string, std::string> info;
     };
 }
 
@@ -122,6 +124,7 @@ namespace avro
         static void encode(Encoder& e, const gpudb::ShowSystemPropertiesResponse& v)
         {
             ::avro::encode(e, v.propertyMap);
+            ::avro::encode(e, v.info);
         }
 
         static void decode(Decoder& d, gpudb::ShowSystemPropertiesResponse& v)
@@ -138,6 +141,10 @@ namespace avro
                             ::avro::decode(d, v.propertyMap);
                             break;
 
+                        case 1:
+                            ::avro::decode(d, v.info);
+                            break;
+
                         default:
                             break;
                     }
@@ -146,6 +153,7 @@ namespace avro
             else
             {
                 ::avro::decode(d, v.propertyMap);
+                ::avro::decode(d, v.info);
             }
         }
     };

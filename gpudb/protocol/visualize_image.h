@@ -28,6 +28,7 @@ namespace gpudb
             worldTableNames(std::vector<std::string>()),
             xColumnName(std::string()),
             yColumnName(std::string()),
+            symbolColumnName(std::string()),
             geometryColumnName(std::string()),
             trackIds(std::vector<std::vector<std::string> >()),
             minX(double()),
@@ -52,6 +53,7 @@ namespace gpudb
          * @param[in] worldTableNames_
          * @param[in] xColumnName_
          * @param[in] yColumnName_
+         * @param[in] symbolColumnName_
          * @param[in] geometryColumnName_
          * @param[in] trackIds_
          * @param[in] minX_
@@ -222,11 +224,12 @@ namespace gpudb
          * @param[in] options_
          * 
          */
-        VisualizeImageRequest(const std::vector<std::string>& tableNames_, const std::vector<std::string>& worldTableNames_, const std::string& xColumnName_, const std::string& yColumnName_, const std::string& geometryColumnName_, const std::vector<std::vector<std::string> >& trackIds_, const double minX_, const double maxX_, const double minY_, const double maxY_, const int32_t width_, const int32_t height_, const std::string& projection_, const int64_t bgColor_, const std::map<std::string, std::vector<std::string> >& styleOptions_, const std::map<std::string, std::string>& options_):
+        VisualizeImageRequest(const std::vector<std::string>& tableNames_, const std::vector<std::string>& worldTableNames_, const std::string& xColumnName_, const std::string& yColumnName_, const std::string& symbolColumnName_, const std::string& geometryColumnName_, const std::vector<std::vector<std::string> >& trackIds_, const double minX_, const double maxX_, const double minY_, const double maxY_, const int32_t width_, const int32_t height_, const std::string& projection_, const int64_t bgColor_, const std::map<std::string, std::vector<std::string> >& styleOptions_, const std::map<std::string, std::string>& options_):
             tableNames( tableNames_ ),
             worldTableNames( worldTableNames_ ),
             xColumnName( xColumnName_ ),
             yColumnName( yColumnName_ ),
+            symbolColumnName( symbolColumnName_ ),
             geometryColumnName( geometryColumnName_ ),
             trackIds( trackIds_ ),
             minX( minX_ ),
@@ -246,6 +249,7 @@ namespace gpudb
         std::vector<std::string> worldTableNames;
         std::string xColumnName;
         std::string yColumnName;
+        std::string symbolColumnName;
         std::string geometryColumnName;
         std::vector<std::vector<std::string> > trackIds;
         double minX;
@@ -275,6 +279,7 @@ namespace avro
             ::avro::encode(e, v.worldTableNames);
             ::avro::encode(e, v.xColumnName);
             ::avro::encode(e, v.yColumnName);
+            ::avro::encode(e, v.symbolColumnName);
             ::avro::encode(e, v.geometryColumnName);
             ::avro::encode(e, v.trackIds);
             ::avro::encode(e, v.minX);
@@ -316,50 +321,54 @@ namespace avro
                             break;
 
                         case 4:
-                            ::avro::decode(d, v.geometryColumnName);
+                            ::avro::decode(d, v.symbolColumnName);
                             break;
 
                         case 5:
-                            ::avro::decode(d, v.trackIds);
+                            ::avro::decode(d, v.geometryColumnName);
                             break;
 
                         case 6:
-                            ::avro::decode(d, v.minX);
+                            ::avro::decode(d, v.trackIds);
                             break;
 
                         case 7:
-                            ::avro::decode(d, v.maxX);
+                            ::avro::decode(d, v.minX);
                             break;
 
                         case 8:
-                            ::avro::decode(d, v.minY);
+                            ::avro::decode(d, v.maxX);
                             break;
 
                         case 9:
-                            ::avro::decode(d, v.maxY);
+                            ::avro::decode(d, v.minY);
                             break;
 
                         case 10:
-                            ::avro::decode(d, v.width);
+                            ::avro::decode(d, v.maxY);
                             break;
 
                         case 11:
-                            ::avro::decode(d, v.height);
+                            ::avro::decode(d, v.width);
                             break;
 
                         case 12:
-                            ::avro::decode(d, v.projection);
+                            ::avro::decode(d, v.height);
                             break;
 
                         case 13:
-                            ::avro::decode(d, v.bgColor);
+                            ::avro::decode(d, v.projection);
                             break;
 
                         case 14:
-                            ::avro::decode(d, v.styleOptions);
+                            ::avro::decode(d, v.bgColor);
                             break;
 
                         case 15:
+                            ::avro::decode(d, v.styleOptions);
+                            break;
+
+                        case 16:
                             ::avro::decode(d, v.options);
                             break;
 
@@ -374,6 +383,7 @@ namespace avro
                 ::avro::decode(d, v.worldTableNames);
                 ::avro::decode(d, v.xColumnName);
                 ::avro::decode(d, v.yColumnName);
+                ::avro::decode(d, v.symbolColumnName);
                 ::avro::decode(d, v.geometryColumnName);
                 ::avro::decode(d, v.trackIds);
                 ::avro::decode(d, v.minX);
@@ -412,7 +422,8 @@ namespace gpudb
             width(double()),
             height(double()),
             bgColor(int64_t()),
-            imageData(std::vector<uint8_t>())
+            imageData(std::vector<uint8_t>()),
+            info(std::map<std::string, std::string>())
         {
         }
 
@@ -420,6 +431,7 @@ namespace gpudb
         double height;
         int64_t bgColor;
         std::vector<uint8_t> imageData;
+        std::map<std::string, std::string> info;
     };
 }
 
@@ -437,6 +449,7 @@ namespace avro
             ::avro::encode(e, v.height);
             ::avro::encode(e, v.bgColor);
             ::avro::encode(e, v.imageData);
+            ::avro::encode(e, v.info);
         }
 
         static void decode(Decoder& d, gpudb::VisualizeImageResponse& v)
@@ -465,6 +478,10 @@ namespace avro
                             ::avro::decode(d, v.imageData);
                             break;
 
+                        case 4:
+                            ::avro::decode(d, v.info);
+                            break;
+
                         default:
                             break;
                     }
@@ -476,6 +493,7 @@ namespace avro
                 ::avro::decode(d, v.height);
                 ::avro::decode(d, v.bgColor);
                 ::avro::decode(d, v.imageData);
+                ::avro::decode(d, v.info);
             }
         }
     };

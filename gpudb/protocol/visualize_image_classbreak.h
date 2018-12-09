@@ -506,7 +506,8 @@ namespace gpudb
             width(double()),
             height(double()),
             bgColor(int64_t()),
-            imageData(std::vector<uint8_t>())
+            imageData(std::vector<uint8_t>()),
+            info(std::map<std::string, std::string>())
         {
         }
 
@@ -514,6 +515,7 @@ namespace gpudb
         double height;
         int64_t bgColor;
         std::vector<uint8_t> imageData;
+        std::map<std::string, std::string> info;
     };
 }
 
@@ -531,6 +533,7 @@ namespace avro
             ::avro::encode(e, v.height);
             ::avro::encode(e, v.bgColor);
             ::avro::encode(e, v.imageData);
+            ::avro::encode(e, v.info);
         }
 
         static void decode(Decoder& d, gpudb::VisualizeImageClassbreakResponse& v)
@@ -559,6 +562,10 @@ namespace avro
                             ::avro::decode(d, v.imageData);
                             break;
 
+                        case 4:
+                            ::avro::decode(d, v.info);
+                            break;
+
                         default:
                             break;
                     }
@@ -570,6 +577,7 @@ namespace avro
                 ::avro::decode(d, v.height);
                 ::avro::decode(d, v.bgColor);
                 ::avro::decode(d, v.imageData);
+                ::avro::decode(d, v.info);
             }
         }
     };

@@ -44,12 +44,12 @@ namespace gpudb
          * parameters.
          * 
          * @param[in] tableName_  Name of the table to filter.  This may be the
-         *                        name of a collection, a table or a view (when
-         *                        chaining queries). If filtering a collection,
-         *                        all child tables where the filter expression
-         *                        is valid will be filtered; the filtered
-         *                        result tables will then be placed in a
-         *                        collection specified by @a viewName.
+         *                        name of a collection, a table, or a view
+         *                        (when chaining queries).  If filtering a
+         *                        collection, all child tables where the filter
+         *                        expression is valid will be filtered; the
+         *                        filtered result tables will then be placed in
+         *                        a collection specified by @a viewName.
          * @param[in] viewName_  If provided, then this will be the name of the
          *                       view containing the results. Has the same
          *                       naming restrictions as <a
@@ -191,11 +191,13 @@ namespace gpudb
          * values.
          */
         FilterByAreaResponse() :
-            count(int64_t())
+            count(int64_t()),
+            info(std::map<std::string, std::string>())
         {
         }
 
         int64_t count;
+        std::map<std::string, std::string> info;
     };
 }
 
@@ -206,6 +208,7 @@ namespace avro
         static void encode(Encoder& e, const gpudb::FilterByAreaResponse& v)
         {
             ::avro::encode(e, v.count);
+            ::avro::encode(e, v.info);
         }
 
         static void decode(Decoder& d, gpudb::FilterByAreaResponse& v)
@@ -222,6 +225,10 @@ namespace avro
                             ::avro::decode(d, v.count);
                             break;
 
+                        case 1:
+                            ::avro::decode(d, v.info);
+                            break;
+
                         default:
                             break;
                     }
@@ -230,6 +237,7 @@ namespace avro
             else
             {
                 ::avro::decode(d, v.count);
+                ::avro::decode(d, v.info);
             }
         }
     };

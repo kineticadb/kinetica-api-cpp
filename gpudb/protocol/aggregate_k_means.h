@@ -182,7 +182,8 @@ namespace gpudb
             count(int64_t()),
             rmsDist(double()),
             tolerance(double()),
-            numIters(int32_t())
+            numIters(int32_t()),
+            info(std::map<std::string, std::string>())
         {
         }
 
@@ -193,6 +194,7 @@ namespace gpudb
         double rmsDist;
         double tolerance;
         int32_t numIters;
+        std::map<std::string, std::string> info;
     };
 }
 
@@ -209,6 +211,7 @@ namespace avro
             ::avro::encode(e, v.rmsDist);
             ::avro::encode(e, v.tolerance);
             ::avro::encode(e, v.numIters);
+            ::avro::encode(e, v.info);
         }
 
         static void decode(Decoder& d, gpudb::AggregateKMeansResponse& v)
@@ -249,6 +252,10 @@ namespace avro
                             ::avro::decode(d, v.numIters);
                             break;
 
+                        case 7:
+                            ::avro::decode(d, v.info);
+                            break;
+
                         default:
                             break;
                     }
@@ -263,6 +270,7 @@ namespace avro
                 ::avro::decode(d, v.rmsDist);
                 ::avro::decode(d, v.tolerance);
                 ::avro::decode(d, v.numIters);
+                ::avro::decode(d, v.info);
             }
         }
     };

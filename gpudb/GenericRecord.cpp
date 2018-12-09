@@ -845,6 +845,36 @@ namespace gpudb
         }
     }
 
+    
+    void GenericRecord::decode( const std::string& schemaString,
+                                const std::vector< std::vector<uint8_t> >& encodedData,
+                                std::vector<GenericRecord>& data )
+    {
+        // Create the type and get a decoder from the schema string
+        Type type_( schemaString );
+
+        // Decode the data into records
+        data.clear();
+        data.resize( encodedData.size(), GenericRecord( type_ ) );
+        avro::decode( &data[0], &encodedData[0], encodedData.size() );
+        
+    }  // end decode
+
+
+    void GenericRecord::decode( const std::string& schemaString,
+                                const std::vector<uint8_t>& encodedData,
+                                GenericRecord& data )
+    {
+        // Create the type and get a decoder from the schema string
+        Type type_( schemaString );
+
+        // Decode the data into records
+        data = GenericRecord( type_ );
+        avro::decode( &data, &encodedData, 1 );
+    }  // end decode
+
+
+
     GenericRecord::GenericRecord(const std::vector<std::pair<Type::Column::ColumnType, bool> >& columnTypes)
     {
         size_t columnCount = columnTypes.size();

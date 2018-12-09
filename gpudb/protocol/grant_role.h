@@ -117,12 +117,14 @@ namespace gpudb
          */
         GrantRoleResponse() :
             role(std::string()),
-            member(std::string())
+            member(std::string()),
+            info(std::map<std::string, std::string>())
         {
         }
 
         std::string role;
         std::string member;
+        std::map<std::string, std::string> info;
     };
 }
 
@@ -134,6 +136,7 @@ namespace avro
         {
             ::avro::encode(e, v.role);
             ::avro::encode(e, v.member);
+            ::avro::encode(e, v.info);
         }
 
         static void decode(Decoder& d, gpudb::GrantRoleResponse& v)
@@ -154,6 +157,10 @@ namespace avro
                             ::avro::decode(d, v.member);
                             break;
 
+                        case 2:
+                            ::avro::decode(d, v.info);
+                            break;
+
                         default:
                             break;
                     }
@@ -163,6 +170,7 @@ namespace avro
             {
                 ::avro::decode(d, v.role);
                 ::avro::decode(d, v.member);
+                ::avro::decode(d, v.info);
             }
         }
     };

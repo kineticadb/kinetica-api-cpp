@@ -41,6 +41,12 @@ namespace gpudb
          * @param[in] password_  Initial password of the user to be created.
          *                       May be an empty string for no password.
          * @param[in] options_  Optional parameters.
+         *                      <ul>
+         *                              <li>
+         *                      gpudb::create_user_internal_resource_group:
+         *                      Name of an existing resource group to associate
+         *                      with this user
+         *                      </ul>
          * 
          */
         CreateUserInternalRequest(const std::string& name_, const std::string& password_, const std::map<std::string, std::string>& options_):
@@ -122,11 +128,13 @@ namespace gpudb
          * parameter values.
          */
         CreateUserInternalResponse() :
-            name(std::string())
+            name(std::string()),
+            info(std::map<std::string, std::string>())
         {
         }
 
         std::string name;
+        std::map<std::string, std::string> info;
     };
 }
 
@@ -137,6 +145,7 @@ namespace avro
         static void encode(Encoder& e, const gpudb::CreateUserInternalResponse& v)
         {
             ::avro::encode(e, v.name);
+            ::avro::encode(e, v.info);
         }
 
         static void decode(Decoder& d, gpudb::CreateUserInternalResponse& v)
@@ -153,6 +162,10 @@ namespace avro
                             ::avro::decode(d, v.name);
                             break;
 
+                        case 1:
+                            ::avro::decode(d, v.info);
+                            break;
+
                         default:
                             break;
                     }
@@ -161,6 +174,7 @@ namespace avro
             else
             {
                 ::avro::decode(d, v.name);
+                ::avro::decode(d, v.info);
             }
         }
     };

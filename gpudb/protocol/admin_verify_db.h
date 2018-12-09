@@ -119,12 +119,14 @@ namespace gpudb
          */
         AdminVerifyDbResponse() :
             verifiedOk(bool()),
-            errorList(std::vector<std::string>())
+            errorList(std::vector<std::string>()),
+            info(std::map<std::string, std::string>())
         {
         }
 
         bool verifiedOk;
         std::vector<std::string> errorList;
+        std::map<std::string, std::string> info;
     };
 }
 
@@ -136,6 +138,7 @@ namespace avro
         {
             ::avro::encode(e, v.verifiedOk);
             ::avro::encode(e, v.errorList);
+            ::avro::encode(e, v.info);
         }
 
         static void decode(Decoder& d, gpudb::AdminVerifyDbResponse& v)
@@ -156,6 +159,10 @@ namespace avro
                             ::avro::decode(d, v.errorList);
                             break;
 
+                        case 2:
+                            ::avro::decode(d, v.info);
+                            break;
+
                         default:
                             break;
                     }
@@ -165,6 +172,7 @@ namespace avro
             {
                 ::avro::decode(d, v.verifiedOk);
                 ::avro::decode(d, v.errorList);
+                ::avro::decode(d, v.info);
             }
         }
     };

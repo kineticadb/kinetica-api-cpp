@@ -104,12 +104,14 @@ namespace gpudb
          */
         HasProcResponse() :
             procName(std::string()),
-            procExists(bool())
+            procExists(bool()),
+            info(std::map<std::string, std::string>())
         {
         }
 
         std::string procName;
         bool procExists;
+        std::map<std::string, std::string> info;
     };
 }
 
@@ -121,6 +123,7 @@ namespace avro
         {
             ::avro::encode(e, v.procName);
             ::avro::encode(e, v.procExists);
+            ::avro::encode(e, v.info);
         }
 
         static void decode(Decoder& d, gpudb::HasProcResponse& v)
@@ -141,6 +144,10 @@ namespace avro
                             ::avro::decode(d, v.procExists);
                             break;
 
+                        case 2:
+                            ::avro::decode(d, v.info);
+                            break;
+
                         default:
                             break;
                     }
@@ -150,6 +157,7 @@ namespace avro
             {
                 ::avro::decode(d, v.procName);
                 ::avro::decode(d, v.procExists);
+                ::avro::decode(d, v.info);
             }
         }
     };

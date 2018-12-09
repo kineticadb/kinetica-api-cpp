@@ -123,7 +123,8 @@ namespace gpudb
             minX(double()),
             maxX(double()),
             minY(double()),
-            maxY(double())
+            maxY(double()),
+            info(std::map<std::string, std::string>())
         {
         }
 
@@ -131,6 +132,7 @@ namespace gpudb
         double maxX;
         double minY;
         double maxY;
+        std::map<std::string, std::string> info;
     };
 }
 
@@ -144,6 +146,7 @@ namespace avro
             ::avro::encode(e, v.maxX);
             ::avro::encode(e, v.minY);
             ::avro::encode(e, v.maxY);
+            ::avro::encode(e, v.info);
         }
 
         static void decode(Decoder& d, gpudb::AggregateMinMaxGeometryResponse& v)
@@ -172,6 +175,10 @@ namespace avro
                             ::avro::decode(d, v.maxY);
                             break;
 
+                        case 4:
+                            ::avro::decode(d, v.info);
+                            break;
+
                         default:
                             break;
                     }
@@ -183,6 +190,7 @@ namespace avro
                 ::avro::decode(d, v.maxX);
                 ::avro::decode(d, v.minY);
                 ::avro::decode(d, v.maxY);
+                ::avro::decode(d, v.info);
             }
         }
     };

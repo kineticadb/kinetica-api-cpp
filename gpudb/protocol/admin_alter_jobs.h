@@ -28,7 +28,7 @@ namespace gpudb
          * values.
          */
         AdminAlterJobsRequest() :
-            jobIds(std::vector<int32_t>()),
+            jobIds(std::vector<int64_t>()),
             action(std::string()),
             options(std::map<std::string, std::string>())
         {
@@ -47,14 +47,14 @@ namespace gpudb
          * @param[in] options_  Optional parameters.
          * 
          */
-        AdminAlterJobsRequest(const std::vector<int32_t>& jobIds_, const std::string& action_, const std::map<std::string, std::string>& options_):
+        AdminAlterJobsRequest(const std::vector<int64_t>& jobIds_, const std::string& action_, const std::map<std::string, std::string>& options_):
             jobIds( jobIds_ ),
             action( action_ ),
             options( options_ )
         {
         }
 
-        std::vector<int32_t> jobIds;
+        std::vector<int64_t> jobIds;
         std::string action;
         std::map<std::string, std::string> options;
     };
@@ -130,15 +130,17 @@ namespace gpudb
          * values.
          */
         AdminAlterJobsResponse() :
-            jobIds(std::vector<int32_t>()),
+            jobIds(std::vector<int64_t>()),
             action(std::string()),
-            status(std::vector<std::string>())
+            status(std::vector<std::string>()),
+            info(std::map<std::string, std::string>())
         {
         }
 
-        std::vector<int32_t> jobIds;
+        std::vector<int64_t> jobIds;
         std::string action;
         std::vector<std::string> status;
+        std::map<std::string, std::string> info;
     };
 }
 
@@ -151,6 +153,7 @@ namespace avro
             ::avro::encode(e, v.jobIds);
             ::avro::encode(e, v.action);
             ::avro::encode(e, v.status);
+            ::avro::encode(e, v.info);
         }
 
         static void decode(Decoder& d, gpudb::AdminAlterJobsResponse& v)
@@ -175,6 +178,10 @@ namespace avro
                             ::avro::decode(d, v.status);
                             break;
 
+                        case 3:
+                            ::avro::decode(d, v.info);
+                            break;
+
                         default:
                             break;
                     }
@@ -185,6 +192,7 @@ namespace avro
                 ::avro::decode(d, v.jobIds);
                 ::avro::decode(d, v.action);
                 ::avro::decode(d, v.status);
+                ::avro::decode(d, v.info);
             }
         }
     };

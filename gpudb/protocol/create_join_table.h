@@ -258,12 +258,14 @@ namespace gpudb
          */
         CreateJoinTableResponse() :
             joinTableName(std::string()),
-            count(int64_t())
+            count(int64_t()),
+            info(std::map<std::string, std::string>())
         {
         }
 
         std::string joinTableName;
         int64_t count;
+        std::map<std::string, std::string> info;
     };
 }
 
@@ -275,6 +277,7 @@ namespace avro
         {
             ::avro::encode(e, v.joinTableName);
             ::avro::encode(e, v.count);
+            ::avro::encode(e, v.info);
         }
 
         static void decode(Decoder& d, gpudb::CreateJoinTableResponse& v)
@@ -295,6 +298,10 @@ namespace avro
                             ::avro::decode(d, v.count);
                             break;
 
+                        case 2:
+                            ::avro::decode(d, v.info);
+                            break;
+
                         default:
                             break;
                     }
@@ -304,6 +311,7 @@ namespace avro
             {
                 ::avro::decode(d, v.joinTableName);
                 ::avro::decode(d, v.count);
+                ::avro::decode(d, v.info);
             }
         }
     };

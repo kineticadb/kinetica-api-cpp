@@ -134,7 +134,8 @@ namespace gpudb
             typeIds(std::vector<std::string>()),
             typeSchemas(std::vector<std::string>()),
             labels(std::vector<std::string>()),
-            properties(std::vector<std::map<std::string, std::vector<std::string> > >())
+            properties(std::vector<std::map<std::string, std::vector<std::string> > >()),
+            info(std::map<std::string, std::string>())
         {
         }
 
@@ -142,6 +143,7 @@ namespace gpudb
         std::vector<std::string> typeSchemas;
         std::vector<std::string> labels;
         std::vector<std::map<std::string, std::vector<std::string> > > properties;
+        std::map<std::string, std::string> info;
     };
 }
 
@@ -155,6 +157,7 @@ namespace avro
             ::avro::encode(e, v.typeSchemas);
             ::avro::encode(e, v.labels);
             ::avro::encode(e, v.properties);
+            ::avro::encode(e, v.info);
         }
 
         static void decode(Decoder& d, gpudb::ShowTypesResponse& v)
@@ -183,6 +186,10 @@ namespace avro
                             ::avro::decode(d, v.properties);
                             break;
 
+                        case 4:
+                            ::avro::decode(d, v.info);
+                            break;
+
                         default:
                             break;
                     }
@@ -194,6 +201,7 @@ namespace avro
                 ::avro::decode(d, v.typeSchemas);
                 ::avro::decode(d, v.labels);
                 ::avro::decode(d, v.properties);
+                ::avro::decode(d, v.info);
             }
         }
     };

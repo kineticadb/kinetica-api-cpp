@@ -40,6 +40,12 @@ namespace gpudb
          *                             <li> gpudb::alter_user_set_password:
          *                     Sets the password of the user. The user must be
          *                     an internal user.
+         *                             <li>
+         *                     gpudb::alter_user_set_resource_group: Sets the
+         *                     resource group for an internal user. The
+         *                     resource group must exist, otherwise, an empty
+         *                     string assigns the user to the default resource
+         *                     group.
          *                     </ul>
          * @param[in] value_  The value of the modification, depending on @a
          *                    action.
@@ -132,11 +138,13 @@ namespace gpudb
          * values.
          */
         AlterUserResponse() :
-            name(std::string())
+            name(std::string()),
+            info(std::map<std::string, std::string>())
         {
         }
 
         std::string name;
+        std::map<std::string, std::string> info;
     };
 }
 
@@ -147,6 +155,7 @@ namespace avro
         static void encode(Encoder& e, const gpudb::AlterUserResponse& v)
         {
             ::avro::encode(e, v.name);
+            ::avro::encode(e, v.info);
         }
 
         static void decode(Decoder& d, gpudb::AlterUserResponse& v)
@@ -163,6 +172,10 @@ namespace avro
                             ::avro::decode(d, v.name);
                             break;
 
+                        case 1:
+                            ::avro::decode(d, v.info);
+                            break;
+
                         default:
                             break;
                     }
@@ -171,6 +184,7 @@ namespace avro
             else
             {
                 ::avro::decode(d, v.name);
+                ::avro::decode(d, v.info);
             }
         }
     };

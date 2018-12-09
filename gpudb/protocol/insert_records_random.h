@@ -356,12 +356,14 @@ namespace gpudb
          */
         InsertRecordsRandomResponse() :
             tableName(std::string()),
-            count(int64_t())
+            count(int64_t()),
+            info(std::map<std::string, std::string>())
         {
         }
 
         std::string tableName;
         int64_t count;
+        std::map<std::string, std::string> info;
     };
 }
 
@@ -373,6 +375,7 @@ namespace avro
         {
             ::avro::encode(e, v.tableName);
             ::avro::encode(e, v.count);
+            ::avro::encode(e, v.info);
         }
 
         static void decode(Decoder& d, gpudb::InsertRecordsRandomResponse& v)
@@ -393,6 +396,10 @@ namespace avro
                             ::avro::decode(d, v.count);
                             break;
 
+                        case 2:
+                            ::avro::decode(d, v.info);
+                            break;
+
                         default:
                             break;
                     }
@@ -402,6 +409,7 @@ namespace avro
             {
                 ::avro::decode(d, v.tableName);
                 ::avro::decode(d, v.count);
+                ::avro::decode(d, v.info);
             }
         }
     };

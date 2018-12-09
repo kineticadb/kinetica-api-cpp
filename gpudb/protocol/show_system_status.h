@@ -100,11 +100,13 @@ namespace gpudb
          * values.
          */
         ShowSystemStatusResponse() :
-            statusMap(std::map<std::string, std::string>())
+            statusMap(std::map<std::string, std::string>()),
+            info(std::map<std::string, std::string>())
         {
         }
 
         std::map<std::string, std::string> statusMap;
+        std::map<std::string, std::string> info;
     };
 }
 
@@ -115,6 +117,7 @@ namespace avro
         static void encode(Encoder& e, const gpudb::ShowSystemStatusResponse& v)
         {
             ::avro::encode(e, v.statusMap);
+            ::avro::encode(e, v.info);
         }
 
         static void decode(Decoder& d, gpudb::ShowSystemStatusResponse& v)
@@ -131,6 +134,10 @@ namespace avro
                             ::avro::decode(d, v.statusMap);
                             break;
 
+                        case 1:
+                            ::avro::decode(d, v.info);
+                            break;
+
                         default:
                             break;
                     }
@@ -139,6 +146,7 @@ namespace avro
             else
             {
                 ::avro::decode(d, v.statusMap);
+                ::avro::decode(d, v.info);
             }
         }
     };

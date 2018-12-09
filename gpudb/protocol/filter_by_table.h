@@ -236,11 +236,13 @@ namespace gpudb
          * values.
          */
         FilterByTableResponse() :
-            count(int64_t())
+            count(int64_t()),
+            info(std::map<std::string, std::string>())
         {
         }
 
         int64_t count;
+        std::map<std::string, std::string> info;
     };
 }
 
@@ -251,6 +253,7 @@ namespace avro
         static void encode(Encoder& e, const gpudb::FilterByTableResponse& v)
         {
             ::avro::encode(e, v.count);
+            ::avro::encode(e, v.info);
         }
 
         static void decode(Decoder& d, gpudb::FilterByTableResponse& v)
@@ -267,6 +270,10 @@ namespace avro
                             ::avro::decode(d, v.count);
                             break;
 
+                        case 1:
+                            ::avro::decode(d, v.info);
+                            break;
+
                         default:
                             break;
                     }
@@ -275,6 +282,7 @@ namespace avro
             else
             {
                 ::avro::decode(d, v.count);
+                ::avro::decode(d, v.info);
             }
         }
     };

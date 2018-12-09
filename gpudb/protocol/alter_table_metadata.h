@@ -131,12 +131,14 @@ namespace gpudb
          */
         AlterTableMetadataResponse() :
             tableNames(std::vector<std::string>()),
-            metadataMap(std::map<std::string, std::string>())
+            metadataMap(std::map<std::string, std::string>()),
+            info(std::map<std::string, std::string>())
         {
         }
 
         std::vector<std::string> tableNames;
         std::map<std::string, std::string> metadataMap;
+        std::map<std::string, std::string> info;
     };
 }
 
@@ -148,6 +150,7 @@ namespace avro
         {
             ::avro::encode(e, v.tableNames);
             ::avro::encode(e, v.metadataMap);
+            ::avro::encode(e, v.info);
         }
 
         static void decode(Decoder& d, gpudb::AlterTableMetadataResponse& v)
@@ -168,6 +171,10 @@ namespace avro
                             ::avro::decode(d, v.metadataMap);
                             break;
 
+                        case 2:
+                            ::avro::decode(d, v.info);
+                            break;
+
                         default:
                             break;
                     }
@@ -177,6 +184,7 @@ namespace avro
             {
                 ::avro::decode(d, v.tableNames);
                 ::avro::decode(d, v.metadataMap);
+                ::avro::decode(d, v.info);
             }
         }
     };

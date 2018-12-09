@@ -145,7 +145,8 @@ namespace gpudb
             messages(std::map<std::string, std::map<std::string, std::string> >()),
             results(std::map<std::string, std::map<std::string, std::map<std::string, std::string> > >()),
             binResults(std::map<std::string, std::map<std::string, std::map<std::string, std::vector<uint8_t> > > >()),
-            timings(std::map<std::string, std::map<std::string, std::map<std::string, int64_t> > >())
+            timings(std::map<std::string, std::map<std::string, std::map<std::string, int64_t> > >()),
+            info(std::map<std::string, std::string>())
         {
         }
 
@@ -162,6 +163,7 @@ namespace gpudb
         std::map<std::string, std::map<std::string, std::map<std::string, std::string> > > results;
         std::map<std::string, std::map<std::string, std::map<std::string, std::vector<uint8_t> > > > binResults;
         std::map<std::string, std::map<std::string, std::map<std::string, int64_t> > > timings;
+        std::map<std::string, std::string> info;
     };
 }
 
@@ -184,6 +186,7 @@ namespace avro
             ::avro::encode(e, v.results);
             ::avro::encode(e, v.binResults);
             ::avro::encode(e, v.timings);
+            ::avro::encode(e, v.info);
         }
 
         static void decode(Decoder& d, gpudb::ShowProcStatusResponse& v)
@@ -248,6 +251,10 @@ namespace avro
                             ::avro::decode(d, v.timings);
                             break;
 
+                        case 13:
+                            ::avro::decode(d, v.info);
+                            break;
+
                         default:
                             break;
                     }
@@ -268,6 +275,7 @@ namespace avro
                 ::avro::decode(d, v.results);
                 ::avro::decode(d, v.binResults);
                 ::avro::decode(d, v.timings);
+                ::avro::decode(d, v.info);
             }
         }
     };

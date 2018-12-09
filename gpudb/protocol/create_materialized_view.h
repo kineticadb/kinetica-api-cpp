@@ -196,12 +196,14 @@ namespace gpudb
          */
         CreateMaterializedViewResponse() :
             tableName(std::string()),
-            viewId(std::string())
+            viewId(std::string()),
+            info(std::map<std::string, std::string>())
         {
         }
 
         std::string tableName;
         std::string viewId;
+        std::map<std::string, std::string> info;
     };
 }
 
@@ -213,6 +215,7 @@ namespace avro
         {
             ::avro::encode(e, v.tableName);
             ::avro::encode(e, v.viewId);
+            ::avro::encode(e, v.info);
         }
 
         static void decode(Decoder& d, gpudb::CreateMaterializedViewResponse& v)
@@ -233,6 +236,10 @@ namespace avro
                             ::avro::decode(d, v.viewId);
                             break;
 
+                        case 2:
+                            ::avro::decode(d, v.info);
+                            break;
+
                         default:
                             break;
                     }
@@ -242,6 +249,7 @@ namespace avro
             {
                 ::avro::decode(d, v.tableName);
                 ::avro::decode(d, v.viewId);
+                ::avro::decode(d, v.info);
             }
         }
     };

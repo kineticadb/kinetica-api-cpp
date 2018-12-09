@@ -102,13 +102,15 @@ namespace gpudb
         ShowSystemTimingResponse() :
             endpoints(std::vector<std::string>()),
             timeInMs(std::vector<float>()),
-            jobids(std::vector<std::string>())
+            jobids(std::vector<std::string>()),
+            info(std::map<std::string, std::string>())
         {
         }
 
         std::vector<std::string> endpoints;
         std::vector<float> timeInMs;
         std::vector<std::string> jobids;
+        std::map<std::string, std::string> info;
     };
 }
 
@@ -121,6 +123,7 @@ namespace avro
             ::avro::encode(e, v.endpoints);
             ::avro::encode(e, v.timeInMs);
             ::avro::encode(e, v.jobids);
+            ::avro::encode(e, v.info);
         }
 
         static void decode(Decoder& d, gpudb::ShowSystemTimingResponse& v)
@@ -145,6 +148,10 @@ namespace avro
                             ::avro::decode(d, v.jobids);
                             break;
 
+                        case 3:
+                            ::avro::decode(d, v.info);
+                            break;
+
                         default:
                             break;
                     }
@@ -155,6 +162,7 @@ namespace avro
                 ::avro::decode(d, v.endpoints);
                 ::avro::decode(d, v.timeInMs);
                 ::avro::decode(d, v.jobids);
+                ::avro::decode(d, v.info);
             }
         }
     };

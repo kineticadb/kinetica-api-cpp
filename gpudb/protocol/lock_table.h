@@ -143,11 +143,13 @@ namespace gpudb
          * Constructs a LockTableResponse object with default parameter values.
          */
         LockTableResponse() :
-            lockType(std::string())
+            lockType(std::string()),
+            info(std::map<std::string, std::string>())
         {
         }
 
         std::string lockType;
+        std::map<std::string, std::string> info;
     };
 }
 
@@ -158,6 +160,7 @@ namespace avro
         static void encode(Encoder& e, const gpudb::LockTableResponse& v)
         {
             ::avro::encode(e, v.lockType);
+            ::avro::encode(e, v.info);
         }
 
         static void decode(Decoder& d, gpudb::LockTableResponse& v)
@@ -174,6 +177,10 @@ namespace avro
                             ::avro::decode(d, v.lockType);
                             break;
 
+                        case 1:
+                            ::avro::decode(d, v.info);
+                            break;
+
                         default:
                             break;
                     }
@@ -182,6 +189,7 @@ namespace avro
             else
             {
                 ::avro::decode(d, v.lockType);
+                ::avro::decode(d, v.info);
             }
         }
     };

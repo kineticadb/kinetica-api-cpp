@@ -518,7 +518,8 @@ namespace gpudb
             countUpdated(int64_t()),
             countsUpdated(std::vector<int64_t>()),
             countInserted(int64_t()),
-            countsInserted(std::vector<int64_t>())
+            countsInserted(std::vector<int64_t>()),
+            info(std::map<std::string, std::string>())
         {
         }
 
@@ -526,6 +527,7 @@ namespace gpudb
         std::vector<int64_t> countsUpdated;
         int64_t countInserted;
         std::vector<int64_t> countsInserted;
+        std::map<std::string, std::string> info;
     };
 }
 
@@ -539,6 +541,7 @@ namespace avro
             ::avro::encode(e, v.countsUpdated);
             ::avro::encode(e, v.countInserted);
             ::avro::encode(e, v.countsInserted);
+            ::avro::encode(e, v.info);
         }
 
         static void decode(Decoder& d, gpudb::UpdateRecordsResponse& v)
@@ -567,6 +570,10 @@ namespace avro
                             ::avro::decode(d, v.countsInserted);
                             break;
 
+                        case 4:
+                            ::avro::decode(d, v.info);
+                            break;
+
                         default:
                             break;
                     }
@@ -578,6 +585,7 @@ namespace avro
                 ::avro::decode(d, v.countsUpdated);
                 ::avro::decode(d, v.countInserted);
                 ::avro::decode(d, v.countsInserted);
+                ::avro::decode(d, v.info);
             }
         }
     };

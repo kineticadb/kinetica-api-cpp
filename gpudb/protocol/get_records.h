@@ -271,7 +271,8 @@ namespace gpudb
             recordsBinary(std::vector<std::vector<uint8_t> >()),
             recordsJson(std::vector<std::string>()),
             totalNumberOfRecords(int64_t()),
-            hasMoreRecords(bool())
+            hasMoreRecords(bool()),
+            info(std::map<std::string, std::string>())
         {
         }
 
@@ -282,6 +283,7 @@ namespace gpudb
         std::vector<std::string> recordsJson;
         int64_t totalNumberOfRecords;
         bool hasMoreRecords;
+        std::map<std::string, std::string> info;
     };
 }
 
@@ -298,6 +300,7 @@ namespace avro
             ::avro::encode(e, v.recordsJson);
             ::avro::encode(e, v.totalNumberOfRecords);
             ::avro::encode(e, v.hasMoreRecords);
+            ::avro::encode(e, v.info);
         }
 
         static void decode(Decoder& d, gpudb::RawGetRecordsResponse& v)
@@ -338,6 +341,10 @@ namespace avro
                             ::avro::decode(d, v.hasMoreRecords);
                             break;
 
+                        case 7:
+                            ::avro::decode(d, v.info);
+                            break;
+
                         default:
                             break;
                     }
@@ -352,6 +359,7 @@ namespace avro
                 ::avro::decode(d, v.recordsJson);
                 ::avro::decode(d, v.totalNumberOfRecords);
                 ::avro::decode(d, v.hasMoreRecords);
+                ::avro::decode(d, v.info);
             }
         }
     };
@@ -392,7 +400,8 @@ namespace gpudb
             typeSchema(std::string()),
             data(std::vector<T>()),
             totalNumberOfRecords(int64_t()),
-            hasMoreRecords(bool())
+            hasMoreRecords(bool()),
+            info(std::map<std::string, std::string>())
         {
         }
 
@@ -402,6 +411,7 @@ namespace gpudb
         std::vector<T> data;
         int64_t totalNumberOfRecords;
         bool hasMoreRecords;
+        std::map<std::string, std::string> info;
     };
 }
 

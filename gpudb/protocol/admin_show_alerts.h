@@ -13,9 +13,8 @@ namespace gpudb
      * A set of input parameters for {@link
      * #adminShowAlerts(const AdminShowAlertsRequest&) const}.
      * <p>
-     * Retrieves a list of the most recent alerts generated.  The number of
-     * alerts to retrieve is specified in this request.
-     * Returns lists of alert data, earliest to latest
+     * Requests a list of the most recent alerts.
+     * Returns lists of alert data, including timestamp and type.
      */
     struct AdminShowAlertsRequest
     {
@@ -35,9 +34,10 @@ namespace gpudb
          * parameters.
          * 
          * @param[in] numAlerts_  Number of most recent alerts to request. The
-         *                        response will return @a numAlerts alerts, or
-         *                        less if there are less in the system. A value
-         *                        of 0 returns all stored alerts.
+         *                        response will include up to @a numAlerts
+         *                        depending on how many alerts there are in the
+         *                        system. A value of 0 returns all stored
+         *                        alerts.
          * @param[in] options_  Optional parameters.
          * 
          */
@@ -101,9 +101,8 @@ namespace gpudb
      * A set of output parameters for {@link
      * #adminShowAlerts(const AdminShowAlertsRequest&) const}.
      * <p>
-     * Retrieves a list of the most recent alerts generated.  The number of
-     * alerts to retrieve is specified in this request.
-     * Returns lists of alert data, earliest to latest
+     * Requests a list of the most recent alerts.
+     * Returns lists of alert data, including timestamp and type.
      */
     struct AdminShowAlertsResponse
     {
@@ -115,13 +114,15 @@ namespace gpudb
         AdminShowAlertsResponse() :
             timestamps(std::vector<std::string>()),
             types(std::vector<std::string>()),
-            params(std::vector<std::map<std::string, std::string> >())
+            params(std::vector<std::map<std::string, std::string> >()),
+            info(std::map<std::string, std::string>())
         {
         }
 
         std::vector<std::string> timestamps;
         std::vector<std::string> types;
         std::vector<std::map<std::string, std::string> > params;
+        std::map<std::string, std::string> info;
     };
 }
 
@@ -134,6 +135,7 @@ namespace avro
             ::avro::encode(e, v.timestamps);
             ::avro::encode(e, v.types);
             ::avro::encode(e, v.params);
+            ::avro::encode(e, v.info);
         }
 
         static void decode(Decoder& d, gpudb::AdminShowAlertsResponse& v)
@@ -158,6 +160,10 @@ namespace avro
                             ::avro::decode(d, v.params);
                             break;
 
+                        case 3:
+                            ::avro::decode(d, v.info);
+                            break;
+
                         default:
                             break;
                     }
@@ -168,6 +174,7 @@ namespace avro
                 ::avro::decode(d, v.timestamps);
                 ::avro::decode(d, v.types);
                 ::avro::decode(d, v.params);
+                ::avro::decode(d, v.info);
             }
         }
     };

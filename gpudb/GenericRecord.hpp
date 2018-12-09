@@ -6,6 +6,9 @@
 #include <avro/Schema.hh>
 #include <avro/Specific.hh>
 
+#include <boost/core/demangle.hpp>
+#include <boost/lexical_cast.hpp>
+
 namespace gpudb
 {
 
@@ -18,28 +21,38 @@ namespace gpudb
         friend struct ::avro::codec_traits<GenericRecord>;
 
         public:
+            /// Create a blank GenericRecord object from a given type
             GenericRecord(const Type& type);
+
             const Type& getType() const;
             const ::avro::ValidSchema& getSchema() const;
 
             template<typename T> T& value(const size_t index)
             {
-                return *boost::any_cast<T>(&m_values.at(index));
+                T* o = boost::any_cast<T>(&m_values.at(index));
+                if (!o) throw std::runtime_error("Error converting GenericRecord column " + boost::lexical_cast<std::string>(index) + " to type " + boost::core::demangle(typeid(T).name() ));
+                return *o;
             }
 
             template<typename T> const T& value(const size_t index) const
             {
-                return *boost::any_cast<T>(&m_values.at(index));
+                const T* o = boost::any_cast<T>(&m_values.at(index));
+                if (!o) throw std::runtime_error("Error converting GenericRecord column " + boost::lexical_cast<std::string>(index) + " to type " + boost::core::demangle(typeid(T).name() ));
+                return *o;
             }
 
             template<typename T> T& value(const std::string& name)
             {
-                return *boost::any_cast<T>(&m_values[m_type.getColumnIndex(name)]);
+                T* o = boost::any_cast<T>(&m_values[m_type.getColumnIndex(name)]);
+                if (!o) throw std::runtime_error("Error converting GenericRecord column '" + name + "' to type " + boost::core::demangle(typeid(T).name() ));
+                return *o;
             }
 
             template<typename T> const T& value(const std::string& name) const
             {
-                return *boost::any_cast<T>(&m_values[m_type.getColumnIndex(name)]);
+                const T* o = boost::any_cast<T>(&m_values[m_type.getColumnIndex(name)]);
+                if (!o) throw std::runtime_error("Error converting GenericRecord column '" + name + "' to type " + boost::core::demangle(typeid(T).name() ));
+                return *o;
             }
 
             std::vector<uint8_t>& bytesValue(const size_t index);
@@ -212,14 +225,35 @@ namespace gpudb
             friend std::ostream &operator << (std::ostream  &os, GenericRecord &gr);
             friend std::ostream &operator << (std::ostream  &os, const GenericRecord &gr);
 
+            /**
+             * Decodes avro encoded data (given the schema string) into GenericRecord objects.
+             *
+             * @param[in]  schemaString  Avro schema string used for decoding the data
+             * @param[in]  encodedData   Avro encoded binary data containing multiple records.
+             * @param[out] data          Vector of decoded GenericRecord objects.  The vector
+             *                           is cleared before operation begins.
+             */
+            static void decode(const std::string& schemaString, const std::vector<std::vector<uint8_t> >& encodedData, std::vector<GenericRecord>& data );
+
+            /**
+             * Decodes avro encoded data (given the schema string) into GenericRecord objects.
+             *
+             * @param[in]  schemaString  Avro schema string used for decoding the data
+             * @param[in]  encodedData   Avro encoded binary data containing a single record.
+             * @param[out] data          A decoded GenericRecord object
+             */
+            static void decode(const std::string& schemaString, const std::vector<uint8_t>& encodedData, GenericRecord& data );
+
         private:
-            static void transpose(const std::string& schemaString, const std::vector<uint8_t>& encodedData, std::vector<GenericRecord>& data, gpudb_type_ptr_t &dataTypePtr );
 
             Type m_type;
             std::vector<boost::any> m_values;
 
             GenericRecord(const std::vector<std::pair<Type::Column::ColumnType, bool> >& columnTypes);
             void initializeColumn(const Type::Column::ColumnType type, const bool isNullable);
+
+            static void transpose(const std::string& schemaString, const std::vector<uint8_t>& encodedData, std::vector<GenericRecord>& data, gpudb_type_ptr_t &dataTypePtr );
+
     };
 
     typedef GenericRecord DynamicTableRecord;

@@ -207,6 +207,7 @@ endif()
 
 # Include directories
 set(GPUDB_API_CPP_INCLUDE_DIRS
+    ${PROJECT_SOURCE_DIR} # when included in another projects
     ${CMAKE_SOURCE_DIR}
     ${GPUDB_API_CPP_LIBS_DIR}/include
     ${Boost_INCLUDE_DIRS}
@@ -351,7 +352,8 @@ message(STATUS "* CMAKE_CXX_FLAGS : ${CMAKE_CXX_FLAGS}")
 
 # ===========================================================================
 
-set(NO_QT_CREATOR $ENV{NO_QT_CREATOR})
+    set(NO_QT_CREATOR $ENV{NO_QT_CREATOR})
+
 message(STATUS "* NO_QT_CREATOR   : ${NO_QT_CREATOR}")
 if(NOT NO_QT_CREATOR)
     include( build/CMakeQtCreator.cmake )

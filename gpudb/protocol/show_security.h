@@ -115,13 +115,17 @@ namespace gpudb
         ShowSecurityResponse() :
             types(std::map<std::string, std::string>()),
             roles(std::map<std::string, std::vector<std::string> >()),
-            permissions(std::map<std::string, std::vector<std::map<std::string, std::string> > >())
+            permissions(std::map<std::string, std::vector<std::map<std::string, std::string> > >()),
+            resourceGroups(std::map<std::string, std::string>()),
+            info(std::map<std::string, std::string>())
         {
         }
 
         std::map<std::string, std::string> types;
         std::map<std::string, std::vector<std::string> > roles;
         std::map<std::string, std::vector<std::map<std::string, std::string> > > permissions;
+        std::map<std::string, std::string> resourceGroups;
+        std::map<std::string, std::string> info;
     };
 }
 
@@ -134,6 +138,8 @@ namespace avro
             ::avro::encode(e, v.types);
             ::avro::encode(e, v.roles);
             ::avro::encode(e, v.permissions);
+            ::avro::encode(e, v.resourceGroups);
+            ::avro::encode(e, v.info);
         }
 
         static void decode(Decoder& d, gpudb::ShowSecurityResponse& v)
@@ -158,6 +164,14 @@ namespace avro
                             ::avro::decode(d, v.permissions);
                             break;
 
+                        case 3:
+                            ::avro::decode(d, v.resourceGroups);
+                            break;
+
+                        case 4:
+                            ::avro::decode(d, v.info);
+                            break;
+
                         default:
                             break;
                     }
@@ -168,6 +182,8 @@ namespace avro
                 ::avro::decode(d, v.types);
                 ::avro::decode(d, v.roles);
                 ::avro::decode(d, v.permissions);
+                ::avro::decode(d, v.resourceGroups);
+                ::avro::decode(d, v.info);
             }
         }
     };

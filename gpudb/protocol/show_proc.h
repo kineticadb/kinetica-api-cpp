@@ -122,7 +122,8 @@ namespace gpudb
             files(std::vector<std::map<std::string, std::vector<uint8_t> > >()),
             commands(std::vector<std::string>()),
             args(std::vector<std::vector<std::string> >()),
-            options(std::vector<std::map<std::string, std::string> >())
+            options(std::vector<std::map<std::string, std::string> >()),
+            info(std::map<std::string, std::string>())
         {
         }
 
@@ -132,6 +133,7 @@ namespace gpudb
         std::vector<std::string> commands;
         std::vector<std::vector<std::string> > args;
         std::vector<std::map<std::string, std::string> > options;
+        std::map<std::string, std::string> info;
     };
 }
 
@@ -147,6 +149,7 @@ namespace avro
             ::avro::encode(e, v.commands);
             ::avro::encode(e, v.args);
             ::avro::encode(e, v.options);
+            ::avro::encode(e, v.info);
         }
 
         static void decode(Decoder& d, gpudb::ShowProcResponse& v)
@@ -183,6 +186,10 @@ namespace avro
                             ::avro::decode(d, v.options);
                             break;
 
+                        case 6:
+                            ::avro::decode(d, v.info);
+                            break;
+
                         default:
                             break;
                     }
@@ -196,6 +203,7 @@ namespace avro
                 ::avro::decode(d, v.commands);
                 ::avro::decode(d, v.args);
                 ::avro::decode(d, v.options);
+                ::avro::decode(d, v.info);
             }
         }
     };

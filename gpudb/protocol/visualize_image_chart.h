@@ -183,11 +183,11 @@ namespace gpudb
          *                                   <li>
          *                           gpudb::visualize_image_chart_jitter_x:
          *                           Amplitude of horizontal jitter applied to
-         *                           non-numaric x column values.
+         *                           non-numeric x column values.
          *                                   <li>
          *                           gpudb::visualize_image_chart_jitter_y:
          *                           Amplitude of vertical jitter applied to
-         *                           non-numaric y column values.
+         *                           non-numeric y column values.
          *                                   <li>
          *                           gpudb::visualize_image_chart_plot_all: If
          *                           this options is set to "true", all
@@ -360,7 +360,8 @@ namespace gpudb
             height(int32_t()),
             bgColor(std::string()),
             imageData(std::vector<uint8_t>()),
-            axesInfo(std::map<std::string, std::vector<std::string> >())
+            axesInfo(std::map<std::string, std::vector<std::string> >()),
+            info(std::map<std::string, std::string>())
         {
         }
 
@@ -373,6 +374,7 @@ namespace gpudb
         std::string bgColor;
         std::vector<uint8_t> imageData;
         std::map<std::string, std::vector<std::string> > axesInfo;
+        std::map<std::string, std::string> info;
     };
 }
 
@@ -391,6 +393,7 @@ namespace avro
             ::avro::encode(e, v.bgColor);
             ::avro::encode(e, v.imageData);
             ::avro::encode(e, v.axesInfo);
+            ::avro::encode(e, v.info);
         }
 
         static void decode(Decoder& d, gpudb::VisualizeImageChartResponse& v)
@@ -439,6 +442,10 @@ namespace avro
                             ::avro::decode(d, v.axesInfo);
                             break;
 
+                        case 9:
+                            ::avro::decode(d, v.info);
+                            break;
+
                         default:
                             break;
                     }
@@ -455,6 +462,7 @@ namespace avro
                 ::avro::decode(d, v.bgColor);
                 ::avro::decode(d, v.imageData);
                 ::avro::decode(d, v.axesInfo);
+                ::avro::decode(d, v.info);
             }
         }
     };

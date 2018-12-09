@@ -107,11 +107,13 @@ namespace gpudb
          * values.
          */
         DeleteProcResponse() :
-            procName(std::string())
+            procName(std::string()),
+            info(std::map<std::string, std::string>())
         {
         }
 
         std::string procName;
+        std::map<std::string, std::string> info;
     };
 }
 
@@ -122,6 +124,7 @@ namespace avro
         static void encode(Encoder& e, const gpudb::DeleteProcResponse& v)
         {
             ::avro::encode(e, v.procName);
+            ::avro::encode(e, v.info);
         }
 
         static void decode(Decoder& d, gpudb::DeleteProcResponse& v)
@@ -138,6 +141,10 @@ namespace avro
                             ::avro::decode(d, v.procName);
                             break;
 
+                        case 1:
+                            ::avro::decode(d, v.info);
+                            break;
+
                         default:
                             break;
                     }
@@ -146,6 +153,7 @@ namespace avro
             else
             {
                 ::avro::decode(d, v.procName);
+                ::avro::decode(d, v.info);
             }
         }
     };

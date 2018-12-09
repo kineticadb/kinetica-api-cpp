@@ -57,27 +57,25 @@ namespace gpudb
          *                      <ul>
          *                              <li> gpudb::append_records_offset: A
          *                      positive integer indicating the number of
-         *                      initial results to skip from source table
-         *                      (specified by @a sourceTableName). Default is
-         *                      0. The minimum allowed value is 0. The maximum
-         *                      allowed value is MAX_INT.
+         *                      initial results to skip from @a
+         *                      sourceTableName. Default is 0. The minimum
+         *                      allowed value is 0. The maximum allowed value
+         *                      is MAX_INT.
          *                              <li> gpudb::append_records_limit: A
          *                      positive integer indicating the maximum number
-         *                      of results to be returned from source table
-         *                      (specified by @a sourceTableName). Or
-         *                      END_OF_SET (-9999) to indicate that the max
-         *                      number of results should be returned.
+         *                      of results to be returned from @a
+         *                      sourceTableName. Or END_OF_SET (-9999) to
+         *                      indicate that the max number of results should
+         *                      be returned.
          *                              <li> gpudb::append_records_expression:
-         *                      Optional filter expression to apply to the
-         *                      source table (specified by @a sourceTableName).
-         *                      Empty by default.
+         *                      Optional filter expression to apply to the @a
+         *                      sourceTableName.
          *                              <li> gpudb::append_records_order_by:
-         *                      Comma-separated list of the columns and
-         *                      expressions to be sorted by from the source
-         *                      table (specified by @a sourceTableName); e.g.
-         *                      'timestamp asc, x desc'.  The @a order_by
-         *                      columns do not have to be present in @a
-         *                      fieldMap.
+         *                      Comma-separated list of the columns to be
+         *                      sorted by from source table (specified by @a
+         *                      sourceTableName), e.g., 'timestamp asc, x
+         *                      desc'. The @a order_by columns do not have to
+         *                      be present in @a fieldMap.
          *                              <li>
          *                      gpudb::append_records_update_on_existing_pk:
          *                      Specifies the record collision policy for
@@ -195,11 +193,13 @@ namespace gpudb
          * values.
          */
         AppendRecordsResponse() :
-            tableName(std::string())
+            tableName(std::string()),
+            info(std::map<std::string, std::string>())
         {
         }
 
         std::string tableName;
+        std::map<std::string, std::string> info;
     };
 }
 
@@ -210,6 +210,7 @@ namespace avro
         static void encode(Encoder& e, const gpudb::AppendRecordsResponse& v)
         {
             ::avro::encode(e, v.tableName);
+            ::avro::encode(e, v.info);
         }
 
         static void decode(Decoder& d, gpudb::AppendRecordsResponse& v)
@@ -226,6 +227,10 @@ namespace avro
                             ::avro::decode(d, v.tableName);
                             break;
 
+                        case 1:
+                            ::avro::decode(d, v.info);
+                            break;
+
                         default:
                             break;
                     }
@@ -234,6 +239,7 @@ namespace avro
             else
             {
                 ::avro::decode(d, v.tableName);
+                ::avro::decode(d, v.info);
             }
         }
     };

@@ -21,7 +21,7 @@ namespace gpudb
          * Constructs a GetJobRequest object with default parameter values.
          */
         GetJobRequest() :
-            jobId(int32_t()),
+            jobId(int64_t()),
             options(std::map<std::string, std::string>())
         {
         }
@@ -34,13 +34,13 @@ namespace gpudb
          * @param[in] options_  Optional parameters.
          * 
          */
-        GetJobRequest(const int32_t jobId_, const std::map<std::string, std::string>& options_):
+        GetJobRequest(const int64_t jobId_, const std::map<std::string, std::string>& options_):
             jobId( jobId_ ),
             options( options_ )
         {
         }
 
-        int32_t jobId;
+        int64_t jobId;
         std::map<std::string, std::string> options;
     };
 }
@@ -110,7 +110,8 @@ namespace gpudb
             responseEncoding(std::string()),
             jobResponse(std::vector<uint8_t>()),
             jobResponseStr(std::string()),
-            statusMap(std::map<std::string, std::string>())
+            statusMap(std::map<std::string, std::string>()),
+            info(std::map<std::string, std::string>())
         {
         }
 
@@ -123,6 +124,7 @@ namespace gpudb
         std::vector<uint8_t> jobResponse;
         std::string jobResponseStr;
         std::map<std::string, std::string> statusMap;
+        std::map<std::string, std::string> info;
     };
 }
 
@@ -141,6 +143,7 @@ namespace avro
             ::avro::encode(e, v.jobResponse);
             ::avro::encode(e, v.jobResponseStr);
             ::avro::encode(e, v.statusMap);
+            ::avro::encode(e, v.info);
         }
 
         static void decode(Decoder& d, gpudb::GetJobResponse& v)
@@ -189,6 +192,10 @@ namespace avro
                             ::avro::decode(d, v.statusMap);
                             break;
 
+                        case 9:
+                            ::avro::decode(d, v.info);
+                            break;
+
                         default:
                             break;
                     }
@@ -205,6 +212,7 @@ namespace avro
                 ::avro::decode(d, v.jobResponse);
                 ::avro::decode(d, v.jobResponseStr);
                 ::avro::decode(d, v.statusMap);
+                ::avro::decode(d, v.info);
             }
         }
     };

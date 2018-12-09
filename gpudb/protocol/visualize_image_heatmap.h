@@ -88,25 +88,153 @@ namespace gpudb
          *                                   <li>
          *                           gpudb::visualize_image_heatmap_jet
          *                                   <li>
-         *                           gpudb::visualize_image_heatmap_hot
+         *                           gpudb::visualize_image_heatmap_accent
          *                                   <li>
-         *                           gpudb::visualize_image_heatmap_hsv
+         *                           gpudb::visualize_image_heatmap_afmhot
          *                                   <li>
-         *                           gpudb::visualize_image_heatmap_gray
+         *                           gpudb::visualize_image_heatmap_autumn
+         *                                   <li>
+         *                           gpudb::visualize_image_heatmap_binary
          *                                   <li>
          *                           gpudb::visualize_image_heatmap_blues
+         *                                   <li>
+         *                           gpudb::visualize_image_heatmap_bone
+         *                                   <li>
+         *                           gpudb::visualize_image_heatmap_brbg
+         *                                   <li>
+         *                           gpudb::visualize_image_heatmap_brg
+         *                                   <li>
+         *                           gpudb::visualize_image_heatmap_bugn
+         *                                   <li>
+         *                           gpudb::visualize_image_heatmap_bupu
+         *                                   <li>
+         *                           gpudb::visualize_image_heatmap_bwr
+         *                                   <li>
+         *                           gpudb::visualize_image_heatmap_cmrmap
+         *                                   <li>
+         *                           gpudb::visualize_image_heatmap_cool
+         *                                   <li>
+         *                           gpudb::visualize_image_heatmap_coolwarm
+         *                                   <li>
+         *                           gpudb::visualize_image_heatmap_copper
+         *                                   <li>
+         *                           gpudb::visualize_image_heatmap_cubehelix
+         *                                   <li>
+         *                           gpudb::visualize_image_heatmap_dark2
+         *                                   <li>
+         *                           gpudb::visualize_image_heatmap_flag
+         *                                   <li>
+         *                           gpudb::visualize_image_heatmap_gist_earth
+         *                                   <li>
+         *                           gpudb::visualize_image_heatmap_gist_gray
+         *                                   <li>
+         *                           gpudb::visualize_image_heatmap_gist_heat
+         *                                   <li>
+         *                           gpudb::visualize_image_heatmap_gist_ncar
+         *                                   <li>
+         *                           gpudb::visualize_image_heatmap_gist_rainbow
+         *                                   <li>
+         *                           gpudb::visualize_image_heatmap_gist_stern
+         *                                   <li>
+         *                           gpudb::visualize_image_heatmap_gist_yarg
+         *                                   <li>
+         *                           gpudb::visualize_image_heatmap_gnbu
+         *                                   <li>
+         *                           gpudb::visualize_image_heatmap_gnuplot2
+         *                                   <li>
+         *                           gpudb::visualize_image_heatmap_gnuplot
+         *                                   <li>
+         *                           gpudb::visualize_image_heatmap_gray
          *                                   <li>
          *                           gpudb::visualize_image_heatmap_greens
          *                                   <li>
          *                           gpudb::visualize_image_heatmap_greys
          *                                   <li>
+         *                           gpudb::visualize_image_heatmap_hot
+         *                                   <li>
+         *                           gpudb::visualize_image_heatmap_hsv
+         *                                   <li>
+         *                           gpudb::visualize_image_heatmap_inferno
+         *                                   <li>
+         *                           gpudb::visualize_image_heatmap_magma
+         *                                   <li>
+         *                           gpudb::visualize_image_heatmap_nipy_spectral
+         *                                   <li>
+         *                           gpudb::visualize_image_heatmap_ocean
+         *                                   <li>
          *                           gpudb::visualize_image_heatmap_oranges
+         *                                   <li>
+         *                           gpudb::visualize_image_heatmap_orrd
+         *                                   <li>
+         *                           gpudb::visualize_image_heatmap_paired
+         *                                   <li>
+         *                           gpudb::visualize_image_heatmap_pastel1
+         *                                   <li>
+         *                           gpudb::visualize_image_heatmap_pastel2
+         *                                   <li>
+         *                           gpudb::visualize_image_heatmap_pink
+         *                                   <li>
+         *                           gpudb::visualize_image_heatmap_piyg
+         *                                   <li>
+         *                           gpudb::visualize_image_heatmap_plasma
+         *                                   <li>
+         *                           gpudb::visualize_image_heatmap_prgn
+         *                                   <li>
+         *                           gpudb::visualize_image_heatmap_prism
+         *                                   <li>
+         *                           gpudb::visualize_image_heatmap_pubu
+         *                                   <li>
+         *                           gpudb::visualize_image_heatmap_pubugn
+         *                                   <li>
+         *                           gpudb::visualize_image_heatmap_puor
+         *                                   <li>
+         *                           gpudb::visualize_image_heatmap_purd
          *                                   <li>
          *                           gpudb::visualize_image_heatmap_purples
          *                                   <li>
+         *                           gpudb::visualize_image_heatmap_rainbow
+         *                                   <li>
+         *                           gpudb::visualize_image_heatmap_rdbu
+         *                                   <li>
+         *                           gpudb::visualize_image_heatmap_rdgy
+         *                                   <li>
+         *                           gpudb::visualize_image_heatmap_rdpu
+         *                                   <li>
+         *                           gpudb::visualize_image_heatmap_rdylbu
+         *                                   <li>
+         *                           gpudb::visualize_image_heatmap_rdylgn
+         *                                   <li>
          *                           gpudb::visualize_image_heatmap_reds
          *                                   <li>
+         *                           gpudb::visualize_image_heatmap_seismic
+         *                                   <li>
+         *                           gpudb::visualize_image_heatmap_set1
+         *                                   <li>
+         *                           gpudb::visualize_image_heatmap_set2
+         *                                   <li>
+         *                           gpudb::visualize_image_heatmap_set3
+         *                                   <li>
+         *                           gpudb::visualize_image_heatmap_spectral
+         *                                   <li>
+         *                           gpudb::visualize_image_heatmap_spring
+         *                                   <li>
+         *                           gpudb::visualize_image_heatmap_summer
+         *                                   <li>
+         *                           gpudb::visualize_image_heatmap_terrain
+         *                                   <li>
          *                           gpudb::visualize_image_heatmap_viridis
+         *                                   <li>
+         *                           gpudb::visualize_image_heatmap_winter
+         *                                   <li>
+         *                           gpudb::visualize_image_heatmap_wistia
+         *                                   <li>
+         *                           gpudb::visualize_image_heatmap_ylgn
+         *                                   <li>
+         *                           gpudb::visualize_image_heatmap_ylgnbu
+         *                                   <li>
+         *                           gpudb::visualize_image_heatmap_ylorbr
+         *                                   <li>
+         *                           gpudb::visualize_image_heatmap_ylorrd
          *                           </ul>
          *                           The default value is
          *                           gpudb::visualize_image_heatmap_jet.
@@ -296,7 +424,8 @@ namespace gpudb
             width(int32_t()),
             height(int32_t()),
             bgColor(int64_t()),
-            imageData(std::vector<uint8_t>())
+            imageData(std::vector<uint8_t>()),
+            info(std::map<std::string, std::string>())
         {
         }
 
@@ -304,6 +433,7 @@ namespace gpudb
         int32_t height;
         int64_t bgColor;
         std::vector<uint8_t> imageData;
+        std::map<std::string, std::string> info;
     };
 }
 
@@ -321,6 +451,7 @@ namespace avro
             ::avro::encode(e, v.height);
             ::avro::encode(e, v.bgColor);
             ::avro::encode(e, v.imageData);
+            ::avro::encode(e, v.info);
         }
 
         static void decode(Decoder& d, gpudb::VisualizeImageHeatmapResponse& v)
@@ -349,6 +480,10 @@ namespace avro
                             ::avro::decode(d, v.imageData);
                             break;
 
+                        case 4:
+                            ::avro::decode(d, v.info);
+                            break;
+
                         default:
                             break;
                     }
@@ -360,6 +495,7 @@ namespace avro
                 ::avro::decode(d, v.height);
                 ::avro::decode(d, v.bgColor);
                 ::avro::decode(d, v.imageData);
+                ::avro::decode(d, v.info);
             }
         }
     };

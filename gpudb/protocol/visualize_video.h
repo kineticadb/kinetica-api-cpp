@@ -410,7 +410,8 @@ namespace gpudb
             bgColor(int64_t()),
             numFrames(int32_t()),
             sessionKey(std::string()),
-            data(std::vector<std::vector<uint8_t> >())
+            data(std::vector<std::vector<uint8_t> >()),
+            info(std::map<std::string, std::string>())
         {
         }
 
@@ -420,6 +421,7 @@ namespace gpudb
         int32_t numFrames;
         std::string sessionKey;
         std::vector<std::vector<uint8_t> > data;
+        std::map<std::string, std::string> info;
     };
 }
 
@@ -439,6 +441,7 @@ namespace avro
             ::avro::encode(e, v.numFrames);
             ::avro::encode(e, v.sessionKey);
             ::avro::encode(e, v.data);
+            ::avro::encode(e, v.info);
         }
 
         static void decode(Decoder& d, gpudb::VisualizeVideoResponse& v)
@@ -475,6 +478,10 @@ namespace avro
                             ::avro::decode(d, v.data);
                             break;
 
+                        case 6:
+                            ::avro::decode(d, v.info);
+                            break;
+
                         default:
                             break;
                     }
@@ -488,6 +495,7 @@ namespace avro
                 ::avro::decode(d, v.numFrames);
                 ::avro::decode(d, v.sessionKey);
                 ::avro::decode(d, v.data);
+                ::avro::decode(d, v.info);
             }
         }
     };

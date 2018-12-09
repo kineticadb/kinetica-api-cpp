@@ -352,7 +352,8 @@ namespace gpudb
             fillNn(double()),
             minLevel(double()),
             maxLevel(double()),
-            samplesUsed(int64_t())
+            samplesUsed(int64_t()),
+            info(std::map<std::string, std::string>())
         {
         }
 
@@ -366,6 +367,7 @@ namespace gpudb
         double minLevel;
         double maxLevel;
         int64_t samplesUsed;
+        std::map<std::string, std::string> info;
     };
 }
 
@@ -389,6 +391,7 @@ namespace avro
             ::avro::encode(e, v.minLevel);
             ::avro::encode(e, v.maxLevel);
             ::avro::encode(e, v.samplesUsed);
+            ::avro::encode(e, v.info);
         }
 
         static void decode(Decoder& d, gpudb::VisualizeImageContourResponse& v)
@@ -441,6 +444,10 @@ namespace avro
                             ::avro::decode(d, v.samplesUsed);
                             break;
 
+                        case 10:
+                            ::avro::decode(d, v.info);
+                            break;
+
                         default:
                             break;
                     }
@@ -458,6 +465,7 @@ namespace avro
                 ::avro::decode(d, v.minLevel);
                 ::avro::decode(d, v.maxLevel);
                 ::avro::decode(d, v.samplesUsed);
+                ::avro::decode(d, v.info);
             }
         }
     };

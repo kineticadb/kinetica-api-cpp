@@ -122,12 +122,14 @@ namespace gpudb
          */
         AggregateMinMaxResponse() :
             min(double()),
-            max(double())
+            max(double()),
+            info(std::map<std::string, std::string>())
         {
         }
 
         double min;
         double max;
+        std::map<std::string, std::string> info;
     };
 }
 
@@ -139,6 +141,7 @@ namespace avro
         {
             ::avro::encode(e, v.min);
             ::avro::encode(e, v.max);
+            ::avro::encode(e, v.info);
         }
 
         static void decode(Decoder& d, gpudb::AggregateMinMaxResponse& v)
@@ -159,6 +162,10 @@ namespace avro
                             ::avro::decode(d, v.max);
                             break;
 
+                        case 2:
+                            ::avro::decode(d, v.info);
+                            break;
+
                         default:
                             break;
                     }
@@ -168,6 +175,7 @@ namespace avro
             {
                 ::avro::decode(d, v.min);
                 ::avro::decode(d, v.max);
+                ::avro::decode(d, v.info);
             }
         }
     };

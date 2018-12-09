@@ -235,12 +235,13 @@ namespace gpudb
 
 
         /**
-         * This property indicates that this column should be dictionary
-         * encoded. It can only be used in conjunction with string columns
-         * marked with a charN property or with int or long columns. This
-         * property is appropriate for columns where the cardinality (the
-         * number of unique values) is expected to be low, and can save a large
-         * amount of memory.
+         * This property indicates that this column should be <a
+         * href="../../concepts/dictionary_encoding.html"
+         * target="_top">dictionary encoded</a>. It can only be used in
+         * conjunction with restricted string (charN), int, or long columns.
+         * Dictionary encoding is best for columns where the cardinality (the
+         * number of unique values) is expected to be low. This property can
+         * save a large amount of memory.
          */
         extern const std::string DICT;
 

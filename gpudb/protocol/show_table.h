@@ -196,7 +196,8 @@ namespace gpudb
             fullSizes(std::vector<int64_t>()),
             joinSizes(std::vector<double>()),
             totalSize(int64_t()),
-            totalFullSize(int64_t())
+            totalFullSize(int64_t()),
+            info(std::map<std::string, std::string>())
         {
         }
 
@@ -213,6 +214,7 @@ namespace gpudb
         std::vector<double> joinSizes;
         int64_t totalSize;
         int64_t totalFullSize;
+        std::map<std::string, std::string> info;
     };
 }
 
@@ -235,6 +237,7 @@ namespace avro
             ::avro::encode(e, v.joinSizes);
             ::avro::encode(e, v.totalSize);
             ::avro::encode(e, v.totalFullSize);
+            ::avro::encode(e, v.info);
         }
 
         static void decode(Decoder& d, gpudb::ShowTableResponse& v)
@@ -299,6 +302,10 @@ namespace avro
                             ::avro::decode(d, v.totalFullSize);
                             break;
 
+                        case 13:
+                            ::avro::decode(d, v.info);
+                            break;
+
                         default:
                             break;
                     }
@@ -319,6 +326,7 @@ namespace avro
                 ::avro::decode(d, v.joinSizes);
                 ::avro::decode(d, v.totalSize);
                 ::avro::decode(d, v.totalFullSize);
+                ::avro::decode(d, v.info);
             }
         }
     };

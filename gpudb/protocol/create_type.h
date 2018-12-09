@@ -247,12 +247,14 @@ namespace gpudb
          *                         schema for the record.
          *                                 <li> gpudb::create_type_dict: This
          *                         property indicates that this column should
-         *                         be dictionary encoded. It can only be used
-         *                         in conjunction with string columns marked
-         *                         with a charN property or with int or long
-         *                         columns. This property is appropriate for
-         *                         columns where the cardinality (the number of
-         *                         unique values) is expected to be low, and
+         *                         be <a
+         *                         href="../../concepts/dictionary_encoding.html"
+         *                         target="_top">dictionary encoded</a>. It can
+         *                         only be used in conjunction with restricted
+         *                         string (charN), int, or long columns.
+         *                         Dictionary encoding is best for columns
+         *                         where the cardinality (the number of unique
+         *                         values) is expected to be low. This property
          *                         can save a large amount of memory.
          *                         </ul>
          * @param[in] options_  Optional parameters.
@@ -386,7 +388,8 @@ namespace gpudb
             typeId(std::string()),
             typeDefinition(std::string()),
             label(std::string()),
-            properties(std::map<std::string, std::vector<std::string> >())
+            properties(std::map<std::string, std::vector<std::string> >()),
+            info(std::map<std::string, std::string>())
         {
         }
 
@@ -394,6 +397,7 @@ namespace gpudb
         std::string typeDefinition;
         std::string label;
         std::map<std::string, std::vector<std::string> > properties;
+        std::map<std::string, std::string> info;
     };
 }
 
@@ -407,6 +411,7 @@ namespace avro
             ::avro::encode(e, v.typeDefinition);
             ::avro::encode(e, v.label);
             ::avro::encode(e, v.properties);
+            ::avro::encode(e, v.info);
         }
 
         static void decode(Decoder& d, gpudb::CreateTypeResponse& v)
@@ -435,6 +440,10 @@ namespace avro
                             ::avro::decode(d, v.properties);
                             break;
 
+                        case 4:
+                            ::avro::decode(d, v.info);
+                            break;
+
                         default:
                             break;
                     }
@@ -446,6 +455,7 @@ namespace avro
                 ::avro::decode(d, v.typeDefinition);
                 ::avro::decode(d, v.label);
                 ::avro::decode(d, v.properties);
+                ::avro::decode(d, v.info);
             }
         }
     };

@@ -14,8 +14,7 @@ namespace gpudb
      * #alterTable(const AlterTableRequest&) const}.
      * <p>
      * Apply various modifications to a table, view, or collection.  The
-     * available
-     * modifications include the following:
+     * available modifications include the following:
      * <p>
      * Create or delete an <a href="../../concepts/indexes.html#column-index"
      * target="_top">index</a> on a
@@ -44,6 +43,10 @@ namespace gpudb
      * target="_top">protection</a> mode to prevent or
      * allow automatic expiration. This can be applied to tables, views, and
      * collections.
+     * <p>
+     * Manage a <a href="../../concepts/tables.html#partitioning"
+     * target="_top">range-partitioned</a>
+     * table's partitions.
      * <p>
      * Allow homogeneous tables within a collection.
      * <p>
@@ -79,11 +82,8 @@ namespace gpudb
          * @param[in] action_  Modification operation to be applied
          *                     <ul>
          *                             <li>
-         *                     gpudb::alter_table_allow_homogeneous_tables:
-         *                     Sets whether homogeneous tables are allowed in
-         *                     the given collection. This action is only valid
-         *                     if @a tableName is a collection. The @a value
-         *                     must be either 'true' or 'false'.
+         *                     gpudb::alter_table_allow_homogeneous_tables: No
+         *                     longer supported; action will be ignored.
          *                             <li> gpudb::alter_table_create_index:
          *                     Creates an <a
          *                     href="../../concepts/indexes.html#column-index"
@@ -162,6 +162,22 @@ namespace gpudb
          *                     should be the foreign_key_name specified when
          *                     creating the key or the complete string used to
          *                     define it.
+         *                             <li> gpudb::alter_table_add_partition:
+         *                     Partition definition to add (for
+         *                     range-partitioned tables only).  See <a
+         *                     href="../../concepts/tables.html#partitioning-by-range-example"
+         *                     target="_top">range partitioning example</a> for
+         *                     example format.
+         *                             <li>
+         *                     gpudb::alter_table_remove_partition: Name of
+         *                     partition to remove (for range-partitioned
+         *                     tables only).  All data in partition will be
+         *                     moved to the default partition
+         *                             <li>
+         *                     gpudb::alter_table_delete_partition: Name of
+         *                     partition to delete (for range-partitioned
+         *                     tables only).  All data in the partition will be
+         *                     deleted.
          *                             <li>
          *                     gpudb::alter_table_set_global_access_mode: Sets
          *                     the global access mode (i.e. locking) for the
@@ -206,6 +222,9 @@ namespace gpudb
          *                    access mode depending on @a action.
          * @param[in] options_  Optional parameters.
          *                      <ul>
+         *                              <li> gpudb::alter_table_action
+         *                              <li> gpudb::alter_table_column_name
+         *                              <li> gpudb::alter_table_table_name
          *                              <li>
          *                      gpudb::alter_table_column_default_value: When
          *                      adding a column, set a default value for
@@ -348,8 +367,7 @@ namespace gpudb
      * #alterTable(const AlterTableRequest&) const}.
      * <p>
      * Apply various modifications to a table, view, or collection.  The
-     * available
-     * modifications include the following:
+     * available modifications include the following:
      * <p>
      * Create or delete an <a href="../../concepts/indexes.html#column-index"
      * target="_top">index</a> on a
@@ -379,6 +397,10 @@ namespace gpudb
      * allow automatic expiration. This can be applied to tables, views, and
      * collections.
      * <p>
+     * Manage a <a href="../../concepts/tables.html#partitioning"
+     * target="_top">range-partitioned</a>
+     * table's partitions.
+     * <p>
      * Allow homogeneous tables within a collection.
      * <p>
      * Manage a table's columns--a column can be added, removed, or have its
@@ -402,7 +424,8 @@ namespace gpudb
             typeId(std::string()),
             typeDefinition(std::string()),
             properties(std::map<std::string, std::vector<std::string> >()),
-            label(std::string())
+            label(std::string()),
+            info(std::map<std::string, std::string>())
         {
         }
 
@@ -413,6 +436,7 @@ namespace gpudb
         std::string typeDefinition;
         std::map<std::string, std::vector<std::string> > properties;
         std::string label;
+        std::map<std::string, std::string> info;
     };
 }
 
@@ -429,6 +453,7 @@ namespace avro
             ::avro::encode(e, v.typeDefinition);
             ::avro::encode(e, v.properties);
             ::avro::encode(e, v.label);
+            ::avro::encode(e, v.info);
         }
 
         static void decode(Decoder& d, gpudb::AlterTableResponse& v)
@@ -469,6 +494,10 @@ namespace avro
                             ::avro::decode(d, v.label);
                             break;
 
+                        case 7:
+                            ::avro::decode(d, v.info);
+                            break;
+
                         default:
                             break;
                     }
@@ -483,6 +512,7 @@ namespace avro
                 ::avro::decode(d, v.typeDefinition);
                 ::avro::decode(d, v.properties);
                 ::avro::decode(d, v.label);
+                ::avro::decode(d, v.info);
             }
         }
     };

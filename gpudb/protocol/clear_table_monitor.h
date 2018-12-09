@@ -108,11 +108,13 @@ namespace gpudb
          * values.
          */
         ClearTableMonitorResponse() :
-            topicId(std::string())
+            topicId(std::string()),
+            info(std::map<std::string, std::string>())
         {
         }
 
         std::string topicId;
+        std::map<std::string, std::string> info;
     };
 }
 
@@ -123,6 +125,7 @@ namespace avro
         static void encode(Encoder& e, const gpudb::ClearTableMonitorResponse& v)
         {
             ::avro::encode(e, v.topicId);
+            ::avro::encode(e, v.info);
         }
 
         static void decode(Decoder& d, gpudb::ClearTableMonitorResponse& v)
@@ -139,6 +142,10 @@ namespace avro
                             ::avro::decode(d, v.topicId);
                             break;
 
+                        case 1:
+                            ::avro::decode(d, v.info);
+                            break;
+
                         default:
                             break;
                     }
@@ -147,6 +154,7 @@ namespace avro
             else
             {
                 ::avro::decode(d, v.topicId);
+                ::avro::decode(d, v.info);
             }
         }
     };

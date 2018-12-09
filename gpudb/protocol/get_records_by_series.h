@@ -231,7 +231,8 @@ namespace gpudb
             typeNames(std::vector<std::string>()),
             typeSchemas(std::vector<std::string>()),
             listRecordsBinary(std::vector<std::vector<std::vector<uint8_t> > >()),
-            listRecordsJson(std::vector<std::vector<std::string> >())
+            listRecordsJson(std::vector<std::vector<std::string> >()),
+            info(std::map<std::string, std::string>())
         {
         }
 
@@ -240,6 +241,7 @@ namespace gpudb
         std::vector<std::string> typeSchemas;
         std::vector<std::vector<std::vector<uint8_t> > > listRecordsBinary;
         std::vector<std::vector<std::string> > listRecordsJson;
+        std::map<std::string, std::string> info;
     };
 }
 
@@ -254,6 +256,7 @@ namespace avro
             ::avro::encode(e, v.typeSchemas);
             ::avro::encode(e, v.listRecordsBinary);
             ::avro::encode(e, v.listRecordsJson);
+            ::avro::encode(e, v.info);
         }
 
         static void decode(Decoder& d, gpudb::RawGetRecordsBySeriesResponse& v)
@@ -286,6 +289,10 @@ namespace avro
                             ::avro::decode(d, v.listRecordsJson);
                             break;
 
+                        case 5:
+                            ::avro::decode(d, v.info);
+                            break;
+
                         default:
                             break;
                     }
@@ -298,6 +305,7 @@ namespace avro
                 ::avro::decode(d, v.typeSchemas);
                 ::avro::decode(d, v.listRecordsBinary);
                 ::avro::decode(d, v.listRecordsJson);
+                ::avro::decode(d, v.info);
             }
         }
     };
@@ -337,7 +345,8 @@ namespace gpudb
             tableNames(std::vector<std::string>()),
             typeNames(std::vector<std::string>()),
             typeSchemas(std::vector<std::string>()),
-            data(std::vector<std::vector<T> >())
+            data(std::vector<std::vector<T> >()),
+            info(std::map<std::string, std::string>())
         {
         }
 
@@ -345,6 +354,7 @@ namespace gpudb
         std::vector<std::string> typeNames;
         std::vector<std::string> typeSchemas;
         std::vector<std::vector<T> > data;
+        std::map<std::string, std::string> info;
     };
 }
 

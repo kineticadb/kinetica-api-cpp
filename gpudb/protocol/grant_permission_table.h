@@ -162,7 +162,8 @@ namespace gpudb
             name(std::string()),
             permission(std::string()),
             tableName(std::string()),
-            filterExpression(std::string())
+            filterExpression(std::string()),
+            info(std::map<std::string, std::string>())
         {
         }
 
@@ -170,6 +171,7 @@ namespace gpudb
         std::string permission;
         std::string tableName;
         std::string filterExpression;
+        std::map<std::string, std::string> info;
     };
 }
 
@@ -183,6 +185,7 @@ namespace avro
             ::avro::encode(e, v.permission);
             ::avro::encode(e, v.tableName);
             ::avro::encode(e, v.filterExpression);
+            ::avro::encode(e, v.info);
         }
 
         static void decode(Decoder& d, gpudb::GrantPermissionTableResponse& v)
@@ -211,6 +214,10 @@ namespace avro
                             ::avro::decode(d, v.filterExpression);
                             break;
 
+                        case 4:
+                            ::avro::decode(d, v.info);
+                            break;
+
                         default:
                             break;
                     }
@@ -222,6 +229,7 @@ namespace avro
                 ::avro::decode(d, v.permission);
                 ::avro::decode(d, v.tableName);
                 ::avro::decode(d, v.filterExpression);
+                ::avro::decode(d, v.info);
             }
         }
     };

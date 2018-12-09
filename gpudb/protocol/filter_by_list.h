@@ -48,8 +48,8 @@ namespace gpudb
          * parameters.
          * 
          * @param[in] tableName_  Name of the table to filter.  This may be the
-         *                        ID of a collection, table or a result set
-         *                        (for chaining queries). If filtering a
+         *                        name of a collection, a table, or a view
+         *                        (when chaining queries).  If filtering a
          *                        collection, all child tables where the filter
          *                        expression is valid will be filtered; the
          *                        filtered result tables will then be placed in
@@ -185,11 +185,13 @@ namespace gpudb
          * values.
          */
         FilterByListResponse() :
-            count(int64_t())
+            count(int64_t()),
+            info(std::map<std::string, std::string>())
         {
         }
 
         int64_t count;
+        std::map<std::string, std::string> info;
     };
 }
 
@@ -200,6 +202,7 @@ namespace avro
         static void encode(Encoder& e, const gpudb::FilterByListResponse& v)
         {
             ::avro::encode(e, v.count);
+            ::avro::encode(e, v.info);
         }
 
         static void decode(Decoder& d, gpudb::FilterByListResponse& v)
@@ -216,6 +219,10 @@ namespace avro
                             ::avro::decode(d, v.count);
                             break;
 
+                        case 1:
+                            ::avro::decode(d, v.info);
+                            break;
+
                         default:
                             break;
                     }
@@ -224,6 +231,7 @@ namespace avro
             else
             {
                 ::avro::decode(d, v.count);
+                ::avro::decode(d, v.info);
             }
         }
     };

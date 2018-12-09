@@ -639,7 +639,8 @@ namespace gpudb
             binaryEncodedResponse(std::vector<uint8_t>()),
             jsonEncodedResponse(std::string()),
             totalNumberOfRecords(int64_t()),
-            hasMoreRecords(bool())
+            hasMoreRecords(bool()),
+            info(std::map<std::string, std::string>())
         {
         }
 
@@ -648,6 +649,7 @@ namespace gpudb
         std::string jsonEncodedResponse;
         int64_t totalNumberOfRecords;
         bool hasMoreRecords;
+        std::map<std::string, std::string> info;
     };
 }
 
@@ -662,6 +664,7 @@ namespace avro
             ::avro::encode(e, v.jsonEncodedResponse);
             ::avro::encode(e, v.totalNumberOfRecords);
             ::avro::encode(e, v.hasMoreRecords);
+            ::avro::encode(e, v.info);
         }
 
         static void decode(Decoder& d, gpudb::RawAggregateGroupByResponse& v)
@@ -694,6 +697,10 @@ namespace avro
                             ::avro::decode(d, v.hasMoreRecords);
                             break;
 
+                        case 5:
+                            ::avro::decode(d, v.info);
+                            break;
+
                         default:
                             break;
                     }
@@ -706,6 +713,7 @@ namespace avro
                 ::avro::decode(d, v.jsonEncodedResponse);
                 ::avro::decode(d, v.totalNumberOfRecords);
                 ::avro::decode(d, v.hasMoreRecords);
+                ::avro::decode(d, v.info);
             }
         }
     };
@@ -796,6 +804,7 @@ namespace gpudb
             data(std::vector<gpudb::GenericRecord>()),
             totalNumberOfRecords(int64_t()),
             hasMoreRecords(bool()),
+            info(std::map<std::string, std::string>()),
             dataTypePtr((gpudb::Type*)NULL)
         {
         }
@@ -804,6 +813,7 @@ namespace gpudb
         std::vector<gpudb::GenericRecord> data;
         int64_t totalNumberOfRecords;
         bool hasMoreRecords;
+        std::map<std::string, std::string> info;
         gpudb_type_ptr_t dataTypePtr;
     };
 }

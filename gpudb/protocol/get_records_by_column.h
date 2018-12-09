@@ -77,13 +77,16 @@ namespace gpudb
          *                      table.
          *                              <li>
          *                      gpudb::get_records_by_column_sort_by: Optional
-         *                      column(s) that the data should be sorted by.
-         *                      Empty by default (i.e. no sorting is applied).
+         *                      column that the data should be sorted by. Used
+         *                      in conjunction with @a sort_order. The @a
+         *                      order_by option can be used in lieu of @a
+         *                      sort_by / @a sort_order.
          *                              <li>
          *                      gpudb::get_records_by_column_sort_order: String
          *                      indicating how the returned values should be
-         *                      sorted - ascending or descending. If sort_order
-         *                      is provided, sort_by has to be provided.
+         *                      sorted - @a ascending or @a descending. If @a
+         *                      sort_order is provided, @a sort_by has to be
+         *                      provided.
          *                      <ul>
          *                              <li>
          *                      gpudb::get_records_by_column_ascending
@@ -95,7 +98,8 @@ namespace gpudb
          *                              <li>
          *                      gpudb::get_records_by_column_order_by:
          *                      Comma-separated list of the columns to be
-         *                      sorted by; e.g. 'timestamp asc, x desc'.
+         *                      sorted by as well as the sort direction, e.g.,
+         *                      'timestamp asc, x desc'.
          *                              <li>
          *                      gpudb::get_records_by_column_convert_wkts_to_wkbs:
          *                      If true, then WKT string columns will be
@@ -154,13 +158,16 @@ namespace gpudb
          *                      table.
          *                              <li>
          *                      gpudb::get_records_by_column_sort_by: Optional
-         *                      column(s) that the data should be sorted by.
-         *                      Empty by default (i.e. no sorting is applied).
+         *                      column that the data should be sorted by. Used
+         *                      in conjunction with @a sort_order. The @a
+         *                      order_by option can be used in lieu of @a
+         *                      sort_by / @a sort_order.
          *                              <li>
          *                      gpudb::get_records_by_column_sort_order: String
          *                      indicating how the returned values should be
-         *                      sorted - ascending or descending. If sort_order
-         *                      is provided, sort_by has to be provided.
+         *                      sorted - @a ascending or @a descending. If @a
+         *                      sort_order is provided, @a sort_by has to be
+         *                      provided.
          *                      <ul>
          *                              <li>
          *                      gpudb::get_records_by_column_ascending
@@ -172,7 +179,8 @@ namespace gpudb
          *                              <li>
          *                      gpudb::get_records_by_column_order_by:
          *                      Comma-separated list of the columns to be
-         *                      sorted by; e.g. 'timestamp asc, x desc'.
+         *                      sorted by as well as the sort direction, e.g.,
+         *                      'timestamp asc, x desc'.
          *                              <li>
          *                      gpudb::get_records_by_column_convert_wkts_to_wkbs:
          *                      If true, then WKT string columns will be
@@ -310,7 +318,8 @@ namespace gpudb
             binaryEncodedResponse(std::vector<uint8_t>()),
             jsonEncodedResponse(std::string()),
             totalNumberOfRecords(int64_t()),
-            hasMoreRecords(bool())
+            hasMoreRecords(bool()),
+            info(std::map<std::string, std::string>())
         {
         }
 
@@ -320,6 +329,7 @@ namespace gpudb
         std::string jsonEncodedResponse;
         int64_t totalNumberOfRecords;
         bool hasMoreRecords;
+        std::map<std::string, std::string> info;
     };
 }
 
@@ -335,6 +345,7 @@ namespace avro
             ::avro::encode(e, v.jsonEncodedResponse);
             ::avro::encode(e, v.totalNumberOfRecords);
             ::avro::encode(e, v.hasMoreRecords);
+            ::avro::encode(e, v.info);
         }
 
         static void decode(Decoder& d, gpudb::RawGetRecordsByColumnResponse& v)
@@ -371,6 +382,10 @@ namespace avro
                             ::avro::decode(d, v.hasMoreRecords);
                             break;
 
+                        case 6:
+                            ::avro::decode(d, v.info);
+                            break;
+
                         default:
                             break;
                     }
@@ -384,6 +399,7 @@ namespace avro
                 ::avro::decode(d, v.jsonEncodedResponse);
                 ::avro::decode(d, v.totalNumberOfRecords);
                 ::avro::decode(d, v.hasMoreRecords);
+                ::avro::decode(d, v.info);
             }
         }
     };
@@ -428,6 +444,7 @@ namespace gpudb
             data(std::vector<gpudb::GenericRecord>()),
             totalNumberOfRecords(int64_t()),
             hasMoreRecords(bool()),
+            info(std::map<std::string, std::string>()),
             dataTypePtr((gpudb::Type*)NULL)
         {
         }
@@ -437,6 +454,7 @@ namespace gpudb
         std::vector<gpudb::GenericRecord> data;
         int64_t totalNumberOfRecords;
         bool hasMoreRecords;
+        std::map<std::string, std::string> info;
         gpudb_type_ptr_t dataTypePtr;
     };
 }

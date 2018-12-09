@@ -137,7 +137,8 @@ namespace gpudb
             xVector(std::vector<double>()),
             yVector(std::vector<double>()),
             count(int32_t()),
-            isValid(bool())
+            isValid(bool()),
+            info(std::map<std::string, std::string>())
         {
         }
 
@@ -145,6 +146,7 @@ namespace gpudb
         std::vector<double> yVector;
         int32_t count;
         bool isValid;
+        std::map<std::string, std::string> info;
     };
 }
 
@@ -158,6 +160,7 @@ namespace avro
             ::avro::encode(e, v.yVector);
             ::avro::encode(e, v.count);
             ::avro::encode(e, v.isValid);
+            ::avro::encode(e, v.info);
         }
 
         static void decode(Decoder& d, gpudb::AggregateConvexHullResponse& v)
@@ -186,6 +189,10 @@ namespace avro
                             ::avro::decode(d, v.isValid);
                             break;
 
+                        case 4:
+                            ::avro::decode(d, v.info);
+                            break;
+
                         default:
                             break;
                     }
@@ -197,6 +204,7 @@ namespace avro
                 ::avro::decode(d, v.yVector);
                 ::avro::decode(d, v.count);
                 ::avro::decode(d, v.isValid);
+                ::avro::decode(d, v.info);
             }
         }
     };

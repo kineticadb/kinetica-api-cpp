@@ -105,11 +105,13 @@ namespace gpudb
          * values.
          */
         DeleteUserResponse() :
-            name(std::string())
+            name(std::string()),
+            info(std::map<std::string, std::string>())
         {
         }
 
         std::string name;
+        std::map<std::string, std::string> info;
     };
 }
 
@@ -120,6 +122,7 @@ namespace avro
         static void encode(Encoder& e, const gpudb::DeleteUserResponse& v)
         {
             ::avro::encode(e, v.name);
+            ::avro::encode(e, v.info);
         }
 
         static void decode(Decoder& d, gpudb::DeleteUserResponse& v)
@@ -136,6 +139,10 @@ namespace avro
                             ::avro::decode(d, v.name);
                             break;
 
+                        case 1:
+                            ::avro::decode(d, v.info);
+                            break;
+
                         default:
                             break;
                     }
@@ -144,6 +151,7 @@ namespace avro
             else
             {
                 ::avro::decode(d, v.name);
+                ::avro::decode(d, v.info);
             }
         }
     };

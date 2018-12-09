@@ -162,12 +162,14 @@ namespace gpudb
          */
         DeleteRecordsResponse() :
             countDeleted(int64_t()),
-            countsDeleted(std::vector<int64_t>())
+            countsDeleted(std::vector<int64_t>()),
+            info(std::map<std::string, std::string>())
         {
         }
 
         int64_t countDeleted;
         std::vector<int64_t> countsDeleted;
+        std::map<std::string, std::string> info;
     };
 }
 
@@ -179,6 +181,7 @@ namespace avro
         {
             ::avro::encode(e, v.countDeleted);
             ::avro::encode(e, v.countsDeleted);
+            ::avro::encode(e, v.info);
         }
 
         static void decode(Decoder& d, gpudb::DeleteRecordsResponse& v)
@@ -199,6 +202,10 @@ namespace avro
                             ::avro::decode(d, v.countsDeleted);
                             break;
 
+                        case 2:
+                            ::avro::decode(d, v.info);
+                            break;
+
                         default:
                             break;
                     }
@@ -208,6 +215,7 @@ namespace avro
             {
                 ::avro::decode(d, v.countDeleted);
                 ::avro::decode(d, v.countsDeleted);
+                ::avro::decode(d, v.info);
             }
         }
     };

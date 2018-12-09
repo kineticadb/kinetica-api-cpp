@@ -164,11 +164,13 @@ namespace gpudb
          * values.
          */
         InsertSymbolResponse() :
-            symbolId(std::string())
+            symbolId(std::string()),
+            info(std::map<std::string, std::string>())
         {
         }
 
         std::string symbolId;
+        std::map<std::string, std::string> info;
     };
 }
 
@@ -179,6 +181,7 @@ namespace avro
         static void encode(Encoder& e, const gpudb::InsertSymbolResponse& v)
         {
             ::avro::encode(e, v.symbolId);
+            ::avro::encode(e, v.info);
         }
 
         static void decode(Decoder& d, gpudb::InsertSymbolResponse& v)
@@ -195,6 +198,10 @@ namespace avro
                             ::avro::decode(d, v.symbolId);
                             break;
 
+                        case 1:
+                            ::avro::decode(d, v.info);
+                            break;
+
                         default:
                             break;
                     }
@@ -203,6 +210,7 @@ namespace avro
             else
             {
                 ::avro::decode(d, v.symbolId);
+                ::avro::decode(d, v.info);
             }
         }
     };

@@ -13,17 +13,27 @@ namespace gpudb
      * A set of input parameters for {@link
      * #createTable(const CreateTableRequest&) const}.
      * <p>
-     * Creates a new table or collection. If a new table is being created, the
-     * type of the table is given by @a typeId, which must the be the ID of a
-     * currently registered type (i.e. one created via {@link
-     * #createType(const CreateTypeRequest&) const}). The table will be
-     * created inside a collection if the option @a collection_name is
-     * specified. If that collection does not already exist, it will be
-     * created.
+     * Creates a new table or collection. If a new table is being created,
+     * the type of the table is given by @a typeId, which must the be the ID of
+     * a currently registered type (i.e. one created via {@link
+     * #createType(const CreateTypeRequest&) const}). The
+     * table will be created inside a collection if the option
+     * @a collection_name is specified. If that collection does
+     * not already exist, it will be created.
      * <p>
-     * To create a new collection, specify the name of the collection in @a
-     * tableName and set the @a is_collection option to @a true; @a typeId will
-     * be ignored.
+     * To create a new collection, specify the name of the collection in
+     * @a tableName and set the @a is_collection option to
+     * @a true; @a typeId will be
+     * ignored.
+     * <p>
+     * A table may optionally be designated to use a
+     * <a href="../../concepts/tables.html#replication"
+     * target="_top">replicated</a> distribution scheme,
+     * have <a href="../../concepts/tables.html#foreign-keys"
+     * target="_top">foreign keys</a> to other
+     * tables assigned, or be assigned a
+     * <a href="../../concepts/tables.html#partitioning"
+     * target="_top">partitioning</a> scheme.
      */
     struct CreateTableRequest
     {
@@ -83,30 +93,33 @@ namespace gpudb
          *                      The default value is gpudb::create_table_false.
          *                              <li>
          *                      gpudb::create_table_disallow_homogeneous_tables:
-         *                      For a collection, indicates whether the
-         *                      collection prohibits containment of multiple
-         *                      tables of exactly the same data type.
+         *                      No longer supported; value will be ignored.
          *                      <ul>
          *                              <li> gpudb::create_table_true
          *                              <li> gpudb::create_table_false
          *                      </ul>
          *                      The default value is gpudb::create_table_false.
          *                              <li> gpudb::create_table_is_replicated:
-         *                      For a table, indicates the <a
+         *                      For a table, affects the <a
          *                      href="../../concepts/tables.html#distribution"
          *                      target="_top">distribution scheme</a> for the
-         *                      table's data.  If true, the table will be <a
+         *                      table's data.  If true and the given type has
+         *                      no explicit <a
+         *                      href="../../concepts/tables.html#shard-key"
+         *                      target="_top">shard key</a> defined, the table
+         *                      will be <a
          *                      href="../../concepts/tables.html#replication"
          *                      target="_top">replicated</a>.  If false, the
          *                      table will be <a
          *                      href="../../concepts/tables.html#sharding"
-         *                      target="_top">sharded</a> according to the <a
-         *                      href="../../concepts/tables.html#shard-keys"
-         *                      target="_top">shard key</a> specified in the
-         *                      given @a typeId, or <a
+         *                      target="_top">sharded</a> according to the
+         *                      shard key specified in the given @a typeId, or
+         *                      <a
          *                      href="../../concepts/tables.html#random-sharding"
          *                      target="_top">randomly sharded</a>, if no shard
-         *                      key is specified.
+         *                      key is specified.  Note that a type containing
+         *                      a shard key cannot be used to create a
+         *                      replicated table.
          *                      <ul>
          *                              <li> gpudb::create_table_true
          *                              <li> gpudb::create_table_false
@@ -124,6 +137,36 @@ namespace gpudb
          *                      shard key of the format 'source_column
          *                      references shard_by_column from
          *                      target_table(primary_key_column)'
+         *                              <li>
+         *                      gpudb::create_table_partition_type: <a
+         *                      href="../../concepts/tables.html#partitioning"
+         *                      target="_top">Partitioning</a> scheme to use
+         *                      <ul>
+         *                              <li> gpudb::create_table_RANGE: Use <a
+         *                      href="../../concepts/tables.html#partitioning-by-range"
+         *                      target="_top">range partitioning</a>
+         *                              <li> gpudb::create_table_INTERVAL: Use
+         *                      <a
+         *                      href="../../concepts/tables.html#partitioning-by-interval"
+         *                      target="_top">interval partitioning</a>
+         *                      </ul>
+         *                              <li>
+         *                      gpudb::create_table_partition_keys:
+         *                      Comma-separated list of partition keys, which
+         *                      are the columns or column expressions by which
+         *                      records will be assigned to partitions defined
+         *                      by @a partition_definitions
+         *                              <li>
+         *                      gpudb::create_table_partition_definitions:
+         *                      Comma-separated list of partition definitions,
+         *                      whose format depends on the choice of @a
+         *                      partition_type.  See <a
+         *                      href="../../concepts/tables.html#partitioning-by-range-example"
+         *                      target="_top">range partitioning example</a> or
+         *                      <a
+         *                      href="../../concepts/tables.html#partitioning-by-interval-example"
+         *                      target="_top">interval partitioning example</a>
+         *                      for example formats.
          *                              <li> gpudb::create_table_ttl: For a
          *                      table, sets the <a
          *                      href="../../concepts/ttl.html"
@@ -144,6 +187,8 @@ namespace gpudb
          *                              <li> gpudb::create_table_false
          *                      </ul>
          *                      The default value is gpudb::create_table_false.
+         *                              <li>
+         *                      gpudb::create_table_strategy_definition
          *                      </ul>
          * 
          */
@@ -215,17 +260,27 @@ namespace gpudb
      * A set of output parameters for {@link
      * #createTable(const CreateTableRequest&) const}.
      * <p>
-     * Creates a new table or collection. If a new table is being created, the
-     * type of the table is given by @a typeId, which must the be the ID of a
-     * currently registered type (i.e. one created via {@link
-     * #createType(const CreateTypeRequest&) const}). The table will be
-     * created inside a collection if the option @a collection_name is
-     * specified. If that collection does not already exist, it will be
-     * created.
+     * Creates a new table or collection. If a new table is being created,
+     * the type of the table is given by @a typeId, which must the be the ID of
+     * a currently registered type (i.e. one created via {@link
+     * #createType(const CreateTypeRequest&) const}). The
+     * table will be created inside a collection if the option
+     * @a collection_name is specified. If that collection does
+     * not already exist, it will be created.
      * <p>
-     * To create a new collection, specify the name of the collection in @a
-     * tableName and set the @a is_collection option to @a true; @a typeId will
-     * be ignored.
+     * To create a new collection, specify the name of the collection in
+     * @a tableName and set the @a is_collection option to
+     * @a true; @a typeId will be
+     * ignored.
+     * <p>
+     * A table may optionally be designated to use a
+     * <a href="../../concepts/tables.html#replication"
+     * target="_top">replicated</a> distribution scheme,
+     * have <a href="../../concepts/tables.html#foreign-keys"
+     * target="_top">foreign keys</a> to other
+     * tables assigned, or be assigned a
+     * <a href="../../concepts/tables.html#partitioning"
+     * target="_top">partitioning</a> scheme.
      */
     struct CreateTableResponse
     {
@@ -237,13 +292,15 @@ namespace gpudb
         CreateTableResponse() :
             tableName(std::string()),
             typeId(std::string()),
-            isCollection(bool())
+            isCollection(bool()),
+            info(std::map<std::string, std::string>())
         {
         }
 
         std::string tableName;
         std::string typeId;
         bool isCollection;
+        std::map<std::string, std::string> info;
     };
 }
 
@@ -256,6 +313,7 @@ namespace avro
             ::avro::encode(e, v.tableName);
             ::avro::encode(e, v.typeId);
             ::avro::encode(e, v.isCollection);
+            ::avro::encode(e, v.info);
         }
 
         static void decode(Decoder& d, gpudb::CreateTableResponse& v)
@@ -280,6 +338,10 @@ namespace avro
                             ::avro::decode(d, v.isCollection);
                             break;
 
+                        case 3:
+                            ::avro::decode(d, v.info);
+                            break;
+
                         default:
                             break;
                     }
@@ -290,6 +352,7 @@ namespace avro
                 ::avro::decode(d, v.tableName);
                 ::avro::decode(d, v.typeId);
                 ::avro::decode(d, v.isCollection);
+                ::avro::decode(d, v.info);
             }
         }
     };

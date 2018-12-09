@@ -301,11 +301,13 @@ namespace gpudb
          * values.
          */
         CreateProjectionResponse() :
-            projectionName(std::string())
+            projectionName(std::string()),
+            info(std::map<std::string, std::string>())
         {
         }
 
         std::string projectionName;
+        std::map<std::string, std::string> info;
     };
 }
 
@@ -316,6 +318,7 @@ namespace avro
         static void encode(Encoder& e, const gpudb::CreateProjectionResponse& v)
         {
             ::avro::encode(e, v.projectionName);
+            ::avro::encode(e, v.info);
         }
 
         static void decode(Decoder& d, gpudb::CreateProjectionResponse& v)
@@ -332,6 +335,10 @@ namespace avro
                             ::avro::decode(d, v.projectionName);
                             break;
 
+                        case 1:
+                            ::avro::decode(d, v.info);
+                            break;
+
                         default:
                             break;
                     }
@@ -340,6 +347,7 @@ namespace avro
             else
             {
                 ::avro::decode(d, v.projectionName);
+                ::avro::decode(d, v.info);
             }
         }
     };

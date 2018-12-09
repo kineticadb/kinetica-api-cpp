@@ -1,5 +1,10 @@
 # GPUdb C++ API Changelog
 
+## Version 7.0.0 - TBD
+
+-   Version release
+
+
 ## Version 6.2.0
 
 ### Version 6.2.0.0 - 2018-03-24

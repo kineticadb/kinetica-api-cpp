@@ -218,11 +218,13 @@ namespace gpudb
          * values.
          */
         MergeRecordsResponse() :
-            tableName(std::string())
+            tableName(std::string()),
+            info(std::map<std::string, std::string>())
         {
         }
 
         std::string tableName;
+        std::map<std::string, std::string> info;
     };
 }
 
@@ -233,6 +235,7 @@ namespace avro
         static void encode(Encoder& e, const gpudb::MergeRecordsResponse& v)
         {
             ::avro::encode(e, v.tableName);
+            ::avro::encode(e, v.info);
         }
 
         static void decode(Decoder& d, gpudb::MergeRecordsResponse& v)
@@ -249,6 +252,10 @@ namespace avro
                             ::avro::decode(d, v.tableName);
                             break;
 
+                        case 1:
+                            ::avro::decode(d, v.info);
+                            break;
+
                         default:
                             break;
                     }
@@ -257,6 +264,7 @@ namespace avro
             else
             {
                 ::avro::decode(d, v.tableName);
+                ::avro::decode(d, v.info);
             }
         }
     };

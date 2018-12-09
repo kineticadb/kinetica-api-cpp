@@ -104,21 +104,23 @@ namespace gpudb
          * values.
          */
         AdminShowJobsResponse() :
-            jobId(std::vector<int32_t>()),
+            jobId(std::vector<int64_t>()),
             status(std::vector<std::string>()),
             endpointName(std::vector<std::string>()),
             timeReceived(std::vector<int64_t>()),
             authId(std::vector<std::string>()),
-            userData(std::vector<std::string>())
+            userData(std::vector<std::string>()),
+            info(std::map<std::string, std::string>())
         {
         }
 
-        std::vector<int32_t> jobId;
+        std::vector<int64_t> jobId;
         std::vector<std::string> status;
         std::vector<std::string> endpointName;
         std::vector<int64_t> timeReceived;
         std::vector<std::string> authId;
         std::vector<std::string> userData;
+        std::map<std::string, std::string> info;
     };
 }
 
@@ -134,6 +136,7 @@ namespace avro
             ::avro::encode(e, v.timeReceived);
             ::avro::encode(e, v.authId);
             ::avro::encode(e, v.userData);
+            ::avro::encode(e, v.info);
         }
 
         static void decode(Decoder& d, gpudb::AdminShowJobsResponse& v)
@@ -170,6 +173,10 @@ namespace avro
                             ::avro::decode(d, v.userData);
                             break;
 
+                        case 6:
+                            ::avro::decode(d, v.info);
+                            break;
+
                         default:
                             break;
                     }
@@ -183,6 +190,7 @@ namespace avro
                 ::avro::decode(d, v.timeReceived);
                 ::avro::decode(d, v.authId);
                 ::avro::decode(d, v.userData);
+                ::avro::decode(d, v.info);
             }
         }
     };

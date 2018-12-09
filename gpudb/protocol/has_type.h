@@ -105,12 +105,14 @@ namespace gpudb
          */
         HasTypeResponse() :
             typeId(std::string()),
-            typeExists(bool())
+            typeExists(bool()),
+            info(std::map<std::string, std::string>())
         {
         }
 
         std::string typeId;
         bool typeExists;
+        std::map<std::string, std::string> info;
     };
 }
 
@@ -122,6 +124,7 @@ namespace avro
         {
             ::avro::encode(e, v.typeId);
             ::avro::encode(e, v.typeExists);
+            ::avro::encode(e, v.info);
         }
 
         static void decode(Decoder& d, gpudb::HasTypeResponse& v)
@@ -142,6 +145,10 @@ namespace avro
                             ::avro::decode(d, v.typeExists);
                             break;
 
+                        case 2:
+                            ::avro::decode(d, v.info);
+                            break;
+
                         default:
                             break;
                     }
@@ -151,6 +158,7 @@ namespace avro
             {
                 ::avro::decode(d, v.typeId);
                 ::avro::decode(d, v.typeExists);
+                ::avro::decode(d, v.info);
             }
         }
     };

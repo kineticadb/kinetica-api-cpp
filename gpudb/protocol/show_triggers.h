@@ -111,11 +111,13 @@ namespace gpudb
          * values.
          */
         ShowTriggersResponse() :
-            triggerMap(std::map<std::string, std::map<std::string, std::string> >())
+            triggerMap(std::map<std::string, std::map<std::string, std::string> >()),
+            info(std::map<std::string, std::string>())
         {
         }
 
         std::map<std::string, std::map<std::string, std::string> > triggerMap;
+        std::map<std::string, std::string> info;
     };
 }
 
@@ -126,6 +128,7 @@ namespace avro
         static void encode(Encoder& e, const gpudb::ShowTriggersResponse& v)
         {
             ::avro::encode(e, v.triggerMap);
+            ::avro::encode(e, v.info);
         }
 
         static void decode(Decoder& d, gpudb::ShowTriggersResponse& v)
@@ -142,6 +145,10 @@ namespace avro
                             ::avro::decode(d, v.triggerMap);
                             break;
 
+                        case 1:
+                            ::avro::decode(d, v.info);
+                            break;
+
                         default:
                             break;
                     }
@@ -150,6 +157,7 @@ namespace avro
             else
             {
                 ::avro::decode(d, v.triggerMap);
+                ::avro::decode(d, v.info);
             }
         }
     };

@@ -232,7 +232,8 @@ namespace gpudb
             typeNames(std::vector<std::string>()),
             recordsBinary(std::vector<std::vector<uint8_t> >()),
             recordsJson(std::vector<std::string>()),
-            recordIds(std::vector<std::string>())
+            recordIds(std::vector<std::string>()),
+            info(std::map<std::string, std::string>())
         {
         }
 
@@ -241,6 +242,7 @@ namespace gpudb
         std::vector<std::vector<uint8_t> > recordsBinary;
         std::vector<std::string> recordsJson;
         std::vector<std::string> recordIds;
+        std::map<std::string, std::string> info;
     };
 }
 
@@ -255,6 +257,7 @@ namespace avro
             ::avro::encode(e, v.recordsBinary);
             ::avro::encode(e, v.recordsJson);
             ::avro::encode(e, v.recordIds);
+            ::avro::encode(e, v.info);
         }
 
         static void decode(Decoder& d, gpudb::RawGetRecordsFromCollectionResponse& v)
@@ -287,6 +290,10 @@ namespace avro
                             ::avro::decode(d, v.recordIds);
                             break;
 
+                        case 5:
+                            ::avro::decode(d, v.info);
+                            break;
+
                         default:
                             break;
                     }
@@ -299,6 +306,7 @@ namespace avro
                 ::avro::decode(d, v.recordsBinary);
                 ::avro::decode(d, v.recordsJson);
                 ::avro::decode(d, v.recordIds);
+                ::avro::decode(d, v.info);
             }
         }
     };
@@ -335,7 +343,8 @@ namespace gpudb
             tableName(std::string()),
             typeNames(std::vector<std::string>()),
             data(std::vector<T>()),
-            recordIds(std::vector<std::string>())
+            recordIds(std::vector<std::string>()),
+            info(std::map<std::string, std::string>())
         {
         }
 
@@ -343,6 +352,7 @@ namespace gpudb
         std::vector<std::string> typeNames;
         std::vector<T> data;
         std::vector<std::string> recordIds;
+        std::map<std::string, std::string> info;
     };
 }
 

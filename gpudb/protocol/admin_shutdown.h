@@ -118,11 +118,13 @@ namespace gpudb
          * values.
          */
         AdminShutdownResponse() :
-            exitStatus(std::string())
+            exitStatus(std::string()),
+            info(std::map<std::string, std::string>())
         {
         }
 
         std::string exitStatus;
+        std::map<std::string, std::string> info;
     };
 }
 
@@ -133,6 +135,7 @@ namespace avro
         static void encode(Encoder& e, const gpudb::AdminShutdownResponse& v)
         {
             ::avro::encode(e, v.exitStatus);
+            ::avro::encode(e, v.info);
         }
 
         static void decode(Decoder& d, gpudb::AdminShutdownResponse& v)
@@ -149,6 +152,10 @@ namespace avro
                             ::avro::decode(d, v.exitStatus);
                             break;
 
+                        case 1:
+                            ::avro::decode(d, v.info);
+                            break;
+
                         default:
                             break;
                     }
@@ -157,6 +164,7 @@ namespace avro
             else
             {
                 ::avro::decode(d, v.exitStatus);
+                ::avro::decode(d, v.info);
             }
         }
     };

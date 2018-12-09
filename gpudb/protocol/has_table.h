@@ -104,12 +104,14 @@ namespace gpudb
          */
         HasTableResponse() :
             tableName(std::string()),
-            tableExists(bool())
+            tableExists(bool()),
+            info(std::map<std::string, std::string>())
         {
         }
 
         std::string tableName;
         bool tableExists;
+        std::map<std::string, std::string> info;
     };
 }
 
@@ -121,6 +123,7 @@ namespace avro
         {
             ::avro::encode(e, v.tableName);
             ::avro::encode(e, v.tableExists);
+            ::avro::encode(e, v.info);
         }
 
         static void decode(Decoder& d, gpudb::HasTableResponse& v)
@@ -141,6 +144,10 @@ namespace avro
                             ::avro::decode(d, v.tableExists);
                             break;
 
+                        case 2:
+                            ::avro::decode(d, v.info);
+                            break;
+
                         default:
                             break;
                     }
@@ -150,6 +157,7 @@ namespace avro
             {
                 ::avro::decode(d, v.tableName);
                 ::avro::decode(d, v.tableExists);
+                ::avro::decode(d, v.info);
             }
         }
     };

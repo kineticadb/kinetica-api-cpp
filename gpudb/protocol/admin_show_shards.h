@@ -102,13 +102,15 @@ namespace gpudb
         AdminShowShardsResponse() :
             version(int64_t()),
             rank(std::vector<int32_t>()),
-            tom(std::vector<int32_t>())
+            tom(std::vector<int32_t>()),
+            info(std::map<std::string, std::string>())
         {
         }
 
         int64_t version;
         std::vector<int32_t> rank;
         std::vector<int32_t> tom;
+        std::map<std::string, std::string> info;
     };
 }
 
@@ -121,6 +123,7 @@ namespace avro
             ::avro::encode(e, v.version);
             ::avro::encode(e, v.rank);
             ::avro::encode(e, v.tom);
+            ::avro::encode(e, v.info);
         }
 
         static void decode(Decoder& d, gpudb::AdminShowShardsResponse& v)
@@ -145,6 +148,10 @@ namespace avro
                             ::avro::decode(d, v.tom);
                             break;
 
+                        case 3:
+                            ::avro::decode(d, v.info);
+                            break;
+
                         default:
                             break;
                     }
@@ -155,6 +162,7 @@ namespace avro
                 ::avro::decode(d, v.version);
                 ::avro::decode(d, v.rank);
                 ::avro::decode(d, v.tom);
+                ::avro::decode(d, v.info);
             }
         }
     };

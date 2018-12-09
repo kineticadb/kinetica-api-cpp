@@ -130,12 +130,14 @@ namespace gpudb
          */
         GrantPermissionSystemResponse() :
             name(std::string()),
-            permission(std::string())
+            permission(std::string()),
+            info(std::map<std::string, std::string>())
         {
         }
 
         std::string name;
         std::string permission;
+        std::map<std::string, std::string> info;
     };
 }
 
@@ -147,6 +149,7 @@ namespace avro
         {
             ::avro::encode(e, v.name);
             ::avro::encode(e, v.permission);
+            ::avro::encode(e, v.info);
         }
 
         static void decode(Decoder& d, gpudb::GrantPermissionSystemResponse& v)
@@ -167,6 +170,10 @@ namespace avro
                             ::avro::decode(d, v.permission);
                             break;
 
+                        case 2:
+                            ::avro::decode(d, v.info);
+                            break;
+
                         default:
                             break;
                     }
@@ -176,6 +183,7 @@ namespace avro
             {
                 ::avro::decode(d, v.name);
                 ::avro::decode(d, v.permission);
+                ::avro::decode(d, v.info);
             }
         }
     };

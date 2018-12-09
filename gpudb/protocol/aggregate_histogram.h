@@ -181,13 +181,15 @@ namespace gpudb
         AggregateHistogramResponse() :
             counts(std::vector<double>()),
             start(double()),
-            end(double())
+            end(double()),
+            info(std::map<std::string, std::string>())
         {
         }
 
         std::vector<double> counts;
         double start;
         double end;
+        std::map<std::string, std::string> info;
     };
 }
 
@@ -200,6 +202,7 @@ namespace avro
             ::avro::encode(e, v.counts);
             ::avro::encode(e, v.start);
             ::avro::encode(e, v.end);
+            ::avro::encode(e, v.info);
         }
 
         static void decode(Decoder& d, gpudb::AggregateHistogramResponse& v)
@@ -224,6 +227,10 @@ namespace avro
                             ::avro::decode(d, v.end);
                             break;
 
+                        case 3:
+                            ::avro::decode(d, v.info);
+                            break;
+
                         default:
                             break;
                     }
@@ -234,6 +241,7 @@ namespace avro
                 ::avro::decode(d, v.counts);
                 ::avro::decode(d, v.start);
                 ::avro::decode(d, v.end);
+                ::avro::decode(d, v.info);
             }
         }
     };

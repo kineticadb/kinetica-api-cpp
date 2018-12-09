@@ -175,11 +175,13 @@ namespace gpudb
          * parameter values.
          */
         CreateTriggerByRangeResponse() :
-            triggerId(std::string())
+            triggerId(std::string()),
+            info(std::map<std::string, std::string>())
         {
         }
 
         std::string triggerId;
+        std::map<std::string, std::string> info;
     };
 }
 
@@ -190,6 +192,7 @@ namespace avro
         static void encode(Encoder& e, const gpudb::CreateTriggerByRangeResponse& v)
         {
             ::avro::encode(e, v.triggerId);
+            ::avro::encode(e, v.info);
         }
 
         static void decode(Decoder& d, gpudb::CreateTriggerByRangeResponse& v)
@@ -206,6 +209,10 @@ namespace avro
                             ::avro::decode(d, v.triggerId);
                             break;
 
+                        case 1:
+                            ::avro::decode(d, v.info);
+                            break;
+
                         default:
                             break;
                     }
@@ -214,6 +221,7 @@ namespace avro
             else
             {
                 ::avro::decode(d, v.triggerId);
+                ::avro::decode(d, v.info);
             }
         }
     };
