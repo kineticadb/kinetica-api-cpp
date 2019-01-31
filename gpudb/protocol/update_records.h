@@ -113,6 +113,17 @@ namespace gpudb
          *                      The default value is
          *                      gpudb::update_records_false.
          *                              <li>
+         *                      gpudb::update_records_update_partition: Force
+         *                      qualifying records to be deleted and reinserted
+         *                      so their partition membership will be
+         *                      reevaluated.
+         *                      <ul>
+         *                              <li> gpudb::update_records_true
+         *                              <li> gpudb::update_records_false
+         *                      </ul>
+         *                      The default value is
+         *                      gpudb::update_records_false.
+         *                              <li>
          *                      gpudb::update_records_use_expressions_in_new_values_maps:
          *                      When set to @a true, all new values in @a
          *                      newValuesMaps are considered as expression
@@ -214,6 +225,17 @@ namespace gpudb
          *                      Can be used to customize behavior when the
          *                      updated primary key value already exists as
          *                      described in /insert/records.
+         *                      <ul>
+         *                              <li> gpudb::update_records_true
+         *                              <li> gpudb::update_records_false
+         *                      </ul>
+         *                      The default value is
+         *                      gpudb::update_records_false.
+         *                              <li>
+         *                      gpudb::update_records_update_partition: Force
+         *                      qualifying records to be deleted and reinserted
+         *                      so their partition membership will be
+         *                      reevaluated.
          *                      <ul>
          *                              <li> gpudb::update_records_true
          *                              <li> gpudb::update_records_false
@@ -434,6 +456,17 @@ namespace gpudb
          *                      Can be used to customize behavior when the
          *                      updated primary key value already exists as
          *                      described in /insert/records.
+         *                      <ul>
+         *                              <li> gpudb::update_records_true
+         *                              <li> gpudb::update_records_false
+         *                      </ul>
+         *                      The default value is
+         *                      gpudb::update_records_false.
+         *                              <li>
+         *                      gpudb::update_records_update_partition: Force
+         *                      qualifying records to be deleted and reinserted
+         *                      so their partition membership will be
+         *                      reevaluated.
          *                      <ul>
          *                              <li> gpudb::update_records_true
          *                              <li> gpudb::update_records_false

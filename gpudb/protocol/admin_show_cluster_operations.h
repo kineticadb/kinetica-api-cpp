@@ -13,13 +13,12 @@ namespace gpudb
      * A set of input parameters for {@link
      * #adminShowClusterOperations(const AdminShowClusterOperationsRequest&) const}.
      * <p>
-     * Shows detailed status of current or prior cluster operations.
+     * Requests the detailed status of the current operation (by default) or a
+     * prior cluster operation specified by @a historyIndex.
+     * Returns details on the requested cluster operation.
      * <p>
-     * By default will retrieve the current or most resent cluster operation.
-     * The @{history_index} is used to specify which cluster operation to
-     * retrieve. A value of zero will return the most recent, one will return
-     * the second most recent, etc.  The response will also indicate how many
-     * cluster operations are stored in the history.
+     * The response will also indicate how many cluster operations are stored
+     * in the history.
      */
     struct AdminShowClusterOperationsRequest
     {
@@ -39,7 +38,7 @@ namespace gpudb
          * specified parameters.
          * 
          * @param[in] historyIndex_  Indicates which cluster operation to
-         *                           retrieve.  Zero is most recent.
+         *                           retrieve.  Use 0 for the most recent.
          * @param[in] options_  Optional parameters.
          * 
          */
@@ -103,13 +102,12 @@ namespace gpudb
      * A set of output parameters for {@link
      * #adminShowClusterOperations(const AdminShowClusterOperationsRequest&) const}.
      * <p>
-     * Shows detailed status of current or prior cluster operations.
+     * Requests the detailed status of the current operation (by default) or a
+     * prior cluster operation specified by @a historyIndex.
+     * Returns details on the requested cluster operation.
      * <p>
-     * By default will retrieve the current or most resent cluster operation.
-     * The @{history_index} is used to specify which cluster operation to
-     * retrieve. A value of zero will return the most recent, one will return
-     * the second most recent, etc.  The response will also indicate how many
-     * cluster operations are stored in the history.
+     * The response will also indicate how many cluster operations are stored
+     * in the history.
      */
     struct AdminShowClusterOperationsResponse
     {

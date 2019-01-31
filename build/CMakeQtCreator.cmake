@@ -9,12 +9,12 @@ function( ADD_QTCREATOR_PROJECT project_name)
 
     set(DST_DIR      ${CMAKE_BINARY_DIR})
     set(SKELETON_DIR ${QT_CREATOR_SKELETON_DIR})
-    set(TOP_SRC_DIR  "${CMAKE_HOME_DIRECTORY}")
+    set(TOP_SRC_DIR  "${PROJECT_SOURCE_DIR}")
 
     # Set the configure_file variables, i.e. @VAR@ to be set when copied below.
     get_filename_component(QT_CREATOR_TOP_SRC_DIR ${TOP_SRC_DIR} ABSOLUTE)
     set(QT_CREATOR_BUILD_DIR     ${CMAKE_CURRENT_BINARY_DIR}) # in .creator.user file
-    set(QT_CREATOR_TOP_CMAKE_DIR ${CMAKE_HOME_DIRECTORY})     # in .creator.user file
+    set(QT_CREATOR_TOP_CMAKE_DIR ${PROJECT_SOURCE_DIR})       # in .creator.user file
 
     FIND_PROCESSOR_COUNT()
     set(QT_CREATOR_MAKE_ARGS "-j${PROCESSOR_COUNT}") # in .creator.user file

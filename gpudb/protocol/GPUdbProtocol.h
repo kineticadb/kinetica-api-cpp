@@ -9,12 +9,9 @@
 #include <avro/Specific.hh>
 
 #include "gpudb_wrapper.h"
-#include "admin_add_ranks.h"
 #include "admin_alter_jobs.h"
 #include "admin_alter_shards.h"
 #include "admin_offline.h"
-#include "admin_rebalance.h"
-#include "admin_remove_ranks.h"
 #include "admin_show_alerts.h"
 #include "admin_show_cluster_operations.h"
 #include "admin_show_jobs.h"

@@ -13,13 +13,12 @@ namespace gpudb
      * A set of input parameters for {@link
      * #collectStatistics(const CollectStatisticsRequest&) const}.
      * <p>
-     * @private
+     * Collect statistics for a column(s) in a specified table.
      */
     struct CollectStatisticsRequest
     {
 
         /**
-         * @private
          * Constructs a CollectStatisticsRequest object with default parameter
          * values.
          */
@@ -31,13 +30,14 @@ namespace gpudb
         }
 
         /**
-         * @private
          * Constructs a CollectStatisticsRequest object with the specified
          * parameters.
          * 
-         * @param[in] tableName_
-         * @param[in] columnNames_
-         * @param[in] options_
+         * @param[in] tableName_  Name of a table. Must be an existing table.
+         * @param[in] columnNames_  List of one or more column names in @a
+         *                          tableName for which to collect statistics
+         *                          (cardinality, mean value, etc.).
+         * @param[in] options_  Optional parameters.
          * 
          */
         CollectStatisticsRequest(const std::string& tableName_, const std::vector<std::string>& columnNames_, const std::map<std::string, std::string>& options_):
@@ -52,10 +52,6 @@ namespace gpudb
         std::map<std::string, std::string> options;
     };
 }
-
-    /**
-     * @private
-     */
 
 namespace avro
 {
@@ -112,13 +108,12 @@ namespace gpudb
      * A set of output parameters for {@link
      * #collectStatistics(const CollectStatisticsRequest&) const}.
      * <p>
-     * @private
+     * Collect statistics for a column(s) in a specified table.
      */
     struct CollectStatisticsResponse
     {
 
         /**
-         * @private
          * Constructs a CollectStatisticsResponse object with default parameter
          * values.
          */
@@ -134,10 +129,6 @@ namespace gpudb
         std::map<std::string, std::string> info;
     };
 }
-
-    /**
-     * @private
-     */
 
 namespace avro
 {

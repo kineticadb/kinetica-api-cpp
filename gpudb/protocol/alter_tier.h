@@ -13,7 +13,14 @@ namespace gpudb
      * A set of input parameters for {@link
      * #alterTier(const AlterTierRequest&) const}.
      * <p>
-     * Alters properties of exisiting tier to facilitate resource management.
+     * Alters properties of an exisiting <a
+     * href="../../rm/concepts.html#storage-tiers" target="_top">tier</a> to
+     * facilitate <a href="../../rm/concepts.html" target="_top">resource
+     * management</a>.
+     * <p>
+     * To disable <a href="../../rm/concepts.html#watermark-based-eviction"
+     * target="_top">watermark-based eviction</a>, set both @a high_watermark
+     * and @a low_watermark to 100.
      */
     struct AlterTierRequest
     {
@@ -30,20 +37,22 @@ namespace gpudb
         /**
          * Constructs an AlterTierRequest object with the specified parameters.
          * 
-         * @param[in] name_  Name of the tier to be altered. Must match tier
-         *                   group name.
+         * @param[in] name_  Name of the tier to be altered. Must be an
+         *                   existing tier group name.
          * @param[in] options_  Optional parameters.
          *                      <ul>
          *                              <li> gpudb::alter_tier_capacity:
          *                      Maximum size in bytes this tier may hold at
          *                      once.
          *                              <li> gpudb::alter_tier_high_watermark:
-         *                      Triggers asynchronous eviction once a tiers
-         *                      resource usage exceeds this percentage down to
-         *                      the low watermark.
+         *                      Threshold of usage of this tier's resource
+         *                      that, once exceeded, will trigger
+         *                      watermark-based eviction from this tier.
          *                              <li> gpudb::alter_tier_low_watermark:
-         *                      Percentage resource usage to evict down to once
-         *                      the high watermark has been hit.
+         *                      Threshold of resource usage that, once fallen
+         *                      below after crossing the @a high_watermark,
+         *                      will cease watermark-based eviction from this
+         *                      tier.
          *                      </ul>
          * 
          */
@@ -107,7 +116,14 @@ namespace gpudb
      * A set of output parameters for {@link
      * #alterTier(const AlterTierRequest&) const}.
      * <p>
-     * Alters properties of exisiting tier to facilitate resource management.
+     * Alters properties of an exisiting <a
+     * href="../../rm/concepts.html#storage-tiers" target="_top">tier</a> to
+     * facilitate <a href="../../rm/concepts.html" target="_top">resource
+     * management</a>.
+     * <p>
+     * To disable <a href="../../rm/concepts.html#watermark-based-eviction"
+     * target="_top">watermark-based eviction</a>, set both @a high_watermark
+     * and @a low_watermark to 100.
      */
     struct AlterTierResponse
     {

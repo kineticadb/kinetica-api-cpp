@@ -13,13 +13,13 @@ namespace gpudb
      * A set of input parameters for {@link
      * #clearStatistics(const ClearStatisticsRequest&) const}.
      * <p>
-     * @private
+     * Clears statistics (cardinality, mean value, etc.) for a column in a
+     * specified table.
      */
     struct ClearStatisticsRequest
     {
 
         /**
-         * @private
          * Constructs a ClearStatisticsRequest object with default parameter
          * values.
          */
@@ -31,13 +31,15 @@ namespace gpudb
         }
 
         /**
-         * @private
          * Constructs a ClearStatisticsRequest object with the specified
          * parameters.
          * 
-         * @param[in] tableName_
-         * @param[in] columnName_
-         * @param[in] options_
+         * @param[in] tableName_  Name of a table. Must be an existing table.
+         * @param[in] columnName_  Name of the column in @a tableName for which
+         *                         to clear statistics. The column must be from
+         *                         an existing table. An empty string clears
+         *                         statistics for all columns in the table.
+         * @param[in] options_  Optional parameters.
          * 
          */
         ClearStatisticsRequest(const std::string& tableName_, const std::string& columnName_, const std::map<std::string, std::string>& options_):
@@ -52,10 +54,6 @@ namespace gpudb
         std::map<std::string, std::string> options;
     };
 }
-
-    /**
-     * @private
-     */
 
 namespace avro
 {
@@ -112,13 +110,13 @@ namespace gpudb
      * A set of output parameters for {@link
      * #clearStatistics(const ClearStatisticsRequest&) const}.
      * <p>
-     * @private
+     * Clears statistics (cardinality, mean value, etc.) for a column in a
+     * specified table.
      */
     struct ClearStatisticsResponse
     {
 
         /**
-         * @private
          * Constructs a ClearStatisticsResponse object with default parameter
          * values.
          */
@@ -134,10 +132,6 @@ namespace gpudb
         std::map<std::string, std::string> info;
     };
 }
-
-    /**
-     * @private
-     */
 
 namespace avro
 {

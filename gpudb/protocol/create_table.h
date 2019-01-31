@@ -31,9 +31,11 @@ namespace gpudb
      * target="_top">replicated</a> distribution scheme,
      * have <a href="../../concepts/tables.html#foreign-keys"
      * target="_top">foreign keys</a> to other
-     * tables assigned, or be assigned a
+     * tables assigned, be assigned a
      * <a href="../../concepts/tables.html#partitioning"
-     * target="_top">partitioning</a> scheme.
+     * target="_top">partitioning</a> scheme, or have a
+     * <a href="../../rm/concepts.html#tier-strategies" target="_top">tier
+     * strategy</a> assigned.
      */
     struct CreateTableRequest
     {
@@ -136,26 +138,26 @@ namespace gpudb
          *                      gpudb::create_table_foreign_shard_key: Foreign
          *                      shard key of the format 'source_column
          *                      references shard_by_column from
-         *                      target_table(primary_key_column)'
+         *                      target_table(primary_key_column)'.
          *                              <li>
          *                      gpudb::create_table_partition_type: <a
          *                      href="../../concepts/tables.html#partitioning"
-         *                      target="_top">Partitioning</a> scheme to use
+         *                      target="_top">Partitioning</a> scheme to use.
          *                      <ul>
          *                              <li> gpudb::create_table_RANGE: Use <a
          *                      href="../../concepts/tables.html#partitioning-by-range"
-         *                      target="_top">range partitioning</a>
+         *                      target="_top">range partitioning</a>.
          *                              <li> gpudb::create_table_INTERVAL: Use
          *                      <a
          *                      href="../../concepts/tables.html#partitioning-by-interval"
-         *                      target="_top">interval partitioning</a>
+         *                      target="_top">interval partitioning</a>.
          *                      </ul>
          *                              <li>
          *                      gpudb::create_table_partition_keys:
          *                      Comma-separated list of partition keys, which
          *                      are the columns or column expressions by which
          *                      records will be assigned to partitions defined
-         *                      by @a partition_definitions
+         *                      by @a partition_definitions.
          *                              <li>
          *                      gpudb::create_table_partition_definitions:
          *                      Comma-separated list of partition definitions,
@@ -188,7 +190,16 @@ namespace gpudb
          *                      </ul>
          *                      The default value is gpudb::create_table_false.
          *                              <li>
-         *                      gpudb::create_table_strategy_definition
+         *                      gpudb::create_table_strategy_definition: The <a
+         *                      href="../../rm/concepts.html#tier-strategies"
+         *                      target="_top">tier strategy</a> for the table
+         *                      and its columns. See <a
+         *                      href="../../rm/concepts.html#tier-strategies"
+         *                      target="_top">tier strategy usage</a> for
+         *                      format and <a
+         *                      href="../../rm/usage.html#tier-strategies"
+         *                      target="_top">tier strategy examples</a> for
+         *                      examples.
          *                      </ul>
          * 
          */
@@ -278,9 +289,11 @@ namespace gpudb
      * target="_top">replicated</a> distribution scheme,
      * have <a href="../../concepts/tables.html#foreign-keys"
      * target="_top">foreign keys</a> to other
-     * tables assigned, or be assigned a
+     * tables assigned, be assigned a
      * <a href="../../concepts/tables.html#partitioning"
-     * target="_top">partitioning</a> scheme.
+     * target="_top">partitioning</a> scheme, or have a
+     * <a href="../../rm/concepts.html#tier-strategies" target="_top">tier
+     * strategy</a> assigned.
      */
     struct CreateTableResponse
     {

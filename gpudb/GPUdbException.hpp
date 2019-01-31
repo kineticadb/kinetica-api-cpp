@@ -16,7 +16,7 @@ namespace gpudb
     class GPUdbException : public std::exception
     {
         public:
-            GPUdbException(const std::string& message) : message(message) {}
+            GPUdbException(const std::string& messageParam) : message(messageParam) {}
 
             virtual const char* what() const throw() { return message.c_str(); }
 
@@ -31,7 +31,7 @@ namespace gpudb
     class GPUdbInsertionException : public GPUdbException
     {
         public:
-            GPUdbInsertionException( const std::string& message ) : GPUdbException( message ) {}
+            GPUdbInsertionException( const std::string& messageParam) : GPUdbException(messageParam) {}
 
             GPUdbInsertionException( const std::string& url_,
                                      const std::vector<gpudb::GenericRecord>& records_,

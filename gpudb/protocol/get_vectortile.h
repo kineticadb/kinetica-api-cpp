@@ -163,12 +163,12 @@ namespace gpudb
          * values.
          */
         GetVectortileResponse() :
-            encodedData(std::vector<uint8_t>()),
+            encodedData(std::string()),
             info(std::map<std::string, std::string>())
         {
         }
 
-        std::vector<uint8_t> encodedData;
+        std::string encodedData;
         std::map<std::string, std::string> info;
     };
 }

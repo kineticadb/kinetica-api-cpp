@@ -32,7 +32,7 @@ namespace gpudb
          * Constructs a DeleteResourceGroupRequest object with the specified
          * parameters.
          * 
-         * @param[in] name_  Name of the group to be deleted.
+         * @param[in] name_  Name of the resource group to be deleted.
          * @param[in] options_  Optional parameters.
          * 
          */

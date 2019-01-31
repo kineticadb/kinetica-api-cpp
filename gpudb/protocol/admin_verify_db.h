@@ -51,6 +51,28 @@ namespace gpudb
          *                      </ul>
          *                      The default value is
          *                      gpudb::admin_verify_db_false.
+         *                              <li>
+         *                      gpudb::admin_verify_db_concurrent_safe: When
+         *                      enabled, allows this endpoint to be run safely
+         *                      with other concurrent database operations.
+         *                      Other operations may be slower while this is
+         *                      running.
+         *                      <ul>
+         *                              <li> gpudb::admin_verify_db_true
+         *                              <li> gpudb::admin_verify_db_false
+         *                      </ul>
+         *                      The default value is
+         *                      gpudb::admin_verify_db_true.
+         *                              <li>
+         *                      gpudb::admin_verify_db_verify_rank0: When
+         *                      enabled, compares rank0 table meta-data against
+         *                      workers meta-data
+         *                      <ul>
+         *                              <li> gpudb::admin_verify_db_true
+         *                              <li> gpudb::admin_verify_db_false
+         *                      </ul>
+         *                      The default value is
+         *                      gpudb::admin_verify_db_false.
          *                      </ul>
          * 
          */

@@ -13,8 +13,9 @@ namespace gpudb
      * A set of input parameters for {@link
      * #showResourceStatistics(const ShowResourceStatisticsRequest&) const}.
      * <p>
-     * Shows various statistics for storage/memory tiers and resource groups.
-     * Statistics are provided on a per rank basis.
+     * Requests various statistics for storage/memory tiers and resource
+     * groups.
+     * Returns statistics on a per-rank basis.
      */
     struct ShowResourceStatisticsRequest
     {
@@ -87,8 +88,9 @@ namespace gpudb
      * A set of output parameters for {@link
      * #showResourceStatistics(const ShowResourceStatisticsRequest&) const}.
      * <p>
-     * Shows various statistics for storage/memory tiers and resource groups.
-     * Statistics are provided on a per rank basis.
+     * Requests various statistics for storage/memory tiers and resource
+     * groups.
+     * Returns statistics on a per-rank basis.
      */
     struct ShowResourceStatisticsResponse
     {

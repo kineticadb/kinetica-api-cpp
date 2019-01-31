@@ -22,8 +22,15 @@ function( GetGitRepoVersionInfo GIT_REPO_DIRECTORY GIT_VARIABLE_PREFIX)
     # Get the latest commit log to get the hash and the date.
     #   "b47ffe4c9ca84b988852a96ef238b895506baf16 2013-09-03 12:20:57 -0400"
     execute_process(COMMAND ${GIT_EXECUTABLE} log -1 --pretty=format:"%H %ci"
+                    RESULT_VARIABLE GIT_LOG_RESULT
                     WORKING_DIRECTORY ${GIT_REPO_DIRECTORY}
                     OUTPUT_VARIABLE GIT_LOG_STRING)
+
+    if (NOT RESULT_VARIABLE EQUAL 0)
+        message(WARNING "WARNING: Unable to run 'git' to retrieve source control information.")
+        return()
+    endif()
+
 
     string(STRIP "${GIT_LOG_STRING}" GIT_LOG_STRING)
     string(REGEX MATCH "([0-9a-fA-F]+) ([- a-zA-Z0-9:]+)" _dummy ${GIT_LOG_STRING})

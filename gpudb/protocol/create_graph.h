@@ -56,8 +56,11 @@ namespace gpudb
          *                    target="_top">identifiers</a>; identifiers are
          *                    grouped as <a
          *                    href="../../graph_solver/network_graph_solver.html#id-combos"
-         *                    target="_top">combinations</a>. Example format:
-         *                    'table.column AS NODE_ID'
+         *                    target="_top">combinations</a>. Identifiers can
+         *                    be used with existing column names, e.g.,
+         *                    'table.column AS NODE_ID', or expressions, e.g.,
+         *                    'ST_MAKEPOINT(column1, column2) AS
+         *                    NODE_WKTPOINT'.
          * @param[in] edges_  Edges represent the required fundamental
          *                    topological unit of a graph that typically
          *                    connect nodes. Edges must be specified using <a
@@ -65,8 +68,10 @@ namespace gpudb
          *                    target="_top">identifiers</a>; identifiers are
          *                    grouped as <a
          *                    href="../../graph_solver/network_graph_solver.html#id-combos"
-         *                    target="_top">combinations</a>. Example format:
-         *                    'table.column AS EDGE_WKTLINE'
+         *                    target="_top">combinations</a>. Identifiers can
+         *                    be used with existing column names, e.g.,
+         *                    'table.column AS EDGE_ID', or expressions, e.g.,
+         *                    'SUBSTR(column, 1, 6) AS EDGE_NODE1_NAME'.
          * @param[in] weights_  Weights represent a method of informing the
          *                      graph solver of the cost of including a given
          *                      edge in a solution. Weights must be specified
@@ -75,8 +80,11 @@ namespace gpudb
          *                      target="_top">identifiers</a>; identifiers are
          *                      grouped as <a
          *                      href="../../graph_solver/network_graph_solver.html#id-combos"
-         *                      target="_top">combinations</a>. Example format:
-         *                      'table.column AS WEIGHTS_EDGE_ID'
+         *                      target="_top">combinations</a>. Identifiers can
+         *                      be used with existing column names, e.g.,
+         *                      'table.column AS WEIGHTS_EDGE_ID', or
+         *                      expressions, e.g., 'ST_LENGTH(wkt) AS
+         *                      WEIGHTS_VALUESPECIFIED'.
          * @param[in] restrictions_  Restrictions represent a method of
          *                           informing the graph solver which edges
          *                           and/or nodes should be ignored for the
@@ -86,9 +94,12 @@ namespace gpudb
          *                           target="_top">identifiers</a>; identifiers
          *                           are grouped as <a
          *                           href="../../graph_solver/network_graph_solver.html#id-combos"
-         *                           target="_top">combinations</a>. Example
-         *                           format: 'table.column AS
-         *                           RESTRICTIONS_EDGE_ID'
+         *                           target="_top">combinations</a>.
+         *                           Identifiers can be used with existing
+         *                           column names, e.g., 'table.column AS
+         *                           RESTRICTIONS_EDGE_ID', or expressions,
+         *                           e.g., 'column/2 AS
+         *                           RESTRICTIONS_VALUECOMPARED'.
          * @param[in] options_  Optional parameters.
          *                      <ul>
          *                              <li>

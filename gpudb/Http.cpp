@@ -530,6 +530,37 @@ namespace gpudb
         return m_url;
     }
 
+    std::string HttpUrl::getAppendedUrl( const std::string& endpoint ) const
+    {
+        // Nothing to append!
+        if ( endpoint.empty() )
+            return m_url;
+        
+        std::stringstream ss;
+
+        // Put the content of the current URL
+        ss << m_url;
+
+        // Append a '/' if the URL does not end in on
+        if ( m_url[ m_url.length() - 1 ] != '/' )
+        {
+            ss << "/";
+        }
+
+        // Append the endpoint, discarding any leading '/'
+        if ( endpoint[ 0 ] == '/' && endpoint.length() > 1 )
+        {
+            ss << endpoint.substr( 1 );
+        }
+        else
+        {
+            ss << endpoint;
+        }
+
+        return ss.str();
+    }
+
+
     void HttpUrl::init(const std::string& url)
     {
         size_t i = 0;

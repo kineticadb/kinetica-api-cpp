@@ -251,7 +251,7 @@ namespace gpudb
          *                         href="../../concepts/dictionary_encoding.html"
          *                         target="_top">dictionary encoded</a>. It can
          *                         only be used in conjunction with restricted
-         *                         string (charN), int, or long columns.
+         *                         string (charN), int, long or date columns.
          *                         Dictionary encoding is best for columns
          *                         where the cardinality (the number of unique
          *                         values) is expected to be low. This property

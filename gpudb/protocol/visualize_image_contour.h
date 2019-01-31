@@ -87,30 +87,160 @@ namespace gpudb
          *                                   <li>
          *                           gpudb::visualize_image_contour_bg_color
          *                                   <li>
+         *                           gpudb::visualize_image_contour_text_color
+         *                                   <li>
          *                           gpudb::visualize_image_contour_colormap:
          *                           <ul>
          *                                   <li>
          *                           gpudb::visualize_image_contour_jet
          *                                   <li>
-         *                           gpudb::visualize_image_contour_hot
+         *                           gpudb::visualize_image_contour_accent
          *                                   <li>
-         *                           gpudb::visualize_image_contour_hsv
+         *                           gpudb::visualize_image_contour_afmhot
          *                                   <li>
-         *                           gpudb::visualize_image_contour_gray
+         *                           gpudb::visualize_image_contour_autumn
+         *                                   <li>
+         *                           gpudb::visualize_image_contour_binary
          *                                   <li>
          *                           gpudb::visualize_image_contour_blues
+         *                                   <li>
+         *                           gpudb::visualize_image_contour_bone
+         *                                   <li>
+         *                           gpudb::visualize_image_contour_brbg
+         *                                   <li>
+         *                           gpudb::visualize_image_contour_brg
+         *                                   <li>
+         *                           gpudb::visualize_image_contour_bugn
+         *                                   <li>
+         *                           gpudb::visualize_image_contour_bupu
+         *                                   <li>
+         *                           gpudb::visualize_image_contour_bwr
+         *                                   <li>
+         *                           gpudb::visualize_image_contour_cmrmap
+         *                                   <li>
+         *                           gpudb::visualize_image_contour_cool
+         *                                   <li>
+         *                           gpudb::visualize_image_contour_coolwarm
+         *                                   <li>
+         *                           gpudb::visualize_image_contour_copper
+         *                                   <li>
+         *                           gpudb::visualize_image_contour_cubehelix
+         *                                   <li>
+         *                           gpudb::visualize_image_contour_dark2
+         *                                   <li>
+         *                           gpudb::visualize_image_contour_flag
+         *                                   <li>
+         *                           gpudb::visualize_image_contour_gist_earth
+         *                                   <li>
+         *                           gpudb::visualize_image_contour_gist_gray
+         *                                   <li>
+         *                           gpudb::visualize_image_contour_gist_heat
+         *                                   <li>
+         *                           gpudb::visualize_image_contour_gist_ncar
+         *                                   <li>
+         *                           gpudb::visualize_image_contour_gist_rainbow
+         *                                   <li>
+         *                           gpudb::visualize_image_contour_gist_stern
+         *                                   <li>
+         *                           gpudb::visualize_image_contour_gist_yarg
+         *                                   <li>
+         *                           gpudb::visualize_image_contour_gnbu
+         *                                   <li>
+         *                           gpudb::visualize_image_contour_gnuplot2
+         *                                   <li>
+         *                           gpudb::visualize_image_contour_gnuplot
+         *                                   <li>
+         *                           gpudb::visualize_image_contour_gray
          *                                   <li>
          *                           gpudb::visualize_image_contour_greens
          *                                   <li>
          *                           gpudb::visualize_image_contour_greys
          *                                   <li>
+         *                           gpudb::visualize_image_contour_hot
+         *                                   <li>
+         *                           gpudb::visualize_image_contour_hsv
+         *                                   <li>
+         *                           gpudb::visualize_image_contour_inferno
+         *                                   <li>
+         *                           gpudb::visualize_image_contour_magma
+         *                                   <li>
+         *                           gpudb::visualize_image_contour_nipy_spectral
+         *                                   <li>
+         *                           gpudb::visualize_image_contour_ocean
+         *                                   <li>
          *                           gpudb::visualize_image_contour_oranges
+         *                                   <li>
+         *                           gpudb::visualize_image_contour_orrd
+         *                                   <li>
+         *                           gpudb::visualize_image_contour_paired
+         *                                   <li>
+         *                           gpudb::visualize_image_contour_pastel1
+         *                                   <li>
+         *                           gpudb::visualize_image_contour_pastel2
+         *                                   <li>
+         *                           gpudb::visualize_image_contour_pink
+         *                                   <li>
+         *                           gpudb::visualize_image_contour_piyg
+         *                                   <li>
+         *                           gpudb::visualize_image_contour_plasma
+         *                                   <li>
+         *                           gpudb::visualize_image_contour_prgn
+         *                                   <li>
+         *                           gpudb::visualize_image_contour_prism
+         *                                   <li>
+         *                           gpudb::visualize_image_contour_pubu
+         *                                   <li>
+         *                           gpudb::visualize_image_contour_pubugn
+         *                                   <li>
+         *                           gpudb::visualize_image_contour_puor
+         *                                   <li>
+         *                           gpudb::visualize_image_contour_purd
          *                                   <li>
          *                           gpudb::visualize_image_contour_purples
          *                                   <li>
+         *                           gpudb::visualize_image_contour_rainbow
+         *                                   <li>
+         *                           gpudb::visualize_image_contour_rdbu
+         *                                   <li>
+         *                           gpudb::visualize_image_contour_rdgy
+         *                                   <li>
+         *                           gpudb::visualize_image_contour_rdpu
+         *                                   <li>
+         *                           gpudb::visualize_image_contour_rdylbu
+         *                                   <li>
+         *                           gpudb::visualize_image_contour_rdylgn
+         *                                   <li>
          *                           gpudb::visualize_image_contour_reds
          *                                   <li>
+         *                           gpudb::visualize_image_contour_seismic
+         *                                   <li>
+         *                           gpudb::visualize_image_contour_set1
+         *                                   <li>
+         *                           gpudb::visualize_image_contour_set2
+         *                                   <li>
+         *                           gpudb::visualize_image_contour_set3
+         *                                   <li>
+         *                           gpudb::visualize_image_contour_spectral
+         *                                   <li>
+         *                           gpudb::visualize_image_contour_spring
+         *                                   <li>
+         *                           gpudb::visualize_image_contour_summer
+         *                                   <li>
+         *                           gpudb::visualize_image_contour_terrain
+         *                                   <li>
          *                           gpudb::visualize_image_contour_viridis
+         *                                   <li>
+         *                           gpudb::visualize_image_contour_winter
+         *                                   <li>
+         *                           gpudb::visualize_image_contour_wistia
+         *                                   <li>
+         *                           gpudb::visualize_image_contour_ylgn
+         *                                   <li>
+         *                           gpudb::visualize_image_contour_ylgnbu
+         *                                   <li>
+         *                           gpudb::visualize_image_contour_ylorbr
+         *                                   <li>
+         *                           gpudb::visualize_image_contour_ylorrd
          *                           </ul>
          *                           The default value is
          *                           gpudb::visualize_image_contour_jet.

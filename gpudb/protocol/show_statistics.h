@@ -13,13 +13,12 @@ namespace gpudb
      * A set of input parameters for {@link
      * #showStatistics(const ShowStatisticsRequest&) const}.
      * <p>
-     * @private
+     * Retrieves the collected column statistics for the specified table.
      */
     struct ShowStatisticsRequest
     {
 
         /**
-         * @private
          * Constructs a ShowStatisticsRequest object with default parameter
          * values.
          */
@@ -30,12 +29,13 @@ namespace gpudb
         }
 
         /**
-         * @private
          * Constructs a ShowStatisticsRequest object with the specified
          * parameters.
          * 
-         * @param[in] tableNames_
-         * @param[in] options_
+         * @param[in] tableNames_  Tables whose metadata will be fetched. All
+         *                         provided tables must exist, or an error is
+         *                         returned.
+         * @param[in] options_  Optional parameters.
          * 
          */
         ShowStatisticsRequest(const std::vector<std::string>& tableNames_, const std::map<std::string, std::string>& options_):
@@ -48,10 +48,6 @@ namespace gpudb
         std::map<std::string, std::string> options;
     };
 }
-
-    /**
-     * @private
-     */
 
 namespace avro
 {
@@ -102,13 +98,12 @@ namespace gpudb
      * A set of output parameters for {@link
      * #showStatistics(const ShowStatisticsRequest&) const}.
      * <p>
-     * @private
+     * Retrieves the collected column statistics for the specified table.
      */
     struct ShowStatisticsResponse
     {
 
         /**
-         * @private
          * Constructs a ShowStatisticsResponse object with default parameter
          * values.
          */
@@ -124,10 +119,6 @@ namespace gpudb
         std::map<std::string, std::string> info;
     };
 }
-
-    /**
-     * @private
-     */
 
 namespace avro
 {

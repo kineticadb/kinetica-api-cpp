@@ -12,11 +12,6 @@
 
 namespace gpudb
 {
-    // Keywords for /admin/add/ranks request
-    const std::string admin_add_ranks_dry_run( "dry_run" );
-    const std::string admin_add_ranks_false  ( "false"   );
-    const std::string admin_add_ranks_true   ( "true"    );
-
     // Keywords for /admin/alter/jobs request
     const std::string admin_alter_jobs_cancel( "cancel" );
 
@@ -25,19 +20,15 @@ namespace gpudb
     const std::string admin_offline_flush_to_disk( "flush_to_disk" );
     const std::string admin_offline_true         ( "true"          );
 
-    // Keywords for /admin/rebalance request
-    const std::string admin_rebalance_false                   ( "false"                    );
-    const std::string admin_rebalance_rebalance_sharded_data  ( "rebalance_sharded_data"   );
-    const std::string admin_rebalance_rebalance_unsharded_data( "rebalance_unsharded_data" );
-    const std::string admin_rebalance_table_blacklist         ( "table_blacklist"          );
-    const std::string admin_rebalance_table_whitelist         ( "table_whitelist"          );
-    const std::string admin_rebalance_true                    ( "true"                     );
-
-    // Keywords for /admin/remove/ranks request
-    const std::string admin_remove_ranks_false                   ( "false"                    );
-    const std::string admin_remove_ranks_rebalance_sharded_data  ( "rebalance_sharded_data"   );
-    const std::string admin_remove_ranks_rebalance_unsharded_data( "rebalance_unsharded_data" );
-    const std::string admin_remove_ranks_true                    ( "true"                     );
+    // Keywords for /admin/show/cluster/operations response
+    const std::string admin_show_cluster_operations_COMPLETED_OK( "COMPLETED_OK" );
+    const std::string admin_show_cluster_operations_ERROR       ( "ERROR"        );
+    const std::string admin_show_cluster_operations_INTERRUPTED ( "INTERRUPTED"  );
+    const std::string admin_show_cluster_operations_IN_PROGRESS ( "IN_PROGRESS"  );
+    const std::string admin_show_cluster_operations_NOT_STARTED ( "NOT_STARTED"  );
+    const std::string admin_show_cluster_operations_OK          ( "OK"           );
+    const std::string admin_show_cluster_operations_false       ( "false"        );
+    const std::string admin_show_cluster_operations_true        ( "true"         );
 
     // Keywords for /admin/show/jobs request
     const std::string admin_show_jobs_false       ( "false"        );
@@ -49,10 +40,12 @@ namespace gpudb
     const std::string admin_shutdown_true ( "true"  );
 
     // Keywords for /admin/verifydb request
+    const std::string admin_verify_db_concurrent_safe ( "concurrent_safe"  );
     const std::string admin_verify_db_false           ( "false"            );
     const std::string admin_verify_db_rebuild_on_error( "rebuild_on_error" );
     const std::string admin_verify_db_true            ( "true"             );
     const std::string admin_verify_db_verify_persist  ( "verify_persist"   );
+    const std::string admin_verify_db_verify_rank0    ( "verify_rank0"     );
 
     // Keywords for /aggregate/groupby request
     const std::string aggregate_group_by_ascending                    ( "ascending"                     );
@@ -76,8 +69,10 @@ namespace gpudb
     const std::string aggregate_group_by_result_table_generate_pk     ( "result_table_generate_pk"      );
     const std::string aggregate_group_by_result_table_persist         ( "result_table_persist"          );
     const std::string aggregate_group_by_rollup                       ( "rollup"                        );
+    const std::string aggregate_group_by_sleep_on_refresh             ( "sleep_on_refresh"              );
     const std::string aggregate_group_by_sort_by                      ( "sort_by"                       );
     const std::string aggregate_group_by_sort_order                   ( "sort_order"                    );
+    const std::string aggregate_group_by_throw_error_on_refresh       ( "throw_error_on_refresh"        );
     const std::string aggregate_group_by_true                         ( "true"                          );
     const std::string aggregate_group_by_ttl                          ( "ttl"                           );
     const std::string aggregate_group_by_value                        ( "value"                         );
@@ -177,17 +172,16 @@ namespace gpudb
     const std::string alter_system_properties_communicator_test          ( "communicator_test"           );
     const std::string alter_system_properties_concurrent_kernel_execution( "concurrent_kernel_execution" );
     const std::string alter_system_properties_enable_audit               ( "enable_audit"                );
-    const std::string alter_system_properties_enable_job_manager         ( "enable_job_manager"          );
     const std::string alter_system_properties_execution_mode             ( "execution_mode"              );
     const std::string alter_system_properties_false                      ( "false"                       );
     const std::string alter_system_properties_flush_to_disk              ( "flush_to_disk"               );
     const std::string alter_system_properties_kernel_omp_threads         ( "kernel_omp_threads"          );
     const std::string alter_system_properties_max_get_records_size       ( "max_get_records_size"        );
-    const std::string alter_system_properties_memory_allocation_limit_mb ( "memory_allocation_limit_mb"  );
     const std::string alter_system_properties_network_speed              ( "network_speed"               );
     const std::string alter_system_properties_request_timeout            ( "request_timeout"             );
     const std::string alter_system_properties_set_message_timers_enabled ( "set_message_timers_enabled"  );
     const std::string alter_system_properties_sm_omp_threads             ( "sm_omp_threads"              );
+    const std::string alter_system_properties_synchronous_compression    ( "synchronous_compression"     );
     const std::string alter_system_properties_true                       ( "true"                        );
 
     // Keywords for /alter/table request
@@ -226,7 +220,9 @@ namespace gpudb
     const std::string alter_table_set_refresh_method           ( "set_refresh_method"            );
     const std::string alter_table_set_refresh_period           ( "set_refresh_period"            );
     const std::string alter_table_set_refresh_start_time       ( "set_refresh_start_time"        );
+    const std::string alter_table_set_strategy_definition      ( "set_strategy_definition"       );
     const std::string alter_table_snappy                       ( "snappy"                        );
+    const std::string alter_table_strategy_definition          ( "strategy_definition"           );
     const std::string alter_table_table_name                   ( "table_name"                    );
     const std::string alter_table_true                         ( "true"                          );
     const std::string alter_table_ttl                          ( "ttl"                           );
@@ -357,6 +353,7 @@ namespace gpudb
     const std::string create_table_is_filter_by_radius_geometry( "is_filter_by_radius_geometry" );
     const std::string create_table_is_filter_by_range          ( "is_filter_by_range"           );
     const std::string create_table_is_filter_by_series         ( "is_filter_by_series"          );
+    const std::string create_table_is_filter_by_series_values  ( "is_filter_by_series_values"   );
     const std::string create_table_is_filter_by_string         ( "is_filter_by_string"          );
     const std::string create_table_is_filter_by_table          ( "is_filter_by_table"           );
     const std::string create_table_is_filter_by_value          ( "is_filter_by_value"           );
@@ -372,6 +369,7 @@ namespace gpudb
     const std::string create_table_is_union                    ( "is_union"                     );
     const std::string create_table_is_unique                   ( "is_unique"                    );
     const std::string create_table_is_unpivot                  ( "is_unpivot"                   );
+    const std::string create_table_is_update_records_by_series ( "is_update_records_by_series"  );
     const std::string create_table_no_error_if_exists          ( "no_error_if_exists"           );
     const std::string create_table_partition_definitions       ( "partition_definitions"        );
     const std::string create_table_partition_keys              ( "partition_keys"               );
@@ -816,6 +814,7 @@ namespace gpudb
     const std::string update_records_record_id                         ( "record_id"                          );
     const std::string update_records_true                              ( "true"                               );
     const std::string update_records_update_on_existing_pk             ( "update_on_existing_pk"              );
+    const std::string update_records_update_partition                  ( "update_partition"                   );
     const std::string update_records_use_expressions_in_new_values_maps( "use_expressions_in_new_values_maps" );
 
     // Keywords for /visualize/image request
@@ -962,16 +961,43 @@ namespace gpudb
     const std::string visualize_image_contour_PASS_THROUGH                ( "PASS_THROUGH"                 );
     const std::string visualize_image_contour_PLATE_CARREE                ( "PLATE_CARREE"                 );
     const std::string visualize_image_contour_WEB_MERCATOR                ( "WEB_MERCATOR"                 );
+    const std::string visualize_image_contour_accent                      ( "accent"                       );
     const std::string visualize_image_contour_add_labels                  ( "add_labels"                   );
     const std::string visualize_image_contour_adjust_grid                 ( "adjust_grid"                  );
     const std::string visualize_image_contour_adjust_grid_neigh           ( "adjust_grid_neigh"            );
     const std::string visualize_image_contour_adjust_grid_size            ( "adjust_grid_size"             );
     const std::string visualize_image_contour_adjust_levels               ( "adjust_levels"                );
+    const std::string visualize_image_contour_afmhot                      ( "afmhot"                       );
+    const std::string visualize_image_contour_autumn                      ( "autumn"                       );
     const std::string visualize_image_contour_bg_color                    ( "bg_color"                     );
+    const std::string visualize_image_contour_binary                      ( "binary"                       );
     const std::string visualize_image_contour_blues                       ( "blues"                        );
+    const std::string visualize_image_contour_bone                        ( "bone"                         );
+    const std::string visualize_image_contour_brbg                        ( "brbg"                         );
+    const std::string visualize_image_contour_brg                         ( "brg"                          );
+    const std::string visualize_image_contour_bugn                        ( "bugn"                         );
+    const std::string visualize_image_contour_bupu                        ( "bupu"                         );
+    const std::string visualize_image_contour_bwr                         ( "bwr"                          );
+    const std::string visualize_image_contour_cmrmap                      ( "cmrmap"                       );
     const std::string visualize_image_contour_color                       ( "color"                        );
     const std::string visualize_image_contour_color_isolines              ( "color_isolines"               );
     const std::string visualize_image_contour_colormap                    ( "colormap"                     );
+    const std::string visualize_image_contour_cool                        ( "cool"                         );
+    const std::string visualize_image_contour_coolwarm                    ( "coolwarm"                     );
+    const std::string visualize_image_contour_copper                      ( "copper"                       );
+    const std::string visualize_image_contour_cubehelix                   ( "cubehelix"                    );
+    const std::string visualize_image_contour_dark2                       ( "dark2"                        );
+    const std::string visualize_image_contour_flag                        ( "flag"                         );
+    const std::string visualize_image_contour_gist_earth                  ( "gist_earth"                   );
+    const std::string visualize_image_contour_gist_gray                   ( "gist_gray"                    );
+    const std::string visualize_image_contour_gist_heat                   ( "gist_heat"                    );
+    const std::string visualize_image_contour_gist_ncar                   ( "gist_ncar"                    );
+    const std::string visualize_image_contour_gist_rainbow                ( "gist_rainbow"                 );
+    const std::string visualize_image_contour_gist_stern                  ( "gist_stern"                   );
+    const std::string visualize_image_contour_gist_yarg                   ( "gist_yarg"                    );
+    const std::string visualize_image_contour_gnbu                        ( "gnbu"                         );
+    const std::string visualize_image_contour_gnuplot                     ( "gnuplot"                      );
+    const std::string visualize_image_contour_gnuplot2                    ( "gnuplot2"                     );
     const std::string visualize_image_contour_gray                        ( "gray"                         );
     const std::string visualize_image_contour_greens                      ( "greens"                       );
     const std::string visualize_image_contour_greys                       ( "greys"                        );
@@ -979,6 +1005,7 @@ namespace gpudb
     const std::string visualize_image_contour_gridding_method             ( "gridding_method"              );
     const std::string visualize_image_contour_hot                         ( "hot"                          );
     const std::string visualize_image_contour_hsv                         ( "hsv"                          );
+    const std::string visualize_image_contour_inferno                     ( "inferno"                      );
     const std::string visualize_image_contour_jet                         ( "jet"                          );
     const std::string visualize_image_contour_labels_font_family          ( "labels_font_family"           );
     const std::string visualize_image_contour_labels_font_size            ( "labels_font_size"             );
@@ -987,19 +1014,56 @@ namespace gpudb
     const std::string visualize_image_contour_labels_max_angle            ( "labels_max_angle"             );
     const std::string visualize_image_contour_labels_search_window        ( "labels_search_window"         );
     const std::string visualize_image_contour_line_size                   ( "line_size"                    );
+    const std::string visualize_image_contour_magma                       ( "magma"                        );
     const std::string visualize_image_contour_max_grid_size               ( "max_grid_size"                );
     const std::string visualize_image_contour_max_level                   ( "max_level"                    );
     const std::string visualize_image_contour_max_search_cells            ( "max_search_cells"             );
     const std::string visualize_image_contour_min_grid_size               ( "min_grid_size"                );
     const std::string visualize_image_contour_min_level                   ( "min_level"                    );
+    const std::string visualize_image_contour_nipy_spectral               ( "nipy_spectral"                );
     const std::string visualize_image_contour_num_levels                  ( "num_levels"                   );
+    const std::string visualize_image_contour_ocean                       ( "ocean"                        );
     const std::string visualize_image_contour_oranges                     ( "oranges"                      );
+    const std::string visualize_image_contour_orrd                        ( "orrd"                         );
+    const std::string visualize_image_contour_paired                      ( "paired"                       );
+    const std::string visualize_image_contour_pastel1                     ( "pastel1"                      );
+    const std::string visualize_image_contour_pastel2                     ( "pastel2"                      );
+    const std::string visualize_image_contour_pink                        ( "pink"                         );
+    const std::string visualize_image_contour_piyg                        ( "piyg"                         );
+    const std::string visualize_image_contour_plasma                      ( "plasma"                       );
+    const std::string visualize_image_contour_prgn                        ( "prgn"                         );
+    const std::string visualize_image_contour_prism                       ( "prism"                        );
+    const std::string visualize_image_contour_pubu                        ( "pubu"                         );
+    const std::string visualize_image_contour_pubugn                      ( "pubugn"                       );
+    const std::string visualize_image_contour_puor                        ( "puor"                         );
+    const std::string visualize_image_contour_purd                        ( "purd"                         );
     const std::string visualize_image_contour_purples                     ( "purples"                      );
+    const std::string visualize_image_contour_rainbow                     ( "rainbow"                      );
+    const std::string visualize_image_contour_rdbu                        ( "rdbu"                         );
+    const std::string visualize_image_contour_rdgy                        ( "rdgy"                         );
+    const std::string visualize_image_contour_rdpu                        ( "rdpu"                         );
+    const std::string visualize_image_contour_rdylbu                      ( "rdylbu"                       );
+    const std::string visualize_image_contour_rdylgn                      ( "rdylgn"                       );
     const std::string visualize_image_contour_reds                        ( "reds"                         );
     const std::string visualize_image_contour_render_output_grid          ( "render_output_grid"           );
     const std::string visualize_image_contour_search_radius               ( "search_radius"                );
+    const std::string visualize_image_contour_seismic                     ( "seismic"                      );
+    const std::string visualize_image_contour_set1                        ( "set1"                         );
+    const std::string visualize_image_contour_set2                        ( "set2"                         );
+    const std::string visualize_image_contour_set3                        ( "set3"                         );
     const std::string visualize_image_contour_smoothing_factor            ( "smoothing_factor"             );
+    const std::string visualize_image_contour_spectral                    ( "spectral"                     );
+    const std::string visualize_image_contour_spring                      ( "spring"                       );
+    const std::string visualize_image_contour_summer                      ( "summer"                       );
+    const std::string visualize_image_contour_terrain                     ( "terrain"                      );
+    const std::string visualize_image_contour_text_color                  ( "text_color"                   );
     const std::string visualize_image_contour_viridis                     ( "viridis"                      );
+    const std::string visualize_image_contour_winter                      ( "winter"                       );
+    const std::string visualize_image_contour_wistia                      ( "wistia"                       );
+    const std::string visualize_image_contour_ylgn                        ( "ylgn"                         );
+    const std::string visualize_image_contour_ylgnbu                      ( "ylgnbu"                       );
+    const std::string visualize_image_contour_ylorbr                      ( "ylorbr"                       );
+    const std::string visualize_image_contour_ylorrd                      ( "ylorrd"                       );
 
     // Keywords for /visualize/image/heatmap request
     const std::string visualize_image_heatmap_102100              ( "102100"               );

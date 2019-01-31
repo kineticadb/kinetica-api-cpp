@@ -153,13 +153,6 @@ namespace gpudb
          *                                 database will serve for a given data
          *                                 retrieval call
          *                                         <li>
-         *                                 gpudb::alter_system_properties_memory_allocation_limit_mb:
-         *                                 Set the memory allocation limit for
-         *                                 all rank processes in megabytes, 0
-         *                                 means no limit. Overrides any
-         *                                 individual rank memory allocation
-         *                                 limits.
-         *                                         <li>
          *                                 gpudb::alter_system_properties_enable_audit:
          *                                 Enable or disable auditing.
          *                                         <li>
@@ -175,11 +168,6 @@ namespace gpudb
          *                                 Enable or disable auditing of
          *                                 request data.
          *                                         <li>
-         *                                 gpudb::alter_system_properties_enable_job_manager:
-         *                                 Enable JobManager to enforce
-         *                                 processing of requests in the order
-         *                                 received.
-         *                                         <li>
          *                                 gpudb::alter_system_properties_chunk_cache_enabled:
          *                                 Enable chunk level query caching.
          *                                 Flushes the chunk cache when value
@@ -187,6 +175,11 @@ namespace gpudb
          *                                         <li>
          *                                 gpudb::alter_system_properties_chunk_cache_size:
          *                                 Size of the chunk cache in bytes.
+         *                                         <li>
+         *                                 gpudb::alter_system_properties_synchronous_compression:
+         *                                 compress vector on set_compression
+         *                                 (instead of waiting for background
+         *                                 thread)
          *                                 </ul>
          * @param[in] options_  Optional parameters.
          * 

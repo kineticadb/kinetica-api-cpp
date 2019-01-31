@@ -5,184 +5,6 @@
  */
 
 /**
- * Add one or more new ranks to the Kinetica cluster. The new ranks will not
- * contain any data initially, other than replicated tables, and not be
- * assigned any shards. To rebalance data across the cluster, which includes
- * shifting some shard key assignments to newly added ranks, see {@link
- * #adminRebalance(const AdminRebalanceRequest&) const}.
- * <p>
- * For example, if attempting to add three new ranks (two ranks on host
- * 172.123.45.67 and one rank on host 172.123.45.68) to a Kinetica cluster with
- * additional configuration parameters:
- * <p>
- * * @a hosts would be an array including 172.123.45.67 in the first two
- * indices (signifying two ranks being added to host 172.123.45.67) and
- * 172.123.45.68 in the last index (signifying one rank being added to host
- * 172.123.45.67)
- * <p>
- * * @a configParams would be an array of maps, with each map corresponding to
- * the ranks being added in @a hosts. The key of each map would be the
- * configuration parameter name and the value would be the parameter's value,
- * e.g. 'rank.gpu':'1'
- * 
- * @param[in] request_  Request object containing the parameters for the
- *                      operation.
- * 
- * @return Response object containing the result of the operation.
- * 
- */
-
-AdminAddRanksResponse adminAddRanks( const AdminAddRanksRequest& request_ ) const;
-
-/**
- * Add one or more new ranks to the Kinetica cluster. The new ranks will not
- * contain any data initially, other than replicated tables, and not be
- * assigned any shards. To rebalance data across the cluster, which includes
- * shifting some shard key assignments to newly added ranks, see {@link
- * #adminRebalance(const AdminRebalanceRequest&,AdminRebalanceResponse&) const}.
- * <p>
- * For example, if attempting to add three new ranks (two ranks on host
- * 172.123.45.67 and one rank on host 172.123.45.68) to a Kinetica cluster with
- * additional configuration parameters:
- * <p>
- * * @a hosts would be an array including 172.123.45.67 in the first two
- * indices (signifying two ranks being added to host 172.123.45.67) and
- * 172.123.45.68 in the last index (signifying one rank being added to host
- * 172.123.45.67)
- * <p>
- * * @a configParams would be an array of maps, with each map corresponding to
- * the ranks being added in @a hosts. The key of each map would be the
- * configuration parameter name and the value would be the parameter's value,
- * e.g. 'rank.gpu':'1'
- * 
- * @param[in] request_  Request object containing the parameters for the
- *                      operation.
- * @param[out] response_  Response object containing the results of the
- *                        operation.
- * 
- * @return Response object containing the result of the operation (initially
- *         passed in by reference).
- * 
- */
-
-AdminAddRanksResponse& adminAddRanks( const AdminAddRanksRequest& request_,
-                                      AdminAddRanksResponse& response_ ) const;
-
-/**
- * Add one or more new ranks to the Kinetica cluster. The new ranks will not
- * contain any data initially, other than replicated tables, and not be
- * assigned any shards. To rebalance data across the cluster, which includes
- * shifting some shard key assignments to newly added ranks, see {@link
- * #adminRebalance(const std::map<std::string, std::string>&) const}.
- * <p>
- * For example, if attempting to add three new ranks (two ranks on host
- * 172.123.45.67 and one rank on host 172.123.45.68) to a Kinetica cluster with
- * additional configuration parameters:
- * <p>
- * * @a hosts would be an array including 172.123.45.67 in the first two
- * indices (signifying two ranks being added to host 172.123.45.67) and
- * 172.123.45.68 in the last index (signifying one rank being added to host
- * 172.123.45.67)
- * <p>
- * * @a configParams would be an array of maps, with each map corresponding to
- * the ranks being added in @a hosts. The key of each map would be the
- * configuration parameter name and the value would be the parameter's value,
- * e.g. 'rank.gpu':'1'
- * 
- * @param hosts  The IP address of each rank being added to the cluster. Insert
- *               one entry per rank, even if they are on the same host. The
- *               order of the hosts in the array only matters as it relates to
- *               the @a configParams.
- * @param configParams  Configuration parameters to apply to the new ranks,
- *                      e.g., which GPU to use. Configuration parameters that
- *                      start with 'rankN.', where N is the rank number, should
- *                      omit the N, as the new rank number(s) are not allocated
- *                      until the ranks are created. Each entry in this array
- *                      corresponds to the entry at the same array index in the
- *                      @a hosts. This array must either be completely empty or
- *                      have the same number of elements as the hosts array.
- *                      An empty array will result in the new ranks being set
- *                      only with default parameters.
- * @param options  Optional parameters.
- *                 <ul>
- *                         <li> gpudb::admin_add_ranks_dry_run: If @a true,
- *                 only validation checks will be performed. No ranks are
- *                 added.
- *                 <ul>
- *                         <li> gpudb::admin_add_ranks_true
- *                         <li> gpudb::admin_add_ranks_false
- *                 </ul>
- *                 The default value is gpudb::admin_add_ranks_false.
- *                 </ul>
- * 
- * @return Response object containing the result of the operation.
- * 
- */
-
-AdminAddRanksResponse adminAddRanks( const std::vector<std::string>& hosts,
-                                     const std::vector<std::map<std::string, std::string> >& configParams,
-                                     const std::map<std::string, std::string>& options ) const;
-
-/**
- * Add one or more new ranks to the Kinetica cluster. The new ranks will not
- * contain any data initially, other than replicated tables, and not be
- * assigned any shards. To rebalance data across the cluster, which includes
- * shifting some shard key assignments to newly added ranks, see {@link
- * #adminRebalance(const std::map<std::string, std::string>&,AdminRebalanceResponse&) const}.
- * <p>
- * For example, if attempting to add three new ranks (two ranks on host
- * 172.123.45.67 and one rank on host 172.123.45.68) to a Kinetica cluster with
- * additional configuration parameters:
- * <p>
- * * @a hosts would be an array including 172.123.45.67 in the first two
- * indices (signifying two ranks being added to host 172.123.45.67) and
- * 172.123.45.68 in the last index (signifying one rank being added to host
- * 172.123.45.67)
- * <p>
- * * @a configParams would be an array of maps, with each map corresponding to
- * the ranks being added in @a hosts. The key of each map would be the
- * configuration parameter name and the value would be the parameter's value,
- * e.g. 'rank.gpu':'1'
- * 
- * @param hosts  The IP address of each rank being added to the cluster. Insert
- *               one entry per rank, even if they are on the same host. The
- *               order of the hosts in the array only matters as it relates to
- *               the @a configParams.
- * @param configParams  Configuration parameters to apply to the new ranks,
- *                      e.g., which GPU to use. Configuration parameters that
- *                      start with 'rankN.', where N is the rank number, should
- *                      omit the N, as the new rank number(s) are not allocated
- *                      until the ranks are created. Each entry in this array
- *                      corresponds to the entry at the same array index in the
- *                      @a hosts. This array must either be completely empty or
- *                      have the same number of elements as the hosts array.
- *                      An empty array will result in the new ranks being set
- *                      only with default parameters.
- * @param options  Optional parameters.
- *                 <ul>
- *                         <li> gpudb::admin_add_ranks_dry_run: If @a true,
- *                 only validation checks will be performed. No ranks are
- *                 added.
- *                 <ul>
- *                         <li> gpudb::admin_add_ranks_true
- *                         <li> gpudb::admin_add_ranks_false
- *                 </ul>
- *                 The default value is gpudb::admin_add_ranks_false.
- *                 </ul>
- * @param[out] response_  Response object containing the results of the
- *                        operation.
- * 
- * @return Response object containing the result of the operation (initially
- *         passed in by reference).
- * 
- */
-
-AdminAddRanksResponse& adminAddRanks( const std::vector<std::string>& hosts,
-                                      const std::vector<std::map<std::string, std::string> >& configParams,
-                                      const std::map<std::string, std::string>& options,
-                                      AdminAddRanksResponse& response_ ) const;
-
-/**
  * Perform the requested action on a list of one or more job(s). Based on the
  * type of job and the current state of execution, the action may not be
  * successfully executed. The final result of the attempted actions for each
@@ -439,262 +261,6 @@ AdminOfflineResponse& adminOffline( const bool offline,
                                     AdminOfflineResponse& response_ ) const;
 
 /**
- * Rebalance the cluster so that all the nodes contain approximately an equal
- * number of records.  The rebalance will also cause the shards to be equally
- * distributed (as much as possible) across all the ranks.
- * 
- * @param[in] request_  Request object containing the parameters for the
- *                      operation.
- * 
- * @return Response object containing the result of the operation.
- * 
- */
-
-AdminRebalanceResponse adminRebalance( const AdminRebalanceRequest& request_ ) const;
-
-/**
- * Rebalance the cluster so that all the nodes contain approximately an equal
- * number of records.  The rebalance will also cause the shards to be equally
- * distributed (as much as possible) across all the ranks.
- * 
- * @param[in] request_  Request object containing the parameters for the
- *                      operation.
- * @param[out] response_  Response object containing the results of the
- *                        operation.
- * 
- * @return Response object containing the result of the operation (initially
- *         passed in by reference).
- * 
- */
-
-AdminRebalanceResponse& adminRebalance( const AdminRebalanceRequest& request_,
-                                        AdminRebalanceResponse& response_ ) const;
-
-/**
- * Rebalance the cluster so that all the nodes contain approximately an equal
- * number of records.  The rebalance will also cause the shards to be equally
- * distributed (as much as possible) across all the ranks.
- * 
- * @param options  Optional parameters.
- *                 <ul>
- *                         <li> gpudb::admin_rebalance_rebalance_sharded_data:
- *                 If @a true, sharded data will be rebalanced approximately
- *                 equally across the cluster. Note that for big clusters, this
- *                 data transfer could be time consuming and result in delayed
- *                 query responses.
- *                 <ul>
- *                         <li> gpudb::admin_rebalance_true
- *                         <li> gpudb::admin_rebalance_false
- *                 </ul>
- *                 The default value is gpudb::admin_rebalance_true.
- *                         <li>
- *                 gpudb::admin_rebalance_rebalance_unsharded_data: If @a true,
- *                 unsharded data (data without primary keys and without shard
- *                 keys) will be rebalanced approximately equally across the
- *                 cluster. Note that for big clusters, this data transfer
- *                 could be time consuming and result in delayed query
- *                 responses.
- *                 <ul>
- *                         <li> gpudb::admin_rebalance_true
- *                         <li> gpudb::admin_rebalance_false
- *                 </ul>
- *                 The default value is gpudb::admin_rebalance_true.
- *                         <li> gpudb::admin_rebalance_table_whitelist:
- *                 Comma-separated list of unsharded table names to rebalance.
- *                 Not applicable to sharded tables because they are always
- *                 balanced in accordance with their primary key or shard key.
- *                 Cannot be used simultaneously with @a table_blacklist.
- *                         <li> gpudb::admin_rebalance_table_blacklist:
- *                 Comma-separated list of unsharded table names to not
- *                 rebalance. Not applicable to sharded tables because they are
- *                 always balanced in accordance with their primary key or
- *                 shard key. Cannot be used simultaneously with @a
- *                 table_whitelist.
- *                 </ul>
- * 
- * @return Response object containing the result of the operation.
- * 
- */
-
-AdminRebalanceResponse adminRebalance( const std::map<std::string, std::string>& options ) const;
-
-/**
- * Rebalance the cluster so that all the nodes contain approximately an equal
- * number of records.  The rebalance will also cause the shards to be equally
- * distributed (as much as possible) across all the ranks.
- * 
- * @param options  Optional parameters.
- *                 <ul>
- *                         <li> gpudb::admin_rebalance_rebalance_sharded_data:
- *                 If @a true, sharded data will be rebalanced approximately
- *                 equally across the cluster. Note that for big clusters, this
- *                 data transfer could be time consuming and result in delayed
- *                 query responses.
- *                 <ul>
- *                         <li> gpudb::admin_rebalance_true
- *                         <li> gpudb::admin_rebalance_false
- *                 </ul>
- *                 The default value is gpudb::admin_rebalance_true.
- *                         <li>
- *                 gpudb::admin_rebalance_rebalance_unsharded_data: If @a true,
- *                 unsharded data (data without primary keys and without shard
- *                 keys) will be rebalanced approximately equally across the
- *                 cluster. Note that for big clusters, this data transfer
- *                 could be time consuming and result in delayed query
- *                 responses.
- *                 <ul>
- *                         <li> gpudb::admin_rebalance_true
- *                         <li> gpudb::admin_rebalance_false
- *                 </ul>
- *                 The default value is gpudb::admin_rebalance_true.
- *                         <li> gpudb::admin_rebalance_table_whitelist:
- *                 Comma-separated list of unsharded table names to rebalance.
- *                 Not applicable to sharded tables because they are always
- *                 balanced in accordance with their primary key or shard key.
- *                 Cannot be used simultaneously with @a table_blacklist.
- *                         <li> gpudb::admin_rebalance_table_blacklist:
- *                 Comma-separated list of unsharded table names to not
- *                 rebalance. Not applicable to sharded tables because they are
- *                 always balanced in accordance with their primary key or
- *                 shard key. Cannot be used simultaneously with @a
- *                 table_whitelist.
- *                 </ul>
- * @param[out] response_  Response object containing the results of the
- *                        operation.
- * 
- * @return Response object containing the result of the operation (initially
- *         passed in by reference).
- * 
- */
-
-AdminRebalanceResponse& adminRebalance( const std::map<std::string, std::string>& options,
-                                        AdminRebalanceResponse& response_ ) const;
-
-/**
- * Remove one or more ranks from the cluster.  Note that this operation could
- * take a long time to complete for big clusters. All data in the ranks to be
- * removed is rebalanced to other ranks before the node is removed unless the
- * @a rebalance_sharded_data or @a rebalance_unsharded_data parameters are set
- * to @a false in the @a options.
- * 
- * @param[in] request_  Request object containing the parameters for the
- *                      operation.
- * 
- * @return Response object containing the result of the operation.
- * 
- */
-
-AdminRemoveRanksResponse adminRemoveRanks( const AdminRemoveRanksRequest& request_ ) const;
-
-/**
- * Remove one or more ranks from the cluster.  Note that this operation could
- * take a long time to complete for big clusters. All data in the ranks to be
- * removed is rebalanced to other ranks before the node is removed unless the
- * @a rebalance_sharded_data or @a rebalance_unsharded_data parameters are set
- * to @a false in the @a options.
- * 
- * @param[in] request_  Request object containing the parameters for the
- *                      operation.
- * @param[out] response_  Response object containing the results of the
- *                        operation.
- * 
- * @return Response object containing the result of the operation (initially
- *         passed in by reference).
- * 
- */
-
-AdminRemoveRanksResponse& adminRemoveRanks( const AdminRemoveRanksRequest& request_,
-                                            AdminRemoveRanksResponse& response_ ) const;
-
-/**
- * Remove one or more ranks from the cluster.  Note that this operation could
- * take a long time to complete for big clusters. All data in the ranks to be
- * removed is rebalanced to other ranks before the node is removed unless the
- * @a rebalance_sharded_data or @a rebalance_unsharded_data parameters are set
- * to @a false in the @a options.
- * 
- * @param ranks  Rank numbers of the ranks to be removed from the cluster.
- * @param options  Optional parameters.
- *                 <ul>
- *                         <li>
- *                 gpudb::admin_remove_ranks_rebalance_sharded_data: When @a
- *                 true, data with primary keys or shard keys will be
- *                 rebalanced to other ranks prior to rank removal. Note that
- *                 for big clusters, this data transfer could be time consuming
- *                 and result in delayed query responses.
- *                 <ul>
- *                         <li> gpudb::admin_remove_ranks_true
- *                         <li> gpudb::admin_remove_ranks_false
- *                 </ul>
- *                 The default value is gpudb::admin_remove_ranks_true.
- *                         <li>
- *                 gpudb::admin_remove_ranks_rebalance_unsharded_data: When @a
- *                 true, unsharded data (data without primary keys and without
- *                 shard keys) will be rebalanced to other ranks prior to rank
- *                 removal. Note that for big clusters, this data transfer
- *                 could be time consuming and result in delayed query
- *                 responses.
- *                 <ul>
- *                         <li> gpudb::admin_remove_ranks_true
- *                         <li> gpudb::admin_remove_ranks_false
- *                 </ul>
- *                 The default value is gpudb::admin_remove_ranks_true.
- *                 </ul>
- * 
- * @return Response object containing the result of the operation.
- * 
- */
-
-AdminRemoveRanksResponse adminRemoveRanks( const std::vector<int32_t>& ranks,
-                                           const std::map<std::string, std::string>& options ) const;
-
-/**
- * Remove one or more ranks from the cluster.  Note that this operation could
- * take a long time to complete for big clusters. All data in the ranks to be
- * removed is rebalanced to other ranks before the node is removed unless the
- * @a rebalance_sharded_data or @a rebalance_unsharded_data parameters are set
- * to @a false in the @a options.
- * 
- * @param ranks  Rank numbers of the ranks to be removed from the cluster.
- * @param options  Optional parameters.
- *                 <ul>
- *                         <li>
- *                 gpudb::admin_remove_ranks_rebalance_sharded_data: When @a
- *                 true, data with primary keys or shard keys will be
- *                 rebalanced to other ranks prior to rank removal. Note that
- *                 for big clusters, this data transfer could be time consuming
- *                 and result in delayed query responses.
- *                 <ul>
- *                         <li> gpudb::admin_remove_ranks_true
- *                         <li> gpudb::admin_remove_ranks_false
- *                 </ul>
- *                 The default value is gpudb::admin_remove_ranks_true.
- *                         <li>
- *                 gpudb::admin_remove_ranks_rebalance_unsharded_data: When @a
- *                 true, unsharded data (data without primary keys and without
- *                 shard keys) will be rebalanced to other ranks prior to rank
- *                 removal. Note that for big clusters, this data transfer
- *                 could be time consuming and result in delayed query
- *                 responses.
- *                 <ul>
- *                         <li> gpudb::admin_remove_ranks_true
- *                         <li> gpudb::admin_remove_ranks_false
- *                 </ul>
- *                 The default value is gpudb::admin_remove_ranks_true.
- *                 </ul>
- * @param[out] response_  Response object containing the results of the
- *                        operation.
- * 
- * @return Response object containing the result of the operation (initially
- *         passed in by reference).
- * 
- */
-
-AdminRemoveRanksResponse& adminRemoveRanks( const std::vector<int32_t>& ranks,
-                                            const std::map<std::string, std::string>& options,
-                                            AdminRemoveRanksResponse& response_ ) const;
-
-/**
  * Requests a list of the most recent alerts.
  * Returns lists of alert data, including timestamp and type.
  * 
@@ -763,13 +329,12 @@ AdminShowAlertsResponse& adminShowAlerts( const int32_t numAlerts,
                                           AdminShowAlertsResponse& response_ ) const;
 
 /**
- * Shows detailed status of current or prior cluster operations.
+ * Requests the detailed status of the current operation (by default) or a
+ * prior cluster operation specified by @a historyIndex.
+ * Returns details on the requested cluster operation.
  * <p>
- * By default will retrieve the current or most resent cluster operation.  The
- * @{history_index} is used to specify which cluster operation to retrieve. A
- * value of zero will return the most recent, one will return the second most
- * recent, etc.  The response will also indicate how many cluster operations
- * are stored in the history.
+ * The response will also indicate how many cluster operations are stored in
+ * the history.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -781,13 +346,12 @@ AdminShowAlertsResponse& adminShowAlerts( const int32_t numAlerts,
 AdminShowClusterOperationsResponse adminShowClusterOperations( const AdminShowClusterOperationsRequest& request_ ) const;
 
 /**
- * Shows detailed status of current or prior cluster operations.
+ * Requests the detailed status of the current operation (by default) or a
+ * prior cluster operation specified by @a historyIndex.
+ * Returns details on the requested cluster operation.
  * <p>
- * By default will retrieve the current or most resent cluster operation.  The
- * @{history_index} is used to specify which cluster operation to retrieve. A
- * value of zero will return the most recent, one will return the second most
- * recent, etc.  The response will also indicate how many cluster operations
- * are stored in the history.
+ * The response will also indicate how many cluster operations are stored in
+ * the history.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -803,16 +367,15 @@ AdminShowClusterOperationsResponse& adminShowClusterOperations( const AdminShowC
                                                                 AdminShowClusterOperationsResponse& response_ ) const;
 
 /**
- * Shows detailed status of current or prior cluster operations.
+ * Requests the detailed status of the current operation (by default) or a
+ * prior cluster operation specified by @a historyIndex.
+ * Returns details on the requested cluster operation.
  * <p>
- * By default will retrieve the current or most resent cluster operation.  The
- * @{history_index} is used to specify which cluster operation to retrieve. A
- * value of zero will return the most recent, one will return the second most
- * recent, etc.  The response will also indicate how many cluster operations
- * are stored in the history.
+ * The response will also indicate how many cluster operations are stored in
+ * the history.
  * 
- * @param historyIndex  Indicates which cluster operation to retrieve.  Zero is
- *                      most recent.
+ * @param historyIndex  Indicates which cluster operation to retrieve.  Use 0
+ *                      for the most recent.
  * @param options  Optional parameters.
  * 
  * @return Response object containing the result of the operation.
@@ -823,16 +386,15 @@ AdminShowClusterOperationsResponse adminShowClusterOperations( const int32_t his
                                                                const std::map<std::string, std::string>& options ) const;
 
 /**
- * Shows detailed status of current or prior cluster operations.
+ * Requests the detailed status of the current operation (by default) or a
+ * prior cluster operation specified by @a historyIndex.
+ * Returns details on the requested cluster operation.
  * <p>
- * By default will retrieve the current or most resent cluster operation.  The
- * @{history_index} is used to specify which cluster operation to retrieve. A
- * value of zero will return the most recent, one will return the second most
- * recent, etc.  The response will also indicate how many cluster operations
- * are stored in the history.
+ * The response will also indicate how many cluster operations are stored in
+ * the history.
  * 
- * @param historyIndex  Indicates which cluster operation to retrieve.  Zero is
- *                      most recent.
+ * @param historyIndex  Indicates which cluster operation to retrieve.  Use 0
+ *                      for the most recent.
  * @param options  Optional parameters.
  * @param[out] response_  Response object containing the results of the
  *                        operation.
@@ -1089,6 +651,23 @@ AdminVerifyDbResponse& adminVerifyDb( const AdminVerifyDbRequest& request_,
  *                         <li> gpudb::admin_verify_db_false
  *                 </ul>
  *                 The default value is gpudb::admin_verify_db_false.
+ *                         <li> gpudb::admin_verify_db_concurrent_safe: When
+ *                 enabled, allows this endpoint to be run safely with other
+ *                 concurrent database operations. Other operations may be
+ *                 slower while this is running.
+ *                 <ul>
+ *                         <li> gpudb::admin_verify_db_true
+ *                         <li> gpudb::admin_verify_db_false
+ *                 </ul>
+ *                 The default value is gpudb::admin_verify_db_true.
+ *                         <li> gpudb::admin_verify_db_verify_rank0: When
+ *                 enabled, compares rank0 table meta-data against workers
+ *                 meta-data
+ *                 <ul>
+ *                         <li> gpudb::admin_verify_db_true
+ *                         <li> gpudb::admin_verify_db_false
+ *                 </ul>
+ *                 The default value is gpudb::admin_verify_db_false.
  *                 </ul>
  * 
  * @return Response object containing the result of the operation.
@@ -1111,6 +690,23 @@ AdminVerifyDbResponse adminVerifyDb( const std::map<std::string, std::string>& o
  *                 </ul>
  *                 The default value is gpudb::admin_verify_db_false.
  *                         <li> gpudb::admin_verify_db_verify_persist:
+ *                 <ul>
+ *                         <li> gpudb::admin_verify_db_true
+ *                         <li> gpudb::admin_verify_db_false
+ *                 </ul>
+ *                 The default value is gpudb::admin_verify_db_false.
+ *                         <li> gpudb::admin_verify_db_concurrent_safe: When
+ *                 enabled, allows this endpoint to be run safely with other
+ *                 concurrent database operations. Other operations may be
+ *                 slower while this is running.
+ *                 <ul>
+ *                         <li> gpudb::admin_verify_db_true
+ *                         <li> gpudb::admin_verify_db_false
+ *                 </ul>
+ *                 The default value is gpudb::admin_verify_db_true.
+ *                         <li> gpudb::admin_verify_db_verify_rank0: When
+ *                 enabled, compares rank0 table meta-data against workers
+ *                 meta-data
  *                 <ul>
  *                         <li> gpudb::admin_verify_db_true
  *                         <li> gpudb::admin_verify_db_false
@@ -1690,6 +1286,11 @@ AggregateGroupByResponse& aggregateGroupBy( const AggregateGroupByRequest& reque
  *                 is used to specify the multilevel aggregates.
  *                         <li> gpudb::aggregate_group_by_cube: This option is
  *                 used to specify the multidimensional aggregates.
+ *                         <li>
+ *                 gpudb::aggregate_group_by_throw_error_on_refresh:
+ *                 <DEVELOPER>
+ *                         <li> gpudb::aggregate_group_by_sleep_on_refresh:
+ *                 <DEVELOPER>
  *                 </ul>
  * 
  * @return Response object containing the result of the operation.
@@ -1892,6 +1493,11 @@ AggregateGroupByResponse aggregateGroupBy( const std::string& tableName,
  *                 is used to specify the multilevel aggregates.
  *                         <li> gpudb::aggregate_group_by_cube: This option is
  *                 used to specify the multidimensional aggregates.
+ *                         <li>
+ *                 gpudb::aggregate_group_by_throw_error_on_refresh:
+ *                 <DEVELOPER>
+ *                         <li> gpudb::aggregate_group_by_sleep_on_refresh:
+ *                 <DEVELOPER>
  *                 </ul>
  * @param[out] response_  Response object containing the results of the
  *                        operation.
@@ -3632,19 +3238,21 @@ AlterResourceGroupResponse& alterResourceGroup( const AlterResourceGroupRequest&
  * Alters properties of exisiting resource group to facilitate resource
  * management.
  * 
- * @param name  Name of the group to be altered. Must match existing resource
+ * @param name  Name of the group to be altered. Must be an existing resource
  *              group name.
- * @param tierAttributes  Optional map containing group limits for
- *                        tier-specific attributes such as memory.
+ * @param tierAttributes  Optional map containing tier names and their
+ *                        respective attribute group limits.  The only valid
+ *                        attribute limit that can be set is max_memory (in
+ *                        bytes) for the VRAM & RAM tiers.
+ *                        For instance, to set max VRAM capacity to 1GB and max
+ *                        RAM capacity to 10GB, use:
+ *                        {'VRAM':{'max_memory':'1000000000'},
+ *                        'RAM':{'max_memory':'10000000000'}}
  *                        <ul>
  *                                <li> gpudb::alter_resource_group_max_memory:
  *                        Maximum amount of memory usable in the given tier at
  *                        one time for this group.
  *                        </ul>
- * @param tierStrategy  Optional array that defines the default tiering
- *                      strategy for this group. Each element pair defines an
- *                      existing tier and its preferred priority. e.g. ['RAM
- *                      50',VRAM 30']
  * @param options  Optional parameters.
  *                 <ul>
  *                         <li>
@@ -3657,9 +3265,9 @@ AlterResourceGroupResponse& alterResourceGroup( const AlterResourceGroupRequest&
  *                         <li> gpudb::alter_resource_group_max_tier_priority:
  *                 Maximum priority of a tiered object for this group.
  *                         <li> gpudb::alter_resource_group_is_default_group:
- *                 If true this request applies to the global default resource
- *                 group. It is an error for this field to be true when the @a
- *                 name field is also populated.
+ *                 If @a true, this request applies to the global default
+ *                 resource group. It is an error for this field to be @a true
+ *                 when the @a name field is also populated.
  *                 <ul>
  *                         <li> gpudb::alter_resource_group_true
  *                         <li> gpudb::alter_resource_group_false
@@ -3673,26 +3281,27 @@ AlterResourceGroupResponse& alterResourceGroup( const AlterResourceGroupRequest&
 
 AlterResourceGroupResponse alterResourceGroup( const std::string& name,
                                                const std::map<std::string, std::map<std::string, std::string> >& tierAttributes,
-                                               const std::vector<std::string>& tierStrategy,
                                                const std::map<std::string, std::string>& options ) const;
 
 /**
  * Alters properties of exisiting resource group to facilitate resource
  * management.
  * 
- * @param name  Name of the group to be altered. Must match existing resource
+ * @param name  Name of the group to be altered. Must be an existing resource
  *              group name.
- * @param tierAttributes  Optional map containing group limits for
- *                        tier-specific attributes such as memory.
+ * @param tierAttributes  Optional map containing tier names and their
+ *                        respective attribute group limits.  The only valid
+ *                        attribute limit that can be set is max_memory (in
+ *                        bytes) for the VRAM & RAM tiers.
+ *                        For instance, to set max VRAM capacity to 1GB and max
+ *                        RAM capacity to 10GB, use:
+ *                        {'VRAM':{'max_memory':'1000000000'},
+ *                        'RAM':{'max_memory':'10000000000'}}
  *                        <ul>
  *                                <li> gpudb::alter_resource_group_max_memory:
  *                        Maximum amount of memory usable in the given tier at
  *                        one time for this group.
  *                        </ul>
- * @param tierStrategy  Optional array that defines the default tiering
- *                      strategy for this group. Each element pair defines an
- *                      existing tier and its preferred priority. e.g. ['RAM
- *                      50',VRAM 30']
  * @param options  Optional parameters.
  *                 <ul>
  *                         <li>
@@ -3705,9 +3314,9 @@ AlterResourceGroupResponse alterResourceGroup( const std::string& name,
  *                         <li> gpudb::alter_resource_group_max_tier_priority:
  *                 Maximum priority of a tiered object for this group.
  *                         <li> gpudb::alter_resource_group_is_default_group:
- *                 If true this request applies to the global default resource
- *                 group. It is an error for this field to be true when the @a
- *                 name field is also populated.
+ *                 If @a true, this request applies to the global default
+ *                 resource group. It is an error for this field to be @a true
+ *                 when the @a name field is also populated.
  *                 <ul>
  *                         <li> gpudb::alter_resource_group_true
  *                         <li> gpudb::alter_resource_group_false
@@ -3724,7 +3333,6 @@ AlterResourceGroupResponse alterResourceGroup( const std::string& name,
 
 AlterResourceGroupResponse& alterResourceGroup( const std::string& name,
                                                 const std::map<std::string, std::map<std::string, std::string> >& tierAttributes,
-                                                const std::vector<std::string>& tierStrategy,
                                                 const std::map<std::string, std::string>& options,
                                                 AlterResourceGroupResponse& response_ ) const;
 
@@ -3868,12 +3476,6 @@ AlterSystemPropertiesResponse& alterSystemProperties( const AlterSystemPropertie
  *                            The maximum number of records the database will
  *                            serve for a given data retrieval call
  *                                    <li>
- *                            gpudb::alter_system_properties_memory_allocation_limit_mb:
- *                            Set the memory allocation limit for all rank
- *                            processes in megabytes, 0 means no limit.
- *                            Overrides any individual rank memory allocation
- *                            limits.
- *                                    <li>
  *                            gpudb::alter_system_properties_enable_audit:
  *                            Enable or disable auditing.
  *                                    <li>
@@ -3886,16 +3488,16 @@ AlterSystemPropertiesResponse& alterSystemProperties( const AlterSystemPropertie
  *                            gpudb::alter_system_properties_audit_data: Enable
  *                            or disable auditing of request data.
  *                                    <li>
- *                            gpudb::alter_system_properties_enable_job_manager:
- *                            Enable JobManager to enforce processing of
- *                            requests in the order received.
- *                                    <li>
  *                            gpudb::alter_system_properties_chunk_cache_enabled:
  *                            Enable chunk level query caching. Flushes the
  *                            chunk cache when value is false
  *                                    <li>
  *                            gpudb::alter_system_properties_chunk_cache_size:
  *                            Size of the chunk cache in bytes.
+ *                                    <li>
+ *                            gpudb::alter_system_properties_synchronous_compression:
+ *                            compress vector on set_compression (instead of
+ *                            waiting for background thread)
  *                            </ul>
  * @param options  Optional parameters.
  * 
@@ -4006,12 +3608,6 @@ AlterSystemPropertiesResponse alterSystemProperties( const std::map<std::string,
  *                            The maximum number of records the database will
  *                            serve for a given data retrieval call
  *                                    <li>
- *                            gpudb::alter_system_properties_memory_allocation_limit_mb:
- *                            Set the memory allocation limit for all rank
- *                            processes in megabytes, 0 means no limit.
- *                            Overrides any individual rank memory allocation
- *                            limits.
- *                                    <li>
  *                            gpudb::alter_system_properties_enable_audit:
  *                            Enable or disable auditing.
  *                                    <li>
@@ -4024,16 +3620,16 @@ AlterSystemPropertiesResponse alterSystemProperties( const std::map<std::string,
  *                            gpudb::alter_system_properties_audit_data: Enable
  *                            or disable auditing of request data.
  *                                    <li>
- *                            gpudb::alter_system_properties_enable_job_manager:
- *                            Enable JobManager to enforce processing of
- *                            requests in the order received.
- *                                    <li>
  *                            gpudb::alter_system_properties_chunk_cache_enabled:
  *                            Enable chunk level query caching. Flushes the
  *                            chunk cache when value is false
  *                                    <li>
  *                            gpudb::alter_system_properties_chunk_cache_size:
  *                            Size of the chunk cache in bytes.
+ *                                    <li>
+ *                            gpudb::alter_system_properties_synchronous_compression:
+ *                            compress vector on set_compression (instead of
+ *                            waiting for background thread)
  *                            </ul>
  * @param options  Optional parameters.
  * @param[out] response_  Response object containing the results of the
@@ -4052,12 +3648,34 @@ AlterSystemPropertiesResponse& alterSystemProperties( const std::map<std::string
  * Apply various modifications to a table, view, or collection.  The
  * available modifications include the following:
  * <p>
+ * Manage a table's columns--a column can be added, removed, or have its
+ * <a href="../../concepts/types.html" target="_top">type and properties</a>
+ * modified, including
+ * whether it is <a href="../../concepts/compression.html"
+ * target="_top">compressed</a> or not.
+ * <p>
  * Create or delete an <a href="../../concepts/indexes.html#column-index"
  * target="_top">index</a> on a
  * particular column. This can speed up certain operations when using
  * expressions
  * containing equality or relational operators on indexed columns. This only
  * applies to tables.
+ * <p>
+ * Create or delete a <a href="../../concepts/tables.html#foreign-key"
+ * target="_top">foreign key</a>
+ * on a particular column.
+ * <p>
+ * Manage a <a href="../../concepts/tables.html#partitioning"
+ * target="_top">range-partitioned</a>
+ * table's partitions.
+ * <p>
+ * Set (or reset) the <a href="../../rm/concepts.html#tier-strategies"
+ * target="_top">tier strategy</a>
+ * of a table or view.
+ * <p>
+ * Refresh and manage the refresh mode of a
+ * <a href="../../concepts/materialized_views.html" target="_top">materialized
+ * view</a>.
  * <p>
  * Set the <a href="../../concepts/ttl.html" target="_top">time-to-live
  * (TTL)</a>. This can be applied
@@ -4077,19 +3695,6 @@ AlterSystemPropertiesResponse& alterSystemProperties( const std::map<std::string
  * target="_top">protection</a> mode to prevent or
  * allow automatic expiration. This can be applied to tables, views, and
  * collections.
- * <p>
- * Manage a <a href="../../concepts/tables.html#partitioning"
- * target="_top">range-partitioned</a>
- * table's partitions.
- * <p>
- * Allow homogeneous tables within a collection.
- * <p>
- * Manage a table's columns--a column can be added, removed, or have its
- * <a href="../../concepts/types.html" target="_top">type and properties</a>
- * modified.
- * <p>
- * Set or unset <a href="../../concepts/compression.html"
- * target="_top">compression</a> for a column.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -4104,12 +3709,34 @@ AlterTableResponse alterTable( const AlterTableRequest& request_ ) const;
  * Apply various modifications to a table, view, or collection.  The
  * available modifications include the following:
  * <p>
+ * Manage a table's columns--a column can be added, removed, or have its
+ * <a href="../../concepts/types.html" target="_top">type and properties</a>
+ * modified, including
+ * whether it is <a href="../../concepts/compression.html"
+ * target="_top">compressed</a> or not.
+ * <p>
  * Create or delete an <a href="../../concepts/indexes.html#column-index"
  * target="_top">index</a> on a
  * particular column. This can speed up certain operations when using
  * expressions
  * containing equality or relational operators on indexed columns. This only
  * applies to tables.
+ * <p>
+ * Create or delete a <a href="../../concepts/tables.html#foreign-key"
+ * target="_top">foreign key</a>
+ * on a particular column.
+ * <p>
+ * Manage a <a href="../../concepts/tables.html#partitioning"
+ * target="_top">range-partitioned</a>
+ * table's partitions.
+ * <p>
+ * Set (or reset) the <a href="../../rm/concepts.html#tier-strategies"
+ * target="_top">tier strategy</a>
+ * of a table or view.
+ * <p>
+ * Refresh and manage the refresh mode of a
+ * <a href="../../concepts/materialized_views.html" target="_top">materialized
+ * view</a>.
  * <p>
  * Set the <a href="../../concepts/ttl.html" target="_top">time-to-live
  * (TTL)</a>. This can be applied
@@ -4129,19 +3756,6 @@ AlterTableResponse alterTable( const AlterTableRequest& request_ ) const;
  * target="_top">protection</a> mode to prevent or
  * allow automatic expiration. This can be applied to tables, views, and
  * collections.
- * <p>
- * Manage a <a href="../../concepts/tables.html#partitioning"
- * target="_top">range-partitioned</a>
- * table's partitions.
- * <p>
- * Allow homogeneous tables within a collection.
- * <p>
- * Manage a table's columns--a column can be added, removed, or have its
- * <a href="../../concepts/types.html" target="_top">type and properties</a>
- * modified.
- * <p>
- * Set or unset <a href="../../concepts/compression.html"
- * target="_top">compression</a> for a column.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -4160,12 +3774,34 @@ AlterTableResponse& alterTable( const AlterTableRequest& request_,
  * Apply various modifications to a table, view, or collection.  The
  * available modifications include the following:
  * <p>
+ * Manage a table's columns--a column can be added, removed, or have its
+ * <a href="../../concepts/types.html" target="_top">type and properties</a>
+ * modified, including
+ * whether it is <a href="../../concepts/compression.html"
+ * target="_top">compressed</a> or not.
+ * <p>
  * Create or delete an <a href="../../concepts/indexes.html#column-index"
  * target="_top">index</a> on a
  * particular column. This can speed up certain operations when using
  * expressions
  * containing equality or relational operators on indexed columns. This only
  * applies to tables.
+ * <p>
+ * Create or delete a <a href="../../concepts/tables.html#foreign-key"
+ * target="_top">foreign key</a>
+ * on a particular column.
+ * <p>
+ * Manage a <a href="../../concepts/tables.html#partitioning"
+ * target="_top">range-partitioned</a>
+ * table's partitions.
+ * <p>
+ * Set (or reset) the <a href="../../rm/concepts.html#tier-strategies"
+ * target="_top">tier strategy</a>
+ * of a table or view.
+ * <p>
+ * Refresh and manage the refresh mode of a
+ * <a href="../../concepts/materialized_views.html" target="_top">materialized
+ * view</a>.
  * <p>
  * Set the <a href="../../concepts/ttl.html" target="_top">time-to-live
  * (TTL)</a>. This can be applied
@@ -4185,19 +3821,6 @@ AlterTableResponse& alterTable( const AlterTableRequest& request_,
  * target="_top">protection</a> mode to prevent or
  * allow automatic expiration. This can be applied to tables, views, and
  * collections.
- * <p>
- * Manage a <a href="../../concepts/tables.html#partitioning"
- * target="_top">range-partitioned</a>
- * table's partitions.
- * <p>
- * Allow homogeneous tables within a collection.
- * <p>
- * Manage a table's columns--a column can be added, removed, or have its
- * <a href="../../concepts/types.html" target="_top">type and properties</a>
- * modified.
- * <p>
- * Set or unset <a href="../../concepts/compression.html"
- * target="_top">compression</a> for a column.
  * 
  * @param tableName  Table on which the operation will be performed. Must be an
  *                   existing table, view, or collection.
@@ -4253,14 +3876,15 @@ AlterTableResponse& alterTable( const AlterTableRequest& request_,
  *                        <li> gpudb::alter_table_set_column_compression:
  *                Modifies the <a href="../../concepts/compression.html"
  *                target="_top">compression</a> setting on the column specified
- *                in @a value.
+ *                in @a value to the compression type specified in @a
+ *                compression_type.
  *                        <li> gpudb::alter_table_delete_column: Deletes the
  *                column specified in @a value from the table specified in @a
  *                tableName.
  *                        <li> gpudb::alter_table_create_foreign_key: Creates a
  *                <a href="../../concepts/tables.html#foreign-key"
- *                target="_top">foreign key</a> using the format
- *                '(source_column_name [, ...]) references
+ *                target="_top">foreign key</a> specified in @a value using the
+ *                format '(source_column_name [, ...]) references
  *                target_table_name(primary_key_column_name [, ...]) [as
  *                foreign_key_name]'.
  *                        <li> gpudb::alter_table_delete_foreign_key: Deletes a
@@ -4268,18 +3892,18 @@ AlterTableResponse& alterTable( const AlterTableRequest& request_,
  *                target="_top">foreign key</a>.  The @a value should be the
  *                foreign_key_name specified when creating the key or the
  *                complete string used to define it.
- *                        <li> gpudb::alter_table_add_partition: Partition
- *                definition to add (for range-partitioned tables only).  See
- *                <a
+ *                        <li> gpudb::alter_table_add_partition: Adds a
+ *                partition (for range-partitioned tables only) specified in @a
+ *                value.  See <a
  *                href="../../concepts/tables.html#partitioning-by-range-example"
  *                target="_top">range partitioning example</a> for example
  *                format.
- *                        <li> gpudb::alter_table_remove_partition: Name of
- *                partition to remove (for range-partitioned tables only).  All
- *                data in partition will be moved to the default partition
- *                        <li> gpudb::alter_table_delete_partition: Name of
- *                partition to delete (for range-partitioned tables only).  All
- *                data in the partition will be deleted.
+ *                        <li> gpudb::alter_table_remove_partition: Removes the
+ *                partition specified in @a value and relocates all its data to
+ *                the default partition (for range-partitioned tables only).
+ *                        <li> gpudb::alter_table_delete_partition: Deletes the
+ *                partition specified in @a value and its data (for
+ *                range-partitioned tables only).
  *                        <li> gpudb::alter_table_set_global_access_mode: Sets
  *                the global access mode (i.e. locking) for the table specified
  *                in @a tableName. Specify the access mode in @a value. Valid
@@ -4292,26 +3916,44 @@ AlterTableResponse& alterTable( const AlterTableRequest& request_,
  *                        <li> gpudb::alter_table_set_refresh_method: Sets the
  *                method by which this <a
  *                href="../../concepts/materialized_views.html"
- *                target="_top">materialized view</a> is refreshed - one of
- *                'manual', 'periodic', 'on_change'.
+ *                target="_top">materialized view</a> is refreshed to the
+ *                method specified in @a value - one of 'manual', 'periodic',
+ *                'on_change'.
  *                        <li> gpudb::alter_table_set_refresh_start_time: Sets
  *                the time to start periodic refreshes of this <a
  *                href="../../concepts/materialized_views.html"
- *                target="_top">materialized view</a> to datetime string with
- *                format 'YYYY-MM-DD HH:MM:SS'.  Subsequent refreshes occur at
- *                the specified time + N * the refresh period.
+ *                target="_top">materialized view</a> to the datetime string
+ *                specified in @a value with format 'YYYY-MM-DD HH:MM:SS'.
+ *                Subsequent refreshes occur at the specified time + N * the
+ *                refresh period.
  *                        <li> gpudb::alter_table_set_refresh_period: Sets the
  *                time interval in seconds at which to refresh this <a
  *                href="../../concepts/materialized_views.html"
- *                target="_top">materialized view</a>.  Also, sets the refresh
- *                method to periodic if not alreay set.
+ *                target="_top">materialized view</a> to the value specified in
+ *                @a value.  Also, sets the refresh method to periodic if not
+ *                already set.
  *                        <li>
- *                gpudb::alter_table_remove_text_search_attributes: remove
- *                text_search attribute from all columns, if exists.
+ *                gpudb::alter_table_remove_text_search_attributes: Removes <a
+ *                href="../../concepts/full_text_search.html"
+ *                target="_top">text search</a> attribute from all columns.
+ *                        <li> gpudb::alter_table_set_strategy_definition: Sets
+ *                the <a href="../../rm/concepts.html#tier-strategies"
+ *                target="_top">tier strategy</a> for the table and its columns
+ *                to the one specified in @a value, replacing the existing tier
+ *                strategy in its entirety. See <a
+ *                href="../../rm/concepts.html#tier-strategies"
+ *                target="_top">tier strategy usage</a> for format and <a
+ *                href="../../rm/usage.html#tier-strategies" target="_top">tier
+ *                strategy examples</a> for examples.
  *                </ul>
- * @param value  The value of the modification. May be a column name, 'true' or
- *               'false', a TTL, or the global access mode depending on @a
- *               action.
+ * @param value  The value of the modification, depending on @a action.  For
+ *               example, if @a action is @a add_column, this would be the
+ *               column name; while the column's definition would be covered by
+ *               the @a column_type, @a column_properties, @a
+ *               column_default_value, and @a add_column_expression in @a
+ *               options.  If @a action is @a ttl, it would be the number of
+ *               minutes for the new TTL. If @a action is @a refresh, this
+ *               field would be blank.
  * @param options  Optional parameters.
  *                 <ul>
  *                         <li> gpudb::alter_table_action
@@ -4340,7 +3982,7 @@ AlterTableResponse& alterTable( const AlterTableRequest& request_,
  *                 </ul>
  *                 The default value is gpudb::alter_table_snappy.
  *                         <li> gpudb::alter_table_copy_values_from_column:
- *                 please see add_column_expression instead.
+ *                 Deprecated.  Please use @a add_column_expression instead.
  *                         <li> gpudb::alter_table_rename_column: When changing
  *                 a column, specify new column name.
  *                         <li> gpudb::alter_table_validate_change_column: When
@@ -4355,16 +3997,33 @@ AlterTableResponse& alterTable( const AlterTableRequest& request_,
  *                 </ul>
  *                 The default value is gpudb::alter_table_true.
  *                         <li> gpudb::alter_table_update_last_access_time:
- *                 Indicates whether need to update the last_access_time.
+ *                 Indicates whether the <a href="../../concepts/ttl.html"
+ *                 target="_top">time-to-live</a> (TTL) expiration countdown
+ *                 timer should be reset to the table's TTL.
  *                 <ul>
- *                         <li> gpudb::alter_table_true
- *                         <li> gpudb::alter_table_false
+ *                         <li> gpudb::alter_table_true: Reset the expiration
+ *                 countdown timer to the table's configured TTL.
+ *                         <li> gpudb::alter_table_false: Don't reset the
+ *                 timer; expiration countdown will continue from where it is,
+ *                 as if the table had not been accessed.
  *                 </ul>
  *                 The default value is gpudb::alter_table_true.
- *                         <li> gpudb::alter_table_add_column_expression:
- *                 expression for new column's values (optional with
- *                 add_column). Any valid expressions including existing
- *                 columns.
+ *                         <li> gpudb::alter_table_add_column_expression: When
+ *                 adding a column, an optional expression to use for the new
+ *                 column's values. Any valid expression may be used, including
+ *                 one containing references to existing columns in the same
+ *                 table.
+ *                         <li> gpudb::alter_table_strategy_definition:
+ *                 Optional parameter for specifying the <a
+ *                 href="../../rm/concepts.html#tier-strategies"
+ *                 target="_top">tier strategy</a> for the table and its
+ *                 columns when @a action is @a set_strategy_definition,
+ *                 replacing the existing tier strategy in its entirety. See <a
+ *                 href="../../rm/concepts.html#tier-strategies"
+ *                 target="_top">tier strategy usage</a> for format and <a
+ *                 href="../../rm/usage.html#tier-strategies"
+ *                 target="_top">tier strategy examples</a> for examples.  This
+ *                 option will be ignored if @a value is also specified.
  *                 </ul>
  * 
  * @return Response object containing the result of the operation.
@@ -4380,12 +4039,34 @@ AlterTableResponse alterTable( const std::string& tableName,
  * Apply various modifications to a table, view, or collection.  The
  * available modifications include the following:
  * <p>
+ * Manage a table's columns--a column can be added, removed, or have its
+ * <a href="../../concepts/types.html" target="_top">type and properties</a>
+ * modified, including
+ * whether it is <a href="../../concepts/compression.html"
+ * target="_top">compressed</a> or not.
+ * <p>
  * Create or delete an <a href="../../concepts/indexes.html#column-index"
  * target="_top">index</a> on a
  * particular column. This can speed up certain operations when using
  * expressions
  * containing equality or relational operators on indexed columns. This only
  * applies to tables.
+ * <p>
+ * Create or delete a <a href="../../concepts/tables.html#foreign-key"
+ * target="_top">foreign key</a>
+ * on a particular column.
+ * <p>
+ * Manage a <a href="../../concepts/tables.html#partitioning"
+ * target="_top">range-partitioned</a>
+ * table's partitions.
+ * <p>
+ * Set (or reset) the <a href="../../rm/concepts.html#tier-strategies"
+ * target="_top">tier strategy</a>
+ * of a table or view.
+ * <p>
+ * Refresh and manage the refresh mode of a
+ * <a href="../../concepts/materialized_views.html" target="_top">materialized
+ * view</a>.
  * <p>
  * Set the <a href="../../concepts/ttl.html" target="_top">time-to-live
  * (TTL)</a>. This can be applied
@@ -4405,19 +4086,6 @@ AlterTableResponse alterTable( const std::string& tableName,
  * target="_top">protection</a> mode to prevent or
  * allow automatic expiration. This can be applied to tables, views, and
  * collections.
- * <p>
- * Manage a <a href="../../concepts/tables.html#partitioning"
- * target="_top">range-partitioned</a>
- * table's partitions.
- * <p>
- * Allow homogeneous tables within a collection.
- * <p>
- * Manage a table's columns--a column can be added, removed, or have its
- * <a href="../../concepts/types.html" target="_top">type and properties</a>
- * modified.
- * <p>
- * Set or unset <a href="../../concepts/compression.html"
- * target="_top">compression</a> for a column.
  * 
  * @param tableName  Table on which the operation will be performed. Must be an
  *                   existing table, view, or collection.
@@ -4473,14 +4141,15 @@ AlterTableResponse alterTable( const std::string& tableName,
  *                        <li> gpudb::alter_table_set_column_compression:
  *                Modifies the <a href="../../concepts/compression.html"
  *                target="_top">compression</a> setting on the column specified
- *                in @a value.
+ *                in @a value to the compression type specified in @a
+ *                compression_type.
  *                        <li> gpudb::alter_table_delete_column: Deletes the
  *                column specified in @a value from the table specified in @a
  *                tableName.
  *                        <li> gpudb::alter_table_create_foreign_key: Creates a
  *                <a href="../../concepts/tables.html#foreign-key"
- *                target="_top">foreign key</a> using the format
- *                '(source_column_name [, ...]) references
+ *                target="_top">foreign key</a> specified in @a value using the
+ *                format '(source_column_name [, ...]) references
  *                target_table_name(primary_key_column_name [, ...]) [as
  *                foreign_key_name]'.
  *                        <li> gpudb::alter_table_delete_foreign_key: Deletes a
@@ -4488,18 +4157,18 @@ AlterTableResponse alterTable( const std::string& tableName,
  *                target="_top">foreign key</a>.  The @a value should be the
  *                foreign_key_name specified when creating the key or the
  *                complete string used to define it.
- *                        <li> gpudb::alter_table_add_partition: Partition
- *                definition to add (for range-partitioned tables only).  See
- *                <a
+ *                        <li> gpudb::alter_table_add_partition: Adds a
+ *                partition (for range-partitioned tables only) specified in @a
+ *                value.  See <a
  *                href="../../concepts/tables.html#partitioning-by-range-example"
  *                target="_top">range partitioning example</a> for example
  *                format.
- *                        <li> gpudb::alter_table_remove_partition: Name of
- *                partition to remove (for range-partitioned tables only).  All
- *                data in partition will be moved to the default partition
- *                        <li> gpudb::alter_table_delete_partition: Name of
- *                partition to delete (for range-partitioned tables only).  All
- *                data in the partition will be deleted.
+ *                        <li> gpudb::alter_table_remove_partition: Removes the
+ *                partition specified in @a value and relocates all its data to
+ *                the default partition (for range-partitioned tables only).
+ *                        <li> gpudb::alter_table_delete_partition: Deletes the
+ *                partition specified in @a value and its data (for
+ *                range-partitioned tables only).
  *                        <li> gpudb::alter_table_set_global_access_mode: Sets
  *                the global access mode (i.e. locking) for the table specified
  *                in @a tableName. Specify the access mode in @a value. Valid
@@ -4512,26 +4181,44 @@ AlterTableResponse alterTable( const std::string& tableName,
  *                        <li> gpudb::alter_table_set_refresh_method: Sets the
  *                method by which this <a
  *                href="../../concepts/materialized_views.html"
- *                target="_top">materialized view</a> is refreshed - one of
- *                'manual', 'periodic', 'on_change'.
+ *                target="_top">materialized view</a> is refreshed to the
+ *                method specified in @a value - one of 'manual', 'periodic',
+ *                'on_change'.
  *                        <li> gpudb::alter_table_set_refresh_start_time: Sets
  *                the time to start periodic refreshes of this <a
  *                href="../../concepts/materialized_views.html"
- *                target="_top">materialized view</a> to datetime string with
- *                format 'YYYY-MM-DD HH:MM:SS'.  Subsequent refreshes occur at
- *                the specified time + N * the refresh period.
+ *                target="_top">materialized view</a> to the datetime string
+ *                specified in @a value with format 'YYYY-MM-DD HH:MM:SS'.
+ *                Subsequent refreshes occur at the specified time + N * the
+ *                refresh period.
  *                        <li> gpudb::alter_table_set_refresh_period: Sets the
  *                time interval in seconds at which to refresh this <a
  *                href="../../concepts/materialized_views.html"
- *                target="_top">materialized view</a>.  Also, sets the refresh
- *                method to periodic if not alreay set.
+ *                target="_top">materialized view</a> to the value specified in
+ *                @a value.  Also, sets the refresh method to periodic if not
+ *                already set.
  *                        <li>
- *                gpudb::alter_table_remove_text_search_attributes: remove
- *                text_search attribute from all columns, if exists.
+ *                gpudb::alter_table_remove_text_search_attributes: Removes <a
+ *                href="../../concepts/full_text_search.html"
+ *                target="_top">text search</a> attribute from all columns.
+ *                        <li> gpudb::alter_table_set_strategy_definition: Sets
+ *                the <a href="../../rm/concepts.html#tier-strategies"
+ *                target="_top">tier strategy</a> for the table and its columns
+ *                to the one specified in @a value, replacing the existing tier
+ *                strategy in its entirety. See <a
+ *                href="../../rm/concepts.html#tier-strategies"
+ *                target="_top">tier strategy usage</a> for format and <a
+ *                href="../../rm/usage.html#tier-strategies" target="_top">tier
+ *                strategy examples</a> for examples.
  *                </ul>
- * @param value  The value of the modification. May be a column name, 'true' or
- *               'false', a TTL, or the global access mode depending on @a
- *               action.
+ * @param value  The value of the modification, depending on @a action.  For
+ *               example, if @a action is @a add_column, this would be the
+ *               column name; while the column's definition would be covered by
+ *               the @a column_type, @a column_properties, @a
+ *               column_default_value, and @a add_column_expression in @a
+ *               options.  If @a action is @a ttl, it would be the number of
+ *               minutes for the new TTL. If @a action is @a refresh, this
+ *               field would be blank.
  * @param options  Optional parameters.
  *                 <ul>
  *                         <li> gpudb::alter_table_action
@@ -4560,7 +4247,7 @@ AlterTableResponse alterTable( const std::string& tableName,
  *                 </ul>
  *                 The default value is gpudb::alter_table_snappy.
  *                         <li> gpudb::alter_table_copy_values_from_column:
- *                 please see add_column_expression instead.
+ *                 Deprecated.  Please use @a add_column_expression instead.
  *                         <li> gpudb::alter_table_rename_column: When changing
  *                 a column, specify new column name.
  *                         <li> gpudb::alter_table_validate_change_column: When
@@ -4575,16 +4262,33 @@ AlterTableResponse alterTable( const std::string& tableName,
  *                 </ul>
  *                 The default value is gpudb::alter_table_true.
  *                         <li> gpudb::alter_table_update_last_access_time:
- *                 Indicates whether need to update the last_access_time.
+ *                 Indicates whether the <a href="../../concepts/ttl.html"
+ *                 target="_top">time-to-live</a> (TTL) expiration countdown
+ *                 timer should be reset to the table's TTL.
  *                 <ul>
- *                         <li> gpudb::alter_table_true
- *                         <li> gpudb::alter_table_false
+ *                         <li> gpudb::alter_table_true: Reset the expiration
+ *                 countdown timer to the table's configured TTL.
+ *                         <li> gpudb::alter_table_false: Don't reset the
+ *                 timer; expiration countdown will continue from where it is,
+ *                 as if the table had not been accessed.
  *                 </ul>
  *                 The default value is gpudb::alter_table_true.
- *                         <li> gpudb::alter_table_add_column_expression:
- *                 expression for new column's values (optional with
- *                 add_column). Any valid expressions including existing
- *                 columns.
+ *                         <li> gpudb::alter_table_add_column_expression: When
+ *                 adding a column, an optional expression to use for the new
+ *                 column's values. Any valid expression may be used, including
+ *                 one containing references to existing columns in the same
+ *                 table.
+ *                         <li> gpudb::alter_table_strategy_definition:
+ *                 Optional parameter for specifying the <a
+ *                 href="../../rm/concepts.html#tier-strategies"
+ *                 target="_top">tier strategy</a> for the table and its
+ *                 columns when @a action is @a set_strategy_definition,
+ *                 replacing the existing tier strategy in its entirety. See <a
+ *                 href="../../rm/concepts.html#tier-strategies"
+ *                 target="_top">tier strategy usage</a> for format and <a
+ *                 href="../../rm/usage.html#tier-strategies"
+ *                 target="_top">tier strategy examples</a> for examples.  This
+ *                 option will be ignored if @a value is also specified.
  *                 </ul>
  * @param[out] response_  Response object containing the results of the
  *                        operation.
@@ -4833,7 +4537,14 @@ AlterTableMetadataResponse& alterTableMetadata( const std::vector<std::string>& 
                                                 AlterTableMetadataResponse& response_ ) const;
 
 /**
- * Alters properties of exisiting tier to facilitate resource management.
+ * Alters properties of an exisiting <a
+ * href="../../rm/concepts.html#storage-tiers" target="_top">tier</a> to
+ * facilitate <a href="../../rm/concepts.html" target="_top">resource
+ * management</a>.
+ * <p>
+ * To disable <a href="../../rm/concepts.html#watermark-based-eviction"
+ * target="_top">watermark-based eviction</a>, set both @a high_watermark and
+ * @a low_watermark to 100.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -4845,7 +4556,14 @@ AlterTableMetadataResponse& alterTableMetadata( const std::vector<std::string>& 
 AlterTierResponse alterTier( const AlterTierRequest& request_ ) const;
 
 /**
- * Alters properties of exisiting tier to facilitate resource management.
+ * Alters properties of an exisiting <a
+ * href="../../rm/concepts.html#storage-tiers" target="_top">tier</a> to
+ * facilitate <a href="../../rm/concepts.html" target="_top">resource
+ * management</a>.
+ * <p>
+ * To disable <a href="../../rm/concepts.html#watermark-based-eviction"
+ * target="_top">watermark-based eviction</a>, set both @a high_watermark and
+ * @a low_watermark to 100.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -4861,19 +4579,28 @@ AlterTierResponse& alterTier( const AlterTierRequest& request_,
                               AlterTierResponse& response_ ) const;
 
 /**
- * Alters properties of exisiting tier to facilitate resource management.
+ * Alters properties of an exisiting <a
+ * href="../../rm/concepts.html#storage-tiers" target="_top">tier</a> to
+ * facilitate <a href="../../rm/concepts.html" target="_top">resource
+ * management</a>.
+ * <p>
+ * To disable <a href="../../rm/concepts.html#watermark-based-eviction"
+ * target="_top">watermark-based eviction</a>, set both @a high_watermark and
+ * @a low_watermark to 100.
  * 
- * @param name  Name of the tier to be altered. Must match tier group name.
+ * @param name  Name of the tier to be altered. Must be an existing tier group
+ *              name.
  * @param options  Optional parameters.
  *                 <ul>
  *                         <li> gpudb::alter_tier_capacity: Maximum size in
  *                 bytes this tier may hold at once.
- *                         <li> gpudb::alter_tier_high_watermark: Triggers
- *                 asynchronous eviction once a tiers resource usage exceeds
- *                 this percentage down to the low watermark.
- *                         <li> gpudb::alter_tier_low_watermark: Percentage
- *                 resource usage to evict down to once the high watermark has
- *                 been hit.
+ *                         <li> gpudb::alter_tier_high_watermark: Threshold of
+ *                 usage of this tier's resource that, once exceeded, will
+ *                 trigger watermark-based eviction from this tier.
+ *                         <li> gpudb::alter_tier_low_watermark: Threshold of
+ *                 resource usage that, once fallen below after crossing the @a
+ *                 high_watermark, will cease watermark-based eviction from
+ *                 this tier.
  *                 </ul>
  * 
  * @return Response object containing the result of the operation.
@@ -4884,19 +4611,28 @@ AlterTierResponse alterTier( const std::string& name,
                              const std::map<std::string, std::string>& options ) const;
 
 /**
- * Alters properties of exisiting tier to facilitate resource management.
+ * Alters properties of an exisiting <a
+ * href="../../rm/concepts.html#storage-tiers" target="_top">tier</a> to
+ * facilitate <a href="../../rm/concepts.html" target="_top">resource
+ * management</a>.
+ * <p>
+ * To disable <a href="../../rm/concepts.html#watermark-based-eviction"
+ * target="_top">watermark-based eviction</a>, set both @a high_watermark and
+ * @a low_watermark to 100.
  * 
- * @param name  Name of the tier to be altered. Must match tier group name.
+ * @param name  Name of the tier to be altered. Must be an existing tier group
+ *              name.
  * @param options  Optional parameters.
  *                 <ul>
  *                         <li> gpudb::alter_tier_capacity: Maximum size in
  *                 bytes this tier may hold at once.
- *                         <li> gpudb::alter_tier_high_watermark: Triggers
- *                 asynchronous eviction once a tiers resource usage exceeds
- *                 this percentage down to the low watermark.
- *                         <li> gpudb::alter_tier_low_watermark: Percentage
- *                 resource usage to evict down to once the high watermark has
- *                 been hit.
+ *                         <li> gpudb::alter_tier_high_watermark: Threshold of
+ *                 usage of this tier's resource that, once exceeded, will
+ *                 trigger watermark-based eviction from this tier.
+ *                         <li> gpudb::alter_tier_low_watermark: Threshold of
+ *                 resource usage that, once fallen below after crossing the @a
+ *                 high_watermark, will cease watermark-based eviction from
+ *                 this tier.
  *                 </ul>
  * @param[out] response_  Response object containing the results of the
  *                        operation.
@@ -5161,7 +4897,8 @@ AppendRecordsResponse& appendRecords( const std::string& tableName,
                                       AppendRecordsResponse& response_ ) const;
 
 /**
- * @private
+ * Clears statistics (cardinality, mean value, etc.) for a column in a
+ * specified table.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -5173,7 +4910,8 @@ AppendRecordsResponse& appendRecords( const std::string& tableName,
 ClearStatisticsResponse clearStatistics( const ClearStatisticsRequest& request_ ) const;
 
 /**
- * @private
+ * Clears statistics (cardinality, mean value, etc.) for a column in a
+ * specified table.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -5189,11 +4927,15 @@ ClearStatisticsResponse& clearStatistics( const ClearStatisticsRequest& request_
                                           ClearStatisticsResponse& response_ ) const;
 
 /**
- * @private
+ * Clears statistics (cardinality, mean value, etc.) for a column in a
+ * specified table.
  * 
- * @param tableName
- * @param columnName
- * @param options
+ * @param tableName  Name of a table. Must be an existing table.
+ * @param columnName  Name of the column in @a tableName for which to clear
+ *                    statistics. The column must be from an existing table. An
+ *                    empty string clears statistics for all columns in the
+ *                    table.
+ * @param options  Optional parameters.
  * 
  * @return Response object containing the result of the operation.
  * 
@@ -5204,11 +4946,15 @@ ClearStatisticsResponse clearStatistics( const std::string& tableName,
                                          const std::map<std::string, std::string>& options ) const;
 
 /**
- * @private
+ * Clears statistics (cardinality, mean value, etc.) for a column in a
+ * specified table.
  * 
- * @param tableName
- * @param columnName
- * @param options
+ * @param tableName  Name of a table. Must be an existing table.
+ * @param columnName  Name of the column in @a tableName for which to clear
+ *                    statistics. The column must be from an existing table. An
+ *                    empty string clears statistics for all columns in the
+ *                    table.
+ * @param options  Optional parameters.
  * @param[out] response_  Response object containing the results of the
  *                        operation.
  * 
@@ -5455,7 +5201,7 @@ ClearTriggerResponse& clearTrigger( const std::string& triggerId,
                                     ClearTriggerResponse& response_ ) const;
 
 /**
- * @private
+ * Collect statistics for a column(s) in a specified table.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -5467,7 +5213,7 @@ ClearTriggerResponse& clearTrigger( const std::string& triggerId,
 CollectStatisticsResponse collectStatistics( const CollectStatisticsRequest& request_ ) const;
 
 /**
- * @private
+ * Collect statistics for a column(s) in a specified table.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -5483,11 +5229,13 @@ CollectStatisticsResponse& collectStatistics( const CollectStatisticsRequest& re
                                               CollectStatisticsResponse& response_ ) const;
 
 /**
- * @private
+ * Collect statistics for a column(s) in a specified table.
  * 
- * @param tableName
- * @param columnNames
- * @param options
+ * @param tableName  Name of a table. Must be an existing table.
+ * @param columnNames  List of one or more column names in @a tableName for
+ *                     which to collect statistics (cardinality, mean value,
+ *                     etc.).
+ * @param options  Optional parameters.
  * 
  * @return Response object containing the result of the operation.
  * 
@@ -5498,11 +5246,13 @@ CollectStatisticsResponse collectStatistics( const std::string& tableName,
                                              const std::map<std::string, std::string>& options ) const;
 
 /**
- * @private
+ * Collect statistics for a column(s) in a specified table.
  * 
- * @param tableName
- * @param columnNames
- * @param options
+ * @param tableName  Name of a table. Must be an existing table.
+ * @param columnNames  List of one or more column names in @a tableName for
+ *                     which to collect statistics (cardinality, mean value,
+ *                     etc.).
+ * @param options  Optional parameters.
  * @param[out] response_  Response object containing the results of the
  *                        operation.
  * 
@@ -5567,24 +5317,29 @@ CreateGraphResponse& createGraph( const CreateGraphRequest& request_,
  *               href="../../graph_solver/network_graph_solver.html#identifiers"
  *               target="_top">identifiers</a>; identifiers are grouped as <a
  *               href="../../graph_solver/network_graph_solver.html#id-combos"
- *               target="_top">combinations</a>. Example format: 'table.column
- *               AS NODE_ID'
+ *               target="_top">combinations</a>. Identifiers can be used with
+ *               existing column names, e.g., 'table.column AS NODE_ID', or
+ *               expressions, e.g., 'ST_MAKEPOINT(column1, column2) AS
+ *               NODE_WKTPOINT'.
  * @param edges  Edges represent the required fundamental topological unit of a
  *               graph that typically connect nodes. Edges must be specified
  *               using <a
  *               href="../../graph_solver/network_graph_solver.html#identifiers"
  *               target="_top">identifiers</a>; identifiers are grouped as <a
  *               href="../../graph_solver/network_graph_solver.html#id-combos"
- *               target="_top">combinations</a>. Example format: 'table.column
- *               AS EDGE_WKTLINE'
+ *               target="_top">combinations</a>. Identifiers can be used with
+ *               existing column names, e.g., 'table.column AS EDGE_ID', or
+ *               expressions, e.g., 'SUBSTR(column, 1, 6) AS EDGE_NODE1_NAME'.
  * @param weights  Weights represent a method of informing the graph solver of
  *                 the cost of including a given edge in a solution. Weights
  *                 must be specified using <a
  *                 href="../../graph_solver/network_graph_solver.html#identifiers"
  *                 target="_top">identifiers</a>; identifiers are grouped as <a
  *                 href="../../graph_solver/network_graph_solver.html#id-combos"
- *                 target="_top">combinations</a>. Example format:
- *                 'table.column AS WEIGHTS_EDGE_ID'
+ *                 target="_top">combinations</a>. Identifiers can be used with
+ *                 existing column names, e.g., 'table.column AS
+ *                 WEIGHTS_EDGE_ID', or expressions, e.g., 'ST_LENGTH(wkt) AS
+ *                 WEIGHTS_VALUESPECIFIED'.
  * @param restrictions  Restrictions represent a method of informing the graph
  *                      solver which edges and/or nodes should be ignored for
  *                      the solution. Restrictions must be specified using <a
@@ -5592,8 +5347,10 @@ CreateGraphResponse& createGraph( const CreateGraphRequest& request_,
  *                      target="_top">identifiers</a>; identifiers are grouped
  *                      as <a
  *                      href="../../graph_solver/network_graph_solver.html#id-combos"
- *                      target="_top">combinations</a>. Example format:
- *                      'table.column AS RESTRICTIONS_EDGE_ID'
+ *                      target="_top">combinations</a>. Identifiers can be used
+ *                      with existing column names, e.g., 'table.column AS
+ *                      RESTRICTIONS_EDGE_ID', or expressions, e.g., 'column/2
+ *                      AS RESTRICTIONS_VALUECOMPARED'.
  * @param options  Optional parameters.
  *                 <ul>
  *                         <li>
@@ -5709,24 +5466,29 @@ CreateGraphResponse createGraph( const std::string& graphName,
  *               href="../../graph_solver/network_graph_solver.html#identifiers"
  *               target="_top">identifiers</a>; identifiers are grouped as <a
  *               href="../../graph_solver/network_graph_solver.html#id-combos"
- *               target="_top">combinations</a>. Example format: 'table.column
- *               AS NODE_ID'
+ *               target="_top">combinations</a>. Identifiers can be used with
+ *               existing column names, e.g., 'table.column AS NODE_ID', or
+ *               expressions, e.g., 'ST_MAKEPOINT(column1, column2) AS
+ *               NODE_WKTPOINT'.
  * @param edges  Edges represent the required fundamental topological unit of a
  *               graph that typically connect nodes. Edges must be specified
  *               using <a
  *               href="../../graph_solver/network_graph_solver.html#identifiers"
  *               target="_top">identifiers</a>; identifiers are grouped as <a
  *               href="../../graph_solver/network_graph_solver.html#id-combos"
- *               target="_top">combinations</a>. Example format: 'table.column
- *               AS EDGE_WKTLINE'
+ *               target="_top">combinations</a>. Identifiers can be used with
+ *               existing column names, e.g., 'table.column AS EDGE_ID', or
+ *               expressions, e.g., 'SUBSTR(column, 1, 6) AS EDGE_NODE1_NAME'.
  * @param weights  Weights represent a method of informing the graph solver of
  *                 the cost of including a given edge in a solution. Weights
  *                 must be specified using <a
  *                 href="../../graph_solver/network_graph_solver.html#identifiers"
  *                 target="_top">identifiers</a>; identifiers are grouped as <a
  *                 href="../../graph_solver/network_graph_solver.html#id-combos"
- *                 target="_top">combinations</a>. Example format:
- *                 'table.column AS WEIGHTS_EDGE_ID'
+ *                 target="_top">combinations</a>. Identifiers can be used with
+ *                 existing column names, e.g., 'table.column AS
+ *                 WEIGHTS_EDGE_ID', or expressions, e.g., 'ST_LENGTH(wkt) AS
+ *                 WEIGHTS_VALUESPECIFIED'.
  * @param restrictions  Restrictions represent a method of informing the graph
  *                      solver which edges and/or nodes should be ignored for
  *                      the solution. Restrictions must be specified using <a
@@ -5734,8 +5496,10 @@ CreateGraphResponse createGraph( const std::string& graphName,
  *                      target="_top">identifiers</a>; identifiers are grouped
  *                      as <a
  *                      href="../../graph_solver/network_graph_solver.html#id-combos"
- *                      target="_top">combinations</a>. Example format:
- *                      'table.column AS RESTRICTIONS_EDGE_ID'
+ *                      target="_top">combinations</a>. Identifiers can be used
+ *                      with existing column names, e.g., 'table.column AS
+ *                      RESTRICTIONS_EDGE_ID', or expressions, e.g., 'column/2
+ *                      AS RESTRICTIONS_VALUECOMPARED'.
  * @param options  Optional parameters.
  *                 <ul>
  *                         <li>
@@ -6778,7 +6542,7 @@ CreateProjectionResponse& createProjection( const CreateProjectionRequest& reque
  *                         <li> gpudb::create_projection_true
  *                         <li> gpudb::create_projection_false
  *                 </ul>
- *                 The default value is gpudb::create_projection_true.
+ *                 The default value is gpudb::create_projection_false.
  *                         <li> gpudb::create_projection_view_id: view this
  *                 projection is part of
  *                 </ul>
@@ -6910,7 +6674,7 @@ CreateProjectionResponse createProjection( const std::string& tableName,
  *                         <li> gpudb::create_projection_true
  *                         <li> gpudb::create_projection_false
  *                 </ul>
- *                 The default value is gpudb::create_projection_true.
+ *                 The default value is gpudb::create_projection_false.
  *                         <li> gpudb::create_projection_view_id: view this
  *                 projection is part of
  *                 </ul>
@@ -6962,17 +6726,19 @@ CreateResourceGroupResponse& createResourceGroup( const CreateResourceGroupReque
  * @param name  Name of the group to be created. Must contain only letters,
  *              digits, and underscores, and cannot begin with a digit. Must
  *              not match existing resource group name.
- * @param tierAttributes  Optional map containing group limits for
- *                        tier-specific attributes such as memory.
+ * @param tierAttributes  Optional map containing tier names and their
+ *                        respective attribute group limits.  The only valid
+ *                        attribute limit that can be set is max_memory (in
+ *                        bytes) for the VRAM & RAM tiers.
+ *                        For instance, to set max VRAM capacity to 1GB and max
+ *                        RAM capacity to 10GB, use:
+ *                        {'VRAM':{'max_memory':'1000000000'},
+ *                        'RAM':{'max_memory':'10000000000'}}
  *                        <ul>
  *                                <li> gpudb::create_resource_group_max_memory:
  *                        Maximum amount of memory usable in the given tier at
  *                        one time for this group.
  *                        </ul>
- * @param tierStrategy  Optional array that defines the default tiering
- *                      strategy for this group. Each element pair defines an
- *                      existing tier and its preferred priority. e.g. ['RAM
- *                      50',VRAM 30']
  * @param options  Optional parameters.
  *                 <ul>
  *                         <li>
@@ -6992,7 +6758,6 @@ CreateResourceGroupResponse& createResourceGroup( const CreateResourceGroupReque
 
 CreateResourceGroupResponse createResourceGroup( const std::string& name,
                                                  const std::map<std::string, std::map<std::string, std::string> >& tierAttributes,
-                                                 const std::vector<std::string>& tierStrategy,
                                                  const std::map<std::string, std::string>& options ) const;
 
 /**
@@ -7001,17 +6766,19 @@ CreateResourceGroupResponse createResourceGroup( const std::string& name,
  * @param name  Name of the group to be created. Must contain only letters,
  *              digits, and underscores, and cannot begin with a digit. Must
  *              not match existing resource group name.
- * @param tierAttributes  Optional map containing group limits for
- *                        tier-specific attributes such as memory.
+ * @param tierAttributes  Optional map containing tier names and their
+ *                        respective attribute group limits.  The only valid
+ *                        attribute limit that can be set is max_memory (in
+ *                        bytes) for the VRAM & RAM tiers.
+ *                        For instance, to set max VRAM capacity to 1GB and max
+ *                        RAM capacity to 10GB, use:
+ *                        {'VRAM':{'max_memory':'1000000000'},
+ *                        'RAM':{'max_memory':'10000000000'}}
  *                        <ul>
  *                                <li> gpudb::create_resource_group_max_memory:
  *                        Maximum amount of memory usable in the given tier at
  *                        one time for this group.
  *                        </ul>
- * @param tierStrategy  Optional array that defines the default tiering
- *                      strategy for this group. Each element pair defines an
- *                      existing tier and its preferred priority. e.g. ['RAM
- *                      50',VRAM 30']
  * @param options  Optional parameters.
  *                 <ul>
  *                         <li>
@@ -7034,7 +6801,6 @@ CreateResourceGroupResponse createResourceGroup( const std::string& name,
 
 CreateResourceGroupResponse& createResourceGroup( const std::string& name,
                                                   const std::map<std::string, std::map<std::string, std::string> >& tierAttributes,
-                                                  const std::vector<std::string>& tierStrategy,
                                                   const std::map<std::string, std::string>& options,
                                                   CreateResourceGroupResponse& response_ ) const;
 
@@ -7119,9 +6885,11 @@ CreateRoleResponse& createRole( const std::string& name,
  * target="_top">replicated</a> distribution scheme,
  * have <a href="../../concepts/tables.html#foreign-keys" target="_top">foreign
  * keys</a> to other
- * tables assigned, or be assigned a
+ * tables assigned, be assigned a
  * <a href="../../concepts/tables.html#partitioning"
- * target="_top">partitioning</a> scheme.
+ * target="_top">partitioning</a> scheme, or have a
+ * <a href="../../rm/concepts.html#tier-strategies" target="_top">tier
+ * strategy</a> assigned.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -7151,9 +6919,11 @@ CreateTableResponse createTable( const CreateTableRequest& request_ ) const;
  * target="_top">replicated</a> distribution scheme,
  * have <a href="../../concepts/tables.html#foreign-keys" target="_top">foreign
  * keys</a> to other
- * tables assigned, or be assigned a
+ * tables assigned, be assigned a
  * <a href="../../concepts/tables.html#partitioning"
- * target="_top">partitioning</a> scheme.
+ * target="_top">partitioning</a> scheme, or have a
+ * <a href="../../rm/concepts.html#tier-strategies" target="_top">tier
+ * strategy</a> assigned.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -7188,9 +6958,11 @@ CreateTableResponse& createTable( const CreateTableRequest& request_,
  * target="_top">replicated</a> distribution scheme,
  * have <a href="../../concepts/tables.html#foreign-keys" target="_top">foreign
  * keys</a> to other
- * tables assigned, or be assigned a
+ * tables assigned, be assigned a
  * <a href="../../concepts/tables.html#partitioning"
- * target="_top">partitioning</a> scheme.
+ * target="_top">partitioning</a> scheme, or have a
+ * <a href="../../rm/concepts.html#tier-strategies" target="_top">tier
+ * strategy</a> assigned.
  * 
  * @param tableName  Name of the table to be created. Error for requests with
  *                   existing table of the same name and type id may be
@@ -7261,22 +7033,22 @@ CreateTableResponse& createTable( const CreateTableRequest& request_,
  *                 foreign_key_name]'.
  *                         <li> gpudb::create_table_foreign_shard_key: Foreign
  *                 shard key of the format 'source_column references
- *                 shard_by_column from target_table(primary_key_column)'
+ *                 shard_by_column from target_table(primary_key_column)'.
  *                         <li> gpudb::create_table_partition_type: <a
  *                 href="../../concepts/tables.html#partitioning"
- *                 target="_top">Partitioning</a> scheme to use
+ *                 target="_top">Partitioning</a> scheme to use.
  *                 <ul>
  *                         <li> gpudb::create_table_RANGE: Use <a
  *                 href="../../concepts/tables.html#partitioning-by-range"
- *                 target="_top">range partitioning</a>
+ *                 target="_top">range partitioning</a>.
  *                         <li> gpudb::create_table_INTERVAL: Use <a
  *                 href="../../concepts/tables.html#partitioning-by-interval"
- *                 target="_top">interval partitioning</a>
+ *                 target="_top">interval partitioning</a>.
  *                 </ul>
  *                         <li> gpudb::create_table_partition_keys:
  *                 Comma-separated list of partition keys, which are the
  *                 columns or column expressions by which records will be
- *                 assigned to partitions defined by @a partition_definitions
+ *                 assigned to partitions defined by @a partition_definitions.
  *                         <li> gpudb::create_table_partition_definitions:
  *                 Comma-separated list of partition definitions, whose format
  *                 depends on the choice of @a partition_type.  See <a
@@ -7300,7 +7072,14 @@ CreateTableResponse& createTable( const CreateTableRequest& request_,
  *                         <li> gpudb::create_table_false
  *                 </ul>
  *                 The default value is gpudb::create_table_false.
- *                         <li> gpudb::create_table_strategy_definition
+ *                         <li> gpudb::create_table_strategy_definition: The <a
+ *                 href="../../rm/concepts.html#tier-strategies"
+ *                 target="_top">tier strategy</a> for the table and its
+ *                 columns. See <a
+ *                 href="../../rm/concepts.html#tier-strategies"
+ *                 target="_top">tier strategy usage</a> for format and <a
+ *                 href="../../rm/usage.html#tier-strategies"
+ *                 target="_top">tier strategy examples</a> for examples.
  *                 </ul>
  * 
  * @return Response object containing the result of the operation.
@@ -7331,9 +7110,11 @@ CreateTableResponse createTable( const std::string& tableName,
  * target="_top">replicated</a> distribution scheme,
  * have <a href="../../concepts/tables.html#foreign-keys" target="_top">foreign
  * keys</a> to other
- * tables assigned, or be assigned a
+ * tables assigned, be assigned a
  * <a href="../../concepts/tables.html#partitioning"
- * target="_top">partitioning</a> scheme.
+ * target="_top">partitioning</a> scheme, or have a
+ * <a href="../../rm/concepts.html#tier-strategies" target="_top">tier
+ * strategy</a> assigned.
  * 
  * @param tableName  Name of the table to be created. Error for requests with
  *                   existing table of the same name and type id may be
@@ -7404,22 +7185,22 @@ CreateTableResponse createTable( const std::string& tableName,
  *                 foreign_key_name]'.
  *                         <li> gpudb::create_table_foreign_shard_key: Foreign
  *                 shard key of the format 'source_column references
- *                 shard_by_column from target_table(primary_key_column)'
+ *                 shard_by_column from target_table(primary_key_column)'.
  *                         <li> gpudb::create_table_partition_type: <a
  *                 href="../../concepts/tables.html#partitioning"
- *                 target="_top">Partitioning</a> scheme to use
+ *                 target="_top">Partitioning</a> scheme to use.
  *                 <ul>
  *                         <li> gpudb::create_table_RANGE: Use <a
  *                 href="../../concepts/tables.html#partitioning-by-range"
- *                 target="_top">range partitioning</a>
+ *                 target="_top">range partitioning</a>.
  *                         <li> gpudb::create_table_INTERVAL: Use <a
  *                 href="../../concepts/tables.html#partitioning-by-interval"
- *                 target="_top">interval partitioning</a>
+ *                 target="_top">interval partitioning</a>.
  *                 </ul>
  *                         <li> gpudb::create_table_partition_keys:
  *                 Comma-separated list of partition keys, which are the
  *                 columns or column expressions by which records will be
- *                 assigned to partitions defined by @a partition_definitions
+ *                 assigned to partitions defined by @a partition_definitions.
  *                         <li> gpudb::create_table_partition_definitions:
  *                 Comma-separated list of partition definitions, whose format
  *                 depends on the choice of @a partition_type.  See <a
@@ -7443,7 +7224,14 @@ CreateTableResponse createTable( const std::string& tableName,
  *                         <li> gpudb::create_table_false
  *                 </ul>
  *                 The default value is gpudb::create_table_false.
- *                         <li> gpudb::create_table_strategy_definition
+ *                         <li> gpudb::create_table_strategy_definition: The <a
+ *                 href="../../rm/concepts.html#tier-strategies"
+ *                 target="_top">tier strategy</a> for the table and its
+ *                 columns. See <a
+ *                 href="../../rm/concepts.html#tier-strategies"
+ *                 target="_top">tier strategy usage</a> for format and <a
+ *                 href="../../rm/usage.html#tier-strategies"
+ *                 target="_top">tier strategy examples</a> for examples.
  *                 </ul>
  * @param[out] response_  Response object containing the results of the
  *                        operation.
@@ -8143,8 +7931,8 @@ CreateTypeResponse& createType( const CreateTypeRequest& request_,
  *                    indicates that this column should be <a
  *                    href="../../concepts/dictionary_encoding.html"
  *                    target="_top">dictionary encoded</a>. It can only be used
- *                    in conjunction with restricted string (charN), int, or
- *                    long columns. Dictionary encoding is best for columns
+ *                    in conjunction with restricted string (charN), int, long
+ *                    or date columns. Dictionary encoding is best for columns
  *                    where the cardinality (the number of unique values) is
  *                    expected to be low. This property can save a large amount
  *                    of memory.
@@ -8348,8 +8136,8 @@ CreateTypeResponse createType( const std::string& typeDefinition,
  *                    indicates that this column should be <a
  *                    href="../../concepts/dictionary_encoding.html"
  *                    target="_top">dictionary encoded</a>. It can only be used
- *                    in conjunction with restricted string (charN), int, or
- *                    long columns. Dictionary encoding is best for columns
+ *                    in conjunction with restricted string (charN), int, long
+ *                    or date columns. Dictionary encoding is best for columns
  *                    where the cardinality (the number of unique values) is
  *                    expected to be low. This property can save a large amount
  *                    of memory.
@@ -9174,7 +8962,7 @@ DeleteResourceGroupResponse& deleteResourceGroup( const DeleteResourceGroupReque
 /**
  * Deletes a resource group.
  * 
- * @param name  Name of the group to be deleted.
+ * @param name  Name of the resource group to be deleted.
  * @param options  Optional parameters.
  * 
  * @return Response object containing the result of the operation.
@@ -9187,7 +8975,7 @@ DeleteResourceGroupResponse deleteResourceGroup( const std::string& name,
 /**
  * Deletes a resource group.
  * 
- * @param name  Name of the group to be deleted.
+ * @param name  Name of the resource group to be deleted.
  * @param options  Optional parameters.
  * @param[out] response_  Response object containing the results of the
  *                        operation.
@@ -17062,8 +16850,8 @@ ShowProcStatusResponse& showProcStatus( const std::string& runId,
                                         ShowProcStatusResponse& response_ ) const;
 
 /**
- * Shows various statistics for storage/memory tiers and resource groups.
- * Statistics are provided on a per rank basis.
+ * Requests various statistics for storage/memory tiers and resource groups.
+ * Returns statistics on a per-rank basis.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -17075,8 +16863,8 @@ ShowProcStatusResponse& showProcStatus( const std::string& runId,
 ShowResourceStatisticsResponse showResourceStatistics( const ShowResourceStatisticsRequest& request_ ) const;
 
 /**
- * Shows various statistics for storage/memory tiers and resource groups.
- * Statistics are provided on a per rank basis.
+ * Requests various statistics for storage/memory tiers and resource groups.
+ * Returns statistics on a per-rank basis.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -17092,8 +16880,8 @@ ShowResourceStatisticsResponse& showResourceStatistics( const ShowResourceStatis
                                                         ShowResourceStatisticsResponse& response_ ) const;
 
 /**
- * Shows various statistics for storage/memory tiers and resource groups.
- * Statistics are provided on a per rank basis.
+ * Requests various statistics for storage/memory tiers and resource groups.
+ * Returns statistics on a per-rank basis.
  * 
  * @param options  Optional parameters.
  * 
@@ -17104,8 +16892,8 @@ ShowResourceStatisticsResponse& showResourceStatistics( const ShowResourceStatis
 ShowResourceStatisticsResponse showResourceStatistics( const std::map<std::string, std::string>& options ) const;
 
 /**
- * Shows various statistics for storage/memory tiers and resource groups.
- * Statistics are provided on a per rank basis.
+ * Requests various statistics for storage/memory tiers and resource groups.
+ * Returns statistics on a per-rank basis.
  * 
  * @param options  Optional parameters.
  * @param[out] response_  Response object containing the results of the
@@ -17120,7 +16908,8 @@ ShowResourceStatisticsResponse& showResourceStatistics( const std::map<std::stri
                                                         ShowResourceStatisticsResponse& response_ ) const;
 
 /**
- * Shows resource group properties.
+ * Requests resource group properties.
+ * Returns detailed information about the requested resource groups.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -17132,7 +16921,8 @@ ShowResourceStatisticsResponse& showResourceStatistics( const std::map<std::stri
 ShowResourceGroupsResponse showResourceGroups( const ShowResourceGroupsRequest& request_ ) const;
 
 /**
- * Shows resource group properties.
+ * Requests resource group properties.
+ * Returns detailed information about the requested resource groups.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -17148,14 +16938,15 @@ ShowResourceGroupsResponse& showResourceGroups( const ShowResourceGroupsRequest&
                                                 ShowResourceGroupsResponse& response_ ) const;
 
 /**
- * Shows resource group properties.
+ * Requests resource group properties.
+ * Returns detailed information about the requested resource groups.
  * 
  * @param names  List of names of groups to be shown. A single entry with an
  *               empty string returns all groups.
  * @param options  Optional parameters.
  *                 <ul>
  *                         <li>
- *                 gpudb::show_resource_groups_show_default_values: If true
+ *                 gpudb::show_resource_groups_show_default_values: If @a true
  *                 include values of fields that are based on the default
  *                 resource group.
  *                 <ul>
@@ -17164,7 +16955,8 @@ ShowResourceGroupsResponse& showResourceGroups( const ShowResourceGroupsRequest&
  *                 </ul>
  *                 The default value is gpudb::show_resource_groups_true.
  *                         <li> gpudb::show_resource_groups_show_default_group:
- *                 If true include the default resource group in the response.
+ *                 If @a true include the default resource group in the
+ *                 response.
  *                 <ul>
  *                         <li> gpudb::show_resource_groups_true
  *                         <li> gpudb::show_resource_groups_false
@@ -17180,14 +16972,15 @@ ShowResourceGroupsResponse showResourceGroups( const std::vector<std::string>& n
                                                const std::map<std::string, std::string>& options ) const;
 
 /**
- * Shows resource group properties.
+ * Requests resource group properties.
+ * Returns detailed information about the requested resource groups.
  * 
  * @param names  List of names of groups to be shown. A single entry with an
  *               empty string returns all groups.
  * @param options  Optional parameters.
  *                 <ul>
  *                         <li>
- *                 gpudb::show_resource_groups_show_default_values: If true
+ *                 gpudb::show_resource_groups_show_default_values: If @a true
  *                 include values of fields that are based on the default
  *                 resource group.
  *                 <ul>
@@ -17196,7 +16989,8 @@ ShowResourceGroupsResponse showResourceGroups( const std::vector<std::string>& n
  *                 </ul>
  *                 The default value is gpudb::show_resource_groups_true.
  *                         <li> gpudb::show_resource_groups_show_default_group:
- *                 If true include the default resource group in the response.
+ *                 If @a true include the default resource group in the
+ *                 response.
  *                 <ul>
  *                         <li> gpudb::show_resource_groups_true
  *                         <li> gpudb::show_resource_groups_false
@@ -17286,7 +17080,7 @@ ShowSecurityResponse& showSecurity( const std::vector<std::string>& names,
                                     ShowSecurityResponse& response_ ) const;
 
 /**
- * @private
+ * Retrieves the collected column statistics for the specified table.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -17298,7 +17092,7 @@ ShowSecurityResponse& showSecurity( const std::vector<std::string>& names,
 ShowStatisticsResponse showStatistics( const ShowStatisticsRequest& request_ ) const;
 
 /**
- * @private
+ * Retrieves the collected column statistics for the specified table.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -17314,10 +17108,11 @@ ShowStatisticsResponse& showStatistics( const ShowStatisticsRequest& request_,
                                         ShowStatisticsResponse& response_ ) const;
 
 /**
- * @private
+ * Retrieves the collected column statistics for the specified table.
  * 
- * @param tableNames
- * @param options
+ * @param tableNames  Tables whose metadata will be fetched. All provided
+ *                    tables must exist, or an error is returned.
+ * @param options  Optional parameters.
  * 
  * @return Response object containing the result of the operation.
  * 
@@ -17327,10 +17122,11 @@ ShowStatisticsResponse showStatistics( const std::vector<std::string>& tableName
                                        const std::map<std::string, std::string>& options ) const;
 
 /**
- * @private
+ * Retrieves the collected column statistics for the specified table.
  * 
- * @param tableNames
- * @param options
+ * @param tableNames  Tables whose metadata will be fetched. All provided
+ *                    tables must exist, or an error is returned.
+ * @param options  Optional parameters.
  * @param[out] response_  Response object containing the results of the
  *                        operation.
  * 
@@ -18078,14 +17874,30 @@ SolveGraphResponse& solveGraph( const SolveGraphRequest& request_,
  * 
  * @param graphName  Name of the graph resource to solve.
  * @param weightsOnEdges  Additional weights to apply to the edges of an
- *                        existing graph. Example format: 'table.column AS
- *                        WEIGHTS_EDGE_ID'. Any provided weights will be added
- *                        (in the case of 'WEIGHTS_VALUESPECIFIED') to or
- *                        multiplied with (in the case of
- *                        'WEIGHTS_FACTORSPECIFIED') the existing weight(s).
+ *                        existing graph. Weights must be specified using <a
+ *                        href="../../graph_solver/network_graph_solver.html#identifiers"
+ *                        target="_top">identifiers</a>; identifiers are
+ *                        grouped as <a
+ *                        href="../../graph_solver/network_graph_solver.html#id-combos"
+ *                        target="_top">combinations</a>. Identifiers can be
+ *                        used with existing column names, e.g., 'table.column
+ *                        AS WEIGHTS_EDGE_ID', or expressions, e.g.,
+ *                        'ST_LENGTH(wkt) AS WEIGHTS_VALUESPECIFIED'. Any
+ *                        provided weights will be added (in the case of
+ *                        'WEIGHTS_VALUESPECIFIED') to or multiplied with (in
+ *                        the case of 'WEIGHTS_FACTORSPECIFIED') the existing
+ *                        weight(s).
  * @param restrictions  Additional restrictions to apply to the nodes/edges of
- *                      an existing graph. Example format: 'table.column AS
- *                      RESTRICTIONS_NODE_ID'. If @a
+ *                      an existing graph. Restrictions must be specified using
+ *                      <a
+ *                      href="../../graph_solver/network_graph_solver.html#identifiers"
+ *                      target="_top">identifiers</a>; identifiers are grouped
+ *                      as <a
+ *                      href="../../graph_solver/network_graph_solver.html#id-combos"
+ *                      target="_top">combinations</a>. Identifiers can be used
+ *                      with existing column names, e.g., 'table.column AS
+ *                      RESTRICTIONS_EDGE_ID', or expressions, e.g., 'column/2
+ *                      AS RESTRICTIONS_VALUECOMPARED'. If @a
  *                      remove_previous_restrictions is set to @a true, any
  *                      provided restrictions will replace the existing
  *                      restrictions. If @a remove_previous_restrictions is set
@@ -18226,14 +18038,30 @@ SolveGraphResponse solveGraph( const std::string& graphName,
  * 
  * @param graphName  Name of the graph resource to solve.
  * @param weightsOnEdges  Additional weights to apply to the edges of an
- *                        existing graph. Example format: 'table.column AS
- *                        WEIGHTS_EDGE_ID'. Any provided weights will be added
- *                        (in the case of 'WEIGHTS_VALUESPECIFIED') to or
- *                        multiplied with (in the case of
- *                        'WEIGHTS_FACTORSPECIFIED') the existing weight(s).
+ *                        existing graph. Weights must be specified using <a
+ *                        href="../../graph_solver/network_graph_solver.html#identifiers"
+ *                        target="_top">identifiers</a>; identifiers are
+ *                        grouped as <a
+ *                        href="../../graph_solver/network_graph_solver.html#id-combos"
+ *                        target="_top">combinations</a>. Identifiers can be
+ *                        used with existing column names, e.g., 'table.column
+ *                        AS WEIGHTS_EDGE_ID', or expressions, e.g.,
+ *                        'ST_LENGTH(wkt) AS WEIGHTS_VALUESPECIFIED'. Any
+ *                        provided weights will be added (in the case of
+ *                        'WEIGHTS_VALUESPECIFIED') to or multiplied with (in
+ *                        the case of 'WEIGHTS_FACTORSPECIFIED') the existing
+ *                        weight(s).
  * @param restrictions  Additional restrictions to apply to the nodes/edges of
- *                      an existing graph. Example format: 'table.column AS
- *                      RESTRICTIONS_NODE_ID'. If @a
+ *                      an existing graph. Restrictions must be specified using
+ *                      <a
+ *                      href="../../graph_solver/network_graph_solver.html#identifiers"
+ *                      target="_top">identifiers</a>; identifiers are grouped
+ *                      as <a
+ *                      href="../../graph_solver/network_graph_solver.html#id-combos"
+ *                      target="_top">combinations</a>. Identifiers can be used
+ *                      with existing column names, e.g., 'table.column AS
+ *                      RESTRICTIONS_EDGE_ID', or expressions, e.g., 'column/2
+ *                      AS RESTRICTIONS_VALUECOMPARED'. If @a
  *                      remove_previous_restrictions is set to @a true, any
  *                      provided restrictions will replace the existing
  *                      restrictions. If @a remove_previous_restrictions is set
@@ -18588,6 +18416,14 @@ UpdateRecordsResponse& updateRecords( const UpdateRecordsRequest<TRequest>& requ
  *                         <li> gpudb::update_records_false
  *                 </ul>
  *                 The default value is gpudb::update_records_false.
+ *                         <li> gpudb::update_records_update_partition: Force
+ *                 qualifying records to be deleted and reinserted so their
+ *                 partition membership will be reevaluated.
+ *                 <ul>
+ *                         <li> gpudb::update_records_true
+ *                         <li> gpudb::update_records_false
+ *                 </ul>
+ *                 The default value is gpudb::update_records_false.
  *                         <li>
  *                 gpudb::update_records_use_expressions_in_new_values_maps:
  *                 When set to @a true, all new values in @a newValuesMaps are
@@ -18686,6 +18522,14 @@ UpdateRecordsResponse updateRecords( const std::string& tableName,
  *                         <li> gpudb::update_records_update_on_existing_pk:
  *                 Can be used to customize behavior when the updated primary
  *                 key value already exists as described in /insert/records.
+ *                 <ul>
+ *                         <li> gpudb::update_records_true
+ *                         <li> gpudb::update_records_false
+ *                 </ul>
+ *                 The default value is gpudb::update_records_false.
+ *                         <li> gpudb::update_records_update_partition: Force
+ *                 qualifying records to be deleted and reinserted so their
+ *                 partition membership will be reevaluated.
  *                 <ul>
  *                         <li> gpudb::update_records_true
  *                         <li> gpudb::update_records_false
@@ -19941,19 +19785,86 @@ VisualizeImageContourResponse& visualizeImageContour( const VisualizeImageContou
  *                              <li> gpudb::visualize_image_contour_line_size
  *                              <li> gpudb::visualize_image_contour_color
  *                              <li> gpudb::visualize_image_contour_bg_color
+ *                              <li> gpudb::visualize_image_contour_text_color
  *                              <li> gpudb::visualize_image_contour_colormap:
  *                      <ul>
  *                              <li> gpudb::visualize_image_contour_jet
- *                              <li> gpudb::visualize_image_contour_hot
- *                              <li> gpudb::visualize_image_contour_hsv
- *                              <li> gpudb::visualize_image_contour_gray
+ *                              <li> gpudb::visualize_image_contour_accent
+ *                              <li> gpudb::visualize_image_contour_afmhot
+ *                              <li> gpudb::visualize_image_contour_autumn
+ *                              <li> gpudb::visualize_image_contour_binary
  *                              <li> gpudb::visualize_image_contour_blues
+ *                              <li> gpudb::visualize_image_contour_bone
+ *                              <li> gpudb::visualize_image_contour_brbg
+ *                              <li> gpudb::visualize_image_contour_brg
+ *                              <li> gpudb::visualize_image_contour_bugn
+ *                              <li> gpudb::visualize_image_contour_bupu
+ *                              <li> gpudb::visualize_image_contour_bwr
+ *                              <li> gpudb::visualize_image_contour_cmrmap
+ *                              <li> gpudb::visualize_image_contour_cool
+ *                              <li> gpudb::visualize_image_contour_coolwarm
+ *                              <li> gpudb::visualize_image_contour_copper
+ *                              <li> gpudb::visualize_image_contour_cubehelix
+ *                              <li> gpudb::visualize_image_contour_dark2
+ *                              <li> gpudb::visualize_image_contour_flag
+ *                              <li> gpudb::visualize_image_contour_gist_earth
+ *                              <li> gpudb::visualize_image_contour_gist_gray
+ *                              <li> gpudb::visualize_image_contour_gist_heat
+ *                              <li> gpudb::visualize_image_contour_gist_ncar
+ *                              <li>
+ *                      gpudb::visualize_image_contour_gist_rainbow
+ *                              <li> gpudb::visualize_image_contour_gist_stern
+ *                              <li> gpudb::visualize_image_contour_gist_yarg
+ *                              <li> gpudb::visualize_image_contour_gnbu
+ *                              <li> gpudb::visualize_image_contour_gnuplot2
+ *                              <li> gpudb::visualize_image_contour_gnuplot
+ *                              <li> gpudb::visualize_image_contour_gray
  *                              <li> gpudb::visualize_image_contour_greens
  *                              <li> gpudb::visualize_image_contour_greys
+ *                              <li> gpudb::visualize_image_contour_hot
+ *                              <li> gpudb::visualize_image_contour_hsv
+ *                              <li> gpudb::visualize_image_contour_inferno
+ *                              <li> gpudb::visualize_image_contour_magma
+ *                              <li>
+ *                      gpudb::visualize_image_contour_nipy_spectral
+ *                              <li> gpudb::visualize_image_contour_ocean
  *                              <li> gpudb::visualize_image_contour_oranges
+ *                              <li> gpudb::visualize_image_contour_orrd
+ *                              <li> gpudb::visualize_image_contour_paired
+ *                              <li> gpudb::visualize_image_contour_pastel1
+ *                              <li> gpudb::visualize_image_contour_pastel2
+ *                              <li> gpudb::visualize_image_contour_pink
+ *                              <li> gpudb::visualize_image_contour_piyg
+ *                              <li> gpudb::visualize_image_contour_plasma
+ *                              <li> gpudb::visualize_image_contour_prgn
+ *                              <li> gpudb::visualize_image_contour_prism
+ *                              <li> gpudb::visualize_image_contour_pubu
+ *                              <li> gpudb::visualize_image_contour_pubugn
+ *                              <li> gpudb::visualize_image_contour_puor
+ *                              <li> gpudb::visualize_image_contour_purd
  *                              <li> gpudb::visualize_image_contour_purples
+ *                              <li> gpudb::visualize_image_contour_rainbow
+ *                              <li> gpudb::visualize_image_contour_rdbu
+ *                              <li> gpudb::visualize_image_contour_rdgy
+ *                              <li> gpudb::visualize_image_contour_rdpu
+ *                              <li> gpudb::visualize_image_contour_rdylbu
+ *                              <li> gpudb::visualize_image_contour_rdylgn
  *                              <li> gpudb::visualize_image_contour_reds
+ *                              <li> gpudb::visualize_image_contour_seismic
+ *                              <li> gpudb::visualize_image_contour_set1
+ *                              <li> gpudb::visualize_image_contour_set2
+ *                              <li> gpudb::visualize_image_contour_set3
+ *                              <li> gpudb::visualize_image_contour_spectral
+ *                              <li> gpudb::visualize_image_contour_spring
+ *                              <li> gpudb::visualize_image_contour_summer
+ *                              <li> gpudb::visualize_image_contour_terrain
  *                              <li> gpudb::visualize_image_contour_viridis
+ *                              <li> gpudb::visualize_image_contour_winter
+ *                              <li> gpudb::visualize_image_contour_wistia
+ *                              <li> gpudb::visualize_image_contour_ylgn
+ *                              <li> gpudb::visualize_image_contour_ylgnbu
+ *                              <li> gpudb::visualize_image_contour_ylorbr
+ *                              <li> gpudb::visualize_image_contour_ylorrd
  *                      </ul>
  *                      The default value is
  *                      gpudb::visualize_image_contour_jet.
@@ -20050,19 +19961,86 @@ VisualizeImageContourResponse visualizeImageContour( const std::vector<std::stri
  *                              <li> gpudb::visualize_image_contour_line_size
  *                              <li> gpudb::visualize_image_contour_color
  *                              <li> gpudb::visualize_image_contour_bg_color
+ *                              <li> gpudb::visualize_image_contour_text_color
  *                              <li> gpudb::visualize_image_contour_colormap:
  *                      <ul>
  *                              <li> gpudb::visualize_image_contour_jet
- *                              <li> gpudb::visualize_image_contour_hot
- *                              <li> gpudb::visualize_image_contour_hsv
- *                              <li> gpudb::visualize_image_contour_gray
+ *                              <li> gpudb::visualize_image_contour_accent
+ *                              <li> gpudb::visualize_image_contour_afmhot
+ *                              <li> gpudb::visualize_image_contour_autumn
+ *                              <li> gpudb::visualize_image_contour_binary
  *                              <li> gpudb::visualize_image_contour_blues
+ *                              <li> gpudb::visualize_image_contour_bone
+ *                              <li> gpudb::visualize_image_contour_brbg
+ *                              <li> gpudb::visualize_image_contour_brg
+ *                              <li> gpudb::visualize_image_contour_bugn
+ *                              <li> gpudb::visualize_image_contour_bupu
+ *                              <li> gpudb::visualize_image_contour_bwr
+ *                              <li> gpudb::visualize_image_contour_cmrmap
+ *                              <li> gpudb::visualize_image_contour_cool
+ *                              <li> gpudb::visualize_image_contour_coolwarm
+ *                              <li> gpudb::visualize_image_contour_copper
+ *                              <li> gpudb::visualize_image_contour_cubehelix
+ *                              <li> gpudb::visualize_image_contour_dark2
+ *                              <li> gpudb::visualize_image_contour_flag
+ *                              <li> gpudb::visualize_image_contour_gist_earth
+ *                              <li> gpudb::visualize_image_contour_gist_gray
+ *                              <li> gpudb::visualize_image_contour_gist_heat
+ *                              <li> gpudb::visualize_image_contour_gist_ncar
+ *                              <li>
+ *                      gpudb::visualize_image_contour_gist_rainbow
+ *                              <li> gpudb::visualize_image_contour_gist_stern
+ *                              <li> gpudb::visualize_image_contour_gist_yarg
+ *                              <li> gpudb::visualize_image_contour_gnbu
+ *                              <li> gpudb::visualize_image_contour_gnuplot2
+ *                              <li> gpudb::visualize_image_contour_gnuplot
+ *                              <li> gpudb::visualize_image_contour_gray
  *                              <li> gpudb::visualize_image_contour_greens
  *                              <li> gpudb::visualize_image_contour_greys
+ *                              <li> gpudb::visualize_image_contour_hot
+ *                              <li> gpudb::visualize_image_contour_hsv
+ *                              <li> gpudb::visualize_image_contour_inferno
+ *                              <li> gpudb::visualize_image_contour_magma
+ *                              <li>
+ *                      gpudb::visualize_image_contour_nipy_spectral
+ *                              <li> gpudb::visualize_image_contour_ocean
  *                              <li> gpudb::visualize_image_contour_oranges
+ *                              <li> gpudb::visualize_image_contour_orrd
+ *                              <li> gpudb::visualize_image_contour_paired
+ *                              <li> gpudb::visualize_image_contour_pastel1
+ *                              <li> gpudb::visualize_image_contour_pastel2
+ *                              <li> gpudb::visualize_image_contour_pink
+ *                              <li> gpudb::visualize_image_contour_piyg
+ *                              <li> gpudb::visualize_image_contour_plasma
+ *                              <li> gpudb::visualize_image_contour_prgn
+ *                              <li> gpudb::visualize_image_contour_prism
+ *                              <li> gpudb::visualize_image_contour_pubu
+ *                              <li> gpudb::visualize_image_contour_pubugn
+ *                              <li> gpudb::visualize_image_contour_puor
+ *                              <li> gpudb::visualize_image_contour_purd
  *                              <li> gpudb::visualize_image_contour_purples
+ *                              <li> gpudb::visualize_image_contour_rainbow
+ *                              <li> gpudb::visualize_image_contour_rdbu
+ *                              <li> gpudb::visualize_image_contour_rdgy
+ *                              <li> gpudb::visualize_image_contour_rdpu
+ *                              <li> gpudb::visualize_image_contour_rdylbu
+ *                              <li> gpudb::visualize_image_contour_rdylgn
  *                              <li> gpudb::visualize_image_contour_reds
+ *                              <li> gpudb::visualize_image_contour_seismic
+ *                              <li> gpudb::visualize_image_contour_set1
+ *                              <li> gpudb::visualize_image_contour_set2
+ *                              <li> gpudb::visualize_image_contour_set3
+ *                              <li> gpudb::visualize_image_contour_spectral
+ *                              <li> gpudb::visualize_image_contour_spring
+ *                              <li> gpudb::visualize_image_contour_summer
+ *                              <li> gpudb::visualize_image_contour_terrain
  *                              <li> gpudb::visualize_image_contour_viridis
+ *                              <li> gpudb::visualize_image_contour_winter
+ *                              <li> gpudb::visualize_image_contour_wistia
+ *                              <li> gpudb::visualize_image_contour_ylgn
+ *                              <li> gpudb::visualize_image_contour_ylgnbu
+ *                              <li> gpudb::visualize_image_contour_ylorbr
+ *                              <li> gpudb::visualize_image_contour_ylorrd
  *                      </ul>
  *                      The default value is
  *                      gpudb::visualize_image_contour_jet.

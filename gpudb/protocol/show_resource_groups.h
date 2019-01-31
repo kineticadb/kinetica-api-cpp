@@ -13,7 +13,8 @@ namespace gpudb
      * A set of input parameters for {@link
      * #showResourceGroups(const ShowResourceGroupsRequest&) const}.
      * <p>
-     * Shows resource group properties.
+     * Requests resource group properties.
+     * Returns detailed information about the requested resource groups.
      */
     struct ShowResourceGroupsRequest
     {
@@ -38,8 +39,8 @@ namespace gpudb
          *                      <ul>
          *                              <li>
          *                      gpudb::show_resource_groups_show_default_values:
-         *                      If true include values of fields that are based
-         *                      on the default resource group.
+         *                      If @a true include values of fields that are
+         *                      based on the default resource group.
          *                      <ul>
          *                              <li> gpudb::show_resource_groups_true
          *                              <li> gpudb::show_resource_groups_false
@@ -48,8 +49,8 @@ namespace gpudb
          *                      gpudb::show_resource_groups_true.
          *                              <li>
          *                      gpudb::show_resource_groups_show_default_group:
-         *                      If true include the default resource group in
-         *                      the response.
+         *                      If @a true include the default resource group
+         *                      in the response.
          *                      <ul>
          *                              <li> gpudb::show_resource_groups_true
          *                              <li> gpudb::show_resource_groups_false
@@ -119,7 +120,8 @@ namespace gpudb
      * A set of output parameters for {@link
      * #showResourceGroups(const ShowResourceGroupsRequest&) const}.
      * <p>
-     * Shows resource group properties.
+     * Requests resource group properties.
+     * Returns detailed information about the requested resource groups.
      */
     struct ShowResourceGroupsResponse
     {

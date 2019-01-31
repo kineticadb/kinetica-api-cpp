@@ -26,7 +26,6 @@ namespace gpudb
         AlterResourceGroupRequest() :
             name(std::string()),
             tierAttributes(std::map<std::string, std::map<std::string, std::string> >()),
-            tierStrategy(std::vector<std::string>()),
             options(std::map<std::string, std::string>())
         {
         }
@@ -35,21 +34,24 @@ namespace gpudb
          * Constructs an AlterResourceGroupRequest object with the specified
          * parameters.
          * 
-         * @param[in] name_  Name of the group to be altered. Must match
+         * @param[in] name_  Name of the group to be altered. Must be an
          *                   existing resource group name.
-         * @param[in] tierAttributes_  Optional map containing group limits for
-         *                             tier-specific attributes such as memory.
+         * @param[in] tierAttributes_  Optional map containing tier names and
+         *                             their respective attribute group limits.
+         *                             The only valid attribute limit that can
+         *                             be set is max_memory (in bytes) for the
+         *                             VRAM & RAM tiers.
+         *                             For instance, to set max VRAM capacity
+         *                             to 1GB and max RAM capacity to 10GB,
+         *                             use:
+         *                             {'VRAM':{'max_memory':'1000000000'},
+         *                             'RAM':{'max_memory':'10000000000'}}
          *                             <ul>
          *                                     <li>
          *                             gpudb::alter_resource_group_max_memory:
          *                             Maximum amount of memory usable in the
          *                             given tier at one time for this group.
          *                             </ul>
-         * @param[in] tierStrategy_  Optional array that defines the default
-         *                           tiering strategy for this group. Each
-         *                           element pair defines an existing tier and
-         *                           its preferred priority. e.g. ['RAM
-         *                           50',VRAM 30']
          * @param[in] options_  Optional parameters.
          *                      <ul>
          *                              <li>
@@ -67,10 +69,10 @@ namespace gpudb
          *                      group.
          *                              <li>
          *                      gpudb::alter_resource_group_is_default_group:
-         *                      If true this request applies to the global
+         *                      If @a true, this request applies to the global
          *                      default resource group. It is an error for this
-         *                      field to be true when the @a name field is also
-         *                      populated.
+         *                      field to be @a true when the @a name field is
+         *                      also populated.
          *                      <ul>
          *                              <li> gpudb::alter_resource_group_true
          *                              <li> gpudb::alter_resource_group_false
@@ -80,17 +82,15 @@ namespace gpudb
          *                      </ul>
          * 
          */
-        AlterResourceGroupRequest(const std::string& name_, const std::map<std::string, std::map<std::string, std::string> >& tierAttributes_, const std::vector<std::string>& tierStrategy_, const std::map<std::string, std::string>& options_):
+        AlterResourceGroupRequest(const std::string& name_, const std::map<std::string, std::map<std::string, std::string> >& tierAttributes_, const std::map<std::string, std::string>& options_):
             name( name_ ),
             tierAttributes( tierAttributes_ ),
-            tierStrategy( tierStrategy_ ),
             options( options_ )
         {
         }
 
         std::string name;
         std::map<std::string, std::map<std::string, std::string> > tierAttributes;
-        std::vector<std::string> tierStrategy;
         std::map<std::string, std::string> options;
     };
 }
@@ -103,7 +103,6 @@ namespace avro
         {
             ::avro::encode(e, v.name);
             ::avro::encode(e, v.tierAttributes);
-            ::avro::encode(e, v.tierStrategy);
             ::avro::encode(e, v.options);
         }
 
@@ -126,10 +125,6 @@ namespace avro
                             break;
 
                         case 2:
-                            ::avro::decode(d, v.tierStrategy);
-                            break;
-
-                        case 3:
                             ::avro::decode(d, v.options);
                             break;
 
@@ -142,7 +137,6 @@ namespace avro
             {
                 ::avro::decode(d, v.name);
                 ::avro::decode(d, v.tierAttributes);
-                ::avro::decode(d, v.tierStrategy);
                 ::avro::decode(d, v.options);
             }
         }

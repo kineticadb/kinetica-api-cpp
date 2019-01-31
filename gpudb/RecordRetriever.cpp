@@ -57,7 +57,7 @@ void RecordRetriever::construct( const gpudb::GPUdb& db,
             // Add a worker (record) queue per worker rank of the database
             for ( WorkerList::const_iterator it = worker_list.begin(); it != worker_list.end(); ++it )
             {
-                std::string url = ( (std::string)it->getUrl() + "get/records" );
+                std::string url = (std::string)( it->getAppendedUrl( "get/records" ) );
                 worker_queue_ptr_t worker_queue( new WorkerQueue( url ) );
                 m_worker_queues.push_back( worker_queue );
             }
@@ -77,7 +77,7 @@ void RecordRetriever::construct( const gpudb::GPUdb& db,
         }
         else // multi-head ingest is NOT turned on; use the regular server IP address
         {
-            std::string url = ( (std::string)m_db.getUrl() + "get/records" );
+            std::string url = (std::string)( m_db.getUrl().getAppendedUrl( "get/records" ) );
             worker_queue_ptr_t worker_queue( new WorkerQueue( url ) );
             m_worker_queues.push_back( worker_queue );
         }

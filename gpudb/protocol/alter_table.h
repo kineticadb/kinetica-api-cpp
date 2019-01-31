@@ -16,6 +16,12 @@ namespace gpudb
      * Apply various modifications to a table, view, or collection.  The
      * available modifications include the following:
      * <p>
+     * Manage a table's columns--a column can be added, removed, or have its
+     * <a href="../../concepts/types.html" target="_top">type and
+     * properties</a> modified, including
+     * whether it is <a href="../../concepts/compression.html"
+     * target="_top">compressed</a> or not.
+     * <p>
      * Create or delete an <a href="../../concepts/indexes.html#column-index"
      * target="_top">index</a> on a
      * particular column. This can speed up certain operations when using
@@ -23,6 +29,22 @@ namespace gpudb
      * containing equality or relational operators on indexed columns. This
      * only
      * applies to tables.
+     * <p>
+     * Create or delete a <a href="../../concepts/tables.html#foreign-key"
+     * target="_top">foreign key</a>
+     * on a particular column.
+     * <p>
+     * Manage a <a href="../../concepts/tables.html#partitioning"
+     * target="_top">range-partitioned</a>
+     * table's partitions.
+     * <p>
+     * Set (or reset) the <a href="../../rm/concepts.html#tier-strategies"
+     * target="_top">tier strategy</a>
+     * of a table or view.
+     * <p>
+     * Refresh and manage the refresh mode of a
+     * <a href="../../concepts/materialized_views.html"
+     * target="_top">materialized view</a>.
      * <p>
      * Set the <a href="../../concepts/ttl.html" target="_top">time-to-live
      * (TTL)</a>. This can be applied
@@ -43,19 +65,6 @@ namespace gpudb
      * target="_top">protection</a> mode to prevent or
      * allow automatic expiration. This can be applied to tables, views, and
      * collections.
-     * <p>
-     * Manage a <a href="../../concepts/tables.html#partitioning"
-     * target="_top">range-partitioned</a>
-     * table's partitions.
-     * <p>
-     * Allow homogeneous tables within a collection.
-     * <p>
-     * Manage a table's columns--a column can be added, removed, or have its
-     * <a href="../../concepts/types.html" target="_top">type and
-     * properties</a> modified.
-     * <p>
-     * Set or unset <a href="../../concepts/compression.html"
-     * target="_top">compression</a> for a column.
      */
     struct AlterTableRequest
     {
@@ -144,15 +153,17 @@ namespace gpudb
          *                     Modifies the <a
          *                     href="../../concepts/compression.html"
          *                     target="_top">compression</a> setting on the
-         *                     column specified in @a value.
+         *                     column specified in @a value to the compression
+         *                     type specified in @a compression_type.
          *                             <li> gpudb::alter_table_delete_column:
          *                     Deletes the column specified in @a value from
          *                     the table specified in @a tableName.
          *                             <li>
          *                     gpudb::alter_table_create_foreign_key: Creates a
          *                     <a href="../../concepts/tables.html#foreign-key"
-         *                     target="_top">foreign key</a> using the format
-         *                     '(source_column_name [, ...]) references
+         *                     target="_top">foreign key</a> specified in @a
+         *                     value using the format '(source_column_name [,
+         *                     ...]) references
          *                     target_table_name(primary_key_column_name [,
          *                     ...]) [as foreign_key_name]'.
          *                             <li>
@@ -163,21 +174,20 @@ namespace gpudb
          *                     creating the key or the complete string used to
          *                     define it.
          *                             <li> gpudb::alter_table_add_partition:
-         *                     Partition definition to add (for
-         *                     range-partitioned tables only).  See <a
+         *                     Adds a partition (for range-partitioned tables
+         *                     only) specified in @a value.  See <a
          *                     href="../../concepts/tables.html#partitioning-by-range-example"
          *                     target="_top">range partitioning example</a> for
          *                     example format.
          *                             <li>
-         *                     gpudb::alter_table_remove_partition: Name of
-         *                     partition to remove (for range-partitioned
-         *                     tables only).  All data in partition will be
-         *                     moved to the default partition
+         *                     gpudb::alter_table_remove_partition: Removes the
+         *                     partition specified in @a value and relocates
+         *                     all its data to the default partition (for
+         *                     range-partitioned tables only).
          *                             <li>
-         *                     gpudb::alter_table_delete_partition: Name of
-         *                     partition to delete (for range-partitioned
-         *                     tables only).  All data in the partition will be
-         *                     deleted.
+         *                     gpudb::alter_table_delete_partition: Deletes the
+         *                     partition specified in @a value and its data
+         *                     (for range-partitioned tables only).
          *                             <li>
          *                     gpudb::alter_table_set_global_access_mode: Sets
          *                     the global access mode (i.e. locking) for the
@@ -195,31 +205,56 @@ namespace gpudb
          *                     method by which this <a
          *                     href="../../concepts/materialized_views.html"
          *                     target="_top">materialized view</a> is refreshed
-         *                     - one of 'manual', 'periodic', 'on_change'.
+         *                     to the method specified in @a value - one of
+         *                     'manual', 'periodic', 'on_change'.
          *                             <li>
          *                     gpudb::alter_table_set_refresh_start_time: Sets
          *                     the time to start periodic refreshes of this <a
          *                     href="../../concepts/materialized_views.html"
-         *                     target="_top">materialized view</a> to datetime
-         *                     string with format 'YYYY-MM-DD HH:MM:SS'.
-         *                     Subsequent refreshes occur at the specified time
-         *                     + N * the refresh period.
+         *                     target="_top">materialized view</a> to the
+         *                     datetime string specified in @a value with
+         *                     format 'YYYY-MM-DD HH:MM:SS'.  Subsequent
+         *                     refreshes occur at the specified time + N * the
+         *                     refresh period.
          *                             <li>
          *                     gpudb::alter_table_set_refresh_period: Sets the
          *                     time interval in seconds at which to refresh
          *                     this <a
          *                     href="../../concepts/materialized_views.html"
-         *                     target="_top">materialized view</a>.  Also, sets
-         *                     the refresh method to periodic if not alreay
-         *                     set.
+         *                     target="_top">materialized view</a> to the value
+         *                     specified in @a value.  Also, sets the refresh
+         *                     method to periodic if not already set.
          *                             <li>
          *                     gpudb::alter_table_remove_text_search_attributes:
-         *                     remove text_search attribute from all columns,
-         *                     if exists.
+         *                     Removes <a
+         *                     href="../../concepts/full_text_search.html"
+         *                     target="_top">text search</a> attribute from all
+         *                     columns.
+         *                             <li>
+         *                     gpudb::alter_table_set_strategy_definition: Sets
+         *                     the <a
+         *                     href="../../rm/concepts.html#tier-strategies"
+         *                     target="_top">tier strategy</a> for the table
+         *                     and its columns to the one specified in @a
+         *                     value, replacing the existing tier strategy in
+         *                     its entirety. See <a
+         *                     href="../../rm/concepts.html#tier-strategies"
+         *                     target="_top">tier strategy usage</a> for format
+         *                     and <a
+         *                     href="../../rm/usage.html#tier-strategies"
+         *                     target="_top">tier strategy examples</a> for
+         *                     examples.
          *                     </ul>
-         * @param[in] value_  The value of the modification. May be a column
-         *                    name, 'true' or 'false', a TTL, or the global
-         *                    access mode depending on @a action.
+         * @param[in] value_  The value of the modification, depending on @a
+         *                    action.  For example, if @a action is @a
+         *                    add_column, this would be the column name; while
+         *                    the column's definition would be covered by the
+         *                    @a column_type, @a column_properties, @a
+         *                    column_default_value, and @a
+         *                    add_column_expression in @a options.  If @a
+         *                    action is @a ttl, it would be the number of
+         *                    minutes for the new TTL. If @a action is @a
+         *                    refresh, this field would be blank.
          * @param[in] options_  Optional parameters.
          *                      <ul>
          *                              <li> gpudb::alter_table_action
@@ -256,7 +291,8 @@ namespace gpudb
          *                      The default value is gpudb::alter_table_snappy.
          *                              <li>
          *                      gpudb::alter_table_copy_values_from_column:
-         *                      please see add_column_expression instead.
+         *                      Deprecated.  Please use @a
+         *                      add_column_expression instead.
          *                              <li> gpudb::alter_table_rename_column:
          *                      When changing a column, specify new column
          *                      name.
@@ -275,18 +311,43 @@ namespace gpudb
          *                      The default value is gpudb::alter_table_true.
          *                              <li>
          *                      gpudb::alter_table_update_last_access_time:
-         *                      Indicates whether need to update the
-         *                      last_access_time.
+         *                      Indicates whether the <a
+         *                      href="../../concepts/ttl.html"
+         *                      target="_top">time-to-live</a> (TTL) expiration
+         *                      countdown timer should be reset to the table's
+         *                      TTL.
          *                      <ul>
-         *                              <li> gpudb::alter_table_true
-         *                              <li> gpudb::alter_table_false
+         *                              <li> gpudb::alter_table_true: Reset the
+         *                      expiration countdown timer to the table's
+         *                      configured TTL.
+         *                              <li> gpudb::alter_table_false: Don't
+         *                      reset the timer; expiration countdown will
+         *                      continue from where it is, as if the table had
+         *                      not been accessed.
          *                      </ul>
          *                      The default value is gpudb::alter_table_true.
          *                              <li>
-         *                      gpudb::alter_table_add_column_expression:
-         *                      expression for new column's values (optional
-         *                      with add_column). Any valid expressions
-         *                      including existing columns.
+         *                      gpudb::alter_table_add_column_expression: When
+         *                      adding a column, an optional expression to use
+         *                      for the new column's values. Any valid
+         *                      expression may be used, including one
+         *                      containing references to existing columns in
+         *                      the same table.
+         *                              <li>
+         *                      gpudb::alter_table_strategy_definition:
+         *                      Optional parameter for specifying the <a
+         *                      href="../../rm/concepts.html#tier-strategies"
+         *                      target="_top">tier strategy</a> for the table
+         *                      and its columns when @a action is @a
+         *                      set_strategy_definition, replacing the existing
+         *                      tier strategy in its entirety. See <a
+         *                      href="../../rm/concepts.html#tier-strategies"
+         *                      target="_top">tier strategy usage</a> for
+         *                      format and <a
+         *                      href="../../rm/usage.html#tier-strategies"
+         *                      target="_top">tier strategy examples</a> for
+         *                      examples.  This option will be ignored if @a
+         *                      value is also specified.
          *                      </ul>
          * 
          */
@@ -369,6 +430,12 @@ namespace gpudb
      * Apply various modifications to a table, view, or collection.  The
      * available modifications include the following:
      * <p>
+     * Manage a table's columns--a column can be added, removed, or have its
+     * <a href="../../concepts/types.html" target="_top">type and
+     * properties</a> modified, including
+     * whether it is <a href="../../concepts/compression.html"
+     * target="_top">compressed</a> or not.
+     * <p>
      * Create or delete an <a href="../../concepts/indexes.html#column-index"
      * target="_top">index</a> on a
      * particular column. This can speed up certain operations when using
@@ -376,6 +443,22 @@ namespace gpudb
      * containing equality or relational operators on indexed columns. This
      * only
      * applies to tables.
+     * <p>
+     * Create or delete a <a href="../../concepts/tables.html#foreign-key"
+     * target="_top">foreign key</a>
+     * on a particular column.
+     * <p>
+     * Manage a <a href="../../concepts/tables.html#partitioning"
+     * target="_top">range-partitioned</a>
+     * table's partitions.
+     * <p>
+     * Set (or reset) the <a href="../../rm/concepts.html#tier-strategies"
+     * target="_top">tier strategy</a>
+     * of a table or view.
+     * <p>
+     * Refresh and manage the refresh mode of a
+     * <a href="../../concepts/materialized_views.html"
+     * target="_top">materialized view</a>.
      * <p>
      * Set the <a href="../../concepts/ttl.html" target="_top">time-to-live
      * (TTL)</a>. This can be applied
@@ -396,19 +479,6 @@ namespace gpudb
      * target="_top">protection</a> mode to prevent or
      * allow automatic expiration. This can be applied to tables, views, and
      * collections.
-     * <p>
-     * Manage a <a href="../../concepts/tables.html#partitioning"
-     * target="_top">range-partitioned</a>
-     * table's partitions.
-     * <p>
-     * Allow homogeneous tables within a collection.
-     * <p>
-     * Manage a table's columns--a column can be added, removed, or have its
-     * <a href="../../concepts/types.html" target="_top">type and
-     * properties</a> modified.
-     * <p>
-     * Set or unset <a href="../../concepts/compression.html"
-     * target="_top">compression</a> for a column.
      */
     struct AlterTableResponse
     {
