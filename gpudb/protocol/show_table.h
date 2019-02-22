@@ -28,6 +28,9 @@ namespace gpudb
      * returns only information about the collection itself; setting @a
      * show_children to @a true returns a list of tables and views contained in
      * the collection, along with their corresponding detail.
+     * <p>
+     * To retrieve a list of every table, view, and collection in the database,
+     * set @a tableName to '*' and @a show_children to @a true.
      */
     struct ShowTableRequest
     {
@@ -176,6 +179,9 @@ namespace gpudb
      * returns only information about the collection itself; setting @a
      * show_children to @a true returns a list of tables and views contained in
      * the collection, along with their corresponding detail.
+     * <p>
+     * To retrieve a list of every table, view, and collection in the database,
+     * set @a tableName to '*' and @a show_children to @a true.
      */
     struct ShowTableResponse
     {

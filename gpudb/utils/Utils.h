@@ -10,7 +10,7 @@ namespace gpudb
 
 
 
-// Useful Logging Macros
+// Useful String Macros
 // ----------------------
 // Create an inline std::stringstream stream object and return the
 // std::string from it.

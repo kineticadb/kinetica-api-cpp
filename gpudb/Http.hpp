@@ -45,6 +45,9 @@ namespace gpudb {
 
         operator std::string() const;
 
+        friend bool operator ==(const HttpUrl &lhs, const HttpUrl &rhs);
+        friend bool operator !=(const HttpUrl &lhs, const HttpUrl &rhs);
+
     private:
         std::string m_url;
         bool m_secure;
@@ -57,8 +60,10 @@ namespace gpudb {
         void createUrl();
     };
 
-    std::ostream& operator <<(std::ostream& stream, const HttpUrl& value);
+    std::ostream& operator <<(std::ostream &stream, const HttpUrl &value);
 
+
+    
     template<typename T>
     class HttpConnection;
 

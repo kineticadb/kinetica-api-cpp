@@ -276,6 +276,9 @@ namespace gpudb
          *                              <li>
          *                      gpudb::aggregate_group_by_sleep_on_refresh:
          *                      <DEVELOPER>
+         *                              <li>
+         *                      gpudb::aggregate_group_by_refresh_type:
+         *                      <DEVELOPER>
          *                      </ul>
          * 
          */
@@ -477,6 +480,9 @@ namespace gpudb
          *                      <DEVELOPER>
          *                              <li>
          *                      gpudb::aggregate_group_by_sleep_on_refresh:
+         *                      <DEVELOPER>
+         *                              <li>
+         *                      gpudb::aggregate_group_by_refresh_type:
          *                      <DEVELOPER>
          *                      </ul>
          * 

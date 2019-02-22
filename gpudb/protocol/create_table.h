@@ -151,6 +151,8 @@ namespace gpudb
          *                      <a
          *                      href="../../concepts/tables.html#partitioning-by-interval"
          *                      target="_top">interval partitioning</a>.
+         *                              <li> gpudb::create_table_LIST: Not yet
+         *                      supported
          *                      </ul>
          *                              <li>
          *                      gpudb::create_table_partition_keys:
@@ -169,6 +171,17 @@ namespace gpudb
          *                      href="../../concepts/tables.html#partitioning-by-interval-example"
          *                      target="_top">interval partitioning example</a>
          *                      for example formats.
+         *                              <li>
+         *                      gpudb::create_table_is_automatic_partition: If
+         *                      true, a new partition will be created for
+         *                      values which don't fall into an existing
+         *                      partition.  Currently only supported for LIST
+         *                      partitions
+         *                      <ul>
+         *                              <li> gpudb::create_table_true
+         *                              <li> gpudb::create_table_false
+         *                      </ul>
+         *                      The default value is gpudb::create_table_false.
          *                              <li> gpudb::create_table_ttl: For a
          *                      table, sets the <a
          *                      href="../../concepts/ttl.html"

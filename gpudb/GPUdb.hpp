@@ -2,6 +2,7 @@
 #define __GPUDB_HPP__
 
 #include "gpudb/protocol/EndpointKeywords.h"
+#include "gpudb/utils/Utils.h"
 
 #ifndef GPUDB_NO_HTTPS
 #include <boost/asio/ssl.hpp>
@@ -109,9 +110,18 @@ public:
 
     static inline std::string getApiVersion() { return GPUdb::API_VERSION; }
 
+    /// Pass a single HttpURL and options to instantiate a GPUdb object
     GPUdb(const HttpUrl& url, const Options& options = Options());
+
+    /// Pass a single or multiple, comma-separated URLs as a string and options
+    /// to instantiate a GPUdb object
     GPUdb(const std::string& url, const Options& options = Options());
+
+    /// Pass multiple HttpURLs and options to instatiate a GPUdb object
     GPUdb(const std::vector<HttpUrl>& urls, const Options& options = Options());
+
+    /// Pass multiple strings, each containing a single URL, and options to
+    /// instantiate a GPUdb object
     GPUdb(const std::vector<std::string>& urls, const Options& options = Options());
 
     /// Some getters
@@ -142,10 +152,32 @@ public:
                              const bool enableCompression = false) const
     {
         std::vector<uint8_t> requestBytes;
-        avro::encode(requestBytes, request);
+        try // encoding the request
+        {
+            avro::encode(requestBytes, request);
+        }
+        catch ( const std::exception& ex )
+        {
+            std::string message = GPUDB_STREAM_TO_STRING( "Error encountered while encoding request: "
+                                                          << ex.what() );
+            throw GPUdbException( message );
+        }
+
+        // Submit the request
         RawGpudbResponse gpudbResponse;
         submitRequestRaw(url, requestBytes, gpudbResponse, enableCompression);
-        avro::decode(response, gpudbResponse.data);
+
+        try // decoding the request
+        {
+            avro::decode(response, gpudbResponse.data);
+        }
+        catch ( const std::exception& ex )
+        {
+            std::string message = GPUDB_STREAM_TO_STRING( "Error encountered while decoding response: '"
+                                                          << ex.what()
+                                                          << "'; please ensure that the client API matches the server API version." );
+            throw GPUdbException( message );
+        }
         return response;
     }
 
@@ -156,10 +188,33 @@ public:
                              const bool enableCompression = false) const
     {
         std::vector<uint8_t> requestBytes;
-        avro::encode(requestBytes, request);
+        try // encoding the request
+        {
+            avro::encode(requestBytes, request);
+        }
+        catch ( const std::exception& ex )
+        {
+            std::string message = GPUDB_STREAM_TO_STRING( "Error encountered while encoding request: "
+                                                          << ex.what() );
+            throw GPUdbException( message );
+        }
+
+        // Submit the request
         RawGpudbResponse gpudbResponse;
         submitRequestRaw(endpoint, requestBytes, gpudbResponse, enableCompression);
-        avro::decode(response, gpudbResponse.data);
+
+        try // decoding the request
+        {
+            avro::decode(response, gpudbResponse.data);
+        }
+        catch ( const std::exception& ex )
+        {
+            std::string message = GPUDB_STREAM_TO_STRING( "Error encountered while decoding response: '"
+                                                          << ex.what()
+                                                          << "'; please ensure that the client API matches the server API version." );
+            throw GPUdbException( message );
+        }
+
         return response;
     }
 
@@ -195,10 +250,32 @@ public:
     {
         // Handle host manager stuff here
         std::vector<uint8_t> requestBytes;
+        try // encoding the request
+        {
         avro::encode(requestBytes, request);
+        }
+        catch ( const std::exception& ex )
+        {
+            std::string message = GPUDB_STREAM_TO_STRING( "Error encountered while encoding request: "
+                                                          << ex.what() );
+            throw GPUdbException( message );
+        }
+
+        // Submit the request
         RawGpudbResponse gpudbResponse;
         submitRequestToHostManagerRaw(endpoint, requestBytes, gpudbResponse, enableCompression);
-        avro::decode(response, gpudbResponse.data);
+
+        try // decoding the request
+        {
+            avro::decode(response, gpudbResponse.data);
+        }
+        catch ( const std::exception& ex )
+        {
+            std::string message = GPUDB_STREAM_TO_STRING( "Error encountered while decoding response: '"
+                                                          << ex.what()
+                                                          << "'; please ensure that the client API matches the server API version." );
+            throw GPUdbException( message );
+        }
         return response;
     }   // end submitRequestToHostManager
 
@@ -274,9 +351,9 @@ private:
 
     std::vector<HttpUrl> m_urls;
     std::vector<HttpUrl> m_hmUrls;
+    mutable std::vector<size_t>  m_urlIndices;
     mutable boost::mutex m_urlMutex;
     mutable size_t m_currentUrl;
-    mutable size_t m_currentHmUrl;
 
 #ifndef GPUDB_NO_HTTPS
     boost::asio::ssl::context* m_sslContext;
@@ -290,10 +367,14 @@ private:
     avro::ExecutorPtr m_executor;
     std::map<std::string, std::string> m_httpHeaders;
     size_t m_timeout;
+    Options m_options;
 
     mutable std::map<std::string, avro::DecoderPtr> m_knownTypes;
     mutable boost::mutex m_knownTypesMutex;
 
+    /// Helper functions
+    void init();
+    
     /// Some getters
     const HttpUrl* getUrlPointer() const;
     const HttpUrl* getHmUrlPointer() const;

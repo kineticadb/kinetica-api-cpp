@@ -1,8 +1,18 @@
 #include "gpudb/GPUdb.hpp"
 
+#include "gpudb/utils/Utils.h"
+
 #include <boost/lexical_cast.hpp>
 #include <boost/random.hpp>
 #include <snappy.h>
+
+#include <algorithm>  // for std::random_shuffle
+#include <iostream>
+#include <iterator>
+#include <map>
+#include <stdexcept>  // for std::out_of_range
+#include <vector>
+
 
 namespace gpudb {
     static const char base64Chars[] = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
@@ -44,8 +54,6 @@ namespace gpudb {
     }
 
     GPUdb::GPUdb(const HttpUrl& url, const Options& options) :
-        m_currentUrl( 0 ),
-        m_currentHmUrl( 0 ),
 
         #ifndef GPUDB_NO_HTTPS
         m_sslContext( options.getSslContext() ),
@@ -60,18 +68,16 @@ namespace gpudb {
         m_threadCount( options.getThreadCount() ),
         m_executor( options.getExecutor() ),
         m_httpHeaders( options.getHttpHeaders() ),
-        m_timeout( options.getTimeout() )
+        m_timeout( options.getTimeout() ),
+        m_options( options )
     {
         // Head node URLs
         m_urls.push_back(url);
 
-        // Host manager URLs
-        createHostManagerUrl( url, options.getHostManagerPort() );
+        init();
     }
 
     GPUdb::GPUdb(const std::string& url, const Options& options) :
-        m_currentUrl(0),
-        m_currentHmUrl(0),
 
         #ifndef GPUDB_NO_HTTPS
         m_sslContext(options.getSslContext()),
@@ -86,19 +92,36 @@ namespace gpudb {
         m_threadCount(options.getThreadCount()),
         m_executor(options.getExecutor()),
         m_httpHeaders(options.getHttpHeaders()),
-        m_timeout(options.getTimeout())
+        m_timeout(options.getTimeout()),
+        m_options( options )
     {
-        HttpUrl url_ = HttpUrl(url);
-        m_urls.push_back( url_ );
+        // Split on commas, if any
+        char comma = ',';
+        std::size_t comma_index = url.find( comma );
+        if ( comma_index != std::string::npos )
+        {
+            // Multiple URLs found; parse them all URL
+            std::istringstream iss( url );
+            std::string token;
+            while ( std::getline( iss, token, comma ) )
+            {
+                // Parse a single URL
+                HttpUrl url_ = HttpUrl( token );
+                m_urls.push_back( url_ );
+            }
+        }
+        else
+        {
+            // Parse single URL
+            HttpUrl url_ = HttpUrl( url );
+            m_urls.push_back( url_ );
+        }
 
-        // Host manager URLs
-        createHostManagerUrl( url_, options.getHostManagerPort() );
+        init();
     }
 
     GPUdb::GPUdb(const std::vector<HttpUrl>& urls, const Options& options) :
         m_urls(urls),
-        m_currentUrl(randomItem(urls.size())),
-        m_currentHmUrl(randomItem(urls.size())),
 
         #ifndef GPUDB_NO_HTTPS
         m_sslContext(options.getSslContext()),
@@ -113,20 +136,18 @@ namespace gpudb {
         m_threadCount(options.getThreadCount()),
         m_executor(options.getExecutor()),
         m_httpHeaders(options.getHttpHeaders()),
-        m_timeout(options.getTimeout())
+        m_timeout(options.getTimeout()),
+        m_options( options )
     {
         if (urls.empty())
         {
             throw std::invalid_argument("At least one URL must be specified.");
         }
 
-        // Host manager URLs
-        createHostManagerUrls( urls, options.getHostManagerPort() );
+        init();
     }
 
     GPUdb::GPUdb(const std::vector<std::string>& urls, const Options& options) :
-        m_currentUrl(randomItem(urls.size())),
-        m_currentHmUrl(randomItem(urls.size())),
 
         #ifndef GPUDB_NO_HTTPS
         m_sslContext(options.getSslContext()),
@@ -141,7 +162,8 @@ namespace gpudb {
         m_threadCount(options.getThreadCount()),
         m_executor(options.getExecutor()),
         m_httpHeaders(options.getHttpHeaders()),
-        m_timeout(options.getTimeout())
+        m_timeout(options.getTimeout()),
+        m_options( options )
     {
         if (urls.empty())
         {
@@ -151,10 +173,129 @@ namespace gpudb {
         m_urls.reserve(urls.size());
         m_urls.insert(m_urls.end(), urls.begin(), urls.end());
 
-        // Host manager URLs
-        createHostManagerUrls( m_urls, options.getHostManagerPort() );
+        init();
     }
 
+    
+    void GPUdb::init()
+    {
+        if ( m_urls.empty() )
+        {
+            throw std::invalid_argument("At least one URL must be specified.");
+        }
+
+        // If only one URL is given, get the HA ring head node addresses, if any
+        if ( m_urls.size() == 1 )
+        {
+            // Get the system properties to find out about the HA ring nodes
+            ShowSystemPropertiesRequest  request;
+            ShowSystemPropertiesResponse response;
+            try {
+                HttpUrl url( m_urls[0], "/show/system/properties" );
+                response = submitRequest( url, request, response );
+                // response = submitRequest( "/show/system/properties", request, response );
+            } catch (GPUdbException ex) {
+                // Note: Not worth dying just because the HA ring node
+                // addresses couldn't be found
+            }
+
+            const std::map<std::string, std::string> &systemProperties = response.propertyMap;
+            try
+            {
+                std::string is_ha_enabled = systemProperties.at( gpudb::show_system_properties_conf_enable_ha );
+
+                // Only attempt to parse the HA ring node addresses if HA is enabled
+                if ( is_ha_enabled.compare( gpudb::show_system_properties_TRUE ) == 0 )
+                {
+                    // Parse the HA ringt head node addresses, if any
+                    std::string ha_ring_head_nodes = systemProperties.at( gpudb::show_system_properties_conf_ha_ring_head_nodes );
+
+                    // Parse the ring head node addresses, if any
+                    if ( !ha_ring_head_nodes.empty() )
+                    {
+                        std::vector<HttpUrl> ha_urls;
+                        try
+                        {
+                            // Split on commas, if any
+                            char comma = ',';
+                            std::size_t comma_index = ha_ring_head_nodes.find( comma );
+                            if ( comma_index != std::string::npos )
+                            {
+                                // Multiple URLs found; parse them all URL
+                                std::istringstream iss( ha_ring_head_nodes );
+                                std::string token;
+                                while ( std::getline( iss, token, comma ) )
+                                {
+                                    // Parse a single URL
+                                    HttpUrl url_ = HttpUrl( token );
+                                    ha_urls.push_back( url_ );
+                                }
+                            }
+                            else
+                            {
+                                // Parse single URL
+                                HttpUrl url_ = HttpUrl( ha_ring_head_nodes );
+                                ha_urls.push_back( url_ );
+                            }
+                        } catch ( const std::invalid_argument& ex )
+                        {
+                            std::string message = GPUDB_STREAM_TO_STRING( "Error parsing HA ring head "
+                                                                          << "node address from the "
+                                                                          << "database configuration "
+                                                                          << "parameters: "
+                                                                          << ex.what() );
+                            throw GPUdbException( message );
+                        }
+
+                        // Ensure that the given URL is included in the HA ring
+                        // head node addresses
+                        std::vector<HttpUrl>::iterator it = std::find( ha_urls.begin(),
+                                                                       ha_urls.end(),
+                                                                       m_urls[0] );
+                        if ( it == ha_urls.end() )
+                        {   // not found; so add the given URL to the list
+                            ha_urls.push_back( m_urls[ 0 ] );
+                        }
+
+                        // Now save these head node addresses, including the given one
+                        m_urls.clear();
+                        m_urls.assign( ha_urls.begin(), ha_urls.end() );
+                    }
+                }
+            } catch (const std::out_of_range &oor)
+            {
+                // Note: Not worth dying just because the appropriate properties
+                // are missing (and so we can't get the HA ring node addresses)
+            }
+        } // end if one URL is given
+
+        // Seed the RNG for later use
+        std::srand( std::time( NULL ) );
+        
+        // Create host manager URLs from the regular URLs
+        createHostManagerUrls( m_urls, m_options.getHostManagerPort() );
+
+        // Make sure that there are the same number of regular URLs and HM URLs
+        if ( m_urls.size() != m_hmUrls.size() )
+        {
+            throw std::runtime_error("Number of head node URLs and host manager URLs do not match");
+        }
+
+        // Generate a list of indices for the URL lists
+        m_urlIndices.reserve( m_urls.size() );
+        for ( size_t i = 0; i < m_urls.size(); ++i )
+        {
+            m_urlIndices.push_back( i );
+        }
+        // Randomly shuffle the list of indices
+        std::random_shuffle( m_urlIndices.begin(), m_urlIndices.end() );
+
+        // We'll go through this list of indices serially, having an overall
+        // effect of randomly choosing the URLs
+        m_currentUrl = 0;
+    }   // end init
+
+    
     void GPUdb::addKnownType(const std::string& typeId, const avro::DecoderPtr& decoder)
     {
         if (!decoder)
@@ -271,7 +412,7 @@ namespace gpudb {
         {
             boost::mutex::scoped_lock lock(m_urlMutex);
 
-            return m_urls[m_currentUrl];
+            return m_urls[ m_urlIndices[ m_currentUrl ] ];
         }
     }
 
@@ -285,7 +426,7 @@ namespace gpudb {
         {
             boost::mutex::scoped_lock lock(m_urlMutex);
 
-            return &m_urls[m_currentUrl];
+            return &m_urls[ m_urlIndices[ m_currentUrl ] ];
         }
     }
 
@@ -304,7 +445,7 @@ namespace gpudb {
         {
             boost::mutex::scoped_lock lock( m_urlMutex );
 
-            return m_hmUrls[ m_currentHmUrl ];
+            return m_hmUrls[ m_urlIndices[ m_currentUrl ] ];
         }
     }
 
@@ -318,7 +459,7 @@ namespace gpudb {
         {
             boost::mutex::scoped_lock lock(m_urlMutex);
 
-            return &m_hmUrls[ m_currentHmUrl ];
+            return &m_hmUrls[ m_urlIndices[ m_currentUrl ] ];
         }
     }
 
@@ -408,7 +549,7 @@ namespace gpudb {
                                           oldUrl.getPath(),
                                           oldUrl.getQuery() );
                 m_hmUrls[ i ] = newUrl;
-            } catch ( std::invalid_argument ex )
+            } catch ( const std::invalid_argument& ex )
             {
                 throw new GPUdbException( ex.what() );
             }
@@ -502,32 +643,53 @@ namespace gpudb {
         {
             try
             {
-                submitRequestRaw(HttpUrl(*url, endpoint), request, response, enableCompression, false);
+                submitRequestRaw(HttpUrl(*url, endpoint), request, response, enableCompression, true);
                 break;
             }
-            catch (const std::exception& /*ex*/)
-            {
-                if (m_urls.size() == 1)
+            catch (const GPUdbExitException& ex)
+            {   // First handle our special exit exception
+                try
                 {
-                    throw;
+                    url = switchUrl( originalUrl );
                 }
-                else
+                catch (GPUdbHAUnavailableException ha_ex)
                 {
-                    url = switchUrl(url);
-
-                    if (url == originalUrl)
-                    {
-                        throw;
-                    }
+                    throw GPUdbException( ha_ex.what() );
+                }
+            }
+            catch (const GPUdbSubmitException& ex)
+            {   // Some error occurred during the HTTP request
+                try
+                {
+                    url = switchUrl( originalUrl );
+                }
+                catch (GPUdbHAUnavailableException ha_ex)
+                {
+                    throw GPUdbException( ha_ex.what() );
+                }
+            }
+            catch (const GPUdbException& ex)
+            {   // Any other GPUdbException is a valid failure
+                throw ex;
+            }
+            catch (const std::exception& ex)
+            {   // And other random exceptions probably are also connection errors
+                try
+                {
+                    url = switchUrl( originalUrl );
+                }
+                catch (GPUdbHAUnavailableException ha_ex)
+                {
+                    throw GPUdbException( ha_ex.what() );
                 }
             }
         }
 
         if (response.status == "ERROR")
-        {
+        {   // Should'nt really get here; but just in case we do
             throw GPUdbException(response.message);
         }
-    }
+    }   // end submitRequestRaw( string endpoint )
 
     
     void GPUdb::submitRequestToHostManagerRaw(const std::string& endpoint,
@@ -542,32 +704,53 @@ namespace gpudb {
         {
             try
             {
-                submitRequestRaw(HttpUrl(*hmUrl, endpoint), request, response, enableCompression, false);
+                submitRequestRaw(HttpUrl(*hmUrl, endpoint), request, response, enableCompression, true);
                 break;
             }
-            catch (const std::exception& ex)
-            {
-                if (m_hmUrls.size() == 1)
+            catch (const GPUdbExitException& ex)
+            {   // First handle our special exit exception
+                try
                 {
-                    throw;
+                    hmUrl = switchHmUrl( originalHmUrl );
                 }
-                else
+                catch (GPUdbHAUnavailableException ha_ex)
                 {
-                    hmUrl = switchHmUrl( hmUrl );
-
-                    if (hmUrl == originalHmUrl)
-                    {
-                        throw;
-                    }
+                    throw GPUdbException( ha_ex.what() );
+                }
+            }
+            catch (const GPUdbSubmitException& ex)
+            {   // Some error occurred during the HTTP request
+                try
+                {
+                    hmUrl = switchHmUrl( originalHmUrl );
+                }
+                catch (GPUdbHAUnavailableException ha_ex)
+                {
+                    throw GPUdbException( ha_ex.what() );
+                }
+            }
+            catch (const GPUdbException& ex)
+            {   // Any other GPUdbException is a valid failure
+                throw ex;
+            }
+            catch (const std::exception& ex)
+            {   // And other random exceptions probably are also connection errors
+                try
+                {
+                    hmUrl = switchHmUrl( originalHmUrl );
+                }
+                catch (GPUdbHAUnavailableException ha_ex)
+                {
+                    throw GPUdbException( ha_ex.what() );
                 }
             }  // end try-catch
         }  // end while
 
         if (response.status == "ERROR")
-        {
+        {   // Should'nt really get here; but just in case we do
             throw GPUdbException( response.message );
         }
-    }
+    }   // end submitRequestToHostManagerRaw( endpoint )
 
 
     void GPUdb::submitRequestRaw(const HttpUrl& url,
@@ -578,72 +761,110 @@ namespace gpudb {
     {
         BinaryHttpResponse httpResponse;
 
-        if (enableCompression && m_useSnappy)
+        try
         {
-            StringHttpRequest httpRequest(url);
-            initHttpRequest(httpRequest);
-            std::string compressedRequest;
-            snappy::Compress((char*)&request[0], request.size(), &compressedRequest);
-            httpRequest.addRequestHeader("Content-type", "application/x-snappy");
-            httpRequest.addRequestHeader("Content-length", boost::lexical_cast<std::string>(compressedRequest.length()));
-            httpRequest.setRequestBody(&compressedRequest);
-            httpRequest.send(httpResponse);
-        }
-        else
-        {
-            BinaryHttpRequest httpRequest(url);
-            initHttpRequest(httpRequest);
-            httpRequest.addRequestHeader("Content-type", "application/octet-stream");
-            httpRequest.addRequestHeader("Content-length", boost::lexical_cast<std::string>(request.size()));
-            httpRequest.setRequestBody(&request);
-            httpRequest.send(httpResponse);
-        }
+            if (enableCompression && m_useSnappy)
+            {
+                StringHttpRequest httpRequest(url);
+                initHttpRequest(httpRequest);
+                std::string compressedRequest;
+                snappy::Compress((char*)&request[0], request.size(), &compressedRequest);
+                httpRequest.addRequestHeader("Content-type", "application/x-snappy");
+                httpRequest.addRequestHeader("Content-length", boost::lexical_cast<std::string>(compressedRequest.length()));
+                httpRequest.setRequestBody(&compressedRequest);
+                httpRequest.send(httpResponse);
+            }
+            else
+            {
+                BinaryHttpRequest httpRequest(url);
+                initHttpRequest(httpRequest);
+                httpRequest.addRequestHeader("Content-type", "application/octet-stream");
+                httpRequest.addRequestHeader("Content-length", boost::lexical_cast<std::string>(request.size()));
+                httpRequest.setRequestBody(&request);
+                httpRequest.send(httpResponse);
+            }
 
-        if (httpResponse.getResponseCode() == 401)
-        {
-            throw GPUdbException("Insufficient credentials");
-        }
+            if (httpResponse.getResponseCode() == 401)
+            {
+                throw GPUdbException("Insufficient credentials");
+            }
 
-        avro::decode(response, httpResponse.getResponseBody());
+            avro::decode(response, httpResponse.getResponseBody());
+        }
+        catch (const std::exception& ex )
+        {
+            throw GPUdbSubmitException( url, request, ex.what() );
+        }
 
         if (throwOnError && response.status == "ERROR")
         {
-            throw GPUdbException(response.message);
+            // If Kinetica is exiting, throw a special exception
+            if ( response.message.find( "Kinetica is exiting" ) != std::string::npos )
+            {
+                throw GPUdbExitException(response.message);
+            }
+            throw GPUdbException( response.message );
         }
-    }
+    }   // end submitRequestRaw( HttpUrl )
+
 
     const HttpUrl* GPUdb::switchUrl(const HttpUrl* oldUrl) const
     {
         boost::mutex::scoped_lock lock(m_urlMutex);
 
-        if (&m_urls[m_currentUrl] == oldUrl)
+        // If we have just one URL, then we can't switch to another!
+        if ( m_urls.size() == 1 )
         {
-            m_currentUrl++;
+            throw GPUdbHAUnavailableException( "GPUdb unavailable (no HA ring available); ", m_urls );
+        }
+        // Increment the index by one (mod url list length)
+        m_currentUrl = (m_currentUrl + 1) % m_urls.size();
+        
+        // If we've circled back; shuffle the indices again so that future
+        // requests go to a different randomly selected cluster, but also
+        // let the caller know that we've circled back
+        if (&m_urls[ m_urlIndices[ m_currentUrl ] ] == oldUrl)
+        {
+            // Re-shuffle and set the index counter to zero
+            std::random_shuffle( m_urlIndices.begin(), m_urlIndices.end() );
+            // Set the index counter to zero
+            m_currentUrl = 0;
 
-            if (m_currentUrl >= m_urls.size())
-            {
-                m_currentUrl = 0;
-            }
+            // Let the user know that we've circled back
+            throw GPUdbHAUnavailableException( "GPUdb unavailable (an HA ring has been set up); ", m_urls );
         }
 
-        return &m_urls[m_currentUrl];
+        // Haven't circled back to the old URL; so return the new one
+        return &m_urls[ m_urlIndices[ m_currentUrl ] ];
     }
+
 
     const HttpUrl* GPUdb::switchHmUrl(const HttpUrl* oldUrl) const
     {
         boost::mutex::scoped_lock lock(m_urlMutex);
 
-        if (&m_hmUrls[ m_currentHmUrl ] == oldUrl)
+        // If we have just one URL, then we can't switch to another!
+        if ( m_hmUrls.size() == 1 )
+            throw GPUdbHAUnavailableException( "GPUdb unavailable (no HA ring available); ", m_hmUrls );
+        // Increment the index by one (mod url list length)
+        m_currentUrl = (m_currentUrl + 1) % m_hmUrls.size();
+        
+        // If we've circled back; shuffle the indices again so that future
+        // requests go to a different randomly selected cluster, but also
+        // let the caller know that we've circled back
+        if (&m_hmUrls[ m_urlIndices[ m_currentUrl ] ] == oldUrl)
         {
-            m_currentHmUrl++;
+            // Re-shuffle and set the index counter to zero
+            std::random_shuffle( m_urlIndices.begin(), m_urlIndices.end() );
+            // Set the index counter to zero
+            m_currentUrl = 0;
 
-            if (m_currentHmUrl >= m_hmUrls.size())
-            {
-                m_currentHmUrl = 0;
-            }
+            // Let the user know that we've circled back
+            throw GPUdbHAUnavailableException( "GPUdb unavailable (an HA ring has been set up); ", m_hmUrls );
         }
 
-        return &m_hmUrls[ m_currentHmUrl ];
+        // Haven't circled back to the old URL; so return the new one
+        return &m_hmUrls[ m_urlIndices[ m_currentUrl ] ];
     }
 
     GPUdb::Options::Options() :

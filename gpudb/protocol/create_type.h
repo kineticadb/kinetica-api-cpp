@@ -107,10 +107,9 @@ namespace gpudb
          *                         disk usage by disabling reverse string
          *                         lookups. Queries like /filter,
          *                         /filter/bylist, and /filter/byvalue work as
-         *                         usual but /aggregate/unique,
-         *                         /aggregate/groupby and /get/records/bycolumn
-         *                         are not allowed on columns with this
-         *                         property.
+         *                         usual but /aggregate/unique and
+         *                         /aggregate/groupby are not allowed on
+         *                         columns with this property.
          *                                 <li> gpudb::create_type_timestamp:
          *                         Valid only for 'long' columns. Indicates
          *                         that this field represents a timestamp and
@@ -256,6 +255,12 @@ namespace gpudb
          *                         where the cardinality (the number of unique
          *                         values) is expected to be low. This property
          *                         can save a large amount of memory.
+         *                                 <li>
+         *                         gpudb::create_type_init_with_now: For
+         *                         columns with attributes of date, time,
+         *                         datetime or timestamp, at insert time,
+         *                         replace empty strings and invalid timestamps
+         *                         with NOW()
          *                         </ul>
          * @param[in] options_  Optional parameters.
          * 

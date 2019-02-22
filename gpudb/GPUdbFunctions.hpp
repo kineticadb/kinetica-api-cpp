@@ -5,6 +5,206 @@
  */
 
 /**
+ * Add one or more new ranks to the Kinetica cluster. The new ranks will not
+ * contain any data initially, other than replicated tables, and not be
+ * assigned any shards. To rebalance data across the cluster, which includes
+ * shifting some shard key assignments to newly added ranks, see {@link
+ * #adminRebalance(const AdminRebalanceRequest&) const}.
+ * <p>
+ * For example, if attempting to add three new ranks (two ranks on host
+ * 172.123.45.67 and one rank on host 172.123.45.68) to a Kinetica cluster with
+ * additional configuration parameters:
+ * <p>
+ * * @a hosts would be an array including 172.123.45.67 in the first two
+ * indices (signifying two ranks being added to host 172.123.45.67) and
+ * 172.123.45.68 in the last index (signifying one rank being added to host
+ * 172.123.45.67)
+ * <p>
+ * * @a configParams would be an array of maps, with each map corresponding to
+ * the ranks being added in @a hosts. The key of each map would be the
+ * configuration parameter name and the value would be the parameter's value,
+ * e.g. 'rank.gpu':'1'
+ * <p>
+ * This endpoint's processing includes copying all replicated table data to the
+ * new rank(s) and therefore could take a long time. The API call may time out
+ * if run directly.  It is recommended to run this endpoint asynchronously via
+ * {@link #createJob(const CreateJobRequest&) const}.
+ * 
+ * @param[in] request_  Request object containing the parameters for the
+ *                      operation.
+ * 
+ * @return Response object containing the result of the operation.
+ * 
+ */
+
+AdminAddRanksResponse adminAddRanks( const AdminAddRanksRequest& request_ ) const;
+
+/**
+ * Add one or more new ranks to the Kinetica cluster. The new ranks will not
+ * contain any data initially, other than replicated tables, and not be
+ * assigned any shards. To rebalance data across the cluster, which includes
+ * shifting some shard key assignments to newly added ranks, see {@link
+ * #adminRebalance(const AdminRebalanceRequest&,AdminRebalanceResponse&) const}.
+ * <p>
+ * For example, if attempting to add three new ranks (two ranks on host
+ * 172.123.45.67 and one rank on host 172.123.45.68) to a Kinetica cluster with
+ * additional configuration parameters:
+ * <p>
+ * * @a hosts would be an array including 172.123.45.67 in the first two
+ * indices (signifying two ranks being added to host 172.123.45.67) and
+ * 172.123.45.68 in the last index (signifying one rank being added to host
+ * 172.123.45.67)
+ * <p>
+ * * @a configParams would be an array of maps, with each map corresponding to
+ * the ranks being added in @a hosts. The key of each map would be the
+ * configuration parameter name and the value would be the parameter's value,
+ * e.g. 'rank.gpu':'1'
+ * <p>
+ * This endpoint's processing includes copying all replicated table data to the
+ * new rank(s) and therefore could take a long time. The API call may time out
+ * if run directly.  It is recommended to run this endpoint asynchronously via
+ * {@link #createJob(const CreateJobRequest&,CreateJobResponse&) const}.
+ * 
+ * @param[in] request_  Request object containing the parameters for the
+ *                      operation.
+ * @param[out] response_  Response object containing the results of the
+ *                        operation.
+ * 
+ * @return Response object containing the result of the operation (initially
+ *         passed in by reference).
+ * 
+ */
+
+AdminAddRanksResponse& adminAddRanks( const AdminAddRanksRequest& request_,
+                                      AdminAddRanksResponse& response_ ) const;
+
+/**
+ * Add one or more new ranks to the Kinetica cluster. The new ranks will not
+ * contain any data initially, other than replicated tables, and not be
+ * assigned any shards. To rebalance data across the cluster, which includes
+ * shifting some shard key assignments to newly added ranks, see {@link
+ * #adminRebalance(const std::map<std::string, std::string>&) const}.
+ * <p>
+ * For example, if attempting to add three new ranks (two ranks on host
+ * 172.123.45.67 and one rank on host 172.123.45.68) to a Kinetica cluster with
+ * additional configuration parameters:
+ * <p>
+ * * @a hosts would be an array including 172.123.45.67 in the first two
+ * indices (signifying two ranks being added to host 172.123.45.67) and
+ * 172.123.45.68 in the last index (signifying one rank being added to host
+ * 172.123.45.67)
+ * <p>
+ * * @a configParams would be an array of maps, with each map corresponding to
+ * the ranks being added in @a hosts. The key of each map would be the
+ * configuration parameter name and the value would be the parameter's value,
+ * e.g. 'rank.gpu':'1'
+ * <p>
+ * This endpoint's processing includes copying all replicated table data to the
+ * new rank(s) and therefore could take a long time. The API call may time out
+ * if run directly.  It is recommended to run this endpoint asynchronously via
+ * {@link
+ * #createJob(const std::string&,const std::string&,const std::vector<uint8_t>&,const std::string&,const std::map<std::string, std::string>&) const}.
+ * 
+ * @param hosts  The IP address of each rank being added to the cluster. Insert
+ *               one entry per rank, even if they are on the same host. The
+ *               order of the hosts in the array only matters as it relates to
+ *               the @a configParams.
+ * @param configParams  Configuration parameters to apply to the new ranks,
+ *                      e.g., which GPU to use. Configuration parameters that
+ *                      start with 'rankN.', where N is the rank number, should
+ *                      omit the N, as the new rank number(s) are not allocated
+ *                      until the ranks are created. Each entry in this array
+ *                      corresponds to the entry at the same array index in the
+ *                      @a hosts. This array must either be completely empty or
+ *                      have the same number of elements as the hosts array.
+ *                      An empty array will result in the new ranks being set
+ *                      only with default parameters.
+ * @param options  Optional parameters.
+ *                 <ul>
+ *                         <li> gpudb::admin_add_ranks_dry_run: If @a true,
+ *                 only validation checks will be performed. No ranks are
+ *                 added.
+ *                 <ul>
+ *                         <li> gpudb::admin_add_ranks_true
+ *                         <li> gpudb::admin_add_ranks_false
+ *                 </ul>
+ *                 The default value is gpudb::admin_add_ranks_false.
+ *                 </ul>
+ * 
+ * @return Response object containing the result of the operation.
+ * 
+ */
+
+AdminAddRanksResponse adminAddRanks( const std::vector<std::string>& hosts,
+                                     const std::vector<std::map<std::string, std::string> >& configParams,
+                                     const std::map<std::string, std::string>& options ) const;
+
+/**
+ * Add one or more new ranks to the Kinetica cluster. The new ranks will not
+ * contain any data initially, other than replicated tables, and not be
+ * assigned any shards. To rebalance data across the cluster, which includes
+ * shifting some shard key assignments to newly added ranks, see {@link
+ * #adminRebalance(const std::map<std::string, std::string>&,AdminRebalanceResponse&) const}.
+ * <p>
+ * For example, if attempting to add three new ranks (two ranks on host
+ * 172.123.45.67 and one rank on host 172.123.45.68) to a Kinetica cluster with
+ * additional configuration parameters:
+ * <p>
+ * * @a hosts would be an array including 172.123.45.67 in the first two
+ * indices (signifying two ranks being added to host 172.123.45.67) and
+ * 172.123.45.68 in the last index (signifying one rank being added to host
+ * 172.123.45.67)
+ * <p>
+ * * @a configParams would be an array of maps, with each map corresponding to
+ * the ranks being added in @a hosts. The key of each map would be the
+ * configuration parameter name and the value would be the parameter's value,
+ * e.g. 'rank.gpu':'1'
+ * <p>
+ * This endpoint's processing includes copying all replicated table data to the
+ * new rank(s) and therefore could take a long time. The API call may time out
+ * if run directly.  It is recommended to run this endpoint asynchronously via
+ * {@link
+ * #createJob(const std::string&,const std::string&,const std::vector<uint8_t>&,const std::string&,const std::map<std::string, std::string>&,CreateJobResponse&) const}.
+ * 
+ * @param hosts  The IP address of each rank being added to the cluster. Insert
+ *               one entry per rank, even if they are on the same host. The
+ *               order of the hosts in the array only matters as it relates to
+ *               the @a configParams.
+ * @param configParams  Configuration parameters to apply to the new ranks,
+ *                      e.g., which GPU to use. Configuration parameters that
+ *                      start with 'rankN.', where N is the rank number, should
+ *                      omit the N, as the new rank number(s) are not allocated
+ *                      until the ranks are created. Each entry in this array
+ *                      corresponds to the entry at the same array index in the
+ *                      @a hosts. This array must either be completely empty or
+ *                      have the same number of elements as the hosts array.
+ *                      An empty array will result in the new ranks being set
+ *                      only with default parameters.
+ * @param options  Optional parameters.
+ *                 <ul>
+ *                         <li> gpudb::admin_add_ranks_dry_run: If @a true,
+ *                 only validation checks will be performed. No ranks are
+ *                 added.
+ *                 <ul>
+ *                         <li> gpudb::admin_add_ranks_true
+ *                         <li> gpudb::admin_add_ranks_false
+ *                 </ul>
+ *                 The default value is gpudb::admin_add_ranks_false.
+ *                 </ul>
+ * @param[out] response_  Response object containing the results of the
+ *                        operation.
+ * 
+ * @return Response object containing the result of the operation (initially
+ *         passed in by reference).
+ * 
+ */
+
+AdminAddRanksResponse& adminAddRanks( const std::vector<std::string>& hosts,
+                                      const std::vector<std::map<std::string, std::string> >& configParams,
+                                      const std::map<std::string, std::string>& options,
+                                      AdminAddRanksResponse& response_ ) const;
+
+/**
  * Perform the requested action on a list of one or more job(s). Based on the
  * type of job and the current state of execution, the action may not be
  * successfully executed. The final result of the attempted actions for each
@@ -93,88 +293,6 @@ AdminAlterJobsResponse& adminAlterJobs( const std::vector<int64_t>& jobIds,
                                         AdminAlterJobsResponse& response_ ) const;
 
 /**
- * @private
- * 
- * @param[in] request_  Request object containing the parameters for the
- *                      operation.
- * 
- * @return Response object containing the result of the operation.
- * 
- */
-
-AdminAlterShardsResponse adminAlterShards( const AdminAlterShardsRequest& request_ ) const;
-
-/**
- * @private
- * 
- * @param[in] request_  Request object containing the parameters for the
- *                      operation.
- * @param[out] response_  Response object containing the results of the
- *                        operation.
- * 
- * @return Response object containing the result of the operation (initially
- *         passed in by reference).
- * 
- */
-
-AdminAlterShardsResponse& adminAlterShards( const AdminAlterShardsRequest& request_,
-                                            AdminAlterShardsResponse& response_ ) const;
-
-/**
- * @private
- * 
- * @param version
- * @param useIndex
- * @param rank
- * @param tom
- * @param index
- * @param backupMapList
- * @param backupMapValues
- * @param options
- * 
- * @return Response object containing the result of the operation.
- * 
- */
-
-AdminAlterShardsResponse adminAlterShards( const int64_t version,
-                                           const bool useIndex,
-                                           const std::vector<int32_t>& rank,
-                                           const std::vector<int32_t>& tom,
-                                           const std::vector<int32_t>& index,
-                                           const std::vector<int32_t>& backupMapList,
-                                           const std::vector<std::vector<int32_t> >& backupMapValues,
-                                           const std::map<std::string, std::string>& options ) const;
-
-/**
- * @private
- * 
- * @param version
- * @param useIndex
- * @param rank
- * @param tom
- * @param index
- * @param backupMapList
- * @param backupMapValues
- * @param options
- * @param[out] response_  Response object containing the results of the
- *                        operation.
- * 
- * @return Response object containing the result of the operation (initially
- *         passed in by reference).
- * 
- */
-
-AdminAlterShardsResponse& adminAlterShards( const int64_t version,
-                                            const bool useIndex,
-                                            const std::vector<int32_t>& rank,
-                                            const std::vector<int32_t>& tom,
-                                            const std::vector<int32_t>& index,
-                                            const std::vector<int32_t>& backupMapList,
-                                            const std::vector<std::vector<int32_t> >& backupMapValues,
-                                            const std::map<std::string, std::string>& options,
-                                            AdminAlterShardsResponse& response_ ) const;
-
-/**
  * Take the system offline. When the system is offline, no user operations can
  * be performed with the exception of a system shutdown.
  * 
@@ -259,6 +377,298 @@ AdminOfflineResponse adminOffline( const bool offline,
 AdminOfflineResponse& adminOffline( const bool offline,
                                     const std::map<std::string, std::string>& options,
                                     AdminOfflineResponse& response_ ) const;
+
+/**
+ * Rebalance the cluster so that all the nodes contain approximately an equal
+ * number of records.  The rebalance will also cause the shards to be equally
+ * distributed (as much as possible) across all the ranks.
+ * <p>
+ * This endpoint may take a long time to run, depending on the amount of data
+ * in the system. The API call may time out if run directly.  It is recommended
+ * to run this endpoint asynchronously via {@link
+ * #createJob(const CreateJobRequest&) const}.
+ * 
+ * @param[in] request_  Request object containing the parameters for the
+ *                      operation.
+ * 
+ * @return Response object containing the result of the operation.
+ * 
+ */
+
+AdminRebalanceResponse adminRebalance( const AdminRebalanceRequest& request_ ) const;
+
+/**
+ * Rebalance the cluster so that all the nodes contain approximately an equal
+ * number of records.  The rebalance will also cause the shards to be equally
+ * distributed (as much as possible) across all the ranks.
+ * <p>
+ * This endpoint may take a long time to run, depending on the amount of data
+ * in the system. The API call may time out if run directly.  It is recommended
+ * to run this endpoint asynchronously via {@link
+ * #createJob(const CreateJobRequest&,CreateJobResponse&) const}.
+ * 
+ * @param[in] request_  Request object containing the parameters for the
+ *                      operation.
+ * @param[out] response_  Response object containing the results of the
+ *                        operation.
+ * 
+ * @return Response object containing the result of the operation (initially
+ *         passed in by reference).
+ * 
+ */
+
+AdminRebalanceResponse& adminRebalance( const AdminRebalanceRequest& request_,
+                                        AdminRebalanceResponse& response_ ) const;
+
+/**
+ * Rebalance the cluster so that all the nodes contain approximately an equal
+ * number of records.  The rebalance will also cause the shards to be equally
+ * distributed (as much as possible) across all the ranks.
+ * <p>
+ * This endpoint may take a long time to run, depending on the amount of data
+ * in the system. The API call may time out if run directly.  It is recommended
+ * to run this endpoint asynchronously via {@link
+ * #createJob(const std::string&,const std::string&,const std::vector<uint8_t>&,const std::string&,const std::map<std::string, std::string>&) const}.
+ * 
+ * @param options  Optional parameters.
+ *                 <ul>
+ *                         <li> gpudb::admin_rebalance_rebalance_sharded_data:
+ *                 If @a true, sharded data will be rebalanced approximately
+ *                 equally across the cluster. Note that for big clusters, this
+ *                 data transfer could be time consuming and result in delayed
+ *                 query responses.
+ *                 <ul>
+ *                         <li> gpudb::admin_rebalance_true
+ *                         <li> gpudb::admin_rebalance_false
+ *                 </ul>
+ *                 The default value is gpudb::admin_rebalance_true.
+ *                         <li>
+ *                 gpudb::admin_rebalance_rebalance_unsharded_data: If @a true,
+ *                 unsharded data (data without primary keys and without shard
+ *                 keys) will be rebalanced approximately equally across the
+ *                 cluster. Note that for big clusters, this data transfer
+ *                 could be time consuming and result in delayed query
+ *                 responses.
+ *                 <ul>
+ *                         <li> gpudb::admin_rebalance_true
+ *                         <li> gpudb::admin_rebalance_false
+ *                 </ul>
+ *                 The default value is gpudb::admin_rebalance_true.
+ *                         <li> gpudb::admin_rebalance_table_whitelist:
+ *                 Comma-separated list of unsharded table names to rebalance.
+ *                 Not applicable to sharded tables because they are always
+ *                 balanced in accordance with their primary key or shard key.
+ *                 Cannot be used simultaneously with @a table_blacklist.
+ *                         <li> gpudb::admin_rebalance_table_blacklist:
+ *                 Comma-separated list of unsharded table names to not
+ *                 rebalance. Not applicable to sharded tables because they are
+ *                 always balanced in accordance with their primary key or
+ *                 shard key. Cannot be used simultaneously with @a
+ *                 table_whitelist.
+ *                 </ul>
+ * 
+ * @return Response object containing the result of the operation.
+ * 
+ */
+
+AdminRebalanceResponse adminRebalance( const std::map<std::string, std::string>& options ) const;
+
+/**
+ * Rebalance the cluster so that all the nodes contain approximately an equal
+ * number of records.  The rebalance will also cause the shards to be equally
+ * distributed (as much as possible) across all the ranks.
+ * <p>
+ * This endpoint may take a long time to run, depending on the amount of data
+ * in the system. The API call may time out if run directly.  It is recommended
+ * to run this endpoint asynchronously via {@link
+ * #createJob(const std::string&,const std::string&,const std::vector<uint8_t>&,const std::string&,const std::map<std::string, std::string>&,CreateJobResponse&) const}.
+ * 
+ * @param options  Optional parameters.
+ *                 <ul>
+ *                         <li> gpudb::admin_rebalance_rebalance_sharded_data:
+ *                 If @a true, sharded data will be rebalanced approximately
+ *                 equally across the cluster. Note that for big clusters, this
+ *                 data transfer could be time consuming and result in delayed
+ *                 query responses.
+ *                 <ul>
+ *                         <li> gpudb::admin_rebalance_true
+ *                         <li> gpudb::admin_rebalance_false
+ *                 </ul>
+ *                 The default value is gpudb::admin_rebalance_true.
+ *                         <li>
+ *                 gpudb::admin_rebalance_rebalance_unsharded_data: If @a true,
+ *                 unsharded data (data without primary keys and without shard
+ *                 keys) will be rebalanced approximately equally across the
+ *                 cluster. Note that for big clusters, this data transfer
+ *                 could be time consuming and result in delayed query
+ *                 responses.
+ *                 <ul>
+ *                         <li> gpudb::admin_rebalance_true
+ *                         <li> gpudb::admin_rebalance_false
+ *                 </ul>
+ *                 The default value is gpudb::admin_rebalance_true.
+ *                         <li> gpudb::admin_rebalance_table_whitelist:
+ *                 Comma-separated list of unsharded table names to rebalance.
+ *                 Not applicable to sharded tables because they are always
+ *                 balanced in accordance with their primary key or shard key.
+ *                 Cannot be used simultaneously with @a table_blacklist.
+ *                         <li> gpudb::admin_rebalance_table_blacklist:
+ *                 Comma-separated list of unsharded table names to not
+ *                 rebalance. Not applicable to sharded tables because they are
+ *                 always balanced in accordance with their primary key or
+ *                 shard key. Cannot be used simultaneously with @a
+ *                 table_whitelist.
+ *                 </ul>
+ * @param[out] response_  Response object containing the results of the
+ *                        operation.
+ * 
+ * @return Response object containing the result of the operation (initially
+ *         passed in by reference).
+ * 
+ */
+
+AdminRebalanceResponse& adminRebalance( const std::map<std::string, std::string>& options,
+                                        AdminRebalanceResponse& response_ ) const;
+
+/**
+ * Remove one or more ranks from the cluster. All data in the ranks to be
+ * removed is rebalanced to other ranks before the node is removed unless the
+ * @a rebalance_sharded_data or @a rebalance_unsharded_data parameters are set
+ * to @a false in the @a options.
+ * <p>
+ * Due to the rebalancing, this endpoint may take a long time to run, depending
+ * on the amount of data in the system. The API call may time out if run
+ * directly.  It is recommended to run this endpoint asynchronously via {@link
+ * #createJob(const CreateJobRequest&) const}.
+ * 
+ * @param[in] request_  Request object containing the parameters for the
+ *                      operation.
+ * 
+ * @return Response object containing the result of the operation.
+ * 
+ */
+
+AdminRemoveRanksResponse adminRemoveRanks( const AdminRemoveRanksRequest& request_ ) const;
+
+/**
+ * Remove one or more ranks from the cluster. All data in the ranks to be
+ * removed is rebalanced to other ranks before the node is removed unless the
+ * @a rebalance_sharded_data or @a rebalance_unsharded_data parameters are set
+ * to @a false in the @a options.
+ * <p>
+ * Due to the rebalancing, this endpoint may take a long time to run, depending
+ * on the amount of data in the system. The API call may time out if run
+ * directly.  It is recommended to run this endpoint asynchronously via {@link
+ * #createJob(const CreateJobRequest&,CreateJobResponse&) const}.
+ * 
+ * @param[in] request_  Request object containing the parameters for the
+ *                      operation.
+ * @param[out] response_  Response object containing the results of the
+ *                        operation.
+ * 
+ * @return Response object containing the result of the operation (initially
+ *         passed in by reference).
+ * 
+ */
+
+AdminRemoveRanksResponse& adminRemoveRanks( const AdminRemoveRanksRequest& request_,
+                                            AdminRemoveRanksResponse& response_ ) const;
+
+/**
+ * Remove one or more ranks from the cluster. All data in the ranks to be
+ * removed is rebalanced to other ranks before the node is removed unless the
+ * @a rebalance_sharded_data or @a rebalance_unsharded_data parameters are set
+ * to @a false in the @a options.
+ * <p>
+ * Due to the rebalancing, this endpoint may take a long time to run, depending
+ * on the amount of data in the system. The API call may time out if run
+ * directly.  It is recommended to run this endpoint asynchronously via {@link
+ * #createJob(const std::string&,const std::string&,const std::vector<uint8_t>&,const std::string&,const std::map<std::string, std::string>&) const}.
+ * 
+ * @param ranks  Rank numbers of the ranks to be removed from the cluster.
+ * @param options  Optional parameters.
+ *                 <ul>
+ *                         <li>
+ *                 gpudb::admin_remove_ranks_rebalance_sharded_data: When @a
+ *                 true, data with primary keys or shard keys will be
+ *                 rebalanced to other ranks prior to rank removal. Note that
+ *                 for big clusters, this data transfer could be time consuming
+ *                 and result in delayed query responses.
+ *                 <ul>
+ *                         <li> gpudb::admin_remove_ranks_true
+ *                         <li> gpudb::admin_remove_ranks_false
+ *                 </ul>
+ *                 The default value is gpudb::admin_remove_ranks_true.
+ *                         <li>
+ *                 gpudb::admin_remove_ranks_rebalance_unsharded_data: When @a
+ *                 true, unsharded data (data without primary keys and without
+ *                 shard keys) will be rebalanced to other ranks prior to rank
+ *                 removal. Note that for big clusters, this data transfer
+ *                 could be time consuming and result in delayed query
+ *                 responses.
+ *                 <ul>
+ *                         <li> gpudb::admin_remove_ranks_true
+ *                         <li> gpudb::admin_remove_ranks_false
+ *                 </ul>
+ *                 The default value is gpudb::admin_remove_ranks_true.
+ *                 </ul>
+ * 
+ * @return Response object containing the result of the operation.
+ * 
+ */
+
+AdminRemoveRanksResponse adminRemoveRanks( const std::vector<int32_t>& ranks,
+                                           const std::map<std::string, std::string>& options ) const;
+
+/**
+ * Remove one or more ranks from the cluster. All data in the ranks to be
+ * removed is rebalanced to other ranks before the node is removed unless the
+ * @a rebalance_sharded_data or @a rebalance_unsharded_data parameters are set
+ * to @a false in the @a options.
+ * <p>
+ * Due to the rebalancing, this endpoint may take a long time to run, depending
+ * on the amount of data in the system. The API call may time out if run
+ * directly.  It is recommended to run this endpoint asynchronously via {@link
+ * #createJob(const std::string&,const std::string&,const std::vector<uint8_t>&,const std::string&,const std::map<std::string, std::string>&,CreateJobResponse&) const}.
+ * 
+ * @param ranks  Rank numbers of the ranks to be removed from the cluster.
+ * @param options  Optional parameters.
+ *                 <ul>
+ *                         <li>
+ *                 gpudb::admin_remove_ranks_rebalance_sharded_data: When @a
+ *                 true, data with primary keys or shard keys will be
+ *                 rebalanced to other ranks prior to rank removal. Note that
+ *                 for big clusters, this data transfer could be time consuming
+ *                 and result in delayed query responses.
+ *                 <ul>
+ *                         <li> gpudb::admin_remove_ranks_true
+ *                         <li> gpudb::admin_remove_ranks_false
+ *                 </ul>
+ *                 The default value is gpudb::admin_remove_ranks_true.
+ *                         <li>
+ *                 gpudb::admin_remove_ranks_rebalance_unsharded_data: When @a
+ *                 true, unsharded data (data without primary keys and without
+ *                 shard keys) will be rebalanced to other ranks prior to rank
+ *                 removal. Note that for big clusters, this data transfer
+ *                 could be time consuming and result in delayed query
+ *                 responses.
+ *                 <ul>
+ *                         <li> gpudb::admin_remove_ranks_true
+ *                         <li> gpudb::admin_remove_ranks_false
+ *                 </ul>
+ *                 The default value is gpudb::admin_remove_ranks_true.
+ *                 </ul>
+ * @param[out] response_  Response object containing the results of the
+ *                        operation.
+ * 
+ * @return Response object containing the result of the operation (initially
+ *         passed in by reference).
+ * 
+ */
+
+AdminRemoveRanksResponse& adminRemoveRanks( const std::vector<int32_t>& ranks,
+                                            const std::map<std::string, std::string>& options,
+                                            AdminRemoveRanksResponse& response_ ) const;
 
 /**
  * Requests a list of the most recent alerts.
@@ -1291,6 +1701,8 @@ AggregateGroupByResponse& aggregateGroupBy( const AggregateGroupByRequest& reque
  *                 <DEVELOPER>
  *                         <li> gpudb::aggregate_group_by_sleep_on_refresh:
  *                 <DEVELOPER>
+ *                         <li> gpudb::aggregate_group_by_refresh_type:
+ *                 <DEVELOPER>
  *                 </ul>
  * 
  * @return Response object containing the result of the operation.
@@ -1497,6 +1909,8 @@ AggregateGroupByResponse aggregateGroupBy( const std::string& tableName,
  *                 gpudb::aggregate_group_by_throw_error_on_refresh:
  *                 <DEVELOPER>
  *                         <li> gpudb::aggregate_group_by_sleep_on_refresh:
+ *                 <DEVELOPER>
+ *                         <li> gpudb::aggregate_group_by_refresh_type:
  *                 <DEVELOPER>
  *                 </ul>
  * @param[out] response_  Response object containing the results of the
@@ -3853,13 +4267,6 @@ AlterTableResponse& alterTable( const AlterTableRequest& request_,
  *                href="../../concepts/ttl.html" target="_top">time-to-live</a>
  *                in minutes of the table, view, or collection specified in @a
  *                tableName.
- *                        <li> gpudb::alter_table_memory_ttl: Sets the
- *                time-to-live in minutes for the individual chunks of the
- *                columns of the table, view, or collection specified in @a
- *                tableName to free their memory if unused longer than the
- *                given time. Specify an empty string to restore the global
- *                memory_ttl setting and a value of '-1' for an infinite
- *                timeout.
  *                        <li> gpudb::alter_table_add_column: Adds the column
  *                specified in @a value to the table specified in @a tableName.
  *                Use @a column_type and @a column_properties in @a options to
@@ -4118,13 +4525,6 @@ AlterTableResponse alterTable( const std::string& tableName,
  *                href="../../concepts/ttl.html" target="_top">time-to-live</a>
  *                in minutes of the table, view, or collection specified in @a
  *                tableName.
- *                        <li> gpudb::alter_table_memory_ttl: Sets the
- *                time-to-live in minutes for the individual chunks of the
- *                columns of the table, view, or collection specified in @a
- *                tableName to free their memory if unused longer than the
- *                given time. Specify an empty string to restore the global
- *                memory_ttl setting and a value of '-1' for an infinite
- *                timeout.
  *                        <li> gpudb::alter_table_add_column: Adds the column
  *                specified in @a value to the table specified in @a tableName.
  *                Use @a column_type and @a column_properties in @a options to
@@ -5789,9 +6189,7 @@ CreateJoinTableResponse& createJoinTable( const CreateJoinTableRequest& request_
  *                 automatically created. If empty, then the join will be at
  *                 the top level.
  *                         <li> gpudb::create_join_table_max_query_dimensions:
- *                 The maximum number of tables in a join that can be accessed
- *                 by a query and are not equated by a foreign-key to
- *                 primary-key equality predicate
+ *                 Obsolete in GPUdb v7.0
  *                         <li> gpudb::create_join_table_optimize_lookups: Use
  *                 more memory to speed up the joining of tables.
  *                 <ul>
@@ -5900,9 +6298,7 @@ CreateJoinTableResponse createJoinTable( const std::string& joinTableName,
  *                 automatically created. If empty, then the join will be at
  *                 the top level.
  *                         <li> gpudb::create_join_table_max_query_dimensions:
- *                 The maximum number of tables in a join that can be accessed
- *                 by a query and are not equated by a foreign-key to
- *                 primary-key equality predicate
+ *                 Obsolete in GPUdb v7.0
  *                         <li> gpudb::create_join_table_optimize_lookups: Use
  *                 more memory to speed up the joining of tables.
  *                 <ul>
@@ -7044,6 +7440,7 @@ CreateTableResponse& createTable( const CreateTableRequest& request_,
  *                         <li> gpudb::create_table_INTERVAL: Use <a
  *                 href="../../concepts/tables.html#partitioning-by-interval"
  *                 target="_top">interval partitioning</a>.
+ *                         <li> gpudb::create_table_LIST: Not yet supported
  *                 </ul>
  *                         <li> gpudb::create_table_partition_keys:
  *                 Comma-separated list of partition keys, which are the
@@ -7057,6 +7454,15 @@ CreateTableResponse& createTable( const CreateTableRequest& request_,
  *                 href="../../concepts/tables.html#partitioning-by-interval-example"
  *                 target="_top">interval partitioning example</a> for example
  *                 formats.
+ *                         <li> gpudb::create_table_is_automatic_partition: If
+ *                 true, a new partition will be created for values which don't
+ *                 fall into an existing partition.  Currently only supported
+ *                 for LIST partitions
+ *                 <ul>
+ *                         <li> gpudb::create_table_true
+ *                         <li> gpudb::create_table_false
+ *                 </ul>
+ *                 The default value is gpudb::create_table_false.
  *                         <li> gpudb::create_table_ttl: For a table, sets the
  *                 <a href="../../concepts/ttl.html" target="_top">TTL</a> of
  *                 the table specified in @a tableName.
@@ -7196,6 +7602,7 @@ CreateTableResponse createTable( const std::string& tableName,
  *                         <li> gpudb::create_table_INTERVAL: Use <a
  *                 href="../../concepts/tables.html#partitioning-by-interval"
  *                 target="_top">interval partitioning</a>.
+ *                         <li> gpudb::create_table_LIST: Not yet supported
  *                 </ul>
  *                         <li> gpudb::create_table_partition_keys:
  *                 Comma-separated list of partition keys, which are the
@@ -7209,6 +7616,15 @@ CreateTableResponse createTable( const std::string& tableName,
  *                 href="../../concepts/tables.html#partitioning-by-interval-example"
  *                 target="_top">interval partitioning example</a> for example
  *                 formats.
+ *                         <li> gpudb::create_table_is_automatic_partition: If
+ *                 true, a new partition will be created for values which don't
+ *                 fall into an existing partition.  Currently only supported
+ *                 for LIST partitions
+ *                 <ul>
+ *                         <li> gpudb::create_table_true
+ *                         <li> gpudb::create_table_false
+ *                 </ul>
+ *                 The default value is gpudb::create_table_false.
  *                         <li> gpudb::create_table_ttl: For a table, sets the
  *                 <a href="../../concepts/ttl.html" target="_top">TTL</a> of
  *                 the table specified in @a tableName.
@@ -7815,9 +8231,8 @@ CreateTypeResponse& createType( const CreateTypeRequest& request_,
  *                    This property reduces system disk usage by disabling
  *                    reverse string lookups. Queries like /filter,
  *                    /filter/bylist, and /filter/byvalue work as usual but
- *                    /aggregate/unique, /aggregate/groupby and
- *                    /get/records/bycolumn are not allowed on columns with
- *                    this property.
+ *                    /aggregate/unique and /aggregate/groupby are not allowed
+ *                    on columns with this property.
  *                            <li> gpudb::create_type_timestamp: Valid only for
  *                    'long' columns. Indicates that this field represents a
  *                    timestamp and will be provided in milliseconds since the
@@ -7936,6 +8351,10 @@ CreateTypeResponse& createType( const CreateTypeRequest& request_,
  *                    where the cardinality (the number of unique values) is
  *                    expected to be low. This property can save a large amount
  *                    of memory.
+ *                            <li> gpudb::create_type_init_with_now: For
+ *                    columns with attributes of date, time, datetime or
+ *                    timestamp, at insert time, replace empty strings and
+ *                    invalid timestamps with NOW()
  *                    </ul>
  * @param options  Optional parameters.
  * 
@@ -8020,9 +8439,8 @@ CreateTypeResponse createType( const std::string& typeDefinition,
  *                    This property reduces system disk usage by disabling
  *                    reverse string lookups. Queries like /filter,
  *                    /filter/bylist, and /filter/byvalue work as usual but
- *                    /aggregate/unique, /aggregate/groupby and
- *                    /get/records/bycolumn are not allowed on columns with
- *                    this property.
+ *                    /aggregate/unique and /aggregate/groupby are not allowed
+ *                    on columns with this property.
  *                            <li> gpudb::create_type_timestamp: Valid only for
  *                    'long' columns. Indicates that this field represents a
  *                    timestamp and will be provided in milliseconds since the
@@ -8141,6 +8559,10 @@ CreateTypeResponse createType( const std::string& typeDefinition,
  *                    where the cardinality (the number of unique values) is
  *                    expected to be low. This property can save a large amount
  *                    of memory.
+ *                            <li> gpudb::create_type_init_with_now: For
+ *                    columns with attributes of date, time, datetime or
+ *                    timestamp, at insert time, replace empty strings and
+ *                    invalid timestamps with NOW()
  *                    </ul>
  * @param options  Optional parameters.
  * @param[out] response_  Response object containing the results of the
@@ -8859,10 +9281,13 @@ DeleteRecordsResponse& deleteRecords( const DeleteRecordsRequest& request_,
  *                         <li> gpudb::delete_records_global_expression: An
  *                 optional global expression to reduce the search space of the
  *                 @a expressions.
- *                         <li> gpudb::delete_records_record_id: A record id
+ *                         <li> gpudb::delete_records_record_id: A record ID
  *                 identifying a single record, obtained at the time of
  *                 /insert/records or by calling /get/records/fromcollection
- *                 with the *return_record_ids* option.
+ *                 with the *return_record_ids* option. This option cannot be
+ *                 used to delete records from <a
+ *                 href="../../concepts/tables.html#replication"
+ *                 target="_top">replicated</a> tables.
  *                         <li> gpudb::delete_records_delete_all_records: If
  *                 set to @a true, all records in the table will be deleted. If
  *                 set to @a false, then the option is effectively ignored.
@@ -8905,10 +9330,13 @@ DeleteRecordsResponse deleteRecords( const std::string& tableName,
  *                         <li> gpudb::delete_records_global_expression: An
  *                 optional global expression to reduce the search space of the
  *                 @a expressions.
- *                         <li> gpudb::delete_records_record_id: A record id
+ *                         <li> gpudb::delete_records_record_id: A record ID
  *                 identifying a single record, obtained at the time of
  *                 /insert/records or by calling /get/records/fromcollection
- *                 with the *return_record_ids* option.
+ *                 with the *return_record_ids* option. This option cannot be
+ *                 used to delete records from <a
+ *                 href="../../concepts/tables.html#replication"
+ *                 target="_top">replicated</a> tables.
  *                         <li> gpudb::delete_records_delete_all_records: If
  *                 set to @a true, all records in the table will be deleted. If
  *                 set to @a false, then the option is effectively ignored.
@@ -9463,6 +9891,15 @@ ExecuteSqlResponse& executeSql( const ExecuteSqlRequest& request_,
  *                         <li> gpudb::execute_sql_false: false
  *                 </ul>
  *                 The default value is gpudb::execute_sql_true.
+ *                         <li> gpudb::execute_sql_prepare_mode: If @a true,
+ *                 compiles a query into an execution plan and saves it in
+ *                 query cache. Query execution is not performed and an empty
+ *                 response will be returned to user
+ *                 <ul>
+ *                         <li> gpudb::execute_sql_true
+ *                         <li> gpudb::execute_sql_false
+ *                 </ul>
+ *                 The default value is gpudb::execute_sql_false.
  *                 </ul>
  * 
  * @return Response object containing the result of the operation.
@@ -9596,6 +10033,15 @@ ExecuteSqlResponse executeSql( const std::string& statement,
  *                         <li> gpudb::execute_sql_false: false
  *                 </ul>
  *                 The default value is gpudb::execute_sql_true.
+ *                         <li> gpudb::execute_sql_prepare_mode: If @a true,
+ *                 compiles a query into an execution plan and saves it in
+ *                 query cache. Query execution is not performed and an empty
+ *                 response will be returned to user
+ *                 <ul>
+ *                         <li> gpudb::execute_sql_true
+ *                         <li> gpudb::execute_sql_false
+ *                 </ul>
+ *                 The default value is gpudb::execute_sql_false.
  *                 </ul>
  * @param[out] response_  Response object containing the results of the
  *                        operation.
@@ -16218,6 +16664,10 @@ QueryGraphResponse& queryGraph( const QueryGraphRequest& request_,
  * target="_top">Network Graph Solvers</a> for more information.
  * 
  * @param graphName  Name of the graph resource to query.
+ * @param queries  ['Schema.collection.table.column', 'node_identifier', ... ];
+ *                 e.g., ['graph_nodes.id AS QUERY_NODE_ID'] It appends to the
+ *                 respective arrays below. QUERY identifier overrides
+ *                 edge_to_node parameter.
  * @param edgeToNode  If set to @a true, the query gives the adjacency list
  *                    from edge(s) to node(s); otherwise, the adjacency list is
  *                    from node(s) to edge(s).
@@ -16275,6 +16725,7 @@ QueryGraphResponse& queryGraph( const QueryGraphRequest& request_,
  */
 
 QueryGraphResponse queryGraph( const std::string& graphName,
+                               const std::vector<std::string>& queries,
                                const bool edgeToNode,
                                const std::vector<int64_t>& edgeOrNodeIntIds,
                                const std::vector<std::string>& edgeOrNodeStringIds,
@@ -16289,6 +16740,10 @@ QueryGraphResponse queryGraph( const std::string& graphName,
  * target="_top">Network Graph Solvers</a> for more information.
  * 
  * @param graphName  Name of the graph resource to query.
+ * @param queries  ['Schema.collection.table.column', 'node_identifier', ... ];
+ *                 e.g., ['graph_nodes.id AS QUERY_NODE_ID'] It appends to the
+ *                 respective arrays below. QUERY identifier overrides
+ *                 edge_to_node parameter.
  * @param edgeToNode  If set to @a true, the query gives the adjacency list
  *                    from edge(s) to node(s); otherwise, the adjacency list is
  *                    from node(s) to edge(s).
@@ -16349,6 +16804,7 @@ QueryGraphResponse queryGraph( const std::string& graphName,
  */
 
 QueryGraphResponse& queryGraph( const std::string& graphName,
+                                const std::vector<std::string>& queries,
                                 const bool edgeToNode,
                                 const std::vector<int64_t>& edgeOrNodeIntIds,
                                 const std::vector<std::string>& edgeOrNodeStringIds,
@@ -16356,68 +16812,6 @@ QueryGraphResponse& queryGraph( const std::string& graphName,
                                 const std::string& adjacencyTable,
                                 const std::map<std::string, std::string>& options,
                                 QueryGraphResponse& response_ ) const;
-
-/**
- * @private
- * 
- * @param[in] request_  Request object containing the parameters for the
- *                      operation.
- * 
- * @return Response object containing the result of the operation.
- * 
- */
-
-AdminReplaceTomResponse adminReplaceTom( const AdminReplaceTomRequest& request_ ) const;
-
-/**
- * @private
- * 
- * @param[in] request_  Request object containing the parameters for the
- *                      operation.
- * @param[out] response_  Response object containing the results of the
- *                        operation.
- * 
- * @return Response object containing the result of the operation (initially
- *         passed in by reference).
- * 
- */
-
-AdminReplaceTomResponse& adminReplaceTom( const AdminReplaceTomRequest& request_,
-                                          AdminReplaceTomResponse& response_ ) const;
-
-/**
- * @private
- * 
- * @param oldRankTom
- * @param newRankTom
- * @param options
- * 
- * @return Response object containing the result of the operation.
- * 
- */
-
-AdminReplaceTomResponse adminReplaceTom( const int64_t oldRankTom,
-                                         const int64_t newRankTom,
-                                         const std::map<std::string, std::string>& options ) const;
-
-/**
- * @private
- * 
- * @param oldRankTom
- * @param newRankTom
- * @param options
- * @param[out] response_  Response object containing the results of the
- *                        operation.
- * 
- * @return Response object containing the result of the operation (initially
- *         passed in by reference).
- * 
- */
-
-AdminReplaceTomResponse& adminReplaceTom( const int64_t oldRankTom,
-                                          const int64_t newRankTom,
-                                          const std::map<std::string, std::string>& options,
-                                          AdminReplaceTomResponse& response_ ) const;
 
 /**
  * Revokes a system-level permission from a user or role.
@@ -17343,6 +17737,9 @@ ShowSystemTimingResponse& showSystemTiming( const std::map<std::string, std::str
  * only information about the collection itself; setting @a show_children to @a
  * true returns a list of tables and views contained in the collection, along
  * with their corresponding detail.
+ * <p>
+ * To retrieve a list of every table, view, and collection in the database, set
+ * @a tableName to '*' and @a show_children to @a true.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -17369,6 +17766,9 @@ ShowTableResponse showTable( const ShowTableRequest& request_ ) const;
  * only information about the collection itself; setting @a show_children to @a
  * true returns a list of tables and views contained in the collection, along
  * with their corresponding detail.
+ * <p>
+ * To retrieve a list of every table, view, and collection in the database, set
+ * @a tableName to '*' and @a show_children to @a true.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -17399,6 +17799,9 @@ ShowTableResponse& showTable( const ShowTableRequest& request_,
  * only information about the collection itself; setting @a show_children to @a
  * true returns a list of tables and views contained in the collection, along
  * with their corresponding detail.
+ * <p>
+ * To retrieve a list of every table, view, and collection in the database, set
+ * @a tableName to '*' and @a show_children to @a true.
  * 
  * @param tableName  Name of the table for which to retrieve the information.
  *                   If blank, then information about all collections and
@@ -17472,6 +17875,9 @@ ShowTableResponse showTable( const std::string& tableName,
  * only information about the collection itself; setting @a show_children to @a
  * true returns a list of tables and views contained in the collection, along
  * with their corresponding detail.
+ * <p>
+ * To retrieve a list of every table, view, and collection in the database, set
+ * @a tableName to '*' and @a show_children to @a true.
  * 
  * @param tableName  Name of the table for which to retrieve the information.
  *                   If blank, then information about all collections and

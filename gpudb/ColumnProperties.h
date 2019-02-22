@@ -41,8 +41,8 @@ namespace gpudb
          * Works in conjunction with the @a data property for string columns.
          * This property reduces system disk usage by disabling reverse string
          * lookups. Queries like /filter, /filter/bylist, and /filter/byvalue
-         * work as usual but /aggregate/unique, /aggregate/groupby and
-         * /get/records/bycolumn are not allowed on columns with this property.
+         * work as usual but /aggregate/unique and /aggregate/groupby are not
+         * allowed on columns with this property.
          */
         extern const std::string DISK_OPTIMIZED;
 
@@ -244,6 +244,13 @@ namespace gpudb
          * This property can save a large amount of memory.
          */
         extern const std::string DICT;
+
+
+        /**
+         * For columns with attributes of date, time, datetime or timestamp, at
+         * insert time, replace empty strings and invalid timestamps with NOW()
+         */
+        extern const std::string INIT_WITH_NOW;
 
 
     } // end namespace ColumnProperty

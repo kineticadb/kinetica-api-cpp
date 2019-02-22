@@ -76,9 +76,7 @@ namespace gpudb
          *                      empty, then the join will be at the top level.
          *                              <li>
          *                      gpudb::create_join_table_max_query_dimensions:
-         *                      The maximum number of tables in a join that can
-         *                      be accessed by a query and are not equated by a
-         *                      foreign-key to primary-key equality predicate
+         *                      Obsolete in GPUdb v7.0
          *                              <li>
          *                      gpudb::create_join_table_optimize_lookups: Use
          *                      more memory to speed up the joining of tables.

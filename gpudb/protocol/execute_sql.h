@@ -180,6 +180,16 @@ namespace gpudb
          *                              <li> gpudb::execute_sql_false: false
          *                      </ul>
          *                      The default value is gpudb::execute_sql_true.
+         *                              <li> gpudb::execute_sql_prepare_mode:
+         *                      If @a true, compiles a query into an execution
+         *                      plan and saves it in query cache. Query
+         *                      execution is not performed and an empty
+         *                      response will be returned to user
+         *                      <ul>
+         *                              <li> gpudb::execute_sql_true
+         *                              <li> gpudb::execute_sql_false
+         *                      </ul>
+         *                      The default value is gpudb::execute_sql_false.
          *                      </ul>
          * 
          */
@@ -347,6 +357,16 @@ namespace gpudb
          *                              <li> gpudb::execute_sql_false: false
          *                      </ul>
          *                      The default value is gpudb::execute_sql_true.
+         *                              <li> gpudb::execute_sql_prepare_mode:
+         *                      If @a true, compiles a query into an execution
+         *                      plan and saves it in query cache. Query
+         *                      execution is not performed and an empty
+         *                      response will be returned to user
+         *                      <ul>
+         *                              <li> gpudb::execute_sql_true
+         *                              <li> gpudb::execute_sql_false
+         *                      </ul>
+         *                      The default value is gpudb::execute_sql_false.
          *                      </ul>
          * 
          */

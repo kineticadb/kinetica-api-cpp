@@ -9,9 +9,11 @@
 #include <avro/Specific.hh>
 
 #include "gpudb_wrapper.h"
+#include "admin_add_ranks.h"
 #include "admin_alter_jobs.h"
-#include "admin_alter_shards.h"
 #include "admin_offline.h"
+#include "admin_rebalance.h"
+#include "admin_remove_ranks.h"
 #include "admin_show_alerts.h"
 #include "admin_show_cluster_operations.h"
 #include "admin_show_jobs.h"
@@ -99,7 +101,6 @@
 #include "lock_table.h"
 #include "merge_records.h"
 #include "query_graph.h"
-#include "admin_replace_tom.h"
 #include "revoke_permission_system.h"
 #include "revoke_permission_table.h"
 #include "revoke_role.h"

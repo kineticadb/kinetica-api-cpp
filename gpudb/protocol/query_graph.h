@@ -26,6 +26,7 @@ namespace gpudb
          */
         QueryGraphRequest() :
             graphName(std::string()),
+            queries(std::vector<std::string>()),
             edgeToNode(bool()),
             edgeOrNodeIntIds(std::vector<int64_t>()),
             edgeOrNodeStringIds(std::vector<std::string>()),
@@ -39,6 +40,11 @@ namespace gpudb
          * Constructs a QueryGraphRequest object with the specified parameters.
          * 
          * @param[in] graphName_  Name of the graph resource to query.
+         * @param[in] queries_  ['Schema.collection.table.column',
+         *                      'node_identifier', ... ]; e.g.,
+         *                      ['graph_nodes.id AS QUERY_NODE_ID'] It appends
+         *                      to the respective arrays below. QUERY
+         *                      identifier overrides edge_to_node parameter.
          * @param[in] edgeToNode_  If set to @a true, the query gives the
          *                         adjacency list from edge(s) to node(s);
          *                         otherwise, the adjacency list is from
@@ -103,8 +109,9 @@ namespace gpudb
          *                      </ul>
          * 
          */
-        QueryGraphRequest(const std::string& graphName_, const bool edgeToNode_, const std::vector<int64_t>& edgeOrNodeIntIds_, const std::vector<std::string>& edgeOrNodeStringIds_, const std::vector<std::string>& edgeOrNodeWktIds_, const std::string& adjacencyTable_, const std::map<std::string, std::string>& options_):
+        QueryGraphRequest(const std::string& graphName_, const std::vector<std::string>& queries_, const bool edgeToNode_, const std::vector<int64_t>& edgeOrNodeIntIds_, const std::vector<std::string>& edgeOrNodeStringIds_, const std::vector<std::string>& edgeOrNodeWktIds_, const std::string& adjacencyTable_, const std::map<std::string, std::string>& options_):
             graphName( graphName_ ),
+            queries( queries_ ),
             edgeToNode( edgeToNode_ ),
             edgeOrNodeIntIds( edgeOrNodeIntIds_ ),
             edgeOrNodeStringIds( edgeOrNodeStringIds_ ),
@@ -115,6 +122,7 @@ namespace gpudb
         }
 
         std::string graphName;
+        std::vector<std::string> queries;
         bool edgeToNode;
         std::vector<int64_t> edgeOrNodeIntIds;
         std::vector<std::string> edgeOrNodeStringIds;
@@ -131,6 +139,7 @@ namespace avro
         static void encode(Encoder& e, const gpudb::QueryGraphRequest& v)
         {
             ::avro::encode(e, v.graphName);
+            ::avro::encode(e, v.queries);
             ::avro::encode(e, v.edgeToNode);
             ::avro::encode(e, v.edgeOrNodeIntIds);
             ::avro::encode(e, v.edgeOrNodeStringIds);
@@ -154,26 +163,30 @@ namespace avro
                             break;
 
                         case 1:
-                            ::avro::decode(d, v.edgeToNode);
+                            ::avro::decode(d, v.queries);
                             break;
 
                         case 2:
-                            ::avro::decode(d, v.edgeOrNodeIntIds);
+                            ::avro::decode(d, v.edgeToNode);
                             break;
 
                         case 3:
-                            ::avro::decode(d, v.edgeOrNodeStringIds);
+                            ::avro::decode(d, v.edgeOrNodeIntIds);
                             break;
 
                         case 4:
-                            ::avro::decode(d, v.edgeOrNodeWktIds);
+                            ::avro::decode(d, v.edgeOrNodeStringIds);
                             break;
 
                         case 5:
-                            ::avro::decode(d, v.adjacencyTable);
+                            ::avro::decode(d, v.edgeOrNodeWktIds);
                             break;
 
                         case 6:
+                            ::avro::decode(d, v.adjacencyTable);
+                            break;
+
+                        case 7:
                             ::avro::decode(d, v.options);
                             break;
 
@@ -185,6 +198,7 @@ namespace avro
             else
             {
                 ::avro::decode(d, v.graphName);
+                ::avro::decode(d, v.queries);
                 ::avro::decode(d, v.edgeToNode);
                 ::avro::decode(d, v.edgeOrNodeIntIds);
                 ::avro::decode(d, v.edgeOrNodeStringIds);

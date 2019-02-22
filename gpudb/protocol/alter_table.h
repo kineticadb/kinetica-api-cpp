@@ -124,14 +124,6 @@ namespace gpudb
          *                     target="_top">time-to-live</a> in minutes of the
          *                     table, view, or collection specified in @a
          *                     tableName.
-         *                             <li> gpudb::alter_table_memory_ttl: Sets
-         *                     the time-to-live in minutes for the individual
-         *                     chunks of the columns of the table, view, or
-         *                     collection specified in @a tableName to free
-         *                     their memory if unused longer than the given
-         *                     time. Specify an empty string to restore the
-         *                     global memory_ttl setting and a value of '-1'
-         *                     for an infinite timeout.
          *                             <li> gpudb::alter_table_add_column: Adds
          *                     the column specified in @a value to the table
          *                     specified in @a tableName.  Use @a column_type

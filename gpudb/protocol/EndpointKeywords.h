@@ -12,6 +12,11 @@
 
 namespace gpudb
 {
+    // Keywords for /admin/add/ranks request
+    extern const std::string admin_add_ranks_dry_run;
+    extern const std::string admin_add_ranks_false;
+    extern const std::string admin_add_ranks_true;
+
     // Keywords for /admin/alter/jobs request
     extern const std::string admin_alter_jobs_cancel;
 
@@ -19,6 +24,20 @@ namespace gpudb
     extern const std::string admin_offline_false;
     extern const std::string admin_offline_flush_to_disk;
     extern const std::string admin_offline_true;
+
+    // Keywords for /admin/rebalance request
+    extern const std::string admin_rebalance_false;
+    extern const std::string admin_rebalance_rebalance_sharded_data;
+    extern const std::string admin_rebalance_rebalance_unsharded_data;
+    extern const std::string admin_rebalance_table_blacklist;
+    extern const std::string admin_rebalance_table_whitelist;
+    extern const std::string admin_rebalance_true;
+
+    // Keywords for /admin/remove/ranks request
+    extern const std::string admin_remove_ranks_false;
+    extern const std::string admin_remove_ranks_rebalance_sharded_data;
+    extern const std::string admin_remove_ranks_rebalance_unsharded_data;
+    extern const std::string admin_remove_ranks_true;
 
     // Keywords for /admin/show/cluster/operations response
     extern const std::string admin_show_cluster_operations_COMPLETED_OK;
@@ -64,6 +83,7 @@ namespace gpudb
     extern const std::string aggregate_group_by_materialize_on_gpu;
     extern const std::string aggregate_group_by_pivot;
     extern const std::string aggregate_group_by_pivot_values;
+    extern const std::string aggregate_group_by_refresh_type;
     extern const std::string aggregate_group_by_result_table;
     extern const std::string aggregate_group_by_result_table_force_replicated;
     extern const std::string aggregate_group_by_result_table_generate_pk;
@@ -206,7 +226,6 @@ namespace gpudb
     extern const std::string alter_table_false;
     extern const std::string alter_table_lz4;
     extern const std::string alter_table_lz4hc;
-    extern const std::string alter_table_memory_ttl;
     extern const std::string alter_table_move_to_collection;
     extern const std::string alter_table_none;
     extern const std::string alter_table_protected;
@@ -335,6 +354,7 @@ namespace gpudb
 
     // Keywords for /create/table request
     extern const std::string create_table_INTERVAL;
+    extern const std::string create_table_LIST;
     extern const std::string create_table_RANGE;
     extern const std::string create_table_chunk_size;
     extern const std::string create_table_collection_name;
@@ -342,6 +362,7 @@ namespace gpudb
     extern const std::string create_table_false;
     extern const std::string create_table_foreign_keys;
     extern const std::string create_table_foreign_shard_key;
+    extern const std::string create_table_is_automatic_partition;
     extern const std::string create_table_is_collection;
     extern const std::string create_table_is_filter_by_area;
     extern const std::string create_table_is_filter_by_area_geometry;
@@ -394,6 +415,7 @@ namespace gpudb
     extern const std::string create_type_decimal;
     extern const std::string create_type_dict;
     extern const std::string create_type_disk_optimized;
+    extern const std::string create_type_init_with_now;
     extern const std::string create_type_int16;
     extern const std::string create_type_int8;
     extern const std::string create_type_ipv4;
@@ -457,6 +479,7 @@ namespace gpudb
     extern const std::string execute_sql_paging_table_ttl;
     extern const std::string execute_sql_parallel_execution;
     extern const std::string execute_sql_plan_cache;
+    extern const std::string execute_sql_prepare_mode;
     extern const std::string execute_sql_preserve_dict_encoding;
     extern const std::string execute_sql_results_caching;
     extern const std::string execute_sql_rule_based_optimization;
@@ -723,7 +746,9 @@ namespace gpudb
     // Keywords for /show/system/properties response
     extern const std::string show_system_properties_FALSE;
     extern const std::string show_system_properties_TRUE;
+    extern const std::string show_system_properties_conf_enable_ha;
     extern const std::string show_system_properties_conf_enable_worker_http_servers;
+    extern const std::string show_system_properties_conf_ha_ring_head_nodes;
     extern const std::string show_system_properties_conf_hm_http_port;
     extern const std::string show_system_properties_conf_worker_http_server_ips;
     extern const std::string show_system_properties_conf_worker_http_server_ports;
@@ -739,6 +764,7 @@ namespace gpudb
     extern const std::string show_table_COLLECTION;
     extern const std::string show_table_INTERVAL;
     extern const std::string show_table_JOIN;
+    extern const std::string show_table_LIST;
     extern const std::string show_table_NONE;
     extern const std::string show_table_RANGE;
     extern const std::string show_table_REPLICATED;
@@ -754,10 +780,10 @@ namespace gpudb
     extern const std::string show_table_foreign_keys;
     extern const std::string show_table_foreign_shard_key;
     extern const std::string show_table_global_access_mode;
+    extern const std::string show_table_is_automatic_partition;
     extern const std::string show_table_is_dirty;
     extern const std::string show_table_is_view_persisted;
     extern const std::string show_table_last_refresh_time;
-    extern const std::string show_table_memory_ttl;
     extern const std::string show_table_next_refresh_time;
     extern const std::string show_table_no_access;
     extern const std::string show_table_partition_definitions;

@@ -1,11 +1,28 @@
 # GPUdb C++ API Changelog
 
-## Version 7.0.0 - 2019-01-31
+## Version 7.0
+
+### Version 7.0.0.1 - 2019-02-22
+-   Added support for high availability (HA) failover logic to the
+    GPUdb class
+
+
+### Version 7.0.0.0 - 2019-01-31
 
 -   Version release
 
 
-## Version 6.2.0
+## Version 6.2
+
+### Version 6.2.0.1 - 2018-10-05
+
+-   Added support for host manager endpoints
+-   Added member dataTypePtr to the response protocol structs that return
+    a dynamically generated table.  Currently, that includes:
+    -   AggregateGroupByResponse
+    -   AggregateUniqueResponse
+    -   AggregateUnpivotResponse
+    -   GetRecordsByColumnResponse
 
 ### Version 6.2.0.0 - 2018-03-24
 
@@ -17,16 +34,6 @@
     -   RecordKey
     -   RecordKeyBuilder
     -   WorkerQueue
-
-### Version 6.2.0.1 - 2018-10-05
-
--   Added support for host manager endpoints
--   Added member dataTypePtr to the response protocol structs that return
-    a dynamically generated table.  Currently, that includes:
-    -   AggregateGroupByResponse
-    -   AggregateUniqueResponse
-    -   AggregateUnpivotResponse
-    -   GetRecordsByColumnResponse
 
 
 ## Version 6.1.0 - 2017-12-11

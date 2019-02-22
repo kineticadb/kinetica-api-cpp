@@ -563,6 +563,11 @@ namespace gpudb
 
     void HttpUrl::init(const std::string& url)
     {
+        if ( url.empty() )
+        {
+            throw std::invalid_argument("Invalid URL specified; empty string given.");
+        }
+
         size_t i = 0;
 
         std::string protocol;
@@ -588,7 +593,7 @@ namespace gpudb
         }
         else
         {
-            throw std::invalid_argument("Invalid URL specified.");
+            throw std::invalid_argument("Invalid URL specified: '" + url + "'");
         }
 
         m_host.reserve(url.length() - i - 1);
@@ -695,6 +700,18 @@ namespace gpudb
     std::ostream& operator <<(std::ostream& stream, const HttpUrl& value)
     {
         return stream << (std::string)value;
+    }
+
+    // Overloaded comparison operator
+    bool operator ==(const HttpUrl &lhs, const HttpUrl &rhs)
+    {
+        return ( (lhs.getUrl().compare( rhs.getUrl() ) == 0)
+                 && ( lhs.isSecure() == rhs.isSecure() ) );
+    }
+
+    bool operator !=(const HttpUrl &lhs, const HttpUrl &rhs)
+    {
+        return !(lhs == rhs);
     }
 
     //- HttpConnection----------------------------------------------------------

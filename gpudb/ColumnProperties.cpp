@@ -65,6 +65,8 @@ namespace gpudb
 
         const std::string DICT          ( "dict"           );
 
+        const std::string INIT_WITH_NOW ( "init_with_now"  );
+
     } // end namespace ColumnProperty
 } // end namespace gpudb
 
