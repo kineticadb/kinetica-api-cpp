@@ -131,12 +131,12 @@ namespace gpudb
          * parameter values.
          */
         ShowResourceGroupsResponse() :
-            groups(std::map<std::string, std::map<std::string, std::string> >()),
+            groups(std::vector<std::map<std::string, std::string> >()),
             info(std::map<std::string, std::string>())
         {
         }
 
-        std::map<std::string, std::map<std::string, std::string> > groups;
+        std::vector<std::map<std::string, std::string> > groups;
         std::map<std::string, std::string> info;
     };
 }

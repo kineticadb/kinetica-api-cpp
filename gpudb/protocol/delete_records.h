@@ -56,7 +56,8 @@ namespace gpudb
          *                              <li>
          *                      gpudb::delete_records_global_expression: An
          *                      optional global expression to reduce the search
-         *                      space of the @a expressions.
+         *                      space of the @a expressions.  The default value
+         *                      is ''.
          *                              <li> gpudb::delete_records_record_id: A
          *                      record ID identifying a single record, obtained
          *                      at the time of /insert/records or by calling

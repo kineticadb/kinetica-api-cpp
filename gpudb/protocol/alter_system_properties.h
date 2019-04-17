@@ -66,6 +66,14 @@ namespace gpudb
          *                                 gpudb::alter_system_properties_false
          *                                 </ul>
          *                                         <li>
+         *                                 gpudb::alter_system_properties_subtask_concurrency_limit:
+         *                                 Sets the maximum number of
+         *                                 simultaneous threads allocated to a
+         *                                 given request, on each rank. Note
+         *                                 that thread allocation may also be
+         *                                 limted by resource group limits
+         *                                 and/or system load.
+         *                                         <li>
          *                                 gpudb::alter_system_properties_chunk_size:
          *                                 Sets the chunk size of all new sets
          *                                 to the specified integer value.
@@ -146,12 +154,13 @@ namespace gpudb
          *                                 filtering (e.g., /filter) and
          *                                 aggregating (e.g.,
          *                                 /aggregate/groupby) queries will
-         *                                 timeout.
+         *                                 timeout.  The default value is '20'.
          *                                         <li>
          *                                 gpudb::alter_system_properties_max_get_records_size:
          *                                 The maximum number of records the
          *                                 database will serve for a given data
-         *                                 retrieval call
+         *                                 retrieval call.  The default value
+         *                                 is '20000'.
          *                                         <li>
          *                                 gpudb::alter_system_properties_enable_audit:
          *                                 Enable or disable auditing.
@@ -175,11 +184,13 @@ namespace gpudb
          *                                         <li>
          *                                 gpudb::alter_system_properties_chunk_cache_size:
          *                                 Size of the chunk cache in bytes.
+         *                                 The default value is '10000000'.
          *                                         <li>
          *                                 gpudb::alter_system_properties_synchronous_compression:
          *                                 compress vector on set_compression
          *                                 (instead of waiting for background
-         *                                 thread)
+         *                                 thread).  The default value is
+         *                                 'false'.
          *                                 </ul>
          * @param[in] options_  Optional parameters.
          * 

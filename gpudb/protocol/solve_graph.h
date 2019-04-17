@@ -183,7 +183,8 @@ namespace gpudb
          *                      radius, which ignores the @a destinationNodeIds
          *                      list and instead outputs the nodes within the
          *                      radius sorted by ascending cost. If set to
-         *                      '0.0', the setting is ignored.
+         *                      '0.0', the setting is ignored.  The default
+         *                      value is '0.0'.
          *                              <li>
          *                      gpudb::solve_graph_max_solution_targets: For @a
          *                      SHORTEST_PATH and @a INVERSE_SHORTEST_PATH
@@ -192,7 +193,8 @@ namespace gpudb
          *                      destinationNodeIds list and instead outputs no
          *                      more than n number of nodes sorted by ascending
          *                      cost where n is equal to the setting value. If
-         *                      set to 0, the setting is ignored.
+         *                      set to 0, the setting is ignored.  The default
+         *                      value is '0'.
          *                              <li>
          *                      gpudb::solve_graph_export_solve_results:
          *                      Returns solution results inside the @a

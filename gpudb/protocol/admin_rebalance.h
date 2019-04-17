@@ -154,14 +154,10 @@ namespace gpudb
          * values.
          */
         AdminRebalanceResponse() :
-            tableNames(std::vector<std::string>()),
-            message(std::vector<std::string>()),
             info(std::map<std::string, std::string>())
         {
         }
 
-        std::vector<std::string> tableNames;
-        std::vector<std::string> message;
         std::map<std::string, std::string> info;
     };
 }
@@ -172,8 +168,6 @@ namespace avro
     {
         static void encode(Encoder& e, const gpudb::AdminRebalanceResponse& v)
         {
-            ::avro::encode(e, v.tableNames);
-            ::avro::encode(e, v.message);
             ::avro::encode(e, v.info);
         }
 
@@ -188,14 +182,6 @@ namespace avro
                     switch (*it)
                     {
                         case 0:
-                            ::avro::decode(d, v.tableNames);
-                            break;
-
-                        case 1:
-                            ::avro::decode(d, v.message);
-                            break;
-
-                        case 2:
                             ::avro::decode(d, v.info);
                             break;
 
@@ -206,8 +192,6 @@ namespace avro
             }
             else
             {
-                ::avro::decode(d, v.tableNames);
-                ::avro::decode(d, v.message);
                 ::avro::decode(d, v.info);
             }
         }

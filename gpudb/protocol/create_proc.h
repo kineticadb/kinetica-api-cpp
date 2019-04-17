@@ -87,7 +87,8 @@ namespace gpudb
          *                      gpudb::create_proc_max_concurrency_per_node:
          *                      The maximum number of concurrent instances of
          *                      the proc that will be executed per node. 0
-         *                      allows unlimited concurrency.
+         *                      allows unlimited concurrency.  The default
+         *                      value is '0'.
          *                      </ul>
          * 
          */

@@ -161,7 +161,8 @@ namespace gpudb
          *                      Must be used in combination with the @a
          *                      result_table option.
          *                              <li> gpudb::aggregate_unique_view_id:
-         *                      view this result table is part of
+         *                      view this result table is part of.  The default
+         *                      value is ''.
          *                      </ul>
          * 
          */
@@ -283,7 +284,8 @@ namespace gpudb
          *                      Must be used in combination with the @a
          *                      result_table option.
          *                              <li> gpudb::aggregate_unique_view_id:
-         *                      view this result table is part of
+         *                      view this result table is part of.  The default
+         *                      value is ''.
          *                      </ul>
          * 
          */

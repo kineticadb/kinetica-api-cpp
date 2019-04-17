@@ -82,7 +82,7 @@ namespace gpudb
          *                      gpudb::update_records_global_expression: An
          *                      optional global expression to reduce the search
          *                      space of the predicates listed in @a
-         *                      expressions.
+         *                      expressions.  The default value is ''.
          *                              <li>
          *                      gpudb::update_records_bypass_safety_checks:
          *                      When set to @a true, all predicates are
@@ -201,7 +201,7 @@ namespace gpudb
          *                      gpudb::update_records_global_expression: An
          *                      optional global expression to reduce the search
          *                      space of the predicates listed in @a
-         *                      expressions.
+         *                      expressions.  The default value is ''.
          *                              <li>
          *                      gpudb::update_records_bypass_safety_checks:
          *                      When set to @a true, all predicates are
@@ -432,7 +432,7 @@ namespace gpudb
          *                      gpudb::update_records_global_expression: An
          *                      optional global expression to reduce the search
          *                      space of the predicates listed in @a
-         *                      expressions.
+         *                      expressions.  The default value is ''.
          *                              <li>
          *                      gpudb::update_records_bypass_safety_checks:
          *                      When set to @a true, all predicates are

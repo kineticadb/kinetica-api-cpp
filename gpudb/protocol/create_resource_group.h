@@ -25,6 +25,8 @@ namespace gpudb
         CreateResourceGroupRequest() :
             name(std::string()),
             tierAttributes(std::map<std::string, std::map<std::string, std::string> >()),
+            ranking(std::string()),
+            adjoiningResourceGroup(std::string()),
             options(std::map<std::string, std::string>())
         {
         }
@@ -53,6 +55,21 @@ namespace gpudb
          *                             Maximum amount of memory usable in the
          *                             given tier at one time for this group.
          *                             </ul>
+         * @param[in] ranking_  Indicates the relative ranking among existing
+         *                      resource groups where this new resource group
+         *                      will be placed.
+         *                      <ul>
+         *                              <li> gpudb::create_resource_group_first
+         *                              <li> gpudb::create_resource_group_last
+         *                              <li>
+         *                      gpudb::create_resource_group_before
+         *                              <li> gpudb::create_resource_group_after
+         *                      </ul>
+         * @param[in] adjoiningResourceGroup_  Name of the resource group
+         *                                     relative to which this group
+         *                                     will be placed. Must be
+         *                                     specified when ranking is before
+         *                                     or after
          * @param[in] options_  Optional parameters.
          *                      <ul>
          *                              <li>
@@ -71,15 +88,19 @@ namespace gpudb
          *                      </ul>
          * 
          */
-        CreateResourceGroupRequest(const std::string& name_, const std::map<std::string, std::map<std::string, std::string> >& tierAttributes_, const std::map<std::string, std::string>& options_):
+        CreateResourceGroupRequest(const std::string& name_, const std::map<std::string, std::map<std::string, std::string> >& tierAttributes_, const std::string& ranking_, const std::string& adjoiningResourceGroup_, const std::map<std::string, std::string>& options_):
             name( name_ ),
             tierAttributes( tierAttributes_ ),
+            ranking( ranking_ ),
+            adjoiningResourceGroup( adjoiningResourceGroup_ ),
             options( options_ )
         {
         }
 
         std::string name;
         std::map<std::string, std::map<std::string, std::string> > tierAttributes;
+        std::string ranking;
+        std::string adjoiningResourceGroup;
         std::map<std::string, std::string> options;
     };
 }
@@ -92,6 +113,8 @@ namespace avro
         {
             ::avro::encode(e, v.name);
             ::avro::encode(e, v.tierAttributes);
+            ::avro::encode(e, v.ranking);
+            ::avro::encode(e, v.adjoiningResourceGroup);
             ::avro::encode(e, v.options);
         }
 
@@ -114,6 +137,14 @@ namespace avro
                             break;
 
                         case 2:
+                            ::avro::decode(d, v.ranking);
+                            break;
+
+                        case 3:
+                            ::avro::decode(d, v.adjoiningResourceGroup);
+                            break;
+
+                        case 4:
                             ::avro::decode(d, v.options);
                             break;
 
@@ -126,6 +157,8 @@ namespace avro
             {
                 ::avro::decode(d, v.name);
                 ::avro::decode(d, v.tierAttributes);
+                ::avro::decode(d, v.ranking);
+                ::avro::decode(d, v.adjoiningResourceGroup);
                 ::avro::decode(d, v.options);
             }
         }

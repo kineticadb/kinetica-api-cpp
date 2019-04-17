@@ -235,7 +235,8 @@ namespace gpudb
          *                      used in combination with the @a result_table
          *                      option.
          *                              <li> gpudb::aggregate_group_by_view_id:
-         *                      view this result table is part of
+         *                      view this result table is part of.  The default
+         *                      value is ''.
          *                              <li>
          *                      gpudb::aggregate_group_by_materialize_on_gpu:
          *                      If @a true then the columns of the groupby
@@ -440,7 +441,8 @@ namespace gpudb
          *                      used in combination with the @a result_table
          *                      option.
          *                              <li> gpudb::aggregate_group_by_view_id:
-         *                      view this result table is part of
+         *                      view this result table is part of.  The default
+         *                      value is ''.
          *                              <li>
          *                      gpudb::aggregate_group_by_materialize_on_gpu:
          *                      If @a true then the columns of the groupby

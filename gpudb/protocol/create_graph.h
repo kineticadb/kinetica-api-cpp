@@ -114,19 +114,20 @@ namespace gpudb
          *                      X, Y), determines the minimum separation
          *                      allowed between unique nodes. If nodes are
          *                      within the tolerance of each other, they will
-         *                      be merged as a single node.
+         *                      be merged as a single node.  The default value
+         *                      is '1.0E-4'.
          *                              <li> gpudb::create_graph_min_x: Minimum
          *                      x (longitude) value for spatial graph
-         *                      associations.
+         *                      associations.  The default value is '-180.0'.
          *                              <li> gpudb::create_graph_max_x: Maximum
          *                      x (longitude) value for spatial graph
-         *                      associations.
+         *                      associations.  The default value is '180.0'.
          *                              <li> gpudb::create_graph_min_y: Minimum
          *                      y (latitude) value for spatial graph
-         *                      associations.
+         *                      associations.  The default value is '-90.0'.
          *                              <li> gpudb::create_graph_max_y: Maximum
          *                      y (latitude) value for spatial graph
-         *                      associations.
+         *                      associations.  The default value is '90.0'.
          *                              <li> gpudb::create_graph_recreate: If
          *                      set to @a true and the graph (using @a
          *                      graphName) already exists, the graph is deleted
@@ -199,7 +200,7 @@ namespace gpudb
          *                      with the given name and following identifier
          *                      columns: 'EDGE_ID', 'EDGE_NODE1_ID',
          *                      'EDGE_NODE2_ID'. If left blank, no table is
-         *                      created.
+         *                      created.  The default value is ''.
          *                      </ul>
          * 
          */

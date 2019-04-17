@@ -91,13 +91,14 @@ namespace gpudb
          *                      collection provided is non-existent, the
          *                      collection will be automatically created. If
          *                      empty, then the projection will be at the top
-         *                      level.
+         *                      level.  The default value is ''.
          *                              <li>
          *                      gpudb::create_projection_expression: An
          *                      optional filter <a
          *                      href="../../concepts/expressions.html"
          *                      target="_top">expression</a> to be applied to
-         *                      the source table prior to the projection.
+         *                      the source table prior to the projection.  The
+         *                      default value is ''.
          *                              <li>
          *                      gpudb::create_projection_is_replicated: If @a
          *                      true then the projection will be replicated
@@ -109,14 +110,16 @@ namespace gpudb
          *                      The default value is
          *                      gpudb::create_projection_false.
          *                              <li> gpudb::create_projection_limit:
-         *                      The number of records to keep.
+         *                      The number of records to keep.  The default
+         *                      value is ''.
          *                              <li> gpudb::create_projection_order_by:
          *                      Comma-separated list of the columns to be
          *                      sorted by; e.g. 'timestamp asc, x desc'.  The
          *                      columns specified must be present in @a
          *                      columnNames.  If any alias is given for any
          *                      column name, the alias must be used, rather
-         *                      than the original column name.
+         *                      than the original column name.  The default
+         *                      value is ''.
          *                              <li>
          *                      gpudb::create_projection_materialize_on_gpu: If
          *                      @a true then the columns of the projection will
@@ -149,7 +152,8 @@ namespace gpudb
          *                      columns specified must be present in @a
          *                      columnNames.  If any alias is given for any
          *                      column name, the alias must be used, rather
-         *                      than the original column name.
+         *                      than the original column name.  The default
+         *                      value is ''.
          *                              <li> gpudb::create_projection_persist:
          *                      If @a true, then the projection specified in @a
          *                      projectionName will be persisted and will not
@@ -175,7 +179,8 @@ namespace gpudb
          *                      The default value is
          *                      gpudb::create_projection_false.
          *                              <li> gpudb::create_projection_view_id:
-         *                      view this projection is part of
+         *                      view this projection is part of.  The default
+         *                      value is ''.
          *                      </ul>
          * 
          */

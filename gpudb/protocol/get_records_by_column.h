@@ -80,7 +80,8 @@ namespace gpudb
          *                      column that the data should be sorted by. Used
          *                      in conjunction with @a sort_order. The @a
          *                      order_by option can be used in lieu of @a
-         *                      sort_by / @a sort_order.
+         *                      sort_by / @a sort_order.  The default value is
+         *                      ''.
          *                              <li>
          *                      gpudb::get_records_by_column_sort_order: String
          *                      indicating how the returned values should be
@@ -99,7 +100,8 @@ namespace gpudb
          *                      gpudb::get_records_by_column_order_by:
          *                      Comma-separated list of the columns to be
          *                      sorted by as well as the sort direction, e.g.,
-         *                      'timestamp asc, x desc'.
+         *                      'timestamp asc, x desc'.  The default value is
+         *                      ''.
          *                              <li>
          *                      gpudb::get_records_by_column_convert_wkts_to_wkbs:
          *                      If true, then WKT string columns will be
@@ -161,7 +163,8 @@ namespace gpudb
          *                      column that the data should be sorted by. Used
          *                      in conjunction with @a sort_order. The @a
          *                      order_by option can be used in lieu of @a
-         *                      sort_by / @a sort_order.
+         *                      sort_by / @a sort_order.  The default value is
+         *                      ''.
          *                              <li>
          *                      gpudb::get_records_by_column_sort_order: String
          *                      indicating how the returned values should be
@@ -180,7 +183,8 @@ namespace gpudb
          *                      gpudb::get_records_by_column_order_by:
          *                      Comma-separated list of the columns to be
          *                      sorted by as well as the sort direction, e.g.,
-         *                      'timestamp asc, x desc'.
+         *                      'timestamp asc, x desc'.  The default value is
+         *                      ''.
          *                              <li>
          *                      gpudb::get_records_by_column_convert_wkts_to_wkbs:
          *                      If true, then WKT string columns will be

@@ -3,11 +3,11 @@ Kinetica C++ API
 
 This project contains the source code of the C++ Kinetica API.
 
-The documentation can be found at http://www.kinetica.com/docs/6.2/index.html.  The
+The documentation can be found at http://www.kinetica.com/docs/7.0/index.html.  The
 C++ specific documentation can be found at:
 
-*   http://www.kinetica.com/docs/6.2/tutorials/cpp_guide.html
-*   http://www.kinetica.com/docs/6.2/api/c++/annotated.html
+*   http://www.kinetica.com/docs/7.0/tutorials/cpp_guide.html
+*   http://www.kinetica.com/docs/7.0/api/c++/annotated.html
 
 For the client-side API changes, please refer to CHANGELOG.md, and for GPUdb
 function changes, please refer to CHANGELOG-FUNCTIONS.md.

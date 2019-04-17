@@ -111,13 +111,17 @@ namespace gpudb
          *                           The default value is
          *                           gpudb::visualize_video_heatmap_reds.
          *                                   <li>
-         *                           gpudb::visualize_video_heatmap_blur_radius
+         *                           gpudb::visualize_video_heatmap_blur_radius:
+         *                           The default value is '5'.
          *                                   <li>
-         *                           gpudb::visualize_video_heatmap_bg_color
+         *                           gpudb::visualize_video_heatmap_bg_color:
+         *                           The default value is 'FF000000'.
          *                                   <li>
-         *                           gpudb::visualize_video_heatmap_gradient_start_color
+         *                           gpudb::visualize_video_heatmap_gradient_start_color:
+         *                           The default value is 'FFFFFF'.
          *                                   <li>
-         *                           gpudb::visualize_video_heatmap_gradient_end_color
+         *                           gpudb::visualize_video_heatmap_gradient_end_color:
+         *                           The default value is 'FF0000'.
          *                           </ul>
          * @param[in] options_
          * 
