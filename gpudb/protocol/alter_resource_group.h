@@ -26,6 +26,8 @@ namespace gpudb
         AlterResourceGroupRequest() :
             name(std::string()),
             tierAttributes(std::map<std::string, std::map<std::string, std::string> >()),
+            ranking(std::string()),
+            adjoiningResourceGroup(std::string()),
             options(std::map<std::string, std::string>())
         {
         }
@@ -52,6 +54,27 @@ namespace gpudb
          *                             Maximum amount of memory usable in the
          *                             given tier at one time for this group.
          *                             </ul>
+         * @param[in] ranking_  If the resource group ranking has to be
+         *                      updated, this indicates the relative ranking
+         *                      among existing resource groups where this
+         *                      resource group will be moved. Left bank if not
+         *                      changing the ranking.
+         *                      <ul>
+         *                              <li>
+         *                      gpudb::alter_resource_group_empty_string
+         *                              <li> gpudb::alter_resource_group_first
+         *                              <li> gpudb::alter_resource_group_last
+         *                              <li> gpudb::alter_resource_group_before
+         *                              <li> gpudb::alter_resource_group_after
+         *                      </ul>
+         *                      The default value is
+         *                      gpudb::alter_resource_group_empty_string.
+         * @param[in] adjoiningResourceGroup_  If the ranking is 'before' or
+         *                                     'after', this field indicates
+         *                                     the resource group before or
+         *                                     after which the current group
+         *                                     will be placed otherwise left
+         *                                     blank.
          * @param[in] options_  Optional parameters.
          *                      <ul>
          *                              <li>
@@ -82,15 +105,19 @@ namespace gpudb
          *                      </ul>
          * 
          */
-        AlterResourceGroupRequest(const std::string& name_, const std::map<std::string, std::map<std::string, std::string> >& tierAttributes_, const std::map<std::string, std::string>& options_):
+        AlterResourceGroupRequest(const std::string& name_, const std::map<std::string, std::map<std::string, std::string> >& tierAttributes_, const std::string& ranking_, const std::string& adjoiningResourceGroup_, const std::map<std::string, std::string>& options_):
             name( name_ ),
             tierAttributes( tierAttributes_ ),
+            ranking( ranking_ ),
+            adjoiningResourceGroup( adjoiningResourceGroup_ ),
             options( options_ )
         {
         }
 
         std::string name;
         std::map<std::string, std::map<std::string, std::string> > tierAttributes;
+        std::string ranking;
+        std::string adjoiningResourceGroup;
         std::map<std::string, std::string> options;
     };
 }
@@ -103,6 +130,8 @@ namespace avro
         {
             ::avro::encode(e, v.name);
             ::avro::encode(e, v.tierAttributes);
+            ::avro::encode(e, v.ranking);
+            ::avro::encode(e, v.adjoiningResourceGroup);
             ::avro::encode(e, v.options);
         }
 
@@ -125,6 +154,14 @@ namespace avro
                             break;
 
                         case 2:
+                            ::avro::decode(d, v.ranking);
+                            break;
+
+                        case 3:
+                            ::avro::decode(d, v.adjoiningResourceGroup);
+                            break;
+
+                        case 4:
                             ::avro::decode(d, v.options);
                             break;
 
@@ -137,6 +174,8 @@ namespace avro
             {
                 ::avro::decode(d, v.name);
                 ::avro::decode(d, v.tierAttributes);
+                ::avro::decode(d, v.ranking);
+                ::avro::decode(d, v.adjoiningResourceGroup);
                 ::avro::decode(d, v.options);
             }
         }

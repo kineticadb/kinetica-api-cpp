@@ -166,8 +166,9 @@ namespace gpudb
          *                     creating the key or the complete string used to
          *                     define it.
          *                             <li> gpudb::alter_table_add_partition:
-         *                     Adds a partition (for range-partitioned tables
-         *                     only) specified in @a value.  See <a
+         *                     Adds a partition (for range-partitioned or
+         *                     list-partitioned tables) specified in @a value.
+         *                     See <a
          *                     href="../../concepts/tables.html#partitioning-by-range-example"
          *                     target="_top">range partitioning example</a> for
          *                     example format.
@@ -175,11 +176,12 @@ namespace gpudb
          *                     gpudb::alter_table_remove_partition: Removes the
          *                     partition specified in @a value and relocates
          *                     all its data to the default partition (for
-         *                     range-partitioned tables only).
+         *                     range-partitioned or list-partition tables).
          *                             <li>
          *                     gpudb::alter_table_delete_partition: Deletes the
          *                     partition specified in @a value and its data
-         *                     (for range-partitioned tables only).
+         *                     (for range-partitioned or list-partitioned
+         *                     tables).
          *                             <li>
          *                     gpudb::alter_table_set_global_access_mode: Sets
          *                     the global access mode (i.e. locking) for the

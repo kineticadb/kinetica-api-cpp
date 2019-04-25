@@ -86,7 +86,7 @@ namespace gpudb
          *                      until the proc status is cleared with the
          *                      /show/proc/status option of /show/proc/status
          *                      and all proc instances using the cached data
-         *                      have completed.
+         *                      have completed.  The default value is ''.
          *                              <li>
          *                      gpudb::execute_proc_use_cached_input: A
          *                      comma-delimited list of run IDs (as returned
@@ -100,7 +100,8 @@ namespace gpudb
          *                      to the proc. If the same table was cached for
          *                      multiple specified run IDs, the cached data
          *                      from the first run ID specified in the list
-         *                      that includes that table will be used.
+         *                      that includes that table will be used.  The
+         *                      default value is ''.
          *                              <li>
          *                      gpudb::execute_proc_kifs_input_dirs: A
          *                      comma-delimited list of KiFS directories whose
@@ -109,7 +110,7 @@ namespace gpudb
          *                      local or not, are also accessible through the
          *                      file system below the KiFS mount point.) Each
          *                      name specified must the name of an existing
-         *                      KiFS directory.
+         *                      KiFS directory.  The default value is ''.
          *                      </ul>
          * 
          */

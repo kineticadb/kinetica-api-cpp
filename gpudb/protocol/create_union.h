@@ -83,7 +83,8 @@ namespace gpudb
          *                      table. If the collection provided is
          *                      non-existent, the collection will be
          *                      automatically created. If empty, the output
-         *                      table will be a top-level table.
+         *                      table will be a top-level table.  The default
+         *                      value is ''.
          *                              <li>
          *                      gpudb::create_union_materialize_on_gpu: If @a
          *                      true, then the columns of the output table will
@@ -160,7 +161,8 @@ namespace gpudb
          *                      </ul>
          *                      The default value is gpudb::create_union_false.
          *                              <li> gpudb::create_union_view_id: view
-         *                      the output table will be a part of
+         *                      the output table will be a part of.  The
+         *                      default value is ''.
          *                              <li>
          *                      gpudb::create_union_force_replicated: If @a
          *                      true, then the table specified in @a tableName

@@ -42,8 +42,8 @@ namespace gpudb
          *                        existing view.
          * @param[in] worldTableName_  Name of the table containing the
          *                             complete series (track) information.
-         * @param[in] viewName_  Optional name of the view containing the
-         *                       series (tracks) which have to be updated.
+         * @param[in] viewName_  name of the view containing the series
+         *                       (tracks) which have to be updated.
          * @param[in] reserved_
          * @param[in] options_  Optional parameters.
          * 

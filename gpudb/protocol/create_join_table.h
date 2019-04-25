@@ -74,6 +74,7 @@ namespace gpudb
          *                      If the collection provided is non-existent, the
          *                      collection will be automatically created. If
          *                      empty, then the join will be at the top level.
+         *                      The default value is ''.
          *                              <li>
          *                      gpudb::create_join_table_max_query_dimensions:
          *                      Obsolete in GPUdb v7.0
@@ -86,73 +87,22 @@ namespace gpudb
          *                      </ul>
          *                      The default value is
          *                      gpudb::create_join_table_false.
-         *                              <li>
-         *                      gpudb::create_join_table_refresh_method: Method
-         *                      by which the join can be refreshed when the
-         *                      data in underlying member tables have changed.
-         *                      <ul>
-         *                              <li> gpudb::create_join_table_manual:
-         *                      refresh only occurs when manually requested by
-         *                      calling this endpoint with refresh option set
-         *                      to @a refresh or @a full_refresh
-         *                              <li> gpudb::create_join_table_on_query:
-         *                      incrementally refresh (refresh just those
-         *                      records added) whenever a new query is issued
-         *                      and new data is inserted into the base table.
-         *                      A full refresh of all the records occurs when a
-         *                      new query is issued and there have been inserts
-         *                      to any non-base-tables since the last query.
-         *                      <a href="../../concepts/ttl.html"
-         *                      target="_top">TTL</a> will be set to not
-         *                      expire; any @a ttl specified will be ignored.
-         *                              <li>
-         *                      gpudb::create_join_table_on_insert:
-         *                      incrementally refresh (refresh just those
-         *                      records added) whenever new data is inserted
-         *                      into a base table.  A full refresh of all the
-         *                      records occurs when a new query is issued and
-         *                      there have been inserts to any non-base-tables
-         *                      since the last query.  <a
-         *                      href="../../concepts/ttl.html"
-         *                      target="_top">TTL</a> will be set to not
-         *                      expire; any @a ttl specified will be ignored.
-         *                      </ul>
-         *                      The default value is
-         *                      gpudb::create_join_table_manual.
-         *                              <li> gpudb::create_join_table_refresh:
-         *                      Do a manual refresh of the join if it exists -
-         *                      throws an error otherwise
-         *                      <ul>
-         *                              <li>
-         *                      gpudb::create_join_table_no_refresh: don't
-         *                      refresh
-         *                              <li> gpudb::create_join_table_refresh:
-         *                      incrementally refresh (refresh just those
-         *                      records added) if new data has been inserted
-         *                      into the base table.  A full refresh of all the
-         *                      records occurs if there have been inserts to
-         *                      any non-base-tables since the last refresh
-         *                              <li>
-         *                      gpudb::create_join_table_full_refresh: always
-         *                      refresh even if no new records have been added.
-         *                      Only refresh method guaranteed to do a full
-         *                      refresh (refresh all the records) if a delete
-         *                      or update has occurred since the last refresh.
-         *                      </ul>
-         *                      The default value is
-         *                      gpudb::create_join_table_no_refresh.
          *                              <li> gpudb::create_join_table_ttl: Sets
          *                      the <a href="../../concepts/ttl.html"
          *                      target="_top">TTL</a> of the join table
-         *                      specified in @a joinTableName.  Ignored if @a
-         *                      refresh_method is either @a on_insert or @a
-         *                      on_query.
+         *                      specified in @a joinTableName.
          *                              <li> gpudb::create_join_table_view_id:
-         *                      view this projection is part of
+         *                      view this projection is part of.  The default
+         *                      value is ''.
          *                              <li> gpudb::create_join_table_no_count:
          *                      return a count of 0 for the join table for
          *                      logging and for show_table. optimization needed
-         *                      for large overlapped equi-join stencils
+         *                      for large overlapped equi-join stencils.  The
+         *                      default value is 'false'.
+         *                              <li>
+         *                      gpudb::create_join_table_chunk_size: Maximum
+         *                      size of a joined-chunk for this table. Defaults
+         *                      to the gpudb.conf file chunk size
          *                      </ul>
          * 
          */

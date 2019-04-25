@@ -95,7 +95,7 @@ namespace gpudb
          *                      gpudb::filter_by_table_normal.
          *                              <li> gpudb::filter_by_table_buffer:
          *                      Buffer size, in meters. Only relevant for @a
-         *                      spatial mode.
+         *                      spatial mode.  The default value is '0'.
          *                              <li>
          *                      gpudb::filter_by_table_buffer_method: Method
          *                      used to buffer polygons.  Only relevant for @a
@@ -110,19 +110,23 @@ namespace gpudb
          *                              <li>
          *                      gpudb::filter_by_table_max_partition_size:
          *                      Maximum number of points in a partition. Only
-         *                      relevant for @a spatial mode.
+         *                      relevant for @a spatial mode.  The default
+         *                      value is '0'.
          *                              <li>
          *                      gpudb::filter_by_table_max_partition_score:
          *                      Maximum number of points * edges in a
          *                      partition. Only relevant for @a spatial mode.
+         *                      The default value is '8000000'.
          *                              <li>
          *                      gpudb::filter_by_table_x_column_name: Name of
          *                      column containing x value of point being
-         *                      filtered in @a spatial mode.
+         *                      filtered in @a spatial mode.  The default value
+         *                      is 'x'.
          *                              <li>
          *                      gpudb::filter_by_table_y_column_name: Name of
          *                      column containing y value of point being
-         *                      filtered in @a spatial mode.
+         *                      filtered in @a spatial mode.  The default value
+         *                      is 'y'.
          *                      </ul>
          * 
          */

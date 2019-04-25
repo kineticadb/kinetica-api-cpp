@@ -68,6 +68,9 @@ public:
 
         std::string getUsername() const;
         std::string getPassword() const;
+        /// Return the URL of the primary cluster, if any (empty string
+        /// delineates that none was set)
+        std::string getPrimaryUrl() const;
         bool getUseSnappy() const;
         size_t getThreadCount() const;
         avro::ExecutorPtr getExecutor() const;
@@ -82,6 +85,8 @@ public:
 
         Options& setUsername(const std::string& value);
         Options& setPassword(const std::string& value);
+        /// Set the URL for the primary cluster
+        Options& setPrimaryUrl(const std::string& value);
         Options& setUseSnappy(const bool value);
         Options& setThreadCount(const size_t value);
         Options& setExecutor(const avro::ExecutorPtr value);
@@ -98,6 +103,7 @@ public:
 
         std::string m_username;
         std::string m_password;
+        std::string m_primaryUrl;
         bool m_useSnappy;
         size_t m_threadCount;
         avro::ExecutorPtr m_executor;
@@ -110,20 +116,64 @@ public:
 
     static inline std::string getApiVersion() { return GPUdb::API_VERSION; }
 
-    /// Pass a single HttpURL and options to instantiate a GPUdb object
+    /**
+     * Pass a single HttpURL and options to instantiate a GPUdb object.
+     *
+     * @param[in] url  An HttpURL object containing the single host URL
+     *                 for the client.
+     * @param[in] options  An optional GPUdb::Options object containing
+     *                     options, e.g. primary cluster URL, used to the
+     *                     create the GPUdb object.
+     *
+     * @return the instantiated GPUdb object.
+     */
     GPUdb(const HttpUrl& url, const Options& options = Options());
 
-    /// Pass a single or multiple, comma-separated URLs as a string and options
-    /// to instantiate a GPUdb object
+    /**
+     * Pass a single or multiple, comma-separated URLs as a string
+     * and optional options to instantiate a GPUdb object.
+     *
+     * @param[in] url  An std::string containing the one host URL
+     *                 or a comma-separated string with multiple host
+     *                 URLs for the client.
+     * @param[in] options  An optional GPUdb::Options object containing
+     *                     options, e.g. primary cluster URL, used to the
+     *                     create the GPUdb object.
+     *
+     * @return the instantiated GPUdb object.
+     */
     GPUdb(const std::string& url, const Options& options = Options());
 
-    /// Pass multiple HttpURLs and options to instatiate a GPUdb object
+    /**
+     * Pass multiple HttpURLs and optional options to instantiate a GPUdb
+     * object.
+     *
+     * @param[in] urls  The host URLs for the client.
+     * @param[in] options  An optional GPUdb::Options object containing
+     *                     options, e.g. primary cluster URL, used to the
+     *                     create the GPUdb object.
+     *
+     * @return the instantiated GPUdb object.
+     */
     GPUdb(const std::vector<HttpUrl>& urls, const Options& options = Options());
 
-    /// Pass multiple strings, each containing a single URL, and options to
-    /// instantiate a GPUdb object
+    /**
+     * Pass multiple strings, each containing a single URL, and optional options
+     * to instantiate a GPUdb object.
+     *
+     * @param[in] urls  The host URLs for the client.  Each string must contain
+     *                  a single valid URL.
+     * @param[in] options  An optional GPUdb::Options object containing
+     *                     options, e.g. primary cluster URL, used to the
+     *                     create the GPUdb object.
+     *
+     * @return the instantiated GPUdb object.
+     */
     GPUdb(const std::vector<std::string>& urls, const Options& options = Options());
 
+    /// Destructor
+    ~GPUdb();
+    
     /// Some getters
     const HttpUrl& getUrl() const;
     const std::vector<HttpUrl>& getUrls() const;
@@ -136,6 +186,11 @@ public:
 
     const std::string& getUsername() const;
     const std::string& getPassword() const;
+
+    /// Return a string containing the URL for the primary cluster; empty
+    /// string otherwise
+    const std::string& getPrimaryURL() const;
+
     bool getUseSnappy() const;
     size_t getThreadCount() const;
     avro::ExecutorPtr getExecutor() const;
@@ -349,8 +404,10 @@ public:
 private:
     static const std::string API_VERSION;
 
-    std::vector<HttpUrl> m_urls;
-    std::vector<HttpUrl> m_hmUrls;
+    mutable std::vector<HttpUrl> m_urls;
+    mutable std::vector<HttpUrl> m_hmUrls;
+    std::string m_primaryUrlStr;
+    HttpUrl* m_primaryUrlPtr;
     mutable std::vector<size_t>  m_urlIndices;
     mutable boost::mutex m_urlMutex;
     mutable size_t m_currentUrl;
@@ -373,15 +430,36 @@ private:
     mutable boost::mutex m_knownTypesMutex;
 
     /// Helper functions
+    /// ----------------
+    /// Initialize the GPUdb object
     void init();
+
+    // Handle the primary host URL, if any is given via options
+    void handlePrimaryURL();
+
+    // Update the URLs with the available HA ring information
+    void getHAringHeadNodeAdresses();
+
+    /// Host manager related methods
+    void updateHostManagerUrls();
+    void setHostManagerPort(uint16_t value);
+
+    /// Randomly shuffles the list of high availability URL indices so that HA
+    /// failover happens at a random fashion.  One caveat is when a primary host
+    /// is given by the user; in that case, we need to keep the primary host's
+    /// index as the first one in the list so that upon failover, when we cricle
+    /// back, we always pick the first/primary host up again.
+    void randomizeURLs() const;
     
     /// Some getters
+    /// ------------
     const HttpUrl* getUrlPointer() const;
     const HttpUrl* getHmUrlPointer() const;
     const HttpUrl* switchUrl(const HttpUrl* oldUrl) const;
     const HttpUrl* switchHmUrl(const HttpUrl* oldUrl) const;
 
     /// Request related methods
+    /// -----------------------
     void initHttpRequest(HttpRequest& httpRequest) const;
     void submitRequestRaw(const std::string& endpoint,
                           const std::vector<uint8_t>& request,
@@ -404,10 +482,6 @@ private:
                              const std::string& schemaString,
                              const std::map<std::string, std::vector<std::string> >& properties) const;
 
-    /// Host manager related methods
-    void createHostManagerUrl( const HttpUrl& url, uint16_t hostManagerPort );
-    void createHostManagerUrls( const std::vector<HttpUrl>& urls, uint16_t hostManagerPort );
-    void setHostManagerPort(uint16_t value);
 };
 
 #include "gpudb/GPUdbTemplates.hpp"

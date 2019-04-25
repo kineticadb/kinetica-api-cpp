@@ -20,8 +20,9 @@ namespace gpudb
      * type are returned. This endpoint supports pagination with the @a offset
      * and @a limit parameters.
      * <p>
-     * <a href="../../concepts/window.html" target="_top">Window functions</a>
-     * are available through this endpoint as well as {@link
+     * <a href="../../concepts/window.html" target="_top">Window functions</a>,
+     * which can perform operations like moving averages, are available through
+     * this endpoint as well as {@link
      * #createProjection(const CreateProjectionRequest&) const}.
      * <p>
      * When using pagination, if the table (or the underlying table in the case
@@ -80,7 +81,8 @@ namespace gpudb
          *                      column that the data should be sorted by. Used
          *                      in conjunction with @a sort_order. The @a
          *                      order_by option can be used in lieu of @a
-         *                      sort_by / @a sort_order.
+         *                      sort_by / @a sort_order.  The default value is
+         *                      ''.
          *                              <li>
          *                      gpudb::get_records_by_column_sort_order: String
          *                      indicating how the returned values should be
@@ -99,7 +101,8 @@ namespace gpudb
          *                      gpudb::get_records_by_column_order_by:
          *                      Comma-separated list of the columns to be
          *                      sorted by as well as the sort direction, e.g.,
-         *                      'timestamp asc, x desc'.
+         *                      'timestamp asc, x desc'.  The default value is
+         *                      ''.
          *                              <li>
          *                      gpudb::get_records_by_column_convert_wkts_to_wkbs:
          *                      If true, then WKT string columns will be
@@ -161,7 +164,8 @@ namespace gpudb
          *                      column that the data should be sorted by. Used
          *                      in conjunction with @a sort_order. The @a
          *                      order_by option can be used in lieu of @a
-         *                      sort_by / @a sort_order.
+         *                      sort_by / @a sort_order.  The default value is
+         *                      ''.
          *                              <li>
          *                      gpudb::get_records_by_column_sort_order: String
          *                      indicating how the returned values should be
@@ -180,7 +184,8 @@ namespace gpudb
          *                      gpudb::get_records_by_column_order_by:
          *                      Comma-separated list of the columns to be
          *                      sorted by as well as the sort direction, e.g.,
-         *                      'timestamp asc, x desc'.
+         *                      'timestamp asc, x desc'.  The default value is
+         *                      ''.
          *                              <li>
          *                      gpudb::get_records_by_column_convert_wkts_to_wkbs:
          *                      If true, then WKT string columns will be
@@ -291,8 +296,9 @@ namespace gpudb
      * type are returned. This endpoint supports pagination with the @a offset
      * and @a limit parameters.
      * <p>
-     * <a href="../../concepts/window.html" target="_top">Window functions</a>
-     * are available through this endpoint as well as {@link
+     * <a href="../../concepts/window.html" target="_top">Window functions</a>,
+     * which can perform operations like moving averages, are available through
+     * this endpoint as well as {@link
      * #createProjection(const CreateProjectionRequest&) const}.
      * <p>
      * When using pagination, if the table (or the underlying table in the case
@@ -417,8 +423,9 @@ namespace gpudb
      * type are returned. This endpoint supports pagination with the @a offset
      * and @a limit parameters.
      * <p>
-     * <a href="../../concepts/window.html" target="_top">Window functions</a>
-     * are available through this endpoint as well as {@link
+     * <a href="../../concepts/window.html" target="_top">Window functions</a>,
+     * which can perform operations like moving averages, are available through
+     * this endpoint as well as {@link
      * #createProjection(const CreateProjectionRequest&) const}.
      * <p>
      * When using pagination, if the table (or the underlying table in the case

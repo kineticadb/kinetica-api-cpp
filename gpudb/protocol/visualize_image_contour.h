@@ -81,13 +81,17 @@ namespace gpudb
          * @param[in] styleOptions_
          *                           <ul>
          *                                   <li>
-         *                           gpudb::visualize_image_contour_line_size
+         *                           gpudb::visualize_image_contour_line_size:
+         *                           The default value is '3'.
          *                                   <li>
-         *                           gpudb::visualize_image_contour_color
+         *                           gpudb::visualize_image_contour_color:
+         *                           The default value is 'FF696969'.
          *                                   <li>
-         *                           gpudb::visualize_image_contour_bg_color
+         *                           gpudb::visualize_image_contour_bg_color:
+         *                           The default value is '00000000'.
          *                                   <li>
-         *                           gpudb::visualize_image_contour_text_color
+         *                           gpudb::visualize_image_contour_text_color:
+         *                           The default value is 'FF000000'.
          *                                   <li>
          *                           gpudb::visualize_image_contour_colormap:
          *                           <ul>
@@ -252,13 +256,17 @@ namespace gpudb
          *                              <li>
          *                      gpudb::visualize_image_contour_max_level
          *                              <li>
-         *                      gpudb::visualize_image_contour_num_levels
+         *                      gpudb::visualize_image_contour_num_levels:
+         *                      The default value is '10'.
          *                              <li>
-         *                      gpudb::visualize_image_contour_adjust_levels
+         *                      gpudb::visualize_image_contour_adjust_levels:
+         *                      The default value is 'true'.
          *                              <li>
-         *                      gpudb::visualize_image_contour_search_radius
+         *                      gpudb::visualize_image_contour_search_radius:
+         *                      The default value is '20'.
          *                              <li>
-         *                      gpudb::visualize_image_contour_max_search_cells
+         *                      gpudb::visualize_image_contour_max_search_cells:
+         *                      The default value is '100'.
          *                              <li>
          *                      gpudb::visualize_image_contour_gridding_method:
          *                      <ul>
@@ -276,37 +284,53 @@ namespace gpudb
          *                      The default value is
          *                      gpudb::visualize_image_contour_INV_DST_POW.
          *                              <li>
-         *                      gpudb::visualize_image_contour_smoothing_factor
+         *                      gpudb::visualize_image_contour_smoothing_factor:
+         *                      The default value is '10'.
          *                              <li>
-         *                      gpudb::visualize_image_contour_grid_size
+         *                      gpudb::visualize_image_contour_grid_size:   The
+         *                      default value is '100'.
          *                              <li>
-         *                      gpudb::visualize_image_contour_adjust_grid
+         *                      gpudb::visualize_image_contour_adjust_grid:
+         *                      The default value is 'false'.
          *                              <li>
-         *                      gpudb::visualize_image_contour_adjust_grid_neigh
+         *                      gpudb::visualize_image_contour_adjust_grid_neigh:
+         *                      The default value is '1'.
          *                              <li>
-         *                      gpudb::visualize_image_contour_adjust_grid_size
+         *                      gpudb::visualize_image_contour_adjust_grid_size:
+         *                      The default value is '1'.
          *                              <li>
-         *                      gpudb::visualize_image_contour_max_grid_size
+         *                      gpudb::visualize_image_contour_max_grid_size:
+         *                      The default value is '500'.
          *                              <li>
-         *                      gpudb::visualize_image_contour_min_grid_size
+         *                      gpudb::visualize_image_contour_min_grid_size:
+         *                      The default value is '10'.
          *                              <li>
-         *                      gpudb::visualize_image_contour_render_output_grid
+         *                      gpudb::visualize_image_contour_render_output_grid:
+         *                      The default value is 'false'.
          *                              <li>
-         *                      gpudb::visualize_image_contour_color_isolines
+         *                      gpudb::visualize_image_contour_color_isolines:
+         *                      The default value is 'true'.
          *                              <li>
-         *                      gpudb::visualize_image_contour_add_labels
+         *                      gpudb::visualize_image_contour_add_labels:
+         *                      The default value is 'false'.
          *                              <li>
-         *                      gpudb::visualize_image_contour_labels_font_size
+         *                      gpudb::visualize_image_contour_labels_font_size:
+         *                      The default value is '12'.
          *                              <li>
-         *                      gpudb::visualize_image_contour_labels_font_family
+         *                      gpudb::visualize_image_contour_labels_font_family:
+         *                      The default value is 'arial'.
          *                              <li>
-         *                      gpudb::visualize_image_contour_labels_search_window
+         *                      gpudb::visualize_image_contour_labels_search_window:
+         *                      The default value is '4'.
          *                              <li>
-         *                      gpudb::visualize_image_contour_labels_intralevel_separation
+         *                      gpudb::visualize_image_contour_labels_intralevel_separation:
+         *                      The default value is '4'.
          *                              <li>
-         *                      gpudb::visualize_image_contour_labels_interlevel_separation
+         *                      gpudb::visualize_image_contour_labels_interlevel_separation:
+         *                      The default value is '20'.
          *                              <li>
-         *                      gpudb::visualize_image_contour_labels_max_angle
+         *                      gpudb::visualize_image_contour_labels_max_angle:
+         *                      The default value is '60'.
          *                      </ul>
          * 
          */

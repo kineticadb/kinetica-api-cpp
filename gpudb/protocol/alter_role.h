@@ -3,67 +3,80 @@
  *
  *  DO NOT EDIT DIRECTLY.
  */
-#ifndef __CREATE_ROLE_H__
-#define __CREATE_ROLE_H__
+#ifndef __ALTER_ROLE_H__
+#define __ALTER_ROLE_H__
 
 namespace gpudb
 {
 
     /**
      * A set of input parameters for {@link
-     * #createRole(const CreateRoleRequest&) const}.
+     * #alterRole(const AlterRoleRequest&) const}.
      * <p>
-     * Creates a new role.
+     * Alters a Role.
      */
-    struct CreateRoleRequest
+    struct AlterRoleRequest
     {
 
         /**
-         * Constructs a CreateRoleRequest object with default parameter values.
+         * Constructs an AlterRoleRequest object with default parameter values.
          */
-        CreateRoleRequest() :
+        AlterRoleRequest() :
             name(std::string()),
+            action(std::string()),
+            value(std::string()),
             options(std::map<std::string, std::string>())
         {
         }
 
         /**
-         * Constructs a CreateRoleRequest object with the specified parameters.
+         * Constructs an AlterRoleRequest object with the specified parameters.
          * 
-         * @param[in] name_  Name of the role to be created. Must contain only
-         *                   lowercase letters, digits, and underscores, and
-         *                   cannot begin with a digit. Must not be the same
-         *                   name as an existing user or role.
+         * @param[in] name_  Name of the role to be altered. Must be an
+         *                   existing role.
+         * @param[in] action_  Modification operation to be applied to the
+         *                     role.
+         *                     <ul>
+         *                             <li>
+         *                     gpudb::alter_role_set_resource_group: Sets the
+         *                     resource group for an internal role. The
+         *                     resource group must exist, otherwise, an empty
+         *                     string assigns the role to the default resource
+         *                     group.
+         *                     </ul>
+         * @param[in] value_  The value of the modification, depending on @a
+         *                    action.
          * @param[in] options_  Optional parameters.
-         *                      <ul>
-         *                              <li> gpudb::create_role_resource_group:
-         *                      Name of an existing resource group to associate
-         *                      with this user
-         *                      </ul>
          * 
          */
-        CreateRoleRequest(const std::string& name_, const std::map<std::string, std::string>& options_):
+        AlterRoleRequest(const std::string& name_, const std::string& action_, const std::string& value_, const std::map<std::string, std::string>& options_):
             name( name_ ),
+            action( action_ ),
+            value( value_ ),
             options( options_ )
         {
         }
 
         std::string name;
+        std::string action;
+        std::string value;
         std::map<std::string, std::string> options;
     };
 }
 
 namespace avro
 {
-    template<> struct codec_traits<gpudb::CreateRoleRequest>
+    template<> struct codec_traits<gpudb::AlterRoleRequest>
     {
-        static void encode(Encoder& e, const gpudb::CreateRoleRequest& v)
+        static void encode(Encoder& e, const gpudb::AlterRoleRequest& v)
         {
             ::avro::encode(e, v.name);
+            ::avro::encode(e, v.action);
+            ::avro::encode(e, v.value);
             ::avro::encode(e, v.options);
         }
 
-        static void decode(Decoder& d, gpudb::CreateRoleRequest& v)
+        static void decode(Decoder& d, gpudb::AlterRoleRequest& v)
         {
             if (::avro::ResolvingDecoder *rd = dynamic_cast< ::avro::ResolvingDecoder*>(&d))
             {
@@ -78,6 +91,14 @@ namespace avro
                             break;
 
                         case 1:
+                            ::avro::decode(d, v.action);
+                            break;
+
+                        case 2:
+                            ::avro::decode(d, v.value);
+                            break;
+
+                        case 3:
                             ::avro::decode(d, v.options);
                             break;
 
@@ -89,6 +110,8 @@ namespace avro
             else
             {
                 ::avro::decode(d, v.name);
+                ::avro::decode(d, v.action);
+                ::avro::decode(d, v.value);
                 ::avro::decode(d, v.options);
             }
         }
@@ -100,18 +123,18 @@ namespace gpudb
 
     /**
      * A set of output parameters for {@link
-     * #createRole(const CreateRoleRequest&) const}.
+     * #alterRole(const AlterRoleRequest&) const}.
      * <p>
-     * Creates a new role.
+     * Alters a Role.
      */
-    struct CreateRoleResponse
+    struct AlterRoleResponse
     {
 
         /**
-         * Constructs a CreateRoleResponse object with default parameter
+         * Constructs an AlterRoleResponse object with default parameter
          * values.
          */
-        CreateRoleResponse() :
+        AlterRoleResponse() :
             name(std::string()),
             info(std::map<std::string, std::string>())
         {
@@ -124,15 +147,15 @@ namespace gpudb
 
 namespace avro
 {
-    template<> struct codec_traits<gpudb::CreateRoleResponse>
+    template<> struct codec_traits<gpudb::AlterRoleResponse>
     {
-        static void encode(Encoder& e, const gpudb::CreateRoleResponse& v)
+        static void encode(Encoder& e, const gpudb::AlterRoleResponse& v)
         {
             ::avro::encode(e, v.name);
             ::avro::encode(e, v.info);
         }
 
-        static void decode(Decoder& d, gpudb::CreateRoleResponse& v)
+        static void decode(Decoder& d, gpudb::AlterRoleResponse& v)
         {
             if (::avro::ResolvingDecoder *rd = dynamic_cast< ::avro::ResolvingDecoder*>(&d))
             {

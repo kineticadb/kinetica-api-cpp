@@ -114,7 +114,8 @@ namespace gpudb
          *                      Indicates the chunk size to be used for the
          *                      merged table specified in @a tableName.
          *                              <li> gpudb::merge_records_view_id: view
-         *                      this result table is part of
+         *                      this result table is part of.  The default
+         *                      value is ''.
          *                      </ul>
          * 
          */

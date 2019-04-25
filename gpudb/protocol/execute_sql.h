@@ -114,17 +114,30 @@ namespace gpudb
          *                      target="_top">TTL</a> of the paging table.
          *                              <li>
          *                      gpudb::execute_sql_distributed_joins: If @a
-         *                      false, disables the use of distributed joins in
+         *                      true, enables the use of distributed joins in
          *                      servicing the given query.  Any query requiring
-         *                      a distributed join to succeed will fail, though
-         *                      hints can be used in the query to change the
+         *                      a distributed join will succeed, though hints
+         *                      can be used in the query to change the
          *                      distribution of the source data to allow the
          *                      query to succeed.
          *                      <ul>
          *                              <li> gpudb::execute_sql_true
          *                              <li> gpudb::execute_sql_false
          *                      </ul>
-         *                      The default value is gpudb::execute_sql_true.
+         *                      The default value is gpudb::execute_sql_false.
+         *                              <li>
+         *                      gpudb::execute_sql_distributed_operations: If
+         *                      @a true, enables the use of distributed
+         *                      operations in servicing the given query.  Any
+         *                      query requiring a distributed join will
+         *                      succeed, though hints can be used in the query
+         *                      to change the distribution of the source data
+         *                      to allow the query to succeed.
+         *                      <ul>
+         *                              <li> gpudb::execute_sql_true
+         *                              <li> gpudb::execute_sql_false
+         *                      </ul>
+         *                      The default value is gpudb::execute_sql_false.
          *                              <li>
          *                      gpudb::execute_sql_ssq_optimization: If @a
          *                      false, scalar subqueries will be translated
@@ -291,17 +304,30 @@ namespace gpudb
          *                      target="_top">TTL</a> of the paging table.
          *                              <li>
          *                      gpudb::execute_sql_distributed_joins: If @a
-         *                      false, disables the use of distributed joins in
+         *                      true, enables the use of distributed joins in
          *                      servicing the given query.  Any query requiring
-         *                      a distributed join to succeed will fail, though
-         *                      hints can be used in the query to change the
+         *                      a distributed join will succeed, though hints
+         *                      can be used in the query to change the
          *                      distribution of the source data to allow the
          *                      query to succeed.
          *                      <ul>
          *                              <li> gpudb::execute_sql_true
          *                              <li> gpudb::execute_sql_false
          *                      </ul>
-         *                      The default value is gpudb::execute_sql_true.
+         *                      The default value is gpudb::execute_sql_false.
+         *                              <li>
+         *                      gpudb::execute_sql_distributed_operations: If
+         *                      @a true, enables the use of distributed
+         *                      operations in servicing the given query.  Any
+         *                      query requiring a distributed join will
+         *                      succeed, though hints can be used in the query
+         *                      to change the distribution of the source data
+         *                      to allow the query to succeed.
+         *                      <ul>
+         *                              <li> gpudb::execute_sql_true
+         *                              <li> gpudb::execute_sql_false
+         *                      </ul>
+         *                      The default value is gpudb::execute_sql_false.
          *                              <li>
          *                      gpudb::execute_sql_ssq_optimization: If @a
          *                      false, scalar subqueries will be translated

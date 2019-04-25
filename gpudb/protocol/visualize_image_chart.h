@@ -72,11 +72,13 @@ namespace gpudb
          *                                   <li>
          *                           gpudb::visualize_image_chart_pointcolor:
          *                           The color of points in the plot
-         *                           represented as a hexadecimal number.
+         *                           represented as a hexadecimal number.  The
+         *                           default value is '0000FF'.
          *                                   <li>
          *                           gpudb::visualize_image_chart_pointsize:
          *                           The size of points in the plot represented
-         *                           as number of pixels.
+         *                           as number of pixels.  The default value is
+         *                           '3'.
          *                                   <li>
          *                           gpudb::visualize_image_chart_pointshape:
          *                           The shape of points in the plot.
@@ -140,7 +142,7 @@ namespace gpudb
          *                           gpudb::visualize_image_chart_cb_delimiter:
          *                           A character or string which separates
          *                           per-class values in a class-break style
-         *                           option string.
+         *                           option string.  The default value is ';'.
          *                                   <li>
          *                           gpudb::visualize_image_chart_x_order_by:
          *                           An expression or aggregate expression by
@@ -181,19 +183,34 @@ namespace gpudb
          *                           The default value is
          *                           gpudb::visualize_image_chart_none.
          *                                   <li>
+         *                           gpudb::visualize_image_chart_min_max_scaled:
+         *                           If this options is set to "false", this
+         *                           endpoint expects request's min/max values
+         *                           are not yet scaled. They will be scaled
+         *                           according to scale_type_x or scale_type_y
+         *                           for response. If this options is set to
+         *                           "true", this endpoint expects request's
+         *                           min/max values are already scaled
+         *                           according to scale_type_x/scale_type_y.
+         *                           Response's min/max values will be equal to
+         *                           request's min/max values.  The default
+         *                           value is 'false'.
+         *                                   <li>
          *                           gpudb::visualize_image_chart_jitter_x:
          *                           Amplitude of horizontal jitter applied to
-         *                           non-numeric x column values.
+         *                           non-numeric x column values.  The default
+         *                           value is '0.0'.
          *                                   <li>
          *                           gpudb::visualize_image_chart_jitter_y:
          *                           Amplitude of vertical jitter applied to
-         *                           non-numeric y column values.
+         *                           non-numeric y column values.  The default
+         *                           value is '0.0'.
          *                                   <li>
          *                           gpudb::visualize_image_chart_plot_all: If
          *                           this options is set to "true", all
          *                           non-numeric column values are plotted
          *                           ignoring min_x, max_x, min_y and max_y
-         *                           parameters.
+         *                           parameters.  The default value is 'false'.
          *                           </ul>
          * @param[in] options_  Optional parameters.
          * 
