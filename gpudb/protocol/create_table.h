@@ -151,8 +151,10 @@ namespace gpudb
          *                      <a
          *                      href="../../concepts/tables.html#partitioning-by-interval"
          *                      target="_top">interval partitioning</a>.
-         *                              <li> gpudb::create_table_LIST: Not yet
-         *                      supported
+         *                              <li> gpudb::create_table_LIST: Allows
+         *                      specifying a list of VALUES for a partition, or
+         *                      optionally to create an AUTOMATIC partition for
+         *                      each unique value
          *                      </ul>
          *                              <li>
          *                      gpudb::create_table_partition_keys:

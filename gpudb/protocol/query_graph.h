@@ -31,7 +31,7 @@ namespace gpudb
      * from any table as long as the type is supported by the given identifier.
      * See <a
      * href="../../graph_solver/network_graph_solver.html#query-identifiers"
-     * target="_top">Query Identifiers</a> for more information. I
+     * target="_top">Query Identifiers</a> for more information.
      * <p>
      * To query for nodes that are adjacent to a given set of edges, set @a
      * edgeToNode to @a true and provide values to the @a edgeOrNodeIntIds, @a
@@ -83,6 +83,7 @@ namespace gpudb
             edgeOrNodeIntIds(std::vector<int64_t>()),
             edgeOrNodeStringIds(std::vector<std::string>()),
             edgeOrNodeWktIds(std::vector<std::string>()),
+            restrictions(std::vector<std::string>()),
             adjacencyTable(std::string()),
             options(std::map<std::string, std::string>())
         {
@@ -120,6 +121,19 @@ namespace gpudb
          * @param[in] edgeOrNodeWktIds_  The unique list of edge or node
          *                               WKTPOINT or WKTLINE string identifiers
          *                               that will be queried for adjacencies.
+         * @param[in] restrictions_  Additional restrictions to apply to the
+         *                           nodes/edges of an existing graph.
+         *                           Restrictions must be specified using <a
+         *                           href="../../graph_solver/network_graph_solver.html#identifiers"
+         *                           target="_top">identifiers</a>; identifiers
+         *                           are grouped as <a
+         *                           href="../../graph_solver/network_graph_solver.html#id-combos"
+         *                           target="_top">combinations</a>.
+         *                           Identifiers can be used with existing
+         *                           column names, e.g., 'table.column AS
+         *                           RESTRICTIONS_EDGE_ID', or expressions,
+         *                           e.g., 'column/2 AS
+         *                           RESTRICTIONS_VALUECOMPARED'.
          * @param[in] adjacencyTable_  Name of the table to store the resulting
          *                             adjacencies. If left blank, the query
          *                             results are instead returned in the
@@ -155,6 +169,12 @@ namespace gpudb
          *                      </ul>
          *                      The default value is gpudb::query_graph_false.
          *                              <li>
+         *                      gpudb::query_graph_restriction_threshold_value:
+         *                      Value-based restriction comparison. Any node or
+         *                      edge with a RESTRICTIONS_VALUECOMPARED value
+         *                      greater than the @a restriction_threshold_value
+         *                      will not be included in the solution.
+         *                              <li>
          *                      gpudb::query_graph_export_query_results:
          *                      Returns query results in the response if set to
          *                      @a true.
@@ -182,13 +202,14 @@ namespace gpudb
          *                      </ul>
          * 
          */
-        QueryGraphRequest(const std::string& graphName_, const std::vector<std::string>& queries_, const bool edgeToNode_, const std::vector<int64_t>& edgeOrNodeIntIds_, const std::vector<std::string>& edgeOrNodeStringIds_, const std::vector<std::string>& edgeOrNodeWktIds_, const std::string& adjacencyTable_, const std::map<std::string, std::string>& options_):
+        QueryGraphRequest(const std::string& graphName_, const std::vector<std::string>& queries_, const bool edgeToNode_, const std::vector<int64_t>& edgeOrNodeIntIds_, const std::vector<std::string>& edgeOrNodeStringIds_, const std::vector<std::string>& edgeOrNodeWktIds_, const std::vector<std::string>& restrictions_, const std::string& adjacencyTable_, const std::map<std::string, std::string>& options_):
             graphName( graphName_ ),
             queries( queries_ ),
             edgeToNode( edgeToNode_ ),
             edgeOrNodeIntIds( edgeOrNodeIntIds_ ),
             edgeOrNodeStringIds( edgeOrNodeStringIds_ ),
             edgeOrNodeWktIds( edgeOrNodeWktIds_ ),
+            restrictions( restrictions_ ),
             adjacencyTable( adjacencyTable_ ),
             options( options_ )
         {
@@ -200,6 +221,7 @@ namespace gpudb
         std::vector<int64_t> edgeOrNodeIntIds;
         std::vector<std::string> edgeOrNodeStringIds;
         std::vector<std::string> edgeOrNodeWktIds;
+        std::vector<std::string> restrictions;
         std::string adjacencyTable;
         std::map<std::string, std::string> options;
     };
@@ -217,6 +239,7 @@ namespace avro
             ::avro::encode(e, v.edgeOrNodeIntIds);
             ::avro::encode(e, v.edgeOrNodeStringIds);
             ::avro::encode(e, v.edgeOrNodeWktIds);
+            ::avro::encode(e, v.restrictions);
             ::avro::encode(e, v.adjacencyTable);
             ::avro::encode(e, v.options);
         }
@@ -256,10 +279,14 @@ namespace avro
                             break;
 
                         case 6:
-                            ::avro::decode(d, v.adjacencyTable);
+                            ::avro::decode(d, v.restrictions);
                             break;
 
                         case 7:
+                            ::avro::decode(d, v.adjacencyTable);
+                            break;
+
+                        case 8:
                             ::avro::decode(d, v.options);
                             break;
 
@@ -276,6 +303,7 @@ namespace avro
                 ::avro::decode(d, v.edgeOrNodeIntIds);
                 ::avro::decode(d, v.edgeOrNodeStringIds);
                 ::avro::decode(d, v.edgeOrNodeWktIds);
+                ::avro::decode(d, v.restrictions);
                 ::avro::decode(d, v.adjacencyTable);
                 ::avro::decode(d, v.options);
             }
@@ -308,7 +336,7 @@ namespace gpudb
      * from any table as long as the type is supported by the given identifier.
      * See <a
      * href="../../graph_solver/network_graph_solver.html#query-identifiers"
-     * target="_top">Query Identifiers</a> for more information. I
+     * target="_top">Query Identifiers</a> for more information.
      * <p>
      * To query for nodes that are adjacent to a given set of edges, set @a
      * edgeToNode to @a true and provide values to the @a edgeOrNodeIntIds, @a

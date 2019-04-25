@@ -1696,13 +1696,6 @@ AggregateGroupByResponse& aggregateGroupBy( const AggregateGroupByRequest& reque
  *                 is used to specify the multilevel aggregates.
  *                         <li> gpudb::aggregate_group_by_cube: This option is
  *                 used to specify the multidimensional aggregates.
- *                         <li>
- *                 gpudb::aggregate_group_by_throw_error_on_refresh:
- *                 <DEVELOPER>
- *                         <li> gpudb::aggregate_group_by_sleep_on_refresh:
- *                 <DEVELOPER>
- *                         <li> gpudb::aggregate_group_by_refresh_type:
- *                 <DEVELOPER>
  *                 </ul>
  * 
  * @return Response object containing the result of the operation.
@@ -1905,13 +1898,6 @@ AggregateGroupByResponse aggregateGroupBy( const std::string& tableName,
  *                 is used to specify the multilevel aggregates.
  *                         <li> gpudb::aggregate_group_by_cube: This option is
  *                 used to specify the multidimensional aggregates.
- *                         <li>
- *                 gpudb::aggregate_group_by_throw_error_on_refresh:
- *                 <DEVELOPER>
- *                         <li> gpudb::aggregate_group_by_sleep_on_refresh:
- *                 <DEVELOPER>
- *                         <li> gpudb::aggregate_group_by_refresh_type:
- *                 <DEVELOPER>
  *                 </ul>
  * @param[out] response_  Response object containing the results of the
  *                        operation.
@@ -4476,17 +4462,18 @@ AlterTableResponse& alterTable( const AlterTableRequest& request_,
  *                foreign_key_name specified when creating the key or the
  *                complete string used to define it.
  *                        <li> gpudb::alter_table_add_partition: Adds a
- *                partition (for range-partitioned tables only) specified in @a
- *                value.  See <a
+ *                partition (for range-partitioned or list-partitioned tables)
+ *                specified in @a value.  See <a
  *                href="../../concepts/tables.html#partitioning-by-range-example"
  *                target="_top">range partitioning example</a> for example
  *                format.
  *                        <li> gpudb::alter_table_remove_partition: Removes the
  *                partition specified in @a value and relocates all its data to
- *                the default partition (for range-partitioned tables only).
+ *                the default partition (for range-partitioned or
+ *                list-partition tables).
  *                        <li> gpudb::alter_table_delete_partition: Deletes the
  *                partition specified in @a value and its data (for
- *                range-partitioned tables only).
+ *                range-partitioned or list-partitioned tables).
  *                        <li> gpudb::alter_table_set_global_access_mode: Sets
  *                the global access mode (i.e. locking) for the table specified
  *                in @a tableName. Specify the access mode in @a value. Valid
@@ -4734,17 +4721,18 @@ AlterTableResponse alterTable( const std::string& tableName,
  *                foreign_key_name specified when creating the key or the
  *                complete string used to define it.
  *                        <li> gpudb::alter_table_add_partition: Adds a
- *                partition (for range-partitioned tables only) specified in @a
- *                value.  See <a
+ *                partition (for range-partitioned or list-partitioned tables)
+ *                specified in @a value.  See <a
  *                href="../../concepts/tables.html#partitioning-by-range-example"
  *                target="_top">range partitioning example</a> for example
  *                format.
  *                        <li> gpudb::alter_table_remove_partition: Removes the
  *                partition specified in @a value and relocates all its data to
- *                the default partition (for range-partitioned tables only).
+ *                the default partition (for range-partitioned or
+ *                list-partition tables).
  *                        <li> gpudb::alter_table_delete_partition: Deletes the
  *                partition specified in @a value and its data (for
- *                range-partitioned tables only).
+ *                range-partitioned or list-partitioned tables).
  *                        <li> gpudb::alter_table_set_global_access_mode: Sets
  *                the global access mode (i.e. locking) for the table specified
  *                in @a tableName. Specify the access mode in @a value. Valid
@@ -6875,27 +6863,12 @@ CreateProcResponse& createProc( const std::string& procName,
  * href="../../concepts/projections.html#limitations-and-cautions"
  * target="_top">Projection Limitations and Cautions</a>.
  * <p>
- * <a href="../../concepts/window.html" target="_top">Window functions</a> are
- * available through this endpoint as well as {@link
+ * <a href="../../concepts/window.html" target="_top">Window functions</a>,
+ * which can perform operations like moving averages, are available through
+ * this endpoint as well as {@link
  * #getRecordsByColumnRaw(const GetRecordsByColumnRequest&) const}.
  * <p>
- * Notes:
- * <p>
- * A moving average can be calculated on a given column using the following
- * syntax in the @a columnNames parameter:
- * <p>
- * 'moving_average(column_name,num_points_before,num_points_after) as
- * new_column_name'
- * <p>
- * For each record in the moving_average function's 'column_name' parameter, it
- * computes the average over the previous 'num_points_before' records and the
- * subsequent 'num_points_after' records.
- * <p>
- * Note that moving average relies on @a order_by, and @a order_by requires
- * that all the data being ordered resides on the same processing node, so it
- * won't make sense to use @a order_by without moving average.
- * <p>
- * Also, a projection can be created with a different <a
+ * A projection can be created with a different <a
  * href="../../concepts/tables.html#shard-keys" target="_top">shard key</a>
  * than the source table.  By specifying @a shard_key, the projection will be
  * sharded according to the specified columns, regardless of how the source
@@ -6921,27 +6894,12 @@ CreateProjectionResponse createProjection( const CreateProjectionRequest& reques
  * href="../../concepts/projections.html#limitations-and-cautions"
  * target="_top">Projection Limitations and Cautions</a>.
  * <p>
- * <a href="../../concepts/window.html" target="_top">Window functions</a> are
- * available through this endpoint as well as {@link
+ * <a href="../../concepts/window.html" target="_top">Window functions</a>,
+ * which can perform operations like moving averages, are available through
+ * this endpoint as well as {@link
  * #getRecordsByColumnRaw(const GetRecordsByColumnRequest&,RawGetRecordsByColumnResponse&) const}.
  * <p>
- * Notes:
- * <p>
- * A moving average can be calculated on a given column using the following
- * syntax in the @a columnNames parameter:
- * <p>
- * 'moving_average(column_name,num_points_before,num_points_after) as
- * new_column_name'
- * <p>
- * For each record in the moving_average function's 'column_name' parameter, it
- * computes the average over the previous 'num_points_before' records and the
- * subsequent 'num_points_after' records.
- * <p>
- * Note that moving average relies on @a order_by, and @a order_by requires
- * that all the data being ordered resides on the same processing node, so it
- * won't make sense to use @a order_by without moving average.
- * <p>
- * Also, a projection can be created with a different <a
+ * A projection can be created with a different <a
  * href="../../concepts/tables.html#shard-keys" target="_top">shard key</a>
  * than the source table.  By specifying @a shard_key, the projection will be
  * sharded according to the specified columns, regardless of how the source
@@ -6971,27 +6929,12 @@ CreateProjectionResponse& createProjection( const CreateProjectionRequest& reque
  * href="../../concepts/projections.html#limitations-and-cautions"
  * target="_top">Projection Limitations and Cautions</a>.
  * <p>
- * <a href="../../concepts/window.html" target="_top">Window functions</a> are
- * available through this endpoint as well as {@link
+ * <a href="../../concepts/window.html" target="_top">Window functions</a>,
+ * which can perform operations like moving averages, are available through
+ * this endpoint as well as {@link
  * #getRecordsByColumnRaw(const GetRecordsByColumnRequest&) const}.
  * <p>
- * Notes:
- * <p>
- * A moving average can be calculated on a given column using the following
- * syntax in the @a columnNames parameter:
- * <p>
- * 'moving_average(column_name,num_points_before,num_points_after) as
- * new_column_name'
- * <p>
- * For each record in the moving_average function's 'column_name' parameter, it
- * computes the average over the previous 'num_points_before' records and the
- * subsequent 'num_points_after' records.
- * <p>
- * Note that moving average relies on @a order_by, and @a order_by requires
- * that all the data being ordered resides on the same processing node, so it
- * won't make sense to use @a order_by without moving average.
- * <p>
- * Also, a projection can be created with a different <a
+ * A projection can be created with a different <a
  * href="../../concepts/tables.html#shard-keys" target="_top">shard key</a>
  * than the source table.  By specifying @a shard_key, the projection will be
  * sharded according to the specified columns, regardless of how the source
@@ -7104,27 +7047,12 @@ CreateProjectionResponse createProjection( const std::string& tableName,
  * href="../../concepts/projections.html#limitations-and-cautions"
  * target="_top">Projection Limitations and Cautions</a>.
  * <p>
- * <a href="../../concepts/window.html" target="_top">Window functions</a> are
- * available through this endpoint as well as {@link
+ * <a href="../../concepts/window.html" target="_top">Window functions</a>,
+ * which can perform operations like moving averages, are available through
+ * this endpoint as well as {@link
  * #getRecordsByColumnRaw(const GetRecordsByColumnRequest&) const}.
  * <p>
- * Notes:
- * <p>
- * A moving average can be calculated on a given column using the following
- * syntax in the @a columnNames parameter:
- * <p>
- * 'moving_average(column_name,num_points_before,num_points_after) as
- * new_column_name'
- * <p>
- * For each record in the moving_average function's 'column_name' parameter, it
- * computes the average over the previous 'num_points_before' records and the
- * subsequent 'num_points_after' records.
- * <p>
- * Note that moving average relies on @a order_by, and @a order_by requires
- * that all the data being ordered resides on the same processing node, so it
- * won't make sense to use @a order_by without moving average.
- * <p>
- * Also, a projection can be created with a different <a
+ * A projection can be created with a different <a
  * href="../../concepts/tables.html#shard-keys" target="_top">shard key</a>
  * than the source table.  By specifying @a shard_key, the projection will be
  * sharded according to the specified columns, regardless of how the source
@@ -7616,7 +7544,9 @@ CreateTableResponse& createTable( const CreateTableRequest& request_,
  *                         <li> gpudb::create_table_INTERVAL: Use <a
  *                 href="../../concepts/tables.html#partitioning-by-interval"
  *                 target="_top">interval partitioning</a>.
- *                         <li> gpudb::create_table_LIST: Not yet supported
+ *                         <li> gpudb::create_table_LIST: Allows specifying a
+ *                 list of VALUES for a partition, or optionally to create an
+ *                 AUTOMATIC partition for each unique value
  *                 </ul>
  *                         <li> gpudb::create_table_partition_keys:
  *                 Comma-separated list of partition keys, which are the
@@ -7778,7 +7708,9 @@ CreateTableResponse createTable( const std::string& tableName,
  *                         <li> gpudb::create_table_INTERVAL: Use <a
  *                 href="../../concepts/tables.html#partitioning-by-interval"
  *                 target="_top">interval partitioning</a>.
- *                         <li> gpudb::create_table_LIST: Not yet supported
+ *                         <li> gpudb::create_table_LIST: Allows specifying a
+ *                 list of VALUES for a partition, or optionally to create an
+ *                 AUTOMATIC partition for each unique value
  *                 </ul>
  *                         <li> gpudb::create_table_partition_keys:
  *                 Comma-separated list of partition keys, which are the
@@ -10089,13 +10021,6 @@ ExecuteSqlResponse& executeSql( const ExecuteSqlRequest& request_,
  *                         <li> gpudb::execute_sql_false
  *                 </ul>
  *                 The default value is gpudb::execute_sql_false.
- *                         <li> gpudb::execute_sql_planner_join_validations:
- *                 <DEVELOPER>
- *                 <ul>
- *                         <li> gpudb::execute_sql_true
- *                         <li> gpudb::execute_sql_false
- *                 </ul>
- *                 The default value is gpudb::execute_sql_true.
  *                 </ul>
  * 
  * @return Response object containing the result of the operation.
@@ -10249,13 +10174,6 @@ ExecuteSqlResponse executeSql( const std::string& statement,
  *                         <li> gpudb::execute_sql_false
  *                 </ul>
  *                 The default value is gpudb::execute_sql_false.
- *                         <li> gpudb::execute_sql_planner_join_validations:
- *                 <DEVELOPER>
- *                 <ul>
- *                         <li> gpudb::execute_sql_true
- *                         <li> gpudb::execute_sql_false
- *                 </ul>
- *                 The default value is gpudb::execute_sql_true.
  *                 </ul>
  * @param[out] response_  Response object containing the results of the
  *                        operation.
@@ -13305,8 +13223,9 @@ GetRecordsResponse<TResponse>& getRecords( const Type& type_,
  * returned. This endpoint supports pagination with the @a offset and @a limit
  * parameters.
  * <p>
- * <a href="../../concepts/window.html" target="_top">Window functions</a> are
- * available through this endpoint as well as {@link
+ * <a href="../../concepts/window.html" target="_top">Window functions</a>,
+ * which can perform operations like moving averages, are available through
+ * this endpoint as well as {@link
  * #createProjection(const CreateProjectionRequest&) const}.
  * <p>
  * When using pagination, if the table (or the underlying table in the case of
@@ -13334,8 +13253,9 @@ RawGetRecordsByColumnResponse getRecordsByColumnRaw( const GetRecordsByColumnReq
  * returned. This endpoint supports pagination with the @a offset and @a limit
  * parameters.
  * <p>
- * <a href="../../concepts/window.html" target="_top">Window functions</a> are
- * available through this endpoint as well as {@link
+ * <a href="../../concepts/window.html" target="_top">Window functions</a>,
+ * which can perform operations like moving averages, are available through
+ * this endpoint as well as {@link
  * #createProjection(const CreateProjectionRequest&,CreateProjectionResponse&) const}.
  * <p>
  * When using pagination, if the table (or the underlying table in the case of
@@ -13367,8 +13287,9 @@ RawGetRecordsByColumnResponse& getRecordsByColumnRaw( const GetRecordsByColumnRe
  * returned. This endpoint supports pagination with the @a offset and @a limit
  * parameters.
  * <p>
- * <a href="../../concepts/window.html" target="_top">Window functions</a> are
- * available through this endpoint as well as {@link
+ * <a href="../../concepts/window.html" target="_top">Window functions</a>,
+ * which can perform operations like moving averages, are available through
+ * this endpoint as well as {@link
  * #createProjection(const CreateProjectionRequest&) const}.
  * <p>
  * When using pagination, if the table (or the underlying table in the case of
@@ -13396,8 +13317,9 @@ GetRecordsByColumnResponse getRecordsByColumn( const GetRecordsByColumnRequest& 
  * returned. This endpoint supports pagination with the @a offset and @a limit
  * parameters.
  * <p>
- * <a href="../../concepts/window.html" target="_top">Window functions</a> are
- * available through this endpoint as well as {@link
+ * <a href="../../concepts/window.html" target="_top">Window functions</a>,
+ * which can perform operations like moving averages, are available through
+ * this endpoint as well as {@link
  * #createProjection(const CreateProjectionRequest&) const}.
  * <p>
  * When using pagination, if the table (or the underlying table in the case of
@@ -13429,8 +13351,9 @@ GetRecordsByColumnResponse& getRecordsByColumn( const GetRecordsByColumnRequest&
  * returned. This endpoint supports pagination with the @a offset and @a limit
  * parameters.
  * <p>
- * <a href="../../concepts/window.html" target="_top">Window functions</a> are
- * available through this endpoint as well as {@link
+ * <a href="../../concepts/window.html" target="_top">Window functions</a>,
+ * which can perform operations like moving averages, are available through
+ * this endpoint as well as {@link
  * #createProjection(const std::string&,const std::string&,const std::vector<std::string>&,const std::map<std::string, std::string>&) const}.
  * <p>
  * When using pagination, if the table (or the underlying table in the case of
@@ -13502,8 +13425,9 @@ GetRecordsByColumnResponse getRecordsByColumn( const std::string& tableName,
  * returned. This endpoint supports pagination with the @a offset and @a limit
  * parameters.
  * <p>
- * <a href="../../concepts/window.html" target="_top">Window functions</a> are
- * available through this endpoint as well as {@link
+ * <a href="../../concepts/window.html" target="_top">Window functions</a>,
+ * which can perform operations like moving averages, are available through
+ * this endpoint as well as {@link
  * #createProjection(const std::string&,const std::string&,const std::vector<std::string>&,const std::map<std::string, std::string>&) const}.
  * <p>
  * When using pagination, if the table (or the underlying table in the case of
@@ -17025,7 +16949,7 @@ MergeRecordsResponse& mergeRecords( const std::string& tableName,
  * @a queries. This field can be populated with column values from any table as
  * long as the type is supported by the given identifier. See <a
  * href="../../graph_solver/network_graph_solver.html#query-identifiers"
- * target="_top">Query Identifiers</a> for more information. I
+ * target="_top">Query Identifiers</a> for more information.
  * <p>
  * To query for nodes that are adjacent to a given set of edges, set @a
  * edgeToNode to @a true and provide values to the @a edgeOrNodeIntIds, @a
@@ -17090,7 +17014,7 @@ QueryGraphResponse queryGraph( const QueryGraphRequest& request_ ) const;
  * @a queries. This field can be populated with column values from any table as
  * long as the type is supported by the given identifier. See <a
  * href="../../graph_solver/network_graph_solver.html#query-identifiers"
- * target="_top">Query Identifiers</a> for more information. I
+ * target="_top">Query Identifiers</a> for more information.
  * <p>
  * To query for nodes that are adjacent to a given set of edges, set @a
  * edgeToNode to @a true and provide values to the @a edgeOrNodeIntIds, @a
@@ -17159,7 +17083,7 @@ QueryGraphResponse& queryGraph( const QueryGraphRequest& request_,
  * @a queries. This field can be populated with column values from any table as
  * long as the type is supported by the given identifier. See <a
  * href="../../graph_solver/network_graph_solver.html#query-identifiers"
- * target="_top">Query Identifiers</a> for more information. I
+ * target="_top">Query Identifiers</a> for more information.
  * <p>
  * To query for nodes that are adjacent to a given set of edges, set @a
  * edgeToNode to @a true and provide values to the @a edgeOrNodeIntIds, @a
@@ -17221,6 +17145,17 @@ QueryGraphResponse& queryGraph( const QueryGraphRequest& request_,
  * @param edgeOrNodeWktIds  The unique list of edge or node WKTPOINT or WKTLINE
  *                          string identifiers that will be queried for
  *                          adjacencies.
+ * @param restrictions  Additional restrictions to apply to the nodes/edges of
+ *                      an existing graph. Restrictions must be specified using
+ *                      <a
+ *                      href="../../graph_solver/network_graph_solver.html#identifiers"
+ *                      target="_top">identifiers</a>; identifiers are grouped
+ *                      as <a
+ *                      href="../../graph_solver/network_graph_solver.html#id-combos"
+ *                      target="_top">combinations</a>. Identifiers can be used
+ *                      with existing column names, e.g., 'table.column AS
+ *                      RESTRICTIONS_EDGE_ID', or expressions, e.g., 'column/2
+ *                      AS RESTRICTIONS_VALUECOMPARED'.
  * @param adjacencyTable  Name of the table to store the resulting adjacencies.
  *                        If left blank, the query results are instead returned
  *                        in the response even if @a export_query_results is
@@ -17248,6 +17183,11 @@ QueryGraphResponse& queryGraph( const QueryGraphRequest& request_,
  *                         <li> gpudb::query_graph_false
  *                 </ul>
  *                 The default value is gpudb::query_graph_false.
+ *                         <li> gpudb::query_graph_restriction_threshold_value:
+ *                 Value-based restriction comparison. Any node or edge with a
+ *                 RESTRICTIONS_VALUECOMPARED value greater than the @a
+ *                 restriction_threshold_value will not be included in the
+ *                 solution.
  *                         <li> gpudb::query_graph_export_query_results:
  *                 Returns query results in the response if set to @a true.
  *                 <ul>
@@ -17281,6 +17221,7 @@ QueryGraphResponse queryGraph( const std::string& graphName,
                                const std::vector<int64_t>& edgeOrNodeIntIds,
                                const std::vector<std::string>& edgeOrNodeStringIds,
                                const std::vector<std::string>& edgeOrNodeWktIds,
+                               const std::vector<std::string>& restrictions,
                                const std::string& adjacencyTable,
                                const std::map<std::string, std::string>& options ) const;
 
@@ -17302,7 +17243,7 @@ QueryGraphResponse queryGraph( const std::string& graphName,
  * @a queries. This field can be populated with column values from any table as
  * long as the type is supported by the given identifier. See <a
  * href="../../graph_solver/network_graph_solver.html#query-identifiers"
- * target="_top">Query Identifiers</a> for more information. I
+ * target="_top">Query Identifiers</a> for more information.
  * <p>
  * To query for nodes that are adjacent to a given set of edges, set @a
  * edgeToNode to @a true and provide values to the @a edgeOrNodeIntIds, @a
@@ -17364,6 +17305,17 @@ QueryGraphResponse queryGraph( const std::string& graphName,
  * @param edgeOrNodeWktIds  The unique list of edge or node WKTPOINT or WKTLINE
  *                          string identifiers that will be queried for
  *                          adjacencies.
+ * @param restrictions  Additional restrictions to apply to the nodes/edges of
+ *                      an existing graph. Restrictions must be specified using
+ *                      <a
+ *                      href="../../graph_solver/network_graph_solver.html#identifiers"
+ *                      target="_top">identifiers</a>; identifiers are grouped
+ *                      as <a
+ *                      href="../../graph_solver/network_graph_solver.html#id-combos"
+ *                      target="_top">combinations</a>. Identifiers can be used
+ *                      with existing column names, e.g., 'table.column AS
+ *                      RESTRICTIONS_EDGE_ID', or expressions, e.g., 'column/2
+ *                      AS RESTRICTIONS_VALUECOMPARED'.
  * @param adjacencyTable  Name of the table to store the resulting adjacencies.
  *                        If left blank, the query results are instead returned
  *                        in the response even if @a export_query_results is
@@ -17391,6 +17343,11 @@ QueryGraphResponse queryGraph( const std::string& graphName,
  *                         <li> gpudb::query_graph_false
  *                 </ul>
  *                 The default value is gpudb::query_graph_false.
+ *                         <li> gpudb::query_graph_restriction_threshold_value:
+ *                 Value-based restriction comparison. Any node or edge with a
+ *                 RESTRICTIONS_VALUECOMPARED value greater than the @a
+ *                 restriction_threshold_value will not be included in the
+ *                 solution.
  *                         <li> gpudb::query_graph_export_query_results:
  *                 Returns query results in the response if set to @a true.
  *                 <ul>
@@ -17427,6 +17384,7 @@ QueryGraphResponse& queryGraph( const std::string& graphName,
                                 const std::vector<int64_t>& edgeOrNodeIntIds,
                                 const std::vector<std::string>& edgeOrNodeStringIds,
                                 const std::vector<std::string>& edgeOrNodeWktIds,
+                                const std::vector<std::string>& restrictions,
                                 const std::string& adjacencyTable,
                                 const std::map<std::string, std::string>& options,
                                 QueryGraphResponse& response_ ) const;
@@ -20187,6 +20145,16 @@ VisualizeImageChartResponse& visualizeImageChart( const VisualizeImageChartReque
  *                      base-10 log scale is applied to the y axis.
  *                      </ul>
  *                      The default value is gpudb::visualize_image_chart_none.
+ *                              <li>
+ *                      gpudb::visualize_image_chart_min_max_scaled: If this
+ *                      options is set to "false", this endpoint expects
+ *                      request's min/max values are not yet scaled. They will
+ *                      be scaled according to scale_type_x or scale_type_y for
+ *                      response. If this options is set to "true", this
+ *                      endpoint expects request's min/max values are already
+ *                      scaled according to scale_type_x/scale_type_y.
+ *                      Response's min/max values will be equal to request's
+ *                      min/max values.  The default value is 'false'.
  *                              <li> gpudb::visualize_image_chart_jitter_x:
  *                      Amplitude of horizontal jitter applied to non-numeric x
  *                      column values.  The default value is '0.0'.
@@ -20325,6 +20293,16 @@ VisualizeImageChartResponse visualizeImageChart( const std::string& tableName,
  *                      base-10 log scale is applied to the y axis.
  *                      </ul>
  *                      The default value is gpudb::visualize_image_chart_none.
+ *                              <li>
+ *                      gpudb::visualize_image_chart_min_max_scaled: If this
+ *                      options is set to "false", this endpoint expects
+ *                      request's min/max values are not yet scaled. They will
+ *                      be scaled according to scale_type_x or scale_type_y for
+ *                      response. If this options is set to "true", this
+ *                      endpoint expects request's min/max values are already
+ *                      scaled according to scale_type_x/scale_type_y.
+ *                      Response's min/max values will be equal to request's
+ *                      min/max values.  The default value is 'false'.
  *                              <li> gpudb::visualize_image_chart_jitter_x:
  *                      Amplitude of horizontal jitter applied to non-numeric x
  *                      column values.  The default value is '0.0'.

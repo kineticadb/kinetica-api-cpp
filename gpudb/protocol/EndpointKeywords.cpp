@@ -83,16 +83,13 @@ namespace gpudb
     const std::string aggregate_group_by_materialize_on_gpu           ( "materialize_on_gpu"            );
     const std::string aggregate_group_by_pivot                        ( "pivot"                         );
     const std::string aggregate_group_by_pivot_values                 ( "pivot_values"                  );
-    const std::string aggregate_group_by_refresh_type                 ( "refresh_type"                  );
     const std::string aggregate_group_by_result_table                 ( "result_table"                  );
     const std::string aggregate_group_by_result_table_force_replicated( "result_table_force_replicated" );
     const std::string aggregate_group_by_result_table_generate_pk     ( "result_table_generate_pk"      );
     const std::string aggregate_group_by_result_table_persist         ( "result_table_persist"          );
     const std::string aggregate_group_by_rollup                       ( "rollup"                        );
-    const std::string aggregate_group_by_sleep_on_refresh             ( "sleep_on_refresh"              );
     const std::string aggregate_group_by_sort_by                      ( "sort_by"                       );
     const std::string aggregate_group_by_sort_order                   ( "sort_order"                    );
-    const std::string aggregate_group_by_throw_error_on_refresh       ( "throw_error_on_refresh"        );
     const std::string aggregate_group_by_true                         ( "true"                          );
     const std::string aggregate_group_by_ttl                          ( "ttl"                           );
     const std::string aggregate_group_by_value                        ( "value"                         );
@@ -488,25 +485,24 @@ namespace gpudb
     const std::string execute_proc_use_cached_input( "use_cached_input" );
 
     // Keywords for /execute/sql request
-    const std::string execute_sql_binary                  ( "binary"                   );
-    const std::string execute_sql_cost_based_optimization ( "cost_based_optimization"  );
-    const std::string execute_sql_distributed_joins       ( "distributed_joins"        );
-    const std::string execute_sql_distributed_operations  ( "distributed_operations"   );
-    const std::string execute_sql_json                    ( "json"                     );
-    const std::string execute_sql_late_materialization    ( "late_materialization"     );
-    const std::string execute_sql_paging_table            ( "paging_table"             );
-    const std::string execute_sql_paging_table_ttl        ( "paging_table_ttl"         );
-    const std::string execute_sql_parallel_execution      ( "parallel_execution"       );
-    const std::string execute_sql_plan_cache              ( "plan_cache"               );
-    const std::string execute_sql_planner_join_validations( "planner_join_validations" );
-    const std::string execute_sql_prepare_mode            ( "prepare_mode"             );
-    const std::string execute_sql_preserve_dict_encoding  ( "preserve_dict_encoding"   );
-    const std::string execute_sql_results_caching         ( "results_caching"          );
-    const std::string execute_sql_rule_based_optimization ( "rule_based_optimization"  );
-    const std::string execute_sql_ssq_optimization        ( "ssq_optimization"         );
-    const std::string execute_sql_ttl                     ( "ttl"                      );
-    const std::string execute_sql_update_on_existing_pk   ( "update_on_existing_pk"    );
-    const std::string execute_sql_validate_change_column  ( "validate_change_column"   );
+    const std::string execute_sql_binary                 ( "binary"                  );
+    const std::string execute_sql_cost_based_optimization( "cost_based_optimization" );
+    const std::string execute_sql_distributed_joins      ( "distributed_joins"       );
+    const std::string execute_sql_distributed_operations ( "distributed_operations"  );
+    const std::string execute_sql_json                   ( "json"                    );
+    const std::string execute_sql_late_materialization   ( "late_materialization"    );
+    const std::string execute_sql_paging_table           ( "paging_table"            );
+    const std::string execute_sql_paging_table_ttl       ( "paging_table_ttl"        );
+    const std::string execute_sql_parallel_execution     ( "parallel_execution"      );
+    const std::string execute_sql_plan_cache             ( "plan_cache"              );
+    const std::string execute_sql_prepare_mode           ( "prepare_mode"            );
+    const std::string execute_sql_preserve_dict_encoding ( "preserve_dict_encoding"  );
+    const std::string execute_sql_results_caching        ( "results_caching"         );
+    const std::string execute_sql_rule_based_optimization( "rule_based_optimization" );
+    const std::string execute_sql_ssq_optimization       ( "ssq_optimization"        );
+    const std::string execute_sql_ttl                    ( "ttl"                     );
+    const std::string execute_sql_update_on_existing_pk  ( "update_on_existing_pk"   );
+    const std::string execute_sql_validate_change_column ( "validate_change_column"  );
 
     // Keywords for /execute/sql request and response
     const std::string execute_sql_false( "false" );
@@ -719,12 +715,13 @@ namespace gpudb
     const std::string merge_records_view_id        ( "view_id"         );
 
     // Keywords for /query/graph request
-    const std::string query_graph_enable_graph_draw   ( "enable_graph_draw"    );
-    const std::string query_graph_export_query_results( "export_query_results" );
-    const std::string query_graph_false               ( "false"                );
-    const std::string query_graph_include_all_edges   ( "include_all_edges"    );
-    const std::string query_graph_number_of_rings     ( "number_of_rings"      );
-    const std::string query_graph_true                ( "true"                 );
+    const std::string query_graph_enable_graph_draw          ( "enable_graph_draw"           );
+    const std::string query_graph_export_query_results       ( "export_query_results"        );
+    const std::string query_graph_false                      ( "false"                       );
+    const std::string query_graph_include_all_edges          ( "include_all_edges"           );
+    const std::string query_graph_number_of_rings            ( "number_of_rings"             );
+    const std::string query_graph_restriction_threshold_value( "restriction_threshold_value" );
+    const std::string query_graph_true                       ( "true"                        );
 
     // Keywords for /revoke/permission/system request
     const std::string revoke_permission_system_system_admin( "system_admin" );
@@ -940,6 +937,7 @@ namespace gpudb
     const std::string visualize_image_chart_jitter_x      ( "jitter_x"       );
     const std::string visualize_image_chart_jitter_y      ( "jitter_y"       );
     const std::string visualize_image_chart_log           ( "log"            );
+    const std::string visualize_image_chart_min_max_scaled( "min_max_scaled" );
     const std::string visualize_image_chart_none          ( "none"           );
     const std::string visualize_image_chart_plot_all      ( "plot_all"       );
     const std::string visualize_image_chart_pointcolor    ( "pointcolor"     );

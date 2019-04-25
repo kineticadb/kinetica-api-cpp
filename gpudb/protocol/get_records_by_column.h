@@ -20,8 +20,9 @@ namespace gpudb
      * type are returned. This endpoint supports pagination with the @a offset
      * and @a limit parameters.
      * <p>
-     * <a href="../../concepts/window.html" target="_top">Window functions</a>
-     * are available through this endpoint as well as {@link
+     * <a href="../../concepts/window.html" target="_top">Window functions</a>,
+     * which can perform operations like moving averages, are available through
+     * this endpoint as well as {@link
      * #createProjection(const CreateProjectionRequest&) const}.
      * <p>
      * When using pagination, if the table (or the underlying table in the case
@@ -295,8 +296,9 @@ namespace gpudb
      * type are returned. This endpoint supports pagination with the @a offset
      * and @a limit parameters.
      * <p>
-     * <a href="../../concepts/window.html" target="_top">Window functions</a>
-     * are available through this endpoint as well as {@link
+     * <a href="../../concepts/window.html" target="_top">Window functions</a>,
+     * which can perform operations like moving averages, are available through
+     * this endpoint as well as {@link
      * #createProjection(const CreateProjectionRequest&) const}.
      * <p>
      * When using pagination, if the table (or the underlying table in the case
@@ -421,8 +423,9 @@ namespace gpudb
      * type are returned. This endpoint supports pagination with the @a offset
      * and @a limit parameters.
      * <p>
-     * <a href="../../concepts/window.html" target="_top">Window functions</a>
-     * are available through this endpoint as well as {@link
+     * <a href="../../concepts/window.html" target="_top">Window functions</a>,
+     * which can perform operations like moving averages, are available through
+     * this endpoint as well as {@link
      * #createProjection(const CreateProjectionRequest&) const}.
      * <p>
      * When using pagination, if the table (or the underlying table in the case

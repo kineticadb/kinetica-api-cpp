@@ -203,14 +203,6 @@ namespace gpudb
          *                              <li> gpudb::execute_sql_false
          *                      </ul>
          *                      The default value is gpudb::execute_sql_false.
-         *                              <li>
-         *                      gpudb::execute_sql_planner_join_validations:
-         *                      <DEVELOPER>
-         *                      <ul>
-         *                              <li> gpudb::execute_sql_true
-         *                              <li> gpudb::execute_sql_false
-         *                      </ul>
-         *                      The default value is gpudb::execute_sql_true.
          *                      </ul>
          * 
          */
@@ -401,14 +393,6 @@ namespace gpudb
          *                              <li> gpudb::execute_sql_false
          *                      </ul>
          *                      The default value is gpudb::execute_sql_false.
-         *                              <li>
-         *                      gpudb::execute_sql_planner_join_validations:
-         *                      <DEVELOPER>
-         *                      <ul>
-         *                              <li> gpudb::execute_sql_true
-         *                              <li> gpudb::execute_sql_false
-         *                      </ul>
-         *                      The default value is gpudb::execute_sql_true.
          *                      </ul>
          * 
          */

@@ -183,6 +183,19 @@ namespace gpudb
          *                           The default value is
          *                           gpudb::visualize_image_chart_none.
          *                                   <li>
+         *                           gpudb::visualize_image_chart_min_max_scaled:
+         *                           If this options is set to "false", this
+         *                           endpoint expects request's min/max values
+         *                           are not yet scaled. They will be scaled
+         *                           according to scale_type_x or scale_type_y
+         *                           for response. If this options is set to
+         *                           "true", this endpoint expects request's
+         *                           min/max values are already scaled
+         *                           according to scale_type_x/scale_type_y.
+         *                           Response's min/max values will be equal to
+         *                           request's min/max values.  The default
+         *                           value is 'false'.
+         *                                   <li>
          *                           gpudb::visualize_image_chart_jitter_x:
          *                           Amplitude of horizontal jitter applied to
          *                           non-numeric x column values.  The default

@@ -2,8 +2,14 @@
 
 ## Version 7.0
 
+#### Version 7.0.2.0 - 2019-04-24
+##### Added
+-   Support for selecting a primary host for the GPUdb class
+
+
 ### Version 7.0.0.1 - 2019-02-22
--   Added support for high availability (HA) failover logic to the
+##### Added
+-   Support for high availability (HA) failover logic to the
     GPUdb class
 
 

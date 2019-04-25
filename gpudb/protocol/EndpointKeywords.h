@@ -83,16 +83,13 @@ namespace gpudb
     extern const std::string aggregate_group_by_materialize_on_gpu;
     extern const std::string aggregate_group_by_pivot;
     extern const std::string aggregate_group_by_pivot_values;
-    extern const std::string aggregate_group_by_refresh_type;
     extern const std::string aggregate_group_by_result_table;
     extern const std::string aggregate_group_by_result_table_force_replicated;
     extern const std::string aggregate_group_by_result_table_generate_pk;
     extern const std::string aggregate_group_by_result_table_persist;
     extern const std::string aggregate_group_by_rollup;
-    extern const std::string aggregate_group_by_sleep_on_refresh;
     extern const std::string aggregate_group_by_sort_by;
     extern const std::string aggregate_group_by_sort_order;
-    extern const std::string aggregate_group_by_throw_error_on_refresh;
     extern const std::string aggregate_group_by_true;
     extern const std::string aggregate_group_by_ttl;
     extern const std::string aggregate_group_by_value;
@@ -498,7 +495,6 @@ namespace gpudb
     extern const std::string execute_sql_paging_table_ttl;
     extern const std::string execute_sql_parallel_execution;
     extern const std::string execute_sql_plan_cache;
-    extern const std::string execute_sql_planner_join_validations;
     extern const std::string execute_sql_prepare_mode;
     extern const std::string execute_sql_preserve_dict_encoding;
     extern const std::string execute_sql_results_caching;
@@ -724,6 +720,7 @@ namespace gpudb
     extern const std::string query_graph_false;
     extern const std::string query_graph_include_all_edges;
     extern const std::string query_graph_number_of_rings;
+    extern const std::string query_graph_restriction_threshold_value;
     extern const std::string query_graph_true;
 
     // Keywords for /revoke/permission/system request
@@ -940,6 +937,7 @@ namespace gpudb
     extern const std::string visualize_image_chart_jitter_x;
     extern const std::string visualize_image_chart_jitter_y;
     extern const std::string visualize_image_chart_log;
+    extern const std::string visualize_image_chart_min_max_scaled;
     extern const std::string visualize_image_chart_none;
     extern const std::string visualize_image_chart_plot_all;
     extern const std::string visualize_image_chart_pointcolor;

@@ -6,7 +6,7 @@
 #include <boost/random.hpp>
 #include <snappy.h>
 
-#include <algorithm>  // for std::random_shuffle
+#include <algorithm>  // for std::random_shuffle, std::iter_swap
 #include <iostream>
 #include <iterator>
 #include <map>
@@ -176,6 +176,16 @@ namespace gpudb {
         init();
     }
 
+
+    GPUdb::~GPUdb()
+    {
+        // Release resources
+        if ( m_primaryUrlPtr != NULL )
+        {
+            delete m_primaryUrlPtr;
+        }
+    }
+    
     
     void GPUdb::init()
     {
@@ -184,118 +194,243 @@ namespace gpudb {
             throw std::invalid_argument("At least one URL must be specified.");
         }
 
-        // If only one URL is given, get the HA ring head node addresses, if any
-        if ( m_urls.size() == 1 )
-        {
-            // Get the system properties to find out about the HA ring nodes
-            ShowSystemPropertiesRequest  request;
-            ShowSystemPropertiesResponse response;
-            try {
-                HttpUrl url( m_urls[0], "/show/system/properties" );
-                response = submitRequest( url, request, response );
-                // response = submitRequest( "/show/system/properties", request, response );
-            } catch (GPUdbException ex) {
-                // Note: Not worth dying just because the HA ring node
-                // addresses couldn't be found
-            }
+        // Seed the RNG for later use
+        std::srand( std::time( NULL ) );
 
-            const std::map<std::string, std::string> &systemProperties = response.propertyMap;
-            try
+        // Handle the primary host URL, if any is given
+        m_primaryUrlStr = m_options.getPrimaryUrl();
+        handlePrimaryURL();
+
+        // Get the HA ring head node addresses, if any
+        getHAringHeadNodeAdresses();
+
+        // Create host manager URLs from the regular URLs
+        updateHostManagerUrls();
+
+        // Randomly shuffle the URL list handler (not the list of URLs
+        // itself, but another list which keeps the former's indices)
+        randomizeURLs();
+    }   // end init
+
+
+    /**
+     *  Handle the primary host URL, if any is given via options
+     */
+    void GPUdb::handlePrimaryURL()
+    {
+        // No-op if an empty string is given
+        if ( m_primaryUrlStr.empty() ) {
+            // Release resources, if necessary
+            if (m_primaryUrlPtr != NULL)
             {
-                std::string is_ha_enabled = systemProperties.at( gpudb::show_system_properties_conf_enable_ha );
+                delete m_primaryUrlPtr;
+            }
+            // Need a null to know we don't have any primary cluster
+            m_primaryUrlPtr = NULL;
+            return;
+        }
 
-                // Only attempt to parse the HA ring node addresses if HA is enabled
-                if ( is_ha_enabled.compare( gpudb::show_system_properties_TRUE ) == 0 )
+        // Make sure that if we've already handled the primary cluster URL, we're not
+        // repeating the work
+        if ( m_primaryUrlPtr != NULL )
+        {
+            if ( m_primaryUrlStr.compare( (std::string)*m_primaryUrlPtr ) == 0 )
+            {
+                // The primary cluster URL has already been processed
+                return;
+            }
+            else
+            {
+                // The saved URL doesn't match; we need to process it properly;
+                // so, release resources
+                delete m_primaryUrlPtr;
+            }
+        }
+        
+        // Parse the URL
+        try {
+            // Need to remember to release resources in the destructor
+            m_primaryUrlPtr = new HttpUrl( m_primaryUrlStr );
+        } catch (const std::invalid_argument& ex) {
+            std::string message = GPUDB_STREAM_TO_STRING( "Error parsing the primary host URL: "
+                                                          << ex.what() );
+            throw new GPUdbException( message );
+        }
+
+        {   // Make the URL handling thread-safe
+            boost::mutex::scoped_lock lock(m_urlMutex);
+            
+            // Check if the primary host exists in the list of user given hosts
+            std::vector<HttpUrl>::iterator primaryUrlIter;
+            primaryUrlIter = std::find( m_urls.begin(), m_urls.end(), *m_primaryUrlPtr );
+            if ( primaryUrlIter != m_urls.end() ) {
+                // The primary URL already exists in the list
+                if ( primaryUrlIter != m_urls.begin() ) {
+                    // Note: Do not combine the nested if with the top level if; will change
+                    //       logic and may end up getting duplicates of the primary URL
+
+                    // Move the primary URL to the front of the list
+                    std::iter_swap( primaryUrlIter, m_urls.begin() );
+                }
+            } else {
+                // The primary URL does not exist in the list and must be the
+                // first element in the list
+                m_urls.insert( m_urls.begin(), *m_primaryUrlPtr );
+            }
+        }
+
+        // Update the host manager URLs
+        updateHostManagerUrls();
+        return;
+    }   // end handlePrimaryUrl
+
+
+    /**
+     * Update the URLs with the available HA ring information
+     */
+    void GPUdb::getHAringHeadNodeAdresses()
+    {
+        // Get the system properties to find out about the HA ring nodes
+        ShowSystemPropertiesRequest  request;
+        ShowSystemPropertiesResponse response;
+        try {
+            HttpUrl url( m_urls[0], "/show/system/properties" );
+            response = submitRequest( url, request, response );
+        } catch (GPUdbException ex) {
+            // Note: Not worth dying just because the HA ring node
+            // addresses couldn't be found
+            return;
+        }
+
+        const std::map<std::string, std::string> &systemProperties = response.propertyMap;
+        try
+        {
+            std::string is_ha_enabled = systemProperties.at( gpudb::show_system_properties_conf_enable_ha );
+
+            // Only attempt to parse the HA ring node addresses if HA is enabled
+            if ( is_ha_enabled.compare( gpudb::show_system_properties_TRUE ) == 0 )
+            {
+                // Parse the HA ringt head node addresses, if any
+                std::string ha_ring_head_nodes = systemProperties.at( gpudb::show_system_properties_conf_ha_ring_head_nodes );
+
+                // Parse the ring head node addresses, if any
+                if ( !ha_ring_head_nodes.empty() )
                 {
-                    // Parse the HA ringt head node addresses, if any
-                    std::string ha_ring_head_nodes = systemProperties.at( gpudb::show_system_properties_conf_ha_ring_head_nodes );
-
-                    // Parse the ring head node addresses, if any
-                    if ( !ha_ring_head_nodes.empty() )
+                    std::vector<HttpUrl> ha_urls;
+                    try
                     {
-                        std::vector<HttpUrl> ha_urls;
-                        try
+                        // Split on commas, if any
+                        char comma = ',';
+                        std::size_t comma_index = ha_ring_head_nodes.find( comma );
+                        if ( comma_index != std::string::npos )
                         {
-                            // Split on commas, if any
-                            char comma = ',';
-                            std::size_t comma_index = ha_ring_head_nodes.find( comma );
-                            if ( comma_index != std::string::npos )
+                            // Multiple URLs found; parse them all URL
+                            std::istringstream iss( ha_ring_head_nodes );
+                            std::string token;
+                            while ( std::getline( iss, token, comma ) )
                             {
-                                // Multiple URLs found; parse them all URL
-                                std::istringstream iss( ha_ring_head_nodes );
-                                std::string token;
-                                while ( std::getline( iss, token, comma ) )
-                                {
-                                    // Parse a single URL
-                                    HttpUrl url_ = HttpUrl( token );
-                                    ha_urls.push_back( url_ );
-                                }
-                            }
-                            else
-                            {
-                                // Parse single URL
-                                HttpUrl url_ = HttpUrl( ha_ring_head_nodes );
+                                // Parse a single URL
+                                HttpUrl url_ = HttpUrl( token );
                                 ha_urls.push_back( url_ );
                             }
-                        } catch ( const std::invalid_argument& ex )
+                        }
+                        else
                         {
-                            std::string message = GPUDB_STREAM_TO_STRING( "Error parsing HA ring head "
-                                                                          << "node address from the "
-                                                                          << "database configuration "
-                                                                          << "parameters: "
-                                                                          << ex.what() );
-                            throw GPUdbException( message );
+                            // Parse single URL
+                            HttpUrl url_ = HttpUrl( ha_ring_head_nodes );
+                            ha_urls.push_back( url_ );
                         }
+                    } catch ( const std::invalid_argument& ex )
+                    {
+                        std::string message = GPUDB_STREAM_TO_STRING( "Error parsing HA ring head "
+                                                                      << "node address from the "
+                                                                      << "database configuration "
+                                                                      << "parameters: "
+                                                                      << ex.what() );
+                        throw GPUdbException( message );
+                    }
 
-                        // Ensure that the given URL is included in the HA ring
-                        // head node addresses
-                        std::vector<HttpUrl>::iterator it = std::find( ha_urls.begin(),
-                                                                       ha_urls.end(),
-                                                                       m_urls[0] );
-                        if ( it == ha_urls.end() )
-                        {   // not found; so add the given URL to the list
-                            ha_urls.push_back( m_urls[ 0 ] );
-                        }
+                    // Ensure that the given URL is included in the HA ring
+                    // head node addresses
+                    std::vector<HttpUrl>::iterator it = std::find( ha_urls.begin(),
+                                                                   ha_urls.end(),
+                                                                   m_urls[0] );
+                    if ( it == ha_urls.end() )
+                    {   // not found; so add the given URL to the list
+                        ha_urls.push_back( m_urls[ 0 ] );
+                    }
+
+                    {
+                        // This operation needs to be thread-safe
+                        boost::mutex::scoped_lock lock(m_urlMutex);
 
                         // Now save these head node addresses, including the given one
                         m_urls.clear();
                         m_urls.assign( ha_urls.begin(), ha_urls.end() );
                     }
-                }
-            } catch (const std::out_of_range &oor)
-            {
-                // Note: Not worth dying just because the appropriate properties
-                // are missing (and so we can't get the HA ring node addresses)
-            }
-        } // end if one URL is given
 
-        // Seed the RNG for later use
-        std::srand( std::time( NULL ) );
-        
-        // Create host manager URLs from the regular URLs
-        createHostManagerUrls( m_urls, m_options.getHostManagerPort() );
+                    // Handle the primary host URL, if any is given
+                    handlePrimaryURL();
 
-        // Make sure that there are the same number of regular URLs and HM URLs
-        if ( m_urls.size() != m_hmUrls.size() )
+                    // Re-create host manager URLs from the regular URLs
+                    updateHostManagerUrls();
+                    
+                    // Randomly shuffle the URL list handler (not the list of URLs
+                    // itself, but another list which keeps the former's indices)
+                    randomizeURLs();
+                }   // end if ha ring non-empty
+            }   // end if ha is enabled
+        } catch (const std::out_of_range &oor)
         {
-            throw std::runtime_error("Number of head node URLs and host manager URLs do not match");
+            // Note: Not worth dying just because the appropriate properties
+            // are missing (and so we can't get the HA ring node addresses)
         }
+    }   // end getHAringHeadNodeAdresses
 
+
+    /**
+     * Randomly shuffles the list of high availability URL indices so that HA
+     * failover happens at a random fashion.  One caveat is when a primary host
+     * is given by the user; in that case, we need to keep the primary host's
+     * index as the first one in the list so that upon failover, when we cricle
+     * back, we always pick the first/primary host up again.
+     */
+    void GPUdb::randomizeURLs() const
+    {
+        // This operation needs to be thread-safe
+        boost::mutex::scoped_lock lock(m_urlMutex);
+
+        // Re-create the list of HA URL indices
         // Generate a list of indices for the URL lists
-        m_urlIndices.reserve( m_urls.size() );
+        m_urlIndices.clear();
         for ( size_t i = 0; i < m_urls.size(); ++i )
         {
             m_urlIndices.push_back( i );
         }
+
         // Randomly shuffle the list of indices
-        std::random_shuffle( m_urlIndices.begin(), m_urlIndices.end() );
+        if ( m_primaryUrlPtr == NULL )
+        {
+            // We don't have any primary URL; so treat all URLs similarly
+            // Randomly order the HA clusters and pick one to start working with
+            std::random_shuffle( m_urlIndices.begin(), m_urlIndices.end() );
+        } else
+        {
+            // Shuffle from the 2nd element onward, only if there are more than
+            // two elements, of course
+            if ( m_urlIndices.size() > 2 ) {
+                std::random_shuffle( m_urlIndices.begin() + 1,
+                                     m_urlIndices.end() );
+            }
+        }
 
-        // We'll go through this list of indices serially, having an overall
-        // effect of randomly choosing the URLs
+        // This will keep track of which cluster to pick next (an index of
+        // randomly shuffled indices)
         m_currentUrl = 0;
-    }   // end init
+    }   // end randomizeURLs
 
-    
+
+
     void GPUdb::addKnownType(const std::string& typeId, const avro::DecoderPtr& decoder)
     {
         if (!decoder)
@@ -392,6 +527,11 @@ namespace gpudb {
         return m_password;
     }
 
+    const std::string& GPUdb::getPrimaryURL() const
+    {
+        return m_primaryUrlStr;
+    }
+
     size_t GPUdb::getThreadCount() const
     {
         return m_threadCount;
@@ -404,28 +544,26 @@ namespace gpudb {
 
     const HttpUrl& GPUdb::getUrl() const
     {
+        boost::mutex::scoped_lock lock(m_urlMutex);
         if (m_urls.size() == 1)
         {
             return m_urls[0];
         }
         else
         {
-            boost::mutex::scoped_lock lock(m_urlMutex);
-
             return m_urls[ m_urlIndices[ m_currentUrl ] ];
         }
     }
 
     const HttpUrl* GPUdb::getUrlPointer() const
     {
+        boost::mutex::scoped_lock lock(m_urlMutex);
         if (m_urls.size() == 1)
         {
             return &m_urls[0];
         }
         else
         {
-            boost::mutex::scoped_lock lock(m_urlMutex);
-
             return &m_urls[ m_urlIndices[ m_currentUrl ] ];
         }
     }
@@ -451,14 +589,13 @@ namespace gpudb {
 
     const HttpUrl* GPUdb::getHmUrlPointer() const
     {
+        boost::mutex::scoped_lock lock(m_urlMutex);
         if (m_hmUrls.size() == 1)
         {
             return &m_hmUrls[0];
         }
         else
         {
-            boost::mutex::scoped_lock lock(m_urlMutex);
-
             return &m_hmUrls[ m_urlIndices[ m_currentUrl ] ];
         }
     }
@@ -500,30 +637,43 @@ namespace gpudb {
     }
 
 
-    /*
-     * Create a host manager URL from a head node URL, and store it in m_hmUrls.
-     */
-    void GPUdb::createHostManagerUrl( const HttpUrl& url, uint16_t hostManagerPort )
-    {
-        HttpUrl hmUrl = HttpUrl( url.getProtocol(),
-                                 url.getHost(),
-                                 hostManagerPort,
-                                 url.getPath(),
-                                 url.getQuery() );
-        m_hmUrls.push_back( hmUrl );
-    }
 
     /*
      * Create host manager URLs from head node URLs and a given
      * host manager port number.
      */
-    void GPUdb::createHostManagerUrls( const std::vector<HttpUrl>& urls,
-                                       uint16_t hostManagerPort )
+    void GPUdb::updateHostManagerUrls()
     {
-        for( std::vector<HttpUrl>::const_iterator iter = urls.begin();
-             iter != urls.end(); ++iter )
+        // Get the host manager port
+        uint16_t hostManagerPort = m_options.getHostManagerPort();
+
+        // The URL handling has to be thread-safe
+        boost::mutex::scoped_lock lock(m_urlMutex);
+
+        // Recreate the host manager URL list
+        m_hmUrls.clear();
+        
+        for( std::vector<HttpUrl>::const_iterator iter = m_urls.begin();
+             iter != m_urls.end(); ++iter )
         {
-            createHostManagerUrl( *iter, hostManagerPort );
+            try
+            {
+                HttpUrl hmUrl = HttpUrl( iter->getProtocol(),
+                                         iter->getHost(),
+                                         hostManagerPort,
+                                         iter->getPath(),
+                                         iter->getQuery() );
+                m_hmUrls.push_back( hmUrl );
+            } catch ( const std::invalid_argument& ex )
+            {
+                throw new GPUdbException( ex.what() );
+            }
+        }
+        
+        // Make sure that there are the same number of regular URLs and HM URLs
+        if ( m_urls.size() != m_hmUrls.size() )
+        {
+            throw GPUdbException("Number of head node URLs and host manager URLs do not match");
         }
     }
     
@@ -536,6 +686,9 @@ namespace gpudb {
      */
     void GPUdb::setHostManagerPort(uint16_t value)
     {
+        // The URL handling has to be thread-safe
+        boost::mutex::scoped_lock lock(m_urlMutex);
+
         // Reset the port for all the host manager URLs
         for ( size_t i = 0; i < m_hmUrls.size(); ++i )
         {
@@ -825,10 +978,10 @@ namespace gpudb {
         // let the caller know that we've circled back
         if (&m_urls[ m_urlIndices[ m_currentUrl ] ] == oldUrl)
         {
+            // Release the lock since randomizeURLs() uses it, too
+            lock.unlock();
             // Re-shuffle and set the index counter to zero
-            std::random_shuffle( m_urlIndices.begin(), m_urlIndices.end() );
-            // Set the index counter to zero
-            m_currentUrl = 0;
+            randomizeURLs();
 
             // Let the user know that we've circled back
             throw GPUdbHAUnavailableException( "GPUdb unavailable (an HA ring has been set up); ", m_urls );
@@ -854,10 +1007,10 @@ namespace gpudb {
         // let the caller know that we've circled back
         if (&m_hmUrls[ m_urlIndices[ m_currentUrl ] ] == oldUrl)
         {
+            // Release the lock since randomizeURLs() uses it, too
+            lock.unlock();
             // Re-shuffle and set the index counter to zero
-            std::random_shuffle( m_urlIndices.begin(), m_urlIndices.end() );
-            // Set the index counter to zero
-            m_currentUrl = 0;
+            randomizeURLs();
 
             // Let the user know that we've circled back
             throw GPUdbHAUnavailableException( "GPUdb unavailable (an HA ring has been set up); ", m_hmUrls );
@@ -867,6 +1020,10 @@ namespace gpudb {
         return &m_hmUrls[ m_urlIndices[ m_currentUrl ] ];
     }
 
+
+
+    // ------------------ GPUdb::Options Methods ----------------------
+    
     GPUdb::Options::Options() :
         #ifndef GPUDB_NO_HTTPS
         m_sslContext( NULL ),
@@ -903,6 +1060,11 @@ namespace gpudb {
     std::string GPUdb::Options::getPassword() const
     {
         return m_password;
+    }
+
+    std::string GPUdb::Options::getPrimaryUrl() const
+    {
+        return m_primaryUrl;
     }
 
     #ifndef GPUDB_NO_HTTPS
@@ -952,6 +1114,12 @@ namespace gpudb {
     GPUdb::Options& GPUdb::Options::setPassword(const std::string& value)
     {
         m_password = value;
+        return *this;
+    }
+
+    GPUdb::Options& GPUdb::Options::setPrimaryUrl(const std::string& value)
+    {
+        m_primaryUrl = value;
         return *this;
     }
 

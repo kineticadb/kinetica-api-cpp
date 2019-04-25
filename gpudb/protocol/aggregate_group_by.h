@@ -271,15 +271,6 @@ namespace gpudb
          *                              <li> gpudb::aggregate_group_by_cube:
          *                      This option is used to specify the
          *                      multidimensional aggregates.
-         *                              <li>
-         *                      gpudb::aggregate_group_by_throw_error_on_refresh:
-         *                      <DEVELOPER>
-         *                              <li>
-         *                      gpudb::aggregate_group_by_sleep_on_refresh:
-         *                      <DEVELOPER>
-         *                              <li>
-         *                      gpudb::aggregate_group_by_refresh_type:
-         *                      <DEVELOPER>
          *                      </ul>
          * 
          */
@@ -477,15 +468,6 @@ namespace gpudb
          *                              <li> gpudb::aggregate_group_by_cube:
          *                      This option is used to specify the
          *                      multidimensional aggregates.
-         *                              <li>
-         *                      gpudb::aggregate_group_by_throw_error_on_refresh:
-         *                      <DEVELOPER>
-         *                              <li>
-         *                      gpudb::aggregate_group_by_sleep_on_refresh:
-         *                      <DEVELOPER>
-         *                              <li>
-         *                      gpudb::aggregate_group_by_refresh_type:
-         *                      <DEVELOPER>
          *                      </ul>
          * 
          */
