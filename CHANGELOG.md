@@ -2,6 +2,12 @@
 
 ## Version 7.0
 
+#### Version 7.0.3.0 - 2019-05-13
+##### Changed
+-   /query/graph parameters: removed `restrictions` and added
+    `edgeToNode`, `edgeOrNodeIntIds`, `edgeOrNodeStringIds`, and
+    `edgeOrNodeWktIds`.
+
 #### Version 7.0.2.0 - 2019-04-24
 ##### Added
 -   Support for selecting a primary host for the GPUdb class

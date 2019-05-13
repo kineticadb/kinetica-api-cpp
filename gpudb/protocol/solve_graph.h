@@ -222,6 +222,11 @@ namespace gpudb
          *                      edge with a RESTRICTIONS_VALUECOMPARED value
          *                      greater than the @a restriction_threshold_value
          *                      will not be included in the solution.
+         *                              <li>
+         *                      gpudb::solve_graph_uniform_weights: When
+         *                      speficied, assigns the given value to all the
+         *                      edges in the graph. Note that weights specified
+         *                      in @{weights_on_edges} override this value.
          *                      </ul>
          * 
          */

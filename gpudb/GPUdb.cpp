@@ -54,6 +54,7 @@ namespace gpudb {
     }
 
     GPUdb::GPUdb(const HttpUrl& url, const Options& options) :
+        m_primaryUrlPtr(NULL),
 
         #ifndef GPUDB_NO_HTTPS
         m_sslContext( options.getSslContext() ),
@@ -78,6 +79,7 @@ namespace gpudb {
     }
 
     GPUdb::GPUdb(const std::string& url, const Options& options) :
+        m_primaryUrlPtr(NULL),
 
         #ifndef GPUDB_NO_HTTPS
         m_sslContext(options.getSslContext()),
@@ -122,6 +124,7 @@ namespace gpudb {
 
     GPUdb::GPUdb(const std::vector<HttpUrl>& urls, const Options& options) :
         m_urls(urls),
+        m_primaryUrlPtr(NULL),
 
         #ifndef GPUDB_NO_HTTPS
         m_sslContext(options.getSslContext()),
@@ -148,6 +151,7 @@ namespace gpudb {
     }
 
     GPUdb::GPUdb(const std::vector<std::string>& urls, const Options& options) :
+        m_primaryUrlPtr(NULL),
 
         #ifndef GPUDB_NO_HTTPS
         m_sslContext(options.getSslContext()),

@@ -6,7 +6,7 @@
 
 
 // GPUdb Version
-const std::string GPUdb::API_VERSION( "7.0.2.0" );
+const std::string GPUdb::API_VERSION( "7.0.3.0" );
 
 
 
@@ -1610,7 +1610,8 @@ AggregateConvexHullResponse& GPUdb::aggregateConvexHull( const std::string& tabl
  * href="../../concepts/tables.html#table" target="_top">standard naming
  * conventions</a>; column/aggregation expressions will need to be aliased.  If
  * the source table's <a href="../../concepts/tables.html#shard-keys"
- * target="_top">shard key</a> is used as the grouping column(s), the result
+ * target="_top">shard key</a> is used as the grouping column(s) and all result
+ * records are selected (@a offset is 0 and @a limit is -9999), the result
  * table will be sharded, in all other cases it will be replicated.  Sorting
  * will properly function only if the result table is replicated or if there is
  * only one processing node and should not be relied upon in other cases.  Not
@@ -1688,7 +1689,8 @@ RawAggregateGroupByResponse GPUdb::aggregateGroupByRaw( const AggregateGroupByRe
  * href="../../concepts/tables.html#table" target="_top">standard naming
  * conventions</a>; column/aggregation expressions will need to be aliased.  If
  * the source table's <a href="../../concepts/tables.html#shard-keys"
- * target="_top">shard key</a> is used as the grouping column(s), the result
+ * target="_top">shard key</a> is used as the grouping column(s) and all result
+ * records are selected (@a offset is 0 and @a limit is -9999), the result
  * table will be sharded, in all other cases it will be replicated.  Sorting
  * will properly function only if the result table is replicated or if there is
  * only one processing node and should not be relied upon in other cases.  Not
@@ -1769,7 +1771,8 @@ RawAggregateGroupByResponse& GPUdb::aggregateGroupByRaw( const AggregateGroupByR
  * href="../../concepts/tables.html#table" target="_top">standard naming
  * conventions</a>; column/aggregation expressions will need to be aliased.  If
  * the source table's <a href="../../concepts/tables.html#shard-keys"
- * target="_top">shard key</a> is used as the grouping column(s), the result
+ * target="_top">shard key</a> is used as the grouping column(s) and all result
+ * records are selected (@a offset is 0 and @a limit is -9999), the result
  * table will be sharded, in all other cases it will be replicated.  Sorting
  * will properly function only if the result table is replicated or if there is
  * only one processing node and should not be relied upon in other cases.  Not
@@ -1856,7 +1859,8 @@ AggregateGroupByResponse GPUdb::aggregateGroupBy( const AggregateGroupByRequest&
  * href="../../concepts/tables.html#table" target="_top">standard naming
  * conventions</a>; column/aggregation expressions will need to be aliased.  If
  * the source table's <a href="../../concepts/tables.html#shard-keys"
- * target="_top">shard key</a> is used as the grouping column(s), the result
+ * target="_top">shard key</a> is used as the grouping column(s) and all result
+ * records are selected (@a offset is 0 and @a limit is -9999), the result
  * table will be sharded, in all other cases it will be replicated.  Sorting
  * will properly function only if the result table is replicated or if there is
  * only one processing node and should not be relied upon in other cases.  Not
@@ -1946,7 +1950,8 @@ AggregateGroupByResponse& GPUdb::aggregateGroupBy( const AggregateGroupByRequest
  * href="../../concepts/tables.html#table" target="_top">standard naming
  * conventions</a>; column/aggregation expressions will need to be aliased.  If
  * the source table's <a href="../../concepts/tables.html#shard-keys"
- * target="_top">shard key</a> is used as the grouping column(s), the result
+ * target="_top">shard key</a> is used as the grouping column(s) and all result
+ * records are selected (@a offset is 0 and @a limit is -9999), the result
  * table will be sharded, in all other cases it will be replicated.  Sorting
  * will properly function only if the result table is replicated or if there is
  * only one processing node and should not be relied upon in other cases.  Not
@@ -2166,7 +2171,8 @@ AggregateGroupByResponse GPUdb::aggregateGroupBy( const std::string& tableName,
  * href="../../concepts/tables.html#table" target="_top">standard naming
  * conventions</a>; column/aggregation expressions will need to be aliased.  If
  * the source table's <a href="../../concepts/tables.html#shard-keys"
- * target="_top">shard key</a> is used as the grouping column(s), the result
+ * target="_top">shard key</a> is used as the grouping column(s) and all result
+ * records are selected (@a offset is 0 and @a limit is -9999), the result
  * table will be sharded, in all other cases it will be replicated.  Sorting
  * will properly function only if the result table is replicated or if there is
  * only one processing node and should not be relied upon in other cases.  Not
@@ -18044,7 +18050,10 @@ LockTableResponse& GPUdb::lockTable( const std::string& tableName,
 
 
 /**
- * Matches measured lon/lat points to an underlying graph network.
+ * Matches a directed route implied by a given set of latitude/longitude points
+ * to an existing underlying road network graph using a given solution type.
+ * See <a href="../../graph_solver/network_graph_solver.html"
+ * target="_top">Network Graph Solvers</a> for more information.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -18062,7 +18071,10 @@ MatchGraphResponse GPUdb::matchGraph( const MatchGraphRequest& request_ ) const
 
 
 /**
- * Matches measured lon/lat points to an underlying graph network.
+ * Matches a directed route implied by a given set of latitude/longitude points
+ * to an existing underlying road network graph using a given solution type.
+ * See <a href="../../graph_solver/network_graph_solver.html"
+ * target="_top">Network Graph Solvers</a> for more information.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -18083,58 +18095,107 @@ MatchGraphResponse& GPUdb::matchGraph( const MatchGraphRequest& request_,
 
 
 /**
- * Matches measured lon/lat points to an underlying graph network.
+ * Matches a directed route implied by a given set of latitude/longitude points
+ * to an existing underlying road network graph using a given solution type.
+ * See <a href="../../graph_solver/network_graph_solver.html"
+ * target="_top">Network Graph Solvers</a> for more information.
  * 
- * @param graphName  Name of the underlying graph network.
- * @param samplePoints  ['Table.column AS node_identifier', 'Table.column AS
- *                      SAMPLE_TIME' ]; e.g., 't1.wkt' AS 'SAMPLE_WKTPOINT',
- *                      t1.t' AS 'SAMPLE_TIME'
- * @param solveMethod  Solver used for mapmatching.
+ * @param graphName  Name of the underlying geospatial graph resource to match
+ *                   to using @a samplePoints.
+ * @param samplePoints  Sample points used to match to an underlying geospatial
+ *                      graph. Sample points must be specified using <a
+ *                      href="../../graph_solver/network_graph_solver.html#match-identifiers"
+ *                      target="_top">identifiers</a>; identifiers are grouped
+ *                      as <a
+ *                      href="../../graph_solver/network_graph_solver.html#match-combinations"
+ *                      target="_top">combinations</a>. Identifiers are used
+ *                      with existing column names, e.g., 'table.column AS
+ *                      SAMPLE_WKTPOINT'.
+ * @param solveMethod  The type of solver to use for graph matching.
  *                     <ul>
- *                             <li> gpudb::match_graph_markov_chain: Hidden
- *                     Markov Model (HMM) based method.
+ *                             <li> gpudb::match_graph_markov_chain: Matches @a
+ *                     samplePoints to the graph using the Hidden Markov Model
+ *                     (HMM)-based method, which conducts a range-tree
+ *                     closest-edge search to find the best combinations of
+ *                     possible road segments (@a num_segments) for each sample
+ *                     point to create the best route. The route is secured one
+ *                     point at a time while looking ahead @a chain_width
+ *                     number of points, so the prediction is corrected after
+ *                     each point. This solution type is the most accurate but
+ *                     also the most computationally intensive.
  *                             <li> gpudb::match_graph_incremental_weighted:
- *                     Uses time and/or distance to influence one or more
- *                     shortest paths along the sample points.
+ *                     Matches @a samplePoints to the graph using time and/or
+ *                     distance between points to influence one or more
+ *                     shortest paths across the sample points.
  *                     </ul>
- *                     The default value is
- *                     gpudb::match_graph_incremental_weighted.
- * @param solutionTable  Name of the table to store the solution. Error if
- *                       table already exists.
+ *                     The default value is gpudb::match_graph_markov_chain.
+ * @param solutionTable  The name of the table used to store the results; this
+ *                       table contains a <a
+ *                       href="../../geospatial/geo_objects.html#geospatial-tracks"
+ *                       target="_top">track</a> of geospatial points for the
+ *                       matched portion of the graph, a track ID, and a score
+ *                       value. Also outputs a details table containing a trip
+ *                       ID (that matches the track ID), the latitude/longitude
+ *                       pair, the timestamp the point was recorded at, and an
+ *                       edge ID corresponding to the matched road segment. Has
+ *                       the same naming restrictions as <a
+ *                       href="../../concepts/tables.html"
+ *                       target="_top">tables</a>. Must not be an existing
+ *                       table of the same name.
  * @param options  Additional parameters
  *                 <ul>
- *                         <li> gpudb::match_graph_gps_noise: GPS noise value -
- *                 in meters - to remove redundant samplespoints (95th
- *                 percentile). -1 to disable.  The default value is '5.0'.
- *                         <li> gpudb::match_graph_num_segments: Number of
- *                 potentially matching road segments for each sample point.
- *                 (Defaults to 3 for 'markov_chain' and 5 for
- *                 'incremental_weighted').  The default value is '0'.
+ *                         <li> gpudb::match_graph_gps_noise: GPS noise value
+ *                 (in meters) to remove redundant sample points. Use -1 to
+ *                 disable noise reduction. The default value accounts for 95%
+ *                 of point variation (+ or -5 meters).  The default value is
+ *                 '5.0'.
+ *                         <li> gpudb::match_graph_num_segments: Maximum number
+ *                 of potentially matching road segments for each sample point.
+ *                 For the @a markov_chain solver, the default is 3; for the @a
+ *                 incremental_weighted, the default is 5.  The default value
+ *                 is ''.
  *                         <li> gpudb::match_graph_search_radius: Maximum
- *                 search radius used when snapping samples points onto
- *                 potentially matching road segments. This corresponds to
- *                 approximately 100m when using geodesic coordinates.  The
- *                 default value is '0.001'.
- *                         <li> gpudb::match_graph_chain_width: Only applicable
- *                 if method is 'markov_chain'. Length of the sample points
- *                 window within the Markov kernel.  The default value is '9'.
- *                         <li> gpudb::match_graph_max_solve_length: Only
- *                 applicable if method is 'incremental_weighted'. Maximum
- *                 number of samples along the path to solve on.  The default
- *                 value is '200'.
- *                         <li> gpudb::match_graph_time_window_width: Only
- *                 applicable if method is 'incremental_weighted'. Time window
- *                 in which sample points are favored (dt of 1 is the most
- *                 attractive).  The default value is '30'.
- *                         <li> gpudb::match_graph_detect_loops: Only
- *                 applicable if method is 'incremental_weighted'. If true, add
- *                 a break point within any loop.  The default value is 'true'.
- *                         <li> gpudb::match_graph_source: Optional WKT point
- *                 on the trace; otherwise the beginning (in time) is taken as
- *                 the source.  The default value is 'POINT NULL'.
+ *                 search radius used when snapping sample points onto
+ *                 potentially matching surrounding segments. The default value
+ *                 corresponds to approximately 100 meters.  The default value
+ *                 is '0.001'.
+ *                         <li> gpudb::match_graph_chain_width: For the @a
+ *                 markov_chain solver only. Length of the sample points
+ *                 lookahead window within the Markov kernel; the larger the
+ *                 number, the more accurate the solution.  The default value
+ *                 is '9'.
+ *                         <li> gpudb::match_graph_max_solve_length: For the @a
+ *                 incremental_weighted solver only. Maximum number of samples
+ *                 along the path on which to solve.  The default value is
+ *                 '200'.
+ *                         <li> gpudb::match_graph_time_window_width: For the
+ *                 @a incremental_weighted solver only. Time window, also known
+ *                 as sampling period, in which points are favored. To
+ *                 determine the raw window value, the @a time_window_width
+ *                 value is multiplied by the mean sample time (in seconds)
+ *                 across all points, e.g., if @a time_window_width is 30 and
+ *                 the mean sample time is 2 seconds, points that are sampled
+ *                 greater than 60 seconds after the previous point are no
+ *                 longer favored in the solution.  The default value is '30'.
+ *                         <li> gpudb::match_graph_detect_loops: For the @a
+ *                 incremental_weighted solver only. If @a true, a loop will be
+ *                 detected and traversed even if it would make a shorter path
+ *                 to ignore the loop.
+ *                 <ul>
+ *                         <li> gpudb::match_graph_true
+ *                         <li> gpudb::match_graph_false
+ *                 </ul>
+ *                 The default value is gpudb::match_graph_true.
+ *                         <li> gpudb::match_graph_source: Optional WKT
+ *                 starting point from @a samplePoints for the solver. The
+ *                 default behavior for the endpoint is to use time to
+ *                 determine the starting point.  The default value is 'POINT
+ *                 NULL'.
  *                         <li> gpudb::match_graph_destination: Optional WKT
- *                 point on the trace; otherwise the end (in time) is taken as
- *                 the destination.  The default value is 'POINT NULL'.
+ *                 ending point from @a samplePoints for the solver. The
+ *                 default behavior for the endpoint is to use time to
+ *                 determine the destination point.  The default value is
+ *                 'POINT NULL'.
  *                 </ul>
  * 
  * @return Response object containing the result of the operation.
@@ -18160,58 +18221,107 @@ MatchGraphResponse GPUdb::matchGraph( const std::string& graphName,
 
 
 /**
- * Matches measured lon/lat points to an underlying graph network.
+ * Matches a directed route implied by a given set of latitude/longitude points
+ * to an existing underlying road network graph using a given solution type.
+ * See <a href="../../graph_solver/network_graph_solver.html"
+ * target="_top">Network Graph Solvers</a> for more information.
  * 
- * @param graphName  Name of the underlying graph network.
- * @param samplePoints  ['Table.column AS node_identifier', 'Table.column AS
- *                      SAMPLE_TIME' ]; e.g., 't1.wkt' AS 'SAMPLE_WKTPOINT',
- *                      t1.t' AS 'SAMPLE_TIME'
- * @param solveMethod  Solver used for mapmatching.
+ * @param graphName  Name of the underlying geospatial graph resource to match
+ *                   to using @a samplePoints.
+ * @param samplePoints  Sample points used to match to an underlying geospatial
+ *                      graph. Sample points must be specified using <a
+ *                      href="../../graph_solver/network_graph_solver.html#match-identifiers"
+ *                      target="_top">identifiers</a>; identifiers are grouped
+ *                      as <a
+ *                      href="../../graph_solver/network_graph_solver.html#match-combinations"
+ *                      target="_top">combinations</a>. Identifiers are used
+ *                      with existing column names, e.g., 'table.column AS
+ *                      SAMPLE_WKTPOINT'.
+ * @param solveMethod  The type of solver to use for graph matching.
  *                     <ul>
- *                             <li> gpudb::match_graph_markov_chain: Hidden
- *                     Markov Model (HMM) based method.
+ *                             <li> gpudb::match_graph_markov_chain: Matches @a
+ *                     samplePoints to the graph using the Hidden Markov Model
+ *                     (HMM)-based method, which conducts a range-tree
+ *                     closest-edge search to find the best combinations of
+ *                     possible road segments (@a num_segments) for each sample
+ *                     point to create the best route. The route is secured one
+ *                     point at a time while looking ahead @a chain_width
+ *                     number of points, so the prediction is corrected after
+ *                     each point. This solution type is the most accurate but
+ *                     also the most computationally intensive.
  *                             <li> gpudb::match_graph_incremental_weighted:
- *                     Uses time and/or distance to influence one or more
- *                     shortest paths along the sample points.
+ *                     Matches @a samplePoints to the graph using time and/or
+ *                     distance between points to influence one or more
+ *                     shortest paths across the sample points.
  *                     </ul>
- *                     The default value is
- *                     gpudb::match_graph_incremental_weighted.
- * @param solutionTable  Name of the table to store the solution. Error if
- *                       table already exists.
+ *                     The default value is gpudb::match_graph_markov_chain.
+ * @param solutionTable  The name of the table used to store the results; this
+ *                       table contains a <a
+ *                       href="../../geospatial/geo_objects.html#geospatial-tracks"
+ *                       target="_top">track</a> of geospatial points for the
+ *                       matched portion of the graph, a track ID, and a score
+ *                       value. Also outputs a details table containing a trip
+ *                       ID (that matches the track ID), the latitude/longitude
+ *                       pair, the timestamp the point was recorded at, and an
+ *                       edge ID corresponding to the matched road segment. Has
+ *                       the same naming restrictions as <a
+ *                       href="../../concepts/tables.html"
+ *                       target="_top">tables</a>. Must not be an existing
+ *                       table of the same name.
  * @param options  Additional parameters
  *                 <ul>
- *                         <li> gpudb::match_graph_gps_noise: GPS noise value -
- *                 in meters - to remove redundant samplespoints (95th
- *                 percentile). -1 to disable.  The default value is '5.0'.
- *                         <li> gpudb::match_graph_num_segments: Number of
- *                 potentially matching road segments for each sample point.
- *                 (Defaults to 3 for 'markov_chain' and 5 for
- *                 'incremental_weighted').  The default value is '0'.
+ *                         <li> gpudb::match_graph_gps_noise: GPS noise value
+ *                 (in meters) to remove redundant sample points. Use -1 to
+ *                 disable noise reduction. The default value accounts for 95%
+ *                 of point variation (+ or -5 meters).  The default value is
+ *                 '5.0'.
+ *                         <li> gpudb::match_graph_num_segments: Maximum number
+ *                 of potentially matching road segments for each sample point.
+ *                 For the @a markov_chain solver, the default is 3; for the @a
+ *                 incremental_weighted, the default is 5.  The default value
+ *                 is ''.
  *                         <li> gpudb::match_graph_search_radius: Maximum
- *                 search radius used when snapping samples points onto
- *                 potentially matching road segments. This corresponds to
- *                 approximately 100m when using geodesic coordinates.  The
- *                 default value is '0.001'.
- *                         <li> gpudb::match_graph_chain_width: Only applicable
- *                 if method is 'markov_chain'. Length of the sample points
- *                 window within the Markov kernel.  The default value is '9'.
- *                         <li> gpudb::match_graph_max_solve_length: Only
- *                 applicable if method is 'incremental_weighted'. Maximum
- *                 number of samples along the path to solve on.  The default
- *                 value is '200'.
- *                         <li> gpudb::match_graph_time_window_width: Only
- *                 applicable if method is 'incremental_weighted'. Time window
- *                 in which sample points are favored (dt of 1 is the most
- *                 attractive).  The default value is '30'.
- *                         <li> gpudb::match_graph_detect_loops: Only
- *                 applicable if method is 'incremental_weighted'. If true, add
- *                 a break point within any loop.  The default value is 'true'.
- *                         <li> gpudb::match_graph_source: Optional WKT point
- *                 on the trace; otherwise the beginning (in time) is taken as
- *                 the source.  The default value is 'POINT NULL'.
+ *                 search radius used when snapping sample points onto
+ *                 potentially matching surrounding segments. The default value
+ *                 corresponds to approximately 100 meters.  The default value
+ *                 is '0.001'.
+ *                         <li> gpudb::match_graph_chain_width: For the @a
+ *                 markov_chain solver only. Length of the sample points
+ *                 lookahead window within the Markov kernel; the larger the
+ *                 number, the more accurate the solution.  The default value
+ *                 is '9'.
+ *                         <li> gpudb::match_graph_max_solve_length: For the @a
+ *                 incremental_weighted solver only. Maximum number of samples
+ *                 along the path on which to solve.  The default value is
+ *                 '200'.
+ *                         <li> gpudb::match_graph_time_window_width: For the
+ *                 @a incremental_weighted solver only. Time window, also known
+ *                 as sampling period, in which points are favored. To
+ *                 determine the raw window value, the @a time_window_width
+ *                 value is multiplied by the mean sample time (in seconds)
+ *                 across all points, e.g., if @a time_window_width is 30 and
+ *                 the mean sample time is 2 seconds, points that are sampled
+ *                 greater than 60 seconds after the previous point are no
+ *                 longer favored in the solution.  The default value is '30'.
+ *                         <li> gpudb::match_graph_detect_loops: For the @a
+ *                 incremental_weighted solver only. If @a true, a loop will be
+ *                 detected and traversed even if it would make a shorter path
+ *                 to ignore the loop.
+ *                 <ul>
+ *                         <li> gpudb::match_graph_true
+ *                         <li> gpudb::match_graph_false
+ *                 </ul>
+ *                 The default value is gpudb::match_graph_true.
+ *                         <li> gpudb::match_graph_source: Optional WKT
+ *                 starting point from @a samplePoints for the solver. The
+ *                 default behavior for the endpoint is to use time to
+ *                 determine the starting point.  The default value is 'POINT
+ *                 NULL'.
  *                         <li> gpudb::match_graph_destination: Optional WKT
- *                 point on the trace; otherwise the end (in time) is taken as
- *                 the destination.  The default value is 'POINT NULL'.
+ *                 ending point from @a samplePoints for the solver. The
+ *                 default behavior for the endpoint is to use time to
+ *                 determine the destination point.  The default value is
+ *                 'POINT NULL'.
  *                 </ul>
  * @param[out] response_  Response object containing the results of the
  *                        operation.
@@ -18496,13 +18606,10 @@ MergeRecordsResponse& GPUdb::mergeRecords( const std::string& tableName,
  * #createGraph(const CreateGraphRequest&) const} and returns a list of
  * adjacent edge(s) or node(s), also known as an adjacency list, depending on
  * what's been provided to the endpoint; providing edges will return nodes and
- * providing nodes will return edges. There are two ways to provide edge(s) or
- * node(s) to be queried: using column names and <a
+ * providing nodes will return edges. The edge(s) or node(s) to be queried are
+ * specified using column names and <a
  * href="../../graph_solver/network_graph_solver.html#query-identifiers"
- * target="_top">query identifiers</a> with the @a queries with or using a list
- * of specific IDs with one of the @a edgeOrNodeIntIds, @a edgeOrNodeStringIds,
- * and @a edgeOrNodeWktIds arrays and @a edgeToNode to determine if the IDs are
- * edges or nodes.
+ * target="_top">query identifiers</a> with the @a queries.
  * <p>
  * To determine the node(s) or edge(s) adjacent to a value from a given column,
  * provide a list of column names aliased as a particular query identifier to
@@ -18510,33 +18617,6 @@ MergeRecordsResponse& GPUdb::mergeRecords( const std::string& tableName,
  * long as the type is supported by the given identifier. See <a
  * href="../../graph_solver/network_graph_solver.html#query-identifiers"
  * target="_top">Query Identifiers</a> for more information.
- * <p>
- * To query for nodes that are adjacent to a given set of edges, set @a
- * edgeToNode to @a true and provide values to the @a edgeOrNodeIntIds, @a
- * edgeOrNodeStringIds, and @a edgeOrNodeWktIds arrays; it is assumed the
- * values in the arrays are edges and the corresponding adjacency list array in
- * the response will be populated with nodes.
- * <p>
- * To query for edges that are adjacent to a given set of nodes, set @a
- * edgeToNode to @a false and provide values to the @a edgeOrNodeIntIds, @a
- * edgeOrNodeStringIds, and @a edgeOrNodeWktIds arrays; it is assumed the
- * values in arrays are nodes and the given node(s) will be queried for
- * adjacent edges and the corresponding adjacency list array in the response
- * will be populated with edges.
- * <p>
- * To query for adjacencies relative to a given column and a given set of
- * edges/nodes, the @a queries and @a edgeOrNodeIntIds / @a edgeOrNodeStringIds
- * / @a edgeOrNodeWktIds parameters can be used in conjuction with each other.
- * If both @a queries and one of the arrays are populated, values from @a
- * queries will be prioritized over values in the array and all values parsed
- * from the @a queries array will be appended to the corresponding arrays
- * (depending on the type). If using both @a queries and the edge_or_node
- * arrays, the types must match, e.g., if @a queries utilizes the
- * 'QUERY_NODE_ID' identifier, only the @a edgeOrNodeIntIds array should be
- * used. Note that using @a queries will override @a edgeToNode, so if @a
- * queries contains a node-based query identifier, e.g., 'table.column AS
- * QUERY_NODE_ID', it is assumed that the @a edgeOrNodeIntIds will contain node
- * IDs.
  * <p>
  * To return the adjacency list in the response, leave @a adjacencyTable empty.
  * To return the adjacency list in a table and not in the response, provide a
@@ -18567,13 +18647,10 @@ QueryGraphResponse GPUdb::queryGraph( const QueryGraphRequest& request_ ) const
  * #createGraph(const CreateGraphRequest&,CreateGraphResponse&) const} and
  * returns a list of adjacent edge(s) or node(s), also known as an adjacency
  * list, depending on what's been provided to the endpoint; providing edges
- * will return nodes and providing nodes will return edges. There are two ways
- * to provide edge(s) or node(s) to be queried: using column names and <a
+ * will return nodes and providing nodes will return edges. The edge(s) or
+ * node(s) to be queried are specified using column names and <a
  * href="../../graph_solver/network_graph_solver.html#query-identifiers"
- * target="_top">query identifiers</a> with the @a queries with or using a list
- * of specific IDs with one of the @a edgeOrNodeIntIds, @a edgeOrNodeStringIds,
- * and @a edgeOrNodeWktIds arrays and @a edgeToNode to determine if the IDs are
- * edges or nodes.
+ * target="_top">query identifiers</a> with the @a queries.
  * <p>
  * To determine the node(s) or edge(s) adjacent to a value from a given column,
  * provide a list of column names aliased as a particular query identifier to
@@ -18581,33 +18658,6 @@ QueryGraphResponse GPUdb::queryGraph( const QueryGraphRequest& request_ ) const
  * long as the type is supported by the given identifier. See <a
  * href="../../graph_solver/network_graph_solver.html#query-identifiers"
  * target="_top">Query Identifiers</a> for more information.
- * <p>
- * To query for nodes that are adjacent to a given set of edges, set @a
- * edgeToNode to @a true and provide values to the @a edgeOrNodeIntIds, @a
- * edgeOrNodeStringIds, and @a edgeOrNodeWktIds arrays; it is assumed the
- * values in the arrays are edges and the corresponding adjacency list array in
- * the response will be populated with nodes.
- * <p>
- * To query for edges that are adjacent to a given set of nodes, set @a
- * edgeToNode to @a false and provide values to the @a edgeOrNodeIntIds, @a
- * edgeOrNodeStringIds, and @a edgeOrNodeWktIds arrays; it is assumed the
- * values in arrays are nodes and the given node(s) will be queried for
- * adjacent edges and the corresponding adjacency list array in the response
- * will be populated with edges.
- * <p>
- * To query for adjacencies relative to a given column and a given set of
- * edges/nodes, the @a queries and @a edgeOrNodeIntIds / @a edgeOrNodeStringIds
- * / @a edgeOrNodeWktIds parameters can be used in conjuction with each other.
- * If both @a queries and one of the arrays are populated, values from @a
- * queries will be prioritized over values in the array and all values parsed
- * from the @a queries array will be appended to the corresponding arrays
- * (depending on the type). If using both @a queries and the edge_or_node
- * arrays, the types must match, e.g., if @a queries utilizes the
- * 'QUERY_NODE_ID' identifier, only the @a edgeOrNodeIntIds array should be
- * used. Note that using @a queries will override @a edgeToNode, so if @a
- * queries contains a node-based query identifier, e.g., 'table.column AS
- * QUERY_NODE_ID', it is assumed that the @a edgeOrNodeIntIds will contain node
- * IDs.
  * <p>
  * To return the adjacency list in the response, leave @a adjacencyTable empty.
  * To return the adjacency list in a table and not in the response, provide a
@@ -18641,13 +18691,10 @@ QueryGraphResponse& GPUdb::queryGraph( const QueryGraphRequest& request_,
  * #createGraph(const std::string&,const bool,const std::vector<std::string>&,const std::vector<std::string>&,const std::vector<std::string>&,const std::vector<std::string>&,const std::map<std::string, std::string>&) const}
  * and returns a list of adjacent edge(s) or node(s), also known as an
  * adjacency list, depending on what's been provided to the endpoint; providing
- * edges will return nodes and providing nodes will return edges. There are two
- * ways to provide edge(s) or node(s) to be queried: using column names and <a
+ * edges will return nodes and providing nodes will return edges. The edge(s)
+ * or node(s) to be queried are specified using column names and <a
  * href="../../graph_solver/network_graph_solver.html#query-identifiers"
- * target="_top">query identifiers</a> with the @a queries with or using a list
- * of specific IDs with one of the @a edgeOrNodeIntIds, @a edgeOrNodeStringIds,
- * and @a edgeOrNodeWktIds arrays and @a edgeToNode to determine if the IDs are
- * edges or nodes.
+ * target="_top">query identifiers</a> with the @a queries.
  * <p>
  * To determine the node(s) or edge(s) adjacent to a value from a given column,
  * provide a list of column names aliased as a particular query identifier to
@@ -18655,33 +18702,6 @@ QueryGraphResponse& GPUdb::queryGraph( const QueryGraphRequest& request_,
  * long as the type is supported by the given identifier. See <a
  * href="../../graph_solver/network_graph_solver.html#query-identifiers"
  * target="_top">Query Identifiers</a> for more information.
- * <p>
- * To query for nodes that are adjacent to a given set of edges, set @a
- * edgeToNode to @a true and provide values to the @a edgeOrNodeIntIds, @a
- * edgeOrNodeStringIds, and @a edgeOrNodeWktIds arrays; it is assumed the
- * values in the arrays are edges and the corresponding adjacency list array in
- * the response will be populated with nodes.
- * <p>
- * To query for edges that are adjacent to a given set of nodes, set @a
- * edgeToNode to @a false and provide values to the @a edgeOrNodeIntIds, @a
- * edgeOrNodeStringIds, and @a edgeOrNodeWktIds arrays; it is assumed the
- * values in arrays are nodes and the given node(s) will be queried for
- * adjacent edges and the corresponding adjacency list array in the response
- * will be populated with edges.
- * <p>
- * To query for adjacencies relative to a given column and a given set of
- * edges/nodes, the @a queries and @a edgeOrNodeIntIds / @a edgeOrNodeStringIds
- * / @a edgeOrNodeWktIds parameters can be used in conjuction with each other.
- * If both @a queries and one of the arrays are populated, values from @a
- * queries will be prioritized over values in the array and all values parsed
- * from the @a queries array will be appended to the corresponding arrays
- * (depending on the type). If using both @a queries and the edge_or_node
- * arrays, the types must match, e.g., if @a queries utilizes the
- * 'QUERY_NODE_ID' identifier, only the @a edgeOrNodeIntIds array should be
- * used. Note that using @a queries will override @a edgeToNode, so if @a
- * queries contains a node-based query identifier, e.g., 'table.column AS
- * QUERY_NODE_ID', it is assumed that the @a edgeOrNodeIntIds will contain node
- * IDs.
  * <p>
  * To return the adjacency list in the response, leave @a adjacencyTable empty.
  * To return the adjacency list in a table and not in the response, provide a
@@ -18698,24 +18718,7 @@ QueryGraphResponse& GPUdb::queryGraph( const QueryGraphRequest& request_,
  *                 target="_top">query identifiers</a>, e.g., 'table.column AS
  *                 QUERY_NODE_ID' or 'table.column AS QUERY_EDGE_WKTLINE'.
  *                 Multiple columns can be used as long as the same identifier
- *                 is used for all columns. Passing in a query identifier will
- *                 override the @a edgeToNode parameter.
- * @param edgeToNode  If set to @a true, the given edge(s) will be queried for
- *                    adjacent nodes. If set to @a false, the given node(s)
- *                    will be queried for adjacent edges.
- *                    <ul>
- *                            <li> gpudb::query_graph_true
- *                            <li> gpudb::query_graph_false
- *                    </ul>
- *                    The default value is gpudb::query_graph_true.
- * @param edgeOrNodeIntIds  The unique list of edge or node integer identifiers
- *                          that will be queried for adjacencies.
- * @param edgeOrNodeStringIds  The unique list of edge or node string
- *                             identifiers that will be queried for
- *                             adjacencies.
- * @param edgeOrNodeWktIds  The unique list of edge or node WKTPOINT or WKTLINE
- *                          string identifiers that will be queried for
- *                          adjacencies.
+ *                 is used for all columns.
  * @param restrictions  Additional restrictions to apply to the nodes/edges of
  *                      an existing graph. Restrictions must be specified using
  *                      <a
@@ -18733,27 +18736,44 @@ QueryGraphResponse& GPUdb::queryGraph( const QueryGraphRequest& request_,
  *                        set to @a false.
  * @param options  Additional parameters
  *                 <ul>
- *                         <li> gpudb::query_graph_number_of_rings: Sets the
- *                 number of rings of edges around the node to query for
- *                 adjacency, with '1' being the edges directly attached to the
- *                 queried nodes. For example, if @a number_of_rings is set to
- *                 '2', the edge(s) directly attached to the queried nodes will
- *                 be returned; in addition, the edge(s) attached to the
- *                 node(s) attached to the initial ring of edge(s) surrounding
- *                 the queried node(s) will be returned. This setting is
- *                 ignored if @a edgeToNode is set to @a true. This setting
- *                 cannot be less than '1'.  The default value is '1'.
- *                         <li> gpudb::query_graph_include_all_edges: This
+ *                         <li> gpudb::query_graph_rings: Sets the number of
+ *                 rings of edges around the node to query for adjacency, with
+ *                 '1' being the edges directly attached to the queried nodes.
+ *                 For example, if @a rings is set to '2', the edge(s) directly
+ *                 attached to the queried nodes will be returned; in addition,
+ *                 the edge(s) attached to the node(s) attached to the initial
+ *                 ring of edge(s) surrounding the queried node(s) will be
+ *                 returned. This setting cannot be less than '1'.  The default
+ *                 value is '1'.
+ *                         <li> gpudb::query_graph_force_undirected: This
  *                 parameter is only applicable if the queried graph is
- *                 directed and @a edgeToNode is set to @a false. If set to @a
- *                 true, all inbound edges and outbound edges relative to the
- *                 node will be returned. If set to @a false, only outbound
- *                 edges relative to the node will be returned.
+ *                 directed. If set to @a true, all inbound edges and outbound
+ *                 edges relative to the node will be returned. If set to @a
+ *                 false, only outbound edges relative to the node will be
+ *                 returned.
  *                 <ul>
  *                         <li> gpudb::query_graph_true
  *                         <li> gpudb::query_graph_false
  *                 </ul>
  *                 The default value is gpudb::query_graph_false.
+ *                         <li> gpudb::query_graph_blocked_nodes: When false,
+ *                 allow a restricted node to be part of a valid traversal but
+ *                 not a target. Otherwise, queries are blocked by restricted
+ *                 nodes.
+ *                 <ul>
+ *                         <li> gpudb::query_graph_true
+ *                         <li> gpudb::query_graph_false
+ *                 </ul>
+ *                 The default value is gpudb::query_graph_true.
+ *                         <li> gpudb::query_graph_limit: When specified,
+ *                 limits the number of query results. Note that if the @a
+ *                 target_nodes_table is requested (non-empty), this will limit
+ *                 the size of the corresponding table.  The default value is
+ *                 an empty std::map.
+ *                         <li> gpudb::query_graph_target_nodes_table: If
+ *                 non-empty, returns a table containing the list of the final
+ *                 nodes reached during the traversal. Only valid if
+ *                 blocked_nodes is false.  The default value is ''.
  *                         <li> gpudb::query_graph_restriction_threshold_value:
  *                 Value-based restriction comparison. Any node or edge with a
  *                 RESTRICTIONS_VALUECOMPARED value greater than the @a
@@ -18788,10 +18808,6 @@ QueryGraphResponse& GPUdb::queryGraph( const QueryGraphRequest& request_,
 
 QueryGraphResponse GPUdb::queryGraph( const std::string& graphName,
                                       const std::vector<std::string>& queries,
-                                      const bool edgeToNode,
-                                      const std::vector<int64_t>& edgeOrNodeIntIds,
-                                      const std::vector<std::string>& edgeOrNodeStringIds,
-                                      const std::vector<std::string>& edgeOrNodeWktIds,
                                       const std::vector<std::string>& restrictions,
                                       const std::string& adjacencyTable,
                                       const std::map<std::string, std::string>& options ) const
@@ -18799,10 +18815,6 @@ QueryGraphResponse GPUdb::queryGraph( const std::string& graphName,
     QueryGraphRequest actualRequest_;
     actualRequest_.graphName = graphName;
     actualRequest_.queries = queries;
-    actualRequest_.edgeToNode = edgeToNode;
-    actualRequest_.edgeOrNodeIntIds = edgeOrNodeIntIds;
-    actualRequest_.edgeOrNodeStringIds = edgeOrNodeStringIds;
-    actualRequest_.edgeOrNodeWktIds = edgeOrNodeWktIds;
     actualRequest_.restrictions = restrictions;
     actualRequest_.adjacencyTable = adjacencyTable;
     actualRequest_.options = options;
@@ -18817,13 +18829,10 @@ QueryGraphResponse GPUdb::queryGraph( const std::string& graphName,
  * #createGraph(const std::string&,const bool,const std::vector<std::string>&,const std::vector<std::string>&,const std::vector<std::string>&,const std::vector<std::string>&,const std::map<std::string, std::string>&,CreateGraphResponse&) const}
  * and returns a list of adjacent edge(s) or node(s), also known as an
  * adjacency list, depending on what's been provided to the endpoint; providing
- * edges will return nodes and providing nodes will return edges. There are two
- * ways to provide edge(s) or node(s) to be queried: using column names and <a
+ * edges will return nodes and providing nodes will return edges. The edge(s)
+ * or node(s) to be queried are specified using column names and <a
  * href="../../graph_solver/network_graph_solver.html#query-identifiers"
- * target="_top">query identifiers</a> with the @a queries with or using a list
- * of specific IDs with one of the @a edgeOrNodeIntIds, @a edgeOrNodeStringIds,
- * and @a edgeOrNodeWktIds arrays and @a edgeToNode to determine if the IDs are
- * edges or nodes.
+ * target="_top">query identifiers</a> with the @a queries.
  * <p>
  * To determine the node(s) or edge(s) adjacent to a value from a given column,
  * provide a list of column names aliased as a particular query identifier to
@@ -18831,33 +18840,6 @@ QueryGraphResponse GPUdb::queryGraph( const std::string& graphName,
  * long as the type is supported by the given identifier. See <a
  * href="../../graph_solver/network_graph_solver.html#query-identifiers"
  * target="_top">Query Identifiers</a> for more information.
- * <p>
- * To query for nodes that are adjacent to a given set of edges, set @a
- * edgeToNode to @a true and provide values to the @a edgeOrNodeIntIds, @a
- * edgeOrNodeStringIds, and @a edgeOrNodeWktIds arrays; it is assumed the
- * values in the arrays are edges and the corresponding adjacency list array in
- * the response will be populated with nodes.
- * <p>
- * To query for edges that are adjacent to a given set of nodes, set @a
- * edgeToNode to @a false and provide values to the @a edgeOrNodeIntIds, @a
- * edgeOrNodeStringIds, and @a edgeOrNodeWktIds arrays; it is assumed the
- * values in arrays are nodes and the given node(s) will be queried for
- * adjacent edges and the corresponding adjacency list array in the response
- * will be populated with edges.
- * <p>
- * To query for adjacencies relative to a given column and a given set of
- * edges/nodes, the @a queries and @a edgeOrNodeIntIds / @a edgeOrNodeStringIds
- * / @a edgeOrNodeWktIds parameters can be used in conjuction with each other.
- * If both @a queries and one of the arrays are populated, values from @a
- * queries will be prioritized over values in the array and all values parsed
- * from the @a queries array will be appended to the corresponding arrays
- * (depending on the type). If using both @a queries and the edge_or_node
- * arrays, the types must match, e.g., if @a queries utilizes the
- * 'QUERY_NODE_ID' identifier, only the @a edgeOrNodeIntIds array should be
- * used. Note that using @a queries will override @a edgeToNode, so if @a
- * queries contains a node-based query identifier, e.g., 'table.column AS
- * QUERY_NODE_ID', it is assumed that the @a edgeOrNodeIntIds will contain node
- * IDs.
  * <p>
  * To return the adjacency list in the response, leave @a adjacencyTable empty.
  * To return the adjacency list in a table and not in the response, provide a
@@ -18874,24 +18856,7 @@ QueryGraphResponse GPUdb::queryGraph( const std::string& graphName,
  *                 target="_top">query identifiers</a>, e.g., 'table.column AS
  *                 QUERY_NODE_ID' or 'table.column AS QUERY_EDGE_WKTLINE'.
  *                 Multiple columns can be used as long as the same identifier
- *                 is used for all columns. Passing in a query identifier will
- *                 override the @a edgeToNode parameter.
- * @param edgeToNode  If set to @a true, the given edge(s) will be queried for
- *                    adjacent nodes. If set to @a false, the given node(s)
- *                    will be queried for adjacent edges.
- *                    <ul>
- *                            <li> gpudb::query_graph_true
- *                            <li> gpudb::query_graph_false
- *                    </ul>
- *                    The default value is gpudb::query_graph_true.
- * @param edgeOrNodeIntIds  The unique list of edge or node integer identifiers
- *                          that will be queried for adjacencies.
- * @param edgeOrNodeStringIds  The unique list of edge or node string
- *                             identifiers that will be queried for
- *                             adjacencies.
- * @param edgeOrNodeWktIds  The unique list of edge or node WKTPOINT or WKTLINE
- *                          string identifiers that will be queried for
- *                          adjacencies.
+ *                 is used for all columns.
  * @param restrictions  Additional restrictions to apply to the nodes/edges of
  *                      an existing graph. Restrictions must be specified using
  *                      <a
@@ -18909,27 +18874,44 @@ QueryGraphResponse GPUdb::queryGraph( const std::string& graphName,
  *                        set to @a false.
  * @param options  Additional parameters
  *                 <ul>
- *                         <li> gpudb::query_graph_number_of_rings: Sets the
- *                 number of rings of edges around the node to query for
- *                 adjacency, with '1' being the edges directly attached to the
- *                 queried nodes. For example, if @a number_of_rings is set to
- *                 '2', the edge(s) directly attached to the queried nodes will
- *                 be returned; in addition, the edge(s) attached to the
- *                 node(s) attached to the initial ring of edge(s) surrounding
- *                 the queried node(s) will be returned. This setting is
- *                 ignored if @a edgeToNode is set to @a true. This setting
- *                 cannot be less than '1'.  The default value is '1'.
- *                         <li> gpudb::query_graph_include_all_edges: This
+ *                         <li> gpudb::query_graph_rings: Sets the number of
+ *                 rings of edges around the node to query for adjacency, with
+ *                 '1' being the edges directly attached to the queried nodes.
+ *                 For example, if @a rings is set to '2', the edge(s) directly
+ *                 attached to the queried nodes will be returned; in addition,
+ *                 the edge(s) attached to the node(s) attached to the initial
+ *                 ring of edge(s) surrounding the queried node(s) will be
+ *                 returned. This setting cannot be less than '1'.  The default
+ *                 value is '1'.
+ *                         <li> gpudb::query_graph_force_undirected: This
  *                 parameter is only applicable if the queried graph is
- *                 directed and @a edgeToNode is set to @a false. If set to @a
- *                 true, all inbound edges and outbound edges relative to the
- *                 node will be returned. If set to @a false, only outbound
- *                 edges relative to the node will be returned.
+ *                 directed. If set to @a true, all inbound edges and outbound
+ *                 edges relative to the node will be returned. If set to @a
+ *                 false, only outbound edges relative to the node will be
+ *                 returned.
  *                 <ul>
  *                         <li> gpudb::query_graph_true
  *                         <li> gpudb::query_graph_false
  *                 </ul>
  *                 The default value is gpudb::query_graph_false.
+ *                         <li> gpudb::query_graph_blocked_nodes: When false,
+ *                 allow a restricted node to be part of a valid traversal but
+ *                 not a target. Otherwise, queries are blocked by restricted
+ *                 nodes.
+ *                 <ul>
+ *                         <li> gpudb::query_graph_true
+ *                         <li> gpudb::query_graph_false
+ *                 </ul>
+ *                 The default value is gpudb::query_graph_true.
+ *                         <li> gpudb::query_graph_limit: When specified,
+ *                 limits the number of query results. Note that if the @a
+ *                 target_nodes_table is requested (non-empty), this will limit
+ *                 the size of the corresponding table.  The default value is
+ *                 an empty std::map.
+ *                         <li> gpudb::query_graph_target_nodes_table: If
+ *                 non-empty, returns a table containing the list of the final
+ *                 nodes reached during the traversal. Only valid if
+ *                 blocked_nodes is false.  The default value is ''.
  *                         <li> gpudb::query_graph_restriction_threshold_value:
  *                 Value-based restriction comparison. Any node or edge with a
  *                 RESTRICTIONS_VALUECOMPARED value greater than the @a
@@ -18967,10 +18949,6 @@ QueryGraphResponse GPUdb::queryGraph( const std::string& graphName,
 
 QueryGraphResponse& GPUdb::queryGraph( const std::string& graphName,
                                        const std::vector<std::string>& queries,
-                                       const bool edgeToNode,
-                                       const std::vector<int64_t>& edgeOrNodeIntIds,
-                                       const std::vector<std::string>& edgeOrNodeStringIds,
-                                       const std::vector<std::string>& edgeOrNodeWktIds,
                                        const std::vector<std::string>& restrictions,
                                        const std::string& adjacencyTable,
                                        const std::map<std::string, std::string>& options,
@@ -18979,10 +18957,6 @@ QueryGraphResponse& GPUdb::queryGraph( const std::string& graphName,
     QueryGraphRequest actualRequest_;
     actualRequest_.graphName = graphName;
     actualRequest_.queries = queries;
-    actualRequest_.edgeToNode = edgeToNode;
-    actualRequest_.edgeOrNodeIntIds = edgeOrNodeIntIds;
-    actualRequest_.edgeOrNodeStringIds = edgeOrNodeStringIds;
-    actualRequest_.edgeOrNodeWktIds = edgeOrNodeWktIds;
     actualRequest_.restrictions = restrictions;
     actualRequest_.adjacencyTable = adjacencyTable;
     actualRequest_.options = options;
@@ -21166,6 +21140,10 @@ SolveGraphResponse& GPUdb::solveGraph( const SolveGraphRequest& request_,
  *                 RESTRICTIONS_VALUECOMPARED value greater than the @a
  *                 restriction_threshold_value will not be included in the
  *                 solution.
+ *                         <li> gpudb::solve_graph_uniform_weights: When
+ *                 speficied, assigns the given value to all the edges in the
+ *                 graph. Note that weights specified in @{weights_on_edges}
+ *                 override this value.
  *                 </ul>
  * 
  * @return Response object containing the result of the operation.
@@ -21348,6 +21326,10 @@ SolveGraphResponse GPUdb::solveGraph( const std::string& graphName,
  *                 RESTRICTIONS_VALUECOMPARED value greater than the @a
  *                 restriction_threshold_value will not be included in the
  *                 solution.
+ *                         <li> gpudb::solve_graph_uniform_weights: When
+ *                 speficied, assigns the given value to all the edges in the
+ *                 graph. Note that weights specified in @{weights_on_edges}
+ *                 override this value.
  *                 </ul>
  * @param[out] response_  Response object containing the results of the
  *                        operation.
