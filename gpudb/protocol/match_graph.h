@@ -13,7 +13,11 @@ namespace gpudb
      * A set of input parameters for {@link
      * #matchGraph(const MatchGraphRequest&) const}.
      * <p>
-     * Matches measured lon/lat points to an underlying graph network.
+     * Matches a directed route implied by a given set of latitude/longitude
+     * points to an existing underlying road network graph using a given
+     * solution type. See <a
+     * href="../../graph_solver/network_graph_solver.html"
+     * target="_top">Network Graph Solvers</a> for more information.
      */
     struct MatchGraphRequest
     {
@@ -33,72 +37,126 @@ namespace gpudb
         /**
          * Constructs a MatchGraphRequest object with the specified parameters.
          * 
-         * @param[in] graphName_  Name of the underlying graph network.
-         * @param[in] samplePoints_  ['Table.column AS node_identifier',
-         *                           'Table.column AS SAMPLE_TIME' ]; e.g.,
-         *                           't1.wkt' AS 'SAMPLE_WKTPOINT', t1.t' AS
-         *                           'SAMPLE_TIME'
-         * @param[in] solveMethod_  Solver used for mapmatching.
+         * @param[in] graphName_  Name of the underlying geospatial graph
+         *                        resource to match to using @a samplePoints.
+         * @param[in] samplePoints_  Sample points used to match to an
+         *                           underlying geospatial graph. Sample points
+         *                           must be specified using <a
+         *                           href="../../graph_solver/network_graph_solver.html#match-identifiers"
+         *                           target="_top">identifiers</a>; identifiers
+         *                           are grouped as <a
+         *                           href="../../graph_solver/network_graph_solver.html#match-combinations"
+         *                           target="_top">combinations</a>.
+         *                           Identifiers are used with existing column
+         *                           names, e.g., 'table.column AS
+         *                           SAMPLE_WKTPOINT'.
+         * @param[in] solveMethod_  The type of solver to use for graph
+         *                          matching.
          *                          <ul>
          *                                  <li>
-         *                          gpudb::match_graph_markov_chain: Hidden
-         *                          Markov Model (HMM) based method.
+         *                          gpudb::match_graph_markov_chain: Matches @a
+         *                          samplePoints to the graph using the Hidden
+         *                          Markov Model (HMM)-based method, which
+         *                          conducts a range-tree closest-edge search
+         *                          to find the best combinations of possible
+         *                          road segments (@a num_segments) for each
+         *                          sample point to create the best route. The
+         *                          route is secured one point at a time while
+         *                          looking ahead @a chain_width number of
+         *                          points, so the prediction is corrected
+         *                          after each point. This solution type is the
+         *                          most accurate but also the most
+         *                          computationally intensive.
          *                                  <li>
          *                          gpudb::match_graph_incremental_weighted:
-         *                          Uses time and/or distance to influence one
-         *                          or more shortest paths along the sample
-         *                          points.
+         *                          Matches @a samplePoints to the graph using
+         *                          time and/or distance between points to
+         *                          influence one or more shortest paths across
+         *                          the sample points.
          *                          </ul>
          *                          The default value is
-         *                          gpudb::match_graph_incremental_weighted.
-         * @param[in] solutionTable_  Name of the table to store the solution.
-         *                            Error if table already exists.
+         *                          gpudb::match_graph_markov_chain.
+         * @param[in] solutionTable_  The name of the table used to store the
+         *                            results; this table contains a <a
+         *                            href="../../geospatial/geo_objects.html#geospatial-tracks"
+         *                            target="_top">track</a> of geospatial
+         *                            points for the matched portion of the
+         *                            graph, a track ID, and a score value.
+         *                            Also outputs a details table containing a
+         *                            trip ID (that matches the track ID), the
+         *                            latitude/longitude pair, the timestamp
+         *                            the point was recorded at, and an edge ID
+         *                            corresponding to the matched road
+         *                            segment. Has the same naming restrictions
+         *                            as <a href="../../concepts/tables.html"
+         *                            target="_top">tables</a>. Must not be an
+         *                            existing table of the same name.
          * @param[in] options_  Additional parameters
          *                      <ul>
          *                              <li> gpudb::match_graph_gps_noise: GPS
-         *                      noise value - in meters - to remove redundant
-         *                      samplespoints (95th percentile). -1 to disable.
-         *                      The default value is '5.0'.
+         *                      noise value (in meters) to remove redundant
+         *                      sample points. Use -1 to disable noise
+         *                      reduction. The default value accounts for 95%
+         *                      of point variation (+ or -5 meters).  The
+         *                      default value is '5.0'.
          *                              <li> gpudb::match_graph_num_segments:
-         *                      Number of potentially matching road segments
-         *                      for each sample point. (Defaults to 3 for
-         *                      'markov_chain' and 5 for
-         *                      'incremental_weighted').  The default value is
-         *                      '0'.
+         *                      Maximum number of potentially matching road
+         *                      segments for each sample point. For the @a
+         *                      markov_chain solver, the default is 3; for the
+         *                      @a incremental_weighted, the default is 5.  The
+         *                      default value is ''.
          *                              <li> gpudb::match_graph_search_radius:
-         *                      Maximum search radius used when snapping
-         *                      samples points onto potentially matching road
-         *                      segments. This corresponds to approximately
-         *                      100m when using geodesic coordinates.  The
-         *                      default value is '0.001'.
+         *                      Maximum search radius used when snapping sample
+         *                      points onto potentially matching surrounding
+         *                      segments. The default value corresponds to
+         *                      approximately 100 meters.  The default value is
+         *                      '0.001'.
          *                              <li> gpudb::match_graph_chain_width:
-         *                      Only applicable if method is 'markov_chain'.
-         *                      Length of the sample points window within the
-         *                      Markov kernel.  The default value is '9'.
+         *                      For the @a markov_chain solver only. Length of
+         *                      the sample points lookahead window within the
+         *                      Markov kernel; the larger the number, the more
+         *                      accurate the solution.  The default value is
+         *                      '9'.
          *                              <li>
-         *                      gpudb::match_graph_max_solve_length: Only
-         *                      applicable if method is 'incremental_weighted'.
-         *                      Maximum number of samples along the path to
-         *                      solve on.  The default value is '200'.
+         *                      gpudb::match_graph_max_solve_length: For the @a
+         *                      incremental_weighted solver only. Maximum
+         *                      number of samples along the path on which to
+         *                      solve.  The default value is '200'.
          *                              <li>
-         *                      gpudb::match_graph_time_window_width: Only
-         *                      applicable if method is 'incremental_weighted'.
-         *                      Time window in which sample points are favored
-         *                      (dt of 1 is the most attractive).  The default
-         *                      value is '30'.
+         *                      gpudb::match_graph_time_window_width: For the
+         *                      @a incremental_weighted solver only. Time
+         *                      window, also known as sampling period, in which
+         *                      points are favored. To determine the raw window
+         *                      value, the @a time_window_width value is
+         *                      multiplied by the mean sample time (in seconds)
+         *                      across all points, e.g., if @a
+         *                      time_window_width is 30 and the mean sample
+         *                      time is 2 seconds, points that are sampled
+         *                      greater than 60 seconds after the previous
+         *                      point are no longer favored in the solution.
+         *                      The default value is '30'.
          *                              <li> gpudb::match_graph_detect_loops:
-         *                      Only applicable if method is
-         *                      'incremental_weighted'. If true, add a break
-         *                      point within any loop.  The default value is
-         *                      'true'.
+         *                      For the @a incremental_weighted solver only. If
+         *                      @a true, a loop will be detected and traversed
+         *                      even if it would make a shorter path to ignore
+         *                      the loop.
+         *                      <ul>
+         *                              <li> gpudb::match_graph_true
+         *                              <li> gpudb::match_graph_false
+         *                      </ul>
+         *                      The default value is gpudb::match_graph_true.
          *                              <li> gpudb::match_graph_source:
-         *                      Optional WKT point on the trace; otherwise the
-         *                      beginning (in time) is taken as the source.
-         *                      The default value is 'POINT NULL'.
+         *                      Optional WKT starting point from @a
+         *                      samplePoints for the solver. The default
+         *                      behavior for the endpoint is to use time to
+         *                      determine the starting point.  The default
+         *                      value is 'POINT NULL'.
          *                              <li> gpudb::match_graph_destination:
-         *                      Optional WKT point on the trace; otherwise the
-         *                      end (in time) is taken as the destination.  The
-         *                      default value is 'POINT NULL'.
+         *                      Optional WKT ending point from @a samplePoints
+         *                      for the solver. The default behavior for the
+         *                      endpoint is to use time to determine the
+         *                      destination point.  The default value is 'POINT
+         *                      NULL'.
          *                      </ul>
          * 
          */
@@ -186,7 +244,11 @@ namespace gpudb
      * A set of output parameters for {@link
      * #matchGraph(const MatchGraphRequest&) const}.
      * <p>
-     * Matches measured lon/lat points to an underlying graph network.
+     * Matches a directed route implied by a given set of latitude/longitude
+     * points to an existing underlying road network graph using a given
+     * solution type. See <a
+     * href="../../graph_solver/network_graph_solver.html"
+     * target="_top">Network Graph Solvers</a> for more information.
      */
     struct MatchGraphResponse
     {

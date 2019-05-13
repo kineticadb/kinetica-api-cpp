@@ -695,6 +695,7 @@ namespace gpudb
     const std::string match_graph_chain_width         ( "chain_width"          );
     const std::string match_graph_destination         ( "destination"          );
     const std::string match_graph_detect_loops        ( "detect_loops"         );
+    const std::string match_graph_false               ( "false"                );
     const std::string match_graph_gps_noise           ( "gps_noise"            );
     const std::string match_graph_incremental_weighted( "incremental_weighted" );
     const std::string match_graph_markov_chain        ( "markov_chain"         );
@@ -703,6 +704,7 @@ namespace gpudb
     const std::string match_graph_search_radius       ( "search_radius"        );
     const std::string match_graph_source              ( "source"               );
     const std::string match_graph_time_window_width   ( "time_window_width"    );
+    const std::string match_graph_true                ( "true"                 );
 
     // Keywords for /merge/records request
     const std::string merge_records_chunk_size     ( "chunk_size"      );
@@ -715,12 +717,15 @@ namespace gpudb
     const std::string merge_records_view_id        ( "view_id"         );
 
     // Keywords for /query/graph request
+    const std::string query_graph_blocked_nodes              ( "blocked_nodes"               );
     const std::string query_graph_enable_graph_draw          ( "enable_graph_draw"           );
     const std::string query_graph_export_query_results       ( "export_query_results"        );
     const std::string query_graph_false                      ( "false"                       );
-    const std::string query_graph_include_all_edges          ( "include_all_edges"           );
-    const std::string query_graph_number_of_rings            ( "number_of_rings"             );
+    const std::string query_graph_force_undirected           ( "force_undirected"            );
+    const std::string query_graph_limit                      ( "limit"                       );
     const std::string query_graph_restriction_threshold_value( "restriction_threshold_value" );
+    const std::string query_graph_rings                      ( "rings"                       );
+    const std::string query_graph_target_nodes_table         ( "target_nodes_table"          );
     const std::string query_graph_true                       ( "true"                        );
 
     // Keywords for /revoke/permission/system request
@@ -800,6 +805,7 @@ namespace gpudb
     const std::string show_table_REPLICATED            ( "REPLICATED"             );
     const std::string show_table_RESULT_TABLE          ( "RESULT_TABLE"           );
     const std::string show_table_VIEW                  ( "VIEW"                   );
+    const std::string show_table_alternate_shard_keys  ( "alternate_shard_keys"   );
     const std::string show_table_attribute_indexes     ( "attribute_indexes"      );
     const std::string show_table_collection_names      ( "collection_names"       );
     const std::string show_table_column_info           ( "column_info"            );
@@ -860,6 +866,7 @@ namespace gpudb
     const std::string solve_graph_remove_previous_restrictions( "remove_previous_restrictions" );
     const std::string solve_graph_restriction_threshold_value ( "restriction_threshold_value"  );
     const std::string solve_graph_true                        ( "true"                         );
+    const std::string solve_graph_uniform_weights             ( "uniform_weights"              );
 
     // Keywords for /update/records request
     const std::string update_records_binary                            ( "binary"                             );

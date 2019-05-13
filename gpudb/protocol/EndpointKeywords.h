@@ -695,6 +695,7 @@ namespace gpudb
     extern const std::string match_graph_chain_width;
     extern const std::string match_graph_destination;
     extern const std::string match_graph_detect_loops;
+    extern const std::string match_graph_false;
     extern const std::string match_graph_gps_noise;
     extern const std::string match_graph_incremental_weighted;
     extern const std::string match_graph_markov_chain;
@@ -703,6 +704,7 @@ namespace gpudb
     extern const std::string match_graph_search_radius;
     extern const std::string match_graph_source;
     extern const std::string match_graph_time_window_width;
+    extern const std::string match_graph_true;
 
     // Keywords for /merge/records request
     extern const std::string merge_records_chunk_size;
@@ -715,12 +717,15 @@ namespace gpudb
     extern const std::string merge_records_view_id;
 
     // Keywords for /query/graph request
+    extern const std::string query_graph_blocked_nodes;
     extern const std::string query_graph_enable_graph_draw;
     extern const std::string query_graph_export_query_results;
     extern const std::string query_graph_false;
-    extern const std::string query_graph_include_all_edges;
-    extern const std::string query_graph_number_of_rings;
+    extern const std::string query_graph_force_undirected;
+    extern const std::string query_graph_limit;
     extern const std::string query_graph_restriction_threshold_value;
+    extern const std::string query_graph_rings;
+    extern const std::string query_graph_target_nodes_table;
     extern const std::string query_graph_true;
 
     // Keywords for /revoke/permission/system request
@@ -800,6 +805,7 @@ namespace gpudb
     extern const std::string show_table_REPLICATED;
     extern const std::string show_table_RESULT_TABLE;
     extern const std::string show_table_VIEW;
+    extern const std::string show_table_alternate_shard_keys;
     extern const std::string show_table_attribute_indexes;
     extern const std::string show_table_collection_names;
     extern const std::string show_table_column_info;
@@ -860,6 +866,7 @@ namespace gpudb
     extern const std::string solve_graph_remove_previous_restrictions;
     extern const std::string solve_graph_restriction_threshold_value;
     extern const std::string solve_graph_true;
+    extern const std::string solve_graph_uniform_weights;
 
     // Keywords for /update/records request
     extern const std::string update_records_binary;

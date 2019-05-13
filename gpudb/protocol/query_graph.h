@@ -17,13 +17,10 @@ namespace gpudb
      * {@link #createGraph(const CreateGraphRequest&) const} and returns a
      * list of adjacent edge(s) or node(s), also known as an adjacency list,
      * depending on what's been provided to the endpoint; providing edges will
-     * return nodes and providing nodes will return edges. There are two ways
-     * to provide edge(s) or node(s) to be queried: using column names and <a
+     * return nodes and providing nodes will return edges. The edge(s) or
+     * node(s) to be queried are specified using column names and <a
      * href="../../graph_solver/network_graph_solver.html#query-identifiers"
-     * target="_top">query identifiers</a> with the @a queries with or using a
-     * list of specific IDs with one of the @a edgeOrNodeIntIds, @a
-     * edgeOrNodeStringIds, and @a edgeOrNodeWktIds arrays and @a edgeToNode to
-     * determine if the IDs are edges or nodes.
+     * target="_top">query identifiers</a> with the @a queries.
      * <p>
      * To determine the node(s) or edge(s) adjacent to a value from a given
      * column, provide a list of column names aliased as a particular query
@@ -32,33 +29,6 @@ namespace gpudb
      * See <a
      * href="../../graph_solver/network_graph_solver.html#query-identifiers"
      * target="_top">Query Identifiers</a> for more information.
-     * <p>
-     * To query for nodes that are adjacent to a given set of edges, set @a
-     * edgeToNode to @a true and provide values to the @a edgeOrNodeIntIds, @a
-     * edgeOrNodeStringIds, and @a edgeOrNodeWktIds arrays; it is assumed the
-     * values in the arrays are edges and the corresponding adjacency list
-     * array in the response will be populated with nodes.
-     * <p>
-     * To query for edges that are adjacent to a given set of nodes, set @a
-     * edgeToNode to @a false and provide values to the @a edgeOrNodeIntIds, @a
-     * edgeOrNodeStringIds, and @a edgeOrNodeWktIds arrays; it is assumed the
-     * values in arrays are nodes and the given node(s) will be queried for
-     * adjacent edges and the corresponding adjacency list array in the
-     * response will be populated with edges.
-     * <p>
-     * To query for adjacencies relative to a given column and a given set of
-     * edges/nodes, the @a queries and @a edgeOrNodeIntIds / @a
-     * edgeOrNodeStringIds / @a edgeOrNodeWktIds parameters can be used in
-     * conjuction with each other. If both @a queries and one of the arrays are
-     * populated, values from @a queries will be prioritized over values in the
-     * array and all values parsed from the @a queries array will be appended
-     * to the corresponding arrays (depending on the type). If using both @a
-     * queries and the edge_or_node arrays, the types must match, e.g., if @a
-     * queries utilizes the 'QUERY_NODE_ID' identifier, only the @a
-     * edgeOrNodeIntIds array should be used. Note that using @a queries will
-     * override @a edgeToNode, so if @a queries contains a node-based query
-     * identifier, e.g., 'table.column AS QUERY_NODE_ID', it is assumed that
-     * the @a edgeOrNodeIntIds will contain node IDs.
      * <p>
      * To return the adjacency list in the response, leave @a adjacencyTable
      * empty. To return the adjacency list in a table and not in the response,
@@ -79,10 +49,6 @@ namespace gpudb
         QueryGraphRequest() :
             graphName(std::string()),
             queries(std::vector<std::string>()),
-            edgeToNode(bool()),
-            edgeOrNodeIntIds(std::vector<int64_t>()),
-            edgeOrNodeStringIds(std::vector<std::string>()),
-            edgeOrNodeWktIds(std::vector<std::string>()),
             restrictions(std::vector<std::string>()),
             adjacencyTable(std::string()),
             options(std::map<std::string, std::string>())
@@ -99,28 +65,7 @@ namespace gpudb
          *                      'table.column AS QUERY_NODE_ID' or
          *                      'table.column AS QUERY_EDGE_WKTLINE'. Multiple
          *                      columns can be used as long as the same
-         *                      identifier is used for all columns. Passing in
-         *                      a query identifier will override the @a
-         *                      edgeToNode parameter.
-         * @param[in] edgeToNode_  If set to @a true, the given edge(s) will be
-         *                         queried for adjacent nodes. If set to @a
-         *                         false, the given node(s) will be queried for
-         *                         adjacent edges.
-         *                         <ul>
-         *                                 <li> gpudb::query_graph_true
-         *                                 <li> gpudb::query_graph_false
-         *                         </ul>
-         *                         The default value is
-         *                         gpudb::query_graph_true.
-         * @param[in] edgeOrNodeIntIds_  The unique list of edge or node
-         *                               integer identifiers that will be
-         *                               queried for adjacencies.
-         * @param[in] edgeOrNodeStringIds_  The unique list of edge or node
-         *                                  string identifiers that will be
-         *                                  queried for adjacencies.
-         * @param[in] edgeOrNodeWktIds_  The unique list of edge or node
-         *                               WKTPOINT or WKTLINE string identifiers
-         *                               that will be queried for adjacencies.
+         *                      identifier is used for all columns.
          * @param[in] restrictions_  Additional restrictions to apply to the
          *                           nodes/edges of an existing graph.
          *                           Restrictions must be specified using <a
@@ -141,33 +86,52 @@ namespace gpudb
          *                             is set to @a false.
          * @param[in] options_  Additional parameters
          *                      <ul>
-         *                              <li>
-         *                      gpudb::query_graph_number_of_rings: Sets the
+         *                              <li> gpudb::query_graph_rings: Sets the
          *                      number of rings of edges around the node to
          *                      query for adjacency, with '1' being the edges
          *                      directly attached to the queried nodes. For
-         *                      example, if @a number_of_rings is set to '2',
-         *                      the edge(s) directly attached to the queried
-         *                      nodes will be returned; in addition, the
-         *                      edge(s) attached to the node(s) attached to the
-         *                      initial ring of edge(s) surrounding the queried
-         *                      node(s) will be returned. This setting is
-         *                      ignored if @a edgeToNode is set to @a true.
-         *                      This setting cannot be less than '1'.  The
-         *                      default value is '1'.
+         *                      example, if @a rings is set to '2', the edge(s)
+         *                      directly attached to the queried nodes will be
+         *                      returned; in addition, the edge(s) attached to
+         *                      the node(s) attached to the initial ring of
+         *                      edge(s) surrounding the queried node(s) will be
+         *                      returned. This setting cannot be less than '1'.
+         *                      The default value is '1'.
          *                              <li>
-         *                      gpudb::query_graph_include_all_edges: This
+         *                      gpudb::query_graph_force_undirected: This
          *                      parameter is only applicable if the queried
-         *                      graph is directed and @a edgeToNode is set to
-         *                      @a false. If set to @a true, all inbound edges
-         *                      and outbound edges relative to the node will be
-         *                      returned. If set to @a false, only outbound
-         *                      edges relative to the node will be returned.
+         *                      graph is directed. If set to @a true, all
+         *                      inbound edges and outbound edges relative to
+         *                      the node will be returned. If set to @a false,
+         *                      only outbound edges relative to the node will
+         *                      be returned.
          *                      <ul>
          *                              <li> gpudb::query_graph_true
          *                              <li> gpudb::query_graph_false
          *                      </ul>
          *                      The default value is gpudb::query_graph_false.
+         *                              <li> gpudb::query_graph_blocked_nodes:
+         *                      When false, allow a restricted node to be part
+         *                      of a valid traversal but not a target.
+         *                      Otherwise, queries are blocked by restricted
+         *                      nodes.
+         *                      <ul>
+         *                              <li> gpudb::query_graph_true
+         *                              <li> gpudb::query_graph_false
+         *                      </ul>
+         *                      The default value is gpudb::query_graph_true.
+         *                              <li> gpudb::query_graph_limit: When
+         *                      specified, limits the number of query results.
+         *                      Note that if the @a target_nodes_table is
+         *                      requested (non-empty), this will limit the size
+         *                      of the corresponding table.  The default value
+         *                      is an empty std::map.
+         *                              <li>
+         *                      gpudb::query_graph_target_nodes_table: If
+         *                      non-empty, returns a table containing the list
+         *                      of the final nodes reached during the
+         *                      traversal. Only valid if blocked_nodes is
+         *                      false.  The default value is ''.
          *                              <li>
          *                      gpudb::query_graph_restriction_threshold_value:
          *                      Value-based restriction comparison. Any node or
@@ -202,13 +166,9 @@ namespace gpudb
          *                      </ul>
          * 
          */
-        QueryGraphRequest(const std::string& graphName_, const std::vector<std::string>& queries_, const bool edgeToNode_, const std::vector<int64_t>& edgeOrNodeIntIds_, const std::vector<std::string>& edgeOrNodeStringIds_, const std::vector<std::string>& edgeOrNodeWktIds_, const std::vector<std::string>& restrictions_, const std::string& adjacencyTable_, const std::map<std::string, std::string>& options_):
+        QueryGraphRequest(const std::string& graphName_, const std::vector<std::string>& queries_, const std::vector<std::string>& restrictions_, const std::string& adjacencyTable_, const std::map<std::string, std::string>& options_):
             graphName( graphName_ ),
             queries( queries_ ),
-            edgeToNode( edgeToNode_ ),
-            edgeOrNodeIntIds( edgeOrNodeIntIds_ ),
-            edgeOrNodeStringIds( edgeOrNodeStringIds_ ),
-            edgeOrNodeWktIds( edgeOrNodeWktIds_ ),
             restrictions( restrictions_ ),
             adjacencyTable( adjacencyTable_ ),
             options( options_ )
@@ -217,10 +177,6 @@ namespace gpudb
 
         std::string graphName;
         std::vector<std::string> queries;
-        bool edgeToNode;
-        std::vector<int64_t> edgeOrNodeIntIds;
-        std::vector<std::string> edgeOrNodeStringIds;
-        std::vector<std::string> edgeOrNodeWktIds;
         std::vector<std::string> restrictions;
         std::string adjacencyTable;
         std::map<std::string, std::string> options;
@@ -235,10 +191,6 @@ namespace avro
         {
             ::avro::encode(e, v.graphName);
             ::avro::encode(e, v.queries);
-            ::avro::encode(e, v.edgeToNode);
-            ::avro::encode(e, v.edgeOrNodeIntIds);
-            ::avro::encode(e, v.edgeOrNodeStringIds);
-            ::avro::encode(e, v.edgeOrNodeWktIds);
             ::avro::encode(e, v.restrictions);
             ::avro::encode(e, v.adjacencyTable);
             ::avro::encode(e, v.options);
@@ -263,30 +215,14 @@ namespace avro
                             break;
 
                         case 2:
-                            ::avro::decode(d, v.edgeToNode);
-                            break;
-
-                        case 3:
-                            ::avro::decode(d, v.edgeOrNodeIntIds);
-                            break;
-
-                        case 4:
-                            ::avro::decode(d, v.edgeOrNodeStringIds);
-                            break;
-
-                        case 5:
-                            ::avro::decode(d, v.edgeOrNodeWktIds);
-                            break;
-
-                        case 6:
                             ::avro::decode(d, v.restrictions);
                             break;
 
-                        case 7:
+                        case 3:
                             ::avro::decode(d, v.adjacencyTable);
                             break;
 
-                        case 8:
+                        case 4:
                             ::avro::decode(d, v.options);
                             break;
 
@@ -299,10 +235,6 @@ namespace avro
             {
                 ::avro::decode(d, v.graphName);
                 ::avro::decode(d, v.queries);
-                ::avro::decode(d, v.edgeToNode);
-                ::avro::decode(d, v.edgeOrNodeIntIds);
-                ::avro::decode(d, v.edgeOrNodeStringIds);
-                ::avro::decode(d, v.edgeOrNodeWktIds);
                 ::avro::decode(d, v.restrictions);
                 ::avro::decode(d, v.adjacencyTable);
                 ::avro::decode(d, v.options);
@@ -322,13 +254,10 @@ namespace gpudb
      * {@link #createGraph(const CreateGraphRequest&) const} and returns a
      * list of adjacent edge(s) or node(s), also known as an adjacency list,
      * depending on what's been provided to the endpoint; providing edges will
-     * return nodes and providing nodes will return edges. There are two ways
-     * to provide edge(s) or node(s) to be queried: using column names and <a
+     * return nodes and providing nodes will return edges. The edge(s) or
+     * node(s) to be queried are specified using column names and <a
      * href="../../graph_solver/network_graph_solver.html#query-identifiers"
-     * target="_top">query identifiers</a> with the @a queries with or using a
-     * list of specific IDs with one of the @a edgeOrNodeIntIds, @a
-     * edgeOrNodeStringIds, and @a edgeOrNodeWktIds arrays and @a edgeToNode to
-     * determine if the IDs are edges or nodes.
+     * target="_top">query identifiers</a> with the @a queries.
      * <p>
      * To determine the node(s) or edge(s) adjacent to a value from a given
      * column, provide a list of column names aliased as a particular query
@@ -337,33 +266,6 @@ namespace gpudb
      * See <a
      * href="../../graph_solver/network_graph_solver.html#query-identifiers"
      * target="_top">Query Identifiers</a> for more information.
-     * <p>
-     * To query for nodes that are adjacent to a given set of edges, set @a
-     * edgeToNode to @a true and provide values to the @a edgeOrNodeIntIds, @a
-     * edgeOrNodeStringIds, and @a edgeOrNodeWktIds arrays; it is assumed the
-     * values in the arrays are edges and the corresponding adjacency list
-     * array in the response will be populated with nodes.
-     * <p>
-     * To query for edges that are adjacent to a given set of nodes, set @a
-     * edgeToNode to @a false and provide values to the @a edgeOrNodeIntIds, @a
-     * edgeOrNodeStringIds, and @a edgeOrNodeWktIds arrays; it is assumed the
-     * values in arrays are nodes and the given node(s) will be queried for
-     * adjacent edges and the corresponding adjacency list array in the
-     * response will be populated with edges.
-     * <p>
-     * To query for adjacencies relative to a given column and a given set of
-     * edges/nodes, the @a queries and @a edgeOrNodeIntIds / @a
-     * edgeOrNodeStringIds / @a edgeOrNodeWktIds parameters can be used in
-     * conjuction with each other. If both @a queries and one of the arrays are
-     * populated, values from @a queries will be prioritized over values in the
-     * array and all values parsed from the @a queries array will be appended
-     * to the corresponding arrays (depending on the type). If using both @a
-     * queries and the edge_or_node arrays, the types must match, e.g., if @a
-     * queries utilizes the 'QUERY_NODE_ID' identifier, only the @a
-     * edgeOrNodeIntIds array should be used. Note that using @a queries will
-     * override @a edgeToNode, so if @a queries contains a node-based query
-     * identifier, e.g., 'table.column AS QUERY_NODE_ID', it is assumed that
-     * the @a edgeOrNodeIntIds will contain node IDs.
      * <p>
      * To return the adjacency list in the response, leave @a adjacencyTable
      * empty. To return the adjacency list in a table and not in the response,
