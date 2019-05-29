@@ -24,27 +24,12 @@ namespace gpudb
      * href="../../concepts/projections.html#limitations-and-cautions"
      * target="_top">Projection Limitations and Cautions</a>.
      * <p>
-     * <a href="../../concepts/window.html" target="_top">Window functions</a>
-     * are available through this endpoint as well as {@link
+     * <a href="../../concepts/window.html" target="_top">Window functions</a>,
+     * which can perform operations like moving averages, are available through
+     * this endpoint as well as {@link
      * #getRecordsByColumnRaw(const GetRecordsByColumnRequest&) const}.
      * <p>
-     * Notes:
-     * <p>
-     * A moving average can be calculated on a given column using the following
-     * syntax in the @a columnNames parameter:
-     * <p>
-     * 'moving_average(column_name,num_points_before,num_points_after) as
-     * new_column_name'
-     * <p>
-     * For each record in the moving_average function's 'column_name'
-     * parameter, it computes the average over the previous 'num_points_before'
-     * records and the subsequent 'num_points_after' records.
-     * <p>
-     * Note that moving average relies on @a order_by, and @a order_by requires
-     * that all the data being ordered resides on the same processing node, so
-     * it won't make sense to use @a order_by without moving average.
-     * <p>
-     * Also, a projection can be created with a different <a
+     * A projection can be created with a different <a
      * href="../../concepts/tables.html#shard-keys" target="_top">shard key</a>
      * than the source table.  By specifying @a shard_key, the projection will
      * be sharded according to the specified columns, regardless of how the
@@ -91,13 +76,14 @@ namespace gpudb
          *                      collection provided is non-existent, the
          *                      collection will be automatically created. If
          *                      empty, then the projection will be at the top
-         *                      level.
+         *                      level.  The default value is ''.
          *                              <li>
          *                      gpudb::create_projection_expression: An
          *                      optional filter <a
          *                      href="../../concepts/expressions.html"
          *                      target="_top">expression</a> to be applied to
-         *                      the source table prior to the projection.
+         *                      the source table prior to the projection.  The
+         *                      default value is ''.
          *                              <li>
          *                      gpudb::create_projection_is_replicated: If @a
          *                      true then the projection will be replicated
@@ -109,14 +95,16 @@ namespace gpudb
          *                      The default value is
          *                      gpudb::create_projection_false.
          *                              <li> gpudb::create_projection_limit:
-         *                      The number of records to keep.
+         *                      The number of records to keep.  The default
+         *                      value is ''.
          *                              <li> gpudb::create_projection_order_by:
          *                      Comma-separated list of the columns to be
          *                      sorted by; e.g. 'timestamp asc, x desc'.  The
          *                      columns specified must be present in @a
          *                      columnNames.  If any alias is given for any
          *                      column name, the alias must be used, rather
-         *                      than the original column name.
+         *                      than the original column name.  The default
+         *                      value is ''.
          *                              <li>
          *                      gpudb::create_projection_materialize_on_gpu: If
          *                      @a true then the columns of the projection will
@@ -149,7 +137,8 @@ namespace gpudb
          *                      columns specified must be present in @a
          *                      columnNames.  If any alias is given for any
          *                      column name, the alias must be used, rather
-         *                      than the original column name.
+         *                      than the original column name.  The default
+         *                      value is ''.
          *                              <li> gpudb::create_projection_persist:
          *                      If @a true, then the projection specified in @a
          *                      projectionName will be persisted and will not
@@ -173,9 +162,10 @@ namespace gpudb
          *                              <li> gpudb::create_projection_false
          *                      </ul>
          *                      The default value is
-         *                      gpudb::create_projection_true.
+         *                      gpudb::create_projection_false.
          *                              <li> gpudb::create_projection_view_id:
-         *                      view this projection is part of
+         *                      view this projection is part of.  The default
+         *                      value is ''.
          *                      </ul>
          * 
          */
@@ -266,27 +256,12 @@ namespace gpudb
      * href="../../concepts/projections.html#limitations-and-cautions"
      * target="_top">Projection Limitations and Cautions</a>.
      * <p>
-     * <a href="../../concepts/window.html" target="_top">Window functions</a>
-     * are available through this endpoint as well as {@link
+     * <a href="../../concepts/window.html" target="_top">Window functions</a>,
+     * which can perform operations like moving averages, are available through
+     * this endpoint as well as {@link
      * #getRecordsByColumnRaw(const GetRecordsByColumnRequest&) const}.
      * <p>
-     * Notes:
-     * <p>
-     * A moving average can be calculated on a given column using the following
-     * syntax in the @a columnNames parameter:
-     * <p>
-     * 'moving_average(column_name,num_points_before,num_points_after) as
-     * new_column_name'
-     * <p>
-     * For each record in the moving_average function's 'column_name'
-     * parameter, it computes the average over the previous 'num_points_before'
-     * records and the subsequent 'num_points_after' records.
-     * <p>
-     * Note that moving average relies on @a order_by, and @a order_by requires
-     * that all the data being ordered resides on the same processing node, so
-     * it won't make sense to use @a order_by without moving average.
-     * <p>
-     * Also, a projection can be created with a different <a
+     * A projection can be created with a different <a
      * href="../../concepts/tables.html#shard-keys" target="_top">shard key</a>
      * than the source table.  By specifying @a shard_key, the projection will
      * be sharded according to the specified columns, regardless of how the

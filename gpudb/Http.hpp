@@ -37,6 +37,12 @@ namespace gpudb {
         const std::string& getPath() const;
         const std::string& getQuery() const;
 
+        /// Returns a string with the passed in endpoint appended
+        /// to this URL.  Takes care of the '/' separating this URL
+        /// and the endpoint (i.e. adds one if needed or gets rid of
+        /// one if two are presetnt).
+        std::string getAppendedUrl( const std::string& endpoint ) const;
+
         operator std::string() const;
 
     private:

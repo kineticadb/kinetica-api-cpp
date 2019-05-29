@@ -74,7 +74,8 @@ namespace gpudb
      * <a href="../../concepts/tables.html#table" target="_top">standard naming
      * conventions</a>; column/aggregation expressions will need to be aliased.
      * If the source table's <a href="../../concepts/tables.html#shard-keys"
-     * target="_top">shard key</a> is used as the grouping column(s), the
+     * target="_top">shard key</a> is used as the grouping column(s) and all
+     * result records are selected (@a offset is 0 and @a limit is -9999), the
      * result table will be sharded, in all other cases it will be replicated.
      * Sorting will properly function only if the result table is replicated or
      * if there is only one processing node and should not be relied upon in
@@ -235,7 +236,8 @@ namespace gpudb
          *                      used in combination with the @a result_table
          *                      option.
          *                              <li> gpudb::aggregate_group_by_view_id:
-         *                      view this result table is part of
+         *                      view this result table is part of.  The default
+         *                      value is ''.
          *                              <li>
          *                      gpudb::aggregate_group_by_materialize_on_gpu:
          *                      If @a true then the columns of the groupby
@@ -431,7 +433,8 @@ namespace gpudb
          *                      used in combination with the @a result_table
          *                      option.
          *                              <li> gpudb::aggregate_group_by_view_id:
-         *                      view this result table is part of
+         *                      view this result table is part of.  The default
+         *                      value is ''.
          *                              <li>
          *                      gpudb::aggregate_group_by_materialize_on_gpu:
          *                      If @a true then the columns of the groupby
@@ -620,7 +623,8 @@ namespace gpudb
      * <a href="../../concepts/tables.html#table" target="_top">standard naming
      * conventions</a>; column/aggregation expressions will need to be aliased.
      * If the source table's <a href="../../concepts/tables.html#shard-keys"
-     * target="_top">shard key</a> is used as the grouping column(s), the
+     * target="_top">shard key</a> is used as the grouping column(s) and all
+     * result records are selected (@a offset is 0 and @a limit is -9999), the
      * result table will be sharded, in all other cases it will be replicated.
      * Sorting will properly function only if the result table is replicated or
      * if there is only one processing node and should not be relied upon in
@@ -777,7 +781,8 @@ namespace gpudb
      * <a href="../../concepts/tables.html#table" target="_top">standard naming
      * conventions</a>; column/aggregation expressions will need to be aliased.
      * If the source table's <a href="../../concepts/tables.html#shard-keys"
-     * target="_top">shard key</a> is used as the grouping column(s), the
+     * target="_top">shard key</a> is used as the grouping column(s) and all
+     * result records are selected (@a offset is 0 and @a limit is -9999), the
      * result table will be sharded, in all other cases it will be replicated.
      * Sorting will properly function only if the result table is replicated or
      * if there is only one processing node and should not be relied upon in

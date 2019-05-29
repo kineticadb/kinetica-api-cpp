@@ -107,20 +107,22 @@ namespace gpudb
          *                      columns specified must be present in input
          *                      table.  If any alias is given for any column
          *                      name, the alias must be used, rather than the
-         *                      original column name.
+         *                      original column name.  The default value is ''.
          *                              <li>
          *                      gpudb::aggregate_unpivot_chunk_size: Indicates
          *                      the chunk size to be used for the result table.
          *                      Must be used in combination with the @a
          *                      result_table option.
          *                              <li> gpudb::aggregate_unpivot_limit:
-         *                      The number of records to keep.
+         *                      The number of records to keep.  The default
+         *                      value is ''.
          *                              <li> gpudb::aggregate_unpivot_ttl: Sets
          *                      the <a href="../../concepts/ttl.html"
          *                      target="_top">TTL</a> of the table specified in
          *                      @a result_table.
          *                              <li> gpudb::aggregate_unpivot_view_id:
-         *                      view this result table is part of
+         *                      view this result table is part of.  The default
+         *                      value is ''.
          *                              <li>
          *                      gpudb::aggregate_unpivot_materialize_on_gpu: If
          *                      @a true then the output columns will be cached
@@ -231,20 +233,22 @@ namespace gpudb
          *                      columns specified must be present in input
          *                      table.  If any alias is given for any column
          *                      name, the alias must be used, rather than the
-         *                      original column name.
+         *                      original column name.  The default value is ''.
          *                              <li>
          *                      gpudb::aggregate_unpivot_chunk_size: Indicates
          *                      the chunk size to be used for the result table.
          *                      Must be used in combination with the @a
          *                      result_table option.
          *                              <li> gpudb::aggregate_unpivot_limit:
-         *                      The number of records to keep.
+         *                      The number of records to keep.  The default
+         *                      value is ''.
          *                              <li> gpudb::aggregate_unpivot_ttl: Sets
          *                      the <a href="../../concepts/ttl.html"
          *                      target="_top">TTL</a> of the table specified in
          *                      @a result_table.
          *                              <li> gpudb::aggregate_unpivot_view_id:
-         *                      view this result table is part of
+         *                      view this result table is part of.  The default
+         *                      value is ''.
          *                              <li>
          *                      gpudb::aggregate_unpivot_materialize_on_gpu: If
          *                      @a true then the output columns will be cached

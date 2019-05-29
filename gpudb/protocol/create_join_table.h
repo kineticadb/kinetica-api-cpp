@@ -74,6 +74,7 @@ namespace gpudb
          *                      If the collection provided is non-existent, the
          *                      collection will be automatically created. If
          *                      empty, then the join will be at the top level.
+         *                      The default value is ''.
          *                              <li>
          *                      gpudb::create_join_table_max_query_dimensions:
          *                      The maximum number of tables in a join that can
@@ -150,11 +151,25 @@ namespace gpudb
          *                      refresh_method is either @a on_insert or @a
          *                      on_query.
          *                              <li> gpudb::create_join_table_view_id:
-         *                      view this projection is part of
+         *                      view this projection is part of.  The default
+         *                      value is ''.
          *                              <li> gpudb::create_join_table_no_count:
          *                      return a count of 0 for the join table for
          *                      logging and for show_table. optimization needed
-         *                      for large overlapped equi-join stencils
+         *                      for large overlapped equi-join stencils.  The
+         *                      default value is 'false'.
+         *                              <li>
+         *                      gpudb::create_join_table_chunk_size: Maximum
+         *                      size of a joined-chunk for this table. Defaults
+         *                      to the gpudb.conf file chunk size
+         *                              <li>
+         *                      gpudb::create_join_table_allow_right_primary_key_join:
+         *                      When true allows right joins from a key to a
+         *                      primary key to be done as primary key joins.
+         *                      Such a join table cannot be joined to other
+         *                      join tables.  When false the right join shall
+         *                      be done as an equi-join.  The default value is
+         *                      'false'.
          *                      </ul>
          * 
          */

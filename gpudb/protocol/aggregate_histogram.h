@@ -19,10 +19,14 @@ namespace gpudb
      * returned.  For each bin, the start value is inclusive, but the end value
      * is exclusive--except for the very last bin for which the end value is
      * also inclusive.  The value returned for each bin is the number of
-     * records in it, except when a column name is provided as a *value_column*
-     * in @a options.  In this latter case the sum of the values corresponding
-     * to the *value_column* is used as the result instead.  The total number
+     * records in it, except when a column name is provided as a @a
+     * value_column.  In this latter case the sum of the values corresponding
+     * to the @a value_column is used as the result instead.  The total number
      * of bins requested cannot exceed 10,000.
+     * <p>
+     * NOTE:  The Kinetica instance being accessed must be running a CUDA
+     * (GPU-based) build to service a request that specifies a @a value_column
+     * option.
      */
     struct AggregateHistogramRequest
     {
@@ -166,10 +170,14 @@ namespace gpudb
      * returned.  For each bin, the start value is inclusive, but the end value
      * is exclusive--except for the very last bin for which the end value is
      * also inclusive.  The value returned for each bin is the number of
-     * records in it, except when a column name is provided as a *value_column*
-     * in @a options.  In this latter case the sum of the values corresponding
-     * to the *value_column* is used as the result instead.  The total number
+     * records in it, except when a column name is provided as a @a
+     * value_column.  In this latter case the sum of the values corresponding
+     * to the @a value_column is used as the result instead.  The total number
      * of bins requested cannot exceed 10,000.
+     * <p>
+     * NOTE:  The Kinetica instance being accessed must be running a CUDA
+     * (GPU-based) build to service a request that specifies a @a value_column
+     * option.
      */
     struct AggregateHistogramResponse
     {

@@ -20,8 +20,9 @@ namespace gpudb
      * type are returned. This endpoint supports pagination with the @a offset
      * and @a limit parameters.
      * <p>
-     * <a href="../../concepts/window.html" target="_top">Window functions</a>
-     * are available through this endpoint as well as {@link
+     * <a href="../../concepts/window.html" target="_top">Window functions</a>,
+     * which can perform operations like moving averages, are available through
+     * this endpoint as well as {@link
      * #createProjection(const CreateProjectionRequest&) const}.
      * <p>
      * When using pagination, if the table (or the underlying table in the case
@@ -95,7 +96,8 @@ namespace gpudb
          *                              <li>
          *                      gpudb::get_records_by_column_order_by:
          *                      Comma-separated list of the columns to be
-         *                      sorted by; e.g. 'timestamp asc, x desc'.
+         *                      sorted by; e.g. 'timestamp asc, x desc'.  The
+         *                      default value is ''.
          *                              <li>
          *                      gpudb::get_records_by_column_convert_wkts_to_wkbs:
          *                      If true, then WKT string columns will be
@@ -172,7 +174,8 @@ namespace gpudb
          *                              <li>
          *                      gpudb::get_records_by_column_order_by:
          *                      Comma-separated list of the columns to be
-         *                      sorted by; e.g. 'timestamp asc, x desc'.
+         *                      sorted by; e.g. 'timestamp asc, x desc'.  The
+         *                      default value is ''.
          *                              <li>
          *                      gpudb::get_records_by_column_convert_wkts_to_wkbs:
          *                      If true, then WKT string columns will be
@@ -283,8 +286,9 @@ namespace gpudb
      * type are returned. This endpoint supports pagination with the @a offset
      * and @a limit parameters.
      * <p>
-     * <a href="../../concepts/window.html" target="_top">Window functions</a>
-     * are available through this endpoint as well as {@link
+     * <a href="../../concepts/window.html" target="_top">Window functions</a>,
+     * which can perform operations like moving averages, are available through
+     * this endpoint as well as {@link
      * #createProjection(const CreateProjectionRequest&) const}.
      * <p>
      * When using pagination, if the table (or the underlying table in the case
@@ -401,8 +405,9 @@ namespace gpudb
      * type are returned. This endpoint supports pagination with the @a offset
      * and @a limit parameters.
      * <p>
-     * <a href="../../concepts/window.html" target="_top">Window functions</a>
-     * are available through this endpoint as well as {@link
+     * <a href="../../concepts/window.html" target="_top">Window functions</a>,
+     * which can perform operations like moving averages, are available through
+     * this endpoint as well as {@link
      * #createProjection(const CreateProjectionRequest&) const}.
      * <p>
      * When using pagination, if the table (or the underlying table in the case

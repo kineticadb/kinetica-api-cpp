@@ -35,6 +35,9 @@ namespace gpudb
      * column values. Binning-columns whose value matches the nth member of the
      * bin_values list are placed in the nth bin. When a list is provided the
      * binning-column must be of type string or int.
+     * <p>
+     * NOTE:  The Kinetica instance being accessed must be running a CUDA
+     * (GPU-based) build to service this request.
      */
     struct AggregateStatisticsByRangeRequest
     {
@@ -241,6 +244,9 @@ namespace gpudb
      * column values. Binning-columns whose value matches the nth member of the
      * bin_values list are placed in the nth bin. When a list is provided the
      * binning-column must be of type string or int.
+     * <p>
+     * NOTE:  The Kinetica instance being accessed must be running a CUDA
+     * (GPU-based) build to service this request.
      */
     struct AggregateStatisticsByRangeResponse
     {

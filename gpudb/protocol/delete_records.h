@@ -56,12 +56,16 @@ namespace gpudb
          *                              <li>
          *                      gpudb::delete_records_global_expression: An
          *                      optional global expression to reduce the search
-         *                      space of the @a expressions.
+         *                      space of the @a expressions.  The default value
+         *                      is ''.
          *                              <li> gpudb::delete_records_record_id: A
-         *                      record id identifying a single record, obtained
+         *                      record ID identifying a single record, obtained
          *                      at the time of /insert/records or by calling
          *                      /get/records/fromcollection with the
-         *                      *return_record_ids* option.
+         *                      *return_record_ids* option. This option cannot
+         *                      be used to delete records from <a
+         *                      href="../../concepts/tables.html#replication"
+         *                      target="_top">replicated</a> tables.
          *                              <li>
          *                      gpudb::delete_records_delete_all_records: If
          *                      set to @a true, all records in the table will

@@ -60,24 +60,26 @@ namespace gpudb
          *                      initial results to skip from source table
          *                      (specified by @a sourceTableName). Default is
          *                      0. The minimum allowed value is 0. The maximum
-         *                      allowed value is MAX_INT.
+         *                      allowed value is MAX_INT.  The default value is
+         *                      '0'.
          *                              <li> gpudb::append_records_limit: A
          *                      positive integer indicating the maximum number
          *                      of results to be returned from source table
          *                      (specified by @a sourceTableName). Or
          *                      END_OF_SET (-9999) to indicate that the max
-         *                      number of results should be returned.
+         *                      number of results should be returned.  The
+         *                      default value is '-9999'.
          *                              <li> gpudb::append_records_expression:
          *                      Optional filter expression to apply to the
          *                      source table (specified by @a sourceTableName).
-         *                      Empty by default.
+         *                      Empty by default.  The default value is ''.
          *                              <li> gpudb::append_records_order_by:
          *                      Comma-separated list of the columns and
          *                      expressions to be sorted by from the source
          *                      table (specified by @a sourceTableName); e.g.
          *                      'timestamp asc, x desc'.  The @a order_by
          *                      columns do not have to be present in @a
-         *                      fieldMap.
+         *                      fieldMap.  The default value is ''.
          *                              <li>
          *                      gpudb::append_records_update_on_existing_pk:
          *                      Specifies the record collision policy for
@@ -96,6 +98,22 @@ namespace gpudb
          *                      the new record discarded.  If the specified
          *                      table does not have a primary key, then this
          *                      option is ignored.
+         *                      <ul>
+         *                              <li> gpudb::append_records_true
+         *                              <li> gpudb::append_records_false
+         *                      </ul>
+         *                      The default value is
+         *                      gpudb::append_records_false.
+         *                              <li>
+         *                      gpudb::append_records_truncate_strings: If set
+         *                      to {true}@{, it allows to append unbounded
+         *                      string to charN string. If 'truncate_strings'
+         *                      is 'true', the desination column is charN
+         *                      datatype, and the source column is unnbounded
+         *                      string, it will truncate the source string to
+         *                      length of N first, and then append the
+         *                      truncated string to the destination charN
+         *                      column. The default value is false.
          *                      <ul>
          *                              <li> gpudb::append_records_true
          *                              <li> gpudb::append_records_false

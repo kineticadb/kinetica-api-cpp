@@ -67,6 +67,11 @@ public:
     const gpudb::GPUdb& getGPUdb() const { return m_db; }
 
     /**
+     * Returns the insertion options the ingestor uses.
+     */
+    const std::map<std::string, std::string>& getOptions() const { return m_insert_options; }
+
+    /**
      * Returns the count of records inserted so far through this ingestor
      * instance;  An atomic operation.
      */

@@ -118,11 +118,14 @@ namespace gpudb
          *                                   <li>
          *                           gpudb::visualize_image_pointcolors
          *                                   <li>
-         *                           gpudb::visualize_image_pointsizes
+         *                           gpudb::visualize_image_pointsizes:   The
+         *                           default value is '3'.
          *                                   <li>
-         *                           gpudb::visualize_image_pointoffset_x
+         *                           gpudb::visualize_image_pointoffset_x:
+         *                           The default value is '0'.
          *                                   <li>
-         *                           gpudb::visualize_image_pointoffset_y
+         *                           gpudb::visualize_image_pointoffset_y:
+         *                           The default value is '0'.
          *                                   <li>
          *                           gpudb::visualize_image_pointshapes:
          *                           <ul>
@@ -143,35 +146,51 @@ namespace gpudb
          *                           The default value is
          *                           gpudb::visualize_image_square.
          *                                   <li>
-         *                           gpudb::visualize_image_symbolrotations
+         *                           gpudb::visualize_image_symbolrotations:
+         *                           The default value is '0'.
          *                                   <li>
-         *                           gpudb::visualize_image_shapelinewidths
+         *                           gpudb::visualize_image_shapelinewidths:
+         *                           The default value is '3'.
          *                                   <li>
-         *                           gpudb::visualize_image_shapelinecolors
+         *                           gpudb::visualize_image_shapelinecolors:
+         *                           The default value is 'FFFF00 '.
          *                                   <li>
-         *                           gpudb::visualize_image_shapelinepatterns
+         *                           gpudb::visualize_image_shapelinepatterns:
+         *                           The default value is '0'.
          *                                   <li>
-         *                           gpudb::visualize_image_shapelinepatternlen
+         *                           gpudb::visualize_image_shapelinepatternlen:
+         *                           The default value is '32'.
          *                                   <li>
-         *                           gpudb::visualize_image_shapefillcolors
+         *                           gpudb::visualize_image_shapefillcolors:
+         *                           The default value is '-1'.
          *                                   <li>
-         *                           gpudb::visualize_image_hashlineintervals
+         *                           gpudb::visualize_image_hashlineintervals:
+         *                           The default value is '20'.
          *                                   <li>
-         *                           gpudb::visualize_image_hashlinecolors
+         *                           gpudb::visualize_image_hashlinecolors:
+         *                           The default value is 'The same as line
+         *                           color.'.
          *                                   <li>
-         *                           gpudb::visualize_image_hashlineangles
+         *                           gpudb::visualize_image_hashlineangles:
+         *                           The default value is '0'.
          *                                   <li>
-         *                           gpudb::visualize_image_hashlinelens
+         *                           gpudb::visualize_image_hashlinelens:   The
+         *                           default value is '0'.
          *                                   <li>
-         *                           gpudb::visualize_image_hashlinewidths
+         *                           gpudb::visualize_image_hashlinewidths:
+         *                           The default value is '3'.
          *                                   <li>
-         *                           gpudb::visualize_image_tracklinewidths
+         *                           gpudb::visualize_image_tracklinewidths:
+         *                           The default value is '3'.
          *                                   <li>
-         *                           gpudb::visualize_image_tracklinecolors
+         *                           gpudb::visualize_image_tracklinecolors:
+         *                           The default value is '00FF00'.
          *                                   <li>
-         *                           gpudb::visualize_image_trackmarkersizes
+         *                           gpudb::visualize_image_trackmarkersizes:
+         *                           The default value is '3'.
          *                                   <li>
-         *                           gpudb::visualize_image_trackmarkercolors
+         *                           gpudb::visualize_image_trackmarkercolors:
+         *                           The default value is '0000FF'.
          *                                   <li>
          *                           gpudb::visualize_image_trackmarkershapes:
          *                           <ul>
@@ -196,9 +215,11 @@ namespace gpudb
          *                           The default value is
          *                           gpudb::visualize_image_circle.
          *                                   <li>
-         *                           gpudb::visualize_image_trackheadcolors
+         *                           gpudb::visualize_image_trackheadcolors:
+         *                           The default value is 'FFFFFF'.
          *                                   <li>
-         *                           gpudb::visualize_image_trackheadsizes
+         *                           gpudb::visualize_image_trackheadsizes:
+         *                           The default value is '10'.
          *                                   <li>
          *                           gpudb::visualize_image_trackheadshapes:
          *                           <ul>

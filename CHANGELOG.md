@@ -2,16 +2,11 @@
 
 ## Version 6.2.0
 
-### Version 6.2.0.0 - 2018-03-24
+### Version 6.2.0.2 - 2019-05-29
 
--   Added new RecordRetriever class to support multi-head record lookup by
-    shard key.
--   Refactored the following classes from GPUdbIngestor.*pp to
-    utils/GPUdbMultiHeadIOUtils.h/cpp:
-    -   WorkerList
-    -   RecordKey
-    -   RecordKeyBuilder
-    -   WorkerQueue
+#### Added
+-   A getter method for the insertion options to the GPUdbIngestor class
+
 
 ### Version 6.2.0.1 - 2018-10-05
 
@@ -23,6 +18,17 @@
     -   AggregateUnpivotResponse
     -   GetRecordsByColumnResponse
 
+
+### Version 6.2.0.0 - 2018-03-24
+
+-   Added new RecordRetriever class to support multi-head record lookup by
+    shard key.
+-   Refactored the following classes from GPUdbIngestor.*pp to
+    utils/GPUdbMultiHeadIOUtils.h/cpp:
+    -   WorkerList
+    -   RecordKey
+    -   RecordKeyBuilder
+    -   WorkerQueue
 
 ## Version 6.1.0 - 2017-12-11
 

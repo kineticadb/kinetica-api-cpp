@@ -114,9 +114,11 @@ namespace gpudb
          *                           The default value is
          *                           gpudb::visualize_video_true.
          *                                   <li>
-         *                           gpudb::visualize_video_pointcolors
+         *                           gpudb::visualize_video_pointcolors:   The
+         *                           default value is 'FF0000'.
          *                                   <li>
-         *                           gpudb::visualize_video_pointsizes
+         *                           gpudb::visualize_video_pointsizes:   The
+         *                           default value is '3'.
          *                                   <li>
          *                           gpudb::visualize_video_pointshapes:
          *                           <ul>
@@ -135,19 +137,26 @@ namespace gpudb
          *                           gpudb::visualize_video_SYMBOLCODE
          *                           </ul>
          *                                   <li>
-         *                           gpudb::visualize_video_shapelinewidths
+         *                           gpudb::visualize_video_shapelinewidths:
+         *                           The default value is '3'.
          *                                   <li>
-         *                           gpudb::visualize_video_shapelinecolors
+         *                           gpudb::visualize_video_shapelinecolors:
+         *                           The default value is 'FFFF00 '.
          *                                   <li>
-         *                           gpudb::visualize_video_shapefillcolors
+         *                           gpudb::visualize_video_shapefillcolors:
+         *                           The default value is '-1'.
          *                                   <li>
-         *                           gpudb::visualize_video_tracklinewidths
+         *                           gpudb::visualize_video_tracklinewidths:
+         *                           The default value is '3'.
          *                                   <li>
-         *                           gpudb::visualize_video_tracklinecolors
+         *                           gpudb::visualize_video_tracklinecolors:
+         *                           The default value is '00FF00'.
          *                                   <li>
-         *                           gpudb::visualize_video_trackmarkersizes
+         *                           gpudb::visualize_video_trackmarkersizes:
+         *                           The default value is '3'.
          *                                   <li>
-         *                           gpudb::visualize_video_trackmarkercolors
+         *                           gpudb::visualize_video_trackmarkercolors:
+         *                           The default value is '0000FF'.
          *                                   <li>
          *                           gpudb::visualize_video_trackmarkershapes:
          *                           <ul>
@@ -168,9 +177,11 @@ namespace gpudb
          *                           The default value is
          *                           gpudb::visualize_video_none.
          *                                   <li>
-         *                           gpudb::visualize_video_trackheadcolors
+         *                           gpudb::visualize_video_trackheadcolors:
+         *                           The default value is 'FFFFFF'.
          *                                   <li>
-         *                           gpudb::visualize_video_trackheadsizes
+         *                           gpudb::visualize_video_trackheadsizes:
+         *                           The default value is '10'.
          *                                   <li>
          *                           gpudb::visualize_video_trackheadshapes:
          *                           <ul>

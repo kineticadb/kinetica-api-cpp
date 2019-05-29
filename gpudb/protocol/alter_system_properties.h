@@ -146,19 +146,20 @@ namespace gpudb
          *                                 filtering (e.g., /filter) and
          *                                 aggregating (e.g.,
          *                                 /aggregate/groupby) queries will
-         *                                 timeout.
+         *                                 timeout.  The default value is '20'.
          *                                         <li>
          *                                 gpudb::alter_system_properties_max_get_records_size:
          *                                 The maximum number of records the
          *                                 database will serve for a given data
-         *                                 retrieval call
+         *                                 retrieval call.  The default value
+         *                                 is '20000'.
          *                                         <li>
          *                                 gpudb::alter_system_properties_memory_allocation_limit_mb:
          *                                 Set the memory allocation limit for
          *                                 all rank processes in megabytes, 0
          *                                 means no limit. Overrides any
          *                                 individual rank memory allocation
-         *                                 limits.
+         *                                 limits.  The default value is '0'.
          *                                         <li>
          *                                 gpudb::alter_system_properties_enable_audit:
          *                                 Enable or disable auditing.
@@ -187,6 +188,7 @@ namespace gpudb
          *                                         <li>
          *                                 gpudb::alter_system_properties_chunk_cache_size:
          *                                 Size of the chunk cache in bytes.
+         *                                 The default value is '10000000'.
          *                                 </ul>
          * @param[in] options_  Optional parameters.
          * 

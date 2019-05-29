@@ -143,13 +143,17 @@ namespace gpudb
          *                           The default value is
          *                           gpudb::visualize_image_classbreak_false.
          *                                   <li>
-         *                           gpudb::visualize_image_classbreak_pointcolors
+         *                           gpudb::visualize_image_classbreak_pointcolors:
+         *                           The default value is 'FF0000'.
          *                                   <li>
-         *                           gpudb::visualize_image_classbreak_pointsizes
+         *                           gpudb::visualize_image_classbreak_pointsizes:
+         *                           The default value is '3'.
          *                                   <li>
-         *                           gpudb::visualize_image_classbreak_pointoffset_x
+         *                           gpudb::visualize_image_classbreak_pointoffset_x:
+         *                           The default value is '0'.
          *                                   <li>
-         *                           gpudb::visualize_image_classbreak_pointoffset_y
+         *                           gpudb::visualize_image_classbreak_pointoffset_y:
+         *                           The default value is '0'.
          *                                   <li>
          *                           gpudb::visualize_image_classbreak_pointshapes:
          *                           <ul>
@@ -173,33 +177,48 @@ namespace gpudb
          *                           The default value is
          *                           gpudb::visualize_image_classbreak_none.
          *                                   <li>
-         *                           gpudb::visualize_image_classbreak_shapelinewidths
+         *                           gpudb::visualize_image_classbreak_shapelinewidths:
+         *                           The default value is '3'.
          *                                   <li>
-         *                           gpudb::visualize_image_classbreak_shapelinecolors
+         *                           gpudb::visualize_image_classbreak_shapelinecolors:
+         *                           The default value is 'FFFF00 '.
          *                                   <li>
-         *                           gpudb::visualize_image_classbreak_shapelinepatterns
+         *                           gpudb::visualize_image_classbreak_shapelinepatterns:
+         *                           The default value is '0'.
          *                                   <li>
-         *                           gpudb::visualize_image_classbreak_shapelinepatternlen
+         *                           gpudb::visualize_image_classbreak_shapelinepatternlen:
+         *                           The default value is '32'.
          *                                   <li>
-         *                           gpudb::visualize_image_classbreak_shapefillcolors
+         *                           gpudb::visualize_image_classbreak_shapefillcolors:
+         *                           The default value is '-1'.
          *                                   <li>
-         *                           gpudb::visualize_image_classbreak_hashlineintervals
+         *                           gpudb::visualize_image_classbreak_hashlineintervals:
+         *                           The default value is '20'.
          *                                   <li>
-         *                           gpudb::visualize_image_classbreak_hashlinecolors
+         *                           gpudb::visualize_image_classbreak_hashlinecolors:
+         *                           The default value is 'The same as line
+         *                           color.'.
          *                                   <li>
-         *                           gpudb::visualize_image_classbreak_hashlineangles
+         *                           gpudb::visualize_image_classbreak_hashlineangles:
+         *                           The default value is '0'.
          *                                   <li>
-         *                           gpudb::visualize_image_classbreak_hashlinelens
+         *                           gpudb::visualize_image_classbreak_hashlinelens:
+         *                           The default value is '0'.
          *                                   <li>
-         *                           gpudb::visualize_image_classbreak_hashlinewidths
+         *                           gpudb::visualize_image_classbreak_hashlinewidths:
+         *                           The default value is '3'.
          *                                   <li>
-         *                           gpudb::visualize_image_classbreak_tracklinewidths
+         *                           gpudb::visualize_image_classbreak_tracklinewidths:
+         *                           The default value is '3'.
          *                                   <li>
-         *                           gpudb::visualize_image_classbreak_tracklinecolors
+         *                           gpudb::visualize_image_classbreak_tracklinecolors:
+         *                           The default value is '00FF00'.
          *                                   <li>
-         *                           gpudb::visualize_image_classbreak_trackmarkersizes
+         *                           gpudb::visualize_image_classbreak_trackmarkersizes:
+         *                           The default value is '3'.
          *                                   <li>
-         *                           gpudb::visualize_image_classbreak_trackmarkercolors
+         *                           gpudb::visualize_image_classbreak_trackmarkercolors:
+         *                           The default value is '0000FF'.
          *                                   <li>
          *                           gpudb::visualize_image_classbreak_trackmarkershapes:
          *                           <ul>
@@ -223,9 +242,11 @@ namespace gpudb
          *                           The default value is
          *                           gpudb::visualize_image_classbreak_none.
          *                                   <li>
-         *                           gpudb::visualize_image_classbreak_trackheadcolors
+         *                           gpudb::visualize_image_classbreak_trackheadcolors:
+         *                           The default value is 'FFFFFF'.
          *                                   <li>
-         *                           gpudb::visualize_image_classbreak_trackheadsizes
+         *                           gpudb::visualize_image_classbreak_trackheadsizes:
+         *                           The default value is '10'.
          *                                   <li>
          *                           gpudb::visualize_image_classbreak_trackheadshapes:
          *                           <ul>

@@ -662,7 +662,8 @@ AggregateConvexHullResponse& aggregateConvexHull( const std::string& tableName,
  * href="../../concepts/tables.html#table" target="_top">standard naming
  * conventions</a>; column/aggregation expressions will need to be aliased.  If
  * the source table's <a href="../../concepts/tables.html#shard-keys"
- * target="_top">shard key</a> is used as the grouping column(s), the result
+ * target="_top">shard key</a> is used as the grouping column(s) and all result
+ * records are selected (@a offset is 0 and @a limit is -9999), the result
  * table will be sharded, in all other cases it will be replicated.  Sorting
  * will properly function only if the result table is replicated or if there is
  * only one processing node and should not be relied upon in other cases.  Not
@@ -734,7 +735,8 @@ RawAggregateGroupByResponse aggregateGroupByRaw( const AggregateGroupByRequest& 
  * href="../../concepts/tables.html#table" target="_top">standard naming
  * conventions</a>; column/aggregation expressions will need to be aliased.  If
  * the source table's <a href="../../concepts/tables.html#shard-keys"
- * target="_top">shard key</a> is used as the grouping column(s), the result
+ * target="_top">shard key</a> is used as the grouping column(s) and all result
+ * records are selected (@a offset is 0 and @a limit is -9999), the result
  * table will be sharded, in all other cases it will be replicated.  Sorting
  * will properly function only if the result table is replicated or if there is
  * only one processing node and should not be relied upon in other cases.  Not
@@ -810,7 +812,8 @@ RawAggregateGroupByResponse& aggregateGroupByRaw( const AggregateGroupByRequest&
  * href="../../concepts/tables.html#table" target="_top">standard naming
  * conventions</a>; column/aggregation expressions will need to be aliased.  If
  * the source table's <a href="../../concepts/tables.html#shard-keys"
- * target="_top">shard key</a> is used as the grouping column(s), the result
+ * target="_top">shard key</a> is used as the grouping column(s) and all result
+ * records are selected (@a offset is 0 and @a limit is -9999), the result
  * table will be sharded, in all other cases it will be replicated.  Sorting
  * will properly function only if the result table is replicated or if there is
  * only one processing node and should not be relied upon in other cases.  Not
@@ -882,7 +885,8 @@ AggregateGroupByResponse aggregateGroupBy( const AggregateGroupByRequest& reques
  * href="../../concepts/tables.html#table" target="_top">standard naming
  * conventions</a>; column/aggregation expressions will need to be aliased.  If
  * the source table's <a href="../../concepts/tables.html#shard-keys"
- * target="_top">shard key</a> is used as the grouping column(s), the result
+ * target="_top">shard key</a> is used as the grouping column(s) and all result
+ * records are selected (@a offset is 0 and @a limit is -9999), the result
  * table will be sharded, in all other cases it will be replicated.  Sorting
  * will properly function only if the result table is replicated or if there is
  * only one processing node and should not be relied upon in other cases.  Not
@@ -958,7 +962,8 @@ AggregateGroupByResponse& aggregateGroupBy( const AggregateGroupByRequest& reque
  * href="../../concepts/tables.html#table" target="_top">standard naming
  * conventions</a>; column/aggregation expressions will need to be aliased.  If
  * the source table's <a href="../../concepts/tables.html#shard-keys"
- * target="_top">shard key</a> is used as the grouping column(s), the result
+ * target="_top">shard key</a> is used as the grouping column(s) and all result
+ * records are selected (@a offset is 0 and @a limit is -9999), the result
  * table will be sharded, in all other cases it will be replicated.  Sorting
  * will properly function only if the result table is replicated or if there is
  * only one processing node and should not be relied upon in other cases.  Not
@@ -1067,7 +1072,7 @@ AggregateGroupByResponse& aggregateGroupBy( const AggregateGroupByRequest& reque
  *                 on the result table. Must be used in combination with the @a
  *                 result_table option.
  *                         <li> gpudb::aggregate_group_by_view_id: view this
- *                 result table is part of
+ *                 result table is part of.  The default value is ''.
  *                         <li> gpudb::aggregate_group_by_materialize_on_gpu:
  *                 If @a true then the columns of the groupby result table will
  *                 be cached on the GPU. Must be used in combination with the
@@ -1160,7 +1165,8 @@ AggregateGroupByResponse aggregateGroupBy( const std::string& tableName,
  * href="../../concepts/tables.html#table" target="_top">standard naming
  * conventions</a>; column/aggregation expressions will need to be aliased.  If
  * the source table's <a href="../../concepts/tables.html#shard-keys"
- * target="_top">shard key</a> is used as the grouping column(s), the result
+ * target="_top">shard key</a> is used as the grouping column(s) and all result
+ * records are selected (@a offset is 0 and @a limit is -9999), the result
  * table will be sharded, in all other cases it will be replicated.  Sorting
  * will properly function only if the result table is replicated or if there is
  * only one processing node and should not be relied upon in other cases.  Not
@@ -1269,7 +1275,7 @@ AggregateGroupByResponse aggregateGroupBy( const std::string& tableName,
  *                 on the result table. Must be used in combination with the @a
  *                 result_table option.
  *                         <li> gpudb::aggregate_group_by_view_id: view this
- *                 result table is part of
+ *                 result table is part of.  The default value is ''.
  *                         <li> gpudb::aggregate_group_by_materialize_on_gpu:
  *                 If @a true then the columns of the groupby result table will
  *                 be cached on the GPU. Must be used in combination with the
@@ -1317,10 +1323,14 @@ AggregateGroupByResponse& aggregateGroupBy( const std::string& tableName,
  * each bin, the start value is inclusive, but the end value is
  * exclusive--except for the very last bin for which the end value is also
  * inclusive.  The value returned for each bin is the number of records in it,
- * except when a column name is provided as a *value_column* in @a options.  In
- * this latter case the sum of the values corresponding to the *value_column*
- * is used as the result instead.  The total number of bins requested cannot
- * exceed 10,000.
+ * except when a column name is provided as a @a value_column.  In this latter
+ * case the sum of the values corresponding to the @a value_column is used as
+ * the result instead.  The total number of bins requested cannot exceed
+ * 10,000.
+ * <p>
+ * NOTE:  The Kinetica instance being accessed must be running a CUDA
+ * (GPU-based) build to service a request that specifies a @a value_column
+ * option.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -1338,10 +1348,14 @@ AggregateHistogramResponse aggregateHistogram( const AggregateHistogramRequest& 
  * each bin, the start value is inclusive, but the end value is
  * exclusive--except for the very last bin for which the end value is also
  * inclusive.  The value returned for each bin is the number of records in it,
- * except when a column name is provided as a *value_column* in @a options.  In
- * this latter case the sum of the values corresponding to the *value_column*
- * is used as the result instead.  The total number of bins requested cannot
- * exceed 10,000.
+ * except when a column name is provided as a @a value_column.  In this latter
+ * case the sum of the values corresponding to the @a value_column is used as
+ * the result instead.  The total number of bins requested cannot exceed
+ * 10,000.
+ * <p>
+ * NOTE:  The Kinetica instance being accessed must be running a CUDA
+ * (GPU-based) build to service a request that specifies a @a value_column
+ * option.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -1363,10 +1377,14 @@ AggregateHistogramResponse& aggregateHistogram( const AggregateHistogramRequest&
  * each bin, the start value is inclusive, but the end value is
  * exclusive--except for the very last bin for which the end value is also
  * inclusive.  The value returned for each bin is the number of records in it,
- * except when a column name is provided as a *value_column* in @a options.  In
- * this latter case the sum of the values corresponding to the *value_column*
- * is used as the result instead.  The total number of bins requested cannot
- * exceed 10,000.
+ * except when a column name is provided as a @a value_column.  In this latter
+ * case the sum of the values corresponding to the @a value_column is used as
+ * the result instead.  The total number of bins requested cannot exceed
+ * 10,000.
+ * <p>
+ * NOTE:  The Kinetica instance being accessed must be running a CUDA
+ * (GPU-based) build to service a request that specifies a @a value_column
+ * option.
  * 
  * @param tableName  Name of the table on which the operation will be
  *                   performed. Must be an existing table or collection.
@@ -1401,10 +1419,14 @@ AggregateHistogramResponse aggregateHistogram( const std::string& tableName,
  * each bin, the start value is inclusive, but the end value is
  * exclusive--except for the very last bin for which the end value is also
  * inclusive.  The value returned for each bin is the number of records in it,
- * except when a column name is provided as a *value_column* in @a options.  In
- * this latter case the sum of the values corresponding to the *value_column*
- * is used as the result instead.  The total number of bins requested cannot
- * exceed 10,000.
+ * except when a column name is provided as a @a value_column.  In this latter
+ * case the sum of the values corresponding to the @a value_column is used as
+ * the result instead.  The total number of bins requested cannot exceed
+ * 10,000.
+ * <p>
+ * NOTE:  The Kinetica instance being accessed must be running a CUDA
+ * (GPU-based) build to service a request that specifies a @a value_column
+ * option.
  * 
  * @param tableName  Name of the table on which the operation will be
  *                   performed. Must be an existing table or collection.
@@ -1445,6 +1467,9 @@ AggregateHistogramResponse& aggregateHistogram( const std::string& tableName,
  * begins with a randomly selected set of k points and then refines the
  * location of the points iteratively and settles to a local minimum.  Various
  * parameters and options are provided to control the heuristic search.
+ * <p>
+ * NOTE:  The Kinetica instance being accessed must be running a CUDA
+ * (GPU-based) build to service this request.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -1464,6 +1489,9 @@ AggregateKMeansResponse aggregateKMeans( const AggregateKMeansRequest& request_ 
  * begins with a randomly selected set of k points and then refines the
  * location of the points iteratively and settles to a local minimum.  Various
  * parameters and options are provided to control the heuristic search.
+ * <p>
+ * NOTE:  The Kinetica instance being accessed must be running a CUDA
+ * (GPU-based) build to service this request.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -1487,6 +1515,9 @@ AggregateKMeansResponse& aggregateKMeans( const AggregateKMeansRequest& request_
  * begins with a randomly selected set of k points and then refines the
  * location of the points iteratively and settles to a local minimum.  Various
  * parameters and options are provided to control the heuristic search.
+ * <p>
+ * NOTE:  The Kinetica instance being accessed must be running a CUDA
+ * (GPU-based) build to service this request.
  * 
  * @param tableName  Name of the table on which the operation will be
  *                   performed. Must be an existing table or collection.
@@ -1530,6 +1561,9 @@ AggregateKMeansResponse aggregateKMeans( const std::string& tableName,
  * begins with a randomly selected set of k points and then refines the
  * location of the points iteratively and settles to a local minimum.  Various
  * parameters and options are provided to control the heuristic search.
+ * <p>
+ * NOTE:  The Kinetica instance being accessed must be running a CUDA
+ * (GPU-based) build to service this request.
  * 
  * @param tableName  Name of the table on which the operation will be
  *                   performed. Must be an existing table or collection.
@@ -2045,6 +2079,9 @@ AggregateStatisticsResponse& aggregateStatistics( const std::string& tableName,
  * values. Binning-columns whose value matches the nth member of the bin_values
  * list are placed in the nth bin. When a list is provided the binning-column
  * must be of type string or int.
+ * <p>
+ * NOTE:  The Kinetica instance being accessed must be running a CUDA
+ * (GPU-based) build to service this request.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -2078,6 +2115,9 @@ AggregateStatisticsByRangeResponse aggregateStatisticsByRange( const AggregateSt
  * values. Binning-columns whose value matches the nth member of the bin_values
  * list are placed in the nth bin. When a list is provided the binning-column
  * must be of type string or int.
+ * <p>
+ * NOTE:  The Kinetica instance being accessed must be running a CUDA
+ * (GPU-based) build to service this request.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -2115,6 +2155,9 @@ AggregateStatisticsByRangeResponse& aggregateStatisticsByRange( const AggregateS
  * values. Binning-columns whose value matches the nth member of the bin_values
  * list are placed in the nth bin. When a list is provided the binning-column
  * must be of type string or int.
+ * <p>
+ * NOTE:  The Kinetica instance being accessed must be running a CUDA
+ * (GPU-based) build to service this request.
  * 
  * @param tableName  Name of the table on which the ranged-statistics operation
  *                   will be performed.
@@ -2190,6 +2233,9 @@ AggregateStatisticsByRangeResponse aggregateStatisticsByRange( const std::string
  * values. Binning-columns whose value matches the nth member of the bin_values
  * list are placed in the nth bin. When a list is provided the binning-column
  * must be of type string or int.
+ * <p>
+ * NOTE:  The Kinetica instance being accessed must be running a CUDA
+ * (GPU-based) build to service this request.
  * 
  * @param tableName  Name of the table on which the ranged-statistics operation
  *                   will be performed.
@@ -2527,7 +2573,7 @@ AggregateUniqueResponse& aggregateUnique( const AggregateUniqueRequest& request_
  *                 the chunk size to be used for the result table. Must be used
  *                 in combination with the @a result_table option.
  *                         <li> gpudb::aggregate_unique_view_id: view this
- *                 result table is part of
+ *                 result table is part of.  The default value is ''.
  *                 </ul>
  * 
  * @return Response object containing the result of the operation.
@@ -2645,7 +2691,7 @@ AggregateUniqueResponse aggregateUnique( const std::string& tableName,
  *                 the chunk size to be used for the result table. Must be used
  *                 in combination with the @a result_table option.
  *                         <li> gpudb::aggregate_unique_view_id: view this
- *                 result table is part of
+ *                 result table is part of.  The default value is ''.
  *                 </ul>
  * @param[out] response_  Response object containing the results of the
  *                        operation.
@@ -2842,17 +2888,17 @@ AggregateUnpivotResponse& aggregateUnpivot( const AggregateUnpivotRequest& reque
  *                 'timestamp asc, x desc'.  The columns specified must be
  *                 present in input table.  If any alias is given for any
  *                 column name, the alias must be used, rather than the
- *                 original column name.
+ *                 original column name.  The default value is ''.
  *                         <li> gpudb::aggregate_unpivot_chunk_size: Indicates
  *                 the chunk size to be used for the result table. Must be used
  *                 in combination with the @a result_table option.
  *                         <li> gpudb::aggregate_unpivot_limit: The number of
- *                 records to keep.
+ *                 records to keep.  The default value is ''.
  *                         <li> gpudb::aggregate_unpivot_ttl: Sets the <a
  *                 href="../../concepts/ttl.html" target="_top">TTL</a> of the
  *                 table specified in @a result_table.
  *                         <li> gpudb::aggregate_unpivot_view_id: view this
- *                 result table is part of
+ *                 result table is part of.  The default value is ''.
  *                         <li> gpudb::aggregate_unpivot_materialize_on_gpu: If
  *                 @a true then the output columns will be cached on the GPU.
  *                 <ul>
@@ -2949,17 +2995,17 @@ AggregateUnpivotResponse aggregateUnpivot( const std::string& tableName,
  *                 'timestamp asc, x desc'.  The columns specified must be
  *                 present in input table.  If any alias is given for any
  *                 column name, the alias must be used, rather than the
- *                 original column name.
+ *                 original column name.  The default value is ''.
  *                         <li> gpudb::aggregate_unpivot_chunk_size: Indicates
  *                 the chunk size to be used for the result table. Must be used
  *                 in combination with the @a result_table option.
  *                         <li> gpudb::aggregate_unpivot_limit: The number of
- *                 records to keep.
+ *                 records to keep.  The default value is ''.
  *                         <li> gpudb::aggregate_unpivot_ttl: Sets the <a
  *                 href="../../concepts/ttl.html" target="_top">TTL</a> of the
  *                 table specified in @a result_table.
  *                         <li> gpudb::aggregate_unpivot_view_id: view this
- *                 result table is part of
+ *                 result table is part of.  The default value is ''.
  *                         <li> gpudb::aggregate_unpivot_materialize_on_gpu: If
  *                 @a true then the output columns will be cached on the GPU.
  *                 <ul>
@@ -3134,17 +3180,19 @@ AlterSystemPropertiesResponse& alterSystemProperties( const AlterSystemPropertie
  *                            gpudb::alter_system_properties_request_timeout:
  *                            Number of minutes after which filtering (e.g.,
  *                            /filter) and aggregating (e.g.,
- *                            /aggregate/groupby) queries will timeout.
+ *                            /aggregate/groupby) queries will timeout.  The
+ *                            default value is '20'.
  *                                    <li>
  *                            gpudb::alter_system_properties_max_get_records_size:
  *                            The maximum number of records the database will
- *                            serve for a given data retrieval call
+ *                            serve for a given data retrieval call.  The
+ *                            default value is '20000'.
  *                                    <li>
  *                            gpudb::alter_system_properties_memory_allocation_limit_mb:
  *                            Set the memory allocation limit for all rank
  *                            processes in megabytes, 0 means no limit.
  *                            Overrides any individual rank memory allocation
- *                            limits.
+ *                            limits.  The default value is '0'.
  *                                    <li>
  *                            gpudb::alter_system_properties_enable_audit:
  *                            Enable or disable auditing.
@@ -3167,7 +3215,8 @@ AlterSystemPropertiesResponse& alterSystemProperties( const AlterSystemPropertie
  *                            chunk cache when value is false
  *                                    <li>
  *                            gpudb::alter_system_properties_chunk_cache_size:
- *                            Size of the chunk cache in bytes.
+ *                            Size of the chunk cache in bytes.  The default
+ *                            value is '10000000'.
  *                            </ul>
  * @param options  Optional parameters.
  * 
@@ -3272,17 +3321,19 @@ AlterSystemPropertiesResponse alterSystemProperties( const std::map<std::string,
  *                            gpudb::alter_system_properties_request_timeout:
  *                            Number of minutes after which filtering (e.g.,
  *                            /filter) and aggregating (e.g.,
- *                            /aggregate/groupby) queries will timeout.
+ *                            /aggregate/groupby) queries will timeout.  The
+ *                            default value is '20'.
  *                                    <li>
  *                            gpudb::alter_system_properties_max_get_records_size:
  *                            The maximum number of records the database will
- *                            serve for a given data retrieval call
+ *                            serve for a given data retrieval call.  The
+ *                            default value is '20000'.
  *                                    <li>
  *                            gpudb::alter_system_properties_memory_allocation_limit_mb:
  *                            Set the memory allocation limit for all rank
  *                            processes in megabytes, 0 means no limit.
  *                            Overrides any individual rank memory allocation
- *                            limits.
+ *                            limits.  The default value is '0'.
  *                                    <li>
  *                            gpudb::alter_system_properties_enable_audit:
  *                            Enable or disable auditing.
@@ -3305,7 +3356,8 @@ AlterSystemPropertiesResponse alterSystemProperties( const std::map<std::string,
  *                            chunk cache when value is false
  *                                    <li>
  *                            gpudb::alter_system_properties_chunk_cache_size:
- *                            Size of the chunk cache in bytes.
+ *                            Size of the chunk cache in bytes.  The default
+ *                            value is '10000000'.
  *                            </ul>
  * @param options  Optional parameters.
  * @param[out] response_  Response object containing the results of the
@@ -4048,20 +4100,21 @@ AppendRecordsResponse& appendRecords( const AppendRecordsRequest& request_,
  *                 integer indicating the number of initial results to skip
  *                 from source table (specified by @a sourceTableName). Default
  *                 is 0. The minimum allowed value is 0. The maximum allowed
- *                 value is MAX_INT.
+ *                 value is MAX_INT.  The default value is '0'.
  *                         <li> gpudb::append_records_limit: A positive integer
  *                 indicating the maximum number of results to be returned from
  *                 source table (specified by @a sourceTableName). Or
  *                 END_OF_SET (-9999) to indicate that the max number of
- *                 results should be returned.
+ *                 results should be returned.  The default value is '-9999'.
  *                         <li> gpudb::append_records_expression: Optional
  *                 filter expression to apply to the source table (specified by
- *                 @a sourceTableName). Empty by default.
+ *                 @a sourceTableName). Empty by default.  The default value is
+ *                 ''.
  *                         <li> gpudb::append_records_order_by: Comma-separated
  *                 list of the columns and expressions to be sorted by from the
  *                 source table (specified by @a sourceTableName); e.g.
  *                 'timestamp asc, x desc'.  The @a order_by columns do not
- *                 have to be present in @a fieldMap.
+ *                 have to be present in @a fieldMap.  The default value is ''.
  *                         <li> gpudb::append_records_update_on_existing_pk:
  *                 Specifies the record collision policy for inserting the
  *                 source table records (specified by @a sourceTableName) into
@@ -4076,6 +4129,18 @@ AppendRecordsResponse& appendRecords( const AppendRecordsRequest& request_,
  *                 remain unchanged and the new record discarded.  If the
  *                 specified table does not have a primary key, then this
  *                 option is ignored.
+ *                 <ul>
+ *                         <li> gpudb::append_records_true
+ *                         <li> gpudb::append_records_false
+ *                 </ul>
+ *                 The default value is gpudb::append_records_false.
+ *                         <li> gpudb::append_records_truncate_strings: If set
+ *                 to {true}@{, it allows to append unbounded string to charN
+ *                 string. If 'truncate_strings' is 'true', the desination
+ *                 column is charN datatype, and the source column is
+ *                 unnbounded string, it will truncate the source string to
+ *                 length of N first, and then append the truncated string to
+ *                 the destination charN column. The default value is false.
  *                 <ul>
  *                         <li> gpudb::append_records_true
  *                         <li> gpudb::append_records_false
@@ -4116,20 +4181,21 @@ AppendRecordsResponse appendRecords( const std::string& tableName,
  *                 integer indicating the number of initial results to skip
  *                 from source table (specified by @a sourceTableName). Default
  *                 is 0. The minimum allowed value is 0. The maximum allowed
- *                 value is MAX_INT.
+ *                 value is MAX_INT.  The default value is '0'.
  *                         <li> gpudb::append_records_limit: A positive integer
  *                 indicating the maximum number of results to be returned from
  *                 source table (specified by @a sourceTableName). Or
  *                 END_OF_SET (-9999) to indicate that the max number of
- *                 results should be returned.
+ *                 results should be returned.  The default value is '-9999'.
  *                         <li> gpudb::append_records_expression: Optional
  *                 filter expression to apply to the source table (specified by
- *                 @a sourceTableName). Empty by default.
+ *                 @a sourceTableName). Empty by default.  The default value is
+ *                 ''.
  *                         <li> gpudb::append_records_order_by: Comma-separated
  *                 list of the columns and expressions to be sorted by from the
  *                 source table (specified by @a sourceTableName); e.g.
  *                 'timestamp asc, x desc'.  The @a order_by columns do not
- *                 have to be present in @a fieldMap.
+ *                 have to be present in @a fieldMap.  The default value is ''.
  *                         <li> gpudb::append_records_update_on_existing_pk:
  *                 Specifies the record collision policy for inserting the
  *                 source table records (specified by @a sourceTableName) into
@@ -4144,6 +4210,18 @@ AppendRecordsResponse appendRecords( const std::string& tableName,
  *                 remain unchanged and the new record discarded.  If the
  *                 specified table does not have a primary key, then this
  *                 option is ignored.
+ *                 <ul>
+ *                         <li> gpudb::append_records_true
+ *                         <li> gpudb::append_records_false
+ *                 </ul>
+ *                 The default value is gpudb::append_records_false.
+ *                         <li> gpudb::append_records_truncate_strings: If set
+ *                 to {true}@{, it allows to append unbounded string to charN
+ *                 string. If 'truncate_strings' is 'true', the desination
+ *                 column is charN datatype, and the source column is
+ *                 unnbounded string, it will truncate the source string to
+ *                 length of N first, and then append the truncated string to
+ *                 the destination charN column. The default value is false.
  *                 <ul>
  *                         <li> gpudb::append_records_true
  *                         <li> gpudb::append_records_false
@@ -4583,7 +4661,7 @@ CreateJoinTableResponse& createJoinTable( const CreateJoinTableRequest& request_
  *                 of a collection which is to contain the join. If the
  *                 collection provided is non-existent, the collection will be
  *                 automatically created. If empty, then the join will be at
- *                 the top level.
+ *                 the top level.  The default value is ''.
  *                         <li> gpudb::create_join_table_max_query_dimensions:
  *                 The maximum number of tables in a join that can be accessed
  *                 by a query and are not equated by a foreign-key to
@@ -4642,11 +4720,21 @@ CreateJoinTableResponse& createJoinTable( const CreateJoinTableRequest& request_
  *                 join table specified in @a joinTableName.  Ignored if @a
  *                 refresh_method is either @a on_insert or @a on_query.
  *                         <li> gpudb::create_join_table_view_id: view this
- *                 projection is part of
+ *                 projection is part of.  The default value is ''.
  *                         <li> gpudb::create_join_table_no_count: return a
  *                 count of 0 for the join table for logging and for
  *                 show_table. optimization needed for large overlapped
- *                 equi-join stencils
+ *                 equi-join stencils.  The default value is 'false'.
+ *                         <li> gpudb::create_join_table_chunk_size: Maximum
+ *                 size of a joined-chunk for this table. Defaults to the
+ *                 gpudb.conf file chunk size
+ *                         <li>
+ *                 gpudb::create_join_table_allow_right_primary_key_join: When
+ *                 true allows right joins from a key to a primary key to be
+ *                 done as primary key joins.  Such a join table cannot be
+ *                 joined to other join tables.  When false the right join
+ *                 shall be done as an equi-join.  The default value is
+ *                 'false'.
  *                 </ul>
  * 
  * @return Response object containing the result of the operation.
@@ -4694,7 +4782,7 @@ CreateJoinTableResponse createJoinTable( const std::string& joinTableName,
  *                 of a collection which is to contain the join. If the
  *                 collection provided is non-existent, the collection will be
  *                 automatically created. If empty, then the join will be at
- *                 the top level.
+ *                 the top level.  The default value is ''.
  *                         <li> gpudb::create_join_table_max_query_dimensions:
  *                 The maximum number of tables in a join that can be accessed
  *                 by a query and are not equated by a foreign-key to
@@ -4753,11 +4841,21 @@ CreateJoinTableResponse createJoinTable( const std::string& joinTableName,
  *                 join table specified in @a joinTableName.  Ignored if @a
  *                 refresh_method is either @a on_insert or @a on_query.
  *                         <li> gpudb::create_join_table_view_id: view this
- *                 projection is part of
+ *                 projection is part of.  The default value is ''.
  *                         <li> gpudb::create_join_table_no_count: return a
  *                 count of 0 for the join table for logging and for
  *                 show_table. optimization needed for large overlapped
- *                 equi-join stencils
+ *                 equi-join stencils.  The default value is 'false'.
+ *                         <li> gpudb::create_join_table_chunk_size: Maximum
+ *                 size of a joined-chunk for this table. Defaults to the
+ *                 gpudb.conf file chunk size
+ *                         <li>
+ *                 gpudb::create_join_table_allow_right_primary_key_join: When
+ *                 true allows right joins from a key to a primary key to be
+ *                 done as primary key joins.  Such a join table cannot be
+ *                 joined to other join tables.  When false the right join
+ *                 shall be done as an equi-join.  The default value is
+ *                 'false'.
  *                 </ul>
  * @param[out] response_  Response object containing the results of the
  *                        operation.
@@ -5048,6 +5146,7 @@ CreateProcResponse& createProc( const CreateProcRequest& request_,
  *                         <li> gpudb::create_proc_max_concurrency_per_node:
  *                 The maximum number of concurrent instances of the proc that
  *                 will be executed per node. 0 allows unlimited concurrency.
+ *                 The default value is '0'.
  *                 </ul>
  * 
  * @return Response object containing the result of the operation.
@@ -5107,6 +5206,7 @@ CreateProcResponse createProc( const std::string& procName,
  *                         <li> gpudb::create_proc_max_concurrency_per_node:
  *                 The maximum number of concurrent instances of the proc that
  *                 will be executed per node. 0 allows unlimited concurrency.
+ *                 The default value is '0'.
  *                 </ul>
  * @param[out] response_  Response object containing the results of the
  *                        operation.
@@ -5135,27 +5235,12 @@ CreateProcResponse& createProc( const std::string& procName,
  * href="../../concepts/projections.html#limitations-and-cautions"
  * target="_top">Projection Limitations and Cautions</a>.
  * <p>
- * <a href="../../concepts/window.html" target="_top">Window functions</a> are
- * available through this endpoint as well as {@link
+ * <a href="../../concepts/window.html" target="_top">Window functions</a>,
+ * which can perform operations like moving averages, are available through
+ * this endpoint as well as {@link
  * #getRecordsByColumnRaw(const GetRecordsByColumnRequest&) const}.
  * <p>
- * Notes:
- * <p>
- * A moving average can be calculated on a given column using the following
- * syntax in the @a columnNames parameter:
- * <p>
- * 'moving_average(column_name,num_points_before,num_points_after) as
- * new_column_name'
- * <p>
- * For each record in the moving_average function's 'column_name' parameter, it
- * computes the average over the previous 'num_points_before' records and the
- * subsequent 'num_points_after' records.
- * <p>
- * Note that moving average relies on @a order_by, and @a order_by requires
- * that all the data being ordered resides on the same processing node, so it
- * won't make sense to use @a order_by without moving average.
- * <p>
- * Also, a projection can be created with a different <a
+ * A projection can be created with a different <a
  * href="../../concepts/tables.html#shard-keys" target="_top">shard key</a>
  * than the source table.  By specifying @a shard_key, the projection will be
  * sharded according to the specified columns, regardless of how the source
@@ -5181,27 +5266,12 @@ CreateProjectionResponse createProjection( const CreateProjectionRequest& reques
  * href="../../concepts/projections.html#limitations-and-cautions"
  * target="_top">Projection Limitations and Cautions</a>.
  * <p>
- * <a href="../../concepts/window.html" target="_top">Window functions</a> are
- * available through this endpoint as well as {@link
+ * <a href="../../concepts/window.html" target="_top">Window functions</a>,
+ * which can perform operations like moving averages, are available through
+ * this endpoint as well as {@link
  * #getRecordsByColumnRaw(const GetRecordsByColumnRequest&,RawGetRecordsByColumnResponse&) const}.
  * <p>
- * Notes:
- * <p>
- * A moving average can be calculated on a given column using the following
- * syntax in the @a columnNames parameter:
- * <p>
- * 'moving_average(column_name,num_points_before,num_points_after) as
- * new_column_name'
- * <p>
- * For each record in the moving_average function's 'column_name' parameter, it
- * computes the average over the previous 'num_points_before' records and the
- * subsequent 'num_points_after' records.
- * <p>
- * Note that moving average relies on @a order_by, and @a order_by requires
- * that all the data being ordered resides on the same processing node, so it
- * won't make sense to use @a order_by without moving average.
- * <p>
- * Also, a projection can be created with a different <a
+ * A projection can be created with a different <a
  * href="../../concepts/tables.html#shard-keys" target="_top">shard key</a>
  * than the source table.  By specifying @a shard_key, the projection will be
  * sharded according to the specified columns, regardless of how the source
@@ -5231,27 +5301,12 @@ CreateProjectionResponse& createProjection( const CreateProjectionRequest& reque
  * href="../../concepts/projections.html#limitations-and-cautions"
  * target="_top">Projection Limitations and Cautions</a>.
  * <p>
- * <a href="../../concepts/window.html" target="_top">Window functions</a> are
- * available through this endpoint as well as {@link
+ * <a href="../../concepts/window.html" target="_top">Window functions</a>,
+ * which can perform operations like moving averages, are available through
+ * this endpoint as well as {@link
  * #getRecordsByColumnRaw(const GetRecordsByColumnRequest&) const}.
  * <p>
- * Notes:
- * <p>
- * A moving average can be calculated on a given column using the following
- * syntax in the @a columnNames parameter:
- * <p>
- * 'moving_average(column_name,num_points_before,num_points_after) as
- * new_column_name'
- * <p>
- * For each record in the moving_average function's 'column_name' parameter, it
- * computes the average over the previous 'num_points_before' records and the
- * subsequent 'num_points_after' records.
- * <p>
- * Note that moving average relies on @a order_by, and @a order_by requires
- * that all the data being ordered resides on the same processing node, so it
- * won't make sense to use @a order_by without moving average.
- * <p>
- * Also, a projection can be created with a different <a
+ * A projection can be created with a different <a
  * href="../../concepts/tables.html#shard-keys" target="_top">shard key</a>
  * than the source table.  By specifying @a shard_key, the projection will be
  * sharded according to the specified columns, regardless of how the source
@@ -5274,11 +5329,12 @@ CreateProjectionResponse& createProjection( const CreateProjectionRequest& reque
  *                 target="_top">collection</a> to which the projection is to
  *                 be assigned as a child. If the collection provided is
  *                 non-existent, the collection will be automatically created.
- *                 If empty, then the projection will be at the top level.
+ *                 If empty, then the projection will be at the top level.  The
+ *                 default value is ''.
  *                         <li> gpudb::create_projection_expression: An
  *                 optional filter <a href="../../concepts/expressions.html"
  *                 target="_top">expression</a> to be applied to the source
- *                 table prior to the projection.
+ *                 table prior to the projection.  The default value is ''.
  *                         <li> gpudb::create_projection_is_replicated: If @a
  *                 true then the projection will be replicated even if the
  *                 source table is not.
@@ -5288,13 +5344,13 @@ CreateProjectionResponse& createProjection( const CreateProjectionRequest& reque
  *                 </ul>
  *                 The default value is gpudb::create_projection_false.
  *                         <li> gpudb::create_projection_limit: The number of
- *                 records to keep.
+ *                 records to keep.  The default value is ''.
  *                         <li> gpudb::create_projection_order_by:
  *                 Comma-separated list of the columns to be sorted by; e.g.
  *                 'timestamp asc, x desc'.  The columns specified must be
  *                 present in @a columnNames.  If any alias is given for any
  *                 column name, the alias must be used, rather than the
- *                 original column name.
+ *                 original column name.  The default value is ''.
  *                         <li> gpudb::create_projection_materialize_on_gpu: If
  *                 @a true then the columns of the projection will be cached on
  *                 the GPU.
@@ -5319,7 +5375,7 @@ CreateProjectionResponse& createProjection( const CreateProjectionRequest& reque
  *                 'column1, column2'.  The columns specified must be present
  *                 in @a columnNames.  If any alias is given for any column
  *                 name, the alias must be used, rather than the original
- *                 column name.
+ *                 column name.  The default value is ''.
  *                         <li> gpudb::create_projection_persist: If @a true,
  *                 then the projection specified in @a projectionName will be
  *                 persisted and will not expire unless a @a ttl is specified.
@@ -5338,9 +5394,9 @@ CreateProjectionResponse& createProjection( const CreateProjectionRequest& reque
  *                         <li> gpudb::create_projection_true
  *                         <li> gpudb::create_projection_false
  *                 </ul>
- *                 The default value is gpudb::create_projection_true.
+ *                 The default value is gpudb::create_projection_false.
  *                         <li> gpudb::create_projection_view_id: view this
- *                 projection is part of
+ *                 projection is part of.  The default value is ''.
  *                 </ul>
  * 
  * @return Response object containing the result of the operation.
@@ -5363,27 +5419,12 @@ CreateProjectionResponse createProjection( const std::string& tableName,
  * href="../../concepts/projections.html#limitations-and-cautions"
  * target="_top">Projection Limitations and Cautions</a>.
  * <p>
- * <a href="../../concepts/window.html" target="_top">Window functions</a> are
- * available through this endpoint as well as {@link
+ * <a href="../../concepts/window.html" target="_top">Window functions</a>,
+ * which can perform operations like moving averages, are available through
+ * this endpoint as well as {@link
  * #getRecordsByColumnRaw(const GetRecordsByColumnRequest&) const}.
  * <p>
- * Notes:
- * <p>
- * A moving average can be calculated on a given column using the following
- * syntax in the @a columnNames parameter:
- * <p>
- * 'moving_average(column_name,num_points_before,num_points_after) as
- * new_column_name'
- * <p>
- * For each record in the moving_average function's 'column_name' parameter, it
- * computes the average over the previous 'num_points_before' records and the
- * subsequent 'num_points_after' records.
- * <p>
- * Note that moving average relies on @a order_by, and @a order_by requires
- * that all the data being ordered resides on the same processing node, so it
- * won't make sense to use @a order_by without moving average.
- * <p>
- * Also, a projection can be created with a different <a
+ * A projection can be created with a different <a
  * href="../../concepts/tables.html#shard-keys" target="_top">shard key</a>
  * than the source table.  By specifying @a shard_key, the projection will be
  * sharded according to the specified columns, regardless of how the source
@@ -5406,11 +5447,12 @@ CreateProjectionResponse createProjection( const std::string& tableName,
  *                 target="_top">collection</a> to which the projection is to
  *                 be assigned as a child. If the collection provided is
  *                 non-existent, the collection will be automatically created.
- *                 If empty, then the projection will be at the top level.
+ *                 If empty, then the projection will be at the top level.  The
+ *                 default value is ''.
  *                         <li> gpudb::create_projection_expression: An
  *                 optional filter <a href="../../concepts/expressions.html"
  *                 target="_top">expression</a> to be applied to the source
- *                 table prior to the projection.
+ *                 table prior to the projection.  The default value is ''.
  *                         <li> gpudb::create_projection_is_replicated: If @a
  *                 true then the projection will be replicated even if the
  *                 source table is not.
@@ -5420,13 +5462,13 @@ CreateProjectionResponse createProjection( const std::string& tableName,
  *                 </ul>
  *                 The default value is gpudb::create_projection_false.
  *                         <li> gpudb::create_projection_limit: The number of
- *                 records to keep.
+ *                 records to keep.  The default value is ''.
  *                         <li> gpudb::create_projection_order_by:
  *                 Comma-separated list of the columns to be sorted by; e.g.
  *                 'timestamp asc, x desc'.  The columns specified must be
  *                 present in @a columnNames.  If any alias is given for any
  *                 column name, the alias must be used, rather than the
- *                 original column name.
+ *                 original column name.  The default value is ''.
  *                         <li> gpudb::create_projection_materialize_on_gpu: If
  *                 @a true then the columns of the projection will be cached on
  *                 the GPU.
@@ -5451,7 +5493,7 @@ CreateProjectionResponse createProjection( const std::string& tableName,
  *                 'column1, column2'.  The columns specified must be present
  *                 in @a columnNames.  If any alias is given for any column
  *                 name, the alias must be used, rather than the original
- *                 column name.
+ *                 column name.  The default value is ''.
  *                         <li> gpudb::create_projection_persist: If @a true,
  *                 then the projection specified in @a projectionName will be
  *                 persisted and will not expire unless a @a ttl is specified.
@@ -5470,9 +5512,9 @@ CreateProjectionResponse createProjection( const std::string& tableName,
  *                         <li> gpudb::create_projection_true
  *                         <li> gpudb::create_projection_false
  *                 </ul>
- *                 The default value is gpudb::create_projection_true.
+ *                 The default value is gpudb::create_projection_false.
  *                         <li> gpudb::create_projection_view_id: view this
- *                 projection is part of
+ *                 projection is part of.  The default value is ''.
  *                 </ul>
  * @param[out] response_  Response object containing the results of the
  *                        operation.
@@ -6502,10 +6544,14 @@ CreateTypeResponse& createType( const CreateTypeRequest& request_,
  *                            <li> gpudb::create_type_dict: This property
  *                    indicates that this column should be dictionary encoded.
  *                    It can only be used in conjunction with string columns
- *                    marked with a charN property or with int or long columns.
- *                    This property is appropriate for columns where the
- *                    cardinality (the number of unique values) is expected to
- *                    be low, and can save a large amount of memory.
+ *                    marked with a charN or date property or with int or long
+ *                    columns. This property is appropriate for columns where
+ *                    the cardinality (the number of unique values) is expected
+ *                    to be low, and can save a large amount of memory.
+ *                            <li> gpudb::create_type_init_with_now: For
+ *                    columns with attributes of date, time, datetime or
+ *                    timestamp, at insert time, replace empty strings and
+ *                    invalid timestamps with NOW()
  *                    </ul>
  * @param options  Optional parameters.
  * 
@@ -6705,10 +6751,14 @@ CreateTypeResponse createType( const std::string& typeDefinition,
  *                            <li> gpudb::create_type_dict: This property
  *                    indicates that this column should be dictionary encoded.
  *                    It can only be used in conjunction with string columns
- *                    marked with a charN property or with int or long columns.
- *                    This property is appropriate for columns where the
- *                    cardinality (the number of unique values) is expected to
- *                    be low, and can save a large amount of memory.
+ *                    marked with a charN or date property or with int or long
+ *                    columns. This property is appropriate for columns where
+ *                    the cardinality (the number of unique values) is expected
+ *                    to be low, and can save a large amount of memory.
+ *                            <li> gpudb::create_type_init_with_now: For
+ *                    columns with attributes of date, time, datetime or
+ *                    timestamp, at insert time, replace empty strings and
+ *                    invalid timestamps with NOW()
  *                    </ul>
  * @param options  Optional parameters.
  * @param[out] response_  Response object containing the results of the
@@ -6852,7 +6902,7 @@ CreateUnionResponse& createUnion( const CreateUnionRequest& request_,
  *                 collection which is to contain the output table. If the
  *                 collection provided is non-existent, the collection will be
  *                 automatically created. If empty, the output table will be a
- *                 top-level table.
+ *                 top-level table.  The default value is ''.
  *                         <li> gpudb::create_union_materialize_on_gpu: If @a
  *                 true, then the columns of the output table will be cached on
  *                 the GPU.
@@ -6916,7 +6966,7 @@ CreateUnionResponse& createUnion( const CreateUnionRequest& request_,
  *                 </ul>
  *                 The default value is gpudb::create_union_false.
  *                         <li> gpudb::create_union_view_id: view the output
- *                 table will be a part of
+ *                 table will be a part of.  The default value is ''.
  *                         <li> gpudb::create_union_force_replicated: If @a
  *                 true, then the table specified in @a tableName will be
  *                 replicated even if the source tables are not.
@@ -6982,7 +7032,7 @@ CreateUnionResponse createUnion( const std::string& tableName,
  *                 collection which is to contain the output table. If the
  *                 collection provided is non-existent, the collection will be
  *                 automatically created. If empty, the output table will be a
- *                 top-level table.
+ *                 top-level table.  The default value is ''.
  *                         <li> gpudb::create_union_materialize_on_gpu: If @a
  *                 true, then the columns of the output table will be cached on
  *                 the GPU.
@@ -7046,7 +7096,7 @@ CreateUnionResponse createUnion( const std::string& tableName,
  *                 </ul>
  *                 The default value is gpudb::create_union_false.
  *                         <li> gpudb::create_union_view_id: view the output
- *                 table will be a part of
+ *                 table will be a part of.  The default value is ''.
  *                         <li> gpudb::create_union_force_replicated: If @a
  *                 true, then the table specified in @a tableName will be
  *                 replicated even if the source tables are not.
@@ -7334,11 +7384,14 @@ DeleteRecordsResponse& deleteRecords( const DeleteRecordsRequest& request_,
  *                 <ul>
  *                         <li> gpudb::delete_records_global_expression: An
  *                 optional global expression to reduce the search space of the
- *                 @a expressions.
- *                         <li> gpudb::delete_records_record_id: A record id
+ *                 @a expressions.  The default value is ''.
+ *                         <li> gpudb::delete_records_record_id: A record ID
  *                 identifying a single record, obtained at the time of
  *                 /insert/records or by calling /get/records/fromcollection
- *                 with the *return_record_ids* option.
+ *                 with the *return_record_ids* option. This option cannot be
+ *                 used to delete records from <a
+ *                 href="../../concepts/tables.html#replication"
+ *                 target="_top">replicated</a> tables.
  *                         <li> gpudb::delete_records_delete_all_records: If
  *                 set to @a true, all records in the table will be deleted. If
  *                 set to @a false, then the option is effectively ignored.
@@ -7380,11 +7433,14 @@ DeleteRecordsResponse deleteRecords( const std::string& tableName,
  *                 <ul>
  *                         <li> gpudb::delete_records_global_expression: An
  *                 optional global expression to reduce the search space of the
- *                 @a expressions.
- *                         <li> gpudb::delete_records_record_id: A record id
+ *                 @a expressions.  The default value is ''.
+ *                         <li> gpudb::delete_records_record_id: A record ID
  *                 identifying a single record, obtained at the time of
  *                 /insert/records or by calling /get/records/fromcollection
- *                 with the *return_record_ids* option.
+ *                 with the *return_record_ids* option. This option cannot be
+ *                 used to delete records from <a
+ *                 href="../../concepts/tables.html#replication"
+ *                 target="_top">replicated</a> tables.
  *                         <li> gpudb::delete_records_delete_all_records: If
  *                 set to @a true, all records in the table will be deleted. If
  *                 set to @a false, then the option is effectively ignored.
@@ -7595,7 +7651,7 @@ ExecuteProcResponse& executeProc( const ExecuteProcRequest& request_,
  *                 Cached input data will be retained until the proc status is
  *                 cleared with the /show/proc/status option of
  *                 /show/proc/status and all proc instances using the cached
- *                 data have completed.
+ *                 data have completed.  The default value is ''.
  *                         <li> gpudb::execute_proc_use_cached_input: A
  *                 comma-delimited list of run IDs (as returned from prior
  *                 calls to /execute/proc) of running or completed proc
@@ -7606,13 +7662,14 @@ ExecuteProcResponse& executeProc( const ExecuteProcRequest& request_,
  *                 will be passed to the proc. If the same table was cached for
  *                 multiple specified run IDs, the cached data from the first
  *                 run ID specified in the list that includes that table will
- *                 be used.
+ *                 be used.  The default value is ''.
  *                         <li> gpudb::execute_proc_kifs_input_dirs: A
  *                 comma-delimited list of KiFS directories whose local files
  *                 will be made directly accessible to the proc through the
  *                 API. (All KiFS files, local or not, are also accessible
  *                 through the file system below the KiFS mount point.) Each
  *                 name specified must the name of an existing KiFS directory.
+ *                 The default value is ''.
  *                 </ul>
  * 
  * @return Response object containing the result of the operation.
@@ -7669,7 +7726,7 @@ ExecuteProcResponse executeProc( const std::string& procName,
  *                 Cached input data will be retained until the proc status is
  *                 cleared with the /show/proc/status option of
  *                 /show/proc/status and all proc instances using the cached
- *                 data have completed.
+ *                 data have completed.  The default value is ''.
  *                         <li> gpudb::execute_proc_use_cached_input: A
  *                 comma-delimited list of run IDs (as returned from prior
  *                 calls to /execute/proc) of running or completed proc
@@ -7680,13 +7737,14 @@ ExecuteProcResponse executeProc( const std::string& procName,
  *                 will be passed to the proc. If the same table was cached for
  *                 multiple specified run IDs, the cached data from the first
  *                 run ID specified in the list that includes that table will
- *                 be used.
+ *                 be used.  The default value is ''.
  *                         <li> gpudb::execute_proc_kifs_input_dirs: A
  *                 comma-delimited list of KiFS directories whose local files
  *                 will be made directly accessible to the proc through the
  *                 API. (All KiFS files, local or not, are also accessible
  *                 through the file system below the KiFS mount point.) Each
  *                 name specified must the name of an existing KiFS directory.
+ *                 The default value is ''.
  *                 </ul>
  * @param[out] response_  Response object containing the results of the
  *                        operation.
@@ -7781,7 +7839,7 @@ FilterResponse& filter( const FilterRequest& request_,
  *                 be automatically created. If empty, then the newly created
  *                 view will be top-level.
  *                         <li> gpudb::filter_view_id: view this filtered-view
- *                 is part of
+ *                 is part of.  The default value is ''.
  *                         <li> gpudb::filter_ttl: Sets the <a
  *                 href="../../concepts/ttl.html" target="_top">TTL</a> of the
  *                 view specified in @a viewName.
@@ -7828,7 +7886,7 @@ FilterResponse filter( const std::string& tableName,
  *                 be automatically created. If empty, then the newly created
  *                 view will be top-level.
  *                         <li> gpudb::filter_view_id: view this filtered-view
- *                 is part of
+ *                 is part of.  The default value is ''.
  *                         <li> gpudb::filter_ttl: Sets the <a
  *                 href="../../concepts/ttl.html" target="_top">TTL</a> of the
  *                 view specified in @a viewName.
@@ -9596,7 +9654,8 @@ FilterByTableResponse& filterByTable( const FilterByTableRequest& request_,
  *                 </ul>
  *                 The default value is gpudb::filter_by_table_normal.
  *                         <li> gpudb::filter_by_table_buffer: Buffer size, in
- *                 meters. Only relevant for @a spatial mode.
+ *                 meters. Only relevant for @a spatial mode.  The default
+ *                 value is '0'.
  *                         <li> gpudb::filter_by_table_buffer_method: Method
  *                 used to buffer polygons.  Only relevant for @a spatial mode.
  *                 <ul>
@@ -9607,16 +9666,17 @@ FilterByTableResponse& filterByTable( const FilterByTableRequest& request_,
  *                 The default value is gpudb::filter_by_table_normal.
  *                         <li> gpudb::filter_by_table_max_partition_size:
  *                 Maximum number of points in a partition. Only relevant for
- *                 @a spatial mode.
+ *                 @a spatial mode.  The default value is '0'.
  *                         <li> gpudb::filter_by_table_max_partition_score:
  *                 Maximum number of points * edges in a partition. Only
- *                 relevant for @a spatial mode.
+ *                 relevant for @a spatial mode.  The default value is
+ *                 '8000000'.
  *                         <li> gpudb::filter_by_table_x_column_name: Name of
  *                 column containing x value of point being filtered in @a
- *                 spatial mode.
+ *                 spatial mode.  The default value is 'x'.
  *                         <li> gpudb::filter_by_table_y_column_name: Name of
  *                 column containing y value of point being filtered in @a
- *                 spatial mode.
+ *                 spatial mode.  The default value is 'y'.
  *                 </ul>
  * 
  * @return Response object containing the result of the operation.
@@ -9681,7 +9741,8 @@ FilterByTableResponse filterByTable( const std::string& tableName,
  *                 </ul>
  *                 The default value is gpudb::filter_by_table_normal.
  *                         <li> gpudb::filter_by_table_buffer: Buffer size, in
- *                 meters. Only relevant for @a spatial mode.
+ *                 meters. Only relevant for @a spatial mode.  The default
+ *                 value is '0'.
  *                         <li> gpudb::filter_by_table_buffer_method: Method
  *                 used to buffer polygons.  Only relevant for @a spatial mode.
  *                 <ul>
@@ -9692,16 +9753,17 @@ FilterByTableResponse filterByTable( const std::string& tableName,
  *                 The default value is gpudb::filter_by_table_normal.
  *                         <li> gpudb::filter_by_table_max_partition_size:
  *                 Maximum number of points in a partition. Only relevant for
- *                 @a spatial mode.
+ *                 @a spatial mode.  The default value is '0'.
  *                         <li> gpudb::filter_by_table_max_partition_score:
  *                 Maximum number of points * edges in a partition. Only
- *                 relevant for @a spatial mode.
+ *                 relevant for @a spatial mode.  The default value is
+ *                 '8000000'.
  *                         <li> gpudb::filter_by_table_x_column_name: Name of
  *                 column containing x value of point being filtered in @a
- *                 spatial mode.
+ *                 spatial mode.  The default value is 'x'.
  *                         <li> gpudb::filter_by_table_y_column_name: Name of
  *                 column containing y value of point being filtered in @a
- *                 spatial mode.
+ *                 spatial mode.  The default value is 'y'.
  *                 </ul>
  * @param[out] response_  Response object containing the results of the
  *                        operation.
@@ -10721,8 +10783,9 @@ GetRecordsResponse<TResponse>& getRecords( const Type& type_,
  * returned. This endpoint supports pagination with the @a offset and @a limit
  * parameters.
  * <p>
- * <a href="../../concepts/window.html" target="_top">Window functions</a> are
- * available through this endpoint as well as {@link
+ * <a href="../../concepts/window.html" target="_top">Window functions</a>,
+ * which can perform operations like moving averages, are available through
+ * this endpoint as well as {@link
  * #createProjection(const CreateProjectionRequest&) const}.
  * <p>
  * When using pagination, if the table (or the underlying table in the case of
@@ -10750,8 +10813,9 @@ RawGetRecordsByColumnResponse getRecordsByColumnRaw( const GetRecordsByColumnReq
  * returned. This endpoint supports pagination with the @a offset and @a limit
  * parameters.
  * <p>
- * <a href="../../concepts/window.html" target="_top">Window functions</a> are
- * available through this endpoint as well as {@link
+ * <a href="../../concepts/window.html" target="_top">Window functions</a>,
+ * which can perform operations like moving averages, are available through
+ * this endpoint as well as {@link
  * #createProjection(const CreateProjectionRequest&,CreateProjectionResponse&) const}.
  * <p>
  * When using pagination, if the table (or the underlying table in the case of
@@ -10783,8 +10847,9 @@ RawGetRecordsByColumnResponse& getRecordsByColumnRaw( const GetRecordsByColumnRe
  * returned. This endpoint supports pagination with the @a offset and @a limit
  * parameters.
  * <p>
- * <a href="../../concepts/window.html" target="_top">Window functions</a> are
- * available through this endpoint as well as {@link
+ * <a href="../../concepts/window.html" target="_top">Window functions</a>,
+ * which can perform operations like moving averages, are available through
+ * this endpoint as well as {@link
  * #createProjection(const CreateProjectionRequest&) const}.
  * <p>
  * When using pagination, if the table (or the underlying table in the case of
@@ -10812,8 +10877,9 @@ GetRecordsByColumnResponse getRecordsByColumn( const GetRecordsByColumnRequest& 
  * returned. This endpoint supports pagination with the @a offset and @a limit
  * parameters.
  * <p>
- * <a href="../../concepts/window.html" target="_top">Window functions</a> are
- * available through this endpoint as well as {@link
+ * <a href="../../concepts/window.html" target="_top">Window functions</a>,
+ * which can perform operations like moving averages, are available through
+ * this endpoint as well as {@link
  * #createProjection(const CreateProjectionRequest&) const}.
  * <p>
  * When using pagination, if the table (or the underlying table in the case of
@@ -10845,8 +10911,9 @@ GetRecordsByColumnResponse& getRecordsByColumn( const GetRecordsByColumnRequest&
  * returned. This endpoint supports pagination with the @a offset and @a limit
  * parameters.
  * <p>
- * <a href="../../concepts/window.html" target="_top">Window functions</a> are
- * available through this endpoint as well as {@link
+ * <a href="../../concepts/window.html" target="_top">Window functions</a>,
+ * which can perform operations like moving averages, are available through
+ * this endpoint as well as {@link
  * #createProjection(const std::string&,const std::string&,const std::vector<std::string>&,const std::map<std::string, std::string>&) const}.
  * <p>
  * When using pagination, if the table (or the underlying table in the case of
@@ -10888,7 +10955,7 @@ GetRecordsByColumnResponse& getRecordsByColumn( const GetRecordsByColumnRequest&
  *                 The default value is gpudb::get_records_by_column_ascending.
  *                         <li> gpudb::get_records_by_column_order_by:
  *                 Comma-separated list of the columns to be sorted by; e.g.
- *                 'timestamp asc, x desc'.
+ *                 'timestamp asc, x desc'.  The default value is ''.
  *                         <li>
  *                 gpudb::get_records_by_column_convert_wkts_to_wkbs: If true,
  *                 then WKT string columns will be returned as WKB bytes.
@@ -10915,8 +10982,9 @@ GetRecordsByColumnResponse getRecordsByColumn( const std::string& tableName,
  * returned. This endpoint supports pagination with the @a offset and @a limit
  * parameters.
  * <p>
- * <a href="../../concepts/window.html" target="_top">Window functions</a> are
- * available through this endpoint as well as {@link
+ * <a href="../../concepts/window.html" target="_top">Window functions</a>,
+ * which can perform operations like moving averages, are available through
+ * this endpoint as well as {@link
  * #createProjection(const std::string&,const std::string&,const std::vector<std::string>&,const std::map<std::string, std::string>&) const}.
  * <p>
  * When using pagination, if the table (or the underlying table in the case of
@@ -10958,7 +11026,7 @@ GetRecordsByColumnResponse getRecordsByColumn( const std::string& tableName,
  *                 The default value is gpudb::get_records_by_column_ascending.
  *                         <li> gpudb::get_records_by_column_order_by:
  *                 Comma-separated list of the columns to be sorted by; e.g.
- *                 'timestamp asc, x desc'.
+ *                 'timestamp asc, x desc'.  The default value is ''.
  *                         <li>
  *                 gpudb::get_records_by_column_convert_wkts_to_wkbs: If true,
  *                 then WKT string columns will be returned as WKB bytes.
@@ -13992,7 +14060,7 @@ MergeRecordsResponse& mergeRecords( const MergeRecordsRequest& request_,
  *                 chunk size to be used for the merged table specified in @a
  *                 tableName.
  *                         <li> gpudb::merge_records_view_id: view this result
- *                 table is part of
+ *                 table is part of.  The default value is ''.
  *                 </ul>
  * 
  * @return Response object containing the result of the operation.
@@ -14073,7 +14141,7 @@ MergeRecordsResponse mergeRecords( const std::string& tableName,
  *                 chunk size to be used for the merged table specified in @a
  *                 tableName.
  *                         <li> gpudb::merge_records_view_id: view this result
- *                 table is part of
+ *                 table is part of.  The default value is ''.
  *                 </ul>
  * @param[out] response_  Response object containing the results of the
  *                        operation.
@@ -14836,21 +14904,27 @@ ShowSystemTimingResponse& showSystemTiming( const std::map<std::string, std::str
                                             ShowSystemTimingResponse& response_ ) const;
 
 /**
- * Retrieves detailed information about a table, view, or collection, specified
- * in @a tableName. If the supplied @a tableName is a collection, the call can
- * return information about either the collection itself or the tables and
- * views it contains. If @a tableName is empty, information about all
- * collections and top-level tables and views can be returned.
+ * Retrieves detailed information about tables, views, and collections.
+ * <p>
+ * If @a tableName specifies a table or view, information specific to that
+ * entity will be returned.
+ * <p>
+ * If @a tableName specifies a collection, the call can return information
+ * about either the collection itself (setting the @a show_children option to
+ * @a false) or the tables and views it contains (setting @a show_children to
+ * @a true).
+ * <p>
+ * If @a tableName is empty, information about all collections and top-level
+ * tables and views can be returned.  Note:  @a show_children must be set to @a
+ * true.
+ * <p>
+ * If @a tableName is '*', information about all tables, collections, and views
+ * will be returned.  Note:  @a show_children must be set to @a true.
  * <p>
  * If the option @a get_sizes is set to @a true, then the sizes (objects and
  * elements) of each table are returned (in @a sizes and @a fullSizes), along
  * with the total number of objects in the requested table (in @a totalSize and
  * @a totalFullSize).
- * <p>
- * For a collection, setting the @a show_children option to @a false returns
- * only information about the collection itself; setting @a show_children to @a
- * true returns a list of tables and views contained in the collection, along
- * with their corresponding detail.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -14862,21 +14936,27 @@ ShowSystemTimingResponse& showSystemTiming( const std::map<std::string, std::str
 ShowTableResponse showTable( const ShowTableRequest& request_ ) const;
 
 /**
- * Retrieves detailed information about a table, view, or collection, specified
- * in @a tableName. If the supplied @a tableName is a collection, the call can
- * return information about either the collection itself or the tables and
- * views it contains. If @a tableName is empty, information about all
- * collections and top-level tables and views can be returned.
+ * Retrieves detailed information about tables, views, and collections.
+ * <p>
+ * If @a tableName specifies a table or view, information specific to that
+ * entity will be returned.
+ * <p>
+ * If @a tableName specifies a collection, the call can return information
+ * about either the collection itself (setting the @a show_children option to
+ * @a false) or the tables and views it contains (setting @a show_children to
+ * @a true).
+ * <p>
+ * If @a tableName is empty, information about all collections and top-level
+ * tables and views can be returned.  Note:  @a show_children must be set to @a
+ * true.
+ * <p>
+ * If @a tableName is '*', information about all tables, collections, and views
+ * will be returned.  Note:  @a show_children must be set to @a true.
  * <p>
  * If the option @a get_sizes is set to @a true, then the sizes (objects and
  * elements) of each table are returned (in @a sizes and @a fullSizes), along
  * with the total number of objects in the requested table (in @a totalSize and
  * @a totalFullSize).
- * <p>
- * For a collection, setting the @a show_children option to @a false returns
- * only information about the collection itself; setting @a show_children to @a
- * true returns a list of tables and views contained in the collection, along
- * with their corresponding detail.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -14892,21 +14972,27 @@ ShowTableResponse& showTable( const ShowTableRequest& request_,
                               ShowTableResponse& response_ ) const;
 
 /**
- * Retrieves detailed information about a table, view, or collection, specified
- * in @a tableName. If the supplied @a tableName is a collection, the call can
- * return information about either the collection itself or the tables and
- * views it contains. If @a tableName is empty, information about all
- * collections and top-level tables and views can be returned.
+ * Retrieves detailed information about tables, views, and collections.
+ * <p>
+ * If @a tableName specifies a table or view, information specific to that
+ * entity will be returned.
+ * <p>
+ * If @a tableName specifies a collection, the call can return information
+ * about either the collection itself (setting the @a show_children option to
+ * @a false) or the tables and views it contains (setting @a show_children to
+ * @a true).
+ * <p>
+ * If @a tableName is empty, information about all collections and top-level
+ * tables and views can be returned.  Note:  @a show_children must be set to @a
+ * true.
+ * <p>
+ * If @a tableName is '*', information about all tables, collections, and views
+ * will be returned.  Note:  @a show_children must be set to @a true.
  * <p>
  * If the option @a get_sizes is set to @a true, then the sizes (objects and
  * elements) of each table are returned (in @a sizes and @a fullSizes), along
  * with the total number of objects in the requested table (in @a totalSize and
  * @a totalFullSize).
- * <p>
- * For a collection, setting the @a show_children option to @a false returns
- * only information about the collection itself; setting @a show_children to @a
- * true returns a list of tables and views contained in the collection, along
- * with their corresponding detail.
  * 
  * @param tableName  Name of the table for which to retrieve the information.
  *                   If blank, then information about all collections and
@@ -14930,11 +15016,11 @@ ShowTableResponse& showTable( const ShowTableRequest& request_,
  *                 The default value is gpudb::show_table_false.
  *                         <li> gpudb::show_table_show_children: If @a
  *                 tableName is a collection, then @a true will return
- *                 information about the children of the collection, and @a
+ *                 information about the children of the collection, while @a
  *                 false will return information about the collection itself.
- *                 If @a tableName is a table or view, @a show_children must be
- *                 @a false. If @a tableName is empty, then @a show_children
- *                 must be @a true.
+ *                 If @a tableName is empty or '*', then @a show_children must
+ *                 be @a true (or not specified); otherwise, no results will be
+ *                 returned.
  *                 <ul>
  *                         <li> gpudb::show_table_true
  *                         <li> gpudb::show_table_false
@@ -14965,21 +15051,27 @@ ShowTableResponse showTable( const std::string& tableName,
                              const std::map<std::string, std::string>& options ) const;
 
 /**
- * Retrieves detailed information about a table, view, or collection, specified
- * in @a tableName. If the supplied @a tableName is a collection, the call can
- * return information about either the collection itself or the tables and
- * views it contains. If @a tableName is empty, information about all
- * collections and top-level tables and views can be returned.
+ * Retrieves detailed information about tables, views, and collections.
+ * <p>
+ * If @a tableName specifies a table or view, information specific to that
+ * entity will be returned.
+ * <p>
+ * If @a tableName specifies a collection, the call can return information
+ * about either the collection itself (setting the @a show_children option to
+ * @a false) or the tables and views it contains (setting @a show_children to
+ * @a true).
+ * <p>
+ * If @a tableName is empty, information about all collections and top-level
+ * tables and views can be returned.  Note:  @a show_children must be set to @a
+ * true.
+ * <p>
+ * If @a tableName is '*', information about all tables, collections, and views
+ * will be returned.  Note:  @a show_children must be set to @a true.
  * <p>
  * If the option @a get_sizes is set to @a true, then the sizes (objects and
  * elements) of each table are returned (in @a sizes and @a fullSizes), along
  * with the total number of objects in the requested table (in @a totalSize and
  * @a totalFullSize).
- * <p>
- * For a collection, setting the @a show_children option to @a false returns
- * only information about the collection itself; setting @a show_children to @a
- * true returns a list of tables and views contained in the collection, along
- * with their corresponding detail.
  * 
  * @param tableName  Name of the table for which to retrieve the information.
  *                   If blank, then information about all collections and
@@ -15003,11 +15095,11 @@ ShowTableResponse showTable( const std::string& tableName,
  *                 The default value is gpudb::show_table_false.
  *                         <li> gpudb::show_table_show_children: If @a
  *                 tableName is a collection, then @a true will return
- *                 information about the children of the collection, and @a
+ *                 information about the children of the collection, while @a
  *                 false will return information about the collection itself.
- *                 If @a tableName is a table or view, @a show_children must be
- *                 @a false. If @a tableName is empty, then @a show_children
- *                 must be @a true.
+ *                 If @a tableName is empty or '*', then @a show_children must
+ *                 be @a true (or not specified); otherwise, no results will be
+ *                 returned.
  *                 <ul>
  *                         <li> gpudb::show_table_true
  *                         <li> gpudb::show_table_false
@@ -15533,7 +15625,8 @@ UpdateRecordsResponse& updateRecords( const UpdateRecordsRequest<TRequest>& requ
  *                 <ul>
  *                         <li> gpudb::update_records_global_expression: An
  *                 optional global expression to reduce the search space of the
- *                 predicates listed in @a expressions.
+ *                 predicates listed in @a expressions.  The default value is
+ *                 ''.
  *                         <li> gpudb::update_records_bypass_safety_checks:
  *                 When set to @a true, all predicates are available for
  *                 primary key updates.  Keep in mind that it is possible to
@@ -15636,7 +15729,8 @@ UpdateRecordsResponse updateRecords( const std::string& tableName,
  *                 <ul>
  *                         <li> gpudb::update_records_global_expression: An
  *                 optional global expression to reduce the search space of the
- *                 predicates listed in @a expressions.
+ *                 predicates listed in @a expressions.  The default value is
+ *                 ''.
  *                         <li> gpudb::update_records_bypass_safety_checks:
  *                 When set to @a true, all predicates are available for
  *                 primary key updates.  Keep in mind that it is possible to
@@ -15869,9 +15963,12 @@ VisualizeImageResponse& visualizeImage( const VisualizeImageRequest& request_,
  *                      </ul>
  *                      The default value is gpudb::visualize_image_false.
  *                              <li> gpudb::visualize_image_pointcolors
- *                              <li> gpudb::visualize_image_pointsizes
- *                              <li> gpudb::visualize_image_pointoffset_x
- *                              <li> gpudb::visualize_image_pointoffset_y
+ *                              <li> gpudb::visualize_image_pointsizes:   The
+ *                      default value is '3'.
+ *                              <li> gpudb::visualize_image_pointoffset_x:
+ *                      The default value is '0'.
+ *                              <li> gpudb::visualize_image_pointoffset_y:
+ *                      The default value is '0'.
  *                              <li> gpudb::visualize_image_pointshapes:
  *                      <ul>
  *                              <li> gpudb::visualize_image_none
@@ -15884,21 +15981,37 @@ VisualizeImageResponse& visualizeImage( const VisualizeImageRequest& request_,
  *                              <li> gpudb::visualize_image_SYMBOLCODE
  *                      </ul>
  *                      The default value is gpudb::visualize_image_square.
- *                              <li> gpudb::visualize_image_symbolrotations
- *                              <li> gpudb::visualize_image_shapelinewidths
- *                              <li> gpudb::visualize_image_shapelinecolors
- *                              <li> gpudb::visualize_image_shapelinepatterns
- *                              <li> gpudb::visualize_image_shapelinepatternlen
- *                              <li> gpudb::visualize_image_shapefillcolors
- *                              <li> gpudb::visualize_image_hashlineintervals
- *                              <li> gpudb::visualize_image_hashlinecolors
- *                              <li> gpudb::visualize_image_hashlineangles
- *                              <li> gpudb::visualize_image_hashlinelens
- *                              <li> gpudb::visualize_image_hashlinewidths
- *                              <li> gpudb::visualize_image_tracklinewidths
- *                              <li> gpudb::visualize_image_tracklinecolors
- *                              <li> gpudb::visualize_image_trackmarkersizes
- *                              <li> gpudb::visualize_image_trackmarkercolors
+ *                              <li> gpudb::visualize_image_symbolrotations:
+ *                      The default value is '0'.
+ *                              <li> gpudb::visualize_image_shapelinewidths:
+ *                      The default value is '3'.
+ *                              <li> gpudb::visualize_image_shapelinecolors:
+ *                      The default value is 'FFFF00 '.
+ *                              <li> gpudb::visualize_image_shapelinepatterns:
+ *                      The default value is '0'.
+ *                              <li>
+ *                      gpudb::visualize_image_shapelinepatternlen:   The
+ *                      default value is '32'.
+ *                              <li> gpudb::visualize_image_shapefillcolors:
+ *                      The default value is '-1'.
+ *                              <li> gpudb::visualize_image_hashlineintervals:
+ *                      The default value is '20'.
+ *                              <li> gpudb::visualize_image_hashlinecolors:
+ *                      The default value is 'The same as line color.'.
+ *                              <li> gpudb::visualize_image_hashlineangles:
+ *                      The default value is '0'.
+ *                              <li> gpudb::visualize_image_hashlinelens:   The
+ *                      default value is '0'.
+ *                              <li> gpudb::visualize_image_hashlinewidths:
+ *                      The default value is '3'.
+ *                              <li> gpudb::visualize_image_tracklinewidths:
+ *                      The default value is '3'.
+ *                              <li> gpudb::visualize_image_tracklinecolors:
+ *                      The default value is '00FF00'.
+ *                              <li> gpudb::visualize_image_trackmarkersizes:
+ *                      The default value is '3'.
+ *                              <li> gpudb::visualize_image_trackmarkercolors:
+ *                      The default value is '0000FF'.
  *                              <li> gpudb::visualize_image_trackmarkershapes:
  *                      <ul>
  *                              <li> gpudb::visualize_image_none
@@ -15913,8 +16026,10 @@ VisualizeImageResponse& visualizeImage( const VisualizeImageRequest& request_,
  *                              <li> gpudb::visualize_image_SYMBOLCODE
  *                      </ul>
  *                      The default value is gpudb::visualize_image_circle.
- *                              <li> gpudb::visualize_image_trackheadcolors
- *                              <li> gpudb::visualize_image_trackheadsizes
+ *                              <li> gpudb::visualize_image_trackheadcolors:
+ *                      The default value is 'FFFFFF'.
+ *                              <li> gpudb::visualize_image_trackheadsizes:
+ *                      The default value is '10'.
  *                              <li> gpudb::visualize_image_trackheadshapes:
  *                      <ul>
  *                              <li> gpudb::visualize_image_none
@@ -16008,9 +16123,12 @@ VisualizeImageResponse visualizeImage( const std::vector<std::string>& tableName
  *                      </ul>
  *                      The default value is gpudb::visualize_image_false.
  *                              <li> gpudb::visualize_image_pointcolors
- *                              <li> gpudb::visualize_image_pointsizes
- *                              <li> gpudb::visualize_image_pointoffset_x
- *                              <li> gpudb::visualize_image_pointoffset_y
+ *                              <li> gpudb::visualize_image_pointsizes:   The
+ *                      default value is '3'.
+ *                              <li> gpudb::visualize_image_pointoffset_x:
+ *                      The default value is '0'.
+ *                              <li> gpudb::visualize_image_pointoffset_y:
+ *                      The default value is '0'.
  *                              <li> gpudb::visualize_image_pointshapes:
  *                      <ul>
  *                              <li> gpudb::visualize_image_none
@@ -16023,21 +16141,37 @@ VisualizeImageResponse visualizeImage( const std::vector<std::string>& tableName
  *                              <li> gpudb::visualize_image_SYMBOLCODE
  *                      </ul>
  *                      The default value is gpudb::visualize_image_square.
- *                              <li> gpudb::visualize_image_symbolrotations
- *                              <li> gpudb::visualize_image_shapelinewidths
- *                              <li> gpudb::visualize_image_shapelinecolors
- *                              <li> gpudb::visualize_image_shapelinepatterns
- *                              <li> gpudb::visualize_image_shapelinepatternlen
- *                              <li> gpudb::visualize_image_shapefillcolors
- *                              <li> gpudb::visualize_image_hashlineintervals
- *                              <li> gpudb::visualize_image_hashlinecolors
- *                              <li> gpudb::visualize_image_hashlineangles
- *                              <li> gpudb::visualize_image_hashlinelens
- *                              <li> gpudb::visualize_image_hashlinewidths
- *                              <li> gpudb::visualize_image_tracklinewidths
- *                              <li> gpudb::visualize_image_tracklinecolors
- *                              <li> gpudb::visualize_image_trackmarkersizes
- *                              <li> gpudb::visualize_image_trackmarkercolors
+ *                              <li> gpudb::visualize_image_symbolrotations:
+ *                      The default value is '0'.
+ *                              <li> gpudb::visualize_image_shapelinewidths:
+ *                      The default value is '3'.
+ *                              <li> gpudb::visualize_image_shapelinecolors:
+ *                      The default value is 'FFFF00 '.
+ *                              <li> gpudb::visualize_image_shapelinepatterns:
+ *                      The default value is '0'.
+ *                              <li>
+ *                      gpudb::visualize_image_shapelinepatternlen:   The
+ *                      default value is '32'.
+ *                              <li> gpudb::visualize_image_shapefillcolors:
+ *                      The default value is '-1'.
+ *                              <li> gpudb::visualize_image_hashlineintervals:
+ *                      The default value is '20'.
+ *                              <li> gpudb::visualize_image_hashlinecolors:
+ *                      The default value is 'The same as line color.'.
+ *                              <li> gpudb::visualize_image_hashlineangles:
+ *                      The default value is '0'.
+ *                              <li> gpudb::visualize_image_hashlinelens:   The
+ *                      default value is '0'.
+ *                              <li> gpudb::visualize_image_hashlinewidths:
+ *                      The default value is '3'.
+ *                              <li> gpudb::visualize_image_tracklinewidths:
+ *                      The default value is '3'.
+ *                              <li> gpudb::visualize_image_tracklinecolors:
+ *                      The default value is '00FF00'.
+ *                              <li> gpudb::visualize_image_trackmarkersizes:
+ *                      The default value is '3'.
+ *                              <li> gpudb::visualize_image_trackmarkercolors:
+ *                      The default value is '0000FF'.
  *                              <li> gpudb::visualize_image_trackmarkershapes:
  *                      <ul>
  *                              <li> gpudb::visualize_image_none
@@ -16052,8 +16186,10 @@ VisualizeImageResponse visualizeImage( const std::vector<std::string>& tableName
  *                              <li> gpudb::visualize_image_SYMBOLCODE
  *                      </ul>
  *                      The default value is gpudb::visualize_image_circle.
- *                              <li> gpudb::visualize_image_trackheadcolors
- *                              <li> gpudb::visualize_image_trackheadsizes
+ *                              <li> gpudb::visualize_image_trackheadcolors:
+ *                      The default value is 'FFFFFF'.
+ *                              <li> gpudb::visualize_image_trackheadsizes:
+ *                      The default value is '10'.
  *                              <li> gpudb::visualize_image_trackheadshapes:
  *                      <ul>
  *                              <li> gpudb::visualize_image_none
@@ -16163,10 +16299,10 @@ VisualizeImageChartResponse& visualizeImageChart( const VisualizeImageChartReque
  *                      <ul>
  *                              <li> gpudb::visualize_image_chart_pointcolor:
  *                      The color of points in the plot represented as a
- *                      hexadecimal number.
+ *                      hexadecimal number.  The default value is '0000FF'.
  *                              <li> gpudb::visualize_image_chart_pointsize:
  *                      The size of points in the plot represented as number of
- *                      pixels.
+ *                      pixels.  The default value is '3'.
  *                              <li> gpudb::visualize_image_chart_pointshape:
  *                      The shape of points in the plot.
  *                      <ul>
@@ -16211,7 +16347,8 @@ VisualizeImageChartResponse& visualizeImageChart( const VisualizeImageChartReque
  *                      "NY;TX;CA", "circle;square;diamond"}.
  *                              <li> gpudb::visualize_image_chart_cb_delimiter:
  *                      A character or string which separates per-class values
- *                      in a class-break style option string.
+ *                      in a class-break style option string.  The default
+ *                      value is ';'.
  *                              <li> gpudb::visualize_image_chart_x_order_by:
  *                      An expression or aggregate expression by which
  *                      non-numeric x column values are sorted, e.g.
@@ -16238,16 +16375,26 @@ VisualizeImageChartResponse& visualizeImageChart( const VisualizeImageChartReque
  *                      base-10 log scale is applied to the y axis.
  *                      </ul>
  *                      The default value is gpudb::visualize_image_chart_none.
+ *                              <li>
+ *                      gpudb::visualize_image_chart_min_max_scaled: If this
+ *                      options is set to "false", this endpoint expects
+ *                      request's min/max values are not yet scaled. They will
+ *                      be scaled according to scale_type_x or scale_type_y for
+ *                      response. If this options is set to "true", this
+ *                      endpoint expects request's min/max values are already
+ *                      scaled according to scale_type_x/scale_type_y.
+ *                      Response's min/max values will be equal to request's
+ *                      min/max values.  The default value is 'false'.
  *                              <li> gpudb::visualize_image_chart_jitter_x:
- *                      Amplitude of horizontal jitter applied to non-numaric x
- *                      column values.
+ *                      Amplitude of horizontal jitter applied to non-numeric x
+ *                      column values.  The default value is '0.0'.
  *                              <li> gpudb::visualize_image_chart_jitter_y:
- *                      Amplitude of vertical jitter applied to non-numaric y
- *                      column values.
+ *                      Amplitude of vertical jitter applied to non-numeric y
+ *                      column values.  The default value is '0.0'.
  *                              <li> gpudb::visualize_image_chart_plot_all: If
  *                      this options is set to "true", all non-numeric column
  *                      values are plotted ignoring min_x, max_x, min_y and
- *                      max_y parameters.
+ *                      max_y parameters.  The default value is 'false'.
  *                      </ul>
  * @param options  Optional parameters.
  * 
@@ -16300,10 +16447,10 @@ VisualizeImageChartResponse visualizeImageChart( const std::string& tableName,
  *                      <ul>
  *                              <li> gpudb::visualize_image_chart_pointcolor:
  *                      The color of points in the plot represented as a
- *                      hexadecimal number.
+ *                      hexadecimal number.  The default value is '0000FF'.
  *                              <li> gpudb::visualize_image_chart_pointsize:
  *                      The size of points in the plot represented as number of
- *                      pixels.
+ *                      pixels.  The default value is '3'.
  *                              <li> gpudb::visualize_image_chart_pointshape:
  *                      The shape of points in the plot.
  *                      <ul>
@@ -16348,7 +16495,8 @@ VisualizeImageChartResponse visualizeImageChart( const std::string& tableName,
  *                      "NY;TX;CA", "circle;square;diamond"}.
  *                              <li> gpudb::visualize_image_chart_cb_delimiter:
  *                      A character or string which separates per-class values
- *                      in a class-break style option string.
+ *                      in a class-break style option string.  The default
+ *                      value is ';'.
  *                              <li> gpudb::visualize_image_chart_x_order_by:
  *                      An expression or aggregate expression by which
  *                      non-numeric x column values are sorted, e.g.
@@ -16375,16 +16523,26 @@ VisualizeImageChartResponse visualizeImageChart( const std::string& tableName,
  *                      base-10 log scale is applied to the y axis.
  *                      </ul>
  *                      The default value is gpudb::visualize_image_chart_none.
+ *                              <li>
+ *                      gpudb::visualize_image_chart_min_max_scaled: If this
+ *                      options is set to "false", this endpoint expects
+ *                      request's min/max values are not yet scaled. They will
+ *                      be scaled according to scale_type_x or scale_type_y for
+ *                      response. If this options is set to "true", this
+ *                      endpoint expects request's min/max values are already
+ *                      scaled according to scale_type_x/scale_type_y.
+ *                      Response's min/max values will be equal to request's
+ *                      min/max values.  The default value is 'false'.
  *                              <li> gpudb::visualize_image_chart_jitter_x:
- *                      Amplitude of horizontal jitter applied to non-numaric x
- *                      column values.
+ *                      Amplitude of horizontal jitter applied to non-numeric x
+ *                      column values.  The default value is '0.0'.
  *                              <li> gpudb::visualize_image_chart_jitter_y:
- *                      Amplitude of vertical jitter applied to non-numaric y
- *                      column values.
+ *                      Amplitude of vertical jitter applied to non-numeric y
+ *                      column values.  The default value is '0.0'.
  *                              <li> gpudb::visualize_image_chart_plot_all: If
  *                      this options is set to "true", all non-numeric column
  *                      values are plotted ignoring min_x, max_x, min_y and
- *                      max_y parameters.
+ *                      max_y parameters.  The default value is 'false'.
  *                      </ul>
  * @param options  Optional parameters.
  * @param[out] response_  Response object containing the results of the
@@ -16514,13 +16672,17 @@ VisualizeImageClassbreakResponse& visualizeImageClassbreak( const VisualizeImage
  *                      The default value is
  *                      gpudb::visualize_image_classbreak_false.
  *                              <li>
- *                      gpudb::visualize_image_classbreak_pointcolors
+ *                      gpudb::visualize_image_classbreak_pointcolors:   The
+ *                      default value is 'FF0000'.
  *                              <li>
- *                      gpudb::visualize_image_classbreak_pointsizes
+ *                      gpudb::visualize_image_classbreak_pointsizes:   The
+ *                      default value is '3'.
  *                              <li>
- *                      gpudb::visualize_image_classbreak_pointoffset_x
+ *                      gpudb::visualize_image_classbreak_pointoffset_x:   The
+ *                      default value is '0'.
  *                              <li>
- *                      gpudb::visualize_image_classbreak_pointoffset_y
+ *                      gpudb::visualize_image_classbreak_pointoffset_y:   The
+ *                      default value is '0'.
  *                              <li>
  *                      gpudb::visualize_image_classbreak_pointshapes:
  *                      <ul>
@@ -16540,33 +16702,47 @@ VisualizeImageClassbreakResponse& visualizeImageClassbreak( const VisualizeImage
  *                      The default value is
  *                      gpudb::visualize_image_classbreak_none.
  *                              <li>
- *                      gpudb::visualize_image_classbreak_shapelinewidths
+ *                      gpudb::visualize_image_classbreak_shapelinewidths:
+ *                      The default value is '3'.
  *                              <li>
- *                      gpudb::visualize_image_classbreak_shapelinecolors
+ *                      gpudb::visualize_image_classbreak_shapelinecolors:
+ *                      The default value is 'FFFF00 '.
  *                              <li>
- *                      gpudb::visualize_image_classbreak_shapelinepatterns
+ *                      gpudb::visualize_image_classbreak_shapelinepatterns:
+ *                      The default value is '0'.
  *                              <li>
- *                      gpudb::visualize_image_classbreak_shapelinepatternlen
+ *                      gpudb::visualize_image_classbreak_shapelinepatternlen:
+ *                      The default value is '32'.
  *                              <li>
- *                      gpudb::visualize_image_classbreak_shapefillcolors
+ *                      gpudb::visualize_image_classbreak_shapefillcolors:
+ *                      The default value is '-1'.
  *                              <li>
- *                      gpudb::visualize_image_classbreak_hashlineintervals
+ *                      gpudb::visualize_image_classbreak_hashlineintervals:
+ *                      The default value is '20'.
  *                              <li>
- *                      gpudb::visualize_image_classbreak_hashlinecolors
+ *                      gpudb::visualize_image_classbreak_hashlinecolors:   The
+ *                      default value is 'The same as line color.'.
  *                              <li>
- *                      gpudb::visualize_image_classbreak_hashlineangles
+ *                      gpudb::visualize_image_classbreak_hashlineangles:   The
+ *                      default value is '0'.
  *                              <li>
- *                      gpudb::visualize_image_classbreak_hashlinelens
+ *                      gpudb::visualize_image_classbreak_hashlinelens:   The
+ *                      default value is '0'.
  *                              <li>
- *                      gpudb::visualize_image_classbreak_hashlinewidths
+ *                      gpudb::visualize_image_classbreak_hashlinewidths:   The
+ *                      default value is '3'.
  *                              <li>
- *                      gpudb::visualize_image_classbreak_tracklinewidths
+ *                      gpudb::visualize_image_classbreak_tracklinewidths:
+ *                      The default value is '3'.
  *                              <li>
- *                      gpudb::visualize_image_classbreak_tracklinecolors
+ *                      gpudb::visualize_image_classbreak_tracklinecolors:
+ *                      The default value is '00FF00'.
  *                              <li>
- *                      gpudb::visualize_image_classbreak_trackmarkersizes
+ *                      gpudb::visualize_image_classbreak_trackmarkersizes:
+ *                      The default value is '3'.
  *                              <li>
- *                      gpudb::visualize_image_classbreak_trackmarkercolors
+ *                      gpudb::visualize_image_classbreak_trackmarkercolors:
+ *                      The default value is '0000FF'.
  *                              <li>
  *                      gpudb::visualize_image_classbreak_trackmarkershapes:
  *                      <ul>
@@ -16586,9 +16762,11 @@ VisualizeImageClassbreakResponse& visualizeImageClassbreak( const VisualizeImage
  *                      The default value is
  *                      gpudb::visualize_image_classbreak_none.
  *                              <li>
- *                      gpudb::visualize_image_classbreak_trackheadcolors
+ *                      gpudb::visualize_image_classbreak_trackheadcolors:
+ *                      The default value is 'FFFFFF'.
  *                              <li>
- *                      gpudb::visualize_image_classbreak_trackheadsizes
+ *                      gpudb::visualize_image_classbreak_trackheadsizes:   The
+ *                      default value is '10'.
  *                              <li>
  *                      gpudb::visualize_image_classbreak_trackheadshapes:
  *                      <ul>
@@ -16716,13 +16894,17 @@ VisualizeImageClassbreakResponse visualizeImageClassbreak( const std::vector<std
  *                      The default value is
  *                      gpudb::visualize_image_classbreak_false.
  *                              <li>
- *                      gpudb::visualize_image_classbreak_pointcolors
+ *                      gpudb::visualize_image_classbreak_pointcolors:   The
+ *                      default value is 'FF0000'.
  *                              <li>
- *                      gpudb::visualize_image_classbreak_pointsizes
+ *                      gpudb::visualize_image_classbreak_pointsizes:   The
+ *                      default value is '3'.
  *                              <li>
- *                      gpudb::visualize_image_classbreak_pointoffset_x
+ *                      gpudb::visualize_image_classbreak_pointoffset_x:   The
+ *                      default value is '0'.
  *                              <li>
- *                      gpudb::visualize_image_classbreak_pointoffset_y
+ *                      gpudb::visualize_image_classbreak_pointoffset_y:   The
+ *                      default value is '0'.
  *                              <li>
  *                      gpudb::visualize_image_classbreak_pointshapes:
  *                      <ul>
@@ -16742,33 +16924,47 @@ VisualizeImageClassbreakResponse visualizeImageClassbreak( const std::vector<std
  *                      The default value is
  *                      gpudb::visualize_image_classbreak_none.
  *                              <li>
- *                      gpudb::visualize_image_classbreak_shapelinewidths
+ *                      gpudb::visualize_image_classbreak_shapelinewidths:
+ *                      The default value is '3'.
  *                              <li>
- *                      gpudb::visualize_image_classbreak_shapelinecolors
+ *                      gpudb::visualize_image_classbreak_shapelinecolors:
+ *                      The default value is 'FFFF00 '.
  *                              <li>
- *                      gpudb::visualize_image_classbreak_shapelinepatterns
+ *                      gpudb::visualize_image_classbreak_shapelinepatterns:
+ *                      The default value is '0'.
  *                              <li>
- *                      gpudb::visualize_image_classbreak_shapelinepatternlen
+ *                      gpudb::visualize_image_classbreak_shapelinepatternlen:
+ *                      The default value is '32'.
  *                              <li>
- *                      gpudb::visualize_image_classbreak_shapefillcolors
+ *                      gpudb::visualize_image_classbreak_shapefillcolors:
+ *                      The default value is '-1'.
  *                              <li>
- *                      gpudb::visualize_image_classbreak_hashlineintervals
+ *                      gpudb::visualize_image_classbreak_hashlineintervals:
+ *                      The default value is '20'.
  *                              <li>
- *                      gpudb::visualize_image_classbreak_hashlinecolors
+ *                      gpudb::visualize_image_classbreak_hashlinecolors:   The
+ *                      default value is 'The same as line color.'.
  *                              <li>
- *                      gpudb::visualize_image_classbreak_hashlineangles
+ *                      gpudb::visualize_image_classbreak_hashlineangles:   The
+ *                      default value is '0'.
  *                              <li>
- *                      gpudb::visualize_image_classbreak_hashlinelens
+ *                      gpudb::visualize_image_classbreak_hashlinelens:   The
+ *                      default value is '0'.
  *                              <li>
- *                      gpudb::visualize_image_classbreak_hashlinewidths
+ *                      gpudb::visualize_image_classbreak_hashlinewidths:   The
+ *                      default value is '3'.
  *                              <li>
- *                      gpudb::visualize_image_classbreak_tracklinewidths
+ *                      gpudb::visualize_image_classbreak_tracklinewidths:
+ *                      The default value is '3'.
  *                              <li>
- *                      gpudb::visualize_image_classbreak_tracklinecolors
+ *                      gpudb::visualize_image_classbreak_tracklinecolors:
+ *                      The default value is '00FF00'.
  *                              <li>
- *                      gpudb::visualize_image_classbreak_trackmarkersizes
+ *                      gpudb::visualize_image_classbreak_trackmarkersizes:
+ *                      The default value is '3'.
  *                              <li>
- *                      gpudb::visualize_image_classbreak_trackmarkercolors
+ *                      gpudb::visualize_image_classbreak_trackmarkercolors:
+ *                      The default value is '0000FF'.
  *                              <li>
  *                      gpudb::visualize_image_classbreak_trackmarkershapes:
  *                      <ul>
@@ -16788,9 +16984,11 @@ VisualizeImageClassbreakResponse visualizeImageClassbreak( const std::vector<std
  *                      The default value is
  *                      gpudb::visualize_image_classbreak_none.
  *                              <li>
- *                      gpudb::visualize_image_classbreak_trackheadcolors
+ *                      gpudb::visualize_image_classbreak_trackheadcolors:
+ *                      The default value is 'FFFFFF'.
  *                              <li>
- *                      gpudb::visualize_image_classbreak_trackheadsizes
+ *                      gpudb::visualize_image_classbreak_trackheadsizes:   The
+ *                      default value is '10'.
  *                              <li>
  *                      gpudb::visualize_image_classbreak_trackheadshapes:
  *                      <ul>
@@ -16902,22 +17100,93 @@ VisualizeImageContourResponse& visualizeImageContour( const VisualizeImageContou
  *                    gpudb::visualize_image_contour_PLATE_CARREE.
  * @param styleOptions
  *                      <ul>
- *                              <li> gpudb::visualize_image_contour_line_size
- *                              <li> gpudb::visualize_image_contour_color
- *                              <li> gpudb::visualize_image_contour_bg_color
+ *                              <li> gpudb::visualize_image_contour_line_size:
+ *                      The default value is '3'.
+ *                              <li> gpudb::visualize_image_contour_color:
+ *                      The default value is 'FF696969'.
+ *                              <li> gpudb::visualize_image_contour_bg_color:
+ *                      The default value is '00000000'.
+ *                              <li> gpudb::visualize_image_contour_text_color:
+ *                      The default value is 'FF000000'.
  *                              <li> gpudb::visualize_image_contour_colormap:
  *                      <ul>
  *                              <li> gpudb::visualize_image_contour_jet
- *                              <li> gpudb::visualize_image_contour_hot
- *                              <li> gpudb::visualize_image_contour_hsv
- *                              <li> gpudb::visualize_image_contour_gray
+ *                              <li> gpudb::visualize_image_contour_accent
+ *                              <li> gpudb::visualize_image_contour_afmhot
+ *                              <li> gpudb::visualize_image_contour_autumn
+ *                              <li> gpudb::visualize_image_contour_binary
  *                              <li> gpudb::visualize_image_contour_blues
+ *                              <li> gpudb::visualize_image_contour_bone
+ *                              <li> gpudb::visualize_image_contour_brbg
+ *                              <li> gpudb::visualize_image_contour_brg
+ *                              <li> gpudb::visualize_image_contour_bugn
+ *                              <li> gpudb::visualize_image_contour_bupu
+ *                              <li> gpudb::visualize_image_contour_bwr
+ *                              <li> gpudb::visualize_image_contour_cmrmap
+ *                              <li> gpudb::visualize_image_contour_cool
+ *                              <li> gpudb::visualize_image_contour_coolwarm
+ *                              <li> gpudb::visualize_image_contour_copper
+ *                              <li> gpudb::visualize_image_contour_cubehelix
+ *                              <li> gpudb::visualize_image_contour_dark2
+ *                              <li> gpudb::visualize_image_contour_flag
+ *                              <li> gpudb::visualize_image_contour_gist_earth
+ *                              <li> gpudb::visualize_image_contour_gist_gray
+ *                              <li> gpudb::visualize_image_contour_gist_heat
+ *                              <li> gpudb::visualize_image_contour_gist_ncar
+ *                              <li>
+ *                      gpudb::visualize_image_contour_gist_rainbow
+ *                              <li> gpudb::visualize_image_contour_gist_stern
+ *                              <li> gpudb::visualize_image_contour_gist_yarg
+ *                              <li> gpudb::visualize_image_contour_gnbu
+ *                              <li> gpudb::visualize_image_contour_gnuplot2
+ *                              <li> gpudb::visualize_image_contour_gnuplot
+ *                              <li> gpudb::visualize_image_contour_gray
  *                              <li> gpudb::visualize_image_contour_greens
  *                              <li> gpudb::visualize_image_contour_greys
+ *                              <li> gpudb::visualize_image_contour_hot
+ *                              <li> gpudb::visualize_image_contour_hsv
+ *                              <li> gpudb::visualize_image_contour_inferno
+ *                              <li> gpudb::visualize_image_contour_magma
+ *                              <li>
+ *                      gpudb::visualize_image_contour_nipy_spectral
+ *                              <li> gpudb::visualize_image_contour_ocean
  *                              <li> gpudb::visualize_image_contour_oranges
+ *                              <li> gpudb::visualize_image_contour_orrd
+ *                              <li> gpudb::visualize_image_contour_paired
+ *                              <li> gpudb::visualize_image_contour_pastel1
+ *                              <li> gpudb::visualize_image_contour_pastel2
+ *                              <li> gpudb::visualize_image_contour_pink
+ *                              <li> gpudb::visualize_image_contour_piyg
+ *                              <li> gpudb::visualize_image_contour_plasma
+ *                              <li> gpudb::visualize_image_contour_prgn
+ *                              <li> gpudb::visualize_image_contour_prism
+ *                              <li> gpudb::visualize_image_contour_pubu
+ *                              <li> gpudb::visualize_image_contour_pubugn
+ *                              <li> gpudb::visualize_image_contour_puor
+ *                              <li> gpudb::visualize_image_contour_purd
  *                              <li> gpudb::visualize_image_contour_purples
+ *                              <li> gpudb::visualize_image_contour_rainbow
+ *                              <li> gpudb::visualize_image_contour_rdbu
+ *                              <li> gpudb::visualize_image_contour_rdgy
+ *                              <li> gpudb::visualize_image_contour_rdpu
+ *                              <li> gpudb::visualize_image_contour_rdylbu
+ *                              <li> gpudb::visualize_image_contour_rdylgn
  *                              <li> gpudb::visualize_image_contour_reds
+ *                              <li> gpudb::visualize_image_contour_seismic
+ *                              <li> gpudb::visualize_image_contour_set1
+ *                              <li> gpudb::visualize_image_contour_set2
+ *                              <li> gpudb::visualize_image_contour_set3
+ *                              <li> gpudb::visualize_image_contour_spectral
+ *                              <li> gpudb::visualize_image_contour_spring
+ *                              <li> gpudb::visualize_image_contour_summer
+ *                              <li> gpudb::visualize_image_contour_terrain
  *                              <li> gpudb::visualize_image_contour_viridis
+ *                              <li> gpudb::visualize_image_contour_winter
+ *                              <li> gpudb::visualize_image_contour_wistia
+ *                              <li> gpudb::visualize_image_contour_ylgn
+ *                              <li> gpudb::visualize_image_contour_ylgnbu
+ *                              <li> gpudb::visualize_image_contour_ylorbr
+ *                              <li> gpudb::visualize_image_contour_ylorrd
  *                      </ul>
  *                      The default value is
  *                      gpudb::visualize_image_contour_jet.
@@ -16926,10 +17195,15 @@ VisualizeImageContourResponse& visualizeImageContour( const VisualizeImageContou
  *                 <ul>
  *                         <li> gpudb::visualize_image_contour_min_level
  *                         <li> gpudb::visualize_image_contour_max_level
- *                         <li> gpudb::visualize_image_contour_num_levels
- *                         <li> gpudb::visualize_image_contour_adjust_levels
- *                         <li> gpudb::visualize_image_contour_search_radius
- *                         <li> gpudb::visualize_image_contour_max_search_cells
+ *                         <li> gpudb::visualize_image_contour_num_levels:
+ *                 The default value is '10'.
+ *                         <li> gpudb::visualize_image_contour_adjust_levels:
+ *                 The default value is 'true'.
+ *                         <li> gpudb::visualize_image_contour_search_radius:
+ *                 The default value is '20'.
+ *                         <li>
+ *                 gpudb::visualize_image_contour_max_search_cells:   The
+ *                 default value is '100'.
  *                         <li> gpudb::visualize_image_contour_gridding_method:
  *                 <ul>
  *                         <li> gpudb::visualize_image_contour_INV_DST_POW
@@ -16940,28 +17214,48 @@ VisualizeImageContourResponse& visualizeImageContour( const VisualizeImageContou
  *                 </ul>
  *                 The default value is
  *                 gpudb::visualize_image_contour_INV_DST_POW.
- *                         <li> gpudb::visualize_image_contour_smoothing_factor
- *                         <li> gpudb::visualize_image_contour_grid_size
- *                         <li> gpudb::visualize_image_contour_adjust_grid
  *                         <li>
- *                 gpudb::visualize_image_contour_adjust_grid_neigh
- *                         <li> gpudb::visualize_image_contour_adjust_grid_size
- *                         <li> gpudb::visualize_image_contour_max_grid_size
- *                         <li> gpudb::visualize_image_contour_min_grid_size
+ *                 gpudb::visualize_image_contour_smoothing_factor:   The
+ *                 default value is '10'.
+ *                         <li> gpudb::visualize_image_contour_grid_size:   The
+ *                 default value is '100'.
+ *                         <li> gpudb::visualize_image_contour_adjust_grid:
+ *                 The default value is 'false'.
  *                         <li>
- *                 gpudb::visualize_image_contour_render_output_grid
- *                         <li> gpudb::visualize_image_contour_color_isolines
- *                         <li> gpudb::visualize_image_contour_add_labels
- *                         <li> gpudb::visualize_image_contour_labels_font_size
+ *                 gpudb::visualize_image_contour_adjust_grid_neigh:   The
+ *                 default value is '1'.
  *                         <li>
- *                 gpudb::visualize_image_contour_labels_font_family
+ *                 gpudb::visualize_image_contour_adjust_grid_size:   The
+ *                 default value is '1'.
+ *                         <li> gpudb::visualize_image_contour_max_grid_size:
+ *                 The default value is '500'.
+ *                         <li> gpudb::visualize_image_contour_min_grid_size:
+ *                 The default value is '10'.
  *                         <li>
- *                 gpudb::visualize_image_contour_labels_search_window
+ *                 gpudb::visualize_image_contour_render_output_grid:   The
+ *                 default value is 'false'.
+ *                         <li> gpudb::visualize_image_contour_color_isolines:
+ *                 The default value is 'true'.
+ *                         <li> gpudb::visualize_image_contour_add_labels:
+ *                 The default value is 'false'.
  *                         <li>
- *                 gpudb::visualize_image_contour_labels_intralevel_separation
+ *                 gpudb::visualize_image_contour_labels_font_size:   The
+ *                 default value is '12'.
  *                         <li>
- *                 gpudb::visualize_image_contour_labels_interlevel_separation
- *                         <li> gpudb::visualize_image_contour_labels_max_angle
+ *                 gpudb::visualize_image_contour_labels_font_family:   The
+ *                 default value is 'arial'.
+ *                         <li>
+ *                 gpudb::visualize_image_contour_labels_search_window:   The
+ *                 default value is '4'.
+ *                         <li>
+ *                 gpudb::visualize_image_contour_labels_intralevel_separation:
+ *                 The default value is '4'.
+ *                         <li>
+ *                 gpudb::visualize_image_contour_labels_interlevel_separation:
+ *                 The default value is '20'.
+ *                         <li>
+ *                 gpudb::visualize_image_contour_labels_max_angle:   The
+ *                 default value is '60'.
  *                 </ul>
  * 
  * @return Response object containing the result of the operation.
@@ -17011,22 +17305,93 @@ VisualizeImageContourResponse visualizeImageContour( const std::vector<std::stri
  *                    gpudb::visualize_image_contour_PLATE_CARREE.
  * @param styleOptions
  *                      <ul>
- *                              <li> gpudb::visualize_image_contour_line_size
- *                              <li> gpudb::visualize_image_contour_color
- *                              <li> gpudb::visualize_image_contour_bg_color
+ *                              <li> gpudb::visualize_image_contour_line_size:
+ *                      The default value is '3'.
+ *                              <li> gpudb::visualize_image_contour_color:
+ *                      The default value is 'FF696969'.
+ *                              <li> gpudb::visualize_image_contour_bg_color:
+ *                      The default value is '00000000'.
+ *                              <li> gpudb::visualize_image_contour_text_color:
+ *                      The default value is 'FF000000'.
  *                              <li> gpudb::visualize_image_contour_colormap:
  *                      <ul>
  *                              <li> gpudb::visualize_image_contour_jet
- *                              <li> gpudb::visualize_image_contour_hot
- *                              <li> gpudb::visualize_image_contour_hsv
- *                              <li> gpudb::visualize_image_contour_gray
+ *                              <li> gpudb::visualize_image_contour_accent
+ *                              <li> gpudb::visualize_image_contour_afmhot
+ *                              <li> gpudb::visualize_image_contour_autumn
+ *                              <li> gpudb::visualize_image_contour_binary
  *                              <li> gpudb::visualize_image_contour_blues
+ *                              <li> gpudb::visualize_image_contour_bone
+ *                              <li> gpudb::visualize_image_contour_brbg
+ *                              <li> gpudb::visualize_image_contour_brg
+ *                              <li> gpudb::visualize_image_contour_bugn
+ *                              <li> gpudb::visualize_image_contour_bupu
+ *                              <li> gpudb::visualize_image_contour_bwr
+ *                              <li> gpudb::visualize_image_contour_cmrmap
+ *                              <li> gpudb::visualize_image_contour_cool
+ *                              <li> gpudb::visualize_image_contour_coolwarm
+ *                              <li> gpudb::visualize_image_contour_copper
+ *                              <li> gpudb::visualize_image_contour_cubehelix
+ *                              <li> gpudb::visualize_image_contour_dark2
+ *                              <li> gpudb::visualize_image_contour_flag
+ *                              <li> gpudb::visualize_image_contour_gist_earth
+ *                              <li> gpudb::visualize_image_contour_gist_gray
+ *                              <li> gpudb::visualize_image_contour_gist_heat
+ *                              <li> gpudb::visualize_image_contour_gist_ncar
+ *                              <li>
+ *                      gpudb::visualize_image_contour_gist_rainbow
+ *                              <li> gpudb::visualize_image_contour_gist_stern
+ *                              <li> gpudb::visualize_image_contour_gist_yarg
+ *                              <li> gpudb::visualize_image_contour_gnbu
+ *                              <li> gpudb::visualize_image_contour_gnuplot2
+ *                              <li> gpudb::visualize_image_contour_gnuplot
+ *                              <li> gpudb::visualize_image_contour_gray
  *                              <li> gpudb::visualize_image_contour_greens
  *                              <li> gpudb::visualize_image_contour_greys
+ *                              <li> gpudb::visualize_image_contour_hot
+ *                              <li> gpudb::visualize_image_contour_hsv
+ *                              <li> gpudb::visualize_image_contour_inferno
+ *                              <li> gpudb::visualize_image_contour_magma
+ *                              <li>
+ *                      gpudb::visualize_image_contour_nipy_spectral
+ *                              <li> gpudb::visualize_image_contour_ocean
  *                              <li> gpudb::visualize_image_contour_oranges
+ *                              <li> gpudb::visualize_image_contour_orrd
+ *                              <li> gpudb::visualize_image_contour_paired
+ *                              <li> gpudb::visualize_image_contour_pastel1
+ *                              <li> gpudb::visualize_image_contour_pastel2
+ *                              <li> gpudb::visualize_image_contour_pink
+ *                              <li> gpudb::visualize_image_contour_piyg
+ *                              <li> gpudb::visualize_image_contour_plasma
+ *                              <li> gpudb::visualize_image_contour_prgn
+ *                              <li> gpudb::visualize_image_contour_prism
+ *                              <li> gpudb::visualize_image_contour_pubu
+ *                              <li> gpudb::visualize_image_contour_pubugn
+ *                              <li> gpudb::visualize_image_contour_puor
+ *                              <li> gpudb::visualize_image_contour_purd
  *                              <li> gpudb::visualize_image_contour_purples
+ *                              <li> gpudb::visualize_image_contour_rainbow
+ *                              <li> gpudb::visualize_image_contour_rdbu
+ *                              <li> gpudb::visualize_image_contour_rdgy
+ *                              <li> gpudb::visualize_image_contour_rdpu
+ *                              <li> gpudb::visualize_image_contour_rdylbu
+ *                              <li> gpudb::visualize_image_contour_rdylgn
  *                              <li> gpudb::visualize_image_contour_reds
+ *                              <li> gpudb::visualize_image_contour_seismic
+ *                              <li> gpudb::visualize_image_contour_set1
+ *                              <li> gpudb::visualize_image_contour_set2
+ *                              <li> gpudb::visualize_image_contour_set3
+ *                              <li> gpudb::visualize_image_contour_spectral
+ *                              <li> gpudb::visualize_image_contour_spring
+ *                              <li> gpudb::visualize_image_contour_summer
+ *                              <li> gpudb::visualize_image_contour_terrain
  *                              <li> gpudb::visualize_image_contour_viridis
+ *                              <li> gpudb::visualize_image_contour_winter
+ *                              <li> gpudb::visualize_image_contour_wistia
+ *                              <li> gpudb::visualize_image_contour_ylgn
+ *                              <li> gpudb::visualize_image_contour_ylgnbu
+ *                              <li> gpudb::visualize_image_contour_ylorbr
+ *                              <li> gpudb::visualize_image_contour_ylorrd
  *                      </ul>
  *                      The default value is
  *                      gpudb::visualize_image_contour_jet.
@@ -17035,10 +17400,15 @@ VisualizeImageContourResponse visualizeImageContour( const std::vector<std::stri
  *                 <ul>
  *                         <li> gpudb::visualize_image_contour_min_level
  *                         <li> gpudb::visualize_image_contour_max_level
- *                         <li> gpudb::visualize_image_contour_num_levels
- *                         <li> gpudb::visualize_image_contour_adjust_levels
- *                         <li> gpudb::visualize_image_contour_search_radius
- *                         <li> gpudb::visualize_image_contour_max_search_cells
+ *                         <li> gpudb::visualize_image_contour_num_levels:
+ *                 The default value is '10'.
+ *                         <li> gpudb::visualize_image_contour_adjust_levels:
+ *                 The default value is 'true'.
+ *                         <li> gpudb::visualize_image_contour_search_radius:
+ *                 The default value is '20'.
+ *                         <li>
+ *                 gpudb::visualize_image_contour_max_search_cells:   The
+ *                 default value is '100'.
  *                         <li> gpudb::visualize_image_contour_gridding_method:
  *                 <ul>
  *                         <li> gpudb::visualize_image_contour_INV_DST_POW
@@ -17049,28 +17419,48 @@ VisualizeImageContourResponse visualizeImageContour( const std::vector<std::stri
  *                 </ul>
  *                 The default value is
  *                 gpudb::visualize_image_contour_INV_DST_POW.
- *                         <li> gpudb::visualize_image_contour_smoothing_factor
- *                         <li> gpudb::visualize_image_contour_grid_size
- *                         <li> gpudb::visualize_image_contour_adjust_grid
  *                         <li>
- *                 gpudb::visualize_image_contour_adjust_grid_neigh
- *                         <li> gpudb::visualize_image_contour_adjust_grid_size
- *                         <li> gpudb::visualize_image_contour_max_grid_size
- *                         <li> gpudb::visualize_image_contour_min_grid_size
+ *                 gpudb::visualize_image_contour_smoothing_factor:   The
+ *                 default value is '10'.
+ *                         <li> gpudb::visualize_image_contour_grid_size:   The
+ *                 default value is '100'.
+ *                         <li> gpudb::visualize_image_contour_adjust_grid:
+ *                 The default value is 'false'.
  *                         <li>
- *                 gpudb::visualize_image_contour_render_output_grid
- *                         <li> gpudb::visualize_image_contour_color_isolines
- *                         <li> gpudb::visualize_image_contour_add_labels
- *                         <li> gpudb::visualize_image_contour_labels_font_size
+ *                 gpudb::visualize_image_contour_adjust_grid_neigh:   The
+ *                 default value is '1'.
  *                         <li>
- *                 gpudb::visualize_image_contour_labels_font_family
+ *                 gpudb::visualize_image_contour_adjust_grid_size:   The
+ *                 default value is '1'.
+ *                         <li> gpudb::visualize_image_contour_max_grid_size:
+ *                 The default value is '500'.
+ *                         <li> gpudb::visualize_image_contour_min_grid_size:
+ *                 The default value is '10'.
  *                         <li>
- *                 gpudb::visualize_image_contour_labels_search_window
+ *                 gpudb::visualize_image_contour_render_output_grid:   The
+ *                 default value is 'false'.
+ *                         <li> gpudb::visualize_image_contour_color_isolines:
+ *                 The default value is 'true'.
+ *                         <li> gpudb::visualize_image_contour_add_labels:
+ *                 The default value is 'false'.
  *                         <li>
- *                 gpudb::visualize_image_contour_labels_intralevel_separation
+ *                 gpudb::visualize_image_contour_labels_font_size:   The
+ *                 default value is '12'.
  *                         <li>
- *                 gpudb::visualize_image_contour_labels_interlevel_separation
- *                         <li> gpudb::visualize_image_contour_labels_max_angle
+ *                 gpudb::visualize_image_contour_labels_font_family:   The
+ *                 default value is 'arial'.
+ *                         <li>
+ *                 gpudb::visualize_image_contour_labels_search_window:   The
+ *                 default value is '4'.
+ *                         <li>
+ *                 gpudb::visualize_image_contour_labels_intralevel_separation:
+ *                 The default value is '4'.
+ *                         <li>
+ *                 gpudb::visualize_image_contour_labels_interlevel_separation:
+ *                 The default value is '20'.
+ *                         <li>
+ *                 gpudb::visualize_image_contour_labels_max_angle:   The
+ *                 default value is '60'.
  *                 </ul>
  * @param[out] response_  Response object containing the results of the
  *                        operation.
@@ -17156,25 +17546,95 @@ VisualizeImageHeatmapResponse& visualizeImageHeatmap( const VisualizeImageHeatma
  *                              <li> gpudb::visualize_image_heatmap_colormap:
  *                      <ul>
  *                              <li> gpudb::visualize_image_heatmap_jet
- *                              <li> gpudb::visualize_image_heatmap_hot
- *                              <li> gpudb::visualize_image_heatmap_hsv
- *                              <li> gpudb::visualize_image_heatmap_gray
+ *                              <li> gpudb::visualize_image_heatmap_accent
+ *                              <li> gpudb::visualize_image_heatmap_afmhot
+ *                              <li> gpudb::visualize_image_heatmap_autumn
+ *                              <li> gpudb::visualize_image_heatmap_binary
  *                              <li> gpudb::visualize_image_heatmap_blues
+ *                              <li> gpudb::visualize_image_heatmap_bone
+ *                              <li> gpudb::visualize_image_heatmap_brbg
+ *                              <li> gpudb::visualize_image_heatmap_brg
+ *                              <li> gpudb::visualize_image_heatmap_bugn
+ *                              <li> gpudb::visualize_image_heatmap_bupu
+ *                              <li> gpudb::visualize_image_heatmap_bwr
+ *                              <li> gpudb::visualize_image_heatmap_cmrmap
+ *                              <li> gpudb::visualize_image_heatmap_cool
+ *                              <li> gpudb::visualize_image_heatmap_coolwarm
+ *                              <li> gpudb::visualize_image_heatmap_copper
+ *                              <li> gpudb::visualize_image_heatmap_cubehelix
+ *                              <li> gpudb::visualize_image_heatmap_dark2
+ *                              <li> gpudb::visualize_image_heatmap_flag
+ *                              <li> gpudb::visualize_image_heatmap_gist_earth
+ *                              <li> gpudb::visualize_image_heatmap_gist_gray
+ *                              <li> gpudb::visualize_image_heatmap_gist_heat
+ *                              <li> gpudb::visualize_image_heatmap_gist_ncar
+ *                              <li>
+ *                      gpudb::visualize_image_heatmap_gist_rainbow
+ *                              <li> gpudb::visualize_image_heatmap_gist_stern
+ *                              <li> gpudb::visualize_image_heatmap_gist_yarg
+ *                              <li> gpudb::visualize_image_heatmap_gnbu
+ *                              <li> gpudb::visualize_image_heatmap_gnuplot2
+ *                              <li> gpudb::visualize_image_heatmap_gnuplot
+ *                              <li> gpudb::visualize_image_heatmap_gray
  *                              <li> gpudb::visualize_image_heatmap_greens
  *                              <li> gpudb::visualize_image_heatmap_greys
+ *                              <li> gpudb::visualize_image_heatmap_hot
+ *                              <li> gpudb::visualize_image_heatmap_hsv
+ *                              <li> gpudb::visualize_image_heatmap_inferno
+ *                              <li> gpudb::visualize_image_heatmap_magma
+ *                              <li>
+ *                      gpudb::visualize_image_heatmap_nipy_spectral
+ *                              <li> gpudb::visualize_image_heatmap_ocean
  *                              <li> gpudb::visualize_image_heatmap_oranges
+ *                              <li> gpudb::visualize_image_heatmap_orrd
+ *                              <li> gpudb::visualize_image_heatmap_paired
+ *                              <li> gpudb::visualize_image_heatmap_pastel1
+ *                              <li> gpudb::visualize_image_heatmap_pastel2
+ *                              <li> gpudb::visualize_image_heatmap_pink
+ *                              <li> gpudb::visualize_image_heatmap_piyg
+ *                              <li> gpudb::visualize_image_heatmap_plasma
+ *                              <li> gpudb::visualize_image_heatmap_prgn
+ *                              <li> gpudb::visualize_image_heatmap_prism
+ *                              <li> gpudb::visualize_image_heatmap_pubu
+ *                              <li> gpudb::visualize_image_heatmap_pubugn
+ *                              <li> gpudb::visualize_image_heatmap_puor
+ *                              <li> gpudb::visualize_image_heatmap_purd
  *                              <li> gpudb::visualize_image_heatmap_purples
+ *                              <li> gpudb::visualize_image_heatmap_rainbow
+ *                              <li> gpudb::visualize_image_heatmap_rdbu
+ *                              <li> gpudb::visualize_image_heatmap_rdgy
+ *                              <li> gpudb::visualize_image_heatmap_rdpu
+ *                              <li> gpudb::visualize_image_heatmap_rdylbu
+ *                              <li> gpudb::visualize_image_heatmap_rdylgn
  *                              <li> gpudb::visualize_image_heatmap_reds
+ *                              <li> gpudb::visualize_image_heatmap_seismic
+ *                              <li> gpudb::visualize_image_heatmap_set1
+ *                              <li> gpudb::visualize_image_heatmap_set2
+ *                              <li> gpudb::visualize_image_heatmap_set3
+ *                              <li> gpudb::visualize_image_heatmap_spectral
+ *                              <li> gpudb::visualize_image_heatmap_spring
+ *                              <li> gpudb::visualize_image_heatmap_summer
+ *                              <li> gpudb::visualize_image_heatmap_terrain
  *                              <li> gpudb::visualize_image_heatmap_viridis
+ *                              <li> gpudb::visualize_image_heatmap_winter
+ *                              <li> gpudb::visualize_image_heatmap_wistia
+ *                              <li> gpudb::visualize_image_heatmap_ylgn
+ *                              <li> gpudb::visualize_image_heatmap_ylgnbu
+ *                              <li> gpudb::visualize_image_heatmap_ylorbr
+ *                              <li> gpudb::visualize_image_heatmap_ylorrd
  *                      </ul>
  *                      The default value is
  *                      gpudb::visualize_image_heatmap_jet.
- *                              <li> gpudb::visualize_image_heatmap_blur_radius
+ *                              <li>
+ *                      gpudb::visualize_image_heatmap_blur_radius:   The
+ *                      default value is '5'.
  *                              <li> gpudb::visualize_image_heatmap_bg_color
  *                              <li>
- *                      gpudb::visualize_image_heatmap_gradient_start_color
+ *                      gpudb::visualize_image_heatmap_gradient_start_color:
+ *                      The default value is 'FFFFFF'.
  *                              <li>
- *                      gpudb::visualize_image_heatmap_gradient_end_color
+ *                      gpudb::visualize_image_heatmap_gradient_end_color:
+ *                      The default value is 'FF0000'.
  *                      </ul>
  * @param options
  * 
@@ -17230,25 +17690,95 @@ VisualizeImageHeatmapResponse visualizeImageHeatmap( const std::vector<std::stri
  *                              <li> gpudb::visualize_image_heatmap_colormap:
  *                      <ul>
  *                              <li> gpudb::visualize_image_heatmap_jet
- *                              <li> gpudb::visualize_image_heatmap_hot
- *                              <li> gpudb::visualize_image_heatmap_hsv
- *                              <li> gpudb::visualize_image_heatmap_gray
+ *                              <li> gpudb::visualize_image_heatmap_accent
+ *                              <li> gpudb::visualize_image_heatmap_afmhot
+ *                              <li> gpudb::visualize_image_heatmap_autumn
+ *                              <li> gpudb::visualize_image_heatmap_binary
  *                              <li> gpudb::visualize_image_heatmap_blues
+ *                              <li> gpudb::visualize_image_heatmap_bone
+ *                              <li> gpudb::visualize_image_heatmap_brbg
+ *                              <li> gpudb::visualize_image_heatmap_brg
+ *                              <li> gpudb::visualize_image_heatmap_bugn
+ *                              <li> gpudb::visualize_image_heatmap_bupu
+ *                              <li> gpudb::visualize_image_heatmap_bwr
+ *                              <li> gpudb::visualize_image_heatmap_cmrmap
+ *                              <li> gpudb::visualize_image_heatmap_cool
+ *                              <li> gpudb::visualize_image_heatmap_coolwarm
+ *                              <li> gpudb::visualize_image_heatmap_copper
+ *                              <li> gpudb::visualize_image_heatmap_cubehelix
+ *                              <li> gpudb::visualize_image_heatmap_dark2
+ *                              <li> gpudb::visualize_image_heatmap_flag
+ *                              <li> gpudb::visualize_image_heatmap_gist_earth
+ *                              <li> gpudb::visualize_image_heatmap_gist_gray
+ *                              <li> gpudb::visualize_image_heatmap_gist_heat
+ *                              <li> gpudb::visualize_image_heatmap_gist_ncar
+ *                              <li>
+ *                      gpudb::visualize_image_heatmap_gist_rainbow
+ *                              <li> gpudb::visualize_image_heatmap_gist_stern
+ *                              <li> gpudb::visualize_image_heatmap_gist_yarg
+ *                              <li> gpudb::visualize_image_heatmap_gnbu
+ *                              <li> gpudb::visualize_image_heatmap_gnuplot2
+ *                              <li> gpudb::visualize_image_heatmap_gnuplot
+ *                              <li> gpudb::visualize_image_heatmap_gray
  *                              <li> gpudb::visualize_image_heatmap_greens
  *                              <li> gpudb::visualize_image_heatmap_greys
+ *                              <li> gpudb::visualize_image_heatmap_hot
+ *                              <li> gpudb::visualize_image_heatmap_hsv
+ *                              <li> gpudb::visualize_image_heatmap_inferno
+ *                              <li> gpudb::visualize_image_heatmap_magma
+ *                              <li>
+ *                      gpudb::visualize_image_heatmap_nipy_spectral
+ *                              <li> gpudb::visualize_image_heatmap_ocean
  *                              <li> gpudb::visualize_image_heatmap_oranges
+ *                              <li> gpudb::visualize_image_heatmap_orrd
+ *                              <li> gpudb::visualize_image_heatmap_paired
+ *                              <li> gpudb::visualize_image_heatmap_pastel1
+ *                              <li> gpudb::visualize_image_heatmap_pastel2
+ *                              <li> gpudb::visualize_image_heatmap_pink
+ *                              <li> gpudb::visualize_image_heatmap_piyg
+ *                              <li> gpudb::visualize_image_heatmap_plasma
+ *                              <li> gpudb::visualize_image_heatmap_prgn
+ *                              <li> gpudb::visualize_image_heatmap_prism
+ *                              <li> gpudb::visualize_image_heatmap_pubu
+ *                              <li> gpudb::visualize_image_heatmap_pubugn
+ *                              <li> gpudb::visualize_image_heatmap_puor
+ *                              <li> gpudb::visualize_image_heatmap_purd
  *                              <li> gpudb::visualize_image_heatmap_purples
+ *                              <li> gpudb::visualize_image_heatmap_rainbow
+ *                              <li> gpudb::visualize_image_heatmap_rdbu
+ *                              <li> gpudb::visualize_image_heatmap_rdgy
+ *                              <li> gpudb::visualize_image_heatmap_rdpu
+ *                              <li> gpudb::visualize_image_heatmap_rdylbu
+ *                              <li> gpudb::visualize_image_heatmap_rdylgn
  *                              <li> gpudb::visualize_image_heatmap_reds
+ *                              <li> gpudb::visualize_image_heatmap_seismic
+ *                              <li> gpudb::visualize_image_heatmap_set1
+ *                              <li> gpudb::visualize_image_heatmap_set2
+ *                              <li> gpudb::visualize_image_heatmap_set3
+ *                              <li> gpudb::visualize_image_heatmap_spectral
+ *                              <li> gpudb::visualize_image_heatmap_spring
+ *                              <li> gpudb::visualize_image_heatmap_summer
+ *                              <li> gpudb::visualize_image_heatmap_terrain
  *                              <li> gpudb::visualize_image_heatmap_viridis
+ *                              <li> gpudb::visualize_image_heatmap_winter
+ *                              <li> gpudb::visualize_image_heatmap_wistia
+ *                              <li> gpudb::visualize_image_heatmap_ylgn
+ *                              <li> gpudb::visualize_image_heatmap_ylgnbu
+ *                              <li> gpudb::visualize_image_heatmap_ylorbr
+ *                              <li> gpudb::visualize_image_heatmap_ylorrd
  *                      </ul>
  *                      The default value is
  *                      gpudb::visualize_image_heatmap_jet.
- *                              <li> gpudb::visualize_image_heatmap_blur_radius
+ *                              <li>
+ *                      gpudb::visualize_image_heatmap_blur_radius:   The
+ *                      default value is '5'.
  *                              <li> gpudb::visualize_image_heatmap_bg_color
  *                              <li>
- *                      gpudb::visualize_image_heatmap_gradient_start_color
+ *                      gpudb::visualize_image_heatmap_gradient_start_color:
+ *                      The default value is 'FFFFFF'.
  *                              <li>
- *                      gpudb::visualize_image_heatmap_gradient_end_color
+ *                      gpudb::visualize_image_heatmap_gradient_end_color:
+ *                      The default value is 'FF0000'.
  *                      </ul>
  * @param options
  * @param[out] response_  Response object containing the results of the
@@ -17535,8 +18065,10 @@ VisualizeVideoResponse& visualizeVideo( const VisualizeVideoRequest& request_,
  *                              <li> gpudb::visualize_video_false
  *                      </ul>
  *                      The default value is gpudb::visualize_video_true.
- *                              <li> gpudb::visualize_video_pointcolors
- *                              <li> gpudb::visualize_video_pointsizes
+ *                              <li> gpudb::visualize_video_pointcolors:   The
+ *                      default value is 'FF0000'.
+ *                              <li> gpudb::visualize_video_pointsizes:   The
+ *                      default value is '3'.
  *                              <li> gpudb::visualize_video_pointshapes:
  *                      <ul>
  *                              <li> gpudb::visualize_video_none
@@ -17548,13 +18080,20 @@ VisualizeVideoResponse& visualizeVideo( const VisualizeVideoRequest& request_,
  *                              <li> gpudb::visualize_video_hollowdiamond
  *                              <li> gpudb::visualize_video_SYMBOLCODE
  *                      </ul>
- *                              <li> gpudb::visualize_video_shapelinewidths
- *                              <li> gpudb::visualize_video_shapelinecolors
- *                              <li> gpudb::visualize_video_shapefillcolors
- *                              <li> gpudb::visualize_video_tracklinewidths
- *                              <li> gpudb::visualize_video_tracklinecolors
- *                              <li> gpudb::visualize_video_trackmarkersizes
- *                              <li> gpudb::visualize_video_trackmarkercolors
+ *                              <li> gpudb::visualize_video_shapelinewidths:
+ *                      The default value is '3'.
+ *                              <li> gpudb::visualize_video_shapelinecolors:
+ *                      The default value is 'FFFF00 '.
+ *                              <li> gpudb::visualize_video_shapefillcolors:
+ *                      The default value is '-1'.
+ *                              <li> gpudb::visualize_video_tracklinewidths:
+ *                      The default value is '3'.
+ *                              <li> gpudb::visualize_video_tracklinecolors:
+ *                      The default value is '00FF00'.
+ *                              <li> gpudb::visualize_video_trackmarkersizes:
+ *                      The default value is '3'.
+ *                              <li> gpudb::visualize_video_trackmarkercolors:
+ *                      The default value is '0000FF'.
  *                              <li> gpudb::visualize_video_trackmarkershapes:
  *                      <ul>
  *                              <li> gpudb::visualize_video_none
@@ -17567,8 +18106,10 @@ VisualizeVideoResponse& visualizeVideo( const VisualizeVideoRequest& request_,
  *                              <li> gpudb::visualize_video_SYMBOLCODE
  *                      </ul>
  *                      The default value is gpudb::visualize_video_none.
- *                              <li> gpudb::visualize_video_trackheadcolors
- *                              <li> gpudb::visualize_video_trackheadsizes
+ *                              <li> gpudb::visualize_video_trackheadcolors:
+ *                      The default value is 'FFFFFF'.
+ *                              <li> gpudb::visualize_video_trackheadsizes:
+ *                      The default value is '10'.
  *                              <li> gpudb::visualize_video_trackheadshapes:
  *                      <ul>
  *                              <li> gpudb::visualize_video_none
@@ -17660,8 +18201,10 @@ VisualizeVideoResponse visualizeVideo( const std::vector<std::string>& tableName
  *                              <li> gpudb::visualize_video_false
  *                      </ul>
  *                      The default value is gpudb::visualize_video_true.
- *                              <li> gpudb::visualize_video_pointcolors
- *                              <li> gpudb::visualize_video_pointsizes
+ *                              <li> gpudb::visualize_video_pointcolors:   The
+ *                      default value is 'FF0000'.
+ *                              <li> gpudb::visualize_video_pointsizes:   The
+ *                      default value is '3'.
  *                              <li> gpudb::visualize_video_pointshapes:
  *                      <ul>
  *                              <li> gpudb::visualize_video_none
@@ -17673,13 +18216,20 @@ VisualizeVideoResponse visualizeVideo( const std::vector<std::string>& tableName
  *                              <li> gpudb::visualize_video_hollowdiamond
  *                              <li> gpudb::visualize_video_SYMBOLCODE
  *                      </ul>
- *                              <li> gpudb::visualize_video_shapelinewidths
- *                              <li> gpudb::visualize_video_shapelinecolors
- *                              <li> gpudb::visualize_video_shapefillcolors
- *                              <li> gpudb::visualize_video_tracklinewidths
- *                              <li> gpudb::visualize_video_tracklinecolors
- *                              <li> gpudb::visualize_video_trackmarkersizes
- *                              <li> gpudb::visualize_video_trackmarkercolors
+ *                              <li> gpudb::visualize_video_shapelinewidths:
+ *                      The default value is '3'.
+ *                              <li> gpudb::visualize_video_shapelinecolors:
+ *                      The default value is 'FFFF00 '.
+ *                              <li> gpudb::visualize_video_shapefillcolors:
+ *                      The default value is '-1'.
+ *                              <li> gpudb::visualize_video_tracklinewidths:
+ *                      The default value is '3'.
+ *                              <li> gpudb::visualize_video_tracklinecolors:
+ *                      The default value is '00FF00'.
+ *                              <li> gpudb::visualize_video_trackmarkersizes:
+ *                      The default value is '3'.
+ *                              <li> gpudb::visualize_video_trackmarkercolors:
+ *                      The default value is '0000FF'.
  *                              <li> gpudb::visualize_video_trackmarkershapes:
  *                      <ul>
  *                              <li> gpudb::visualize_video_none
@@ -17692,8 +18242,10 @@ VisualizeVideoResponse visualizeVideo( const std::vector<std::string>& tableName
  *                              <li> gpudb::visualize_video_SYMBOLCODE
  *                      </ul>
  *                      The default value is gpudb::visualize_video_none.
- *                              <li> gpudb::visualize_video_trackheadcolors
- *                              <li> gpudb::visualize_video_trackheadsizes
+ *                              <li> gpudb::visualize_video_trackheadcolors:
+ *                      The default value is 'FFFFFF'.
+ *                              <li> gpudb::visualize_video_trackheadsizes:
+ *                      The default value is '10'.
  *                              <li> gpudb::visualize_video_trackheadshapes:
  *                      <ul>
  *                              <li> gpudb::visualize_video_none
@@ -17811,12 +18363,17 @@ VisualizeVideoHeatmapResponse& visualizeVideoHeatmap( const VisualizeVideoHeatma
  *                      </ul>
  *                      The default value is
  *                      gpudb::visualize_video_heatmap_reds.
- *                              <li> gpudb::visualize_video_heatmap_blur_radius
- *                              <li> gpudb::visualize_video_heatmap_bg_color
  *                              <li>
- *                      gpudb::visualize_video_heatmap_gradient_start_color
+ *                      gpudb::visualize_video_heatmap_blur_radius:   The
+ *                      default value is '5'.
+ *                              <li> gpudb::visualize_video_heatmap_bg_color:
+ *                      The default value is 'FF000000'.
  *                              <li>
- *                      gpudb::visualize_video_heatmap_gradient_end_color
+ *                      gpudb::visualize_video_heatmap_gradient_start_color:
+ *                      The default value is 'FFFFFF'.
+ *                              <li>
+ *                      gpudb::visualize_video_heatmap_gradient_end_color:
+ *                      The default value is 'FF0000'.
  *                      </ul>
  * @param options
  * 
@@ -17886,12 +18443,17 @@ VisualizeVideoHeatmapResponse visualizeVideoHeatmap( const std::vector<std::stri
  *                      </ul>
  *                      The default value is
  *                      gpudb::visualize_video_heatmap_reds.
- *                              <li> gpudb::visualize_video_heatmap_blur_radius
- *                              <li> gpudb::visualize_video_heatmap_bg_color
  *                              <li>
- *                      gpudb::visualize_video_heatmap_gradient_start_color
+ *                      gpudb::visualize_video_heatmap_blur_radius:   The
+ *                      default value is '5'.
+ *                              <li> gpudb::visualize_video_heatmap_bg_color:
+ *                      The default value is 'FF000000'.
  *                              <li>
- *                      gpudb::visualize_video_heatmap_gradient_end_color
+ *                      gpudb::visualize_video_heatmap_gradient_start_color:
+ *                      The default value is 'FFFFFF'.
+ *                              <li>
+ *                      gpudb::visualize_video_heatmap_gradient_end_color:
+ *                      The default value is 'FF0000'.
  *                      </ul>
  * @param options
  * @param[out] response_  Response object containing the results of the

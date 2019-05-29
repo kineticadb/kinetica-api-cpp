@@ -237,12 +237,19 @@ namespace gpudb
         /**
          * This property indicates that this column should be dictionary
          * encoded. It can only be used in conjunction with string columns
-         * marked with a charN property or with int or long columns. This
-         * property is appropriate for columns where the cardinality (the
+         * marked with a charN or date property or with int or long columns.
+         * This property is appropriate for columns where the cardinality (the
          * number of unique values) is expected to be low, and can save a large
          * amount of memory.
          */
         extern const std::string DICT;
+
+
+        /**
+         * For columns with attributes of date, time, datetime or timestamp, at
+         * insert time, replace empty strings and invalid timestamps with NOW()
+         */
+        extern const std::string INIT_WITH_NOW;
 
 
     } // end namespace ColumnProperty

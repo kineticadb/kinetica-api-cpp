@@ -22,6 +22,9 @@ namespace gpudb
      * points and then refines the location of the points iteratively and
      * settles to a local minimum.  Various parameters and options are provided
      * to control the heuristic search.
+     * <p>
+     * NOTE:  The Kinetica instance being accessed must be running a CUDA
+     * (GPU-based) build to service this request.
      */
     struct AggregateKMeansRequest
     {
@@ -167,6 +170,9 @@ namespace gpudb
      * points and then refines the location of the points iteratively and
      * settles to a local minimum.  Various parameters and options are provided
      * to control the heuristic search.
+     * <p>
+     * NOTE:  The Kinetica instance being accessed must be running a CUDA
+     * (GPU-based) build to service this request.
      */
     struct AggregateKMeansResponse
     {
