@@ -17,13 +17,13 @@ namespace gpudb
 class GPUdbException : public std::exception
 {
 public:
-    GPUdbException(const std::string& messageParam) : message(messageParam) {}
+    GPUdbException(const std::string& messageParam) : message( messageParam ) {}
 
     virtual const char* what() const throw() { return message.c_str(); }
 
     ~GPUdbException() throw() {}
 
-private:
+protected:
     std::string message;
 };
 
@@ -32,7 +32,7 @@ private:
 class GPUdbInsertionException : public GPUdbException
 {
 public:
-    GPUdbInsertionException( const std::string& messageParam) : GPUdbException(messageParam) {}
+    GPUdbInsertionException( const std::string& messageParam) : GPUdbException( messageParam ) {}
 
     GPUdbInsertionException( const std::string& url_,
                              const std::vector<gpudb::GenericRecord>& records_,
@@ -47,7 +47,6 @@ public:
                          std::vector<gpudb::GenericRecord>::iterator end );
 
 private:
-    std::string message;
     std::string url;
     std::vector<gpudb::GenericRecord> records;
 };
@@ -56,21 +55,18 @@ private:
 class GPUdbExitException : public GPUdbException
 {
 public:
-    GPUdbExitException( const std::string& messageParam) : GPUdbException(messageParam) {}
+    GPUdbExitException( const std::string& messageParam) : GPUdbException( messageParam ) {}
 
     virtual const char* what() const throw() { return message.c_str(); }
 
     ~GPUdbExitException() throw() {}
-
-
-private:
-    std::string message;
 };
+
 
 class GPUdbHAUnavailableException : public GPUdbException
 {
 public:
-    GPUdbHAUnavailableException( const std::string& messageParam) : GPUdbException(messageParam) {}
+    GPUdbHAUnavailableException( const std::string& messageParam) : GPUdbException( messageParam ) {}
 
     GPUdbHAUnavailableException( const std::string& message_,
                                  const std::vector<HttpUrl>& urls_ );
@@ -81,7 +77,6 @@ public:
 
 
 private:
-    std::string message;
     std::vector<HttpUrl> urls;
 };
 
@@ -100,7 +95,6 @@ public:
 
 
 private:
-    std::string           message;
     std::vector<uint8_t>  request;
     HttpUrl               url;
 };

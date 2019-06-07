@@ -3999,7 +3999,7 @@ AlterSystemPropertiesResponse& alterSystemProperties( const AlterSystemPropertie
  *                                    <li>
  *                            gpudb::alter_system_properties_communicator_test:
  *                            Invoke the communicator test and report timing
- *                            results. Value string is is a comma separated
+ *                            results. Value string is is a semicolon separated
  *                            list of <key>=<value> expressions.  Expressions
  *                            are: num_transactions=<num> where num is the
  *                            number of request reply transactions to invoke
@@ -4141,7 +4141,7 @@ AlterSystemPropertiesResponse alterSystemProperties( const std::map<std::string,
  *                                    <li>
  *                            gpudb::alter_system_properties_communicator_test:
  *                            Invoke the communicator test and report timing
- *                            results. Value string is is a comma separated
+ *                            results. Value string is is a semicolon separated
  *                            list of <key>=<value> expressions.  Expressions
  *                            are: num_transactions=<num> where num is the
  *                            number of request reply transactions to invoke
@@ -4247,8 +4247,11 @@ AlterSystemPropertiesResponse& alterSystemProperties( const std::map<std::string
  * target="_top">foreign key</a>
  * on a particular column.
  * <p>
- * Manage a <a href="../../concepts/tables.html#partitioning"
- * target="_top">range-partitioned</a>
+ * Manage a
+ * <a href="../../concepts/tables.html#partitioning-by-range"
+ * target="_top">range-partitioned</a> or a
+ * <a href="../../concepts/tables.html#partitioning-by-list-manual"
+ * target="_top">manual list-partitioned</a>
  * table's partitions.
  * <p>
  * Set (or reset) the <a href="../../rm/concepts.html#tier-strategies"
@@ -4308,8 +4311,11 @@ AlterTableResponse alterTable( const AlterTableRequest& request_ ) const;
  * target="_top">foreign key</a>
  * on a particular column.
  * <p>
- * Manage a <a href="../../concepts/tables.html#partitioning"
- * target="_top">range-partitioned</a>
+ * Manage a
+ * <a href="../../concepts/tables.html#partitioning-by-range"
+ * target="_top">range-partitioned</a> or a
+ * <a href="../../concepts/tables.html#partitioning-by-list-manual"
+ * target="_top">manual list-partitioned</a>
  * table's partitions.
  * <p>
  * Set (or reset) the <a href="../../rm/concepts.html#tier-strategies"
@@ -4373,8 +4379,11 @@ AlterTableResponse& alterTable( const AlterTableRequest& request_,
  * target="_top">foreign key</a>
  * on a particular column.
  * <p>
- * Manage a <a href="../../concepts/tables.html#partitioning"
- * target="_top">range-partitioned</a>
+ * Manage a
+ * <a href="../../concepts/tables.html#partitioning-by-range"
+ * target="_top">range-partitioned</a> or a
+ * <a href="../../concepts/tables.html#partitioning-by-list-manual"
+ * target="_top">manual list-partitioned</a>
  * table's partitions.
  * <p>
  * Set (or reset) the <a href="../../rm/concepts.html#tier-strategies"
@@ -4421,7 +4430,10 @@ AlterTableResponse& alterTable( const AlterTableRequest& request_,
  *                value. If this column does not have indexing turned on, an
  *                error will be returned.
  *                        <li> gpudb::alter_table_move_to_collection: Moves a
- *                table into a collection @a value.
+ *                table or view into a collection named @a value.  If the
+ *                collection provided is non-existent, the collection will be
+ *                automatically created. If @a value is empty, then the table
+ *                or view will be top-level.
  *                        <li> gpudb::alter_table_protected: Sets whether the
  *                given @a tableName should be <a
  *                href="../../concepts/protection.html"
@@ -4467,19 +4479,26 @@ AlterTableResponse& alterTable( const AlterTableRequest& request_,
  *                target="_top">foreign key</a>.  The @a value should be the
  *                foreign_key_name specified when creating the key or the
  *                complete string used to define it.
- *                        <li> gpudb::alter_table_add_partition: Adds a
- *                partition (for range-partitioned or list-partitioned tables)
- *                specified in @a value.  See <a
- *                href="../../concepts/tables.html#partitioning-by-range-example"
- *                target="_top">range partitioning example</a> for example
- *                format.
+ *                        <li> gpudb::alter_table_add_partition: Adds the
+ *                partition specified in @a value, to either a <a
+ *                href="../../concepts/tables.html#partitioning-by-range"
+ *                target="_top">range-partitioned</a> or <a
+ *                href="../../concepts/tables.html#partitioning-by-list-manual"
+ *                target="_top">manual list-partitioned</a> table.
  *                        <li> gpudb::alter_table_remove_partition: Removes the
- *                partition specified in @a value and relocates all its data to
- *                the default partition (for range-partitioned or
- *                list-partition tables).
+ *                partition specified in @a value (and relocates all of its
+ *                data to the default partition) from either a <a
+ *                href="../../concepts/tables.html#partitioning-by-range"
+ *                target="_top">range-partitioned</a> or <a
+ *                href="../../concepts/tables.html#partitioning-by-list-manual"
+ *                target="_top">manual list-partitioned</a> table.
  *                        <li> gpudb::alter_table_delete_partition: Deletes the
- *                partition specified in @a value and its data (for
- *                range-partitioned or list-partitioned tables).
+ *                partition specified in @a value (and all of its data) from
+ *                either a <a
+ *                href="../../concepts/tables.html#partitioning-by-range"
+ *                target="_top">range-partitioned</a> or <a
+ *                href="../../concepts/tables.html#partitioning-by-list-manual"
+ *                target="_top">manual list-partitioned</a> table.
  *                        <li> gpudb::alter_table_set_global_access_mode: Sets
  *                the global access mode (i.e. locking) for the table specified
  *                in @a tableName. Specify the access mode in @a value. Valid
@@ -4632,8 +4651,11 @@ AlterTableResponse alterTable( const std::string& tableName,
  * target="_top">foreign key</a>
  * on a particular column.
  * <p>
- * Manage a <a href="../../concepts/tables.html#partitioning"
- * target="_top">range-partitioned</a>
+ * Manage a
+ * <a href="../../concepts/tables.html#partitioning-by-range"
+ * target="_top">range-partitioned</a> or a
+ * <a href="../../concepts/tables.html#partitioning-by-list-manual"
+ * target="_top">manual list-partitioned</a>
  * table's partitions.
  * <p>
  * Set (or reset) the <a href="../../rm/concepts.html#tier-strategies"
@@ -4680,7 +4702,10 @@ AlterTableResponse alterTable( const std::string& tableName,
  *                value. If this column does not have indexing turned on, an
  *                error will be returned.
  *                        <li> gpudb::alter_table_move_to_collection: Moves a
- *                table into a collection @a value.
+ *                table or view into a collection named @a value.  If the
+ *                collection provided is non-existent, the collection will be
+ *                automatically created. If @a value is empty, then the table
+ *                or view will be top-level.
  *                        <li> gpudb::alter_table_protected: Sets whether the
  *                given @a tableName should be <a
  *                href="../../concepts/protection.html"
@@ -4726,19 +4751,26 @@ AlterTableResponse alterTable( const std::string& tableName,
  *                target="_top">foreign key</a>.  The @a value should be the
  *                foreign_key_name specified when creating the key or the
  *                complete string used to define it.
- *                        <li> gpudb::alter_table_add_partition: Adds a
- *                partition (for range-partitioned or list-partitioned tables)
- *                specified in @a value.  See <a
- *                href="../../concepts/tables.html#partitioning-by-range-example"
- *                target="_top">range partitioning example</a> for example
- *                format.
+ *                        <li> gpudb::alter_table_add_partition: Adds the
+ *                partition specified in @a value, to either a <a
+ *                href="../../concepts/tables.html#partitioning-by-range"
+ *                target="_top">range-partitioned</a> or <a
+ *                href="../../concepts/tables.html#partitioning-by-list-manual"
+ *                target="_top">manual list-partitioned</a> table.
  *                        <li> gpudb::alter_table_remove_partition: Removes the
- *                partition specified in @a value and relocates all its data to
- *                the default partition (for range-partitioned or
- *                list-partition tables).
+ *                partition specified in @a value (and relocates all of its
+ *                data to the default partition) from either a <a
+ *                href="../../concepts/tables.html#partitioning-by-range"
+ *                target="_top">range-partitioned</a> or <a
+ *                href="../../concepts/tables.html#partitioning-by-list-manual"
+ *                target="_top">manual list-partitioned</a> table.
  *                        <li> gpudb::alter_table_delete_partition: Deletes the
- *                partition specified in @a value and its data (for
- *                range-partitioned or list-partitioned tables).
+ *                partition specified in @a value (and all of its data) from
+ *                either a <a
+ *                href="../../concepts/tables.html#partitioning-by-range"
+ *                target="_top">range-partitioned</a> or <a
+ *                href="../../concepts/tables.html#partitioning-by-list-manual"
+ *                target="_top">manual list-partitioned</a> table.
  *                        <li> gpudb::alter_table_set_global_access_mode: Sets
  *                the global access mode (i.e. locking) for the table specified
  *                in @a tableName. Specify the access mode in @a value. Valid
@@ -5918,9 +5950,11 @@ CreateGraphResponse& createGraph( const CreateGraphRequest& request_,
  *               target="_top">identifiers</a>; identifiers are grouped as <a
  *               href="../../graph_solver/network_graph_solver.html#id-combos"
  *               target="_top">combinations</a>. Identifiers can be used with
- *               existing column names, e.g., 'table.column AS NODE_ID', or
+ *               existing column names, e.g., 'table.column AS NODE_ID',
  *               expressions, e.g., 'ST_MAKEPOINT(column1, column2) AS
- *               NODE_WKTPOINT'.
+ *               NODE_WKTPOINT', or raw values, e.g., '{9, 10, 11} AS NODE_ID'.
+ *               If using raw values in an identifier combination, the number
+ *               of values specified must match across the combination.
  * @param edges  Edges represent the required fundamental topological unit of a
  *               graph that typically connect nodes. Edges must be specified
  *               using <a
@@ -5928,8 +5962,11 @@ CreateGraphResponse& createGraph( const CreateGraphRequest& request_,
  *               target="_top">identifiers</a>; identifiers are grouped as <a
  *               href="../../graph_solver/network_graph_solver.html#id-combos"
  *               target="_top">combinations</a>. Identifiers can be used with
- *               existing column names, e.g., 'table.column AS EDGE_ID', or
- *               expressions, e.g., 'SUBSTR(column, 1, 6) AS EDGE_NODE1_NAME'.
+ *               existing column names, e.g., 'table.column AS EDGE_ID',
+ *               expressions, e.g., 'SUBSTR(column, 1, 6) AS EDGE_NODE1_NAME',
+ *               or raw values, e.g., "{'family', 'coworker'} AS EDGE_LABEL".
+ *               If using raw values in an identifier combination, the number
+ *               of values specified must match across the combination.
  * @param weights  Weights represent a method of informing the graph solver of
  *                 the cost of including a given edge in a solution. Weights
  *                 must be specified using <a
@@ -5938,8 +5975,11 @@ CreateGraphResponse& createGraph( const CreateGraphRequest& request_,
  *                 href="../../graph_solver/network_graph_solver.html#id-combos"
  *                 target="_top">combinations</a>. Identifiers can be used with
  *                 existing column names, e.g., 'table.column AS
- *                 WEIGHTS_EDGE_ID', or expressions, e.g., 'ST_LENGTH(wkt) AS
- *                 WEIGHTS_VALUESPECIFIED'.
+ *                 WEIGHTS_EDGE_ID', expressions, e.g., 'ST_LENGTH(wkt) AS
+ *                 WEIGHTS_VALUESPECIFIED', or raw values, e.g., '{4, 15} AS
+ *                 WEIGHTS_VALUESPECIFIED'. If using raw values in an
+ *                 identifier combination, the number of values specified must
+ *                 match across the combination.
  * @param restrictions  Restrictions represent a method of informing the graph
  *                      solver which edges and/or nodes should be ignored for
  *                      the solution. Restrictions must be specified using <a
@@ -5949,8 +5989,11 @@ CreateGraphResponse& createGraph( const CreateGraphRequest& request_,
  *                      href="../../graph_solver/network_graph_solver.html#id-combos"
  *                      target="_top">combinations</a>. Identifiers can be used
  *                      with existing column names, e.g., 'table.column AS
- *                      RESTRICTIONS_EDGE_ID', or expressions, e.g., 'column/2
- *                      AS RESTRICTIONS_VALUECOMPARED'.
+ *                      RESTRICTIONS_EDGE_ID', expressions, e.g., 'column/2 AS
+ *                      RESTRICTIONS_VALUECOMPARED', or raw values, e.g., '{0,
+ *                      0, 0, 1} AS RESTRICTIONS_ONOFFCOMPARED'. If using raw
+ *                      values in an identifier combination, the number of
+ *                      values specified must match across the combination.
  * @param options  Optional parameters.
  *                 <ul>
  *                         <li>
@@ -6073,9 +6116,11 @@ CreateGraphResponse createGraph( const std::string& graphName,
  *               target="_top">identifiers</a>; identifiers are grouped as <a
  *               href="../../graph_solver/network_graph_solver.html#id-combos"
  *               target="_top">combinations</a>. Identifiers can be used with
- *               existing column names, e.g., 'table.column AS NODE_ID', or
+ *               existing column names, e.g., 'table.column AS NODE_ID',
  *               expressions, e.g., 'ST_MAKEPOINT(column1, column2) AS
- *               NODE_WKTPOINT'.
+ *               NODE_WKTPOINT', or raw values, e.g., '{9, 10, 11} AS NODE_ID'.
+ *               If using raw values in an identifier combination, the number
+ *               of values specified must match across the combination.
  * @param edges  Edges represent the required fundamental topological unit of a
  *               graph that typically connect nodes. Edges must be specified
  *               using <a
@@ -6083,8 +6128,11 @@ CreateGraphResponse createGraph( const std::string& graphName,
  *               target="_top">identifiers</a>; identifiers are grouped as <a
  *               href="../../graph_solver/network_graph_solver.html#id-combos"
  *               target="_top">combinations</a>. Identifiers can be used with
- *               existing column names, e.g., 'table.column AS EDGE_ID', or
- *               expressions, e.g., 'SUBSTR(column, 1, 6) AS EDGE_NODE1_NAME'.
+ *               existing column names, e.g., 'table.column AS EDGE_ID',
+ *               expressions, e.g., 'SUBSTR(column, 1, 6) AS EDGE_NODE1_NAME',
+ *               or raw values, e.g., "{'family', 'coworker'} AS EDGE_LABEL".
+ *               If using raw values in an identifier combination, the number
+ *               of values specified must match across the combination.
  * @param weights  Weights represent a method of informing the graph solver of
  *                 the cost of including a given edge in a solution. Weights
  *                 must be specified using <a
@@ -6093,8 +6141,11 @@ CreateGraphResponse createGraph( const std::string& graphName,
  *                 href="../../graph_solver/network_graph_solver.html#id-combos"
  *                 target="_top">combinations</a>. Identifiers can be used with
  *                 existing column names, e.g., 'table.column AS
- *                 WEIGHTS_EDGE_ID', or expressions, e.g., 'ST_LENGTH(wkt) AS
- *                 WEIGHTS_VALUESPECIFIED'.
+ *                 WEIGHTS_EDGE_ID', expressions, e.g., 'ST_LENGTH(wkt) AS
+ *                 WEIGHTS_VALUESPECIFIED', or raw values, e.g., '{4, 15} AS
+ *                 WEIGHTS_VALUESPECIFIED'. If using raw values in an
+ *                 identifier combination, the number of values specified must
+ *                 match across the combination.
  * @param restrictions  Restrictions represent a method of informing the graph
  *                      solver which edges and/or nodes should be ignored for
  *                      the solution. Restrictions must be specified using <a
@@ -6104,8 +6155,11 @@ CreateGraphResponse createGraph( const std::string& graphName,
  *                      href="../../graph_solver/network_graph_solver.html#id-combos"
  *                      target="_top">combinations</a>. Identifiers can be used
  *                      with existing column names, e.g., 'table.column AS
- *                      RESTRICTIONS_EDGE_ID', or expressions, e.g., 'column/2
- *                      AS RESTRICTIONS_VALUECOMPARED'.
+ *                      RESTRICTIONS_EDGE_ID', expressions, e.g., 'column/2 AS
+ *                      RESTRICTIONS_VALUECOMPARED', or raw values, e.g., '{0,
+ *                      0, 0, 1} AS RESTRICTIONS_ONOFFCOMPARED'. If using raw
+ *                      values in an identifier combination, the number of
+ *                      values specified must match across the combination.
  * @param options  Optional parameters.
  *                 <ul>
  *                         <li>
@@ -7028,7 +7082,7 @@ CreateProjectionResponse& createProjection( const CreateProjectionRequest& reque
  *                         <li> gpudb::create_projection_true
  *                         <li> gpudb::create_projection_false
  *                 </ul>
- *                 The default value is gpudb::create_projection_false.
+ *                 The default value is gpudb::create_projection_true.
  *                         <li> gpudb::create_projection_view_id: view this
  *                 projection is part of.  The default value is ''.
  *                 </ul>
@@ -7146,7 +7200,7 @@ CreateProjectionResponse createProjection( const std::string& tableName,
  *                         <li> gpudb::create_projection_true
  *                         <li> gpudb::create_projection_false
  *                 </ul>
- *                 The default value is gpudb::create_projection_false.
+ *                 The default value is gpudb::create_projection_true.
  *                         <li> gpudb::create_projection_view_id: view this
  *                 projection is part of.  The default value is ''.
  *                 </ul>
@@ -7550,9 +7604,9 @@ CreateTableResponse& createTable( const CreateTableRequest& request_,
  *                         <li> gpudb::create_table_INTERVAL: Use <a
  *                 href="../../concepts/tables.html#partitioning-by-interval"
  *                 target="_top">interval partitioning</a>.
- *                         <li> gpudb::create_table_LIST: Allows specifying a
- *                 list of VALUES for a partition, or optionally to create an
- *                 AUTOMATIC partition for each unique value
+ *                         <li> gpudb::create_table_LIST: Use <a
+ *                 href="../../concepts/tables.html#partitioning-by-list"
+ *                 target="_top">list partitioning</a>.
  *                 </ul>
  *                         <li> gpudb::create_table_partition_keys:
  *                 Comma-separated list of partition keys, which are the
@@ -7561,15 +7615,18 @@ CreateTableResponse& createTable( const CreateTableRequest& request_,
  *                         <li> gpudb::create_table_partition_definitions:
  *                 Comma-separated list of partition definitions, whose format
  *                 depends on the choice of @a partition_type.  See <a
- *                 href="../../concepts/tables.html#partitioning-by-range-example"
- *                 target="_top">range partitioning example</a> or <a
- *                 href="../../concepts/tables.html#partitioning-by-interval-example"
- *                 target="_top">interval partitioning example</a> for example
- *                 formats.
+ *                 href="../../concepts/tables.html#partitioning-by-range"
+ *                 target="_top">range partitioning</a>, <a
+ *                 href="../../concepts/tables.html#partitioning-by-interval"
+ *                 target="_top">interval partitioning</a>, or <a
+ *                 href="../../concepts/tables.html#partitioning-by-list"
+ *                 target="_top">list partitioning</a> for example formats.
  *                         <li> gpudb::create_table_is_automatic_partition: If
  *                 true, a new partition will be created for values which don't
  *                 fall into an existing partition.  Currently only supported
- *                 for LIST partitions
+ *                 for <a
+ *                 href="../../concepts/tables.html#partitioning-by-list"
+ *                 target="_top">list partitions</a>.
  *                 <ul>
  *                         <li> gpudb::create_table_true
  *                         <li> gpudb::create_table_false
@@ -7714,9 +7771,9 @@ CreateTableResponse createTable( const std::string& tableName,
  *                         <li> gpudb::create_table_INTERVAL: Use <a
  *                 href="../../concepts/tables.html#partitioning-by-interval"
  *                 target="_top">interval partitioning</a>.
- *                         <li> gpudb::create_table_LIST: Allows specifying a
- *                 list of VALUES for a partition, or optionally to create an
- *                 AUTOMATIC partition for each unique value
+ *                         <li> gpudb::create_table_LIST: Use <a
+ *                 href="../../concepts/tables.html#partitioning-by-list"
+ *                 target="_top">list partitioning</a>.
  *                 </ul>
  *                         <li> gpudb::create_table_partition_keys:
  *                 Comma-separated list of partition keys, which are the
@@ -7725,15 +7782,18 @@ CreateTableResponse createTable( const std::string& tableName,
  *                         <li> gpudb::create_table_partition_definitions:
  *                 Comma-separated list of partition definitions, whose format
  *                 depends on the choice of @a partition_type.  See <a
- *                 href="../../concepts/tables.html#partitioning-by-range-example"
- *                 target="_top">range partitioning example</a> or <a
- *                 href="../../concepts/tables.html#partitioning-by-interval-example"
- *                 target="_top">interval partitioning example</a> for example
- *                 formats.
+ *                 href="../../concepts/tables.html#partitioning-by-range"
+ *                 target="_top">range partitioning</a>, <a
+ *                 href="../../concepts/tables.html#partitioning-by-interval"
+ *                 target="_top">interval partitioning</a>, or <a
+ *                 href="../../concepts/tables.html#partitioning-by-list"
+ *                 target="_top">list partitioning</a> for example formats.
  *                         <li> gpudb::create_table_is_automatic_partition: If
  *                 true, a new partition will be created for values which don't
  *                 fall into an existing partition.  Currently only supported
- *                 for LIST partitions
+ *                 for <a
+ *                 href="../../concepts/tables.html#partitioning-by-list"
+ *                 target="_top">list partitions</a>.
  *                 <ul>
  *                         <li> gpudb::create_table_true
  *                         <li> gpudb::create_table_false
@@ -16182,9 +16242,9 @@ InsertRecordsRandomResponse& insertRecordsRandom( const std::string& tableName,
  * and any additional optional parameter (e.g. color). To have a symbol used
  * for rendering create a table with a string column named 'SYMBOLCODE' (along
  * with 'x' or 'y' for example). Then when the table is rendered (via <a
- * href="../rest/wms_rest.html" target="_top">WMS</a>) if the 'dosymbology'
- * parameter is 'true' then the value of the 'SYMBOLCODE' column is used to
- * pick the symbol displayed for each point.
+ * href="../../api/rest/wms_rest.html" target="_top">WMS</a>) if the
+ * 'dosymbology' parameter is 'true' then the value of the 'SYMBOLCODE' column
+ * is used to pick the symbol displayed for each point.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -16202,9 +16262,9 @@ InsertSymbolResponse insertSymbol( const InsertSymbolRequest& request_ ) const;
  * and any additional optional parameter (e.g. color). To have a symbol used
  * for rendering create a table with a string column named 'SYMBOLCODE' (along
  * with 'x' or 'y' for example). Then when the table is rendered (via <a
- * href="../rest/wms_rest.html" target="_top">WMS</a>) if the 'dosymbology'
- * parameter is 'true' then the value of the 'SYMBOLCODE' column is used to
- * pick the symbol displayed for each point.
+ * href="../../api/rest/wms_rest.html" target="_top">WMS</a>) if the
+ * 'dosymbology' parameter is 'true' then the value of the 'SYMBOLCODE' column
+ * is used to pick the symbol displayed for each point.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -16226,9 +16286,9 @@ InsertSymbolResponse& insertSymbol( const InsertSymbolRequest& request_,
  * and any additional optional parameter (e.g. color). To have a symbol used
  * for rendering create a table with a string column named 'SYMBOLCODE' (along
  * with 'x' or 'y' for example). Then when the table is rendered (via <a
- * href="../rest/wms_rest.html" target="_top">WMS</a>) if the 'dosymbology'
- * parameter is 'true' then the value of the 'SYMBOLCODE' column is used to
- * pick the symbol displayed for each point.
+ * href="../../api/rest/wms_rest.html" target="_top">WMS</a>) if the
+ * 'dosymbology' parameter is 'true' then the value of the 'SYMBOLCODE' column
+ * is used to pick the symbol displayed for each point.
  * 
  * @param symbolId  The id of the symbol being added. This is the same id that
  *                  should be in the 'SYMBOLCODE' column for objects using this
@@ -16270,9 +16330,9 @@ InsertSymbolResponse insertSymbol( const std::string& symbolId,
  * and any additional optional parameter (e.g. color). To have a symbol used
  * for rendering create a table with a string column named 'SYMBOLCODE' (along
  * with 'x' or 'y' for example). Then when the table is rendered (via <a
- * href="../rest/wms_rest.html" target="_top">WMS</a>) if the 'dosymbology'
- * parameter is 'true' then the value of the 'SYMBOLCODE' column is used to
- * pick the symbol displayed for each point.
+ * href="../../api/rest/wms_rest.html" target="_top">WMS</a>) if the
+ * 'dosymbology' parameter is 'true' then the value of the 'SYMBOLCODE' column
+ * is used to pick the symbol displayed for each point.
  * 
  * @param symbolId  The id of the symbol being added. This is the same id that
  *                  should be in the 'SYMBOLCODE' column for objects using this
@@ -16603,9 +16663,11 @@ MatchGraphResponse& matchGraph( const MatchGraphRequest& request_,
  *                      target="_top">identifiers</a>; identifiers are grouped
  *                      as <a
  *                      href="../../graph_solver/network_graph_solver.html#match-combinations"
- *                      target="_top">combinations</a>. Identifiers are used
- *                      with existing column names, e.g., 'table.column AS
- *                      SAMPLE_WKTPOINT'.
+ *                      target="_top">combinations</a>. Identifiers can be used
+ *                      with: existing column names, e.g., 'table.column AS
+ *                      SAMPLE_X'; expressions, e.g., 'ST_MAKEPOINT(table.x,
+ *                      table.y) AS SAMPLE_WKTPOINT'; or raw values, e.g., '{1,
+ *                      2, 10} AS SAMPLE_TRIPID'.
  * @param solveMethod  The type of solver to use for graph matching.
  *                     <ul>
  *                             <li> gpudb::match_graph_markov_chain: Matches @a
@@ -16717,9 +16779,11 @@ MatchGraphResponse matchGraph( const std::string& graphName,
  *                      target="_top">identifiers</a>; identifiers are grouped
  *                      as <a
  *                      href="../../graph_solver/network_graph_solver.html#match-combinations"
- *                      target="_top">combinations</a>. Identifiers are used
- *                      with existing column names, e.g., 'table.column AS
- *                      SAMPLE_WKTPOINT'.
+ *                      target="_top">combinations</a>. Identifiers can be used
+ *                      with: existing column names, e.g., 'table.column AS
+ *                      SAMPLE_X'; expressions, e.g., 'ST_MAKEPOINT(table.x,
+ *                      table.y) AS SAMPLE_WKTPOINT'; or raw values, e.g., '{1,
+ *                      2, 10} AS SAMPLE_TRIPID'.
  * @param solveMethod  The type of solver to use for graph matching.
  *                     <ul>
  *                             <li> gpudb::match_graph_markov_chain: Matches @a
@@ -17046,15 +17110,12 @@ MergeRecordsResponse& mergeRecords( const std::string& tableName,
  * #createGraph(const CreateGraphRequest&) const} and returns a list of
  * adjacent edge(s) or node(s), also known as an adjacency list, depending on
  * what's been provided to the endpoint; providing edges will return nodes and
- * providing nodes will return edges. The edge(s) or node(s) to be queried are
- * specified using column names and <a
- * href="../../graph_solver/network_graph_solver.html#query-identifiers"
- * target="_top">query identifiers</a> with the @a queries.
+ * providing nodes will return edges.
  * <p>
  * To determine the node(s) or edge(s) adjacent to a value from a given column,
- * provide a list of column names aliased as a particular query identifier to
- * @a queries. This field can be populated with column values from any table as
- * long as the type is supported by the given identifier. See <a
+ * provide a list of values to @a queries. This field can be populated with
+ * column values from any table as long as the type is supported by the given
+ * identifier. See <a
  * href="../../graph_solver/network_graph_solver.html#query-identifiers"
  * target="_top">Query Identifiers</a> for more information.
  * <p>
@@ -17081,15 +17142,12 @@ QueryGraphResponse queryGraph( const QueryGraphRequest& request_ ) const;
  * #createGraph(const CreateGraphRequest&,CreateGraphResponse&) const} and
  * returns a list of adjacent edge(s) or node(s), also known as an adjacency
  * list, depending on what's been provided to the endpoint; providing edges
- * will return nodes and providing nodes will return edges. The edge(s) or
- * node(s) to be queried are specified using column names and <a
- * href="../../graph_solver/network_graph_solver.html#query-identifiers"
- * target="_top">query identifiers</a> with the @a queries.
+ * will return nodes and providing nodes will return edges.
  * <p>
  * To determine the node(s) or edge(s) adjacent to a value from a given column,
- * provide a list of column names aliased as a particular query identifier to
- * @a queries. This field can be populated with column values from any table as
- * long as the type is supported by the given identifier. See <a
+ * provide a list of values to @a queries. This field can be populated with
+ * column values from any table as long as the type is supported by the given
+ * identifier. See <a
  * href="../../graph_solver/network_graph_solver.html#query-identifiers"
  * target="_top">Query Identifiers</a> for more information.
  * <p>
@@ -17120,15 +17178,12 @@ QueryGraphResponse& queryGraph( const QueryGraphRequest& request_,
  * #createGraph(const std::string&,const bool,const std::vector<std::string>&,const std::vector<std::string>&,const std::vector<std::string>&,const std::vector<std::string>&,const std::map<std::string, std::string>&) const}
  * and returns a list of adjacent edge(s) or node(s), also known as an
  * adjacency list, depending on what's been provided to the endpoint; providing
- * edges will return nodes and providing nodes will return edges. The edge(s)
- * or node(s) to be queried are specified using column names and <a
- * href="../../graph_solver/network_graph_solver.html#query-identifiers"
- * target="_top">query identifiers</a> with the @a queries.
+ * edges will return nodes and providing nodes will return edges.
  * <p>
  * To determine the node(s) or edge(s) adjacent to a value from a given column,
- * provide a list of column names aliased as a particular query identifier to
- * @a queries. This field can be populated with column values from any table as
- * long as the type is supported by the given identifier. See <a
+ * provide a list of values to @a queries. This field can be populated with
+ * column values from any table as long as the type is supported by the given
+ * identifier. See <a
  * href="../../graph_solver/network_graph_solver.html#query-identifiers"
  * target="_top">Query Identifiers</a> for more information.
  * <p>
@@ -17144,10 +17199,14 @@ QueryGraphResponse& queryGraph( const QueryGraphRequest& request_,
  * @param graphName  Name of the graph resource to query.
  * @param queries  Nodes or edges to be queried specified using <a
  *                 href="../../graph_solver/network_graph_solver.html#query-identifiers"
- *                 target="_top">query identifiers</a>, e.g., 'table.column AS
- *                 QUERY_NODE_ID' or 'table.column AS QUERY_EDGE_WKTLINE'.
- *                 Multiple columns can be used as long as the same identifier
- *                 is used for all columns.
+ *                 target="_top">query identifiers</a>. Identifiers can be used
+ *                 with existing column names, e.g., 'table.column AS
+ *                 QUERY_NODE_ID', raw values, e.g., '{0, 2} AS QUERY_NODE_ID',
+ *                 or expressions, e.g., 'ST_MAKEPOINT(table.x, table.y) AS
+ *                 QUERY_NODE_WKTPOINT'. Multiple values can be provided as
+ *                 long as the same identifier is used for all values. If using
+ *                 raw values in an identifier combination, the number of
+ *                 values specified must match across the combination.
  * @param restrictions  Additional restrictions to apply to the nodes/edges of
  *                      an existing graph. Restrictions must be specified using
  *                      <a
@@ -17157,64 +17216,74 @@ QueryGraphResponse& queryGraph( const QueryGraphRequest& request_,
  *                      href="../../graph_solver/network_graph_solver.html#id-combos"
  *                      target="_top">combinations</a>. Identifiers can be used
  *                      with existing column names, e.g., 'table.column AS
- *                      RESTRICTIONS_EDGE_ID', or expressions, e.g., 'column/2
- *                      AS RESTRICTIONS_VALUECOMPARED'.
+ *                      RESTRICTIONS_EDGE_ID', expressions, e.g., 'column/2 AS
+ *                      RESTRICTIONS_VALUECOMPARED', or raw values, e.g., '{0,
+ *                      0, 0, 1} AS RESTRICTIONS_ONOFFCOMPARED'. If using raw
+ *                      values in an identifier combination, the number of
+ *                      values specified must match across the combination.
  * @param adjacencyTable  Name of the table to store the resulting adjacencies.
  *                        If left blank, the query results are instead returned
  *                        in the response even if @a export_query_results is
- *                        set to @a false.
+ *                        set to @a false. If the 'QUERY_TARGET_NODE_LABEL' <a
+ *                        href="../../graph_solver/network_graph_solver.html#query-identifiers"
+ *                        target="_top">query identifier</a> is used in @a
+ *                        queries, then two additional columns will be
+ *                        available: 'PATH_ID' and 'RING_ID'. See
+ *                                    <a
+ *                        href="../../graph_solver/network_graph_solver.html#using-labels"
+ *                        target="_top">Using Labels</a> for more information.
  * @param options  Additional parameters
  *                 <ul>
- *                         <li> gpudb::query_graph_rings: Sets the number of
- *                 rings of edges around the node to query for adjacency, with
- *                 '1' being the edges directly attached to the queried nodes.
+ *                         <li> gpudb::query_graph_rings: Only applicable when
+ *                 querying nodes. Sets the number of rings around the node to
+ *                 query for adjacency, with '1' being the edges directly
+ *                 attached to the queried node. Also known as number of hops.
  *                 For example, if @a rings is set to '2', the edge(s) directly
- *                 attached to the queried nodes will be returned; in addition,
- *                 the edge(s) attached to the node(s) attached to the initial
- *                 ring of edge(s) surrounding the queried node(s) will be
- *                 returned. This setting cannot be less than '1'.  The default
- *                 value is '1'.
+ *                 attached to the queried node(s) will be returned; in
+ *                 addition, the edge(s) attached to the node(s) attached to
+ *                 the initial ring of edge(s) surrounding the queried node(s)
+ *                 will be returned. This setting cannot be less than '1'.  The
+ *                 default value is '1'.
  *                         <li> gpudb::query_graph_force_undirected: This
- *                 parameter is only applicable if the queried graph is
- *                 directed. If set to @a true, all inbound edges and outbound
- *                 edges relative to the node will be returned. If set to @a
- *                 false, only outbound edges relative to the node will be
- *                 returned.
+ *                 parameter is only applicable if the queried graph @a
+ *                 graphName is directed and when querying nodes. If set to @a
+ *                 true, all inbound edges and outbound edges relative to the
+ *                 node will be returned. If set to @a false, only outbound
+ *                 edges relative to the node will be returned.
  *                 <ul>
  *                         <li> gpudb::query_graph_true
  *                         <li> gpudb::query_graph_false
  *                 </ul>
  *                 The default value is gpudb::query_graph_false.
- *                         <li> gpudb::query_graph_blocked_nodes: When false,
- *                 allow a restricted node to be part of a valid traversal but
- *                 not a target. Otherwise, queries are blocked by restricted
- *                 nodes.
- *                 <ul>
- *                         <li> gpudb::query_graph_true
- *                         <li> gpudb::query_graph_false
- *                 </ul>
- *                 The default value is gpudb::query_graph_true.
  *                         <li> gpudb::query_graph_limit: When specified,
  *                 limits the number of query results. Note that if the @a
- *                 target_nodes_table is requested (non-empty), this will limit
- *                 the size of the corresponding table.  The default value is
- *                 an empty std::map.
- *                         <li> gpudb::query_graph_target_nodes_table: If
- *                 non-empty, returns a table containing the list of the final
- *                 nodes reached during the traversal. Only valid if
- *                 blocked_nodes is false.  The default value is ''.
+ *                 target_nodes_table is provided, the size of the
+ *                 corresponding table will be limited by the @a limit value.
+ *                 The default value is an empty std::map.
+ *                         <li> gpudb::query_graph_target_nodes_table: Name of
+ *                 the table to store the list of the final nodes reached
+ *                 during the traversal. If the 'QUERY_TARGET_NODE_LABEL' <a
+ *                 href="../../graph_solver/network_graph_solver.html#query-identifiers"
+ *                 target="_top">query identifier</a> is NOT used in @a
+ *                 queries, the table will not be created.  The default value
+ *                 is ''.
  *                         <li> gpudb::query_graph_restriction_threshold_value:
  *                 Value-based restriction comparison. Any node or edge with a
  *                 RESTRICTIONS_VALUECOMPARED value greater than the @a
  *                 restriction_threshold_value will not be included in the
  *                 solution.
  *                         <li> gpudb::query_graph_export_query_results:
- *                 Returns query results in the response if set to @a true.
+ *                 Returns query results in the response. If set to @a true,
+ *                 the @a adjacencyListIntArray (if the query was based on
+ *                 IDs), @{adjacency_list_string_array} (if the query was based
+ *                 on names), or @{output_adjacency_list_wkt_array} (if the
+ *                 query was based on WKTs) will be populated with the results.
+ *                 If set to @a false, none of the arrays will be populated.
  *                 <ul>
  *                         <li> gpudb::query_graph_true
  *                         <li> gpudb::query_graph_false
  *                 </ul>
- *                 The default value is gpudb::query_graph_true.
+ *                 The default value is gpudb::query_graph_false.
  *                         <li> gpudb::query_graph_enable_graph_draw: If set to
  *                 @a true, adds a WKT-type column named 'QUERY_EDGE_WKTLINE'
  *                 to the given @a adjacencyTable and inputs WKT values from
@@ -17246,15 +17315,12 @@ QueryGraphResponse queryGraph( const std::string& graphName,
  * #createGraph(const std::string&,const bool,const std::vector<std::string>&,const std::vector<std::string>&,const std::vector<std::string>&,const std::vector<std::string>&,const std::map<std::string, std::string>&,CreateGraphResponse&) const}
  * and returns a list of adjacent edge(s) or node(s), also known as an
  * adjacency list, depending on what's been provided to the endpoint; providing
- * edges will return nodes and providing nodes will return edges. The edge(s)
- * or node(s) to be queried are specified using column names and <a
- * href="../../graph_solver/network_graph_solver.html#query-identifiers"
- * target="_top">query identifiers</a> with the @a queries.
+ * edges will return nodes and providing nodes will return edges.
  * <p>
  * To determine the node(s) or edge(s) adjacent to a value from a given column,
- * provide a list of column names aliased as a particular query identifier to
- * @a queries. This field can be populated with column values from any table as
- * long as the type is supported by the given identifier. See <a
+ * provide a list of values to @a queries. This field can be populated with
+ * column values from any table as long as the type is supported by the given
+ * identifier. See <a
  * href="../../graph_solver/network_graph_solver.html#query-identifiers"
  * target="_top">Query Identifiers</a> for more information.
  * <p>
@@ -17270,10 +17336,14 @@ QueryGraphResponse queryGraph( const std::string& graphName,
  * @param graphName  Name of the graph resource to query.
  * @param queries  Nodes or edges to be queried specified using <a
  *                 href="../../graph_solver/network_graph_solver.html#query-identifiers"
- *                 target="_top">query identifiers</a>, e.g., 'table.column AS
- *                 QUERY_NODE_ID' or 'table.column AS QUERY_EDGE_WKTLINE'.
- *                 Multiple columns can be used as long as the same identifier
- *                 is used for all columns.
+ *                 target="_top">query identifiers</a>. Identifiers can be used
+ *                 with existing column names, e.g., 'table.column AS
+ *                 QUERY_NODE_ID', raw values, e.g., '{0, 2} AS QUERY_NODE_ID',
+ *                 or expressions, e.g., 'ST_MAKEPOINT(table.x, table.y) AS
+ *                 QUERY_NODE_WKTPOINT'. Multiple values can be provided as
+ *                 long as the same identifier is used for all values. If using
+ *                 raw values in an identifier combination, the number of
+ *                 values specified must match across the combination.
  * @param restrictions  Additional restrictions to apply to the nodes/edges of
  *                      an existing graph. Restrictions must be specified using
  *                      <a
@@ -17283,64 +17353,74 @@ QueryGraphResponse queryGraph( const std::string& graphName,
  *                      href="../../graph_solver/network_graph_solver.html#id-combos"
  *                      target="_top">combinations</a>. Identifiers can be used
  *                      with existing column names, e.g., 'table.column AS
- *                      RESTRICTIONS_EDGE_ID', or expressions, e.g., 'column/2
- *                      AS RESTRICTIONS_VALUECOMPARED'.
+ *                      RESTRICTIONS_EDGE_ID', expressions, e.g., 'column/2 AS
+ *                      RESTRICTIONS_VALUECOMPARED', or raw values, e.g., '{0,
+ *                      0, 0, 1} AS RESTRICTIONS_ONOFFCOMPARED'. If using raw
+ *                      values in an identifier combination, the number of
+ *                      values specified must match across the combination.
  * @param adjacencyTable  Name of the table to store the resulting adjacencies.
  *                        If left blank, the query results are instead returned
  *                        in the response even if @a export_query_results is
- *                        set to @a false.
+ *                        set to @a false. If the 'QUERY_TARGET_NODE_LABEL' <a
+ *                        href="../../graph_solver/network_graph_solver.html#query-identifiers"
+ *                        target="_top">query identifier</a> is used in @a
+ *                        queries, then two additional columns will be
+ *                        available: 'PATH_ID' and 'RING_ID'. See
+ *                                    <a
+ *                        href="../../graph_solver/network_graph_solver.html#using-labels"
+ *                        target="_top">Using Labels</a> for more information.
  * @param options  Additional parameters
  *                 <ul>
- *                         <li> gpudb::query_graph_rings: Sets the number of
- *                 rings of edges around the node to query for adjacency, with
- *                 '1' being the edges directly attached to the queried nodes.
+ *                         <li> gpudb::query_graph_rings: Only applicable when
+ *                 querying nodes. Sets the number of rings around the node to
+ *                 query for adjacency, with '1' being the edges directly
+ *                 attached to the queried node. Also known as number of hops.
  *                 For example, if @a rings is set to '2', the edge(s) directly
- *                 attached to the queried nodes will be returned; in addition,
- *                 the edge(s) attached to the node(s) attached to the initial
- *                 ring of edge(s) surrounding the queried node(s) will be
- *                 returned. This setting cannot be less than '1'.  The default
- *                 value is '1'.
+ *                 attached to the queried node(s) will be returned; in
+ *                 addition, the edge(s) attached to the node(s) attached to
+ *                 the initial ring of edge(s) surrounding the queried node(s)
+ *                 will be returned. This setting cannot be less than '1'.  The
+ *                 default value is '1'.
  *                         <li> gpudb::query_graph_force_undirected: This
- *                 parameter is only applicable if the queried graph is
- *                 directed. If set to @a true, all inbound edges and outbound
- *                 edges relative to the node will be returned. If set to @a
- *                 false, only outbound edges relative to the node will be
- *                 returned.
+ *                 parameter is only applicable if the queried graph @a
+ *                 graphName is directed and when querying nodes. If set to @a
+ *                 true, all inbound edges and outbound edges relative to the
+ *                 node will be returned. If set to @a false, only outbound
+ *                 edges relative to the node will be returned.
  *                 <ul>
  *                         <li> gpudb::query_graph_true
  *                         <li> gpudb::query_graph_false
  *                 </ul>
  *                 The default value is gpudb::query_graph_false.
- *                         <li> gpudb::query_graph_blocked_nodes: When false,
- *                 allow a restricted node to be part of a valid traversal but
- *                 not a target. Otherwise, queries are blocked by restricted
- *                 nodes.
- *                 <ul>
- *                         <li> gpudb::query_graph_true
- *                         <li> gpudb::query_graph_false
- *                 </ul>
- *                 The default value is gpudb::query_graph_true.
  *                         <li> gpudb::query_graph_limit: When specified,
  *                 limits the number of query results. Note that if the @a
- *                 target_nodes_table is requested (non-empty), this will limit
- *                 the size of the corresponding table.  The default value is
- *                 an empty std::map.
- *                         <li> gpudb::query_graph_target_nodes_table: If
- *                 non-empty, returns a table containing the list of the final
- *                 nodes reached during the traversal. Only valid if
- *                 blocked_nodes is false.  The default value is ''.
+ *                 target_nodes_table is provided, the size of the
+ *                 corresponding table will be limited by the @a limit value.
+ *                 The default value is an empty std::map.
+ *                         <li> gpudb::query_graph_target_nodes_table: Name of
+ *                 the table to store the list of the final nodes reached
+ *                 during the traversal. If the 'QUERY_TARGET_NODE_LABEL' <a
+ *                 href="../../graph_solver/network_graph_solver.html#query-identifiers"
+ *                 target="_top">query identifier</a> is NOT used in @a
+ *                 queries, the table will not be created.  The default value
+ *                 is ''.
  *                         <li> gpudb::query_graph_restriction_threshold_value:
  *                 Value-based restriction comparison. Any node or edge with a
  *                 RESTRICTIONS_VALUECOMPARED value greater than the @a
  *                 restriction_threshold_value will not be included in the
  *                 solution.
  *                         <li> gpudb::query_graph_export_query_results:
- *                 Returns query results in the response if set to @a true.
+ *                 Returns query results in the response. If set to @a true,
+ *                 the @a adjacencyListIntArray (if the query was based on
+ *                 IDs), @{adjacency_list_string_array} (if the query was based
+ *                 on names), or @{output_adjacency_list_wkt_array} (if the
+ *                 query was based on WKTs) will be populated with the results.
+ *                 If set to @a false, none of the arrays will be populated.
  *                 <ul>
  *                         <li> gpudb::query_graph_true
  *                         <li> gpudb::query_graph_false
  *                 </ul>
- *                 The default value is gpudb::query_graph_true.
+ *                 The default value is gpudb::query_graph_false.
  *                         <li> gpudb::query_graph_enable_graph_draw: If set to
  *                 @a true, adds a WKT-type column named 'QUERY_EDGE_WKTLINE'
  *                 to the given @a adjacencyTable and inputs WKT values from
@@ -18845,12 +18925,15 @@ SolveGraphResponse& solveGraph( const SolveGraphRequest& request_,
  *                        href="../../graph_solver/network_graph_solver.html#id-combos"
  *                        target="_top">combinations</a>. Identifiers can be
  *                        used with existing column names, e.g., 'table.column
- *                        AS WEIGHTS_EDGE_ID', or expressions, e.g.,
- *                        'ST_LENGTH(wkt) AS WEIGHTS_VALUESPECIFIED'. Any
- *                        provided weights will be added (in the case of
+ *                        AS WEIGHTS_EDGE_ID', expressions, e.g.,
+ *                        'ST_LENGTH(wkt) AS WEIGHTS_VALUESPECIFIED', or raw
+ *                        values, e.g., '{4, 15, 2} AS WEIGHTS_VALUESPECIFIED'.
+ *                        Any provided weights will be added (in the case of
  *                        'WEIGHTS_VALUESPECIFIED') to or multiplied with (in
  *                        the case of 'WEIGHTS_FACTORSPECIFIED') the existing
- *                        weight(s).
+ *                        weight(s). If using raw values in an identifier
+ *                        combination, the number of values specified must
+ *                        match across the combination.
  * @param restrictions  Additional restrictions to apply to the nodes/edges of
  *                      an existing graph. Restrictions must be specified using
  *                      <a
@@ -18860,9 +18943,12 @@ SolveGraphResponse& solveGraph( const SolveGraphRequest& request_,
  *                      href="../../graph_solver/network_graph_solver.html#id-combos"
  *                      target="_top">combinations</a>. Identifiers can be used
  *                      with existing column names, e.g., 'table.column AS
- *                      RESTRICTIONS_EDGE_ID', or expressions, e.g., 'column/2
- *                      AS RESTRICTIONS_VALUECOMPARED'. If @a
- *                      remove_previous_restrictions is set to @a true, any
+ *                      RESTRICTIONS_EDGE_ID', expressions, e.g., 'column/2 AS
+ *                      RESTRICTIONS_VALUECOMPARED', or raw values, e.g., '{0,
+ *                      0, 0, 1} AS RESTRICTIONS_ONOFFCOMPARED'. If using raw
+ *                      values in an identifier combination, the number of
+ *                      values specified must match across the combination. If
+ *                      @a remove_previous_restrictions is set to @a true, any
  *                      provided restrictions will replace the existing
  *                      restrictions. If @a remove_previous_restrictions is set
  *                      to @a false, any provided weights will be added (in the
@@ -18876,7 +18962,12 @@ SolveGraphResponse& solveGraph( const SolveGraphRequest& request_,
  *                    known as the Dijkstra solver.
  *                            <li> gpudb::solve_graph_PAGE_RANK: Solves for the
  *                    probability of each destination node being visited based
- *                    on the links of the graph topology.
+ *                    on the links of the graph topology. Weights are not
+ *                    required to use this solver.
+ *                            <li> gpudb::solve_graph_PROBABILITY_RANK: Solves
+ *                    for the transitional probability (Hidden Markov) for each
+ *                    node based on the weights (probability assigned over
+ *                    given edges).
  *                            <li> gpudb::solve_graph_CENTRALITY: Solves for
  *                    the degree of a node to depict how many pairs of
  *                    individuals that would have to go through the node to
@@ -18944,6 +19035,13 @@ SolveGraphResponse& solveGraph( const SolveGraphRequest& request_,
  *                 destinationNodeIds list and instead outputs the nodes within
  *                 the radius sorted by ascending cost. If set to '0.0', the
  *                 setting is ignored.  The default value is '0.0'.
+ *                         <li> gpudb::solve_graph_min_solution_radius: For @a
+ *                 SHORTEST_PATH and @a INVERSE_SHORTEST_PATH solvers only.
+ *                 Applicable only when @a max_solution_radius is set. Sets the
+ *                 minimum solution cost radius, which ignores the @a
+ *                 destinationNodeIds list and instead outputs the nodes within
+ *                 the radius sorted by ascending cost. If set to '0.0', the
+ *                 setting is ignored.  The default value is '0.0'.
  *                         <li> gpudb::solve_graph_max_solution_targets: For @a
  *                 SHORTEST_PATH and @a INVERSE_SHORTEST_PATH solvers only.
  *                 Sets the maximum number of solution targets, which ignores
@@ -18976,8 +19074,8 @@ SolveGraphResponse& solveGraph( const SolveGraphRequest& request_,
  *                 restriction_threshold_value will not be included in the
  *                 solution.
  *                         <li> gpudb::solve_graph_uniform_weights: When
- *                 speficied, assigns the given value to all the edges in the
- *                 graph. Note that weights specified in @{weights_on_edges}
+ *                 specified, assigns the given value to all the edges in the
+ *                 graph. Note that weights provided in @a weightsOnEdges will
  *                 override this value.
  *                 </ul>
  * 
@@ -19013,12 +19111,15 @@ SolveGraphResponse solveGraph( const std::string& graphName,
  *                        href="../../graph_solver/network_graph_solver.html#id-combos"
  *                        target="_top">combinations</a>. Identifiers can be
  *                        used with existing column names, e.g., 'table.column
- *                        AS WEIGHTS_EDGE_ID', or expressions, e.g.,
- *                        'ST_LENGTH(wkt) AS WEIGHTS_VALUESPECIFIED'. Any
- *                        provided weights will be added (in the case of
+ *                        AS WEIGHTS_EDGE_ID', expressions, e.g.,
+ *                        'ST_LENGTH(wkt) AS WEIGHTS_VALUESPECIFIED', or raw
+ *                        values, e.g., '{4, 15, 2} AS WEIGHTS_VALUESPECIFIED'.
+ *                        Any provided weights will be added (in the case of
  *                        'WEIGHTS_VALUESPECIFIED') to or multiplied with (in
  *                        the case of 'WEIGHTS_FACTORSPECIFIED') the existing
- *                        weight(s).
+ *                        weight(s). If using raw values in an identifier
+ *                        combination, the number of values specified must
+ *                        match across the combination.
  * @param restrictions  Additional restrictions to apply to the nodes/edges of
  *                      an existing graph. Restrictions must be specified using
  *                      <a
@@ -19028,9 +19129,12 @@ SolveGraphResponse solveGraph( const std::string& graphName,
  *                      href="../../graph_solver/network_graph_solver.html#id-combos"
  *                      target="_top">combinations</a>. Identifiers can be used
  *                      with existing column names, e.g., 'table.column AS
- *                      RESTRICTIONS_EDGE_ID', or expressions, e.g., 'column/2
- *                      AS RESTRICTIONS_VALUECOMPARED'. If @a
- *                      remove_previous_restrictions is set to @a true, any
+ *                      RESTRICTIONS_EDGE_ID', expressions, e.g., 'column/2 AS
+ *                      RESTRICTIONS_VALUECOMPARED', or raw values, e.g., '{0,
+ *                      0, 0, 1} AS RESTRICTIONS_ONOFFCOMPARED'. If using raw
+ *                      values in an identifier combination, the number of
+ *                      values specified must match across the combination. If
+ *                      @a remove_previous_restrictions is set to @a true, any
  *                      provided restrictions will replace the existing
  *                      restrictions. If @a remove_previous_restrictions is set
  *                      to @a false, any provided weights will be added (in the
@@ -19044,7 +19148,12 @@ SolveGraphResponse solveGraph( const std::string& graphName,
  *                    known as the Dijkstra solver.
  *                            <li> gpudb::solve_graph_PAGE_RANK: Solves for the
  *                    probability of each destination node being visited based
- *                    on the links of the graph topology.
+ *                    on the links of the graph topology. Weights are not
+ *                    required to use this solver.
+ *                            <li> gpudb::solve_graph_PROBABILITY_RANK: Solves
+ *                    for the transitional probability (Hidden Markov) for each
+ *                    node based on the weights (probability assigned over
+ *                    given edges).
  *                            <li> gpudb::solve_graph_CENTRALITY: Solves for
  *                    the degree of a node to depict how many pairs of
  *                    individuals that would have to go through the node to
@@ -19112,6 +19221,13 @@ SolveGraphResponse solveGraph( const std::string& graphName,
  *                 destinationNodeIds list and instead outputs the nodes within
  *                 the radius sorted by ascending cost. If set to '0.0', the
  *                 setting is ignored.  The default value is '0.0'.
+ *                         <li> gpudb::solve_graph_min_solution_radius: For @a
+ *                 SHORTEST_PATH and @a INVERSE_SHORTEST_PATH solvers only.
+ *                 Applicable only when @a max_solution_radius is set. Sets the
+ *                 minimum solution cost radius, which ignores the @a
+ *                 destinationNodeIds list and instead outputs the nodes within
+ *                 the radius sorted by ascending cost. If set to '0.0', the
+ *                 setting is ignored.  The default value is '0.0'.
  *                         <li> gpudb::solve_graph_max_solution_targets: For @a
  *                 SHORTEST_PATH and @a INVERSE_SHORTEST_PATH solvers only.
  *                 Sets the maximum number of solution targets, which ignores
@@ -19144,8 +19260,8 @@ SolveGraphResponse solveGraph( const std::string& graphName,
  *                 restriction_threshold_value will not be included in the
  *                 solution.
  *                         <li> gpudb::solve_graph_uniform_weights: When
- *                 speficied, assigns the given value to all the edges in the
- *                 graph. Note that weights specified in @{weights_on_edges}
+ *                 specified, assigns the given value to all the edges in the
+ *                 graph. Note that weights provided in @a weightsOnEdges will
  *                 override this value.
  *                 </ul>
  * @param[out] response_  Response object containing the results of the
@@ -21003,7 +21119,7 @@ VisualizeImageContourResponse& visualizeImageContour( const VisualizeImageContou
  *                 default value is '12'.
  *                         <li>
  *                 gpudb::visualize_image_contour_labels_font_family:   The
- *                 default value is 'arial'.
+ *                 default value is 'sans'.
  *                         <li>
  *                 gpudb::visualize_image_contour_labels_search_window:   The
  *                 default value is '4'.
@@ -21016,6 +21132,14 @@ VisualizeImageContourResponse& visualizeImageContour( const VisualizeImageContou
  *                         <li>
  *                 gpudb::visualize_image_contour_labels_max_angle:   The
  *                 default value is '60'.
+ *                         <li>
+ *                 gpudb::visualize_image_contour_isochrone_concavity:   The
+ *                 default value is '-1'.
+ *                         <li>
+ *                 gpudb::visualize_image_contour_isochrone_output_table:   The
+ *                 default value is ''.
+ *                         <li> gpudb::visualize_image_contour_isochrone_image:
+ *                 The default value is 'false'.
  *                 </ul>
  * 
  * @return Response object containing the result of the operation.
@@ -21208,7 +21332,7 @@ VisualizeImageContourResponse visualizeImageContour( const std::vector<std::stri
  *                 default value is '12'.
  *                         <li>
  *                 gpudb::visualize_image_contour_labels_font_family:   The
- *                 default value is 'arial'.
+ *                 default value is 'sans'.
  *                         <li>
  *                 gpudb::visualize_image_contour_labels_search_window:   The
  *                 default value is '4'.
@@ -21221,6 +21345,14 @@ VisualizeImageContourResponse visualizeImageContour( const std::vector<std::stri
  *                         <li>
  *                 gpudb::visualize_image_contour_labels_max_angle:   The
  *                 default value is '60'.
+ *                         <li>
+ *                 gpudb::visualize_image_contour_isochrone_concavity:   The
+ *                 default value is '-1'.
+ *                         <li>
+ *                 gpudb::visualize_image_contour_isochrone_output_table:   The
+ *                 default value is ''.
+ *                         <li> gpudb::visualize_image_contour_isochrone_image:
+ *                 The default value is 'false'.
  *                 </ul>
  * @param[out] response_  Response object containing the results of the
  *                        operation.
@@ -21744,6 +21876,440 @@ VisualizeImageLabelsResponse& visualizeImageLabels( const std::string& tableName
                                                     const std::string& projection,
                                                     const std::map<std::string, std::string>& options,
                                                     VisualizeImageLabelsResponse& response_ ) const;
+
+/**
+ * @private
+ * 
+ * @param[in] request_  Request object containing the parameters for the
+ *                      operation.
+ * 
+ * @return Response object containing the result of the operation.
+ * 
+ */
+
+VisualizeIsochroneResponse visualizeIsochrone( const VisualizeIsochroneRequest& request_ ) const;
+
+/**
+ * @private
+ * 
+ * @param[in] request_  Request object containing the parameters for the
+ *                      operation.
+ * @param[out] response_  Response object containing the results of the
+ *                        operation.
+ * 
+ * @return Response object containing the result of the operation (initially
+ *         passed in by reference).
+ * 
+ */
+
+VisualizeIsochroneResponse& visualizeIsochrone( const VisualizeIsochroneRequest& request_,
+                                                VisualizeIsochroneResponse& response_ ) const;
+
+/**
+ * @private
+ * 
+ * @param graphName
+ * @param weightsOnEdges
+ * @param sourceNode
+ * @param restrictions
+ * @param maxSolutionRadius
+ * @param numLevels
+ * @param generateImage
+ * @param projection
+ *                    <ul>
+ *                            <li> gpudb::visualize_isochrone_3857
+ *                            <li> gpudb::visualize_isochrone_102100
+ *                            <li> gpudb::visualize_isochrone_900913
+ *                            <li> gpudb::visualize_isochrone_EPSG_4326
+ *                            <li> gpudb::visualize_isochrone_PLATE_CARREE
+ *                            <li> gpudb::visualize_isochrone_EPSG_900913
+ *                            <li> gpudb::visualize_isochrone_EPSG_102100
+ *                            <li> gpudb::visualize_isochrone_EPSG_3857
+ *                            <li> gpudb::visualize_isochrone_WEB_MERCATOR
+ *                    </ul>
+ *                    The default value is
+ *                    gpudb::visualize_isochrone_PLATE_CARREE.
+ * @param imageWidth
+ * @param imageHeight
+ * @param styleOptions
+ *                      <ul>
+ *                              <li> gpudb::visualize_isochrone_line_size:
+ *                      The default value is '3'.
+ *                              <li> gpudb::visualize_isochrone_color:   The
+ *                      default value is 'FF696969'.
+ *                              <li> gpudb::visualize_isochrone_bg_color:   The
+ *                      default value is '00000000'.
+ *                              <li> gpudb::visualize_isochrone_text_color:
+ *                      The default value is 'FF000000'.
+ *                              <li> gpudb::visualize_isochrone_colormap:
+ *                      <ul>
+ *                              <li> gpudb::visualize_isochrone_jet
+ *                              <li> gpudb::visualize_isochrone_accent
+ *                              <li> gpudb::visualize_isochrone_afmhot
+ *                              <li> gpudb::visualize_isochrone_autumn
+ *                              <li> gpudb::visualize_isochrone_binary
+ *                              <li> gpudb::visualize_isochrone_blues
+ *                              <li> gpudb::visualize_isochrone_bone
+ *                              <li> gpudb::visualize_isochrone_brbg
+ *                              <li> gpudb::visualize_isochrone_brg
+ *                              <li> gpudb::visualize_isochrone_bugn
+ *                              <li> gpudb::visualize_isochrone_bupu
+ *                              <li> gpudb::visualize_isochrone_bwr
+ *                              <li> gpudb::visualize_isochrone_cmrmap
+ *                              <li> gpudb::visualize_isochrone_cool
+ *                              <li> gpudb::visualize_isochrone_coolwarm
+ *                              <li> gpudb::visualize_isochrone_copper
+ *                              <li> gpudb::visualize_isochrone_cubehelix
+ *                              <li> gpudb::visualize_isochrone_dark2
+ *                              <li> gpudb::visualize_isochrone_flag
+ *                              <li> gpudb::visualize_isochrone_gist_earth
+ *                              <li> gpudb::visualize_isochrone_gist_gray
+ *                              <li> gpudb::visualize_isochrone_gist_heat
+ *                              <li> gpudb::visualize_isochrone_gist_ncar
+ *                              <li> gpudb::visualize_isochrone_gist_rainbow
+ *                              <li> gpudb::visualize_isochrone_gist_stern
+ *                              <li> gpudb::visualize_isochrone_gist_yarg
+ *                              <li> gpudb::visualize_isochrone_gnbu
+ *                              <li> gpudb::visualize_isochrone_gnuplot2
+ *                              <li> gpudb::visualize_isochrone_gnuplot
+ *                              <li> gpudb::visualize_isochrone_gray
+ *                              <li> gpudb::visualize_isochrone_greens
+ *                              <li> gpudb::visualize_isochrone_greys
+ *                              <li> gpudb::visualize_isochrone_hot
+ *                              <li> gpudb::visualize_isochrone_hsv
+ *                              <li> gpudb::visualize_isochrone_inferno
+ *                              <li> gpudb::visualize_isochrone_magma
+ *                              <li> gpudb::visualize_isochrone_nipy_spectral
+ *                              <li> gpudb::visualize_isochrone_ocean
+ *                              <li> gpudb::visualize_isochrone_oranges
+ *                              <li> gpudb::visualize_isochrone_orrd
+ *                              <li> gpudb::visualize_isochrone_paired
+ *                              <li> gpudb::visualize_isochrone_pastel1
+ *                              <li> gpudb::visualize_isochrone_pastel2
+ *                              <li> gpudb::visualize_isochrone_pink
+ *                              <li> gpudb::visualize_isochrone_piyg
+ *                              <li> gpudb::visualize_isochrone_plasma
+ *                              <li> gpudb::visualize_isochrone_prgn
+ *                              <li> gpudb::visualize_isochrone_prism
+ *                              <li> gpudb::visualize_isochrone_pubu
+ *                              <li> gpudb::visualize_isochrone_pubugn
+ *                              <li> gpudb::visualize_isochrone_puor
+ *                              <li> gpudb::visualize_isochrone_purd
+ *                              <li> gpudb::visualize_isochrone_purples
+ *                              <li> gpudb::visualize_isochrone_rainbow
+ *                              <li> gpudb::visualize_isochrone_rdbu
+ *                              <li> gpudb::visualize_isochrone_rdgy
+ *                              <li> gpudb::visualize_isochrone_rdpu
+ *                              <li> gpudb::visualize_isochrone_rdylbu
+ *                              <li> gpudb::visualize_isochrone_rdylgn
+ *                              <li> gpudb::visualize_isochrone_reds
+ *                              <li> gpudb::visualize_isochrone_seismic
+ *                              <li> gpudb::visualize_isochrone_set1
+ *                              <li> gpudb::visualize_isochrone_set2
+ *                              <li> gpudb::visualize_isochrone_set3
+ *                              <li> gpudb::visualize_isochrone_spectral
+ *                              <li> gpudb::visualize_isochrone_spring
+ *                              <li> gpudb::visualize_isochrone_summer
+ *                              <li> gpudb::visualize_isochrone_terrain
+ *                              <li> gpudb::visualize_isochrone_viridis
+ *                              <li> gpudb::visualize_isochrone_winter
+ *                              <li> gpudb::visualize_isochrone_wistia
+ *                              <li> gpudb::visualize_isochrone_ylgn
+ *                              <li> gpudb::visualize_isochrone_ylgnbu
+ *                              <li> gpudb::visualize_isochrone_ylorbr
+ *                              <li> gpudb::visualize_isochrone_ylorrd
+ *                      </ul>
+ *                      The default value is gpudb::visualize_isochrone_jet.
+ *                      </ul>
+ * @param solveOptions
+ *                      <ul>
+ *                              <li>
+ *                      gpudb::visualize_isochrone_remove_previous_restrictions:
+ *                      <ul>
+ *                              <li> gpudb::visualize_isochrone_true
+ *                              <li> gpudb::visualize_isochrone_false
+ *                      </ul>
+ *                      The default value is gpudb::visualize_isochrone_false.
+ *                              <li>
+ *                      gpudb::visualize_isochrone_restriction_threshold_value
+ *                              <li> gpudb::visualize_isochrone_uniform_weights
+ *                      </ul>
+ * @param contourOptions
+ *                        <ul>
+ *                                <li>
+ *                        gpudb::visualize_isochrone_search_radius:   The
+ *                        default value is '20'.
+ *                                <li> gpudb::visualize_isochrone_grid_size:
+ *                        The default value is '100'.
+ *                                <li>
+ *                        gpudb::visualize_isochrone_color_isolines:   The
+ *                        default value is 'true'.
+ *                                <li> gpudb::visualize_isochrone_add_labels:
+ *                        The default value is 'false'.
+ *                                <li>
+ *                        gpudb::visualize_isochrone_labels_font_size:   The
+ *                        default value is '12'.
+ *                                <li>
+ *                        gpudb::visualize_isochrone_labels_font_family:   The
+ *                        default value is 'arial'.
+ *                                <li>
+ *                        gpudb::visualize_isochrone_labels_search_window:
+ *                        The default value is '4'.
+ *                                <li>
+ *                        gpudb::visualize_isochrone_labels_intralevel_separation:
+ *                        The default value is '4'.
+ *                                <li>
+ *                        gpudb::visualize_isochrone_labels_interlevel_separation:
+ *                        The default value is '20'.
+ *                                <li>
+ *                        gpudb::visualize_isochrone_labels_max_angle:   The
+ *                        default value is '60'.
+ *                        </ul>
+ * @param options
+ *                 <ul>
+ *                         <li> gpudb::visualize_isochrone_levels_table:   The
+ *                 default value is ''.
+ *                         <li> gpudb::visualize_isochrone_solve_table:   The
+ *                 default value is ''.
+ *                         <li> gpudb::visualize_isochrone_is_replicated:   The
+ *                 default value is 'true'.
+ *                         <li> gpudb::visualize_isochrone_data_min_x
+ *                         <li> gpudb::visualize_isochrone_data_max_x
+ *                         <li> gpudb::visualize_isochrone_data_min_y
+ *                         <li> gpudb::visualize_isochrone_data_max_y
+ *                         <li> gpudb::visualize_isochrone_concavity_level:
+ *                 The default value is '0'.
+ *                         <li> gpudb::visualize_isochrone_solve_direction:
+ *                 <ul>
+ *                         <li> gpudb::visualize_isochrone_from_source
+ *                         <li> gpudb::visualize_isochrone_to_source
+ *                 </ul>
+ *                 The default value is gpudb::visualize_isochrone_from_source.
+ *                 </ul>
+ * 
+ * @return Response object containing the result of the operation.
+ * 
+ */
+
+VisualizeIsochroneResponse visualizeIsochrone( const std::string& graphName,
+                                               const std::vector<std::string>& weightsOnEdges,
+                                               const std::string& sourceNode,
+                                               const std::vector<std::string>& restrictions,
+                                               const double maxSolutionRadius,
+                                               const int32_t numLevels,
+                                               const bool generateImage,
+                                               const std::string& projection,
+                                               const int32_t imageWidth,
+                                               const int32_t imageHeight,
+                                               const std::map<std::string, std::string>& styleOptions,
+                                               const std::map<std::string, std::string>& solveOptions,
+                                               const std::map<std::string, std::string>& contourOptions,
+                                               const std::map<std::string, std::string>& options ) const;
+
+/**
+ * @private
+ * 
+ * @param graphName
+ * @param weightsOnEdges
+ * @param sourceNode
+ * @param restrictions
+ * @param maxSolutionRadius
+ * @param numLevels
+ * @param generateImage
+ * @param projection
+ *                    <ul>
+ *                            <li> gpudb::visualize_isochrone_3857
+ *                            <li> gpudb::visualize_isochrone_102100
+ *                            <li> gpudb::visualize_isochrone_900913
+ *                            <li> gpudb::visualize_isochrone_EPSG_4326
+ *                            <li> gpudb::visualize_isochrone_PLATE_CARREE
+ *                            <li> gpudb::visualize_isochrone_EPSG_900913
+ *                            <li> gpudb::visualize_isochrone_EPSG_102100
+ *                            <li> gpudb::visualize_isochrone_EPSG_3857
+ *                            <li> gpudb::visualize_isochrone_WEB_MERCATOR
+ *                    </ul>
+ *                    The default value is
+ *                    gpudb::visualize_isochrone_PLATE_CARREE.
+ * @param imageWidth
+ * @param imageHeight
+ * @param styleOptions
+ *                      <ul>
+ *                              <li> gpudb::visualize_isochrone_line_size:
+ *                      The default value is '3'.
+ *                              <li> gpudb::visualize_isochrone_color:   The
+ *                      default value is 'FF696969'.
+ *                              <li> gpudb::visualize_isochrone_bg_color:   The
+ *                      default value is '00000000'.
+ *                              <li> gpudb::visualize_isochrone_text_color:
+ *                      The default value is 'FF000000'.
+ *                              <li> gpudb::visualize_isochrone_colormap:
+ *                      <ul>
+ *                              <li> gpudb::visualize_isochrone_jet
+ *                              <li> gpudb::visualize_isochrone_accent
+ *                              <li> gpudb::visualize_isochrone_afmhot
+ *                              <li> gpudb::visualize_isochrone_autumn
+ *                              <li> gpudb::visualize_isochrone_binary
+ *                              <li> gpudb::visualize_isochrone_blues
+ *                              <li> gpudb::visualize_isochrone_bone
+ *                              <li> gpudb::visualize_isochrone_brbg
+ *                              <li> gpudb::visualize_isochrone_brg
+ *                              <li> gpudb::visualize_isochrone_bugn
+ *                              <li> gpudb::visualize_isochrone_bupu
+ *                              <li> gpudb::visualize_isochrone_bwr
+ *                              <li> gpudb::visualize_isochrone_cmrmap
+ *                              <li> gpudb::visualize_isochrone_cool
+ *                              <li> gpudb::visualize_isochrone_coolwarm
+ *                              <li> gpudb::visualize_isochrone_copper
+ *                              <li> gpudb::visualize_isochrone_cubehelix
+ *                              <li> gpudb::visualize_isochrone_dark2
+ *                              <li> gpudb::visualize_isochrone_flag
+ *                              <li> gpudb::visualize_isochrone_gist_earth
+ *                              <li> gpudb::visualize_isochrone_gist_gray
+ *                              <li> gpudb::visualize_isochrone_gist_heat
+ *                              <li> gpudb::visualize_isochrone_gist_ncar
+ *                              <li> gpudb::visualize_isochrone_gist_rainbow
+ *                              <li> gpudb::visualize_isochrone_gist_stern
+ *                              <li> gpudb::visualize_isochrone_gist_yarg
+ *                              <li> gpudb::visualize_isochrone_gnbu
+ *                              <li> gpudb::visualize_isochrone_gnuplot2
+ *                              <li> gpudb::visualize_isochrone_gnuplot
+ *                              <li> gpudb::visualize_isochrone_gray
+ *                              <li> gpudb::visualize_isochrone_greens
+ *                              <li> gpudb::visualize_isochrone_greys
+ *                              <li> gpudb::visualize_isochrone_hot
+ *                              <li> gpudb::visualize_isochrone_hsv
+ *                              <li> gpudb::visualize_isochrone_inferno
+ *                              <li> gpudb::visualize_isochrone_magma
+ *                              <li> gpudb::visualize_isochrone_nipy_spectral
+ *                              <li> gpudb::visualize_isochrone_ocean
+ *                              <li> gpudb::visualize_isochrone_oranges
+ *                              <li> gpudb::visualize_isochrone_orrd
+ *                              <li> gpudb::visualize_isochrone_paired
+ *                              <li> gpudb::visualize_isochrone_pastel1
+ *                              <li> gpudb::visualize_isochrone_pastel2
+ *                              <li> gpudb::visualize_isochrone_pink
+ *                              <li> gpudb::visualize_isochrone_piyg
+ *                              <li> gpudb::visualize_isochrone_plasma
+ *                              <li> gpudb::visualize_isochrone_prgn
+ *                              <li> gpudb::visualize_isochrone_prism
+ *                              <li> gpudb::visualize_isochrone_pubu
+ *                              <li> gpudb::visualize_isochrone_pubugn
+ *                              <li> gpudb::visualize_isochrone_puor
+ *                              <li> gpudb::visualize_isochrone_purd
+ *                              <li> gpudb::visualize_isochrone_purples
+ *                              <li> gpudb::visualize_isochrone_rainbow
+ *                              <li> gpudb::visualize_isochrone_rdbu
+ *                              <li> gpudb::visualize_isochrone_rdgy
+ *                              <li> gpudb::visualize_isochrone_rdpu
+ *                              <li> gpudb::visualize_isochrone_rdylbu
+ *                              <li> gpudb::visualize_isochrone_rdylgn
+ *                              <li> gpudb::visualize_isochrone_reds
+ *                              <li> gpudb::visualize_isochrone_seismic
+ *                              <li> gpudb::visualize_isochrone_set1
+ *                              <li> gpudb::visualize_isochrone_set2
+ *                              <li> gpudb::visualize_isochrone_set3
+ *                              <li> gpudb::visualize_isochrone_spectral
+ *                              <li> gpudb::visualize_isochrone_spring
+ *                              <li> gpudb::visualize_isochrone_summer
+ *                              <li> gpudb::visualize_isochrone_terrain
+ *                              <li> gpudb::visualize_isochrone_viridis
+ *                              <li> gpudb::visualize_isochrone_winter
+ *                              <li> gpudb::visualize_isochrone_wistia
+ *                              <li> gpudb::visualize_isochrone_ylgn
+ *                              <li> gpudb::visualize_isochrone_ylgnbu
+ *                              <li> gpudb::visualize_isochrone_ylorbr
+ *                              <li> gpudb::visualize_isochrone_ylorrd
+ *                      </ul>
+ *                      The default value is gpudb::visualize_isochrone_jet.
+ *                      </ul>
+ * @param solveOptions
+ *                      <ul>
+ *                              <li>
+ *                      gpudb::visualize_isochrone_remove_previous_restrictions:
+ *                      <ul>
+ *                              <li> gpudb::visualize_isochrone_true
+ *                              <li> gpudb::visualize_isochrone_false
+ *                      </ul>
+ *                      The default value is gpudb::visualize_isochrone_false.
+ *                              <li>
+ *                      gpudb::visualize_isochrone_restriction_threshold_value
+ *                              <li> gpudb::visualize_isochrone_uniform_weights
+ *                      </ul>
+ * @param contourOptions
+ *                        <ul>
+ *                                <li>
+ *                        gpudb::visualize_isochrone_search_radius:   The
+ *                        default value is '20'.
+ *                                <li> gpudb::visualize_isochrone_grid_size:
+ *                        The default value is '100'.
+ *                                <li>
+ *                        gpudb::visualize_isochrone_color_isolines:   The
+ *                        default value is 'true'.
+ *                                <li> gpudb::visualize_isochrone_add_labels:
+ *                        The default value is 'false'.
+ *                                <li>
+ *                        gpudb::visualize_isochrone_labels_font_size:   The
+ *                        default value is '12'.
+ *                                <li>
+ *                        gpudb::visualize_isochrone_labels_font_family:   The
+ *                        default value is 'arial'.
+ *                                <li>
+ *                        gpudb::visualize_isochrone_labels_search_window:
+ *                        The default value is '4'.
+ *                                <li>
+ *                        gpudb::visualize_isochrone_labels_intralevel_separation:
+ *                        The default value is '4'.
+ *                                <li>
+ *                        gpudb::visualize_isochrone_labels_interlevel_separation:
+ *                        The default value is '20'.
+ *                                <li>
+ *                        gpudb::visualize_isochrone_labels_max_angle:   The
+ *                        default value is '60'.
+ *                        </ul>
+ * @param options
+ *                 <ul>
+ *                         <li> gpudb::visualize_isochrone_levels_table:   The
+ *                 default value is ''.
+ *                         <li> gpudb::visualize_isochrone_solve_table:   The
+ *                 default value is ''.
+ *                         <li> gpudb::visualize_isochrone_is_replicated:   The
+ *                 default value is 'true'.
+ *                         <li> gpudb::visualize_isochrone_data_min_x
+ *                         <li> gpudb::visualize_isochrone_data_max_x
+ *                         <li> gpudb::visualize_isochrone_data_min_y
+ *                         <li> gpudb::visualize_isochrone_data_max_y
+ *                         <li> gpudb::visualize_isochrone_concavity_level:
+ *                 The default value is '0'.
+ *                         <li> gpudb::visualize_isochrone_solve_direction:
+ *                 <ul>
+ *                         <li> gpudb::visualize_isochrone_from_source
+ *                         <li> gpudb::visualize_isochrone_to_source
+ *                 </ul>
+ *                 The default value is gpudb::visualize_isochrone_from_source.
+ *                 </ul>
+ * @param[out] response_  Response object containing the results of the
+ *                        operation.
+ * 
+ * @return Response object containing the result of the operation (initially
+ *         passed in by reference).
+ * 
+ */
+
+VisualizeIsochroneResponse& visualizeIsochrone( const std::string& graphName,
+                                                const std::vector<std::string>& weightsOnEdges,
+                                                const std::string& sourceNode,
+                                                const std::vector<std::string>& restrictions,
+                                                const double maxSolutionRadius,
+                                                const int32_t numLevels,
+                                                const bool generateImage,
+                                                const std::string& projection,
+                                                const int32_t imageWidth,
+                                                const int32_t imageHeight,
+                                                const std::map<std::string, std::string>& styleOptions,
+                                                const std::map<std::string, std::string>& solveOptions,
+                                                const std::map<std::string, std::string>& contourOptions,
+                                                const std::map<std::string, std::string>& options,
+                                                VisualizeIsochroneResponse& response_ ) const;
 
 /**
  * @private

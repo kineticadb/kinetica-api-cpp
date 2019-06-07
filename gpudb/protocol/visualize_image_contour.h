@@ -318,7 +318,7 @@ namespace gpudb
          *                      The default value is '12'.
          *                              <li>
          *                      gpudb::visualize_image_contour_labels_font_family:
-         *                      The default value is 'arial'.
+         *                      The default value is 'sans'.
          *                              <li>
          *                      gpudb::visualize_image_contour_labels_search_window:
          *                      The default value is '4'.
@@ -331,6 +331,15 @@ namespace gpudb
          *                              <li>
          *                      gpudb::visualize_image_contour_labels_max_angle:
          *                      The default value is '60'.
+         *                              <li>
+         *                      gpudb::visualize_image_contour_isochrone_concavity:
+         *                      The default value is '-1'.
+         *                              <li>
+         *                      gpudb::visualize_image_contour_isochrone_output_table:
+         *                      The default value is ''.
+         *                              <li>
+         *                      gpudb::visualize_image_contour_isochrone_image:
+         *                      The default value is 'false'.
          *                      </ul>
          * 
          */

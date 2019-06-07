@@ -34,8 +34,11 @@ namespace gpudb
      * target="_top">foreign key</a>
      * on a particular column.
      * <p>
-     * Manage a <a href="../../concepts/tables.html#partitioning"
-     * target="_top">range-partitioned</a>
+     * Manage a
+     * <a href="../../concepts/tables.html#partitioning-by-range"
+     * target="_top">range-partitioned</a> or a
+     * <a href="../../concepts/tables.html#partitioning-by-list-manual"
+     * target="_top">manual list-partitioned</a>
      * table's partitions.
      * <p>
      * Set (or reset) the <a href="../../rm/concepts.html#tier-strategies"
@@ -108,7 +111,11 @@ namespace gpudb
          *                     returned.
          *                             <li>
          *                     gpudb::alter_table_move_to_collection: Moves a
-         *                     table into a collection @a value.
+         *                     table or view into a collection named @a value.
+         *                     If the collection provided is non-existent, the
+         *                     collection will be automatically created. If @a
+         *                     value is empty, then the table or view will be
+         *                     top-level.
          *                             <li> gpudb::alter_table_protected: Sets
          *                     whether the given @a tableName should be <a
          *                     href="../../concepts/protection.html"
@@ -166,22 +173,29 @@ namespace gpudb
          *                     creating the key or the complete string used to
          *                     define it.
          *                             <li> gpudb::alter_table_add_partition:
-         *                     Adds a partition (for range-partitioned or
-         *                     list-partitioned tables) specified in @a value.
-         *                     See <a
-         *                     href="../../concepts/tables.html#partitioning-by-range-example"
-         *                     target="_top">range partitioning example</a> for
-         *                     example format.
+         *                     Adds the partition specified in @a value, to
+         *                     either a <a
+         *                     href="../../concepts/tables.html#partitioning-by-range"
+         *                     target="_top">range-partitioned</a> or <a
+         *                     href="../../concepts/tables.html#partitioning-by-list-manual"
+         *                     target="_top">manual list-partitioned</a> table.
          *                             <li>
          *                     gpudb::alter_table_remove_partition: Removes the
-         *                     partition specified in @a value and relocates
-         *                     all its data to the default partition (for
-         *                     range-partitioned or list-partition tables).
+         *                     partition specified in @a value (and relocates
+         *                     all of its data to the default partition) from
+         *                     either a <a
+         *                     href="../../concepts/tables.html#partitioning-by-range"
+         *                     target="_top">range-partitioned</a> or <a
+         *                     href="../../concepts/tables.html#partitioning-by-list-manual"
+         *                     target="_top">manual list-partitioned</a> table.
          *                             <li>
          *                     gpudb::alter_table_delete_partition: Deletes the
-         *                     partition specified in @a value and its data
-         *                     (for range-partitioned or list-partitioned
-         *                     tables).
+         *                     partition specified in @a value (and all of its
+         *                     data) from either a <a
+         *                     href="../../concepts/tables.html#partitioning-by-range"
+         *                     target="_top">range-partitioned</a> or <a
+         *                     href="../../concepts/tables.html#partitioning-by-list-manual"
+         *                     target="_top">manual list-partitioned</a> table.
          *                             <li>
          *                     gpudb::alter_table_set_global_access_mode: Sets
          *                     the global access mode (i.e. locking) for the
@@ -442,8 +456,11 @@ namespace gpudb
      * target="_top">foreign key</a>
      * on a particular column.
      * <p>
-     * Manage a <a href="../../concepts/tables.html#partitioning"
-     * target="_top">range-partitioned</a>
+     * Manage a
+     * <a href="../../concepts/tables.html#partitioning-by-range"
+     * target="_top">range-partitioned</a> or a
+     * <a href="../../concepts/tables.html#partitioning-by-list-manual"
+     * target="_top">manual list-partitioned</a>
      * table's partitions.
      * <p>
      * Set (or reset) the <a href="../../rm/concepts.html#tier-strategies"

@@ -54,14 +54,19 @@ namespace gpudb
          *                             target="_top">combinations</a>.
          *                             Identifiers can be used with existing
          *                             column names, e.g., 'table.column AS
-         *                             WEIGHTS_EDGE_ID', or expressions, e.g.,
+         *                             WEIGHTS_EDGE_ID', expressions, e.g.,
          *                             'ST_LENGTH(wkt) AS
+         *                             WEIGHTS_VALUESPECIFIED', or raw values,
+         *                             e.g., '{4, 15, 2} AS
          *                             WEIGHTS_VALUESPECIFIED'. Any provided
          *                             weights will be added (in the case of
          *                             'WEIGHTS_VALUESPECIFIED') to or
          *                             multiplied with (in the case of
          *                             'WEIGHTS_FACTORSPECIFIED') the existing
-         *                             weight(s).
+         *                             weight(s). If using raw values in an
+         *                             identifier combination, the number of
+         *                             values specified must match across the
+         *                             combination.
          * @param[in] restrictions_  Additional restrictions to apply to the
          *                           nodes/edges of an existing graph.
          *                           Restrictions must be specified using <a
@@ -72,9 +77,13 @@ namespace gpudb
          *                           target="_top">combinations</a>.
          *                           Identifiers can be used with existing
          *                           column names, e.g., 'table.column AS
-         *                           RESTRICTIONS_EDGE_ID', or expressions,
-         *                           e.g., 'column/2 AS
-         *                           RESTRICTIONS_VALUECOMPARED'. If @a
+         *                           RESTRICTIONS_EDGE_ID', expressions, e.g.,
+         *                           'column/2 AS RESTRICTIONS_VALUECOMPARED',
+         *                           or raw values, e.g., '{0, 0, 0, 1} AS
+         *                           RESTRICTIONS_ONOFFCOMPARED'. If using raw
+         *                           values in an identifier combination, the
+         *                           number of values specified must match
+         *                           across the combination. If @a
          *                           remove_previous_restrictions is set to @a
          *                           true, any provided restrictions will
          *                           replace the existing restrictions. If @a
@@ -95,7 +104,13 @@ namespace gpudb
          *                                 <li> gpudb::solve_graph_PAGE_RANK:
          *                         Solves for the probability of each
          *                         destination node being visited based on the
-         *                         links of the graph topology.
+         *                         links of the graph topology. Weights are not
+         *                         required to use this solver.
+         *                                 <li>
+         *                         gpudb::solve_graph_PROBABILITY_RANK: Solves
+         *                         for the transitional probability (Hidden
+         *                         Markov) for each node based on the weights
+         *                         (probability assigned over given edges).
          *                                 <li> gpudb::solve_graph_CENTRALITY:
          *                         Solves for the degree of a node to depict
          *                         how many pairs of individuals that would
@@ -186,6 +201,16 @@ namespace gpudb
          *                      '0.0', the setting is ignored.  The default
          *                      value is '0.0'.
          *                              <li>
+         *                      gpudb::solve_graph_min_solution_radius: For @a
+         *                      SHORTEST_PATH and @a INVERSE_SHORTEST_PATH
+         *                      solvers only. Applicable only when @a
+         *                      max_solution_radius is set. Sets the minimum
+         *                      solution cost radius, which ignores the @a
+         *                      destinationNodeIds list and instead outputs the
+         *                      nodes within the radius sorted by ascending
+         *                      cost. If set to '0.0', the setting is ignored.
+         *                      The default value is '0.0'.
+         *                              <li>
          *                      gpudb::solve_graph_max_solution_targets: For @a
          *                      SHORTEST_PATH and @a INVERSE_SHORTEST_PATH
          *                      solvers only. Sets the maximum number of
@@ -224,9 +249,9 @@ namespace gpudb
          *                      will not be included in the solution.
          *                              <li>
          *                      gpudb::solve_graph_uniform_weights: When
-         *                      speficied, assigns the given value to all the
-         *                      edges in the graph. Note that weights specified
-         *                      in @{weights_on_edges} override this value.
+         *                      specified, assigns the given value to all the
+         *                      edges in the graph. Note that weights provided
+         *                      in @a weightsOnEdges will override this value.
          *                      </ul>
          * 
          */

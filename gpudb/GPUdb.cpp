@@ -811,7 +811,10 @@ namespace gpudb {
                 }
                 catch (GPUdbHAUnavailableException ha_ex)
                 {
-                    throw GPUdbException( ha_ex.what() );
+                    std::string message = GPUDB_STREAM_TO_STRING( ha_ex.what()
+                                                                  << "; original exception: "
+                                                                  << ex.what() );
+                    throw GPUdbException( message );
                 }
             }
             catch (const GPUdbSubmitException& ex)
@@ -822,7 +825,10 @@ namespace gpudb {
                 }
                 catch (GPUdbHAUnavailableException ha_ex)
                 {
-                    throw GPUdbException( ha_ex.what() );
+                    std::string message = GPUDB_STREAM_TO_STRING( ha_ex.what()
+                                                                  << "; original exception: "
+                                                                  << ex.what() );
+                    throw GPUdbException( message );
                 }
             }
             catch (const GPUdbException& ex)
@@ -837,7 +843,10 @@ namespace gpudb {
                 }
                 catch (GPUdbHAUnavailableException ha_ex)
                 {
-                    throw GPUdbException( ha_ex.what() );
+                    std::string message = GPUDB_STREAM_TO_STRING( ha_ex.what()
+                                                                  << "; original exception: "
+                                                                  << ex.what() );
+                    throw GPUdbException( message );
                 }
             }
         }
@@ -872,7 +881,10 @@ namespace gpudb {
                 }
                 catch (GPUdbHAUnavailableException ha_ex)
                 {
-                    throw GPUdbException( ha_ex.what() );
+                    std::string message = GPUDB_STREAM_TO_STRING( ha_ex.what()
+                                                                  << "; original exception: "
+                                                                  << ex.what() );
+                    throw GPUdbException( message );
                 }
             }
             catch (const GPUdbSubmitException& ex)
@@ -883,7 +895,10 @@ namespace gpudb {
                 }
                 catch (GPUdbHAUnavailableException ha_ex)
                 {
-                    throw GPUdbException( ha_ex.what() );
+                    std::string message = GPUDB_STREAM_TO_STRING( ha_ex.what()
+                                                                  << "; original exception: "
+                                                                  << ex.what() );
+                    throw GPUdbException( message );
                 }
             }
             catch (const GPUdbException& ex)
@@ -898,7 +913,10 @@ namespace gpudb {
                 }
                 catch (GPUdbHAUnavailableException ha_ex)
                 {
-                    throw GPUdbException( ha_ex.what() );
+                    std::string message = GPUDB_STREAM_TO_STRING( ha_ex.what()
+                                                                  << "; original exception: "
+                                                                  << ex.what() );
+                    throw GPUdbException( message );
                 }
             }  // end try-catch
         }  // end while
@@ -958,7 +976,7 @@ namespace gpudb {
             // If Kinetica is exiting, throw a special exception
             if ( response.message.find( "Kinetica is exiting" ) != std::string::npos )
             {
-                throw GPUdbExitException(response.message);
+                throw GPUdbExitException( response.message );
             }
             throw GPUdbException( response.message );
         }
@@ -972,7 +990,7 @@ namespace gpudb {
         // If we have just one URL, then we can't switch to another!
         if ( m_urls.size() == 1 )
         {
-            throw GPUdbHAUnavailableException( "GPUdb unavailable (no HA ring available); ", m_urls );
+            throw GPUdbHAUnavailableException( "GPUdb unavailable (no backup cluster exists); ", m_urls );
         }
         // Increment the index by one (mod url list length)
         m_currentUrl = (m_currentUrl + 1) % m_urls.size();
@@ -988,7 +1006,7 @@ namespace gpudb {
             randomizeURLs();
 
             // Let the user know that we've circled back
-            throw GPUdbHAUnavailableException( "GPUdb unavailable (an HA ring has been set up); ", m_urls );
+            throw GPUdbHAUnavailableException( "GPUdb unavailable (backup clusters exist, but all failed); ", m_urls );
         }
 
         // Haven't circled back to the old URL; so return the new one
@@ -1002,7 +1020,7 @@ namespace gpudb {
 
         // If we have just one URL, then we can't switch to another!
         if ( m_hmUrls.size() == 1 )
-            throw GPUdbHAUnavailableException( "GPUdb unavailable (no HA ring available); ", m_hmUrls );
+            throw GPUdbHAUnavailableException( "GPUdb unavailable (no backup cluster exists); ", m_hmUrls );
         // Increment the index by one (mod url list length)
         m_currentUrl = (m_currentUrl + 1) % m_hmUrls.size();
         
@@ -1017,7 +1035,7 @@ namespace gpudb {
             randomizeURLs();
 
             // Let the user know that we've circled back
-            throw GPUdbHAUnavailableException( "GPUdb unavailable (an HA ring has been set up); ", m_hmUrls );
+            throw GPUdbHAUnavailableException( "GPUdb unavailable (backup clusters exist, but all failed); ", m_hmUrls );
         }
 
         // Haven't circled back to the old URL; so return the new one

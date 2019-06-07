@@ -151,10 +151,9 @@ namespace gpudb
          *                      <a
          *                      href="../../concepts/tables.html#partitioning-by-interval"
          *                      target="_top">interval partitioning</a>.
-         *                              <li> gpudb::create_table_LIST: Allows
-         *                      specifying a list of VALUES for a partition, or
-         *                      optionally to create an AUTOMATIC partition for
-         *                      each unique value
+         *                              <li> gpudb::create_table_LIST: Use <a
+         *                      href="../../concepts/tables.html#partitioning-by-list"
+         *                      target="_top">list partitioning</a>.
          *                      </ul>
          *                              <li>
          *                      gpudb::create_table_partition_keys:
@@ -167,18 +166,20 @@ namespace gpudb
          *                      Comma-separated list of partition definitions,
          *                      whose format depends on the choice of @a
          *                      partition_type.  See <a
-         *                      href="../../concepts/tables.html#partitioning-by-range-example"
-         *                      target="_top">range partitioning example</a> or
-         *                      <a
-         *                      href="../../concepts/tables.html#partitioning-by-interval-example"
-         *                      target="_top">interval partitioning example</a>
-         *                      for example formats.
+         *                      href="../../concepts/tables.html#partitioning-by-range"
+         *                      target="_top">range partitioning</a>, <a
+         *                      href="../../concepts/tables.html#partitioning-by-interval"
+         *                      target="_top">interval partitioning</a>, or <a
+         *                      href="../../concepts/tables.html#partitioning-by-list"
+         *                      target="_top">list partitioning</a> for example
+         *                      formats.
          *                              <li>
          *                      gpudb::create_table_is_automatic_partition: If
          *                      true, a new partition will be created for
          *                      values which don't fall into an existing
-         *                      partition.  Currently only supported for LIST
-         *                      partitions
+         *                      partition.  Currently only supported for <a
+         *                      href="../../concepts/tables.html#partitioning-by-list"
+         *                      target="_top">list partitions</a>.
          *                      <ul>
          *                              <li> gpudb::create_table_true
          *                              <li> gpudb::create_table_false

@@ -2,6 +2,16 @@
 
 ## Version 7.0
 
+#### Version 7.0.4.0 -- 2019-05-29
+
+#### Added
+-   A getter method for the insertion options to the GPUdbIngestor class
+
+##### Fixed
+-   Kinetica exit or other connection errors are propagated to the user
+    correctly
+
+
 #### Version 7.0.3.0 - 2019-05-13
 ##### Changed
 -   /query/graph parameters: removed `restrictions` and added

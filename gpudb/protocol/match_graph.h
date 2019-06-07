@@ -47,9 +47,12 @@ namespace gpudb
          *                           are grouped as <a
          *                           href="../../graph_solver/network_graph_solver.html#match-combinations"
          *                           target="_top">combinations</a>.
-         *                           Identifiers are used with existing column
-         *                           names, e.g., 'table.column AS
-         *                           SAMPLE_WKTPOINT'.
+         *                           Identifiers can be used with: existing
+         *                           column names, e.g., 'table.column AS
+         *                           SAMPLE_X'; expressions, e.g.,
+         *                           'ST_MAKEPOINT(table.x, table.y) AS
+         *                           SAMPLE_WKTPOINT'; or raw values, e.g.,
+         *                           '{1, 2, 10} AS SAMPLE_TRIPID'.
          * @param[in] solveMethod_  The type of solver to use for graph
          *                          matching.
          *                          <ul>
