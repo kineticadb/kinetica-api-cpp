@@ -17,16 +17,12 @@ namespace gpudb
      * {@link #createGraph(const CreateGraphRequest&) const} and returns a
      * list of adjacent edge(s) or node(s), also known as an adjacency list,
      * depending on what's been provided to the endpoint; providing edges will
-     * return nodes and providing nodes will return edges. The edge(s) or
-     * node(s) to be queried are specified using column names and <a
-     * href="../../graph_solver/network_graph_solver.html#query-identifiers"
-     * target="_top">query identifiers</a> with the @a queries.
+     * return nodes and providing nodes will return edges.
      * <p>
      * To determine the node(s) or edge(s) adjacent to a value from a given
-     * column, provide a list of column names aliased as a particular query
-     * identifier to @a queries. This field can be populated with column values
-     * from any table as long as the type is supported by the given identifier.
-     * See <a
+     * column, provide a list of values to @a queries. This field can be
+     * populated with column values from any table as long as the type is
+     * supported by the given identifier. See <a
      * href="../../graph_solver/network_graph_solver.html#query-identifiers"
      * target="_top">Query Identifiers</a> for more information.
      * <p>
@@ -61,11 +57,17 @@ namespace gpudb
          * @param[in] graphName_  Name of the graph resource to query.
          * @param[in] queries_  Nodes or edges to be queried specified using <a
          *                      href="../../graph_solver/network_graph_solver.html#query-identifiers"
-         *                      target="_top">query identifiers</a>, e.g.,
-         *                      'table.column AS QUERY_NODE_ID' or
-         *                      'table.column AS QUERY_EDGE_WKTLINE'. Multiple
-         *                      columns can be used as long as the same
-         *                      identifier is used for all columns.
+         *                      target="_top">query identifiers</a>.
+         *                      Identifiers can be used with existing column
+         *                      names, e.g., 'table.column AS QUERY_NODE_ID',
+         *                      raw values, e.g., '{0, 2} AS QUERY_NODE_ID', or
+         *                      expressions, e.g., 'ST_MAKEPOINT(table.x,
+         *                      table.y) AS QUERY_NODE_WKTPOINT'. Multiple
+         *                      values can be provided as long as the same
+         *                      identifier is used for all values. If using raw
+         *                      values in an identifier combination, the number
+         *                      of values specified must match across the
+         *                      combination.
          * @param[in] restrictions_  Additional restrictions to apply to the
          *                           nodes/edges of an existing graph.
          *                           Restrictions must be specified using <a
@@ -76,62 +78,72 @@ namespace gpudb
          *                           target="_top">combinations</a>.
          *                           Identifiers can be used with existing
          *                           column names, e.g., 'table.column AS
-         *                           RESTRICTIONS_EDGE_ID', or expressions,
-         *                           e.g., 'column/2 AS
-         *                           RESTRICTIONS_VALUECOMPARED'.
+         *                           RESTRICTIONS_EDGE_ID', expressions, e.g.,
+         *                           'column/2 AS RESTRICTIONS_VALUECOMPARED',
+         *                           or raw values, e.g., '{0, 0, 0, 1} AS
+         *                           RESTRICTIONS_ONOFFCOMPARED'. If using raw
+         *                           values in an identifier combination, the
+         *                           number of values specified must match
+         *                           across the combination.
          * @param[in] adjacencyTable_  Name of the table to store the resulting
          *                             adjacencies. If left blank, the query
          *                             results are instead returned in the
          *                             response even if @a export_query_results
-         *                             is set to @a false.
+         *                             is set to @a false. If the
+         *                             'QUERY_TARGET_NODE_LABEL' <a
+         *                             href="../../graph_solver/network_graph_solver.html#query-identifiers"
+         *                             target="_top">query identifier</a> is
+         *                             used in @a queries, then two additional
+         *                             columns will be available: 'PATH_ID' and
+         *                             'RING_ID'. See
+         *                                         <a
+         *                             href="../../graph_solver/network_graph_solver.html#using-labels"
+         *                             target="_top">Using Labels</a> for more
+         *                             information.
          * @param[in] options_  Additional parameters
          *                      <ul>
-         *                              <li> gpudb::query_graph_rings: Sets the
-         *                      number of rings of edges around the node to
-         *                      query for adjacency, with '1' being the edges
-         *                      directly attached to the queried nodes. For
-         *                      example, if @a rings is set to '2', the edge(s)
-         *                      directly attached to the queried nodes will be
-         *                      returned; in addition, the edge(s) attached to
-         *                      the node(s) attached to the initial ring of
-         *                      edge(s) surrounding the queried node(s) will be
-         *                      returned. This setting cannot be less than '1'.
-         *                      The default value is '1'.
+         *                              <li> gpudb::query_graph_rings: Only
+         *                      applicable when querying nodes. Sets the number
+         *                      of rings around the node to query for
+         *                      adjacency, with '1' being the edges directly
+         *                      attached to the queried node. Also known as
+         *                      number of hops. For example, if @a rings is set
+         *                      to '2', the edge(s) directly attached to the
+         *                      queried node(s) will be returned; in addition,
+         *                      the edge(s) attached to the node(s) attached to
+         *                      the initial ring of edge(s) surrounding the
+         *                      queried node(s) will be returned. This setting
+         *                      cannot be less than '1'.  The default value is
+         *                      '1'.
          *                              <li>
          *                      gpudb::query_graph_force_undirected: This
          *                      parameter is only applicable if the queried
-         *                      graph is directed. If set to @a true, all
-         *                      inbound edges and outbound edges relative to
-         *                      the node will be returned. If set to @a false,
-         *                      only outbound edges relative to the node will
-         *                      be returned.
+         *                      graph @a graphName is directed and when
+         *                      querying nodes. If set to @a true, all inbound
+         *                      edges and outbound edges relative to the node
+         *                      will be returned. If set to @a false, only
+         *                      outbound edges relative to the node will be
+         *                      returned.
          *                      <ul>
          *                              <li> gpudb::query_graph_true
          *                              <li> gpudb::query_graph_false
          *                      </ul>
          *                      The default value is gpudb::query_graph_false.
-         *                              <li> gpudb::query_graph_blocked_nodes:
-         *                      When false, allow a restricted node to be part
-         *                      of a valid traversal but not a target.
-         *                      Otherwise, queries are blocked by restricted
-         *                      nodes.
-         *                      <ul>
-         *                              <li> gpudb::query_graph_true
-         *                              <li> gpudb::query_graph_false
-         *                      </ul>
-         *                      The default value is gpudb::query_graph_true.
          *                              <li> gpudb::query_graph_limit: When
          *                      specified, limits the number of query results.
          *                      Note that if the @a target_nodes_table is
-         *                      requested (non-empty), this will limit the size
-         *                      of the corresponding table.  The default value
-         *                      is an empty std::map.
+         *                      provided, the size of the corresponding table
+         *                      will be limited by the @a limit value.  The
+         *                      default value is an empty std::map.
          *                              <li>
-         *                      gpudb::query_graph_target_nodes_table: If
-         *                      non-empty, returns a table containing the list
-         *                      of the final nodes reached during the
-         *                      traversal. Only valid if blocked_nodes is
-         *                      false.  The default value is ''.
+         *                      gpudb::query_graph_target_nodes_table: Name of
+         *                      the table to store the list of the final nodes
+         *                      reached during the traversal. If the
+         *                      'QUERY_TARGET_NODE_LABEL' <a
+         *                      href="../../graph_solver/network_graph_solver.html#query-identifiers"
+         *                      target="_top">query identifier</a> is NOT used
+         *                      in @a queries, the table will not be created.
+         *                      The default value is ''.
          *                              <li>
          *                      gpudb::query_graph_restriction_threshold_value:
          *                      Value-based restriction comparison. Any node or
@@ -140,13 +152,20 @@ namespace gpudb
          *                      will not be included in the solution.
          *                              <li>
          *                      gpudb::query_graph_export_query_results:
-         *                      Returns query results in the response if set to
-         *                      @a true.
+         *                      Returns query results in the response. If set
+         *                      to @a true, the @a adjacencyListIntArray (if
+         *                      the query was based on IDs),
+         *                      @{adjacency_list_string_array} (if the query
+         *                      was based on names), or
+         *                      @{output_adjacency_list_wkt_array} (if the
+         *                      query was based on WKTs) will be populated with
+         *                      the results. If set to @a false, none of the
+         *                      arrays will be populated.
          *                      <ul>
          *                              <li> gpudb::query_graph_true
          *                              <li> gpudb::query_graph_false
          *                      </ul>
-         *                      The default value is gpudb::query_graph_true.
+         *                      The default value is gpudb::query_graph_false.
          *                              <li>
          *                      gpudb::query_graph_enable_graph_draw: If set to
          *                      @a true, adds a WKT-type column named
@@ -254,16 +273,12 @@ namespace gpudb
      * {@link #createGraph(const CreateGraphRequest&) const} and returns a
      * list of adjacent edge(s) or node(s), also known as an adjacency list,
      * depending on what's been provided to the endpoint; providing edges will
-     * return nodes and providing nodes will return edges. The edge(s) or
-     * node(s) to be queried are specified using column names and <a
-     * href="../../graph_solver/network_graph_solver.html#query-identifiers"
-     * target="_top">query identifiers</a> with the @a queries.
+     * return nodes and providing nodes will return edges.
      * <p>
      * To determine the node(s) or edge(s) adjacent to a value from a given
-     * column, provide a list of column names aliased as a particular query
-     * identifier to @a queries. This field can be populated with column values
-     * from any table as long as the type is supported by the given identifier.
-     * See <a
+     * column, provide a list of values to @a queries. This field can be
+     * populated with column values from any table as long as the type is
+     * supported by the given identifier. See <a
      * href="../../graph_solver/network_graph_solver.html#query-identifiers"
      * target="_top">Query Identifiers</a> for more information.
      * <p>

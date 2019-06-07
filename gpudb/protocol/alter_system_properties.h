@@ -101,7 +101,7 @@ namespace gpudb
          *                                 gpudb::alter_system_properties_communicator_test:
          *                                 Invoke the communicator test and
          *                                 report timing results. Value string
-         *                                 is is a comma separated list of
+         *                                 is is a semicolon separated list of
          *                                 <key>=<value> expressions.
          *                                 Expressions are:
          *                                 num_transactions=<num> where num is

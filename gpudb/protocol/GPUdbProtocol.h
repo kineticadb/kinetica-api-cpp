@@ -129,6 +129,7 @@
 #include "visualize_image_contour.h"
 #include "visualize_image_heatmap.h"
 #include "visualize_image_labels.h"
+#include "visualize_isochrone.h"
 #include "visualize_video.h"
 #include "visualize_video_heatmap.h"
 
