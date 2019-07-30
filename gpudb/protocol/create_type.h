@@ -257,10 +257,9 @@ namespace gpudb
          *                         can save a large amount of memory.
          *                                 <li>
          *                         gpudb::create_type_init_with_now: For
-         *                         columns with attributes of date, time,
-         *                         datetime or timestamp, at insert time,
-         *                         replace empty strings and invalid timestamps
-         *                         with NOW()
+         *                         'date', 'time', 'datetime', or 'timestamp'
+         *                         column types, replace empty strings and
+         *                         invalid timestamps with 'NOW()' upon insert.
          *                         </ul>
          * @param[in] options_  Optional parameters.
          * 

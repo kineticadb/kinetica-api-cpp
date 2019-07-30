@@ -44,6 +44,16 @@ namespace gpudb
          *                      The default value is
          *                      gpudb::admin_verify_db_false.
          *                              <li>
+         *                      gpudb::admin_verify_db_verify_nulls: When
+         *                      enabled, verifies that null values are set to
+         *                      zero
+         *                      <ul>
+         *                              <li> gpudb::admin_verify_db_true
+         *                              <li> gpudb::admin_verify_db_false
+         *                      </ul>
+         *                      The default value is
+         *                      gpudb::admin_verify_db_false.
+         *                              <li>
          *                      gpudb::admin_verify_db_verify_persist:
          *                      <ul>
          *                              <li> gpudb::admin_verify_db_true

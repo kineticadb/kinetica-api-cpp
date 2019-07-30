@@ -1055,6 +1055,13 @@ AdminVerifyDbResponse& adminVerifyDb( const AdminVerifyDbRequest& request_,
  *                         <li> gpudb::admin_verify_db_false
  *                 </ul>
  *                 The default value is gpudb::admin_verify_db_false.
+ *                         <li> gpudb::admin_verify_db_verify_nulls: When
+ *                 enabled, verifies that null values are set to zero
+ *                 <ul>
+ *                         <li> gpudb::admin_verify_db_true
+ *                         <li> gpudb::admin_verify_db_false
+ *                 </ul>
+ *                 The default value is gpudb::admin_verify_db_false.
  *                         <li> gpudb::admin_verify_db_verify_persist:
  *                 <ul>
  *                         <li> gpudb::admin_verify_db_true
@@ -1094,6 +1101,13 @@ AdminVerifyDbResponse adminVerifyDb( const std::map<std::string, std::string>& o
  * @param options  Optional parameters.
  *                 <ul>
  *                         <li> gpudb::admin_verify_db_rebuild_on_error:
+ *                 <ul>
+ *                         <li> gpudb::admin_verify_db_true
+ *                         <li> gpudb::admin_verify_db_false
+ *                 </ul>
+ *                 The default value is gpudb::admin_verify_db_false.
+ *                         <li> gpudb::admin_verify_db_verify_nulls: When
+ *                 enabled, verifies that null values are set to zero
  *                 <ul>
  *                         <li> gpudb::admin_verify_db_true
  *                         <li> gpudb::admin_verify_db_false
@@ -3651,7 +3665,7 @@ AggregateUnpivotResponse& aggregateUnpivot( const std::string& tableName,
                                             AggregateUnpivotResponse& response_ ) const;
 
 /**
- * Alters properties of exisiting resource group to facilitate resource
+ * Alters the properties of an exisiting resource group to facilitate resource
  * management.
  * 
  * @param[in] request_  Request object containing the parameters for the
@@ -3664,7 +3678,7 @@ AggregateUnpivotResponse& aggregateUnpivot( const std::string& tableName,
 AlterResourceGroupResponse alterResourceGroup( const AlterResourceGroupRequest& request_ ) const;
 
 /**
- * Alters properties of exisiting resource group to facilitate resource
+ * Alters the properties of an exisiting resource group to facilitate resource
  * management.
  * 
  * @param[in] request_  Request object containing the parameters for the
@@ -3681,7 +3695,7 @@ AlterResourceGroupResponse& alterResourceGroup( const AlterResourceGroupRequest&
                                                 AlterResourceGroupResponse& response_ ) const;
 
 /**
- * Alters properties of exisiting resource group to facilitate resource
+ * Alters the properties of an exisiting resource group to facilitate resource
  * management.
  * 
  * @param name  Name of the group to be altered. Must be an existing resource
@@ -3699,10 +3713,12 @@ AlterResourceGroupResponse& alterResourceGroup( const AlterResourceGroupRequest&
  *                        Maximum amount of memory usable in the given tier at
  *                        one time for this group.
  *                        </ul>
- * @param ranking  If the resource group ranking has to be updated, this
+ * @param ranking  If the resource group ranking is to be updated, this
  *                 indicates the relative ranking among existing resource
- *                 groups where this resource group will be moved. Left bank if
- *                 not changing the ranking.
+ *                 groups where this resource group will be moved; leave blank
+ *                 if not changing the ranking.  When using @a before or @a
+ *                 after, specify which resource group this one will be
+ *                 inserted before or after in @a adjoiningResourceGroup.
  *                 <ul>
  *                         <li> gpudb::alter_resource_group_empty_string
  *                         <li> gpudb::alter_resource_group_first
@@ -3712,10 +3728,10 @@ AlterResourceGroupResponse& alterResourceGroup( const AlterResourceGroupRequest&
  *                 </ul>
  *                 The default value is
  *                 gpudb::alter_resource_group_empty_string.
- * @param adjoiningResourceGroup  If the ranking is 'before' or 'after', this
+ * @param adjoiningResourceGroup  If @a ranking is @a before or @a after, this
  *                                field indicates the resource group before or
- *                                after which the current group will be placed
- *                                otherwise left blank.
+ *                                after which the current group will be placed;
+ *                                otherwise, leave blank.
  * @param options  Optional parameters.
  *                 <ul>
  *                         <li>
@@ -3749,7 +3765,7 @@ AlterResourceGroupResponse alterResourceGroup( const std::string& name,
                                                const std::map<std::string, std::string>& options ) const;
 
 /**
- * Alters properties of exisiting resource group to facilitate resource
+ * Alters the properties of an exisiting resource group to facilitate resource
  * management.
  * 
  * @param name  Name of the group to be altered. Must be an existing resource
@@ -3767,10 +3783,12 @@ AlterResourceGroupResponse alterResourceGroup( const std::string& name,
  *                        Maximum amount of memory usable in the given tier at
  *                        one time for this group.
  *                        </ul>
- * @param ranking  If the resource group ranking has to be updated, this
+ * @param ranking  If the resource group ranking is to be updated, this
  *                 indicates the relative ranking among existing resource
- *                 groups where this resource group will be moved. Left bank if
- *                 not changing the ranking.
+ *                 groups where this resource group will be moved; leave blank
+ *                 if not changing the ranking.  When using @a before or @a
+ *                 after, specify which resource group this one will be
+ *                 inserted before or after in @a adjoiningResourceGroup.
  *                 <ul>
  *                         <li> gpudb::alter_resource_group_empty_string
  *                         <li> gpudb::alter_resource_group_first
@@ -3780,10 +3798,10 @@ AlterResourceGroupResponse alterResourceGroup( const std::string& name,
  *                 </ul>
  *                 The default value is
  *                 gpudb::alter_resource_group_empty_string.
- * @param adjoiningResourceGroup  If the ranking is 'before' or 'after', this
+ * @param adjoiningResourceGroup  If @a ranking is @a before or @a after, this
  *                                field indicates the resource group before or
- *                                after which the current group will be placed
- *                                otherwise left blank.
+ *                                after which the current group will be placed;
+ *                                otherwise, leave blank.
  * @param options  Optional parameters.
  *                 <ul>
  *                         <li>
@@ -7266,16 +7284,20 @@ CreateResourceGroupResponse& createResourceGroup( const CreateResourceGroupReque
  *                        one time for this group.
  *                        </ul>
  * @param ranking  Indicates the relative ranking among existing resource
- *                 groups where this new resource group will be placed.
+ *                 groups where this new resource group will be placed.  When
+ *                 using @a before or @a after, specify which resource group
+ *                 this one will be inserted before or after in @a
+ *                 adjoiningResourceGroup.
  *                 <ul>
  *                         <li> gpudb::create_resource_group_first
  *                         <li> gpudb::create_resource_group_last
  *                         <li> gpudb::create_resource_group_before
  *                         <li> gpudb::create_resource_group_after
  *                 </ul>
- * @param adjoiningResourceGroup  Name of the resource group relative to which
- *                                this group will be placed. Must be specified
- *                                when ranking is before or after
+ * @param adjoiningResourceGroup  If @a ranking is @a before or @a after, this
+ *                                field indicates the resource group before or
+ *                                after which the current group will be placed;
+ *                                otherwise, leave blank.
  * @param options  Optional parameters.
  *                 <ul>
  *                         <li>
@@ -7319,16 +7341,20 @@ CreateResourceGroupResponse createResourceGroup( const std::string& name,
  *                        one time for this group.
  *                        </ul>
  * @param ranking  Indicates the relative ranking among existing resource
- *                 groups where this new resource group will be placed.
+ *                 groups where this new resource group will be placed.  When
+ *                 using @a before or @a after, specify which resource group
+ *                 this one will be inserted before or after in @a
+ *                 adjoiningResourceGroup.
  *                 <ul>
  *                         <li> gpudb::create_resource_group_first
  *                         <li> gpudb::create_resource_group_last
  *                         <li> gpudb::create_resource_group_before
  *                         <li> gpudb::create_resource_group_after
  *                 </ul>
- * @param adjoiningResourceGroup  Name of the resource group relative to which
- *                                this group will be placed. Must be specified
- *                                when ranking is before or after
+ * @param adjoiningResourceGroup  If @a ranking is @a before or @a after, this
+ *                                field indicates the resource group before or
+ *                                after which the current group will be placed;
+ *                                otherwise, leave blank.
  * @param options  Optional parameters.
  *                 <ul>
  *                         <li>
@@ -7837,15 +7863,16 @@ CreateTableResponse& createTable( const std::string& tableName,
                                   CreateTableResponse& response_ ) const;
 
 /**
- * Creates a monitor that watches for new records inserted into a particular
- * table (identified by @a tableName) and forwards copies to subscribers via
- * ZMQ. After this call completes, subscribe to the returned @a topicId on the
- * ZMQ table monitor port (default 9002). Each time an insert operation on the
- * table completes, a multipart message is published for that topic; the first
- * part contains only the topic ID, and each subsequent part contains one
- * binary-encoded Avro object that was inserted. The monitor will continue to
- * run (regardless of whether or not there are any subscribers) until
- * deactivated with {@link
+ * Creates a monitor that watches for table modification events such as insert,
+ * update or delete on a particular table (identified by @a tableName) and
+ * forwards event notifications to subscribers via ZMQ. After this call
+ * completes, subscribe to the returned @a topicId on the ZMQ table monitor
+ * port (default 9002). Each time a modification operation on the table
+ * completes, a multipart message is published for that topic; the first part
+ * contains only the topic ID, and each subsequent part contains one
+ * binary-encoded Avro object that corresponds to the event and can be decoded
+ * using @a typeSchema. The monitor will continue to run (regardless of whether
+ * or not there are any subscribers) until deactivated with {@link
  * #clearTableMonitor(const ClearTableMonitorRequest&) const}.
  * 
  * @param[in] request_  Request object containing the parameters for the
@@ -7858,15 +7885,16 @@ CreateTableResponse& createTable( const std::string& tableName,
 CreateTableMonitorResponse createTableMonitor( const CreateTableMonitorRequest& request_ ) const;
 
 /**
- * Creates a monitor that watches for new records inserted into a particular
- * table (identified by @a tableName) and forwards copies to subscribers via
- * ZMQ. After this call completes, subscribe to the returned @a topicId on the
- * ZMQ table monitor port (default 9002). Each time an insert operation on the
- * table completes, a multipart message is published for that topic; the first
- * part contains only the topic ID, and each subsequent part contains one
- * binary-encoded Avro object that was inserted. The monitor will continue to
- * run (regardless of whether or not there are any subscribers) until
- * deactivated with {@link
+ * Creates a monitor that watches for table modification events such as insert,
+ * update or delete on a particular table (identified by @a tableName) and
+ * forwards event notifications to subscribers via ZMQ. After this call
+ * completes, subscribe to the returned @a topicId on the ZMQ table monitor
+ * port (default 9002). Each time a modification operation on the table
+ * completes, a multipart message is published for that topic; the first part
+ * contains only the topic ID, and each subsequent part contains one
+ * binary-encoded Avro object that corresponds to the event and can be decoded
+ * using @a typeSchema. The monitor will continue to run (regardless of whether
+ * or not there are any subscribers) until deactivated with {@link
  * #clearTableMonitor(const ClearTableMonitorRequest&,ClearTableMonitorResponse&) const}.
  * 
  * @param[in] request_  Request object containing the parameters for the
@@ -7883,20 +7911,36 @@ CreateTableMonitorResponse& createTableMonitor( const CreateTableMonitorRequest&
                                                 CreateTableMonitorResponse& response_ ) const;
 
 /**
- * Creates a monitor that watches for new records inserted into a particular
- * table (identified by @a tableName) and forwards copies to subscribers via
- * ZMQ. After this call completes, subscribe to the returned @a topicId on the
- * ZMQ table monitor port (default 9002). Each time an insert operation on the
- * table completes, a multipart message is published for that topic; the first
- * part contains only the topic ID, and each subsequent part contains one
- * binary-encoded Avro object that was inserted. The monitor will continue to
- * run (regardless of whether or not there are any subscribers) until
- * deactivated with {@link
+ * Creates a monitor that watches for table modification events such as insert,
+ * update or delete on a particular table (identified by @a tableName) and
+ * forwards event notifications to subscribers via ZMQ. After this call
+ * completes, subscribe to the returned @a topicId on the ZMQ table monitor
+ * port (default 9002). Each time a modification operation on the table
+ * completes, a multipart message is published for that topic; the first part
+ * contains only the topic ID, and each subsequent part contains one
+ * binary-encoded Avro object that corresponds to the event and can be decoded
+ * using @a typeSchema. The monitor will continue to run (regardless of whether
+ * or not there are any subscribers) until deactivated with {@link
  * #clearTableMonitor(const std::string&,const std::map<std::string, std::string>&) const}.
  * 
  * @param tableName  Name of the table to monitor. Must not refer to a
  *                   collection.
  * @param options  Optional parameters.
+ *                 <ul>
+ *                         <li> gpudb::create_table_monitor_event:
+ *                 <ul>
+ *                         <li> gpudb::create_table_monitor_insert: Get
+ *                 notifications of new record insertions. The new row images
+ *                 are forwarded to the subscribers.
+ *                         <li> gpudb::create_table_monitor_update: Get
+ *                 notifications of update operations. The modified row count
+ *                 information is forwarded to the subscribers.
+ *                         <li> gpudb::create_table_monitor_delete: Get
+ *                 notifications of delete operations. The deleted row count
+ *                 information is forwarded to the subscribers.
+ *                 </ul>
+ *                 The default value is gpudb::create_table_monitor_insert.
+ *                 </ul>
  * 
  * @return Response object containing the result of the operation.
  * 
@@ -7906,20 +7950,36 @@ CreateTableMonitorResponse createTableMonitor( const std::string& tableName,
                                                const std::map<std::string, std::string>& options ) const;
 
 /**
- * Creates a monitor that watches for new records inserted into a particular
- * table (identified by @a tableName) and forwards copies to subscribers via
- * ZMQ. After this call completes, subscribe to the returned @a topicId on the
- * ZMQ table monitor port (default 9002). Each time an insert operation on the
- * table completes, a multipart message is published for that topic; the first
- * part contains only the topic ID, and each subsequent part contains one
- * binary-encoded Avro object that was inserted. The monitor will continue to
- * run (regardless of whether or not there are any subscribers) until
- * deactivated with {@link
+ * Creates a monitor that watches for table modification events such as insert,
+ * update or delete on a particular table (identified by @a tableName) and
+ * forwards event notifications to subscribers via ZMQ. After this call
+ * completes, subscribe to the returned @a topicId on the ZMQ table monitor
+ * port (default 9002). Each time a modification operation on the table
+ * completes, a multipart message is published for that topic; the first part
+ * contains only the topic ID, and each subsequent part contains one
+ * binary-encoded Avro object that corresponds to the event and can be decoded
+ * using @a typeSchema. The monitor will continue to run (regardless of whether
+ * or not there are any subscribers) until deactivated with {@link
  * #clearTableMonitor(const std::string&,const std::map<std::string, std::string>&,ClearTableMonitorResponse&) const}.
  * 
  * @param tableName  Name of the table to monitor. Must not refer to a
  *                   collection.
  * @param options  Optional parameters.
+ *                 <ul>
+ *                         <li> gpudb::create_table_monitor_event:
+ *                 <ul>
+ *                         <li> gpudb::create_table_monitor_insert: Get
+ *                 notifications of new record insertions. The new row images
+ *                 are forwarded to the subscribers.
+ *                         <li> gpudb::create_table_monitor_update: Get
+ *                 notifications of update operations. The modified row count
+ *                 information is forwarded to the subscribers.
+ *                         <li> gpudb::create_table_monitor_delete: Get
+ *                 notifications of delete operations. The deleted row count
+ *                 information is forwarded to the subscribers.
+ *                 </ul>
+ *                 The default value is gpudb::create_table_monitor_insert.
+ *                 </ul>
  * @param[out] response_  Response object containing the results of the
  *                        operation.
  * 
@@ -8526,9 +8586,9 @@ CreateTypeResponse& createType( const CreateTypeRequest& request_,
  *                    expected to be low. This property can save a large amount
  *                    of memory.
  *                            <li> gpudb::create_type_init_with_now: For
- *                    columns with attributes of date, time, datetime or
- *                    timestamp, at insert time, replace empty strings and
- *                    invalid timestamps with NOW()
+ *                    'date', 'time', 'datetime', or 'timestamp' column types,
+ *                    replace empty strings and invalid timestamps with 'NOW()'
+ *                    upon insert.
  *                    </ul>
  * @param options  Optional parameters.
  * 
@@ -8734,9 +8794,9 @@ CreateTypeResponse createType( const std::string& typeDefinition,
  *                    expected to be low. This property can save a large amount
  *                    of memory.
  *                            <li> gpudb::create_type_init_with_now: For
- *                    columns with attributes of date, time, datetime or
- *                    timestamp, at insert time, replace empty strings and
- *                    invalid timestamps with NOW()
+ *                    'date', 'time', 'datetime', or 'timestamp' column types,
+ *                    replace empty strings and invalid timestamps with 'NOW()'
+ *                    upon insert.
  *                    </ul>
  * @param options  Optional parameters.
  * @param[out] response_  Response object containing the results of the
@@ -16684,6 +16744,9 @@ MatchGraphResponse& matchGraph( const MatchGraphRequest& request_,
  *                     Matches @a samplePoints to the graph using time and/or
  *                     distance between points to influence one or more
  *                     shortest paths across the sample points.
+ *                             <li> gpudb::match_graph_match_od_pairs: Matches
+ *                     @a samplePoints to find the most probable path between
+ *                     origin and destination pairs with cost constraints
  *                     </ul>
  *                     The default value is gpudb::match_graph_markov_chain.
  * @param solutionTable  The name of the table used to store the results; this
@@ -16800,6 +16863,9 @@ MatchGraphResponse matchGraph( const std::string& graphName,
  *                     Matches @a samplePoints to the graph using time and/or
  *                     distance between points to influence one or more
  *                     shortest paths across the sample points.
+ *                             <li> gpudb::match_graph_match_od_pairs: Matches
+ *                     @a samplePoints to find the most probable path between
+ *                     origin and destination pairs with cost constraints
  *                     </ul>
  *                     The default value is gpudb::match_graph_markov_chain.
  * @param solutionTable  The name of the table used to store the results; this
@@ -17298,6 +17364,14 @@ QueryGraphResponse& queryGraph( const QueryGraphRequest& request_,
  *                         <li> gpudb::query_graph_false
  *                 </ul>
  *                 The default value is gpudb::query_graph_false.
+ *                         <li> gpudb::query_graph_and_labels: If set to @a
+ *                 true, the result of the query has entities that satisfy all
+ *                 of the target labels, instead of any.
+ *                 <ul>
+ *                         <li> gpudb::query_graph_true
+ *                         <li> gpudb::query_graph_false
+ *                 </ul>
+ *                 The default value is gpudb::query_graph_false.
  *                 </ul>
  * 
  * @return Response object containing the result of the operation.
@@ -17430,6 +17504,14 @@ QueryGraphResponse queryGraph( const std::string& graphName,
  *                 href="../../api/rest/wms_rest.html" target="_top">/wms</a>
  *                 endpoint can then be made to display the query results on a
  *                 map.
+ *                 <ul>
+ *                         <li> gpudb::query_graph_true
+ *                         <li> gpudb::query_graph_false
+ *                 </ul>
+ *                 The default value is gpudb::query_graph_false.
+ *                         <li> gpudb::query_graph_and_labels: If set to @a
+ *                 true, the result of the query has entities that satisfy all
+ *                 of the target labels, instead of any.
  *                 <ul>
  *                         <li> gpudb::query_graph_true
  *                         <li> gpudb::query_graph_false
@@ -18951,9 +19033,9 @@ SolveGraphResponse& solveGraph( const SolveGraphRequest& request_,
  *                      @a remove_previous_restrictions is set to @a true, any
  *                      provided restrictions will replace the existing
  *                      restrictions. If @a remove_previous_restrictions is set
- *                      to @a false, any provided weights will be added (in the
- *                      case of 'RESTRICTIONS_VALUECOMPARED') to or replaced
- *                      (in the case of 'RESTRICTIONS_ONOFFCOMPARED').
+ *                      to @a false, any provided restrictions will be added
+ *                      (in the case of 'RESTRICTIONS_VALUECOMPARED') to or
+ *                      replaced (in the case of 'RESTRICTIONS_ONOFFCOMPARED').
  * @param solverType  The type of solver to use for the graph.
  *                    <ul>
  *                            <li> gpudb::solve_graph_SHORTEST_PATH: Solves for
@@ -19137,9 +19219,9 @@ SolveGraphResponse solveGraph( const std::string& graphName,
  *                      @a remove_previous_restrictions is set to @a true, any
  *                      provided restrictions will replace the existing
  *                      restrictions. If @a remove_previous_restrictions is set
- *                      to @a false, any provided weights will be added (in the
- *                      case of 'RESTRICTIONS_VALUECOMPARED') to or replaced
- *                      (in the case of 'RESTRICTIONS_ONOFFCOMPARED').
+ *                      to @a false, any provided restrictions will be added
+ *                      (in the case of 'RESTRICTIONS_VALUECOMPARED') to or
+ *                      replaced (in the case of 'RESTRICTIONS_ONOFFCOMPARED').
  * @param solverType  The type of solver to use for the graph.
  *                    <ul>
  *                            <li> gpudb::solve_graph_SHORTEST_PATH: Solves for
@@ -21878,7 +21960,12 @@ VisualizeImageLabelsResponse& visualizeImageLabels( const std::string& tableName
                                                     VisualizeImageLabelsResponse& response_ ) const;
 
 /**
- * @private
+ * Generate an image containing isolines for travel results using an existing
+ * graph. Isolines represent curves of equal cost, with cost typically
+ * referring to the time or distance assigned as the weights of the underlying
+ * graph. See <a href="../../graph_solver/network_graph_solver.html"
+ * target="_top">Network Graph Solvers</a> for more information on graphs.
+ * .
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -21890,7 +21977,12 @@ VisualizeImageLabelsResponse& visualizeImageLabels( const std::string& tableName
 VisualizeIsochroneResponse visualizeIsochrone( const VisualizeIsochroneRequest& request_ ) const;
 
 /**
- * @private
+ * Generate an image containing isolines for travel results using an existing
+ * graph. Isolines represent curves of equal cost, with cost typically
+ * referring to the time or distance assigned as the weights of the underlying
+ * graph. See <a href="../../graph_solver/network_graph_solver.html"
+ * target="_top">Network Graph Solvers</a> for more information on graphs.
+ * .
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -21906,42 +21998,86 @@ VisualizeIsochroneResponse& visualizeIsochrone( const VisualizeIsochroneRequest&
                                                 VisualizeIsochroneResponse& response_ ) const;
 
 /**
- * @private
+ * Generate an image containing isolines for travel results using an existing
+ * graph. Isolines represent curves of equal cost, with cost typically
+ * referring to the time or distance assigned as the weights of the underlying
+ * graph. See <a href="../../graph_solver/network_graph_solver.html"
+ * target="_top">Network Graph Solvers</a> for more information on graphs.
+ * .
  * 
- * @param graphName
- * @param weightsOnEdges
- * @param sourceNode
- * @param restrictions
- * @param maxSolutionRadius
- * @param numLevels
- * @param generateImage
- * @param projection
- *                    <ul>
- *                            <li> gpudb::visualize_isochrone_3857
- *                            <li> gpudb::visualize_isochrone_102100
- *                            <li> gpudb::visualize_isochrone_900913
- *                            <li> gpudb::visualize_isochrone_EPSG_4326
- *                            <li> gpudb::visualize_isochrone_PLATE_CARREE
- *                            <li> gpudb::visualize_isochrone_EPSG_900913
- *                            <li> gpudb::visualize_isochrone_EPSG_102100
- *                            <li> gpudb::visualize_isochrone_EPSG_3857
- *                            <li> gpudb::visualize_isochrone_WEB_MERCATOR
- *                    </ul>
- *                    The default value is
- *                    gpudb::visualize_isochrone_PLATE_CARREE.
- * @param imageWidth
- * @param imageHeight
- * @param styleOptions
+ * @param graphName  Name of the graph on which the isochrone is to be
+ *                   computed.
+ * @param sourceNode  Starting vertex on the underlying graph from/to which the
+ *                    isochrones are created.
+ * @param maxSolutionRadius  Extent of the search radius around @a sourceNode.
+ *                           Set to '-1.0' for unrestricted search radius.
+ * @param weightsOnEdges  Additional weights to apply to the edges of an
+ *                        existing graph. Weights must be specified using <a
+ *                        href="../../graph_solver/network_graph_solver.html#identifiers"
+ *                        target="_top">identifiers</a>; identifiers are
+ *                        grouped as <a
+ *                        href="../../graph_solver/network_graph_solver.html#id-combos"
+ *                        target="_top">combinations</a>. Identifiers can be
+ *                        used with existing column names, e.g., 'table.column
+ *                        AS WEIGHTS_EDGE_ID', or expressions, e.g.,
+ *                        'ST_LENGTH(wkt) AS WEIGHTS_VALUESPECIFIED'. Any
+ *                        provided weights will be added (in the case of
+ *                        'WEIGHTS_VALUESPECIFIED') to or multiplied with (in
+ *                        the case of 'WEIGHTS_FACTORSPECIFIED') the existing
+ *                        weight(s).
+ * @param restrictions  Additional restrictions to apply to the nodes/edges of
+ *                      an existing graph. Restrictions must be specified using
+ *                      <a
+ *                      href="../../graph_solver/network_graph_solver.html#identifiers"
+ *                      target="_top">identifiers</a>; identifiers are grouped
+ *                      as <a
+ *                      href="../../graph_solver/network_graph_solver.html#id-combos"
+ *                      target="_top">combinations</a>. Identifiers can be used
+ *                      with existing column names, e.g., 'table.column AS
+ *                      RESTRICTIONS_EDGE_ID', or expressions, e.g., 'column/2
+ *                      AS RESTRICTIONS_VALUECOMPARED'. If @a
+ *                      remove_previous_restrictions is set to @a true, any
+ *                      provided restrictions will replace the existing
+ *                      restrictions. If @a remove_previous_restrictions is set
+ *                      to @a false, any provided restrictions will be added
+ *                      (in the case of 'RESTRICTIONS_VALUECOMPARED') to or
+ *                      replaced (in the case of 'RESTRICTIONS_ONOFFCOMPARED').
+ * @param numLevels  Number of equally-separated isochrones to compute.
+ * @param generateImage  If set to @a true, generates a PNG image of the
+ *                       isochrones in the response.
+ *                       <ul>
+ *                               <li> gpudb::visualize_isochrone_true
+ *                               <li> gpudb::visualize_isochrone_false
+ *                       </ul>
+ *                       The default value is gpudb::visualize_isochrone_true.
+ * @param levelsTable  Name of the table to output the isochrones, containing
+ *                     levels and their corresponding WKT geometry. If no value
+ *                     is provided, the table is not generated.
+ * @param styleOptions  Various style related options of the isochrone image.
  *                      <ul>
- *                              <li> gpudb::visualize_isochrone_line_size:
- *                      The default value is '3'.
- *                              <li> gpudb::visualize_isochrone_color:   The
- *                      default value is 'FF696969'.
- *                              <li> gpudb::visualize_isochrone_bg_color:   The
- *                      default value is '00000000'.
+ *                              <li> gpudb::visualize_isochrone_line_size: The
+ *                      width of the contour lines in pixels.  The default
+ *                      value is '3'.
+ *                              <li> gpudb::visualize_isochrone_color: Color of
+ *                      generated isolines. All color values must be in the
+ *                      format RRGGBB or AARRGGBB (to specify the alpha value).
+ *                      If alpha is specified and flooded contours are enabled,
+ *                      it will be used for as the transparency of the latter.
+ *                      The default value is 'FF696969'.
+ *                              <li> gpudb::visualize_isochrone_bg_color: When
+ *                      @a generateImage is set to @a true, background color of
+ *                      the generated image. All color values must be in the
+ *                      format RRGGBB or AARRGGBB (to specify the alpha value).
+ *                      The default value is '00000000'.
  *                              <li> gpudb::visualize_isochrone_text_color:
- *                      The default value is 'FF000000'.
+ *                      When @a add_labels is set to @a true, color for the
+ *                      labels. All color values must be in the format RRGGBB
+ *                      or AARRGGBB (to specify the alpha value).  The default
+ *                      value is 'FF000000'.
  *                              <li> gpudb::visualize_isochrone_colormap:
+ *                      Colormap for contours or fill-in regions when
+ *                      applicable. All color values must be in the format
+ *                      RRGGBB or AARRGGBB (to specify the alpha value)
  *                      <ul>
  *                              <li> gpudb::visualize_isochrone_jet
  *                              <li> gpudb::visualize_isochrone_accent
@@ -22021,68 +22157,172 @@ VisualizeIsochroneResponse& visualizeIsochrone( const VisualizeIsochroneRequest&
  *                      </ul>
  *                      The default value is gpudb::visualize_isochrone_jet.
  *                      </ul>
- * @param solveOptions
+ * @param solveOptions  Solver specific parameters
  *                      <ul>
  *                              <li>
  *                      gpudb::visualize_isochrone_remove_previous_restrictions:
+ *                      Ignore the restrictions applied to the graph during the
+ *                      creation stage and only use the restrictions specified
+ *                      in this request if set to @a true.
  *                      <ul>
  *                              <li> gpudb::visualize_isochrone_true
  *                              <li> gpudb::visualize_isochrone_false
  *                      </ul>
  *                      The default value is gpudb::visualize_isochrone_false.
  *                              <li>
- *                      gpudb::visualize_isochrone_restriction_threshold_value
- *                              <li> gpudb::visualize_isochrone_uniform_weights
+ *                      gpudb::visualize_isochrone_restriction_threshold_value:
+ *                      Value-based restriction comparison. Any node or edge
+ *                      with a 'RESTRICTIONS_VALUECOMPARED' value greater than
+ *                      the @a restriction_threshold_value will not be included
+ *                      in the solution.
+ *                              <li>
+ *                      gpudb::visualize_isochrone_uniform_weights: When
+ *                      specified, assigns the given value to all the edges in
+ *                      the graph. Note that weights provided in @a
+ *                      weightsOnEdges will override this value.
  *                      </ul>
- * @param contourOptions
+ * @param contourOptions  Solver specific parameters
  *                        <ul>
+ *                                <li> gpudb::visualize_isochrone_projection:
+ *                        Spatial Reference System (i.e. EPSG Code).
+ *                        <ul>
+ *                                <li> gpudb::visualize_isochrone_3857
+ *                                <li> gpudb::visualize_isochrone_102100
+ *                                <li> gpudb::visualize_isochrone_900913
+ *                                <li> gpudb::visualize_isochrone_EPSG_4326
+ *                                <li> gpudb::visualize_isochrone_PLATE_CARREE
+ *                                <li> gpudb::visualize_isochrone_EPSG_900913
+ *                                <li> gpudb::visualize_isochrone_EPSG_102100
+ *                                <li> gpudb::visualize_isochrone_EPSG_3857
+ *                                <li> gpudb::visualize_isochrone_WEB_MERCATOR
+ *                        </ul>
+ *                        The default value is
+ *                        gpudb::visualize_isochrone_PLATE_CARREE.
+ *                                <li> gpudb::visualize_isochrone_width: When
+ *                        @a generateImage is set to @a true, width of the
+ *                        generated image.  The default value is '512'.
+ *                                <li> gpudb::visualize_isochrone_height: When
+ *                        @a generateImage is set to @a true, height of the
+ *                        generated image. If the default value is used, the @a
+ *                        height is set to the value resulting from multiplying
+ *                        the aspect ratio by the @a width.  The default value
+ *                        is '-1'.
  *                                <li>
- *                        gpudb::visualize_isochrone_search_radius:   The
- *                        default value is '20'.
+ *                        gpudb::visualize_isochrone_search_radius: When
+ *                        interpolating the graph solution to generate the
+ *                        isochrone, neighborhood of influence of sample data
+ *                        (in percent of the image/grid).  The default value is
+ *                        '20'.
  *                                <li> gpudb::visualize_isochrone_grid_size:
- *                        The default value is '100'.
+ *                        When interpolating the graph solution to generate the
+ *                        isochrone, number of subdivisions along the x axis
+ *                        when building the grid (the y is computed using the
+ *                        aspect ratio of the output image).  The default value
+ *                        is '100'.
  *                                <li>
- *                        gpudb::visualize_isochrone_color_isolines:   The
- *                        default value is 'true'.
+ *                        gpudb::visualize_isochrone_color_isolines: Color each
+ *                        isoline according to the colormap; otherwise, use the
+ *                        foreground color.
+ *                        <ul>
+ *                                <li> gpudb::visualize_isochrone_true
+ *                                <li> gpudb::visualize_isochrone_false
+ *                        </ul>
+ *                        The default value is gpudb::visualize_isochrone_true.
  *                                <li> gpudb::visualize_isochrone_add_labels:
- *                        The default value is 'false'.
+ *                        If set to @a true, add labels to the isolines.
+ *                        <ul>
+ *                                <li> gpudb::visualize_isochrone_true
+ *                                <li> gpudb::visualize_isochrone_false
+ *                        </ul>
+ *                        The default value is
+ *                        gpudb::visualize_isochrone_false.
  *                                <li>
- *                        gpudb::visualize_isochrone_labels_font_size:   The
- *                        default value is '12'.
+ *                        gpudb::visualize_isochrone_labels_font_size: When @a
+ *                        add_labels is set to @a true, size of the font (in
+ *                        pixels) to use for labels.  The default value is
+ *                        '12'.
  *                                <li>
- *                        gpudb::visualize_isochrone_labels_font_family:   The
- *                        default value is 'arial'.
+ *                        gpudb::visualize_isochrone_labels_font_family: When
+ *                        @a add_labels is set to @a true, font name to be used
+ *                        when adding labels.  The default value is 'arial'.
  *                                <li>
- *                        gpudb::visualize_isochrone_labels_search_window:
- *                        The default value is '4'.
+ *                        gpudb::visualize_isochrone_labels_search_window: When
+ *                        @a add_labels is set to @a true, a search window is
+ *                        used to rate the local quality of each isoline.
+ *                        Smooth, continuous, long stretches with relatively
+ *                        flat angles are favored. The provided value is
+ *                        multiplied by the @a labels_font_size to calculate
+ *                        the final window size.  The default value is '4'.
  *                                <li>
  *                        gpudb::visualize_isochrone_labels_intralevel_separation:
- *                        The default value is '4'.
+ *                        When @a add_labels is set to @a true, this value
+ *                        determines the  distance (in multiples of the @a
+ *                        labels_font_size) to use when separating labels of
+ *                        different values.  The default value is '4'.
  *                                <li>
  *                        gpudb::visualize_isochrone_labels_interlevel_separation:
- *                        The default value is '20'.
+ *                        When @a add_labels is set to @a true, this value
+ *                        determines the distance (in percent of the total
+ *                        window size) to use when separating labels of the
+ *                        same value.  The default value is '20'.
  *                                <li>
- *                        gpudb::visualize_isochrone_labels_max_angle:   The
- *                        default value is '60'.
+ *                        gpudb::visualize_isochrone_labels_max_angle: When @a
+ *                        add_labels is set to @a true, maximum angle (in
+ *                        degrees) from the vertical to use when adding labels.
+ *                        The default value is '60'.
  *                        </ul>
- * @param options
+ * @param options  Additional parameters
  *                 <ul>
- *                         <li> gpudb::visualize_isochrone_levels_table:   The
- *                 default value is ''.
- *                         <li> gpudb::visualize_isochrone_solve_table:   The
- *                 default value is ''.
- *                         <li> gpudb::visualize_isochrone_is_replicated:   The
- *                 default value is 'true'.
- *                         <li> gpudb::visualize_isochrone_data_min_x
- *                         <li> gpudb::visualize_isochrone_data_max_x
- *                         <li> gpudb::visualize_isochrone_data_min_y
- *                         <li> gpudb::visualize_isochrone_data_max_y
+ *                         <li> gpudb::visualize_isochrone_solve_table: Name of
+ *                 the table to host intermediate solve results containing the
+ *                 position and cost for each vertex in the graph. If the
+ *                 default value is used, a temporary table is created and
+ *                 deleted once the solution is calculated.  The default value
+ *                 is ''.
+ *                         <li> gpudb::visualize_isochrone_is_replicated: If
+ *                 set to @a true, replicate the @a solve_table.
+ *                 <ul>
+ *                         <li> gpudb::visualize_isochrone_true
+ *                         <li> gpudb::visualize_isochrone_false
+ *                 </ul>
+ *                 The default value is gpudb::visualize_isochrone_true.
+ *                         <li> gpudb::visualize_isochrone_data_min_x: Lower
+ *                 bound for the x values. If not provided, it will be computed
+ *                 from the bounds of the input data.
+ *                         <li> gpudb::visualize_isochrone_data_max_x: Upper
+ *                 bound for the x values. If not provided, it will be computed
+ *                 from the bounds of the input data.
+ *                         <li> gpudb::visualize_isochrone_data_min_y: Lower
+ *                 bound for the y values. If not provided, it will be computed
+ *                 from the bounds of the input data.
+ *                         <li> gpudb::visualize_isochrone_data_max_y: Upper
+ *                 bound for the y values. If not provided, it will be computed
+ *                 from the bounds of the input data.
  *                         <li> gpudb::visualize_isochrone_concavity_level:
- *                 The default value is '0'.
- *                         <li> gpudb::visualize_isochrone_solve_direction:
+ *                 Factor to qualify the concavity of the isochrone curves. The
+ *                 lower the value, the more convex (with '0' being completely
+ *                 convex and '1' being the most concave).  The default value
+ *                 is '0.5'.
+ *                         <li>
+ *                 gpudb::visualize_isochrone_use_priority_queue_solvers: sets
+ *                 the solver methods explicitly if true
  *                 <ul>
- *                         <li> gpudb::visualize_isochrone_from_source
- *                         <li> gpudb::visualize_isochrone_to_source
+ *                         <li> gpudb::visualize_isochrone_true: uses the
+ *                 solvers scheduled for 'shortest_path' and
+ *                 'inverse_shortest_path' based on solve_direction
+ *                         <li> gpudb::visualize_isochrone_false: uses the
+ *                 solvers 'priority_queue' and 'inverse_priority_queue' based
+ *                 on solve_direction
+ *                 </ul>
+ *                 The default value is gpudb::visualize_isochrone_false.
+ *                         <li> gpudb::visualize_isochrone_solve_direction:
+ *                 Specify whether we are going to the source node, or starting
+ *                 from it.
+ *                 <ul>
+ *                         <li> gpudb::visualize_isochrone_from_source:
+ *                 Shortest path to get to the source (inverse Dijkstra)
+ *                         <li> gpudb::visualize_isochrone_to_source: Shortest
+ *                 path to source (Dijkstra)
  *                 </ul>
  *                 The default value is gpudb::visualize_isochrone_from_source.
  *                 </ul>
@@ -22092,57 +22332,99 @@ VisualizeIsochroneResponse& visualizeIsochrone( const VisualizeIsochroneRequest&
  */
 
 VisualizeIsochroneResponse visualizeIsochrone( const std::string& graphName,
-                                               const std::vector<std::string>& weightsOnEdges,
                                                const std::string& sourceNode,
-                                               const std::vector<std::string>& restrictions,
                                                const double maxSolutionRadius,
+                                               const std::vector<std::string>& weightsOnEdges,
+                                               const std::vector<std::string>& restrictions,
                                                const int32_t numLevels,
                                                const bool generateImage,
-                                               const std::string& projection,
-                                               const int32_t imageWidth,
-                                               const int32_t imageHeight,
+                                               const std::string& levelsTable,
                                                const std::map<std::string, std::string>& styleOptions,
                                                const std::map<std::string, std::string>& solveOptions,
                                                const std::map<std::string, std::string>& contourOptions,
                                                const std::map<std::string, std::string>& options ) const;
 
 /**
- * @private
+ * Generate an image containing isolines for travel results using an existing
+ * graph. Isolines represent curves of equal cost, with cost typically
+ * referring to the time or distance assigned as the weights of the underlying
+ * graph. See <a href="../../graph_solver/network_graph_solver.html"
+ * target="_top">Network Graph Solvers</a> for more information on graphs.
+ * .
  * 
- * @param graphName
- * @param weightsOnEdges
- * @param sourceNode
- * @param restrictions
- * @param maxSolutionRadius
- * @param numLevels
- * @param generateImage
- * @param projection
- *                    <ul>
- *                            <li> gpudb::visualize_isochrone_3857
- *                            <li> gpudb::visualize_isochrone_102100
- *                            <li> gpudb::visualize_isochrone_900913
- *                            <li> gpudb::visualize_isochrone_EPSG_4326
- *                            <li> gpudb::visualize_isochrone_PLATE_CARREE
- *                            <li> gpudb::visualize_isochrone_EPSG_900913
- *                            <li> gpudb::visualize_isochrone_EPSG_102100
- *                            <li> gpudb::visualize_isochrone_EPSG_3857
- *                            <li> gpudb::visualize_isochrone_WEB_MERCATOR
- *                    </ul>
- *                    The default value is
- *                    gpudb::visualize_isochrone_PLATE_CARREE.
- * @param imageWidth
- * @param imageHeight
- * @param styleOptions
+ * @param graphName  Name of the graph on which the isochrone is to be
+ *                   computed.
+ * @param sourceNode  Starting vertex on the underlying graph from/to which the
+ *                    isochrones are created.
+ * @param maxSolutionRadius  Extent of the search radius around @a sourceNode.
+ *                           Set to '-1.0' for unrestricted search radius.
+ * @param weightsOnEdges  Additional weights to apply to the edges of an
+ *                        existing graph. Weights must be specified using <a
+ *                        href="../../graph_solver/network_graph_solver.html#identifiers"
+ *                        target="_top">identifiers</a>; identifiers are
+ *                        grouped as <a
+ *                        href="../../graph_solver/network_graph_solver.html#id-combos"
+ *                        target="_top">combinations</a>. Identifiers can be
+ *                        used with existing column names, e.g., 'table.column
+ *                        AS WEIGHTS_EDGE_ID', or expressions, e.g.,
+ *                        'ST_LENGTH(wkt) AS WEIGHTS_VALUESPECIFIED'. Any
+ *                        provided weights will be added (in the case of
+ *                        'WEIGHTS_VALUESPECIFIED') to or multiplied with (in
+ *                        the case of 'WEIGHTS_FACTORSPECIFIED') the existing
+ *                        weight(s).
+ * @param restrictions  Additional restrictions to apply to the nodes/edges of
+ *                      an existing graph. Restrictions must be specified using
+ *                      <a
+ *                      href="../../graph_solver/network_graph_solver.html#identifiers"
+ *                      target="_top">identifiers</a>; identifiers are grouped
+ *                      as <a
+ *                      href="../../graph_solver/network_graph_solver.html#id-combos"
+ *                      target="_top">combinations</a>. Identifiers can be used
+ *                      with existing column names, e.g., 'table.column AS
+ *                      RESTRICTIONS_EDGE_ID', or expressions, e.g., 'column/2
+ *                      AS RESTRICTIONS_VALUECOMPARED'. If @a
+ *                      remove_previous_restrictions is set to @a true, any
+ *                      provided restrictions will replace the existing
+ *                      restrictions. If @a remove_previous_restrictions is set
+ *                      to @a false, any provided restrictions will be added
+ *                      (in the case of 'RESTRICTIONS_VALUECOMPARED') to or
+ *                      replaced (in the case of 'RESTRICTIONS_ONOFFCOMPARED').
+ * @param numLevels  Number of equally-separated isochrones to compute.
+ * @param generateImage  If set to @a true, generates a PNG image of the
+ *                       isochrones in the response.
+ *                       <ul>
+ *                               <li> gpudb::visualize_isochrone_true
+ *                               <li> gpudb::visualize_isochrone_false
+ *                       </ul>
+ *                       The default value is gpudb::visualize_isochrone_true.
+ * @param levelsTable  Name of the table to output the isochrones, containing
+ *                     levels and their corresponding WKT geometry. If no value
+ *                     is provided, the table is not generated.
+ * @param styleOptions  Various style related options of the isochrone image.
  *                      <ul>
- *                              <li> gpudb::visualize_isochrone_line_size:
- *                      The default value is '3'.
- *                              <li> gpudb::visualize_isochrone_color:   The
- *                      default value is 'FF696969'.
- *                              <li> gpudb::visualize_isochrone_bg_color:   The
- *                      default value is '00000000'.
+ *                              <li> gpudb::visualize_isochrone_line_size: The
+ *                      width of the contour lines in pixels.  The default
+ *                      value is '3'.
+ *                              <li> gpudb::visualize_isochrone_color: Color of
+ *                      generated isolines. All color values must be in the
+ *                      format RRGGBB or AARRGGBB (to specify the alpha value).
+ *                      If alpha is specified and flooded contours are enabled,
+ *                      it will be used for as the transparency of the latter.
+ *                      The default value is 'FF696969'.
+ *                              <li> gpudb::visualize_isochrone_bg_color: When
+ *                      @a generateImage is set to @a true, background color of
+ *                      the generated image. All color values must be in the
+ *                      format RRGGBB or AARRGGBB (to specify the alpha value).
+ *                      The default value is '00000000'.
  *                              <li> gpudb::visualize_isochrone_text_color:
- *                      The default value is 'FF000000'.
+ *                      When @a add_labels is set to @a true, color for the
+ *                      labels. All color values must be in the format RRGGBB
+ *                      or AARRGGBB (to specify the alpha value).  The default
+ *                      value is 'FF000000'.
  *                              <li> gpudb::visualize_isochrone_colormap:
+ *                      Colormap for contours or fill-in regions when
+ *                      applicable. All color values must be in the format
+ *                      RRGGBB or AARRGGBB (to specify the alpha value)
  *                      <ul>
  *                              <li> gpudb::visualize_isochrone_jet
  *                              <li> gpudb::visualize_isochrone_accent
@@ -22222,68 +22504,172 @@ VisualizeIsochroneResponse visualizeIsochrone( const std::string& graphName,
  *                      </ul>
  *                      The default value is gpudb::visualize_isochrone_jet.
  *                      </ul>
- * @param solveOptions
+ * @param solveOptions  Solver specific parameters
  *                      <ul>
  *                              <li>
  *                      gpudb::visualize_isochrone_remove_previous_restrictions:
+ *                      Ignore the restrictions applied to the graph during the
+ *                      creation stage and only use the restrictions specified
+ *                      in this request if set to @a true.
  *                      <ul>
  *                              <li> gpudb::visualize_isochrone_true
  *                              <li> gpudb::visualize_isochrone_false
  *                      </ul>
  *                      The default value is gpudb::visualize_isochrone_false.
  *                              <li>
- *                      gpudb::visualize_isochrone_restriction_threshold_value
- *                              <li> gpudb::visualize_isochrone_uniform_weights
+ *                      gpudb::visualize_isochrone_restriction_threshold_value:
+ *                      Value-based restriction comparison. Any node or edge
+ *                      with a 'RESTRICTIONS_VALUECOMPARED' value greater than
+ *                      the @a restriction_threshold_value will not be included
+ *                      in the solution.
+ *                              <li>
+ *                      gpudb::visualize_isochrone_uniform_weights: When
+ *                      specified, assigns the given value to all the edges in
+ *                      the graph. Note that weights provided in @a
+ *                      weightsOnEdges will override this value.
  *                      </ul>
- * @param contourOptions
+ * @param contourOptions  Solver specific parameters
  *                        <ul>
+ *                                <li> gpudb::visualize_isochrone_projection:
+ *                        Spatial Reference System (i.e. EPSG Code).
+ *                        <ul>
+ *                                <li> gpudb::visualize_isochrone_3857
+ *                                <li> gpudb::visualize_isochrone_102100
+ *                                <li> gpudb::visualize_isochrone_900913
+ *                                <li> gpudb::visualize_isochrone_EPSG_4326
+ *                                <li> gpudb::visualize_isochrone_PLATE_CARREE
+ *                                <li> gpudb::visualize_isochrone_EPSG_900913
+ *                                <li> gpudb::visualize_isochrone_EPSG_102100
+ *                                <li> gpudb::visualize_isochrone_EPSG_3857
+ *                                <li> gpudb::visualize_isochrone_WEB_MERCATOR
+ *                        </ul>
+ *                        The default value is
+ *                        gpudb::visualize_isochrone_PLATE_CARREE.
+ *                                <li> gpudb::visualize_isochrone_width: When
+ *                        @a generateImage is set to @a true, width of the
+ *                        generated image.  The default value is '512'.
+ *                                <li> gpudb::visualize_isochrone_height: When
+ *                        @a generateImage is set to @a true, height of the
+ *                        generated image. If the default value is used, the @a
+ *                        height is set to the value resulting from multiplying
+ *                        the aspect ratio by the @a width.  The default value
+ *                        is '-1'.
  *                                <li>
- *                        gpudb::visualize_isochrone_search_radius:   The
- *                        default value is '20'.
+ *                        gpudb::visualize_isochrone_search_radius: When
+ *                        interpolating the graph solution to generate the
+ *                        isochrone, neighborhood of influence of sample data
+ *                        (in percent of the image/grid).  The default value is
+ *                        '20'.
  *                                <li> gpudb::visualize_isochrone_grid_size:
- *                        The default value is '100'.
+ *                        When interpolating the graph solution to generate the
+ *                        isochrone, number of subdivisions along the x axis
+ *                        when building the grid (the y is computed using the
+ *                        aspect ratio of the output image).  The default value
+ *                        is '100'.
  *                                <li>
- *                        gpudb::visualize_isochrone_color_isolines:   The
- *                        default value is 'true'.
+ *                        gpudb::visualize_isochrone_color_isolines: Color each
+ *                        isoline according to the colormap; otherwise, use the
+ *                        foreground color.
+ *                        <ul>
+ *                                <li> gpudb::visualize_isochrone_true
+ *                                <li> gpudb::visualize_isochrone_false
+ *                        </ul>
+ *                        The default value is gpudb::visualize_isochrone_true.
  *                                <li> gpudb::visualize_isochrone_add_labels:
- *                        The default value is 'false'.
+ *                        If set to @a true, add labels to the isolines.
+ *                        <ul>
+ *                                <li> gpudb::visualize_isochrone_true
+ *                                <li> gpudb::visualize_isochrone_false
+ *                        </ul>
+ *                        The default value is
+ *                        gpudb::visualize_isochrone_false.
  *                                <li>
- *                        gpudb::visualize_isochrone_labels_font_size:   The
- *                        default value is '12'.
+ *                        gpudb::visualize_isochrone_labels_font_size: When @a
+ *                        add_labels is set to @a true, size of the font (in
+ *                        pixels) to use for labels.  The default value is
+ *                        '12'.
  *                                <li>
- *                        gpudb::visualize_isochrone_labels_font_family:   The
- *                        default value is 'arial'.
+ *                        gpudb::visualize_isochrone_labels_font_family: When
+ *                        @a add_labels is set to @a true, font name to be used
+ *                        when adding labels.  The default value is 'arial'.
  *                                <li>
- *                        gpudb::visualize_isochrone_labels_search_window:
- *                        The default value is '4'.
+ *                        gpudb::visualize_isochrone_labels_search_window: When
+ *                        @a add_labels is set to @a true, a search window is
+ *                        used to rate the local quality of each isoline.
+ *                        Smooth, continuous, long stretches with relatively
+ *                        flat angles are favored. The provided value is
+ *                        multiplied by the @a labels_font_size to calculate
+ *                        the final window size.  The default value is '4'.
  *                                <li>
  *                        gpudb::visualize_isochrone_labels_intralevel_separation:
- *                        The default value is '4'.
+ *                        When @a add_labels is set to @a true, this value
+ *                        determines the  distance (in multiples of the @a
+ *                        labels_font_size) to use when separating labels of
+ *                        different values.  The default value is '4'.
  *                                <li>
  *                        gpudb::visualize_isochrone_labels_interlevel_separation:
- *                        The default value is '20'.
+ *                        When @a add_labels is set to @a true, this value
+ *                        determines the distance (in percent of the total
+ *                        window size) to use when separating labels of the
+ *                        same value.  The default value is '20'.
  *                                <li>
- *                        gpudb::visualize_isochrone_labels_max_angle:   The
- *                        default value is '60'.
+ *                        gpudb::visualize_isochrone_labels_max_angle: When @a
+ *                        add_labels is set to @a true, maximum angle (in
+ *                        degrees) from the vertical to use when adding labels.
+ *                        The default value is '60'.
  *                        </ul>
- * @param options
+ * @param options  Additional parameters
  *                 <ul>
- *                         <li> gpudb::visualize_isochrone_levels_table:   The
- *                 default value is ''.
- *                         <li> gpudb::visualize_isochrone_solve_table:   The
- *                 default value is ''.
- *                         <li> gpudb::visualize_isochrone_is_replicated:   The
- *                 default value is 'true'.
- *                         <li> gpudb::visualize_isochrone_data_min_x
- *                         <li> gpudb::visualize_isochrone_data_max_x
- *                         <li> gpudb::visualize_isochrone_data_min_y
- *                         <li> gpudb::visualize_isochrone_data_max_y
+ *                         <li> gpudb::visualize_isochrone_solve_table: Name of
+ *                 the table to host intermediate solve results containing the
+ *                 position and cost for each vertex in the graph. If the
+ *                 default value is used, a temporary table is created and
+ *                 deleted once the solution is calculated.  The default value
+ *                 is ''.
+ *                         <li> gpudb::visualize_isochrone_is_replicated: If
+ *                 set to @a true, replicate the @a solve_table.
+ *                 <ul>
+ *                         <li> gpudb::visualize_isochrone_true
+ *                         <li> gpudb::visualize_isochrone_false
+ *                 </ul>
+ *                 The default value is gpudb::visualize_isochrone_true.
+ *                         <li> gpudb::visualize_isochrone_data_min_x: Lower
+ *                 bound for the x values. If not provided, it will be computed
+ *                 from the bounds of the input data.
+ *                         <li> gpudb::visualize_isochrone_data_max_x: Upper
+ *                 bound for the x values. If not provided, it will be computed
+ *                 from the bounds of the input data.
+ *                         <li> gpudb::visualize_isochrone_data_min_y: Lower
+ *                 bound for the y values. If not provided, it will be computed
+ *                 from the bounds of the input data.
+ *                         <li> gpudb::visualize_isochrone_data_max_y: Upper
+ *                 bound for the y values. If not provided, it will be computed
+ *                 from the bounds of the input data.
  *                         <li> gpudb::visualize_isochrone_concavity_level:
- *                 The default value is '0'.
- *                         <li> gpudb::visualize_isochrone_solve_direction:
+ *                 Factor to qualify the concavity of the isochrone curves. The
+ *                 lower the value, the more convex (with '0' being completely
+ *                 convex and '1' being the most concave).  The default value
+ *                 is '0.5'.
+ *                         <li>
+ *                 gpudb::visualize_isochrone_use_priority_queue_solvers: sets
+ *                 the solver methods explicitly if true
  *                 <ul>
- *                         <li> gpudb::visualize_isochrone_from_source
- *                         <li> gpudb::visualize_isochrone_to_source
+ *                         <li> gpudb::visualize_isochrone_true: uses the
+ *                 solvers scheduled for 'shortest_path' and
+ *                 'inverse_shortest_path' based on solve_direction
+ *                         <li> gpudb::visualize_isochrone_false: uses the
+ *                 solvers 'priority_queue' and 'inverse_priority_queue' based
+ *                 on solve_direction
+ *                 </ul>
+ *                 The default value is gpudb::visualize_isochrone_false.
+ *                         <li> gpudb::visualize_isochrone_solve_direction:
+ *                 Specify whether we are going to the source node, or starting
+ *                 from it.
+ *                 <ul>
+ *                         <li> gpudb::visualize_isochrone_from_source:
+ *                 Shortest path to get to the source (inverse Dijkstra)
+ *                         <li> gpudb::visualize_isochrone_to_source: Shortest
+ *                 path to source (Dijkstra)
  *                 </ul>
  *                 The default value is gpudb::visualize_isochrone_from_source.
  *                 </ul>
@@ -22296,15 +22682,13 @@ VisualizeIsochroneResponse visualizeIsochrone( const std::string& graphName,
  */
 
 VisualizeIsochroneResponse& visualizeIsochrone( const std::string& graphName,
-                                                const std::vector<std::string>& weightsOnEdges,
                                                 const std::string& sourceNode,
-                                                const std::vector<std::string>& restrictions,
                                                 const double maxSolutionRadius,
+                                                const std::vector<std::string>& weightsOnEdges,
+                                                const std::vector<std::string>& restrictions,
                                                 const int32_t numLevels,
                                                 const bool generateImage,
-                                                const std::string& projection,
-                                                const int32_t imageWidth,
-                                                const int32_t imageHeight,
+                                                const std::string& levelsTable,
                                                 const std::map<std::string, std::string>& styleOptions,
                                                 const std::map<std::string, std::string>& solveOptions,
                                                 const std::map<std::string, std::string>& contourOptions,

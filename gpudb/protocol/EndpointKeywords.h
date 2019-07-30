@@ -63,6 +63,7 @@ namespace gpudb
     extern const std::string admin_verify_db_false;
     extern const std::string admin_verify_db_rebuild_on_error;
     extern const std::string admin_verify_db_true;
+    extern const std::string admin_verify_db_verify_nulls;
     extern const std::string admin_verify_db_verify_persist;
     extern const std::string admin_verify_db_verify_rank0;
 
@@ -414,6 +415,12 @@ namespace gpudb
     extern const std::string create_table_true;
     extern const std::string create_table_ttl;
 
+    // Keywords for /create/tablemonitor request
+    extern const std::string create_table_monitor_delete;
+    extern const std::string create_table_monitor_event;
+    extern const std::string create_table_monitor_insert;
+    extern const std::string create_table_monitor_update;
+
     // Keywords for /create/type request
     extern const std::string create_type_char1;
     extern const std::string create_type_char128;
@@ -699,6 +706,7 @@ namespace gpudb
     extern const std::string match_graph_gps_noise;
     extern const std::string match_graph_incremental_weighted;
     extern const std::string match_graph_markov_chain;
+    extern const std::string match_graph_match_od_pairs;
     extern const std::string match_graph_max_solve_length;
     extern const std::string match_graph_num_segments;
     extern const std::string match_graph_search_radius;
@@ -717,6 +725,7 @@ namespace gpudb
     extern const std::string merge_records_view_id;
 
     // Keywords for /query/graph request
+    extern const std::string query_graph_and_labels;
     extern const std::string query_graph_enable_graph_draw;
     extern const std::string query_graph_export_query_results;
     extern const std::string query_graph_false;
@@ -1289,6 +1298,7 @@ namespace gpudb
     extern const std::string visualize_isochrone_greens;
     extern const std::string visualize_isochrone_greys;
     extern const std::string visualize_isochrone_grid_size;
+    extern const std::string visualize_isochrone_height;
     extern const std::string visualize_isochrone_hot;
     extern const std::string visualize_isochrone_hsv;
     extern const std::string visualize_isochrone_inferno;
@@ -1300,7 +1310,6 @@ namespace gpudb
     extern const std::string visualize_isochrone_labels_intralevel_separation;
     extern const std::string visualize_isochrone_labels_max_angle;
     extern const std::string visualize_isochrone_labels_search_window;
-    extern const std::string visualize_isochrone_levels_table;
     extern const std::string visualize_isochrone_line_size;
     extern const std::string visualize_isochrone_magma;
     extern const std::string visualize_isochrone_nipy_spectral;
@@ -1315,6 +1324,7 @@ namespace gpudb
     extern const std::string visualize_isochrone_plasma;
     extern const std::string visualize_isochrone_prgn;
     extern const std::string visualize_isochrone_prism;
+    extern const std::string visualize_isochrone_projection;
     extern const std::string visualize_isochrone_pubu;
     extern const std::string visualize_isochrone_pubugn;
     extern const std::string visualize_isochrone_puor;
@@ -1344,7 +1354,9 @@ namespace gpudb
     extern const std::string visualize_isochrone_to_source;
     extern const std::string visualize_isochrone_true;
     extern const std::string visualize_isochrone_uniform_weights;
+    extern const std::string visualize_isochrone_use_priority_queue_solvers;
     extern const std::string visualize_isochrone_viridis;
+    extern const std::string visualize_isochrone_width;
     extern const std::string visualize_isochrone_winter;
     extern const std::string visualize_isochrone_wistia;
     extern const std::string visualize_isochrone_ylgn;

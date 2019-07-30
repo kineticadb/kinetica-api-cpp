@@ -13,15 +13,17 @@ namespace gpudb
      * A set of input parameters for {@link
      * #createTableMonitor(const CreateTableMonitorRequest&) const}.
      * <p>
-     * Creates a monitor that watches for new records inserted into a
-     * particular table (identified by @a tableName) and forwards copies to
-     * subscribers via ZMQ. After this call completes, subscribe to the
-     * returned @a topicId on the ZMQ table monitor port (default 9002). Each
-     * time an insert operation on the table completes, a multipart message is
-     * published for that topic; the first part contains only the topic ID, and
-     * each subsequent part contains one binary-encoded Avro object that was
-     * inserted. The monitor will continue to run (regardless of whether or not
-     * there are any subscribers) until deactivated with {@link
+     * Creates a monitor that watches for table modification events such as
+     * insert, update or delete on a particular table (identified by @a
+     * tableName) and forwards event notifications to subscribers via ZMQ.
+     * After this call completes, subscribe to the returned @a topicId on the
+     * ZMQ table monitor port (default 9002). Each time a modification
+     * operation on the table completes, a multipart message is published for
+     * that topic; the first part contains only the topic ID, and each
+     * subsequent part contains one binary-encoded Avro object that corresponds
+     * to the event and can be decoded using @a typeSchema. The monitor will
+     * continue to run (regardless of whether or not there are any subscribers)
+     * until deactivated with {@link
      * #clearTableMonitor(const ClearTableMonitorRequest&) const}.
      */
     struct CreateTableMonitorRequest
@@ -44,6 +46,27 @@ namespace gpudb
          * @param[in] tableName_  Name of the table to monitor. Must not refer
          *                        to a collection.
          * @param[in] options_  Optional parameters.
+         *                      <ul>
+         *                              <li> gpudb::create_table_monitor_event:
+         *                      <ul>
+         *                              <li>
+         *                      gpudb::create_table_monitor_insert: Get
+         *                      notifications of new record insertions. The new
+         *                      row images are forwarded to the subscribers.
+         *                              <li>
+         *                      gpudb::create_table_monitor_update: Get
+         *                      notifications of update operations. The
+         *                      modified row count information is forwarded to
+         *                      the subscribers.
+         *                              <li>
+         *                      gpudb::create_table_monitor_delete: Get
+         *                      notifications of delete operations. The deleted
+         *                      row count information is forwarded to the
+         *                      subscribers.
+         *                      </ul>
+         *                      The default value is
+         *                      gpudb::create_table_monitor_insert.
+         *                      </ul>
          * 
          */
         CreateTableMonitorRequest(const std::string& tableName_, const std::map<std::string, std::string>& options_):
@@ -106,15 +129,17 @@ namespace gpudb
      * A set of output parameters for {@link
      * #createTableMonitor(const CreateTableMonitorRequest&) const}.
      * <p>
-     * Creates a monitor that watches for new records inserted into a
-     * particular table (identified by @a tableName) and forwards copies to
-     * subscribers via ZMQ. After this call completes, subscribe to the
-     * returned @a topicId on the ZMQ table monitor port (default 9002). Each
-     * time an insert operation on the table completes, a multipart message is
-     * published for that topic; the first part contains only the topic ID, and
-     * each subsequent part contains one binary-encoded Avro object that was
-     * inserted. The monitor will continue to run (regardless of whether or not
-     * there are any subscribers) until deactivated with {@link
+     * Creates a monitor that watches for table modification events such as
+     * insert, update or delete on a particular table (identified by @a
+     * tableName) and forwards event notifications to subscribers via ZMQ.
+     * After this call completes, subscribe to the returned @a topicId on the
+     * ZMQ table monitor port (default 9002). Each time a modification
+     * operation on the table completes, a multipart message is published for
+     * that topic; the first part contains only the topic ID, and each
+     * subsequent part contains one binary-encoded Avro object that corresponds
+     * to the event and can be decoded using @a typeSchema. The monitor will
+     * continue to run (regardless of whether or not there are any subscribers)
+     * until deactivated with {@link
      * #clearTableMonitor(const ClearTableMonitorRequest&) const}.
      */
     struct CreateTableMonitorResponse

@@ -63,6 +63,7 @@ namespace gpudb
     const std::string admin_verify_db_false           ( "false"            );
     const std::string admin_verify_db_rebuild_on_error( "rebuild_on_error" );
     const std::string admin_verify_db_true            ( "true"             );
+    const std::string admin_verify_db_verify_nulls    ( "verify_nulls"     );
     const std::string admin_verify_db_verify_persist  ( "verify_persist"   );
     const std::string admin_verify_db_verify_rank0    ( "verify_rank0"     );
 
@@ -414,6 +415,12 @@ namespace gpudb
     const std::string create_table_true                        ( "true"                         );
     const std::string create_table_ttl                         ( "ttl"                          );
 
+    // Keywords for /create/tablemonitor request
+    const std::string create_table_monitor_delete( "delete" );
+    const std::string create_table_monitor_event ( "event"  );
+    const std::string create_table_monitor_insert( "insert" );
+    const std::string create_table_monitor_update( "update" );
+
     // Keywords for /create/type request
     const std::string create_type_char1         ( "char1"          );
     const std::string create_type_char128       ( "char128"        );
@@ -699,6 +706,7 @@ namespace gpudb
     const std::string match_graph_gps_noise           ( "gps_noise"            );
     const std::string match_graph_incremental_weighted( "incremental_weighted" );
     const std::string match_graph_markov_chain        ( "markov_chain"         );
+    const std::string match_graph_match_od_pairs      ( "match_od_pairs"       );
     const std::string match_graph_max_solve_length    ( "max_solve_length"     );
     const std::string match_graph_num_segments        ( "num_segments"         );
     const std::string match_graph_search_radius       ( "search_radius"        );
@@ -717,6 +725,7 @@ namespace gpudb
     const std::string merge_records_view_id        ( "view_id"         );
 
     // Keywords for /query/graph request
+    const std::string query_graph_and_labels                 ( "and_labels"                  );
     const std::string query_graph_enable_graph_draw          ( "enable_graph_draw"           );
     const std::string query_graph_export_query_results       ( "export_query_results"        );
     const std::string query_graph_false                      ( "false"                       );
@@ -1289,6 +1298,7 @@ namespace gpudb
     const std::string visualize_isochrone_greens                      ( "greens"                       );
     const std::string visualize_isochrone_greys                       ( "greys"                        );
     const std::string visualize_isochrone_grid_size                   ( "grid_size"                    );
+    const std::string visualize_isochrone_height                      ( "height"                       );
     const std::string visualize_isochrone_hot                         ( "hot"                          );
     const std::string visualize_isochrone_hsv                         ( "hsv"                          );
     const std::string visualize_isochrone_inferno                     ( "inferno"                      );
@@ -1300,7 +1310,6 @@ namespace gpudb
     const std::string visualize_isochrone_labels_intralevel_separation( "labels_intralevel_separation" );
     const std::string visualize_isochrone_labels_max_angle            ( "labels_max_angle"             );
     const std::string visualize_isochrone_labels_search_window        ( "labels_search_window"         );
-    const std::string visualize_isochrone_levels_table                ( "levels_table"                 );
     const std::string visualize_isochrone_line_size                   ( "line_size"                    );
     const std::string visualize_isochrone_magma                       ( "magma"                        );
     const std::string visualize_isochrone_nipy_spectral               ( "nipy_spectral"                );
@@ -1315,6 +1324,7 @@ namespace gpudb
     const std::string visualize_isochrone_plasma                      ( "plasma"                       );
     const std::string visualize_isochrone_prgn                        ( "prgn"                         );
     const std::string visualize_isochrone_prism                       ( "prism"                        );
+    const std::string visualize_isochrone_projection                  ( "projection"                   );
     const std::string visualize_isochrone_pubu                        ( "pubu"                         );
     const std::string visualize_isochrone_pubugn                      ( "pubugn"                       );
     const std::string visualize_isochrone_puor                        ( "puor"                         );
@@ -1344,7 +1354,9 @@ namespace gpudb
     const std::string visualize_isochrone_to_source                   ( "to_source"                    );
     const std::string visualize_isochrone_true                        ( "true"                         );
     const std::string visualize_isochrone_uniform_weights             ( "uniform_weights"              );
+    const std::string visualize_isochrone_use_priority_queue_solvers  ( "use_priority_queue_solvers"   );
     const std::string visualize_isochrone_viridis                     ( "viridis"                      );
+    const std::string visualize_isochrone_width                       ( "width"                        );
     const std::string visualize_isochrone_winter                      ( "winter"                       );
     const std::string visualize_isochrone_wistia                      ( "wistia"                       );
     const std::string visualize_isochrone_ylgn                        ( "ylgn"                         );

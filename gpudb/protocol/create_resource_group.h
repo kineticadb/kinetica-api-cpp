@@ -57,7 +57,10 @@ namespace gpudb
          *                             </ul>
          * @param[in] ranking_  Indicates the relative ranking among existing
          *                      resource groups where this new resource group
-         *                      will be placed.
+         *                      will be placed.  When using @a before or @a
+         *                      after, specify which resource group this one
+         *                      will be inserted before or after in @a
+         *                      adjoiningResourceGroup.
          *                      <ul>
          *                              <li> gpudb::create_resource_group_first
          *                              <li> gpudb::create_resource_group_last
@@ -65,11 +68,11 @@ namespace gpudb
          *                      gpudb::create_resource_group_before
          *                              <li> gpudb::create_resource_group_after
          *                      </ul>
-         * @param[in] adjoiningResourceGroup_  Name of the resource group
-         *                                     relative to which this group
-         *                                     will be placed. Must be
-         *                                     specified when ranking is before
-         *                                     or after
+         * @param[in] adjoiningResourceGroup_  If @a ranking is @a before or @a
+         *                                     after, this field indicates the
+         *                                     resource group before or after
+         *                                     which the current group will be
+         *                                     placed; otherwise, leave blank.
          * @param[in] options_  Optional parameters.
          *                      <ul>
          *                              <li>
