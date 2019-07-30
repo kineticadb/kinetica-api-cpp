@@ -88,8 +88,8 @@ namespace gpudb
          *                           true, any provided restrictions will
          *                           replace the existing restrictions. If @a
          *                           remove_previous_restrictions is set to @a
-         *                           false, any provided weights will be added
-         *                           (in the case of
+         *                           false, any provided restrictions will be
+         *                           added (in the case of
          *                           'RESTRICTIONS_VALUECOMPARED') to or
          *                           replaced (in the case of
          *                           'RESTRICTIONS_ONOFFCOMPARED').

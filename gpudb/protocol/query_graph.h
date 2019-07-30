@@ -182,6 +182,15 @@ namespace gpudb
          *                              <li> gpudb::query_graph_false
          *                      </ul>
          *                      The default value is gpudb::query_graph_false.
+         *                              <li> gpudb::query_graph_and_labels: If
+         *                      set to @a true, the result of the query has
+         *                      entities that satisfy all of the target labels,
+         *                      instead of any.
+         *                      <ul>
+         *                              <li> gpudb::query_graph_true
+         *                              <li> gpudb::query_graph_false
+         *                      </ul>
+         *                      The default value is gpudb::query_graph_false.
          *                      </ul>
          * 
          */

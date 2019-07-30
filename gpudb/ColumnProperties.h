@@ -247,8 +247,8 @@ namespace gpudb
 
 
         /**
-         * For columns with attributes of date, time, datetime or timestamp, at
-         * insert time, replace empty strings and invalid timestamps with NOW()
+         * For 'date', 'time', 'datetime', or 'timestamp' column types, replace
+         * empty strings and invalid timestamps with 'NOW()' upon insert.
          */
         extern const std::string INIT_WITH_NOW;
 

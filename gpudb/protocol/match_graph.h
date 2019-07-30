@@ -76,6 +76,11 @@ namespace gpudb
          *                          time and/or distance between points to
          *                          influence one or more shortest paths across
          *                          the sample points.
+         *                                  <li>
+         *                          gpudb::match_graph_match_od_pairs: Matches
+         *                          @a samplePoints to find the most probable
+         *                          path between origin and destination pairs
+         *                          with cost constraints
          *                          </ul>
          *                          The default value is
          *                          gpudb::match_graph_markov_chain.

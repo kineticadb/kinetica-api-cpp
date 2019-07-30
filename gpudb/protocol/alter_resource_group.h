@@ -13,8 +13,8 @@ namespace gpudb
      * A set of input parameters for {@link
      * #alterResourceGroup(const AlterResourceGroupRequest&) const}.
      * <p>
-     * Alters properties of exisiting resource group to facilitate resource
-     * management.
+     * Alters the properties of an exisiting resource group to facilitate
+     * resource management.
      */
     struct AlterResourceGroupRequest
     {
@@ -54,11 +54,14 @@ namespace gpudb
          *                             Maximum amount of memory usable in the
          *                             given tier at one time for this group.
          *                             </ul>
-         * @param[in] ranking_  If the resource group ranking has to be
-         *                      updated, this indicates the relative ranking
-         *                      among existing resource groups where this
-         *                      resource group will be moved. Left bank if not
-         *                      changing the ranking.
+         * @param[in] ranking_  If the resource group ranking is to be updated,
+         *                      this indicates the relative ranking among
+         *                      existing resource groups where this resource
+         *                      group will be moved; leave blank if not
+         *                      changing the ranking.  When using @a before or
+         *                      @a after, specify which resource group this one
+         *                      will be inserted before or after in @a
+         *                      adjoiningResourceGroup.
          *                      <ul>
          *                              <li>
          *                      gpudb::alter_resource_group_empty_string
@@ -69,12 +72,11 @@ namespace gpudb
          *                      </ul>
          *                      The default value is
          *                      gpudb::alter_resource_group_empty_string.
-         * @param[in] adjoiningResourceGroup_  If the ranking is 'before' or
-         *                                     'after', this field indicates
-         *                                     the resource group before or
-         *                                     after which the current group
-         *                                     will be placed otherwise left
-         *                                     blank.
+         * @param[in] adjoiningResourceGroup_  If @a ranking is @a before or @a
+         *                                     after, this field indicates the
+         *                                     resource group before or after
+         *                                     which the current group will be
+         *                                     placed; otherwise, leave blank.
          * @param[in] options_  Optional parameters.
          *                      <ul>
          *                              <li>
@@ -189,8 +191,8 @@ namespace gpudb
      * A set of output parameters for {@link
      * #alterResourceGroup(const AlterResourceGroupRequest&) const}.
      * <p>
-     * Alters properties of exisiting resource group to facilitate resource
-     * management.
+     * Alters the properties of an exisiting resource group to facilitate
+     * resource management.
      */
     struct AlterResourceGroupResponse
     {
