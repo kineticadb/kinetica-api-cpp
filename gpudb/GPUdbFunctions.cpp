@@ -6,7 +6,7 @@
 
 
 // GPUdb Version
-const std::string GPUdb::API_VERSION( "7.0.5.0" );
+const std::string GPUdb::API_VERSION( "7.0.6.0" );
 
 
 
@@ -570,6 +570,13 @@ AdminRebalanceResponse& GPUdb::adminRebalance( const AdminRebalanceRequest& requ
  *                 always balanced in accordance with their primary key or
  *                 shard key. Cannot be used simultaneously with @a
  *                 table_whitelist.
+ *                         <li> gpudb::admin_rebalance_aggressiveness:
+ *                 Influences how much data to send per rebalance round.  A
+ *                 higher aggressiveness setting will complete the rebalance
+ *                 faster.  A lower aggressiveness setting will take longer,
+ *                 but allow for better interleaving between the rebalance and
+ *                 other queries. Allowed values are 1 through 10.  The default
+ *                 value is '1'.
  *                 </ul>
  * 
  * @return Response object containing the result of the operation.
@@ -631,6 +638,13 @@ AdminRebalanceResponse GPUdb::adminRebalance( const std::map<std::string, std::s
  *                 always balanced in accordance with their primary key or
  *                 shard key. Cannot be used simultaneously with @a
  *                 table_whitelist.
+ *                         <li> gpudb::admin_rebalance_aggressiveness:
+ *                 Influences how much data to send per rebalance round.  A
+ *                 higher aggressiveness setting will complete the rebalance
+ *                 faster.  A lower aggressiveness setting will take longer,
+ *                 but allow for better interleaving between the rebalance and
+ *                 other queries. Allowed values are 1 through 10.  The default
+ *                 value is '1'.
  *                 </ul>
  * @param[out] response_  Response object containing the results of the
  *                        operation.
@@ -742,6 +756,14 @@ AdminRemoveRanksResponse& GPUdb::adminRemoveRanks( const AdminRemoveRanksRequest
  *                         <li> gpudb::admin_remove_ranks_false
  *                 </ul>
  *                 The default value is gpudb::admin_remove_ranks_true.
+ *                         <li> gpudb::admin_remove_ranks_aggressiveness:
+ *                 Influences how much data to send per rebalance round, during
+ *                 the rebalance portion of removing ranks.  A higher
+ *                 aggressiveness setting will complete the rebalance faster.
+ *                 A lower aggressiveness setting will take longer, but allow
+ *                 for better interleaving between the rebalance and other
+ *                 queries. Allowed values are 1 through 10.  The default value
+ *                 is '1'.
  *                 </ul>
  * 
  * @return Response object containing the result of the operation.
@@ -797,6 +819,14 @@ AdminRemoveRanksResponse GPUdb::adminRemoveRanks( const std::vector<int32_t>& ra
  *                         <li> gpudb::admin_remove_ranks_false
  *                 </ul>
  *                 The default value is gpudb::admin_remove_ranks_true.
+ *                         <li> gpudb::admin_remove_ranks_aggressiveness:
+ *                 Influences how much data to send per rebalance round, during
+ *                 the rebalance portion of removing ranks.  A higher
+ *                 aggressiveness setting will complete the rebalance faster.
+ *                 A lower aggressiveness setting will take longer, but allow
+ *                 for better interleaving between the rebalance and other
+ *                 queries. Allowed values are 1 through 10.  The default value
+ *                 is '1'.
  *                 </ul>
  * @param[out] response_  Response object containing the results of the
  *                        operation.
@@ -1066,11 +1096,15 @@ AdminShowJobsResponse& GPUdb::adminShowJobs( const AdminShowJobsRequest& request
  * 
  * @param options  Optional parameters.
  *                 <ul>
- *                         <li> gpudb::admin_show_jobs_show_details:
+ *                         <li> gpudb::admin_show_jobs_show_async_jobs: If @a
+ *                 true, then the completed async jobs are also included in the
+ *                 response. By default, once the async jobs are completed they
+ *                 are no longer included in the jobs list.
  *                 <ul>
  *                         <li> gpudb::admin_show_jobs_true
  *                         <li> gpudb::admin_show_jobs_false
  *                 </ul>
+ *                 The default value is gpudb::admin_show_jobs_false.
  *                 </ul>
  * 
  * @return Response object containing the result of the operation.
@@ -1092,11 +1126,15 @@ AdminShowJobsResponse GPUdb::adminShowJobs( const std::map<std::string, std::str
  * 
  * @param options  Optional parameters.
  *                 <ul>
- *                         <li> gpudb::admin_show_jobs_show_details:
+ *                         <li> gpudb::admin_show_jobs_show_async_jobs: If @a
+ *                 true, then the completed async jobs are also included in the
+ *                 response. By default, once the async jobs are completed they
+ *                 are no longer included in the jobs list.
  *                 <ul>
  *                         <li> gpudb::admin_show_jobs_true
  *                         <li> gpudb::admin_show_jobs_false
  *                 </ul>
+ *                 The default value is gpudb::admin_show_jobs_false.
  *                 </ul>
  * @param[out] response_  Response object containing the results of the
  *                        operation.
@@ -6476,12 +6514,9 @@ AppendRecordsResponse& GPUdb::appendRecords( const AppendRecordsRequest& request
  *                 </ul>
  *                 The default value is gpudb::append_records_false.
  *                         <li> gpudb::append_records_truncate_strings: If set
- *                 to {true}@{, it allows to append unbounded string to charN
- *                 string. If 'truncate_strings' is 'true', the desination
- *                 column is charN datatype, and the source column is
- *                 unnbounded string, it will truncate the source string to
- *                 length of N first, and then append the truncated string to
- *                 the destination charN column. The default value is false.
+ *                 to {true}@{, it allows appending longer strings to smaller
+ *                 charN string columns by truncating the longer string to fit.
+ *                 The default value is false.
  *                 <ul>
  *                         <li> gpudb::append_records_true
  *                         <li> gpudb::append_records_false
@@ -6567,12 +6602,9 @@ AppendRecordsResponse GPUdb::appendRecords( const std::string& tableName,
  *                 </ul>
  *                 The default value is gpudb::append_records_false.
  *                         <li> gpudb::append_records_truncate_strings: If set
- *                 to {true}@{, it allows to append unbounded string to charN
- *                 string. If 'truncate_strings' is 'true', the desination
- *                 column is charN datatype, and the source column is
- *                 unnbounded string, it will truncate the source string to
- *                 length of N first, and then append the truncated string to
- *                 the destination charN column. The default value is false.
+ *                 to {true}@{, it allows appending longer strings to smaller
+ *                 charN string columns by truncating the longer string to fit.
+ *                 The default value is false.
  *                 <ul>
  *                         <li> gpudb::append_records_true
  *                         <li> gpudb::append_records_false
@@ -16543,6 +16575,118 @@ GetVectortileResponse& GPUdb::getVectortile( const std::vector<std::string>& tab
 
 
 /**
+ * Grants a proc-level permission to a user or role.
+ * 
+ * @param[in] request_  Request object containing the parameters for the
+ *                      operation.
+ * 
+ * @return Response object containing the result of the operation.
+ * 
+ */
+
+GrantPermissionProcResponse GPUdb::grantPermissionProc( const GrantPermissionProcRequest& request_ ) const
+{
+    GrantPermissionProcResponse actualResponse_;
+    submitRequest("/grant/permission/proc", request_, actualResponse_, false);
+    return actualResponse_;
+}
+
+
+/**
+ * Grants a proc-level permission to a user or role.
+ * 
+ * @param[in] request_  Request object containing the parameters for the
+ *                      operation.
+ * @param[out] response_  Response object containing the results of the
+ *                        operation.
+ * 
+ * @return Response object containing the result of the operation (initially
+ *         passed in by reference).
+ * 
+ */
+
+GrantPermissionProcResponse& GPUdb::grantPermissionProc( const GrantPermissionProcRequest& request_,
+                                                         GrantPermissionProcResponse& response_ ) const
+{
+    submitRequest("/grant/permission/proc", request_, response_, false);
+    return response_;
+}
+
+
+/**
+ * Grants a proc-level permission to a user or role.
+ * 
+ * @param name  Name of the user or role to which the permission will be
+ *              granted. Must be an existing user or role.
+ * @param permission  Permission to grant to the user or role.
+ *                    <ul>
+ *                            <li> gpudb::grant_permission_proc_proc_execute:
+ *                    Execute access to the proc.
+ *                    </ul>
+ * @param procName  Name of the proc to which the permission grants access.
+ *                  Must be an existing proc, or an empty string to grant
+ *                  access to all procs.
+ * @param options  Optional parameters.
+ * 
+ * @return Response object containing the result of the operation.
+ * 
+ */
+
+GrantPermissionProcResponse GPUdb::grantPermissionProc( const std::string& name,
+                                                        const std::string& permission,
+                                                        const std::string& procName,
+                                                        const std::map<std::string, std::string>& options ) const
+{
+    GrantPermissionProcRequest actualRequest_;
+    actualRequest_.name = name;
+    actualRequest_.permission = permission;
+    actualRequest_.procName = procName;
+    actualRequest_.options = options;
+    GrantPermissionProcResponse actualResponse_;
+    submitRequest("/grant/permission/proc", actualRequest_, actualResponse_, false);
+    return actualResponse_;
+}
+
+
+/**
+ * Grants a proc-level permission to a user or role.
+ * 
+ * @param name  Name of the user or role to which the permission will be
+ *              granted. Must be an existing user or role.
+ * @param permission  Permission to grant to the user or role.
+ *                    <ul>
+ *                            <li> gpudb::grant_permission_proc_proc_execute:
+ *                    Execute access to the proc.
+ *                    </ul>
+ * @param procName  Name of the proc to which the permission grants access.
+ *                  Must be an existing proc, or an empty string to grant
+ *                  access to all procs.
+ * @param options  Optional parameters.
+ * @param[out] response_  Response object containing the results of the
+ *                        operation.
+ * 
+ * @return Response object containing the result of the operation (initially
+ *         passed in by reference).
+ * 
+ */
+
+GrantPermissionProcResponse& GPUdb::grantPermissionProc( const std::string& name,
+                                                         const std::string& permission,
+                                                         const std::string& procName,
+                                                         const std::map<std::string, std::string>& options,
+                                                         GrantPermissionProcResponse& response_ ) const
+{
+    GrantPermissionProcRequest actualRequest_;
+    actualRequest_.name = name;
+    actualRequest_.permission = permission;
+    actualRequest_.procName = procName;
+    actualRequest_.options = options;
+    submitRequest("/grant/permission/proc", actualRequest_, response_, false);
+    return response_;
+}
+
+
+/**
  * Grants a system-level permission to a user or role.
  * 
  * @param[in] request_  Request object containing the parameters for the
@@ -18869,18 +19013,18 @@ QueryGraphResponse& GPUdb::queryGraph( const QueryGraphRequest& request_,
  *                                    <a
  *                        href="../../graph_solver/network_graph_solver.html#using-labels"
  *                        target="_top">Using Labels</a> for more information.
+ * @param rings  Only applicable when querying nodes. Sets the number of rings
+ *               around the node to query for adjacency, with '1' being the
+ *               edges directly attached to the queried node. Also known as
+ *               number of hops. For example, if it is set to '2', the edge(s)
+ *               directly attached to the queried node(s) will be returned; in
+ *               addition, the edge(s) attached to the node(s) attached to the
+ *               initial ring of edge(s) surrounding the queried node(s) will
+ *               be returned. This setting can be '0' in which case if the node
+ *               type id label, it'll then query for all that has the same
+ *               property.
  * @param options  Additional parameters
  *                 <ul>
- *                         <li> gpudb::query_graph_rings: Only applicable when
- *                 querying nodes. Sets the number of rings around the node to
- *                 query for adjacency, with '1' being the edges directly
- *                 attached to the queried node. Also known as number of hops.
- *                 For example, if @a rings is set to '2', the edge(s) directly
- *                 attached to the queried node(s) will be returned; in
- *                 addition, the edge(s) attached to the node(s) attached to
- *                 the initial ring of edge(s) surrounding the queried node(s)
- *                 will be returned. This setting cannot be less than '1'.  The
- *                 default value is '1'.
  *                         <li> gpudb::query_graph_force_undirected: This
  *                 parameter is only applicable if the queried graph @a
  *                 graphName is directed and when querying nodes. If set to @a
@@ -18899,11 +19043,9 @@ QueryGraphResponse& GPUdb::queryGraph( const QueryGraphRequest& request_,
  *                 The default value is an empty std::map.
  *                         <li> gpudb::query_graph_target_nodes_table: Name of
  *                 the table to store the list of the final nodes reached
- *                 during the traversal. If the 'QUERY_TARGET_NODE_LABEL' <a
- *                 href="../../graph_solver/network_graph_solver.html#query-identifiers"
- *                 target="_top">query identifier</a> is NOT used in @a
- *                 queries, the table will not be created.  The default value
- *                 is ''.
+ *                 during the traversal. If this value is not given it'll
+ *                 default to adjacemcy_table+'_nodes'.  The default value is
+ *                 ''.
  *                         <li> gpudb::query_graph_restriction_threshold_value:
  *                 Value-based restriction comparison. Any node or edge with a
  *                 RESTRICTIONS_VALUECOMPARED value greater than the @a
@@ -18953,6 +19095,7 @@ QueryGraphResponse GPUdb::queryGraph( const std::string& graphName,
                                       const std::vector<std::string>& queries,
                                       const std::vector<std::string>& restrictions,
                                       const std::string& adjacencyTable,
+                                      const int32_t rings,
                                       const std::map<std::string, std::string>& options ) const
 {
     QueryGraphRequest actualRequest_;
@@ -18960,6 +19103,7 @@ QueryGraphResponse GPUdb::queryGraph( const std::string& graphName,
     actualRequest_.queries = queries;
     actualRequest_.restrictions = restrictions;
     actualRequest_.adjacencyTable = adjacencyTable;
+    actualRequest_.rings = rings;
     actualRequest_.options = options;
     QueryGraphResponse actualResponse_;
     submitRequest("/query/graph", actualRequest_, actualResponse_, false);
@@ -19026,18 +19170,18 @@ QueryGraphResponse GPUdb::queryGraph( const std::string& graphName,
  *                                    <a
  *                        href="../../graph_solver/network_graph_solver.html#using-labels"
  *                        target="_top">Using Labels</a> for more information.
+ * @param rings  Only applicable when querying nodes. Sets the number of rings
+ *               around the node to query for adjacency, with '1' being the
+ *               edges directly attached to the queried node. Also known as
+ *               number of hops. For example, if it is set to '2', the edge(s)
+ *               directly attached to the queried node(s) will be returned; in
+ *               addition, the edge(s) attached to the node(s) attached to the
+ *               initial ring of edge(s) surrounding the queried node(s) will
+ *               be returned. This setting can be '0' in which case if the node
+ *               type id label, it'll then query for all that has the same
+ *               property.
  * @param options  Additional parameters
  *                 <ul>
- *                         <li> gpudb::query_graph_rings: Only applicable when
- *                 querying nodes. Sets the number of rings around the node to
- *                 query for adjacency, with '1' being the edges directly
- *                 attached to the queried node. Also known as number of hops.
- *                 For example, if @a rings is set to '2', the edge(s) directly
- *                 attached to the queried node(s) will be returned; in
- *                 addition, the edge(s) attached to the node(s) attached to
- *                 the initial ring of edge(s) surrounding the queried node(s)
- *                 will be returned. This setting cannot be less than '1'.  The
- *                 default value is '1'.
  *                         <li> gpudb::query_graph_force_undirected: This
  *                 parameter is only applicable if the queried graph @a
  *                 graphName is directed and when querying nodes. If set to @a
@@ -19056,11 +19200,9 @@ QueryGraphResponse GPUdb::queryGraph( const std::string& graphName,
  *                 The default value is an empty std::map.
  *                         <li> gpudb::query_graph_target_nodes_table: Name of
  *                 the table to store the list of the final nodes reached
- *                 during the traversal. If the 'QUERY_TARGET_NODE_LABEL' <a
- *                 href="../../graph_solver/network_graph_solver.html#query-identifiers"
- *                 target="_top">query identifier</a> is NOT used in @a
- *                 queries, the table will not be created.  The default value
- *                 is ''.
+ *                 during the traversal. If this value is not given it'll
+ *                 default to adjacemcy_table+'_nodes'.  The default value is
+ *                 ''.
  *                         <li> gpudb::query_graph_restriction_threshold_value:
  *                 Value-based restriction comparison. Any node or edge with a
  *                 RESTRICTIONS_VALUECOMPARED value greater than the @a
@@ -19113,6 +19255,7 @@ QueryGraphResponse& GPUdb::queryGraph( const std::string& graphName,
                                        const std::vector<std::string>& queries,
                                        const std::vector<std::string>& restrictions,
                                        const std::string& adjacencyTable,
+                                       const int32_t rings,
                                        const std::map<std::string, std::string>& options,
                                        QueryGraphResponse& response_ ) const
 {
@@ -19121,8 +19264,121 @@ QueryGraphResponse& GPUdb::queryGraph( const std::string& graphName,
     actualRequest_.queries = queries;
     actualRequest_.restrictions = restrictions;
     actualRequest_.adjacencyTable = adjacencyTable;
+    actualRequest_.rings = rings;
     actualRequest_.options = options;
     submitRequest("/query/graph", actualRequest_, response_, false);
+    return response_;
+}
+
+
+/**
+ * Revokes a proc-level permission from a user or role.
+ * 
+ * @param[in] request_  Request object containing the parameters for the
+ *                      operation.
+ * 
+ * @return Response object containing the result of the operation.
+ * 
+ */
+
+RevokePermissionProcResponse GPUdb::revokePermissionProc( const RevokePermissionProcRequest& request_ ) const
+{
+    RevokePermissionProcResponse actualResponse_;
+    submitRequest("/revoke/permission/proc", request_, actualResponse_, false);
+    return actualResponse_;
+}
+
+
+/**
+ * Revokes a proc-level permission from a user or role.
+ * 
+ * @param[in] request_  Request object containing the parameters for the
+ *                      operation.
+ * @param[out] response_  Response object containing the results of the
+ *                        operation.
+ * 
+ * @return Response object containing the result of the operation (initially
+ *         passed in by reference).
+ * 
+ */
+
+RevokePermissionProcResponse& GPUdb::revokePermissionProc( const RevokePermissionProcRequest& request_,
+                                                           RevokePermissionProcResponse& response_ ) const
+{
+    submitRequest("/revoke/permission/proc", request_, response_, false);
+    return response_;
+}
+
+
+/**
+ * Revokes a proc-level permission from a user or role.
+ * 
+ * @param name  Name of the user or role from which the permission will be
+ *              revoked. Must be an existing user or role.
+ * @param permission  Permission to revoke from the user or role.
+ *                    <ul>
+ *                            <li> gpudb::revoke_permission_proc_proc_execute:
+ *                    Execute access to the proc.
+ *                    </ul>
+ * @param procName  Name of the proc to which the permission grants access.
+ *                  Must be an existing proc, or an empty string if the
+ *                  permission grants access to all procs.
+ * @param options  Optional parameters.
+ * 
+ * @return Response object containing the result of the operation.
+ * 
+ */
+
+RevokePermissionProcResponse GPUdb::revokePermissionProc( const std::string& name,
+                                                          const std::string& permission,
+                                                          const std::string& procName,
+                                                          const std::map<std::string, std::string>& options ) const
+{
+    RevokePermissionProcRequest actualRequest_;
+    actualRequest_.name = name;
+    actualRequest_.permission = permission;
+    actualRequest_.procName = procName;
+    actualRequest_.options = options;
+    RevokePermissionProcResponse actualResponse_;
+    submitRequest("/revoke/permission/proc", actualRequest_, actualResponse_, false);
+    return actualResponse_;
+}
+
+
+/**
+ * Revokes a proc-level permission from a user or role.
+ * 
+ * @param name  Name of the user or role from which the permission will be
+ *              revoked. Must be an existing user or role.
+ * @param permission  Permission to revoke from the user or role.
+ *                    <ul>
+ *                            <li> gpudb::revoke_permission_proc_proc_execute:
+ *                    Execute access to the proc.
+ *                    </ul>
+ * @param procName  Name of the proc to which the permission grants access.
+ *                  Must be an existing proc, or an empty string if the
+ *                  permission grants access to all procs.
+ * @param options  Optional parameters.
+ * @param[out] response_  Response object containing the results of the
+ *                        operation.
+ * 
+ * @return Response object containing the result of the operation (initially
+ *         passed in by reference).
+ * 
+ */
+
+RevokePermissionProcResponse& GPUdb::revokePermissionProc( const std::string& name,
+                                                           const std::string& permission,
+                                                           const std::string& procName,
+                                                           const std::map<std::string, std::string>& options,
+                                                           RevokePermissionProcResponse& response_ ) const
+{
+    RevokePermissionProcRequest actualRequest_;
+    actualRequest_.name = name;
+    actualRequest_.permission = permission;
+    actualRequest_.procName = procName;
+    actualRequest_.options = options;
+    submitRequest("/revoke/permission/proc", actualRequest_, response_, false);
     return response_;
 }
 
@@ -19459,6 +19715,116 @@ RevokeRoleResponse& GPUdb::revokeRole( const std::string& role,
     actualRequest_.member = member;
     actualRequest_.options = options;
     submitRequest("/revoke/role", actualRequest_, response_, false);
+    return response_;
+}
+
+
+/**
+ * Shows information and characteristics of graphs that exist on the graph
+ * server, depending on the options specified.
+ * 
+ * @param[in] request_  Request object containing the parameters for the
+ *                      operation.
+ * 
+ * @return Response object containing the result of the operation.
+ * 
+ */
+
+ShowGraphResponse GPUdb::showGraph( const ShowGraphRequest& request_ ) const
+{
+    ShowGraphResponse actualResponse_;
+    submitRequest("/show/graph", request_, actualResponse_, false);
+    return actualResponse_;
+}
+
+
+/**
+ * Shows information and characteristics of graphs that exist on the graph
+ * server, depending on the options specified.
+ * 
+ * @param[in] request_  Request object containing the parameters for the
+ *                      operation.
+ * @param[out] response_  Response object containing the results of the
+ *                        operation.
+ * 
+ * @return Response object containing the result of the operation (initially
+ *         passed in by reference).
+ * 
+ */
+
+ShowGraphResponse& GPUdb::showGraph( const ShowGraphRequest& request_,
+                                     ShowGraphResponse& response_ ) const
+{
+    submitRequest("/show/graph", request_, response_, false);
+    return response_;
+}
+
+
+/**
+ * Shows information and characteristics of graphs that exist on the graph
+ * server, depending on the options specified.
+ * 
+ * @param graphName  Name of the graph on which to retrieve information. If
+ *                   empty, information about all graphs is returned.
+ * @param options  Optional parameters.
+ *                 <ul>
+ *                         <li> gpudb::show_graph_show_original_request: If set
+ *                 to @a true, the request that was originally used.
+ *                 <ul>
+ *                         <li> gpudb::show_graph_true
+ *                         <li> gpudb::show_graph_false
+ *                 </ul>
+ *                 The default value is gpudb::show_graph_true.
+ *                 </ul>
+ * 
+ * @return Response object containing the result of the operation.
+ * 
+ */
+
+ShowGraphResponse GPUdb::showGraph( const std::string& graphName,
+                                    const std::map<std::string, std::string>& options ) const
+{
+    ShowGraphRequest actualRequest_;
+    actualRequest_.graphName = graphName;
+    actualRequest_.options = options;
+    ShowGraphResponse actualResponse_;
+    submitRequest("/show/graph", actualRequest_, actualResponse_, false);
+    return actualResponse_;
+}
+
+
+/**
+ * Shows information and characteristics of graphs that exist on the graph
+ * server, depending on the options specified.
+ * 
+ * @param graphName  Name of the graph on which to retrieve information. If
+ *                   empty, information about all graphs is returned.
+ * @param options  Optional parameters.
+ *                 <ul>
+ *                         <li> gpudb::show_graph_show_original_request: If set
+ *                 to @a true, the request that was originally used.
+ *                 <ul>
+ *                         <li> gpudb::show_graph_true
+ *                         <li> gpudb::show_graph_false
+ *                 </ul>
+ *                 The default value is gpudb::show_graph_true.
+ *                 </ul>
+ * @param[out] response_  Response object containing the results of the
+ *                        operation.
+ * 
+ * @return Response object containing the result of the operation (initially
+ *         passed in by reference).
+ * 
+ */
+
+ShowGraphResponse& GPUdb::showGraph( const std::string& graphName,
+                                     const std::map<std::string, std::string>& options,
+                                     ShowGraphResponse& response_ ) const
+{
+    ShowGraphRequest actualRequest_;
+    actualRequest_.graphName = graphName;
+    actualRequest_.options = options;
+    submitRequest("/show/graph", actualRequest_, response_, false);
     return response_;
 }
 

@@ -26,6 +26,7 @@ namespace gpudb
     const std::string admin_offline_true         ( "true"          );
 
     // Keywords for /admin/rebalance request
+    const std::string admin_rebalance_aggressiveness          ( "aggressiveness"           );
     const std::string admin_rebalance_false                   ( "false"                    );
     const std::string admin_rebalance_rebalance_sharded_data  ( "rebalance_sharded_data"   );
     const std::string admin_rebalance_rebalance_unsharded_data( "rebalance_unsharded_data" );
@@ -34,6 +35,7 @@ namespace gpudb
     const std::string admin_rebalance_true                    ( "true"                     );
 
     // Keywords for /admin/remove/ranks request
+    const std::string admin_remove_ranks_aggressiveness          ( "aggressiveness"           );
     const std::string admin_remove_ranks_false                   ( "false"                    );
     const std::string admin_remove_ranks_rebalance_sharded_data  ( "rebalance_sharded_data"   );
     const std::string admin_remove_ranks_rebalance_unsharded_data( "rebalance_unsharded_data" );
@@ -50,9 +52,9 @@ namespace gpudb
     const std::string admin_show_cluster_operations_true        ( "true"         );
 
     // Keywords for /admin/show/jobs request
-    const std::string admin_show_jobs_false       ( "false"        );
-    const std::string admin_show_jobs_show_details( "show_details" );
-    const std::string admin_show_jobs_true        ( "true"         );
+    const std::string admin_show_jobs_false          ( "false"           );
+    const std::string admin_show_jobs_show_async_jobs( "show_async_jobs" );
+    const std::string admin_show_jobs_true           ( "true"            );
 
     // Keywords for /admin/shutdown request
     const std::string admin_shutdown_false( "false" );
@@ -642,6 +644,9 @@ namespace gpudb
     const std::string get_records_from_collection_return_record_ids( "return_record_ids" );
     const std::string get_records_from_collection_true             ( "true"              );
 
+    // Keywords for /grant/permission/proc request
+    const std::string grant_permission_proc_proc_execute( "proc_execute" );
+
     // Keywords for /grant/permission/system request
     const std::string grant_permission_system_system_admin( "system_admin" );
     const std::string grant_permission_system_system_read ( "system_read"  );
@@ -672,6 +677,7 @@ namespace gpudb
     const std::string insert_records_json                 ( "json"                  );
     const std::string insert_records_return_record_ids    ( "return_record_ids"     );
     const std::string insert_records_true                 ( "true"                  );
+    const std::string insert_records_truncate_strings     ( "truncate_strings"      );
     const std::string insert_records_update_on_existing_pk( "update_on_existing_pk" );
 
     // Keywords for /insert/records/random request
@@ -732,9 +738,11 @@ namespace gpudb
     const std::string query_graph_force_undirected           ( "force_undirected"            );
     const std::string query_graph_limit                      ( "limit"                       );
     const std::string query_graph_restriction_threshold_value( "restriction_threshold_value" );
-    const std::string query_graph_rings                      ( "rings"                       );
     const std::string query_graph_target_nodes_table         ( "target_nodes_table"          );
     const std::string query_graph_true                       ( "true"                        );
+
+    // Keywords for /revoke/permission/proc request
+    const std::string revoke_permission_proc_proc_execute( "proc_execute" );
 
     // Keywords for /revoke/permission/system request
     const std::string revoke_permission_system_system_admin( "system_admin" );
@@ -747,6 +755,11 @@ namespace gpudb
     const std::string revoke_permission_table_table_insert( "table_insert" );
     const std::string revoke_permission_table_table_read  ( "table_read"   );
     const std::string revoke_permission_table_table_update( "table_update" );
+
+    // Keywords for /show/graph request
+    const std::string show_graph_false                ( "false"                 );
+    const std::string show_graph_show_original_request( "show_original_request" );
+    const std::string show_graph_true                 ( "true"                  );
 
     // Keywords for /show/proc request
     const std::string show_proc_false        ( "false"         );

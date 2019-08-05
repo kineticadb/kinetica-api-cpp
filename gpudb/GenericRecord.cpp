@@ -825,15 +825,24 @@ namespace gpudb
                 || type == ColumnProperty::CHAR128
                 || type == ColumnProperty::CHAR256
                 || type == ColumnProperty::DATE
+                || type == ColumnProperty::DATETIME
                 || type == ColumnProperty::DECIMAL
                 || type == ColumnProperty::INT8
                 || type == ColumnProperty::INT16
                 || type == ColumnProperty::IPV4
                 || type == ColumnProperty::TIME
-                || type == ColumnProperty::TIMESTAMP)
+                || type == ColumnProperty::TIMESTAMP
+                || type == ColumnProperty::WKT)
             {
                 columnProperties.push_back(type);
+            } else if ( type == "geometry" )
+            {   // "wkt" can be sent back as "geometry"; in that case,
+                // include both the WKT property and the string "geometry"
+                columnProperties.push_back(type);
+                columnProperties.push_back( ColumnProperty::WKT );
             }
+
+            
 
             columns.push_back(Type::Column(expressions[i], columnType.first, columnProperties));
         }

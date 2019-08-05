@@ -13,8 +13,11 @@ RecordRetriever::RecordRetriever( const gpudb::GPUdb& db, const gpudb::Type& rec
     m_db( db ),
     m_record_type( record_type )
 {
+    // Pass a blank map for the options
+    std::map<std::string, std::string> retrieval_options;
+    
     WorkerList worker_list( db );
-    construct( db, record_type, table_name, worker_list );
+    construct( db, record_type, table_name, worker_list, retrieval_options );
 }  // end RecordRetriever constructor
 
 
@@ -24,21 +27,52 @@ RecordRetriever::RecordRetriever( const gpudb::GPUdb& db, const gpudb::Type& rec
     m_db( db ),
     m_record_type( record_type )
 {
-    construct( db, record_type, table_name, worker_list );
+    // Pass a blank map for the options
+    std::map<std::string, std::string> retrieval_options;
+    
+    construct( db, record_type, table_name, worker_list, retrieval_options );
+}  // end RecordRetriever constructor
+
+
+RecordRetriever::RecordRetriever( const gpudb::GPUdb& db, const gpudb::Type& record_type,
+                                  const std::string& table_name,
+                                  const std::map<std::string, std::string>& retrieval_options ) :
+    m_db( db ),
+    m_record_type( record_type )
+{
+
+    WorkerList worker_list( db );
+    construct( db, record_type, table_name, worker_list, retrieval_options );
+}  // end RecordRetriever constructor
+
+
+RecordRetriever::RecordRetriever( const gpudb::GPUdb& db, const gpudb::Type& record_type,
+                                  const std::string& table_name,
+                                  const WorkerList& worker_list,
+                                  const std::map<std::string, std::string>& retrieval_options ) :
+    m_db( db ),
+    m_record_type( record_type )
+{
+    // Construct the remaining members
+    construct( db, record_type, table_name, worker_list, retrieval_options );
 }  // end RecordRetriever constructor
 
 
 
 void RecordRetriever::construct( const gpudb::GPUdb& db,
-                               const gpudb::Type& record_type,
-                               const std::string& table_name,
-                               const WorkerList& worker_list )
+                                 const gpudb::Type& record_type,
+                                 const std::string& table_name,
+                                 const WorkerList& worker_list,
+                                 const std::map<std::string, std::string>& retrieval_options )
 {
-    m_table_name  = table_name;
+    m_table_name = table_name;
+
+    // Save the options
+    setOptions( retrieval_options );
 
     // Set up the shard key builder
     // ----------------------------
-    m_shard_key_builder_ptr   = new RecordKeyBuilder( false, record_type );
+    m_shard_key_builder_ptr = new RecordKeyBuilder( false, record_type );
 
     // Check if there are shard keys
     if ( !m_shard_key_builder_ptr->has_key() )
@@ -47,6 +81,7 @@ void RecordRetriever::construct( const gpudb::GPUdb& db,
         m_shard_key_builder_ptr = NULL;
     }
 
+    
     // Set up the worker queues
     // ------------------------
     try
@@ -106,6 +141,25 @@ RecordRetriever::~RecordRetriever()
 }  // end destructor
 
 
+
+/**
+ * Returns the options currently used for the retriever methods.  Note
+ * that any gpudb::get_records_by_column_expression option will
+ * be overridden at the next {@link #getRecordsByKey} call with the
+ * appropriate expression.
+ */
+void RecordRetriever::setOptions( const str_to_str_map_t& options )
+{
+    // Save the given options
+    m_retrieval_options = options;
+
+    // We will always need to use this for getRecordsByKey
+    m_retrieval_options[ gpudb::get_records_fast_index_lookup ] = gpudb::get_records_true;
+}
+
+    
+
+    
 GetRecordsResponse<gpudb::GenericRecord>
 RecordRetriever::getRecordsByKey( const gpudb::GenericRecord& record,
                                   const std::string& expression )
@@ -127,13 +181,14 @@ RecordRetriever::getRecordsByKey( const gpudb::GenericRecord& record,
             full_expression = ( full_expression + " and (" + expression + ")" );
         }
 
-        // Create the options map for the /get/records call
-        std::map<std::string, std::string> options;
-        options[ gpudb::get_records_by_column_expression ] = full_expression;
-        options[ gpudb::get_records_fast_index_lookup    ] = gpudb::get_records_true;
+        // Set the expression in the options map
+        m_retrieval_options[ gpudb::get_records_by_column_expression ] = full_expression;
+        // // Currently set in the constructor
+        // options[ gpudb::get_records_fast_index_lookup    ] = gpudb::get_records_true;
 
         // Create a /get/records request packet
-        GetRecordsRequest request( m_table_name, 0, gpudb::GPUdb::END_OF_SET, options );
+        GetRecordsRequest request( m_table_name, 0, gpudb::GPUdb::END_OF_SET,
+                                   m_retrieval_options );
 
         // Create the appropriate response objects
         RawGetRecordsResponse raw_response;
@@ -176,6 +231,23 @@ RecordRetriever::getRecordsByKey( const gpudb::GenericRecord& record,
         throw GPUdbException( e.what() );
     }
 }  // end getRecordsByKey
+
+
+
+    /**
+     * Note: If a regular retriever method is implemented (other than "by key"),
+     *       then some changes would need to be made to the options.  Currently,
+     *       `getByKey()` sets the `expressions` option and keeps it there since
+     *       it will get overridden during the next `getByKey()` call.  However,
+     *       if there is a method like `getAllRecords()` from the worker ranks
+     *       directly, then such a saved expression in the options would change/
+     *       limit the records fetched.  In that case, the options handling would
+     *       have to be modified as necessary.  Also, currently, the `fast index
+     *       lookup` option is always set in the constructor; that would not
+     *       necessarily apply; we would need to take care of that as well.
+     *
+     *       The `setOptions()` method would have to be changed as well.
+     */
 
 
 } // end namespace gpudb

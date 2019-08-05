@@ -2,6 +2,17 @@
 
 ## Version 7.0
 
+### Version 7.0.6.0 - 2019-07-23
+
+#### Added
+-   Support for passing /get/records options to RecordRetriever; can be set
+    via the constructors and also by the setter method.
+
+#### Fixed
+-   GenericRecord now correctly parses 'datetime' and 'wkt'/'geometry'
+    properties when parsing dynamically generated responses (by endpoints
+    like /get/records/bycolumn, for example).
+
 ### Version 7.0.5.0 - 2019-06-26
 
 #### Added

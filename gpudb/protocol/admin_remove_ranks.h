@@ -71,6 +71,16 @@ namespace gpudb
          *                      </ul>
          *                      The default value is
          *                      gpudb::admin_remove_ranks_true.
+         *                              <li>
+         *                      gpudb::admin_remove_ranks_aggressiveness:
+         *                      Influences how much data to send per rebalance
+         *                      round, during the rebalance portion of removing
+         *                      ranks.  A higher aggressiveness setting will
+         *                      complete the rebalance faster.  A lower
+         *                      aggressiveness setting will take longer, but
+         *                      allow for better interleaving between the
+         *                      rebalance and other queries. Allowed values are
+         *                      1 through 10.  The default value is '1'.
          *                      </ul>
          * 
          */

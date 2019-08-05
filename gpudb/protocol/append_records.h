@@ -103,14 +103,10 @@ namespace gpudb
          *                      gpudb::append_records_false.
          *                              <li>
          *                      gpudb::append_records_truncate_strings: If set
-         *                      to {true}@{, it allows to append unbounded
-         *                      string to charN string. If 'truncate_strings'
-         *                      is 'true', the desination column is charN
-         *                      datatype, and the source column is unnbounded
-         *                      string, it will truncate the source string to
-         *                      length of N first, and then append the
-         *                      truncated string to the destination charN
-         *                      column. The default value is false.
+         *                      to {true}@{, it allows appending longer strings
+         *                      to smaller charN string columns by truncating
+         *                      the longer string to fit.  The default value is
+         *                      false.
          *                      <ul>
          *                              <li> gpudb::append_records_true
          *                              <li> gpudb::append_records_false

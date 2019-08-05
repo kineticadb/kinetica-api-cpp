@@ -82,6 +82,15 @@ namespace gpudb
          *                      accordance with their primary key or shard key.
          *                      Cannot be used simultaneously with @a
          *                      table_whitelist.
+         *                              <li>
+         *                      gpudb::admin_rebalance_aggressiveness:
+         *                      Influences how much data to send per rebalance
+         *                      round.  A higher aggressiveness setting will
+         *                      complete the rebalance faster.  A lower
+         *                      aggressiveness setting will take longer, but
+         *                      allow for better interleaving between the
+         *                      rebalance and other queries. Allowed values are
+         *                      1 through 10.  The default value is '1'.
          *                      </ul>
          * 
          */
