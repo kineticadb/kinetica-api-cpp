@@ -26,6 +26,7 @@ namespace gpudb
     extern const std::string admin_offline_true;
 
     // Keywords for /admin/rebalance request
+    extern const std::string admin_rebalance_aggressiveness;
     extern const std::string admin_rebalance_false;
     extern const std::string admin_rebalance_rebalance_sharded_data;
     extern const std::string admin_rebalance_rebalance_unsharded_data;
@@ -34,6 +35,7 @@ namespace gpudb
     extern const std::string admin_rebalance_true;
 
     // Keywords for /admin/remove/ranks request
+    extern const std::string admin_remove_ranks_aggressiveness;
     extern const std::string admin_remove_ranks_false;
     extern const std::string admin_remove_ranks_rebalance_sharded_data;
     extern const std::string admin_remove_ranks_rebalance_unsharded_data;
@@ -51,7 +53,7 @@ namespace gpudb
 
     // Keywords for /admin/show/jobs request
     extern const std::string admin_show_jobs_false;
-    extern const std::string admin_show_jobs_show_details;
+    extern const std::string admin_show_jobs_show_async_jobs;
     extern const std::string admin_show_jobs_true;
 
     // Keywords for /admin/shutdown request
@@ -642,6 +644,9 @@ namespace gpudb
     extern const std::string get_records_from_collection_return_record_ids;
     extern const std::string get_records_from_collection_true;
 
+    // Keywords for /grant/permission/proc request
+    extern const std::string grant_permission_proc_proc_execute;
+
     // Keywords for /grant/permission/system request
     extern const std::string grant_permission_system_system_admin;
     extern const std::string grant_permission_system_system_read;
@@ -672,6 +677,7 @@ namespace gpudb
     extern const std::string insert_records_json;
     extern const std::string insert_records_return_record_ids;
     extern const std::string insert_records_true;
+    extern const std::string insert_records_truncate_strings;
     extern const std::string insert_records_update_on_existing_pk;
 
     // Keywords for /insert/records/random request
@@ -732,9 +738,11 @@ namespace gpudb
     extern const std::string query_graph_force_undirected;
     extern const std::string query_graph_limit;
     extern const std::string query_graph_restriction_threshold_value;
-    extern const std::string query_graph_rings;
     extern const std::string query_graph_target_nodes_table;
     extern const std::string query_graph_true;
+
+    // Keywords for /revoke/permission/proc request
+    extern const std::string revoke_permission_proc_proc_execute;
 
     // Keywords for /revoke/permission/system request
     extern const std::string revoke_permission_system_system_admin;
@@ -747,6 +755,11 @@ namespace gpudb
     extern const std::string revoke_permission_table_table_insert;
     extern const std::string revoke_permission_table_table_read;
     extern const std::string revoke_permission_table_table_update;
+
+    // Keywords for /show/graph request
+    extern const std::string show_graph_false;
+    extern const std::string show_graph_show_original_request;
+    extern const std::string show_graph_true;
 
     // Keywords for /show/proc request
     extern const std::string show_proc_false;

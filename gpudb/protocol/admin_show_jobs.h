@@ -34,11 +34,17 @@ namespace gpudb
          * @param[in] options_  Optional parameters.
          *                      <ul>
          *                              <li>
-         *                      gpudb::admin_show_jobs_show_details:
+         *                      gpudb::admin_show_jobs_show_async_jobs: If @a
+         *                      true, then the completed async jobs are also
+         *                      included in the response. By default, once the
+         *                      async jobs are completed they are no longer
+         *                      included in the jobs list.
          *                      <ul>
          *                              <li> gpudb::admin_show_jobs_true
          *                              <li> gpudb::admin_show_jobs_false
          *                      </ul>
+         *                      The default value is
+         *                      gpudb::admin_show_jobs_false.
          *                      </ul>
          * 
          */
@@ -109,6 +115,7 @@ namespace gpudb
             endpointName(std::vector<std::string>()),
             timeReceived(std::vector<int64_t>()),
             authId(std::vector<std::string>()),
+            sourceIp(std::vector<std::string>()),
             userData(std::vector<std::string>()),
             info(std::map<std::string, std::string>())
         {
@@ -119,6 +126,7 @@ namespace gpudb
         std::vector<std::string> endpointName;
         std::vector<int64_t> timeReceived;
         std::vector<std::string> authId;
+        std::vector<std::string> sourceIp;
         std::vector<std::string> userData;
         std::map<std::string, std::string> info;
     };
@@ -135,6 +143,7 @@ namespace avro
             ::avro::encode(e, v.endpointName);
             ::avro::encode(e, v.timeReceived);
             ::avro::encode(e, v.authId);
+            ::avro::encode(e, v.sourceIp);
             ::avro::encode(e, v.userData);
             ::avro::encode(e, v.info);
         }
@@ -170,10 +179,14 @@ namespace avro
                             break;
 
                         case 5:
-                            ::avro::decode(d, v.userData);
+                            ::avro::decode(d, v.sourceIp);
                             break;
 
                         case 6:
+                            ::avro::decode(d, v.userData);
+                            break;
+
+                        case 7:
                             ::avro::decode(d, v.info);
                             break;
 
@@ -189,6 +202,7 @@ namespace avro
                 ::avro::decode(d, v.endpointName);
                 ::avro::decode(d, v.timeReceived);
                 ::avro::decode(d, v.authId);
+                ::avro::decode(d, v.sourceIp);
                 ::avro::decode(d, v.userData);
                 ::avro::decode(d, v.info);
             }

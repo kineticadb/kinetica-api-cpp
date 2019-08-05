@@ -47,6 +47,7 @@ namespace gpudb
             queries(std::vector<std::string>()),
             restrictions(std::vector<std::string>()),
             adjacencyTable(std::string()),
+            rings(int32_t()),
             options(std::map<std::string, std::string>())
         {
         }
@@ -100,21 +101,20 @@ namespace gpudb
          *                             href="../../graph_solver/network_graph_solver.html#using-labels"
          *                             target="_top">Using Labels</a> for more
          *                             information.
+         * @param[in] rings_  Only applicable when querying nodes. Sets the
+         *                    number of rings around the node to query for
+         *                    adjacency, with '1' being the edges directly
+         *                    attached to the queried node. Also known as
+         *                    number of hops. For example, if it is set to '2',
+         *                    the edge(s) directly attached to the queried
+         *                    node(s) will be returned; in addition, the
+         *                    edge(s) attached to the node(s) attached to the
+         *                    initial ring of edge(s) surrounding the queried
+         *                    node(s) will be returned. This setting can be '0'
+         *                    in which case if the node type id label, it'll
+         *                    then query for all that has the same property.
          * @param[in] options_  Additional parameters
          *                      <ul>
-         *                              <li> gpudb::query_graph_rings: Only
-         *                      applicable when querying nodes. Sets the number
-         *                      of rings around the node to query for
-         *                      adjacency, with '1' being the edges directly
-         *                      attached to the queried node. Also known as
-         *                      number of hops. For example, if @a rings is set
-         *                      to '2', the edge(s) directly attached to the
-         *                      queried node(s) will be returned; in addition,
-         *                      the edge(s) attached to the node(s) attached to
-         *                      the initial ring of edge(s) surrounding the
-         *                      queried node(s) will be returned. This setting
-         *                      cannot be less than '1'.  The default value is
-         *                      '1'.
          *                              <li>
          *                      gpudb::query_graph_force_undirected: This
          *                      parameter is only applicable if the queried
@@ -138,12 +138,10 @@ namespace gpudb
          *                              <li>
          *                      gpudb::query_graph_target_nodes_table: Name of
          *                      the table to store the list of the final nodes
-         *                      reached during the traversal. If the
-         *                      'QUERY_TARGET_NODE_LABEL' <a
-         *                      href="../../graph_solver/network_graph_solver.html#query-identifiers"
-         *                      target="_top">query identifier</a> is NOT used
-         *                      in @a queries, the table will not be created.
-         *                      The default value is ''.
+         *                      reached during the traversal. If this value is
+         *                      not given it'll default to
+         *                      adjacemcy_table+'_nodes'.  The default value is
+         *                      ''.
          *                              <li>
          *                      gpudb::query_graph_restriction_threshold_value:
          *                      Value-based restriction comparison. Any node or
@@ -194,11 +192,12 @@ namespace gpudb
          *                      </ul>
          * 
          */
-        QueryGraphRequest(const std::string& graphName_, const std::vector<std::string>& queries_, const std::vector<std::string>& restrictions_, const std::string& adjacencyTable_, const std::map<std::string, std::string>& options_):
+        QueryGraphRequest(const std::string& graphName_, const std::vector<std::string>& queries_, const std::vector<std::string>& restrictions_, const std::string& adjacencyTable_, const int32_t rings_, const std::map<std::string, std::string>& options_):
             graphName( graphName_ ),
             queries( queries_ ),
             restrictions( restrictions_ ),
             adjacencyTable( adjacencyTable_ ),
+            rings( rings_ ),
             options( options_ )
         {
         }
@@ -207,6 +206,7 @@ namespace gpudb
         std::vector<std::string> queries;
         std::vector<std::string> restrictions;
         std::string adjacencyTable;
+        int32_t rings;
         std::map<std::string, std::string> options;
     };
 }
@@ -221,6 +221,7 @@ namespace avro
             ::avro::encode(e, v.queries);
             ::avro::encode(e, v.restrictions);
             ::avro::encode(e, v.adjacencyTable);
+            ::avro::encode(e, v.rings);
             ::avro::encode(e, v.options);
         }
 
@@ -251,6 +252,10 @@ namespace avro
                             break;
 
                         case 4:
+                            ::avro::decode(d, v.rings);
+                            break;
+
+                        case 5:
                             ::avro::decode(d, v.options);
                             break;
 
@@ -265,6 +270,7 @@ namespace avro
                 ::avro::decode(d, v.queries);
                 ::avro::decode(d, v.restrictions);
                 ::avro::decode(d, v.adjacencyTable);
+                ::avro::decode(d, v.rings);
                 ::avro::decode(d, v.options);
             }
         }

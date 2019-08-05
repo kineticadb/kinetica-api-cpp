@@ -46,6 +46,15 @@ public:
     RecordRetriever( const gpudb::GPUdb& db, const gpudb::Type& record_type,
                      const std::string& table_name );
 
+    RecordRetriever( const gpudb::GPUdb& db, const gpudb::Type& record_type,
+                     const std::string& table_name,
+                     const WorkerList& worker_list,
+                     const std::map<std::string, std::string>& retrieval_options );
+
+    RecordRetriever( const gpudb::GPUdb& db, const gpudb::Type& record_type,
+                     const std::string& table_name,
+                     const std::map<std::string, std::string>& retrieval_options );
+
 
     ~RecordRetriever();
 
@@ -58,6 +67,25 @@ public:
      * Returns the GPUdb client handle that this class uses internally.
      */
     const gpudb::GPUdb& getGPUdb() const { return m_db; }
+
+
+    /**
+     * Gets the options currently used for the retriever methods.  Note
+     * that any gpudb::get_records_by_column_expression option will
+     * get overridden at the next {@link #getRecordsByKey} call with the
+     * appropriate expression.
+     *
+     */
+    const std::map<std::string, std::string>& getOptions() const { return m_retrieval_options; }
+
+
+    /**
+     * Returns the options currently used for the retriever methods.  Note
+     * that any gpudb::get_records_by_column_expression option will
+     * be overridden at the next {@link #getRecordsByKey} call with the
+     * appropriate expression.
+     */
+    void setOptions( const std::map<std::string, std::string>& options );
 
 
     /**
@@ -93,7 +121,8 @@ private:
     void construct( const gpudb::GPUdb& db,
                     const gpudb::Type& record_type,
                     const std::string& table_name,
-                    const WorkerList& worker_list );
+                    const WorkerList& worker_list,
+                    const std::map<std::string, std::string>& retrieval_options );
 
     const gpudb::GPUdb&              m_db;
     std::string                      m_table_name;
@@ -101,6 +130,7 @@ private:
     gpudb::RecordKeyBuilder*         m_shard_key_builder_ptr;
     std::vector<int32_t>             m_routing_table;
     std::vector<worker_queue_ptr_t>  m_worker_queues;
+    str_to_str_map_t                 m_retrieval_options;
 
 };  // end class RecordRetriever
 

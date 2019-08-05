@@ -89,6 +89,17 @@ namespace gpudb
          *                      </ul>
          *                      The default value is
          *                      gpudb::insert_records_false.
+         *                              <li>
+         *                      gpudb::insert_records_truncate_strings: If set
+         *                      to {true}@{, any strings which are too long for
+         *                      their charN string fields will be truncated to
+         *                      fit.  The default value is false.
+         *                      <ul>
+         *                              <li> gpudb::insert_records_true
+         *                              <li> gpudb::insert_records_false
+         *                      </ul>
+         *                      The default value is
+         *                      gpudb::insert_records_false.
          *                      </ul>
          * 
          */
@@ -150,6 +161,17 @@ namespace gpudb
          *                      gpudb::insert_records_return_record_ids: If @a
          *                      true then return the internal record id along
          *                      for each inserted record.
+         *                      <ul>
+         *                              <li> gpudb::insert_records_true
+         *                              <li> gpudb::insert_records_false
+         *                      </ul>
+         *                      The default value is
+         *                      gpudb::insert_records_false.
+         *                              <li>
+         *                      gpudb::insert_records_truncate_strings: If set
+         *                      to {true}@{, any strings which are too long for
+         *                      their charN string fields will be truncated to
+         *                      fit.  The default value is false.
          *                      <ul>
          *                              <li> gpudb::insert_records_true
          *                              <li> gpudb::insert_records_false
@@ -314,6 +336,17 @@ namespace gpudb
          *                      gpudb::insert_records_return_record_ids: If @a
          *                      true then return the internal record id along
          *                      for each inserted record.
+         *                      <ul>
+         *                              <li> gpudb::insert_records_true
+         *                              <li> gpudb::insert_records_false
+         *                      </ul>
+         *                      The default value is
+         *                      gpudb::insert_records_false.
+         *                              <li>
+         *                      gpudb::insert_records_truncate_strings: If set
+         *                      to {true}@{, any strings which are too long for
+         *                      their charN string fields will be truncated to
+         *                      fit.  The default value is false.
          *                      <ul>
          *                              <li> gpudb::insert_records_true
          *                              <li> gpudb::insert_records_false
