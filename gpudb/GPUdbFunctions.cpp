@@ -6,7 +6,7 @@
 
 
 // GPUdb Version
-const std::string GPUdb::API_VERSION( "7.0.6.0" );
+const std::string GPUdb::API_VERSION( "7.0.6.1" );
 
 
 
@@ -3310,12 +3310,12 @@ AggregateStatisticsResponse& GPUdb::aggregateStatistics( const std::string& tabl
  * be used for numeric valued binning-columns, a min, max and interval are
  * specified. The number of bins, nbins, is the integer upper bound of
  * (max-min)/interval. Values that fall in the range
- * [min+n\*interval,min+(n+1)\*interval) are placed in the nth bin where n
- * ranges from 0..nbin-2. The final bin is [min+(nbin-1)\*interval,max]. In the
- * second method, @a options bin_values specifies a list of binning column
- * values. Binning-columns whose value matches the nth member of the bin_values
- * list are placed in the nth bin. When a list is provided the binning-column
- * must be of type string or int.
+ * [min+n*interval,min+(n+1)*interval) are placed in the nth bin where n ranges
+ * from 0..nbin-2. The final bin is [min+(nbin-1)*interval,max]. In the second
+ * method, @a options bin_values specifies a list of binning column values.
+ * Binning-columns whose value matches the nth member of the bin_values list
+ * are placed in the nth bin. When a list is provided the binning-column must
+ * be of type string or int.
  * <p>
  * NOTE:  The Kinetica instance being accessed must be running a CUDA
  * (GPU-based) build to service this request.
@@ -3352,12 +3352,12 @@ AggregateStatisticsByRangeResponse GPUdb::aggregateStatisticsByRange( const Aggr
  * be used for numeric valued binning-columns, a min, max and interval are
  * specified. The number of bins, nbins, is the integer upper bound of
  * (max-min)/interval. Values that fall in the range
- * [min+n\*interval,min+(n+1)\*interval) are placed in the nth bin where n
- * ranges from 0..nbin-2. The final bin is [min+(nbin-1)\*interval,max]. In the
- * second method, @a options bin_values specifies a list of binning column
- * values. Binning-columns whose value matches the nth member of the bin_values
- * list are placed in the nth bin. When a list is provided the binning-column
- * must be of type string or int.
+ * [min+n*interval,min+(n+1)*interval) are placed in the nth bin where n ranges
+ * from 0..nbin-2. The final bin is [min+(nbin-1)*interval,max]. In the second
+ * method, @a options bin_values specifies a list of binning column values.
+ * Binning-columns whose value matches the nth member of the bin_values list
+ * are placed in the nth bin. When a list is provided the binning-column must
+ * be of type string or int.
  * <p>
  * NOTE:  The Kinetica instance being accessed must be running a CUDA
  * (GPU-based) build to service this request.
@@ -3397,12 +3397,12 @@ AggregateStatisticsByRangeResponse& GPUdb::aggregateStatisticsByRange( const Agg
  * be used for numeric valued binning-columns, a min, max and interval are
  * specified. The number of bins, nbins, is the integer upper bound of
  * (max-min)/interval. Values that fall in the range
- * [min+n\*interval,min+(n+1)\*interval) are placed in the nth bin where n
- * ranges from 0..nbin-2. The final bin is [min+(nbin-1)\*interval,max]. In the
- * second method, @a options bin_values specifies a list of binning column
- * values. Binning-columns whose value matches the nth member of the bin_values
- * list are placed in the nth bin. When a list is provided the binning-column
- * must be of type string or int.
+ * [min+n*interval,min+(n+1)*interval) are placed in the nth bin where n ranges
+ * from 0..nbin-2. The final bin is [min+(nbin-1)*interval,max]. In the second
+ * method, @a options bin_values specifies a list of binning column values.
+ * Binning-columns whose value matches the nth member of the bin_values list
+ * are placed in the nth bin. When a list is provided the binning-column must
+ * be of type string or int.
  * <p>
  * NOTE:  The Kinetica instance being accessed must be running a CUDA
  * (GPU-based) build to service this request.
@@ -3422,8 +3422,8 @@ AggregateStatisticsByRangeResponse& GPUdb::aggregateStatisticsByRange( const Agg
  * @param start  The lower bound of the binning-column.
  * @param end  The upper bound of the binning-column.
  * @param interval  The interval of a bin. Set members fall into bin i if the
- *                  binning-column falls in the range [start+interval``*``i,
- *                  start+interval``*``(i+1)).
+ *                  binning-column falls in the range [start+interval*i,
+ *                  start+interval*(i+1)).
  * @param options  Map of optional parameters:
  *                 <ul>
  *                         <li>
@@ -3491,12 +3491,12 @@ AggregateStatisticsByRangeResponse GPUdb::aggregateStatisticsByRange( const std:
  * be used for numeric valued binning-columns, a min, max and interval are
  * specified. The number of bins, nbins, is the integer upper bound of
  * (max-min)/interval. Values that fall in the range
- * [min+n\*interval,min+(n+1)\*interval) are placed in the nth bin where n
- * ranges from 0..nbin-2. The final bin is [min+(nbin-1)\*interval,max]. In the
- * second method, @a options bin_values specifies a list of binning column
- * values. Binning-columns whose value matches the nth member of the bin_values
- * list are placed in the nth bin. When a list is provided the binning-column
- * must be of type string or int.
+ * [min+n*interval,min+(n+1)*interval) are placed in the nth bin where n ranges
+ * from 0..nbin-2. The final bin is [min+(nbin-1)*interval,max]. In the second
+ * method, @a options bin_values specifies a list of binning column values.
+ * Binning-columns whose value matches the nth member of the bin_values list
+ * are placed in the nth bin. When a list is provided the binning-column must
+ * be of type string or int.
  * <p>
  * NOTE:  The Kinetica instance being accessed must be running a CUDA
  * (GPU-based) build to service this request.
@@ -3516,8 +3516,8 @@ AggregateStatisticsByRangeResponse GPUdb::aggregateStatisticsByRange( const std:
  * @param start  The lower bound of the binning-column.
  * @param end  The upper bound of the binning-column.
  * @param interval  The interval of a bin. Set members fall into bin i if the
- *                  binning-column falls in the range [start+interval``*``i,
- *                  start+interval``*``(i+1)).
+ *                  binning-column falls in the range [start+interval*i,
+ *                  start+interval*(i+1)).
  * @param options  Map of optional parameters:
  *                 <ul>
  *                         <li>
@@ -19044,7 +19044,7 @@ QueryGraphResponse& GPUdb::queryGraph( const QueryGraphRequest& request_,
  *                         <li> gpudb::query_graph_target_nodes_table: Name of
  *                 the table to store the list of the final nodes reached
  *                 during the traversal. If this value is not given it'll
- *                 default to adjacemcy_table+'_nodes'.  The default value is
+ *                 default to adjacency_table+'_nodes'.  The default value is
  *                 ''.
  *                         <li> gpudb::query_graph_restriction_threshold_value:
  *                 Value-based restriction comparison. Any node or edge with a
@@ -19054,10 +19054,10 @@ QueryGraphResponse& GPUdb::queryGraph( const QueryGraphRequest& request_,
  *                         <li> gpudb::query_graph_export_query_results:
  *                 Returns query results in the response. If set to @a true,
  *                 the @a adjacencyListIntArray (if the query was based on
- *                 IDs), @{adjacency_list_string_array} (if the query was based
- *                 on names), or @{output_adjacency_list_wkt_array} (if the
- *                 query was based on WKTs) will be populated with the results.
- *                 If set to @a false, none of the arrays will be populated.
+ *                 IDs), @a adjacencyListStringArray (if the query was based on
+ *                 names), or @a adjacencyListWktArray (if the query was based
+ *                 on WKTs) will be populated with the results. If set to @a
+ *                 false, none of the arrays will be populated.
  *                 <ul>
  *                         <li> gpudb::query_graph_true
  *                         <li> gpudb::query_graph_false
@@ -19201,7 +19201,7 @@ QueryGraphResponse GPUdb::queryGraph( const std::string& graphName,
  *                         <li> gpudb::query_graph_target_nodes_table: Name of
  *                 the table to store the list of the final nodes reached
  *                 during the traversal. If this value is not given it'll
- *                 default to adjacemcy_table+'_nodes'.  The default value is
+ *                 default to adjacency_table+'_nodes'.  The default value is
  *                 ''.
  *                         <li> gpudb::query_graph_restriction_threshold_value:
  *                 Value-based restriction comparison. Any node or edge with a
@@ -19211,10 +19211,10 @@ QueryGraphResponse GPUdb::queryGraph( const std::string& graphName,
  *                         <li> gpudb::query_graph_export_query_results:
  *                 Returns query results in the response. If set to @a true,
  *                 the @a adjacencyListIntArray (if the query was based on
- *                 IDs), @{adjacency_list_string_array} (if the query was based
- *                 on names), or @{output_adjacency_list_wkt_array} (if the
- *                 query was based on WKTs) will be populated with the results.
- *                 If set to @a false, none of the arrays will be populated.
+ *                 IDs), @a adjacencyListStringArray (if the query was based on
+ *                 names), or @a adjacencyListWktArray (if the query was based
+ *                 on WKTs) will be populated with the results. If set to @a
+ *                 false, none of the arrays will be populated.
  *                 <ul>
  *                         <li> gpudb::query_graph_true
  *                         <li> gpudb::query_graph_false

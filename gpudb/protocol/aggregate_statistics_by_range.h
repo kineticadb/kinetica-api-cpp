@@ -29,8 +29,8 @@ namespace gpudb
      * can be used for numeric valued binning-columns, a min, max and interval
      * are specified. The number of bins, nbins, is the integer upper bound of
      * (max-min)/interval. Values that fall in the range
-     * [min+n\*interval,min+(n+1)\*interval) are placed in the nth bin where n
-     * ranges from 0..nbin-2. The final bin is [min+(nbin-1)\*interval,max]. In
+     * [min+n*interval,min+(n+1)*interval) are placed in the nth bin where n
+     * ranges from 0..nbin-2. The final bin is [min+(nbin-1)*interval,max]. In
      * the second method, @a options bin_values specifies a list of binning
      * column values. Binning-columns whose value matches the nth member of the
      * bin_values list are placed in the nth bin. When a list is provided the
@@ -81,8 +81,7 @@ namespace gpudb
          * @param[in] end_  The upper bound of the binning-column.
          * @param[in] interval_  The interval of a bin. Set members fall into
          *                       bin i if the binning-column falls in the range
-         *                       [start+interval``*``i,
-         *                       start+interval``*``(i+1)).
+         *                       [start+interval*i, start+interval*(i+1)).
          * @param[in] options_  Map of optional parameters:
          *                      <ul>
          *                              <li>
@@ -238,8 +237,8 @@ namespace gpudb
      * can be used for numeric valued binning-columns, a min, max and interval
      * are specified. The number of bins, nbins, is the integer upper bound of
      * (max-min)/interval. Values that fall in the range
-     * [min+n\*interval,min+(n+1)\*interval) are placed in the nth bin where n
-     * ranges from 0..nbin-2. The final bin is [min+(nbin-1)\*interval,max]. In
+     * [min+n*interval,min+(n+1)*interval) are placed in the nth bin where n
+     * ranges from 0..nbin-2. The final bin is [min+(nbin-1)*interval,max]. In
      * the second method, @a options bin_values specifies a list of binning
      * column values. Binning-columns whose value matches the nth member of the
      * bin_values list are placed in the nth bin. When a list is provided the
