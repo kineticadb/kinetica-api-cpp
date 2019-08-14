@@ -979,7 +979,7 @@ namespace gpudb {
                 throw GPUdbExitException( response.message );
             }
             // If the system has some issues, we also want to fail over
-            if ( response.message.find( "system limited" ) != std::string::npos )
+            if ( response.message.find( "system-limited-fatal" ) != std::string::npos )
             {
                 throw GPUdbExitException( response.message );
             }
