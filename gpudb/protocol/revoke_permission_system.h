@@ -42,6 +42,10 @@ namespace gpudb
          *                         Full access to all data and system
          *                         functions.
          *                                 <li>
+         *                         gpudb::revoke_permission_system_system_user_admin:
+         *                         Access to administer users and roles that do
+         *                         not have system_admin permission.
+         *                                 <li>
          *                         gpudb::revoke_permission_system_system_write:
          *                         Read and write access to all tables.
          *                                 <li>

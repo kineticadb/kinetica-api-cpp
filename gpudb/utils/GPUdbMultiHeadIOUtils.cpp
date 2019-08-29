@@ -826,7 +826,7 @@ namespace charN
 /// A big-endian 0-32 byte char* string stored as a 4 64-bit ints.
 /// All inlined since these may be used in loops.
 // --------------------------------------------------------------------------
-template<int N>     //N is the number of bytes (32,64,128,256)
+template<int N>     // N is the number of bytes (32,64,128,256)
 struct fixed_array_buf_t
 {
     /// Convert from a little-endian string to a big-endian intXXX
@@ -922,7 +922,8 @@ enum ColumnTypeSize_T
     LONG      =   8,
     STRING    =   8,
     TIME      =   4,
-    TIMESTAMP =   8
+    TIMESTAMP =   8,
+    ULONG     =   8
 };
 
 #define GPUDB_HASH_SEED 10
@@ -1936,6 +1937,86 @@ void RecordKey::add_string( const std::string &value, bool is_null )
 
 
 
+/// A static utility function for verifying if a given string is a valid
+// ulong value
+bool RecordKey::verify_ulong_value( const std::string& value )
+{
+    static const size_t max_len = std::to_string( ULONG_MAX ).size();
+
+    // Need to have the correct number of characters
+    size_t str_len = value.size();
+    if ((str_len == 0) || (str_len > max_len))
+    {
+        return false;
+    }
+
+    // Each character must be a digit
+    for (size_t i = 0; i < str_len; ++i )
+    {
+        if ( !std::isdigit( static_cast<unsigned char>(value[i]) ) )
+        {
+            return false;
+        }
+    }
+    return true;
+}
+
+
+
+/*
+ * Adds an unsigned long to the buffer.
+ *
+ * <param name="value">The unsigned long to be added.</param>
+ * <param name="is_null">Indicates that a null value is to be added.</param>
+ */
+void RecordKey::add_ulong( const std::string &value, bool is_null )
+{
+    // Check if the given number of characters will fit in the buffer
+    this->will_buffer_overflow( ColumnTypeSize_T::ULONG );
+
+    // Handle nulls
+    if ( is_null )
+    {   // Add eight zeroes for the null value
+        this->add( 0 ); // 1st 0
+        this->add( 0 ); // 2nd 0
+        this->add( 0 ); // 3rd 0
+        this->add( 0 ); // 4th 0
+        this->add( 0 ); // 5th 0
+        this->add( 0 ); // 6th 0
+        this->add( 0 ); // 7th 0
+        this->add( 0 ); // 8th 0
+        return;
+    }
+
+    if ( !verify_ulong_value( value ) )
+    {
+        throw GPUdbException( "Unable to parse string value '" + value
+                              + "' as an unsigned long" );
+    }
+
+    // Process the data
+    uint64_t unsigned_long_value;
+    try
+    {
+        unsigned_long_value = std::stoul( value );
+    } catch (const std::exception& e)
+    {
+        throw GPUdbException( "Unable to parse string value '" + value
+                              + "' as an unsigned long" );
+    }
+
+    // Copy the bytes of the unsigned long to the buffer
+    memcpy( &m_buffer[0] + m_current_size,
+            &unsigned_long_value,
+            ColumnTypeSize_T::ULONG );
+        
+    m_current_size += ColumnTypeSize_T::ULONG;
+
+} // end RecordKey::add_ulong
+
+
+
+
 // Needed for parsing time
 // Handle with and without milliseconds, with and without leading '0'
 // Possible formats:
@@ -2333,6 +2414,11 @@ RecordKeyBuilder::RecordKeyBuilder( bool is_primary_key, const gpudb::Type& reco
                     m_column_types.push_back( ColumnType_T::TIME );
                     m_key_buffer_size += ColumnTypeSize_T::TIME;
                 }
+                else if ( column.hasProperty( gpudb::ColumnProperty::ULONG ) )
+                {
+                    m_column_types.push_back( ColumnType_T::ULONG );
+                    m_key_buffer_size += ColumnTypeSize_T::ULONG;
+                }
                 else // a regular string
                 {
                     m_column_types.push_back( ColumnType_T::STRING );
@@ -2625,6 +2711,17 @@ bool RecordKeyBuilder::build( const gpudb::GenericRecord& record, RecordKey& rec
                 break;
             }  // end case timestamp
 
+            case ColumnType_T::ULONG:
+            {
+                std::string value;
+                if ( can_get_value )
+                    value = record.getAsString( column_index );
+
+                // Now we add the long value (or null) to the record key
+                record_key.add_ulong( value, record.isNull( column_index ) );
+                break;
+            }  // end case timestamp
+
             case ColumnType_T::STRING:
             {
                 std::string value;
@@ -2700,13 +2797,28 @@ bool RecordKeyBuilder::buildExpression( const gpudb::GenericRecord& record,
             case ColumnType_T::DATE:
             case ColumnType_T::DATETIME:
             case ColumnType_T::DECIMAL:
-            case ColumnType_T::TIME:
             case ColumnType_T::IPV4:
+            case ColumnType_T::TIME:
             case ColumnType_T::STRING:
             {
                 ss << "\""
                    << record.getAsString( column_index )
                    << "\"";
+                break;
+            }  // end case string
+
+            case ColumnType_T::ULONG:
+            {
+                // Need to verify if the string is an actual unsigned long value
+                std::string value = record.getAsString( column_index );
+                if ( !RecordKey::verify_ulong_value( value ) )
+                {
+                    throw GPUdbException( "Unable to parse string value '" + value
+                                          + "' as an unsigned long while building expression" );
+                }
+
+                // Unsigned longs, for query purposes, are just numbers, not strings                    
+                ss << value;
                 break;
             }  // end case string
 

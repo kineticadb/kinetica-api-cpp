@@ -23,6 +23,8 @@ namespace gpudb
 
         const std::string TIMESTAMP     ( "timestamp"      );
 
+        const std::string ULONG         ( "ulong"          );
+
         const std::string DECIMAL       ( "decimal"        );
 
         const std::string DATE          ( "date"           );

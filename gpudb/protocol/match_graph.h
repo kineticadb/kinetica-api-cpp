@@ -81,6 +81,12 @@ namespace gpudb
          *                          @a samplePoints to find the most probable
          *                          path between origin and destination pairs
          *                          with cost constraints
+         *                                  <li>
+         *                          gpudb::match_graph_match_supply_demand:
+         *                          Matches @a samplePoints to optimize
+         *                          scheduling multiple supplies (trucks) with
+         *                          varying sizes to varying demand sites with
+         *                          varying capacities per depot
          *                          </ul>
          *                          The default value is
          *                          gpudb::match_graph_markov_chain.
@@ -165,6 +171,21 @@ namespace gpudb
          *                      endpoint is to use time to determine the
          *                      destination point.  The default value is 'POINT
          *                      NULL'.
+         *                              <li>
+         *                      gpudb::match_graph_partial_loading: For the @a
+         *                      match_supply_demand solver only. When false
+         *                      (non-default), trucks do not off-load at the
+         *                      demand (store) side if the remainder is less
+         *                      than the store's need
+         *                      <ul>
+         *                              <li> gpudb::match_graph_true: Partial
+         *                      off loading at multiple store (demand)
+         *                      locations
+         *                              <li> gpudb::match_graph_false: No
+         *                      partial off loading allowed if supply is less
+         *                      than the store's demand.
+         *                      </ul>
+         *                      The default value is gpudb::match_graph_true.
          *                      </ul>
          * 
          */

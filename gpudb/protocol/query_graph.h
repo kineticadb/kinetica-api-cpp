@@ -140,7 +140,7 @@ namespace gpudb
          *                      the table to store the list of the final nodes
          *                      reached during the traversal. If this value is
          *                      not given it'll default to
-         *                      adjacency_table+'_nodes'.  The default value is
+         *                      adjacemcy_table+'_nodes'.  The default value is
          *                      ''.
          *                              <li>
          *                      gpudb::query_graph_restriction_threshold_value:
@@ -152,12 +152,13 @@ namespace gpudb
          *                      gpudb::query_graph_export_query_results:
          *                      Returns query results in the response. If set
          *                      to @a true, the @a adjacencyListIntArray (if
-         *                      the query was based on IDs), @a
-         *                      adjacencyListStringArray (if the query was
-         *                      based on names), or @a adjacencyListWktArray
-         *                      (if the query was based on WKTs) will be
-         *                      populated with the results. If set to @a false,
-         *                      none of the arrays will be populated.
+         *                      the query was based on IDs),
+         *                      @{adjacency_list_string_array} (if the query
+         *                      was based on names), or
+         *                      @{output_adjacency_list_wkt_array} (if the
+         *                      query was based on WKTs) will be populated with
+         *                      the results. If set to @a false, none of the
+         *                      arrays will be populated.
          *                      <ul>
          *                              <li> gpudb::query_graph_true
          *                              <li> gpudb::query_graph_false

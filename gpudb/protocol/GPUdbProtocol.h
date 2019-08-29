@@ -109,6 +109,7 @@
 #include "revoke_permission_table.h"
 #include "revoke_role.h"
 #include "show_graph.h"
+#include "show_graph_grammar.h"
 #include "show_proc.h"
 #include "show_proc_status.h"
 #include "show_resource_statistics.h"

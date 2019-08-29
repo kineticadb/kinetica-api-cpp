@@ -117,6 +117,12 @@ namespace gpudb
          *                         Unix epoch: 00:00:00 Jan 1 1970.  Dates
          *                         represented by a timestamp must fall between
          *                         the year 1000 and the year 2900.
+         *                                 <li> gpudb::create_type_ulong: Valid
+         *                         only for 'string' columns.  It represents an
+         *                         unsigned long integer data type. The string
+         *                         can only be interpreted as an unsigned long
+         *                         data type with minimum value of zero, and
+         *                         maximum value of 18446744073709551615.
          *                                 <li> gpudb::create_type_decimal:
          *                         Valid only for 'string' columns.  It
          *                         represents a SQL type NUMERIC(19, 4) data

@@ -114,6 +114,14 @@ public:
 
     static const int64_t END_OF_SET = -9999;
 
+    /// Headers used internally; MUST add each of them to PROTECTED_HEADERS
+    /// in the .cpp file
+    static const std::string HEADER_AUTHORIZATION;
+    static const std::string HEADER_CONTENT_TYPE;
+    static const std::string HEADER_CONTENT_LENGTH;
+    static const std::string HEADER_HA_SYNC_MODE;
+    
+    
     static inline std::string getApiVersion() { return GPUdb::API_VERSION; }
 
     /**
@@ -197,6 +205,47 @@ public:
     const std::map<std::string, std::string>& getHttpHeaders() const;
     size_t getTimeout() const;
 
+    
+    /**
+     * Adds an HTTP header to the map of additional HTTP headers to send to
+     * GPUdb with each request. If the header is already in the map, its
+     * value is replaced with the specified value.  The user is not allowed
+     * to modify the following headers:
+     * <ul>
+     *    <li> Authorization
+     *    <li> Content-type
+     *    <li> Content-length
+     *    <li> ha_sync_mode
+     * </ul>
+     *
+     * @param header  the HTTP header
+     * @param value   the value of the HTTP header
+     *
+     * See {@link #getHttpHeaders()}
+     * See {@link #removeHttpHeader(const std::string&)}
+     */
+    void addHttpHeader( const std::string& header,
+                        const std::string& value );
+
+    /**
+     * Removes the given HTTP header from the map of additional HTTP headers to
+     * send to GPUdb with each request. The user is not allowed to remove the
+     * following headers:
+     * <ul>
+     *    <li> Authorization
+     *    <li> Content-type
+     *    <li> Content-length
+     *    <li> ha_sync_mode
+     * </ul>
+     *
+     * @param header  the HTTP header
+     *
+     * See {@link #getHttpHeaders()}
+     * See {@link #addHttpHeader(const std::string&, const std::string&)}
+     */
+    void removeHttpHeader( const std::string& header );
+
+    
     /// Update the host manager port by inquiring the server
     void updateHostManagerPort();
     
@@ -402,8 +451,11 @@ public:
     }
 
 private:
+
     static const std::string API_VERSION;
 
+    static const std::string PROTECTED_HEADERS[];
+    
     mutable std::vector<HttpUrl> m_urls;
     mutable std::vector<HttpUrl> m_hmUrls;
     std::string m_primaryUrlStr;
@@ -458,6 +510,7 @@ private:
     const HttpUrl* switchUrl(const HttpUrl* oldUrl) const;
     const HttpUrl* switchHmUrl(const HttpUrl* oldUrl) const;
 
+    
     /// Request related methods
     /// -----------------------
     void initHttpRequest(HttpRequest& httpRequest) const;

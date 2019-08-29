@@ -56,6 +56,10 @@ namespace gpudb
          *                      </ul>
          *                      The default value is
          *                      gpudb::show_proc_status_false.
+         *                              <li> gpudb::show_proc_status_run_tag:
+         *                      Limit statuses to proc instances where a
+         *                      matching run tag was provided to /execute/proc.
+         *                      The default value is ''.
          *                      </ul>
          * 
          */
