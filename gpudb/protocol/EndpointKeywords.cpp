@@ -450,6 +450,7 @@ namespace gpudb
     const std::string create_type_text_search   ( "text_search"    );
     const std::string create_type_time          ( "time"           );
     const std::string create_type_timestamp     ( "timestamp"      );
+    const std::string create_type_ulong         ( "ulong"          );
     const std::string create_type_wkt           ( "wkt"            );
 
     // Keywords for /create/union request
@@ -491,6 +492,7 @@ namespace gpudb
     // Keywords for /execute/proc request
     const std::string execute_proc_cache_input     ( "cache_input"      );
     const std::string execute_proc_kifs_input_dirs ( "kifs_input_dirs"  );
+    const std::string execute_proc_run_tag         ( "run_tag"          );
     const std::string execute_proc_use_cached_input( "use_cached_input" );
 
     // Keywords for /execute/sql request
@@ -648,9 +650,10 @@ namespace gpudb
     const std::string grant_permission_proc_proc_execute( "proc_execute" );
 
     // Keywords for /grant/permission/system request
-    const std::string grant_permission_system_system_admin( "system_admin" );
-    const std::string grant_permission_system_system_read ( "system_read"  );
-    const std::string grant_permission_system_system_write( "system_write" );
+    const std::string grant_permission_system_system_admin     ( "system_admin"      );
+    const std::string grant_permission_system_system_read      ( "system_read"       );
+    const std::string grant_permission_system_system_user_admin( "system_user_admin" );
+    const std::string grant_permission_system_system_write     ( "system_write"      );
 
     // Keywords for /grant/permission/table request
     const std::string grant_permission_table_table_admin ( "table_admin"  );
@@ -697,6 +700,9 @@ namespace gpudb
     const std::string insert_symbol_svg     ( "svg"      );
     const std::string insert_symbol_svg_path( "svg_path" );
 
+    // Keywords for /kill/proc request
+    const std::string kill_proc_run_tag( "run_tag" );
+
     // Keywords for /lock/table request
     const std::string lock_table_no_access ( "no_access"  );
     const std::string lock_table_read_only ( "read_only"  );
@@ -713,8 +719,10 @@ namespace gpudb
     const std::string match_graph_incremental_weighted( "incremental_weighted" );
     const std::string match_graph_markov_chain        ( "markov_chain"         );
     const std::string match_graph_match_od_pairs      ( "match_od_pairs"       );
+    const std::string match_graph_match_supply_demand ( "match_supply_demand"  );
     const std::string match_graph_max_solve_length    ( "max_solve_length"     );
     const std::string match_graph_num_segments        ( "num_segments"         );
+    const std::string match_graph_partial_loading     ( "partial_loading"      );
     const std::string match_graph_search_radius       ( "search_radius"        );
     const std::string match_graph_source              ( "source"               );
     const std::string match_graph_time_window_width   ( "time_window_width"    );
@@ -745,9 +753,10 @@ namespace gpudb
     const std::string revoke_permission_proc_proc_execute( "proc_execute" );
 
     // Keywords for /revoke/permission/system request
-    const std::string revoke_permission_system_system_admin( "system_admin" );
-    const std::string revoke_permission_system_system_read ( "system_read"  );
-    const std::string revoke_permission_system_system_write( "system_write" );
+    const std::string revoke_permission_system_system_admin     ( "system_admin"      );
+    const std::string revoke_permission_system_system_read      ( "system_read"       );
+    const std::string revoke_permission_system_system_user_admin( "system_user_admin" );
+    const std::string revoke_permission_system_system_write     ( "system_write"      );
 
     // Keywords for /revoke/permission/table request
     const std::string revoke_permission_table_table_admin ( "table_admin"  );
@@ -773,6 +782,7 @@ namespace gpudb
     // Keywords for /show/proc/status request
     const std::string show_proc_status_clear_complete( "clear_complete" );
     const std::string show_proc_status_false         ( "false"          );
+    const std::string show_proc_status_run_tag       ( "run_tag"        );
     const std::string show_proc_status_true          ( "true"           );
 
     // Keywords for /show/proc/status response

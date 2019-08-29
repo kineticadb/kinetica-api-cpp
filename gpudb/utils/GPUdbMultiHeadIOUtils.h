@@ -183,6 +183,9 @@ public:
     // Adds (the hash value of) a string to the buffer
     void add_string( const std::string& value, bool is_null );
 
+    // Adds an unsigned long value to the buffer
+    void add_ulong( const std::string& value, bool is_null );
+
 
     /// Compute the hash of the key in the buffer
     void compute_hash();
@@ -191,6 +194,10 @@ public:
     /// worker rank based on the hash of the record key.
     size_t route( const std::vector<int32_t>& routing_table ) const;
 
+    /// A static utility function for verifying if a given string is a valid
+    // ulong value
+    static bool verify_ulong_value( const std::string& value );
+    
     /// The assignment operator
     RecordKey& operator=(const RecordKey& other);
 
@@ -257,7 +264,8 @@ private:
         LONG,
         STRING,
         TIME,
-        TIMESTAMP
+        TIMESTAMP,
+        ULONG
     };
 
     // Some typedefs for nullable types

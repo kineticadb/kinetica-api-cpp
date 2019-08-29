@@ -17,6 +17,17 @@
 namespace gpudb {
     static const char base64Chars[] = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
 
+    const std::string GPUdb::HEADER_AUTHORIZATION  = "Authorization";
+    const std::string GPUdb::HEADER_CONTENT_TYPE   = "Content-type";
+    const std::string GPUdb::HEADER_CONTENT_LENGTH = "Content-length";
+    const std::string GPUdb::HEADER_HA_SYNC_MODE   = "ha_sync_mode";
+
+    const std::string GPUdb::PROTECTED_HEADERS[] = { HEADER_AUTHORIZATION,
+                                                     HEADER_CONTENT_TYPE,
+                                                     HEADER_CONTENT_LENGTH,
+                                                     HEADER_HA_SYNC_MODE
+    };
+    
     std::string base64Encode(const std::string& value)
     {
         size_t padding = value.length() % 3;
@@ -619,6 +630,80 @@ namespace gpudb {
         return m_username;
     }
 
+
+
+    
+    /**
+     * Adds an HTTP header to the map of additional HTTP headers to send to
+     * GPUdb with each request. If the header is already in the map, its
+     * value is replaced with the specified value.  The user is not allowed
+     * to modify the following headers:
+     * <ul>
+     *    <li> Authorization
+     *    <li> Content-type
+     *    <li> Content-length
+     *    <li> ha_sync_mode
+     * </ul>
+     *
+     * @param header  the HTTP header
+     * @param value   the value of the HTTP header
+     *
+     * See {@link #getHttpHeaders()}
+     * See {@link #removeHttpHeader(const std::string&)}
+     */
+    void GPUdb::addHttpHeader( const std::string& header,
+                               const std::string& value )
+    {
+        // Ensure that the given header is not a protecte header
+        size_t num_protected_headers = sizeof(PROTECTED_HEADERS)/sizeof(PROTECTED_HEADERS[0]);
+        for ( size_t i = 0; i < num_protected_headers; ++i )
+        {
+            if ( header == PROTECTED_HEADERS[ i ] )
+            {
+                throw GPUdbException( "Not allowed to change proteced header: "
+                                      + header );
+            }
+        }
+        
+        m_httpHeaders[ header ] = value;
+        return;
+    }
+
+    /**
+     * Removes the given HTTP header from the map of additional HTTP headers to
+     * send to GPUdb with each request. The user is not allowed to remove the
+     * following headers:
+     * <ul>
+     *    <li> Authorization
+     *    <li> Content-type
+     *    <li> Content-length
+     *    <li> ha_sync_mode
+     * </ul>
+     *
+     * @param header  the HTTP header
+     *
+     * See {@link #getHttpHeaders()}
+     * See {@link #addHttpHeader(const std::string&, const std::string&)}
+     */
+    void GPUdb::removeHttpHeader( const std::string& header )
+    {
+        // Ensure that the given header is not a protecte header
+        size_t num_protected_headers = sizeof(PROTECTED_HEADERS)/sizeof(PROTECTED_HEADERS[0]);
+        for ( size_t i = 0; i < num_protected_headers; ++i )
+        {
+            if ( header == PROTECTED_HEADERS[ i ] )
+            {
+                throw GPUdbException( "Not allowed to remove proteced header: "
+                                      + header );
+            }
+        }
+        
+        m_httpHeaders.erase( header );
+        return;
+    }
+
+
+    
     void GPUdb::initHttpRequest(HttpRequest& httpRequest) const
     {
         #ifndef GPUDB_NO_HTTPS
@@ -636,7 +721,8 @@ namespace gpudb {
 
         if (!m_authorization.empty())
         {
-            httpRequest.addRequestHeader("Authorization", "Basic " + m_authorization);
+            httpRequest.addRequestHeader( HEADER_AUTHORIZATION,
+                                          "Basic " + m_authorization );
         }
     }
 
@@ -944,8 +1030,9 @@ namespace gpudb {
                 initHttpRequest(httpRequest);
                 std::string compressedRequest;
                 snappy::Compress((char*)&request[0], request.size(), &compressedRequest);
-                httpRequest.addRequestHeader("Content-type", "application/x-snappy");
-                httpRequest.addRequestHeader("Content-length", boost::lexical_cast<std::string>(compressedRequest.length()));
+                httpRequest.addRequestHeader( HEADER_CONTENT_TYPE, "application/x-snappy" );
+                httpRequest.addRequestHeader( HEADER_CONTENT_LENGTH,
+                                              boost::lexical_cast<std::string>(compressedRequest.length()) );
                 httpRequest.setRequestBody(&compressedRequest);
                 httpRequest.send(httpResponse);
             }
@@ -953,8 +1040,9 @@ namespace gpudb {
             {
                 BinaryHttpRequest httpRequest(url);
                 initHttpRequest(httpRequest);
-                httpRequest.addRequestHeader("Content-type", "application/octet-stream");
-                httpRequest.addRequestHeader("Content-length", boost::lexical_cast<std::string>(request.size()));
+                httpRequest.addRequestHeader( HEADER_CONTENT_TYPE, "application/octet-stream" );
+                httpRequest.addRequestHeader( HEADER_CONTENT_LENGTH,
+                                              boost::lexical_cast<std::string>(request.size()) );
                 httpRequest.setRequestBody(&request);
                 httpRequest.send(httpResponse);
             }

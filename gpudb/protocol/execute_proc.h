@@ -111,6 +111,11 @@ namespace gpudb
          *                      file system below the KiFS mount point.) Each
          *                      name specified must the name of an existing
          *                      KiFS directory.  The default value is ''.
+         *                              <li> gpudb::execute_proc_run_tag: A
+         *                      string that, if not empty, can be used in
+         *                      subsequent calls to /show/proc/status or
+         *                      /kill/proc to identify the proc instance.  The
+         *                      default value is ''.
          *                      </ul>
          * 
          */

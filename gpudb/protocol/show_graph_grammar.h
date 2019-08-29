@@ -3,69 +3,62 @@
  *
  *  DO NOT EDIT DIRECTLY.
  */
-#ifndef __KILL_PROC_H__
-#define __KILL_PROC_H__
+#ifndef __SHOW_GRAPH_GRAMMAR_H__
+#define __SHOW_GRAPH_GRAMMAR_H__
 
 namespace gpudb
 {
 
     /**
      * A set of input parameters for {@link
-     * #killProc(const KillProcRequest&) const}.
+     * #showGraphGrammar(const ShowGraphGrammarRequest&) const}.
      * <p>
-     * Kills a running proc instance.
+     * @private
      */
-    struct KillProcRequest
+    struct ShowGraphGrammarRequest
     {
 
         /**
-         * Constructs a KillProcRequest object with default parameter values.
+         * @private
+         * Constructs a ShowGraphGrammarRequest object with default parameter
+         * values.
          */
-        KillProcRequest() :
-            runId(std::string()),
+        ShowGraphGrammarRequest() :
             options(std::map<std::string, std::string>())
         {
         }
 
         /**
-         * Constructs a KillProcRequest object with the specified parameters.
+         * @private
+         * Constructs a ShowGraphGrammarRequest object with the specified
+         * parameters.
          * 
-         * @param[in] runId_  The run ID of the running proc instance. If the
-         *                    run ID is not found or the proc instance has
-         *                    already completed, this does nothing. If not
-         *                    specified, all running proc instances will be
-         *                    killed.
-         * @param[in] options_  Optional parameters.
-         *                      <ul>
-         *                              <li> gpudb::kill_proc_run_tag: Kill
-         *                      only proc instances where a matching run tag
-         *                      was provided to /execute/proc.  The default
-         *                      value is ''.
-         *                      </ul>
+         * @param[in] options_
          * 
          */
-        KillProcRequest(const std::string& runId_, const std::map<std::string, std::string>& options_):
-            runId( runId_ ),
+        ShowGraphGrammarRequest(const std::map<std::string, std::string>& options_):
             options( options_ )
         {
         }
 
-        std::string runId;
         std::map<std::string, std::string> options;
     };
 }
 
+    /**
+     * @private
+     */
+
 namespace avro
 {
-    template<> struct codec_traits<gpudb::KillProcRequest>
+    template<> struct codec_traits<gpudb::ShowGraphGrammarRequest>
     {
-        static void encode(Encoder& e, const gpudb::KillProcRequest& v)
+        static void encode(Encoder& e, const gpudb::ShowGraphGrammarRequest& v)
         {
-            ::avro::encode(e, v.runId);
             ::avro::encode(e, v.options);
         }
 
-        static void decode(Decoder& d, gpudb::KillProcRequest& v)
+        static void decode(Decoder& d, gpudb::ShowGraphGrammarRequest& v)
         {
             if (::avro::ResolvingDecoder *rd = dynamic_cast< ::avro::ResolvingDecoder*>(&d))
             {
@@ -76,10 +69,6 @@ namespace avro
                     switch (*it)
                     {
                         case 0:
-                            ::avro::decode(d, v.runId);
-                            break;
-
-                        case 1:
                             ::avro::decode(d, v.options);
                             break;
 
@@ -90,7 +79,6 @@ namespace avro
             }
             else
             {
-                ::avro::decode(d, v.runId);
                 ::avro::decode(d, v.options);
             }
         }
@@ -102,38 +90,47 @@ namespace gpudb
 
     /**
      * A set of output parameters for {@link
-     * #killProc(const KillProcRequest&) const}.
+     * #showGraphGrammar(const ShowGraphGrammarRequest&) const}.
      * <p>
-     * Kills a running proc instance.
+     * @private
      */
-    struct KillProcResponse
+    struct ShowGraphGrammarResponse
     {
 
         /**
-         * Constructs a KillProcResponse object with default parameter values.
+         * @private
+         * Constructs a ShowGraphGrammarResponse object with default parameter
+         * values.
          */
-        KillProcResponse() :
-            runIds(std::vector<std::string>()),
+        ShowGraphGrammarResponse() :
+            result(bool()),
+            componentsJson(std::string()),
             info(std::map<std::string, std::string>())
         {
         }
 
-        std::vector<std::string> runIds;
+        bool result;
+        std::string componentsJson;
         std::map<std::string, std::string> info;
     };
 }
 
+    /**
+     * @private
+     */
+
 namespace avro
 {
-    template<> struct codec_traits<gpudb::KillProcResponse>
+    template<> struct codec_traits<gpudb::ShowGraphGrammarResponse>
     {
-        static void encode(Encoder& e, const gpudb::KillProcResponse& v)
+        static void encode(Encoder& e, const gpudb::ShowGraphGrammarResponse& v)
         {
-            ::avro::encode(e, v.runIds);
+            ::avro::encode(e, v.result);
+            ::avro::encode(e, v.componentsJson);
             ::avro::encode(e, v.info);
         }
 
-        static void decode(Decoder& d, gpudb::KillProcResponse& v)
+        static void decode(Decoder& d, gpudb::ShowGraphGrammarResponse& v)
         {
             if (::avro::ResolvingDecoder *rd = dynamic_cast< ::avro::ResolvingDecoder*>(&d))
             {
@@ -144,10 +141,14 @@ namespace avro
                     switch (*it)
                     {
                         case 0:
-                            ::avro::decode(d, v.runIds);
+                            ::avro::decode(d, v.result);
                             break;
 
                         case 1:
+                            ::avro::decode(d, v.componentsJson);
+                            break;
+
+                        case 2:
                             ::avro::decode(d, v.info);
                             break;
 
@@ -158,7 +159,8 @@ namespace avro
             }
             else
             {
-                ::avro::decode(d, v.runIds);
+                ::avro::decode(d, v.result);
+                ::avro::decode(d, v.componentsJson);
                 ::avro::decode(d, v.info);
             }
         }

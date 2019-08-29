@@ -6,7 +6,7 @@
 
 
 // GPUdb Version
-const std::string GPUdb::API_VERSION( "7.0.6.1" );
+const std::string GPUdb::API_VERSION( "7.0.7.0" );
 
 
 
@@ -10123,6 +10123,11 @@ CreateTypeResponse& GPUdb::createType( const CreateTypeRequest& request_,
  *                    Unix epoch: 00:00:00 Jan 1 1970.  Dates represented by a
  *                    timestamp must fall between the year 1000 and the year
  *                    2900.
+ *                            <li> gpudb::create_type_ulong: Valid only for
+ *                    'string' columns.  It represents an unsigned long integer
+ *                    data type. The string can only be interpreted as an
+ *                    unsigned long data type with minimum value of zero, and
+ *                    maximum value of 18446744073709551615.
  *                            <li> gpudb::create_type_decimal: Valid only for
  *                    'string' columns.  It represents a SQL type NUMERIC(19,
  *                    4) data type.  There can be up to 15 digits before the
@@ -10346,6 +10351,11 @@ CreateTypeResponse GPUdb::createType( const std::string& typeDefinition,
  *                    Unix epoch: 00:00:00 Jan 1 1970.  Dates represented by a
  *                    timestamp must fall between the year 1000 and the year
  *                    2900.
+ *                            <li> gpudb::create_type_ulong: Valid only for
+ *                    'string' columns.  It represents an unsigned long integer
+ *                    data type. The string can only be interpreted as an
+ *                    unsigned long data type with minimum value of zero, and
+ *                    maximum value of 18446744073709551615.
  *                            <li> gpudb::create_type_decimal: Valid only for
  *                    'string' columns.  It represents a SQL type NUMERIC(19,
  *                    4) data type.  There can be up to 15 digits before the
@@ -11810,6 +11820,10 @@ ExecuteProcResponse& GPUdb::executeProc( const ExecuteProcRequest& request_,
  *                 through the file system below the KiFS mount point.) Each
  *                 name specified must the name of an existing KiFS directory.
  *                 The default value is ''.
+ *                         <li> gpudb::execute_proc_run_tag: A string that, if
+ *                 not empty, can be used in subsequent calls to
+ *                 /show/proc/status or /kill/proc to identify the proc
+ *                 instance.  The default value is ''.
  *                 </ul>
  * 
  * @return Response object containing the result of the operation.
@@ -11899,6 +11913,10 @@ ExecuteProcResponse GPUdb::executeProc( const std::string& procName,
  *                 through the file system below the KiFS mount point.) Each
  *                 name specified must the name of an existing KiFS directory.
  *                 The default value is ''.
+ *                         <li> gpudb::execute_proc_run_tag: A string that, if
+ *                 not empty, can be used in subsequent calls to
+ *                 /show/proc/status or /kill/proc to identify the proc
+ *                 instance.  The default value is ''.
  *                 </ul>
  * @param[out] response_  Response object containing the results of the
  *                        operation.
@@ -16734,6 +16752,10 @@ GrantPermissionSystemResponse& GPUdb::grantPermissionSystem( const GrantPermissi
  *                    <ul>
  *                            <li> gpudb::grant_permission_system_system_admin:
  *                    Full access to all data and system functions.
+ *                            <li>
+ *                    gpudb::grant_permission_system_system_user_admin: Access
+ *                    to administer users and roles that do not have
+ *                    system_admin permission.
  *                            <li> gpudb::grant_permission_system_system_write:
  *                    Read and write access to all tables.
  *                            <li> gpudb::grant_permission_system_system_read:
@@ -16768,6 +16790,10 @@ GrantPermissionSystemResponse GPUdb::grantPermissionSystem( const std::string& n
  *                    <ul>
  *                            <li> gpudb::grant_permission_system_system_admin:
  *                    Full access to all data and system functions.
+ *                            <li>
+ *                    gpudb::grant_permission_system_system_user_admin: Access
+ *                    to administer users and roles that do not have
+ *                    system_admin permission.
  *                            <li> gpudb::grant_permission_system_system_write:
  *                    Read and write access to all tables.
  *                            <li> gpudb::grant_permission_system_system_read:
@@ -18030,6 +18056,11 @@ KillProcResponse& GPUdb::killProc( const KillProcRequest& request_,
  *               nothing. If not specified, all running proc instances will be
  *               killed.
  * @param options  Optional parameters.
+ *                 <ul>
+ *                         <li> gpudb::kill_proc_run_tag: Kill only proc
+ *                 instances where a matching run tag was provided to
+ *                 /execute/proc.  The default value is ''.
+ *                 </ul>
  * 
  * @return Response object containing the result of the operation.
  * 
@@ -18055,6 +18086,11 @@ KillProcResponse GPUdb::killProc( const std::string& runId,
  *               nothing. If not specified, all running proc instances will be
  *               killed.
  * @param options  Optional parameters.
+ *                 <ul>
+ *                         <li> gpudb::kill_proc_run_tag: Kill only proc
+ *                 instances where a matching run tag was provided to
+ *                 /execute/proc.  The default value is ''.
+ *                 </ul>
  * @param[out] response_  Response object containing the results of the
  *                        operation.
  * 
@@ -18396,6 +18432,10 @@ MatchGraphResponse& GPUdb::matchGraph( const MatchGraphRequest& request_,
  *                             <li> gpudb::match_graph_match_od_pairs: Matches
  *                     @a samplePoints to find the most probable path between
  *                     origin and destination pairs with cost constraints
+ *                             <li> gpudb::match_graph_match_supply_demand:
+ *                     Matches @a samplePoints to optimize scheduling multiple
+ *                     supplies (trucks) with varying sizes to varying demand
+ *                     sites with varying capacities per depot
  *                     </ul>
  *                     The default value is gpudb::match_graph_markov_chain.
  * @param solutionTable  The name of the table used to store the results; this
@@ -18465,6 +18505,17 @@ MatchGraphResponse& GPUdb::matchGraph( const MatchGraphRequest& request_,
  *                 default behavior for the endpoint is to use time to
  *                 determine the destination point.  The default value is
  *                 'POINT NULL'.
+ *                         <li> gpudb::match_graph_partial_loading: For the @a
+ *                 match_supply_demand solver only. When false (non-default),
+ *                 trucks do not off-load at the demand (store) side if the
+ *                 remainder is less than the store's need
+ *                 <ul>
+ *                         <li> gpudb::match_graph_true: Partial off loading at
+ *                 multiple store (demand) locations
+ *                         <li> gpudb::match_graph_false: No partial off
+ *                 loading allowed if supply is less than the store's demand.
+ *                 </ul>
+ *                 The default value is gpudb::match_graph_true.
  *                 </ul>
  * 
  * @return Response object containing the result of the operation.
@@ -18527,6 +18578,10 @@ MatchGraphResponse GPUdb::matchGraph( const std::string& graphName,
  *                             <li> gpudb::match_graph_match_od_pairs: Matches
  *                     @a samplePoints to find the most probable path between
  *                     origin and destination pairs with cost constraints
+ *                             <li> gpudb::match_graph_match_supply_demand:
+ *                     Matches @a samplePoints to optimize scheduling multiple
+ *                     supplies (trucks) with varying sizes to varying demand
+ *                     sites with varying capacities per depot
  *                     </ul>
  *                     The default value is gpudb::match_graph_markov_chain.
  * @param solutionTable  The name of the table used to store the results; this
@@ -18596,6 +18651,17 @@ MatchGraphResponse GPUdb::matchGraph( const std::string& graphName,
  *                 default behavior for the endpoint is to use time to
  *                 determine the destination point.  The default value is
  *                 'POINT NULL'.
+ *                         <li> gpudb::match_graph_partial_loading: For the @a
+ *                 match_supply_demand solver only. When false (non-default),
+ *                 trucks do not off-load at the demand (store) side if the
+ *                 remainder is less than the store's need
+ *                 <ul>
+ *                         <li> gpudb::match_graph_true: Partial off loading at
+ *                 multiple store (demand) locations
+ *                         <li> gpudb::match_graph_false: No partial off
+ *                 loading allowed if supply is less than the store's demand.
+ *                 </ul>
+ *                 The default value is gpudb::match_graph_true.
  *                 </ul>
  * @param[out] response_  Response object containing the results of the
  *                        operation.
@@ -19044,7 +19110,7 @@ QueryGraphResponse& GPUdb::queryGraph( const QueryGraphRequest& request_,
  *                         <li> gpudb::query_graph_target_nodes_table: Name of
  *                 the table to store the list of the final nodes reached
  *                 during the traversal. If this value is not given it'll
- *                 default to adjacency_table+'_nodes'.  The default value is
+ *                 default to adjacemcy_table+'_nodes'.  The default value is
  *                 ''.
  *                         <li> gpudb::query_graph_restriction_threshold_value:
  *                 Value-based restriction comparison. Any node or edge with a
@@ -19054,10 +19120,10 @@ QueryGraphResponse& GPUdb::queryGraph( const QueryGraphRequest& request_,
  *                         <li> gpudb::query_graph_export_query_results:
  *                 Returns query results in the response. If set to @a true,
  *                 the @a adjacencyListIntArray (if the query was based on
- *                 IDs), @a adjacencyListStringArray (if the query was based on
- *                 names), or @a adjacencyListWktArray (if the query was based
- *                 on WKTs) will be populated with the results. If set to @a
- *                 false, none of the arrays will be populated.
+ *                 IDs), @{adjacency_list_string_array} (if the query was based
+ *                 on names), or @{output_adjacency_list_wkt_array} (if the
+ *                 query was based on WKTs) will be populated with the results.
+ *                 If set to @a false, none of the arrays will be populated.
  *                 <ul>
  *                         <li> gpudb::query_graph_true
  *                         <li> gpudb::query_graph_false
@@ -19201,7 +19267,7 @@ QueryGraphResponse GPUdb::queryGraph( const std::string& graphName,
  *                         <li> gpudb::query_graph_target_nodes_table: Name of
  *                 the table to store the list of the final nodes reached
  *                 during the traversal. If this value is not given it'll
- *                 default to adjacency_table+'_nodes'.  The default value is
+ *                 default to adjacemcy_table+'_nodes'.  The default value is
  *                 ''.
  *                         <li> gpudb::query_graph_restriction_threshold_value:
  *                 Value-based restriction comparison. Any node or edge with a
@@ -19211,10 +19277,10 @@ QueryGraphResponse GPUdb::queryGraph( const std::string& graphName,
  *                         <li> gpudb::query_graph_export_query_results:
  *                 Returns query results in the response. If set to @a true,
  *                 the @a adjacencyListIntArray (if the query was based on
- *                 IDs), @a adjacencyListStringArray (if the query was based on
- *                 names), or @a adjacencyListWktArray (if the query was based
- *                 on WKTs) will be populated with the results. If set to @a
- *                 false, none of the arrays will be populated.
+ *                 IDs), @{adjacency_list_string_array} (if the query was based
+ *                 on names), or @{output_adjacency_list_wkt_array} (if the
+ *                 query was based on WKTs) will be populated with the results.
+ *                 If set to @a false, none of the arrays will be populated.
  *                 <ul>
  *                         <li> gpudb::query_graph_true
  *                         <li> gpudb::query_graph_false
@@ -19433,6 +19499,10 @@ RevokePermissionSystemResponse& GPUdb::revokePermissionSystem( const RevokePermi
  *                    gpudb::revoke_permission_system_system_admin: Full access
  *                    to all data and system functions.
  *                            <li>
+ *                    gpudb::revoke_permission_system_system_user_admin: Access
+ *                    to administer users and roles that do not have
+ *                    system_admin permission.
+ *                            <li>
  *                    gpudb::revoke_permission_system_system_write: Read and
  *                    write access to all tables.
  *                            <li> gpudb::revoke_permission_system_system_read:
@@ -19468,6 +19538,10 @@ RevokePermissionSystemResponse GPUdb::revokePermissionSystem( const std::string&
  *                            <li>
  *                    gpudb::revoke_permission_system_system_admin: Full access
  *                    to all data and system functions.
+ *                            <li>
+ *                    gpudb::revoke_permission_system_system_user_admin: Access
+ *                    to administer users and roles that do not have
+ *                    system_admin permission.
  *                            <li>
  *                    gpudb::revoke_permission_system_system_write: Read and
  *                    write access to all tables.
@@ -19830,6 +19904,86 @@ ShowGraphResponse& GPUdb::showGraph( const std::string& graphName,
 
 
 /**
+ * @private
+ * 
+ * @param[in] request_  Request object containing the parameters for the
+ *                      operation.
+ * 
+ * @return Response object containing the result of the operation.
+ * 
+ */
+
+ShowGraphGrammarResponse GPUdb::showGraphGrammar( const ShowGraphGrammarRequest& request_ ) const
+{
+    ShowGraphGrammarResponse actualResponse_;
+    submitRequest("/show/graph/grammar", request_, actualResponse_, false);
+    return actualResponse_;
+}
+
+
+/**
+ * @private
+ * 
+ * @param[in] request_  Request object containing the parameters for the
+ *                      operation.
+ * @param[out] response_  Response object containing the results of the
+ *                        operation.
+ * 
+ * @return Response object containing the result of the operation (initially
+ *         passed in by reference).
+ * 
+ */
+
+ShowGraphGrammarResponse& GPUdb::showGraphGrammar( const ShowGraphGrammarRequest& request_,
+                                                   ShowGraphGrammarResponse& response_ ) const
+{
+    submitRequest("/show/graph/grammar", request_, response_, false);
+    return response_;
+}
+
+
+/**
+ * @private
+ * 
+ * @param options
+ * 
+ * @return Response object containing the result of the operation.
+ * 
+ */
+
+ShowGraphGrammarResponse GPUdb::showGraphGrammar( const std::map<std::string, std::string>& options ) const
+{
+    ShowGraphGrammarRequest actualRequest_;
+    actualRequest_.options = options;
+    ShowGraphGrammarResponse actualResponse_;
+    submitRequest("/show/graph/grammar", actualRequest_, actualResponse_, false);
+    return actualResponse_;
+}
+
+
+/**
+ * @private
+ * 
+ * @param options
+ * @param[out] response_  Response object containing the results of the
+ *                        operation.
+ * 
+ * @return Response object containing the result of the operation (initially
+ *         passed in by reference).
+ * 
+ */
+
+ShowGraphGrammarResponse& GPUdb::showGraphGrammar( const std::map<std::string, std::string>& options,
+                                                   ShowGraphGrammarResponse& response_ ) const
+{
+    ShowGraphGrammarRequest actualRequest_;
+    actualRequest_.options = options;
+    submitRequest("/show/graph/grammar", actualRequest_, response_, false);
+    return response_;
+}
+
+
+/**
  * Shows information about a proc.
  * 
  * @param[in] request_  Request object containing the parameters for the
@@ -20009,6 +20163,9 @@ ShowProcStatusResponse& GPUdb::showProcStatus( const ShowProcStatusRequest& requ
  *                         <li> gpudb::show_proc_status_false
  *                 </ul>
  *                 The default value is gpudb::show_proc_status_false.
+ *                         <li> gpudb::show_proc_status_run_tag: Limit statuses
+ *                 to proc instances where a matching run tag was provided to
+ *                 /execute/proc.  The default value is ''.
  *                 </ul>
  * 
  * @return Response object containing the result of the operation.
@@ -20050,6 +20207,9 @@ ShowProcStatusResponse GPUdb::showProcStatus( const std::string& runId,
  *                         <li> gpudb::show_proc_status_false
  *                 </ul>
  *                 The default value is gpudb::show_proc_status_false.
+ *                         <li> gpudb::show_proc_status_run_tag: Limit statuses
+ *                 to proc instances where a matching run tag was provided to
+ *                 /execute/proc.  The default value is ''.
  *                 </ul>
  * @param[out] response_  Response object containing the results of the
  *                        operation.

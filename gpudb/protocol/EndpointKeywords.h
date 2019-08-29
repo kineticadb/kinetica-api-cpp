@@ -450,6 +450,7 @@ namespace gpudb
     extern const std::string create_type_text_search;
     extern const std::string create_type_time;
     extern const std::string create_type_timestamp;
+    extern const std::string create_type_ulong;
     extern const std::string create_type_wkt;
 
     // Keywords for /create/union request
@@ -491,6 +492,7 @@ namespace gpudb
     // Keywords for /execute/proc request
     extern const std::string execute_proc_cache_input;
     extern const std::string execute_proc_kifs_input_dirs;
+    extern const std::string execute_proc_run_tag;
     extern const std::string execute_proc_use_cached_input;
 
     // Keywords for /execute/sql request
@@ -650,6 +652,7 @@ namespace gpudb
     // Keywords for /grant/permission/system request
     extern const std::string grant_permission_system_system_admin;
     extern const std::string grant_permission_system_system_read;
+    extern const std::string grant_permission_system_system_user_admin;
     extern const std::string grant_permission_system_system_write;
 
     // Keywords for /grant/permission/table request
@@ -697,6 +700,9 @@ namespace gpudb
     extern const std::string insert_symbol_svg;
     extern const std::string insert_symbol_svg_path;
 
+    // Keywords for /kill/proc request
+    extern const std::string kill_proc_run_tag;
+
     // Keywords for /lock/table request
     extern const std::string lock_table_no_access;
     extern const std::string lock_table_read_only;
@@ -713,8 +719,10 @@ namespace gpudb
     extern const std::string match_graph_incremental_weighted;
     extern const std::string match_graph_markov_chain;
     extern const std::string match_graph_match_od_pairs;
+    extern const std::string match_graph_match_supply_demand;
     extern const std::string match_graph_max_solve_length;
     extern const std::string match_graph_num_segments;
+    extern const std::string match_graph_partial_loading;
     extern const std::string match_graph_search_radius;
     extern const std::string match_graph_source;
     extern const std::string match_graph_time_window_width;
@@ -747,6 +755,7 @@ namespace gpudb
     // Keywords for /revoke/permission/system request
     extern const std::string revoke_permission_system_system_admin;
     extern const std::string revoke_permission_system_system_read;
+    extern const std::string revoke_permission_system_system_user_admin;
     extern const std::string revoke_permission_system_system_write;
 
     // Keywords for /revoke/permission/table request
@@ -773,6 +782,7 @@ namespace gpudb
     // Keywords for /show/proc/status request
     extern const std::string show_proc_status_clear_complete;
     extern const std::string show_proc_status_false;
+    extern const std::string show_proc_status_run_tag;
     extern const std::string show_proc_status_true;
 
     // Keywords for /show/proc/status response
