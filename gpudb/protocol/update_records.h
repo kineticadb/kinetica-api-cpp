@@ -124,6 +124,17 @@ namespace gpudb
          *                      The default value is
          *                      gpudb::update_records_false.
          *                              <li>
+         *                      gpudb::update_records_truncate_strings: If set
+         *                      to {true}@{, any strings which are too long for
+         *                      their charN string fields will be truncated to
+         *                      fit.  The default value is false.
+         *                      <ul>
+         *                              <li> gpudb::update_records_true
+         *                              <li> gpudb::update_records_false
+         *                      </ul>
+         *                      The default value is
+         *                      gpudb::update_records_false.
+         *                              <li>
          *                      gpudb::update_records_use_expressions_in_new_values_maps:
          *                      When set to @a true, all new values in @a
          *                      newValuesMaps are considered as expression
@@ -236,6 +247,17 @@ namespace gpudb
          *                      qualifying records to be deleted and reinserted
          *                      so their partition membership will be
          *                      reevaluated.
+         *                      <ul>
+         *                              <li> gpudb::update_records_true
+         *                              <li> gpudb::update_records_false
+         *                      </ul>
+         *                      The default value is
+         *                      gpudb::update_records_false.
+         *                              <li>
+         *                      gpudb::update_records_truncate_strings: If set
+         *                      to {true}@{, any strings which are too long for
+         *                      their charN string fields will be truncated to
+         *                      fit.  The default value is false.
          *                      <ul>
          *                              <li> gpudb::update_records_true
          *                              <li> gpudb::update_records_false
@@ -467,6 +489,17 @@ namespace gpudb
          *                      qualifying records to be deleted and reinserted
          *                      so their partition membership will be
          *                      reevaluated.
+         *                      <ul>
+         *                              <li> gpudb::update_records_true
+         *                              <li> gpudb::update_records_false
+         *                      </ul>
+         *                      The default value is
+         *                      gpudb::update_records_false.
+         *                              <li>
+         *                      gpudb::update_records_truncate_strings: If set
+         *                      to {true}@{, any strings which are too long for
+         *                      their charN string fields will be truncated to
+         *                      fit.  The default value is false.
          *                      <ul>
          *                              <li> gpudb::update_records_true
          *                              <li> gpudb::update_records_false

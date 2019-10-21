@@ -91,9 +91,9 @@ namespace gpudb
          *                      gpudb::insert_records_false.
          *                              <li>
          *                      gpudb::insert_records_truncate_strings: If set
-         *                      to {true}@{, any strings which are too long for
-         *                      their charN string fields will be truncated to
-         *                      fit.  The default value is false.
+         *                      to @a true, any strings which are too long for
+         *                      their target charN string columns will be
+         *                      truncated to fit.
          *                      <ul>
          *                              <li> gpudb::insert_records_true
          *                              <li> gpudb::insert_records_false
@@ -169,9 +169,9 @@ namespace gpudb
          *                      gpudb::insert_records_false.
          *                              <li>
          *                      gpudb::insert_records_truncate_strings: If set
-         *                      to {true}@{, any strings which are too long for
-         *                      their charN string fields will be truncated to
-         *                      fit.  The default value is false.
+         *                      to @a true, any strings which are too long for
+         *                      their target charN string columns will be
+         *                      truncated to fit.
          *                      <ul>
          *                              <li> gpudb::insert_records_true
          *                              <li> gpudb::insert_records_false
@@ -344,9 +344,9 @@ namespace gpudb
          *                      gpudb::insert_records_false.
          *                              <li>
          *                      gpudb::insert_records_truncate_strings: If set
-         *                      to {true}@{, any strings which are too long for
-         *                      their charN string fields will be truncated to
-         *                      fit.  The default value is false.
+         *                      to @a true, any strings which are too long for
+         *                      their target charN string columns will be
+         *                      truncated to fit.
          *                      <ul>
          *                              <li> gpudb::insert_records_true
          *                              <li> gpudb::insert_records_false

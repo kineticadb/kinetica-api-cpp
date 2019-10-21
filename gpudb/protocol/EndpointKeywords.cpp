@@ -200,6 +200,7 @@ namespace gpudb
     const std::string alter_system_properties_communicator_test          ( "communicator_test"           );
     const std::string alter_system_properties_concurrent_kernel_execution( "concurrent_kernel_execution" );
     const std::string alter_system_properties_enable_audit               ( "enable_audit"                );
+    const std::string alter_system_properties_evict_columns              ( "evict_columns"               );
     const std::string alter_system_properties_execution_mode             ( "execution_mode"              );
     const std::string alter_system_properties_false                      ( "false"                       );
     const std::string alter_system_properties_flush_to_disk              ( "flush_to_disk"               );
@@ -909,6 +910,7 @@ namespace gpudb
     const std::string update_records_json                              ( "json"                               );
     const std::string update_records_record_id                         ( "record_id"                          );
     const std::string update_records_true                              ( "true"                               );
+    const std::string update_records_truncate_strings                  ( "truncate_strings"                   );
     const std::string update_records_update_on_existing_pk             ( "update_on_existing_pk"              );
     const std::string update_records_update_partition                  ( "update_partition"                   );
     const std::string update_records_use_expressions_in_new_values_maps( "use_expressions_in_new_values_maps" );
