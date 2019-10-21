@@ -47,7 +47,8 @@ namespace gpudb
             projection(std::string()),
             bgColor(int64_t()),
             styleOptions(std::map<std::string, std::vector<std::string> >()),
-            options(std::map<std::string, std::string>())
+            options(std::map<std::string, std::string>()),
+            cbTransparencyVec(std::vector<int32_t>())
         {
         }
 
@@ -271,9 +272,10 @@ namespace gpudb
          *                           gpudb::visualize_image_classbreak_circle.
          *                           </ul>
          * @param[in] options_
+         * @param[in] cbTransparencyVec_
          * 
          */
-        VisualizeImageClassbreakRequest(const std::vector<std::string>& tableNames_, const std::vector<std::string>& worldTableNames_, const std::string& xColumnName_, const std::string& yColumnName_, const std::string& geometryColumnName_, const std::vector<std::vector<std::string> >& trackIds_, const std::string& cbAttr_, const std::vector<std::string>& cbVals_, const std::string& cbPointcolorAttr_, const std::vector<std::string>& cbPointcolorVals_, const std::string& cbPointsizeAttr_, const std::vector<std::string>& cbPointsizeVals_, const std::string& cbPointshapeAttr_, const std::vector<std::string>& cbPointshapeVals_, const double minX_, const double maxX_, const double minY_, const double maxY_, const int32_t width_, const int32_t height_, const std::string& projection_, const int64_t bgColor_, const std::map<std::string, std::vector<std::string> >& styleOptions_, const std::map<std::string, std::string>& options_):
+        VisualizeImageClassbreakRequest(const std::vector<std::string>& tableNames_, const std::vector<std::string>& worldTableNames_, const std::string& xColumnName_, const std::string& yColumnName_, const std::string& geometryColumnName_, const std::vector<std::vector<std::string> >& trackIds_, const std::string& cbAttr_, const std::vector<std::string>& cbVals_, const std::string& cbPointcolorAttr_, const std::vector<std::string>& cbPointcolorVals_, const std::string& cbPointsizeAttr_, const std::vector<std::string>& cbPointsizeVals_, const std::string& cbPointshapeAttr_, const std::vector<std::string>& cbPointshapeVals_, const double minX_, const double maxX_, const double minY_, const double maxY_, const int32_t width_, const int32_t height_, const std::string& projection_, const int64_t bgColor_, const std::map<std::string, std::vector<std::string> >& styleOptions_, const std::map<std::string, std::string>& options_, const std::vector<int32_t>& cbTransparencyVec_):
             tableNames( tableNames_ ),
             worldTableNames( worldTableNames_ ),
             xColumnName( xColumnName_ ),
@@ -297,7 +299,8 @@ namespace gpudb
             projection( projection_ ),
             bgColor( bgColor_ ),
             styleOptions( styleOptions_ ),
-            options( options_ )
+            options( options_ ),
+            cbTransparencyVec( cbTransparencyVec_ )
         {
         }
 
@@ -325,6 +328,7 @@ namespace gpudb
         int64_t bgColor;
         std::map<std::string, std::vector<std::string> > styleOptions;
         std::map<std::string, std::string> options;
+        std::vector<int32_t> cbTransparencyVec;
     };
 }
 
@@ -362,6 +366,7 @@ namespace avro
             ::avro::encode(e, v.bgColor);
             ::avro::encode(e, v.styleOptions);
             ::avro::encode(e, v.options);
+            ::avro::encode(e, v.cbTransparencyVec);
         }
 
         static void decode(Decoder& d, gpudb::VisualizeImageClassbreakRequest& v)
@@ -470,6 +475,10 @@ namespace avro
                             ::avro::decode(d, v.options);
                             break;
 
+                        case 24:
+                            ::avro::decode(d, v.cbTransparencyVec);
+                            break;
+
                         default:
                             break;
                     }
@@ -501,6 +510,7 @@ namespace avro
                 ::avro::decode(d, v.bgColor);
                 ::avro::decode(d, v.styleOptions);
                 ::avro::decode(d, v.options);
+                ::avro::decode(d, v.cbTransparencyVec);
             }
         }
     };

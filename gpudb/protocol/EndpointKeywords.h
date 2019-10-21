@@ -200,6 +200,7 @@ namespace gpudb
     extern const std::string alter_system_properties_communicator_test;
     extern const std::string alter_system_properties_concurrent_kernel_execution;
     extern const std::string alter_system_properties_enable_audit;
+    extern const std::string alter_system_properties_evict_columns;
     extern const std::string alter_system_properties_execution_mode;
     extern const std::string alter_system_properties_false;
     extern const std::string alter_system_properties_flush_to_disk;
@@ -909,6 +910,7 @@ namespace gpudb
     extern const std::string update_records_json;
     extern const std::string update_records_record_id;
     extern const std::string update_records_true;
+    extern const std::string update_records_truncate_strings;
     extern const std::string update_records_update_on_existing_pk;
     extern const std::string update_records_update_partition;
     extern const std::string update_records_use_expressions_in_new_values_maps;

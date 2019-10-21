@@ -190,10 +190,13 @@ namespace gpudb
          *                      </ul>
          *                      The default value is gpudb::create_graph_false.
          *                              <li> gpudb::create_graph_sync_db: If
-         *                      set to @a true, the graph will be updated if
-         *                      its source table(s) is updated. If set to @a
-         *                      false, the graph will not be updated if the
-         *                      source table(s) is updated.
+         *                      set to @a true and @a save_persist is set to @a
+         *                      true, the graph will be fully reconstructed
+         *                      upon a database restart and be updated to align
+         *                      with any source table(s) updates made since the
+         *                      creation of the graph. If dynamic graph updates
+         *                      upon table inserts are desired, use @a
+         *                      add_table_monitor instead.
          *                      <ul>
          *                              <li> gpudb::create_graph_true
          *                              <li> gpudb::create_graph_false
@@ -202,8 +205,14 @@ namespace gpudb
          *                              <li>
          *                      gpudb::create_graph_add_table_monitor: Adds a
          *                      table monitor to every table used in the
-         *                      creation of the graph. For more details on
-         *                      table monitors, see /create/tablemonitor.
+         *                      creation of the graph; this table monitor will
+         *                      trigger the graph to update dynamically upon
+         *                      inserts to the source table(s). Note that upon
+         *                      database restart, if @a save_persist is also
+         *                      set to @a true, the graph will be fully
+         *                      reconstructed and the table monitors will be
+         *                      reattached. For more details on table monitors,
+         *                      see /create/tablemonitor.
          *                      <ul>
          *                              <li> gpudb::create_graph_true
          *                              <li> gpudb::create_graph_false

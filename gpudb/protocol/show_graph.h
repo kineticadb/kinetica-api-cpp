@@ -14,7 +14,7 @@ namespace gpudb
      * #showGraph(const ShowGraphRequest&) const}.
      * <p>
      * Shows information and characteristics of graphs that exist on the graph
-     * server, depending on the options specified.
+     * server.
      */
     struct ShowGraphRequest
     {
@@ -32,14 +32,15 @@ namespace gpudb
          * Constructs a ShowGraphRequest object with the specified parameters.
          * 
          * @param[in] graphName_  Name of the graph on which to retrieve
-         *                        information. If empty, information about all
-         *                        graphs is returned.
+         *                        information. If left as the default value,
+         *                        information about all graphs is returned.
          * @param[in] options_  Optional parameters.
          *                      <ul>
          *                              <li>
          *                      gpudb::show_graph_show_original_request: If set
          *                      to @a true, the request that was originally
-         *                      used.
+         *                      used to create the graph is also returned as
+         *                      JSON.
          *                      <ul>
          *                              <li> gpudb::show_graph_true
          *                              <li> gpudb::show_graph_false
@@ -109,7 +110,7 @@ namespace gpudb
      * #showGraph(const ShowGraphRequest&) const}.
      * <p>
      * Shows information and characteristics of graphs that exist on the graph
-     * server, depending on the options specified.
+     * server.
      */
     struct ShowGraphResponse
     {

@@ -78,6 +78,18 @@ namespace gpudb
          *                                 Sets the chunk size of all new sets
          *                                 to the specified integer value.
          *                                         <li>
+         *                                 gpudb::alter_system_properties_evict_columns:
+         *                                 Attempts to evict columns from
+         *                                 memory to the persistent store.
+         *                                 Value string is a semicolon
+         *                                 separated list of entries, each
+         *                                 entry being a table name optionally
+         *                                 followed by a comma and a comma
+         *                                 separated list of column names to
+         *                                 attempt to evict.  An empty value
+         *                                 string will attempt to evict all
+         *                                 tables and columns.
+         *                                         <li>
          *                                 gpudb::alter_system_properties_execution_mode:
          *                                 Sets the execution_mode for kernel
          *                                 executions to the specified string

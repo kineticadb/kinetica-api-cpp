@@ -101,29 +101,29 @@ namespace gpudb
          *                             href="../../graph_solver/network_graph_solver.html#using-labels"
          *                             target="_top">Using Labels</a> for more
          *                             information.
-         * @param[in] rings_  Only applicable when querying nodes. Sets the
-         *                    number of rings around the node to query for
-         *                    adjacency, with '1' being the edges directly
+         * @param[in] rings_  Sets the number of rings around the node to query
+         *                    for adjacency, with '1' being the edges directly
          *                    attached to the queried node. Also known as
          *                    number of hops. For example, if it is set to '2',
          *                    the edge(s) directly attached to the queried
          *                    node(s) will be returned; in addition, the
          *                    edge(s) attached to the node(s) attached to the
          *                    initial ring of edge(s) surrounding the queried
-         *                    node(s) will be returned. This setting can be '0'
-         *                    in which case if the node type id label, it'll
-         *                    then query for all that has the same property.
+         *                    node(s) will be returned. If the value is set to
+         *                    '0', any nodes that meet the criteria in @a
+         *                    queries and @a restrictions will be returned.
+         *                    This parameter is only applicable when querying
+         *                    nodes.
          * @param[in] options_  Additional parameters
          *                      <ul>
          *                              <li>
-         *                      gpudb::query_graph_force_undirected: This
-         *                      parameter is only applicable if the queried
-         *                      graph @a graphName is directed and when
-         *                      querying nodes. If set to @a true, all inbound
-         *                      edges and outbound edges relative to the node
-         *                      will be returned. If set to @a false, only
-         *                      outbound edges relative to the node will be
-         *                      returned.
+         *                      gpudb::query_graph_force_undirected: If set to
+         *                      @a true, all inbound edges and outbound edges
+         *                      relative to the node will be returned. If set
+         *                      to @a false, only outbound edges relative to
+         *                      the node will be returned. This parameter is
+         *                      only applicable if the queried graph @a
+         *                      graphName is directed and when querying nodes.
          *                      <ul>
          *                              <li> gpudb::query_graph_true
          *                              <li> gpudb::query_graph_false
@@ -139,9 +139,11 @@ namespace gpudb
          *                      gpudb::query_graph_target_nodes_table: Name of
          *                      the table to store the list of the final nodes
          *                      reached during the traversal. If this value is
-         *                      not given it'll default to
-         *                      adjacemcy_table+'_nodes'.  The default value is
-         *                      ''.
+         *                      left as the default, the table name will
+         *                      default to the @a adjacencyTable value plus a
+         *                      '_nodes' suffix, e.g.,
+         *                      '<adjacency_table_name>_nodes'.  The default
+         *                      value is ''.
          *                              <li>
          *                      gpudb::query_graph_restriction_threshold_value:
          *                      Value-based restriction comparison. Any node or
@@ -152,13 +154,12 @@ namespace gpudb
          *                      gpudb::query_graph_export_query_results:
          *                      Returns query results in the response. If set
          *                      to @a true, the @a adjacencyListIntArray (if
-         *                      the query was based on IDs),
-         *                      @{adjacency_list_string_array} (if the query
-         *                      was based on names), or
-         *                      @{output_adjacency_list_wkt_array} (if the
-         *                      query was based on WKTs) will be populated with
-         *                      the results. If set to @a false, none of the
-         *                      arrays will be populated.
+         *                      the query was based on IDs), @a
+         *                      adjacencyListStringArray (if the query was
+         *                      based on names), or @a adjacencyListWktArray
+         *                      (if the query was based on WKTs) will be
+         *                      populated with the results. If set to @a false,
+         *                      none of the arrays will be populated.
          *                      <ul>
          *                              <li> gpudb::query_graph_true
          *                              <li> gpudb::query_graph_false

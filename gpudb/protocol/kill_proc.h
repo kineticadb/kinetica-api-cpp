@@ -30,17 +30,20 @@ namespace gpudb
         /**
          * Constructs a KillProcRequest object with the specified parameters.
          * 
-         * @param[in] runId_  The run ID of the running proc instance. If the
-         *                    run ID is not found or the proc instance has
-         *                    already completed, this does nothing. If not
-         *                    specified, all running proc instances will be
-         *                    killed.
+         * @param[in] runId_  The run ID of a running proc instance. If a proc
+         *                    with a matching run ID is not found or the proc
+         *                    instance has already completed, no procs will be
+         *                    killed. If not specified, all running proc
+         *                    instances will be killed.
          * @param[in] options_  Optional parameters.
          *                      <ul>
-         *                              <li> gpudb::kill_proc_run_tag: Kill
-         *                      only proc instances where a matching run tag
-         *                      was provided to /execute/proc.  The default
-         *                      value is ''.
+         *                              <li> gpudb::kill_proc_run_tag: If @a
+         *                      runId is specified, kill the proc instance that
+         *                      has a matching run ID and a matching run tag
+         *                      that was provided to /execute/proc. If @a runId
+         *                      is not specified, kill the proc instance(s)
+         *                      where a matching run tag was provided to
+         *                      /execute/proc.  The default value is ''.
          *                      </ul>
          * 
          */

@@ -36,12 +36,11 @@ namespace gpudb
          * Constructs a ShowProcStatusRequest object with the specified
          * parameters.
          * 
-         * @param[in] runId_  The run ID of a specific running or completed
-         *                    proc instance for which the status will be
-         *                    returned. If the run ID is not found, nothing
-         *                    will be returned. If not specified, the statuses
-         *                    of all running and completed proc instances will
-         *                    be returned.
+         * @param[in] runId_  The run ID of a specific proc instance for which
+         *                    the status will be returned. If a proc with a
+         *                    matching run ID is not found, the response will
+         *                    be empty. If not specified, the statuses of all
+         *                    executed proc instances will be returned.
          * @param[in] options_  Optional parameters.
          *                      <ul>
          *                              <li>
@@ -57,7 +56,11 @@ namespace gpudb
          *                      The default value is
          *                      gpudb::show_proc_status_false.
          *                              <li> gpudb::show_proc_status_run_tag:
-         *                      Limit statuses to proc instances where a
+         *                      If @a runId is specified, return the status for
+         *                      a proc instance that has a matching run ID and
+         *                      a matching run tag that was provided to
+         *                      /execute/proc. If @a runId is not specified,
+         *                      return statuses for all proc instances where a
          *                      matching run tag was provided to /execute/proc.
          *                      The default value is ''.
          *                      </ul>

@@ -6,7 +6,7 @@
 
 
 // GPUdb Version
-const std::string GPUdb::API_VERSION( "7.0.7.0" );
+const std::string GPUdb::API_VERSION( "7.0.8.0" );
 
 
 
@@ -4892,6 +4892,15 @@ AlterSystemPropertiesResponse& GPUdb::alterSystemProperties( const AlterSystemPr
  *                            the chunk size of all new sets to the specified
  *                            integer value.
  *                                    <li>
+ *                            gpudb::alter_system_properties_evict_columns:
+ *                            Attempts to evict columns from memory to the
+ *                            persistent store.  Value string is a semicolon
+ *                            separated list of entries, each entry being a
+ *                            table name optionally followed by a comma and a
+ *                            comma separated list of column names to attempt
+ *                            to evict.  An empty value string will attempt to
+ *                            evict all tables and columns.
+ *                                    <li>
  *                            gpudb::alter_system_properties_execution_mode:
  *                            Sets the execution_mode for kernel executions to
  *                            the specified string value. Possible values are
@@ -5042,6 +5051,15 @@ AlterSystemPropertiesResponse GPUdb::alterSystemProperties( const std::map<std::
  *                            gpudb::alter_system_properties_chunk_size: Sets
  *                            the chunk size of all new sets to the specified
  *                            integer value.
+ *                                    <li>
+ *                            gpudb::alter_system_properties_evict_columns:
+ *                            Attempts to evict columns from memory to the
+ *                            persistent store.  Value string is a semicolon
+ *                            separated list of entries, each entry being a
+ *                            table name optionally followed by a comma and a
+ *                            comma separated list of column names to attempt
+ *                            to evict.  An empty value string will attempt to
+ *                            evict all tables and columns.
  *                                    <li>
  *                            gpudb::alter_system_properties_execution_mode:
  *                            Sets the execution_mode for kernel executions to
@@ -6514,9 +6532,9 @@ AppendRecordsResponse& GPUdb::appendRecords( const AppendRecordsRequest& request
  *                 </ul>
  *                 The default value is gpudb::append_records_false.
  *                         <li> gpudb::append_records_truncate_strings: If set
- *                 to {true}@{, it allows appending longer strings to smaller
- *                 charN string columns by truncating the longer string to fit.
- *                 The default value is false.
+ *                 to @a true, it allows inserting longer strings into smaller
+ *                 charN string columns by truncating the longer strings to
+ *                 fit.
  *                 <ul>
  *                         <li> gpudb::append_records_true
  *                         <li> gpudb::append_records_false
@@ -6602,9 +6620,9 @@ AppendRecordsResponse GPUdb::appendRecords( const std::string& tableName,
  *                 </ul>
  *                 The default value is gpudb::append_records_false.
  *                         <li> gpudb::append_records_truncate_strings: If set
- *                 to {true}@{, it allows appending longer strings to smaller
- *                 charN string columns by truncating the longer string to fit.
- *                 The default value is false.
+ *                 to @a true, it allows inserting longer strings into smaller
+ *                 charN string columns by truncating the longer strings to
+ *                 fit.
  *                 <ul>
  *                         <li> gpudb::append_records_true
  *                         <li> gpudb::append_records_false
@@ -7322,10 +7340,12 @@ CreateGraphResponse& GPUdb::createGraph( const CreateGraphRequest& request_,
  *                         <li> gpudb::create_graph_false
  *                 </ul>
  *                 The default value is gpudb::create_graph_false.
- *                         <li> gpudb::create_graph_sync_db: If set to @a true,
- *                 the graph will be updated if its source table(s) is updated.
- *                 If set to @a false, the graph will not be updated if the
- *                 source table(s) is updated.
+ *                         <li> gpudb::create_graph_sync_db: If set to @a true
+ *                 and @a save_persist is set to @a true, the graph will be
+ *                 fully reconstructed upon a database restart and be updated
+ *                 to align with any source table(s) updates made since the
+ *                 creation of the graph. If dynamic graph updates upon table
+ *                 inserts are desired, use @a add_table_monitor instead.
  *                 <ul>
  *                         <li> gpudb::create_graph_true
  *                         <li> gpudb::create_graph_false
@@ -7333,8 +7353,12 @@ CreateGraphResponse& GPUdb::createGraph( const CreateGraphRequest& request_,
  *                 The default value is gpudb::create_graph_false.
  *                         <li> gpudb::create_graph_add_table_monitor: Adds a
  *                 table monitor to every table used in the creation of the
- *                 graph. For more details on table monitors, see
- *                 /create/tablemonitor.
+ *                 graph; this table monitor will trigger the graph to update
+ *                 dynamically upon inserts to the source table(s). Note that
+ *                 upon database restart, if @a save_persist is also set to @a
+ *                 true, the graph will be fully reconstructed and the table
+ *                 monitors will be reattached. For more details on table
+ *                 monitors, see /create/tablemonitor.
  *                 <ul>
  *                         <li> gpudb::create_graph_true
  *                         <li> gpudb::create_graph_false
@@ -7502,10 +7526,12 @@ CreateGraphResponse GPUdb::createGraph( const std::string& graphName,
  *                         <li> gpudb::create_graph_false
  *                 </ul>
  *                 The default value is gpudb::create_graph_false.
- *                         <li> gpudb::create_graph_sync_db: If set to @a true,
- *                 the graph will be updated if its source table(s) is updated.
- *                 If set to @a false, the graph will not be updated if the
- *                 source table(s) is updated.
+ *                         <li> gpudb::create_graph_sync_db: If set to @a true
+ *                 and @a save_persist is set to @a true, the graph will be
+ *                 fully reconstructed upon a database restart and be updated
+ *                 to align with any source table(s) updates made since the
+ *                 creation of the graph. If dynamic graph updates upon table
+ *                 inserts are desired, use @a add_table_monitor instead.
  *                 <ul>
  *                         <li> gpudb::create_graph_true
  *                         <li> gpudb::create_graph_false
@@ -7513,8 +7539,12 @@ CreateGraphResponse GPUdb::createGraph( const std::string& graphName,
  *                 The default value is gpudb::create_graph_false.
  *                         <li> gpudb::create_graph_add_table_monitor: Adds a
  *                 table monitor to every table used in the creation of the
- *                 graph. For more details on table monitors, see
- *                 /create/tablemonitor.
+ *                 graph; this table monitor will trigger the graph to update
+ *                 dynamically upon inserts to the source table(s). Note that
+ *                 upon database restart, if @a save_persist is also set to @a
+ *                 true, the graph will be fully reconstructed and the table
+ *                 monitors will be reattached. For more details on table
+ *                 monitors, see /create/tablemonitor.
  *                 <ul>
  *                         <li> gpudb::create_graph_true
  *                         <li> gpudb::create_graph_false
@@ -18051,15 +18081,18 @@ KillProcResponse& GPUdb::killProc( const KillProcRequest& request_,
 /**
  * Kills a running proc instance.
  * 
- * @param runId  The run ID of the running proc instance. If the run ID is not
- *               found or the proc instance has already completed, this does
- *               nothing. If not specified, all running proc instances will be
- *               killed.
+ * @param runId  The run ID of a running proc instance. If a proc with a
+ *               matching run ID is not found or the proc instance has already
+ *               completed, no procs will be killed. If not specified, all
+ *               running proc instances will be killed.
  * @param options  Optional parameters.
  *                 <ul>
- *                         <li> gpudb::kill_proc_run_tag: Kill only proc
- *                 instances where a matching run tag was provided to
- *                 /execute/proc.  The default value is ''.
+ *                         <li> gpudb::kill_proc_run_tag: If @a runId is
+ *                 specified, kill the proc instance that has a matching run ID
+ *                 and a matching run tag that was provided to /execute/proc.
+ *                 If @a runId is not specified, kill the proc instance(s)
+ *                 where a matching run tag was provided to /execute/proc.  The
+ *                 default value is ''.
  *                 </ul>
  * 
  * @return Response object containing the result of the operation.
@@ -18081,15 +18114,18 @@ KillProcResponse GPUdb::killProc( const std::string& runId,
 /**
  * Kills a running proc instance.
  * 
- * @param runId  The run ID of the running proc instance. If the run ID is not
- *               found or the proc instance has already completed, this does
- *               nothing. If not specified, all running proc instances will be
- *               killed.
+ * @param runId  The run ID of a running proc instance. If a proc with a
+ *               matching run ID is not found or the proc instance has already
+ *               completed, no procs will be killed. If not specified, all
+ *               running proc instances will be killed.
  * @param options  Optional parameters.
  *                 <ul>
- *                         <li> gpudb::kill_proc_run_tag: Kill only proc
- *                 instances where a matching run tag was provided to
- *                 /execute/proc.  The default value is ''.
+ *                         <li> gpudb::kill_proc_run_tag: If @a runId is
+ *                 specified, kill the proc instance that has a matching run ID
+ *                 and a matching run tag that was provided to /execute/proc.
+ *                 If @a runId is not specified, kill the proc instance(s)
+ *                 where a matching run tag was provided to /execute/proc.  The
+ *                 default value is ''.
  *                 </ul>
  * @param[out] response_  Response object containing the results of the
  *                        operation.
@@ -19079,24 +19115,24 @@ QueryGraphResponse& GPUdb::queryGraph( const QueryGraphRequest& request_,
  *                                    <a
  *                        href="../../graph_solver/network_graph_solver.html#using-labels"
  *                        target="_top">Using Labels</a> for more information.
- * @param rings  Only applicable when querying nodes. Sets the number of rings
- *               around the node to query for adjacency, with '1' being the
- *               edges directly attached to the queried node. Also known as
- *               number of hops. For example, if it is set to '2', the edge(s)
- *               directly attached to the queried node(s) will be returned; in
- *               addition, the edge(s) attached to the node(s) attached to the
- *               initial ring of edge(s) surrounding the queried node(s) will
- *               be returned. This setting can be '0' in which case if the node
- *               type id label, it'll then query for all that has the same
- *               property.
+ * @param rings  Sets the number of rings around the node to query for
+ *               adjacency, with '1' being the edges directly attached to the
+ *               queried node. Also known as number of hops. For example, if it
+ *               is set to '2', the edge(s) directly attached to the queried
+ *               node(s) will be returned; in addition, the edge(s) attached to
+ *               the node(s) attached to the initial ring of edge(s)
+ *               surrounding the queried node(s) will be returned. If the value
+ *               is set to '0', any nodes that meet the criteria in @a queries
+ *               and @a restrictions will be returned. This parameter is only
+ *               applicable when querying nodes.
  * @param options  Additional parameters
  *                 <ul>
- *                         <li> gpudb::query_graph_force_undirected: This
- *                 parameter is only applicable if the queried graph @a
- *                 graphName is directed and when querying nodes. If set to @a
- *                 true, all inbound edges and outbound edges relative to the
- *                 node will be returned. If set to @a false, only outbound
- *                 edges relative to the node will be returned.
+ *                         <li> gpudb::query_graph_force_undirected: If set to
+ *                 @a true, all inbound edges and outbound edges relative to
+ *                 the node will be returned. If set to @a false, only outbound
+ *                 edges relative to the node will be returned. This parameter
+ *                 is only applicable if the queried graph @a graphName is
+ *                 directed and when querying nodes.
  *                 <ul>
  *                         <li> gpudb::query_graph_true
  *                         <li> gpudb::query_graph_false
@@ -19109,9 +19145,10 @@ QueryGraphResponse& GPUdb::queryGraph( const QueryGraphRequest& request_,
  *                 The default value is an empty std::map.
  *                         <li> gpudb::query_graph_target_nodes_table: Name of
  *                 the table to store the list of the final nodes reached
- *                 during the traversal. If this value is not given it'll
- *                 default to adjacemcy_table+'_nodes'.  The default value is
- *                 ''.
+ *                 during the traversal. If this value is left as the default,
+ *                 the table name will default to the @a adjacencyTable value
+ *                 plus a '_nodes' suffix, e.g.,
+ *                 '<adjacency_table_name>_nodes'.  The default value is ''.
  *                         <li> gpudb::query_graph_restriction_threshold_value:
  *                 Value-based restriction comparison. Any node or edge with a
  *                 RESTRICTIONS_VALUECOMPARED value greater than the @a
@@ -19120,10 +19157,10 @@ QueryGraphResponse& GPUdb::queryGraph( const QueryGraphRequest& request_,
  *                         <li> gpudb::query_graph_export_query_results:
  *                 Returns query results in the response. If set to @a true,
  *                 the @a adjacencyListIntArray (if the query was based on
- *                 IDs), @{adjacency_list_string_array} (if the query was based
- *                 on names), or @{output_adjacency_list_wkt_array} (if the
- *                 query was based on WKTs) will be populated with the results.
- *                 If set to @a false, none of the arrays will be populated.
+ *                 IDs), @a adjacencyListStringArray (if the query was based on
+ *                 names), or @a adjacencyListWktArray (if the query was based
+ *                 on WKTs) will be populated with the results. If set to @a
+ *                 false, none of the arrays will be populated.
  *                 <ul>
  *                         <li> gpudb::query_graph_true
  *                         <li> gpudb::query_graph_false
@@ -19236,24 +19273,24 @@ QueryGraphResponse GPUdb::queryGraph( const std::string& graphName,
  *                                    <a
  *                        href="../../graph_solver/network_graph_solver.html#using-labels"
  *                        target="_top">Using Labels</a> for more information.
- * @param rings  Only applicable when querying nodes. Sets the number of rings
- *               around the node to query for adjacency, with '1' being the
- *               edges directly attached to the queried node. Also known as
- *               number of hops. For example, if it is set to '2', the edge(s)
- *               directly attached to the queried node(s) will be returned; in
- *               addition, the edge(s) attached to the node(s) attached to the
- *               initial ring of edge(s) surrounding the queried node(s) will
- *               be returned. This setting can be '0' in which case if the node
- *               type id label, it'll then query for all that has the same
- *               property.
+ * @param rings  Sets the number of rings around the node to query for
+ *               adjacency, with '1' being the edges directly attached to the
+ *               queried node. Also known as number of hops. For example, if it
+ *               is set to '2', the edge(s) directly attached to the queried
+ *               node(s) will be returned; in addition, the edge(s) attached to
+ *               the node(s) attached to the initial ring of edge(s)
+ *               surrounding the queried node(s) will be returned. If the value
+ *               is set to '0', any nodes that meet the criteria in @a queries
+ *               and @a restrictions will be returned. This parameter is only
+ *               applicable when querying nodes.
  * @param options  Additional parameters
  *                 <ul>
- *                         <li> gpudb::query_graph_force_undirected: This
- *                 parameter is only applicable if the queried graph @a
- *                 graphName is directed and when querying nodes. If set to @a
- *                 true, all inbound edges and outbound edges relative to the
- *                 node will be returned. If set to @a false, only outbound
- *                 edges relative to the node will be returned.
+ *                         <li> gpudb::query_graph_force_undirected: If set to
+ *                 @a true, all inbound edges and outbound edges relative to
+ *                 the node will be returned. If set to @a false, only outbound
+ *                 edges relative to the node will be returned. This parameter
+ *                 is only applicable if the queried graph @a graphName is
+ *                 directed and when querying nodes.
  *                 <ul>
  *                         <li> gpudb::query_graph_true
  *                         <li> gpudb::query_graph_false
@@ -19266,9 +19303,10 @@ QueryGraphResponse GPUdb::queryGraph( const std::string& graphName,
  *                 The default value is an empty std::map.
  *                         <li> gpudb::query_graph_target_nodes_table: Name of
  *                 the table to store the list of the final nodes reached
- *                 during the traversal. If this value is not given it'll
- *                 default to adjacemcy_table+'_nodes'.  The default value is
- *                 ''.
+ *                 during the traversal. If this value is left as the default,
+ *                 the table name will default to the @a adjacencyTable value
+ *                 plus a '_nodes' suffix, e.g.,
+ *                 '<adjacency_table_name>_nodes'.  The default value is ''.
  *                         <li> gpudb::query_graph_restriction_threshold_value:
  *                 Value-based restriction comparison. Any node or edge with a
  *                 RESTRICTIONS_VALUECOMPARED value greater than the @a
@@ -19277,10 +19315,10 @@ QueryGraphResponse GPUdb::queryGraph( const std::string& graphName,
  *                         <li> gpudb::query_graph_export_query_results:
  *                 Returns query results in the response. If set to @a true,
  *                 the @a adjacencyListIntArray (if the query was based on
- *                 IDs), @{adjacency_list_string_array} (if the query was based
- *                 on names), or @{output_adjacency_list_wkt_array} (if the
- *                 query was based on WKTs) will be populated with the results.
- *                 If set to @a false, none of the arrays will be populated.
+ *                 IDs), @a adjacencyListStringArray (if the query was based on
+ *                 names), or @a adjacencyListWktArray (if the query was based
+ *                 on WKTs) will be populated with the results. If set to @a
+ *                 false, none of the arrays will be populated.
  *                 <ul>
  *                         <li> gpudb::query_graph_true
  *                         <li> gpudb::query_graph_false
@@ -19795,7 +19833,7 @@ RevokeRoleResponse& GPUdb::revokeRole( const std::string& role,
 
 /**
  * Shows information and characteristics of graphs that exist on the graph
- * server, depending on the options specified.
+ * server.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -19814,7 +19852,7 @@ ShowGraphResponse GPUdb::showGraph( const ShowGraphRequest& request_ ) const
 
 /**
  * Shows information and characteristics of graphs that exist on the graph
- * server, depending on the options specified.
+ * server.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -19836,14 +19874,16 @@ ShowGraphResponse& GPUdb::showGraph( const ShowGraphRequest& request_,
 
 /**
  * Shows information and characteristics of graphs that exist on the graph
- * server, depending on the options specified.
+ * server.
  * 
  * @param graphName  Name of the graph on which to retrieve information. If
- *                   empty, information about all graphs is returned.
+ *                   left as the default value, information about all graphs is
+ *                   returned.
  * @param options  Optional parameters.
  *                 <ul>
  *                         <li> gpudb::show_graph_show_original_request: If set
- *                 to @a true, the request that was originally used.
+ *                 to @a true, the request that was originally used to create
+ *                 the graph is also returned as JSON.
  *                 <ul>
  *                         <li> gpudb::show_graph_true
  *                         <li> gpudb::show_graph_false
@@ -19869,14 +19909,16 @@ ShowGraphResponse GPUdb::showGraph( const std::string& graphName,
 
 /**
  * Shows information and characteristics of graphs that exist on the graph
- * server, depending on the options specified.
+ * server.
  * 
  * @param graphName  Name of the graph on which to retrieve information. If
- *                   empty, information about all graphs is returned.
+ *                   left as the default value, information about all graphs is
+ *                   returned.
  * @param options  Optional parameters.
  *                 <ul>
  *                         <li> gpudb::show_graph_show_original_request: If set
- *                 to @a true, the request that was originally used.
+ *                 to @a true, the request that was originally used to create
+ *                 the graph is also returned as JSON.
  *                 <ul>
  *                         <li> gpudb::show_graph_true
  *                         <li> gpudb::show_graph_false
@@ -20147,11 +20189,10 @@ ShowProcStatusResponse& GPUdb::showProcStatus( const ShowProcStatusRequest& requ
  * and data segment ID (each invocation of the proc command on a data segment
  * is assigned a data segment ID).
  * 
- * @param runId  The run ID of a specific running or completed proc instance
- *               for which the status will be returned. If the run ID is not
- *               found, nothing will be returned. If not specified, the
- *               statuses of all running and completed proc instances will be
- *               returned.
+ * @param runId  The run ID of a specific proc instance for which the status
+ *               will be returned. If a proc with a matching run ID is not
+ *               found, the response will be empty. If not specified, the
+ *               statuses of all executed proc instances will be returned.
  * @param options  Optional parameters.
  *                 <ul>
  *                         <li> gpudb::show_proc_status_clear_complete: If set
@@ -20163,9 +20204,12 @@ ShowProcStatusResponse& GPUdb::showProcStatus( const ShowProcStatusRequest& requ
  *                         <li> gpudb::show_proc_status_false
  *                 </ul>
  *                 The default value is gpudb::show_proc_status_false.
- *                         <li> gpudb::show_proc_status_run_tag: Limit statuses
- *                 to proc instances where a matching run tag was provided to
- *                 /execute/proc.  The default value is ''.
+ *                         <li> gpudb::show_proc_status_run_tag: If @a runId is
+ *                 specified, return the status for a proc instance that has a
+ *                 matching run ID and a matching run tag that was provided to
+ *                 /execute/proc. If @a runId is not specified, return statuses
+ *                 for all proc instances where a matching run tag was provided
+ *                 to /execute/proc.  The default value is ''.
  *                 </ul>
  * 
  * @return Response object containing the result of the operation.
@@ -20191,11 +20235,10 @@ ShowProcStatusResponse GPUdb::showProcStatus( const std::string& runId,
  * and data segment ID (each invocation of the proc command on a data segment
  * is assigned a data segment ID).
  * 
- * @param runId  The run ID of a specific running or completed proc instance
- *               for which the status will be returned. If the run ID is not
- *               found, nothing will be returned. If not specified, the
- *               statuses of all running and completed proc instances will be
- *               returned.
+ * @param runId  The run ID of a specific proc instance for which the status
+ *               will be returned. If a proc with a matching run ID is not
+ *               found, the response will be empty. If not specified, the
+ *               statuses of all executed proc instances will be returned.
  * @param options  Optional parameters.
  *                 <ul>
  *                         <li> gpudb::show_proc_status_clear_complete: If set
@@ -20207,9 +20250,12 @@ ShowProcStatusResponse GPUdb::showProcStatus( const std::string& runId,
  *                         <li> gpudb::show_proc_status_false
  *                 </ul>
  *                 The default value is gpudb::show_proc_status_false.
- *                         <li> gpudb::show_proc_status_run_tag: Limit statuses
- *                 to proc instances where a matching run tag was provided to
- *                 /execute/proc.  The default value is ''.
+ *                         <li> gpudb::show_proc_status_run_tag: If @a runId is
+ *                 specified, return the status for a proc instance that has a
+ *                 matching run ID and a matching run tag that was provided to
+ *                 /execute/proc. If @a runId is not specified, return statuses
+ *                 for all proc instances where a matching run tag was provided
+ *                 to /execute/proc.  The default value is ''.
  *                 </ul>
  * @param[out] response_  Response object containing the results of the
  *                        operation.
@@ -23315,6 +23361,7 @@ VisualizeImageClassbreakResponse& GPUdb::visualizeImageClassbreak( const Visuali
  *                      gpudb::visualize_image_classbreak_circle.
  *                      </ul>
  * @param options
+ * @param cbTransparencyVec
  * 
  * @return Response object containing the result of the operation.
  * 
@@ -23343,7 +23390,8 @@ VisualizeImageClassbreakResponse GPUdb::visualizeImageClassbreak( const std::vec
                                                                   const std::string& projection,
                                                                   const int64_t bgColor,
                                                                   const std::map<std::string, std::vector<std::string> >& styleOptions,
-                                                                  const std::map<std::string, std::string>& options ) const
+                                                                  const std::map<std::string, std::string>& options,
+                                                                  const std::vector<int32_t>& cbTransparencyVec ) const
 {
     VisualizeImageClassbreakRequest actualRequest_;
     actualRequest_.tableNames = tableNames;
@@ -23370,6 +23418,7 @@ VisualizeImageClassbreakResponse GPUdb::visualizeImageClassbreak( const std::vec
     actualRequest_.bgColor = bgColor;
     actualRequest_.styleOptions = styleOptions;
     actualRequest_.options = options;
+    actualRequest_.cbTransparencyVec = cbTransparencyVec;
     VisualizeImageClassbreakResponse actualResponse_;
     submitRequest("/visualize/image/classbreak", actualRequest_, actualResponse_, false);
     return actualResponse_;
@@ -23568,6 +23617,7 @@ VisualizeImageClassbreakResponse GPUdb::visualizeImageClassbreak( const std::vec
  *                      gpudb::visualize_image_classbreak_circle.
  *                      </ul>
  * @param options
+ * @param cbTransparencyVec
  * @param[out] response_  Response object containing the results of the
  *                        operation.
  * 
@@ -23600,6 +23650,7 @@ VisualizeImageClassbreakResponse& GPUdb::visualizeImageClassbreak( const std::ve
                                                                    const int64_t bgColor,
                                                                    const std::map<std::string, std::vector<std::string> >& styleOptions,
                                                                    const std::map<std::string, std::string>& options,
+                                                                   const std::vector<int32_t>& cbTransparencyVec,
                                                                    VisualizeImageClassbreakResponse& response_ ) const
 {
     VisualizeImageClassbreakRequest actualRequest_;
@@ -23627,6 +23678,7 @@ VisualizeImageClassbreakResponse& GPUdb::visualizeImageClassbreak( const std::ve
     actualRequest_.bgColor = bgColor;
     actualRequest_.styleOptions = styleOptions;
     actualRequest_.options = options;
+    actualRequest_.cbTransparencyVec = cbTransparencyVec;
     submitRequest("/visualize/image/classbreak", actualRequest_, response_, false);
     return response_;
 }
