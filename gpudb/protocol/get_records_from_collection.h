@@ -54,7 +54,12 @@ namespace gpudb
          * @param[in] limit_  A positive integer indicating the maximum number
          *                    of results to be returned, or END_OF_SET (-9999)
          *                    to indicate that the max number of results should
-         *                    be returned.
+         *                    be returned.  The number of records returned will
+         *                    never exceed the server's own limit, defined by
+         *                    the <a href="../../config/index.html#general"
+         *                    target="_top">max_get_records_size</a> parameter
+         *                    in the server configuration.  Use @a offset & @a
+         *                    limit to request subsequent pages of results.
          * @param[in] options_
          *                      <ul>
          *                              <li>
@@ -97,7 +102,12 @@ namespace gpudb
          * @param[in] limit_  A positive integer indicating the maximum number
          *                    of results to be returned, or END_OF_SET (-9999)
          *                    to indicate that the max number of results should
-         *                    be returned.
+         *                    be returned.  The number of records returned will
+         *                    never exceed the server's own limit, defined by
+         *                    the <a href="../../config/index.html#general"
+         *                    target="_top">max_get_records_size</a> parameter
+         *                    in the server configuration.  Use @a offset & @a
+         *                    limit to request subsequent pages of results.
          * @param[in] encoding_  Specifies the encoding for returned records;
          *                       either 'binary' or 'json'.
          *                       <ul>

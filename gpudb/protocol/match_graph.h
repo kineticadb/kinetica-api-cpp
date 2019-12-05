@@ -15,9 +15,15 @@ namespace gpudb
      * <p>
      * Matches a directed route implied by a given set of latitude/longitude
      * points to an existing underlying road network graph using a given
-     * solution type. See <a
+     * solution type.
+
+     * IMPORTANT: It's highly recommended that you review the <a
      * href="../../graph_solver/network_graph_solver.html"
-     * target="_top">Network Graph Solvers</a> for more information.
+     * target="_top">Network Graphs & Solvers</a> concepts documentation, the
+     * <a href="../../graph_solver/examples/graph_rest_guide.html"
+     * target="_top">Graph REST Tutorial</a>, and/or some <a
+     * href="../../graph_solver/examples.html#match-graph"
+     * target="_top">/match/graph examples</a> before using this endpoint.
      */
     struct MatchGraphRequest
     {
@@ -87,6 +93,11 @@ namespace gpudb
          *                          scheduling multiple supplies (trucks) with
          *                          varying sizes to varying demand sites with
          *                          varying capacities per depot
+         *                                  <li>
+         *                          gpudb::match_graph_match_batch_solves:
+         *                          Matches @a samplePoints source and
+         *                          destination pairs for the shortest path
+         *                          solves in batch mode
          *                          </ul>
          *                          The default value is
          *                          gpudb::match_graph_markov_chain.
@@ -186,6 +197,13 @@ namespace gpudb
          *                      than the store's demand.
          *                      </ul>
          *                      The default value is gpudb::match_graph_true.
+         *                              <li>
+         *                      gpudb::match_graph_max_combinations: For the @a
+         *                      match_supply_demand solver only. This is the
+         *                      cutoff for the number of generated combinations
+         *                      for sequencing the demand locations - can
+         *                      increase this upto 2M.  The default value is
+         *                      '10000'.
          *                      </ul>
          * 
          */
@@ -275,9 +293,15 @@ namespace gpudb
      * <p>
      * Matches a directed route implied by a given set of latitude/longitude
      * points to an existing underlying road network graph using a given
-     * solution type. See <a
+     * solution type.
+
+     * IMPORTANT: It's highly recommended that you review the <a
      * href="../../graph_solver/network_graph_solver.html"
-     * target="_top">Network Graph Solvers</a> for more information.
+     * target="_top">Network Graphs & Solvers</a> concepts documentation, the
+     * <a href="../../graph_solver/examples/graph_rest_guide.html"
+     * target="_top">Graph REST Tutorial</a>, and/or some <a
+     * href="../../graph_solver/examples.html#match-graph"
+     * target="_top">/match/graph examples</a> before using this endpoint.
      */
     struct MatchGraphResponse
     {

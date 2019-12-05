@@ -1264,8 +1264,8 @@ AggregateConvexHullResponse& aggregateConvexHull( const std::string& tableName,
 
 /**
  * Calculates unique combinations (groups) of values for the given columns in a
- * given table/view/collection and computes aggregates on each unique
- * combination. This is somewhat analogous to an SQL-style SELECT...GROUP BY.
+ * given table or view and computes aggregates on each unique combination. This
+ * is somewhat analogous to an SQL-style SELECT...GROUP BY.
  * <p>
  * For aggregation details and examples, see <a
  * href="../../concepts/aggregation.html" target="_top">Aggregation</a>.  For
@@ -1337,8 +1337,8 @@ RawAggregateGroupByResponse aggregateGroupByRaw( const AggregateGroupByRequest& 
 
 /**
  * Calculates unique combinations (groups) of values for the given columns in a
- * given table/view/collection and computes aggregates on each unique
- * combination. This is somewhat analogous to an SQL-style SELECT...GROUP BY.
+ * given table or view and computes aggregates on each unique combination. This
+ * is somewhat analogous to an SQL-style SELECT...GROUP BY.
  * <p>
  * For aggregation details and examples, see <a
  * href="../../concepts/aggregation.html" target="_top">Aggregation</a>.  For
@@ -1414,8 +1414,8 @@ RawAggregateGroupByResponse& aggregateGroupByRaw( const AggregateGroupByRequest&
 
 /**
  * Calculates unique combinations (groups) of values for the given columns in a
- * given table/view/collection and computes aggregates on each unique
- * combination. This is somewhat analogous to an SQL-style SELECT...GROUP BY.
+ * given table or view and computes aggregates on each unique combination. This
+ * is somewhat analogous to an SQL-style SELECT...GROUP BY.
  * <p>
  * For aggregation details and examples, see <a
  * href="../../concepts/aggregation.html" target="_top">Aggregation</a>.  For
@@ -1487,8 +1487,8 @@ AggregateGroupByResponse aggregateGroupBy( const AggregateGroupByRequest& reques
 
 /**
  * Calculates unique combinations (groups) of values for the given columns in a
- * given table/view/collection and computes aggregates on each unique
- * combination. This is somewhat analogous to an SQL-style SELECT...GROUP BY.
+ * given table or view and computes aggregates on each unique combination. This
+ * is somewhat analogous to an SQL-style SELECT...GROUP BY.
  * <p>
  * For aggregation details and examples, see <a
  * href="../../concepts/aggregation.html" target="_top">Aggregation</a>.  For
@@ -1564,8 +1564,8 @@ AggregateGroupByResponse& aggregateGroupBy( const AggregateGroupByRequest& reque
 
 /**
  * Calculates unique combinations (groups) of values for the given columns in a
- * given table/view/collection and computes aggregates on each unique
- * combination. This is somewhat analogous to an SQL-style SELECT...GROUP BY.
+ * given table or view and computes aggregates on each unique combination. This
+ * is somewhat analogous to an SQL-style SELECT...GROUP BY.
  * <p>
  * For aggregation details and examples, see <a
  * href="../../concepts/aggregation.html" target="_top">Aggregation</a>.  For
@@ -1626,8 +1626,8 @@ AggregateGroupByResponse& aggregateGroupBy( const AggregateGroupByRequest& reque
  * available when any of the values of @a columnNames is an unrestricted-length
  * string.
  * 
- * @param tableName  Name of the table on which the operation will be
- *                   performed. Must be an existing table/view/collection.
+ * @param tableName  Name of an existing table or view on which the operation
+ *                   will be performed.
  * @param columnNames  List of one or more column names, expressions, and
  *                     aggregate expressions.
  * @param offset  A positive integer indicating the number of initial results
@@ -1635,16 +1635,21 @@ AggregateGroupByResponse& aggregateGroupBy( const AggregateGroupByRequest& reque
  *                The minimum allowed value is 0. The maximum allowed value is
  *                MAX_INT.
  * @param limit  A positive integer indicating the maximum number of results to
- *               be returned Or END_OF_SET (-9999) to indicate that the max
- *               number of results should be returned.
+ *               be returned, or END_OF_SET (-9999) to indicate that the max
+ *               number of results should be returned.  The number of records
+ *               returned will never exceed the server's own limit, defined by
+ *               the <a href="../../config/index.html#general"
+ *               target="_top">max_get_records_size</a> parameter in the server
+ *               configuration.  Use @a hasMoreRecords to see if more records
+ *               exist in the result to be fetched, and @a offset & @a limit to
+ *               request subsequent pages of results.
  * @param options  Optional parameters.
  *                 <ul>
  *                         <li> gpudb::aggregate_group_by_collection_name: Name
  *                 of a collection which is to contain the table specified in
  *                 @a result_table. If the collection provided is non-existent,
  *                 the collection will be automatically created. If empty, then
- *                 the table will be a top-level table.  Additionally this
- *                 option is invalid if @a tableName is a collection.
+ *                 the table will be a top-level table.
  *                         <li> gpudb::aggregate_group_by_expression: Filter
  *                 expression to apply to the table prior to computing the
  *                 aggregate group by.
@@ -1709,8 +1714,8 @@ AggregateGroupByResponse& aggregateGroupBy( const AggregateGroupByRequest& reque
  *                 </ul>
  *                 The default value is gpudb::aggregate_group_by_false.
  *                         <li>
- *                 gpudb::aggregate_group_by_result_table_generate_pk: If
- *                 'true' then set a primary key for the result table. Must be
+ *                 gpudb::aggregate_group_by_result_table_generate_pk: If @a
+ *                 true then set a primary key for the result table. Must be
  *                 used in combination with the @a result_table option.
  *                 <ul>
  *                         <li> gpudb::aggregate_group_by_true
@@ -1721,14 +1726,16 @@ AggregateGroupByResponse& aggregateGroupBy( const AggregateGroupByRequest& reque
  *                 href="../../concepts/ttl.html" target="_top">TTL</a> of the
  *                 table specified in @a result_table.
  *                         <li> gpudb::aggregate_group_by_chunk_size: Indicates
- *                 the chunk size to be used for the result table. Must be used
- *                 in combination with the @a result_table option.
+ *                 the number of records per chunk to be used for the result
+ *                 table. Must be used in combination with the @a result_table
+ *                 option.
  *                         <li> gpudb::aggregate_group_by_create_indexes:
  *                 Comma-separated list of columns on which to create indexes
  *                 on the result table. Must be used in combination with the @a
  *                 result_table option.
- *                         <li> gpudb::aggregate_group_by_view_id: view this
- *                 result table is part of.  The default value is ''.
+ *                         <li> gpudb::aggregate_group_by_view_id: ID of view
+ *                 of which the result table will be a member.  The default
+ *                 value is ''.
  *                         <li> gpudb::aggregate_group_by_materialize_on_gpu:
  *                 If @a true then the columns of the groupby result table will
  *                 be cached on the GPU. Must be used in combination with the
@@ -1767,8 +1774,8 @@ AggregateGroupByResponse aggregateGroupBy( const std::string& tableName,
 
 /**
  * Calculates unique combinations (groups) of values for the given columns in a
- * given table/view/collection and computes aggregates on each unique
- * combination. This is somewhat analogous to an SQL-style SELECT...GROUP BY.
+ * given table or view and computes aggregates on each unique combination. This
+ * is somewhat analogous to an SQL-style SELECT...GROUP BY.
  * <p>
  * For aggregation details and examples, see <a
  * href="../../concepts/aggregation.html" target="_top">Aggregation</a>.  For
@@ -1829,8 +1836,8 @@ AggregateGroupByResponse aggregateGroupBy( const std::string& tableName,
  * available when any of the values of @a columnNames is an unrestricted-length
  * string.
  * 
- * @param tableName  Name of the table on which the operation will be
- *                   performed. Must be an existing table/view/collection.
+ * @param tableName  Name of an existing table or view on which the operation
+ *                   will be performed.
  * @param columnNames  List of one or more column names, expressions, and
  *                     aggregate expressions.
  * @param offset  A positive integer indicating the number of initial results
@@ -1838,16 +1845,21 @@ AggregateGroupByResponse aggregateGroupBy( const std::string& tableName,
  *                The minimum allowed value is 0. The maximum allowed value is
  *                MAX_INT.
  * @param limit  A positive integer indicating the maximum number of results to
- *               be returned Or END_OF_SET (-9999) to indicate that the max
- *               number of results should be returned.
+ *               be returned, or END_OF_SET (-9999) to indicate that the max
+ *               number of results should be returned.  The number of records
+ *               returned will never exceed the server's own limit, defined by
+ *               the <a href="../../config/index.html#general"
+ *               target="_top">max_get_records_size</a> parameter in the server
+ *               configuration.  Use @a hasMoreRecords to see if more records
+ *               exist in the result to be fetched, and @a offset & @a limit to
+ *               request subsequent pages of results.
  * @param options  Optional parameters.
  *                 <ul>
  *                         <li> gpudb::aggregate_group_by_collection_name: Name
  *                 of a collection which is to contain the table specified in
  *                 @a result_table. If the collection provided is non-existent,
  *                 the collection will be automatically created. If empty, then
- *                 the table will be a top-level table.  Additionally this
- *                 option is invalid if @a tableName is a collection.
+ *                 the table will be a top-level table.
  *                         <li> gpudb::aggregate_group_by_expression: Filter
  *                 expression to apply to the table prior to computing the
  *                 aggregate group by.
@@ -1912,8 +1924,8 @@ AggregateGroupByResponse aggregateGroupBy( const std::string& tableName,
  *                 </ul>
  *                 The default value is gpudb::aggregate_group_by_false.
  *                         <li>
- *                 gpudb::aggregate_group_by_result_table_generate_pk: If
- *                 'true' then set a primary key for the result table. Must be
+ *                 gpudb::aggregate_group_by_result_table_generate_pk: If @a
+ *                 true then set a primary key for the result table. Must be
  *                 used in combination with the @a result_table option.
  *                 <ul>
  *                         <li> gpudb::aggregate_group_by_true
@@ -1924,14 +1936,16 @@ AggregateGroupByResponse aggregateGroupBy( const std::string& tableName,
  *                 href="../../concepts/ttl.html" target="_top">TTL</a> of the
  *                 table specified in @a result_table.
  *                         <li> gpudb::aggregate_group_by_chunk_size: Indicates
- *                 the chunk size to be used for the result table. Must be used
- *                 in combination with the @a result_table option.
+ *                 the number of records per chunk to be used for the result
+ *                 table. Must be used in combination with the @a result_table
+ *                 option.
  *                         <li> gpudb::aggregate_group_by_create_indexes:
  *                 Comma-separated list of columns on which to create indexes
  *                 on the result table. Must be used in combination with the @a
  *                 result_table option.
- *                         <li> gpudb::aggregate_group_by_view_id: view this
- *                 result table is part of.  The default value is ''.
+ *                         <li> gpudb::aggregate_group_by_view_id: ID of view
+ *                 of which the result table will be a member.  The default
+ *                 value is ''.
  *                         <li> gpudb::aggregate_group_by_materialize_on_gpu:
  *                 If @a true then the columns of the groupby result table will
  *                 be cached on the GPU. Must be used in combination with the
@@ -2950,8 +2964,8 @@ AggregateStatisticsByRangeResponse& aggregateStatisticsByRange( const std::strin
 
 /**
  * Returns all the unique values from a particular column (specified by @a
- * columnName) of a particular table or collection (specified by @a tableName).
- * If @a columnName is a numeric column the values will be in @a
+ * columnName) of a particular table or view (specified by @a tableName). If @a
+ * columnName is a numeric column the values will be in @a
  * binaryEncodedResponse. Otherwise if @a columnName is a string column the
  * values will be in @a jsonEncodedResponse.  The results can be paged via the
  * @a offset and @a limit parameters.
@@ -2978,8 +2992,7 @@ AggregateStatisticsByRangeResponse& aggregateStatisticsByRange( const std::strin
  * will be sharded, in all other cases it will be replicated.  Sorting will
  * properly function only if the result table is replicated or if there is only
  * one processing node and should not be relied upon in other cases.  Not
- * available if @a tableName is a collection or when the value of @a columnName
- * is an unrestricted-length string.
+ * available if the value of @a columnName is an unrestricted-length string.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -2992,8 +3005,8 @@ RawAggregateUniqueResponse aggregateUniqueRaw( const AggregateUniqueRequest& req
 
 /**
  * Returns all the unique values from a particular column (specified by @a
- * columnName) of a particular table or collection (specified by @a tableName).
- * If @a columnName is a numeric column the values will be in @a
+ * columnName) of a particular table or view (specified by @a tableName). If @a
+ * columnName is a numeric column the values will be in @a
  * binaryEncodedResponse. Otherwise if @a columnName is a string column the
  * values will be in @a jsonEncodedResponse.  The results can be paged via the
  * @a offset and @a limit parameters.
@@ -3020,8 +3033,7 @@ RawAggregateUniqueResponse aggregateUniqueRaw( const AggregateUniqueRequest& req
  * will be sharded, in all other cases it will be replicated.  Sorting will
  * properly function only if the result table is replicated or if there is only
  * one processing node and should not be relied upon in other cases.  Not
- * available if @a tableName is a collection or when the value of @a columnName
- * is an unrestricted-length string.
+ * available if the value of @a columnName is an unrestricted-length string.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -3038,8 +3050,8 @@ RawAggregateUniqueResponse& aggregateUniqueRaw( const AggregateUniqueRequest& re
 
 /**
  * Returns all the unique values from a particular column (specified by @a
- * columnName) of a particular table or collection (specified by @a tableName).
- * If @a columnName is a numeric column the values will be in @a
+ * columnName) of a particular table or view (specified by @a tableName). If @a
+ * columnName is a numeric column the values will be in @a
  * binaryEncodedResponse. Otherwise if @a columnName is a string column the
  * values will be in @a jsonEncodedResponse.  The results can be paged via the
  * @a offset and @a limit parameters.
@@ -3066,8 +3078,7 @@ RawAggregateUniqueResponse& aggregateUniqueRaw( const AggregateUniqueRequest& re
  * will be sharded, in all other cases it will be replicated.  Sorting will
  * properly function only if the result table is replicated or if there is only
  * one processing node and should not be relied upon in other cases.  Not
- * available if @a tableName is a collection or when the value of @a columnName
- * is an unrestricted-length string.
+ * available if the value of @a columnName is an unrestricted-length string.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -3080,8 +3091,8 @@ AggregateUniqueResponse aggregateUnique( const AggregateUniqueRequest& request_ 
 
 /**
  * Returns all the unique values from a particular column (specified by @a
- * columnName) of a particular table or collection (specified by @a tableName).
- * If @a columnName is a numeric column the values will be in @a
+ * columnName) of a particular table or view (specified by @a tableName). If @a
+ * columnName is a numeric column the values will be in @a
  * binaryEncodedResponse. Otherwise if @a columnName is a string column the
  * values will be in @a jsonEncodedResponse.  The results can be paged via the
  * @a offset and @a limit parameters.
@@ -3108,8 +3119,7 @@ AggregateUniqueResponse aggregateUnique( const AggregateUniqueRequest& request_ 
  * will be sharded, in all other cases it will be replicated.  Sorting will
  * properly function only if the result table is replicated or if there is only
  * one processing node and should not be relied upon in other cases.  Not
- * available if @a tableName is a collection or when the value of @a columnName
- * is an unrestricted-length string.
+ * available if the value of @a columnName is an unrestricted-length string.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -3126,8 +3136,8 @@ AggregateUniqueResponse& aggregateUnique( const AggregateUniqueRequest& request_
 
 /**
  * Returns all the unique values from a particular column (specified by @a
- * columnName) of a particular table or collection (specified by @a tableName).
- * If @a columnName is a numeric column the values will be in @a
+ * columnName) of a particular table or view (specified by @a tableName). If @a
+ * columnName is a numeric column the values will be in @a
  * binaryEncodedResponse. Otherwise if @a columnName is a string column the
  * values will be in @a jsonEncodedResponse.  The results can be paged via the
  * @a offset and @a limit parameters.
@@ -3154,11 +3164,10 @@ AggregateUniqueResponse& aggregateUnique( const AggregateUniqueRequest& request_
  * will be sharded, in all other cases it will be replicated.  Sorting will
  * properly function only if the result table is replicated or if there is only
  * one processing node and should not be relied upon in other cases.  Not
- * available if @a tableName is a collection or when the value of @a columnName
- * is an unrestricted-length string.
+ * available if the value of @a columnName is an unrestricted-length string.
  * 
- * @param tableName  Name of an existing table/collection on which the
- *                   operation will be performed.
+ * @param tableName  Name of an existing table or view on which the operation
+ *                   will be performed.
  * @param columnName  Name of the column or an expression containing one or
  *                    more column names on which the unique function would be
  *                    applied.
@@ -3168,15 +3177,20 @@ AggregateUniqueResponse& aggregateUnique( const AggregateUniqueRequest& request_
  *                MAX_INT.
  * @param limit  A positive integer indicating the maximum number of results to
  *               be returned. Or END_OF_SET (-9999) to indicate that the max
- *               number of results should be returned.
+ *               number of results should be returned.  The number of records
+ *               returned will never exceed the server's own limit, defined by
+ *               the <a href="../../config/index.html#general"
+ *               target="_top">max_get_records_size</a> parameter in the server
+ *               configuration.  Use @a hasMoreRecords to see if more records
+ *               exist in the result to be fetched, and @a offset & @a limit to
+ *               request subsequent pages of results.
  * @param options  Optional parameters.
  *                 <ul>
  *                         <li> gpudb::aggregate_unique_collection_name: Name
  *                 of a collection which is to contain the table specified in
  *                 @a result_table. If the collection provided is non-existent,
  *                 the collection will be automatically created. If empty, then
- *                 the table will be a top-level table.  Additionally this
- *                 option is invalid if @a tableName is a collection.
+ *                 the table will be a top-level table.
  *                         <li> gpudb::aggregate_unique_expression: Optional
  *                 filter expression to apply to the table.
  *                         <li> gpudb::aggregate_unique_sort_order: String
@@ -3190,9 +3204,8 @@ AggregateUniqueResponse& aggregateUnique( const AggregateUniqueRequest& request_
  *                 of the table used to store the results. If present, no
  *                 results are returned in the response. Has the same naming
  *                 restrictions as <a href="../../concepts/tables.html"
- *                 target="_top">tables</a>.  Not available if @a tableName is
- *                 a collection or when @a columnName is an unrestricted-length
- *                 string.
+ *                 target="_top">tables</a>.  Not available if @a columnName is
+ *                 an unrestricted-length string.
  *                         <li> gpudb::aggregate_unique_result_table_persist:
  *                 If @a true, then the result table specified in @a
  *                 result_table will be persisted and will not expire unless a
@@ -3214,7 +3227,7 @@ AggregateUniqueResponse& aggregateUnique( const AggregateUniqueRequest& request_
  *                 </ul>
  *                 The default value is gpudb::aggregate_unique_false.
  *                         <li>
- *                 gpudb::aggregate_unique_result_table_generate_pk: If 'true'
+ *                 gpudb::aggregate_unique_result_table_generate_pk: If @a true
  *                 then set a primary key for the result table. Must be used in
  *                 combination with the @a result_table option.
  *                 <ul>
@@ -3226,10 +3239,12 @@ AggregateUniqueResponse& aggregateUnique( const AggregateUniqueRequest& request_
  *                 href="../../concepts/ttl.html" target="_top">TTL</a> of the
  *                 table specified in @a result_table.
  *                         <li> gpudb::aggregate_unique_chunk_size: Indicates
- *                 the chunk size to be used for the result table. Must be used
- *                 in combination with the @a result_table option.
- *                         <li> gpudb::aggregate_unique_view_id: view this
- *                 result table is part of.  The default value is ''.
+ *                 the number of records per chunk to be used for the result
+ *                 table. Must be used in combination with the @a result_table
+ *                 option.
+ *                         <li> gpudb::aggregate_unique_view_id: ID of view of
+ *                 which the result table will be a member.  The default value
+ *                 is ''.
  *                 </ul>
  * 
  * @return Response object containing the result of the operation.
@@ -3244,8 +3259,8 @@ AggregateUniqueResponse aggregateUnique( const std::string& tableName,
 
 /**
  * Returns all the unique values from a particular column (specified by @a
- * columnName) of a particular table or collection (specified by @a tableName).
- * If @a columnName is a numeric column the values will be in @a
+ * columnName) of a particular table or view (specified by @a tableName). If @a
+ * columnName is a numeric column the values will be in @a
  * binaryEncodedResponse. Otherwise if @a columnName is a string column the
  * values will be in @a jsonEncodedResponse.  The results can be paged via the
  * @a offset and @a limit parameters.
@@ -3272,11 +3287,10 @@ AggregateUniqueResponse aggregateUnique( const std::string& tableName,
  * will be sharded, in all other cases it will be replicated.  Sorting will
  * properly function only if the result table is replicated or if there is only
  * one processing node and should not be relied upon in other cases.  Not
- * available if @a tableName is a collection or when the value of @a columnName
- * is an unrestricted-length string.
+ * available if the value of @a columnName is an unrestricted-length string.
  * 
- * @param tableName  Name of an existing table/collection on which the
- *                   operation will be performed.
+ * @param tableName  Name of an existing table or view on which the operation
+ *                   will be performed.
  * @param columnName  Name of the column or an expression containing one or
  *                    more column names on which the unique function would be
  *                    applied.
@@ -3286,15 +3300,20 @@ AggregateUniqueResponse aggregateUnique( const std::string& tableName,
  *                MAX_INT.
  * @param limit  A positive integer indicating the maximum number of results to
  *               be returned. Or END_OF_SET (-9999) to indicate that the max
- *               number of results should be returned.
+ *               number of results should be returned.  The number of records
+ *               returned will never exceed the server's own limit, defined by
+ *               the <a href="../../config/index.html#general"
+ *               target="_top">max_get_records_size</a> parameter in the server
+ *               configuration.  Use @a hasMoreRecords to see if more records
+ *               exist in the result to be fetched, and @a offset & @a limit to
+ *               request subsequent pages of results.
  * @param options  Optional parameters.
  *                 <ul>
  *                         <li> gpudb::aggregate_unique_collection_name: Name
  *                 of a collection which is to contain the table specified in
  *                 @a result_table. If the collection provided is non-existent,
  *                 the collection will be automatically created. If empty, then
- *                 the table will be a top-level table.  Additionally this
- *                 option is invalid if @a tableName is a collection.
+ *                 the table will be a top-level table.
  *                         <li> gpudb::aggregate_unique_expression: Optional
  *                 filter expression to apply to the table.
  *                         <li> gpudb::aggregate_unique_sort_order: String
@@ -3308,9 +3327,8 @@ AggregateUniqueResponse aggregateUnique( const std::string& tableName,
  *                 of the table used to store the results. If present, no
  *                 results are returned in the response. Has the same naming
  *                 restrictions as <a href="../../concepts/tables.html"
- *                 target="_top">tables</a>.  Not available if @a tableName is
- *                 a collection or when @a columnName is an unrestricted-length
- *                 string.
+ *                 target="_top">tables</a>.  Not available if @a columnName is
+ *                 an unrestricted-length string.
  *                         <li> gpudb::aggregate_unique_result_table_persist:
  *                 If @a true, then the result table specified in @a
  *                 result_table will be persisted and will not expire unless a
@@ -3332,7 +3350,7 @@ AggregateUniqueResponse aggregateUnique( const std::string& tableName,
  *                 </ul>
  *                 The default value is gpudb::aggregate_unique_false.
  *                         <li>
- *                 gpudb::aggregate_unique_result_table_generate_pk: If 'true'
+ *                 gpudb::aggregate_unique_result_table_generate_pk: If @a true
  *                 then set a primary key for the result table. Must be used in
  *                 combination with the @a result_table option.
  *                 <ul>
@@ -3344,10 +3362,12 @@ AggregateUniqueResponse aggregateUnique( const std::string& tableName,
  *                 href="../../concepts/ttl.html" target="_top">TTL</a> of the
  *                 table specified in @a result_table.
  *                         <li> gpudb::aggregate_unique_chunk_size: Indicates
- *                 the chunk size to be used for the result table. Must be used
- *                 in combination with the @a result_table option.
- *                         <li> gpudb::aggregate_unique_view_id: view this
- *                 result table is part of.  The default value is ''.
+ *                 the number of records per chunk to be used for the result
+ *                 table. Must be used in combination with the @a result_table
+ *                 option.
+ *                         <li> gpudb::aggregate_unique_view_id: ID of view of
+ *                 which the result table will be a member.  The default value
+ *                 is ''.
  *                 </ul>
  * @param[out] response_  Response object containing the results of the
  *                        operation.
@@ -3546,8 +3566,9 @@ AggregateUnpivotResponse& aggregateUnpivot( const AggregateUnpivotRequest& reque
  *                 column name, the alias must be used, rather than the
  *                 original column name.  The default value is ''.
  *                         <li> gpudb::aggregate_unpivot_chunk_size: Indicates
- *                 the chunk size to be used for the result table. Must be used
- *                 in combination with the @a result_table option.
+ *                 the number of records per chunk to be used for the result
+ *                 table. Must be used in combination with the @a result_table
+ *                 option.
  *                         <li> gpudb::aggregate_unpivot_limit: The number of
  *                 records to keep.  The default value is ''.
  *                         <li> gpudb::aggregate_unpivot_ttl: Sets the <a
@@ -3653,8 +3674,9 @@ AggregateUnpivotResponse aggregateUnpivot( const std::string& tableName,
  *                 column name, the alias must be used, rather than the
  *                 original column name.  The default value is ''.
  *                         <li> gpudb::aggregate_unpivot_chunk_size: Indicates
- *                 the chunk size to be used for the result table. Must be used
- *                 in combination with the @a result_table option.
+ *                 the number of records per chunk to be used for the result
+ *                 table. Must be used in combination with the @a result_table
+ *                 option.
  *                         <li> gpudb::aggregate_unpivot_limit: The number of
  *                 records to keep.  The default value is ''.
  *                         <li> gpudb::aggregate_unpivot_ttl: Sets the <a
@@ -4033,8 +4055,8 @@ AlterSystemPropertiesResponse& alterSystemProperties( const AlterSystemPropertie
  *                            resource group limits and/or system load.
  *                                    <li>
  *                            gpudb::alter_system_properties_chunk_size: Sets
- *                            the chunk size of all new sets to the specified
- *                            integer value.
+ *                            the number of records per chunk to be used for
+ *                            all new tables.
  *                                    <li>
  *                            gpudb::alter_system_properties_evict_columns:
  *                            Attempts to evict columns from memory to the
@@ -4065,12 +4087,12 @@ AlterSystemPropertiesResponse& alterSystemProperties( const AlterSystemPropertie
  *                            gpudb::alter_system_properties_communicator_test:
  *                            Invoke the communicator test and report timing
  *                            results. Value string is is a semicolon separated
- *                            list of <key>=<value> expressions.  Expressions
- *                            are: num_transactions=<num> where num is the
+ *                            list of [key]=[value] expressions.  Expressions
+ *                            are: num_transactions=[num] where num is the
  *                            number of request reply transactions to invoke
- *                            per test; message_size=<bytes> where bytes is the
- *                            size of the messages to send in bytes;
- *                            check_values=<enabled> where if enabled is true
+ *                            per test; message_size=[bytes] where bytes is the
+ *                            size in bytes of the messages to send;
+ *                            check_values=[enabled] where if enabled is true
  *                            the value of the messages received are verified.
  *                                    <li>
  *                            gpudb::alter_system_properties_set_message_timers_enabled:
@@ -4090,12 +4112,13 @@ AlterSystemPropertiesResponse& alterSystemProperties( const AlterSystemPropertie
  *                            gpudb::alter_system_properties_network_speed:
  *                            Invoke the network speed test and report timing
  *                            results. Value string is a semicolon-separated
- *                            list of <key>=<value> expressions.  Valid
- *                            expressions are: seconds=<time> where time is the
- *                            time in seconds to run the test; data_size=<size>
- *                            where size is the size in bytes of the block to
- *                            be transferred; threads=<number of threads>;
- *                            to_ranks=<space-separated list of ranks> where
+ *                            list of [key]=[value] expressions.  Valid
+ *                            expressions are: seconds=[time] where time is the
+ *                            time in seconds to run the test;
+ *                            data_size=[bytes] where bytes is the size in
+ *                            bytes of the block to be transferred;
+ *                            threads=[number of threads];
+ *                            to_ranks=[space-separated list of ranks] where
  *                            the list of ranks is the ranks that rank 0 will
  *                            send data to and get data from. If to_ranks is
  *                            unspecified then all worker ranks are used.
@@ -4123,13 +4146,13 @@ AlterSystemPropertiesResponse& alterSystemProperties( const AlterSystemPropertie
  *                            gpudb::alter_system_properties_audit_data: Enable
  *                            or disable auditing of request data.
  *                                    <li>
- *                            gpudb::alter_system_properties_chunk_cache_enabled:
- *                            Enable chunk level query caching. Flushes the
- *                            chunk cache when value is false
+ *                            gpudb::alter_system_properties_shadow_agg_size:
+ *                            Size of the shadow aggregate chunk cache in
+ *                            bytes.  The default value is '10000000'.
  *                                    <li>
- *                            gpudb::alter_system_properties_chunk_cache_size:
- *                            Size of the chunk cache in bytes.  The default
- *                            value is '10000000'.
+ *                            gpudb::alter_system_properties_shadow_filter_size:
+ *                            Size of the shdow filter chunk cache in bytes.
+ *                            The default value is '10000000'.
  *                                    <li>
  *                            gpudb::alter_system_properties_synchronous_compression:
  *                            compress vector on set_compression (instead of
@@ -4184,8 +4207,8 @@ AlterSystemPropertiesResponse alterSystemProperties( const std::map<std::string,
  *                            resource group limits and/or system load.
  *                                    <li>
  *                            gpudb::alter_system_properties_chunk_size: Sets
- *                            the chunk size of all new sets to the specified
- *                            integer value.
+ *                            the number of records per chunk to be used for
+ *                            all new tables.
  *                                    <li>
  *                            gpudb::alter_system_properties_evict_columns:
  *                            Attempts to evict columns from memory to the
@@ -4216,12 +4239,12 @@ AlterSystemPropertiesResponse alterSystemProperties( const std::map<std::string,
  *                            gpudb::alter_system_properties_communicator_test:
  *                            Invoke the communicator test and report timing
  *                            results. Value string is is a semicolon separated
- *                            list of <key>=<value> expressions.  Expressions
- *                            are: num_transactions=<num> where num is the
+ *                            list of [key]=[value] expressions.  Expressions
+ *                            are: num_transactions=[num] where num is the
  *                            number of request reply transactions to invoke
- *                            per test; message_size=<bytes> where bytes is the
- *                            size of the messages to send in bytes;
- *                            check_values=<enabled> where if enabled is true
+ *                            per test; message_size=[bytes] where bytes is the
+ *                            size in bytes of the messages to send;
+ *                            check_values=[enabled] where if enabled is true
  *                            the value of the messages received are verified.
  *                                    <li>
  *                            gpudb::alter_system_properties_set_message_timers_enabled:
@@ -4241,12 +4264,13 @@ AlterSystemPropertiesResponse alterSystemProperties( const std::map<std::string,
  *                            gpudb::alter_system_properties_network_speed:
  *                            Invoke the network speed test and report timing
  *                            results. Value string is a semicolon-separated
- *                            list of <key>=<value> expressions.  Valid
- *                            expressions are: seconds=<time> where time is the
- *                            time in seconds to run the test; data_size=<size>
- *                            where size is the size in bytes of the block to
- *                            be transferred; threads=<number of threads>;
- *                            to_ranks=<space-separated list of ranks> where
+ *                            list of [key]=[value] expressions.  Valid
+ *                            expressions are: seconds=[time] where time is the
+ *                            time in seconds to run the test;
+ *                            data_size=[bytes] where bytes is the size in
+ *                            bytes of the block to be transferred;
+ *                            threads=[number of threads];
+ *                            to_ranks=[space-separated list of ranks] where
  *                            the list of ranks is the ranks that rank 0 will
  *                            send data to and get data from. If to_ranks is
  *                            unspecified then all worker ranks are used.
@@ -4274,13 +4298,13 @@ AlterSystemPropertiesResponse alterSystemProperties( const std::map<std::string,
  *                            gpudb::alter_system_properties_audit_data: Enable
  *                            or disable auditing of request data.
  *                                    <li>
- *                            gpudb::alter_system_properties_chunk_cache_enabled:
- *                            Enable chunk level query caching. Flushes the
- *                            chunk cache when value is false
+ *                            gpudb::alter_system_properties_shadow_agg_size:
+ *                            Size of the shadow aggregate chunk cache in
+ *                            bytes.  The default value is '10000000'.
  *                                    <li>
- *                            gpudb::alter_system_properties_chunk_cache_size:
- *                            Size of the chunk cache in bytes.  The default
- *                            value is '10000000'.
+ *                            gpudb::alter_system_properties_shadow_filter_size:
+ *                            Size of the shdow filter chunk cache in bytes.
+ *                            The default value is '10000000'.
  *                                    <li>
  *                            gpudb::alter_system_properties_synchronous_compression:
  *                            compress vector on set_compression (instead of
@@ -4693,6 +4717,15 @@ AlterTableResponse& alterTable( const AlterTableRequest& request_,
  *                 href="../../rm/usage.html#tier-strategies"
  *                 target="_top">tier strategy examples</a> for examples.  This
  *                 option will be ignored if @a value is also specified.
+ *                         <li> gpudb::alter_table_index_type: Type of index to
+ *                 create.
+ *                 <ul>
+ *                         <li> gpudb::alter_table_column: Standard column
+ *                 index.
+ *                         <li> gpudb::alter_table_chunk_skip: Chunk skip
+ *                 index.
+ *                 </ul>
+ *                 The default value is gpudb::alter_table_column.
  *                 </ul>
  * 
  * @return Response object containing the result of the operation.
@@ -4965,6 +4998,15 @@ AlterTableResponse alterTable( const std::string& tableName,
  *                 href="../../rm/usage.html#tier-strategies"
  *                 target="_top">tier strategy examples</a> for examples.  This
  *                 option will be ignored if @a value is also specified.
+ *                         <li> gpudb::alter_table_index_type: Type of index to
+ *                 create.
+ *                 <ul>
+ *                         <li> gpudb::alter_table_column: Standard column
+ *                 index.
+ *                         <li> gpudb::alter_table_chunk_skip: Chunk skip
+ *                 index.
+ *                 </ul>
+ *                 The default value is gpudb::alter_table_column.
  *                 </ul>
  * @param[out] response_  Response object containing the results of the
  *                        operation.
@@ -5968,8 +6010,14 @@ CollectStatisticsResponse& collectStatistics( const std::string& tableName,
 
 /**
  * Creates a new graph network using given nodes, edges, weights, and
- * restrictions. See <a href="../../graph_solver/network_graph_solver.html"
- * target="_top">Network Graph Solvers</a> for more information.
+ * restrictions.
+
+ * IMPORTANT: It's highly recommended that you review the <a
+ * href="../../graph_solver/network_graph_solver.html" target="_top">Network
+ * Graphs & Solvers</a> concepts documentation, the <a
+ * href="../../graph_solver/examples/graph_rest_guide.html" target="_top">Graph
+ * REST Tutorial</a>, and/or some <a href="../../graph_solver/examples.html"
+ * target="_top">graph examples</a> before using this endpoint.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -5982,8 +6030,14 @@ CreateGraphResponse createGraph( const CreateGraphRequest& request_ ) const;
 
 /**
  * Creates a new graph network using given nodes, edges, weights, and
- * restrictions. See <a href="../../graph_solver/network_graph_solver.html"
- * target="_top">Network Graph Solvers</a> for more information.
+ * restrictions.
+
+ * IMPORTANT: It's highly recommended that you review the <a
+ * href="../../graph_solver/network_graph_solver.html" target="_top">Network
+ * Graphs & Solvers</a> concepts documentation, the <a
+ * href="../../graph_solver/examples/graph_rest_guide.html" target="_top">Graph
+ * REST Tutorial</a>, and/or some <a href="../../graph_solver/examples.html"
+ * target="_top">graph examples</a> before using this endpoint.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -6000,13 +6054,21 @@ CreateGraphResponse& createGraph( const CreateGraphRequest& request_,
 
 /**
  * Creates a new graph network using given nodes, edges, weights, and
- * restrictions. See <a href="../../graph_solver/network_graph_solver.html"
- * target="_top">Network Graph Solvers</a> for more information.
+ * restrictions.
+
+ * IMPORTANT: It's highly recommended that you review the <a
+ * href="../../graph_solver/network_graph_solver.html" target="_top">Network
+ * Graphs & Solvers</a> concepts documentation, the <a
+ * href="../../graph_solver/examples/graph_rest_guide.html" target="_top">Graph
+ * REST Tutorial</a>, and/or some <a href="../../graph_solver/examples.html"
+ * target="_top">graph examples</a> before using this endpoint.
  * 
  * @param graphName  Name of the graph resource to generate.
- * @param directedGraph  If set to @a true, the graph will be directed (0 to 1,
- *                       1 to 2, etc.). If set to @a false, the graph will not
- *                       be directed.
+ * @param directedGraph  If set to @a true, the graph will be directed. If set
+ *                       to @a false, the graph will not be directed. Consult
+ *                       <a
+ *                       href="../../graph_solver/network_graph_solver.html#directed-graphs"
+ *                       target="_top">Directed Graphs</a> for more details.
  *                       <ul>
  *                               <li> gpudb::create_graph_true
  *                               <li> gpudb::create_graph_false
@@ -6091,6 +6153,14 @@ CreateGraphResponse& createGraph( const CreateGraphRequest& request_,
  *                         <li> gpudb::create_graph_recreate: If set to @a true
  *                 and the graph (using @a graphName) already exists, the graph
  *                 is deleted and recreated.
+ *                 <ul>
+ *                         <li> gpudb::create_graph_true
+ *                         <li> gpudb::create_graph_false
+ *                 </ul>
+ *                 The default value is gpudb::create_graph_false.
+ *                         <li> gpudb::create_graph_modify: If set to @a true
+ *                 and @a true and if the graph (using @a graphName) already
+ *                 exists, the graph is updated with these components.
  *                 <ul>
  *                         <li> gpudb::create_graph_true
  *                         <li> gpudb::create_graph_false
@@ -6172,13 +6242,21 @@ CreateGraphResponse createGraph( const std::string& graphName,
 
 /**
  * Creates a new graph network using given nodes, edges, weights, and
- * restrictions. See <a href="../../graph_solver/network_graph_solver.html"
- * target="_top">Network Graph Solvers</a> for more information.
+ * restrictions.
+
+ * IMPORTANT: It's highly recommended that you review the <a
+ * href="../../graph_solver/network_graph_solver.html" target="_top">Network
+ * Graphs & Solvers</a> concepts documentation, the <a
+ * href="../../graph_solver/examples/graph_rest_guide.html" target="_top">Graph
+ * REST Tutorial</a>, and/or some <a href="../../graph_solver/examples.html"
+ * target="_top">graph examples</a> before using this endpoint.
  * 
  * @param graphName  Name of the graph resource to generate.
- * @param directedGraph  If set to @a true, the graph will be directed (0 to 1,
- *                       1 to 2, etc.). If set to @a false, the graph will not
- *                       be directed.
+ * @param directedGraph  If set to @a true, the graph will be directed. If set
+ *                       to @a false, the graph will not be directed. Consult
+ *                       <a
+ *                       href="../../graph_solver/network_graph_solver.html#directed-graphs"
+ *                       target="_top">Directed Graphs</a> for more details.
  *                       <ul>
  *                               <li> gpudb::create_graph_true
  *                               <li> gpudb::create_graph_false
@@ -6263,6 +6341,14 @@ CreateGraphResponse createGraph( const std::string& graphName,
  *                         <li> gpudb::create_graph_recreate: If set to @a true
  *                 and the graph (using @a graphName) already exists, the graph
  *                 is deleted and recreated.
+ *                 <ul>
+ *                         <li> gpudb::create_graph_true
+ *                         <li> gpudb::create_graph_false
+ *                 </ul>
+ *                 The default value is gpudb::create_graph_false.
+ *                         <li> gpudb::create_graph_modify: If set to @a true
+ *                 and @a true and if the graph (using @a graphName) already
+ *                 exists, the graph is updated with these components.
  *                 <ul>
  *                         <li> gpudb::create_graph_true
  *                         <li> gpudb::create_graph_false
@@ -6553,8 +6639,8 @@ CreateJoinTableResponse& createJoinTable( const CreateJoinTableRequest& request_
  *                 show_table. optimization needed for large overlapped
  *                 equi-join stencils.  The default value is 'false'.
  *                         <li> gpudb::create_join_table_chunk_size: Maximum
- *                 size of a joined-chunk for this table. Defaults to the
- *                 gpudb.conf file chunk size
+ *                 number of records per joined-chunk for this table. Defaults
+ *                 to the gpudb.conf file chunk size
  *                 </ul>
  * 
  * @return Response object containing the result of the operation.
@@ -6622,8 +6708,8 @@ CreateJoinTableResponse createJoinTable( const std::string& joinTableName,
  *                 show_table. optimization needed for large overlapped
  *                 equi-join stencils.  The default value is 'false'.
  *                         <li> gpudb::create_join_table_chunk_size: Maximum
- *                 size of a joined-chunk for this table. Defaults to the
- *                 gpudb.conf file chunk size
+ *                 number of records per joined-chunk for this table. Defaults
+ *                 to the gpudb.conf file chunk size
  *                 </ul>
  * @param[out] response_  Response object containing the results of the
  *                        operation.
@@ -7013,6 +7099,15 @@ CreateProcResponse& createProc( const std::string& procName,
  * than the source table.  By specifying @a shard_key, the projection will be
  * sharded according to the specified columns, regardless of how the source
  * table is sharded.  The source table can even be unsharded or replicated.
+ * <p>
+ * If @a tableName is empty, selection is performed against a single-row
+ * virtual table.  This can be useful in executing temporal (<a
+ * href="../../concepts/expressions.html#date-time-functions"
+ * target="_top">NOW()</a>), identity (<a
+ * href="../../concepts/expressions.html#user-security-functions"
+ * target="_top">USER()</a>), or constant-based functions (<a
+ * href="../../concepts/expressions.html#scalar-functions"
+ * target="_top">GEODIST(-77.11, 38.88, -71.06, 42.36)</a>).
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -7044,6 +7139,15 @@ CreateProjectionResponse createProjection( const CreateProjectionRequest& reques
  * than the source table.  By specifying @a shard_key, the projection will be
  * sharded according to the specified columns, regardless of how the source
  * table is sharded.  The source table can even be unsharded or replicated.
+ * <p>
+ * If @a tableName is empty, selection is performed against a single-row
+ * virtual table.  This can be useful in executing temporal (<a
+ * href="../../concepts/expressions.html#date-time-functions"
+ * target="_top">NOW()</a>), identity (<a
+ * href="../../concepts/expressions.html#user-security-functions"
+ * target="_top">USER()</a>), or constant-based functions (<a
+ * href="../../concepts/expressions.html#scalar-functions"
+ * target="_top">GEODIST(-77.11, 38.88, -71.06, 42.36)</a>).
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -7079,9 +7183,20 @@ CreateProjectionResponse& createProjection( const CreateProjectionRequest& reque
  * than the source table.  By specifying @a shard_key, the projection will be
  * sharded according to the specified columns, regardless of how the source
  * table is sharded.  The source table can even be unsharded or replicated.
+ * <p>
+ * If @a tableName is empty, selection is performed against a single-row
+ * virtual table.  This can be useful in executing temporal (<a
+ * href="../../concepts/expressions.html#date-time-functions"
+ * target="_top">NOW()</a>), identity (<a
+ * href="../../concepts/expressions.html#user-security-functions"
+ * target="_top">USER()</a>), or constant-based functions (<a
+ * href="../../concepts/expressions.html#scalar-functions"
+ * target="_top">GEODIST(-77.11, 38.88, -71.06, 42.36)</a>).
  * 
  * @param tableName  Name of the existing table on which the projection is to
- *                   be applied.
+ *                   be applied.  An empty table name creates a projection from
+ *                   a single-row virtual table, where columns specified should
+ *                   be constants or constant expressions.
  * @param projectionName  Name of the projection to be created. Has the same
  *                        naming restrictions as <a
  *                        href="../../concepts/tables.html"
@@ -7128,13 +7243,14 @@ CreateProjectionResponse& createProjection( const CreateProjectionRequest& reque
  *                 </ul>
  *                 The default value is gpudb::create_projection_false.
  *                         <li> gpudb::create_projection_chunk_size: Indicates
- *                 the chunk size to be used for this table.
+ *                 the number of records per chunk to be used for this
+ *                 projection.
  *                         <li> gpudb::create_projection_create_indexes:
  *                 Comma-separated list of columns on which to create indexes
- *                 on the output table.  The columns specified must be present
- *                 in @a columnNames.  If any alias is given for any column
- *                 name, the alias must be used, rather than the original
- *                 column name.
+ *                 on the projection.  The columns specified must be present in
+ *                 @a columnNames.  If any alias is given for any column name,
+ *                 the alias must be used, rather than the original column
+ *                 name.
  *                         <li> gpudb::create_projection_ttl: Sets the <a
  *                 href="../../concepts/ttl.html" target="_top">TTL</a> of the
  *                 projection specified in @a projectionName.
@@ -7157,14 +7273,22 @@ CreateProjectionResponse& createProjection( const CreateProjectionRequest& reque
  *                         <li>
  *                 gpudb::create_projection_preserve_dict_encoding: If @a true,
  *                 then columns that were dict encoded in the source table will
- *                 be dict encoded in the projection table.
+ *                 be dict encoded in the projection.
  *                 <ul>
  *                         <li> gpudb::create_projection_true
  *                         <li> gpudb::create_projection_false
  *                 </ul>
  *                 The default value is gpudb::create_projection_true.
- *                         <li> gpudb::create_projection_view_id: view this
- *                 projection is part of.  The default value is ''.
+ *                         <li> gpudb::create_projection_retain_partitions:
+ *                 Determines whether the created projection will retain the
+ *                 partitioning scheme from the source table.
+ *                 <ul>
+ *                         <li> gpudb::create_projection_true
+ *                         <li> gpudb::create_projection_false
+ *                 </ul>
+ *                 The default value is gpudb::create_projection_false.
+ *                         <li> gpudb::create_projection_view_id: ID of view of
+ *                 which this projection is a member.  The default value is ''.
  *                 </ul>
  * 
  * @return Response object containing the result of the operation.
@@ -7197,9 +7321,20 @@ CreateProjectionResponse createProjection( const std::string& tableName,
  * than the source table.  By specifying @a shard_key, the projection will be
  * sharded according to the specified columns, regardless of how the source
  * table is sharded.  The source table can even be unsharded or replicated.
+ * <p>
+ * If @a tableName is empty, selection is performed against a single-row
+ * virtual table.  This can be useful in executing temporal (<a
+ * href="../../concepts/expressions.html#date-time-functions"
+ * target="_top">NOW()</a>), identity (<a
+ * href="../../concepts/expressions.html#user-security-functions"
+ * target="_top">USER()</a>), or constant-based functions (<a
+ * href="../../concepts/expressions.html#scalar-functions"
+ * target="_top">GEODIST(-77.11, 38.88, -71.06, 42.36)</a>).
  * 
  * @param tableName  Name of the existing table on which the projection is to
- *                   be applied.
+ *                   be applied.  An empty table name creates a projection from
+ *                   a single-row virtual table, where columns specified should
+ *                   be constants or constant expressions.
  * @param projectionName  Name of the projection to be created. Has the same
  *                        naming restrictions as <a
  *                        href="../../concepts/tables.html"
@@ -7246,13 +7381,14 @@ CreateProjectionResponse createProjection( const std::string& tableName,
  *                 </ul>
  *                 The default value is gpudb::create_projection_false.
  *                         <li> gpudb::create_projection_chunk_size: Indicates
- *                 the chunk size to be used for this table.
+ *                 the number of records per chunk to be used for this
+ *                 projection.
  *                         <li> gpudb::create_projection_create_indexes:
  *                 Comma-separated list of columns on which to create indexes
- *                 on the output table.  The columns specified must be present
- *                 in @a columnNames.  If any alias is given for any column
- *                 name, the alias must be used, rather than the original
- *                 column name.
+ *                 on the projection.  The columns specified must be present in
+ *                 @a columnNames.  If any alias is given for any column name,
+ *                 the alias must be used, rather than the original column
+ *                 name.
  *                         <li> gpudb::create_projection_ttl: Sets the <a
  *                 href="../../concepts/ttl.html" target="_top">TTL</a> of the
  *                 projection specified in @a projectionName.
@@ -7275,14 +7411,22 @@ CreateProjectionResponse createProjection( const std::string& tableName,
  *                         <li>
  *                 gpudb::create_projection_preserve_dict_encoding: If @a true,
  *                 then columns that were dict encoded in the source table will
- *                 be dict encoded in the projection table.
+ *                 be dict encoded in the projection.
  *                 <ul>
  *                         <li> gpudb::create_projection_true
  *                         <li> gpudb::create_projection_false
  *                 </ul>
  *                 The default value is gpudb::create_projection_true.
- *                         <li> gpudb::create_projection_view_id: view this
- *                 projection is part of.  The default value is ''.
+ *                         <li> gpudb::create_projection_retain_partitions:
+ *                 Determines whether the created projection will retain the
+ *                 partitioning scheme from the source table.
+ *                 <ul>
+ *                         <li> gpudb::create_projection_true
+ *                         <li> gpudb::create_projection_false
+ *                 </ul>
+ *                 The default value is gpudb::create_projection_false.
+ *                         <li> gpudb::create_projection_view_id: ID of view of
+ *                 which this projection is a member.  The default value is ''.
  *                 </ul>
  * @param[out] response_  Response object containing the results of the
  *                        operation.
@@ -7695,6 +7839,9 @@ CreateTableResponse& createTable( const CreateTableRequest& request_,
  *                         <li> gpudb::create_table_LIST: Use <a
  *                 href="../../concepts/tables.html#partitioning-by-list"
  *                 target="_top">list partitioning</a>.
+ *                         <li> gpudb::create_table_HASH: Use <a
+ *                 href="../../concepts/tables.html#partitioning-by-hash"
+ *                 target="_top">hash partitioning</a>.
  *                 </ul>
  *                         <li> gpudb::create_table_partition_keys:
  *                 Comma-separated list of partition keys, which are the
@@ -7706,9 +7853,11 @@ CreateTableResponse& createTable( const CreateTableRequest& request_,
  *                 href="../../concepts/tables.html#partitioning-by-range"
  *                 target="_top">range partitioning</a>, <a
  *                 href="../../concepts/tables.html#partitioning-by-interval"
- *                 target="_top">interval partitioning</a>, or <a
+ *                 target="_top">interval partitioning</a>, <a
  *                 href="../../concepts/tables.html#partitioning-by-list"
- *                 target="_top">list partitioning</a> for example formats.
+ *                 target="_top">list partitioning</a>, or <a
+ *                 href="../../concepts/tables.html#partitioning-by-hash"
+ *                 target="_top">hash partitioning</a> for example formats.
  *                         <li> gpudb::create_table_is_automatic_partition: If
  *                 true, a new partition will be created for values which don't
  *                 fall into an existing partition.  Currently only supported
@@ -7724,7 +7873,7 @@ CreateTableResponse& createTable( const CreateTableRequest& request_,
  *                 <a href="../../concepts/ttl.html" target="_top">TTL</a> of
  *                 the table specified in @a tableName.
  *                         <li> gpudb::create_table_chunk_size: Indicates the
- *                 chunk size to be used for this table.
+ *                 number of records per chunk to be used for this table.
  *                         <li> gpudb::create_table_is_result_table: For a
  *                 table, indicates whether the table is an in-memory table. A
  *                 result table cannot contain store_only, text_search, or
@@ -7862,6 +8011,9 @@ CreateTableResponse createTable( const std::string& tableName,
  *                         <li> gpudb::create_table_LIST: Use <a
  *                 href="../../concepts/tables.html#partitioning-by-list"
  *                 target="_top">list partitioning</a>.
+ *                         <li> gpudb::create_table_HASH: Use <a
+ *                 href="../../concepts/tables.html#partitioning-by-hash"
+ *                 target="_top">hash partitioning</a>.
  *                 </ul>
  *                         <li> gpudb::create_table_partition_keys:
  *                 Comma-separated list of partition keys, which are the
@@ -7873,9 +8025,11 @@ CreateTableResponse createTable( const std::string& tableName,
  *                 href="../../concepts/tables.html#partitioning-by-range"
  *                 target="_top">range partitioning</a>, <a
  *                 href="../../concepts/tables.html#partitioning-by-interval"
- *                 target="_top">interval partitioning</a>, or <a
+ *                 target="_top">interval partitioning</a>, <a
  *                 href="../../concepts/tables.html#partitioning-by-list"
- *                 target="_top">list partitioning</a> for example formats.
+ *                 target="_top">list partitioning</a>, or <a
+ *                 href="../../concepts/tables.html#partitioning-by-hash"
+ *                 target="_top">hash partitioning</a> for example formats.
  *                         <li> gpudb::create_table_is_automatic_partition: If
  *                 true, a new partition will be created for values which don't
  *                 fall into an existing partition.  Currently only supported
@@ -7891,7 +8045,7 @@ CreateTableResponse createTable( const std::string& tableName,
  *                 <a href="../../concepts/ttl.html" target="_top">TTL</a> of
  *                 the table specified in @a tableName.
  *                         <li> gpudb::create_table_chunk_size: Indicates the
- *                 chunk size to be used for this table.
+ *                 number of records per chunk to be used for this table.
  *                         <li> gpudb::create_table_is_result_table: For a
  *                 table, indicates whether the table is an in-memory table. A
  *                 result table cannot contain store_only, text_search, or
@@ -9057,29 +9211,31 @@ CreateUnionResponse& createUnion( const CreateUnionRequest& request_,
  *                 </ul>
  *                 The default value is gpudb::create_union_union_all.
  *                         <li> gpudb::create_union_chunk_size: Indicates the
- *                 chunk size to be used for this table.
+ *                 number of records per chunk to be used for this output
+ *                 table.
  *                         <li> gpudb::create_union_create_indexes:
  *                 Comma-separated list of columns on which to create indexes
  *                 on the output table.  The columns specified must be present
  *                 in @a outputColumnNames.
  *                         <li> gpudb::create_union_ttl: Sets the <a
  *                 href="../../concepts/ttl.html" target="_top">TTL</a> of the
- *                 table specified in @a tableName.
+ *                 output table specified in @a tableName.
  *                         <li> gpudb::create_union_persist: If @a true, then
- *                 the table specified in @a tableName will be persisted and
- *                 will not expire unless a @a ttl is specified.   If @a false,
- *                 then the table will be an in-memory table and will expire
- *                 unless a @a ttl is specified otherwise.
+ *                 the output table specified in @a tableName will be persisted
+ *                 and will not expire unless a @a ttl is specified.   If @a
+ *                 false, then the output table will be an in-memory table and
+ *                 will expire unless a @a ttl is specified otherwise.
  *                 <ul>
  *                         <li> gpudb::create_union_true
  *                         <li> gpudb::create_union_false
  *                 </ul>
  *                 The default value is gpudb::create_union_false.
- *                         <li> gpudb::create_union_view_id: view the output
- *                 table will be a part of.  The default value is ''.
+ *                         <li> gpudb::create_union_view_id: ID of view of
+ *                 which this output table is a member.  The default value is
+ *                 ''.
  *                         <li> gpudb::create_union_force_replicated: If @a
- *                 true, then the table specified in @a tableName will be
- *                 replicated even if the source tables are not.
+ *                 true, then the output table specified in @a tableName will
+ *                 be replicated even if the source tables are not.
  *                 <ul>
  *                         <li> gpudb::create_union_true
  *                         <li> gpudb::create_union_false
@@ -9187,29 +9343,31 @@ CreateUnionResponse createUnion( const std::string& tableName,
  *                 </ul>
  *                 The default value is gpudb::create_union_union_all.
  *                         <li> gpudb::create_union_chunk_size: Indicates the
- *                 chunk size to be used for this table.
+ *                 number of records per chunk to be used for this output
+ *                 table.
  *                         <li> gpudb::create_union_create_indexes:
  *                 Comma-separated list of columns on which to create indexes
  *                 on the output table.  The columns specified must be present
  *                 in @a outputColumnNames.
  *                         <li> gpudb::create_union_ttl: Sets the <a
  *                 href="../../concepts/ttl.html" target="_top">TTL</a> of the
- *                 table specified in @a tableName.
+ *                 output table specified in @a tableName.
  *                         <li> gpudb::create_union_persist: If @a true, then
- *                 the table specified in @a tableName will be persisted and
- *                 will not expire unless a @a ttl is specified.   If @a false,
- *                 then the table will be an in-memory table and will expire
- *                 unless a @a ttl is specified otherwise.
+ *                 the output table specified in @a tableName will be persisted
+ *                 and will not expire unless a @a ttl is specified.   If @a
+ *                 false, then the output table will be an in-memory table and
+ *                 will expire unless a @a ttl is specified otherwise.
  *                 <ul>
  *                         <li> gpudb::create_union_true
  *                         <li> gpudb::create_union_false
  *                 </ul>
  *                 The default value is gpudb::create_union_false.
- *                         <li> gpudb::create_union_view_id: view the output
- *                 table will be a part of.  The default value is ''.
+ *                         <li> gpudb::create_union_view_id: ID of view of
+ *                 which this output table is a member.  The default value is
+ *                 ''.
  *                         <li> gpudb::create_union_force_replicated: If @a
- *                 true, then the table specified in @a tableName will be
- *                 replicated even if the source tables are not.
+ *                 true, then the output table specified in @a tableName will
+ *                 be replicated even if the source tables are not.
  *                 <ul>
  *                         <li> gpudb::create_union_true
  *                         <li> gpudb::create_union_false
@@ -10096,9 +10254,15 @@ ExecuteSqlResponse& executeSql( const ExecuteSqlRequest& request_,
  *                The minimum allowed value is 0. The maximum allowed value is
  *                MAX_INT.
  * @param limit  A positive integer indicating the maximum number of results to
- *               be returned (if not provided the default is 10000), or
- *               END_OF_SET (-9999) to indicate that the maximum number of
- *               results allowed by the server should be returned.
+ *               be returned, or END_OF_SET (-9999) to indicate that the
+ *               maximum number of results allowed by the server should be
+ *               returned.  The number of records returned will never exceed
+ *               the server's own limit, defined by the <a
+ *               href="../../config/index.html#general"
+ *               target="_top">max_get_records_size</a> parameter in the server
+ *               configuration.  Use @a hasMoreRecords to see if more records
+ *               exist in the result to be fetched, and @a offset & @a limit to
+ *               request subsequent pages of results.
  * @param requestSchemaStr  Avro schema of @a data.
  * @param data  An array of binary-encoded data for the records to be binded to
  *              the SQL query.
@@ -10249,9 +10413,15 @@ ExecuteSqlResponse executeSql( const std::string& statement,
  *                The minimum allowed value is 0. The maximum allowed value is
  *                MAX_INT.
  * @param limit  A positive integer indicating the maximum number of results to
- *               be returned (if not provided the default is 10000), or
- *               END_OF_SET (-9999) to indicate that the maximum number of
- *               results allowed by the server should be returned.
+ *               be returned, or END_OF_SET (-9999) to indicate that the
+ *               maximum number of results allowed by the server should be
+ *               returned.  The number of records returned will never exceed
+ *               the server's own limit, defined by the <a
+ *               href="../../config/index.html#general"
+ *               target="_top">max_get_records_size</a> parameter in the server
+ *               configuration.  Use @a hasMoreRecords to see if more records
+ *               exist in the result to be fetched, and @a offset & @a limit to
+ *               request subsequent pages of results.
  * @param requestSchemaStr  Avro schema of @a data.
  * @param data  An array of binary-encoded data for the records to be binded to
  *              the SQL query.
@@ -12764,7 +12934,13 @@ GetRecordsResponse<TResponse>& getRecords( const GetRecordsRequest& request_,
  *                MAX_INT.
  * @param limit  A positive integer indicating the maximum number of results to
  *               be returned. Or END_OF_SET (-9999) to indicate that the max
- *               number of results should be returned.
+ *               number of results should be returned.  The number of records
+ *               returned will never exceed the server's own limit, defined by
+ *               the <a href="../../config/index.html#general"
+ *               target="_top">max_get_records_size</a> parameter in the server
+ *               configuration.  Use @a hasMoreRecords to see if more records
+ *               exist in the result to be fetched, and @a offset & @a limit to
+ *               request subsequent pages of results.
  * @param options
  *                 <ul>
  *                         <li> gpudb::get_records_expression: Optional filter
@@ -12845,7 +13021,13 @@ GetRecordsResponse<TResponse> getRecords( const std::string& tableName,
  *                MAX_INT.
  * @param limit  A positive integer indicating the maximum number of results to
  *               be returned. Or END_OF_SET (-9999) to indicate that the max
- *               number of results should be returned.
+ *               number of results should be returned.  The number of records
+ *               returned will never exceed the server's own limit, defined by
+ *               the <a href="../../config/index.html#general"
+ *               target="_top">max_get_records_size</a> parameter in the server
+ *               configuration.  Use @a hasMoreRecords to see if more records
+ *               exist in the result to be fetched, and @a offset & @a limit to
+ *               request subsequent pages of results.
  * @param options
  *                 <ul>
  *                         <li> gpudb::get_records_expression: Optional filter
@@ -13108,7 +13290,13 @@ GetRecordsResponse<TResponse>& getRecords( const Type& type_,
  *                MAX_INT.
  * @param limit  A positive integer indicating the maximum number of results to
  *               be returned. Or END_OF_SET (-9999) to indicate that the max
- *               number of results should be returned.
+ *               number of results should be returned.  The number of records
+ *               returned will never exceed the server's own limit, defined by
+ *               the <a href="../../config/index.html#general"
+ *               target="_top">max_get_records_size</a> parameter in the server
+ *               configuration.  Use @a hasMoreRecords to see if more records
+ *               exist in the result to be fetched, and @a offset & @a limit to
+ *               request subsequent pages of results.
  * @param options
  *                 <ul>
  *                         <li> gpudb::get_records_expression: Optional filter
@@ -13191,7 +13379,13 @@ GetRecordsResponse<TResponse> getRecords( const ::avro::ValidSchema& schema_,
  *                MAX_INT.
  * @param limit  A positive integer indicating the maximum number of results to
  *               be returned. Or END_OF_SET (-9999) to indicate that the max
- *               number of results should be returned.
+ *               number of results should be returned.  The number of records
+ *               returned will never exceed the server's own limit, defined by
+ *               the <a href="../../config/index.html#general"
+ *               target="_top">max_get_records_size</a> parameter in the server
+ *               configuration.  Use @a hasMoreRecords to see if more records
+ *               exist in the result to be fetched, and @a offset & @a limit to
+ *               request subsequent pages of results.
  * @param options
  *                 <ul>
  *                         <li> gpudb::get_records_expression: Optional filter
@@ -13274,7 +13468,13 @@ GetRecordsResponse<TResponse> getRecords( const Type& type_,
  *                MAX_INT.
  * @param limit  A positive integer indicating the maximum number of results to
  *               be returned. Or END_OF_SET (-9999) to indicate that the max
- *               number of results should be returned.
+ *               number of results should be returned.  The number of records
+ *               returned will never exceed the server's own limit, defined by
+ *               the <a href="../../config/index.html#general"
+ *               target="_top">max_get_records_size</a> parameter in the server
+ *               configuration.  Use @a hasMoreRecords to see if more records
+ *               exist in the result to be fetched, and @a offset & @a limit to
+ *               request subsequent pages of results.
  * @param options
  *                 <ul>
  *                         <li> gpudb::get_records_expression: Optional filter
@@ -13360,7 +13560,13 @@ GetRecordsResponse<TResponse>& getRecords( const ::avro::ValidSchema& schema_,
  *                MAX_INT.
  * @param limit  A positive integer indicating the maximum number of results to
  *               be returned. Or END_OF_SET (-9999) to indicate that the max
- *               number of results should be returned.
+ *               number of results should be returned.  The number of records
+ *               returned will never exceed the server's own limit, defined by
+ *               the <a href="../../config/index.html#general"
+ *               target="_top">max_get_records_size</a> parameter in the server
+ *               configuration.  Use @a hasMoreRecords to see if more records
+ *               exist in the result to be fetched, and @a offset & @a limit to
+ *               request subsequent pages of results.
  * @param options
  *                 <ul>
  *                         <li> gpudb::get_records_expression: Optional filter
@@ -13440,6 +13646,15 @@ GetRecordsResponse<TResponse>& getRecords( const Type& type_,
  * calls based on the type of the update, e.g., the contiguity across pages
  * cannot be relied upon.
  * <p>
+ * If @a tableName is empty, selection is performed against a single-row
+ * virtual table.  This can be useful in executing temporal (<a
+ * href="../../concepts/expressions.html#date-time-functions"
+ * target="_top">NOW()</a>), identity (<a
+ * href="../../concepts/expressions.html#user-security-functions"
+ * target="_top">USER()</a>), or constant-based functions (<a
+ * href="../../concepts/expressions.html#scalar-functions"
+ * target="_top">GEODIST(-77.11, 38.88, -71.06, 42.36)</a>).
+ * <p>
  * The response is returned as a dynamic schema. For details see: <a
  * href="../../api/index.html#dynamic-schemas" target="_top">dynamic schemas
  * documentation</a>.
@@ -13469,6 +13684,15 @@ RawGetRecordsByColumnResponse getRecordsByColumnRaw( const GetRecordsByColumnReq
  * call to the endpoint, the records or values retrieved may differ between
  * calls based on the type of the update, e.g., the contiguity across pages
  * cannot be relied upon.
+ * <p>
+ * If @a tableName is empty, selection is performed against a single-row
+ * virtual table.  This can be useful in executing temporal (<a
+ * href="../../concepts/expressions.html#date-time-functions"
+ * target="_top">NOW()</a>), identity (<a
+ * href="../../concepts/expressions.html#user-security-functions"
+ * target="_top">USER()</a>), or constant-based functions (<a
+ * href="../../concepts/expressions.html#scalar-functions"
+ * target="_top">GEODIST(-77.11, 38.88, -71.06, 42.36)</a>).
  * <p>
  * The response is returned as a dynamic schema. For details see: <a
  * href="../../api/index.html#dynamic-schemas" target="_top">dynamic schemas
@@ -13504,6 +13728,15 @@ RawGetRecordsByColumnResponse& getRecordsByColumnRaw( const GetRecordsByColumnRe
  * calls based on the type of the update, e.g., the contiguity across pages
  * cannot be relied upon.
  * <p>
+ * If @a tableName is empty, selection is performed against a single-row
+ * virtual table.  This can be useful in executing temporal (<a
+ * href="../../concepts/expressions.html#date-time-functions"
+ * target="_top">NOW()</a>), identity (<a
+ * href="../../concepts/expressions.html#user-security-functions"
+ * target="_top">USER()</a>), or constant-based functions (<a
+ * href="../../concepts/expressions.html#scalar-functions"
+ * target="_top">GEODIST(-77.11, 38.88, -71.06, 42.36)</a>).
+ * <p>
  * The response is returned as a dynamic schema. For details see: <a
  * href="../../api/index.html#dynamic-schemas" target="_top">dynamic schemas
  * documentation</a>.
@@ -13533,6 +13766,15 @@ GetRecordsByColumnResponse getRecordsByColumn( const GetRecordsByColumnRequest& 
  * call to the endpoint, the records or values retrieved may differ between
  * calls based on the type of the update, e.g., the contiguity across pages
  * cannot be relied upon.
+ * <p>
+ * If @a tableName is empty, selection is performed against a single-row
+ * virtual table.  This can be useful in executing temporal (<a
+ * href="../../concepts/expressions.html#date-time-functions"
+ * target="_top">NOW()</a>), identity (<a
+ * href="../../concepts/expressions.html#user-security-functions"
+ * target="_top">USER()</a>), or constant-based functions (<a
+ * href="../../concepts/expressions.html#scalar-functions"
+ * target="_top">GEODIST(-77.11, 38.88, -71.06, 42.36)</a>).
  * <p>
  * The response is returned as a dynamic schema. For details see: <a
  * href="../../api/index.html#dynamic-schemas" target="_top">dynamic schemas
@@ -13568,21 +13810,39 @@ GetRecordsByColumnResponse& getRecordsByColumn( const GetRecordsByColumnRequest&
  * calls based on the type of the update, e.g., the contiguity across pages
  * cannot be relied upon.
  * <p>
+ * If @a tableName is empty, selection is performed against a single-row
+ * virtual table.  This can be useful in executing temporal (<a
+ * href="../../concepts/expressions.html#date-time-functions"
+ * target="_top">NOW()</a>), identity (<a
+ * href="../../concepts/expressions.html#user-security-functions"
+ * target="_top">USER()</a>), or constant-based functions (<a
+ * href="../../concepts/expressions.html#scalar-functions"
+ * target="_top">GEODIST(-77.11, 38.88, -71.06, 42.36)</a>).
+ * <p>
  * The response is returned as a dynamic schema. For details see: <a
  * href="../../api/index.html#dynamic-schemas" target="_top">dynamic schemas
  * documentation</a>.
  * 
  * @param tableName  Name of the table on which this operation will be
- *                   performed. The table cannot be a parent set.
+ *                   performed.  An empty table name retrieves one record from
+ *                   a single-row virtual table, where columns specified should
+ *                   be constants or constant expressions.  The table cannot be
+ *                   a parent set.
  * @param columnNames  The list of column values to retrieve.
  * @param offset  A positive integer indicating the number of initial results
  *                to skip (this can be useful for paging through the results).
  *                The minimum allowed value is 0. The maximum allowed value is
  *                MAX_INT.
  * @param limit  A positive integer indicating the maximum number of results to
- *               be returned (if not provided the default is 10000), or
- *               END_OF_SET (-9999) to indicate that the maximum number of
- *               results allowed by the server should be returned.
+ *               be returned, or END_OF_SET (-9999) to indicate that the
+ *               maximum number of results allowed by the server should be
+ *               returned.  The number of records returned will never exceed
+ *               the server's own limit, defined by the <a
+ *               href="../../config/index.html#general"
+ *               target="_top">max_get_records_size</a> parameter in the server
+ *               configuration.  Use @a hasMoreRecords to see if more records
+ *               exist in the result to be fetched, and @a offset & @a limit to
+ *               request subsequent pages of results.
  * @param options
  *                 <ul>
  *                         <li> gpudb::get_records_by_column_expression:
@@ -13642,21 +13902,39 @@ GetRecordsByColumnResponse getRecordsByColumn( const std::string& tableName,
  * calls based on the type of the update, e.g., the contiguity across pages
  * cannot be relied upon.
  * <p>
+ * If @a tableName is empty, selection is performed against a single-row
+ * virtual table.  This can be useful in executing temporal (<a
+ * href="../../concepts/expressions.html#date-time-functions"
+ * target="_top">NOW()</a>), identity (<a
+ * href="../../concepts/expressions.html#user-security-functions"
+ * target="_top">USER()</a>), or constant-based functions (<a
+ * href="../../concepts/expressions.html#scalar-functions"
+ * target="_top">GEODIST(-77.11, 38.88, -71.06, 42.36)</a>).
+ * <p>
  * The response is returned as a dynamic schema. For details see: <a
  * href="../../api/index.html#dynamic-schemas" target="_top">dynamic schemas
  * documentation</a>.
  * 
  * @param tableName  Name of the table on which this operation will be
- *                   performed. The table cannot be a parent set.
+ *                   performed.  An empty table name retrieves one record from
+ *                   a single-row virtual table, where columns specified should
+ *                   be constants or constant expressions.  The table cannot be
+ *                   a parent set.
  * @param columnNames  The list of column values to retrieve.
  * @param offset  A positive integer indicating the number of initial results
  *                to skip (this can be useful for paging through the results).
  *                The minimum allowed value is 0. The maximum allowed value is
  *                MAX_INT.
  * @param limit  A positive integer indicating the maximum number of results to
- *               be returned (if not provided the default is 10000), or
- *               END_OF_SET (-9999) to indicate that the maximum number of
- *               results allowed by the server should be returned.
+ *               be returned, or END_OF_SET (-9999) to indicate that the
+ *               maximum number of results allowed by the server should be
+ *               returned.  The number of records returned will never exceed
+ *               the server's own limit, defined by the <a
+ *               href="../../config/index.html#general"
+ *               target="_top">max_get_records_size</a> parameter in the server
+ *               configuration.  Use @a hasMoreRecords to see if more records
+ *               exist in the result to be fetched, and @a offset & @a limit to
+ *               request subsequent pages of results.
  * @param options
  *                 <ul>
  *                         <li> gpudb::get_records_by_column_expression:
@@ -14623,7 +14901,12 @@ GetRecordsFromCollectionResponse<TResponse>& getRecordsFromCollection( const Get
  *                MAX_INT.
  * @param limit  A positive integer indicating the maximum number of results to
  *               be returned, or END_OF_SET (-9999) to indicate that the max
- *               number of results should be returned.
+ *               number of results should be returned.  The number of records
+ *               returned will never exceed the server's own limit, defined by
+ *               the <a href="../../config/index.html#general"
+ *               target="_top">max_get_records_size</a> parameter in the server
+ *               configuration.  Use @a offset & @a limit to request subsequent
+ *               pages of results.
  * @param options
  *                 <ul>
  *                         <li>
@@ -14686,7 +14969,12 @@ GetRecordsFromCollectionResponse<TResponse> getRecordsFromCollection( const std:
  *                MAX_INT.
  * @param limit  A positive integer indicating the maximum number of results to
  *               be returned, or END_OF_SET (-9999) to indicate that the max
- *               number of results should be returned.
+ *               number of results should be returned.  The number of records
+ *               returned will never exceed the server's own limit, defined by
+ *               the <a href="../../config/index.html#general"
+ *               target="_top">max_get_records_size</a> parameter in the server
+ *               configuration.  Use @a offset & @a limit to request subsequent
+ *               pages of results.
  * @param options
  *                 <ul>
  *                         <li>
@@ -14919,7 +15207,12 @@ GetRecordsFromCollectionResponse<TResponse>& getRecordsFromCollection( const Typ
  *                MAX_INT.
  * @param limit  A positive integer indicating the maximum number of results to
  *               be returned, or END_OF_SET (-9999) to indicate that the max
- *               number of results should be returned.
+ *               number of results should be returned.  The number of records
+ *               returned will never exceed the server's own limit, defined by
+ *               the <a href="../../config/index.html#general"
+ *               target="_top">max_get_records_size</a> parameter in the server
+ *               configuration.  Use @a offset & @a limit to request subsequent
+ *               pages of results.
  * @param options
  *                 <ul>
  *                         <li>
@@ -14984,7 +15277,12 @@ GetRecordsFromCollectionResponse<TResponse> getRecordsFromCollection( const ::av
  *                MAX_INT.
  * @param limit  A positive integer indicating the maximum number of results to
  *               be returned, or END_OF_SET (-9999) to indicate that the max
- *               number of results should be returned.
+ *               number of results should be returned.  The number of records
+ *               returned will never exceed the server's own limit, defined by
+ *               the <a href="../../config/index.html#general"
+ *               target="_top">max_get_records_size</a> parameter in the server
+ *               configuration.  Use @a offset & @a limit to request subsequent
+ *               pages of results.
  * @param options
  *                 <ul>
  *                         <li>
@@ -15049,7 +15347,12 @@ GetRecordsFromCollectionResponse<TResponse> getRecordsFromCollection( const Type
  *                MAX_INT.
  * @param limit  A positive integer indicating the maximum number of results to
  *               be returned, or END_OF_SET (-9999) to indicate that the max
- *               number of results should be returned.
+ *               number of results should be returned.  The number of records
+ *               returned will never exceed the server's own limit, defined by
+ *               the <a href="../../config/index.html#general"
+ *               target="_top">max_get_records_size</a> parameter in the server
+ *               configuration.  Use @a offset & @a limit to request subsequent
+ *               pages of results.
  * @param options
  *                 <ul>
  *                         <li>
@@ -15117,7 +15420,12 @@ GetRecordsFromCollectionResponse<TResponse>& getRecordsFromCollection( const ::a
  *                MAX_INT.
  * @param limit  A positive integer indicating the maximum number of results to
  *               be returned, or END_OF_SET (-9999) to indicate that the max
- *               number of results should be returned.
+ *               number of results should be returned.  The number of records
+ *               returned will never exceed the server's own limit, defined by
+ *               the <a href="../../config/index.html#general"
+ *               target="_top">max_get_records_size</a> parameter in the server
+ *               configuration.  Use @a offset & @a limit to request subsequent
+ *               pages of results.
  * @param options
  *                 <ul>
  *                         <li>
@@ -15945,6 +16253,35 @@ InsertRecordsResponse& insertRecords( const InsertRecordsRequest<TRequest>& requ
  *                         <li> gpudb::insert_records_false
  *                 </ul>
  *                 The default value is gpudb::insert_records_false.
+ *                         <li> gpudb::insert_records_return_individual_errors:
+ *                 If set to @a true, success will always be returned, and any
+ *                 errors found will be included in the info map.  The
+ *                 "bad_record_indices" entry is a comma-separated list of bad
+ *                 records (0-based).  And if so, there will also be an
+ *                 "error_N" entry for each record with an error, where N is
+ *                 the index (0-based).
+ *                 <ul>
+ *                         <li> gpudb::insert_records_true
+ *                         <li> gpudb::insert_records_false
+ *                 </ul>
+ *                 The default value is gpudb::insert_records_false.
+ *                         <li> gpudb::insert_records_allow_partial_batch: If
+ *                 set to @a true, all correct records will be inserted and
+ *                 incorrect records will be rejected and reported.  Otherwise,
+ *                 the entire batch will be rejected if any records are
+ *                 incorrect.
+ *                 <ul>
+ *                         <li> gpudb::insert_records_true
+ *                         <li> gpudb::insert_records_false
+ *                 </ul>
+ *                 The default value is gpudb::insert_records_false.
+ *                         <li> gpudb::insert_records_dry_run: If set to @a
+ *                 true, no data will be saved and any errors will be returned.
+ *                 <ul>
+ *                         <li> gpudb::insert_records_true
+ *                         <li> gpudb::insert_records_false
+ *                 </ul>
+ *                 The default value is gpudb::insert_records_false.
  *                 </ul>
  * 
  * @return Response object containing the result of the operation.
@@ -16019,6 +16356,35 @@ InsertRecordsResponse insertRecords( const std::string& tableName,
  *                         <li> gpudb::insert_records_truncate_strings: If set
  *                 to @a true, any strings which are too long for their target
  *                 charN string columns will be truncated to fit.
+ *                 <ul>
+ *                         <li> gpudb::insert_records_true
+ *                         <li> gpudb::insert_records_false
+ *                 </ul>
+ *                 The default value is gpudb::insert_records_false.
+ *                         <li> gpudb::insert_records_return_individual_errors:
+ *                 If set to @a true, success will always be returned, and any
+ *                 errors found will be included in the info map.  The
+ *                 "bad_record_indices" entry is a comma-separated list of bad
+ *                 records (0-based).  And if so, there will also be an
+ *                 "error_N" entry for each record with an error, where N is
+ *                 the index (0-based).
+ *                 <ul>
+ *                         <li> gpudb::insert_records_true
+ *                         <li> gpudb::insert_records_false
+ *                 </ul>
+ *                 The default value is gpudb::insert_records_false.
+ *                         <li> gpudb::insert_records_allow_partial_batch: If
+ *                 set to @a true, all correct records will be inserted and
+ *                 incorrect records will be rejected and reported.  Otherwise,
+ *                 the entire batch will be rejected if any records are
+ *                 incorrect.
+ *                 <ul>
+ *                         <li> gpudb::insert_records_true
+ *                         <li> gpudb::insert_records_false
+ *                 </ul>
+ *                 The default value is gpudb::insert_records_false.
+ *                         <li> gpudb::insert_records_dry_run: If set to @a
+ *                 true, no data will be saved and any errors will be returned.
  *                 <ul>
  *                         <li> gpudb::insert_records_true
  *                         <li> gpudb::insert_records_false
@@ -16878,8 +17244,14 @@ LockTableResponse& lockTable( const std::string& tableName,
 /**
  * Matches a directed route implied by a given set of latitude/longitude points
  * to an existing underlying road network graph using a given solution type.
- * See <a href="../../graph_solver/network_graph_solver.html"
- * target="_top">Network Graph Solvers</a> for more information.
+
+ * IMPORTANT: It's highly recommended that you review the <a
+ * href="../../graph_solver/network_graph_solver.html" target="_top">Network
+ * Graphs & Solvers</a> concepts documentation, the <a
+ * href="../../graph_solver/examples/graph_rest_guide.html" target="_top">Graph
+ * REST Tutorial</a>, and/or some <a
+ * href="../../graph_solver/examples.html#match-graph"
+ * target="_top">/match/graph examples</a> before using this endpoint.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -16893,8 +17265,14 @@ MatchGraphResponse matchGraph( const MatchGraphRequest& request_ ) const;
 /**
  * Matches a directed route implied by a given set of latitude/longitude points
  * to an existing underlying road network graph using a given solution type.
- * See <a href="../../graph_solver/network_graph_solver.html"
- * target="_top">Network Graph Solvers</a> for more information.
+
+ * IMPORTANT: It's highly recommended that you review the <a
+ * href="../../graph_solver/network_graph_solver.html" target="_top">Network
+ * Graphs & Solvers</a> concepts documentation, the <a
+ * href="../../graph_solver/examples/graph_rest_guide.html" target="_top">Graph
+ * REST Tutorial</a>, and/or some <a
+ * href="../../graph_solver/examples.html#match-graph"
+ * target="_top">/match/graph examples</a> before using this endpoint.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -16912,8 +17290,14 @@ MatchGraphResponse& matchGraph( const MatchGraphRequest& request_,
 /**
  * Matches a directed route implied by a given set of latitude/longitude points
  * to an existing underlying road network graph using a given solution type.
- * See <a href="../../graph_solver/network_graph_solver.html"
- * target="_top">Network Graph Solvers</a> for more information.
+
+ * IMPORTANT: It's highly recommended that you review the <a
+ * href="../../graph_solver/network_graph_solver.html" target="_top">Network
+ * Graphs & Solvers</a> concepts documentation, the <a
+ * href="../../graph_solver/examples/graph_rest_guide.html" target="_top">Graph
+ * REST Tutorial</a>, and/or some <a
+ * href="../../graph_solver/examples.html#match-graph"
+ * target="_top">/match/graph examples</a> before using this endpoint.
  * 
  * @param graphName  Name of the underlying geospatial graph resource to match
  *                   to using @a samplePoints.
@@ -16951,6 +17335,9 @@ MatchGraphResponse& matchGraph( const MatchGraphRequest& request_,
  *                     Matches @a samplePoints to optimize scheduling multiple
  *                     supplies (trucks) with varying sizes to varying demand
  *                     sites with varying capacities per depot
+ *                             <li> gpudb::match_graph_match_batch_solves:
+ *                     Matches @a samplePoints source and destination pairs for
+ *                     the shortest path solves in batch mode
  *                     </ul>
  *                     The default value is gpudb::match_graph_markov_chain.
  * @param solutionTable  The name of the table used to store the results; this
@@ -17031,6 +17418,11 @@ MatchGraphResponse& matchGraph( const MatchGraphRequest& request_,
  *                 loading allowed if supply is less than the store's demand.
  *                 </ul>
  *                 The default value is gpudb::match_graph_true.
+ *                         <li> gpudb::match_graph_max_combinations: For the @a
+ *                 match_supply_demand solver only. This is the cutoff for the
+ *                 number of generated combinations for sequencing the demand
+ *                 locations - can increase this upto 2M.  The default value is
+ *                 '10000'.
  *                 </ul>
  * 
  * @return Response object containing the result of the operation.
@@ -17046,8 +17438,14 @@ MatchGraphResponse matchGraph( const std::string& graphName,
 /**
  * Matches a directed route implied by a given set of latitude/longitude points
  * to an existing underlying road network graph using a given solution type.
- * See <a href="../../graph_solver/network_graph_solver.html"
- * target="_top">Network Graph Solvers</a> for more information.
+
+ * IMPORTANT: It's highly recommended that you review the <a
+ * href="../../graph_solver/network_graph_solver.html" target="_top">Network
+ * Graphs & Solvers</a> concepts documentation, the <a
+ * href="../../graph_solver/examples/graph_rest_guide.html" target="_top">Graph
+ * REST Tutorial</a>, and/or some <a
+ * href="../../graph_solver/examples.html#match-graph"
+ * target="_top">/match/graph examples</a> before using this endpoint.
  * 
  * @param graphName  Name of the underlying geospatial graph resource to match
  *                   to using @a samplePoints.
@@ -17085,6 +17483,9 @@ MatchGraphResponse matchGraph( const std::string& graphName,
  *                     Matches @a samplePoints to optimize scheduling multiple
  *                     supplies (trucks) with varying sizes to varying demand
  *                     sites with varying capacities per depot
+ *                             <li> gpudb::match_graph_match_batch_solves:
+ *                     Matches @a samplePoints source and destination pairs for
+ *                     the shortest path solves in batch mode
  *                     </ul>
  *                     The default value is gpudb::match_graph_markov_chain.
  * @param solutionTable  The name of the table used to store the results; this
@@ -17165,6 +17566,11 @@ MatchGraphResponse matchGraph( const std::string& graphName,
  *                 loading allowed if supply is less than the store's demand.
  *                 </ul>
  *                 The default value is gpudb::match_graph_true.
+ *                         <li> gpudb::match_graph_max_combinations: For the @a
+ *                 match_supply_demand solver only. This is the cutoff for the
+ *                 number of generated combinations for sequencing the demand
+ *                 locations - can increase this upto 2M.  The default value is
+ *                 '10000'.
  *                 </ul>
  * @param[out] response_  Response object containing the results of the
  *                        operation.
@@ -17301,8 +17707,8 @@ MergeRecordsResponse& mergeRecords( const MergeRecordsRequest& request_,
  *                 </ul>
  *                 The default value is gpudb::merge_records_true.
  *                         <li> gpudb::merge_records_chunk_size: Indicates the
- *                 chunk size to be used for the merged table specified in @a
- *                 tableName.
+ *                 number of records per chunk to be used for the merged table
+ *                 specified in @a tableName.
  *                         <li> gpudb::merge_records_view_id: view this result
  *                 table is part of.  The default value is ''.
  *                 </ul>
@@ -17382,8 +17788,8 @@ MergeRecordsResponse mergeRecords( const std::string& tableName,
  *                 </ul>
  *                 The default value is gpudb::merge_records_true.
  *                         <li> gpudb::merge_records_chunk_size: Indicates the
- *                 chunk size to be used for the merged table specified in @a
- *                 tableName.
+ *                 number of records per chunk to be used for the merged table
+ *                 specified in @a tableName.
  *                         <li> gpudb::merge_records_view_id: view this result
  *                 table is part of.  The default value is ''.
  *                 </ul>
@@ -17421,8 +17827,13 @@ MergeRecordsResponse& mergeRecords( const std::string& tableName,
  * return the adjacency list both in a table and the response, provide a value
  * to @a adjacencyTable and set @a export_query_results to @a true.
  * <p>
- * See <a href="../../graph_solver/network_graph_solver.html"
- * target="_top">Network Graph Solver</a> for more information.
+ * IMPORTANT: It's highly recommended that you review the <a
+ * href="../../graph_solver/network_graph_solver.html" target="_top">Network
+ * Graphs & Solvers</a> concepts documentation, the <a
+ * href="../../graph_solver/examples/graph_rest_guide.html" target="_top">Graph
+ * REST Tutorial</a>, and/or some <a
+ * href="../../graph_solver/examples.html#query-graph"
+ * target="_top">/query/graph examples</a> before using this endpoint.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -17453,8 +17864,13 @@ QueryGraphResponse queryGraph( const QueryGraphRequest& request_ ) const;
  * return the adjacency list both in a table and the response, provide a value
  * to @a adjacencyTable and set @a export_query_results to @a true.
  * <p>
- * See <a href="../../graph_solver/network_graph_solver.html"
- * target="_top">Network Graph Solver</a> for more information.
+ * IMPORTANT: It's highly recommended that you review the <a
+ * href="../../graph_solver/network_graph_solver.html" target="_top">Network
+ * Graphs & Solvers</a> concepts documentation, the <a
+ * href="../../graph_solver/examples/graph_rest_guide.html" target="_top">Graph
+ * REST Tutorial</a>, and/or some <a
+ * href="../../graph_solver/examples.html#query-graph"
+ * target="_top">/query/graph examples</a> before using this endpoint.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -17489,8 +17905,13 @@ QueryGraphResponse& queryGraph( const QueryGraphRequest& request_,
  * return the adjacency list both in a table and the response, provide a value
  * to @a adjacencyTable and set @a export_query_results to @a true.
  * <p>
- * See <a href="../../graph_solver/network_graph_solver.html"
- * target="_top">Network Graph Solver</a> for more information.
+ * IMPORTANT: It's highly recommended that you review the <a
+ * href="../../graph_solver/network_graph_solver.html" target="_top">Network
+ * Graphs & Solvers</a> concepts documentation, the <a
+ * href="../../graph_solver/examples/graph_rest_guide.html" target="_top">Graph
+ * REST Tutorial</a>, and/or some <a
+ * href="../../graph_solver/examples.html#query-graph"
+ * target="_top">/query/graph examples</a> before using this endpoint.
  * 
  * @param graphName  Name of the graph resource to query.
  * @param queries  Nodes or edges to be queried specified using <a
@@ -17545,7 +17966,9 @@ QueryGraphResponse& queryGraph( const QueryGraphRequest& request_,
  *                 the node will be returned. If set to @a false, only outbound
  *                 edges relative to the node will be returned. This parameter
  *                 is only applicable if the queried graph @a graphName is
- *                 directed and when querying nodes.
+ *                 directed and when querying nodes. Consult <a
+ *                 href="../../graph_solver/network_graph_solver.html#directed-graphs"
+ *                 target="_top">Directed Graphs</a> for more details.
  *                 <ul>
  *                         <li> gpudb::query_graph_true
  *                         <li> gpudb::query_graph_false
@@ -17634,8 +18057,13 @@ QueryGraphResponse queryGraph( const std::string& graphName,
  * return the adjacency list both in a table and the response, provide a value
  * to @a adjacencyTable and set @a export_query_results to @a true.
  * <p>
- * See <a href="../../graph_solver/network_graph_solver.html"
- * target="_top">Network Graph Solver</a> for more information.
+ * IMPORTANT: It's highly recommended that you review the <a
+ * href="../../graph_solver/network_graph_solver.html" target="_top">Network
+ * Graphs & Solvers</a> concepts documentation, the <a
+ * href="../../graph_solver/examples/graph_rest_guide.html" target="_top">Graph
+ * REST Tutorial</a>, and/or some <a
+ * href="../../graph_solver/examples.html#query-graph"
+ * target="_top">/query/graph examples</a> before using this endpoint.
  * 
  * @param graphName  Name of the graph resource to query.
  * @param queries  Nodes or edges to be queried specified using <a
@@ -17690,7 +18118,9 @@ QueryGraphResponse queryGraph( const std::string& graphName,
  *                 the node will be returned. If set to @a false, only outbound
  *                 edges relative to the node will be returned. This parameter
  *                 is only applicable if the queried graph @a graphName is
- *                 directed and when querying nodes.
+ *                 directed and when querying nodes. Consult <a
+ *                 href="../../graph_solver/network_graph_solver.html#directed-graphs"
+ *                 target="_top">Directed Graphs</a> for more details.
  *                 <ul>
  *                         <li> gpudb::query_graph_true
  *                         <li> gpudb::query_graph_false
@@ -18662,6 +19092,88 @@ ShowSecurityResponse& showSecurity( const std::vector<std::string>& names,
                                     ShowSecurityResponse& response_ ) const;
 
 /**
+ * Procedures
+ * 
+ * @param[in] request_  Request object containing the parameters for the
+ *                      operation.
+ * 
+ * @return Response object containing the result of the operation.
+ * 
+ */
+
+ShowSqlProcResponse showSqlProc( const ShowSqlProcRequest& request_ ) const;
+
+/**
+ * Procedures
+ * 
+ * @param[in] request_  Request object containing the parameters for the
+ *                      operation.
+ * @param[out] response_  Response object containing the results of the
+ *                        operation.
+ * 
+ * @return Response object containing the result of the operation (initially
+ *         passed in by reference).
+ * 
+ */
+
+ShowSqlProcResponse& showSqlProc( const ShowSqlProcRequest& request_,
+                                  ShowSqlProcResponse& response_ ) const;
+
+/**
+ * Procedures
+ * 
+ * @param procedureName  Name of the procedure for which to retrieve the
+ *                       information. If blank, then information about all
+ *                       procedures is returned.
+ * @param options  Optional parameters.
+ *                 <ul>
+ *                         <li> gpudb::show_sql_proc_no_error_if_not_exists: If
+ *                 @a false will return an error if the provided  does not
+ *                 exist. If @a true then it will return an empty result.
+ *                 <ul>
+ *                         <li> gpudb::show_sql_proc_true
+ *                         <li> gpudb::show_sql_proc_false
+ *                 </ul>
+ *                 The default value is gpudb::show_sql_proc_false.
+ *                 </ul>
+ * 
+ * @return Response object containing the result of the operation.
+ * 
+ */
+
+ShowSqlProcResponse showSqlProc( const std::string& procedureName,
+                                 const std::map<std::string, std::string>& options ) const;
+
+/**
+ * Procedures
+ * 
+ * @param procedureName  Name of the procedure for which to retrieve the
+ *                       information. If blank, then information about all
+ *                       procedures is returned.
+ * @param options  Optional parameters.
+ *                 <ul>
+ *                         <li> gpudb::show_sql_proc_no_error_if_not_exists: If
+ *                 @a false will return an error if the provided  does not
+ *                 exist. If @a true then it will return an empty result.
+ *                 <ul>
+ *                         <li> gpudb::show_sql_proc_true
+ *                         <li> gpudb::show_sql_proc_false
+ *                 </ul>
+ *                 The default value is gpudb::show_sql_proc_false.
+ *                 </ul>
+ * @param[out] response_  Response object containing the results of the
+ *                        operation.
+ * 
+ * @return Response object containing the result of the operation (initially
+ *         passed in by reference).
+ * 
+ */
+
+ShowSqlProcResponse& showSqlProc( const std::string& procedureName,
+                                  const std::map<std::string, std::string>& options,
+                                  ShowSqlProcResponse& response_ ) const;
+
+/**
  * Retrieves the collected column statistics for the specified table.
  * 
  * @param[in] request_  Request object containing the parameters for the
@@ -19426,9 +19938,15 @@ ShowTypesResponse& showTypes( const std::string& typeId,
 /**
  * Solves an existing graph for a type of problem (e.g., shortest path, page
  * rank, travelling salesman, etc.) using source nodes, destination nodes, and
- * additional, optional weights and restrictions. See <a
+ * additional, optional weights and restrictions.
+ * <p>
+ * IMPORTANT: It's highly recommended that you review the <a
  * href="../../graph_solver/network_graph_solver.html" target="_top">Network
- * Graph Solvers</a> for more information.
+ * Graphs & Solvers</a> concepts documentation, the <a
+ * href="../../graph_solver/examples/graph_rest_guide.html" target="_top">Graph
+ * REST Tutorial</a>, and/or some <a
+ * href="../../graph_solver/examples.html#solve-graph"
+ * target="_top">/solve/graph examples</a> before using this endpoint.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -19442,9 +19960,15 @@ SolveGraphResponse solveGraph( const SolveGraphRequest& request_ ) const;
 /**
  * Solves an existing graph for a type of problem (e.g., shortest path, page
  * rank, travelling salesman, etc.) using source nodes, destination nodes, and
- * additional, optional weights and restrictions. See <a
+ * additional, optional weights and restrictions.
+ * <p>
+ * IMPORTANT: It's highly recommended that you review the <a
  * href="../../graph_solver/network_graph_solver.html" target="_top">Network
- * Graph Solvers</a> for more information.
+ * Graphs & Solvers</a> concepts documentation, the <a
+ * href="../../graph_solver/examples/graph_rest_guide.html" target="_top">Graph
+ * REST Tutorial</a>, and/or some <a
+ * href="../../graph_solver/examples.html#solve-graph"
+ * target="_top">/solve/graph examples</a> before using this endpoint.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -19462,9 +19986,15 @@ SolveGraphResponse& solveGraph( const SolveGraphRequest& request_,
 /**
  * Solves an existing graph for a type of problem (e.g., shortest path, page
  * rank, travelling salesman, etc.) using source nodes, destination nodes, and
- * additional, optional weights and restrictions. See <a
+ * additional, optional weights and restrictions.
+ * <p>
+ * IMPORTANT: It's highly recommended that you review the <a
  * href="../../graph_solver/network_graph_solver.html" target="_top">Network
- * Graph Solvers</a> for more information.
+ * Graphs & Solvers</a> concepts documentation, the <a
+ * href="../../graph_solver/examples/graph_rest_guide.html" target="_top">Graph
+ * REST Tutorial</a>, and/or some <a
+ * href="../../graph_solver/examples.html#solve-graph"
+ * target="_top">/solve/graph examples</a> before using this endpoint.
  * 
  * @param graphName  Name of the graph resource to solve.
  * @param weightsOnEdges  Additional weights to apply to the edges of an
@@ -19534,68 +20064,40 @@ SolveGraphResponse& solveGraph( const SolveGraphRequest& request_,
  *                    as inverse Dijkstra or the service man routing problem.
  *                            <li> gpudb::solve_graph_BACKHAUL_ROUTING: Solves
  *                    for optimal routes that connect remote asset nodes to the
- *                    fixed (backbone) asset nodes. When @a BACKHAUL_ROUTING is
- *                    invoked, the @a destinationNodes or @a destinationNodeIds
- *                    array is used for both fixed and remote asset nodes and
- *                    the @a sourceNodeId represents the number of fixed asset
- *                    nodes contained in @a destinationNodes / @a
- *                    destinationNodeIds.
+ *                    fixed (backbone) asset nodes.
+ *                            <li> gpudb::solve_graph_ALLPATHS: Solves for
+ *                    paths that would give costs between max and min solution
+ *                    radia - Make sure to limit by the 'max_solution_targets'
+ *                    option. Min cost shoudl be >= shortest_path cost.
  *                    </ul>
  *                    The default value is gpudb::solve_graph_SHORTEST_PATH.
- * @param sourceNodeId  If @a nodeType is @a NODE_ID, the node ID (integer) of
- *                      the source (starting point) for the graph solution. If
- *                      the @a solverType is set to @a BACKHAUL_ROUTING, this
- *                      number represents the number of fixed asset nodes
- *                      contained in @a destinationNodes, e.g., if @a
- *                      sourceNodeId is set to 24, the first 24 nodes listed in
- *                      @a destinationNodes / @a destinationNodeIds are the
- *                      fixed asset nodes and the rest of the nodes in the
- *                      array are remote assets.
- * @param destinationNodeIds  List of destination node indices, or indices for
- *                            pageranks. If the @a solverType is set to @a
- *                            BACKHAUL_ROUTING, it is the list of all fixed and
- *                            remote asset nodes.
- * @param nodeType  Source and destination node identifier type.
- *                  <ul>
- *                          <li> gpudb::solve_graph_NODE_ID: The graph's nodes
- *                  were identified as integers, e.g., 1234.
- *                          <li> gpudb::solve_graph_NODE_WKTPOINT: The graph's
- *                  nodes were identified as geospatial coordinates, e.g.,
- *                  'POINT(1.0 2.0)'.
- *                          <li> gpudb::solve_graph_NODE_NAME: The graph's
- *                  nodes were identified as strings, e.g., 'Arlington'.
- *                  </ul>
- *                  The default value is gpudb::solve_graph_NODE_ID.
- * @param sourceNode  If @a nodeType is @a NODE_WKTPOINT or @a NODE_NAME, the
- *                    node (string) of the source (starting point) for the
- *                    graph solution.
- * @param destinationNodes  If @a nodeType is @a NODE_WKTPOINT or @a NODE_NAME,
- *                          the list of destination node or page rank indices
- *                          (strings) for the graph solution. If the @a
- *                          solverType is set to @a BACKHAUL_ROUTING, it is the
- *                          list of all fixed and remote asset nodes. The
- *                          string type should be consistent with the @a
- *                          nodeType parameter.
+ * @param sourceNodes  It can be one of the nodal identifiers - e.g:
+ *                     'NODE_WKTPOINT' for source nodes. For @a
+ *                     BACKHAUL_ROUTING, this list depicts the fixed assets.
+ * @param destinationNodes  It can be one of the nodal identifiers - e.g:
+ *                          'NODE_WKTPOINT' for destination (target) nodes. For
+ *                          @a BACKHAUL_ROUTING, this list depicts the remote
+ *                          assets.
  * @param solutionTable  Name of the table to store the solution.
  * @param options  Additional parameters
  *                 <ul>
  *                         <li> gpudb::solve_graph_max_solution_radius: For @a
  *                 SHORTEST_PATH and @a INVERSE_SHORTEST_PATH solvers only.
  *                 Sets the maximum solution cost radius, which ignores the @a
- *                 destinationNodeIds list and instead outputs the nodes within
+ *                 destinationNodes list and instead outputs the nodes within
  *                 the radius sorted by ascending cost. If set to '0.0', the
  *                 setting is ignored.  The default value is '0.0'.
  *                         <li> gpudb::solve_graph_min_solution_radius: For @a
  *                 SHORTEST_PATH and @a INVERSE_SHORTEST_PATH solvers only.
  *                 Applicable only when @a max_solution_radius is set. Sets the
  *                 minimum solution cost radius, which ignores the @a
- *                 destinationNodeIds list and instead outputs the nodes within
+ *                 destinationNodes list and instead outputs the nodes within
  *                 the radius sorted by ascending cost. If set to '0.0', the
  *                 setting is ignored.  The default value is '0.0'.
  *                         <li> gpudb::solve_graph_max_solution_targets: For @a
  *                 SHORTEST_PATH and @a INVERSE_SHORTEST_PATH solvers only.
  *                 Sets the maximum number of solution targets, which ignores
- *                 the @a destinationNodeIds list and instead outputs no more
+ *                 the @a destinationNodes list and instead outputs no more
  *                 than n number of nodes sorted by ascending cost where n is
  *                 equal to the setting value. If set to 0, the setting is
  *                 ignored.  The default value is '0'.
@@ -19637,10 +20139,7 @@ SolveGraphResponse solveGraph( const std::string& graphName,
                                const std::vector<std::string>& weightsOnEdges,
                                const std::vector<std::string>& restrictions,
                                const std::string& solverType,
-                               const int64_t sourceNodeId,
-                               const std::vector<int64_t>& destinationNodeIds,
-                               const std::string& nodeType,
-                               const std::string& sourceNode,
+                               const std::vector<std::string>& sourceNodes,
                                const std::vector<std::string>& destinationNodes,
                                const std::string& solutionTable,
                                const std::map<std::string, std::string>& options ) const;
@@ -19648,9 +20147,15 @@ SolveGraphResponse solveGraph( const std::string& graphName,
 /**
  * Solves an existing graph for a type of problem (e.g., shortest path, page
  * rank, travelling salesman, etc.) using source nodes, destination nodes, and
- * additional, optional weights and restrictions. See <a
+ * additional, optional weights and restrictions.
+ * <p>
+ * IMPORTANT: It's highly recommended that you review the <a
  * href="../../graph_solver/network_graph_solver.html" target="_top">Network
- * Graph Solvers</a> for more information.
+ * Graphs & Solvers</a> concepts documentation, the <a
+ * href="../../graph_solver/examples/graph_rest_guide.html" target="_top">Graph
+ * REST Tutorial</a>, and/or some <a
+ * href="../../graph_solver/examples.html#solve-graph"
+ * target="_top">/solve/graph examples</a> before using this endpoint.
  * 
  * @param graphName  Name of the graph resource to solve.
  * @param weightsOnEdges  Additional weights to apply to the edges of an
@@ -19720,68 +20225,40 @@ SolveGraphResponse solveGraph( const std::string& graphName,
  *                    as inverse Dijkstra or the service man routing problem.
  *                            <li> gpudb::solve_graph_BACKHAUL_ROUTING: Solves
  *                    for optimal routes that connect remote asset nodes to the
- *                    fixed (backbone) asset nodes. When @a BACKHAUL_ROUTING is
- *                    invoked, the @a destinationNodes or @a destinationNodeIds
- *                    array is used for both fixed and remote asset nodes and
- *                    the @a sourceNodeId represents the number of fixed asset
- *                    nodes contained in @a destinationNodes / @a
- *                    destinationNodeIds.
+ *                    fixed (backbone) asset nodes.
+ *                            <li> gpudb::solve_graph_ALLPATHS: Solves for
+ *                    paths that would give costs between max and min solution
+ *                    radia - Make sure to limit by the 'max_solution_targets'
+ *                    option. Min cost shoudl be >= shortest_path cost.
  *                    </ul>
  *                    The default value is gpudb::solve_graph_SHORTEST_PATH.
- * @param sourceNodeId  If @a nodeType is @a NODE_ID, the node ID (integer) of
- *                      the source (starting point) for the graph solution. If
- *                      the @a solverType is set to @a BACKHAUL_ROUTING, this
- *                      number represents the number of fixed asset nodes
- *                      contained in @a destinationNodes, e.g., if @a
- *                      sourceNodeId is set to 24, the first 24 nodes listed in
- *                      @a destinationNodes / @a destinationNodeIds are the
- *                      fixed asset nodes and the rest of the nodes in the
- *                      array are remote assets.
- * @param destinationNodeIds  List of destination node indices, or indices for
- *                            pageranks. If the @a solverType is set to @a
- *                            BACKHAUL_ROUTING, it is the list of all fixed and
- *                            remote asset nodes.
- * @param nodeType  Source and destination node identifier type.
- *                  <ul>
- *                          <li> gpudb::solve_graph_NODE_ID: The graph's nodes
- *                  were identified as integers, e.g., 1234.
- *                          <li> gpudb::solve_graph_NODE_WKTPOINT: The graph's
- *                  nodes were identified as geospatial coordinates, e.g.,
- *                  'POINT(1.0 2.0)'.
- *                          <li> gpudb::solve_graph_NODE_NAME: The graph's
- *                  nodes were identified as strings, e.g., 'Arlington'.
- *                  </ul>
- *                  The default value is gpudb::solve_graph_NODE_ID.
- * @param sourceNode  If @a nodeType is @a NODE_WKTPOINT or @a NODE_NAME, the
- *                    node (string) of the source (starting point) for the
- *                    graph solution.
- * @param destinationNodes  If @a nodeType is @a NODE_WKTPOINT or @a NODE_NAME,
- *                          the list of destination node or page rank indices
- *                          (strings) for the graph solution. If the @a
- *                          solverType is set to @a BACKHAUL_ROUTING, it is the
- *                          list of all fixed and remote asset nodes. The
- *                          string type should be consistent with the @a
- *                          nodeType parameter.
+ * @param sourceNodes  It can be one of the nodal identifiers - e.g:
+ *                     'NODE_WKTPOINT' for source nodes. For @a
+ *                     BACKHAUL_ROUTING, this list depicts the fixed assets.
+ * @param destinationNodes  It can be one of the nodal identifiers - e.g:
+ *                          'NODE_WKTPOINT' for destination (target) nodes. For
+ *                          @a BACKHAUL_ROUTING, this list depicts the remote
+ *                          assets.
  * @param solutionTable  Name of the table to store the solution.
  * @param options  Additional parameters
  *                 <ul>
  *                         <li> gpudb::solve_graph_max_solution_radius: For @a
  *                 SHORTEST_PATH and @a INVERSE_SHORTEST_PATH solvers only.
  *                 Sets the maximum solution cost radius, which ignores the @a
- *                 destinationNodeIds list and instead outputs the nodes within
+ *                 destinationNodes list and instead outputs the nodes within
  *                 the radius sorted by ascending cost. If set to '0.0', the
  *                 setting is ignored.  The default value is '0.0'.
  *                         <li> gpudb::solve_graph_min_solution_radius: For @a
  *                 SHORTEST_PATH and @a INVERSE_SHORTEST_PATH solvers only.
  *                 Applicable only when @a max_solution_radius is set. Sets the
  *                 minimum solution cost radius, which ignores the @a
- *                 destinationNodeIds list and instead outputs the nodes within
+ *                 destinationNodes list and instead outputs the nodes within
  *                 the radius sorted by ascending cost. If set to '0.0', the
  *                 setting is ignored.  The default value is '0.0'.
  *                         <li> gpudb::solve_graph_max_solution_targets: For @a
  *                 SHORTEST_PATH and @a INVERSE_SHORTEST_PATH solvers only.
  *                 Sets the maximum number of solution targets, which ignores
- *                 the @a destinationNodeIds list and instead outputs no more
+ *                 the @a destinationNodes list and instead outputs no more
  *                 than n number of nodes sorted by ascending cost where n is
  *                 equal to the setting value. If set to 0, the setting is
  *                 ignored.  The default value is '0'.
@@ -19826,10 +20303,7 @@ SolveGraphResponse& solveGraph( const std::string& graphName,
                                 const std::vector<std::string>& weightsOnEdges,
                                 const std::vector<std::string>& restrictions,
                                 const std::string& solverType,
-                                const int64_t sourceNodeId,
-                                const std::vector<int64_t>& destinationNodeIds,
-                                const std::string& nodeType,
-                                const std::string& sourceNode,
+                                const std::vector<std::string>& sourceNodes,
                                 const std::vector<std::string>& destinationNodes,
                                 const std::string& solutionTable,
                                 const std::map<std::string, std::string>& options,
@@ -20064,9 +20538,8 @@ UpdateRecordsResponse& updateRecords( const UpdateRecordsRequest<TRequest>& requ
  *                 </ul>
  *                 The default value is gpudb::update_records_false.
  *                         <li> gpudb::update_records_truncate_strings: If set
- *                 to {true}@{, any strings which are too long for their charN
- *                 string fields will be truncated to fit.  The default value
- *                 is false.
+ *                 to @a true, any strings which are too long for their charN
+ *                 string fields will be truncated to fit.
  *                 <ul>
  *                         <li> gpudb::update_records_true
  *                         <li> gpudb::update_records_false
@@ -20185,9 +20658,8 @@ UpdateRecordsResponse updateRecords( const std::string& tableName,
  *                 </ul>
  *                 The default value is gpudb::update_records_false.
  *                         <li> gpudb::update_records_truncate_strings: If set
- *                 to {true}@{, any strings which are too long for their charN
- *                 string fields will be truncated to fit.  The default value
- *                 is false.
+ *                 to @a true, any strings which are too long for their charN
+ *                 string fields will be truncated to fit.
  *                 <ul>
  *                         <li> gpudb::update_records_true
  *                         <li> gpudb::update_records_false
@@ -22454,7 +22926,7 @@ VisualizeImageLabelsResponse& visualizeImageLabels( const std::string& tableName
  * graph. Isolines represent curves of equal cost, with cost typically
  * referring to the time or distance assigned as the weights of the underlying
  * graph. See <a href="../../graph_solver/network_graph_solver.html"
- * target="_top">Network Graph Solvers</a> for more information on graphs.
+ * target="_top">Network Graphs & Solvers</a> for more information on graphs.
  * .
  * 
  * @param[in] request_  Request object containing the parameters for the
@@ -22471,7 +22943,7 @@ VisualizeIsochroneResponse visualizeIsochrone( const VisualizeIsochroneRequest& 
  * graph. Isolines represent curves of equal cost, with cost typically
  * referring to the time or distance assigned as the weights of the underlying
  * graph. See <a href="../../graph_solver/network_graph_solver.html"
- * target="_top">Network Graph Solvers</a> for more information on graphs.
+ * target="_top">Network Graphs & Solvers</a> for more information on graphs.
  * .
  * 
  * @param[in] request_  Request object containing the parameters for the
@@ -22492,7 +22964,7 @@ VisualizeIsochroneResponse& visualizeIsochrone( const VisualizeIsochroneRequest&
  * graph. Isolines represent curves of equal cost, with cost typically
  * referring to the time or distance assigned as the weights of the underlying
  * graph. See <a href="../../graph_solver/network_graph_solver.html"
- * target="_top">Network Graph Solvers</a> for more information on graphs.
+ * target="_top">Network Graphs & Solvers</a> for more information on graphs.
  * .
  * 
  * @param graphName  Name of the graph on which the isochrone is to be
@@ -22839,7 +23311,7 @@ VisualizeIsochroneResponse visualizeIsochrone( const std::string& graphName,
  * graph. Isolines represent curves of equal cost, with cost typically
  * referring to the time or distance assigned as the weights of the underlying
  * graph. See <a href="../../graph_solver/network_graph_solver.html"
- * target="_top">Network Graph Solvers</a> for more information on graphs.
+ * target="_top">Network Graphs & Solvers</a> for more information on graphs.
  * .
  * 
  * @param graphName  Name of the graph on which the isochrone is to be

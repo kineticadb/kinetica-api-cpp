@@ -18,7 +18,8 @@ namespace gpudb
      * typically referring to the time or distance assigned as the weights of
      * the underlying graph. See <a
      * href="../../graph_solver/network_graph_solver.html"
-     * target="_top">Network Graph Solvers</a> for more information on graphs.
+     * target="_top">Network Graphs & Solvers</a> for more information on
+     * graphs.
      * .
      */
     struct VisualizeIsochroneRequest
@@ -678,7 +679,8 @@ namespace gpudb
      * typically referring to the time or distance assigned as the weights of
      * the underlying graph. See <a
      * href="../../graph_solver/network_graph_solver.html"
-     * target="_top">Network Graph Solvers</a> for more information on graphs.
+     * target="_top">Network Graphs & Solvers</a> for more information on
+     * graphs.
      * .
      */
     struct VisualizeIsochroneResponse

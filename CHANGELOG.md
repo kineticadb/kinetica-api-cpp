@@ -2,6 +2,19 @@
 
 ## Version 7.0
 
+### Version 7.0.9.0 - 2019-10-28
+
+#### Added
+-   Support for high-availability failover when the database is in the
+    offline mode.
+
+#### Changed
+-   GPUdb constructor behavior--if a single URL is used and no primary URL
+    is specified via the options, the given single URL will be treated as
+    the primary URL.
+
+
+
 ### Version 7.0.7.0 - 2019-08-21
 
 #### Added

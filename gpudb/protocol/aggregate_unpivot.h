@@ -110,9 +110,9 @@ namespace gpudb
          *                      original column name.  The default value is ''.
          *                              <li>
          *                      gpudb::aggregate_unpivot_chunk_size: Indicates
-         *                      the chunk size to be used for the result table.
-         *                      Must be used in combination with the @a
-         *                      result_table option.
+         *                      the number of records per chunk to be used for
+         *                      the result table. Must be used in combination
+         *                      with the @a result_table option.
          *                              <li> gpudb::aggregate_unpivot_limit:
          *                      The number of records to keep.  The default
          *                      value is ''.
@@ -236,9 +236,9 @@ namespace gpudb
          *                      original column name.  The default value is ''.
          *                              <li>
          *                      gpudb::aggregate_unpivot_chunk_size: Indicates
-         *                      the chunk size to be used for the result table.
-         *                      Must be used in combination with the @a
-         *                      result_table option.
+         *                      the number of records per chunk to be used for
+         *                      the result table. Must be used in combination
+         *                      with the @a result_table option.
          *                              <li> gpudb::aggregate_unpivot_limit:
          *                      The number of records to keep.  The default
          *                      value is ''.

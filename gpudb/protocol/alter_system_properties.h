@@ -75,8 +75,8 @@ namespace gpudb
          *                                 and/or system load.
          *                                         <li>
          *                                 gpudb::alter_system_properties_chunk_size:
-         *                                 Sets the chunk size of all new sets
-         *                                 to the specified integer value.
+         *                                 Sets the number of records per chunk
+         *                                 to be used for all new tables.
          *                                         <li>
          *                                 gpudb::alter_system_properties_evict_columns:
          *                                 Attempts to evict columns from
@@ -114,14 +114,14 @@ namespace gpudb
          *                                 Invoke the communicator test and
          *                                 report timing results. Value string
          *                                 is is a semicolon separated list of
-         *                                 <key>=<value> expressions.
+         *                                 [key]=[value] expressions.
          *                                 Expressions are:
-         *                                 num_transactions=<num> where num is
+         *                                 num_transactions=[num] where num is
          *                                 the number of request reply
          *                                 transactions to invoke per test;
-         *                                 message_size=<bytes> where bytes is
-         *                                 the size of the messages to send in
-         *                                 bytes; check_values=<enabled> where
+         *                                 message_size=[bytes] where bytes is
+         *                                 the size in bytes of the messages to
+         *                                 send; check_values=[enabled] where
          *                                 if enabled is true the value of the
          *                                 messages received are verified.
          *                                         <li>
@@ -147,15 +147,15 @@ namespace gpudb
          *                                 Invoke the network speed test and
          *                                 report timing results. Value string
          *                                 is a semicolon-separated list of
-         *                                 <key>=<value> expressions.  Valid
-         *                                 expressions are: seconds=<time>
+         *                                 [key]=[value] expressions.  Valid
+         *                                 expressions are: seconds=[time]
          *                                 where time is the time in seconds to
-         *                                 run the test; data_size=<size> where
-         *                                 size is the size in bytes of the
-         *                                 block to be transferred;
-         *                                 threads=<number of threads>;
-         *                                 to_ranks=<space-separated list of
-         *                                 ranks> where the list of ranks is
+         *                                 run the test; data_size=[bytes]
+         *                                 where bytes is the size in bytes of
+         *                                 the block to be transferred;
+         *                                 threads=[number of threads];
+         *                                 to_ranks=[space-separated list of
+         *                                 ranks] where the list of ranks is
          *                                 the ranks that rank 0 will send data
          *                                 to and get data from. If to_ranks is
          *                                 unspecified then all worker ranks
@@ -189,14 +189,15 @@ namespace gpudb
          *                                 Enable or disable auditing of
          *                                 request data.
          *                                         <li>
-         *                                 gpudb::alter_system_properties_chunk_cache_enabled:
-         *                                 Enable chunk level query caching.
-         *                                 Flushes the chunk cache when value
-         *                                 is false
+         *                                 gpudb::alter_system_properties_shadow_agg_size:
+         *                                 Size of the shadow aggregate chunk
+         *                                 cache in bytes.  The default value
+         *                                 is '10000000'.
          *                                         <li>
-         *                                 gpudb::alter_system_properties_chunk_cache_size:
-         *                                 Size of the chunk cache in bytes.
-         *                                 The default value is '10000000'.
+         *                                 gpudb::alter_system_properties_shadow_filter_size:
+         *                                 Size of the shdow filter chunk cache
+         *                                 in bytes.  The default value is
+         *                                 '10000000'.
          *                                         <li>
          *                                 gpudb::alter_system_properties_synchronous_compression:
          *                                 compress vector on set_compression

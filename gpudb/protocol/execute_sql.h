@@ -47,10 +47,17 @@ namespace gpudb
          *                     allowed value is 0. The maximum allowed value is
          *                     MAX_INT.
          * @param[in] limit_  A positive integer indicating the maximum number
-         *                    of results to be returned (if not provided the
-         *                    default is 10000), or END_OF_SET (-9999) to
-         *                    indicate that the maximum number of results
-         *                    allowed by the server should be returned.
+         *                    of results to be returned, or END_OF_SET (-9999)
+         *                    to indicate that the maximum number of results
+         *                    allowed by the server should be returned.  The
+         *                    number of records returned will never exceed the
+         *                    server's own limit, defined by the <a
+         *                    href="../../config/index.html#general"
+         *                    target="_top">max_get_records_size</a> parameter
+         *                    in the server configuration.  Use @a
+         *                    hasMoreRecords to see if more records exist in
+         *                    the result to be fetched, and @a offset & @a
+         *                    limit to request subsequent pages of results.
          * @param[in] requestSchemaStr_  Avro schema of @a data.
          * @param[in] data_  An array of binary-encoded data for the records to
          *                   be binded to the SQL query.
@@ -229,10 +236,17 @@ namespace gpudb
          *                     allowed value is 0. The maximum allowed value is
          *                     MAX_INT.
          * @param[in] limit_  A positive integer indicating the maximum number
-         *                    of results to be returned (if not provided the
-         *                    default is 10000), or END_OF_SET (-9999) to
-         *                    indicate that the maximum number of results
-         *                    allowed by the server should be returned.
+         *                    of results to be returned, or END_OF_SET (-9999)
+         *                    to indicate that the maximum number of results
+         *                    allowed by the server should be returned.  The
+         *                    number of records returned will never exceed the
+         *                    server's own limit, defined by the <a
+         *                    href="../../config/index.html#general"
+         *                    target="_top">max_get_records_size</a> parameter
+         *                    in the server configuration.  Use @a
+         *                    hasMoreRecords to see if more records exist in
+         *                    the result to be fetched, and @a offset & @a
+         *                    limit to request subsequent pages of results.
          * @param[in] encoding_  Specifies the encoding for returned records;
          *                       either 'binary' or 'json'.
          *                       <ul>

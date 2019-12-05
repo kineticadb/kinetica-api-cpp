@@ -17,6 +17,28 @@
 namespace gpudb {
     static const char base64Chars[] = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
 
+    /// Special error messages indicating that a connection failure happened
+    /// (generally should trigger a high-availability failover if applicable)
+    const std::string GPUdb::DB_CONNECTION_RESET_ERROR_MESSAGE   = "Connection reset";
+    const std::string GPUdb::DB_CONNECTION_REFUSED_ERROR_MESSAGE = "Connection refused";
+    const std::string GPUdb::DB_EXITING_ERROR_MESSAGE            = "Kinetica is exiting";
+    const std::string GPUdb::DB_OFFLINE_ERROR_MESSAGE            = "Kinetica is offline";
+    const std::string GPUdb::DB_SYSTEM_LIMITED_ERROR_MESSAGE     = "system-limited-fatal";
+    const std::string GPUdb::DB_HM_OFFLINE_ERROR_MESSAGE         = "System is offline";
+
+    const std::string GPUdb::FAILOVER_TRIGGER_MESSAGES[] = {
+        DB_CONNECTION_RESET_ERROR_MESSAGE,
+        DB_CONNECTION_REFUSED_ERROR_MESSAGE,
+        DB_OFFLINE_ERROR_MESSAGE,
+        DB_EXITING_ERROR_MESSAGE,
+        DB_SYSTEM_LIMITED_ERROR_MESSAGE,
+        DB_HM_OFFLINE_ERROR_MESSAGE
+    };
+
+    const size_t GPUdb::NUM_TRIGGER_MESSAGES = sizeof(FAILOVER_TRIGGER_MESSAGES)/sizeof(FAILOVER_TRIGGER_MESSAGES[0]); 
+
+    /// Headers used internally; MUST add each of them to PROTECTED_HEADERS
+    /// in the .cpp file
     const std::string GPUdb::HEADER_AUTHORIZATION  = "Authorization";
     const std::string GPUdb::HEADER_CONTENT_TYPE   = "Content-type";
     const std::string GPUdb::HEADER_CONTENT_LENGTH = "Content-length";
@@ -235,14 +257,25 @@ namespace gpudb {
     {
         // No-op if an empty string is given
         if ( m_primaryUrlStr.empty() ) {
-            // Release resources, if necessary
-            if (m_primaryUrlPtr != NULL)
+
+            if ( m_urls.size() == 1 )
             {
-                delete m_primaryUrlPtr;
+                // Use the one URL provided by the user as the primary,
+                // but only if the user has not specified any primary URL
+                // also
+                m_primaryUrlStr = m_urls[ 0 ].getUrl();
             }
-            // Need a null to know we don't have any primary cluster
-            m_primaryUrlPtr = NULL;
-            return;
+            else
+            {   // No primary URL to handle;
+                // release resources, if necessary
+                if (m_primaryUrlPtr != NULL)
+                {
+                    delete m_primaryUrlPtr;
+                }
+                // Need a null to know we don't have any primary cluster
+                m_primaryUrlPtr = NULL;
+                return;
+            }
         }
 
         // Make sure that if we've already handled the primary cluster URL, we're not
@@ -1056,20 +1089,32 @@ namespace gpudb {
         }
         catch (const std::exception& ex )
         {
-            throw GPUdbSubmitException( url, request, ex.what() );
+            std::string error_msg = ex.what();
+
+            // If the error message contains any of the HA failover trigger messages,
+            // then return an exit exception to indicate that we need to do an HA failover
+            for ( size_t i = 0; i < NUM_TRIGGER_MESSAGES; ++i )
+            {
+                if ( error_msg.find( FAILOVER_TRIGGER_MESSAGES[ i ] ) != std::string::npos )
+                {
+                    throw GPUdbExitException( error_msg );
+                }
+            }
+
+            // For any other error, throw a submit exception
+            throw GPUdbSubmitException( url, request, error_msg );
         }
 
         if (throwOnError && response.status == "ERROR")
         {
-            // If Kinetica is exiting, throw a special exception
-            if ( response.message.find( "Kinetica is exiting" ) != std::string::npos )
+            // If the error message contains any of the HA failover trigger messages,
+            // then return an exit exception to indicate that we need to do an HA failover
+            for ( size_t i = 0; i < NUM_TRIGGER_MESSAGES; ++i )
             {
-                throw GPUdbExitException( response.message );
-            }
-            // If the system has some issues, we also want to fail over
-            if ( response.message.find( "system-limited-fatal" ) != std::string::npos )
-            {
-                throw GPUdbExitException( response.message );
+                if ( response.message.find( FAILOVER_TRIGGER_MESSAGES[ i ] ) != std::string::npos )
+                {
+                    throw GPUdbExitException( response.message );
+                }
             }
             throw GPUdbException( response.message );
         }

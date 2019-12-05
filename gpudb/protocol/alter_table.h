@@ -356,6 +356,15 @@ namespace gpudb
          *                      target="_top">tier strategy examples</a> for
          *                      examples.  This option will be ignored if @a
          *                      value is also specified.
+         *                              <li> gpudb::alter_table_index_type:
+         *                      Type of index to create.
+         *                      <ul>
+         *                              <li> gpudb::alter_table_column:
+         *                      Standard column index.
+         *                              <li> gpudb::alter_table_chunk_skip:
+         *                      Chunk skip index.
+         *                      </ul>
+         *                      The default value is gpudb::alter_table_column.
          *                      </ul>
          * 
          */

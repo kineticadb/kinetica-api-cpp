@@ -137,8 +137,8 @@ namespace gpudb
          *                      The default value is
          *                      gpudb::create_union_union_all.
          *                              <li> gpudb::create_union_chunk_size:
-         *                      Indicates the chunk size to be used for this
-         *                      table.
+         *                      Indicates the number of records per chunk to be
+         *                      used for this output table.
          *                              <li>
          *                      gpudb::create_union_create_indexes:
          *                      Comma-separated list of columns on which to
@@ -147,27 +147,28 @@ namespace gpudb
          *                      outputColumnNames.
          *                              <li> gpudb::create_union_ttl: Sets the
          *                      <a href="../../concepts/ttl.html"
-         *                      target="_top">TTL</a> of the table specified in
-         *                      @a tableName.
+         *                      target="_top">TTL</a> of the output table
+         *                      specified in @a tableName.
          *                              <li> gpudb::create_union_persist: If @a
-         *                      true, then the table specified in @a tableName
-         *                      will be persisted and will not expire unless a
-         *                      @a ttl is specified.   If @a false, then the
-         *                      table will be an in-memory table and will
-         *                      expire unless a @a ttl is specified otherwise.
+         *                      true, then the output table specified in @a
+         *                      tableName will be persisted and will not expire
+         *                      unless a @a ttl is specified.   If @a false,
+         *                      then the output table will be an in-memory
+         *                      table and will expire unless a @a ttl is
+         *                      specified otherwise.
          *                      <ul>
          *                              <li> gpudb::create_union_true
          *                              <li> gpudb::create_union_false
          *                      </ul>
          *                      The default value is gpudb::create_union_false.
-         *                              <li> gpudb::create_union_view_id: view
-         *                      the output table will be a part of.  The
-         *                      default value is ''.
+         *                              <li> gpudb::create_union_view_id: ID of
+         *                      view of which this output table is a member.
+         *                      The default value is ''.
          *                              <li>
          *                      gpudb::create_union_force_replicated: If @a
-         *                      true, then the table specified in @a tableName
-         *                      will be replicated even if the source tables
-         *                      are not.
+         *                      true, then the output table specified in @a
+         *                      tableName will be replicated even if the source
+         *                      tables are not.
          *                      <ul>
          *                              <li> gpudb::create_union_true
          *                              <li> gpudb::create_union_false

@@ -154,6 +154,9 @@ namespace gpudb
          *                              <li> gpudb::create_table_LIST: Use <a
          *                      href="../../concepts/tables.html#partitioning-by-list"
          *                      target="_top">list partitioning</a>.
+         *                              <li> gpudb::create_table_HASH: Use <a
+         *                      href="../../concepts/tables.html#partitioning-by-hash"
+         *                      target="_top">hash partitioning</a>.
          *                      </ul>
          *                              <li>
          *                      gpudb::create_table_partition_keys:
@@ -169,9 +172,11 @@ namespace gpudb
          *                      href="../../concepts/tables.html#partitioning-by-range"
          *                      target="_top">range partitioning</a>, <a
          *                      href="../../concepts/tables.html#partitioning-by-interval"
-         *                      target="_top">interval partitioning</a>, or <a
+         *                      target="_top">interval partitioning</a>, <a
          *                      href="../../concepts/tables.html#partitioning-by-list"
-         *                      target="_top">list partitioning</a> for example
+         *                      target="_top">list partitioning</a>, or <a
+         *                      href="../../concepts/tables.html#partitioning-by-hash"
+         *                      target="_top">hash partitioning</a> for example
          *                      formats.
          *                              <li>
          *                      gpudb::create_table_is_automatic_partition: If
@@ -191,8 +196,8 @@ namespace gpudb
          *                      target="_top">TTL</a> of the table specified in
          *                      @a tableName.
          *                              <li> gpudb::create_table_chunk_size:
-         *                      Indicates the chunk size to be used for this
-         *                      table.
+         *                      Indicates the number of records per chunk to be
+         *                      used for this table.
          *                              <li>
          *                      gpudb::create_table_is_result_table: For a
          *                      table, indicates whether the table is an

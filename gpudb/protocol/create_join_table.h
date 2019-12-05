@@ -101,8 +101,9 @@ namespace gpudb
          *                      default value is 'false'.
          *                              <li>
          *                      gpudb::create_join_table_chunk_size: Maximum
-         *                      size of a joined-chunk for this table. Defaults
-         *                      to the gpudb.conf file chunk size
+         *                      number of records per joined-chunk for this
+         *                      table. Defaults to the gpudb.conf file chunk
+         *                      size
          *                      </ul>
          * 
          */
