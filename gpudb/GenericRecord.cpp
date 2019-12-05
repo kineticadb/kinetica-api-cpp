@@ -432,6 +432,7 @@ namespace gpudb
                         throw std::bad_cast();
                     }
                 }
+                break;
 
             default:
                 throw std::bad_cast();

@@ -111,8 +111,9 @@ namespace gpudb
          *                      </ul>
          *                      The default value is gpudb::merge_records_true.
          *                              <li> gpudb::merge_records_chunk_size:
-         *                      Indicates the chunk size to be used for the
-         *                      merged table specified in @a tableName.
+         *                      Indicates the number of records per chunk to be
+         *                      used for the merged table specified in @a
+         *                      tableName.
          *                              <li> gpudb::merge_records_view_id: view
          *                      this result table is part of.  The default
          *                      value is ''.

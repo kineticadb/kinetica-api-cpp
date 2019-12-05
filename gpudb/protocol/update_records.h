@@ -125,9 +125,9 @@ namespace gpudb
          *                      gpudb::update_records_false.
          *                              <li>
          *                      gpudb::update_records_truncate_strings: If set
-         *                      to {true}@{, any strings which are too long for
+         *                      to @a true, any strings which are too long for
          *                      their charN string fields will be truncated to
-         *                      fit.  The default value is false.
+         *                      fit.
          *                      <ul>
          *                              <li> gpudb::update_records_true
          *                              <li> gpudb::update_records_false
@@ -255,9 +255,9 @@ namespace gpudb
          *                      gpudb::update_records_false.
          *                              <li>
          *                      gpudb::update_records_truncate_strings: If set
-         *                      to {true}@{, any strings which are too long for
+         *                      to @a true, any strings which are too long for
          *                      their charN string fields will be truncated to
-         *                      fit.  The default value is false.
+         *                      fit.
          *                      <ul>
          *                              <li> gpudb::update_records_true
          *                              <li> gpudb::update_records_false
@@ -497,9 +497,9 @@ namespace gpudb
          *                      gpudb::update_records_false.
          *                              <li>
          *                      gpudb::update_records_truncate_strings: If set
-         *                      to {true}@{, any strings which are too long for
+         *                      to @a true, any strings which are too long for
          *                      their charN string fields will be truncated to
-         *                      fit.  The default value is false.
+         *                      fit.
          *                      <ul>
          *                              <li> gpudb::update_records_true
          *                              <li> gpudb::update_records_false

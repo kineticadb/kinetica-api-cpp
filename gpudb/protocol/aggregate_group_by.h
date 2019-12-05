@@ -16,7 +16,7 @@ namespace gpudb
      * #aggregateGroupByRaw(const AggregateGroupByRequest&) const}.
      * <p>
      * Calculates unique combinations (groups) of values for the given columns
-     * in a given table/view/collection and computes aggregates on each unique
+     * in a given table or view and computes aggregates on each unique
      * combination. This is somewhat analogous to an SQL-style SELECT...GROUP
      * BY.
      * <p>
@@ -103,9 +103,8 @@ namespace gpudb
          * Constructs an AggregateGroupByRequest object with the specified
          * parameters.
          * 
-         * @param[in] tableName_  Name of the table on which the operation will
-         *                        be performed. Must be an existing
-         *                        table/view/collection.
+         * @param[in] tableName_  Name of an existing table or view on which
+         *                        the operation will be performed.
          * @param[in] columnNames_  List of one or more column names,
          *                          expressions, and aggregate expressions.
          * @param[in] offset_  A positive integer indicating the number of
@@ -114,9 +113,16 @@ namespace gpudb
          *                     allowed value is 0. The maximum allowed value is
          *                     MAX_INT.
          * @param[in] limit_  A positive integer indicating the maximum number
-         *                    of results to be returned Or END_OF_SET (-9999)
+         *                    of results to be returned, or END_OF_SET (-9999)
          *                    to indicate that the max number of results should
-         *                    be returned.
+         *                    be returned.  The number of records returned will
+         *                    never exceed the server's own limit, defined by
+         *                    the <a href="../../config/index.html#general"
+         *                    target="_top">max_get_records_size</a> parameter
+         *                    in the server configuration.  Use @a
+         *                    hasMoreRecords to see if more records exist in
+         *                    the result to be fetched, and @a offset & @a
+         *                    limit to request subsequent pages of results.
          * @param[in] options_  Optional parameters.
          *                      <ul>
          *                              <li>
@@ -125,9 +131,7 @@ namespace gpudb
          *                      specified in @a result_table. If the collection
          *                      provided is non-existent, the collection will
          *                      be automatically created. If empty, then the
-         *                      table will be a top-level table.  Additionally
-         *                      this option is invalid if @a tableName is a
-         *                      collection.
+         *                      table will be a top-level table.
          *                              <li>
          *                      gpudb::aggregate_group_by_expression: Filter
          *                      expression to apply to the table prior to
@@ -211,9 +215,9 @@ namespace gpudb
          *                      gpudb::aggregate_group_by_false.
          *                              <li>
          *                      gpudb::aggregate_group_by_result_table_generate_pk:
-         *                      If 'true' then set a primary key for the result
-         *                      table. Must be used in combination with the @a
-         *                      result_table option.
+         *                      If @a true then set a primary key for the
+         *                      result table. Must be used in combination with
+         *                      the @a result_table option.
          *                      <ul>
          *                              <li> gpudb::aggregate_group_by_true
          *                              <li> gpudb::aggregate_group_by_false
@@ -226,9 +230,9 @@ namespace gpudb
          *                      @a result_table.
          *                              <li>
          *                      gpudb::aggregate_group_by_chunk_size: Indicates
-         *                      the chunk size to be used for the result table.
-         *                      Must be used in combination with the @a
-         *                      result_table option.
+         *                      the number of records per chunk to be used for
+         *                      the result table. Must be used in combination
+         *                      with the @a result_table option.
          *                              <li>
          *                      gpudb::aggregate_group_by_create_indexes:
          *                      Comma-separated list of columns on which to
@@ -236,8 +240,8 @@ namespace gpudb
          *                      used in combination with the @a result_table
          *                      option.
          *                              <li> gpudb::aggregate_group_by_view_id:
-         *                      view this result table is part of.  The default
-         *                      value is ''.
+         *                      ID of view of which the result table will be a
+         *                      member.  The default value is ''.
          *                              <li>
          *                      gpudb::aggregate_group_by_materialize_on_gpu:
          *                      If @a true then the columns of the groupby
@@ -289,9 +293,8 @@ namespace gpudb
          * Constructs an AggregateGroupByRequest object with the specified
          * parameters.
          * 
-         * @param[in] tableName_  Name of the table on which the operation will
-         *                        be performed. Must be an existing
-         *                        table/view/collection.
+         * @param[in] tableName_  Name of an existing table or view on which
+         *                        the operation will be performed.
          * @param[in] columnNames_  List of one or more column names,
          *                          expressions, and aggregate expressions.
          * @param[in] offset_  A positive integer indicating the number of
@@ -300,9 +303,16 @@ namespace gpudb
          *                     allowed value is 0. The maximum allowed value is
          *                     MAX_INT.
          * @param[in] limit_  A positive integer indicating the maximum number
-         *                    of results to be returned Or END_OF_SET (-9999)
+         *                    of results to be returned, or END_OF_SET (-9999)
          *                    to indicate that the max number of results should
-         *                    be returned.
+         *                    be returned.  The number of records returned will
+         *                    never exceed the server's own limit, defined by
+         *                    the <a href="../../config/index.html#general"
+         *                    target="_top">max_get_records_size</a> parameter
+         *                    in the server configuration.  Use @a
+         *                    hasMoreRecords to see if more records exist in
+         *                    the result to be fetched, and @a offset & @a
+         *                    limit to request subsequent pages of results.
          * @param[in] encoding_  Specifies the encoding for returned records.
          *                       <ul>
          *                               <li> gpudb::aggregate_group_by_binary:
@@ -322,9 +332,7 @@ namespace gpudb
          *                      specified in @a result_table. If the collection
          *                      provided is non-existent, the collection will
          *                      be automatically created. If empty, then the
-         *                      table will be a top-level table.  Additionally
-         *                      this option is invalid if @a tableName is a
-         *                      collection.
+         *                      table will be a top-level table.
          *                              <li>
          *                      gpudb::aggregate_group_by_expression: Filter
          *                      expression to apply to the table prior to
@@ -408,9 +416,9 @@ namespace gpudb
          *                      gpudb::aggregate_group_by_false.
          *                              <li>
          *                      gpudb::aggregate_group_by_result_table_generate_pk:
-         *                      If 'true' then set a primary key for the result
-         *                      table. Must be used in combination with the @a
-         *                      result_table option.
+         *                      If @a true then set a primary key for the
+         *                      result table. Must be used in combination with
+         *                      the @a result_table option.
          *                      <ul>
          *                              <li> gpudb::aggregate_group_by_true
          *                              <li> gpudb::aggregate_group_by_false
@@ -423,9 +431,9 @@ namespace gpudb
          *                      @a result_table.
          *                              <li>
          *                      gpudb::aggregate_group_by_chunk_size: Indicates
-         *                      the chunk size to be used for the result table.
-         *                      Must be used in combination with the @a
-         *                      result_table option.
+         *                      the number of records per chunk to be used for
+         *                      the result table. Must be used in combination
+         *                      with the @a result_table option.
          *                              <li>
          *                      gpudb::aggregate_group_by_create_indexes:
          *                      Comma-separated list of columns on which to
@@ -433,8 +441,8 @@ namespace gpudb
          *                      used in combination with the @a result_table
          *                      option.
          *                              <li> gpudb::aggregate_group_by_view_id:
-         *                      view this result table is part of.  The default
-         *                      value is ''.
+         *                      ID of view of which the result table will be a
+         *                      member.  The default value is ''.
          *                              <li>
          *                      gpudb::aggregate_group_by_materialize_on_gpu:
          *                      If @a true then the columns of the groupby
@@ -565,7 +573,7 @@ namespace gpudb
      * #aggregateGroupByRaw(const AggregateGroupByRequest&) const}.
      * <p>
      * Calculates unique combinations (groups) of values for the given columns
-     * in a given table/view/collection and computes aggregates on each unique
+     * in a given table or view and computes aggregates on each unique
      * combination. This is somewhat analogous to an SQL-style SELECT...GROUP
      * BY.
      * <p>
@@ -731,7 +739,7 @@ namespace gpudb
      * #aggregateGroupBy(const AggregateGroupByRequest&) const}.
      * <p>
      * Calculates unique combinations (groups) of values for the given columns
-     * in a given table/view/collection and computes aggregates on each unique
+     * in a given table or view and computes aggregates on each unique
      * combination. This is somewhat analogous to an SQL-style SELECT...GROUP
      * BY.
      * <p>

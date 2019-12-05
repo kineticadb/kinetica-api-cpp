@@ -15,9 +15,15 @@ namespace gpudb
      * <p>
      * Solves an existing graph for a type of problem (e.g., shortest path,
      * page rank, travelling salesman, etc.) using source nodes, destination
-     * nodes, and additional, optional weights and restrictions. See <a
+     * nodes, and additional, optional weights and restrictions.
+     * <p>
+     * IMPORTANT: It's highly recommended that you review the <a
      * href="../../graph_solver/network_graph_solver.html"
-     * target="_top">Network Graph Solvers</a> for more information.
+     * target="_top">Network Graphs & Solvers</a> concepts documentation, the
+     * <a href="../../graph_solver/examples/graph_rest_guide.html"
+     * target="_top">Graph REST Tutorial</a>, and/or some <a
+     * href="../../graph_solver/examples.html#solve-graph"
+     * target="_top">/solve/graph examples</a> before using this endpoint.
      */
     struct SolveGraphRequest
     {
@@ -30,10 +36,7 @@ namespace gpudb
             weightsOnEdges(std::vector<std::string>()),
             restrictions(std::vector<std::string>()),
             solverType(std::string()),
-            sourceNodeId(int64_t()),
-            destinationNodeIds(std::vector<int64_t>()),
-            nodeType(std::string()),
-            sourceNode(std::string()),
+            sourceNodes(std::vector<std::string>()),
             destinationNodes(std::vector<std::string>()),
             solutionTable(std::string()),
             options(std::map<std::string, std::string>())
@@ -134,60 +137,24 @@ namespace gpudb
          *                         gpudb::solve_graph_BACKHAUL_ROUTING: Solves
          *                         for optimal routes that connect remote asset
          *                         nodes to the fixed (backbone) asset nodes.
-         *                         When @a BACKHAUL_ROUTING is invoked, the @a
-         *                         destinationNodes or @a destinationNodeIds
-         *                         array is used for both fixed and remote
-         *                         asset nodes and the @a sourceNodeId
-         *                         represents the number of fixed asset nodes
-         *                         contained in @a destinationNodes / @a
-         *                         destinationNodeIds.
+         *                                 <li> gpudb::solve_graph_ALLPATHS:
+         *                         Solves for paths that would give costs
+         *                         between max and min solution radia - Make
+         *                         sure to limit by the 'max_solution_targets'
+         *                         option. Min cost shoudl be >= shortest_path
+         *                         cost.
          *                         </ul>
          *                         The default value is
          *                         gpudb::solve_graph_SHORTEST_PATH.
-         * @param[in] sourceNodeId_  If @a nodeType is @a NODE_ID, the node ID
-         *                           (integer) of the source (starting point)
-         *                           for the graph solution. If the @a
-         *                           solverType is set to @a BACKHAUL_ROUTING,
-         *                           this number represents the number of fixed
-         *                           asset nodes contained in @a
-         *                           destinationNodes, e.g., if @a sourceNodeId
-         *                           is set to 24, the first 24 nodes listed in
-         *                           @a destinationNodes / @a
-         *                           destinationNodeIds are the fixed asset
-         *                           nodes and the rest of the nodes in the
-         *                           array are remote assets.
-         * @param[in] destinationNodeIds_  List of destination node indices, or
-         *                                 indices for pageranks. If the @a
-         *                                 solverType is set to @a
-         *                                 BACKHAUL_ROUTING, it is the list of
-         *                                 all fixed and remote asset nodes.
-         * @param[in] nodeType_  Source and destination node identifier type.
-         *                       <ul>
-         *                               <li> gpudb::solve_graph_NODE_ID: The
-         *                       graph's nodes were identified as integers,
-         *                       e.g., 1234.
-         *                               <li> gpudb::solve_graph_NODE_WKTPOINT:
-         *                       The graph's nodes were identified as
-         *                       geospatial coordinates, e.g., 'POINT(1.0
-         *                       2.0)'.
-         *                               <li> gpudb::solve_graph_NODE_NAME: The
-         *                       graph's nodes were identified as strings,
-         *                       e.g., 'Arlington'.
-         *                       </ul>
-         *                       The default value is
-         *                       gpudb::solve_graph_NODE_ID.
-         * @param[in] sourceNode_  If @a nodeType is @a NODE_WKTPOINT or @a
-         *                         NODE_NAME, the node (string) of the source
-         *                         (starting point) for the graph solution.
-         * @param[in] destinationNodes_  If @a nodeType is @a NODE_WKTPOINT or
-         *                               @a NODE_NAME, the list of destination
-         *                               node or page rank indices (strings)
-         *                               for the graph solution. If the @a
-         *                               solverType is set to @a
-         *                               BACKHAUL_ROUTING, it is the list of
-         *                               all fixed and remote asset nodes. The
-         *                               string type should be consistent with
-         *                               the @a nodeType parameter.
+         * @param[in] sourceNodes_  It can be one of the nodal identifiers -
+         *                          e.g: 'NODE_WKTPOINT' for source nodes. For
+         *                          @a BACKHAUL_ROUTING, this list depicts the
+         *                          fixed assets.
+         * @param[in] destinationNodes_  It can be one of the nodal identifiers
+         *                               - e.g: 'NODE_WKTPOINT' for destination
+         *                               (target) nodes. For @a
+         *                               BACKHAUL_ROUTING, this list depicts
+         *                               the remote assets.
          * @param[in] solutionTable_  Name of the table to store the solution.
          * @param[in] options_  Additional parameters
          *                      <ul>
@@ -195,7 +162,7 @@ namespace gpudb
          *                      gpudb::solve_graph_max_solution_radius: For @a
          *                      SHORTEST_PATH and @a INVERSE_SHORTEST_PATH
          *                      solvers only. Sets the maximum solution cost
-         *                      radius, which ignores the @a destinationNodeIds
+         *                      radius, which ignores the @a destinationNodes
          *                      list and instead outputs the nodes within the
          *                      radius sorted by ascending cost. If set to
          *                      '0.0', the setting is ignored.  The default
@@ -206,7 +173,7 @@ namespace gpudb
          *                      solvers only. Applicable only when @a
          *                      max_solution_radius is set. Sets the minimum
          *                      solution cost radius, which ignores the @a
-         *                      destinationNodeIds list and instead outputs the
+         *                      destinationNodes list and instead outputs the
          *                      nodes within the radius sorted by ascending
          *                      cost. If set to '0.0', the setting is ignored.
          *                      The default value is '0.0'.
@@ -215,7 +182,7 @@ namespace gpudb
          *                      SHORTEST_PATH and @a INVERSE_SHORTEST_PATH
          *                      solvers only. Sets the maximum number of
          *                      solution targets, which ignores the @a
-         *                      destinationNodeIds list and instead outputs no
+         *                      destinationNodes list and instead outputs no
          *                      more than n number of nodes sorted by ascending
          *                      cost where n is equal to the setting value. If
          *                      set to 0, the setting is ignored.  The default
@@ -255,15 +222,12 @@ namespace gpudb
          *                      </ul>
          * 
          */
-        SolveGraphRequest(const std::string& graphName_, const std::vector<std::string>& weightsOnEdges_, const std::vector<std::string>& restrictions_, const std::string& solverType_, const int64_t sourceNodeId_, const std::vector<int64_t>& destinationNodeIds_, const std::string& nodeType_, const std::string& sourceNode_, const std::vector<std::string>& destinationNodes_, const std::string& solutionTable_, const std::map<std::string, std::string>& options_):
+        SolveGraphRequest(const std::string& graphName_, const std::vector<std::string>& weightsOnEdges_, const std::vector<std::string>& restrictions_, const std::string& solverType_, const std::vector<std::string>& sourceNodes_, const std::vector<std::string>& destinationNodes_, const std::string& solutionTable_, const std::map<std::string, std::string>& options_):
             graphName( graphName_ ),
             weightsOnEdges( weightsOnEdges_ ),
             restrictions( restrictions_ ),
             solverType( solverType_ ),
-            sourceNodeId( sourceNodeId_ ),
-            destinationNodeIds( destinationNodeIds_ ),
-            nodeType( nodeType_ ),
-            sourceNode( sourceNode_ ),
+            sourceNodes( sourceNodes_ ),
             destinationNodes( destinationNodes_ ),
             solutionTable( solutionTable_ ),
             options( options_ )
@@ -274,10 +238,7 @@ namespace gpudb
         std::vector<std::string> weightsOnEdges;
         std::vector<std::string> restrictions;
         std::string solverType;
-        int64_t sourceNodeId;
-        std::vector<int64_t> destinationNodeIds;
-        std::string nodeType;
-        std::string sourceNode;
+        std::vector<std::string> sourceNodes;
         std::vector<std::string> destinationNodes;
         std::string solutionTable;
         std::map<std::string, std::string> options;
@@ -294,10 +255,7 @@ namespace avro
             ::avro::encode(e, v.weightsOnEdges);
             ::avro::encode(e, v.restrictions);
             ::avro::encode(e, v.solverType);
-            ::avro::encode(e, v.sourceNodeId);
-            ::avro::encode(e, v.destinationNodeIds);
-            ::avro::encode(e, v.nodeType);
-            ::avro::encode(e, v.sourceNode);
+            ::avro::encode(e, v.sourceNodes);
             ::avro::encode(e, v.destinationNodes);
             ::avro::encode(e, v.solutionTable);
             ::avro::encode(e, v.options);
@@ -330,30 +288,18 @@ namespace avro
                             break;
 
                         case 4:
-                            ::avro::decode(d, v.sourceNodeId);
+                            ::avro::decode(d, v.sourceNodes);
                             break;
 
                         case 5:
-                            ::avro::decode(d, v.destinationNodeIds);
-                            break;
-
-                        case 6:
-                            ::avro::decode(d, v.nodeType);
-                            break;
-
-                        case 7:
-                            ::avro::decode(d, v.sourceNode);
-                            break;
-
-                        case 8:
                             ::avro::decode(d, v.destinationNodes);
                             break;
 
-                        case 9:
+                        case 6:
                             ::avro::decode(d, v.solutionTable);
                             break;
 
-                        case 10:
+                        case 7:
                             ::avro::decode(d, v.options);
                             break;
 
@@ -368,10 +314,7 @@ namespace avro
                 ::avro::decode(d, v.weightsOnEdges);
                 ::avro::decode(d, v.restrictions);
                 ::avro::decode(d, v.solverType);
-                ::avro::decode(d, v.sourceNodeId);
-                ::avro::decode(d, v.destinationNodeIds);
-                ::avro::decode(d, v.nodeType);
-                ::avro::decode(d, v.sourceNode);
+                ::avro::decode(d, v.sourceNodes);
                 ::avro::decode(d, v.destinationNodes);
                 ::avro::decode(d, v.solutionTable);
                 ::avro::decode(d, v.options);
@@ -389,9 +332,15 @@ namespace gpudb
      * <p>
      * Solves an existing graph for a type of problem (e.g., shortest path,
      * page rank, travelling salesman, etc.) using source nodes, destination
-     * nodes, and additional, optional weights and restrictions. See <a
+     * nodes, and additional, optional weights and restrictions.
+     * <p>
+     * IMPORTANT: It's highly recommended that you review the <a
      * href="../../graph_solver/network_graph_solver.html"
-     * target="_top">Network Graph Solvers</a> for more information.
+     * target="_top">Network Graphs & Solvers</a> concepts documentation, the
+     * <a href="../../graph_solver/examples/graph_rest_guide.html"
+     * target="_top">Graph REST Tutorial</a>, and/or some <a
+     * href="../../graph_solver/examples.html#solve-graph"
+     * target="_top">/solve/graph examples</a> before using this endpoint.
      */
     struct SolveGraphResponse
     {

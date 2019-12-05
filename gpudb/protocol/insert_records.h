@@ -100,6 +100,42 @@ namespace gpudb
          *                      </ul>
          *                      The default value is
          *                      gpudb::insert_records_false.
+         *                              <li>
+         *                      gpudb::insert_records_return_individual_errors:
+         *                      If set to @a true, success will always be
+         *                      returned, and any errors found will be included
+         *                      in the info map.  The "bad_record_indices"
+         *                      entry is a comma-separated list of bad records
+         *                      (0-based).  And if so, there will also be an
+         *                      "error_N" entry for each record with an error,
+         *                      where N is the index (0-based).
+         *                      <ul>
+         *                              <li> gpudb::insert_records_true
+         *                              <li> gpudb::insert_records_false
+         *                      </ul>
+         *                      The default value is
+         *                      gpudb::insert_records_false.
+         *                              <li>
+         *                      gpudb::insert_records_allow_partial_batch: If
+         *                      set to @a true, all correct records will be
+         *                      inserted and incorrect records will be rejected
+         *                      and reported.  Otherwise, the entire batch will
+         *                      be rejected if any records are incorrect.
+         *                      <ul>
+         *                              <li> gpudb::insert_records_true
+         *                              <li> gpudb::insert_records_false
+         *                      </ul>
+         *                      The default value is
+         *                      gpudb::insert_records_false.
+         *                              <li> gpudb::insert_records_dry_run: If
+         *                      set to @a true, no data will be saved and any
+         *                      errors will be returned.
+         *                      <ul>
+         *                              <li> gpudb::insert_records_true
+         *                              <li> gpudb::insert_records_false
+         *                      </ul>
+         *                      The default value is
+         *                      gpudb::insert_records_false.
          *                      </ul>
          * 
          */
@@ -172,6 +208,42 @@ namespace gpudb
          *                      to @a true, any strings which are too long for
          *                      their target charN string columns will be
          *                      truncated to fit.
+         *                      <ul>
+         *                              <li> gpudb::insert_records_true
+         *                              <li> gpudb::insert_records_false
+         *                      </ul>
+         *                      The default value is
+         *                      gpudb::insert_records_false.
+         *                              <li>
+         *                      gpudb::insert_records_return_individual_errors:
+         *                      If set to @a true, success will always be
+         *                      returned, and any errors found will be included
+         *                      in the info map.  The "bad_record_indices"
+         *                      entry is a comma-separated list of bad records
+         *                      (0-based).  And if so, there will also be an
+         *                      "error_N" entry for each record with an error,
+         *                      where N is the index (0-based).
+         *                      <ul>
+         *                              <li> gpudb::insert_records_true
+         *                              <li> gpudb::insert_records_false
+         *                      </ul>
+         *                      The default value is
+         *                      gpudb::insert_records_false.
+         *                              <li>
+         *                      gpudb::insert_records_allow_partial_batch: If
+         *                      set to @a true, all correct records will be
+         *                      inserted and incorrect records will be rejected
+         *                      and reported.  Otherwise, the entire batch will
+         *                      be rejected if any records are incorrect.
+         *                      <ul>
+         *                              <li> gpudb::insert_records_true
+         *                              <li> gpudb::insert_records_false
+         *                      </ul>
+         *                      The default value is
+         *                      gpudb::insert_records_false.
+         *                              <li> gpudb::insert_records_dry_run: If
+         *                      set to @a true, no data will be saved and any
+         *                      errors will be returned.
          *                      <ul>
          *                              <li> gpudb::insert_records_true
          *                              <li> gpudb::insert_records_false
@@ -347,6 +419,42 @@ namespace gpudb
          *                      to @a true, any strings which are too long for
          *                      their target charN string columns will be
          *                      truncated to fit.
+         *                      <ul>
+         *                              <li> gpudb::insert_records_true
+         *                              <li> gpudb::insert_records_false
+         *                      </ul>
+         *                      The default value is
+         *                      gpudb::insert_records_false.
+         *                              <li>
+         *                      gpudb::insert_records_return_individual_errors:
+         *                      If set to @a true, success will always be
+         *                      returned, and any errors found will be included
+         *                      in the info map.  The "bad_record_indices"
+         *                      entry is a comma-separated list of bad records
+         *                      (0-based).  And if so, there will also be an
+         *                      "error_N" entry for each record with an error,
+         *                      where N is the index (0-based).
+         *                      <ul>
+         *                              <li> gpudb::insert_records_true
+         *                              <li> gpudb::insert_records_false
+         *                      </ul>
+         *                      The default value is
+         *                      gpudb::insert_records_false.
+         *                              <li>
+         *                      gpudb::insert_records_allow_partial_batch: If
+         *                      set to @a true, all correct records will be
+         *                      inserted and incorrect records will be rejected
+         *                      and reported.  Otherwise, the entire batch will
+         *                      be rejected if any records are incorrect.
+         *                      <ul>
+         *                              <li> gpudb::insert_records_true
+         *                              <li> gpudb::insert_records_false
+         *                      </ul>
+         *                      The default value is
+         *                      gpudb::insert_records_false.
+         *                              <li> gpudb::insert_records_dry_run: If
+         *                      set to @a true, no data will be saved and any
+         *                      errors will be returned.
          *                      <ul>
          *                              <li> gpudb::insert_records_true
          *                              <li> gpudb::insert_records_false

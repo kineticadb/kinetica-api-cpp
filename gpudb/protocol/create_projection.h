@@ -35,6 +35,15 @@ namespace gpudb
      * be sharded according to the specified columns, regardless of how the
      * source table is sharded.  The source table can even be unsharded or
      * replicated.
+     * <p>
+     * If @a tableName is empty, selection is performed against a single-row
+     * virtual table.  This can be useful in executing temporal (<a
+     * href="../../concepts/expressions.html#date-time-functions"
+     * target="_top">NOW()</a>), identity (<a
+     * href="../../concepts/expressions.html#user-security-functions"
+     * target="_top">USER()</a>), or constant-based functions (<a
+     * href="../../concepts/expressions.html#scalar-functions"
+     * target="_top">GEODIST(-77.11, 38.88, -71.06, 42.36)</a>).
      */
     struct CreateProjectionRequest
     {
@@ -56,7 +65,10 @@ namespace gpudb
          * parameters.
          * 
          * @param[in] tableName_  Name of the existing table on which the
-         *                        projection is to be applied.
+         *                        projection is to be applied.  An empty table
+         *                        name creates a projection from a single-row
+         *                        virtual table, where columns specified should
+         *                        be constants or constant expressions.
          * @param[in] projectionName_  Name of the projection to be created.
          *                             Has the same naming restrictions as <a
          *                             href="../../concepts/tables.html"
@@ -117,15 +129,16 @@ namespace gpudb
          *                      gpudb::create_projection_false.
          *                              <li>
          *                      gpudb::create_projection_chunk_size: Indicates
-         *                      the chunk size to be used for this table.
+         *                      the number of records per chunk to be used for
+         *                      this projection.
          *                              <li>
          *                      gpudb::create_projection_create_indexes:
          *                      Comma-separated list of columns on which to
-         *                      create indexes on the output table.  The
-         *                      columns specified must be present in @a
-         *                      columnNames.  If any alias is given for any
-         *                      column name, the alias must be used, rather
-         *                      than the original column name.
+         *                      create indexes on the projection.  The columns
+         *                      specified must be present in @a columnNames.
+         *                      If any alias is given for any column name, the
+         *                      alias must be used, rather than the original
+         *                      column name.
          *                              <li> gpudb::create_projection_ttl: Sets
          *                      the <a href="../../concepts/ttl.html"
          *                      target="_top">TTL</a> of the projection
@@ -156,16 +169,27 @@ namespace gpudb
          *                      gpudb::create_projection_preserve_dict_encoding:
          *                      If @a true, then columns that were dict encoded
          *                      in the source table will be dict encoded in the
-         *                      projection table.
+         *                      projection.
          *                      <ul>
          *                              <li> gpudb::create_projection_true
          *                              <li> gpudb::create_projection_false
          *                      </ul>
          *                      The default value is
          *                      gpudb::create_projection_true.
+         *                              <li>
+         *                      gpudb::create_projection_retain_partitions:
+         *                      Determines whether the created projection will
+         *                      retain the partitioning scheme from the source
+         *                      table.
+         *                      <ul>
+         *                              <li> gpudb::create_projection_true
+         *                              <li> gpudb::create_projection_false
+         *                      </ul>
+         *                      The default value is
+         *                      gpudb::create_projection_false.
          *                              <li> gpudb::create_projection_view_id:
-         *                      view this projection is part of.  The default
-         *                      value is ''.
+         *                      ID of view of which this projection is a
+         *                      member.  The default value is ''.
          *                      </ul>
          * 
          */
@@ -267,6 +291,15 @@ namespace gpudb
      * be sharded according to the specified columns, regardless of how the
      * source table is sharded.  The source table can even be unsharded or
      * replicated.
+     * <p>
+     * If @a tableName is empty, selection is performed against a single-row
+     * virtual table.  This can be useful in executing temporal (<a
+     * href="../../concepts/expressions.html#date-time-functions"
+     * target="_top">NOW()</a>), identity (<a
+     * href="../../concepts/expressions.html#user-security-functions"
+     * target="_top">USER()</a>), or constant-based functions (<a
+     * href="../../concepts/expressions.html#scalar-functions"
+     * target="_top">GEODIST(-77.11, 38.88, -71.06, 42.36)</a>).
      */
     struct CreateProjectionResponse
     {

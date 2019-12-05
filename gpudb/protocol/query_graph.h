@@ -33,8 +33,13 @@ namespace gpudb
      * provide a value to @a adjacencyTable and set @a export_query_results to
      * @a true.
      * <p>
-     * See <a href="../../graph_solver/network_graph_solver.html"
-     * target="_top">Network Graph Solver</a> for more information.
+     * IMPORTANT: It's highly recommended that you review the <a
+     * href="../../graph_solver/network_graph_solver.html"
+     * target="_top">Network Graphs & Solvers</a> concepts documentation, the
+     * <a href="../../graph_solver/examples/graph_rest_guide.html"
+     * target="_top">Graph REST Tutorial</a>, and/or some <a
+     * href="../../graph_solver/examples.html#query-graph"
+     * target="_top">/query/graph examples</a> before using this endpoint.
      */
     struct QueryGraphRequest
     {
@@ -124,6 +129,10 @@ namespace gpudb
          *                      the node will be returned. This parameter is
          *                      only applicable if the queried graph @a
          *                      graphName is directed and when querying nodes.
+         *                      Consult <a
+         *                      href="../../graph_solver/network_graph_solver.html#directed-graphs"
+         *                      target="_top">Directed Graphs</a> for more
+         *                      details.
          *                      <ul>
          *                              <li> gpudb::query_graph_true
          *                              <li> gpudb::query_graph_false
@@ -305,8 +314,13 @@ namespace gpudb
      * provide a value to @a adjacencyTable and set @a export_query_results to
      * @a true.
      * <p>
-     * See <a href="../../graph_solver/network_graph_solver.html"
-     * target="_top">Network Graph Solver</a> for more information.
+     * IMPORTANT: It's highly recommended that you review the <a
+     * href="../../graph_solver/network_graph_solver.html"
+     * target="_top">Network Graphs & Solvers</a> concepts documentation, the
+     * <a href="../../graph_solver/examples/graph_rest_guide.html"
+     * target="_top">Graph REST Tutorial</a>, and/or some <a
+     * href="../../graph_solver/examples.html#query-graph"
+     * target="_top">/query/graph examples</a> before using this endpoint.
      */
     struct QueryGraphResponse
     {

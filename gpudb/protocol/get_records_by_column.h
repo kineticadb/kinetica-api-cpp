@@ -31,6 +31,15 @@ namespace gpudb
      * differ between calls based on the type of the update, e.g., the
      * contiguity across pages cannot be relied upon.
      * <p>
+     * If @a tableName is empty, selection is performed against a single-row
+     * virtual table.  This can be useful in executing temporal (<a
+     * href="../../concepts/expressions.html#date-time-functions"
+     * target="_top">NOW()</a>), identity (<a
+     * href="../../concepts/expressions.html#user-security-functions"
+     * target="_top">USER()</a>), or constant-based functions (<a
+     * href="../../concepts/expressions.html#scalar-functions"
+     * target="_top">GEODIST(-77.11, 38.88, -71.06, 42.36)</a>).
+     * <p>
      * The response is returned as a dynamic schema. For details see: <a
      * href="../../api/index.html#dynamic-schemas" target="_top">dynamic
      * schemas documentation</a>.
@@ -57,8 +66,11 @@ namespace gpudb
          * parameters.
          * 
          * @param[in] tableName_  Name of the table on which this operation
-         *                        will be performed. The table cannot be a
-         *                        parent set.
+         *                        will be performed.  An empty table name
+         *                        retrieves one record from a single-row
+         *                        virtual table, where columns specified should
+         *                        be constants or constant expressions.  The
+         *                        table cannot be a parent set.
          * @param[in] columnNames_  The list of column values to retrieve.
          * @param[in] offset_  A positive integer indicating the number of
          *                     initial results to skip (this can be useful for
@@ -66,10 +78,17 @@ namespace gpudb
          *                     allowed value is 0. The maximum allowed value is
          *                     MAX_INT.
          * @param[in] limit_  A positive integer indicating the maximum number
-         *                    of results to be returned (if not provided the
-         *                    default is 10000), or END_OF_SET (-9999) to
-         *                    indicate that the maximum number of results
-         *                    allowed by the server should be returned.
+         *                    of results to be returned, or END_OF_SET (-9999)
+         *                    to indicate that the maximum number of results
+         *                    allowed by the server should be returned.  The
+         *                    number of records returned will never exceed the
+         *                    server's own limit, defined by the <a
+         *                    href="../../config/index.html#general"
+         *                    target="_top">max_get_records_size</a> parameter
+         *                    in the server configuration.  Use @a
+         *                    hasMoreRecords to see if more records exist in
+         *                    the result to be fetched, and @a offset & @a
+         *                    limit to request subsequent pages of results.
          * @param[in] options_
          *                      <ul>
          *                              <li>
@@ -131,8 +150,11 @@ namespace gpudb
          * parameters.
          * 
          * @param[in] tableName_  Name of the table on which this operation
-         *                        will be performed. The table cannot be a
-         *                        parent set.
+         *                        will be performed.  An empty table name
+         *                        retrieves one record from a single-row
+         *                        virtual table, where columns specified should
+         *                        be constants or constant expressions.  The
+         *                        table cannot be a parent set.
          * @param[in] columnNames_  The list of column values to retrieve.
          * @param[in] offset_  A positive integer indicating the number of
          *                     initial results to skip (this can be useful for
@@ -140,10 +162,17 @@ namespace gpudb
          *                     allowed value is 0. The maximum allowed value is
          *                     MAX_INT.
          * @param[in] limit_  A positive integer indicating the maximum number
-         *                    of results to be returned (if not provided the
-         *                    default is 10000), or END_OF_SET (-9999) to
-         *                    indicate that the maximum number of results
-         *                    allowed by the server should be returned.
+         *                    of results to be returned, or END_OF_SET (-9999)
+         *                    to indicate that the maximum number of results
+         *                    allowed by the server should be returned.  The
+         *                    number of records returned will never exceed the
+         *                    server's own limit, defined by the <a
+         *                    href="../../config/index.html#general"
+         *                    target="_top">max_get_records_size</a> parameter
+         *                    in the server configuration.  Use @a
+         *                    hasMoreRecords to see if more records exist in
+         *                    the result to be fetched, and @a offset & @a
+         *                    limit to request subsequent pages of results.
          * @param[in] encoding_  Specifies the encoding for returned records;
          *                       either 'binary' or 'json'.
          *                       <ul>
@@ -307,6 +336,15 @@ namespace gpudb
      * differ between calls based on the type of the update, e.g., the
      * contiguity across pages cannot be relied upon.
      * <p>
+     * If @a tableName is empty, selection is performed against a single-row
+     * virtual table.  This can be useful in executing temporal (<a
+     * href="../../concepts/expressions.html#date-time-functions"
+     * target="_top">NOW()</a>), identity (<a
+     * href="../../concepts/expressions.html#user-security-functions"
+     * target="_top">USER()</a>), or constant-based functions (<a
+     * href="../../concepts/expressions.html#scalar-functions"
+     * target="_top">GEODIST(-77.11, 38.88, -71.06, 42.36)</a>).
+     * <p>
      * The response is returned as a dynamic schema. For details see: <a
      * href="../../api/index.html#dynamic-schemas" target="_top">dynamic
      * schemas documentation</a>.
@@ -433,6 +471,15 @@ namespace gpudb
      * during a call to the endpoint, the records or values retrieved may
      * differ between calls based on the type of the update, e.g., the
      * contiguity across pages cannot be relied upon.
+     * <p>
+     * If @a tableName is empty, selection is performed against a single-row
+     * virtual table.  This can be useful in executing temporal (<a
+     * href="../../concepts/expressions.html#date-time-functions"
+     * target="_top">NOW()</a>), identity (<a
+     * href="../../concepts/expressions.html#user-security-functions"
+     * target="_top">USER()</a>), or constant-based functions (<a
+     * href="../../concepts/expressions.html#scalar-functions"
+     * target="_top">GEODIST(-77.11, 38.88, -71.06, 42.36)</a>).
      * <p>
      * The response is returned as a dynamic schema. For details see: <a
      * href="../../api/index.html#dynamic-schemas" target="_top">dynamic

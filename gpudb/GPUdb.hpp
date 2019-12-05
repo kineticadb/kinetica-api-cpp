@@ -114,6 +114,15 @@ public:
 
     static const int64_t END_OF_SET = -9999;
 
+    /// Special error messages indicating that a connection failure happened
+    /// (generally should trigger a high-availability failover if applicable)
+    static const std::string DB_CONNECTION_RESET_ERROR_MESSAGE;
+    static const std::string DB_CONNECTION_REFUSED_ERROR_MESSAGE;
+    static const std::string DB_EXITING_ERROR_MESSAGE;
+    static const std::string DB_OFFLINE_ERROR_MESSAGE;
+    static const std::string DB_SYSTEM_LIMITED_ERROR_MESSAGE;
+    static const std::string DB_HM_OFFLINE_ERROR_MESSAGE;
+    
     /// Headers used internally; MUST add each of them to PROTECTED_HEADERS
     /// in the .cpp file
     static const std::string HEADER_AUTHORIZATION;
@@ -128,7 +137,9 @@ public:
      * Pass a single HttpURL and options to instantiate a GPUdb object.
      *
      * @param[in] url  An HttpURL object containing the single host URL
-     *                 for the client.
+     *                 for the client.  If no primary URL is specified via
+     *                 the options, the given URL will be used as the primary
+     *                 URL.
      * @param[in] options  An optional GPUdb::Options object containing
      *                     options, e.g. primary cluster URL, used to the
      *                     create the GPUdb object.
@@ -143,7 +154,11 @@ public:
      *
      * @param[in] url  An std::string containing the one host URL
      *                 or a comma-separated string with multiple host
-     *                 URLs for the client.
+     *                 URLs for the client.  For example
+     *                 'http://172.42.40.1:9191,,http://172.42.40.2:9191'.
+     *                 If a single URL is given, and no primary URL is
+     *                 specified via the options, the given URL will be used
+     *                 as the primary URL.
      * @param[in] options  An optional GPUdb::Options object containing
      *                     options, e.g. primary cluster URL, used to the
      *                     create the GPUdb object.
@@ -156,7 +171,9 @@ public:
      * Pass multiple HttpURLs and optional options to instantiate a GPUdb
      * object.
      *
-     * @param[in] urls  The host URLs for the client.
+     * @param[in] urls  The host URLs for the client.  If a single URL is given,
+     *                  and no primary URL is specified via the options, the
+     *                  given URL will be used as the primary URL.
      * @param[in] options  An optional GPUdb::Options object containing
      *                     options, e.g. primary cluster URL, used to the
      *                     create the GPUdb object.
@@ -170,7 +187,9 @@ public:
      * to instantiate a GPUdb object.
      *
      * @param[in] urls  The host URLs for the client.  Each string must contain
-     *                  a single valid URL.
+     *                  a single valid URL.  If a single URL is given,
+     *                  and no primary URL is specified via the options, the
+     *                  given URL will be used as the primary URL.
      * @param[in] options  An optional GPUdb::Options object containing
      *                     options, e.g. primary cluster URL, used to the
      *                     create the GPUdb object.
@@ -454,7 +473,10 @@ private:
 
     static const std::string API_VERSION;
 
+    static const std::string FAILOVER_TRIGGER_MESSAGES[];
     static const std::string PROTECTED_HEADERS[];
+
+    static const size_t NUM_TRIGGER_MESSAGES;
     
     mutable std::vector<HttpUrl> m_urls;
     mutable std::vector<HttpUrl> m_hmUrls;

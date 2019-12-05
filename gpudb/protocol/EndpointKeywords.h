@@ -193,8 +193,6 @@ namespace gpudb
     extern const std::string alter_system_properties_audit_data;
     extern const std::string alter_system_properties_audit_headers;
     extern const std::string alter_system_properties_bulk_add_test;
-    extern const std::string alter_system_properties_chunk_cache_enabled;
-    extern const std::string alter_system_properties_chunk_cache_size;
     extern const std::string alter_system_properties_chunk_size;
     extern const std::string alter_system_properties_clear_cache;
     extern const std::string alter_system_properties_communicator_test;
@@ -209,6 +207,8 @@ namespace gpudb
     extern const std::string alter_system_properties_network_speed;
     extern const std::string alter_system_properties_request_timeout;
     extern const std::string alter_system_properties_set_message_timers_enabled;
+    extern const std::string alter_system_properties_shadow_agg_size;
+    extern const std::string alter_system_properties_shadow_filter_size;
     extern const std::string alter_system_properties_sm_omp_threads;
     extern const std::string alter_system_properties_subtask_concurrency_limit;
     extern const std::string alter_system_properties_synchronous_compression;
@@ -221,6 +221,8 @@ namespace gpudb
     extern const std::string alter_table_add_partition;
     extern const std::string alter_table_allow_homogeneous_tables;
     extern const std::string alter_table_change_column;
+    extern const std::string alter_table_chunk_skip;
+    extern const std::string alter_table_column;
     extern const std::string alter_table_column_default_value;
     extern const std::string alter_table_column_name;
     extern const std::string alter_table_column_properties;
@@ -234,6 +236,7 @@ namespace gpudb
     extern const std::string alter_table_delete_index;
     extern const std::string alter_table_delete_partition;
     extern const std::string alter_table_false;
+    extern const std::string alter_table_index_type;
     extern const std::string alter_table_lz4;
     extern const std::string alter_table_lz4hc;
     extern const std::string alter_table_move_to_collection;
@@ -293,6 +296,7 @@ namespace gpudb
     extern const std::string create_graph_merge_tolerance;
     extern const std::string create_graph_min_x;
     extern const std::string create_graph_min_y;
+    extern const std::string create_graph_modify;
     extern const std::string create_graph_recreate;
     extern const std::string create_graph_restriction_threshold_value;
     extern const std::string create_graph_save_persist;
@@ -352,6 +356,7 @@ namespace gpudb
     extern const std::string create_projection_order_by;
     extern const std::string create_projection_persist;
     extern const std::string create_projection_preserve_dict_encoding;
+    extern const std::string create_projection_retain_partitions;
     extern const std::string create_projection_shard_key;
     extern const std::string create_projection_true;
     extern const std::string create_projection_ttl;
@@ -371,6 +376,7 @@ namespace gpudb
     extern const std::string create_role_resource_group;
 
     // Keywords for /create/table request
+    extern const std::string create_table_HASH;
     extern const std::string create_table_INTERVAL;
     extern const std::string create_table_LIST;
     extern const std::string create_table_RANGE;
@@ -382,6 +388,7 @@ namespace gpudb
     extern const std::string create_table_foreign_shard_key;
     extern const std::string create_table_is_automatic_partition;
     extern const std::string create_table_is_collection;
+    extern const std::string create_table_is_create_sql_proc;
     extern const std::string create_table_is_create_view;
     extern const std::string create_table_is_filter_by_area;
     extern const std::string create_table_is_filter_by_area_geometry;
@@ -676,13 +683,20 @@ namespace gpudb
     extern const std::string has_type_true;
 
     // Keywords for /insert/records request
+    extern const std::string insert_records_allow_partial_batch;
     extern const std::string insert_records_binary;
+    extern const std::string insert_records_dry_run;
     extern const std::string insert_records_false;
     extern const std::string insert_records_json;
+    extern const std::string insert_records_return_individual_errors;
     extern const std::string insert_records_return_record_ids;
     extern const std::string insert_records_true;
     extern const std::string insert_records_truncate_strings;
     extern const std::string insert_records_update_on_existing_pk;
+
+    // Keywords for /insert/records response
+    extern const std::string insert_records_bad_record_indices;
+    extern const std::string insert_records_error_N;
 
     // Keywords for /insert/records/random request
     extern const std::string insert_records_random_all;
@@ -719,8 +733,10 @@ namespace gpudb
     extern const std::string match_graph_gps_noise;
     extern const std::string match_graph_incremental_weighted;
     extern const std::string match_graph_markov_chain;
+    extern const std::string match_graph_match_batch_solves;
     extern const std::string match_graph_match_od_pairs;
     extern const std::string match_graph_match_supply_demand;
+    extern const std::string match_graph_max_combinations;
     extern const std::string match_graph_max_solve_length;
     extern const std::string match_graph_num_segments;
     extern const std::string match_graph_partial_loading;
@@ -807,6 +823,15 @@ namespace gpudb
     extern const std::string show_security_internal_user;
     extern const std::string show_security_role;
 
+    // Keywords for /show/sql/proc request
+    extern const std::string show_sql_proc_false;
+    extern const std::string show_sql_proc_no_error_if_not_exists;
+    extern const std::string show_sql_proc_true;
+
+    // Keywords for /show/sql/proc response
+    extern const std::string show_sql_proc_execute_interval;
+    extern const std::string show_sql_proc_execute_start_time;
+
     // Keywords for /show/system/properties request
     extern const std::string show_system_properties_properties;
 
@@ -882,13 +907,11 @@ namespace gpudb
     extern const std::string show_types_true;
 
     // Keywords for /solve/graph request
+    extern const std::string solve_graph_ALLPATHS;
     extern const std::string solve_graph_BACKHAUL_ROUTING;
     extern const std::string solve_graph_CENTRALITY;
     extern const std::string solve_graph_INVERSE_SHORTEST_PATH;
     extern const std::string solve_graph_MULTIPLE_ROUTING;
-    extern const std::string solve_graph_NODE_ID;
-    extern const std::string solve_graph_NODE_NAME;
-    extern const std::string solve_graph_NODE_WKTPOINT;
     extern const std::string solve_graph_PAGE_RANK;
     extern const std::string solve_graph_PROBABILITY_RANK;
     extern const std::string solve_graph_SHORTEST_PATH;

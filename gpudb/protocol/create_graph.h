@@ -14,8 +14,15 @@ namespace gpudb
      * #createGraph(const CreateGraphRequest&) const}.
      * <p>
      * Creates a new graph network using given nodes, edges, weights, and
-     * restrictions. See <a href="../../graph_solver/network_graph_solver.html"
-     * target="_top">Network Graph Solvers</a> for more information.
+     * restrictions.
+
+     * IMPORTANT: It's highly recommended that you review the <a
+     * href="../../graph_solver/network_graph_solver.html"
+     * target="_top">Network Graphs & Solvers</a> concepts documentation, the
+     * <a href="../../graph_solver/examples/graph_rest_guide.html"
+     * target="_top">Graph REST Tutorial</a>, and/or some <a
+     * href="../../graph_solver/examples.html" target="_top">graph examples</a>
+     * before using this endpoint.
      */
     struct CreateGraphRequest
     {
@@ -41,9 +48,11 @@ namespace gpudb
          * 
          * @param[in] graphName_  Name of the graph resource to generate.
          * @param[in] directedGraph_  If set to @a true, the graph will be
-         *                            directed (0 to 1, 1 to 2, etc.). If set
-         *                            to @a false, the graph will not be
-         *                            directed.
+         *                            directed. If set to @a false, the graph
+         *                            will not be directed. Consult <a
+         *                            href="../../graph_solver/network_graph_solver.html#directed-graphs"
+         *                            target="_top">Directed Graphs</a> for
+         *                            more details.
          *                            <ul>
          *                                    <li> gpudb::create_graph_true
          *                                    <li> gpudb::create_graph_false
@@ -147,6 +156,15 @@ namespace gpudb
          *                      set to @a true and the graph (using @a
          *                      graphName) already exists, the graph is deleted
          *                      and recreated.
+         *                      <ul>
+         *                              <li> gpudb::create_graph_true
+         *                              <li> gpudb::create_graph_false
+         *                      </ul>
+         *                      The default value is gpudb::create_graph_false.
+         *                              <li> gpudb::create_graph_modify: If set
+         *                      to @a true and @a true and if the graph (using
+         *                      @a graphName) already exists, the graph is
+         *                      updated with these components.
          *                      <ul>
          *                              <li> gpudb::create_graph_true
          *                              <li> gpudb::create_graph_false
@@ -329,8 +347,15 @@ namespace gpudb
      * #createGraph(const CreateGraphRequest&) const}.
      * <p>
      * Creates a new graph network using given nodes, edges, weights, and
-     * restrictions. See <a href="../../graph_solver/network_graph_solver.html"
-     * target="_top">Network Graph Solvers</a> for more information.
+     * restrictions.
+
+     * IMPORTANT: It's highly recommended that you review the <a
+     * href="../../graph_solver/network_graph_solver.html"
+     * target="_top">Network Graphs & Solvers</a> concepts documentation, the
+     * <a href="../../graph_solver/examples/graph_rest_guide.html"
+     * target="_top">Graph REST Tutorial</a>, and/or some <a
+     * href="../../graph_solver/examples.html" target="_top">graph examples</a>
+     * before using this endpoint.
      */
     struct CreateGraphResponse
     {

@@ -26,6 +26,11 @@
 // (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
+#if defined(_MSC_VER)
+// VS seemed to change their headers between 2015 and 2017, so this now seems to be needed
+#include "intrin.h"
+#endif
+
 #include <algorithm>
 #include <string>
 

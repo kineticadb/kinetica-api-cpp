@@ -115,6 +115,7 @@
 #include "show_resource_statistics.h"
 #include "show_resource_groups.h"
 #include "show_security.h"
+#include "show_sql_proc.h"
 #include "show_statistics.h"
 #include "show_system_properties.h"
 #include "show_system_status.h"

@@ -193,8 +193,6 @@ namespace gpudb
     const std::string alter_system_properties_audit_data                 ( "audit_data"                  );
     const std::string alter_system_properties_audit_headers              ( "audit_headers"               );
     const std::string alter_system_properties_bulk_add_test              ( "bulk_add_test"               );
-    const std::string alter_system_properties_chunk_cache_enabled        ( "chunk_cache_enabled"         );
-    const std::string alter_system_properties_chunk_cache_size           ( "chunk_cache_size"            );
     const std::string alter_system_properties_chunk_size                 ( "chunk_size"                  );
     const std::string alter_system_properties_clear_cache                ( "clear_cache"                 );
     const std::string alter_system_properties_communicator_test          ( "communicator_test"           );
@@ -209,6 +207,8 @@ namespace gpudb
     const std::string alter_system_properties_network_speed              ( "network_speed"               );
     const std::string alter_system_properties_request_timeout            ( "request_timeout"             );
     const std::string alter_system_properties_set_message_timers_enabled ( "set_message_timers_enabled"  );
+    const std::string alter_system_properties_shadow_agg_size            ( "shadow_agg_size"             );
+    const std::string alter_system_properties_shadow_filter_size         ( "shadow_filter_size"          );
     const std::string alter_system_properties_sm_omp_threads             ( "sm_omp_threads"              );
     const std::string alter_system_properties_subtask_concurrency_limit  ( "subtask_concurrency_limit"   );
     const std::string alter_system_properties_synchronous_compression    ( "synchronous_compression"     );
@@ -221,6 +221,8 @@ namespace gpudb
     const std::string alter_table_add_partition                ( "add_partition"                 );
     const std::string alter_table_allow_homogeneous_tables     ( "allow_homogeneous_tables"      );
     const std::string alter_table_change_column                ( "change_column"                 );
+    const std::string alter_table_chunk_skip                   ( "chunk_skip"                    );
+    const std::string alter_table_column                       ( "column"                        );
     const std::string alter_table_column_default_value         ( "column_default_value"          );
     const std::string alter_table_column_name                  ( "column_name"                   );
     const std::string alter_table_column_properties            ( "column_properties"             );
@@ -234,6 +236,7 @@ namespace gpudb
     const std::string alter_table_delete_index                 ( "delete_index"                  );
     const std::string alter_table_delete_partition             ( "delete_partition"              );
     const std::string alter_table_false                        ( "false"                         );
+    const std::string alter_table_index_type                   ( "index_type"                    );
     const std::string alter_table_lz4                          ( "lz4"                           );
     const std::string alter_table_lz4hc                        ( "lz4hc"                         );
     const std::string alter_table_move_to_collection           ( "move_to_collection"            );
@@ -293,6 +296,7 @@ namespace gpudb
     const std::string create_graph_merge_tolerance            ( "merge_tolerance"             );
     const std::string create_graph_min_x                      ( "min_x"                       );
     const std::string create_graph_min_y                      ( "min_y"                       );
+    const std::string create_graph_modify                     ( "modify"                      );
     const std::string create_graph_recreate                   ( "recreate"                    );
     const std::string create_graph_restriction_threshold_value( "restriction_threshold_value" );
     const std::string create_graph_save_persist               ( "save_persist"                );
@@ -352,6 +356,7 @@ namespace gpudb
     const std::string create_projection_order_by              ( "order_by"               );
     const std::string create_projection_persist               ( "persist"                );
     const std::string create_projection_preserve_dict_encoding( "preserve_dict_encoding" );
+    const std::string create_projection_retain_partitions     ( "retain_partitions"      );
     const std::string create_projection_shard_key             ( "shard_key"              );
     const std::string create_projection_true                  ( "true"                   );
     const std::string create_projection_ttl                   ( "ttl"                    );
@@ -371,6 +376,7 @@ namespace gpudb
     const std::string create_role_resource_group( "resource_group" );
 
     // Keywords for /create/table request
+    const std::string create_table_HASH                        ( "HASH"                         );
     const std::string create_table_INTERVAL                    ( "INTERVAL"                     );
     const std::string create_table_LIST                        ( "LIST"                         );
     const std::string create_table_RANGE                       ( "RANGE"                        );
@@ -382,6 +388,7 @@ namespace gpudb
     const std::string create_table_foreign_shard_key           ( "foreign_shard_key"            );
     const std::string create_table_is_automatic_partition      ( "is_automatic_partition"       );
     const std::string create_table_is_collection               ( "is_collection"                );
+    const std::string create_table_is_create_sql_proc          ( "is_create_sql_proc"           );
     const std::string create_table_is_create_view              ( "is_create_view"               );
     const std::string create_table_is_filter_by_area           ( "is_filter_by_area"            );
     const std::string create_table_is_filter_by_area_geometry  ( "is_filter_by_area_geometry"   );
@@ -676,13 +683,20 @@ namespace gpudb
     const std::string has_type_true ( "true"  );
 
     // Keywords for /insert/records request
-    const std::string insert_records_binary               ( "binary"                );
-    const std::string insert_records_false                ( "false"                 );
-    const std::string insert_records_json                 ( "json"                  );
-    const std::string insert_records_return_record_ids    ( "return_record_ids"     );
-    const std::string insert_records_true                 ( "true"                  );
-    const std::string insert_records_truncate_strings     ( "truncate_strings"      );
-    const std::string insert_records_update_on_existing_pk( "update_on_existing_pk" );
+    const std::string insert_records_allow_partial_batch     ( "allow_partial_batch"      );
+    const std::string insert_records_binary                  ( "binary"                   );
+    const std::string insert_records_dry_run                 ( "dry_run"                  );
+    const std::string insert_records_false                   ( "false"                    );
+    const std::string insert_records_json                    ( "json"                     );
+    const std::string insert_records_return_individual_errors( "return_individual_errors" );
+    const std::string insert_records_return_record_ids       ( "return_record_ids"        );
+    const std::string insert_records_true                    ( "true"                     );
+    const std::string insert_records_truncate_strings        ( "truncate_strings"         );
+    const std::string insert_records_update_on_existing_pk   ( "update_on_existing_pk"    );
+
+    // Keywords for /insert/records response
+    const std::string insert_records_bad_record_indices( "bad_record_indices" );
+    const std::string insert_records_error_N           ( "error_N"            );
 
     // Keywords for /insert/records/random request
     const std::string insert_records_random_all            ( "all"             );
@@ -719,8 +733,10 @@ namespace gpudb
     const std::string match_graph_gps_noise           ( "gps_noise"            );
     const std::string match_graph_incremental_weighted( "incremental_weighted" );
     const std::string match_graph_markov_chain        ( "markov_chain"         );
+    const std::string match_graph_match_batch_solves  ( "match_batch_solves"   );
     const std::string match_graph_match_od_pairs      ( "match_od_pairs"       );
     const std::string match_graph_match_supply_demand ( "match_supply_demand"  );
+    const std::string match_graph_max_combinations    ( "max_combinations"     );
     const std::string match_graph_max_solve_length    ( "max_solve_length"     );
     const std::string match_graph_num_segments        ( "num_segments"         );
     const std::string match_graph_partial_loading     ( "partial_loading"      );
@@ -807,6 +823,15 @@ namespace gpudb
     const std::string show_security_internal_user( "internal_user" );
     const std::string show_security_role         ( "role"          );
 
+    // Keywords for /show/sql/proc request
+    const std::string show_sql_proc_false                 ( "false"                  );
+    const std::string show_sql_proc_no_error_if_not_exists( "no_error_if_not_exists" );
+    const std::string show_sql_proc_true                  ( "true"                   );
+
+    // Keywords for /show/sql/proc response
+    const std::string show_sql_proc_execute_interval  ( "execute_interval"   );
+    const std::string show_sql_proc_execute_start_time( "execute_start_time" );
+
     // Keywords for /show/system/properties request
     const std::string show_system_properties_properties( "properties" );
 
@@ -882,13 +907,11 @@ namespace gpudb
     const std::string show_types_true         ( "true"          );
 
     // Keywords for /solve/graph request
+    const std::string solve_graph_ALLPATHS                    ( "ALLPATHS"                     );
     const std::string solve_graph_BACKHAUL_ROUTING            ( "BACKHAUL_ROUTING"             );
     const std::string solve_graph_CENTRALITY                  ( "CENTRALITY"                   );
     const std::string solve_graph_INVERSE_SHORTEST_PATH       ( "INVERSE_SHORTEST_PATH"        );
     const std::string solve_graph_MULTIPLE_ROUTING            ( "MULTIPLE_ROUTING"             );
-    const std::string solve_graph_NODE_ID                     ( "NODE_ID"                      );
-    const std::string solve_graph_NODE_NAME                   ( "NODE_NAME"                    );
-    const std::string solve_graph_NODE_WKTPOINT               ( "NODE_WKTPOINT"                );
     const std::string solve_graph_PAGE_RANK                   ( "PAGE_RANK"                    );
     const std::string solve_graph_PROBABILITY_RANK            ( "PROBABILITY_RANK"             );
     const std::string solve_graph_SHORTEST_PATH               ( "SHORTEST_PATH"                );
