@@ -98,6 +98,12 @@ namespace gpudb
          *                                 an integer value that indicates max
          *                                 chunk size to exec on host
          *                                         <li>
+         *                                 gpudb::alter_system_properties_external_files_directory:
+         *                                 Sets the root directory path where
+         *                                 external table data files are
+         *                                 accessed from.  Path must exist on
+         *                                 the head node
+         *                                         <li>
          *                                 gpudb::alter_system_properties_flush_to_disk:
          *                                 Flushes any changes to any tables to
          *                                 the persistent store.  These changes
@@ -203,6 +209,15 @@ namespace gpudb
          *                                 compress vector on set_compression
          *                                 (instead of waiting for background
          *                                 thread).  The default value is
+         *                                 'false'.
+         *                                         <li>
+         *                                 gpudb::alter_system_properties_enable_overlapped_equi_join:
+         *                                 Enable overlapped-equi-join filter.
+         *                                 The default value is 'true'.
+         *                                         <li>
+         *                                 gpudb::alter_system_properties_enable_compound_equi_join:
+         *                                 Enable compound-equi-join filter
+         *                                 plan type.  The default value is
          *                                 'false'.
          *                                 </ul>
          * @param[in] options_  Optional parameters.

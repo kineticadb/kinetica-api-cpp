@@ -13,7 +13,8 @@ namespace gpudb
      * A set of input parameters for {@link
      * #showSqlProc(const ShowSqlProcRequest&) const}.
      * <p>
-     * Procedures
+     * Shows information about SQL procedures, including the full definition of
+     * each requested procedure.
      */
     struct ShowSqlProcRequest
     {
@@ -40,9 +41,10 @@ namespace gpudb
          *                      <ul>
          *                              <li>
          *                      gpudb::show_sql_proc_no_error_if_not_exists: If
-         *                      @a false will return an error if the provided
-         *                      does not exist. If @a true then it will return
-         *                      an empty result.
+         *                      @a true, no error will be returned if the
+         *                      requested procedure does not exist.  If @a
+         *                      false, an error will be returned if the
+         *                      requested procedure does not exist.
          *                      <ul>
          *                              <li> gpudb::show_sql_proc_true
          *                              <li> gpudb::show_sql_proc_false
@@ -112,7 +114,8 @@ namespace gpudb
      * A set of output parameters for {@link
      * #showSqlProc(const ShowSqlProcRequest&) const}.
      * <p>
-     * Procedures
+     * Shows information about SQL procedures, including the full definition of
+     * each requested procedure.
      */
     struct ShowSqlProcResponse
     {
