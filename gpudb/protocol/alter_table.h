@@ -97,17 +97,24 @@ namespace gpudb
          *                     gpudb::alter_table_allow_homogeneous_tables: No
          *                     longer supported; action will be ignored.
          *                             <li> gpudb::alter_table_create_index:
-         *                     Creates an <a
+         *                     Creates either a <a
          *                     href="../../concepts/indexes.html#column-index"
-         *                     target="_top">index</a> on the column name
-         *                     specified in @a value. If this column is already
-         *                     indexed, an error will be returned.
+         *                     target="_top">column (attribute) index</a> or <a
+         *                     href="../../concepts/indexes.html#chunk-skip-index"
+         *                     target="_top">chunk skip index</a>, depending on
+         *                     the specified @a index_type, on the column name
+         *                     specified in @a value. If this column already
+         *                     has the specified index, an error will be
+         *                     returned.
          *                             <li> gpudb::alter_table_delete_index:
-         *                     Deletes an existing <a
+         *                     Deletes either a <a
          *                     href="../../concepts/indexes.html#column-index"
-         *                     target="_top">index</a> on the column name
+         *                     target="_top">column (attribute) index</a> or <a
+         *                     href="../../concepts/indexes.html#chunk-skip-index"
+         *                     target="_top">chunk skip index</a>, depending on
+         *                     the specified @a index_type, on the column name
          *                     specified in @a value. If this column does not
-         *                     have indexing turned on, an error will be
+         *                     have the specified index, an error will be
          *                     returned.
          *                             <li>
          *                     gpudb::alter_table_move_to_collection: Moves a
@@ -357,12 +364,18 @@ namespace gpudb
          *                      examples.  This option will be ignored if @a
          *                      value is also specified.
          *                              <li> gpudb::alter_table_index_type:
-         *                      Type of index to create.
+         *                      Type of index to create, when @a action is @a
+         *                      create_index, or to delete, when @a action is
+         *                      @a delete_index.
          *                      <ul>
-         *                              <li> gpudb::alter_table_column:
-         *                      Standard column index.
+         *                              <li> gpudb::alter_table_column: Create
+         *                      or delete a <a
+         *                      href="../../concepts/indexes.html#column-index"
+         *                      target="_top">column (attribute) index</a>.
          *                              <li> gpudb::alter_table_chunk_skip:
-         *                      Chunk skip index.
+         *                      Create or delete a <a
+         *                      href="../../concepts/indexes.html#chunk-skip-index"
+         *                      target="_top">chunk skip index</a>.
          *                      </ul>
          *                      The default value is gpudb::alter_table_column.
          *                      </ul>

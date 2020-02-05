@@ -261,7 +261,23 @@ function build_boost
                 if [ "$STATIC_WITH_PIC" -eq 1 ]; then
                     BJAM_FLAGS="$BJAM_FLAGS cxxflags='-fPIC $CXXFLAGS'"
                 fi
-                run_cmd "./bjam -a $BJAM_FLAGS --layout=system install variant=release threading=multi --user-config=user-config.jam --disable-icu boost.locale.icu=off --prefix=$INSTALL_DIR -j8 install"
+
+                # Find the path to bjam
+                BJAM_EXE=""
+                for BJAM_PATH in "./bjam" "./tools/build/src/engine/bjam"; do
+                    if [ -f "${BJAM_PATH}" ]; then
+                        BJAM_EXE="${BJAM_PATH}"
+                        break
+                    fi
+                done
+
+                # Ensure that we found the bjam executable necessary to build boost
+                if [ -z "${BJAM_EXE}" ]; then
+                    echo "ERROR: Could not find bjam to build boost!"
+                    exit 1
+                fi
+
+                run_cmd "$BJAM_EXE -a $BJAM_FLAGS --layout=system install variant=release threading=multi --user-config=user-config.jam --disable-icu boost.locale.icu=off --prefix=$INSTALL_DIR -j8 install"
 
                 date > $BUILD_DIR/$BOOST_NAME.built
 

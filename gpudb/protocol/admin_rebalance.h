@@ -91,6 +91,16 @@ namespace gpudb
          *                      allow for better interleaving between the
          *                      rebalance and other queries. Allowed values are
          *                      1 through 10.  The default value is '1'.
+         *                              <li>
+         *                      gpudb::admin_rebalance_compact_after_rebalance:
+         *                      Perform compaction of deleted records once the
+         *                      rebalance completes, to reclaim memory and disk
+         *                      space. Default is true.  The default value is
+         *                      'true'.
+         *                              <li>
+         *                      gpudb::admin_rebalance_compact_only: Only
+         *                      perform compaction, do not rebalance. Default
+         *                      is false.  The default value is 'false'.
          *                      </ul>
          * 
          */

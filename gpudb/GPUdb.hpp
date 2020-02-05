@@ -74,8 +74,12 @@ public:
         bool getUseSnappy() const;
         size_t getThreadCount() const;
         avro::ExecutorPtr getExecutor() const;
+
+        /// Get the HTTP headers (will include the high-availability
+        /// synchronicity override header)
         std::map<std::string, std::string>& getHttpHeaders();
         const std::map<std::string, std::string>& getHttpHeaders() const;
+
         size_t getTimeout() const;
         uint16_t getHostManagerPort() const;
 
@@ -112,6 +116,27 @@ public:
         uint16_t m_hmPort;
     };
 
+
+    /**
+     * A enumeration of high-availability synchronicity override modes.
+     *
+     * Note: Internally, do not use the enum value as the mode to be set
+     *       in the header; use the {@link
+     *       #getHASynchronicityModeValue(HASynchronicityMode)} to get
+     *       the approprivate stirng value instead.
+     */
+    enum HASynchronicityMode {
+        // No override; defer to the HA process for synchronizing
+        // endpoints (which has different logic for different endpoints)
+        DEFAULT = 0,  // maps to 'none'
+        // Synchronize all endpoint calls
+        SYNCHRONOUS,  // maps to 'sync'
+        // Do NOT synchronize any endpoint call
+        ASYNCHRONOUS  // maps to 'async'
+    };
+
+
+    
     static const int64_t END_OF_SET = -9999;
 
     /// Special error messages indicating that a connection failure happened
@@ -202,6 +227,7 @@ public:
     ~GPUdb();
     
     /// Some getters
+    /// ------------
     const HttpUrl& getUrl() const;
     const std::vector<HttpUrl>& getUrls() const;
     const HttpUrl& getHmUrl() const;
@@ -222,9 +248,18 @@ public:
     size_t getThreadCount() const;
     avro::ExecutorPtr getExecutor() const;
     const std::map<std::string, std::string>& getHttpHeaders() const;
+    HASynchronicityMode getHASyncMode() const;
     size_t getTimeout() const;
 
-    
+    /// Some setters
+    /// ------------
+
+    /**
+     * Sets the high-availability synchronization mode which will override
+     * the default mode.
+     */
+    void setHASyncMode( HASynchronicityMode mode );
+
     /**
      * Adds an HTTP header to the map of additional HTTP headers to send to
      * GPUdb with each request. If the header is already in the map, its
@@ -475,6 +510,7 @@ private:
 
     static const std::string FAILOVER_TRIGGER_MESSAGES[];
     static const std::string PROTECTED_HEADERS[];
+    static const std::string HA_SYNCHRONICITY_MODE_VALUES[];
 
     static const size_t NUM_TRIGGER_MESSAGES;
     
@@ -498,11 +534,13 @@ private:
     avro::ExecutorPtr m_executor;
     std::map<std::string, std::string> m_httpHeaders;
     size_t m_timeout;
+    mutable HASynchronicityMode m_haSyncMode;
     Options m_options;
 
     mutable std::map<std::string, avro::DecoderPtr> m_knownTypes;
     mutable boost::mutex m_knownTypesMutex;
 
+   
     /// Helper functions
     /// ----------------
     /// Initialize the GPUdb object
@@ -524,7 +562,11 @@ private:
     /// index as the first one in the list so that upon failover, when we cricle
     /// back, we always pick the first/primary host up again.
     void randomizeURLs() const;
-    
+
+    /// Convert a given high availability synchronicity override mode enumeration
+    /// to its string value
+    const std::string& getHASynchronicityModeValue( HASynchronicityMode syncMode ) const;
+
     /// Some getters
     /// ------------
     const HttpUrl* getUrlPointer() const;

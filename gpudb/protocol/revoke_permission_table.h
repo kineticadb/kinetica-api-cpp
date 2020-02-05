@@ -59,6 +59,12 @@ namespace gpudb
          *                        grants access. Must be an existing table,
          *                        collection, or view.
          * @param[in] options_  Optional parameters.
+         *                      <ul>
+         *                              <li>
+         *                      gpudb::revoke_permission_table_columns: Apply
+         *                      security to these columns, comma-separated.
+         *                      The default value is ''.
+         *                      </ul>
          * 
          */
         RevokePermissionTableRequest(const std::string& name_, const std::string& permission_, const std::string& tableName_, const std::map<std::string, std::string>& options_):

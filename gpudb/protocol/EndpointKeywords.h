@@ -27,6 +27,8 @@ namespace gpudb
 
     // Keywords for /admin/rebalance request
     extern const std::string admin_rebalance_aggressiveness;
+    extern const std::string admin_rebalance_compact_after_rebalance;
+    extern const std::string admin_rebalance_compact_only;
     extern const std::string admin_rebalance_false;
     extern const std::string admin_rebalance_rebalance_sharded_data;
     extern const std::string admin_rebalance_rebalance_unsharded_data;
@@ -198,8 +200,11 @@ namespace gpudb
     extern const std::string alter_system_properties_communicator_test;
     extern const std::string alter_system_properties_concurrent_kernel_execution;
     extern const std::string alter_system_properties_enable_audit;
+    extern const std::string alter_system_properties_enable_compound_equi_join;
+    extern const std::string alter_system_properties_enable_overlapped_equi_join;
     extern const std::string alter_system_properties_evict_columns;
     extern const std::string alter_system_properties_execution_mode;
+    extern const std::string alter_system_properties_external_files_directory;
     extern const std::string alter_system_properties_false;
     extern const std::string alter_system_properties_flush_to_disk;
     extern const std::string alter_system_properties_kernel_omp_threads;
@@ -285,6 +290,43 @@ namespace gpudb
     extern const std::string clear_table_no_error_if_not_exists;
     extern const std::string clear_table_true;
 
+    // Keywords for /create/externaltable request
+    extern const std::string create_external_table_abort;
+    extern const std::string create_external_table_batch_size;
+    extern const std::string create_external_table_column_formats;
+    extern const std::string create_external_table_columns_to_load;
+    extern const std::string create_external_table_default_column_formats;
+    extern const std::string create_external_table_delimited_text;
+    extern const std::string create_external_table_distributed_local;
+    extern const std::string create_external_table_distributed_shared;
+    extern const std::string create_external_table_dry_run;
+    extern const std::string create_external_table_error_handling;
+    extern const std::string create_external_table_false;
+    extern const std::string create_external_table_file_type;
+    extern const std::string create_external_table_full_refresh;
+    extern const std::string create_external_table_head;
+    extern const std::string create_external_table_ignore_bad_records;
+    extern const std::string create_external_table_loading_mode;
+    extern const std::string create_external_table_logical;
+    extern const std::string create_external_table_logical_tmp;
+    extern const std::string create_external_table_manual;
+    extern const std::string create_external_table_materialized;
+    extern const std::string create_external_table_no_refresh;
+    extern const std::string create_external_table_on_start;
+    extern const std::string create_external_table_parquet;
+    extern const std::string create_external_table_permissive;
+    extern const std::string create_external_table_refresh_method;
+    extern const std::string create_external_table_table_type;
+    extern const std::string create_external_table_text_comment_string;
+    extern const std::string create_external_table_text_delimiter;
+    extern const std::string create_external_table_text_escape_character;
+    extern const std::string create_external_table_text_has_header;
+    extern const std::string create_external_table_text_header_property_delimiter;
+    extern const std::string create_external_table_text_null_string;
+    extern const std::string create_external_table_text_quote_character;
+    extern const std::string create_external_table_true;
+    extern const std::string create_external_table_type_id;
+
     // Keywords for /create/graph request
     extern const std::string create_graph_add_table_monitor;
     extern const std::string create_graph_enable_graph_draw;
@@ -298,6 +340,7 @@ namespace gpudb
     extern const std::string create_graph_min_y;
     extern const std::string create_graph_modify;
     extern const std::string create_graph_recreate;
+    extern const std::string create_graph_remove_label_only;
     extern const std::string create_graph_restriction_threshold_value;
     extern const std::string create_graph_save_persist;
     extern const std::string create_graph_sync_db;
@@ -390,6 +433,7 @@ namespace gpudb
     extern const std::string create_table_is_collection;
     extern const std::string create_table_is_create_sql_proc;
     extern const std::string create_table_is_create_view;
+    extern const std::string create_table_is_external_table;
     extern const std::string create_table_is_filter_by_area;
     extern const std::string create_table_is_filter_by_area_geometry;
     extern const std::string create_table_is_filter_by_box;
@@ -664,6 +708,7 @@ namespace gpudb
     extern const std::string grant_permission_system_system_write;
 
     // Keywords for /grant/permission/table request
+    extern const std::string grant_permission_table_columns;
     extern const std::string grant_permission_table_table_admin;
     extern const std::string grant_permission_table_table_delete;
     extern const std::string grant_permission_table_table_insert;
@@ -697,6 +742,82 @@ namespace gpudb
     // Keywords for /insert/records response
     extern const std::string insert_records_bad_record_indices;
     extern const std::string insert_records_error_N;
+
+    // Keywords for /insert/records/fromfiles request
+    extern const std::string insert_records_from_files_HASH;
+    extern const std::string insert_records_from_files_INTERVAL;
+    extern const std::string insert_records_from_files_LIST;
+    extern const std::string insert_records_from_files_RANGE;
+    extern const std::string insert_records_from_files_abort;
+    extern const std::string insert_records_from_files_batch_size;
+    extern const std::string insert_records_from_files_chunk_size;
+    extern const std::string insert_records_from_files_collection_name;
+    extern const std::string insert_records_from_files_column_formats;
+    extern const std::string insert_records_from_files_columns_to_load;
+    extern const std::string insert_records_from_files_default_column_formats;
+    extern const std::string insert_records_from_files_delimited_text;
+    extern const std::string insert_records_from_files_disallow_homogeneous_tables;
+    extern const std::string insert_records_from_files_distributed_local;
+    extern const std::string insert_records_from_files_distributed_shared;
+    extern const std::string insert_records_from_files_dry_run;
+    extern const std::string insert_records_from_files_error_handling;
+    extern const std::string insert_records_from_files_false;
+    extern const std::string insert_records_from_files_file_type;
+    extern const std::string insert_records_from_files_foreign_keys;
+    extern const std::string insert_records_from_files_foreign_shard_key;
+    extern const std::string insert_records_from_files_head;
+    extern const std::string insert_records_from_files_ignore_bad_records;
+    extern const std::string insert_records_from_files_is_automatic_partition;
+    extern const std::string insert_records_from_files_is_collection;
+    extern const std::string insert_records_from_files_is_create_sql_proc;
+    extern const std::string insert_records_from_files_is_create_view;
+    extern const std::string insert_records_from_files_is_external_table;
+    extern const std::string insert_records_from_files_is_filter_by_area;
+    extern const std::string insert_records_from_files_is_filter_by_area_geometry;
+    extern const std::string insert_records_from_files_is_filter_by_box;
+    extern const std::string insert_records_from_files_is_filter_by_box_geometry;
+    extern const std::string insert_records_from_files_is_filter_by_geometry;
+    extern const std::string insert_records_from_files_is_filter_by_list;
+    extern const std::string insert_records_from_files_is_filter_by_radius;
+    extern const std::string insert_records_from_files_is_filter_by_radius_geometry;
+    extern const std::string insert_records_from_files_is_filter_by_range;
+    extern const std::string insert_records_from_files_is_filter_by_series;
+    extern const std::string insert_records_from_files_is_filter_by_series_values;
+    extern const std::string insert_records_from_files_is_filter_by_string;
+    extern const std::string insert_records_from_files_is_filter_by_table;
+    extern const std::string insert_records_from_files_is_filter_by_value;
+    extern const std::string insert_records_from_files_is_filter_view;
+    extern const std::string insert_records_from_files_is_group_by;
+    extern const std::string insert_records_from_files_is_join;
+    extern const std::string insert_records_from_files_is_merge;
+    extern const std::string insert_records_from_files_is_other_view;
+    extern const std::string insert_records_from_files_is_projection;
+    extern const std::string insert_records_from_files_is_replicated;
+    extern const std::string insert_records_from_files_is_result_table;
+    extern const std::string insert_records_from_files_is_table;
+    extern const std::string insert_records_from_files_is_union;
+    extern const std::string insert_records_from_files_is_unique;
+    extern const std::string insert_records_from_files_is_unpivot;
+    extern const std::string insert_records_from_files_is_update_records_by_series;
+    extern const std::string insert_records_from_files_loading_mode;
+    extern const std::string insert_records_from_files_no_error_if_exists;
+    extern const std::string insert_records_from_files_parquet;
+    extern const std::string insert_records_from_files_partition_definitions;
+    extern const std::string insert_records_from_files_partition_keys;
+    extern const std::string insert_records_from_files_partition_type;
+    extern const std::string insert_records_from_files_permissive;
+    extern const std::string insert_records_from_files_strategy_definition;
+    extern const std::string insert_records_from_files_text_comment_string;
+    extern const std::string insert_records_from_files_text_delimiter;
+    extern const std::string insert_records_from_files_text_escape_character;
+    extern const std::string insert_records_from_files_text_has_header;
+    extern const std::string insert_records_from_files_text_header_property_delimiter;
+    extern const std::string insert_records_from_files_text_null_string;
+    extern const std::string insert_records_from_files_text_quote_character;
+    extern const std::string insert_records_from_files_true;
+    extern const std::string insert_records_from_files_truncate_table;
+    extern const std::string insert_records_from_files_ttl;
+    extern const std::string insert_records_from_files_type_id;
 
     // Keywords for /insert/records/random request
     extern const std::string insert_records_random_all;
@@ -755,6 +876,17 @@ namespace gpudb
     extern const std::string merge_records_ttl;
     extern const std::string merge_records_view_id;
 
+    // Keywords for /modify/graph request
+    extern const std::string modify_graph_add_table_monitor;
+    extern const std::string modify_graph_enable_graph_draw;
+    extern const std::string modify_graph_export_create_results;
+    extern const std::string modify_graph_false;
+    extern const std::string modify_graph_graph_table;
+    extern const std::string modify_graph_remove_label_only;
+    extern const std::string modify_graph_restriction_threshold_value;
+    extern const std::string modify_graph_save_persist;
+    extern const std::string modify_graph_true;
+
     // Keywords for /query/graph request
     extern const std::string query_graph_and_labels;
     extern const std::string query_graph_enable_graph_draw;
@@ -776,6 +908,7 @@ namespace gpudb
     extern const std::string revoke_permission_system_system_write;
 
     // Keywords for /revoke/permission/table request
+    extern const std::string revoke_permission_table_columns;
     extern const std::string revoke_permission_table_table_admin;
     extern const std::string revoke_permission_table_table_delete;
     extern const std::string revoke_permission_table_table_insert;
@@ -857,6 +990,7 @@ namespace gpudb
     extern const std::string show_table_INTERVAL;
     extern const std::string show_table_JOIN;
     extern const std::string show_table_LIST;
+    extern const std::string show_table_MATERIALIZED_VIEW_UNDER_CONSTRUCTION;
     extern const std::string show_table_NONE;
     extern const std::string show_table_RANGE;
     extern const std::string show_table_REPLICATED;

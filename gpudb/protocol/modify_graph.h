@@ -3,18 +3,18 @@
  *
  *  DO NOT EDIT DIRECTLY.
  */
-#ifndef __CREATE_GRAPH_H__
-#define __CREATE_GRAPH_H__
+#ifndef __MODIFY_GRAPH_H__
+#define __MODIFY_GRAPH_H__
 
 namespace gpudb
 {
 
     /**
      * A set of input parameters for {@link
-     * #createGraph(const CreateGraphRequest&) const}.
+     * #modifyGraph(const ModifyGraphRequest&) const}.
      * <p>
-     * Creates a new graph network using given nodes, edges, weights, and
-     * restrictions.
+     * Update an existing graph network using given nodes, edges, weights,
+     * restrictions, and options.
 
      * IMPORTANT: It's highly recommended that you review the <a
      * href="../../graph_solver/network_graph_solver.html"
@@ -24,16 +24,15 @@ namespace gpudb
      * href="../../graph_solver/examples.html" target="_top">graph examples</a>
      * before using this endpoint.
      */
-    struct CreateGraphRequest
+    struct ModifyGraphRequest
     {
 
         /**
-         * Constructs a CreateGraphRequest object with default parameter
+         * Constructs a ModifyGraphRequest object with default parameter
          * values.
          */
-        CreateGraphRequest() :
+        ModifyGraphRequest() :
             graphName(std::string()),
-            directedGraph(bool()),
             nodes(std::vector<std::string>()),
             edges(std::vector<std::string>()),
             weights(std::vector<std::string>()),
@@ -43,24 +42,15 @@ namespace gpudb
         }
 
         /**
-         * Constructs a CreateGraphRequest object with the specified
+         * Constructs a ModifyGraphRequest object with the specified
          * parameters.
          * 
-         * @param[in] graphName_  Name of the graph resource to generate.
-         * @param[in] directedGraph_  If set to @a true, the graph will be
-         *                            directed. If set to @a false, the graph
-         *                            will not be directed. Consult <a
-         *                            href="../../graph_solver/network_graph_solver.html#directed-graphs"
-         *                            target="_top">Directed Graphs</a> for
-         *                            more details.
-         *                            <ul>
-         *                                    <li> gpudb::create_graph_true
-         *                                    <li> gpudb::create_graph_false
-         *                            </ul>
-         *                            The default value is
-         *                            gpudb::create_graph_true.
-         * @param[in] nodes_  Nodes represent fundamental topological units of
-         *                    a graph. Nodes must be specified using <a
+         * @param[in] graphName_  Name of the graph resource to modify.
+         * @param[in] nodes_  Nodes with which to update existing @a nodes in
+         *                    graph specified by @a graphName. Review <a
+         *                    href="../../graph_solver/network_graph_solver.html#nodes"
+         *                    target="_top">Nodes</a> for more information.
+         *                    Nodes must be specified using <a
          *                    href="../../graph_solver/network_graph_solver.html#identifiers"
          *                    target="_top">identifiers</a>; identifiers are
          *                    grouped as <a
@@ -72,10 +62,17 @@ namespace gpudb
          *                    NODE_WKTPOINT', or raw values, e.g., '{9, 10, 11}
          *                    AS NODE_ID'. If using raw values in an identifier
          *                    combination, the number of values specified must
-         *                    match across the combination.
-         * @param[in] edges_  Edges represent the required fundamental
-         *                    topological unit of a graph that typically
-         *                    connect nodes. Edges must be specified using <a
+         *                    match across the combination. Identifier
+         *                    combination(s) do not have to match the method
+         *                    used to create the graph, e.g., if column names
+         *                    were specified to create the graph, expressions
+         *                    or raw values could also be used to modify the
+         *                    graph.
+         * @param[in] edges_  Edges with which to update existing @a edges in
+         *                    graph specified by @a graphName. Review <a
+         *                    href="../../graph_solver/network_graph_solver.html#edges"
+         *                    target="_top">Edges</a> for more information.
+         *                    Edges must be specified using <a
          *                    href="../../graph_solver/network_graph_solver.html#identifiers"
          *                    target="_top">identifiers</a>; identifiers are
          *                    grouped as <a
@@ -87,11 +84,18 @@ namespace gpudb
          *                    values, e.g., "{'family', 'coworker'} AS
          *                    EDGE_LABEL". If using raw values in an identifier
          *                    combination, the number of values specified must
-         *                    match across the combination.
-         * @param[in] weights_  Weights represent a method of informing the
-         *                      graph solver of the cost of including a given
-         *                      edge in a solution. Weights must be specified
-         *                      using <a
+         *                    match across the combination. Identifier
+         *                    combination(s) do not have to match the method
+         *                    used to create the graph, e.g., if column names
+         *                    were specified to create the graph, expressions
+         *                    or raw values could also be used to modify the
+         *                    graph.
+         * @param[in] weights_  Weights with which to update existing @a
+         *                      weights in graph specified by @a graphName.
+         *                      Review <a
+         *                      href="../../graph_solver/network_graph_solver.html#graph-weights"
+         *                      target="_top">Weights</a> for more information.
+         *                      Weights must be specified using <a
          *                      href="../../graph_solver/network_graph_solver.html#identifiers"
          *                      target="_top">identifiers</a>; identifiers are
          *                      grouped as <a
@@ -104,12 +108,18 @@ namespace gpudb
          *                      '{4, 15} AS WEIGHTS_VALUESPECIFIED'. If using
          *                      raw values in an identifier combination, the
          *                      number of values specified must match across
-         *                      the combination.
-         * @param[in] restrictions_  Restrictions represent a method of
-         *                           informing the graph solver which edges
-         *                           and/or nodes should be ignored for the
-         *                           solution. Restrictions must be specified
-         *                           using <a
+         *                      the combination. Identifier combination(s) do
+         *                      not have to match the method used to create the
+         *                      graph, e.g., if column names were specified to
+         *                      create the graph, expressions or raw values
+         *                      could also be used to modify the graph.
+         * @param[in] restrictions_  Restrictions with which to update existing
+         *                           @a restrictions in graph specified by @a
+         *                           graphName. Review <a
+         *                           href="../../graph_solver/network_graph_solver.html#graph-restrictions"
+         *                           target="_top">Restrictions</a> for more
+         *                           information. Restrictions must be
+         *                           specified using <a
          *                           href="../../graph_solver/network_graph_solver.html#identifiers"
          *                           target="_top">identifiers</a>; identifiers
          *                           are grouped as <a
@@ -123,65 +133,31 @@ namespace gpudb
          *                           RESTRICTIONS_ONOFFCOMPARED'. If using raw
          *                           values in an identifier combination, the
          *                           number of values specified must match
-         *                           across the combination.
+         *                           across the combination. Identifier
+         *                           combination(s) do not have to match the
+         *                           method used to create the graph, e.g., if
+         *                           column names were specified to create the
+         *                           graph, expressions or raw values could
+         *                           also be used to modify the graph.
          * @param[in] options_  Optional parameters.
          *                      <ul>
          *                              <li>
-         *                      gpudb::create_graph_restriction_threshold_value:
+         *                      gpudb::modify_graph_restriction_threshold_value:
          *                      Value-based restriction comparison. Any node or
          *                      edge with a RESTRICTIONS_VALUECOMPARED value
          *                      greater than the @a restriction_threshold_value
          *                      will not be included in the graph.
          *                              <li>
-         *                      gpudb::create_graph_merge_tolerance: If node
-         *                      geospatial positions are input (e.g., WKTPOINT,
-         *                      X, Y), determines the minimum separation
-         *                      allowed between unique nodes. If nodes are
-         *                      within the tolerance of each other, they will
-         *                      be merged as a single node.  The default value
-         *                      is '1.0E-4'.
-         *                              <li> gpudb::create_graph_min_x: Minimum
-         *                      x (longitude) value for spatial graph
-         *                      associations.  The default value is '-180.0'.
-         *                              <li> gpudb::create_graph_max_x: Maximum
-         *                      x (longitude) value for spatial graph
-         *                      associations.  The default value is '180.0'.
-         *                              <li> gpudb::create_graph_min_y: Minimum
-         *                      y (latitude) value for spatial graph
-         *                      associations.  The default value is '-90.0'.
-         *                              <li> gpudb::create_graph_max_y: Maximum
-         *                      y (latitude) value for spatial graph
-         *                      associations.  The default value is '90.0'.
-         *                              <li> gpudb::create_graph_recreate: If
-         *                      set to @a true and the graph (using @a
-         *                      graphName) already exists, the graph is deleted
-         *                      and recreated.
-         *                      <ul>
-         *                              <li> gpudb::create_graph_true
-         *                              <li> gpudb::create_graph_false
-         *                      </ul>
-         *                      The default value is gpudb::create_graph_false.
-         *                              <li> gpudb::create_graph_modify: If set
-         *                      to @a true, @a recreate is set to @a true, and
-         *                      the graph (specified using @a graphName)
-         *                      already exists, the graph is updated with the
-         *                      given components.
-         *                      <ul>
-         *                              <li> gpudb::create_graph_true
-         *                              <li> gpudb::create_graph_false
-         *                      </ul>
-         *                      The default value is gpudb::create_graph_false.
-         *                              <li>
-         *                      gpudb::create_graph_export_create_results: If
+         *                      gpudb::modify_graph_export_create_results: If
          *                      set to @a true, returns the graph topology in
          *                      the response as arrays.
          *                      <ul>
-         *                              <li> gpudb::create_graph_true
-         *                              <li> gpudb::create_graph_false
+         *                              <li> gpudb::modify_graph_true
+         *                              <li> gpudb::modify_graph_false
          *                      </ul>
-         *                      The default value is gpudb::create_graph_false.
+         *                      The default value is gpudb::modify_graph_false.
          *                              <li>
-         *                      gpudb::create_graph_enable_graph_draw: If set
+         *                      gpudb::modify_graph_enable_graph_draw: If set
          *                      to @a true, adds a 'EDGE_WKTLINE' column
          *                      identifier to the specified @a graph_table so
          *                      the graph can be viewed via WMS; for social and
@@ -191,11 +167,11 @@ namespace gpudb
          *                      layout algorithm so the graph can still be
          *                      viewed.
          *                      <ul>
-         *                              <li> gpudb::create_graph_true
-         *                              <li> gpudb::create_graph_false
+         *                              <li> gpudb::modify_graph_true
+         *                              <li> gpudb::modify_graph_false
          *                      </ul>
-         *                      The default value is gpudb::create_graph_false.
-         *                              <li> gpudb::create_graph_save_persist:
+         *                      The default value is gpudb::modify_graph_false.
+         *                              <li> gpudb::modify_graph_save_persist:
          *                      If set to @a true, the graph will be saved in
          *                      the persist directory (see the <a
          *                      href="../../config/index.html"
@@ -204,25 +180,12 @@ namespace gpudb
          *                      will be removed when the graph server is
          *                      shutdown.
          *                      <ul>
-         *                              <li> gpudb::create_graph_true
-         *                              <li> gpudb::create_graph_false
+         *                              <li> gpudb::modify_graph_true
+         *                              <li> gpudb::modify_graph_false
          *                      </ul>
-         *                      The default value is gpudb::create_graph_false.
-         *                              <li> gpudb::create_graph_sync_db: If
-         *                      set to @a true and @a save_persist is set to @a
-         *                      true, the graph will be fully reconstructed
-         *                      upon a database restart and be updated to align
-         *                      with any source table(s) updates made since the
-         *                      creation of the graph. If dynamic graph updates
-         *                      upon table inserts are desired, use @a
-         *                      add_table_monitor instead.
-         *                      <ul>
-         *                              <li> gpudb::create_graph_true
-         *                              <li> gpudb::create_graph_false
-         *                      </ul>
-         *                      The default value is gpudb::create_graph_false.
+         *                      The default value is gpudb::modify_graph_false.
          *                              <li>
-         *                      gpudb::create_graph_add_table_monitor: Adds a
+         *                      gpudb::modify_graph_add_table_monitor: Adds a
          *                      table monitor to every table used in the
          *                      creation of the graph; this table monitor will
          *                      trigger the graph to update dynamically upon
@@ -233,34 +196,33 @@ namespace gpudb
          *                      reattached. For more details on table monitors,
          *                      see /create/tablemonitor.
          *                      <ul>
-         *                              <li> gpudb::create_graph_true
-         *                              <li> gpudb::create_graph_false
+         *                              <li> gpudb::modify_graph_true
+         *                              <li> gpudb::modify_graph_false
          *                      </ul>
-         *                      The default value is gpudb::create_graph_false.
-         *                              <li> gpudb::create_graph_graph_table:
+         *                      The default value is gpudb::modify_graph_false.
+         *                              <li> gpudb::modify_graph_graph_table:
          *                      If specified, the created graph is also created
          *                      as a table with the given name and following
          *                      identifier columns: 'EDGE_ID', 'EDGE_NODE1_ID',
          *                      'EDGE_NODE2_ID'. If left blank, no table is
          *                      created.  The default value is ''.
          *                              <li>
-         *                      gpudb::create_graph_remove_label_only: When
+         *                      gpudb::modify_graph_remove_label_only: When
          *                      RESTRICTIONS on labeled entities requested, if
          *                      set to true this will NOT delete the entity but
          *                      only the label associated with the entity.
          *                      Otherwise (default), it'll delete the label AND
          *                      the entity.
          *                      <ul>
-         *                              <li> gpudb::create_graph_true
-         *                              <li> gpudb::create_graph_false
+         *                              <li> gpudb::modify_graph_true
+         *                              <li> gpudb::modify_graph_false
          *                      </ul>
-         *                      The default value is gpudb::create_graph_false.
+         *                      The default value is gpudb::modify_graph_false.
          *                      </ul>
          * 
          */
-        CreateGraphRequest(const std::string& graphName_, const bool directedGraph_, const std::vector<std::string>& nodes_, const std::vector<std::string>& edges_, const std::vector<std::string>& weights_, const std::vector<std::string>& restrictions_, const std::map<std::string, std::string>& options_):
+        ModifyGraphRequest(const std::string& graphName_, const std::vector<std::string>& nodes_, const std::vector<std::string>& edges_, const std::vector<std::string>& weights_, const std::vector<std::string>& restrictions_, const std::map<std::string, std::string>& options_):
             graphName( graphName_ ),
-            directedGraph( directedGraph_ ),
             nodes( nodes_ ),
             edges( edges_ ),
             weights( weights_ ),
@@ -270,7 +232,6 @@ namespace gpudb
         }
 
         std::string graphName;
-        bool directedGraph;
         std::vector<std::string> nodes;
         std::vector<std::string> edges;
         std::vector<std::string> weights;
@@ -281,12 +242,11 @@ namespace gpudb
 
 namespace avro
 {
-    template<> struct codec_traits<gpudb::CreateGraphRequest>
+    template<> struct codec_traits<gpudb::ModifyGraphRequest>
     {
-        static void encode(Encoder& e, const gpudb::CreateGraphRequest& v)
+        static void encode(Encoder& e, const gpudb::ModifyGraphRequest& v)
         {
             ::avro::encode(e, v.graphName);
-            ::avro::encode(e, v.directedGraph);
             ::avro::encode(e, v.nodes);
             ::avro::encode(e, v.edges);
             ::avro::encode(e, v.weights);
@@ -294,7 +254,7 @@ namespace avro
             ::avro::encode(e, v.options);
         }
 
-        static void decode(Decoder& d, gpudb::CreateGraphRequest& v)
+        static void decode(Decoder& d, gpudb::ModifyGraphRequest& v)
         {
             if (::avro::ResolvingDecoder *rd = dynamic_cast< ::avro::ResolvingDecoder*>(&d))
             {
@@ -309,26 +269,22 @@ namespace avro
                             break;
 
                         case 1:
-                            ::avro::decode(d, v.directedGraph);
-                            break;
-
-                        case 2:
                             ::avro::decode(d, v.nodes);
                             break;
 
-                        case 3:
+                        case 2:
                             ::avro::decode(d, v.edges);
                             break;
 
-                        case 4:
+                        case 3:
                             ::avro::decode(d, v.weights);
                             break;
 
-                        case 5:
+                        case 4:
                             ::avro::decode(d, v.restrictions);
                             break;
 
-                        case 6:
+                        case 5:
                             ::avro::decode(d, v.options);
                             break;
 
@@ -340,7 +296,6 @@ namespace avro
             else
             {
                 ::avro::decode(d, v.graphName);
-                ::avro::decode(d, v.directedGraph);
                 ::avro::decode(d, v.nodes);
                 ::avro::decode(d, v.edges);
                 ::avro::decode(d, v.weights);
@@ -356,10 +311,10 @@ namespace gpudb
 
     /**
      * A set of output parameters for {@link
-     * #createGraph(const CreateGraphRequest&) const}.
+     * #modifyGraph(const ModifyGraphRequest&) const}.
      * <p>
-     * Creates a new graph network using given nodes, edges, weights, and
-     * restrictions.
+     * Update an existing graph network using given nodes, edges, weights,
+     * restrictions, and options.
 
      * IMPORTANT: It's highly recommended that you review the <a
      * href="../../graph_solver/network_graph_solver.html"
@@ -369,14 +324,14 @@ namespace gpudb
      * href="../../graph_solver/examples.html" target="_top">graph examples</a>
      * before using this endpoint.
      */
-    struct CreateGraphResponse
+    struct ModifyGraphResponse
     {
 
         /**
-         * Constructs a CreateGraphResponse object with default parameter
+         * Constructs a ModifyGraphResponse object with default parameter
          * values.
          */
-        CreateGraphResponse() :
+        ModifyGraphResponse() :
             numNodes(int64_t()),
             numEdges(int64_t()),
             edgesIds(std::vector<int64_t>()),
@@ -393,9 +348,9 @@ namespace gpudb
 
 namespace avro
 {
-    template<> struct codec_traits<gpudb::CreateGraphResponse>
+    template<> struct codec_traits<gpudb::ModifyGraphResponse>
     {
-        static void encode(Encoder& e, const gpudb::CreateGraphResponse& v)
+        static void encode(Encoder& e, const gpudb::ModifyGraphResponse& v)
         {
             ::avro::encode(e, v.numNodes);
             ::avro::encode(e, v.numEdges);
@@ -403,7 +358,7 @@ namespace avro
             ::avro::encode(e, v.info);
         }
 
-        static void decode(Decoder& d, gpudb::CreateGraphResponse& v)
+        static void decode(Decoder& d, gpudb::ModifyGraphResponse& v)
         {
             if (::avro::ResolvingDecoder *rd = dynamic_cast< ::avro::ResolvingDecoder*>(&d))
             {

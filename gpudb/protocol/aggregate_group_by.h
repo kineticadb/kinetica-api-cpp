@@ -244,10 +244,16 @@ namespace gpudb
          *                      member.  The default value is ''.
          *                              <li>
          *                      gpudb::aggregate_group_by_materialize_on_gpu:
-         *                      If @a true then the columns of the groupby
-         *                      result table will be cached on the GPU. Must be
-         *                      used in combination with the @a result_table
-         *                      option.
+         *                      No longer used.  See <a
+         *                      href="../../rm/concepts.html"
+         *                      target="_top">Resource Management Concepts</a>
+         *                      for information about how resources are
+         *                      managed, <a href="../../rm/concepts.html"
+         *                      target="_top">Tier Strategy Concepts</a> for
+         *                      how resources are targeted for VRAM, and <a
+         *                      href="../../rm/usage.html#tier-strategies"
+         *                      target="_top">Tier Strategy Usage</a> for how
+         *                      to specify a table's priority in VRAM.
          *                      <ul>
          *                              <li> gpudb::aggregate_group_by_true
          *                              <li> gpudb::aggregate_group_by_false
@@ -445,10 +451,16 @@ namespace gpudb
          *                      member.  The default value is ''.
          *                              <li>
          *                      gpudb::aggregate_group_by_materialize_on_gpu:
-         *                      If @a true then the columns of the groupby
-         *                      result table will be cached on the GPU. Must be
-         *                      used in combination with the @a result_table
-         *                      option.
+         *                      No longer used.  See <a
+         *                      href="../../rm/concepts.html"
+         *                      target="_top">Resource Management Concepts</a>
+         *                      for information about how resources are
+         *                      managed, <a href="../../rm/concepts.html"
+         *                      target="_top">Tier Strategy Concepts</a> for
+         *                      how resources are targeted for VRAM, and <a
+         *                      href="../../rm/usage.html#tier-strategies"
+         *                      target="_top">Tier Strategy Usage</a> for how
+         *                      to specify a table's priority in VRAM.
          *                      <ul>
          *                              <li> gpudb::aggregate_group_by_true
          *                              <li> gpudb::aggregate_group_by_false

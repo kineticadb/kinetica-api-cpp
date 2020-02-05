@@ -63,6 +63,12 @@ namespace gpudb
          *                        in the collection.
          * @param[in] filterExpression_  Reserved for future use.
          * @param[in] options_  Optional parameters.
+         *                      <ul>
+         *                              <li>
+         *                      gpudb::grant_permission_table_columns: Apply
+         *                      security to these columns, comma-separated.
+         *                      The default value is ''.
+         *                      </ul>
          * 
          */
         GrantPermissionTableRequest(const std::string& name_, const std::string& permission_, const std::string& tableName_, const std::string& filterExpression_, const std::map<std::string, std::string>& options_):

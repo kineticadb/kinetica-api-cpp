@@ -49,6 +49,11 @@ namespace gpudb {
                                                      HEADER_CONTENT_LENGTH,
                                                      HEADER_HA_SYNC_MODE
     };
+
+    const std::string GPUdb::HA_SYNCHRONICITY_MODE_VALUES[] = { "none",
+                                                                "sync",
+                                                                "async"
+    };
     
     std::string base64Encode(const std::string& value)
     {
@@ -103,6 +108,7 @@ namespace gpudb {
         m_executor( options.getExecutor() ),
         m_httpHeaders( options.getHttpHeaders() ),
         m_timeout( options.getTimeout() ),
+        m_haSyncMode( HASynchronicityMode::DEFAULT ),
         m_options( options )
     {
         // Head node URLs
@@ -128,6 +134,7 @@ namespace gpudb {
         m_executor(options.getExecutor()),
         m_httpHeaders(options.getHttpHeaders()),
         m_timeout(options.getTimeout()),
+        m_haSyncMode( HASynchronicityMode::DEFAULT ),
         m_options( options )
     {
         // Split on commas, if any
@@ -173,6 +180,7 @@ namespace gpudb {
         m_executor(options.getExecutor()),
         m_httpHeaders(options.getHttpHeaders()),
         m_timeout(options.getTimeout()),
+        m_haSyncMode( HASynchronicityMode::DEFAULT ),
         m_options( options )
     {
         if (urls.empty())
@@ -200,6 +208,7 @@ namespace gpudb {
         m_executor(options.getExecutor()),
         m_httpHeaders(options.getHttpHeaders()),
         m_timeout(options.getTimeout()),
+        m_haSyncMode( HASynchronicityMode::DEFAULT ),
         m_options( options )
     {
         if (urls.empty())
@@ -247,6 +256,9 @@ namespace gpudb {
         // Randomly shuffle the URL list handler (not the list of URLs
         // itself, but another list which keeps the former's indices)
         randomizeURLs();
+
+        // Ensure that the default synchronicity mode is set in the headers
+        setHASyncMode( m_haSyncMode );
     }   // end init
 
 
@@ -478,6 +490,15 @@ namespace gpudb {
     }   // end randomizeURLs
 
 
+    /**
+     * Convert a given high availability synchronicity override mode enumeration
+     * to its string value.
+     */
+    const std::string& GPUdb::getHASynchronicityModeValue( HASynchronicityMode syncMode ) const
+    {
+        return HA_SYNCHRONICITY_MODE_VALUES[ syncMode ];
+    }
+
 
     void GPUdb::addKnownType(const std::string& typeId, const avro::DecoderPtr& decoder)
     {
@@ -585,6 +606,11 @@ namespace gpudb {
         return m_threadCount;
     }
 
+    GPUdb::HASynchronicityMode GPUdb::getHASyncMode() const
+    {
+        return m_haSyncMode;
+    }
+
     size_t GPUdb::getTimeout() const
     {
         return m_timeout;
@@ -665,7 +691,19 @@ namespace gpudb {
 
 
 
-    
+    /**
+     * Sets the high-availability synchronization mode which will override
+     * the default mode.
+     */
+    void GPUdb::setHASyncMode( GPUdb::HASynchronicityMode mode )
+    {
+        m_haSyncMode = mode;
+
+        // Add the sync mode to the list of headers (overriding it if extant)
+        m_httpHeaders[ HEADER_HA_SYNC_MODE ] = getHASynchronicityModeValue( m_haSyncMode );
+    }
+
+
     /**
      * Adds an HTTP header to the map of additional HTTP headers to send to
      * GPUdb with each request. If the header is already in the map, its

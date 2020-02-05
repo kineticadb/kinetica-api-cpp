@@ -2,6 +2,17 @@
 
 ## Version 7.0
 
+### Version 7.0.11.0 - 2019-11-23
+
+#### Added
+-   Support for overriding the high availability synchronicity mode for
+    endpoints; set the mode (enum HASynchronicityMode) with the setter
+    method setHASyncMode():
+    - DEFAULT
+    - SYNCHRONOUS
+    - ASYNCRHONOUS
+
+
 ### Version 7.0.9.0 - 2019-10-28
 
 #### Added

@@ -6,7 +6,7 @@
 
 
 // GPUdb Version
-const std::string GPUdb::API_VERSION( "7.0.10.0" );
+const std::string GPUdb::API_VERSION( "7.0.11.0" );
 
 
 
@@ -577,6 +577,13 @@ AdminRebalanceResponse& GPUdb::adminRebalance( const AdminRebalanceRequest& requ
  *                 but allow for better interleaving between the rebalance and
  *                 other queries. Allowed values are 1 through 10.  The default
  *                 value is '1'.
+ *                         <li> gpudb::admin_rebalance_compact_after_rebalance:
+ *                 Perform compaction of deleted records once the rebalance
+ *                 completes, to reclaim memory and disk space. Default is
+ *                 true.  The default value is 'true'.
+ *                         <li> gpudb::admin_rebalance_compact_only: Only
+ *                 perform compaction, do not rebalance. Default is false.  The
+ *                 default value is 'false'.
  *                 </ul>
  * 
  * @return Response object containing the result of the operation.
@@ -645,6 +652,13 @@ AdminRebalanceResponse GPUdb::adminRebalance( const std::map<std::string, std::s
  *                 but allow for better interleaving between the rebalance and
  *                 other queries. Allowed values are 1 through 10.  The default
  *                 value is '1'.
+ *                         <li> gpudb::admin_rebalance_compact_after_rebalance:
+ *                 Perform compaction of deleted records once the rebalance
+ *                 completes, to reclaim memory and disk space. Default is
+ *                 true.  The default value is 'true'.
+ *                         <li> gpudb::admin_rebalance_compact_only: Only
+ *                 perform compaction, do not rebalance. Default is false.  The
+ *                 default value is 'false'.
  *                 </ul>
  * @param[out] response_  Response object containing the results of the
  *                        operation.
@@ -2121,9 +2135,14 @@ AggregateGroupByResponse& GPUdb::aggregateGroupBy( const AggregateGroupByRequest
  *                 of which the result table will be a member.  The default
  *                 value is ''.
  *                         <li> gpudb::aggregate_group_by_materialize_on_gpu:
- *                 If @a true then the columns of the groupby result table will
- *                 be cached on the GPU. Must be used in combination with the
- *                 @a result_table option.
+ *                 No longer used.  See <a href="../../rm/concepts.html"
+ *                 target="_top">Resource Management Concepts</a> for
+ *                 information about how resources are managed, <a
+ *                 href="../../rm/concepts.html" target="_top">Tier Strategy
+ *                 Concepts</a> for how resources are targeted for VRAM, and <a
+ *                 href="../../rm/usage.html#tier-strategies"
+ *                 target="_top">Tier Strategy Usage</a> for how to specify a
+ *                 table's priority in VRAM.
  *                 <ul>
  *                         <li> gpudb::aggregate_group_by_true
  *                         <li> gpudb::aggregate_group_by_false
@@ -2349,9 +2368,14 @@ AggregateGroupByResponse GPUdb::aggregateGroupBy( const std::string& tableName,
  *                 of which the result table will be a member.  The default
  *                 value is ''.
  *                         <li> gpudb::aggregate_group_by_materialize_on_gpu:
- *                 If @a true then the columns of the groupby result table will
- *                 be cached on the GPU. Must be used in combination with the
- *                 @a result_table option.
+ *                 No longer used.  See <a href="../../rm/concepts.html"
+ *                 target="_top">Resource Management Concepts</a> for
+ *                 information about how resources are managed, <a
+ *                 href="../../rm/concepts.html" target="_top">Tier Strategy
+ *                 Concepts</a> for how resources are targeted for VRAM, and <a
+ *                 href="../../rm/usage.html#tier-strategies"
+ *                 target="_top">Tier Strategy Usage</a> for how to specify a
+ *                 table's priority in VRAM.
  *                 <ul>
  *                         <li> gpudb::aggregate_group_by_true
  *                         <li> gpudb::aggregate_group_by_false
@@ -4316,8 +4340,15 @@ AggregateUnpivotResponse& GPUdb::aggregateUnpivot( const AggregateUnpivotRequest
  *                 table specified in @a result_table.
  *                         <li> gpudb::aggregate_unpivot_view_id: view this
  *                 result table is part of.  The default value is ''.
- *                         <li> gpudb::aggregate_unpivot_materialize_on_gpu: If
- *                 @a true then the output columns will be cached on the GPU.
+ *                         <li> gpudb::aggregate_unpivot_materialize_on_gpu: No
+ *                 longer used.  See <a href="../../rm/concepts.html"
+ *                 target="_top">Resource Management Concepts</a> for
+ *                 information about how resources are managed, <a
+ *                 href="../../rm/concepts.html" target="_top">Tier Strategy
+ *                 Concepts</a> for how resources are targeted for VRAM, and <a
+ *                 href="../../rm/usage.html#tier-strategies"
+ *                 target="_top">Tier Strategy Usage</a> for how to specify a
+ *                 table's priority in VRAM.
  *                 <ul>
  *                         <li> gpudb::aggregate_unpivot_true
  *                         <li> gpudb::aggregate_unpivot_false
@@ -4444,8 +4475,15 @@ AggregateUnpivotResponse GPUdb::aggregateUnpivot( const std::string& tableName,
  *                 table specified in @a result_table.
  *                         <li> gpudb::aggregate_unpivot_view_id: view this
  *                 result table is part of.  The default value is ''.
- *                         <li> gpudb::aggregate_unpivot_materialize_on_gpu: If
- *                 @a true then the output columns will be cached on the GPU.
+ *                         <li> gpudb::aggregate_unpivot_materialize_on_gpu: No
+ *                 longer used.  See <a href="../../rm/concepts.html"
+ *                 target="_top">Resource Management Concepts</a> for
+ *                 information about how resources are managed, <a
+ *                 href="../../rm/concepts.html" target="_top">Tier Strategy
+ *                 Concepts</a> for how resources are targeted for VRAM, and <a
+ *                 href="../../rm/usage.html#tier-strategies"
+ *                 target="_top">Tier Strategy Usage</a> for how to specify a
+ *                 table's priority in VRAM.
  *                 <ul>
  *                         <li> gpudb::aggregate_unpivot_true
  *                         <li> gpudb::aggregate_unpivot_false
@@ -4930,6 +4968,11 @@ AlterSystemPropertiesResponse& GPUdb::alterSystemProperties( const AlterSystemPr
  *                            integer value that indicates max chunk size to
  *                            exec on host
  *                                    <li>
+ *                            gpudb::alter_system_properties_external_files_directory:
+ *                            Sets the root directory path where external table
+ *                            data files are accessed from.  Path must exist on
+ *                            the head node
+ *                                    <li>
  *                            gpudb::alter_system_properties_flush_to_disk:
  *                            Flushes any changes to any tables to the
  *                            persistent store.  These changes include updates
@@ -5014,6 +5057,14 @@ AlterSystemPropertiesResponse& GPUdb::alterSystemProperties( const AlterSystemPr
  *                            compress vector on set_compression (instead of
  *                            waiting for background thread).  The default
  *                            value is 'false'.
+ *                                    <li>
+ *                            gpudb::alter_system_properties_enable_overlapped_equi_join:
+ *                            Enable overlapped-equi-join filter.  The default
+ *                            value is 'true'.
+ *                                    <li>
+ *                            gpudb::alter_system_properties_enable_compound_equi_join:
+ *                            Enable compound-equi-join filter plan type.  The
+ *                            default value is 'false'.
  *                            </ul>
  * @param options  Optional parameters.
  * 
@@ -5091,6 +5142,11 @@ AlterSystemPropertiesResponse GPUdb::alterSystemProperties( const std::map<std::
  *                            integer value that indicates max chunk size to
  *                            exec on host
  *                                    <li>
+ *                            gpudb::alter_system_properties_external_files_directory:
+ *                            Sets the root directory path where external table
+ *                            data files are accessed from.  Path must exist on
+ *                            the head node
+ *                                    <li>
  *                            gpudb::alter_system_properties_flush_to_disk:
  *                            Flushes any changes to any tables to the
  *                            persistent store.  These changes include updates
@@ -5175,6 +5231,14 @@ AlterSystemPropertiesResponse GPUdb::alterSystemProperties( const std::map<std::
  *                            compress vector on set_compression (instead of
  *                            waiting for background thread).  The default
  *                            value is 'false'.
+ *                                    <li>
+ *                            gpudb::alter_system_properties_enable_overlapped_equi_join:
+ *                            Enable overlapped-equi-join filter.  The default
+ *                            value is 'true'.
+ *                                    <li>
+ *                            gpudb::alter_system_properties_enable_compound_equi_join:
+ *                            Enable compound-equi-join filter plan type.  The
+ *                            default value is 'false'.
  *                            </ul>
  * @param options  Optional parameters.
  * @param[out] response_  Response object containing the results of the
@@ -5401,15 +5465,21 @@ AlterTableResponse& GPUdb::alterTable( const AlterTableRequest& request_,
  *                <ul>
  *                        <li> gpudb::alter_table_allow_homogeneous_tables: No
  *                longer supported; action will be ignored.
- *                        <li> gpudb::alter_table_create_index: Creates an <a
- *                href="../../concepts/indexes.html#column-index"
- *                target="_top">index</a> on the column name specified in @a
- *                value. If this column is already indexed, an error will be
- *                returned.
- *                        <li> gpudb::alter_table_delete_index: Deletes an
- *                existing <a href="../../concepts/indexes.html#column-index"
- *                target="_top">index</a> on the column name specified in @a
- *                value. If this column does not have indexing turned on, an
+ *                        <li> gpudb::alter_table_create_index: Creates either
+ *                a <a href="../../concepts/indexes.html#column-index"
+ *                target="_top">column (attribute) index</a> or <a
+ *                href="../../concepts/indexes.html#chunk-skip-index"
+ *                target="_top">chunk skip index</a>, depending on the
+ *                specified @a index_type, on the column name specified in @a
+ *                value. If this column already has the specified index, an
+ *                error will be returned.
+ *                        <li> gpudb::alter_table_delete_index: Deletes either
+ *                a <a href="../../concepts/indexes.html#column-index"
+ *                target="_top">column (attribute) index</a> or <a
+ *                href="../../concepts/indexes.html#chunk-skip-index"
+ *                target="_top">chunk skip index</a>, depending on the
+ *                specified @a index_type, on the column name specified in @a
+ *                value. If this column does not have the specified index, an
  *                error will be returned.
  *                        <li> gpudb::alter_table_move_to_collection: Moves a
  *                table or view into a collection named @a value.  If the
@@ -5602,12 +5672,15 @@ AlterTableResponse& GPUdb::alterTable( const AlterTableRequest& request_,
  *                 target="_top">tier strategy examples</a> for examples.  This
  *                 option will be ignored if @a value is also specified.
  *                         <li> gpudb::alter_table_index_type: Type of index to
- *                 create.
+ *                 create, when @a action is @a create_index, or to delete,
+ *                 when @a action is @a delete_index.
  *                 <ul>
- *                         <li> gpudb::alter_table_column: Standard column
- *                 index.
- *                         <li> gpudb::alter_table_chunk_skip: Chunk skip
- *                 index.
+ *                         <li> gpudb::alter_table_column: Create or delete a
+ *                 <a href="../../concepts/indexes.html#column-index"
+ *                 target="_top">column (attribute) index</a>.
+ *                         <li> gpudb::alter_table_chunk_skip: Create or delete
+ *                 a <a href="../../concepts/indexes.html#chunk-skip-index"
+ *                 target="_top">chunk skip index</a>.
  *                 </ul>
  *                 The default value is gpudb::alter_table_column.
  *                 </ul>
@@ -5693,15 +5766,21 @@ AlterTableResponse GPUdb::alterTable( const std::string& tableName,
  *                <ul>
  *                        <li> gpudb::alter_table_allow_homogeneous_tables: No
  *                longer supported; action will be ignored.
- *                        <li> gpudb::alter_table_create_index: Creates an <a
- *                href="../../concepts/indexes.html#column-index"
- *                target="_top">index</a> on the column name specified in @a
- *                value. If this column is already indexed, an error will be
- *                returned.
- *                        <li> gpudb::alter_table_delete_index: Deletes an
- *                existing <a href="../../concepts/indexes.html#column-index"
- *                target="_top">index</a> on the column name specified in @a
- *                value. If this column does not have indexing turned on, an
+ *                        <li> gpudb::alter_table_create_index: Creates either
+ *                a <a href="../../concepts/indexes.html#column-index"
+ *                target="_top">column (attribute) index</a> or <a
+ *                href="../../concepts/indexes.html#chunk-skip-index"
+ *                target="_top">chunk skip index</a>, depending on the
+ *                specified @a index_type, on the column name specified in @a
+ *                value. If this column already has the specified index, an
+ *                error will be returned.
+ *                        <li> gpudb::alter_table_delete_index: Deletes either
+ *                a <a href="../../concepts/indexes.html#column-index"
+ *                target="_top">column (attribute) index</a> or <a
+ *                href="../../concepts/indexes.html#chunk-skip-index"
+ *                target="_top">chunk skip index</a>, depending on the
+ *                specified @a index_type, on the column name specified in @a
+ *                value. If this column does not have the specified index, an
  *                error will be returned.
  *                        <li> gpudb::alter_table_move_to_collection: Moves a
  *                table or view into a collection named @a value.  If the
@@ -5894,12 +5973,15 @@ AlterTableResponse GPUdb::alterTable( const std::string& tableName,
  *                 target="_top">tier strategy examples</a> for examples.  This
  *                 option will be ignored if @a value is also specified.
  *                         <li> gpudb::alter_table_index_type: Type of index to
- *                 create.
+ *                 create, when @a action is @a create_index, or to delete,
+ *                 when @a action is @a delete_index.
  *                 <ul>
- *                         <li> gpudb::alter_table_column: Standard column
- *                 index.
- *                         <li> gpudb::alter_table_chunk_skip: Chunk skip
- *                 index.
+ *                         <li> gpudb::alter_table_column: Create or delete a
+ *                 <a href="../../concepts/indexes.html#column-index"
+ *                 target="_top">column (attribute) index</a>.
+ *                         <li> gpudb::alter_table_chunk_skip: Create or delete
+ *                 a <a href="../../concepts/indexes.html#chunk-skip-index"
+ *                 target="_top">chunk skip index</a>.
  *                 </ul>
  *                 The default value is gpudb::alter_table_column.
  *                 </ul>
@@ -7212,6 +7294,254 @@ CollectStatisticsResponse& GPUdb::collectStatistics( const std::string& tableNam
 
 
 /**
+ * @private
+ * 
+ * @param[in] request_  Request object containing the parameters for the
+ *                      operation.
+ * 
+ * @return Response object containing the result of the operation.
+ * 
+ */
+
+CreateExternalTableResponse GPUdb::createExternalTable( const CreateExternalTableRequest& request_ ) const
+{
+    CreateExternalTableResponse actualResponse_;
+    submitRequest("/create/externaltable", request_, actualResponse_, false);
+    return actualResponse_;
+}
+
+
+/**
+ * @private
+ * 
+ * @param[in] request_  Request object containing the parameters for the
+ *                      operation.
+ * @param[out] response_  Response object containing the results of the
+ *                        operation.
+ * 
+ * @return Response object containing the result of the operation (initially
+ *         passed in by reference).
+ * 
+ */
+
+CreateExternalTableResponse& GPUdb::createExternalTable( const CreateExternalTableRequest& request_,
+                                                         CreateExternalTableResponse& response_ ) const
+{
+    submitRequest("/create/externaltable", request_, response_, false);
+    return response_;
+}
+
+
+/**
+ * @private
+ * 
+ * @param tableName
+ * @param filepaths
+ * @param createTableOptions
+ *                            <ul>
+ *                                    <li>
+ *                            gpudb::create_external_table_type_id:   The
+ *                            default value is ''.
+ *                            </ul>
+ * @param options
+ *                 <ul>
+ *                         <li> gpudb::create_external_table_table_type:
+ *                 <ul>
+ *                         <li> gpudb::create_external_table_materialized
+ *                         <li> gpudb::create_external_table_logical
+ *                         <li> gpudb::create_external_table_logical_tmp
+ *                 </ul>
+ *                 The default value is
+ *                 gpudb::create_external_table_materialized.
+ *                         <li> gpudb::create_external_table_file_type:
+ *                 <ul>
+ *                         <li> gpudb::create_external_table_delimited_text
+ *                         <li> gpudb::create_external_table_parquet
+ *                 </ul>
+ *                 The default value is
+ *                 gpudb::create_external_table_delimited_text.
+ *                         <li> gpudb::create_external_table_loading_mode:
+ *                 <ul>
+ *                         <li> gpudb::create_external_table_head
+ *                         <li> gpudb::create_external_table_distributed_shared
+ *                         <li> gpudb::create_external_table_distributed_local
+ *                 </ul>
+ *                 The default value is gpudb::create_external_table_head.
+ *                         <li> gpudb::create_external_table_error_handling:
+ *                 <ul>
+ *                         <li> gpudb::create_external_table_permissive
+ *                         <li> gpudb::create_external_table_ignore_bad_records
+ *                         <li> gpudb::create_external_table_abort
+ *                 </ul>
+ *                 The default value is
+ *                 gpudb::create_external_table_Permissive.
+ *                         <li> gpudb::create_external_table_batch_size
+ *                         <li> gpudb::create_external_table_refresh_method:
+ *                 <ul>
+ *                         <li> gpudb::create_external_table_manual
+ *                         <li> gpudb::create_external_table_on_start
+ *                 </ul>
+ *                 The default value is gpudb::create_external_table_manual.
+ *                         <li> gpudb::create_external_table_column_formats
+ *                         <li>
+ *                 gpudb::create_external_table_default_column_formats
+ *                         <li> gpudb::create_external_table_dry_run:
+ *                 <ul>
+ *                         <li> gpudb::create_external_table_false
+ *                         <li> gpudb::create_external_table_true
+ *                 </ul>
+ *                 The default value is gpudb::create_external_table_false.
+ *                         <li> gpudb::create_external_table_text_has_header:
+ *                 <ul>
+ *                         <li> gpudb::create_external_table_true
+ *                         <li> gpudb::create_external_table_false
+ *                 </ul>
+ *                 The default value is gpudb::create_external_table_true.
+ *                         <li> gpudb::create_external_table_text_delimiter:
+ *                 The default value is ','.
+ *                         <li>
+ *                 gpudb::create_external_table_text_header_property_delimiter:
+ *                 The default value is '|'.
+ *                         <li> gpudb::create_external_table_columns_to_load
+ *                         <li>
+ *                 gpudb::create_external_table_text_comment_string:   The
+ *                 default value is '#'.
+ *                         <li> gpudb::create_external_table_text_null_string:
+ *                 The default value is ''.
+ *                         <li>
+ *                 gpudb::create_external_table_text_quote_character:   The
+ *                 default value is '"'.
+ *                         <li>
+ *                 gpudb::create_external_table_text_escape_character
+ *                 </ul>
+ * 
+ * @return Response object containing the result of the operation.
+ * 
+ */
+
+CreateExternalTableResponse GPUdb::createExternalTable( const std::string& tableName,
+                                                        const std::vector<std::string>& filepaths,
+                                                        const std::map<std::string, std::string>& createTableOptions,
+                                                        const std::map<std::string, std::string>& options ) const
+{
+    CreateExternalTableRequest actualRequest_;
+    actualRequest_.tableName = tableName;
+    actualRequest_.filepaths = filepaths;
+    actualRequest_.createTableOptions = createTableOptions;
+    actualRequest_.options = options;
+    CreateExternalTableResponse actualResponse_;
+    submitRequest("/create/externaltable", actualRequest_, actualResponse_, false);
+    return actualResponse_;
+}
+
+
+/**
+ * @private
+ * 
+ * @param tableName
+ * @param filepaths
+ * @param createTableOptions
+ *                            <ul>
+ *                                    <li>
+ *                            gpudb::create_external_table_type_id:   The
+ *                            default value is ''.
+ *                            </ul>
+ * @param options
+ *                 <ul>
+ *                         <li> gpudb::create_external_table_table_type:
+ *                 <ul>
+ *                         <li> gpudb::create_external_table_materialized
+ *                         <li> gpudb::create_external_table_logical
+ *                         <li> gpudb::create_external_table_logical_tmp
+ *                 </ul>
+ *                 The default value is
+ *                 gpudb::create_external_table_materialized.
+ *                         <li> gpudb::create_external_table_file_type:
+ *                 <ul>
+ *                         <li> gpudb::create_external_table_delimited_text
+ *                         <li> gpudb::create_external_table_parquet
+ *                 </ul>
+ *                 The default value is
+ *                 gpudb::create_external_table_delimited_text.
+ *                         <li> gpudb::create_external_table_loading_mode:
+ *                 <ul>
+ *                         <li> gpudb::create_external_table_head
+ *                         <li> gpudb::create_external_table_distributed_shared
+ *                         <li> gpudb::create_external_table_distributed_local
+ *                 </ul>
+ *                 The default value is gpudb::create_external_table_head.
+ *                         <li> gpudb::create_external_table_error_handling:
+ *                 <ul>
+ *                         <li> gpudb::create_external_table_permissive
+ *                         <li> gpudb::create_external_table_ignore_bad_records
+ *                         <li> gpudb::create_external_table_abort
+ *                 </ul>
+ *                 The default value is
+ *                 gpudb::create_external_table_Permissive.
+ *                         <li> gpudb::create_external_table_batch_size
+ *                         <li> gpudb::create_external_table_refresh_method:
+ *                 <ul>
+ *                         <li> gpudb::create_external_table_manual
+ *                         <li> gpudb::create_external_table_on_start
+ *                 </ul>
+ *                 The default value is gpudb::create_external_table_manual.
+ *                         <li> gpudb::create_external_table_column_formats
+ *                         <li>
+ *                 gpudb::create_external_table_default_column_formats
+ *                         <li> gpudb::create_external_table_dry_run:
+ *                 <ul>
+ *                         <li> gpudb::create_external_table_false
+ *                         <li> gpudb::create_external_table_true
+ *                 </ul>
+ *                 The default value is gpudb::create_external_table_false.
+ *                         <li> gpudb::create_external_table_text_has_header:
+ *                 <ul>
+ *                         <li> gpudb::create_external_table_true
+ *                         <li> gpudb::create_external_table_false
+ *                 </ul>
+ *                 The default value is gpudb::create_external_table_true.
+ *                         <li> gpudb::create_external_table_text_delimiter:
+ *                 The default value is ','.
+ *                         <li>
+ *                 gpudb::create_external_table_text_header_property_delimiter:
+ *                 The default value is '|'.
+ *                         <li> gpudb::create_external_table_columns_to_load
+ *                         <li>
+ *                 gpudb::create_external_table_text_comment_string:   The
+ *                 default value is '#'.
+ *                         <li> gpudb::create_external_table_text_null_string:
+ *                 The default value is ''.
+ *                         <li>
+ *                 gpudb::create_external_table_text_quote_character:   The
+ *                 default value is '"'.
+ *                         <li>
+ *                 gpudb::create_external_table_text_escape_character
+ *                 </ul>
+ * @param[out] response_  Response object containing the results of the
+ *                        operation.
+ * 
+ * @return Response object containing the result of the operation (initially
+ *         passed in by reference).
+ * 
+ */
+
+CreateExternalTableResponse& GPUdb::createExternalTable( const std::string& tableName,
+                                                         const std::vector<std::string>& filepaths,
+                                                         const std::map<std::string, std::string>& createTableOptions,
+                                                         const std::map<std::string, std::string>& options,
+                                                         CreateExternalTableResponse& response_ ) const
+{
+    CreateExternalTableRequest actualRequest_;
+    actualRequest_.tableName = tableName;
+    actualRequest_.filepaths = filepaths;
+    actualRequest_.createTableOptions = createTableOptions;
+    actualRequest_.options = options;
+    submitRequest("/create/externaltable", actualRequest_, response_, false);
+    return response_;
+}
+
+
+/**
  * Creates a new graph network using given nodes, edges, weights, and
  * restrictions.
 
@@ -7372,9 +7702,10 @@ CreateGraphResponse& GPUdb::createGraph( const CreateGraphRequest& request_,
  *                         <li> gpudb::create_graph_false
  *                 </ul>
  *                 The default value is gpudb::create_graph_false.
- *                         <li> gpudb::create_graph_modify: If set to @a true
- *                 and @a true and if the graph (using @a graphName) already
- *                 exists, the graph is updated with these components.
+ *                         <li> gpudb::create_graph_modify: If set to @a true,
+ *                 @a recreate is set to @a true, and the graph (specified
+ *                 using @a graphName) already exists, the graph is updated
+ *                 with the given components.
  *                 <ul>
  *                         <li> gpudb::create_graph_true
  *                         <li> gpudb::create_graph_false
@@ -7434,12 +7765,21 @@ CreateGraphResponse& GPUdb::createGraph( const CreateGraphRequest& request_,
  *                         <li> gpudb::create_graph_false
  *                 </ul>
  *                 The default value is gpudb::create_graph_false.
- *                         <li> gpudb::create_graph_graph_table: If the @a
- *                 graph_table name is NOT left blank, the created graph is
- *                 also created as a table with the given name and following
- *                 identifier columns: 'EDGE_ID', 'EDGE_NODE1_ID',
- *                 'EDGE_NODE2_ID'. If left blank, no table is created.  The
- *                 default value is ''.
+ *                         <li> gpudb::create_graph_graph_table: If specified,
+ *                 the created graph is also created as a table with the given
+ *                 name and following identifier columns: 'EDGE_ID',
+ *                 'EDGE_NODE1_ID', 'EDGE_NODE2_ID'. If left blank, no table is
+ *                 created.  The default value is ''.
+ *                         <li> gpudb::create_graph_remove_label_only: When
+ *                 RESTRICTIONS on labeled entities requested, if set to true
+ *                 this will NOT delete the entity but only the label
+ *                 associated with the entity. Otherwise (default), it'll
+ *                 delete the label AND the entity.
+ *                 <ul>
+ *                         <li> gpudb::create_graph_true
+ *                         <li> gpudb::create_graph_false
+ *                 </ul>
+ *                 The default value is gpudb::create_graph_false.
  *                 </ul>
  * 
  * @return Response object containing the result of the operation.
@@ -7574,9 +7914,10 @@ CreateGraphResponse GPUdb::createGraph( const std::string& graphName,
  *                         <li> gpudb::create_graph_false
  *                 </ul>
  *                 The default value is gpudb::create_graph_false.
- *                         <li> gpudb::create_graph_modify: If set to @a true
- *                 and @a true and if the graph (using @a graphName) already
- *                 exists, the graph is updated with these components.
+ *                         <li> gpudb::create_graph_modify: If set to @a true,
+ *                 @a recreate is set to @a true, and the graph (specified
+ *                 using @a graphName) already exists, the graph is updated
+ *                 with the given components.
  *                 <ul>
  *                         <li> gpudb::create_graph_true
  *                         <li> gpudb::create_graph_false
@@ -7636,12 +7977,21 @@ CreateGraphResponse GPUdb::createGraph( const std::string& graphName,
  *                         <li> gpudb::create_graph_false
  *                 </ul>
  *                 The default value is gpudb::create_graph_false.
- *                         <li> gpudb::create_graph_graph_table: If the @a
- *                 graph_table name is NOT left blank, the created graph is
- *                 also created as a table with the given name and following
- *                 identifier columns: 'EDGE_ID', 'EDGE_NODE1_ID',
- *                 'EDGE_NODE2_ID'. If left blank, no table is created.  The
- *                 default value is ''.
+ *                         <li> gpudb::create_graph_graph_table: If specified,
+ *                 the created graph is also created as a table with the given
+ *                 name and following identifier columns: 'EDGE_ID',
+ *                 'EDGE_NODE1_ID', 'EDGE_NODE2_ID'. If left blank, no table is
+ *                 created.  The default value is ''.
+ *                         <li> gpudb::create_graph_remove_label_only: When
+ *                 RESTRICTIONS on labeled entities requested, if set to true
+ *                 this will NOT delete the entity but only the label
+ *                 associated with the entity. Otherwise (default), it'll
+ *                 delete the label AND the entity.
+ *                 <ul>
+ *                         <li> gpudb::create_graph_true
+ *                         <li> gpudb::create_graph_false
+ *                 </ul>
+ *                 The default value is gpudb::create_graph_false.
  *                 </ul>
  * @param[out] response_  Response object containing the results of the
  *                        operation.
@@ -8618,9 +8968,15 @@ CreateProjectionResponse& GPUdb::createProjection( const CreateProjectionRequest
  *                 present in @a columnNames.  If any alias is given for any
  *                 column name, the alias must be used, rather than the
  *                 original column name.  The default value is ''.
- *                         <li> gpudb::create_projection_materialize_on_gpu: If
- *                 @a true then the columns of the projection will be cached on
- *                 the GPU.
+ *                         <li> gpudb::create_projection_materialize_on_gpu: No
+ *                 longer used.  See <a href="../../rm/concepts.html"
+ *                 target="_top">Resource Management Concepts</a> for
+ *                 information about how resources are managed, <a
+ *                 href="../../rm/concepts.html" target="_top">Tier Strategy
+ *                 Concepts</a> for how resources are targeted for VRAM, and <a
+ *                 href="../../rm/usage.html#tier-strategies"
+ *                 target="_top">Tier Strategy Usage</a> for how to specify a
+ *                 table's priority in VRAM.
  *                 <ul>
  *                         <li> gpudb::create_projection_true
  *                         <li> gpudb::create_projection_false
@@ -8767,9 +9123,15 @@ CreateProjectionResponse GPUdb::createProjection( const std::string& tableName,
  *                 present in @a columnNames.  If any alias is given for any
  *                 column name, the alias must be used, rather than the
  *                 original column name.  The default value is ''.
- *                         <li> gpudb::create_projection_materialize_on_gpu: If
- *                 @a true then the columns of the projection will be cached on
- *                 the GPU.
+ *                         <li> gpudb::create_projection_materialize_on_gpu: No
+ *                 longer used.  See <a href="../../rm/concepts.html"
+ *                 target="_top">Resource Management Concepts</a> for
+ *                 information about how resources are managed, <a
+ *                 href="../../rm/concepts.html" target="_top">Tier Strategy
+ *                 Concepts</a> for how resources are targeted for VRAM, and <a
+ *                 href="../../rm/usage.html#tier-strategies"
+ *                 target="_top">Tier Strategy Usage</a> for how to specify a
+ *                 table's priority in VRAM.
  *                 <ul>
  *                         <li> gpudb::create_projection_true
  *                         <li> gpudb::create_projection_false
@@ -10825,9 +11187,15 @@ CreateUnionResponse& GPUdb::createUnion( const CreateUnionRequest& request_,
  *                 collection provided is non-existent, the collection will be
  *                 automatically created. If empty, the output table will be a
  *                 top-level table.  The default value is ''.
- *                         <li> gpudb::create_union_materialize_on_gpu: If @a
- *                 true, then the columns of the output table will be cached on
- *                 the GPU.
+ *                         <li> gpudb::create_union_materialize_on_gpu: No
+ *                 longer used.  See <a href="../../rm/concepts.html"
+ *                 target="_top">Resource Management Concepts</a> for
+ *                 information about how resources are managed, <a
+ *                 href="../../rm/concepts.html" target="_top">Tier Strategy
+ *                 Concepts</a> for how resources are targeted for VRAM, and <a
+ *                 href="../../rm/usage.html#tier-strategies"
+ *                 target="_top">Tier Strategy Usage</a> for how to specify a
+ *                 table's priority in VRAM.
  *                 <ul>
  *                         <li> gpudb::create_union_true
  *                         <li> gpudb::create_union_false
@@ -10969,9 +11337,15 @@ CreateUnionResponse GPUdb::createUnion( const std::string& tableName,
  *                 collection provided is non-existent, the collection will be
  *                 automatically created. If empty, the output table will be a
  *                 top-level table.  The default value is ''.
- *                         <li> gpudb::create_union_materialize_on_gpu: If @a
- *                 true, then the columns of the output table will be cached on
- *                 the GPU.
+ *                         <li> gpudb::create_union_materialize_on_gpu: No
+ *                 longer used.  See <a href="../../rm/concepts.html"
+ *                 target="_top">Resource Management Concepts</a> for
+ *                 information about how resources are managed, <a
+ *                 href="../../rm/concepts.html" target="_top">Tier Strategy
+ *                 Concepts</a> for how resources are targeted for VRAM, and <a
+ *                 href="../../rm/usage.html#tier-strategies"
+ *                 target="_top">Tier Strategy Usage</a> for how to specify a
+ *                 table's priority in VRAM.
  *                 <ul>
  *                         <li> gpudb::create_union_true
  *                         <li> gpudb::create_union_false
@@ -17179,6 +17553,11 @@ GrantPermissionTableResponse& GPUdb::grantPermissionTable( const GrantPermission
  *                   views in the collection.
  * @param filterExpression  Reserved for future use.
  * @param options  Optional parameters.
+ *                 <ul>
+ *                         <li> gpudb::grant_permission_table_columns: Apply
+ *                 security to these columns, comma-separated.  The default
+ *                 value is ''.
+ *                 </ul>
  * 
  * @return Response object containing the result of the operation.
  * 
@@ -17226,6 +17605,11 @@ GrantPermissionTableResponse GPUdb::grantPermissionTable( const std::string& nam
  *                   views in the collection.
  * @param filterExpression  Reserved for future use.
  * @param options  Optional parameters.
+ *                 <ul>
+ *                         <li> gpudb::grant_permission_table_columns: Apply
+ *                 security to these columns, comma-separated.  The default
+ *                 value is ''.
+ *                 </ul>
  * @param[out] response_  Response object containing the results of the
  *                        operation.
  * 
@@ -17669,6 +18053,694 @@ InsertRecordsResponse& GPUdb::insertRecordsRaw( const RawInsertRecordsRequest& r
                                                 InsertRecordsResponse& response_ ) const
 {
     submitRequest("/insert/records", request_, response_, true);
+    return response_;
+}
+
+
+/**
+ * 
+ * @param[in] request_  Request object containing the parameters for the
+ *                      operation.
+ * 
+ * @return Response object containing the result of the operation.
+ * 
+ */
+
+InsertRecordsFromFilesResponse GPUdb::insertRecordsFromFiles( const InsertRecordsFromFilesRequest& request_ ) const
+{
+    InsertRecordsFromFilesResponse actualResponse_;
+    submitRequest("/insert/records/fromfiles", request_, actualResponse_, false);
+    return actualResponse_;
+}
+
+
+/**
+ * 
+ * @param[in] request_  Request object containing the parameters for the
+ *                      operation.
+ * @param[out] response_  Response object containing the results of the
+ *                        operation.
+ * 
+ * @return Response object containing the result of the operation (initially
+ *         passed in by reference).
+ * 
+ */
+
+InsertRecordsFromFilesResponse& GPUdb::insertRecordsFromFiles( const InsertRecordsFromFilesRequest& request_,
+                                                               InsertRecordsFromFilesResponse& response_ ) const
+{
+    submitRequest("/insert/records/fromfiles", request_, response_, false);
+    return response_;
+}
+
+
+/**
+ * 
+ * @param tableName
+ * @param filepaths  (can have wildcards) -- array of strings (can be relative
+ *                   paths)
+ * @param createTableOptions  see options in create_table_request
+ *                            <ul>
+ *                                    <li>
+ *                            gpudb::insert_records_from_files_type_id:
+ *                            Optional: ID of a currently registered type.  The
+ *                            default value is ''.
+ *                                    <li>
+ *                            gpudb::insert_records_from_files_no_error_if_exists:
+ *                            If @a true, prevents an error from occurring if
+ *                            the table already exists and is of the given
+ *                            type.  If a table with the same ID but a
+ *                            different type exists, it is still an error.
+ *                            <ul>
+ *                                    <li>
+ *                            gpudb::insert_records_from_files_true
+ *                                    <li>
+ *                            gpudb::insert_records_from_files_false
+ *                            </ul>
+ *                            The default value is
+ *                            gpudb::insert_records_from_files_false.
+ *                                    <li>
+ *                            gpudb::insert_records_from_files_collection_name:
+ *                            Name of a collection which is to contain the
+ *                            newly created table. If the collection provided
+ *                            is non-existent, the collection will be
+ *                            automatically created. If empty, then the newly
+ *                            created table will be a top-level table.
+ *                                    <li>
+ *                            gpudb::insert_records_from_files_is_collection:
+ *                            Indicates whether the new table to be created
+ *                            will be a collection.
+ *                            <ul>
+ *                                    <li>
+ *                            gpudb::insert_records_from_files_true
+ *                                    <li>
+ *                            gpudb::insert_records_from_files_false
+ *                            </ul>
+ *                            The default value is
+ *                            gpudb::insert_records_from_files_false.
+ *                                    <li>
+ *                            gpudb::insert_records_from_files_disallow_homogeneous_tables:
+ *                            No longer supported; value will be ignored.
+ *                            <ul>
+ *                                    <li>
+ *                            gpudb::insert_records_from_files_true
+ *                                    <li>
+ *                            gpudb::insert_records_from_files_false
+ *                            </ul>
+ *                            The default value is
+ *                            gpudb::insert_records_from_files_false.
+ *                                    <li>
+ *                            gpudb::insert_records_from_files_is_replicated:
+ *                            For a table, affects the <a
+ *                            href="../../concepts/tables.html#distribution"
+ *                            target="_top">distribution scheme</a> for the
+ *                            table's data.  If true and the given type has no
+ *                            explicit <a
+ *                            href="../../concepts/tables.html#shard-key"
+ *                            target="_top">shard key</a> defined, the table
+ *                            will be <a
+ *                            href="../../concepts/tables.html#replication"
+ *                            target="_top">replicated</a>.  If false, the
+ *                            table will be <a
+ *                            href="../../concepts/tables.html#sharding"
+ *                            target="_top">sharded</a> according to the shard
+ *                            key specified in the given
+ *                            @{create_table_options.type_id}, or <a
+ *                            href="../../concepts/tables.html#random-sharding"
+ *                            target="_top">randomly sharded</a>, if no shard
+ *                            key is specified.  Note that a type containing a
+ *                            shard key cannot be used to create a replicated
+ *                            table.
+ *                            <ul>
+ *                                    <li>
+ *                            gpudb::insert_records_from_files_true
+ *                                    <li>
+ *                            gpudb::insert_records_from_files_false
+ *                            </ul>
+ *                            The default value is
+ *                            gpudb::insert_records_from_files_false.
+ *                                    <li>
+ *                            gpudb::insert_records_from_files_foreign_keys:
+ *                            Semicolon-separated list of <a
+ *                            href="../../concepts/tables.html#foreign-keys"
+ *                            target="_top">foreign keys</a>, of the format
+ *                            '(source_column_name [, ...]) references
+ *                            target_table_name(primary_key_column_name [,
+ *                            ...]) [as foreign_key_name]'.
+ *                                    <li>
+ *                            gpudb::insert_records_from_files_foreign_shard_key:
+ *                            Foreign shard key of the format 'source_column
+ *                            references shard_by_column from
+ *                            target_table(primary_key_column)'.
+ *                                    <li>
+ *                            gpudb::insert_records_from_files_partition_type:
+ *                            <a href="../../concepts/tables.html#partitioning"
+ *                            target="_top">Partitioning</a> scheme to use.
+ *                            <ul>
+ *                                    <li>
+ *                            gpudb::insert_records_from_files_RANGE: Use <a
+ *                            href="../../concepts/tables.html#partitioning-by-range"
+ *                            target="_top">range partitioning</a>.
+ *                                    <li>
+ *                            gpudb::insert_records_from_files_INTERVAL: Use <a
+ *                            href="../../concepts/tables.html#partitioning-by-interval"
+ *                            target="_top">interval partitioning</a>.
+ *                                    <li>
+ *                            gpudb::insert_records_from_files_LIST: Use <a
+ *                            href="../../concepts/tables.html#partitioning-by-list"
+ *                            target="_top">list partitioning</a>.
+ *                                    <li>
+ *                            gpudb::insert_records_from_files_HASH: Use <a
+ *                            href="../../concepts/tables.html#partitioning-by-hash"
+ *                            target="_top">hash partitioning</a>.
+ *                            </ul>
+ *                                    <li>
+ *                            gpudb::insert_records_from_files_partition_keys:
+ *                            Comma-separated list of partition keys, which are
+ *                            the columns or column expressions by which
+ *                            records will be assigned to partitions defined by
+ *                            @a partition_definitions.
+ *                                    <li>
+ *                            gpudb::insert_records_from_files_partition_definitions:
+ *                            Comma-separated list of partition definitions,
+ *                            whose format depends on the choice of @a
+ *                            partition_type.  See <a
+ *                            href="../../concepts/tables.html#partitioning-by-range"
+ *                            target="_top">range partitioning</a>, <a
+ *                            href="../../concepts/tables.html#partitioning-by-interval"
+ *                            target="_top">interval partitioning</a>, <a
+ *                            href="../../concepts/tables.html#partitioning-by-list"
+ *                            target="_top">list partitioning</a>, or <a
+ *                            href="../../concepts/tables.html#partitioning-by-hash"
+ *                            target="_top">hash partitioning</a> for example
+ *                            formats.
+ *                                    <li>
+ *                            gpudb::insert_records_from_files_is_automatic_partition:
+ *                            If true, a new partition will be created for
+ *                            values which don't fall into an existing
+ *                            partition.  Currently only supported for <a
+ *                            href="../../concepts/tables.html#partitioning-by-list"
+ *                            target="_top">list partitions</a>.
+ *                            <ul>
+ *                                    <li>
+ *                            gpudb::insert_records_from_files_true
+ *                                    <li>
+ *                            gpudb::insert_records_from_files_false
+ *                            </ul>
+ *                            The default value is
+ *                            gpudb::insert_records_from_files_false.
+ *                                    <li>
+ *                            gpudb::insert_records_from_files_ttl: For a
+ *                            table, sets the <a href="../../concepts/ttl.html"
+ *                            target="_top">TTL</a> of the table specified in
+ *                            @a tableName.
+ *                                    <li>
+ *                            gpudb::insert_records_from_files_chunk_size:
+ *                            Indicates the number of records per chunk to be
+ *                            used for this table.
+ *                                    <li>
+ *                            gpudb::insert_records_from_files_is_result_table:
+ *                            For a table, indicates whether the table is an
+ *                            in-memory table. A result table cannot contain
+ *                            store_only, text_search, or string columns (charN
+ *                            columns are acceptable), and it will not be
+ *                            retained if the server is restarted.
+ *                            <ul>
+ *                                    <li>
+ *                            gpudb::insert_records_from_files_true
+ *                                    <li>
+ *                            gpudb::insert_records_from_files_false
+ *                            </ul>
+ *                            The default value is
+ *                            gpudb::insert_records_from_files_false.
+ *                                    <li>
+ *                            gpudb::insert_records_from_files_strategy_definition:
+ *                            The <a
+ *                            href="../../rm/concepts.html#tier-strategies"
+ *                            target="_top">tier strategy</a> for the table and
+ *                            its columns. See <a
+ *                            href="../../rm/concepts.html#tier-strategies"
+ *                            target="_top">tier strategy usage</a> for format
+ *                            and <a href="../../rm/usage.html#tier-strategies"
+ *                            target="_top">tier strategy examples</a> for
+ *                            examples.
+ *                            </ul>
+ * @param options  Optional parameters.
+ *                 <ul>
+ *                         <li> gpudb::insert_records_from_files_file_type:
+ *                 <ul>
+ *                         <li> gpudb::insert_records_from_files_delimited_text
+ *                         <li> gpudb::insert_records_from_files_parquet
+ *                 </ul>
+ *                 The default value is
+ *                 gpudb::insert_records_from_files_delimited_text.
+ *                         <li> gpudb::insert_records_from_files_loading_mode:
+ *                 specifies how to divide up data loading among nodes
+ *                 <ul>
+ *                         <li> gpudb::insert_records_from_files_head: head
+ *                 node loads all data
+ *                         <li>
+ *                 gpudb::insert_records_from_files_distributed_shared: worker
+ *                 nodes load all data, all nodes can see all files and loading
+ *                 is divided up internally
+ *                         <li>
+ *                 gpudb::insert_records_from_files_distributed_local: each
+ *                 worker node loads the files that it sees
+ *                 </ul>
+ *                 The default value is gpudb::insert_records_from_files_head.
+ *                         <li>
+ *                 gpudb::insert_records_from_files_error_handling:
+ *                 <ul>
+ *                         <li> gpudb::insert_records_from_files_permissive:
+ *                 tries to parse all lines: nulls are inserted for missing
+ *                 tokens and extra tokens are ignored.
+ *                         <li>
+ *                 gpudb::insert_records_from_files_ignore_bad_records: Drops
+ *                 malformed lines/rows entirely.
+ *                         <li> gpudb::insert_records_from_files_abort: Aborts
+ *                 ingest when it encounters an error.
+ *                 </ul>
+ *                 The default value is
+ *                 gpudb::insert_records_from_files_Permissive.
+ *                         <li>
+ *                 gpudb::insert_records_from_files_truncate_table:
+ *                 <ul>
+ *                         <li> gpudb::insert_records_from_files_true
+ *                         <li> gpudb::insert_records_from_files_false
+ *                 </ul>
+ *                 The default value is gpudb::insert_records_from_files_false.
+ *                         <li> gpudb::insert_records_from_files_batch_size:
+ *                 number of records per batch when loading from file
+ *                         <li>
+ *                 gpudb::insert_records_from_files_column_formats: json map of
+ *                 colname to map of format to value
+ *                         <li>
+ *                 gpudb::insert_records_from_files_default_column_formats:
+ *                 json map of format to value
+ *                         <li> gpudb::insert_records_from_files_dry_run: Walk
+ *                 through the files and determine number of valid records.
+ *                 Does not load data. Applies the error handling mode to
+ *                 determine valid behavior
+ *                 <ul>
+ *                         <li> gpudb::insert_records_from_files_false: no dry
+ *                 run
+ *                         <li> gpudb::insert_records_from_files_true: do a dry
+ *                 run
+ *                 </ul>
+ *                 The default value is gpudb::insert_records_from_files_false.
+ *                         <li>
+ *                 gpudb::insert_records_from_files_text_has_header:
+ *                 <ul>
+ *                         <li> gpudb::insert_records_from_files_true
+ *                         <li> gpudb::insert_records_from_files_false
+ *                 </ul>
+ *                 The default value is gpudb::insert_records_from_files_true.
+ *                         <li>
+ *                 gpudb::insert_records_from_files_text_delimiter: Delimiter
+ *                 for csv fields and header row. Must be a single character.
+ *                 The default value is ','.
+ *                         <li>
+ *                 gpudb::insert_records_from_files_text_header_property_delimiter:
+ *                 Delimiter for column properties in csv header row.  The
+ *                 default value is '|'.
+ *                         <li>
+ *                 gpudb::insert_records_from_files_columns_to_load: Optionally
+ *                 used to specify a subset of columns to load, instead of
+ *                 loading all columns in the file.
+ *                 The columns to use are delimited by a comma. Column numbers
+ *                 can be specified discretely or as a range e.g. '1 .. 4'
+ *                 refers to the first through fourth columns.
+ *                 For example, a value of '5,3,1..2' will create a table with
+ *                 the first column in the table being the fifth column in the
+ *                 file, followed by third column in the file, then the first
+ *                 column, and lastly the second column.
+ *                 Additionally, if the file(s) have a header, names matching
+ *                 the file header names may be provided instead of numbers.
+ *                 Ranges are not supported.
+ *                 For example, a value of 'C, B, A' will create a three column
+ *                 table with column C, followed by column B, followed by
+ *                 column A.
+ *                         <li>
+ *                 gpudb::insert_records_from_files_text_comment_string: ignore
+ *                 all lines starting with the comment value.  The default
+ *                 value is '#'.
+ *                         <li>
+ *                 gpudb::insert_records_from_files_text_null_string: value to
+ *                 treat as null.  The default value is ''.
+ *                         <li>
+ *                 gpudb::insert_records_from_files_text_quote_character: quote
+ *                 character, defaults to a double-quote i.e. ".Set an empty
+ *                 string to not have a quote character. Must be a single
+ *                 character.  The default value is '"'.
+ *                         <li>
+ *                 gpudb::insert_records_from_files_text_escape_character:
+ *                 escape character, defaults to no escaping. Must be a single
+ *                 character
+ *                 </ul>
+ * 
+ * @return Response object containing the result of the operation.
+ * 
+ */
+
+InsertRecordsFromFilesResponse GPUdb::insertRecordsFromFiles( const std::string& tableName,
+                                                              const std::vector<std::string>& filepaths,
+                                                              const std::map<std::string, std::string>& createTableOptions,
+                                                              const std::map<std::string, std::string>& options ) const
+{
+    InsertRecordsFromFilesRequest actualRequest_;
+    actualRequest_.tableName = tableName;
+    actualRequest_.filepaths = filepaths;
+    actualRequest_.createTableOptions = createTableOptions;
+    actualRequest_.options = options;
+    InsertRecordsFromFilesResponse actualResponse_;
+    submitRequest("/insert/records/fromfiles", actualRequest_, actualResponse_, false);
+    return actualResponse_;
+}
+
+
+/**
+ * 
+ * @param tableName
+ * @param filepaths  (can have wildcards) -- array of strings (can be relative
+ *                   paths)
+ * @param createTableOptions  see options in create_table_request
+ *                            <ul>
+ *                                    <li>
+ *                            gpudb::insert_records_from_files_type_id:
+ *                            Optional: ID of a currently registered type.  The
+ *                            default value is ''.
+ *                                    <li>
+ *                            gpudb::insert_records_from_files_no_error_if_exists:
+ *                            If @a true, prevents an error from occurring if
+ *                            the table already exists and is of the given
+ *                            type.  If a table with the same ID but a
+ *                            different type exists, it is still an error.
+ *                            <ul>
+ *                                    <li>
+ *                            gpudb::insert_records_from_files_true
+ *                                    <li>
+ *                            gpudb::insert_records_from_files_false
+ *                            </ul>
+ *                            The default value is
+ *                            gpudb::insert_records_from_files_false.
+ *                                    <li>
+ *                            gpudb::insert_records_from_files_collection_name:
+ *                            Name of a collection which is to contain the
+ *                            newly created table. If the collection provided
+ *                            is non-existent, the collection will be
+ *                            automatically created. If empty, then the newly
+ *                            created table will be a top-level table.
+ *                                    <li>
+ *                            gpudb::insert_records_from_files_is_collection:
+ *                            Indicates whether the new table to be created
+ *                            will be a collection.
+ *                            <ul>
+ *                                    <li>
+ *                            gpudb::insert_records_from_files_true
+ *                                    <li>
+ *                            gpudb::insert_records_from_files_false
+ *                            </ul>
+ *                            The default value is
+ *                            gpudb::insert_records_from_files_false.
+ *                                    <li>
+ *                            gpudb::insert_records_from_files_disallow_homogeneous_tables:
+ *                            No longer supported; value will be ignored.
+ *                            <ul>
+ *                                    <li>
+ *                            gpudb::insert_records_from_files_true
+ *                                    <li>
+ *                            gpudb::insert_records_from_files_false
+ *                            </ul>
+ *                            The default value is
+ *                            gpudb::insert_records_from_files_false.
+ *                                    <li>
+ *                            gpudb::insert_records_from_files_is_replicated:
+ *                            For a table, affects the <a
+ *                            href="../../concepts/tables.html#distribution"
+ *                            target="_top">distribution scheme</a> for the
+ *                            table's data.  If true and the given type has no
+ *                            explicit <a
+ *                            href="../../concepts/tables.html#shard-key"
+ *                            target="_top">shard key</a> defined, the table
+ *                            will be <a
+ *                            href="../../concepts/tables.html#replication"
+ *                            target="_top">replicated</a>.  If false, the
+ *                            table will be <a
+ *                            href="../../concepts/tables.html#sharding"
+ *                            target="_top">sharded</a> according to the shard
+ *                            key specified in the given
+ *                            @{create_table_options.type_id}, or <a
+ *                            href="../../concepts/tables.html#random-sharding"
+ *                            target="_top">randomly sharded</a>, if no shard
+ *                            key is specified.  Note that a type containing a
+ *                            shard key cannot be used to create a replicated
+ *                            table.
+ *                            <ul>
+ *                                    <li>
+ *                            gpudb::insert_records_from_files_true
+ *                                    <li>
+ *                            gpudb::insert_records_from_files_false
+ *                            </ul>
+ *                            The default value is
+ *                            gpudb::insert_records_from_files_false.
+ *                                    <li>
+ *                            gpudb::insert_records_from_files_foreign_keys:
+ *                            Semicolon-separated list of <a
+ *                            href="../../concepts/tables.html#foreign-keys"
+ *                            target="_top">foreign keys</a>, of the format
+ *                            '(source_column_name [, ...]) references
+ *                            target_table_name(primary_key_column_name [,
+ *                            ...]) [as foreign_key_name]'.
+ *                                    <li>
+ *                            gpudb::insert_records_from_files_foreign_shard_key:
+ *                            Foreign shard key of the format 'source_column
+ *                            references shard_by_column from
+ *                            target_table(primary_key_column)'.
+ *                                    <li>
+ *                            gpudb::insert_records_from_files_partition_type:
+ *                            <a href="../../concepts/tables.html#partitioning"
+ *                            target="_top">Partitioning</a> scheme to use.
+ *                            <ul>
+ *                                    <li>
+ *                            gpudb::insert_records_from_files_RANGE: Use <a
+ *                            href="../../concepts/tables.html#partitioning-by-range"
+ *                            target="_top">range partitioning</a>.
+ *                                    <li>
+ *                            gpudb::insert_records_from_files_INTERVAL: Use <a
+ *                            href="../../concepts/tables.html#partitioning-by-interval"
+ *                            target="_top">interval partitioning</a>.
+ *                                    <li>
+ *                            gpudb::insert_records_from_files_LIST: Use <a
+ *                            href="../../concepts/tables.html#partitioning-by-list"
+ *                            target="_top">list partitioning</a>.
+ *                                    <li>
+ *                            gpudb::insert_records_from_files_HASH: Use <a
+ *                            href="../../concepts/tables.html#partitioning-by-hash"
+ *                            target="_top">hash partitioning</a>.
+ *                            </ul>
+ *                                    <li>
+ *                            gpudb::insert_records_from_files_partition_keys:
+ *                            Comma-separated list of partition keys, which are
+ *                            the columns or column expressions by which
+ *                            records will be assigned to partitions defined by
+ *                            @a partition_definitions.
+ *                                    <li>
+ *                            gpudb::insert_records_from_files_partition_definitions:
+ *                            Comma-separated list of partition definitions,
+ *                            whose format depends on the choice of @a
+ *                            partition_type.  See <a
+ *                            href="../../concepts/tables.html#partitioning-by-range"
+ *                            target="_top">range partitioning</a>, <a
+ *                            href="../../concepts/tables.html#partitioning-by-interval"
+ *                            target="_top">interval partitioning</a>, <a
+ *                            href="../../concepts/tables.html#partitioning-by-list"
+ *                            target="_top">list partitioning</a>, or <a
+ *                            href="../../concepts/tables.html#partitioning-by-hash"
+ *                            target="_top">hash partitioning</a> for example
+ *                            formats.
+ *                                    <li>
+ *                            gpudb::insert_records_from_files_is_automatic_partition:
+ *                            If true, a new partition will be created for
+ *                            values which don't fall into an existing
+ *                            partition.  Currently only supported for <a
+ *                            href="../../concepts/tables.html#partitioning-by-list"
+ *                            target="_top">list partitions</a>.
+ *                            <ul>
+ *                                    <li>
+ *                            gpudb::insert_records_from_files_true
+ *                                    <li>
+ *                            gpudb::insert_records_from_files_false
+ *                            </ul>
+ *                            The default value is
+ *                            gpudb::insert_records_from_files_false.
+ *                                    <li>
+ *                            gpudb::insert_records_from_files_ttl: For a
+ *                            table, sets the <a href="../../concepts/ttl.html"
+ *                            target="_top">TTL</a> of the table specified in
+ *                            @a tableName.
+ *                                    <li>
+ *                            gpudb::insert_records_from_files_chunk_size:
+ *                            Indicates the number of records per chunk to be
+ *                            used for this table.
+ *                                    <li>
+ *                            gpudb::insert_records_from_files_is_result_table:
+ *                            For a table, indicates whether the table is an
+ *                            in-memory table. A result table cannot contain
+ *                            store_only, text_search, or string columns (charN
+ *                            columns are acceptable), and it will not be
+ *                            retained if the server is restarted.
+ *                            <ul>
+ *                                    <li>
+ *                            gpudb::insert_records_from_files_true
+ *                                    <li>
+ *                            gpudb::insert_records_from_files_false
+ *                            </ul>
+ *                            The default value is
+ *                            gpudb::insert_records_from_files_false.
+ *                                    <li>
+ *                            gpudb::insert_records_from_files_strategy_definition:
+ *                            The <a
+ *                            href="../../rm/concepts.html#tier-strategies"
+ *                            target="_top">tier strategy</a> for the table and
+ *                            its columns. See <a
+ *                            href="../../rm/concepts.html#tier-strategies"
+ *                            target="_top">tier strategy usage</a> for format
+ *                            and <a href="../../rm/usage.html#tier-strategies"
+ *                            target="_top">tier strategy examples</a> for
+ *                            examples.
+ *                            </ul>
+ * @param options  Optional parameters.
+ *                 <ul>
+ *                         <li> gpudb::insert_records_from_files_file_type:
+ *                 <ul>
+ *                         <li> gpudb::insert_records_from_files_delimited_text
+ *                         <li> gpudb::insert_records_from_files_parquet
+ *                 </ul>
+ *                 The default value is
+ *                 gpudb::insert_records_from_files_delimited_text.
+ *                         <li> gpudb::insert_records_from_files_loading_mode:
+ *                 specifies how to divide up data loading among nodes
+ *                 <ul>
+ *                         <li> gpudb::insert_records_from_files_head: head
+ *                 node loads all data
+ *                         <li>
+ *                 gpudb::insert_records_from_files_distributed_shared: worker
+ *                 nodes load all data, all nodes can see all files and loading
+ *                 is divided up internally
+ *                         <li>
+ *                 gpudb::insert_records_from_files_distributed_local: each
+ *                 worker node loads the files that it sees
+ *                 </ul>
+ *                 The default value is gpudb::insert_records_from_files_head.
+ *                         <li>
+ *                 gpudb::insert_records_from_files_error_handling:
+ *                 <ul>
+ *                         <li> gpudb::insert_records_from_files_permissive:
+ *                 tries to parse all lines: nulls are inserted for missing
+ *                 tokens and extra tokens are ignored.
+ *                         <li>
+ *                 gpudb::insert_records_from_files_ignore_bad_records: Drops
+ *                 malformed lines/rows entirely.
+ *                         <li> gpudb::insert_records_from_files_abort: Aborts
+ *                 ingest when it encounters an error.
+ *                 </ul>
+ *                 The default value is
+ *                 gpudb::insert_records_from_files_Permissive.
+ *                         <li>
+ *                 gpudb::insert_records_from_files_truncate_table:
+ *                 <ul>
+ *                         <li> gpudb::insert_records_from_files_true
+ *                         <li> gpudb::insert_records_from_files_false
+ *                 </ul>
+ *                 The default value is gpudb::insert_records_from_files_false.
+ *                         <li> gpudb::insert_records_from_files_batch_size:
+ *                 number of records per batch when loading from file
+ *                         <li>
+ *                 gpudb::insert_records_from_files_column_formats: json map of
+ *                 colname to map of format to value
+ *                         <li>
+ *                 gpudb::insert_records_from_files_default_column_formats:
+ *                 json map of format to value
+ *                         <li> gpudb::insert_records_from_files_dry_run: Walk
+ *                 through the files and determine number of valid records.
+ *                 Does not load data. Applies the error handling mode to
+ *                 determine valid behavior
+ *                 <ul>
+ *                         <li> gpudb::insert_records_from_files_false: no dry
+ *                 run
+ *                         <li> gpudb::insert_records_from_files_true: do a dry
+ *                 run
+ *                 </ul>
+ *                 The default value is gpudb::insert_records_from_files_false.
+ *                         <li>
+ *                 gpudb::insert_records_from_files_text_has_header:
+ *                 <ul>
+ *                         <li> gpudb::insert_records_from_files_true
+ *                         <li> gpudb::insert_records_from_files_false
+ *                 </ul>
+ *                 The default value is gpudb::insert_records_from_files_true.
+ *                         <li>
+ *                 gpudb::insert_records_from_files_text_delimiter: Delimiter
+ *                 for csv fields and header row. Must be a single character.
+ *                 The default value is ','.
+ *                         <li>
+ *                 gpudb::insert_records_from_files_text_header_property_delimiter:
+ *                 Delimiter for column properties in csv header row.  The
+ *                 default value is '|'.
+ *                         <li>
+ *                 gpudb::insert_records_from_files_columns_to_load: Optionally
+ *                 used to specify a subset of columns to load, instead of
+ *                 loading all columns in the file.
+ *                 The columns to use are delimited by a comma. Column numbers
+ *                 can be specified discretely or as a range e.g. '1 .. 4'
+ *                 refers to the first through fourth columns.
+ *                 For example, a value of '5,3,1..2' will create a table with
+ *                 the first column in the table being the fifth column in the
+ *                 file, followed by third column in the file, then the first
+ *                 column, and lastly the second column.
+ *                 Additionally, if the file(s) have a header, names matching
+ *                 the file header names may be provided instead of numbers.
+ *                 Ranges are not supported.
+ *                 For example, a value of 'C, B, A' will create a three column
+ *                 table with column C, followed by column B, followed by
+ *                 column A.
+ *                         <li>
+ *                 gpudb::insert_records_from_files_text_comment_string: ignore
+ *                 all lines starting with the comment value.  The default
+ *                 value is '#'.
+ *                         <li>
+ *                 gpudb::insert_records_from_files_text_null_string: value to
+ *                 treat as null.  The default value is ''.
+ *                         <li>
+ *                 gpudb::insert_records_from_files_text_quote_character: quote
+ *                 character, defaults to a double-quote i.e. ".Set an empty
+ *                 string to not have a quote character. Must be a single
+ *                 character.  The default value is '"'.
+ *                         <li>
+ *                 gpudb::insert_records_from_files_text_escape_character:
+ *                 escape character, defaults to no escaping. Must be a single
+ *                 character
+ *                 </ul>
+ * @param[out] response_  Response object containing the results of the
+ *                        operation.
+ * 
+ * @return Response object containing the result of the operation (initially
+ *         passed in by reference).
+ * 
+ */
+
+InsertRecordsFromFilesResponse& GPUdb::insertRecordsFromFiles( const std::string& tableName,
+                                                               const std::vector<std::string>& filepaths,
+                                                               const std::map<std::string, std::string>& createTableOptions,
+                                                               const std::map<std::string, std::string>& options,
+                                                               InsertRecordsFromFilesResponse& response_ ) const
+{
+    InsertRecordsFromFilesRequest actualRequest_;
+    actualRequest_.tableName = tableName;
+    actualRequest_.filepaths = filepaths;
+    actualRequest_.createTableOptions = createTableOptions;
+    actualRequest_.options = options;
+    submitRequest("/insert/records/fromfiles", actualRequest_, response_, false);
     return response_;
 }
 
@@ -19282,6 +20354,424 @@ MergeRecordsResponse& GPUdb::mergeRecords( const std::string& tableName,
 
 
 /**
+ * Update an existing graph network using given nodes, edges, weights,
+ * restrictions, and options.
+
+ * IMPORTANT: It's highly recommended that you review the <a
+ * href="../../graph_solver/network_graph_solver.html" target="_top">Network
+ * Graphs & Solvers</a> concepts documentation, the <a
+ * href="../../graph_solver/examples/graph_rest_guide.html" target="_top">Graph
+ * REST Tutorial</a>, and/or some <a href="../../graph_solver/examples.html"
+ * target="_top">graph examples</a> before using this endpoint.
+ * 
+ * @param[in] request_  Request object containing the parameters for the
+ *                      operation.
+ * 
+ * @return Response object containing the result of the operation.
+ * 
+ */
+
+ModifyGraphResponse GPUdb::modifyGraph( const ModifyGraphRequest& request_ ) const
+{
+    ModifyGraphResponse actualResponse_;
+    submitRequest("/modify/graph", request_, actualResponse_, false);
+    return actualResponse_;
+}
+
+
+/**
+ * Update an existing graph network using given nodes, edges, weights,
+ * restrictions, and options.
+
+ * IMPORTANT: It's highly recommended that you review the <a
+ * href="../../graph_solver/network_graph_solver.html" target="_top">Network
+ * Graphs & Solvers</a> concepts documentation, the <a
+ * href="../../graph_solver/examples/graph_rest_guide.html" target="_top">Graph
+ * REST Tutorial</a>, and/or some <a href="../../graph_solver/examples.html"
+ * target="_top">graph examples</a> before using this endpoint.
+ * 
+ * @param[in] request_  Request object containing the parameters for the
+ *                      operation.
+ * @param[out] response_  Response object containing the results of the
+ *                        operation.
+ * 
+ * @return Response object containing the result of the operation (initially
+ *         passed in by reference).
+ * 
+ */
+
+ModifyGraphResponse& GPUdb::modifyGraph( const ModifyGraphRequest& request_,
+                                         ModifyGraphResponse& response_ ) const
+{
+    submitRequest("/modify/graph", request_, response_, false);
+    return response_;
+}
+
+
+/**
+ * Update an existing graph network using given nodes, edges, weights,
+ * restrictions, and options.
+
+ * IMPORTANT: It's highly recommended that you review the <a
+ * href="../../graph_solver/network_graph_solver.html" target="_top">Network
+ * Graphs & Solvers</a> concepts documentation, the <a
+ * href="../../graph_solver/examples/graph_rest_guide.html" target="_top">Graph
+ * REST Tutorial</a>, and/or some <a href="../../graph_solver/examples.html"
+ * target="_top">graph examples</a> before using this endpoint.
+ * 
+ * @param graphName  Name of the graph resource to modify.
+ * @param nodes  Nodes with which to update existing @a nodes in graph
+ *               specified by @a graphName. Review <a
+ *               href="../../graph_solver/network_graph_solver.html#nodes"
+ *               target="_top">Nodes</a> for more information. Nodes must be
+ *               specified using <a
+ *               href="../../graph_solver/network_graph_solver.html#identifiers"
+ *               target="_top">identifiers</a>; identifiers are grouped as <a
+ *               href="../../graph_solver/network_graph_solver.html#id-combos"
+ *               target="_top">combinations</a>. Identifiers can be used with
+ *               existing column names, e.g., 'table.column AS NODE_ID',
+ *               expressions, e.g., 'ST_MAKEPOINT(column1, column2) AS
+ *               NODE_WKTPOINT', or raw values, e.g., '{9, 10, 11} AS NODE_ID'.
+ *               If using raw values in an identifier combination, the number
+ *               of values specified must match across the combination.
+ *               Identifier combination(s) do not have to match the method used
+ *               to create the graph, e.g., if column names were specified to
+ *               create the graph, expressions or raw values could also be used
+ *               to modify the graph.
+ * @param edges  Edges with which to update existing @a edges in graph
+ *               specified by @a graphName. Review <a
+ *               href="../../graph_solver/network_graph_solver.html#edges"
+ *               target="_top">Edges</a> for more information. Edges must be
+ *               specified using <a
+ *               href="../../graph_solver/network_graph_solver.html#identifiers"
+ *               target="_top">identifiers</a>; identifiers are grouped as <a
+ *               href="../../graph_solver/network_graph_solver.html#id-combos"
+ *               target="_top">combinations</a>. Identifiers can be used with
+ *               existing column names, e.g., 'table.column AS EDGE_ID',
+ *               expressions, e.g., 'SUBSTR(column, 1, 6) AS EDGE_NODE1_NAME',
+ *               or raw values, e.g., "{'family', 'coworker'} AS EDGE_LABEL".
+ *               If using raw values in an identifier combination, the number
+ *               of values specified must match across the combination.
+ *               Identifier combination(s) do not have to match the method used
+ *               to create the graph, e.g., if column names were specified to
+ *               create the graph, expressions or raw values could also be used
+ *               to modify the graph.
+ * @param weights  Weights with which to update existing @a weights in graph
+ *                 specified by @a graphName. Review <a
+ *                 href="../../graph_solver/network_graph_solver.html#graph-weights"
+ *                 target="_top">Weights</a> for more information. Weights must
+ *                 be specified using <a
+ *                 href="../../graph_solver/network_graph_solver.html#identifiers"
+ *                 target="_top">identifiers</a>; identifiers are grouped as <a
+ *                 href="../../graph_solver/network_graph_solver.html#id-combos"
+ *                 target="_top">combinations</a>. Identifiers can be used with
+ *                 existing column names, e.g., 'table.column AS
+ *                 WEIGHTS_EDGE_ID', expressions, e.g., 'ST_LENGTH(wkt) AS
+ *                 WEIGHTS_VALUESPECIFIED', or raw values, e.g., '{4, 15} AS
+ *                 WEIGHTS_VALUESPECIFIED'. If using raw values in an
+ *                 identifier combination, the number of values specified must
+ *                 match across the combination. Identifier combination(s) do
+ *                 not have to match the method used to create the graph, e.g.,
+ *                 if column names were specified to create the graph,
+ *                 expressions or raw values could also be used to modify the
+ *                 graph.
+ * @param restrictions  Restrictions with which to update existing @a
+ *                      restrictions in graph specified by @a graphName. Review
+ *                      <a
+ *                      href="../../graph_solver/network_graph_solver.html#graph-restrictions"
+ *                      target="_top">Restrictions</a> for more information.
+ *                      Restrictions must be specified using <a
+ *                      href="../../graph_solver/network_graph_solver.html#identifiers"
+ *                      target="_top">identifiers</a>; identifiers are grouped
+ *                      as <a
+ *                      href="../../graph_solver/network_graph_solver.html#id-combos"
+ *                      target="_top">combinations</a>. Identifiers can be used
+ *                      with existing column names, e.g., 'table.column AS
+ *                      RESTRICTIONS_EDGE_ID', expressions, e.g., 'column/2 AS
+ *                      RESTRICTIONS_VALUECOMPARED', or raw values, e.g., '{0,
+ *                      0, 0, 1} AS RESTRICTIONS_ONOFFCOMPARED'. If using raw
+ *                      values in an identifier combination, the number of
+ *                      values specified must match across the combination.
+ *                      Identifier combination(s) do not have to match the
+ *                      method used to create the graph, e.g., if column names
+ *                      were specified to create the graph, expressions or raw
+ *                      values could also be used to modify the graph.
+ * @param options  Optional parameters.
+ *                 <ul>
+ *                         <li>
+ *                 gpudb::modify_graph_restriction_threshold_value: Value-based
+ *                 restriction comparison. Any node or edge with a
+ *                 RESTRICTIONS_VALUECOMPARED value greater than the @a
+ *                 restriction_threshold_value will not be included in the
+ *                 graph.
+ *                         <li> gpudb::modify_graph_export_create_results: If
+ *                 set to @a true, returns the graph topology in the response
+ *                 as arrays.
+ *                 <ul>
+ *                         <li> gpudb::modify_graph_true
+ *                         <li> gpudb::modify_graph_false
+ *                 </ul>
+ *                 The default value is gpudb::modify_graph_false.
+ *                         <li> gpudb::modify_graph_enable_graph_draw: If set
+ *                 to @a true, adds a 'EDGE_WKTLINE' column identifier to the
+ *                 specified @a graph_table so the graph can be viewed via WMS;
+ *                 for social and non-geospatial graphs, the 'EDGE_WKTLINE'
+ *                 column identifier will be populated with spatial coordinates
+ *                 derived from a flattening layout algorithm so the graph can
+ *                 still be viewed.
+ *                 <ul>
+ *                         <li> gpudb::modify_graph_true
+ *                         <li> gpudb::modify_graph_false
+ *                 </ul>
+ *                 The default value is gpudb::modify_graph_false.
+ *                         <li> gpudb::modify_graph_save_persist: If set to @a
+ *                 true, the graph will be saved in the persist directory (see
+ *                 the <a href="../../config/index.html" target="_top">config
+ *                 reference</a> for more information). If set to @a false, the
+ *                 graph will be removed when the graph server is shutdown.
+ *                 <ul>
+ *                         <li> gpudb::modify_graph_true
+ *                         <li> gpudb::modify_graph_false
+ *                 </ul>
+ *                 The default value is gpudb::modify_graph_false.
+ *                         <li> gpudb::modify_graph_add_table_monitor: Adds a
+ *                 table monitor to every table used in the creation of the
+ *                 graph; this table monitor will trigger the graph to update
+ *                 dynamically upon inserts to the source table(s). Note that
+ *                 upon database restart, if @a save_persist is also set to @a
+ *                 true, the graph will be fully reconstructed and the table
+ *                 monitors will be reattached. For more details on table
+ *                 monitors, see /create/tablemonitor.
+ *                 <ul>
+ *                         <li> gpudb::modify_graph_true
+ *                         <li> gpudb::modify_graph_false
+ *                 </ul>
+ *                 The default value is gpudb::modify_graph_false.
+ *                         <li> gpudb::modify_graph_graph_table: If specified,
+ *                 the created graph is also created as a table with the given
+ *                 name and following identifier columns: 'EDGE_ID',
+ *                 'EDGE_NODE1_ID', 'EDGE_NODE2_ID'. If left blank, no table is
+ *                 created.  The default value is ''.
+ *                         <li> gpudb::modify_graph_remove_label_only: When
+ *                 RESTRICTIONS on labeled entities requested, if set to true
+ *                 this will NOT delete the entity but only the label
+ *                 associated with the entity. Otherwise (default), it'll
+ *                 delete the label AND the entity.
+ *                 <ul>
+ *                         <li> gpudb::modify_graph_true
+ *                         <li> gpudb::modify_graph_false
+ *                 </ul>
+ *                 The default value is gpudb::modify_graph_false.
+ *                 </ul>
+ * 
+ * @return Response object containing the result of the operation.
+ * 
+ */
+
+ModifyGraphResponse GPUdb::modifyGraph( const std::string& graphName,
+                                        const std::vector<std::string>& nodes,
+                                        const std::vector<std::string>& edges,
+                                        const std::vector<std::string>& weights,
+                                        const std::vector<std::string>& restrictions,
+                                        const std::map<std::string, std::string>& options ) const
+{
+    ModifyGraphRequest actualRequest_;
+    actualRequest_.graphName = graphName;
+    actualRequest_.nodes = nodes;
+    actualRequest_.edges = edges;
+    actualRequest_.weights = weights;
+    actualRequest_.restrictions = restrictions;
+    actualRequest_.options = options;
+    ModifyGraphResponse actualResponse_;
+    submitRequest("/modify/graph", actualRequest_, actualResponse_, false);
+    return actualResponse_;
+}
+
+
+/**
+ * Update an existing graph network using given nodes, edges, weights,
+ * restrictions, and options.
+
+ * IMPORTANT: It's highly recommended that you review the <a
+ * href="../../graph_solver/network_graph_solver.html" target="_top">Network
+ * Graphs & Solvers</a> concepts documentation, the <a
+ * href="../../graph_solver/examples/graph_rest_guide.html" target="_top">Graph
+ * REST Tutorial</a>, and/or some <a href="../../graph_solver/examples.html"
+ * target="_top">graph examples</a> before using this endpoint.
+ * 
+ * @param graphName  Name of the graph resource to modify.
+ * @param nodes  Nodes with which to update existing @a nodes in graph
+ *               specified by @a graphName. Review <a
+ *               href="../../graph_solver/network_graph_solver.html#nodes"
+ *               target="_top">Nodes</a> for more information. Nodes must be
+ *               specified using <a
+ *               href="../../graph_solver/network_graph_solver.html#identifiers"
+ *               target="_top">identifiers</a>; identifiers are grouped as <a
+ *               href="../../graph_solver/network_graph_solver.html#id-combos"
+ *               target="_top">combinations</a>. Identifiers can be used with
+ *               existing column names, e.g., 'table.column AS NODE_ID',
+ *               expressions, e.g., 'ST_MAKEPOINT(column1, column2) AS
+ *               NODE_WKTPOINT', or raw values, e.g., '{9, 10, 11} AS NODE_ID'.
+ *               If using raw values in an identifier combination, the number
+ *               of values specified must match across the combination.
+ *               Identifier combination(s) do not have to match the method used
+ *               to create the graph, e.g., if column names were specified to
+ *               create the graph, expressions or raw values could also be used
+ *               to modify the graph.
+ * @param edges  Edges with which to update existing @a edges in graph
+ *               specified by @a graphName. Review <a
+ *               href="../../graph_solver/network_graph_solver.html#edges"
+ *               target="_top">Edges</a> for more information. Edges must be
+ *               specified using <a
+ *               href="../../graph_solver/network_graph_solver.html#identifiers"
+ *               target="_top">identifiers</a>; identifiers are grouped as <a
+ *               href="../../graph_solver/network_graph_solver.html#id-combos"
+ *               target="_top">combinations</a>. Identifiers can be used with
+ *               existing column names, e.g., 'table.column AS EDGE_ID',
+ *               expressions, e.g., 'SUBSTR(column, 1, 6) AS EDGE_NODE1_NAME',
+ *               or raw values, e.g., "{'family', 'coworker'} AS EDGE_LABEL".
+ *               If using raw values in an identifier combination, the number
+ *               of values specified must match across the combination.
+ *               Identifier combination(s) do not have to match the method used
+ *               to create the graph, e.g., if column names were specified to
+ *               create the graph, expressions or raw values could also be used
+ *               to modify the graph.
+ * @param weights  Weights with which to update existing @a weights in graph
+ *                 specified by @a graphName. Review <a
+ *                 href="../../graph_solver/network_graph_solver.html#graph-weights"
+ *                 target="_top">Weights</a> for more information. Weights must
+ *                 be specified using <a
+ *                 href="../../graph_solver/network_graph_solver.html#identifiers"
+ *                 target="_top">identifiers</a>; identifiers are grouped as <a
+ *                 href="../../graph_solver/network_graph_solver.html#id-combos"
+ *                 target="_top">combinations</a>. Identifiers can be used with
+ *                 existing column names, e.g., 'table.column AS
+ *                 WEIGHTS_EDGE_ID', expressions, e.g., 'ST_LENGTH(wkt) AS
+ *                 WEIGHTS_VALUESPECIFIED', or raw values, e.g., '{4, 15} AS
+ *                 WEIGHTS_VALUESPECIFIED'. If using raw values in an
+ *                 identifier combination, the number of values specified must
+ *                 match across the combination. Identifier combination(s) do
+ *                 not have to match the method used to create the graph, e.g.,
+ *                 if column names were specified to create the graph,
+ *                 expressions or raw values could also be used to modify the
+ *                 graph.
+ * @param restrictions  Restrictions with which to update existing @a
+ *                      restrictions in graph specified by @a graphName. Review
+ *                      <a
+ *                      href="../../graph_solver/network_graph_solver.html#graph-restrictions"
+ *                      target="_top">Restrictions</a> for more information.
+ *                      Restrictions must be specified using <a
+ *                      href="../../graph_solver/network_graph_solver.html#identifiers"
+ *                      target="_top">identifiers</a>; identifiers are grouped
+ *                      as <a
+ *                      href="../../graph_solver/network_graph_solver.html#id-combos"
+ *                      target="_top">combinations</a>. Identifiers can be used
+ *                      with existing column names, e.g., 'table.column AS
+ *                      RESTRICTIONS_EDGE_ID', expressions, e.g., 'column/2 AS
+ *                      RESTRICTIONS_VALUECOMPARED', or raw values, e.g., '{0,
+ *                      0, 0, 1} AS RESTRICTIONS_ONOFFCOMPARED'. If using raw
+ *                      values in an identifier combination, the number of
+ *                      values specified must match across the combination.
+ *                      Identifier combination(s) do not have to match the
+ *                      method used to create the graph, e.g., if column names
+ *                      were specified to create the graph, expressions or raw
+ *                      values could also be used to modify the graph.
+ * @param options  Optional parameters.
+ *                 <ul>
+ *                         <li>
+ *                 gpudb::modify_graph_restriction_threshold_value: Value-based
+ *                 restriction comparison. Any node or edge with a
+ *                 RESTRICTIONS_VALUECOMPARED value greater than the @a
+ *                 restriction_threshold_value will not be included in the
+ *                 graph.
+ *                         <li> gpudb::modify_graph_export_create_results: If
+ *                 set to @a true, returns the graph topology in the response
+ *                 as arrays.
+ *                 <ul>
+ *                         <li> gpudb::modify_graph_true
+ *                         <li> gpudb::modify_graph_false
+ *                 </ul>
+ *                 The default value is gpudb::modify_graph_false.
+ *                         <li> gpudb::modify_graph_enable_graph_draw: If set
+ *                 to @a true, adds a 'EDGE_WKTLINE' column identifier to the
+ *                 specified @a graph_table so the graph can be viewed via WMS;
+ *                 for social and non-geospatial graphs, the 'EDGE_WKTLINE'
+ *                 column identifier will be populated with spatial coordinates
+ *                 derived from a flattening layout algorithm so the graph can
+ *                 still be viewed.
+ *                 <ul>
+ *                         <li> gpudb::modify_graph_true
+ *                         <li> gpudb::modify_graph_false
+ *                 </ul>
+ *                 The default value is gpudb::modify_graph_false.
+ *                         <li> gpudb::modify_graph_save_persist: If set to @a
+ *                 true, the graph will be saved in the persist directory (see
+ *                 the <a href="../../config/index.html" target="_top">config
+ *                 reference</a> for more information). If set to @a false, the
+ *                 graph will be removed when the graph server is shutdown.
+ *                 <ul>
+ *                         <li> gpudb::modify_graph_true
+ *                         <li> gpudb::modify_graph_false
+ *                 </ul>
+ *                 The default value is gpudb::modify_graph_false.
+ *                         <li> gpudb::modify_graph_add_table_monitor: Adds a
+ *                 table monitor to every table used in the creation of the
+ *                 graph; this table monitor will trigger the graph to update
+ *                 dynamically upon inserts to the source table(s). Note that
+ *                 upon database restart, if @a save_persist is also set to @a
+ *                 true, the graph will be fully reconstructed and the table
+ *                 monitors will be reattached. For more details on table
+ *                 monitors, see /create/tablemonitor.
+ *                 <ul>
+ *                         <li> gpudb::modify_graph_true
+ *                         <li> gpudb::modify_graph_false
+ *                 </ul>
+ *                 The default value is gpudb::modify_graph_false.
+ *                         <li> gpudb::modify_graph_graph_table: If specified,
+ *                 the created graph is also created as a table with the given
+ *                 name and following identifier columns: 'EDGE_ID',
+ *                 'EDGE_NODE1_ID', 'EDGE_NODE2_ID'. If left blank, no table is
+ *                 created.  The default value is ''.
+ *                         <li> gpudb::modify_graph_remove_label_only: When
+ *                 RESTRICTIONS on labeled entities requested, if set to true
+ *                 this will NOT delete the entity but only the label
+ *                 associated with the entity. Otherwise (default), it'll
+ *                 delete the label AND the entity.
+ *                 <ul>
+ *                         <li> gpudb::modify_graph_true
+ *                         <li> gpudb::modify_graph_false
+ *                 </ul>
+ *                 The default value is gpudb::modify_graph_false.
+ *                 </ul>
+ * @param[out] response_  Response object containing the results of the
+ *                        operation.
+ * 
+ * @return Response object containing the result of the operation (initially
+ *         passed in by reference).
+ * 
+ */
+
+ModifyGraphResponse& GPUdb::modifyGraph( const std::string& graphName,
+                                         const std::vector<std::string>& nodes,
+                                         const std::vector<std::string>& edges,
+                                         const std::vector<std::string>& weights,
+                                         const std::vector<std::string>& restrictions,
+                                         const std::map<std::string, std::string>& options,
+                                         ModifyGraphResponse& response_ ) const
+{
+    ModifyGraphRequest actualRequest_;
+    actualRequest_.graphName = graphName;
+    actualRequest_.nodes = nodes;
+    actualRequest_.edges = edges;
+    actualRequest_.weights = weights;
+    actualRequest_.restrictions = restrictions;
+    actualRequest_.options = options;
+    submitRequest("/modify/graph", actualRequest_, response_, false);
+    return response_;
+}
+
+
+/**
  * Employs a topological query on a network graph generated a-priori by {@link
  * #createGraph(const CreateGraphRequest&) const} and returns a list of
  * adjacent edge(s) or node(s), also known as an adjacency list, depending on
@@ -19997,6 +21487,11 @@ RevokePermissionTableResponse& GPUdb::revokePermissionTable( const RevokePermiss
  * @param tableName  Name of the table to which the permission grants access.
  *                   Must be an existing table, collection, or view.
  * @param options  Optional parameters.
+ *                 <ul>
+ *                         <li> gpudb::revoke_permission_table_columns: Apply
+ *                 security to these columns, comma-separated.  The default
+ *                 value is ''.
+ *                 </ul>
  * 
  * @return Response object containing the result of the operation.
  * 
@@ -20039,6 +21534,11 @@ RevokePermissionTableResponse GPUdb::revokePermissionTable( const std::string& n
  * @param tableName  Name of the table to which the permission grants access.
  *                   Must be an existing table, collection, or view.
  * @param options  Optional parameters.
+ *                 <ul>
+ *                         <li> gpudb::revoke_permission_table_columns: Apply
+ *                 security to these columns, comma-separated.  The default
+ *                 value is ''.
+ *                 </ul>
  * @param[out] response_  Response object containing the results of the
  *                        operation.
  * 
@@ -20918,7 +22418,8 @@ ShowSecurityResponse& GPUdb::showSecurity( const std::vector<std::string>& names
 
 
 /**
- * Procedures
+ * Shows information about SQL procedures, including the full definition of
+ * each requested procedure.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -20936,7 +22437,8 @@ ShowSqlProcResponse GPUdb::showSqlProc( const ShowSqlProcRequest& request_ ) con
 
 
 /**
- * Procedures
+ * Shows information about SQL procedures, including the full definition of
+ * each requested procedure.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -20957,7 +22459,8 @@ ShowSqlProcResponse& GPUdb::showSqlProc( const ShowSqlProcRequest& request_,
 
 
 /**
- * Procedures
+ * Shows information about SQL procedures, including the full definition of
+ * each requested procedure.
  * 
  * @param procedureName  Name of the procedure for which to retrieve the
  *                       information. If blank, then information about all
@@ -20965,8 +22468,9 @@ ShowSqlProcResponse& GPUdb::showSqlProc( const ShowSqlProcRequest& request_,
  * @param options  Optional parameters.
  *                 <ul>
  *                         <li> gpudb::show_sql_proc_no_error_if_not_exists: If
- *                 @a false will return an error if the provided  does not
- *                 exist. If @a true then it will return an empty result.
+ *                 @a true, no error will be returned if the requested
+ *                 procedure does not exist.  If @a false, an error will be
+ *                 returned if the requested procedure does not exist.
  *                 <ul>
  *                         <li> gpudb::show_sql_proc_true
  *                         <li> gpudb::show_sql_proc_false
@@ -20991,7 +22495,8 @@ ShowSqlProcResponse GPUdb::showSqlProc( const std::string& procedureName,
 
 
 /**
- * Procedures
+ * Shows information about SQL procedures, including the full definition of
+ * each requested procedure.
  * 
  * @param procedureName  Name of the procedure for which to retrieve the
  *                       information. If blank, then information about all
@@ -20999,8 +22504,9 @@ ShowSqlProcResponse GPUdb::showSqlProc( const std::string& procedureName,
  * @param options  Optional parameters.
  *                 <ul>
  *                         <li> gpudb::show_sql_proc_no_error_if_not_exists: If
- *                 @a false will return an error if the provided  does not
- *                 exist. If @a true then it will return an empty result.
+ *                 @a true, no error will be returned if the requested
+ *                 procedure does not exist.  If @a false, an error will be
+ *                 returned if the requested procedure does not exist.
  *                 <ul>
  *                         <li> gpudb::show_sql_proc_true
  *                         <li> gpudb::show_sql_proc_false
@@ -21416,6 +22922,11 @@ ShowTableResponse GPUdb::showTable( const ShowTableRequest& request_ ) const
     std::vector<std::string>::size_type i_;
     for ( i_ = 0; i_ < actualResponse_.typeIds.size(); ++i_)
     {
+        if ( actualResponse_.typeSchemas[i_].empty() )
+        {
+            // Skip generating a type if no schema is available
+            continue;
+        }
         setDecoderIfMissing( actualResponse_.typeIds[i_],
                              actualResponse_.typeLabels[i_],
                              actualResponse_.typeSchemas[i_],
@@ -21464,6 +22975,11 @@ ShowTableResponse& GPUdb::showTable( const ShowTableRequest& request_,
     std::vector<std::string>::size_type i_;
     for ( i_ = 0; i_ < response_.typeIds.size(); ++i_)
     {
+        if ( response_.typeSchemas[i_].empty() )
+        {
+            // Skip generating a type if no schema is available
+            continue;
+        }
         setDecoderIfMissing( response_.typeIds[i_],
                              response_.typeLabels[i_],
                              response_.typeSchemas[i_],
@@ -21559,6 +23075,11 @@ ShowTableResponse GPUdb::showTable( const std::string& tableName,
     std::vector<std::string>::size_type i_;
     for ( i_ = 0; i_ < actualResponse_.typeIds.size(); ++i_)
     {
+        if ( actualResponse_.typeSchemas[i_].empty() )
+        {
+            // Skip generating a type if no schema is available
+            continue;
+        }
         setDecoderIfMissing( actualResponse_.typeIds[i_],
                              actualResponse_.typeLabels[i_],
                              actualResponse_.typeSchemas[i_],
@@ -21657,6 +23178,11 @@ ShowTableResponse& GPUdb::showTable( const std::string& tableName,
     std::vector<std::string>::size_type i_;
     for ( i_ = 0; i_ < response_.typeIds.size(); ++i_)
     {
+        if ( response_.typeSchemas[i_].empty() )
+        {
+            // Skip generating a type if no schema is available
+            continue;
+        }
         setDecoderIfMissing( response_.typeIds[i_],
                              response_.typeLabels[i_],
                              response_.typeSchemas[i_],
@@ -21979,6 +23505,11 @@ ShowTypesResponse GPUdb::showTypes( const ShowTypesRequest& request_ ) const
     std::vector<std::string>::size_type i_;
     for ( i_ = 0; i_ < actualResponse_.typeIds.size(); ++i_)
     {
+        if ( actualResponse_.typeSchemas[i_].empty() )
+        {
+            // Skip generating a type if no schema is available
+            continue;
+        }
         setDecoderIfMissing( actualResponse_.typeIds[i_],
                              actualResponse_.labels[i_],
                              actualResponse_.typeSchemas[i_],
@@ -22012,6 +23543,11 @@ ShowTypesResponse& GPUdb::showTypes( const ShowTypesRequest& request_,
     std::vector<std::string>::size_type i_;
     for ( i_ = 0; i_ < response_.typeIds.size(); ++i_)
     {
+        if ( response_.typeSchemas[i_].empty() )
+        {
+            // Skip generating a type if no schema is available
+            continue;
+        }
         setDecoderIfMissing( response_.typeIds[i_],
                              response_.labels[i_],
                              response_.typeSchemas[i_],
@@ -22059,6 +23595,11 @@ ShowTypesResponse GPUdb::showTypes( const std::string& typeId,
     std::vector<std::string>::size_type i_;
     for ( i_ = 0; i_ < actualResponse_.typeIds.size(); ++i_)
     {
+        if ( actualResponse_.typeSchemas[i_].empty() )
+        {
+            // Skip generating a type if no schema is available
+            continue;
+        }
         setDecoderIfMissing( actualResponse_.typeIds[i_],
                              actualResponse_.labels[i_],
                              actualResponse_.typeSchemas[i_],
@@ -22109,6 +23650,11 @@ ShowTypesResponse& GPUdb::showTypes( const std::string& typeId,
     std::vector<std::string>::size_type i_;
     for ( i_ = 0; i_ < response_.typeIds.size(); ++i_)
     {
+        if ( response_.typeSchemas[i_].empty() )
+        {
+            // Skip generating a type if no schema is available
+            continue;
+        }
         setDecoderIfMissing( response_.typeIds[i_],
                              response_.labels[i_],
                              response_.typeSchemas[i_],
