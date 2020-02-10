@@ -26,15 +26,16 @@ namespace gpudb
     const std::string admin_offline_true         ( "true"          );
 
     // Keywords for /admin/rebalance request
-    const std::string admin_rebalance_aggressiveness          ( "aggressiveness"           );
-    const std::string admin_rebalance_compact_after_rebalance ( "compact_after_rebalance"  );
-    const std::string admin_rebalance_compact_only            ( "compact_only"             );
-    const std::string admin_rebalance_false                   ( "false"                    );
-    const std::string admin_rebalance_rebalance_sharded_data  ( "rebalance_sharded_data"   );
-    const std::string admin_rebalance_rebalance_unsharded_data( "rebalance_unsharded_data" );
-    const std::string admin_rebalance_table_blacklist         ( "table_blacklist"          );
-    const std::string admin_rebalance_table_whitelist         ( "table_whitelist"          );
-    const std::string admin_rebalance_true                    ( "true"                     );
+    const std::string admin_rebalance_aggressiveness                 ( "aggressiveness"                  );
+    const std::string admin_rebalance_compact_after_rebalance        ( "compact_after_rebalance"         );
+    const std::string admin_rebalance_compact_only                   ( "compact_only"                    );
+    const std::string admin_rebalance_false                          ( "false"                           );
+    const std::string admin_rebalance_rebalance_sharded_data         ( "rebalance_sharded_data"          );
+    const std::string admin_rebalance_rebalance_unsharded_data       ( "rebalance_unsharded_data"        );
+    const std::string admin_rebalance_repair_incorrectly_sharded_data( "repair_incorrectly_sharded_data" );
+    const std::string admin_rebalance_table_blacklist                ( "table_blacklist"                 );
+    const std::string admin_rebalance_table_whitelist                ( "table_whitelist"                 );
+    const std::string admin_rebalance_true                           ( "true"                            );
 
     // Keywords for /admin/remove/ranks request
     const std::string admin_remove_ranks_aggressiveness          ( "aggressiveness"           );
@@ -301,6 +302,7 @@ namespace gpudb
     const std::string create_external_table_distributed_shared            ( "distributed_shared"             );
     const std::string create_external_table_dry_run                       ( "dry_run"                        );
     const std::string create_external_table_error_handling                ( "error_handling"                 );
+    const std::string create_external_table_external_storage_location     ( "external_storage_location"      );
     const std::string create_external_table_false                         ( "false"                          );
     const std::string create_external_table_file_type                     ( "file_type"                      );
     const std::string create_external_table_full_refresh                  ( "full_refresh"                   );
@@ -316,6 +318,8 @@ namespace gpudb
     const std::string create_external_table_parquet                       ( "parquet"                        );
     const std::string create_external_table_permissive                    ( "permissive"                     );
     const std::string create_external_table_refresh_method                ( "refresh_method"                 );
+    const std::string create_external_table_s3_bucket_name                ( "s3_bucket_name"                 );
+    const std::string create_external_table_s3_region                     ( "s3_region"                      );
     const std::string create_external_table_table_type                    ( "table_type"                     );
     const std::string create_external_table_text_comment_string           ( "text_comment_string"            );
     const std::string create_external_table_text_delimiter                ( "text_delimiter"                 );
@@ -404,6 +408,9 @@ namespace gpudb
     const std::string create_projection_true                  ( "true"                   );
     const std::string create_projection_ttl                   ( "ttl"                    );
     const std::string create_projection_view_id               ( "view_id"                );
+
+    // Keywords for /create/projection response
+    const std::string create_projection_count( "count" );
 
     // Keywords for /create/resourcegroup request
     const std::string create_resource_group_after                  ( "after"                   );
@@ -526,6 +533,9 @@ namespace gpudb
     const std::string create_union_union_distinct    ( "union_distinct"     );
     const std::string create_union_view_id           ( "view_id"            );
 
+    // Keywords for /create/union response
+    const std::string create_union_count( "count" );
+
     // Keywords for /create/user/internal request
     const std::string create_user_internal_resource_group( "resource_group" );
 
@@ -554,6 +564,7 @@ namespace gpudb
     const std::string execute_sql_distributed_operations ( "distributed_operations"  );
     const std::string execute_sql_json                   ( "json"                    );
     const std::string execute_sql_late_materialization   ( "late_materialization"    );
+    const std::string execute_sql_no_count               ( "no_count"                );
     const std::string execute_sql_paging_table           ( "paging_table"            );
     const std::string execute_sql_paging_table_ttl       ( "paging_table_ttl"        );
     const std::string execute_sql_parallel_execution     ( "parallel_execution"      );
@@ -566,6 +577,10 @@ namespace gpudb
     const std::string execute_sql_ttl                    ( "ttl"                     );
     const std::string execute_sql_update_on_existing_pk  ( "update_on_existing_pk"   );
     const std::string execute_sql_validate_change_column ( "validate_change_column"  );
+    const std::string execute_sql_view_id                ( "view_id"                 );
+
+    // Keywords for /execute/sql response
+    const std::string execute_sql_count( "count" );
 
     // Keywords for /execute/sql request and response
     const std::string execute_sql_false( "false" );
@@ -756,7 +771,6 @@ namespace gpudb
     const std::string insert_records_from_files_columns_to_load               ( "columns_to_load"                );
     const std::string insert_records_from_files_default_column_formats        ( "default_column_formats"         );
     const std::string insert_records_from_files_delimited_text                ( "delimited_text"                 );
-    const std::string insert_records_from_files_disallow_homogeneous_tables   ( "disallow_homogeneous_tables"    );
     const std::string insert_records_from_files_distributed_local             ( "distributed_local"              );
     const std::string insert_records_from_files_distributed_shared            ( "distributed_shared"             );
     const std::string insert_records_from_files_dry_run                       ( "dry_run"                        );
@@ -768,7 +782,6 @@ namespace gpudb
     const std::string insert_records_from_files_head                          ( "head"                           );
     const std::string insert_records_from_files_ignore_bad_records            ( "ignore_bad_records"             );
     const std::string insert_records_from_files_is_automatic_partition        ( "is_automatic_partition"         );
-    const std::string insert_records_from_files_is_collection                 ( "is_collection"                  );
     const std::string insert_records_from_files_is_create_sql_proc            ( "is_create_sql_proc"             );
     const std::string insert_records_from_files_is_create_view                ( "is_create_view"                 );
     const std::string insert_records_from_files_is_external_table             ( "is_external_table"              );
@@ -801,7 +814,6 @@ namespace gpudb
     const std::string insert_records_from_files_is_update_records_by_series   ( "is_update_records_by_series"    );
     const std::string insert_records_from_files_loading_mode                  ( "loading_mode"                   );
     const std::string insert_records_from_files_no_error_if_exists            ( "no_error_if_exists"             );
-    const std::string insert_records_from_files_parquet                       ( "parquet"                        );
     const std::string insert_records_from_files_partition_definitions         ( "partition_definitions"          );
     const std::string insert_records_from_files_partition_keys                ( "partition_keys"                 );
     const std::string insert_records_from_files_partition_type                ( "partition_type"                 );
@@ -990,6 +1002,8 @@ namespace gpudb
     const std::string show_table_INTERVAL                            ( "INTERVAL"                             );
     const std::string show_table_JOIN                                ( "JOIN"                                 );
     const std::string show_table_LIST                                ( "LIST"                                 );
+    const std::string show_table_MATERIALIZED_VIEW                   ( "MATERIALIZED_VIEW"                    );
+    const std::string show_table_MATERIALIZED_VIEW_MEMBER            ( "MATERIALIZED_VIEW_MEMBER"             );
     const std::string show_table_MATERIALIZED_VIEW_UNDER_CONSTRUCTION( "MATERIALIZED_VIEW_UNDER_CONSTRUCTION" );
     const std::string show_table_NONE                                ( "NONE"                                 );
     const std::string show_table_RANGE                               ( "RANGE"                                );

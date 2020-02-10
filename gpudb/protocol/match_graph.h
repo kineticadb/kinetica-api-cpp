@@ -75,29 +75,34 @@ namespace gpudb
          *                          points, so the prediction is corrected
          *                          after each point. This solution type is the
          *                          most accurate but also the most
-         *                          computationally intensive.
+         *                          computationally intensive. Related options:
+         *                          @a num_segments and @a chain_width.
          *                                  <li>
          *                          gpudb::match_graph_incremental_weighted:
          *                          Matches @a samplePoints to the graph using
          *                          time and/or distance between points to
          *                          influence one or more shortest paths across
-         *                          the sample points.
+         *                          the sample points. Related options: @a
+         *                          num_segments, @a max_solve_length, @a
+         *                          time_window_width, and @a detect_loops.
          *                                  <li>
          *                          gpudb::match_graph_match_od_pairs: Matches
          *                          @a samplePoints to find the most probable
          *                          path between origin and destination pairs
-         *                          with cost constraints
+         *                          with cost constraints.
          *                                  <li>
          *                          gpudb::match_graph_match_supply_demand:
          *                          Matches @a samplePoints to optimize
          *                          scheduling multiple supplies (trucks) with
          *                          varying sizes to varying demand sites with
-         *                          varying capacities per depot
+         *                          varying capacities per depot. Related
+         *                          options: @a partial_loading and @a
+         *                          max_combinations.
          *                                  <li>
          *                          gpudb::match_graph_match_batch_solves:
          *                          Matches @a samplePoints source and
          *                          destination pairs for the shortest path
-         *                          solves in batch mode
+         *                          solves in batch mode.
          *                          </ul>
          *                          The default value is
          *                          gpudb::match_graph_markov_chain.
@@ -190,10 +195,10 @@ namespace gpudb
          *                      than the store's need
          *                      <ul>
          *                              <li> gpudb::match_graph_true: Partial
-         *                      off loading at multiple store (demand)
+         *                      off-loading at multiple store (demand)
          *                      locations
          *                              <li> gpudb::match_graph_false: No
-         *                      partial off loading allowed if supply is less
+         *                      partial off-loading allowed if supply is less
          *                      than the store's demand.
          *                      </ul>
          *                      The default value is gpudb::match_graph_true.
@@ -202,7 +207,7 @@ namespace gpudb
          *                      match_supply_demand solver only. This is the
          *                      cutoff for the number of generated combinations
          *                      for sequencing the demand locations - can
-         *                      increase this upto 2M.  The default value is
+         *                      increase this up to 2M.  The default value is
          *                      '10000'.
          *                      </ul>
          * 
