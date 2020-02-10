@@ -32,6 +32,7 @@ namespace gpudb
     extern const std::string admin_rebalance_false;
     extern const std::string admin_rebalance_rebalance_sharded_data;
     extern const std::string admin_rebalance_rebalance_unsharded_data;
+    extern const std::string admin_rebalance_repair_incorrectly_sharded_data;
     extern const std::string admin_rebalance_table_blacklist;
     extern const std::string admin_rebalance_table_whitelist;
     extern const std::string admin_rebalance_true;
@@ -301,6 +302,7 @@ namespace gpudb
     extern const std::string create_external_table_distributed_shared;
     extern const std::string create_external_table_dry_run;
     extern const std::string create_external_table_error_handling;
+    extern const std::string create_external_table_external_storage_location;
     extern const std::string create_external_table_false;
     extern const std::string create_external_table_file_type;
     extern const std::string create_external_table_full_refresh;
@@ -316,6 +318,8 @@ namespace gpudb
     extern const std::string create_external_table_parquet;
     extern const std::string create_external_table_permissive;
     extern const std::string create_external_table_refresh_method;
+    extern const std::string create_external_table_s3_bucket_name;
+    extern const std::string create_external_table_s3_region;
     extern const std::string create_external_table_table_type;
     extern const std::string create_external_table_text_comment_string;
     extern const std::string create_external_table_text_delimiter;
@@ -404,6 +408,9 @@ namespace gpudb
     extern const std::string create_projection_true;
     extern const std::string create_projection_ttl;
     extern const std::string create_projection_view_id;
+
+    // Keywords for /create/projection response
+    extern const std::string create_projection_count;
 
     // Keywords for /create/resourcegroup request
     extern const std::string create_resource_group_after;
@@ -526,6 +533,9 @@ namespace gpudb
     extern const std::string create_union_union_distinct;
     extern const std::string create_union_view_id;
 
+    // Keywords for /create/union response
+    extern const std::string create_union_count;
+
     // Keywords for /create/user/internal request
     extern const std::string create_user_internal_resource_group;
 
@@ -554,6 +564,7 @@ namespace gpudb
     extern const std::string execute_sql_distributed_operations;
     extern const std::string execute_sql_json;
     extern const std::string execute_sql_late_materialization;
+    extern const std::string execute_sql_no_count;
     extern const std::string execute_sql_paging_table;
     extern const std::string execute_sql_paging_table_ttl;
     extern const std::string execute_sql_parallel_execution;
@@ -566,6 +577,10 @@ namespace gpudb
     extern const std::string execute_sql_ttl;
     extern const std::string execute_sql_update_on_existing_pk;
     extern const std::string execute_sql_validate_change_column;
+    extern const std::string execute_sql_view_id;
+
+    // Keywords for /execute/sql response
+    extern const std::string execute_sql_count;
 
     // Keywords for /execute/sql request and response
     extern const std::string execute_sql_false;
@@ -756,7 +771,6 @@ namespace gpudb
     extern const std::string insert_records_from_files_columns_to_load;
     extern const std::string insert_records_from_files_default_column_formats;
     extern const std::string insert_records_from_files_delimited_text;
-    extern const std::string insert_records_from_files_disallow_homogeneous_tables;
     extern const std::string insert_records_from_files_distributed_local;
     extern const std::string insert_records_from_files_distributed_shared;
     extern const std::string insert_records_from_files_dry_run;
@@ -768,7 +782,6 @@ namespace gpudb
     extern const std::string insert_records_from_files_head;
     extern const std::string insert_records_from_files_ignore_bad_records;
     extern const std::string insert_records_from_files_is_automatic_partition;
-    extern const std::string insert_records_from_files_is_collection;
     extern const std::string insert_records_from_files_is_create_sql_proc;
     extern const std::string insert_records_from_files_is_create_view;
     extern const std::string insert_records_from_files_is_external_table;
@@ -801,7 +814,6 @@ namespace gpudb
     extern const std::string insert_records_from_files_is_update_records_by_series;
     extern const std::string insert_records_from_files_loading_mode;
     extern const std::string insert_records_from_files_no_error_if_exists;
-    extern const std::string insert_records_from_files_parquet;
     extern const std::string insert_records_from_files_partition_definitions;
     extern const std::string insert_records_from_files_partition_keys;
     extern const std::string insert_records_from_files_partition_type;
@@ -990,6 +1002,8 @@ namespace gpudb
     extern const std::string show_table_INTERVAL;
     extern const std::string show_table_JOIN;
     extern const std::string show_table_LIST;
+    extern const std::string show_table_MATERIALIZED_VIEW;
+    extern const std::string show_table_MATERIALIZED_VIEW_MEMBER;
     extern const std::string show_table_MATERIALIZED_VIEW_UNDER_CONSTRUCTION;
     extern const std::string show_table_NONE;
     extern const std::string show_table_RANGE;

@@ -13,6 +13,10 @@ namespace gpudb
      * A set of input parameters for {@link
      * #getJob(const GetJobRequest&) const}.
      * <p>
+     * Get the status and result of asynchronously running job.  See the {@link
+     * #createJob(const CreateJobRequest&) const} for starting an
+     * asynchronous job.  Some fields of the response are filled only after the
+     * submitted job has finished execution.
      */
     struct GetJobRequest
     {
@@ -94,6 +98,10 @@ namespace gpudb
      * A set of output parameters for {@link
      * #getJob(const GetJobRequest&) const}.
      * <p>
+     * Get the status and result of asynchronously running job.  See the {@link
+     * #createJob(const CreateJobRequest&) const} for starting an
+     * asynchronous job.  Some fields of the response are filled only after the
+     * submitted job has finished execution.
      */
     struct GetJobResponse
     {

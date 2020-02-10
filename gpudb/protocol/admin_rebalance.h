@@ -95,12 +95,44 @@ namespace gpudb
          *                      gpudb::admin_rebalance_compact_after_rebalance:
          *                      Perform compaction of deleted records once the
          *                      rebalance completes, to reclaim memory and disk
-         *                      space. Default is true.  The default value is
-         *                      'true'.
+         *                      space. Default is true, unless
+         *                      {add_labels}@{key of options
+         *                      repair_incorrectly_sharded_data} is set to @a
+         *                      true.
+         *                      <ul>
+         *                              <li> gpudb::admin_rebalance_true
+         *                              <li> gpudb::admin_rebalance_false
+         *                      </ul>
+         *                      The default value is
+         *                      gpudb::admin_rebalance_true.
          *                              <li>
          *                      gpudb::admin_rebalance_compact_only: Only
          *                      perform compaction, do not rebalance. Default
-         *                      is false.  The default value is 'false'.
+         *                      is false.
+         *                      <ul>
+         *                              <li> gpudb::admin_rebalance_true
+         *                              <li> gpudb::admin_rebalance_false
+         *                      </ul>
+         *                      The default value is
+         *                      gpudb::admin_rebalance_false.
+         *                              <li>
+         *                      gpudb::admin_rebalance_repair_incorrectly_sharded_data:
+         *                      Scans for any data sharded incorrectly and
+         *                      re-routes the correct location. This can be
+         *                      done as part of a typical rebalance after
+         *                      expanding the cluster, or in a standalone
+         *                      fashion when it is believed that data is
+         *                      sharded incorrectly somewhere in the cluster.
+         *                      Compaction will not be performed by default
+         *                      when this is enabled. This option may also
+         *                      lengthen rebalance time, and increase the
+         *                      memory used by the rebalance.
+         *                      <ul>
+         *                              <li> gpudb::admin_rebalance_true
+         *                              <li> gpudb::admin_rebalance_false
+         *                      </ul>
+         *                      The default value is
+         *                      gpudb::admin_rebalance_false.
          *                      </ul>
          * 
          */

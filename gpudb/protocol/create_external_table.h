@@ -141,6 +141,12 @@ namespace gpudb
          *                      The default value is '"'.
          *                              <li>
          *                      gpudb::create_external_table_text_escape_character
+         *                              <li>
+         *                      gpudb::create_external_table_external_storage_location
+         *                              <li>
+         *                      gpudb::create_external_table_s3_bucket_name
+         *                              <li>
+         *                      gpudb::create_external_table_s3_region
          *                      </ul>
          * 
          */

@@ -210,6 +210,10 @@ namespace gpudb
          *                              <li> gpudb::execute_sql_false
          *                      </ul>
          *                      The default value is gpudb::execute_sql_false.
+         *                              <li> gpudb::execute_sql_view_id:
+         *                      <DEVELOPER>  The default value is ''.
+         *                              <li> gpudb::execute_sql_no_count:
+         *                      <DEVELOPER>  The default value is 'false'.
          *                      </ul>
          * 
          */
@@ -407,6 +411,10 @@ namespace gpudb
          *                              <li> gpudb::execute_sql_false
          *                      </ul>
          *                      The default value is gpudb::execute_sql_false.
+         *                              <li> gpudb::execute_sql_view_id:
+         *                      <DEVELOPER>  The default value is ''.
+         *                              <li> gpudb::execute_sql_no_count:
+         *                      <DEVELOPER>  The default value is 'false'.
          *                      </ul>
          * 
          */
