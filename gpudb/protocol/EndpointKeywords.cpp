@@ -333,6 +333,7 @@ namespace gpudb
 
     // Keywords for /create/graph request
     const std::string create_graph_add_table_monitor          ( "add_table_monitor"           );
+    const std::string create_graph_add_turns                  ( "add_turns"                   );
     const std::string create_graph_enable_graph_draw          ( "enable_graph_draw"           );
     const std::string create_graph_export_create_results      ( "export_create_results"       );
     const std::string create_graph_false                      ( "false"                       );
@@ -349,6 +350,7 @@ namespace gpudb
     const std::string create_graph_save_persist               ( "save_persist"                );
     const std::string create_graph_sync_db                    ( "sync_db"                     );
     const std::string create_graph_true                       ( "true"                        );
+    const std::string create_graph_turn_angle                 ( "turn_angle"                  );
 
     // Keywords for /create/job request
     const std::string create_job_binary( "binary" );
@@ -859,12 +861,15 @@ namespace gpudb
     const std::string lock_table_write_only( "write_only" );
 
     // Keywords for /match/graph request
+    const std::string match_graph_aggregated_output   ( "aggregated_output"    );
     const std::string match_graph_chain_width         ( "chain_width"          );
     const std::string match_graph_destination         ( "destination"          );
     const std::string match_graph_detect_loops        ( "detect_loops"         );
     const std::string match_graph_false               ( "false"                );
     const std::string match_graph_gps_noise           ( "gps_noise"            );
     const std::string match_graph_incremental_weighted( "incremental_weighted" );
+    const std::string match_graph_intersection_penalty( "intersection_penalty" );
+    const std::string match_graph_left_turn_penalty   ( "left_turn_penalty"    );
     const std::string match_graph_markov_chain        ( "markov_chain"         );
     const std::string match_graph_match_batch_solves  ( "match_batch_solves"   );
     const std::string match_graph_match_od_pairs      ( "match_od_pairs"       );
@@ -873,7 +878,9 @@ namespace gpudb
     const std::string match_graph_max_solve_length    ( "max_solve_length"     );
     const std::string match_graph_num_segments        ( "num_segments"         );
     const std::string match_graph_partial_loading     ( "partial_loading"      );
+    const std::string match_graph_right_turn_penalty  ( "right_turn_penalty"   );
     const std::string match_graph_search_radius       ( "search_radius"        );
+    const std::string match_graph_sharp_turn_penalty  ( "sharp_turn_penalty"   );
     const std::string match_graph_source              ( "source"               );
     const std::string match_graph_time_window_width   ( "time_window_width"    );
     const std::string match_graph_true                ( "true"                 );
@@ -890,6 +897,7 @@ namespace gpudb
 
     // Keywords for /modify/graph request
     const std::string modify_graph_add_table_monitor          ( "add_table_monitor"           );
+    const std::string modify_graph_add_turns                  ( "add_turns"                   );
     const std::string modify_graph_enable_graph_draw          ( "enable_graph_draw"           );
     const std::string modify_graph_export_create_results      ( "export_create_results"       );
     const std::string modify_graph_false                      ( "false"                       );
@@ -898,6 +906,7 @@ namespace gpudb
     const std::string modify_graph_restriction_threshold_value( "restriction_threshold_value" );
     const std::string modify_graph_save_persist               ( "save_persist"                );
     const std::string modify_graph_true                       ( "true"                        );
+    const std::string modify_graph_turn_angle                 ( "turn_angle"                  );
 
     // Keywords for /query/graph request
     const std::string query_graph_and_labels                 ( "and_labels"                  );
@@ -1063,13 +1072,20 @@ namespace gpudb
     const std::string solve_graph_PAGE_RANK                   ( "PAGE_RANK"                    );
     const std::string solve_graph_PROBABILITY_RANK            ( "PROBABILITY_RANK"             );
     const std::string solve_graph_SHORTEST_PATH               ( "SHORTEST_PATH"                );
+    const std::string solve_graph_accurate_snaps              ( "accurate_snaps"               );
     const std::string solve_graph_export_solve_results        ( "export_solve_results"         );
     const std::string solve_graph_false                       ( "false"                        );
+    const std::string solve_graph_intersection_penalty        ( "intersection_penalty"         );
+    const std::string solve_graph_left_turn_penalty           ( "left_turn_penalty"            );
+    const std::string solve_graph_max_num_combinations        ( "max_num_combinations"         );
     const std::string solve_graph_max_solution_radius         ( "max_solution_radius"          );
     const std::string solve_graph_max_solution_targets        ( "max_solution_targets"         );
     const std::string solve_graph_min_solution_radius         ( "min_solution_radius"          );
+    const std::string solve_graph_num_best_paths              ( "num_best_paths"               );
     const std::string solve_graph_remove_previous_restrictions( "remove_previous_restrictions" );
     const std::string solve_graph_restriction_threshold_value ( "restriction_threshold_value"  );
+    const std::string solve_graph_right_turn_penalty          ( "right_turn_penalty"           );
+    const std::string solve_graph_sharp_turn_penalty          ( "sharp_turn_penalty"           );
     const std::string solve_graph_true                        ( "true"                         );
     const std::string solve_graph_uniform_weights             ( "uniform_weights"              );
 

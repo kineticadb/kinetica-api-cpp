@@ -255,6 +255,28 @@ namespace gpudb
          *                              <li> gpudb::create_graph_false
          *                      </ul>
          *                      The default value is gpudb::create_graph_false.
+         *                              <li> gpudb::create_graph_add_turns:
+         *                      Adds dummy 'pillowed' edges around intersection
+         *                      nodes where there are more than three edges so
+         *                      that additional weight penalties can be imposed
+         *                      by the solve endpoints. (increases the total
+         *                      number of edges).
+         *                      <ul>
+         *                              <li> gpudb::create_graph_true
+         *                              <li> gpudb::create_graph_false
+         *                      </ul>
+         *                      The default value is gpudb::create_graph_false.
+         *                              <li> gpudb::create_graph_turn_angle:
+         *                      Value in degrees modifies the thresholds for
+         *                      attributing right, left, sharp turns, and
+         *                      intersections. It is the vertical deviation
+         *                      angle from the incoming edge to the
+         *                      intersection node. The larger the value, the
+         *                      larger the threshold for sharp turns and
+         *                      intersections; the smaller the value, the
+         *                      larger the threshold for right and left turns;
+         *                      0 < turn_angle < 90.  The default value is
+         *                      '60'.
          *                      </ul>
          * 
          */

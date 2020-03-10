@@ -333,6 +333,7 @@ namespace gpudb
 
     // Keywords for /create/graph request
     extern const std::string create_graph_add_table_monitor;
+    extern const std::string create_graph_add_turns;
     extern const std::string create_graph_enable_graph_draw;
     extern const std::string create_graph_export_create_results;
     extern const std::string create_graph_false;
@@ -349,6 +350,7 @@ namespace gpudb
     extern const std::string create_graph_save_persist;
     extern const std::string create_graph_sync_db;
     extern const std::string create_graph_true;
+    extern const std::string create_graph_turn_angle;
 
     // Keywords for /create/job request
     extern const std::string create_job_binary;
@@ -859,12 +861,15 @@ namespace gpudb
     extern const std::string lock_table_write_only;
 
     // Keywords for /match/graph request
+    extern const std::string match_graph_aggregated_output;
     extern const std::string match_graph_chain_width;
     extern const std::string match_graph_destination;
     extern const std::string match_graph_detect_loops;
     extern const std::string match_graph_false;
     extern const std::string match_graph_gps_noise;
     extern const std::string match_graph_incremental_weighted;
+    extern const std::string match_graph_intersection_penalty;
+    extern const std::string match_graph_left_turn_penalty;
     extern const std::string match_graph_markov_chain;
     extern const std::string match_graph_match_batch_solves;
     extern const std::string match_graph_match_od_pairs;
@@ -873,7 +878,9 @@ namespace gpudb
     extern const std::string match_graph_max_solve_length;
     extern const std::string match_graph_num_segments;
     extern const std::string match_graph_partial_loading;
+    extern const std::string match_graph_right_turn_penalty;
     extern const std::string match_graph_search_radius;
+    extern const std::string match_graph_sharp_turn_penalty;
     extern const std::string match_graph_source;
     extern const std::string match_graph_time_window_width;
     extern const std::string match_graph_true;
@@ -890,6 +897,7 @@ namespace gpudb
 
     // Keywords for /modify/graph request
     extern const std::string modify_graph_add_table_monitor;
+    extern const std::string modify_graph_add_turns;
     extern const std::string modify_graph_enable_graph_draw;
     extern const std::string modify_graph_export_create_results;
     extern const std::string modify_graph_false;
@@ -898,6 +906,7 @@ namespace gpudb
     extern const std::string modify_graph_restriction_threshold_value;
     extern const std::string modify_graph_save_persist;
     extern const std::string modify_graph_true;
+    extern const std::string modify_graph_turn_angle;
 
     // Keywords for /query/graph request
     extern const std::string query_graph_and_labels;
@@ -1063,13 +1072,20 @@ namespace gpudb
     extern const std::string solve_graph_PAGE_RANK;
     extern const std::string solve_graph_PROBABILITY_RANK;
     extern const std::string solve_graph_SHORTEST_PATH;
+    extern const std::string solve_graph_accurate_snaps;
     extern const std::string solve_graph_export_solve_results;
     extern const std::string solve_graph_false;
+    extern const std::string solve_graph_intersection_penalty;
+    extern const std::string solve_graph_left_turn_penalty;
+    extern const std::string solve_graph_max_num_combinations;
     extern const std::string solve_graph_max_solution_radius;
     extern const std::string solve_graph_max_solution_targets;
     extern const std::string solve_graph_min_solution_radius;
+    extern const std::string solve_graph_num_best_paths;
     extern const std::string solve_graph_remove_previous_restrictions;
     extern const std::string solve_graph_restriction_threshold_value;
+    extern const std::string solve_graph_right_turn_penalty;
+    extern const std::string solve_graph_sharp_turn_penalty;
     extern const std::string solve_graph_true;
     extern const std::string solve_graph_uniform_weights;
 

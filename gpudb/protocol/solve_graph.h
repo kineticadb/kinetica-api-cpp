@@ -219,6 +219,68 @@ namespace gpudb
          *                      specified, assigns the given value to all the
          *                      edges in the graph. Note that weights provided
          *                      in @a weightsOnEdges will override this value.
+         *                              <li>
+         *                      gpudb::solve_graph_left_turn_penalty: This will
+         *                      add an additonal weight over the edges labelled
+         *                      as 'left turn' if the 'add_turn' option
+         *                      parameter of the /create/graph was invoked at
+         *                      graph creation.  The default value is '0.0'.
+         *                              <li>
+         *                      gpudb::solve_graph_right_turn_penalty: This
+         *                      will add an additonal weight over the edges
+         *                      labelled as' right turn' if the 'add_turn'
+         *                      option parameter of the /create/graph was
+         *                      invoked at graph creation.  The default value
+         *                      is '0.0'.
+         *                              <li>
+         *                      gpudb::solve_graph_intersection_penalty: This
+         *                      will add an additonal weight over the edges
+         *                      labelled as 'intersection' if the 'add_turn'
+         *                      option parameter of the /create/graph was
+         *                      invoked at graph creation.  The default value
+         *                      is '0.0'.
+         *                              <li>
+         *                      gpudb::solve_graph_sharp_turn_penalty: This
+         *                      will add an additonal weight over the edges
+         *                      labelled as 'sharp turn' or 'u-turn' if the
+         *                      'add_turn' option parameter of the
+         *                      /create/graph was invoked at graph creation.
+         *                      The default value is '0.0'.
+         *                              <li> gpudb::solve_graph_num_best_paths:
+         *                      For @a MULTIPLE_ROUTING solvers only; sets the
+         *                      number of shortest paths computed from each
+         *                      node. This is the heuristic criterion. Default
+         *                      value of zero allows the number to be computed
+         *                      automatically by the solver. The user may want
+         *                      to override this parameter to speed-up the
+         *                      solver.  The default value is '0'.
+         *                              <li>
+         *                      gpudb::solve_graph_max_num_combinations: For @a
+         *                      MULTIPLE_ROUTING solvers only; sets the cap on
+         *                      the combinatorial sequences generated. If the
+         *                      default value of two millions is overridden to
+         *                      a lesser value, it can potentially speed up the
+         *                      solver.  The default value is '2000000'.
+         *                              <li> gpudb::solve_graph_accurate_snaps:
+         *                      Valid for single source destination pair solves
+         *                      if points are described in NODE_WKTPOINT
+         *                      identifier types: When true (default), it snaps
+         *                      to the nearest node of the graph; otherwise, it
+         *                      searches for the closest entity that could be
+         *                      an edge. For the latter case (false), the
+         *                      solver modifies the resulting cost with the
+         *                      weights proportional to the ratio of the snap
+         *                      location within the edge. This may be an
+         *                      over-kill when the performance is considered
+         *                      and the difference is well less than 1 percent.
+         *                      In batch runs, since the performance is of
+         *                      utmost importance, the option is always
+         *                      considered 'false'.
+         *                      <ul>
+         *                              <li> gpudb::solve_graph_true
+         *                              <li> gpudb::solve_graph_false
+         *                      </ul>
+         *                      The default value is gpudb::solve_graph_true.
          *                      </ul>
          * 
          */
