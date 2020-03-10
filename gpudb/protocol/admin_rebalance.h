@@ -95,9 +95,8 @@ namespace gpudb
          *                      gpudb::admin_rebalance_compact_after_rebalance:
          *                      Perform compaction of deleted records once the
          *                      rebalance completes, to reclaim memory and disk
-         *                      space. Default is true, unless
-         *                      {add_labels}@{key of options
-         *                      repair_incorrectly_sharded_data} is set to @a
+         *                      space. Default is true, unless @a
+         *                      repair_incorrectly_sharded_data is set to @a
          *                      true.
          *                      <ul>
          *                              <li> gpudb::admin_rebalance_true

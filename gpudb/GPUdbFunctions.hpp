@@ -475,8 +475,8 @@ AdminRebalanceResponse& adminRebalance( const AdminRebalanceRequest& request_,
  *                         <li> gpudb::admin_rebalance_compact_after_rebalance:
  *                 Perform compaction of deleted records once the rebalance
  *                 completes, to reclaim memory and disk space. Default is
- *                 true, unless {add_labels}@{key of options
- *                 repair_incorrectly_sharded_data} is set to @a true.
+ *                 true, unless @a repair_incorrectly_sharded_data is set to @a
+ *                 true.
  *                 <ul>
  *                         <li> gpudb::admin_rebalance_true
  *                         <li> gpudb::admin_rebalance_false
@@ -567,8 +567,8 @@ AdminRebalanceResponse adminRebalance( const std::map<std::string, std::string>&
  *                         <li> gpudb::admin_rebalance_compact_after_rebalance:
  *                 Perform compaction of deleted records once the rebalance
  *                 completes, to reclaim memory and disk space. Default is
- *                 true, unless {add_labels}@{key of options
- *                 repair_incorrectly_sharded_data} is set to @a true.
+ *                 true, unless @a repair_incorrectly_sharded_data is set to @a
+ *                 true.
  *                 <ul>
  *                         <li> gpudb::admin_rebalance_true
  *                         <li> gpudb::admin_rebalance_false
@@ -6592,6 +6592,24 @@ CreateGraphResponse& createGraph( const CreateGraphRequest& request_,
  *                         <li> gpudb::create_graph_false
  *                 </ul>
  *                 The default value is gpudb::create_graph_false.
+ *                         <li> gpudb::create_graph_add_turns: Adds dummy
+ *                 'pillowed' edges around intersection nodes where there are
+ *                 more than three edges so that additional weight penalties
+ *                 can be imposed by the solve endpoints. (increases the total
+ *                 number of edges).
+ *                 <ul>
+ *                         <li> gpudb::create_graph_true
+ *                         <li> gpudb::create_graph_false
+ *                 </ul>
+ *                 The default value is gpudb::create_graph_false.
+ *                         <li> gpudb::create_graph_turn_angle: Value in
+ *                 degrees modifies the thresholds for attributing right, left,
+ *                 sharp turns, and intersections. It is the vertical deviation
+ *                 angle from the incoming edge to the intersection node. The
+ *                 larger the value, the larger the threshold for sharp turns
+ *                 and intersections; the smaller the value, the larger the
+ *                 threshold for right and left turns; 0 < turn_angle < 90.
+ *                 The default value is '60'.
  *                 </ul>
  * 
  * @return Response object containing the result of the operation.
@@ -6790,6 +6808,24 @@ CreateGraphResponse createGraph( const std::string& graphName,
  *                         <li> gpudb::create_graph_false
  *                 </ul>
  *                 The default value is gpudb::create_graph_false.
+ *                         <li> gpudb::create_graph_add_turns: Adds dummy
+ *                 'pillowed' edges around intersection nodes where there are
+ *                 more than three edges so that additional weight penalties
+ *                 can be imposed by the solve endpoints. (increases the total
+ *                 number of edges).
+ *                 <ul>
+ *                         <li> gpudb::create_graph_true
+ *                         <li> gpudb::create_graph_false
+ *                 </ul>
+ *                 The default value is gpudb::create_graph_false.
+ *                         <li> gpudb::create_graph_turn_angle: Value in
+ *                 degrees modifies the thresholds for attributing right, left,
+ *                 sharp turns, and intersections. It is the vertical deviation
+ *                 angle from the incoming edge to the intersection node. The
+ *                 larger the value, the larger the threshold for sharp turns
+ *                 and intersections; the smaller the value, the larger the
+ *                 threshold for right and left turns; 0 < turn_angle < 90.
+ *                 The default value is '60'.
  *                 </ul>
  * @param[out] response_  Response object containing the results of the
  *                        operation.
@@ -18691,6 +18727,34 @@ MatchGraphResponse& matchGraph( const MatchGraphRequest& request_,
  *                 number of generated combinations for sequencing the demand
  *                 locations - can increase this up to 2M.  The default value
  *                 is '10000'.
+ *                         <li> gpudb::match_graph_left_turn_penalty: This will
+ *                 add an additonal weight over the edges labelled as 'left
+ *                 turn' if the 'add_turn' option parameter of the
+ *                 /create/graph was invoked at graph creation.  The default
+ *                 value is '0.0'.
+ *                         <li> gpudb::match_graph_right_turn_penalty: This
+ *                 will add an additonal weight over the edges labelled as'
+ *                 right turn' if the 'add_turn' option parameter of the
+ *                 /create/graph was invoked at graph creation.  The default
+ *                 value is '0.0'.
+ *                         <li> gpudb::match_graph_intersection_penalty: This
+ *                 will add an additonal weight over the edges labelled as
+ *                 'intersection' if the 'add_turn' option parameter of the
+ *                 /create/graph was invoked at graph creation.  The default
+ *                 value is '0.0'.
+ *                         <li> gpudb::match_graph_sharp_turn_penalty: This
+ *                 will add an additonal weight over the edges labelled as
+ *                 'sharp turn' or 'u-turn' if the 'add_turn' option parameter
+ *                 of the /create/graph was invoked at graph creation.  The
+ *                 default value is '0.0'.
+ *                         <li> gpudb::match_graph_aggregated_output: For the
+ *                 @a match_supply_demand solver only. When it is true
+ *                 (default), each record in the output table shows a
+ *                 particular truck's scheduled cumulative round trip path
+ *                 (MULTILINESTRING) and the corresponding aggregated cost.
+ *                 Otherwise, each record shows a single scheduled truck route
+ *                 (LINESTRING) towards a particular demand location (store id)
+ *                 with its corresponding cost.  The default value is 'true'.
  *                 </ul>
  * 
  * @return Response object containing the result of the operation.
@@ -18844,6 +18908,34 @@ MatchGraphResponse matchGraph( const std::string& graphName,
  *                 number of generated combinations for sequencing the demand
  *                 locations - can increase this up to 2M.  The default value
  *                 is '10000'.
+ *                         <li> gpudb::match_graph_left_turn_penalty: This will
+ *                 add an additonal weight over the edges labelled as 'left
+ *                 turn' if the 'add_turn' option parameter of the
+ *                 /create/graph was invoked at graph creation.  The default
+ *                 value is '0.0'.
+ *                         <li> gpudb::match_graph_right_turn_penalty: This
+ *                 will add an additonal weight over the edges labelled as'
+ *                 right turn' if the 'add_turn' option parameter of the
+ *                 /create/graph was invoked at graph creation.  The default
+ *                 value is '0.0'.
+ *                         <li> gpudb::match_graph_intersection_penalty: This
+ *                 will add an additonal weight over the edges labelled as
+ *                 'intersection' if the 'add_turn' option parameter of the
+ *                 /create/graph was invoked at graph creation.  The default
+ *                 value is '0.0'.
+ *                         <li> gpudb::match_graph_sharp_turn_penalty: This
+ *                 will add an additonal weight over the edges labelled as
+ *                 'sharp turn' or 'u-turn' if the 'add_turn' option parameter
+ *                 of the /create/graph was invoked at graph creation.  The
+ *                 default value is '0.0'.
+ *                         <li> gpudb::match_graph_aggregated_output: For the
+ *                 @a match_supply_demand solver only. When it is true
+ *                 (default), each record in the output table shows a
+ *                 particular truck's scheduled cumulative round trip path
+ *                 (MULTILINESTRING) and the corresponding aggregated cost.
+ *                 Otherwise, each record shows a single scheduled truck route
+ *                 (LINESTRING) towards a particular demand location (store id)
+ *                 with its corresponding cost.  The default value is 'true'.
  *                 </ul>
  * @param[out] response_  Response object containing the results of the
  *                        operation.
@@ -19278,6 +19370,24 @@ ModifyGraphResponse& modifyGraph( const ModifyGraphRequest& request_,
  *                         <li> gpudb::modify_graph_false
  *                 </ul>
  *                 The default value is gpudb::modify_graph_false.
+ *                         <li> gpudb::modify_graph_add_turns: Adds dummy
+ *                 'pillowed' edges around intersection nodes where there are
+ *                 more than three edges so that additional weight penalties
+ *                 can be imposed by the solve endpoints. (increases the total
+ *                 number of edges).
+ *                 <ul>
+ *                         <li> gpudb::modify_graph_true
+ *                         <li> gpudb::modify_graph_false
+ *                 </ul>
+ *                 The default value is gpudb::modify_graph_false.
+ *                         <li> gpudb::modify_graph_turn_angle: Value in
+ *                 degrees modifies the thresholds for attributing right, left,
+ *                 sharp turns, and intersections. It is the vertical deviation
+ *                 angle from the incoming edge to the intersection node. The
+ *                 larger the value, the larger the threshold for sharp turns
+ *                 and intersections; the smaller the value, the larger the
+ *                 threshold for right and left turns; 0 < turn_angle < 90.
+ *                 The default value is '60'.
  *                 </ul>
  * 
  * @return Response object containing the result of the operation.
@@ -19445,6 +19555,24 @@ ModifyGraphResponse modifyGraph( const std::string& graphName,
  *                         <li> gpudb::modify_graph_false
  *                 </ul>
  *                 The default value is gpudb::modify_graph_false.
+ *                         <li> gpudb::modify_graph_add_turns: Adds dummy
+ *                 'pillowed' edges around intersection nodes where there are
+ *                 more than three edges so that additional weight penalties
+ *                 can be imposed by the solve endpoints. (increases the total
+ *                 number of edges).
+ *                 <ul>
+ *                         <li> gpudb::modify_graph_true
+ *                         <li> gpudb::modify_graph_false
+ *                 </ul>
+ *                 The default value is gpudb::modify_graph_false.
+ *                         <li> gpudb::modify_graph_turn_angle: Value in
+ *                 degrees modifies the thresholds for attributing right, left,
+ *                 sharp turns, and intersections. It is the vertical deviation
+ *                 angle from the incoming edge to the intersection node. The
+ *                 larger the value, the larger the threshold for sharp turns
+ *                 and intersections; the smaller the value, the larger the
+ *                 threshold for right and left turns; 0 < turn_angle < 90.
+ *                 The default value is '60'.
  *                 </ul>
  * @param[out] response_  Response object containing the results of the
  *                        operation.
@@ -21800,6 +21928,56 @@ SolveGraphResponse& solveGraph( const SolveGraphRequest& request_,
  *                 specified, assigns the given value to all the edges in the
  *                 graph. Note that weights provided in @a weightsOnEdges will
  *                 override this value.
+ *                         <li> gpudb::solve_graph_left_turn_penalty: This will
+ *                 add an additonal weight over the edges labelled as 'left
+ *                 turn' if the 'add_turn' option parameter of the
+ *                 /create/graph was invoked at graph creation.  The default
+ *                 value is '0.0'.
+ *                         <li> gpudb::solve_graph_right_turn_penalty: This
+ *                 will add an additonal weight over the edges labelled as'
+ *                 right turn' if the 'add_turn' option parameter of the
+ *                 /create/graph was invoked at graph creation.  The default
+ *                 value is '0.0'.
+ *                         <li> gpudb::solve_graph_intersection_penalty: This
+ *                 will add an additonal weight over the edges labelled as
+ *                 'intersection' if the 'add_turn' option parameter of the
+ *                 /create/graph was invoked at graph creation.  The default
+ *                 value is '0.0'.
+ *                         <li> gpudb::solve_graph_sharp_turn_penalty: This
+ *                 will add an additonal weight over the edges labelled as
+ *                 'sharp turn' or 'u-turn' if the 'add_turn' option parameter
+ *                 of the /create/graph was invoked at graph creation.  The
+ *                 default value is '0.0'.
+ *                         <li> gpudb::solve_graph_num_best_paths: For @a
+ *                 MULTIPLE_ROUTING solvers only; sets the number of shortest
+ *                 paths computed from each node. This is the heuristic
+ *                 criterion. Default value of zero allows the number to be
+ *                 computed automatically by the solver. The user may want to
+ *                 override this parameter to speed-up the solver.  The default
+ *                 value is '0'.
+ *                         <li> gpudb::solve_graph_max_num_combinations: For @a
+ *                 MULTIPLE_ROUTING solvers only; sets the cap on the
+ *                 combinatorial sequences generated. If the default value of
+ *                 two millions is overridden to a lesser value, it can
+ *                 potentially speed up the solver.  The default value is
+ *                 '2000000'.
+ *                         <li> gpudb::solve_graph_accurate_snaps: Valid for
+ *                 single source destination pair solves if points are
+ *                 described in NODE_WKTPOINT identifier types: When true
+ *                 (default), it snaps to the nearest node of the graph;
+ *                 otherwise, it searches for the closest entity that could be
+ *                 an edge. For the latter case (false), the solver modifies
+ *                 the resulting cost with the weights proportional to the
+ *                 ratio of the snap location within the edge. This may be an
+ *                 over-kill when the performance is considered and the
+ *                 difference is well less than 1 percent. In batch runs, since
+ *                 the performance is of utmost importance, the option is
+ *                 always considered 'false'.
+ *                 <ul>
+ *                         <li> gpudb::solve_graph_true
+ *                         <li> gpudb::solve_graph_false
+ *                 </ul>
+ *                 The default value is gpudb::solve_graph_true.
  *                 </ul>
  * 
  * @return Response object containing the result of the operation.
@@ -21961,6 +22139,56 @@ SolveGraphResponse solveGraph( const std::string& graphName,
  *                 specified, assigns the given value to all the edges in the
  *                 graph. Note that weights provided in @a weightsOnEdges will
  *                 override this value.
+ *                         <li> gpudb::solve_graph_left_turn_penalty: This will
+ *                 add an additonal weight over the edges labelled as 'left
+ *                 turn' if the 'add_turn' option parameter of the
+ *                 /create/graph was invoked at graph creation.  The default
+ *                 value is '0.0'.
+ *                         <li> gpudb::solve_graph_right_turn_penalty: This
+ *                 will add an additonal weight over the edges labelled as'
+ *                 right turn' if the 'add_turn' option parameter of the
+ *                 /create/graph was invoked at graph creation.  The default
+ *                 value is '0.0'.
+ *                         <li> gpudb::solve_graph_intersection_penalty: This
+ *                 will add an additonal weight over the edges labelled as
+ *                 'intersection' if the 'add_turn' option parameter of the
+ *                 /create/graph was invoked at graph creation.  The default
+ *                 value is '0.0'.
+ *                         <li> gpudb::solve_graph_sharp_turn_penalty: This
+ *                 will add an additonal weight over the edges labelled as
+ *                 'sharp turn' or 'u-turn' if the 'add_turn' option parameter
+ *                 of the /create/graph was invoked at graph creation.  The
+ *                 default value is '0.0'.
+ *                         <li> gpudb::solve_graph_num_best_paths: For @a
+ *                 MULTIPLE_ROUTING solvers only; sets the number of shortest
+ *                 paths computed from each node. This is the heuristic
+ *                 criterion. Default value of zero allows the number to be
+ *                 computed automatically by the solver. The user may want to
+ *                 override this parameter to speed-up the solver.  The default
+ *                 value is '0'.
+ *                         <li> gpudb::solve_graph_max_num_combinations: For @a
+ *                 MULTIPLE_ROUTING solvers only; sets the cap on the
+ *                 combinatorial sequences generated. If the default value of
+ *                 two millions is overridden to a lesser value, it can
+ *                 potentially speed up the solver.  The default value is
+ *                 '2000000'.
+ *                         <li> gpudb::solve_graph_accurate_snaps: Valid for
+ *                 single source destination pair solves if points are
+ *                 described in NODE_WKTPOINT identifier types: When true
+ *                 (default), it snaps to the nearest node of the graph;
+ *                 otherwise, it searches for the closest entity that could be
+ *                 an edge. For the latter case (false), the solver modifies
+ *                 the resulting cost with the weights proportional to the
+ *                 ratio of the snap location within the edge. This may be an
+ *                 over-kill when the performance is considered and the
+ *                 difference is well less than 1 percent. In batch runs, since
+ *                 the performance is of utmost importance, the option is
+ *                 always considered 'false'.
+ *                 <ul>
+ *                         <li> gpudb::solve_graph_true
+ *                         <li> gpudb::solve_graph_false
+ *                 </ul>
+ *                 The default value is gpudb::solve_graph_true.
  *                 </ul>
  * @param[out] response_  Response object containing the results of the
  *                        operation.

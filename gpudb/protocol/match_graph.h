@@ -209,6 +209,44 @@ namespace gpudb
          *                      for sequencing the demand locations - can
          *                      increase this up to 2M.  The default value is
          *                      '10000'.
+         *                              <li>
+         *                      gpudb::match_graph_left_turn_penalty: This will
+         *                      add an additonal weight over the edges labelled
+         *                      as 'left turn' if the 'add_turn' option
+         *                      parameter of the /create/graph was invoked at
+         *                      graph creation.  The default value is '0.0'.
+         *                              <li>
+         *                      gpudb::match_graph_right_turn_penalty: This
+         *                      will add an additonal weight over the edges
+         *                      labelled as' right turn' if the 'add_turn'
+         *                      option parameter of the /create/graph was
+         *                      invoked at graph creation.  The default value
+         *                      is '0.0'.
+         *                              <li>
+         *                      gpudb::match_graph_intersection_penalty: This
+         *                      will add an additonal weight over the edges
+         *                      labelled as 'intersection' if the 'add_turn'
+         *                      option parameter of the /create/graph was
+         *                      invoked at graph creation.  The default value
+         *                      is '0.0'.
+         *                              <li>
+         *                      gpudb::match_graph_sharp_turn_penalty: This
+         *                      will add an additonal weight over the edges
+         *                      labelled as 'sharp turn' or 'u-turn' if the
+         *                      'add_turn' option parameter of the
+         *                      /create/graph was invoked at graph creation.
+         *                      The default value is '0.0'.
+         *                              <li>
+         *                      gpudb::match_graph_aggregated_output: For the
+         *                      @a match_supply_demand solver only. When it is
+         *                      true (default), each record in the output table
+         *                      shows a particular truck's scheduled cumulative
+         *                      round trip path (MULTILINESTRING) and the
+         *                      corresponding aggregated cost. Otherwise, each
+         *                      record shows a single scheduled truck route
+         *                      (LINESTRING) towards a particular demand
+         *                      location (store id) with its corresponding
+         *                      cost.  The default value is 'true'.
          *                      </ul>
          * 
          */
