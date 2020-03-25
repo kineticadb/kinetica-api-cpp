@@ -14,7 +14,7 @@ namespace gpudb
      * #createTable(const CreateTableRequest&) const}.
      * <p>
      * Creates a new table or collection. If a new table is being created,
-     * the type of the table is given by @a typeId, which must the be the ID of
+     * the type of the table is given by @a typeId, which must be the ID of
      * a currently registered type (i.e. one created via {@link
      * #createType(const CreateTypeRequest&) const}). The
      * table will be created inside a collection if the option
@@ -57,7 +57,7 @@ namespace gpudb
          * 
          * @param[in] tableName_  Name of the table to be created. Error for
          *                        requests with existing table of the same name
-         *                        and type id may be suppressed by using the @a
+         *                        and type ID may be suppressed by using the @a
          *                        no_error_if_exists option.  See <a
          *                        href="../../concepts/tables.html"
          *                        target="_top">Tables</a> for naming
@@ -293,7 +293,7 @@ namespace gpudb
      * #createTable(const CreateTableRequest&) const}.
      * <p>
      * Creates a new table or collection. If a new table is being created,
-     * the type of the table is given by @a typeId, which must the be the ID of
+     * the type of the table is given by @a typeId, which must be the ID of
      * a currently registered type (i.e. one created via {@link
      * #createType(const CreateTypeRequest&) const}). The
      * table will be created inside a collection if the option
