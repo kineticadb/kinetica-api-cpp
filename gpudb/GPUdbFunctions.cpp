@@ -6,7 +6,7 @@
 
 
 // GPUdb Version
-const std::string GPUdb::API_VERSION( "7.0.13.0" );
+const std::string GPUdb::API_VERSION( "7.0.14.0" );
 
 
 
@@ -9583,7 +9583,7 @@ CreateRoleResponse& GPUdb::createRole( const std::string& name,
 
 /**
  * Creates a new table or collection. If a new table is being created,
- * the type of the table is given by @a typeId, which must the be the ID of
+ * the type of the table is given by @a typeId, which must be the ID of
  * a currently registered type (i.e. one created via {@link
  * #createType(const CreateTypeRequest&) const}). The
  * table will be created inside a collection if the option
@@ -9623,7 +9623,7 @@ CreateTableResponse GPUdb::createTable( const CreateTableRequest& request_ ) con
 
 /**
  * Creates a new table or collection. If a new table is being created,
- * the type of the table is given by @a typeId, which must the be the ID of
+ * the type of the table is given by @a typeId, which must be the ID of
  * a currently registered type (i.e. one created via {@link
  * #createType(const CreateTypeRequest&,CreateTypeResponse&) const}). The
  * table will be created inside a collection if the option
@@ -9666,7 +9666,7 @@ CreateTableResponse& GPUdb::createTable( const CreateTableRequest& request_,
 
 /**
  * Creates a new table or collection. If a new table is being created,
- * the type of the table is given by @a typeId, which must the be the ID of
+ * the type of the table is given by @a typeId, which must be the ID of
  * a currently registered type (i.e. one created via {@link
  * #createType(const std::string&,const std::string&,const std::map<std::string, std::vector<std::string> >&,const std::map<std::string, std::string>&) const}).
  * The
@@ -9691,7 +9691,7 @@ CreateTableResponse& GPUdb::createTable( const CreateTableRequest& request_,
  * strategy</a> assigned.
  * 
  * @param tableName  Name of the table to be created. Error for requests with
- *                   existing table of the same name and type id may be
+ *                   existing table of the same name and type ID may be
  *                   suppressed by using the @a no_error_if_exists option.  See
  *                   <a href="../../concepts/tables.html"
  *                   target="_top">Tables</a> for naming restrictions.
@@ -9848,7 +9848,7 @@ CreateTableResponse GPUdb::createTable( const std::string& tableName,
 
 /**
  * Creates a new table or collection. If a new table is being created,
- * the type of the table is given by @a typeId, which must the be the ID of
+ * the type of the table is given by @a typeId, which must be the ID of
  * a currently registered type (i.e. one created via {@link
  * #createType(const std::string&,const std::string&,const std::map<std::string, std::vector<std::string> >&,const std::map<std::string, std::string>&,CreateTypeResponse&) const}).
  * The
@@ -9873,7 +9873,7 @@ CreateTableResponse GPUdb::createTable( const std::string& tableName,
  * strategy</a> assigned.
  * 
  * @param tableName  Name of the table to be created. Error for requests with
- *                   existing table of the same name and type id may be
+ *                   existing table of the same name and type ID may be
  *                   suppressed by using the @a no_error_if_exists option.  See
  *                   <a href="../../concepts/tables.html"
  *                   target="_top">Tables</a> for naming restrictions.
