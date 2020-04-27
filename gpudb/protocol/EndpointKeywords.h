@@ -866,6 +866,7 @@ namespace gpudb
     extern const std::string match_graph_destination;
     extern const std::string match_graph_detect_loops;
     extern const std::string match_graph_false;
+    extern const std::string match_graph_filter_folding_paths;
     extern const std::string match_graph_gps_noise;
     extern const std::string match_graph_incremental_weighted;
     extern const std::string match_graph_intersection_penalty;
@@ -876,6 +877,7 @@ namespace gpudb
     extern const std::string match_graph_match_supply_demand;
     extern const std::string match_graph_max_combinations;
     extern const std::string match_graph_max_solve_length;
+    extern const std::string match_graph_max_trip_cost;
     extern const std::string match_graph_num_segments;
     extern const std::string match_graph_partial_loading;
     extern const std::string match_graph_right_turn_penalty;
@@ -1154,6 +1156,7 @@ namespace gpudb
     extern const std::string visualize_image_true;
 
     // Keywords for /visualize/image/chart request
+    extern const std::string visualize_image_chart_base64;
     extern const std::string visualize_image_chart_cb_delimiter;
     extern const std::string visualize_image_chart_cb_pointcolors;
     extern const std::string visualize_image_chart_cb_pointshapes;
@@ -1163,6 +1166,7 @@ namespace gpudb
     extern const std::string visualize_image_chart_hollowcircle;
     extern const std::string visualize_image_chart_hollowdiamond;
     extern const std::string visualize_image_chart_hollowsquare;
+    extern const std::string visualize_image_chart_image_encoding;
     extern const std::string visualize_image_chart_jitter_x;
     extern const std::string visualize_image_chart_jitter_y;
     extern const std::string visualize_image_chart_log;

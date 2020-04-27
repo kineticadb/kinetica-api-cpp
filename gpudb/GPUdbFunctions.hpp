@@ -8503,19 +8503,17 @@ CreateTableResponse& createTable( const std::string& tableName,
                                   CreateTableResponse& response_ ) const;
 
 /**
- * Creates a monitor that watches for table modification events such as
- * insert, update or delete on a particular table (identified by
+ * Creates a monitor that watches for a single table modification event
+ * type (insert, update, or delete) on a particular table (identified by
  * @a tableName) and forwards event notifications to subscribers via ZMQ.
  * After this call completes, subscribe to the returned @a topicId on the
- * ZMQ table monitor port (default 9002). Each time a modification operation on
- * the
- * table completes, a multipart message is published for that topic; the first
- * part
- * contains only the topic ID, and each subsequent part contains one
- * binary-encoded
- * Avro object that corresponds to the event and can be decoded using
- * @a typeSchema. The monitor will continue to run (regardless of whether
- * or not there are any subscribers) until deactivated with
+ * ZMQ table monitor port (default 9002). Each time an operation of the given
+ * type
+ * on the table completes, a multipart message is published for that topic; the
+ * first part contains only the topic ID, and each subsequent part contains one
+ * binary-encoded Avro object that corresponds to the event and can be decoded
+ * using @a typeSchema. The monitor will continue to run (regardless of
+ * whether or not there are any subscribers) until deactivated with
  * {@link #clearTableMonitor(const ClearTableMonitorRequest&) const}.
  * <p>
  * For more information on table monitors, see
@@ -8532,19 +8530,17 @@ CreateTableResponse& createTable( const std::string& tableName,
 CreateTableMonitorResponse createTableMonitor( const CreateTableMonitorRequest& request_ ) const;
 
 /**
- * Creates a monitor that watches for table modification events such as
- * insert, update or delete on a particular table (identified by
+ * Creates a monitor that watches for a single table modification event
+ * type (insert, update, or delete) on a particular table (identified by
  * @a tableName) and forwards event notifications to subscribers via ZMQ.
  * After this call completes, subscribe to the returned @a topicId on the
- * ZMQ table monitor port (default 9002). Each time a modification operation on
- * the
- * table completes, a multipart message is published for that topic; the first
- * part
- * contains only the topic ID, and each subsequent part contains one
- * binary-encoded
- * Avro object that corresponds to the event and can be decoded using
- * @a typeSchema. The monitor will continue to run (regardless of whether
- * or not there are any subscribers) until deactivated with
+ * ZMQ table monitor port (default 9002). Each time an operation of the given
+ * type
+ * on the table completes, a multipart message is published for that topic; the
+ * first part contains only the topic ID, and each subsequent part contains one
+ * binary-encoded Avro object that corresponds to the event and can be decoded
+ * using @a typeSchema. The monitor will continue to run (regardless of
+ * whether or not there are any subscribers) until deactivated with
  * {@link
  * #clearTableMonitor(const ClearTableMonitorRequest&,ClearTableMonitorResponse&) const}.
  * <p>
@@ -8566,19 +8562,17 @@ CreateTableMonitorResponse& createTableMonitor( const CreateTableMonitorRequest&
                                                 CreateTableMonitorResponse& response_ ) const;
 
 /**
- * Creates a monitor that watches for table modification events such as
- * insert, update or delete on a particular table (identified by
+ * Creates a monitor that watches for a single table modification event
+ * type (insert, update, or delete) on a particular table (identified by
  * @a tableName) and forwards event notifications to subscribers via ZMQ.
  * After this call completes, subscribe to the returned @a topicId on the
- * ZMQ table monitor port (default 9002). Each time a modification operation on
- * the
- * table completes, a multipart message is published for that topic; the first
- * part
- * contains only the topic ID, and each subsequent part contains one
- * binary-encoded
- * Avro object that corresponds to the event and can be decoded using
- * @a typeSchema. The monitor will continue to run (regardless of whether
- * or not there are any subscribers) until deactivated with
+ * ZMQ table monitor port (default 9002). Each time an operation of the given
+ * type
+ * on the table completes, a multipart message is published for that topic; the
+ * first part contains only the topic ID, and each subsequent part contains one
+ * binary-encoded Avro object that corresponds to the event and can be decoded
+ * using @a typeSchema. The monitor will continue to run (regardless of
+ * whether or not there are any subscribers) until deactivated with
  * {@link
  * #clearTableMonitor(const std::string&,const std::map<std::string, std::string>&) const}.
  * <p>
@@ -8590,7 +8584,9 @@ CreateTableMonitorResponse& createTableMonitor( const CreateTableMonitorRequest&
  *                   collection.
  * @param options  Optional parameters.
  *                 <ul>
- *                         <li> gpudb::create_table_monitor_event:
+ *                         <li> gpudb::create_table_monitor_event: Type of
+ *                 modification event on the target table to be monitored by
+ *                 this table monitor.
  *                 <ul>
  *                         <li> gpudb::create_table_monitor_insert: Get
  *                 notifications of new record insertions. The new row images
@@ -8613,19 +8609,17 @@ CreateTableMonitorResponse createTableMonitor( const std::string& tableName,
                                                const std::map<std::string, std::string>& options ) const;
 
 /**
- * Creates a monitor that watches for table modification events such as
- * insert, update or delete on a particular table (identified by
+ * Creates a monitor that watches for a single table modification event
+ * type (insert, update, or delete) on a particular table (identified by
  * @a tableName) and forwards event notifications to subscribers via ZMQ.
  * After this call completes, subscribe to the returned @a topicId on the
- * ZMQ table monitor port (default 9002). Each time a modification operation on
- * the
- * table completes, a multipart message is published for that topic; the first
- * part
- * contains only the topic ID, and each subsequent part contains one
- * binary-encoded
- * Avro object that corresponds to the event and can be decoded using
- * @a typeSchema. The monitor will continue to run (regardless of whether
- * or not there are any subscribers) until deactivated with
+ * ZMQ table monitor port (default 9002). Each time an operation of the given
+ * type
+ * on the table completes, a multipart message is published for that topic; the
+ * first part contains only the topic ID, and each subsequent part contains one
+ * binary-encoded Avro object that corresponds to the event and can be decoded
+ * using @a typeSchema. The monitor will continue to run (regardless of
+ * whether or not there are any subscribers) until deactivated with
  * {@link
  * #clearTableMonitor(const std::string&,const std::map<std::string, std::string>&,ClearTableMonitorResponse&) const}.
  * <p>
@@ -8637,7 +8631,9 @@ CreateTableMonitorResponse createTableMonitor( const std::string& tableName,
  *                   collection.
  * @param options  Optional parameters.
  *                 <ul>
- *                         <li> gpudb::create_table_monitor_event:
+ *                         <li> gpudb::create_table_monitor_event: Type of
+ *                 modification event on the target table to be monitored by
+ *                 this table monitor.
  *                 <ul>
  *                         <li> gpudb::create_table_monitor_insert: Get
  *                 notifications of new record insertions. The new row images
@@ -18361,8 +18357,7 @@ KillProcResponse& killProc( const std::string& runId,
                             KillProcResponse& response_ ) const;
 
 /**
- * Lists basic information about one or all graphs that exist on the graph
- * server.
+ * @private
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -18374,8 +18369,7 @@ KillProcResponse& killProc( const std::string& runId,
 ListGraphResponse listGraph( const ListGraphRequest& request_ ) const;
 
 /**
- * Lists basic information about one or all graphs that exist on the graph
- * server.
+ * @private
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -18391,12 +18385,10 @@ ListGraphResponse& listGraph( const ListGraphRequest& request_,
                               ListGraphResponse& response_ ) const;
 
 /**
- * Lists basic information about one or all graphs that exist on the graph
- * server.
+ * @private
  * 
- * @param graphName  Name of the graph on which to retrieve information. If
- *                   empty, information about all graphs is returned.
- * @param options  Optional parameters.
+ * @param graphName
+ * @param options
  * 
  * @return Response object containing the result of the operation.
  * 
@@ -18406,12 +18398,10 @@ ListGraphResponse listGraph( const std::string& graphName,
                              const std::map<std::string, std::string>& options ) const;
 
 /**
- * Lists basic information about one or all graphs that exist on the graph
- * server.
+ * @private
  * 
- * @param graphName  Name of the graph on which to retrieve information. If
- *                   empty, information about all graphs is returned.
- * @param options  Optional parameters.
+ * @param graphName
+ * @param options
  * @param[out] response_  Response object containing the results of the
  *                        operation.
  * 
@@ -18755,6 +18745,26 @@ MatchGraphResponse& matchGraph( const MatchGraphRequest& request_,
  *                 Otherwise, each record shows a single scheduled truck route
  *                 (LINESTRING) towards a particular demand location (store id)
  *                 with its corresponding cost.  The default value is 'true'.
+ *                         <li> gpudb::match_graph_max_trip_cost: For the @a
+ *                 match_supply_demand solver only. If this constraint is
+ *                 greater than zero (default) then the trucks will skip
+ *                 travelling from one demand location to another if the cost
+ *                 between them is greater than this number (distance or time).
+ *                 Zero (default) value means no check is performed.  The
+ *                 default value is '0.0'.
+ *                         <li> gpudb::match_graph_filter_folding_paths: For
+ *                 the @a markov_chain solver only. When true (non-default),
+ *                 the paths per sequence combination is checked for folding
+ *                 over patterns and can significantly increase the execution
+ *                 time depending on the chain width and the number of gps
+ *                 samples.
+ *                 <ul>
+ *                         <li> gpudb::match_graph_true: Filter out the folded
+ *                 paths.
+ *                         <li> gpudb::match_graph_false: Do not filter out the
+ *                 folded paths
+ *                 </ul>
+ *                 The default value is gpudb::match_graph_false.
  *                 </ul>
  * 
  * @return Response object containing the result of the operation.
@@ -18936,6 +18946,26 @@ MatchGraphResponse matchGraph( const std::string& graphName,
  *                 Otherwise, each record shows a single scheduled truck route
  *                 (LINESTRING) towards a particular demand location (store id)
  *                 with its corresponding cost.  The default value is 'true'.
+ *                         <li> gpudb::match_graph_max_trip_cost: For the @a
+ *                 match_supply_demand solver only. If this constraint is
+ *                 greater than zero (default) then the trucks will skip
+ *                 travelling from one demand location to another if the cost
+ *                 between them is greater than this number (distance or time).
+ *                 Zero (default) value means no check is performed.  The
+ *                 default value is '0.0'.
+ *                         <li> gpudb::match_graph_filter_folding_paths: For
+ *                 the @a markov_chain solver only. When true (non-default),
+ *                 the paths per sequence combination is checked for folding
+ *                 over patterns and can significantly increase the execution
+ *                 time depending on the chain width and the number of gps
+ *                 samples.
+ *                 <ul>
+ *                         <li> gpudb::match_graph_true: Filter out the folded
+ *                 paths.
+ *                         <li> gpudb::match_graph_false: Do not filter out the
+ *                 folded paths
+ *                 </ul>
+ *                 The default value is gpudb::match_graph_false.
  *                 </ul>
  * @param[out] response_  Response object containing the results of the
  *                        operation.
@@ -23212,6 +23242,19 @@ VisualizeImageChartResponse& visualizeImageChart( const VisualizeImageChartReque
  *                      max_y parameters.  The default value is 'false'.
  *                      </ul>
  * @param options  Optional parameters.
+ *                 <ul>
+ *                         <li> gpudb::visualize_image_chart_image_encoding:
+ *                 Encoding to be applied to the output image. When using JSON
+ *                 serialization it is recommended to specify this as @a
+ *                 base64.
+ *                 <ul>
+ *                         <li> gpudb::visualize_image_chart_base64: Apply
+ *                 base64 encoding to the output image.
+ *                         <li> gpudb::visualize_image_chart_none: Do not apply
+ *                 any additional encoding to the output image.
+ *                 </ul>
+ *                 The default value is gpudb::visualize_image_chart_none.
+ *                 </ul>
  * 
  * @return Response object containing the result of the operation.
  * 
@@ -23360,6 +23403,19 @@ VisualizeImageChartResponse visualizeImageChart( const std::string& tableName,
  *                      max_y parameters.  The default value is 'false'.
  *                      </ul>
  * @param options  Optional parameters.
+ *                 <ul>
+ *                         <li> gpudb::visualize_image_chart_image_encoding:
+ *                 Encoding to be applied to the output image. When using JSON
+ *                 serialization it is recommended to specify this as @a
+ *                 base64.
+ *                 <ul>
+ *                         <li> gpudb::visualize_image_chart_base64: Apply
+ *                 base64 encoding to the output image.
+ *                         <li> gpudb::visualize_image_chart_none: Do not apply
+ *                 any additional encoding to the output image.
+ *                 </ul>
+ *                 The default value is gpudb::visualize_image_chart_none.
+ *                 </ul>
  * @param[out] response_  Response object containing the results of the
  *                        operation.
  * 

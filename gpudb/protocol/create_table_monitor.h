@@ -13,19 +13,20 @@ namespace gpudb
      * A set of input parameters for {@link
      * #createTableMonitor(const CreateTableMonitorRequest&) const}.
      * <p>
-     * Creates a monitor that watches for table modification events such as
-     * insert, update or delete on a particular table (identified by
+     * Creates a monitor that watches for a single table modification event
+     * type (insert, update, or delete) on a particular table (identified by
      * @a tableName) and forwards event notifications to subscribers via ZMQ.
      * After this call completes, subscribe to the returned @a topicId on the
-     * ZMQ table monitor port (default 9002). Each time a modification
-     * operation on the
-     * table completes, a multipart message is published for that topic; the
-     * first part
-     * contains only the topic ID, and each subsequent part contains one
-     * binary-encoded
-     * Avro object that corresponds to the event and can be decoded using
-     * @a typeSchema. The monitor will continue to run (regardless of whether
-     * or not there are any subscribers) until deactivated with
+     * ZMQ table monitor port (default 9002). Each time an operation of the
+     * given type
+     * on the table completes, a multipart message is published for that topic;
+     * the
+     * first part contains only the topic ID, and each subsequent part contains
+     * one
+     * binary-encoded Avro object that corresponds to the event and can be
+     * decoded
+     * using @a typeSchema. The monitor will continue to run (regardless of
+     * whether or not there are any subscribers) until deactivated with
      * {@link #clearTableMonitor(const ClearTableMonitorRequest&) const}.
      * <p>
      * For more information on table monitors, see
@@ -54,6 +55,8 @@ namespace gpudb
          * @param[in] options_  Optional parameters.
          *                      <ul>
          *                              <li> gpudb::create_table_monitor_event:
+         *                      Type of modification event on the target table
+         *                      to be monitored by this table monitor.
          *                      <ul>
          *                              <li>
          *                      gpudb::create_table_monitor_insert: Get
@@ -135,19 +138,20 @@ namespace gpudb
      * A set of output parameters for {@link
      * #createTableMonitor(const CreateTableMonitorRequest&) const}.
      * <p>
-     * Creates a monitor that watches for table modification events such as
-     * insert, update or delete on a particular table (identified by
+     * Creates a monitor that watches for a single table modification event
+     * type (insert, update, or delete) on a particular table (identified by
      * @a tableName) and forwards event notifications to subscribers via ZMQ.
      * After this call completes, subscribe to the returned @a topicId on the
-     * ZMQ table monitor port (default 9002). Each time a modification
-     * operation on the
-     * table completes, a multipart message is published for that topic; the
-     * first part
-     * contains only the topic ID, and each subsequent part contains one
-     * binary-encoded
-     * Avro object that corresponds to the event and can be decoded using
-     * @a typeSchema. The monitor will continue to run (regardless of whether
-     * or not there are any subscribers) until deactivated with
+     * ZMQ table monitor port (default 9002). Each time an operation of the
+     * given type
+     * on the table completes, a multipart message is published for that topic;
+     * the
+     * first part contains only the topic ID, and each subsequent part contains
+     * one
+     * binary-encoded Avro object that corresponds to the event and can be
+     * decoded
+     * using @a typeSchema. The monitor will continue to run (regardless of
+     * whether or not there are any subscribers) until deactivated with
      * {@link #clearTableMonitor(const ClearTableMonitorRequest&) const}.
      * <p>
      * For more information on table monitors, see

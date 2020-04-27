@@ -13,13 +13,13 @@ namespace gpudb
      * A set of input parameters for {@link
      * #listGraph(const ListGraphRequest&) const}.
      * <p>
-     * Lists basic information about one or all graphs that exist on the graph
-     * server.
+     * @private
      */
     struct ListGraphRequest
     {
 
         /**
+         * @private
          * Constructs a ListGraphRequest object with default parameter values.
          */
         ListGraphRequest() :
@@ -29,12 +29,11 @@ namespace gpudb
         }
 
         /**
+         * @private
          * Constructs a ListGraphRequest object with the specified parameters.
          * 
-         * @param[in] graphName_  Name of the graph on which to retrieve
-         *                        information. If empty, information about all
-         *                        graphs is returned.
-         * @param[in] options_  Optional parameters.
+         * @param[in] graphName_
+         * @param[in] options_
          * 
          */
         ListGraphRequest(const std::string& graphName_, const std::map<std::string, std::string>& options_):
@@ -47,6 +46,10 @@ namespace gpudb
         std::map<std::string, std::string> options;
     };
 }
+
+    /**
+     * @private
+     */
 
 namespace avro
 {
@@ -97,13 +100,13 @@ namespace gpudb
      * A set of output parameters for {@link
      * #listGraph(const ListGraphRequest&) const}.
      * <p>
-     * Lists basic information about one or all graphs that exist on the graph
-     * server.
+     * @private
      */
     struct ListGraphResponse
     {
 
         /**
+         * @private
          * Constructs a ListGraphResponse object with default parameter values.
          */
         ListGraphResponse() :
@@ -122,6 +125,10 @@ namespace gpudb
         std::map<std::string, std::string> info;
     };
 }
+
+    /**
+     * @private
+     */
 
 namespace avro
 {

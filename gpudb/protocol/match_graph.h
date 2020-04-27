@@ -247,6 +247,29 @@ namespace gpudb
          *                      (LINESTRING) towards a particular demand
          *                      location (store id) with its corresponding
          *                      cost.  The default value is 'true'.
+         *                              <li> gpudb::match_graph_max_trip_cost:
+         *                      For the @a match_supply_demand solver only. If
+         *                      this constraint is greater than zero (default)
+         *                      then the trucks will skip travelling from one
+         *                      demand location to another if the cost between
+         *                      them is greater than this number (distance or
+         *                      time). Zero (default) value means no check is
+         *                      performed.  The default value is '0.0'.
+         *                              <li>
+         *                      gpudb::match_graph_filter_folding_paths: For
+         *                      the @a markov_chain solver only. When true
+         *                      (non-default), the paths per sequence
+         *                      combination is checked for folding over
+         *                      patterns and can significantly increase the
+         *                      execution time depending on the chain width and
+         *                      the number of gps samples.
+         *                      <ul>
+         *                              <li> gpudb::match_graph_true: Filter
+         *                      out the folded paths.
+         *                              <li> gpudb::match_graph_false: Do not
+         *                      filter out the folded paths
+         *                      </ul>
+         *                      The default value is gpudb::match_graph_false.
          *                      </ul>
          * 
          */

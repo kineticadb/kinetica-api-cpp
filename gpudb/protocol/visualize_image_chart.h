@@ -213,6 +213,23 @@ namespace gpudb
          *                           parameters.  The default value is 'false'.
          *                           </ul>
          * @param[in] options_  Optional parameters.
+         *                      <ul>
+         *                              <li>
+         *                      gpudb::visualize_image_chart_image_encoding:
+         *                      Encoding to be applied to the output image.
+         *                      When using JSON serialization it is recommended
+         *                      to specify this as @a base64.
+         *                      <ul>
+         *                              <li>
+         *                      gpudb::visualize_image_chart_base64: Apply
+         *                      base64 encoding to the output image.
+         *                              <li> gpudb::visualize_image_chart_none:
+         *                      Do not apply any additional encoding to the
+         *                      output image.
+         *                      </ul>
+         *                      The default value is
+         *                      gpudb::visualize_image_chart_none.
+         *                      </ul>
          * 
          */
         VisualizeImageChartRequest(const std::string& tableName_, const std::vector<std::string>& xColumnNames_, const std::vector<std::string>& yColumnNames_, const double minX_, const double maxX_, const double minY_, const double maxY_, const int32_t width_, const int32_t height_, const std::string& bgColor_, const std::map<std::string, std::vector<std::string> >& styleOptions_, const std::map<std::string, std::string>& options_):
