@@ -866,6 +866,7 @@ namespace gpudb
     const std::string match_graph_destination         ( "destination"          );
     const std::string match_graph_detect_loops        ( "detect_loops"         );
     const std::string match_graph_false               ( "false"                );
+    const std::string match_graph_filter_folding_paths( "filter_folding_paths" );
     const std::string match_graph_gps_noise           ( "gps_noise"            );
     const std::string match_graph_incremental_weighted( "incremental_weighted" );
     const std::string match_graph_intersection_penalty( "intersection_penalty" );
@@ -876,6 +877,7 @@ namespace gpudb
     const std::string match_graph_match_supply_demand ( "match_supply_demand"  );
     const std::string match_graph_max_combinations    ( "max_combinations"     );
     const std::string match_graph_max_solve_length    ( "max_solve_length"     );
+    const std::string match_graph_max_trip_cost       ( "max_trip_cost"        );
     const std::string match_graph_num_segments        ( "num_segments"         );
     const std::string match_graph_partial_loading     ( "partial_loading"      );
     const std::string match_graph_right_turn_penalty  ( "right_turn_penalty"   );
@@ -1154,6 +1156,7 @@ namespace gpudb
     const std::string visualize_image_true               ( "true"                );
 
     // Keywords for /visualize/image/chart request
+    const std::string visualize_image_chart_base64        ( "base64"         );
     const std::string visualize_image_chart_cb_delimiter  ( "cb_delimiter"   );
     const std::string visualize_image_chart_cb_pointcolors( "cb_pointcolors" );
     const std::string visualize_image_chart_cb_pointshapes( "cb_pointshapes" );
@@ -1163,6 +1166,7 @@ namespace gpudb
     const std::string visualize_image_chart_hollowcircle  ( "hollowcircle"   );
     const std::string visualize_image_chart_hollowdiamond ( "hollowdiamond"  );
     const std::string visualize_image_chart_hollowsquare  ( "hollowsquare"   );
+    const std::string visualize_image_chart_image_encoding( "image_encoding" );
     const std::string visualize_image_chart_jitter_x      ( "jitter_x"       );
     const std::string visualize_image_chart_jitter_y      ( "jitter_y"       );
     const std::string visualize_image_chart_log           ( "log"            );
