@@ -710,10 +710,16 @@ namespace gpudb
 
     // Keywords for /get/records/fromcollection request
     const std::string get_records_from_collection_binary           ( "binary"            );
-    const std::string get_records_from_collection_false            ( "false"             );
     const std::string get_records_from_collection_json             ( "json"              );
     const std::string get_records_from_collection_return_record_ids( "return_record_ids" );
-    const std::string get_records_from_collection_true             ( "true"              );
+
+    // Keywords for /get/records/fromcollection response
+    const std::string get_records_from_collection_has_more_records       ( "has_more_records"        );
+    const std::string get_records_from_collection_total_number_of_records( "total_number_of_records" );
+
+    // Keywords for /get/records/fromcollection request and response
+    const std::string get_records_from_collection_false( "false" );
+    const std::string get_records_from_collection_true ( "true"  );
 
     // Keywords for /grant/permission/proc request
     const std::string grant_permission_proc_proc_execute( "proc_execute" );
@@ -886,6 +892,7 @@ namespace gpudb
     const std::string match_graph_source              ( "source"               );
     const std::string match_graph_time_window_width   ( "time_window_width"    );
     const std::string match_graph_true                ( "true"                 );
+    const std::string match_graph_unit_unloading_cost ( "unit_unloading_cost"  );
 
     // Keywords for /merge/records request
     const std::string merge_records_chunk_size     ( "chunk_size"      );

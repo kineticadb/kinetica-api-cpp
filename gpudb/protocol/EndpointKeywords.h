@@ -710,9 +710,15 @@ namespace gpudb
 
     // Keywords for /get/records/fromcollection request
     extern const std::string get_records_from_collection_binary;
-    extern const std::string get_records_from_collection_false;
     extern const std::string get_records_from_collection_json;
     extern const std::string get_records_from_collection_return_record_ids;
+
+    // Keywords for /get/records/fromcollection response
+    extern const std::string get_records_from_collection_has_more_records;
+    extern const std::string get_records_from_collection_total_number_of_records;
+
+    // Keywords for /get/records/fromcollection request and response
+    extern const std::string get_records_from_collection_false;
     extern const std::string get_records_from_collection_true;
 
     // Keywords for /grant/permission/proc request
@@ -886,6 +892,7 @@ namespace gpudb
     extern const std::string match_graph_source;
     extern const std::string match_graph_time_window_width;
     extern const std::string match_graph_true;
+    extern const std::string match_graph_unit_unloading_cost;
 
     // Keywords for /merge/records request
     extern const std::string merge_records_chunk_size;
