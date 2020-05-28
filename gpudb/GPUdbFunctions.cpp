@@ -6,7 +6,7 @@
 
 
 // GPUdb Version
-const std::string GPUdb::API_VERSION( "7.0.15.0" );
+const std::string GPUdb::API_VERSION( "7.0.16.0" );
 
 
 
@@ -20248,6 +20248,13 @@ MatchGraphResponse& GPUdb::matchGraph( const MatchGraphRequest& request_,
  *                 folded paths
  *                 </ul>
  *                 The default value is gpudb::match_graph_false.
+ *                         <li> gpudb::match_graph_unit_unloading_cost: For the
+ *                 @a match_supply_demand solver only. The unit cost per load
+ *                 amount to be delivered. If this value is greater than zero
+ *                 (default) then the additional cost of this unit load
+ *                 multiplied by the total dropped load will be added over to
+ *                 the trip cost to the demand location.  The default value is
+ *                 '0.0'.
  *                 </ul>
  * 
  * @return Response object containing the result of the operation.
@@ -20461,6 +20468,13 @@ MatchGraphResponse GPUdb::matchGraph( const std::string& graphName,
  *                 folded paths
  *                 </ul>
  *                 The default value is gpudb::match_graph_false.
+ *                         <li> gpudb::match_graph_unit_unloading_cost: For the
+ *                 @a match_supply_demand solver only. The unit cost per load
+ *                 amount to be delivered. If this value is greater than zero
+ *                 (default) then the additional cost of this unit load
+ *                 multiplied by the total dropped load will be added over to
+ *                 the trip cost to the demand location.  The default value is
+ *                 '0.0'.
  *                 </ul>
  * @param[out] response_  Response object containing the results of the
  *                        operation.
