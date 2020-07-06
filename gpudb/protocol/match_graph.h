@@ -78,14 +78,6 @@ namespace gpudb
          *                          computationally intensive. Related options:
          *                          @a num_segments and @a chain_width.
          *                                  <li>
-         *                          gpudb::match_graph_incremental_weighted:
-         *                          Matches @a samplePoints to the graph using
-         *                          time and/or distance between points to
-         *                          influence one or more shortest paths across
-         *                          the sample points. Related options: @a
-         *                          num_segments, @a max_solve_length, @a
-         *                          time_window_width, and @a detect_loops.
-         *                                  <li>
          *                          gpudb::match_graph_match_od_pairs: Matches
          *                          @a samplePoints to find the most probable
          *                          path between origin and destination pairs
@@ -132,9 +124,8 @@ namespace gpudb
          *                              <li> gpudb::match_graph_num_segments:
          *                      Maximum number of potentially matching road
          *                      segments for each sample point. For the @a
-         *                      markov_chain solver, the default is 3; for the
-         *                      @a incremental_weighted, the default is 5.  The
-         *                      default value is ''.
+         *                      markov_chain solver, the default is 3.  The
+         *                      default value is '3'.
          *                              <li> gpudb::match_graph_search_radius:
          *                      Maximum search radius used when snapping sample
          *                      points onto potentially matching surrounding
@@ -147,34 +138,6 @@ namespace gpudb
          *                      Markov kernel; the larger the number, the more
          *                      accurate the solution.  The default value is
          *                      '9'.
-         *                              <li>
-         *                      gpudb::match_graph_max_solve_length: For the @a
-         *                      incremental_weighted solver only. Maximum
-         *                      number of samples along the path on which to
-         *                      solve.  The default value is '200'.
-         *                              <li>
-         *                      gpudb::match_graph_time_window_width: For the
-         *                      @a incremental_weighted solver only. Time
-         *                      window, also known as sampling period, in which
-         *                      points are favored. To determine the raw window
-         *                      value, the @a time_window_width value is
-         *                      multiplied by the mean sample time (in seconds)
-         *                      across all points, e.g., if @a
-         *                      time_window_width is 30 and the mean sample
-         *                      time is 2 seconds, points that are sampled
-         *                      greater than 60 seconds after the previous
-         *                      point are no longer favored in the solution.
-         *                      The default value is '30'.
-         *                              <li> gpudb::match_graph_detect_loops:
-         *                      For the @a incremental_weighted solver only. If
-         *                      @a true, a loop will be detected and traversed
-         *                      even if it would make a shorter path to ignore
-         *                      the loop.
-         *                      <ul>
-         *                              <li> gpudb::match_graph_true
-         *                              <li> gpudb::match_graph_false
-         *                      </ul>
-         *                      The default value is gpudb::match_graph_true.
          *                              <li> gpudb::match_graph_source:
          *                      Optional WKT starting point from @a
          *                      samplePoints for the solver. The default
@@ -279,6 +242,37 @@ namespace gpudb
          *                      the total dropped load will be added over to
          *                      the trip cost to the demand location.  The
          *                      default value is '0.0'.
+         *                              <li>
+         *                      gpudb::match_graph_max_num_threads: For the @a
+         *                      markov_chain solver only. If specified (greater
+         *                      than zero), the maximum number of threads will
+         *                      not be greater than the specified value. It can
+         *                      be lower due to the memory and the number cores
+         *                      available. Default value of zero allows the
+         *                      algorithm to set the maximal number of threads
+         *                      within these constraints.  The default value is
+         *                      '0'.
+         *                              <li>
+         *                      gpudb::match_graph_truck_service_limit: For the
+         *                      @a match_supply_demand solver only. If
+         *                      specified (greather than zero), any truck's
+         *                      total service cost (distance or time) will be
+         *                      limited by the specified value including
+         *                      multiple rounds (if set).  The default value is
+         *                      '0.0'.
+         *                              <li>
+         *                      gpudb::match_graph_enable_truck_reuse: For the
+         *                      @a match_supply_demand solver only. If
+         *                      specified (true), all trucks can be scheduled
+         *                      for second rounds from their originating
+         *                      depots.
+         *                      <ul>
+         *                              <li> gpudb::match_graph_true: Allows
+         *                      reusing trucks for scheduling again.
+         *                              <li> gpudb::match_graph_false: Trucks
+         *                      are scheduled only once from their depots.
+         *                      </ul>
+         *                      The default value is gpudb::match_graph_false.
          *                      </ul>
          * 
          */

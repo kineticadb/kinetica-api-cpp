@@ -195,7 +195,6 @@ namespace gpudb
     extern const std::string alter_system_properties_audit_body;
     extern const std::string alter_system_properties_audit_data;
     extern const std::string alter_system_properties_audit_headers;
-    extern const std::string alter_system_properties_bulk_add_test;
     extern const std::string alter_system_properties_chunk_size;
     extern const std::string alter_system_properties_clear_cache;
     extern const std::string alter_system_properties_communicator_test;
@@ -314,6 +313,7 @@ namespace gpudb
     extern const std::string create_external_table_manual;
     extern const std::string create_external_table_materialized;
     extern const std::string create_external_table_no_refresh;
+    extern const std::string create_external_table_num_tasks_per_rank;
     extern const std::string create_external_table_on_start;
     extern const std::string create_external_table_parquet;
     extern const std::string create_external_table_permissive;
@@ -822,6 +822,7 @@ namespace gpudb
     extern const std::string insert_records_from_files_is_update_records_by_series;
     extern const std::string insert_records_from_files_loading_mode;
     extern const std::string insert_records_from_files_no_error_if_exists;
+    extern const std::string insert_records_from_files_num_tasks_per_rank;
     extern const std::string insert_records_from_files_partition_definitions;
     extern const std::string insert_records_from_files_partition_keys;
     extern const std::string insert_records_from_files_partition_type;
@@ -870,11 +871,10 @@ namespace gpudb
     extern const std::string match_graph_aggregated_output;
     extern const std::string match_graph_chain_width;
     extern const std::string match_graph_destination;
-    extern const std::string match_graph_detect_loops;
+    extern const std::string match_graph_enable_truck_reuse;
     extern const std::string match_graph_false;
     extern const std::string match_graph_filter_folding_paths;
     extern const std::string match_graph_gps_noise;
-    extern const std::string match_graph_incremental_weighted;
     extern const std::string match_graph_intersection_penalty;
     extern const std::string match_graph_left_turn_penalty;
     extern const std::string match_graph_markov_chain;
@@ -882,7 +882,7 @@ namespace gpudb
     extern const std::string match_graph_match_od_pairs;
     extern const std::string match_graph_match_supply_demand;
     extern const std::string match_graph_max_combinations;
-    extern const std::string match_graph_max_solve_length;
+    extern const std::string match_graph_max_num_threads;
     extern const std::string match_graph_max_trip_cost;
     extern const std::string match_graph_num_segments;
     extern const std::string match_graph_partial_loading;
@@ -890,7 +890,7 @@ namespace gpudb
     extern const std::string match_graph_search_radius;
     extern const std::string match_graph_sharp_turn_penalty;
     extern const std::string match_graph_source;
-    extern const std::string match_graph_time_window_width;
+    extern const std::string match_graph_truck_service_limit;
     extern const std::string match_graph_true;
     extern const std::string match_graph_unit_unloading_cost;
 

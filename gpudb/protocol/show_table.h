@@ -19,10 +19,11 @@ namespace gpudb
      * the tables and views it contains. If @a tableName is empty, information
      * about all collections and top-level tables and views can be returned.
      * <p>
-     * If the option @a get_sizes is set to @a true, then the sizes (objects
-     * and elements) of each table are returned (in @a sizes and @a fullSizes),
-     * along with the total number of objects in the requested table (in @a
-     * totalSize and @a totalFullSize).
+     * If the option @a get_sizes is set to
+     * @a true, then the number of records
+     * in each table is returned (in @a sizes and
+     * @a fullSizes), along with the total number of objects across all
+     * requested tables (in @a totalSize and @a totalFullSize).
      * <p>
      * For a collection, setting the @a show_children option to @a false
      * returns only information about the collection itself; setting @a
@@ -63,8 +64,9 @@ namespace gpudb
          *                      </ul>
          *                      The default value is gpudb::show_table_true.
          *                              <li> gpudb::show_table_get_sizes: If @a
-         *                      true then the table sizes will be returned;
-         *                      blank, otherwise.
+         *                      true then the number of records in each table,
+         *                      along with a cumulative count, will be
+         *                      returned; blank, otherwise.
          *                      <ul>
          *                              <li> gpudb::show_table_true
          *                              <li> gpudb::show_table_false
@@ -170,10 +172,11 @@ namespace gpudb
      * the tables and views it contains. If @a tableName is empty, information
      * about all collections and top-level tables and views can be returned.
      * <p>
-     * If the option @a get_sizes is set to @a true, then the sizes (objects
-     * and elements) of each table are returned (in @a sizes and @a fullSizes),
-     * along with the total number of objects in the requested table (in @a
-     * totalSize and @a totalFullSize).
+     * If the option @a get_sizes is set to
+     * @a true, then the number of records
+     * in each table is returned (in @a sizes and
+     * @a fullSizes), along with the total number of objects across all
+     * requested tables (in @a totalSize and @a totalFullSize).
      * <p>
      * For a collection, setting the @a show_children option to @a false
      * returns only information about the collection itself; setting @a

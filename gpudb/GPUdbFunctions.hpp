@@ -4175,7 +4175,10 @@ AlterSystemPropertiesResponse& alterSystemProperties( const AlterSystemPropertie
  *                                    <li>
  *                            gpudb::alter_system_properties_clear_cache:
  *                            Clears cached results.  Useful to allow repeated
- *                            timing of endpoints. Value string is ignored
+ *                            timing of endpoints.  Value string is the name of
+ *                            the table for which to clear the cached results,
+ *                            or an empty string to clear the cached results
+ *                            for all tables.
  *                                    <li>
  *                            gpudb::alter_system_properties_communicator_test:
  *                            Invoke the communicator test and report timing
@@ -4197,10 +4200,6 @@ AlterSystemPropertiesResponse& alterSystemProperties( const AlterSystemPropertie
  *                                    <li> gpudb::alter_system_properties_true
  *                                    <li> gpudb::alter_system_properties_false
  *                            </ul>
- *                                    <li>
- *                            gpudb::alter_system_properties_bulk_add_test:
- *                            Invoke the bulk add test and report timing
- *                            results. Value string is ignored.
  *                                    <li>
  *                            gpudb::alter_system_properties_network_speed:
  *                            Invoke the network speed test and report timing
@@ -4340,7 +4339,10 @@ AlterSystemPropertiesResponse alterSystemProperties( const std::map<std::string,
  *                                    <li>
  *                            gpudb::alter_system_properties_clear_cache:
  *                            Clears cached results.  Useful to allow repeated
- *                            timing of endpoints. Value string is ignored
+ *                            timing of endpoints.  Value string is the name of
+ *                            the table for which to clear the cached results,
+ *                            or an empty string to clear the cached results
+ *                            for all tables.
  *                                    <li>
  *                            gpudb::alter_system_properties_communicator_test:
  *                            Invoke the communicator test and report timing
@@ -4362,10 +4364,6 @@ AlterSystemPropertiesResponse alterSystemProperties( const std::map<std::string,
  *                                    <li> gpudb::alter_system_properties_true
  *                                    <li> gpudb::alter_system_properties_false
  *                            </ul>
- *                                    <li>
- *                            gpudb::alter_system_properties_bulk_add_test:
- *                            Invoke the bulk add test and report timing
- *                            results. Value string is ignored.
  *                                    <li>
  *                            gpudb::alter_system_properties_network_speed:
  *                            Invoke the network speed test and report timing
@@ -6253,6 +6251,7 @@ CreateExternalTableResponse& createExternalTable( const CreateExternalTableReque
  *                 gpudb::create_external_table_external_storage_location
  *                         <li> gpudb::create_external_table_s3_bucket_name
  *                         <li> gpudb::create_external_table_s3_region
+ *                         <li> gpudb::create_external_table_num_tasks_per_rank
  *                 </ul>
  * 
  * @return Response object containing the result of the operation.
@@ -6349,6 +6348,7 @@ CreateExternalTableResponse createExternalTable( const std::string& tableName,
  *                 gpudb::create_external_table_external_storage_location
  *                         <li> gpudb::create_external_table_s3_bucket_name
  *                         <li> gpudb::create_external_table_s3_region
+ *                         <li> gpudb::create_external_table_num_tasks_per_rank
  *                 </ul>
  * @param[out] response_  Response object containing the results of the
  *                        operation.
@@ -16254,7 +16254,8 @@ GrantPermissionTableResponse& grantPermissionTable( const GrantPermissionTableRe
  *                   Must be an existing table, collection, or view. If a
  *                   collection, the permission also applies to tables and
  *                   views in the collection.
- * @param filterExpression  Reserved for future use.
+ * @param filterExpression  Optional filter expression to apply to this grant.
+ *                          Only rows that match the filter will be affected.
  * @param options  Optional parameters.
  *                 <ul>
  *                         <li> gpudb::grant_permission_table_columns: Apply
@@ -16294,7 +16295,8 @@ GrantPermissionTableResponse grantPermissionTable( const std::string& name,
  *                   Must be an existing table, collection, or view. If a
  *                   collection, the permission also applies to tables and
  *                   views in the collection.
- * @param filterExpression  Reserved for future use.
+ * @param filterExpression  Optional filter expression to apply to this grant.
+ *                          Only rows that match the filter will be affected.
  * @param options  Optional parameters.
  *                 <ul>
  *                         <li> gpudb::grant_permission_table_columns: Apply
@@ -17323,6 +17325,10 @@ InsertRecordsFromFilesResponse& insertRecordsFromFiles( const InsertRecordsFromF
  *                         <li> gpudb::insert_records_from_files_false
  *                 </ul>
  *                 The default value is gpudb::insert_records_from_files_false.
+ *                         <li>
+ *                 gpudb::insert_records_from_files_num_tasks_per_rank:
+ *                 Optional: number of tasks for reading file per rank. Default
+ *                 will be external_file_reader_num_tasks
  *                 </ul>
  * 
  * @return Response object containing the result of the operation.
@@ -17693,6 +17699,10 @@ InsertRecordsFromFilesResponse insertRecordsFromFiles( const std::string& tableN
  *                         <li> gpudb::insert_records_from_files_false
  *                 </ul>
  *                 The default value is gpudb::insert_records_from_files_false.
+ *                         <li>
+ *                 gpudb::insert_records_from_files_num_tasks_per_rank:
+ *                 Optional: number of tasks for reading file per rank. Default
+ *                 will be external_file_reader_num_tasks
  *                 </ul>
  * @param[out] response_  Response object containing the results of the
  *                        operation.
@@ -18614,12 +18624,6 @@ MatchGraphResponse& matchGraph( const MatchGraphRequest& request_,
  *                     each point. This solution type is the most accurate but
  *                     also the most computationally intensive. Related
  *                     options: @a num_segments and @a chain_width.
- *                             <li> gpudb::match_graph_incremental_weighted:
- *                     Matches @a samplePoints to the graph using time and/or
- *                     distance between points to influence one or more
- *                     shortest paths across the sample points. Related
- *                     options: @a num_segments, @a max_solve_length, @a
- *                     time_window_width, and @a detect_loops.
  *                             <li> gpudb::match_graph_match_od_pairs: Matches
  *                     @a samplePoints to find the most probable path between
  *                     origin and destination pairs with cost constraints.
@@ -18655,9 +18659,8 @@ MatchGraphResponse& matchGraph( const MatchGraphRequest& request_,
  *                 '5.0'.
  *                         <li> gpudb::match_graph_num_segments: Maximum number
  *                 of potentially matching road segments for each sample point.
- *                 For the @a markov_chain solver, the default is 3; for the @a
- *                 incremental_weighted, the default is 5.  The default value
- *                 is ''.
+ *                 For the @a markov_chain solver, the default is 3.  The
+ *                 default value is '3'.
  *                         <li> gpudb::match_graph_search_radius: Maximum
  *                 search radius used when snapping sample points onto
  *                 potentially matching surrounding segments. The default value
@@ -18668,28 +18671,6 @@ MatchGraphResponse& matchGraph( const MatchGraphRequest& request_,
  *                 lookahead window within the Markov kernel; the larger the
  *                 number, the more accurate the solution.  The default value
  *                 is '9'.
- *                         <li> gpudb::match_graph_max_solve_length: For the @a
- *                 incremental_weighted solver only. Maximum number of samples
- *                 along the path on which to solve.  The default value is
- *                 '200'.
- *                         <li> gpudb::match_graph_time_window_width: For the
- *                 @a incremental_weighted solver only. Time window, also known
- *                 as sampling period, in which points are favored. To
- *                 determine the raw window value, the @a time_window_width
- *                 value is multiplied by the mean sample time (in seconds)
- *                 across all points, e.g., if @a time_window_width is 30 and
- *                 the mean sample time is 2 seconds, points that are sampled
- *                 greater than 60 seconds after the previous point are no
- *                 longer favored in the solution.  The default value is '30'.
- *                         <li> gpudb::match_graph_detect_loops: For the @a
- *                 incremental_weighted solver only. If @a true, a loop will be
- *                 detected and traversed even if it would make a shorter path
- *                 to ignore the loop.
- *                 <ul>
- *                         <li> gpudb::match_graph_true
- *                         <li> gpudb::match_graph_false
- *                 </ul>
- *                 The default value is gpudb::match_graph_true.
  *                         <li> gpudb::match_graph_source: Optional WKT
  *                 starting point from @a samplePoints for the solver. The
  *                 default behavior for the endpoint is to use time to
@@ -18772,6 +18753,29 @@ MatchGraphResponse& matchGraph( const MatchGraphRequest& request_,
  *                 multiplied by the total dropped load will be added over to
  *                 the trip cost to the demand location.  The default value is
  *                 '0.0'.
+ *                         <li> gpudb::match_graph_max_num_threads: For the @a
+ *                 markov_chain solver only. If specified (greater than zero),
+ *                 the maximum number of threads will not be greater than the
+ *                 specified value. It can be lower due to the memory and the
+ *                 number cores available. Default value of zero allows the
+ *                 algorithm to set the maximal number of threads within these
+ *                 constraints.  The default value is '0'.
+ *                         <li> gpudb::match_graph_truck_service_limit: For the
+ *                 @a match_supply_demand solver only. If specified (greather
+ *                 than zero), any truck's total service cost (distance or
+ *                 time) will be limited by the specified value including
+ *                 multiple rounds (if set).  The default value is '0.0'.
+ *                         <li> gpudb::match_graph_enable_truck_reuse: For the
+ *                 @a match_supply_demand solver only. If specified (true), all
+ *                 trucks can be scheduled for second rounds from their
+ *                 originating depots.
+ *                 <ul>
+ *                         <li> gpudb::match_graph_true: Allows reusing trucks
+ *                 for scheduling again.
+ *                         <li> gpudb::match_graph_false: Trucks are scheduled
+ *                 only once from their depots.
+ *                 </ul>
+ *                 The default value is gpudb::match_graph_false.
  *                 </ul>
  * 
  * @return Response object containing the result of the operation.
@@ -18822,12 +18826,6 @@ MatchGraphResponse matchGraph( const std::string& graphName,
  *                     each point. This solution type is the most accurate but
  *                     also the most computationally intensive. Related
  *                     options: @a num_segments and @a chain_width.
- *                             <li> gpudb::match_graph_incremental_weighted:
- *                     Matches @a samplePoints to the graph using time and/or
- *                     distance between points to influence one or more
- *                     shortest paths across the sample points. Related
- *                     options: @a num_segments, @a max_solve_length, @a
- *                     time_window_width, and @a detect_loops.
  *                             <li> gpudb::match_graph_match_od_pairs: Matches
  *                     @a samplePoints to find the most probable path between
  *                     origin and destination pairs with cost constraints.
@@ -18863,9 +18861,8 @@ MatchGraphResponse matchGraph( const std::string& graphName,
  *                 '5.0'.
  *                         <li> gpudb::match_graph_num_segments: Maximum number
  *                 of potentially matching road segments for each sample point.
- *                 For the @a markov_chain solver, the default is 3; for the @a
- *                 incremental_weighted, the default is 5.  The default value
- *                 is ''.
+ *                 For the @a markov_chain solver, the default is 3.  The
+ *                 default value is '3'.
  *                         <li> gpudb::match_graph_search_radius: Maximum
  *                 search radius used when snapping sample points onto
  *                 potentially matching surrounding segments. The default value
@@ -18876,28 +18873,6 @@ MatchGraphResponse matchGraph( const std::string& graphName,
  *                 lookahead window within the Markov kernel; the larger the
  *                 number, the more accurate the solution.  The default value
  *                 is '9'.
- *                         <li> gpudb::match_graph_max_solve_length: For the @a
- *                 incremental_weighted solver only. Maximum number of samples
- *                 along the path on which to solve.  The default value is
- *                 '200'.
- *                         <li> gpudb::match_graph_time_window_width: For the
- *                 @a incremental_weighted solver only. Time window, also known
- *                 as sampling period, in which points are favored. To
- *                 determine the raw window value, the @a time_window_width
- *                 value is multiplied by the mean sample time (in seconds)
- *                 across all points, e.g., if @a time_window_width is 30 and
- *                 the mean sample time is 2 seconds, points that are sampled
- *                 greater than 60 seconds after the previous point are no
- *                 longer favored in the solution.  The default value is '30'.
- *                         <li> gpudb::match_graph_detect_loops: For the @a
- *                 incremental_weighted solver only. If @a true, a loop will be
- *                 detected and traversed even if it would make a shorter path
- *                 to ignore the loop.
- *                 <ul>
- *                         <li> gpudb::match_graph_true
- *                         <li> gpudb::match_graph_false
- *                 </ul>
- *                 The default value is gpudb::match_graph_true.
  *                         <li> gpudb::match_graph_source: Optional WKT
  *                 starting point from @a samplePoints for the solver. The
  *                 default behavior for the endpoint is to use time to
@@ -18980,6 +18955,29 @@ MatchGraphResponse matchGraph( const std::string& graphName,
  *                 multiplied by the total dropped load will be added over to
  *                 the trip cost to the demand location.  The default value is
  *                 '0.0'.
+ *                         <li> gpudb::match_graph_max_num_threads: For the @a
+ *                 markov_chain solver only. If specified (greater than zero),
+ *                 the maximum number of threads will not be greater than the
+ *                 specified value. It can be lower due to the memory and the
+ *                 number cores available. Default value of zero allows the
+ *                 algorithm to set the maximal number of threads within these
+ *                 constraints.  The default value is '0'.
+ *                         <li> gpudb::match_graph_truck_service_limit: For the
+ *                 @a match_supply_demand solver only. If specified (greather
+ *                 than zero), any truck's total service cost (distance or
+ *                 time) will be limited by the specified value including
+ *                 multiple rounds (if set).  The default value is '0.0'.
+ *                         <li> gpudb::match_graph_enable_truck_reuse: For the
+ *                 @a match_supply_demand solver only. If specified (true), all
+ *                 trucks can be scheduled for second rounds from their
+ *                 originating depots.
+ *                 <ul>
+ *                         <li> gpudb::match_graph_true: Allows reusing trucks
+ *                 for scheduling again.
+ *                         <li> gpudb::match_graph_false: Trucks are scheduled
+ *                 only once from their depots.
+ *                 </ul>
+ *                 The default value is gpudb::match_graph_false.
  *                 </ul>
  * @param[out] response_  Response object containing the results of the
  *                        operation.
@@ -21271,10 +21269,11 @@ ShowSystemTimingResponse& showSystemTiming( const std::map<std::string, std::str
  * views it contains. If @a tableName is empty, information about all
  * collections and top-level tables and views can be returned.
  * <p>
- * If the option @a get_sizes is set to @a true, then the sizes (objects and
- * elements) of each table are returned (in @a sizes and @a fullSizes), along
- * with the total number of objects in the requested table (in @a totalSize and
- * @a totalFullSize).
+ * If the option @a get_sizes is set to
+ * @a true, then the number of records
+ * in each table is returned (in @a sizes and
+ * @a fullSizes), along with the total number of objects across all
+ * requested tables (in @a totalSize and @a totalFullSize).
  * <p>
  * For a collection, setting the @a show_children option to @a false returns
  * only information about the collection itself; setting @a show_children to @a
@@ -21300,10 +21299,11 @@ ShowTableResponse showTable( const ShowTableRequest& request_ ) const;
  * views it contains. If @a tableName is empty, information about all
  * collections and top-level tables and views can be returned.
  * <p>
- * If the option @a get_sizes is set to @a true, then the sizes (objects and
- * elements) of each table are returned (in @a sizes and @a fullSizes), along
- * with the total number of objects in the requested table (in @a totalSize and
- * @a totalFullSize).
+ * If the option @a get_sizes is set to
+ * @a true, then the number of records
+ * in each table is returned (in @a sizes and
+ * @a fullSizes), along with the total number of objects across all
+ * requested tables (in @a totalSize and @a totalFullSize).
  * <p>
  * For a collection, setting the @a show_children option to @a false returns
  * only information about the collection itself; setting @a show_children to @a
@@ -21333,10 +21333,11 @@ ShowTableResponse& showTable( const ShowTableRequest& request_,
  * views it contains. If @a tableName is empty, information about all
  * collections and top-level tables and views can be returned.
  * <p>
- * If the option @a get_sizes is set to @a true, then the sizes (objects and
- * elements) of each table are returned (in @a sizes and @a fullSizes), along
- * with the total number of objects in the requested table (in @a totalSize and
- * @a totalFullSize).
+ * If the option @a get_sizes is set to
+ * @a true, then the number of records
+ * in each table is returned (in @a sizes and
+ * @a fullSizes), along with the total number of objects across all
+ * requested tables (in @a totalSize and @a totalFullSize).
  * <p>
  * For a collection, setting the @a show_children option to @a false returns
  * only information about the collection itself; setting @a show_children to @a
@@ -21360,7 +21361,8 @@ ShowTableResponse& showTable( const ShowTableRequest& request_,
  *                 </ul>
  *                 The default value is gpudb::show_table_true.
  *                         <li> gpudb::show_table_get_sizes: If @a true then
- *                 the table sizes will be returned; blank, otherwise.
+ *                 the number of records in each table, along with a cumulative
+ *                 count, will be returned; blank, otherwise.
  *                 <ul>
  *                         <li> gpudb::show_table_true
  *                         <li> gpudb::show_table_false
@@ -21409,10 +21411,11 @@ ShowTableResponse showTable( const std::string& tableName,
  * views it contains. If @a tableName is empty, information about all
  * collections and top-level tables and views can be returned.
  * <p>
- * If the option @a get_sizes is set to @a true, then the sizes (objects and
- * elements) of each table are returned (in @a sizes and @a fullSizes), along
- * with the total number of objects in the requested table (in @a totalSize and
- * @a totalFullSize).
+ * If the option @a get_sizes is set to
+ * @a true, then the number of records
+ * in each table is returned (in @a sizes and
+ * @a fullSizes), along with the total number of objects across all
+ * requested tables (in @a totalSize and @a totalFullSize).
  * <p>
  * For a collection, setting the @a show_children option to @a false returns
  * only information about the collection itself; setting @a show_children to @a
@@ -21436,7 +21439,8 @@ ShowTableResponse showTable( const std::string& tableName,
  *                 </ul>
  *                 The default value is gpudb::show_table_true.
  *                         <li> gpudb::show_table_get_sizes: If @a true then
- *                 the table sizes will be returned; blank, otherwise.
+ *                 the number of records in each table, along with a cumulative
+ *                 count, will be returned; blank, otherwise.
  *                 <ul>
  *                         <li> gpudb::show_table_true
  *                         <li> gpudb::show_table_false

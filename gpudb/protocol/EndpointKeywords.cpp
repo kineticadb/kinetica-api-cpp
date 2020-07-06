@@ -195,7 +195,6 @@ namespace gpudb
     const std::string alter_system_properties_audit_body                 ( "audit_body"                  );
     const std::string alter_system_properties_audit_data                 ( "audit_data"                  );
     const std::string alter_system_properties_audit_headers              ( "audit_headers"               );
-    const std::string alter_system_properties_bulk_add_test              ( "bulk_add_test"               );
     const std::string alter_system_properties_chunk_size                 ( "chunk_size"                  );
     const std::string alter_system_properties_clear_cache                ( "clear_cache"                 );
     const std::string alter_system_properties_communicator_test          ( "communicator_test"           );
@@ -314,6 +313,7 @@ namespace gpudb
     const std::string create_external_table_manual                        ( "manual"                         );
     const std::string create_external_table_materialized                  ( "materialized"                   );
     const std::string create_external_table_no_refresh                    ( "no_refresh"                     );
+    const std::string create_external_table_num_tasks_per_rank            ( "num_tasks_per_rank"             );
     const std::string create_external_table_on_start                      ( "on_start"                       );
     const std::string create_external_table_parquet                       ( "parquet"                        );
     const std::string create_external_table_permissive                    ( "permissive"                     );
@@ -822,6 +822,7 @@ namespace gpudb
     const std::string insert_records_from_files_is_update_records_by_series   ( "is_update_records_by_series"    );
     const std::string insert_records_from_files_loading_mode                  ( "loading_mode"                   );
     const std::string insert_records_from_files_no_error_if_exists            ( "no_error_if_exists"             );
+    const std::string insert_records_from_files_num_tasks_per_rank            ( "num_tasks_per_rank"             );
     const std::string insert_records_from_files_partition_definitions         ( "partition_definitions"          );
     const std::string insert_records_from_files_partition_keys                ( "partition_keys"                 );
     const std::string insert_records_from_files_partition_type                ( "partition_type"                 );
@@ -870,11 +871,10 @@ namespace gpudb
     const std::string match_graph_aggregated_output   ( "aggregated_output"    );
     const std::string match_graph_chain_width         ( "chain_width"          );
     const std::string match_graph_destination         ( "destination"          );
-    const std::string match_graph_detect_loops        ( "detect_loops"         );
+    const std::string match_graph_enable_truck_reuse  ( "enable_truck_reuse"   );
     const std::string match_graph_false               ( "false"                );
     const std::string match_graph_filter_folding_paths( "filter_folding_paths" );
     const std::string match_graph_gps_noise           ( "gps_noise"            );
-    const std::string match_graph_incremental_weighted( "incremental_weighted" );
     const std::string match_graph_intersection_penalty( "intersection_penalty" );
     const std::string match_graph_left_turn_penalty   ( "left_turn_penalty"    );
     const std::string match_graph_markov_chain        ( "markov_chain"         );
@@ -882,7 +882,7 @@ namespace gpudb
     const std::string match_graph_match_od_pairs      ( "match_od_pairs"       );
     const std::string match_graph_match_supply_demand ( "match_supply_demand"  );
     const std::string match_graph_max_combinations    ( "max_combinations"     );
-    const std::string match_graph_max_solve_length    ( "max_solve_length"     );
+    const std::string match_graph_max_num_threads     ( "max_num_threads"      );
     const std::string match_graph_max_trip_cost       ( "max_trip_cost"        );
     const std::string match_graph_num_segments        ( "num_segments"         );
     const std::string match_graph_partial_loading     ( "partial_loading"      );
@@ -890,7 +890,7 @@ namespace gpudb
     const std::string match_graph_search_radius       ( "search_radius"        );
     const std::string match_graph_sharp_turn_penalty  ( "sharp_turn_penalty"   );
     const std::string match_graph_source              ( "source"               );
-    const std::string match_graph_time_window_width   ( "time_window_width"    );
+    const std::string match_graph_truck_service_limit ( "truck_service_limit"  );
     const std::string match_graph_true                ( "true"                 );
     const std::string match_graph_unit_unloading_cost ( "unit_unloading_cost"  );
 
