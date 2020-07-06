@@ -147,6 +147,8 @@ namespace gpudb
          *                      gpudb::create_external_table_s3_bucket_name
          *                              <li>
          *                      gpudb::create_external_table_s3_region
+         *                              <li>
+         *                      gpudb::create_external_table_num_tasks_per_rank
          *                      </ul>
          * 
          */

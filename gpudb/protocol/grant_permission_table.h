@@ -61,7 +61,9 @@ namespace gpudb
          *                        collection, or view. If a collection, the
          *                        permission also applies to tables and views
          *                        in the collection.
-         * @param[in] filterExpression_  Reserved for future use.
+         * @param[in] filterExpression_  Optional filter expression to apply to
+         *                               this grant.  Only rows that match the
+         *                               filter will be affected.
          * @param[in] options_  Optional parameters.
          *                      <ul>
          *                              <li>

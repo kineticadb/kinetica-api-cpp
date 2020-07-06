@@ -469,6 +469,11 @@ namespace gpudb
          *                      </ul>
          *                      The default value is
          *                      gpudb::insert_records_from_files_false.
+         *                              <li>
+         *                      gpudb::insert_records_from_files_num_tasks_per_rank:
+         *                      Optional: number of tasks for reading file per
+         *                      rank. Default will be
+         *                      external_file_reader_num_tasks
          *                      </ul>
          * 
          */

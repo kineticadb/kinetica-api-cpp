@@ -114,7 +114,10 @@ namespace gpudb
          *                                 gpudb::alter_system_properties_clear_cache:
          *                                 Clears cached results.  Useful to
          *                                 allow repeated timing of endpoints.
-         *                                 Value string is ignored
+         *                                 Value string is the name of the
+         *                                 table for which to clear the cached
+         *                                 results, or an empty string to clear
+         *                                 the cached results for all tables.
          *                                         <li>
          *                                 gpudb::alter_system_properties_communicator_test:
          *                                 Invoke the communicator test and
@@ -143,11 +146,6 @@ namespace gpudb
          *                                         <li>
          *                                 gpudb::alter_system_properties_false
          *                                 </ul>
-         *                                         <li>
-         *                                 gpudb::alter_system_properties_bulk_add_test:
-         *                                 Invoke the bulk add test and report
-         *                                 timing results. Value string is
-         *                                 ignored.
          *                                         <li>
          *                                 gpudb::alter_system_properties_network_speed:
          *                                 Invoke the network speed test and
