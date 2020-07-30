@@ -6,7 +6,7 @@
 
 
 // GPUdb Version
-const std::string GPUdb::API_VERSION( "7.0.17.0" );
+const std::string GPUdb::API_VERSION( "7.0.18.0" );
 
 
 
@@ -24639,7 +24639,13 @@ SolveGraphResponse& GPUdb::solveGraph( const std::string& graphName,
  * 'foo') and (attr2 == 'bar')".  Meaning, all primary key columns must appear
  * in an equality predicate in the expressions.  Furthermore each 'pure primary
  * key' predicate must be unique within a given request.  These restrictions
- * can be removed by utilizing some available options through @a options.
+ * can be removed by utilizing some available options through @a options.Note
+ * that this operation can only be run on an original table and not on a
+ * collection or a result view.
+ * <p>
+ * The @a update_on_existing_pk option specifies the record collision policy
+ * for tables with a <a href="../../concepts/tables.html#primary-keys"
+ * target="_top">primary key</a>, and is ignored on tables with no primary key.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -24675,7 +24681,13 @@ UpdateRecordsResponse GPUdb::updateRecordsRaw( const RawUpdateRecordsRequest& re
  * 'foo') and (attr2 == 'bar')".  Meaning, all primary key columns must appear
  * in an equality predicate in the expressions.  Furthermore each 'pure primary
  * key' predicate must be unique within a given request.  These restrictions
- * can be removed by utilizing some available options through @a options.
+ * can be removed by utilizing some available options through @a options.Note
+ * that this operation can only be run on an original table and not on a
+ * collection or a result view.
+ * <p>
+ * The @a update_on_existing_pk option specifies the record collision policy
+ * for tables with a <a href="../../concepts/tables.html#primary-keys"
+ * target="_top">primary key</a>, and is ignored on tables with no primary key.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -25689,6 +25701,8 @@ VisualizeImageClassbreakResponse& GPUdb::visualizeImageClassbreak( const Visuali
  * @param cbVals
  * @param cbPointcolorAttr
  * @param cbPointcolorVals
+ * @param cbPointalphaAttr
+ * @param cbPointalphaVals
  * @param cbPointsizeAttr
  * @param cbPointsizeVals
  * @param cbPointshapeAttr
@@ -25755,6 +25769,9 @@ VisualizeImageClassbreakResponse& GPUdb::visualizeImageClassbreak( const Visuali
  *                              <li>
  *                      gpudb::visualize_image_classbreak_pointcolors:   The
  *                      default value is 'FF0000'.
+ *                              <li>
+ *                      gpudb::visualize_image_classbreak_cb_pointalphas:   The
+ *                      default value is '255'.
  *                              <li>
  *                      gpudb::visualize_image_classbreak_pointsizes:   The
  *                      default value is '3'.
@@ -25884,6 +25901,8 @@ VisualizeImageClassbreakResponse GPUdb::visualizeImageClassbreak( const std::vec
                                                                   const std::vector<std::string>& cbVals,
                                                                   const std::string& cbPointcolorAttr,
                                                                   const std::vector<std::string>& cbPointcolorVals,
+                                                                  const std::string& cbPointalphaAttr,
+                                                                  const std::vector<std::string>& cbPointalphaVals,
                                                                   const std::string& cbPointsizeAttr,
                                                                   const std::vector<std::string>& cbPointsizeVals,
                                                                   const std::string& cbPointshapeAttr,
@@ -25911,6 +25930,8 @@ VisualizeImageClassbreakResponse GPUdb::visualizeImageClassbreak( const std::vec
     actualRequest_.cbVals = cbVals;
     actualRequest_.cbPointcolorAttr = cbPointcolorAttr;
     actualRequest_.cbPointcolorVals = cbPointcolorVals;
+    actualRequest_.cbPointalphaAttr = cbPointalphaAttr;
+    actualRequest_.cbPointalphaVals = cbPointalphaVals;
     actualRequest_.cbPointsizeAttr = cbPointsizeAttr;
     actualRequest_.cbPointsizeVals = cbPointsizeVals;
     actualRequest_.cbPointshapeAttr = cbPointshapeAttr;
@@ -25945,6 +25966,8 @@ VisualizeImageClassbreakResponse GPUdb::visualizeImageClassbreak( const std::vec
  * @param cbVals
  * @param cbPointcolorAttr
  * @param cbPointcolorVals
+ * @param cbPointalphaAttr
+ * @param cbPointalphaVals
  * @param cbPointsizeAttr
  * @param cbPointsizeVals
  * @param cbPointshapeAttr
@@ -26011,6 +26034,9 @@ VisualizeImageClassbreakResponse GPUdb::visualizeImageClassbreak( const std::vec
  *                              <li>
  *                      gpudb::visualize_image_classbreak_pointcolors:   The
  *                      default value is 'FF0000'.
+ *                              <li>
+ *                      gpudb::visualize_image_classbreak_cb_pointalphas:   The
+ *                      default value is '255'.
  *                              <li>
  *                      gpudb::visualize_image_classbreak_pointsizes:   The
  *                      default value is '3'.
@@ -26143,6 +26169,8 @@ VisualizeImageClassbreakResponse& GPUdb::visualizeImageClassbreak( const std::ve
                                                                    const std::vector<std::string>& cbVals,
                                                                    const std::string& cbPointcolorAttr,
                                                                    const std::vector<std::string>& cbPointcolorVals,
+                                                                   const std::string& cbPointalphaAttr,
+                                                                   const std::vector<std::string>& cbPointalphaVals,
                                                                    const std::string& cbPointsizeAttr,
                                                                    const std::vector<std::string>& cbPointsizeVals,
                                                                    const std::string& cbPointshapeAttr,
@@ -26171,6 +26199,8 @@ VisualizeImageClassbreakResponse& GPUdb::visualizeImageClassbreak( const std::ve
     actualRequest_.cbVals = cbVals;
     actualRequest_.cbPointcolorAttr = cbPointcolorAttr;
     actualRequest_.cbPointcolorVals = cbPointcolorVals;
+    actualRequest_.cbPointalphaAttr = cbPointalphaAttr;
+    actualRequest_.cbPointalphaVals = cbPointalphaVals;
     actualRequest_.cbPointsizeAttr = cbPointsizeAttr;
     actualRequest_.cbPointsizeVals = cbPointsizeVals;
     actualRequest_.cbPointshapeAttr = cbPointshapeAttr;

@@ -1206,6 +1206,7 @@ namespace gpudb
     const std::string visualize_image_classbreak_PLATE_CARREE       ( "PLATE_CARREE"        );
     const std::string visualize_image_classbreak_SYMBOLCODE         ( "SYMBOLCODE"          );
     const std::string visualize_image_classbreak_WEB_MERCATOR       ( "WEB_MERCATOR"        );
+    const std::string visualize_image_classbreak_cb_pointalphas     ( "cb_pointalphas"      );
     const std::string visualize_image_classbreak_circle             ( "circle"              );
     const std::string visualize_image_classbreak_diamond            ( "diamond"             );
     const std::string visualize_image_classbreak_do_points          ( "do_points"           );
