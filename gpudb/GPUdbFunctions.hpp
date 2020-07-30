@@ -22275,7 +22275,13 @@ SolveGraphResponse& solveGraph( const std::string& graphName,
  * 'foo') and (attr2 == 'bar')".  Meaning, all primary key columns must appear
  * in an equality predicate in the expressions.  Furthermore each 'pure primary
  * key' predicate must be unique within a given request.  These restrictions
- * can be removed by utilizing some available options through @a options.
+ * can be removed by utilizing some available options through @a options.Note
+ * that this operation can only be run on an original table and not on a
+ * collection or a result view.
+ * <p>
+ * The @a update_on_existing_pk option specifies the record collision policy
+ * for tables with a <a href="../../concepts/tables.html#primary-keys"
+ * target="_top">primary key</a>, and is ignored on tables with no primary key.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -22305,7 +22311,13 @@ UpdateRecordsResponse updateRecordsRaw( const RawUpdateRecordsRequest& request_ 
  * 'foo') and (attr2 == 'bar')".  Meaning, all primary key columns must appear
  * in an equality predicate in the expressions.  Furthermore each 'pure primary
  * key' predicate must be unique within a given request.  These restrictions
- * can be removed by utilizing some available options through @a options.
+ * can be removed by utilizing some available options through @a options.Note
+ * that this operation can only be run on an original table and not on a
+ * collection or a result view.
+ * <p>
+ * The @a update_on_existing_pk option specifies the record collision policy
+ * for tables with a <a href="../../concepts/tables.html#primary-keys"
+ * target="_top">primary key</a>, and is ignored on tables with no primary key.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -22339,7 +22351,13 @@ UpdateRecordsResponse& updateRecordsRaw( const RawUpdateRecordsRequest& request_
  * 'foo') and (attr2 == 'bar')".  Meaning, all primary key columns must appear
  * in an equality predicate in the expressions.  Furthermore each 'pure primary
  * key' predicate must be unique within a given request.  These restrictions
- * can be removed by utilizing some available options through @a options.
+ * can be removed by utilizing some available options through @a options.Note
+ * that this operation can only be run on an original table and not on a
+ * collection or a result view.
+ * <p>
+ * The @a update_on_existing_pk option specifies the record collision policy
+ * for tables with a <a href="../../concepts/tables.html#primary-keys"
+ * target="_top">primary key</a>, and is ignored on tables with no primary key.
  * 
  * @tparam <TRequest>  The type of object being added.
  * 
@@ -22383,7 +22401,13 @@ UpdateRecordsResponse updateRecords( const UpdateRecordsRequest<TRequest>& reque
  * 'foo') and (attr2 == 'bar')".  Meaning, all primary key columns must appear
  * in an equality predicate in the expressions.  Furthermore each 'pure primary
  * key' predicate must be unique within a given request.  These restrictions
- * can be removed by utilizing some available options through @a options.
+ * can be removed by utilizing some available options through @a options.Note
+ * that this operation can only be run on an original table and not on a
+ * collection or a result view.
+ * <p>
+ * The @a update_on_existing_pk option specifies the record collision policy
+ * for tables with a <a href="../../concepts/tables.html#primary-keys"
+ * target="_top">primary key</a>, and is ignored on tables with no primary key.
  * 
  * @tparam <TRequest>  The type of object being added.
  * 
@@ -22430,7 +22454,13 @@ UpdateRecordsResponse& updateRecords( const UpdateRecordsRequest<TRequest>& requ
  * 'foo') and (attr2 == 'bar')".  Meaning, all primary key columns must appear
  * in an equality predicate in the expressions.  Furthermore each 'pure primary
  * key' predicate must be unique within a given request.  These restrictions
- * can be removed by utilizing some available options through @a options.
+ * can be removed by utilizing some available options through @a options.Note
+ * that this operation can only be run on an original table and not on a
+ * collection or a result view.
+ * <p>
+ * The @a update_on_existing_pk option specifies the record collision policy
+ * for tables with a <a href="../../concepts/tables.html#primary-keys"
+ * target="_top">primary key</a>, and is ignored on tables with no primary key.
  * 
  * @tparam <TRequest>  The type of object being added.
  * 
@@ -22469,11 +22499,26 @@ UpdateRecordsResponse& updateRecords( const UpdateRecordsRequest<TRequest>& requ
  *                 </ul>
  *                 The default value is gpudb::update_records_false.
  *                         <li> gpudb::update_records_update_on_existing_pk:
- *                 Can be used to customize behavior when the updated primary
- *                 key value already exists as described in /insert/records.
+ *                 Specifies the record collision policy for tables with a <a
+ *                 href="../../concepts/tables.html#primary-keys"
+ *                 target="_top">primary key</a> when updating columns of the
+ *                 <a href="../../concepts/tables.html#primary-keys"
+ *                 target="_top">primary key</a> or inserting new records.  If
+ *                 @a true, existing records with primary key values that match
+ *                 those of a record being updated or inserted will be replaced
+ *                 by the updated and new records.  If @a false, existing
+ *                 records with matching primary key values will remain
+ *                 unchanged, and the updated or new records with primary key
+ *                 values that match those of existing records will be
+ *                 discarded.  If the specified table does not have a primary
+ *                 key, then this option has no effect.
  *                 <ul>
- *                         <li> gpudb::update_records_true
- *                         <li> gpudb::update_records_false
+ *                         <li> gpudb::update_records_true: Overwrite existing
+ *                 records when updated and inserted records have the same
+ *                 primary keys
+ *                         <li> gpudb::update_records_false: Discard updated
+ *                 and inserted records when the same primary keys already
+ *                 exist
  *                 </ul>
  *                 The default value is gpudb::update_records_false.
  *                         <li> gpudb::update_records_update_partition: Force
@@ -22550,7 +22595,13 @@ UpdateRecordsResponse updateRecords( const std::string& tableName,
  * 'foo') and (attr2 == 'bar')".  Meaning, all primary key columns must appear
  * in an equality predicate in the expressions.  Furthermore each 'pure primary
  * key' predicate must be unique within a given request.  These restrictions
- * can be removed by utilizing some available options through @a options.
+ * can be removed by utilizing some available options through @a options.Note
+ * that this operation can only be run on an original table and not on a
+ * collection or a result view.
+ * <p>
+ * The @a update_on_existing_pk option specifies the record collision policy
+ * for tables with a <a href="../../concepts/tables.html#primary-keys"
+ * target="_top">primary key</a>, and is ignored on tables with no primary key.
  * 
  * @tparam <TRequest>  The type of object being added.
  * 
@@ -22589,11 +22640,26 @@ UpdateRecordsResponse updateRecords( const std::string& tableName,
  *                 </ul>
  *                 The default value is gpudb::update_records_false.
  *                         <li> gpudb::update_records_update_on_existing_pk:
- *                 Can be used to customize behavior when the updated primary
- *                 key value already exists as described in /insert/records.
+ *                 Specifies the record collision policy for tables with a <a
+ *                 href="../../concepts/tables.html#primary-keys"
+ *                 target="_top">primary key</a> when updating columns of the
+ *                 <a href="../../concepts/tables.html#primary-keys"
+ *                 target="_top">primary key</a> or inserting new records.  If
+ *                 @a true, existing records with primary key values that match
+ *                 those of a record being updated or inserted will be replaced
+ *                 by the updated and new records.  If @a false, existing
+ *                 records with matching primary key values will remain
+ *                 unchanged, and the updated or new records with primary key
+ *                 values that match those of existing records will be
+ *                 discarded.  If the specified table does not have a primary
+ *                 key, then this option has no effect.
  *                 <ul>
- *                         <li> gpudb::update_records_true
- *                         <li> gpudb::update_records_false
+ *                         <li> gpudb::update_records_true: Overwrite existing
+ *                 records when updated and inserted records have the same
+ *                 primary keys
+ *                         <li> gpudb::update_records_false: Discard updated
+ *                 and inserted records when the same primary keys already
+ *                 exist
  *                 </ul>
  *                 The default value is gpudb::update_records_false.
  *                         <li> gpudb::update_records_update_partition: Force
@@ -23497,6 +23563,8 @@ VisualizeImageClassbreakResponse& visualizeImageClassbreak( const VisualizeImage
  * @param cbVals
  * @param cbPointcolorAttr
  * @param cbPointcolorVals
+ * @param cbPointalphaAttr
+ * @param cbPointalphaVals
  * @param cbPointsizeAttr
  * @param cbPointsizeVals
  * @param cbPointshapeAttr
@@ -23563,6 +23631,9 @@ VisualizeImageClassbreakResponse& visualizeImageClassbreak( const VisualizeImage
  *                              <li>
  *                      gpudb::visualize_image_classbreak_pointcolors:   The
  *                      default value is 'FF0000'.
+ *                              <li>
+ *                      gpudb::visualize_image_classbreak_cb_pointalphas:   The
+ *                      default value is '255'.
  *                              <li>
  *                      gpudb::visualize_image_classbreak_pointsizes:   The
  *                      default value is '3'.
@@ -23692,6 +23763,8 @@ VisualizeImageClassbreakResponse visualizeImageClassbreak( const std::vector<std
                                                            const std::vector<std::string>& cbVals,
                                                            const std::string& cbPointcolorAttr,
                                                            const std::vector<std::string>& cbPointcolorVals,
+                                                           const std::string& cbPointalphaAttr,
+                                                           const std::vector<std::string>& cbPointalphaVals,
                                                            const std::string& cbPointsizeAttr,
                                                            const std::vector<std::string>& cbPointsizeVals,
                                                            const std::string& cbPointshapeAttr,
@@ -23721,6 +23794,8 @@ VisualizeImageClassbreakResponse visualizeImageClassbreak( const std::vector<std
  * @param cbVals
  * @param cbPointcolorAttr
  * @param cbPointcolorVals
+ * @param cbPointalphaAttr
+ * @param cbPointalphaVals
  * @param cbPointsizeAttr
  * @param cbPointsizeVals
  * @param cbPointshapeAttr
@@ -23787,6 +23862,9 @@ VisualizeImageClassbreakResponse visualizeImageClassbreak( const std::vector<std
  *                              <li>
  *                      gpudb::visualize_image_classbreak_pointcolors:   The
  *                      default value is 'FF0000'.
+ *                              <li>
+ *                      gpudb::visualize_image_classbreak_cb_pointalphas:   The
+ *                      default value is '255'.
  *                              <li>
  *                      gpudb::visualize_image_classbreak_pointsizes:   The
  *                      default value is '3'.
@@ -23919,6 +23997,8 @@ VisualizeImageClassbreakResponse& visualizeImageClassbreak( const std::vector<st
                                                             const std::vector<std::string>& cbVals,
                                                             const std::string& cbPointcolorAttr,
                                                             const std::vector<std::string>& cbPointcolorVals,
+                                                            const std::string& cbPointalphaAttr,
+                                                            const std::vector<std::string>& cbPointalphaVals,
                                                             const std::string& cbPointsizeAttr,
                                                             const std::vector<std::string>& cbPointsizeVals,
                                                             const std::string& cbPointshapeAttr,

@@ -1206,6 +1206,7 @@ namespace gpudb
     extern const std::string visualize_image_classbreak_PLATE_CARREE;
     extern const std::string visualize_image_classbreak_SYMBOLCODE;
     extern const std::string visualize_image_classbreak_WEB_MERCATOR;
+    extern const std::string visualize_image_classbreak_cb_pointalphas;
     extern const std::string visualize_image_classbreak_circle;
     extern const std::string visualize_image_classbreak_diamond;
     extern const std::string visualize_image_classbreak_do_points;
