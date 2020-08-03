@@ -13,8 +13,8 @@ namespace gpudb
      * A set of input parameters for {@link
      * #aggregateMinMaxGeometry(const AggregateMinMaxGeometryRequest&) const}.
      * <p>
-     * Calculates and returns the minimum and maximum x- and y-coordinates of a
-     * particular geospatial geometry column in a table.
+     * Calculates and returns the minimum and maximum x- and y-coordinates
+     * of a particular geospatial geometry column in a table.
      */
     struct AggregateMinMaxGeometryRequest
     {
@@ -35,7 +35,11 @@ namespace gpudb
          * specified parameters.
          * 
          * @param[in] tableName_  Name of the table on which the operation will
-         *                        be performed. Must be an existing table.
+         *                        be performed. Must be an existing table, in
+         *                        [schema_name.]table_name format, using
+         *                        standard <a
+         *                        href="../../concepts/tables.html#table-name-resolution"
+         *                        target="_top">name resolution rules</a>.
          * @param[in] columnName_  Name of a geospatial geometry column on
          *                         which the min-max will be calculated.
          * @param[in] options_  Optional parameters.
@@ -109,8 +113,8 @@ namespace gpudb
      * A set of output parameters for {@link
      * #aggregateMinMaxGeometry(const AggregateMinMaxGeometryRequest&) const}.
      * <p>
-     * Calculates and returns the minimum and maximum x- and y-coordinates of a
-     * particular geospatial geometry column in a table.
+     * Calculates and returns the minimum and maximum x- and y-coordinates
+     * of a particular geospatial geometry column in a table.
      */
     struct AggregateMinMaxGeometryResponse
     {

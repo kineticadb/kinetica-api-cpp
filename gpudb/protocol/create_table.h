@@ -13,29 +13,20 @@ namespace gpudb
      * A set of input parameters for {@link
      * #createTable(const CreateTableRequest&) const}.
      * <p>
-     * Creates a new table or collection. If a new table is being created,
+     * Creates a new table. If a new table is being created,
      * the type of the table is given by @a typeId, which must be the ID of
      * a currently registered type (i.e. one created via {@link
-     * #createType(const CreateTypeRequest&) const}). The
-     * table will be created inside a collection if the option
-     * @a collection_name is specified. If that collection does
-     * not already exist, it will be created.
-     * <p>
-     * To create a new collection, specify the name of the collection in
-     * @a tableName and set the @a is_collection option to
-     * @a true; @a typeId will be
-     * ignored.
+     * #createType(const CreateTypeRequest&) const}).
      * <p>
      * A table may optionally be designated to use a
      * <a href="../../concepts/tables.html#replication"
      * target="_top">replicated</a> distribution scheme,
-     * have <a href="../../concepts/tables.html#foreign-keys"
-     * target="_top">foreign keys</a> to other
-     * tables assigned, be assigned a
-     * <a href="../../concepts/tables.html#partitioning"
-     * target="_top">partitioning</a> scheme, or have a
-     * <a href="../../rm/concepts.html#tier-strategies" target="_top">tier
-     * strategy</a> assigned.
+     * or be assigned: <a href="../../concepts/tables.html#foreign-keys"
+     * target="_top">foreign keys</a> to
+     * other tables, a <a href="../../concepts/tables.html#partitioning"
+     * target="_top">partitioning</a>
+     * scheme, and/or a <a href="../../rm/concepts.html#tier-strategies"
+     * target="_top">tier strategy</a>.
      */
     struct CreateTableRequest
     {
@@ -55,16 +46,20 @@ namespace gpudb
          * Constructs a CreateTableRequest object with the specified
          * parameters.
          * 
-         * @param[in] tableName_  Name of the table to be created. Error for
-         *                        requests with existing table of the same name
-         *                        and type ID may be suppressed by using the @a
-         *                        no_error_if_exists option.  See <a
-         *                        href="../../concepts/tables.html"
-         *                        target="_top">Tables</a> for naming
-         *                        restrictions.
+         * @param[in] tableName_  Name of the table to be created, in
+         *                        [schema_name.]table_name format, using
+         *                        standard <a
+         *                        href="../../concepts/tables.html#table-name-resolution"
+         *                        target="_top">name resolution rules</a> and
+         *                        meeting <a
+         *                        href="../../concepts/tables.html#table-naming-criteria"
+         *                        target="_top">table naming criteria</a>.
+         *                        Error for requests with existing table of the
+         *                        same name and type ID may be suppressed by
+         *                        using the @a no_error_if_exists option.
          * @param[in] typeId_  ID of a currently registered type. All objects
          *                     added to the newly created table will be of this
-         *                     type.  Ignored if @a is_collection is @a true.
+         *                     type.
          * @param[in] options_  Optional parameters.
          *                      <ul>
          *                              <li>
@@ -79,15 +74,18 @@ namespace gpudb
          *                      </ul>
          *                      The default value is gpudb::create_table_false.
          *                              <li>
-         *                      gpudb::create_table_collection_name: Name of a
-         *                      collection which is to contain the newly
-         *                      created table. If the collection provided is
-         *                      non-existent, the collection will be
-         *                      automatically created. If empty, then the newly
-         *                      created table will be a top-level table.
+         *                      gpudb::create_table_collection_name:
+         *                      [DEPRECATED--please specify the containing
+         *                      schema as part of @a tableName and use
+         *                      /create/schema to create the schema if
+         *                      non-existent]  Name of a schema which is to
+         *                      contain the newly created table. If the schema
+         *                      is non-existent, it will be automatically
+         *                      created.
          *                              <li> gpudb::create_table_is_collection:
-         *                      Indicates whether the new table to be created
-         *                      will be a collection.
+         *                      [DEPRECATED--please use /create/schema to
+         *                      create a schema instead]  Indicates whether to
+         *                      create a schema instead of a table.
          *                      <ul>
          *                              <li> gpudb::create_table_true
          *                              <li> gpudb::create_table_false
@@ -102,16 +100,16 @@ namespace gpudb
          *                      </ul>
          *                      The default value is gpudb::create_table_false.
          *                              <li> gpudb::create_table_is_replicated:
-         *                      For a table, affects the <a
+         *                      Affects the <a
          *                      href="../../concepts/tables.html#distribution"
          *                      target="_top">distribution scheme</a> for the
-         *                      table's data.  If true and the given type has
-         *                      no explicit <a
+         *                      table's data.  If @a true and the given type
+         *                      has no explicit <a
          *                      href="../../concepts/tables.html#shard-key"
          *                      target="_top">shard key</a> defined, the table
          *                      will be <a
          *                      href="../../concepts/tables.html#replication"
-         *                      target="_top">replicated</a>.  If false, the
+         *                      target="_top">replicated</a>.  If @a false, the
          *                      table will be <a
          *                      href="../../concepts/tables.html#sharding"
          *                      target="_top">sharded</a> according to the
@@ -180,7 +178,7 @@ namespace gpudb
          *                      formats.
          *                              <li>
          *                      gpudb::create_table_is_automatic_partition: If
-         *                      true, a new partition will be created for
+         *                      @a true, a new partition will be created for
          *                      values which don't fall into an existing
          *                      partition.  Currently only supported for <a
          *                      href="../../concepts/tables.html#partitioning-by-list"
@@ -190,21 +188,26 @@ namespace gpudb
          *                              <li> gpudb::create_table_false
          *                      </ul>
          *                      The default value is gpudb::create_table_false.
-         *                              <li> gpudb::create_table_ttl: For a
-         *                      table, sets the <a
-         *                      href="../../concepts/ttl.html"
+         *                              <li> gpudb::create_table_ttl: Sets the
+         *                      <a href="../../concepts/ttl.html"
          *                      target="_top">TTL</a> of the table specified in
          *                      @a tableName.
          *                              <li> gpudb::create_table_chunk_size:
          *                      Indicates the number of records per chunk to be
          *                      used for this table.
          *                              <li>
-         *                      gpudb::create_table_is_result_table: For a
-         *                      table, indicates whether the table is an
-         *                      in-memory table. A result table cannot contain
-         *                      store_only, text_search, or string columns
-         *                      (charN columns are acceptable), and it will not
-         *                      be retained if the server is restarted.
+         *                      gpudb::create_table_is_result_table: Indicates
+         *                      whether the table is a <a
+         *                      href="../../concepts/tables_memory_only.html"
+         *                      target="_top">memory-only table</a>. A result
+         *                      table cannot contain columns with store_only or
+         *                      text_search <a
+         *                      href="../../concepts/types.html#data-handling"
+         *                      target="_top">data-handling</a> or that are <a
+         *                      href="../../concepts/types.html#primitive-types"
+         *                      target="_top">non-charN strings</a>, and it
+         *                      will not be retained if the server is
+         *                      restarted.
          *                      <ul>
          *                              <li> gpudb::create_table_true
          *                              <li> gpudb::create_table_false
@@ -292,29 +295,20 @@ namespace gpudb
      * A set of output parameters for {@link
      * #createTable(const CreateTableRequest&) const}.
      * <p>
-     * Creates a new table or collection. If a new table is being created,
+     * Creates a new table. If a new table is being created,
      * the type of the table is given by @a typeId, which must be the ID of
      * a currently registered type (i.e. one created via {@link
-     * #createType(const CreateTypeRequest&) const}). The
-     * table will be created inside a collection if the option
-     * @a collection_name is specified. If that collection does
-     * not already exist, it will be created.
-     * <p>
-     * To create a new collection, specify the name of the collection in
-     * @a tableName and set the @a is_collection option to
-     * @a true; @a typeId will be
-     * ignored.
+     * #createType(const CreateTypeRequest&) const}).
      * <p>
      * A table may optionally be designated to use a
      * <a href="../../concepts/tables.html#replication"
      * target="_top">replicated</a> distribution scheme,
-     * have <a href="../../concepts/tables.html#foreign-keys"
-     * target="_top">foreign keys</a> to other
-     * tables assigned, be assigned a
-     * <a href="../../concepts/tables.html#partitioning"
-     * target="_top">partitioning</a> scheme, or have a
-     * <a href="../../rm/concepts.html#tier-strategies" target="_top">tier
-     * strategy</a> assigned.
+     * or be assigned: <a href="../../concepts/tables.html#foreign-keys"
+     * target="_top">foreign keys</a> to
+     * other tables, a <a href="../../concepts/tables.html#partitioning"
+     * target="_top">partitioning</a>
+     * scheme, and/or a <a href="../../rm/concepts.html#tier-strategies"
+     * target="_top">tier strategy</a>.
      */
     struct CreateTableResponse
     {

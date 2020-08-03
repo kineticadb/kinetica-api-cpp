@@ -13,20 +13,25 @@ namespace gpudb
      * A set of input parameters for {@link
      * #createTriggerByRange(const CreateTriggerByRangeRequest&) const}.
      * <p>
-     * Sets up a simple range trigger for a column_name for one or more tables.
-     * Once the trigger has been activated, any record added to the listed
+     * Sets up a simple range trigger for a column_name for one or more
+     * tables. Once the trigger has been activated, any record added to the
+     * listed
      * tables(s) via {@link
      * #insertRecordsRaw(const RawInsertRecordsRequest&) const} with the
-     * chosen column_name's value falling within the specified range will trip
-     * the trigger. All such records will be queued at the trigger port (by
-     * default '9001' but able to be retrieved via {@link
-     * #showSystemStatus(const ShowSystemStatusRequest&) const}) for any
-     * listening client to collect. Active triggers can be cancelled by using
-     * the {@link #clearTrigger(const ClearTriggerRequest&) const} endpoint
-     * or by clearing all relevant tables.
+     * chosen column_name's value
+     * falling within the specified range will trip the trigger. All such
+     * records will
+     * be queued at the trigger port (by default '9001' but able to be
+     * retrieved via
+     * {@link #showSystemStatus(const ShowSystemStatusRequest&) const}) for
+     * any listening client to collect. Active
+     * triggers can be cancelled by using the {@link
+     * #clearTrigger(const ClearTriggerRequest&) const} endpoint or by
+     * clearing all relevant tables.
      * <p>
      * The output returns the trigger handle as well as indicating success or
-     * failure of the trigger activation.
+     * failure
+     * of the trigger activation.
      */
     struct CreateTriggerByRangeRequest
     {
@@ -52,7 +57,11 @@ namespace gpudb
          * @param[in] requestId_  User-created ID for the trigger. The ID can
          *                        be alphanumeric, contain symbols, and must
          *                        contain at least one character.
-         * @param[in] tableNames_  Tables on which the trigger will be active.
+         * @param[in] tableNames_  Tables on which the trigger will be active,
+         *                         each in [schema_name.]table_name format,
+         *                         using standard <a
+         *                         href="../../concepts/tables.html#table-name-resolution"
+         *                         target="_top">name resolution rules</a>.
          * @param[in] columnName_  Name of a numeric column_name on which the
          *                         trigger is activated.
          * @param[in] min_  The lower bound (inclusive) for the trigger range.
@@ -152,20 +161,25 @@ namespace gpudb
      * A set of output parameters for {@link
      * #createTriggerByRange(const CreateTriggerByRangeRequest&) const}.
      * <p>
-     * Sets up a simple range trigger for a column_name for one or more tables.
-     * Once the trigger has been activated, any record added to the listed
+     * Sets up a simple range trigger for a column_name for one or more
+     * tables. Once the trigger has been activated, any record added to the
+     * listed
      * tables(s) via {@link
      * #insertRecordsRaw(const RawInsertRecordsRequest&) const} with the
-     * chosen column_name's value falling within the specified range will trip
-     * the trigger. All such records will be queued at the trigger port (by
-     * default '9001' but able to be retrieved via {@link
-     * #showSystemStatus(const ShowSystemStatusRequest&) const}) for any
-     * listening client to collect. Active triggers can be cancelled by using
-     * the {@link #clearTrigger(const ClearTriggerRequest&) const} endpoint
-     * or by clearing all relevant tables.
+     * chosen column_name's value
+     * falling within the specified range will trip the trigger. All such
+     * records will
+     * be queued at the trigger port (by default '9001' but able to be
+     * retrieved via
+     * {@link #showSystemStatus(const ShowSystemStatusRequest&) const}) for
+     * any listening client to collect. Active
+     * triggers can be cancelled by using the {@link
+     * #clearTrigger(const ClearTriggerRequest&) const} endpoint or by
+     * clearing all relevant tables.
      * <p>
      * The output returns the trigger handle as well as indicating success or
-     * failure of the trigger activation.
+     * failure
+     * of the trigger activation.
      */
     struct CreateTriggerByRangeResponse
     {

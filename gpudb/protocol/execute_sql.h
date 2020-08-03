@@ -15,7 +15,10 @@ namespace gpudb
      * A set of input parameters for {@link
      * #executeSqlRaw(const ExecuteSqlRequest&) const}.
      * <p>
-     * SQL Request
+     * Execute a SQL statement (query, DML, or DDL).
+     * <p>
+     * See <a href="../../concepts/sql.html" target="_top">SQL Support</a> for
+     * the complete set of supported SQL commands.
      */
     struct ExecuteSqlRequest
     {
@@ -196,8 +199,8 @@ namespace gpudb
          *                      If @a false, then when a value is too large or
          *                      long, it will be truncated.
          *                      <ul>
-         *                              <li> gpudb::execute_sql_true: true
-         *                              <li> gpudb::execute_sql_false: false
+         *                              <li> gpudb::execute_sql_true
+         *                              <li> gpudb::execute_sql_false
          *                      </ul>
          *                      The default value is gpudb::execute_sql_true.
          *                              <li> gpudb::execute_sql_prepare_mode:
@@ -210,10 +213,6 @@ namespace gpudb
          *                              <li> gpudb::execute_sql_false
          *                      </ul>
          *                      The default value is gpudb::execute_sql_false.
-         *                              <li> gpudb::execute_sql_view_id:
-         *                      <DEVELOPER>  The default value is ''.
-         *                              <li> gpudb::execute_sql_no_count:
-         *                      <DEVELOPER>  The default value is 'false'.
          *                      </ul>
          * 
          */
@@ -397,8 +396,8 @@ namespace gpudb
          *                      If @a false, then when a value is too large or
          *                      long, it will be truncated.
          *                      <ul>
-         *                              <li> gpudb::execute_sql_true: true
-         *                              <li> gpudb::execute_sql_false: false
+         *                              <li> gpudb::execute_sql_true
+         *                              <li> gpudb::execute_sql_false
          *                      </ul>
          *                      The default value is gpudb::execute_sql_true.
          *                              <li> gpudb::execute_sql_prepare_mode:
@@ -411,10 +410,6 @@ namespace gpudb
          *                              <li> gpudb::execute_sql_false
          *                      </ul>
          *                      The default value is gpudb::execute_sql_false.
-         *                              <li> gpudb::execute_sql_view_id:
-         *                      <DEVELOPER>  The default value is ''.
-         *                              <li> gpudb::execute_sql_no_count:
-         *                      <DEVELOPER>  The default value is 'false'.
          *                      </ul>
          * 
          */
@@ -518,7 +513,10 @@ namespace gpudb
      * A set of output parameters for {@link
      * #executeSqlRaw(const ExecuteSqlRequest&) const}.
      * <p>
-     * SQL Request
+     * Execute a SQL statement (query, DML, or DDL).
+     * <p>
+     * See <a href="../../concepts/sql.html" target="_top">SQL Support</a> for
+     * the complete set of supported SQL commands.
      */
     struct RawExecuteSqlResponse
     {
@@ -635,7 +633,10 @@ namespace gpudb
      * A set of output parameters for {@link
      * #executeSql(const ExecuteSqlRequest&) const}.
      * <p>
-     * SQL Request
+     * Execute a SQL statement (query, DML, or DDL).
+     * <p>
+     * See <a href="../../concepts/sql.html" target="_top">SQL Support</a> for
+     * the complete set of supported SQL commands.
      */
     struct ExecuteSqlResponse
     {

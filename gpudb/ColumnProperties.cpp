@@ -25,6 +25,8 @@ namespace gpudb
 
         const std::string ULONG         ( "ulong"          );
 
+        const std::string UUID          ( "uuid"           );
+
         const std::string DECIMAL       ( "decimal"        );
 
         const std::string DATE          ( "date"           );

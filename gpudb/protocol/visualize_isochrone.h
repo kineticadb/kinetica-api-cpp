@@ -15,11 +15,13 @@ namespace gpudb
      * <p>
      * Generate an image containing isolines for travel results using an
      * existing graph. Isolines represent curves of equal cost, with cost
-     * typically referring to the time or distance assigned as the weights of
-     * the underlying graph. See <a
-     * href="../../graph_solver/network_graph_solver.html"
-     * target="_top">Network Graphs & Solvers</a> for more information on
-     * graphs.
+     * typically
+     * referring to the time or distance assigned as the weights of the
+     * underlying
+     * graph. See
+     * <a href="../../graph_solver/network_graph_solver.html"
+     * target="_top">Network Graphs & Solvers</a>
+     * for more information on graphs.
      * .
      */
     struct VisualizeIsochroneRequest
@@ -108,10 +110,17 @@ namespace gpudb
          *                            </ul>
          *                            The default value is
          *                            gpudb::visualize_isochrone_true.
-         * @param[in] levelsTable_  Name of the table to output the isochrones,
-         *                          containing levels and their corresponding
-         *                          WKT geometry. If no value is provided, the
-         *                          table is not generated.
+         * @param[in] levelsTable_  Name of the table to output the isochrones
+         *                          to, in [schema_name.]table_name format,
+         *                          using standard <a
+         *                          href="../../concepts/tables.html#table-name-resolution"
+         *                          target="_top">name resolution rules</a> and
+         *                          meeting <a
+         *                          href="../../concepts/tables.html#table-naming-criteria"
+         *                          target="_top">table naming criteria</a>.
+         *                          The table will contain levels and their
+         *                          corresponding WKT geometry. If no value is
+         *                          provided, the table is not generated.
          * @param[in] styleOptions_  Various style related options of the
          *                           isochrone image.
          *                           <ul>
@@ -459,12 +468,19 @@ namespace gpudb
          *                      <ul>
          *                              <li>
          *                      gpudb::visualize_isochrone_solve_table: Name of
-         *                      the table to host intermediate solve results
-         *                      containing the position and cost for each
-         *                      vertex in the graph. If the default value is
-         *                      used, a temporary table is created and deleted
-         *                      once the solution is calculated.  The default
-         *                      value is ''.
+         *                      the table to host intermediate solve results,
+         *                      in [schema_name.]table_name format, using
+         *                      standard <a
+         *                      href="../../concepts/tables.html#table-name-resolution"
+         *                      target="_top">name resolution rules</a> and
+         *                      meeting <a
+         *                      href="../../concepts/tables.html#table-naming-criteria"
+         *                      target="_top">table naming criteria</a>.  This
+         *                      table will contain the position and cost for
+         *                      each vertex in the graph. If the default value
+         *                      is used, a temporary table is created and
+         *                      deleted once the solution is calculated.  The
+         *                      default value is ''.
          *                              <li>
          *                      gpudb::visualize_isochrone_is_replicated: If
          *                      set to @a true, replicate the @a solve_table.
@@ -676,11 +692,13 @@ namespace gpudb
      * <p>
      * Generate an image containing isolines for travel results using an
      * existing graph. Isolines represent curves of equal cost, with cost
-     * typically referring to the time or distance assigned as the weights of
-     * the underlying graph. See <a
-     * href="../../graph_solver/network_graph_solver.html"
-     * target="_top">Network Graphs & Solvers</a> for more information on
-     * graphs.
+     * typically
+     * referring to the time or distance assigned as the weights of the
+     * underlying
+     * graph. See
+     * <a href="../../graph_solver/network_graph_solver.html"
+     * target="_top">Network Graphs & Solvers</a>
+     * for more information on graphs.
      * .
      */
     struct VisualizeIsochroneResponse

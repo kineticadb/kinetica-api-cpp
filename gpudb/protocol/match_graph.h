@@ -13,17 +13,21 @@ namespace gpudb
      * A set of input parameters for {@link
      * #matchGraph(const MatchGraphRequest&) const}.
      * <p>
-     * Matches a directed route implied by a given set of latitude/longitude
-     * points to an existing underlying road network graph using a given
-     * solution type.
+     * Matches a directed route implied by a given set of
+     * latitude/longitude points to an existing underlying road network graph
+     * using a
+     * given solution type.
 
-     * IMPORTANT: It's highly recommended that you review the <a
-     * href="../../graph_solver/network_graph_solver.html"
-     * target="_top">Network Graphs & Solvers</a> concepts documentation, the
+     * IMPORTANT: It's highly recommended that you review the
+     * <a href="../../graph_solver/network_graph_solver.html"
+     * target="_top">Network Graphs & Solvers</a>
+     * concepts documentation, the
      * <a href="../../graph_solver/examples/graph_rest_guide.html"
-     * target="_top">Graph REST Tutorial</a>, and/or some <a
-     * href="../../graph_solver/examples.html#match-graph"
-     * target="_top">/match/graph examples</a> before using this endpoint.
+     * target="_top">Graph REST Tutorial</a>,
+     * and/or some
+     * <a href="../../graph_solver/examples.html#match-graph"
+     * target="_top">/match/graph examples</a>
+     * before using this endpoint.
      */
     struct MatchGraphRequest
     {
@@ -99,7 +103,14 @@ namespace gpudb
          *                          The default value is
          *                          gpudb::match_graph_markov_chain.
          * @param[in] solutionTable_  The name of the table used to store the
-         *                            results; this table contains a <a
+         *                            results, in [schema_name.]table_name
+         *                            format, using standard <a
+         *                            href="../../concepts/tables.html#table-name-resolution"
+         *                            target="_top">name resolution rules</a>
+         *                            and meeting <a
+         *                            href="../../concepts/tables.html#table-naming-criteria"
+         *                            target="_top">table naming criteria</a>.
+         *                            This table contains a <a
          *                            href="../../geospatial/geo_objects.html#geospatial-tracks"
          *                            target="_top">track</a> of geospatial
          *                            points for the matched portion of the
@@ -109,10 +120,8 @@ namespace gpudb
          *                            latitude/longitude pair, the timestamp
          *                            the point was recorded at, and an edge ID
          *                            corresponding to the matched road
-         *                            segment. Has the same naming restrictions
-         *                            as <a href="../../concepts/tables.html"
-         *                            target="_top">tables</a>. Must not be an
-         *                            existing table of the same name.
+         *                            segment. Must not be an existing table of
+         *                            the same name.
          * @param[in] options_  Additional parameters
          *                      <ul>
          *                              <li> gpudb::match_graph_gps_noise: GPS
@@ -360,17 +369,21 @@ namespace gpudb
      * A set of output parameters for {@link
      * #matchGraph(const MatchGraphRequest&) const}.
      * <p>
-     * Matches a directed route implied by a given set of latitude/longitude
-     * points to an existing underlying road network graph using a given
-     * solution type.
+     * Matches a directed route implied by a given set of
+     * latitude/longitude points to an existing underlying road network graph
+     * using a
+     * given solution type.
 
-     * IMPORTANT: It's highly recommended that you review the <a
-     * href="../../graph_solver/network_graph_solver.html"
-     * target="_top">Network Graphs & Solvers</a> concepts documentation, the
+     * IMPORTANT: It's highly recommended that you review the
+     * <a href="../../graph_solver/network_graph_solver.html"
+     * target="_top">Network Graphs & Solvers</a>
+     * concepts documentation, the
      * <a href="../../graph_solver/examples/graph_rest_guide.html"
-     * target="_top">Graph REST Tutorial</a>, and/or some <a
-     * href="../../graph_solver/examples.html#match-graph"
-     * target="_top">/match/graph examples</a> before using this endpoint.
+     * target="_top">Graph REST Tutorial</a>,
+     * and/or some
+     * <a href="../../graph_solver/examples.html#match-graph"
+     * target="_top">/match/graph examples</a>
+     * before using this endpoint.
      */
     struct MatchGraphResponse
     {

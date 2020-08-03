@@ -15,8 +15,10 @@ namespace gpudb
      * <p>
      * Updates (adds or changes) metadata for tables. The metadata key and
      * values must both be strings. This is an easy way to annotate whole
-     * tables rather than single records within tables.  Some examples of
-     * metadata are owner of the table, table creation timestamp etc.
+     * tables rather
+     * than single records within tables.  Some examples of metadata are owner
+     * of the
+     * table, table creation timestamp etc.
      */
     struct AlterTableMetadataRequest
     {
@@ -37,8 +39,12 @@ namespace gpudb
          * parameters.
          * 
          * @param[in] tableNames_  Names of the tables whose metadata will be
-         *                         updated. All specified tables must exist, or
-         *                         an error will be returned.
+         *                         updated, in [schema_name.]table_name format,
+         *                         using standard <a
+         *                         href="../../concepts/tables.html#table-name-resolution"
+         *                         target="_top">name resolution rules</a>.
+         *                         All specified tables must exist, or an error
+         *                         will be returned.
          * @param[in] metadataMap_  A map which contains the metadata of the
          *                          tables that are to be updated. Note that
          *                          only one map is provided for all the
@@ -119,8 +125,10 @@ namespace gpudb
      * <p>
      * Updates (adds or changes) metadata for tables. The metadata key and
      * values must both be strings. This is an easy way to annotate whole
-     * tables rather than single records within tables.  Some examples of
-     * metadata are owner of the table, table creation timestamp etc.
+     * tables rather
+     * than single records within tables.  Some examples of metadata are owner
+     * of the
+     * table, table creation timestamp etc.
      */
     struct AlterTableMetadataResponse
     {

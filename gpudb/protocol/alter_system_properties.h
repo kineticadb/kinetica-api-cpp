@@ -46,9 +46,8 @@ namespace gpudb
          *                                 gpudb::alter_system_properties_sm_omp_threads:
          *                                 Set the number of OpenMP threads
          *                                 that will be used to service filter
-         *                                 & aggregation requests against
-         *                                 collections to the specified integer
-         *                                 value.
+         *                                 & aggregation requests to the
+         *                                 specified integer value.
          *                                         <li>
          *                                 gpudb::alter_system_properties_kernel_omp_threads:
          *                                 Set the number of kernel OpenMP
@@ -138,8 +137,8 @@ namespace gpudb
          *                                 Enables the communicator test to
          *                                 collect additional timing statistics
          *                                 when the value string is @a true.
-         *                                 Disables the collection when the
-         *                                 value string is @a false
+         *                                 Disables collecting statistics when
+         *                                 the value string is @a false
          *                                 <ul>
          *                                         <li>
          *                                 gpudb::alter_system_properties_true
@@ -212,11 +211,6 @@ namespace gpudb
          *                                 gpudb::alter_system_properties_enable_overlapped_equi_join:
          *                                 Enable overlapped-equi-join filter.
          *                                 The default value is 'true'.
-         *                                         <li>
-         *                                 gpudb::alter_system_properties_enable_compound_equi_join:
-         *                                 Enable compound-equi-join filter
-         *                                 plan type.  The default value is
-         *                                 'false'.
          *                                 </ul>
          * @param[in] options_  Optional parameters.
          * 

@@ -104,7 +104,11 @@ namespace gpudb
          * parameters.
          * 
          * @param[in] tableName_  Name of an existing table or view on which
-         *                        the operation will be performed.
+         *                        the operation will be performed, in
+         *                        [schema_name.]table_name format, using
+         *                        standard <a
+         *                        href="../../concepts/tables.html#table-name-resolution"
+         *                        target="_top">name resolution rules</a>.
          * @param[in] columnNames_  List of one or more column names,
          *                          expressions, and aggregate expressions.
          * @param[in] offset_  A positive integer indicating the number of
@@ -126,12 +130,14 @@ namespace gpudb
          * @param[in] options_  Optional parameters.
          *                      <ul>
          *                              <li>
-         *                      gpudb::aggregate_group_by_collection_name: Name
-         *                      of a collection which is to contain the table
-         *                      specified in @a result_table. If the collection
-         *                      provided is non-existent, the collection will
-         *                      be automatically created. If empty, then the
-         *                      table will be a top-level table.
+         *                      gpudb::aggregate_group_by_collection_name:
+         *                      [DEPRECATED--please specify the containing
+         *                      schema as part of @a result_table and use
+         *                      /create/schema to create the schema if
+         *                      non-existent]  Name of a schema which is to
+         *                      contain the table specified in @a result_table.
+         *                      If the schema provided is non-existent, it will
+         *                      be automatically created.
          *                              <li>
          *                      gpudb::aggregate_group_by_expression: Filter
          *                      expression to apply to the table prior to
@@ -177,17 +183,21 @@ namespace gpudb
          *                      gpudb::aggregate_group_by_value.
          *                              <li>
          *                      gpudb::aggregate_group_by_result_table: The
-         *                      name of the table used to store the results.
-         *                      Has the same naming restrictions as <a
-         *                      href="../../concepts/tables.html"
-         *                      target="_top">tables</a>. Column names
-         *                      (group-by and aggregate fields) need to be
-         *                      given aliases e.g. ["FChar256 as fchar256",
-         *                      "sum(FDouble) as sfd"].  If present, no results
-         *                      are returned in the response.  This option is
-         *                      not available if one of the grouping attributes
-         *                      is an unrestricted string (i.e.; not charN)
-         *                      type.
+         *                      name of a table used to store the results, in
+         *                      [schema_name.]table_name format, using standard
+         *                      <a
+         *                      href="../../concepts/tables.html#table-name-resolution"
+         *                      target="_top">name resolution rules</a> and
+         *                      meeting <a
+         *                      href="../../concepts/tables.html#table-naming-criteria"
+         *                      target="_top">table naming criteria</a>.
+         *                      Column names (group-by and aggregate fields)
+         *                      need to be given aliases e.g. ["FChar256 as
+         *                      fchar256", "sum(FDouble) as sfd"].  If present,
+         *                      no results are returned in the response.  This
+         *                      option is not available if one of the grouping
+         *                      attributes is an unrestricted string (i.e.; not
+         *                      charN) type.
          *                              <li>
          *                      gpudb::aggregate_group_by_result_table_persist:
          *                      If @a true, then the result table specified in
@@ -300,7 +310,11 @@ namespace gpudb
          * parameters.
          * 
          * @param[in] tableName_  Name of an existing table or view on which
-         *                        the operation will be performed.
+         *                        the operation will be performed, in
+         *                        [schema_name.]table_name format, using
+         *                        standard <a
+         *                        href="../../concepts/tables.html#table-name-resolution"
+         *                        target="_top">name resolution rules</a>.
          * @param[in] columnNames_  List of one or more column names,
          *                          expressions, and aggregate expressions.
          * @param[in] offset_  A positive integer indicating the number of
@@ -333,12 +347,14 @@ namespace gpudb
          * @param[in] options_  Optional parameters.
          *                      <ul>
          *                              <li>
-         *                      gpudb::aggregate_group_by_collection_name: Name
-         *                      of a collection which is to contain the table
-         *                      specified in @a result_table. If the collection
-         *                      provided is non-existent, the collection will
-         *                      be automatically created. If empty, then the
-         *                      table will be a top-level table.
+         *                      gpudb::aggregate_group_by_collection_name:
+         *                      [DEPRECATED--please specify the containing
+         *                      schema as part of @a result_table and use
+         *                      /create/schema to create the schema if
+         *                      non-existent]  Name of a schema which is to
+         *                      contain the table specified in @a result_table.
+         *                      If the schema provided is non-existent, it will
+         *                      be automatically created.
          *                              <li>
          *                      gpudb::aggregate_group_by_expression: Filter
          *                      expression to apply to the table prior to
@@ -384,17 +400,21 @@ namespace gpudb
          *                      gpudb::aggregate_group_by_value.
          *                              <li>
          *                      gpudb::aggregate_group_by_result_table: The
-         *                      name of the table used to store the results.
-         *                      Has the same naming restrictions as <a
-         *                      href="../../concepts/tables.html"
-         *                      target="_top">tables</a>. Column names
-         *                      (group-by and aggregate fields) need to be
-         *                      given aliases e.g. ["FChar256 as fchar256",
-         *                      "sum(FDouble) as sfd"].  If present, no results
-         *                      are returned in the response.  This option is
-         *                      not available if one of the grouping attributes
-         *                      is an unrestricted string (i.e.; not charN)
-         *                      type.
+         *                      name of a table used to store the results, in
+         *                      [schema_name.]table_name format, using standard
+         *                      <a
+         *                      href="../../concepts/tables.html#table-name-resolution"
+         *                      target="_top">name resolution rules</a> and
+         *                      meeting <a
+         *                      href="../../concepts/tables.html#table-naming-criteria"
+         *                      target="_top">table naming criteria</a>.
+         *                      Column names (group-by and aggregate fields)
+         *                      need to be given aliases e.g. ["FChar256 as
+         *                      fchar256", "sum(FDouble) as sfd"].  If present,
+         *                      no results are returned in the response.  This
+         *                      option is not available if one of the grouping
+         *                      attributes is an unrestricted string (i.e.; not
+         *                      charN) type.
          *                              <li>
          *                      gpudb::aggregate_group_by_result_table_persist:
          *                      If @a true, then the result table specified in

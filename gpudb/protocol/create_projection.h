@@ -14,35 +14,40 @@ namespace gpudb
      * #createProjection(const CreateProjectionRequest&) const}.
      * <p>
      * Creates a new <a href="../../concepts/projections.html"
-     * target="_top">projection</a> of an existing table. A projection
-     * represents a subset of the columns (potentially including derived
-     * columns) of a table.
+     * target="_top">projection</a> of
+     * an existing table. A projection represents a subset of the columns
+     * (potentially
+     * including derived columns) of a table.
      * <p>
-     * For projection details and examples, see <a
-     * href="../../concepts/projections.html" target="_top">Projections</a>.
-     * For limitations, see <a
-     * href="../../concepts/projections.html#limitations-and-cautions"
+     * For projection details and examples, see
+     * <a href="../../concepts/projections.html" target="_top">Projections</a>.
+     * For limitations, see
+     * <a href="../../concepts/projections.html#limitations-and-cautions"
      * target="_top">Projection Limitations and Cautions</a>.
      * <p>
      * <a href="../../concepts/window.html" target="_top">Window functions</a>,
-     * which can perform operations like moving averages, are available through
-     * this endpoint as well as {@link
+     * which can perform
+     * operations like moving averages, are available through this endpoint as
+     * well as
+     * {@link
      * #getRecordsByColumnRaw(const GetRecordsByColumnRequest&) const}.
      * <p>
-     * A projection can be created with a different <a
-     * href="../../concepts/tables.html#shard-keys" target="_top">shard key</a>
-     * than the source table.  By specifying @a shard_key, the projection will
-     * be sharded according to the specified columns, regardless of how the
-     * source table is sharded.  The source table can even be unsharded or
-     * replicated.
+     * A projection can be created with a different
+     * <a href="../../concepts/tables.html#shard-keys" target="_top">shard
+     * key</a> than the source table.
+     * By specifying @a shard_key, the projection will be sharded
+     * according to the specified columns, regardless of how the source table
+     * is
+     * sharded.  The source table can even be unsharded or replicated.
      * <p>
      * If @a tableName is empty, selection is performed against a single-row
-     * virtual table.  This can be useful in executing temporal (<a
-     * href="../../concepts/expressions.html#date-time-functions"
-     * target="_top">NOW()</a>), identity (<a
-     * href="../../concepts/expressions.html#user-security-functions"
-     * target="_top">USER()</a>), or constant-based functions (<a
-     * href="../../concepts/expressions.html#scalar-functions"
+     * virtual table.  This can be useful in executing temporal
+     * (<a href="../../concepts/expressions.html#date-time-functions"
+     * target="_top">NOW()</a>), identity
+     * (<a href="../../concepts/expressions.html#user-security-functions"
+     * target="_top">USER()</a>), or
+     * constant-based functions
+     * (<a href="../../concepts/expressions.html#scalar-functions"
      * target="_top">GEODIST(-77.11, 38.88, -71.06, 42.36)</a>).
      */
     struct CreateProjectionRequest
@@ -65,14 +70,23 @@ namespace gpudb
          * parameters.
          * 
          * @param[in] tableName_  Name of the existing table on which the
-         *                        projection is to be applied.  An empty table
-         *                        name creates a projection from a single-row
-         *                        virtual table, where columns specified should
-         *                        be constants or constant expressions.
-         * @param[in] projectionName_  Name of the projection to be created.
-         *                             Has the same naming restrictions as <a
-         *                             href="../../concepts/tables.html"
-         *                             target="_top">tables</a>.
+         *                        projection is to be applied, in
+         *                        [schema_name.]table_name format, using
+         *                        standard <a
+         *                        href="../../concepts/tables.html#table-name-resolution"
+         *                        target="_top">name resolution rules</a>.  An
+         *                        empty table name creates a projection from a
+         *                        single-row virtual table, where columns
+         *                        specified should be constants or constant
+         *                        expressions.
+         * @param[in] projectionName_  Name of the projection to be created, in
+         *                             [schema_name.]table_name format, using
+         *                             standard <a
+         *                             href="../../concepts/tables.html#table-name-resolution"
+         *                             target="_top">name resolution rules</a>
+         *                             and meeting <a
+         *                             href="../../concepts/tables.html#table-naming-criteria"
+         *                             target="_top">table naming criteria</a>.
          * @param[in] columnNames_  List of columns from @a tableName to be
          *                          included in the projection. Can include
          *                          derived columns. Can be specified as
@@ -81,14 +95,14 @@ namespace gpudb
          * @param[in] options_  Optional parameters.
          *                      <ul>
          *                              <li>
-         *                      gpudb::create_projection_collection_name: Name
-         *                      of a <a href="../../concepts/collections.html"
-         *                      target="_top">collection</a> to which the
-         *                      projection is to be assigned as a child. If the
-         *                      collection provided is non-existent, the
-         *                      collection will be automatically created. If
-         *                      empty, then the projection will be at the top
-         *                      level.  The default value is ''.
+         *                      gpudb::create_projection_collection_name:
+         *                      [DEPRECATED--please specify the containing
+         *                      schema for the projection as part of @a
+         *                      projectionName and use /create/schema to create
+         *                      the schema if non-existent]  Name of a schema
+         *                      for the projection. If the schema is
+         *                      non-existent, it will be automatically created.
+         *                      The default value is ''.
          *                              <li>
          *                      gpudb::create_projection_expression: An
          *                      optional filter <a
@@ -278,35 +292,40 @@ namespace gpudb
      * #createProjection(const CreateProjectionRequest&) const}.
      * <p>
      * Creates a new <a href="../../concepts/projections.html"
-     * target="_top">projection</a> of an existing table. A projection
-     * represents a subset of the columns (potentially including derived
-     * columns) of a table.
+     * target="_top">projection</a> of
+     * an existing table. A projection represents a subset of the columns
+     * (potentially
+     * including derived columns) of a table.
      * <p>
-     * For projection details and examples, see <a
-     * href="../../concepts/projections.html" target="_top">Projections</a>.
-     * For limitations, see <a
-     * href="../../concepts/projections.html#limitations-and-cautions"
+     * For projection details and examples, see
+     * <a href="../../concepts/projections.html" target="_top">Projections</a>.
+     * For limitations, see
+     * <a href="../../concepts/projections.html#limitations-and-cautions"
      * target="_top">Projection Limitations and Cautions</a>.
      * <p>
      * <a href="../../concepts/window.html" target="_top">Window functions</a>,
-     * which can perform operations like moving averages, are available through
-     * this endpoint as well as {@link
+     * which can perform
+     * operations like moving averages, are available through this endpoint as
+     * well as
+     * {@link
      * #getRecordsByColumnRaw(const GetRecordsByColumnRequest&) const}.
      * <p>
-     * A projection can be created with a different <a
-     * href="../../concepts/tables.html#shard-keys" target="_top">shard key</a>
-     * than the source table.  By specifying @a shard_key, the projection will
-     * be sharded according to the specified columns, regardless of how the
-     * source table is sharded.  The source table can even be unsharded or
-     * replicated.
+     * A projection can be created with a different
+     * <a href="../../concepts/tables.html#shard-keys" target="_top">shard
+     * key</a> than the source table.
+     * By specifying @a shard_key, the projection will be sharded
+     * according to the specified columns, regardless of how the source table
+     * is
+     * sharded.  The source table can even be unsharded or replicated.
      * <p>
      * If @a tableName is empty, selection is performed against a single-row
-     * virtual table.  This can be useful in executing temporal (<a
-     * href="../../concepts/expressions.html#date-time-functions"
-     * target="_top">NOW()</a>), identity (<a
-     * href="../../concepts/expressions.html#user-security-functions"
-     * target="_top">USER()</a>), or constant-based functions (<a
-     * href="../../concepts/expressions.html#scalar-functions"
+     * virtual table.  This can be useful in executing temporal
+     * (<a href="../../concepts/expressions.html#date-time-functions"
+     * target="_top">NOW()</a>), identity
+     * (<a href="../../concepts/expressions.html#user-security-functions"
+     * target="_top">USER()</a>), or
+     * constant-based functions
+     * (<a href="../../concepts/expressions.html#scalar-functions"
      * target="_top">GEODIST(-77.11, 38.88, -71.06, 42.36)</a>).
      */
     struct CreateProjectionResponse

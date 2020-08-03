@@ -36,6 +36,10 @@ namespace gpudb
          * @param[in] jobId_  A unique identifier for the job whose status and
          *                    result is to be fetched.
          * @param[in] options_  Optional parameters.
+         *                      <ul>
+         *                              <li> gpudb::get_job_job_tag: Job tag
+         *                      returned in call to create the job
+         *                      </ul>
          * 
          */
         GetJobRequest(const int64_t jobId_, const std::map<std::string, std::string>& options_):

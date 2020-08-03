@@ -128,11 +128,13 @@ public:
     enum HASynchronicityMode {
         // No override; defer to the HA process for synchronizing
         // endpoints (which has different logic for different endpoints)
-        DEFAULT = 0,  // maps to 'none'
+        DEFAULT = 0,  // maps to 'default'
+        // Explicitly do NOT replicate across the HA cluster
+        NONE,         // maps to 'REPL_NONE'
         // Synchronize all endpoint calls
-        SYNCHRONOUS,  // maps to 'sync'
+        SYNCHRONOUS,  // maps to 'REPL_SYNC'
         // Do NOT synchronize any endpoint call
-        ASYNCHRONOUS  // maps to 'async'
+        ASYNCHRONOUS  // maps to 'REPL_ASYNC'
     };
 
 

@@ -13,12 +13,31 @@ namespace gpudb
      * A set of input parameters for {@link
      * #adminRebalance(const AdminRebalanceRequest&) const}.
      * <p>
-     * Rebalance the cluster so that all the nodes contain approximately an
-     * equal number of records.  The rebalance will also cause the shards to be
+     * Rebalance the data in the cluster so that all nodes contain an equal
+     * number of records approximately and/or rebalance the shards to be
      * equally distributed (as much as possible) across all the ranks.
      * <p>
-     * This endpoint may take a long time to run, depending on the amount of
-     * data in the system. The API call may time out if run directly.  It is
+     * * If {@link #adminRebalance(const AdminRebalanceRequest&) const} is
+     * invoked after a change is made to the
+     *   cluster, e.g., a host was added or removed,
+     *   <a href="../../concepts/tables.html#sharding" target="_top">sharded
+     * data</a> will be
+     *   evenly redistributed across the cluster by number of shards per rank
+     *   while unsharded data will be redistributed across the cluster by data
+     *   size per rank
+     * * If {@link #adminRebalance(const AdminRebalanceRequest&) const} is
+     * invoked at some point when unsharded
+     *   data (a.k.a.
+     *   <a href="../../concepts/tables.html#random-sharding"
+     * target="_top">randomly-sharded</a>)
+     *   in the cluster is unevenly distributed over time, sharded data will
+     *   not move while unsharded data will be redistributed across the
+     *   cluster by data size per rank
+     * <p>
+     * NOTE: Replicated data will not move as a result of this call
+     * <p>
+     * This endpoint's processing time depends on the amount of data in the
+     * system, thus the API call may time out if run directly.  It is
      * recommended to run this endpoint asynchronously via {@link
      * #createJob(const CreateJobRequest&) const}.
      */
@@ -42,11 +61,14 @@ namespace gpudb
          *                      <ul>
          *                              <li>
          *                      gpudb::admin_rebalance_rebalance_sharded_data:
-         *                      If @a true, sharded data will be rebalanced
-         *                      approximately equally across the cluster. Note
-         *                      that for big clusters, this data transfer could
-         *                      be time consuming and result in delayed query
-         *                      responses.
+         *                      If @a true, <a
+         *                      href="../../concepts/tables.html#sharding"
+         *                      target="_top">sharded data</a> will be
+         *                      rebalanced approximately equally across the
+         *                      cluster. Note that for clusters with large
+         *                      amounts of sharded data, this data transfer
+         *                      could be time consuming and result in delayed
+         *                      query responses.
          *                      <ul>
          *                              <li> gpudb::admin_rebalance_true
          *                              <li> gpudb::admin_rebalance_false
@@ -55,12 +77,14 @@ namespace gpudb
          *                      gpudb::admin_rebalance_true.
          *                              <li>
          *                      gpudb::admin_rebalance_rebalance_unsharded_data:
-         *                      If @a true, unsharded data (data without
-         *                      primary keys and without shard keys) will be
+         *                      If @a true, unsharded data (a.k.a. <a
+         *                      href="../../concepts/tables.html#random-sharding"
+         *                      target="_top">randomly-sharded</a>) will be
          *                      rebalanced approximately equally across the
-         *                      cluster. Note that for big clusters, this data
-         *                      transfer could be time consuming and result in
-         *                      delayed query responses.
+         *                      cluster. Note that for clusters with large
+         *                      amounts of unsharded data, this data transfer
+         *                      could be time consuming and result in delayed
+         *                      query responses.
          *                      <ul>
          *                              <li> gpudb::admin_rebalance_true
          *                              <li> gpudb::admin_rebalance_false
@@ -68,34 +92,36 @@ namespace gpudb
          *                      The default value is
          *                      gpudb::admin_rebalance_true.
          *                              <li>
-         *                      gpudb::admin_rebalance_table_whitelist:
+         *                      gpudb::admin_rebalance_table_includes:
          *                      Comma-separated list of unsharded table names
          *                      to rebalance. Not applicable to sharded tables
-         *                      because they are always balanced in accordance
-         *                      with their primary key or shard key. Cannot be
-         *                      used simultaneously with @a table_blacklist.
+         *                      because they are always rebalanced. Cannot be
+         *                      used simultaneously with @a table_excludes.
+         *                      This parameter is ignored if @a
+         *                      rebalance_unsharded_data is @a false.
          *                              <li>
-         *                      gpudb::admin_rebalance_table_blacklist:
+         *                      gpudb::admin_rebalance_table_excludes:
          *                      Comma-separated list of unsharded table names
          *                      to not rebalance. Not applicable to sharded
-         *                      tables because they are always balanced in
-         *                      accordance with their primary key or shard key.
+         *                      tables because they are always rebalanced.
          *                      Cannot be used simultaneously with @a
-         *                      table_whitelist.
+         *                      table_includes. This parameter is ignored if @a
+         *                      rebalance_unsharded_data is @a false.
          *                              <li>
          *                      gpudb::admin_rebalance_aggressiveness:
-         *                      Influences how much data to send per rebalance
-         *                      round.  A higher aggressiveness setting will
-         *                      complete the rebalance faster.  A lower
-         *                      aggressiveness setting will take longer, but
-         *                      allow for better interleaving between the
-         *                      rebalance and other queries. Allowed values are
-         *                      1 through 10.  The default value is '1'.
+         *                      Influences how much data is moved at a time
+         *                      during rebalance.  A higher @a aggressiveness
+         *                      will complete the rebalance faster.  A lower @a
+         *                      aggressiveness will take longer but allow for
+         *                      better interleaving between the rebalance and
+         *                      other queries. Valid values are constants from
+         *                      1 (lowest) to 10 (highest).  The default value
+         *                      is '1'.
          *                              <li>
          *                      gpudb::admin_rebalance_compact_after_rebalance:
          *                      Perform compaction of deleted records once the
-         *                      rebalance completes, to reclaim memory and disk
-         *                      space. Default is true, unless @a
+         *                      rebalance completes to reclaim memory and disk
+         *                      space. Default is @a true, unless @a
          *                      repair_incorrectly_sharded_data is set to @a
          *                      true.
          *                      <ul>
@@ -105,9 +131,11 @@ namespace gpudb
          *                      The default value is
          *                      gpudb::admin_rebalance_true.
          *                              <li>
-         *                      gpudb::admin_rebalance_compact_only: Only
-         *                      perform compaction, do not rebalance. Default
-         *                      is false.
+         *                      gpudb::admin_rebalance_compact_only: If set to
+         *                      @a true, ignore rebalance options and attempt
+         *                      to perform compaction of deleted records to
+         *                      reclaim memory and disk space without
+         *                      rebalancing first.
          *                      <ul>
          *                              <li> gpudb::admin_rebalance_true
          *                              <li> gpudb::admin_rebalance_false
@@ -117,15 +145,17 @@ namespace gpudb
          *                              <li>
          *                      gpudb::admin_rebalance_repair_incorrectly_sharded_data:
          *                      Scans for any data sharded incorrectly and
-         *                      re-routes the correct location. This can be
-         *                      done as part of a typical rebalance after
-         *                      expanding the cluster, or in a standalone
-         *                      fashion when it is believed that data is
-         *                      sharded incorrectly somewhere in the cluster.
-         *                      Compaction will not be performed by default
-         *                      when this is enabled. This option may also
-         *                      lengthen rebalance time, and increase the
-         *                      memory used by the rebalance.
+         *                      re-routes the data to the correct location.
+         *                      Only necessary if /admin/verifydb reports an
+         *                      error in sharding alignment. This can be done
+         *                      as part of a typical rebalance after expanding
+         *                      the cluster or in a standalone fashion when it
+         *                      is believed that data is sharded incorrectly
+         *                      somewhere in the cluster. Compaction will not
+         *                      be performed by default when this is enabled.
+         *                      If this option is set to @a true, the time
+         *                      necessary to rebalance and the memory used by
+         *                      the rebalance may increase.
          *                      <ul>
          *                              <li> gpudb::admin_rebalance_true
          *                              <li> gpudb::admin_rebalance_false
@@ -187,12 +217,31 @@ namespace gpudb
      * A set of output parameters for {@link
      * #adminRebalance(const AdminRebalanceRequest&) const}.
      * <p>
-     * Rebalance the cluster so that all the nodes contain approximately an
-     * equal number of records.  The rebalance will also cause the shards to be
+     * Rebalance the data in the cluster so that all nodes contain an equal
+     * number of records approximately and/or rebalance the shards to be
      * equally distributed (as much as possible) across all the ranks.
      * <p>
-     * This endpoint may take a long time to run, depending on the amount of
-     * data in the system. The API call may time out if run directly.  It is
+     * * If {@link #adminRebalance(const AdminRebalanceRequest&) const} is
+     * invoked after a change is made to the
+     *   cluster, e.g., a host was added or removed,
+     *   <a href="../../concepts/tables.html#sharding" target="_top">sharded
+     * data</a> will be
+     *   evenly redistributed across the cluster by number of shards per rank
+     *   while unsharded data will be redistributed across the cluster by data
+     *   size per rank
+     * * If {@link #adminRebalance(const AdminRebalanceRequest&) const} is
+     * invoked at some point when unsharded
+     *   data (a.k.a.
+     *   <a href="../../concepts/tables.html#random-sharding"
+     * target="_top">randomly-sharded</a>)
+     *   in the cluster is unevenly distributed over time, sharded data will
+     *   not move while unsharded data will be redistributed across the
+     *   cluster by data size per rank
+     * <p>
+     * NOTE: Replicated data will not move as a result of this call
+     * <p>
+     * This endpoint's processing time depends on the amount of data in the
+     * system, thus the API call may time out if run directly.  It is
      * recommended to run this endpoint asynchronously via {@link
      * #createJob(const CreateJobRequest&) const}.
      */

@@ -13,13 +13,16 @@ namespace gpudb
      * A set of input parameters for {@link
      * #filterByAreaGeometry(const FilterByAreaGeometryRequest&) const}.
      * <p>
-     * Calculates which geospatial geometry objects from a table intersect a
-     * named area of interest (NAI/polygon). The operation is synchronous,
-     * meaning that a response will not be returned until all the matching
-     * objects are fully available. The response payload provides the count of
-     * the resulting set. A new resultant set (view) which satisfies the input
-     * NAI restriction specification is created with the name @a viewName
-     * passed in as part of the input.
+     * Calculates which geospatial geometry objects from a table intersect
+     * a named area of interest (NAI/polygon). The operation is synchronous,
+     * meaning
+     * that a response will not be returned until all the matching objects are
+     * fully
+     * available. The response payload provides the count of the resulting set.
+     * A new
+     * resultant set (view) which satisfies the input NAI restriction
+     * specification is
+     * created with the name @a viewName passed in as part of the input.
      */
     struct FilterByAreaGeometryRequest
     {
@@ -42,16 +45,23 @@ namespace gpudb
          * Constructs a FilterByAreaGeometryRequest object with the specified
          * parameters.
          * 
-         * @param[in] tableName_  Name of the table to filter.  This may be the
-         *                        name of a collection, a table, or a view
-         *                        (when chaining queries).  If filtering a
-         *                        collection, all child tables where the filter
-         *                        expression is valid will be filtered; the
-         *                        filtered result tables will then be placed in
-         *                        a collection specified by @a viewName.
+         * @param[in] tableName_  Name of the table to filter, in
+         *                        [schema_name.]table_name format, using
+         *                        standard <a
+         *                        href="../../concepts/tables.html#table-name-resolution"
+         *                        target="_top">name resolution rules</a>.
+         *                        This may be the name of a table or a view
+         *                        (when chaining queries).
          * @param[in] viewName_  If provided, then this will be the name of the
-         *                       view containing the results. Must not be an
-         *                       already existing collection, table or view.
+         *                       view containing the results, in
+         *                       [schema_name.]view_name format, using standard
+         *                       <a
+         *                       href="../../concepts/tables.html#table-name-resolution"
+         *                       target="_top">name resolution rules</a> and
+         *                       meeting <a
+         *                       href="../../concepts/tables.html#table-naming-criteria"
+         *                       target="_top">table naming criteria</a>.  Must
+         *                       not be an already existing table or view.
          * @param[in] columnName_  Name of the geospatial geometry column to be
          *                         filtered.
          * @param[in] xVector_  List of x coordinates of the vertices of the
@@ -62,11 +72,12 @@ namespace gpudb
          *                      <ul>
          *                              <li>
          *                      gpudb::filter_by_area_geometry_collection_name:
-         *                      Name of a collection which is to contain the
-         *                      newly created view. If the collection provided
-         *                      is non-existent, the collection will be
-         *                      automatically created. If empty, then the newly
-         *                      created view will be top-level.
+         *                      [DEPRECATED--please specify the containing
+         *                      schema for the view as part of @a viewName and
+         *                      use /create/schema to create the schema if
+         *                      non-existent]  The schema for the newly created
+         *                      view. If the schema is non-existent, it will be
+         *                      automatically created.
          *                      </ul>
          * 
          */
@@ -162,13 +173,16 @@ namespace gpudb
      * A set of output parameters for {@link
      * #filterByAreaGeometry(const FilterByAreaGeometryRequest&) const}.
      * <p>
-     * Calculates which geospatial geometry objects from a table intersect a
-     * named area of interest (NAI/polygon). The operation is synchronous,
-     * meaning that a response will not be returned until all the matching
-     * objects are fully available. The response payload provides the count of
-     * the resulting set. A new resultant set (view) which satisfies the input
-     * NAI restriction specification is created with the name @a viewName
-     * passed in as part of the input.
+     * Calculates which geospatial geometry objects from a table intersect
+     * a named area of interest (NAI/polygon). The operation is synchronous,
+     * meaning
+     * that a response will not be returned until all the matching objects are
+     * fully
+     * available. The response payload provides the count of the resulting set.
+     * A new
+     * resultant set (view) which satisfies the input NAI restriction
+     * specification is
+     * created with the name @a viewName passed in as part of the input.
      */
     struct FilterByAreaGeometryResponse
     {

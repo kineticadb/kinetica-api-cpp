@@ -17,13 +17,14 @@ namespace gpudb
      * view's name to prevent other views or tables from being created with
      * that name.
      * <p>
-     * For materialized view details and examples, see <a
-     * href="../../concepts/materialized_views.html" target="_top">Materialized
-     * Views</a>.
+     * For materialized view details and examples, see
+     * <a href="../../concepts/materialized_views.html"
+     * target="_top">Materialized Views</a>.
      * <p>
      * The response contains @a viewId, which is used to tag each subsequent
      * operation (projection, union, aggregation, filter, or join) that will
-     * compose the view.
+     * compose
+     * the view.
      */
     struct CreateMaterializedViewRequest
     {
@@ -43,16 +44,25 @@ namespace gpudb
          * parameters.
          * 
          * @param[in] tableName_  Name of the table to be created that is the
-         *                        top-level table of the materialized view.
+         *                        top-level table of the materialized view, in
+         *                        [schema_name.]table_name format, using
+         *                        standard <a
+         *                        href="../../concepts/tables.html#table-name-resolution"
+         *                        target="_top">name resolution rules</a> and
+         *                        meeting <a
+         *                        href="../../concepts/tables.html#table-naming-criteria"
+         *                        target="_top">table naming criteria</a>.
          * @param[in] options_  Optional parameters.
          *                      <ul>
          *                              <li>
          *                      gpudb::create_materialized_view_collection_name:
-         *                      Name of a collection which is to contain the
-         *                      newly created view. If the collection provided
-         *                      is non-existent, the collection will be
-         *                      automatically created. If empty, then the newly
-         *                      created table will be a top-level table.
+         *                      [DEPRECATED--please specify the containing
+         *                      schema for the materialized view as part of @a
+         *                      tableName and use /create/schema to create the
+         *                      schema if non-existent]  Name of a schema which
+         *                      is to contain the newly created view. If the
+         *                      schema provided is non-existent, it will be
+         *                      automatically created.
          *                              <li>
          *                      gpudb::create_materialized_view_ttl: Sets the
          *                      <a href="../../concepts/ttl.html"
@@ -179,13 +189,14 @@ namespace gpudb
      * view's name to prevent other views or tables from being created with
      * that name.
      * <p>
-     * For materialized view details and examples, see <a
-     * href="../../concepts/materialized_views.html" target="_top">Materialized
-     * Views</a>.
+     * For materialized view details and examples, see
+     * <a href="../../concepts/materialized_views.html"
+     * target="_top">Materialized Views</a>.
      * <p>
      * The response contains @a viewId, which is used to tag each subsequent
      * operation (projection, union, aggregation, filter, or join) that will
-     * compose the view.
+     * compose
+     * the view.
      */
     struct CreateMaterializedViewResponse
     {

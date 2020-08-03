@@ -13,21 +13,22 @@ namespace gpudb
      * A set of input parameters for {@link
      * #mergeRecords(const MergeRecordsRequest&) const}.
      * <p>
-     * Create a new empty result table (specified by @a tableName), and insert
-     * all records from source tables (specified by @a sourceTableNames) based
-     * on the field mapping information (specified by @a fieldMaps).
+     * Create a new empty result table (specified by @a tableName),
+     * and insert all records from source tables
+     * (specified by @a sourceTableNames) based on the field mapping
+     * information (specified by @a fieldMaps).
      * <p>
-     * For merge records details and examples, see <a
-     * href="../../concepts/merge_records.html" target="_top">Merge
-     * Records</a>.  For limitations, see <a
-     * href="../../concepts/merge_records.html#limitations-and-cautions"
+     * For merge records details and examples, see
+     * <a href="../../concepts/merge_records.html" target="_top">Merge
+     * Records</a>.  For limitations, see
+     * <a href="../../concepts/merge_records.html#limitations-and-cautions"
      * target="_top">Merge Records Limitations and Cautions</a>.
 
      * The field map (specified by @a fieldMaps) holds the user-specified maps
-     * of target table column names to source table columns. The array of @a
-     * fieldMaps must match one-to-one with the @a sourceTableNames, e.g.,
-     * there's a map present in @a fieldMaps for each table listed in @a
-     * sourceTableNames.
+     * of target table column names to source table columns. The array of
+     * @a fieldMaps must match one-to-one with the @a sourceTableNames,
+     * e.g., there's a map present in @a fieldMaps for each table listed in
+     * @a sourceTableNames.
      */
     struct MergeRecordsRequest
     {
@@ -48,11 +49,24 @@ namespace gpudb
          * Constructs a MergeRecordsRequest object with the specified
          * parameters.
          * 
-         * @param[in] tableName_  The new result table name for the records to
-         *                        be merged.  Must NOT be an existing table.
-         * @param[in] sourceTableNames_  The list of source table names to get
-         *                               the records from. Must be existing
-         *                               table names.
+         * @param[in] tableName_  The name of the new result table for the
+         *                        records to be merged into, in
+         *                        [schema_name.]table_name format, using
+         *                        standard <a
+         *                        href="../../concepts/tables.html#table-name-resolution"
+         *                        target="_top">name resolution rules</a> and
+         *                        meeting <a
+         *                        href="../../concepts/tables.html#table-naming-criteria"
+         *                        target="_top">table naming criteria</a>.
+         *                        Must NOT be an existing table.
+         * @param[in] sourceTableNames_  The list of names of source tables to
+         *                               get the records from, each in
+         *                               [schema_name.]table_name format, using
+         *                               standard <a
+         *                               href="../../concepts/tables.html#table-name-resolution"
+         *                               target="_top">name resolution
+         *                               rules</a>.  Must be existing table
+         *                               names.
          * @param[in] fieldMaps_  Contains a list of source/target column
          *                        mappings, one mapping for each source table
          *                        listed in @a sourceTableNames being merged
@@ -69,13 +83,13 @@ namespace gpudb
          * @param[in] options_  Optional parameters.
          *                      <ul>
          *                              <li>
-         *                      gpudb::merge_records_collection_name: Name of a
-         *                      collection which is to contain the newly
-         *                      created merged table specified by @a tableName.
-         *                      If the collection provided is non-existent, the
-         *                      collection will be automatically created. If
-         *                      empty, then the newly created merged table will
-         *                      be a top-level table.
+         *                      gpudb::merge_records_collection_name:
+         *                      [DEPRECATED--please specify the containing
+         *                      schema for the merged table as part of @a
+         *                      tableName and use /create/schema to create the
+         *                      schema if non-existent]  Name of a schema for
+         *                      the newly created merged table specified by @a
+         *                      tableName.
          *                              <li>
          *                      gpudb::merge_records_is_replicated: Indicates
          *                      the <a
@@ -196,21 +210,22 @@ namespace gpudb
      * A set of output parameters for {@link
      * #mergeRecords(const MergeRecordsRequest&) const}.
      * <p>
-     * Create a new empty result table (specified by @a tableName), and insert
-     * all records from source tables (specified by @a sourceTableNames) based
-     * on the field mapping information (specified by @a fieldMaps).
+     * Create a new empty result table (specified by @a tableName),
+     * and insert all records from source tables
+     * (specified by @a sourceTableNames) based on the field mapping
+     * information (specified by @a fieldMaps).
      * <p>
-     * For merge records details and examples, see <a
-     * href="../../concepts/merge_records.html" target="_top">Merge
-     * Records</a>.  For limitations, see <a
-     * href="../../concepts/merge_records.html#limitations-and-cautions"
+     * For merge records details and examples, see
+     * <a href="../../concepts/merge_records.html" target="_top">Merge
+     * Records</a>.  For limitations, see
+     * <a href="../../concepts/merge_records.html#limitations-and-cautions"
      * target="_top">Merge Records Limitations and Cautions</a>.
 
      * The field map (specified by @a fieldMaps) holds the user-specified maps
-     * of target table column names to source table columns. The array of @a
-     * fieldMaps must match one-to-one with the @a sourceTableNames, e.g.,
-     * there's a map present in @a fieldMaps for each table listed in @a
-     * sourceTableNames.
+     * of target table column names to source table columns. The array of
+     * @a fieldMaps must match one-to-one with the @a sourceTableNames,
+     * e.g., there's a map present in @a fieldMaps for each table listed in
+     * @a sourceTableNames.
      */
     struct MergeRecordsResponse
     {

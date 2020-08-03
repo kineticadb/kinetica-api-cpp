@@ -15,14 +15,19 @@ namespace gpudb
      * <p>
      * Calculates which objects from a table has a particular value for a
      * particular column. The input parameters provide a way to specify either
-     * a String or a Double valued column and a desired value for the column on
-     * which the filter is performed. The operation is synchronous, meaning
-     * that a response will not be returned until all the objects are fully
-     * available. The response payload provides the count of the resulting set.
-     * A new result view which satisfies the input filter restriction
-     * specification is also created with a view name passed in as part of the
-     * input payload.  Although this functionality can also be accomplished
-     * with the standard filter function, it is more efficient.
+     * a String
+     * or a Double valued column and a desired value for the column on which
+     * the filter
+     * is performed. The operation is synchronous, meaning that a response will
+     * not be
+     * returned until all the objects are fully available. The response payload
+     * provides the count of the resulting set. A new result view which
+     * satisfies the
+     * input filter restriction specification is also created with a view name
+     * passed
+     * in as part of the input payload.  Although this functionality can also
+     * be
+     * accomplished with the standard filter function, it is more efficient.
      */
     struct FilterByValueRequest
     {
@@ -47,12 +52,20 @@ namespace gpudb
          * parameters.
          * 
          * @param[in] tableName_  Name of an existing table on which to perform
-         *                        the calculation.
+         *                        the calculation, in [schema_name.]table_name
+         *                        format, using standard <a
+         *                        href="../../concepts/tables.html#table-name-resolution"
+         *                        target="_top">name resolution rules</a>.
          * @param[in] viewName_  If provided, then this will be the name of the
-         *                       view containing the results. Has the same
-         *                       naming restrictions as <a
-         *                       href="../../concepts/tables.html"
-         *                       target="_top">tables</a>.
+         *                       view containing the results, in
+         *                       [schema_name.]view_name format, using standard
+         *                       <a
+         *                       href="../../concepts/tables.html#table-name-resolution"
+         *                       target="_top">name resolution rules</a> and
+         *                       meeting <a
+         *                       href="../../concepts/tables.html#table-naming-criteria"
+         *                       target="_top">table naming criteria</a>.  Must
+         *                       not be an already existing table or view.
          * @param[in] isString_  Indicates whether the value being searched for
          *                       is string or numeric.
          * @param[in] value_  The value to search for.
@@ -62,12 +75,13 @@ namespace gpudb
          * @param[in] options_  Optional parameters.
          *                      <ul>
          *                              <li>
-         *                      gpudb::filter_by_value_collection_name: Name of
-         *                      a collection which is to contain the newly
-         *                      created view. If the collection provided is
-         *                      non-existent, the collection will be
-         *                      automatically created. If empty, then the newly
-         *                      created view will be top-level.
+         *                      gpudb::filter_by_value_collection_name:
+         *                      [DEPRECATED--please specify the containing
+         *                      schema for the view as part of @a viewName and
+         *                      use /create/schema to create the schema if
+         *                      non-existent]  Name of a schema for the newly
+         *                      created view. If the schema is non-existent, it
+         *                      will be automatically created.
          *                      </ul>
          * 
          */
@@ -173,14 +187,19 @@ namespace gpudb
      * <p>
      * Calculates which objects from a table has a particular value for a
      * particular column. The input parameters provide a way to specify either
-     * a String or a Double valued column and a desired value for the column on
-     * which the filter is performed. The operation is synchronous, meaning
-     * that a response will not be returned until all the objects are fully
-     * available. The response payload provides the count of the resulting set.
-     * A new result view which satisfies the input filter restriction
-     * specification is also created with a view name passed in as part of the
-     * input payload.  Although this functionality can also be accomplished
-     * with the standard filter function, it is more efficient.
+     * a String
+     * or a Double valued column and a desired value for the column on which
+     * the filter
+     * is performed. The operation is synchronous, meaning that a response will
+     * not be
+     * returned until all the objects are fully available. The response payload
+     * provides the count of the resulting set. A new result view which
+     * satisfies the
+     * input filter restriction specification is also created with a view name
+     * passed
+     * in as part of the input payload.  Although this functionality can also
+     * be
+     * accomplished with the standard filter function, it is more efficient.
      */
     struct FilterByValueResponse
     {

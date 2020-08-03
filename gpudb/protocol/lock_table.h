@@ -37,9 +37,12 @@ namespace gpudb
         /**
          * Constructs a LockTableRequest object with the specified parameters.
          * 
-         * @param[in] tableName_  Name of the table to be locked. It must be a
-         *                        currently existing table, collection, or
-         *                        view.
+         * @param[in] tableName_  Name of the table to be locked, in
+         *                        [schema_name.]table_name format, using
+         *                        standard <a
+         *                        href="../../concepts/tables.html#table-name-resolution"
+         *                        target="_top">name resolution rules</a>.  It
+         *                        must be a currently existing table or view.
          * @param[in] lockType_  The type of lock being applied to the table.
          *                       Setting it to @a status will return the
          *                       current lock status of the table without

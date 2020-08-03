@@ -46,6 +46,9 @@ namespace gpudb
          *                      gpudb::create_user_internal_resource_group:
          *                      Name of an existing resource group to associate
          *                      with this user
+         *                              <li>
+         *                      gpudb::create_user_internal_default_schema:
+         *                      default schema associate with this user
          *                      </ul>
          * 
          */

@@ -15,33 +15,39 @@ namespace gpudb
      * A set of input parameters for {@link
      * #getRecordsByColumnRaw(const GetRecordsByColumnRequest&) const}.
      * <p>
-     * For a given table, retrieves the values from the requested column(s).
-     * Maps of column name to the array of values as well as the column data
+     * For a given table, retrieves the values from the requested
+     * column(s). Maps of column name to the array of values as well as the
+     * column data
      * type are returned. This endpoint supports pagination with the @a offset
      * and @a limit parameters.
      * <p>
      * <a href="../../concepts/window.html" target="_top">Window functions</a>,
-     * which can perform operations like moving averages, are available through
-     * this endpoint as well as {@link
-     * #createProjection(const CreateProjectionRequest&) const}.
+     * which can perform
+     * operations like moving averages, are available through this endpoint as
+     * well as
+     * {@link #createProjection(const CreateProjectionRequest&) const}.
      * <p>
      * When using pagination, if the table (or the underlying table in the case
-     * of a view) is modified (records are inserted, updated, or deleted)
-     * during a call to the endpoint, the records or values retrieved may
-     * differ between calls based on the type of the update, e.g., the
-     * contiguity across pages cannot be relied upon.
+     * of a
+     * view) is modified (records are inserted, updated, or deleted) during a
+     * call to
+     * the endpoint, the records or values retrieved may differ between calls
+     * based on
+     * the type of the update, e.g., the contiguity across pages cannot be
+     * relied upon.
      * <p>
      * If @a tableName is empty, selection is performed against a single-row
-     * virtual table.  This can be useful in executing temporal (<a
-     * href="../../concepts/expressions.html#date-time-functions"
-     * target="_top">NOW()</a>), identity (<a
-     * href="../../concepts/expressions.html#user-security-functions"
-     * target="_top">USER()</a>), or constant-based functions (<a
-     * href="../../concepts/expressions.html#scalar-functions"
+     * virtual table.  This can be useful in executing temporal
+     * (<a href="../../concepts/expressions.html#date-time-functions"
+     * target="_top">NOW()</a>), identity
+     * (<a href="../../concepts/expressions.html#user-security-functions"
+     * target="_top">USER()</a>), or
+     * constant-based functions
+     * (<a href="../../concepts/expressions.html#scalar-functions"
      * target="_top">GEODIST(-77.11, 38.88, -71.06, 42.36)</a>).
      * <p>
-     * The response is returned as a dynamic schema. For details see: <a
-     * href="../../api/index.html#dynamic-schemas" target="_top">dynamic
+     * The response is returned as a dynamic schema. For details see:
+     * <a href="../../api/index.html#dynamic-schemas" target="_top">dynamic
      * schemas documentation</a>.
      */
     struct GetRecordsByColumnRequest
@@ -65,12 +71,16 @@ namespace gpudb
          * Constructs a GetRecordsByColumnRequest object with the specified
          * parameters.
          * 
-         * @param[in] tableName_  Name of the table on which this operation
-         *                        will be performed.  An empty table name
-         *                        retrieves one record from a single-row
-         *                        virtual table, where columns specified should
-         *                        be constants or constant expressions.  The
-         *                        table cannot be a parent set.
+         * @param[in] tableName_  Name of the table or view on which this
+         *                        operation will be performed, in
+         *                        [schema_name.]table_name format, using
+         *                        standard <a
+         *                        href="../../concepts/tables.html#table-name-resolution"
+         *                        target="_top">name resolution rules</a>.  An
+         *                        empty table name retrieves one record from a
+         *                        single-row virtual table, where columns
+         *                        specified should be constants or constant
+         *                        expressions.
          * @param[in] columnNames_  The list of column values to retrieve.
          * @param[in] offset_  A positive integer indicating the number of
          *                     initial results to skip (this can be useful for
@@ -124,7 +134,7 @@ namespace gpudb
          *                      ''.
          *                              <li>
          *                      gpudb::get_records_by_column_convert_wkts_to_wkbs:
-         *                      If true, then WKT string columns will be
+         *                      If @a true, then WKT string columns will be
          *                      returned as WKB bytes.
          *                      <ul>
          *                              <li> gpudb::get_records_by_column_true
@@ -149,12 +159,16 @@ namespace gpudb
          * Constructs a GetRecordsByColumnRequest object with the specified
          * parameters.
          * 
-         * @param[in] tableName_  Name of the table on which this operation
-         *                        will be performed.  An empty table name
-         *                        retrieves one record from a single-row
-         *                        virtual table, where columns specified should
-         *                        be constants or constant expressions.  The
-         *                        table cannot be a parent set.
+         * @param[in] tableName_  Name of the table or view on which this
+         *                        operation will be performed, in
+         *                        [schema_name.]table_name format, using
+         *                        standard <a
+         *                        href="../../concepts/tables.html#table-name-resolution"
+         *                        target="_top">name resolution rules</a>.  An
+         *                        empty table name retrieves one record from a
+         *                        single-row virtual table, where columns
+         *                        specified should be constants or constant
+         *                        expressions.
          * @param[in] columnNames_  The list of column values to retrieve.
          * @param[in] offset_  A positive integer indicating the number of
          *                     initial results to skip (this can be useful for
@@ -174,7 +188,7 @@ namespace gpudb
          *                    the result to be fetched, and @a offset & @a
          *                    limit to request subsequent pages of results.
          * @param[in] encoding_  Specifies the encoding for returned records;
-         *                       either 'binary' or 'json'.
+         *                       either @a binary or @a json.
          *                       <ul>
          *                               <li>
          *                       gpudb::get_records_by_column_binary
@@ -217,7 +231,7 @@ namespace gpudb
          *                      ''.
          *                              <li>
          *                      gpudb::get_records_by_column_convert_wkts_to_wkbs:
-         *                      If true, then WKT string columns will be
+         *                      If @a true, then WKT string columns will be
          *                      returned as WKB bytes.
          *                      <ul>
          *                              <li> gpudb::get_records_by_column_true
@@ -320,33 +334,39 @@ namespace gpudb
      * A set of output parameters for {@link
      * #getRecordsByColumnRaw(const GetRecordsByColumnRequest&) const}.
      * <p>
-     * For a given table, retrieves the values from the requested column(s).
-     * Maps of column name to the array of values as well as the column data
+     * For a given table, retrieves the values from the requested
+     * column(s). Maps of column name to the array of values as well as the
+     * column data
      * type are returned. This endpoint supports pagination with the @a offset
      * and @a limit parameters.
      * <p>
      * <a href="../../concepts/window.html" target="_top">Window functions</a>,
-     * which can perform operations like moving averages, are available through
-     * this endpoint as well as {@link
-     * #createProjection(const CreateProjectionRequest&) const}.
+     * which can perform
+     * operations like moving averages, are available through this endpoint as
+     * well as
+     * {@link #createProjection(const CreateProjectionRequest&) const}.
      * <p>
      * When using pagination, if the table (or the underlying table in the case
-     * of a view) is modified (records are inserted, updated, or deleted)
-     * during a call to the endpoint, the records or values retrieved may
-     * differ between calls based on the type of the update, e.g., the
-     * contiguity across pages cannot be relied upon.
+     * of a
+     * view) is modified (records are inserted, updated, or deleted) during a
+     * call to
+     * the endpoint, the records or values retrieved may differ between calls
+     * based on
+     * the type of the update, e.g., the contiguity across pages cannot be
+     * relied upon.
      * <p>
      * If @a tableName is empty, selection is performed against a single-row
-     * virtual table.  This can be useful in executing temporal (<a
-     * href="../../concepts/expressions.html#date-time-functions"
-     * target="_top">NOW()</a>), identity (<a
-     * href="../../concepts/expressions.html#user-security-functions"
-     * target="_top">USER()</a>), or constant-based functions (<a
-     * href="../../concepts/expressions.html#scalar-functions"
+     * virtual table.  This can be useful in executing temporal
+     * (<a href="../../concepts/expressions.html#date-time-functions"
+     * target="_top">NOW()</a>), identity
+     * (<a href="../../concepts/expressions.html#user-security-functions"
+     * target="_top">USER()</a>), or
+     * constant-based functions
+     * (<a href="../../concepts/expressions.html#scalar-functions"
      * target="_top">GEODIST(-77.11, 38.88, -71.06, 42.36)</a>).
      * <p>
-     * The response is returned as a dynamic schema. For details see: <a
-     * href="../../api/index.html#dynamic-schemas" target="_top">dynamic
+     * The response is returned as a dynamic schema. For details see:
+     * <a href="../../api/index.html#dynamic-schemas" target="_top">dynamic
      * schemas documentation</a>.
      */
     struct RawGetRecordsByColumnResponse
@@ -456,33 +476,39 @@ namespace gpudb
      * A set of output parameters for {@link
      * #getRecordsByColumn(const GetRecordsByColumnRequest&) const}.
      * <p>
-     * For a given table, retrieves the values from the requested column(s).
-     * Maps of column name to the array of values as well as the column data
+     * For a given table, retrieves the values from the requested
+     * column(s). Maps of column name to the array of values as well as the
+     * column data
      * type are returned. This endpoint supports pagination with the @a offset
      * and @a limit parameters.
      * <p>
      * <a href="../../concepts/window.html" target="_top">Window functions</a>,
-     * which can perform operations like moving averages, are available through
-     * this endpoint as well as {@link
-     * #createProjection(const CreateProjectionRequest&) const}.
+     * which can perform
+     * operations like moving averages, are available through this endpoint as
+     * well as
+     * {@link #createProjection(const CreateProjectionRequest&) const}.
      * <p>
      * When using pagination, if the table (or the underlying table in the case
-     * of a view) is modified (records are inserted, updated, or deleted)
-     * during a call to the endpoint, the records or values retrieved may
-     * differ between calls based on the type of the update, e.g., the
-     * contiguity across pages cannot be relied upon.
+     * of a
+     * view) is modified (records are inserted, updated, or deleted) during a
+     * call to
+     * the endpoint, the records or values retrieved may differ between calls
+     * based on
+     * the type of the update, e.g., the contiguity across pages cannot be
+     * relied upon.
      * <p>
      * If @a tableName is empty, selection is performed against a single-row
-     * virtual table.  This can be useful in executing temporal (<a
-     * href="../../concepts/expressions.html#date-time-functions"
-     * target="_top">NOW()</a>), identity (<a
-     * href="../../concepts/expressions.html#user-security-functions"
-     * target="_top">USER()</a>), or constant-based functions (<a
-     * href="../../concepts/expressions.html#scalar-functions"
+     * virtual table.  This can be useful in executing temporal
+     * (<a href="../../concepts/expressions.html#date-time-functions"
+     * target="_top">NOW()</a>), identity
+     * (<a href="../../concepts/expressions.html#user-security-functions"
+     * target="_top">USER()</a>), or
+     * constant-based functions
+     * (<a href="../../concepts/expressions.html#scalar-functions"
      * target="_top">GEODIST(-77.11, 38.88, -71.06, 42.36)</a>).
      * <p>
-     * The response is returned as a dynamic schema. For details see: <a
-     * href="../../api/index.html#dynamic-schemas" target="_top">dynamic
+     * The response is returned as a dynamic schema. For details see:
+     * <a href="../../api/index.html#dynamic-schemas" target="_top">dynamic
      * schemas documentation</a>.
      */
     struct GetRecordsByColumnResponse

@@ -13,7 +13,7 @@ namespace gpudb
      * A set of input parameters for {@link
      * #alterTable(const AlterTableRequest&) const}.
      * <p>
-     * Apply various modifications to a table, view, or collection.  The
+     * Apply various modifications to a table or view.  The
      * available modifications include the following:
      * <p>
      * Manage a table's columns--a column can be added, removed, or have its
@@ -21,6 +21,8 @@ namespace gpudb
      * properties</a> modified, including
      * whether it is <a href="../../concepts/compression.html"
      * target="_top">compressed</a> or not.
+     * <p>
+     * External tables cannot be modified except for their refresh method.
      * <p>
      * Create or delete an <a href="../../concepts/indexes.html#column-index"
      * target="_top">index</a> on a
@@ -47,14 +49,13 @@ namespace gpudb
      * <p>
      * Refresh and manage the refresh mode of a
      * <a href="../../concepts/materialized_views.html"
-     * target="_top">materialized view</a>.
+     * target="_top">materialized view</a> or an
+     * <a href="../../concepts/external_tables.html" target="_top">external
+     * table</a>.
      * <p>
      * Set the <a href="../../concepts/ttl.html" target="_top">time-to-live
      * (TTL)</a>. This can be applied
-     * to tables, views, or collections.  When applied to collections, every
-     * contained
-     * table & view that is not protected will have its TTL set to the given
-     * value.
+     * to tables or views.
      * <p>
      * Set the global access mode (i.e. locking) for a table. This setting
      * trumps any
@@ -63,11 +64,6 @@ namespace gpudb
      * to a table marked read-only will not be able to insert records into it.
      * The mode
      * can be set to read-only, write-only, read/write, and no access.
-     * <p>
-     * Change the <a href="../../concepts/protection.html"
-     * target="_top">protection</a> mode to prevent or
-     * allow automatic expiration. This can be applied to tables, views, and
-     * collections.
      */
     struct AlterTableRequest
     {
@@ -89,8 +85,11 @@ namespace gpudb
          * parameters.
          * 
          * @param[in] tableName_  Table on which the operation will be
-         *                        performed. Must be an existing table, view,
-         *                        or collection.
+         *                        performed, in [schema_name.]table_name
+         *                        format, using standard <a
+         *                        href="../../concepts/tables.html#table-name-resolution"
+         *                        target="_top">name resolution rules</a>.
+         *                        Must be an existing table or view.
          * @param[in] action_  Modification operation to be applied
          *                     <ul>
          *                             <li>
@@ -117,27 +116,33 @@ namespace gpudb
          *                     have the specified index, an error will be
          *                     returned.
          *                             <li>
-         *                     gpudb::alter_table_move_to_collection: Moves a
-         *                     table or view into a collection named @a value.
-         *                     If the collection provided is non-existent, the
-         *                     collection will be automatically created. If @a
-         *                     value is empty, then the table or view will be
-         *                     top-level.
-         *                             <li> gpudb::alter_table_protected: Sets
-         *                     whether the given @a tableName should be <a
-         *                     href="../../concepts/protection.html"
-         *                     target="_top">protected</a> or not. The @a value
-         *                     must be either 'true' or 'false'.
+         *                     gpudb::alter_table_move_to_collection:
+         *                     [DEPRECATED--please use @a move_to_schema and
+         *                     use /create/schema to create the schema if
+         *                     non-existent]  Moves a table or view into a
+         *                     schema named @a value.  If the schema provided
+         *                     is non-existent, it will be automatically
+         *                     created.
+         *                             <li> gpudb::alter_table_move_to_schema:
+         *                     Moves a table or view into a schema named @a
+         *                     value.  If the schema provided is non-existent,
+         *                     an error will be thrown. If @a value is empty,
+         *                     then the table or view will be placed in the
+         *                     user's default schema.
+         *                             <li> gpudb::alter_table_protected: No
+         *                     longer used.  Previously set whether the given
+         *                     @a tableName should be protected or not. The @a
+         *                     value would have been either 'true' or 'false'.
          *                             <li> gpudb::alter_table_rename_table:
-         *                     Renames a table, view or collection to @a value.
-         *                     Has the same naming restrictions as <a
+         *                     Renames a table or view within its current
+         *                     schema to @a value. Has the same naming
+         *                     restrictions as <a
          *                     href="../../concepts/tables.html"
          *                     target="_top">tables</a>.
          *                             <li> gpudb::alter_table_ttl: Sets the <a
          *                     href="../../concepts/ttl.html"
          *                     target="_top">time-to-live</a> in minutes of the
-         *                     table, view, or collection specified in @a
-         *                     tableName.
+         *                     table or view specified in @a tableName.
          *                             <li> gpudb::alter_table_add_column: Adds
          *                     the column specified in @a value to the table
          *                     specified in @a tableName.  Use @a column_type
@@ -210,18 +215,29 @@ namespace gpudb
          *                     access mode in @a value. Valid modes are
          *                     'no_access', 'read_only', 'write_only' and
          *                     'read_write'.
-         *                             <li> gpudb::alter_table_refresh: Replays
-         *                     all the table creation commands required to
-         *                     create this <a
-         *                     href="../../concepts/materialized_views.html"
-         *                     target="_top">materialized view</a>.
+         *                             <li> gpudb::alter_table_refresh: For a
+         *                     <a href="../../concepts/materialized_views.html"
+         *                     target="_top">materialized view</a>, replays all
+         *                     the table creation commands required to create
+         *                     the view.  For an <a
+         *                     href="../../concepts/external_tables.html"
+         *                     target="_top">external table</a>, reloads all
+         *                     data in the table from its associated source
+         *                     files or <a
+         *                     href="../../concepts/data_sources.html"
+         *                     target="_top">data source</a>.
          *                             <li>
-         *                     gpudb::alter_table_set_refresh_method: Sets the
-         *                     method by which this <a
+         *                     gpudb::alter_table_set_refresh_method: For a <a
          *                     href="../../concepts/materialized_views.html"
-         *                     target="_top">materialized view</a> is refreshed
-         *                     to the method specified in @a value - one of
-         *                     'manual', 'periodic', 'on_change'.
+         *                     target="_top">materialized view</a>, sets the
+         *                     method by which the view is refreshed to the
+         *                     method specified in @a value - one of 'manual',
+         *                     'periodic', or 'on_change'.  For an <a
+         *                     href="../../concepts/external_tables.html"
+         *                     target="_top">external table</a>, sets the
+         *                     method by which the table is refreshed to the
+         *                     method specified in @a value - either 'manual'
+         *                     or 'on_start'.
          *                             <li>
          *                     gpudb::alter_table_set_refresh_start_time: Sets
          *                     the time to start periodic refreshes of this <a
@@ -306,22 +322,22 @@ namespace gpudb
          *                      The default value is gpudb::alter_table_snappy.
          *                              <li>
          *                      gpudb::alter_table_copy_values_from_column:
-         *                      Deprecated.  Please use @a
-         *                      add_column_expression instead.
+         *                      [DEPRECATED--please use @a
+         *                      add_column_expression instead.]
          *                              <li> gpudb::alter_table_rename_column:
          *                      When changing a column, specify new column
          *                      name.
          *                              <li>
          *                      gpudb::alter_table_validate_change_column: When
          *                      changing a column, validate the change before
-         *                      applying it. If @a true, then validate all
-         *                      values. A value too large (or too long) for the
-         *                      new type will prevent any change. If @a false,
-         *                      then when a value is too large or long, it will
-         *                      be truncated.
+         *                      applying it (or not).
          *                      <ul>
-         *                              <li> gpudb::alter_table_true: true
-         *                              <li> gpudb::alter_table_false: false
+         *                              <li> gpudb::alter_table_true: Validate
+         *                      all values. A value too large (or too long) for
+         *                      the new type will prevent any change.
+         *                              <li> gpudb::alter_table_false: When a
+         *                      value is too large or long, it will be
+         *                      truncated.
          *                      </ul>
          *                      The default value is gpudb::alter_table_true.
          *                              <li>
@@ -457,7 +473,7 @@ namespace gpudb
      * A set of output parameters for {@link
      * #alterTable(const AlterTableRequest&) const}.
      * <p>
-     * Apply various modifications to a table, view, or collection.  The
+     * Apply various modifications to a table or view.  The
      * available modifications include the following:
      * <p>
      * Manage a table's columns--a column can be added, removed, or have its
@@ -465,6 +481,8 @@ namespace gpudb
      * properties</a> modified, including
      * whether it is <a href="../../concepts/compression.html"
      * target="_top">compressed</a> or not.
+     * <p>
+     * External tables cannot be modified except for their refresh method.
      * <p>
      * Create or delete an <a href="../../concepts/indexes.html#column-index"
      * target="_top">index</a> on a
@@ -491,14 +509,13 @@ namespace gpudb
      * <p>
      * Refresh and manage the refresh mode of a
      * <a href="../../concepts/materialized_views.html"
-     * target="_top">materialized view</a>.
+     * target="_top">materialized view</a> or an
+     * <a href="../../concepts/external_tables.html" target="_top">external
+     * table</a>.
      * <p>
      * Set the <a href="../../concepts/ttl.html" target="_top">time-to-live
      * (TTL)</a>. This can be applied
-     * to tables, views, or collections.  When applied to collections, every
-     * contained
-     * table & view that is not protected will have its TTL set to the given
-     * value.
+     * to tables or views.
      * <p>
      * Set the global access mode (i.e. locking) for a table. This setting
      * trumps any
@@ -507,11 +524,6 @@ namespace gpudb
      * to a table marked read-only will not be able to insert records into it.
      * The mode
      * can be set to read-only, write-only, read/write, and no access.
-     * <p>
-     * Change the <a href="../../concepts/protection.html"
-     * target="_top">protection</a> mode to prevent or
-     * allow automatic expiration. This can be applied to tables, views, and
-     * collections.
      */
     struct AlterTableResponse
     {

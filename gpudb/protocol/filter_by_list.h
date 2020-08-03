@@ -13,20 +13,28 @@ namespace gpudb
      * A set of input parameters for {@link
      * #filterByList(const FilterByListRequest&) const}.
      * <p>
-     * Calculates which records from a table have values in the given list for
-     * the corresponding column. The operation is synchronous, meaning that a
+     * Calculates which records from a table have values in the given list
+     * for the corresponding column. The operation is synchronous, meaning that
+     * a
      * response will not be returned until all the objects are fully available.
-     * The response payload provides the count of the resulting set. A new
-     * resultant set (view) which satisfies the input filter specification is
-     * also created if a @a viewName is passed in as part of the request.
+     * The
+     * response payload provides the count of the resulting set. A new
+     * resultant set
+     * (view) which satisfies the input filter specification is also created if
+     * a
+     * @a viewName is passed in as part of the request.
      * <p>
      * For example, if a type definition has the columns 'x' and 'y', then a
-     * filter by list query with the column map {"x":["10.1", "2.3"],
-     * "y":["0.0", "-31.5", "42.0"]} will return the count of all data points
-     * whose x and y values match both in the respective x- and y-lists, e.g.,
-     * "x = 10.1 and y = 0.0", "x = 2.3 and y = -31.5", etc. However, a record
-     * with "x = 10.1 and y = -31.5" or "x = 2.3 and y = 0.0" would not be
-     * returned because the values in the given lists do not correspond.
+     * filter by
+     * list query with the column map
+     * {"x":["10.1", "2.3"], "y":["0.0", "-31.5", "42.0"]} will return
+     * the count of all data points whose x and y values match both in the
+     * respective
+     * x- and y-lists, e.g., "x = 10.1 and y = 0.0", "x = 2.3 and y = -31.5",
+     * etc.
+     * However, a record with "x = 10.1 and y = -31.5" or "x = 2.3 and y = 0.0"
+     * would not be returned because the values in the given lists do not
+     * correspond.
      */
     struct FilterByListRequest
     {
@@ -47,29 +55,35 @@ namespace gpudb
          * Constructs a FilterByListRequest object with the specified
          * parameters.
          * 
-         * @param[in] tableName_  Name of the table to filter.  This may be the
-         *                        name of a collection, a table, or a view
-         *                        (when chaining queries).  If filtering a
-         *                        collection, all child tables where the filter
-         *                        expression is valid will be filtered; the
-         *                        filtered result tables will then be placed in
-         *                        a collection specified by @a viewName.
+         * @param[in] tableName_  Name of the table to filter, in
+         *                        [schema_name.]table_name format, using
+         *                        standard <a
+         *                        href="../../concepts/tables.html#table-name-resolution"
+         *                        target="_top">name resolution rules</a>.
+         *                        This may be the name of a table or a view
+         *                        (when chaining queries).
          * @param[in] viewName_  If provided, then this will be the name of the
-         *                       view containing the results. Has the same
-         *                       naming restrictions as <a
-         *                       href="../../concepts/tables.html"
-         *                       target="_top">tables</a>.
+         *                       view containing the results, in
+         *                       [schema_name.]view_name format, using standard
+         *                       <a
+         *                       href="../../concepts/tables.html#table-name-resolution"
+         *                       target="_top">name resolution rules</a> and
+         *                       meeting <a
+         *                       href="../../concepts/tables.html#table-naming-criteria"
+         *                       target="_top">table naming criteria</a>.  Must
+         *                       not be an already existing table or view.
          * @param[in] columnValuesMap_  List of values for the corresponding
          *                              column in the table
          * @param[in] options_  Optional parameters.
          *                      <ul>
          *                              <li>
-         *                      gpudb::filter_by_list_collection_name: Name of
-         *                      a collection which is to contain the newly
-         *                      created view. If the collection provided is
-         *                      non-existent, the collection will be
-         *                      automatically created. If empty, then the newly
-         *                      created view will be top-level.
+         *                      gpudb::filter_by_list_collection_name:
+         *                      [DEPRECATED--please specify the containing
+         *                      schema for the view as part of @a viewName and
+         *                      use /create/schema to create the schema if
+         *                      non-existent]  Name of a schema for the newly
+         *                      created view. If the schema provided is
+         *                      non-existent, it will be automatically created.
          *                              <li> gpudb::filter_by_list_filter_mode:
          *                      String indicating the filter mode, either
          *                      'in_list' or 'not_in_list'.
@@ -162,20 +176,28 @@ namespace gpudb
      * A set of output parameters for {@link
      * #filterByList(const FilterByListRequest&) const}.
      * <p>
-     * Calculates which records from a table have values in the given list for
-     * the corresponding column. The operation is synchronous, meaning that a
+     * Calculates which records from a table have values in the given list
+     * for the corresponding column. The operation is synchronous, meaning that
+     * a
      * response will not be returned until all the objects are fully available.
-     * The response payload provides the count of the resulting set. A new
-     * resultant set (view) which satisfies the input filter specification is
-     * also created if a @a viewName is passed in as part of the request.
+     * The
+     * response payload provides the count of the resulting set. A new
+     * resultant set
+     * (view) which satisfies the input filter specification is also created if
+     * a
+     * @a viewName is passed in as part of the request.
      * <p>
      * For example, if a type definition has the columns 'x' and 'y', then a
-     * filter by list query with the column map {"x":["10.1", "2.3"],
-     * "y":["0.0", "-31.5", "42.0"]} will return the count of all data points
-     * whose x and y values match both in the respective x- and y-lists, e.g.,
-     * "x = 10.1 and y = 0.0", "x = 2.3 and y = -31.5", etc. However, a record
-     * with "x = 10.1 and y = -31.5" or "x = 2.3 and y = 0.0" would not be
-     * returned because the values in the given lists do not correspond.
+     * filter by
+     * list query with the column map
+     * {"x":["10.1", "2.3"], "y":["0.0", "-31.5", "42.0"]} will return
+     * the count of all data points whose x and y values match both in the
+     * respective
+     * x- and y-lists, e.g., "x = 10.1 and y = 0.0", "x = 2.3 and y = -31.5",
+     * etc.
+     * However, a record with "x = 10.1 and y = -31.5" or "x = 2.3 and y = 0.0"
+     * would not be returned because the values in the given lists do not
+     * correspond.
      */
     struct FilterByListResponse
     {

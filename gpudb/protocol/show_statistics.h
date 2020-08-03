@@ -13,7 +13,7 @@ namespace gpudb
      * A set of input parameters for {@link
      * #showStatistics(const ShowStatisticsRequest&) const}.
      * <p>
-     * Retrieves the collected column statistics for the specified table.
+     * Retrieves the collected column statistics for the specified table(s).
      */
     struct ShowStatisticsRequest
     {
@@ -32,9 +32,13 @@ namespace gpudb
          * Constructs a ShowStatisticsRequest object with the specified
          * parameters.
          * 
-         * @param[in] tableNames_  Tables whose metadata will be fetched. All
-         *                         provided tables must exist, or an error is
-         *                         returned.
+         * @param[in] tableNames_  Names of tables whose metadata will be
+         *                         fetched, each in [schema_name.]table_name
+         *                         format, using standard <a
+         *                         href="../../concepts/tables.html#table-name-resolution"
+         *                         target="_top">name resolution rules</a>.
+         *                         All provided tables must exist, or an error
+         *                         is returned.
          * @param[in] options_  Optional parameters.
          * 
          */
@@ -98,7 +102,7 @@ namespace gpudb
      * A set of output parameters for {@link
      * #showStatistics(const ShowStatisticsRequest&) const}.
      * <p>
-     * Retrieves the collected column statistics for the specified table.
+     * Retrieves the collected column statistics for the specified table(s).
      */
     struct ShowStatisticsResponse
     {

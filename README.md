@@ -4,9 +4,9 @@ This project contains the source code for the C++ Kinetica API. The following
 links will provide the information needed to get started with Kinetica and the
 C++ API:
 
-* [C++ API documentation](http://www.kinetica.com/docs/7.0/api/c++/annotated.html)
-* [C++ API tutorial](http://www.kinetica.com/docs/7.0/tutorials/cpp_guide.html)
-* [Kinetica documentation site](http://www.kinetica.com/docs/7.0/index.html)
+* [C++ API documentation](http://www.kinetica.com/docs/7.1/api/c++/annotated.html)
+* [C++ API tutorial](http://www.kinetica.com/docs/7.1/tutorials/cpp_guide.html)
+* [Kinetica documentation site](http://www.kinetica.com/docs/7.1/index.html)
 
 For the client-side API changes, please refer to [CHANGELOG.md](CHANGELOG.md),
 and for Kinetica function changes, please refer to

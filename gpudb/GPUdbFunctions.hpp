@@ -5,26 +5,176 @@
  */
 
 /**
- * Add one or more new ranks to the Kinetica cluster. The new ranks will not
- * contain any data initially, other than replicated tables, and not be
- * assigned any shards. To rebalance data across the cluster, which includes
- * shifting some shard key assignments to newly added ranks, see {@link
- * #adminRebalance(const AdminRebalanceRequest&) const}.
+ * Adds a host to an existing cluster.
+ * 
+ * @param[in] request_  Request object containing the parameters for the
+ *                      operation.
+ * 
+ * @return Response object containing the result of the operation.
+ * 
+ */
+
+AdminAddHostResponse adminAddHost( const AdminAddHostRequest& request_ ) const;
+
+/**
+ * Adds a host to an existing cluster.
+ * 
+ * @param[in] request_  Request object containing the parameters for the
+ *                      operation.
+ * @param[out] response_  Response object containing the results of the
+ *                        operation.
+ * 
+ * @return Response object containing the result of the operation (initially
+ *         passed in by reference).
+ * 
+ */
+
+AdminAddHostResponse& adminAddHost( const AdminAddHostRequest& request_,
+                                    AdminAddHostResponse& response_ ) const;
+
+/**
+ * Adds a host to an existing cluster.
+ * 
+ * @param hostAddress  IP address of the host that will be added to the
+ *                     cluster. This host must have installed the same version
+ *                     of Kinetica as the cluster to which it is being added.
+ * @param options  Optional parameters.
+ *                 <ul>
+ *                         <li> gpudb::admin_add_host_dry_run: If set to @a
+ *                 true, only validation checks will be performed. No host is
+ *                 added.
+ *                 <ul>
+ *                         <li> gpudb::admin_add_host_true
+ *                         <li> gpudb::admin_add_host_false
+ *                 </ul>
+ *                 The default value is gpudb::admin_add_host_false.
+ *                         <li> gpudb::admin_add_host_accepts_failover: If set
+ *                 to @a true, the host will accept processes (ranks, graph
+ *                 server, etc.) in the event of a failover on another node in
+ *                 the cluster. See <a href="../../n_plus_1/index.html"
+ *                 target="_top">Cluster Resilience</a> for more information.
+ *                 <ul>
+ *                         <li> gpudb::admin_add_host_true
+ *                         <li> gpudb::admin_add_host_false
+ *                 </ul>
+ *                 The default value is gpudb::admin_add_host_false.
+ *                         <li> gpudb::admin_add_host_public_address: The
+ *                 publicly-accessible IP address for the host being added,
+ *                 typically specified for clients using multi-head operations.
+ *                 This setting is required if any other host(s) in the cluster
+ *                 specify a public address.
+ *                         <li> gpudb::admin_add_host_host_manager_public_url:
+ *                 The publicly-accessible full path URL to the host manager on
+ *                 the host being added, e.g., 'http://172.123.45.67:9300'. The
+ *                 default host manager port can be found in the <a
+ *                 href="../../install/shared/ports.html" target="_top">list of
+ *                 ports</a> used by Kinetica.
+ *                         <li> gpudb::admin_add_host_ram_limit: The desired
+ *                 RAM limit for the host being added, i.e. the sum of RAM
+ *                 usage for all processes on the host will not be able to
+ *                 exceed this value. Supported units: K (thousand), KB
+ *                 (kilobytes), M (million), MB (megabytes), G (billion), GB
+ *                 (gigabytes); if no unit is provided, the value is assumed to
+ *                 be in bytes. For example, if @a ram_limit is set to 10M, the
+ *                 resulting RAM limit is 10 million bytes. Set @a ram_limit to
+ *                 -1 to have no RAM limit.
+ *                         <li> gpudb::admin_add_host_gpus: Comma-delimited
+ *                 list of GPU indices (starting at 1) that are eligible for
+ *                 running worker processes. If left blank, all GPUs on the
+ *                 host being added will be eligible.
+ *                 </ul>
+ * 
+ * @return Response object containing the result of the operation.
+ * 
+ */
+
+AdminAddHostResponse adminAddHost( const std::string& hostAddress,
+                                   const std::map<std::string, std::string>& options ) const;
+
+/**
+ * Adds a host to an existing cluster.
+ * 
+ * @param hostAddress  IP address of the host that will be added to the
+ *                     cluster. This host must have installed the same version
+ *                     of Kinetica as the cluster to which it is being added.
+ * @param options  Optional parameters.
+ *                 <ul>
+ *                         <li> gpudb::admin_add_host_dry_run: If set to @a
+ *                 true, only validation checks will be performed. No host is
+ *                 added.
+ *                 <ul>
+ *                         <li> gpudb::admin_add_host_true
+ *                         <li> gpudb::admin_add_host_false
+ *                 </ul>
+ *                 The default value is gpudb::admin_add_host_false.
+ *                         <li> gpudb::admin_add_host_accepts_failover: If set
+ *                 to @a true, the host will accept processes (ranks, graph
+ *                 server, etc.) in the event of a failover on another node in
+ *                 the cluster. See <a href="../../n_plus_1/index.html"
+ *                 target="_top">Cluster Resilience</a> for more information.
+ *                 <ul>
+ *                         <li> gpudb::admin_add_host_true
+ *                         <li> gpudb::admin_add_host_false
+ *                 </ul>
+ *                 The default value is gpudb::admin_add_host_false.
+ *                         <li> gpudb::admin_add_host_public_address: The
+ *                 publicly-accessible IP address for the host being added,
+ *                 typically specified for clients using multi-head operations.
+ *                 This setting is required if any other host(s) in the cluster
+ *                 specify a public address.
+ *                         <li> gpudb::admin_add_host_host_manager_public_url:
+ *                 The publicly-accessible full path URL to the host manager on
+ *                 the host being added, e.g., 'http://172.123.45.67:9300'. The
+ *                 default host manager port can be found in the <a
+ *                 href="../../install/shared/ports.html" target="_top">list of
+ *                 ports</a> used by Kinetica.
+ *                         <li> gpudb::admin_add_host_ram_limit: The desired
+ *                 RAM limit for the host being added, i.e. the sum of RAM
+ *                 usage for all processes on the host will not be able to
+ *                 exceed this value. Supported units: K (thousand), KB
+ *                 (kilobytes), M (million), MB (megabytes), G (billion), GB
+ *                 (gigabytes); if no unit is provided, the value is assumed to
+ *                 be in bytes. For example, if @a ram_limit is set to 10M, the
+ *                 resulting RAM limit is 10 million bytes. Set @a ram_limit to
+ *                 -1 to have no RAM limit.
+ *                         <li> gpudb::admin_add_host_gpus: Comma-delimited
+ *                 list of GPU indices (starting at 1) that are eligible for
+ *                 running worker processes. If left blank, all GPUs on the
+ *                 host being added will be eligible.
+ *                 </ul>
+ * @param[out] response_  Response object containing the results of the
+ *                        operation.
+ * 
+ * @return Response object containing the result of the operation (initially
+ *         passed in by reference).
+ * 
+ */
+
+AdminAddHostResponse& adminAddHost( const std::string& hostAddress,
+                                    const std::map<std::string, std::string>& options,
+                                    AdminAddHostResponse& response_ ) const;
+
+/**
+ * Add one or more ranks to an existing Kinetica cluster. The new ranks will
+ * not contain any data initially (other than replicated tables) and will not
+ * be assigned any shards. To rebalance data and shards across the cluster, use
+ * {@link #adminRebalance(const AdminRebalanceRequest&) const}.
  * <p>
  * For example, if attempting to add three new ranks (two ranks on host
  * 172.123.45.67 and one rank on host 172.123.45.68) to a Kinetica cluster with
  * additional configuration parameters:
  * <p>
- * * @a hosts would be an array including 172.123.45.67 in the first two
- * indices (signifying two ranks being added to host 172.123.45.67) and
- * 172.123.45.68 in the last index (signifying one rank being added to host
- * 172.123.45.67)
- * <p>
- * * @a configParams would be an array of maps, with each map corresponding to
- * the ranks being added in @a hosts. The key of each map would be the
- * configuration parameter name and the value would be the parameter's value,
- * e.g. 'rank.gpu':'1'
- * <p>
+ * * @a hosts
+ *   would be an array including 172.123.45.67 in the first two indices
+ *   (signifying two ranks being added to host 172.123.45.67) and
+ *   172.123.45.68 in the last index (signifying one rank being added
+ *   to host 172.123.45.67)
+ * * @a configParams
+ *   would be an array of maps, with each map corresponding to the ranks
+ *   being added in @a hosts. The key of each map would be
+ *   the configuration parameter name and the value would be the
+ *   parameter's value, e.g. '{"rank.gpu":"1"}'
+
  * This endpoint's processing includes copying all replicated table data to the
  * new rank(s) and therefore could take a long time. The API call may time out
  * if run directly.  It is recommended to run this endpoint asynchronously via
@@ -40,26 +190,27 @@
 AdminAddRanksResponse adminAddRanks( const AdminAddRanksRequest& request_ ) const;
 
 /**
- * Add one or more new ranks to the Kinetica cluster. The new ranks will not
- * contain any data initially, other than replicated tables, and not be
- * assigned any shards. To rebalance data across the cluster, which includes
- * shifting some shard key assignments to newly added ranks, see {@link
+ * Add one or more ranks to an existing Kinetica cluster. The new ranks will
+ * not contain any data initially (other than replicated tables) and will not
+ * be assigned any shards. To rebalance data and shards across the cluster, use
+ * {@link
  * #adminRebalance(const AdminRebalanceRequest&,AdminRebalanceResponse&) const}.
  * <p>
  * For example, if attempting to add three new ranks (two ranks on host
  * 172.123.45.67 and one rank on host 172.123.45.68) to a Kinetica cluster with
  * additional configuration parameters:
  * <p>
- * * @a hosts would be an array including 172.123.45.67 in the first two
- * indices (signifying two ranks being added to host 172.123.45.67) and
- * 172.123.45.68 in the last index (signifying one rank being added to host
- * 172.123.45.67)
- * <p>
- * * @a configParams would be an array of maps, with each map corresponding to
- * the ranks being added in @a hosts. The key of each map would be the
- * configuration parameter name and the value would be the parameter's value,
- * e.g. 'rank.gpu':'1'
- * <p>
+ * * @a hosts
+ *   would be an array including 172.123.45.67 in the first two indices
+ *   (signifying two ranks being added to host 172.123.45.67) and
+ *   172.123.45.68 in the last index (signifying one rank being added
+ *   to host 172.123.45.67)
+ * * @a configParams
+ *   would be an array of maps, with each map corresponding to the ranks
+ *   being added in @a hosts. The key of each map would be
+ *   the configuration parameter name and the value would be the
+ *   parameter's value, e.g. '{"rank.gpu":"1"}'
+
  * This endpoint's processing includes copying all replicated table data to the
  * new rank(s) and therefore could take a long time. The API call may time out
  * if run directly.  It is recommended to run this endpoint asynchronously via
@@ -79,46 +230,71 @@ AdminAddRanksResponse& adminAddRanks( const AdminAddRanksRequest& request_,
                                       AdminAddRanksResponse& response_ ) const;
 
 /**
- * Add one or more new ranks to the Kinetica cluster. The new ranks will not
- * contain any data initially, other than replicated tables, and not be
- * assigned any shards. To rebalance data across the cluster, which includes
- * shifting some shard key assignments to newly added ranks, see {@link
+ * Add one or more ranks to an existing Kinetica cluster. The new ranks will
+ * not contain any data initially (other than replicated tables) and will not
+ * be assigned any shards. To rebalance data and shards across the cluster, use
+ * {@link
  * #adminRebalance(const std::map<std::string, std::string>&) const}.
  * <p>
  * For example, if attempting to add three new ranks (two ranks on host
  * 172.123.45.67 and one rank on host 172.123.45.68) to a Kinetica cluster with
  * additional configuration parameters:
  * <p>
- * * @a hosts would be an array including 172.123.45.67 in the first two
- * indices (signifying two ranks being added to host 172.123.45.67) and
- * 172.123.45.68 in the last index (signifying one rank being added to host
- * 172.123.45.67)
- * <p>
- * * @a configParams would be an array of maps, with each map corresponding to
- * the ranks being added in @a hosts. The key of each map would be the
- * configuration parameter name and the value would be the parameter's value,
- * e.g. 'rank.gpu':'1'
- * <p>
+ * * @a hosts
+ *   would be an array including 172.123.45.67 in the first two indices
+ *   (signifying two ranks being added to host 172.123.45.67) and
+ *   172.123.45.68 in the last index (signifying one rank being added
+ *   to host 172.123.45.67)
+ * * @a configParams
+ *   would be an array of maps, with each map corresponding to the ranks
+ *   being added in @a hosts. The key of each map would be
+ *   the configuration parameter name and the value would be the
+ *   parameter's value, e.g. '{"rank.gpu":"1"}'
+
  * This endpoint's processing includes copying all replicated table data to the
  * new rank(s) and therefore could take a long time. The API call may time out
  * if run directly.  It is recommended to run this endpoint asynchronously via
  * {@link
  * #createJob(const std::string&,const std::string&,const std::vector<uint8_t>&,const std::string&,const std::map<std::string, std::string>&) const}.
  * 
- * @param hosts  The IP address of each rank being added to the cluster. Insert
- *               one entry per rank, even if they are on the same host. The
- *               order of the hosts in the array only matters as it relates to
+ * @param hosts  Array of host IP addresses (matching a hostN.address from the
+ *               gpudb.conf file), or host identifiers (e.g. 'host0' from the
+ *               gpudb.conf file), on which to add ranks to the cluster. The
+ *               hosts must already be in the cluster. If needed beforehand, to
+ *               add a new host to the cluster use /admin/add/host. Include the
+ *               same entry as many times as there are ranks to add to the
+ *               cluster, e.g., if two ranks on host 172.123.45.67 should be
+ *               added, @a hosts could look like '["172.123.45.67",
+ *               "172.123.45.67"]'. All ranks will be added simultaneously,
+ *               i.e. they're not added in the order of this array. Each entry
+ *               in this array corresponds to the entry at the same index in
  *               the @a configParams.
- * @param configParams  Configuration parameters to apply to the new ranks,
- *                      e.g., which GPU to use. Configuration parameters that
- *                      start with 'rankN.', where N is the rank number, should
- *                      omit the N, as the new rank number(s) are not allocated
- *                      until the ranks are created. Each entry in this array
- *                      corresponds to the entry at the same array index in the
- *                      @a hosts. This array must either be completely empty or
- *                      have the same number of elements as the hosts array.
- *                      An empty array will result in the new ranks being set
- *                      only with default parameters.
+ * @param configParams  Array of maps containing configuration parameters to
+ *                      apply to the new ranks found in @a hosts. For example,
+ *                      '{"rank.gpu":"2",
+ *                      "tier.ram.rank.limit":"10000000000"}'. Currently, the
+ *                      available parameters are rank-specific parameters in
+ *                      the <a href="../../config/index.html#network"
+ *                      target="_top">Network</a>, <a
+ *                      href="../../config/index.html#hardware"
+ *                      target="_top">Hardware</a>, <a
+ *                      href="../../config/index.html#text-search"
+ *                      target="_top">Text Search</a>, and <a
+ *                      href="../../config/index.html#ram-tier"
+ *                      target="_top">RAM Tiered Storage</a> sections in the
+ *                      gpudb.conf file, with the key exception of the
+ *                      'rankN.host' settings in the Network section that will
+ *                      be determined by @a hosts instead. Though many of these
+ *                      configuration parameters typically are affixed with
+ *                      'rankN' in the gpudb.conf file (where N is the rank
+ *                      number), the 'N' should be omitted in @a configParams
+ *                      as the new rank number(s) are not allocated until the
+ *                      ranks have been added to the cluster. Each entry in
+ *                      this array corresponds to the entry at the same index
+ *                      in the @a hosts. This array must either be completely
+ *                      empty or have the same number of elements as the @a
+ *                      hosts.  An empty @a configParams array will result in
+ *                      the new ranks being set with default parameters.
  * @param options  Optional parameters.
  *                 <ul>
  *                         <li> gpudb::admin_add_ranks_dry_run: If @a true,
@@ -140,46 +316,71 @@ AdminAddRanksResponse adminAddRanks( const std::vector<std::string>& hosts,
                                      const std::map<std::string, std::string>& options ) const;
 
 /**
- * Add one or more new ranks to the Kinetica cluster. The new ranks will not
- * contain any data initially, other than replicated tables, and not be
- * assigned any shards. To rebalance data across the cluster, which includes
- * shifting some shard key assignments to newly added ranks, see {@link
+ * Add one or more ranks to an existing Kinetica cluster. The new ranks will
+ * not contain any data initially (other than replicated tables) and will not
+ * be assigned any shards. To rebalance data and shards across the cluster, use
+ * {@link
  * #adminRebalance(const std::map<std::string, std::string>&,AdminRebalanceResponse&) const}.
  * <p>
  * For example, if attempting to add three new ranks (two ranks on host
  * 172.123.45.67 and one rank on host 172.123.45.68) to a Kinetica cluster with
  * additional configuration parameters:
  * <p>
- * * @a hosts would be an array including 172.123.45.67 in the first two
- * indices (signifying two ranks being added to host 172.123.45.67) and
- * 172.123.45.68 in the last index (signifying one rank being added to host
- * 172.123.45.67)
- * <p>
- * * @a configParams would be an array of maps, with each map corresponding to
- * the ranks being added in @a hosts. The key of each map would be the
- * configuration parameter name and the value would be the parameter's value,
- * e.g. 'rank.gpu':'1'
- * <p>
+ * * @a hosts
+ *   would be an array including 172.123.45.67 in the first two indices
+ *   (signifying two ranks being added to host 172.123.45.67) and
+ *   172.123.45.68 in the last index (signifying one rank being added
+ *   to host 172.123.45.67)
+ * * @a configParams
+ *   would be an array of maps, with each map corresponding to the ranks
+ *   being added in @a hosts. The key of each map would be
+ *   the configuration parameter name and the value would be the
+ *   parameter's value, e.g. '{"rank.gpu":"1"}'
+
  * This endpoint's processing includes copying all replicated table data to the
  * new rank(s) and therefore could take a long time. The API call may time out
  * if run directly.  It is recommended to run this endpoint asynchronously via
  * {@link
  * #createJob(const std::string&,const std::string&,const std::vector<uint8_t>&,const std::string&,const std::map<std::string, std::string>&,CreateJobResponse&) const}.
  * 
- * @param hosts  The IP address of each rank being added to the cluster. Insert
- *               one entry per rank, even if they are on the same host. The
- *               order of the hosts in the array only matters as it relates to
+ * @param hosts  Array of host IP addresses (matching a hostN.address from the
+ *               gpudb.conf file), or host identifiers (e.g. 'host0' from the
+ *               gpudb.conf file), on which to add ranks to the cluster. The
+ *               hosts must already be in the cluster. If needed beforehand, to
+ *               add a new host to the cluster use /admin/add/host. Include the
+ *               same entry as many times as there are ranks to add to the
+ *               cluster, e.g., if two ranks on host 172.123.45.67 should be
+ *               added, @a hosts could look like '["172.123.45.67",
+ *               "172.123.45.67"]'. All ranks will be added simultaneously,
+ *               i.e. they're not added in the order of this array. Each entry
+ *               in this array corresponds to the entry at the same index in
  *               the @a configParams.
- * @param configParams  Configuration parameters to apply to the new ranks,
- *                      e.g., which GPU to use. Configuration parameters that
- *                      start with 'rankN.', where N is the rank number, should
- *                      omit the N, as the new rank number(s) are not allocated
- *                      until the ranks are created. Each entry in this array
- *                      corresponds to the entry at the same array index in the
- *                      @a hosts. This array must either be completely empty or
- *                      have the same number of elements as the hosts array.
- *                      An empty array will result in the new ranks being set
- *                      only with default parameters.
+ * @param configParams  Array of maps containing configuration parameters to
+ *                      apply to the new ranks found in @a hosts. For example,
+ *                      '{"rank.gpu":"2",
+ *                      "tier.ram.rank.limit":"10000000000"}'. Currently, the
+ *                      available parameters are rank-specific parameters in
+ *                      the <a href="../../config/index.html#network"
+ *                      target="_top">Network</a>, <a
+ *                      href="../../config/index.html#hardware"
+ *                      target="_top">Hardware</a>, <a
+ *                      href="../../config/index.html#text-search"
+ *                      target="_top">Text Search</a>, and <a
+ *                      href="../../config/index.html#ram-tier"
+ *                      target="_top">RAM Tiered Storage</a> sections in the
+ *                      gpudb.conf file, with the key exception of the
+ *                      'rankN.host' settings in the Network section that will
+ *                      be determined by @a hosts instead. Though many of these
+ *                      configuration parameters typically are affixed with
+ *                      'rankN' in the gpudb.conf file (where N is the rank
+ *                      number), the 'N' should be omitted in @a configParams
+ *                      as the new rank number(s) are not allocated until the
+ *                      ranks have been added to the cluster. Each entry in
+ *                      this array corresponds to the entry at the same index
+ *                      in the @a hosts. This array must either be completely
+ *                      empty or have the same number of elements as the @a
+ *                      hosts.  An empty @a configParams array will result in
+ *                      the new ranks being set with default parameters.
  * @param options  Optional parameters.
  *                 <ul>
  *                         <li> gpudb::admin_add_ranks_dry_run: If @a true,
@@ -205,12 +406,106 @@ AdminAddRanksResponse& adminAddRanks( const std::vector<std::string>& hosts,
                                       AdminAddRanksResponse& response_ ) const;
 
 /**
+ * Alter properties on an existing host in the cluster. Currently, the only
+ * property that can be altered is a hosts ability to accept failover
+ * processes.
+ * 
+ * @param[in] request_  Request object containing the parameters for the
+ *                      operation.
+ * 
+ * @return Response object containing the result of the operation.
+ * 
+ */
+
+AdminAlterHostResponse adminAlterHost( const AdminAlterHostRequest& request_ ) const;
+
+/**
+ * Alter properties on an existing host in the cluster. Currently, the only
+ * property that can be altered is a hosts ability to accept failover
+ * processes.
+ * 
+ * @param[in] request_  Request object containing the parameters for the
+ *                      operation.
+ * @param[out] response_  Response object containing the results of the
+ *                        operation.
+ * 
+ * @return Response object containing the result of the operation (initially
+ *         passed in by reference).
+ * 
+ */
+
+AdminAlterHostResponse& adminAlterHost( const AdminAlterHostRequest& request_,
+                                        AdminAlterHostResponse& response_ ) const;
+
+/**
+ * Alter properties on an existing host in the cluster. Currently, the only
+ * property that can be altered is a hosts ability to accept failover
+ * processes.
+ * 
+ * @param host  Identifies the host this applies to. Can be the host address,
+ *              or formatted as 'hostN' where N is the host number as specified
+ *              in gpudb.conf
+ * @param options  Optional parameters
+ *                 <ul>
+ *                         <li> gpudb::admin_alter_host_accepts_failover: If
+ *                 set to @a true, the host will accept processes (ranks, graph
+ *                 server, etc.) in the event of a failover on another node in
+ *                 the cluster. See <a href="../../n_plus_1/index.html"
+ *                 target="_top">Cluster Resilience</a> for more information.
+ *                 <ul>
+ *                         <li> gpudb::admin_alter_host_true
+ *                         <li> gpudb::admin_alter_host_false
+ *                 </ul>
+ *                 The default value is gpudb::admin_alter_host_false.
+ *                 </ul>
+ * 
+ * @return Response object containing the result of the operation.
+ * 
+ */
+
+AdminAlterHostResponse adminAlterHost( const std::string& host,
+                                       const std::map<std::string, std::string>& options ) const;
+
+/**
+ * Alter properties on an existing host in the cluster. Currently, the only
+ * property that can be altered is a hosts ability to accept failover
+ * processes.
+ * 
+ * @param host  Identifies the host this applies to. Can be the host address,
+ *              or formatted as 'hostN' where N is the host number as specified
+ *              in gpudb.conf
+ * @param options  Optional parameters
+ *                 <ul>
+ *                         <li> gpudb::admin_alter_host_accepts_failover: If
+ *                 set to @a true, the host will accept processes (ranks, graph
+ *                 server, etc.) in the event of a failover on another node in
+ *                 the cluster. See <a href="../../n_plus_1/index.html"
+ *                 target="_top">Cluster Resilience</a> for more information.
+ *                 <ul>
+ *                         <li> gpudb::admin_alter_host_true
+ *                         <li> gpudb::admin_alter_host_false
+ *                 </ul>
+ *                 The default value is gpudb::admin_alter_host_false.
+ *                 </ul>
+ * @param[out] response_  Response object containing the results of the
+ *                        operation.
+ * 
+ * @return Response object containing the result of the operation (initially
+ *         passed in by reference).
+ * 
+ */
+
+AdminAlterHostResponse& adminAlterHost( const std::string& host,
+                                        const std::map<std::string, std::string>& options,
+                                        AdminAlterHostResponse& response_ ) const;
+
+/**
  * Perform the requested action on a list of one or more job(s). Based on the
  * type of job and the current state of execution, the action may not be
  * successfully executed. The final result of the attempted actions for each
  * specified job is returned in the status array of the response. See <a
- * href="../../gpudbAdmin/job_manager.html" target="_top">Job Manager</a> for
- * more information.
+ * href="../../admin/job_manager.html" target="_top">Job Manager</a> for more
+ * information.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -226,8 +521,8 @@ AdminAlterJobsResponse adminAlterJobs( const AdminAlterJobsRequest& request_ ) c
  * type of job and the current state of execution, the action may not be
  * successfully executed. The final result of the attempted actions for each
  * specified job is returned in the status array of the response. See <a
- * href="../../gpudbAdmin/job_manager.html" target="_top">Job Manager</a> for
- * more information.
+ * href="../../admin/job_manager.html" target="_top">Job Manager</a> for more
+ * information.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -247,8 +542,8 @@ AdminAlterJobsResponse& adminAlterJobs( const AdminAlterJobsRequest& request_,
  * type of job and the current state of execution, the action may not be
  * successfully executed. The final result of the attempted actions for each
  * specified job is returned in the status array of the response. See <a
- * href="../../gpudbAdmin/job_manager.html" target="_top">Job Manager</a> for
- * more information.
+ * href="../../admin/job_manager.html" target="_top">Job Manager</a> for more
+ * information.
  * 
  * @param jobIds  Jobs to be modified.
  * @param action  Action to be performed on the jobs specified by job_ids.
@@ -256,6 +551,10 @@ AdminAlterJobsResponse& adminAlterJobs( const AdminAlterJobsRequest& request_,
  *                        <li> gpudb::admin_alter_jobs_cancel
  *                </ul>
  * @param options  Optional parameters.
+ *                 <ul>
+ *                         <li> gpudb::admin_alter_jobs_job_tag: Job tag
+ *                 returned in call to create the job
+ *                 </ul>
  * 
  * @return Response object containing the result of the operation.
  * 
@@ -270,8 +569,8 @@ AdminAlterJobsResponse adminAlterJobs( const std::vector<int64_t>& jobIds,
  * type of job and the current state of execution, the action may not be
  * successfully executed. The final result of the attempted actions for each
  * specified job is returned in the status array of the response. See <a
- * href="../../gpudbAdmin/job_manager.html" target="_top">Job Manager</a> for
- * more information.
+ * href="../../admin/job_manager.html" target="_top">Job Manager</a> for more
+ * information.
  * 
  * @param jobIds  Jobs to be modified.
  * @param action  Action to be performed on the jobs specified by job_ids.
@@ -279,6 +578,10 @@ AdminAlterJobsResponse adminAlterJobs( const std::vector<int64_t>& jobIds,
  *                        <li> gpudb::admin_alter_jobs_cancel
  *                </ul>
  * @param options  Optional parameters.
+ *                 <ul>
+ *                         <li> gpudb::admin_alter_jobs_job_tag: Job tag
+ *                 returned in call to create the job
+ *                 </ul>
  * @param[out] response_  Response object containing the results of the
  *                        operation.
  * 
@@ -379,13 +682,32 @@ AdminOfflineResponse& adminOffline( const bool offline,
                                     AdminOfflineResponse& response_ ) const;
 
 /**
- * Rebalance the cluster so that all the nodes contain approximately an equal
- * number of records.  The rebalance will also cause the shards to be equally
+ * Rebalance the data in the cluster so that all nodes contain an equal number
+ * of records approximately and/or rebalance the shards to be equally
  * distributed (as much as possible) across all the ranks.
  * <p>
- * This endpoint may take a long time to run, depending on the amount of data
- * in the system. The API call may time out if run directly.  It is recommended
- * to run this endpoint asynchronously via {@link
+ * * If {@link #adminRebalance(const AdminRebalanceRequest&) const} is
+ * invoked after a change is made to the
+ *   cluster, e.g., a host was added or removed,
+ *   <a href="../../concepts/tables.html#sharding" target="_top">sharded
+ * data</a> will be
+ *   evenly redistributed across the cluster by number of shards per rank
+ *   while unsharded data will be redistributed across the cluster by data
+ *   size per rank
+ * * If {@link #adminRebalance(const AdminRebalanceRequest&) const} is
+ * invoked at some point when unsharded
+ *   data (a.k.a.
+ *   <a href="../../concepts/tables.html#random-sharding"
+ * target="_top">randomly-sharded</a>)
+ *   in the cluster is unevenly distributed over time, sharded data will
+ *   not move while unsharded data will be redistributed across the
+ *   cluster by data size per rank
+ * <p>
+ * NOTE: Replicated data will not move as a result of this call
+ * <p>
+ * This endpoint's processing time depends on the amount of data in the system,
+ * thus the API call may time out if run directly.  It is recommended to run
+ * this endpoint asynchronously via {@link
  * #createJob(const CreateJobRequest&) const}.
  * 
  * @param[in] request_  Request object containing the parameters for the
@@ -398,13 +720,34 @@ AdminOfflineResponse& adminOffline( const bool offline,
 AdminRebalanceResponse adminRebalance( const AdminRebalanceRequest& request_ ) const;
 
 /**
- * Rebalance the cluster so that all the nodes contain approximately an equal
- * number of records.  The rebalance will also cause the shards to be equally
+ * Rebalance the data in the cluster so that all nodes contain an equal number
+ * of records approximately and/or rebalance the shards to be equally
  * distributed (as much as possible) across all the ranks.
  * <p>
- * This endpoint may take a long time to run, depending on the amount of data
- * in the system. The API call may time out if run directly.  It is recommended
- * to run this endpoint asynchronously via {@link
+ * * If {@link
+ * #adminRebalance(const AdminRebalanceRequest&,AdminRebalanceResponse&) const}
+ * is invoked after a change is made to the
+ *   cluster, e.g., a host was added or removed,
+ *   <a href="../../concepts/tables.html#sharding" target="_top">sharded
+ * data</a> will be
+ *   evenly redistributed across the cluster by number of shards per rank
+ *   while unsharded data will be redistributed across the cluster by data
+ *   size per rank
+ * * If {@link
+ * #adminRebalance(const AdminRebalanceRequest&,AdminRebalanceResponse&) const}
+ * is invoked at some point when unsharded
+ *   data (a.k.a.
+ *   <a href="../../concepts/tables.html#random-sharding"
+ * target="_top">randomly-sharded</a>)
+ *   in the cluster is unevenly distributed over time, sharded data will
+ *   not move while unsharded data will be redistributed across the
+ *   cluster by data size per rank
+ * <p>
+ * NOTE: Replicated data will not move as a result of this call
+ * <p>
+ * This endpoint's processing time depends on the amount of data in the system,
+ * thus the API call may time out if run directly.  It is recommended to run
+ * this endpoint asynchronously via {@link
  * #createJob(const CreateJobRequest&,CreateJobResponse&) const}.
  * 
  * @param[in] request_  Request object containing the parameters for the
@@ -421,22 +764,45 @@ AdminRebalanceResponse& adminRebalance( const AdminRebalanceRequest& request_,
                                         AdminRebalanceResponse& response_ ) const;
 
 /**
- * Rebalance the cluster so that all the nodes contain approximately an equal
- * number of records.  The rebalance will also cause the shards to be equally
+ * Rebalance the data in the cluster so that all nodes contain an equal number
+ * of records approximately and/or rebalance the shards to be equally
  * distributed (as much as possible) across all the ranks.
  * <p>
- * This endpoint may take a long time to run, depending on the amount of data
- * in the system. The API call may time out if run directly.  It is recommended
- * to run this endpoint asynchronously via {@link
+ * * If {@link
+ * #adminRebalance(const std::map<std::string, std::string>&) const} is
+ * invoked after a change is made to the
+ *   cluster, e.g., a host was added or removed,
+ *   <a href="../../concepts/tables.html#sharding" target="_top">sharded
+ * data</a> will be
+ *   evenly redistributed across the cluster by number of shards per rank
+ *   while unsharded data will be redistributed across the cluster by data
+ *   size per rank
+ * * If {@link
+ * #adminRebalance(const std::map<std::string, std::string>&) const} is
+ * invoked at some point when unsharded
+ *   data (a.k.a.
+ *   <a href="../../concepts/tables.html#random-sharding"
+ * target="_top">randomly-sharded</a>)
+ *   in the cluster is unevenly distributed over time, sharded data will
+ *   not move while unsharded data will be redistributed across the
+ *   cluster by data size per rank
+ * <p>
+ * NOTE: Replicated data will not move as a result of this call
+ * <p>
+ * This endpoint's processing time depends on the amount of data in the system,
+ * thus the API call may time out if run directly.  It is recommended to run
+ * this endpoint asynchronously via {@link
  * #createJob(const std::string&,const std::string&,const std::vector<uint8_t>&,const std::string&,const std::map<std::string, std::string>&) const}.
  * 
  * @param options  Optional parameters.
  *                 <ul>
  *                         <li> gpudb::admin_rebalance_rebalance_sharded_data:
- *                 If @a true, sharded data will be rebalanced approximately
- *                 equally across the cluster. Note that for big clusters, this
- *                 data transfer could be time consuming and result in delayed
- *                 query responses.
+ *                 If @a true, <a href="../../concepts/tables.html#sharding"
+ *                 target="_top">sharded data</a> will be rebalanced
+ *                 approximately equally across the cluster. Note that for
+ *                 clusters with large amounts of sharded data, this data
+ *                 transfer could be time consuming and result in delayed query
+ *                 responses.
  *                 <ul>
  *                         <li> gpudb::admin_rebalance_true
  *                         <li> gpudb::admin_rebalance_false
@@ -444,37 +810,40 @@ AdminRebalanceResponse& adminRebalance( const AdminRebalanceRequest& request_,
  *                 The default value is gpudb::admin_rebalance_true.
  *                         <li>
  *                 gpudb::admin_rebalance_rebalance_unsharded_data: If @a true,
- *                 unsharded data (data without primary keys and without shard
- *                 keys) will be rebalanced approximately equally across the
- *                 cluster. Note that for big clusters, this data transfer
- *                 could be time consuming and result in delayed query
+ *                 unsharded data (a.k.a. <a
+ *                 href="../../concepts/tables.html#random-sharding"
+ *                 target="_top">randomly-sharded</a>) will be rebalanced
+ *                 approximately equally across the cluster. Note that for
+ *                 clusters with large amounts of unsharded data, this data
+ *                 transfer could be time consuming and result in delayed query
  *                 responses.
  *                 <ul>
  *                         <li> gpudb::admin_rebalance_true
  *                         <li> gpudb::admin_rebalance_false
  *                 </ul>
  *                 The default value is gpudb::admin_rebalance_true.
- *                         <li> gpudb::admin_rebalance_table_whitelist:
+ *                         <li> gpudb::admin_rebalance_table_includes:
  *                 Comma-separated list of unsharded table names to rebalance.
  *                 Not applicable to sharded tables because they are always
- *                 balanced in accordance with their primary key or shard key.
- *                 Cannot be used simultaneously with @a table_blacklist.
- *                         <li> gpudb::admin_rebalance_table_blacklist:
+ *                 rebalanced. Cannot be used simultaneously with @a
+ *                 table_excludes. This parameter is ignored if @a
+ *                 rebalance_unsharded_data is @a false.
+ *                         <li> gpudb::admin_rebalance_table_excludes:
  *                 Comma-separated list of unsharded table names to not
  *                 rebalance. Not applicable to sharded tables because they are
- *                 always balanced in accordance with their primary key or
- *                 shard key. Cannot be used simultaneously with @a
- *                 table_whitelist.
+ *                 always rebalanced. Cannot be used simultaneously with @a
+ *                 table_includes. This parameter is ignored if @a
+ *                 rebalance_unsharded_data is @a false.
  *                         <li> gpudb::admin_rebalance_aggressiveness:
- *                 Influences how much data to send per rebalance round.  A
- *                 higher aggressiveness setting will complete the rebalance
- *                 faster.  A lower aggressiveness setting will take longer,
- *                 but allow for better interleaving between the rebalance and
- *                 other queries. Allowed values are 1 through 10.  The default
- *                 value is '1'.
+ *                 Influences how much data is moved at a time during
+ *                 rebalance.  A higher @a aggressiveness will complete the
+ *                 rebalance faster.  A lower @a aggressiveness will take
+ *                 longer but allow for better interleaving between the
+ *                 rebalance and other queries. Valid values are constants from
+ *                 1 (lowest) to 10 (highest).  The default value is '1'.
  *                         <li> gpudb::admin_rebalance_compact_after_rebalance:
  *                 Perform compaction of deleted records once the rebalance
- *                 completes, to reclaim memory and disk space. Default is
+ *                 completes to reclaim memory and disk space. Default is @a
  *                 true, unless @a repair_incorrectly_sharded_data is set to @a
  *                 true.
  *                 <ul>
@@ -482,8 +851,10 @@ AdminRebalanceResponse& adminRebalance( const AdminRebalanceRequest& request_,
  *                         <li> gpudb::admin_rebalance_false
  *                 </ul>
  *                 The default value is gpudb::admin_rebalance_true.
- *                         <li> gpudb::admin_rebalance_compact_only: Only
- *                 perform compaction, do not rebalance. Default is false.
+ *                         <li> gpudb::admin_rebalance_compact_only: If set to
+ *                 @a true, ignore rebalance options and attempt to perform
+ *                 compaction of deleted records to reclaim memory and disk
+ *                 space without rebalancing first.
  *                 <ul>
  *                         <li> gpudb::admin_rebalance_true
  *                         <li> gpudb::admin_rebalance_false
@@ -492,13 +863,15 @@ AdminRebalanceResponse& adminRebalance( const AdminRebalanceRequest& request_,
  *                         <li>
  *                 gpudb::admin_rebalance_repair_incorrectly_sharded_data:
  *                 Scans for any data sharded incorrectly and re-routes the
- *                 correct location. This can be done as part of a typical
- *                 rebalance after expanding the cluster, or in a standalone
- *                 fashion when it is believed that data is sharded incorrectly
- *                 somewhere in the cluster. Compaction will not be performed
- *                 by default when this is enabled. This option may also
- *                 lengthen rebalance time, and increase the memory used by the
- *                 rebalance.
+ *                 data to the correct location. Only necessary if
+ *                 /admin/verifydb reports an error in sharding alignment. This
+ *                 can be done as part of a typical rebalance after expanding
+ *                 the cluster or in a standalone fashion when it is believed
+ *                 that data is sharded incorrectly somewhere in the cluster.
+ *                 Compaction will not be performed by default when this is
+ *                 enabled. If this option is set to @a true, the time
+ *                 necessary to rebalance and the memory used by the rebalance
+ *                 may increase.
  *                 <ul>
  *                         <li> gpudb::admin_rebalance_true
  *                         <li> gpudb::admin_rebalance_false
@@ -513,22 +886,45 @@ AdminRebalanceResponse& adminRebalance( const AdminRebalanceRequest& request_,
 AdminRebalanceResponse adminRebalance( const std::map<std::string, std::string>& options ) const;
 
 /**
- * Rebalance the cluster so that all the nodes contain approximately an equal
- * number of records.  The rebalance will also cause the shards to be equally
+ * Rebalance the data in the cluster so that all nodes contain an equal number
+ * of records approximately and/or rebalance the shards to be equally
  * distributed (as much as possible) across all the ranks.
  * <p>
- * This endpoint may take a long time to run, depending on the amount of data
- * in the system. The API call may time out if run directly.  It is recommended
- * to run this endpoint asynchronously via {@link
+ * * If {@link
+ * #adminRebalance(const std::map<std::string, std::string>&,AdminRebalanceResponse&) const}
+ * is invoked after a change is made to the
+ *   cluster, e.g., a host was added or removed,
+ *   <a href="../../concepts/tables.html#sharding" target="_top">sharded
+ * data</a> will be
+ *   evenly redistributed across the cluster by number of shards per rank
+ *   while unsharded data will be redistributed across the cluster by data
+ *   size per rank
+ * * If {@link
+ * #adminRebalance(const std::map<std::string, std::string>&,AdminRebalanceResponse&) const}
+ * is invoked at some point when unsharded
+ *   data (a.k.a.
+ *   <a href="../../concepts/tables.html#random-sharding"
+ * target="_top">randomly-sharded</a>)
+ *   in the cluster is unevenly distributed over time, sharded data will
+ *   not move while unsharded data will be redistributed across the
+ *   cluster by data size per rank
+ * <p>
+ * NOTE: Replicated data will not move as a result of this call
+ * <p>
+ * This endpoint's processing time depends on the amount of data in the system,
+ * thus the API call may time out if run directly.  It is recommended to run
+ * this endpoint asynchronously via {@link
  * #createJob(const std::string&,const std::string&,const std::vector<uint8_t>&,const std::string&,const std::map<std::string, std::string>&,CreateJobResponse&) const}.
  * 
  * @param options  Optional parameters.
  *                 <ul>
  *                         <li> gpudb::admin_rebalance_rebalance_sharded_data:
- *                 If @a true, sharded data will be rebalanced approximately
- *                 equally across the cluster. Note that for big clusters, this
- *                 data transfer could be time consuming and result in delayed
- *                 query responses.
+ *                 If @a true, <a href="../../concepts/tables.html#sharding"
+ *                 target="_top">sharded data</a> will be rebalanced
+ *                 approximately equally across the cluster. Note that for
+ *                 clusters with large amounts of sharded data, this data
+ *                 transfer could be time consuming and result in delayed query
+ *                 responses.
  *                 <ul>
  *                         <li> gpudb::admin_rebalance_true
  *                         <li> gpudb::admin_rebalance_false
@@ -536,37 +932,40 @@ AdminRebalanceResponse adminRebalance( const std::map<std::string, std::string>&
  *                 The default value is gpudb::admin_rebalance_true.
  *                         <li>
  *                 gpudb::admin_rebalance_rebalance_unsharded_data: If @a true,
- *                 unsharded data (data without primary keys and without shard
- *                 keys) will be rebalanced approximately equally across the
- *                 cluster. Note that for big clusters, this data transfer
- *                 could be time consuming and result in delayed query
+ *                 unsharded data (a.k.a. <a
+ *                 href="../../concepts/tables.html#random-sharding"
+ *                 target="_top">randomly-sharded</a>) will be rebalanced
+ *                 approximately equally across the cluster. Note that for
+ *                 clusters with large amounts of unsharded data, this data
+ *                 transfer could be time consuming and result in delayed query
  *                 responses.
  *                 <ul>
  *                         <li> gpudb::admin_rebalance_true
  *                         <li> gpudb::admin_rebalance_false
  *                 </ul>
  *                 The default value is gpudb::admin_rebalance_true.
- *                         <li> gpudb::admin_rebalance_table_whitelist:
+ *                         <li> gpudb::admin_rebalance_table_includes:
  *                 Comma-separated list of unsharded table names to rebalance.
  *                 Not applicable to sharded tables because they are always
- *                 balanced in accordance with their primary key or shard key.
- *                 Cannot be used simultaneously with @a table_blacklist.
- *                         <li> gpudb::admin_rebalance_table_blacklist:
+ *                 rebalanced. Cannot be used simultaneously with @a
+ *                 table_excludes. This parameter is ignored if @a
+ *                 rebalance_unsharded_data is @a false.
+ *                         <li> gpudb::admin_rebalance_table_excludes:
  *                 Comma-separated list of unsharded table names to not
  *                 rebalance. Not applicable to sharded tables because they are
- *                 always balanced in accordance with their primary key or
- *                 shard key. Cannot be used simultaneously with @a
- *                 table_whitelist.
+ *                 always rebalanced. Cannot be used simultaneously with @a
+ *                 table_includes. This parameter is ignored if @a
+ *                 rebalance_unsharded_data is @a false.
  *                         <li> gpudb::admin_rebalance_aggressiveness:
- *                 Influences how much data to send per rebalance round.  A
- *                 higher aggressiveness setting will complete the rebalance
- *                 faster.  A lower aggressiveness setting will take longer,
- *                 but allow for better interleaving between the rebalance and
- *                 other queries. Allowed values are 1 through 10.  The default
- *                 value is '1'.
+ *                 Influences how much data is moved at a time during
+ *                 rebalance.  A higher @a aggressiveness will complete the
+ *                 rebalance faster.  A lower @a aggressiveness will take
+ *                 longer but allow for better interleaving between the
+ *                 rebalance and other queries. Valid values are constants from
+ *                 1 (lowest) to 10 (highest).  The default value is '1'.
  *                         <li> gpudb::admin_rebalance_compact_after_rebalance:
  *                 Perform compaction of deleted records once the rebalance
- *                 completes, to reclaim memory and disk space. Default is
+ *                 completes to reclaim memory and disk space. Default is @a
  *                 true, unless @a repair_incorrectly_sharded_data is set to @a
  *                 true.
  *                 <ul>
@@ -574,8 +973,10 @@ AdminRebalanceResponse adminRebalance( const std::map<std::string, std::string>&
  *                         <li> gpudb::admin_rebalance_false
  *                 </ul>
  *                 The default value is gpudb::admin_rebalance_true.
- *                         <li> gpudb::admin_rebalance_compact_only: Only
- *                 perform compaction, do not rebalance. Default is false.
+ *                         <li> gpudb::admin_rebalance_compact_only: If set to
+ *                 @a true, ignore rebalance options and attempt to perform
+ *                 compaction of deleted records to reclaim memory and disk
+ *                 space without rebalancing first.
  *                 <ul>
  *                         <li> gpudb::admin_rebalance_true
  *                         <li> gpudb::admin_rebalance_false
@@ -584,13 +985,15 @@ AdminRebalanceResponse adminRebalance( const std::map<std::string, std::string>&
  *                         <li>
  *                 gpudb::admin_rebalance_repair_incorrectly_sharded_data:
  *                 Scans for any data sharded incorrectly and re-routes the
- *                 correct location. This can be done as part of a typical
- *                 rebalance after expanding the cluster, or in a standalone
- *                 fashion when it is believed that data is sharded incorrectly
- *                 somewhere in the cluster. Compaction will not be performed
- *                 by default when this is enabled. This option may also
- *                 lengthen rebalance time, and increase the memory used by the
- *                 rebalance.
+ *                 data to the correct location. Only necessary if
+ *                 /admin/verifydb reports an error in sharding alignment. This
+ *                 can be done as part of a typical rebalance after expanding
+ *                 the cluster or in a standalone fashion when it is believed
+ *                 that data is sharded incorrectly somewhere in the cluster.
+ *                 Compaction will not be performed by default when this is
+ *                 enabled. If this option is set to @a true, the time
+ *                 necessary to rebalance and the memory used by the rebalance
+ *                 may increase.
  *                 <ul>
  *                         <li> gpudb::admin_rebalance_true
  *                         <li> gpudb::admin_rebalance_false
@@ -609,14 +1012,131 @@ AdminRebalanceResponse& adminRebalance( const std::map<std::string, std::string>
                                         AdminRebalanceResponse& response_ ) const;
 
 /**
- * Remove one or more ranks from the cluster. All data in the ranks to be
- * removed is rebalanced to other ranks before the node is removed unless the
- * @a rebalance_sharded_data or @a rebalance_unsharded_data parameters are set
- * to @a false in the @a options.
+ * Removes a host from an existing cluster. If the host to be removed has any
+ * ranks running on it, the ranks must be removed using {@link
+ * #adminRemoveRanks(const AdminRemoveRanksRequest&) const} or manually
+ * switched over to a new host using {@link
+ * #adminSwitchover(const AdminSwitchoverRequest&) const} prior to host
+ * removal. If the host to be removed has the graph server or SQL planner
+ * running on it, these must be manually switched over to a new host using
+ * {@link #adminSwitchover(const AdminSwitchoverRequest&) const}.
+ * 
+ * @param[in] request_  Request object containing the parameters for the
+ *                      operation.
+ * 
+ * @return Response object containing the result of the operation.
+ * 
+ */
+
+AdminRemoveHostResponse adminRemoveHost( const AdminRemoveHostRequest& request_ ) const;
+
+/**
+ * Removes a host from an existing cluster. If the host to be removed has any
+ * ranks running on it, the ranks must be removed using {@link
+ * #adminRemoveRanks(const AdminRemoveRanksRequest&,AdminRemoveRanksResponse&) const}
+ * or manually switched over to a new host using {@link
+ * #adminSwitchover(const AdminSwitchoverRequest&,AdminSwitchoverResponse&) const}
+ * prior to host removal. If the host to be removed has the graph server or SQL
+ * planner running on it, these must be manually switched over to a new host
+ * using {@link
+ * #adminSwitchover(const AdminSwitchoverRequest&,AdminSwitchoverResponse&) const}.
+ * 
+ * @param[in] request_  Request object containing the parameters for the
+ *                      operation.
+ * @param[out] response_  Response object containing the results of the
+ *                        operation.
+ * 
+ * @return Response object containing the result of the operation (initially
+ *         passed in by reference).
+ * 
+ */
+
+AdminRemoveHostResponse& adminRemoveHost( const AdminRemoveHostRequest& request_,
+                                          AdminRemoveHostResponse& response_ ) const;
+
+/**
+ * Removes a host from an existing cluster. If the host to be removed has any
+ * ranks running on it, the ranks must be removed using {@link
+ * #adminRemoveRanks(const std::vector<std::string>&,const std::map<std::string, std::string>&) const}
+ * or manually switched over to a new host using {@link
+ * #adminSwitchover(const std::vector<std::string>&,const std::vector<std::string>&,const std::map<std::string, std::string>&) const}
+ * prior to host removal. If the host to be removed has the graph server or SQL
+ * planner running on it, these must be manually switched over to a new host
+ * using {@link
+ * #adminSwitchover(const std::vector<std::string>&,const std::vector<std::string>&,const std::map<std::string, std::string>&) const}.
+ * 
+ * @param host  Identifies the host this applies to. Can be the host address,
+ *              or formatted as 'hostN' where N is the host number as specified
+ *              in gpudb.conf
+ * @param options  Optional parameters.
+ *                 <ul>
+ *                         <li> gpudb::admin_remove_host_dry_run: If set to @a
+ *                 true, only validation checks will be performed. No host is
+ *                 removed.
+ *                 <ul>
+ *                         <li> gpudb::admin_remove_host_true
+ *                         <li> gpudb::admin_remove_host_false
+ *                 </ul>
+ *                 The default value is gpudb::admin_remove_host_false.
+ *                 </ul>
+ * 
+ * @return Response object containing the result of the operation.
+ * 
+ */
+
+AdminRemoveHostResponse adminRemoveHost( const std::string& host,
+                                         const std::map<std::string, std::string>& options ) const;
+
+/**
+ * Removes a host from an existing cluster. If the host to be removed has any
+ * ranks running on it, the ranks must be removed using {@link
+ * #adminRemoveRanks(const std::vector<std::string>&,const std::map<std::string, std::string>&,AdminRemoveRanksResponse&) const}
+ * or manually switched over to a new host using {@link
+ * #adminSwitchover(const std::vector<std::string>&,const std::vector<std::string>&,const std::map<std::string, std::string>&,AdminSwitchoverResponse&) const}
+ * prior to host removal. If the host to be removed has the graph server or SQL
+ * planner running on it, these must be manually switched over to a new host
+ * using {@link
+ * #adminSwitchover(const std::vector<std::string>&,const std::vector<std::string>&,const std::map<std::string, std::string>&,AdminSwitchoverResponse&) const}.
+ * 
+ * @param host  Identifies the host this applies to. Can be the host address,
+ *              or formatted as 'hostN' where N is the host number as specified
+ *              in gpudb.conf
+ * @param options  Optional parameters.
+ *                 <ul>
+ *                         <li> gpudb::admin_remove_host_dry_run: If set to @a
+ *                 true, only validation checks will be performed. No host is
+ *                 removed.
+ *                 <ul>
+ *                         <li> gpudb::admin_remove_host_true
+ *                         <li> gpudb::admin_remove_host_false
+ *                 </ul>
+ *                 The default value is gpudb::admin_remove_host_false.
+ *                 </ul>
+ * @param[out] response_  Response object containing the results of the
+ *                        operation.
+ * 
+ * @return Response object containing the result of the operation (initially
+ *         passed in by reference).
+ * 
+ */
+
+AdminRemoveHostResponse& adminRemoveHost( const std::string& host,
+                                          const std::map<std::string, std::string>& options,
+                                          AdminRemoveHostResponse& response_ ) const;
+
+/**
+ * Remove one or more ranks from an existing Kinetica cluster. All data will be
+ * rebalanced to other ranks before the rank(s) is removed unless the @a
+ * rebalance_sharded_data or @a rebalance_unsharded_data parameters are set to
+ * @a false in the @a options, in which case the corresponding <a
+ * href="../../concepts/tables.html#sharding" target="_top">sharded data</a>
+ * and/or unsharded data (a.k.a. <a
+ * href="../../concepts/tables.html#random-sharding"
+ * target="_top">randomly-sharded</a>) will be deleted.
  * <p>
- * Due to the rebalancing, this endpoint may take a long time to run, depending
- * on the amount of data in the system. The API call may time out if run
- * directly.  It is recommended to run this endpoint asynchronously via {@link
+ * This endpoint's processing time depends on the amount of data in the system,
+ * thus the API call may time out if run directly.  It is recommended to run
+ * this endpoint asynchronously via {@link
  * #createJob(const CreateJobRequest&) const}.
  * 
  * @param[in] request_  Request object containing the parameters for the
@@ -629,14 +1149,18 @@ AdminRebalanceResponse& adminRebalance( const std::map<std::string, std::string>
 AdminRemoveRanksResponse adminRemoveRanks( const AdminRemoveRanksRequest& request_ ) const;
 
 /**
- * Remove one or more ranks from the cluster. All data in the ranks to be
- * removed is rebalanced to other ranks before the node is removed unless the
- * @a rebalance_sharded_data or @a rebalance_unsharded_data parameters are set
- * to @a false in the @a options.
+ * Remove one or more ranks from an existing Kinetica cluster. All data will be
+ * rebalanced to other ranks before the rank(s) is removed unless the @a
+ * rebalance_sharded_data or @a rebalance_unsharded_data parameters are set to
+ * @a false in the @a options, in which case the corresponding <a
+ * href="../../concepts/tables.html#sharding" target="_top">sharded data</a>
+ * and/or unsharded data (a.k.a. <a
+ * href="../../concepts/tables.html#random-sharding"
+ * target="_top">randomly-sharded</a>) will be deleted.
  * <p>
- * Due to the rebalancing, this endpoint may take a long time to run, depending
- * on the amount of data in the system. The API call may time out if run
- * directly.  It is recommended to run this endpoint asynchronously via {@link
+ * This endpoint's processing time depends on the amount of data in the system,
+ * thus the API call may time out if run directly.  It is recommended to run
+ * this endpoint asynchronously via {@link
  * #createJob(const CreateJobRequest&,CreateJobResponse&) const}.
  * 
  * @param[in] request_  Request object containing the parameters for the
@@ -653,36 +1177,51 @@ AdminRemoveRanksResponse& adminRemoveRanks( const AdminRemoveRanksRequest& reque
                                             AdminRemoveRanksResponse& response_ ) const;
 
 /**
- * Remove one or more ranks from the cluster. All data in the ranks to be
- * removed is rebalanced to other ranks before the node is removed unless the
- * @a rebalance_sharded_data or @a rebalance_unsharded_data parameters are set
- * to @a false in the @a options.
+ * Remove one or more ranks from an existing Kinetica cluster. All data will be
+ * rebalanced to other ranks before the rank(s) is removed unless the @a
+ * rebalance_sharded_data or @a rebalance_unsharded_data parameters are set to
+ * @a false in the @a options, in which case the corresponding <a
+ * href="../../concepts/tables.html#sharding" target="_top">sharded data</a>
+ * and/or unsharded data (a.k.a. <a
+ * href="../../concepts/tables.html#random-sharding"
+ * target="_top">randomly-sharded</a>) will be deleted.
  * <p>
- * Due to the rebalancing, this endpoint may take a long time to run, depending
- * on the amount of data in the system. The API call may time out if run
- * directly.  It is recommended to run this endpoint asynchronously via {@link
+ * This endpoint's processing time depends on the amount of data in the system,
+ * thus the API call may time out if run directly.  It is recommended to run
+ * this endpoint asynchronously via {@link
  * #createJob(const std::string&,const std::string&,const std::vector<uint8_t>&,const std::string&,const std::map<std::string, std::string>&) const}.
  * 
- * @param ranks  Rank numbers of the ranks to be removed from the cluster.
+ * @param ranks  Each array value designates one or more ranks to remove from
+ *               the cluster. Values can be formatted as 'rankN' for a specific
+ *               rank, 'hostN' (from the gpudb.conf file) to remove all ranks
+ *               on that host, or the host IP address (hostN.address from the
+ *               gpub.conf file) which also removes all ranks on that host.
+ *               Rank 0 (the head rank) cannot be removed (but can be moved to
+ *               another host using /admin/switchover). At least one worker
+ *               rank must be left in the cluster after the operation.
  * @param options  Optional parameters.
  *                 <ul>
  *                         <li>
- *                 gpudb::admin_remove_ranks_rebalance_sharded_data: When @a
- *                 true, data with primary keys or shard keys will be
- *                 rebalanced to other ranks prior to rank removal. Note that
- *                 for big clusters, this data transfer could be time consuming
- *                 and result in delayed query responses.
+ *                 gpudb::admin_remove_ranks_rebalance_sharded_data: If @a
+ *                 true, <a href="../../concepts/tables.html#sharding"
+ *                 target="_top">sharded data</a> will be rebalanced
+ *                 approximately equally across the cluster. Note that for
+ *                 clusters with large amounts of sharded data, this data
+ *                 transfer could be time consuming and result in delayed query
+ *                 responses.
  *                 <ul>
  *                         <li> gpudb::admin_remove_ranks_true
  *                         <li> gpudb::admin_remove_ranks_false
  *                 </ul>
  *                 The default value is gpudb::admin_remove_ranks_true.
  *                         <li>
- *                 gpudb::admin_remove_ranks_rebalance_unsharded_data: When @a
- *                 true, unsharded data (data without primary keys and without
- *                 shard keys) will be rebalanced to other ranks prior to rank
- *                 removal. Note that for big clusters, this data transfer
- *                 could be time consuming and result in delayed query
+ *                 gpudb::admin_remove_ranks_rebalance_unsharded_data: If @a
+ *                 true, unsharded data (a.k.a. <a
+ *                 href="../../concepts/tables.html#random-sharding"
+ *                 target="_top">randomly-sharded</a>) will be rebalanced
+ *                 approximately equally across the cluster. Note that for
+ *                 clusters with large amounts of unsharded data, this data
+ *                 transfer could be time consuming and result in delayed query
  *                 responses.
  *                 <ul>
  *                         <li> gpudb::admin_remove_ranks_true
@@ -690,53 +1229,67 @@ AdminRemoveRanksResponse& adminRemoveRanks( const AdminRemoveRanksRequest& reque
  *                 </ul>
  *                 The default value is gpudb::admin_remove_ranks_true.
  *                         <li> gpudb::admin_remove_ranks_aggressiveness:
- *                 Influences how much data to send per rebalance round, during
- *                 the rebalance portion of removing ranks.  A higher
- *                 aggressiveness setting will complete the rebalance faster.
- *                 A lower aggressiveness setting will take longer, but allow
- *                 for better interleaving between the rebalance and other
- *                 queries. Allowed values are 1 through 10.  The default value
- *                 is '1'.
+ *                 Influences how much data is moved at a time during
+ *                 rebalance.  A higher @a aggressiveness will complete the
+ *                 rebalance faster.  A lower @a aggressiveness will take
+ *                 longer but allow for better interleaving between the
+ *                 rebalance and other queries. Valid values are constants from
+ *                 1 (lowest) to 10 (highest).  The default value is '1'.
  *                 </ul>
  * 
  * @return Response object containing the result of the operation.
  * 
  */
 
-AdminRemoveRanksResponse adminRemoveRanks( const std::vector<int32_t>& ranks,
+AdminRemoveRanksResponse adminRemoveRanks( const std::vector<std::string>& ranks,
                                            const std::map<std::string, std::string>& options ) const;
 
 /**
- * Remove one or more ranks from the cluster. All data in the ranks to be
- * removed is rebalanced to other ranks before the node is removed unless the
- * @a rebalance_sharded_data or @a rebalance_unsharded_data parameters are set
- * to @a false in the @a options.
+ * Remove one or more ranks from an existing Kinetica cluster. All data will be
+ * rebalanced to other ranks before the rank(s) is removed unless the @a
+ * rebalance_sharded_data or @a rebalance_unsharded_data parameters are set to
+ * @a false in the @a options, in which case the corresponding <a
+ * href="../../concepts/tables.html#sharding" target="_top">sharded data</a>
+ * and/or unsharded data (a.k.a. <a
+ * href="../../concepts/tables.html#random-sharding"
+ * target="_top">randomly-sharded</a>) will be deleted.
  * <p>
- * Due to the rebalancing, this endpoint may take a long time to run, depending
- * on the amount of data in the system. The API call may time out if run
- * directly.  It is recommended to run this endpoint asynchronously via {@link
+ * This endpoint's processing time depends on the amount of data in the system,
+ * thus the API call may time out if run directly.  It is recommended to run
+ * this endpoint asynchronously via {@link
  * #createJob(const std::string&,const std::string&,const std::vector<uint8_t>&,const std::string&,const std::map<std::string, std::string>&,CreateJobResponse&) const}.
  * 
- * @param ranks  Rank numbers of the ranks to be removed from the cluster.
+ * @param ranks  Each array value designates one or more ranks to remove from
+ *               the cluster. Values can be formatted as 'rankN' for a specific
+ *               rank, 'hostN' (from the gpudb.conf file) to remove all ranks
+ *               on that host, or the host IP address (hostN.address from the
+ *               gpub.conf file) which also removes all ranks on that host.
+ *               Rank 0 (the head rank) cannot be removed (but can be moved to
+ *               another host using /admin/switchover). At least one worker
+ *               rank must be left in the cluster after the operation.
  * @param options  Optional parameters.
  *                 <ul>
  *                         <li>
- *                 gpudb::admin_remove_ranks_rebalance_sharded_data: When @a
- *                 true, data with primary keys or shard keys will be
- *                 rebalanced to other ranks prior to rank removal. Note that
- *                 for big clusters, this data transfer could be time consuming
- *                 and result in delayed query responses.
+ *                 gpudb::admin_remove_ranks_rebalance_sharded_data: If @a
+ *                 true, <a href="../../concepts/tables.html#sharding"
+ *                 target="_top">sharded data</a> will be rebalanced
+ *                 approximately equally across the cluster. Note that for
+ *                 clusters with large amounts of sharded data, this data
+ *                 transfer could be time consuming and result in delayed query
+ *                 responses.
  *                 <ul>
  *                         <li> gpudb::admin_remove_ranks_true
  *                         <li> gpudb::admin_remove_ranks_false
  *                 </ul>
  *                 The default value is gpudb::admin_remove_ranks_true.
  *                         <li>
- *                 gpudb::admin_remove_ranks_rebalance_unsharded_data: When @a
- *                 true, unsharded data (data without primary keys and without
- *                 shard keys) will be rebalanced to other ranks prior to rank
- *                 removal. Note that for big clusters, this data transfer
- *                 could be time consuming and result in delayed query
+ *                 gpudb::admin_remove_ranks_rebalance_unsharded_data: If @a
+ *                 true, unsharded data (a.k.a. <a
+ *                 href="../../concepts/tables.html#random-sharding"
+ *                 target="_top">randomly-sharded</a>) will be rebalanced
+ *                 approximately equally across the cluster. Note that for
+ *                 clusters with large amounts of unsharded data, this data
+ *                 transfer could be time consuming and result in delayed query
  *                 responses.
  *                 <ul>
  *                         <li> gpudb::admin_remove_ranks_true
@@ -744,13 +1297,12 @@ AdminRemoveRanksResponse adminRemoveRanks( const std::vector<int32_t>& ranks,
  *                 </ul>
  *                 The default value is gpudb::admin_remove_ranks_true.
  *                         <li> gpudb::admin_remove_ranks_aggressiveness:
- *                 Influences how much data to send per rebalance round, during
- *                 the rebalance portion of removing ranks.  A higher
- *                 aggressiveness setting will complete the rebalance faster.
- *                 A lower aggressiveness setting will take longer, but allow
- *                 for better interleaving between the rebalance and other
- *                 queries. Allowed values are 1 through 10.  The default value
- *                 is '1'.
+ *                 Influences how much data is moved at a time during
+ *                 rebalance.  A higher @a aggressiveness will complete the
+ *                 rebalance faster.  A lower @a aggressiveness will take
+ *                 longer but allow for better interleaving between the
+ *                 rebalance and other queries. Valid values are constants from
+ *                 1 (lowest) to 10 (highest).  The default value is '1'.
  *                 </ul>
  * @param[out] response_  Response object containing the results of the
  *                        operation.
@@ -760,7 +1312,7 @@ AdminRemoveRanksResponse adminRemoveRanks( const std::vector<int32_t>& ranks,
  * 
  */
 
-AdminRemoveRanksResponse& adminRemoveRanks( const std::vector<int32_t>& ranks,
+AdminRemoveRanksResponse& adminRemoveRanks( const std::vector<std::string>& ranks,
                                             const std::map<std::string, std::string>& options,
                                             AdminRemoveRanksResponse& response_ ) const;
 
@@ -1113,6 +1665,126 @@ AdminShutdownResponse& adminShutdown( const std::string& exitType,
                                       AdminShutdownResponse& response_ ) const;
 
 /**
+ * Manually switchover one or more processes to another host. Individual ranks
+ * or entire hosts may be moved to another host.
+ * 
+ * @param[in] request_  Request object containing the parameters for the
+ *                      operation.
+ * 
+ * @return Response object containing the result of the operation.
+ * 
+ */
+
+AdminSwitchoverResponse adminSwitchover( const AdminSwitchoverRequest& request_ ) const;
+
+/**
+ * Manually switchover one or more processes to another host. Individual ranks
+ * or entire hosts may be moved to another host.
+ * 
+ * @param[in] request_  Request object containing the parameters for the
+ *                      operation.
+ * @param[out] response_  Response object containing the results of the
+ *                        operation.
+ * 
+ * @return Response object containing the result of the operation (initially
+ *         passed in by reference).
+ * 
+ */
+
+AdminSwitchoverResponse& adminSwitchover( const AdminSwitchoverRequest& request_,
+                                          AdminSwitchoverResponse& response_ ) const;
+
+/**
+ * Manually switchover one or more processes to another host. Individual ranks
+ * or entire hosts may be moved to another host.
+ * 
+ * @param processes  Indicates the process identifier to switchover to another
+ *                   host. Options are 'hostN' and 'rankN' where 'N'
+ *                   corresponds to the number associated with a host or rank
+ *                   in the <a href="../../config/index.html#network"
+ *                   target="_top">Network</a> section of the gpudb.conf file,
+ *                   e.g., 'host[N].address' or 'rank[N].host'. If 'hostN' is
+ *                   provided, all processes on that host will be moved to
+ *                   another host. Each entry in this array will be switched
+ *                   over to the corresponding host entry at the same index in
+ *                   @a destinations.
+ * @param destinations  Indicates to which host to switchover each
+ *                      corresponding process given in @a processes. Each index
+ *                      must be specified as 'hostN' where 'N' corresponds to
+ *                      the number associated with a host or rank in the <a
+ *                      href="../../config/index.html#network"
+ *                      target="_top">Network</a> section of the gpudb.conf
+ *                      file, e.g., 'host[N].address'. Each entry in this array
+ *                      will receive the corresponding process entry at the
+ *                      same index in @a processes.
+ * @param options  Optional parameters.
+ *                 <ul>
+ *                         <li> gpudb::admin_switchover_dry_run: If set to @a
+ *                 true, only validation checks will be performed. Nothing is
+ *                 switched over.
+ *                 <ul>
+ *                         <li> gpudb::admin_switchover_true
+ *                         <li> gpudb::admin_switchover_false
+ *                 </ul>
+ *                 The default value is gpudb::admin_switchover_false.
+ *                 </ul>
+ * 
+ * @return Response object containing the result of the operation.
+ * 
+ */
+
+AdminSwitchoverResponse adminSwitchover( const std::vector<std::string>& processes,
+                                         const std::vector<std::string>& destinations,
+                                         const std::map<std::string, std::string>& options ) const;
+
+/**
+ * Manually switchover one or more processes to another host. Individual ranks
+ * or entire hosts may be moved to another host.
+ * 
+ * @param processes  Indicates the process identifier to switchover to another
+ *                   host. Options are 'hostN' and 'rankN' where 'N'
+ *                   corresponds to the number associated with a host or rank
+ *                   in the <a href="../../config/index.html#network"
+ *                   target="_top">Network</a> section of the gpudb.conf file,
+ *                   e.g., 'host[N].address' or 'rank[N].host'. If 'hostN' is
+ *                   provided, all processes on that host will be moved to
+ *                   another host. Each entry in this array will be switched
+ *                   over to the corresponding host entry at the same index in
+ *                   @a destinations.
+ * @param destinations  Indicates to which host to switchover each
+ *                      corresponding process given in @a processes. Each index
+ *                      must be specified as 'hostN' where 'N' corresponds to
+ *                      the number associated with a host or rank in the <a
+ *                      href="../../config/index.html#network"
+ *                      target="_top">Network</a> section of the gpudb.conf
+ *                      file, e.g., 'host[N].address'. Each entry in this array
+ *                      will receive the corresponding process entry at the
+ *                      same index in @a processes.
+ * @param options  Optional parameters.
+ *                 <ul>
+ *                         <li> gpudb::admin_switchover_dry_run: If set to @a
+ *                 true, only validation checks will be performed. Nothing is
+ *                 switched over.
+ *                 <ul>
+ *                         <li> gpudb::admin_switchover_true
+ *                         <li> gpudb::admin_switchover_false
+ *                 </ul>
+ *                 The default value is gpudb::admin_switchover_false.
+ *                 </ul>
+ * @param[out] response_  Response object containing the results of the
+ *                        operation.
+ * 
+ * @return Response object containing the result of the operation (initially
+ *         passed in by reference).
+ * 
+ */
+
+AdminSwitchoverResponse& adminSwitchover( const std::vector<std::string>& processes,
+                                          const std::vector<std::string>& destinations,
+                                          const std::map<std::string, std::string>& options,
+                                          AdminSwitchoverResponse& response_ ) const;
+
+/**
  * Verify database is in a consistent state.  When inconsistencies or errors
  * are found, the verified_ok flag in the response is set to false and the list
  * of errors found is provided in the error_list.
@@ -1285,7 +1957,10 @@ AggregateConvexHullResponse& aggregateConvexHull( const AggregateConvexHullReque
  * by @a tableName.
  * 
  * @param tableName  Name of table on which the operation will be performed.
- *                   Must be an existing table.  It cannot be a collection.
+ *                   Must be an existing table, in [schema_name.]table_name
+ *                   format, using standard <a
+ *                   href="../../concepts/tables.html#table-name-resolution"
+ *                   target="_top">name resolution rules</a>.
  * @param xColumnName  Name of the column containing the x coordinates of the
  *                     points for the operation being performed.
  * @param yColumnName  Name of the column containing the y coordinates of the
@@ -1306,7 +1981,10 @@ AggregateConvexHullResponse aggregateConvexHull( const std::string& tableName,
  * by @a tableName.
  * 
  * @param tableName  Name of table on which the operation will be performed.
- *                   Must be an existing table.  It cannot be a collection.
+ *                   Must be an existing table, in [schema_name.]table_name
+ *                   format, using standard <a
+ *                   href="../../concepts/tables.html#table-name-resolution"
+ *                   target="_top">name resolution rules</a>.
  * @param xColumnName  Name of the column containing the x coordinates of the
  *                     points for the operation being performed.
  * @param yColumnName  Name of the column containing the y coordinates of the
@@ -1691,7 +2369,10 @@ AggregateGroupByResponse& aggregateGroupBy( const AggregateGroupByRequest& reque
  * string.
  * 
  * @param tableName  Name of an existing table or view on which the operation
- *                   will be performed.
+ *                   will be performed, in [schema_name.]table_name format,
+ *                   using standard <a
+ *                   href="../../concepts/tables.html#table-name-resolution"
+ *                   target="_top">name resolution rules</a>.
  * @param columnNames  List of one or more column names, expressions, and
  *                     aggregate expressions.
  * @param offset  A positive integer indicating the number of initial results
@@ -1709,11 +2390,12 @@ AggregateGroupByResponse& aggregateGroupBy( const AggregateGroupByRequest& reque
  *               request subsequent pages of results.
  * @param options  Optional parameters.
  *                 <ul>
- *                         <li> gpudb::aggregate_group_by_collection_name: Name
- *                 of a collection which is to contain the table specified in
- *                 @a result_table. If the collection provided is non-existent,
- *                 the collection will be automatically created. If empty, then
- *                 the table will be a top-level table.
+ *                         <li> gpudb::aggregate_group_by_collection_name:
+ *                 [DEPRECATED--please specify the containing schema as part of
+ *                 @a result_table and use /create/schema to create the schema
+ *                 if non-existent]  Name of a schema which is to contain the
+ *                 table specified in @a result_table. If the schema provided
+ *                 is non-existent, it will be automatically created.
  *                         <li> gpudb::aggregate_group_by_expression: Filter
  *                 expression to apply to the table prior to computing the
  *                 aggregate group by.
@@ -1748,14 +2430,17 @@ AggregateGroupByResponse& aggregateGroupBy( const AggregateGroupByRequest& reque
  *                 </ul>
  *                 The default value is gpudb::aggregate_group_by_value.
  *                         <li> gpudb::aggregate_group_by_result_table: The
- *                 name of the table used to store the results. Has the same
- *                 naming restrictions as <a href="../../concepts/tables.html"
- *                 target="_top">tables</a>. Column names (group-by and
- *                 aggregate fields) need to be given aliases e.g. ["FChar256
- *                 as fchar256", "sum(FDouble) as sfd"].  If present, no
- *                 results are returned in the response.  This option is not
- *                 available if one of the grouping attributes is an
- *                 unrestricted string (i.e.; not charN) type.
+ *                 name of a table used to store the results, in
+ *                 [schema_name.]table_name format, using standard <a
+ *                 href="../../concepts/tables.html#table-name-resolution"
+ *                 target="_top">name resolution rules</a> and meeting <a
+ *                 href="../../concepts/tables.html#table-naming-criteria"
+ *                 target="_top">table naming criteria</a>.  Column names
+ *                 (group-by and aggregate fields) need to be given aliases
+ *                 e.g. ["FChar256 as fchar256", "sum(FDouble) as sfd"].  If
+ *                 present, no results are returned in the response.  This
+ *                 option is not available if one of the grouping attributes is
+ *                 an unrestricted string (i.e.; not charN) type.
  *                         <li> gpudb::aggregate_group_by_result_table_persist:
  *                 If @a true, then the result table specified in @a
  *                 result_table will be persisted and will not expire unless a
@@ -1906,7 +2591,10 @@ AggregateGroupByResponse aggregateGroupBy( const std::string& tableName,
  * string.
  * 
  * @param tableName  Name of an existing table or view on which the operation
- *                   will be performed.
+ *                   will be performed, in [schema_name.]table_name format,
+ *                   using standard <a
+ *                   href="../../concepts/tables.html#table-name-resolution"
+ *                   target="_top">name resolution rules</a>.
  * @param columnNames  List of one or more column names, expressions, and
  *                     aggregate expressions.
  * @param offset  A positive integer indicating the number of initial results
@@ -1924,11 +2612,12 @@ AggregateGroupByResponse aggregateGroupBy( const std::string& tableName,
  *               request subsequent pages of results.
  * @param options  Optional parameters.
  *                 <ul>
- *                         <li> gpudb::aggregate_group_by_collection_name: Name
- *                 of a collection which is to contain the table specified in
- *                 @a result_table. If the collection provided is non-existent,
- *                 the collection will be automatically created. If empty, then
- *                 the table will be a top-level table.
+ *                         <li> gpudb::aggregate_group_by_collection_name:
+ *                 [DEPRECATED--please specify the containing schema as part of
+ *                 @a result_table and use /create/schema to create the schema
+ *                 if non-existent]  Name of a schema which is to contain the
+ *                 table specified in @a result_table. If the schema provided
+ *                 is non-existent, it will be automatically created.
  *                         <li> gpudb::aggregate_group_by_expression: Filter
  *                 expression to apply to the table prior to computing the
  *                 aggregate group by.
@@ -1963,14 +2652,17 @@ AggregateGroupByResponse aggregateGroupBy( const std::string& tableName,
  *                 </ul>
  *                 The default value is gpudb::aggregate_group_by_value.
  *                         <li> gpudb::aggregate_group_by_result_table: The
- *                 name of the table used to store the results. Has the same
- *                 naming restrictions as <a href="../../concepts/tables.html"
- *                 target="_top">tables</a>. Column names (group-by and
- *                 aggregate fields) need to be given aliases e.g. ["FChar256
- *                 as fchar256", "sum(FDouble) as sfd"].  If present, no
- *                 results are returned in the response.  This option is not
- *                 available if one of the grouping attributes is an
- *                 unrestricted string (i.e.; not charN) type.
+ *                 name of a table used to store the results, in
+ *                 [schema_name.]table_name format, using standard <a
+ *                 href="../../concepts/tables.html#table-name-resolution"
+ *                 target="_top">name resolution rules</a> and meeting <a
+ *                 href="../../concepts/tables.html#table-naming-criteria"
+ *                 target="_top">table naming criteria</a>.  Column names
+ *                 (group-by and aggregate fields) need to be given aliases
+ *                 e.g. ["FChar256 as fchar256", "sum(FDouble) as sfd"].  If
+ *                 present, no results are returned in the response.  This
+ *                 option is not available if one of the grouping attributes is
+ *                 an unrestricted string (i.e.; not charN) type.
  *                         <li> gpudb::aggregate_group_by_result_table_persist:
  *                 If @a true, then the result table specified in @a
  *                 result_table will be persisted and will not expire unless a
@@ -2061,20 +2753,21 @@ AggregateGroupByResponse& aggregateGroupBy( const std::string& tableName,
                                             AggregateGroupByResponse& response_ ) const;
 
 /**
- * Performs a histogram calculation given a table, a column, and an interval
- * function. The @a interval is used to produce bins of that size and the
- * result, computed over the records falling within each bin, is returned.  For
- * each bin, the start value is inclusive, but the end value is
+ * Performs a histogram calculation given a table, a column, and an
+ * interval function. The @a interval is used to produce bins of that size
+ * and the result, computed over the records falling within each bin, is
+ * returned.
+ * For each bin, the start value is inclusive, but the end value is
  * exclusive--except for the very last bin for which the end value is also
  * inclusive.  The value returned for each bin is the number of records in it,
- * except when a column name is provided as a @a value_column.  In this latter
- * case the sum of the values corresponding to the @a value_column is used as
- * the result instead.  The total number of bins requested cannot exceed
- * 10,000.
+ * except when a column name is provided as a
+ * @a value_column.  In this latter case the sum of the
+ * values corresponding to the @a value_column is used as the
+ * result instead.  The total number of bins requested cannot exceed 10,000.
  * <p>
  * NOTE:  The Kinetica instance being accessed must be running a CUDA
- * (GPU-based) build to service a request that specifies a @a value_column
- * option.
+ * (GPU-based)
+ * build to service a request that specifies a @a value_column.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -2086,20 +2779,21 @@ AggregateGroupByResponse& aggregateGroupBy( const std::string& tableName,
 AggregateHistogramResponse aggregateHistogram( const AggregateHistogramRequest& request_ ) const;
 
 /**
- * Performs a histogram calculation given a table, a column, and an interval
- * function. The @a interval is used to produce bins of that size and the
- * result, computed over the records falling within each bin, is returned.  For
- * each bin, the start value is inclusive, but the end value is
+ * Performs a histogram calculation given a table, a column, and an
+ * interval function. The @a interval is used to produce bins of that size
+ * and the result, computed over the records falling within each bin, is
+ * returned.
+ * For each bin, the start value is inclusive, but the end value is
  * exclusive--except for the very last bin for which the end value is also
  * inclusive.  The value returned for each bin is the number of records in it,
- * except when a column name is provided as a @a value_column.  In this latter
- * case the sum of the values corresponding to the @a value_column is used as
- * the result instead.  The total number of bins requested cannot exceed
- * 10,000.
+ * except when a column name is provided as a
+ * @a value_column.  In this latter case the sum of the
+ * values corresponding to the @a value_column is used as the
+ * result instead.  The total number of bins requested cannot exceed 10,000.
  * <p>
  * NOTE:  The Kinetica instance being accessed must be running a CUDA
- * (GPU-based) build to service a request that specifies a @a value_column
- * option.
+ * (GPU-based)
+ * build to service a request that specifies a @a value_column.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -2115,23 +2809,27 @@ AggregateHistogramResponse& aggregateHistogram( const AggregateHistogramRequest&
                                                 AggregateHistogramResponse& response_ ) const;
 
 /**
- * Performs a histogram calculation given a table, a column, and an interval
- * function. The @a interval is used to produce bins of that size and the
- * result, computed over the records falling within each bin, is returned.  For
- * each bin, the start value is inclusive, but the end value is
+ * Performs a histogram calculation given a table, a column, and an
+ * interval function. The @a interval is used to produce bins of that size
+ * and the result, computed over the records falling within each bin, is
+ * returned.
+ * For each bin, the start value is inclusive, but the end value is
  * exclusive--except for the very last bin for which the end value is also
  * inclusive.  The value returned for each bin is the number of records in it,
- * except when a column name is provided as a @a value_column.  In this latter
- * case the sum of the values corresponding to the @a value_column is used as
- * the result instead.  The total number of bins requested cannot exceed
- * 10,000.
+ * except when a column name is provided as a
+ * @a value_column.  In this latter case the sum of the
+ * values corresponding to the @a value_column is used as the
+ * result instead.  The total number of bins requested cannot exceed 10,000.
  * <p>
  * NOTE:  The Kinetica instance being accessed must be running a CUDA
- * (GPU-based) build to service a request that specifies a @a value_column
- * option.
+ * (GPU-based)
+ * build to service a request that specifies a @a value_column.
  * 
  * @param tableName  Name of the table on which the operation will be
- *                   performed. Must be an existing table or collection.
+ *                   performed. Must be an existing table, in
+ *                   [schema_name.]table_name format, using standard <a
+ *                   href="../../concepts/tables.html#table-name-resolution"
+ *                   target="_top">name resolution rules</a>.
  * @param columnName  Name of a column or an expression of one or more column
  *                    names over which the histogram will be calculated.
  * @param start  Lower end value of the histogram interval, inclusive.
@@ -2157,23 +2855,27 @@ AggregateHistogramResponse aggregateHistogram( const std::string& tableName,
                                                const std::map<std::string, std::string>& options ) const;
 
 /**
- * Performs a histogram calculation given a table, a column, and an interval
- * function. The @a interval is used to produce bins of that size and the
- * result, computed over the records falling within each bin, is returned.  For
- * each bin, the start value is inclusive, but the end value is
+ * Performs a histogram calculation given a table, a column, and an
+ * interval function. The @a interval is used to produce bins of that size
+ * and the result, computed over the records falling within each bin, is
+ * returned.
+ * For each bin, the start value is inclusive, but the end value is
  * exclusive--except for the very last bin for which the end value is also
  * inclusive.  The value returned for each bin is the number of records in it,
- * except when a column name is provided as a @a value_column.  In this latter
- * case the sum of the values corresponding to the @a value_column is used as
- * the result instead.  The total number of bins requested cannot exceed
- * 10,000.
+ * except when a column name is provided as a
+ * @a value_column.  In this latter case the sum of the
+ * values corresponding to the @a value_column is used as the
+ * result instead.  The total number of bins requested cannot exceed 10,000.
  * <p>
  * NOTE:  The Kinetica instance being accessed must be running a CUDA
- * (GPU-based) build to service a request that specifies a @a value_column
- * option.
+ * (GPU-based)
+ * build to service a request that specifies a @a value_column.
  * 
  * @param tableName  Name of the table on which the operation will be
- *                   performed. Must be an existing table or collection.
+ *                   performed. Must be an existing table, in
+ *                   [schema_name.]table_name format, using standard <a
+ *                   href="../../concepts/tables.html#table-name-resolution"
+ *                   target="_top">name resolution rules</a>.
  * @param columnName  Name of a column or an expression of one or more column
  *                    names over which the histogram will be calculated.
  * @param start  Lower end value of the histogram interval, inclusive.
@@ -2203,17 +2905,24 @@ AggregateHistogramResponse& aggregateHistogram( const std::string& tableName,
                                                 AggregateHistogramResponse& response_ ) const;
 
 /**
- * This endpoint runs the k-means algorithm - a heuristic algorithm that
- * attempts to do k-means clustering.  An ideal k-means clustering algorithm
+ * This endpoint runs the k-means algorithm - a heuristic algorithm
+ * that attempts to do k-means clustering.  An ideal k-means clustering
+ * algorithm
  * selects k points such that the sum of the mean squared distances of each
- * member of the set to the nearest of the k points is minimized.  The k-means
- * algorithm however does not necessarily produce such an ideal cluster.   It
- * begins with a randomly selected set of k points and then refines the
- * location of the points iteratively and settles to a local minimum.  Various
- * parameters and options are provided to control the heuristic search.
+ * member
+ * of the set to the nearest of the k points is minimized.  The k-means
+ * algorithm
+ * however does not necessarily produce such an ideal cluster.   It begins with
+ * a
+ * randomly selected set of k points and then refines the location of the
+ * points
+ * iteratively and settles to a local minimum.  Various parameters and options
+ * are
+ * provided to control the heuristic search.
  * <p>
  * NOTE:  The Kinetica instance being accessed must be running a CUDA
- * (GPU-based) build to service this request.
+ * (GPU-based)
+ * build to service this request.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -2225,17 +2934,24 @@ AggregateHistogramResponse& aggregateHistogram( const std::string& tableName,
 AggregateKMeansResponse aggregateKMeans( const AggregateKMeansRequest& request_ ) const;
 
 /**
- * This endpoint runs the k-means algorithm - a heuristic algorithm that
- * attempts to do k-means clustering.  An ideal k-means clustering algorithm
+ * This endpoint runs the k-means algorithm - a heuristic algorithm
+ * that attempts to do k-means clustering.  An ideal k-means clustering
+ * algorithm
  * selects k points such that the sum of the mean squared distances of each
- * member of the set to the nearest of the k points is minimized.  The k-means
- * algorithm however does not necessarily produce such an ideal cluster.   It
- * begins with a randomly selected set of k points and then refines the
- * location of the points iteratively and settles to a local minimum.  Various
- * parameters and options are provided to control the heuristic search.
+ * member
+ * of the set to the nearest of the k points is minimized.  The k-means
+ * algorithm
+ * however does not necessarily produce such an ideal cluster.   It begins with
+ * a
+ * randomly selected set of k points and then refines the location of the
+ * points
+ * iteratively and settles to a local minimum.  Various parameters and options
+ * are
+ * provided to control the heuristic search.
  * <p>
  * NOTE:  The Kinetica instance being accessed must be running a CUDA
- * (GPU-based) build to service this request.
+ * (GPU-based)
+ * build to service this request.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -2251,20 +2967,30 @@ AggregateKMeansResponse& aggregateKMeans( const AggregateKMeansRequest& request_
                                           AggregateKMeansResponse& response_ ) const;
 
 /**
- * This endpoint runs the k-means algorithm - a heuristic algorithm that
- * attempts to do k-means clustering.  An ideal k-means clustering algorithm
+ * This endpoint runs the k-means algorithm - a heuristic algorithm
+ * that attempts to do k-means clustering.  An ideal k-means clustering
+ * algorithm
  * selects k points such that the sum of the mean squared distances of each
- * member of the set to the nearest of the k points is minimized.  The k-means
- * algorithm however does not necessarily produce such an ideal cluster.   It
- * begins with a randomly selected set of k points and then refines the
- * location of the points iteratively and settles to a local minimum.  Various
- * parameters and options are provided to control the heuristic search.
+ * member
+ * of the set to the nearest of the k points is minimized.  The k-means
+ * algorithm
+ * however does not necessarily produce such an ideal cluster.   It begins with
+ * a
+ * randomly selected set of k points and then refines the location of the
+ * points
+ * iteratively and settles to a local minimum.  Various parameters and options
+ * are
+ * provided to control the heuristic search.
  * <p>
  * NOTE:  The Kinetica instance being accessed must be running a CUDA
- * (GPU-based) build to service this request.
+ * (GPU-based)
+ * build to service this request.
  * 
  * @param tableName  Name of the table on which the operation will be
- *                   performed. Must be an existing table or collection.
+ *                   performed. Must be an existing table, in
+ *                   [schema_name.]table_name format, using standard <a
+ *                   href="../../concepts/tables.html#table-name-resolution"
+ *                   target="_top">name resolution rules</a>.
  * @param columnNames  List of column names on which the operation would be
  *                     performed. If n columns are provided then each of the k
  *                     result points will have n dimensions corresponding to
@@ -2297,20 +3023,30 @@ AggregateKMeansResponse aggregateKMeans( const std::string& tableName,
                                          const std::map<std::string, std::string>& options ) const;
 
 /**
- * This endpoint runs the k-means algorithm - a heuristic algorithm that
- * attempts to do k-means clustering.  An ideal k-means clustering algorithm
+ * This endpoint runs the k-means algorithm - a heuristic algorithm
+ * that attempts to do k-means clustering.  An ideal k-means clustering
+ * algorithm
  * selects k points such that the sum of the mean squared distances of each
- * member of the set to the nearest of the k points is minimized.  The k-means
- * algorithm however does not necessarily produce such an ideal cluster.   It
- * begins with a randomly selected set of k points and then refines the
- * location of the points iteratively and settles to a local minimum.  Various
- * parameters and options are provided to control the heuristic search.
+ * member
+ * of the set to the nearest of the k points is minimized.  The k-means
+ * algorithm
+ * however does not necessarily produce such an ideal cluster.   It begins with
+ * a
+ * randomly selected set of k points and then refines the location of the
+ * points
+ * iteratively and settles to a local minimum.  Various parameters and options
+ * are
+ * provided to control the heuristic search.
  * <p>
  * NOTE:  The Kinetica instance being accessed must be running a CUDA
- * (GPU-based) build to service this request.
+ * (GPU-based)
+ * build to service this request.
  * 
  * @param tableName  Name of the table on which the operation will be
- *                   performed. Must be an existing table or collection.
+ *                   performed. Must be an existing table, in
+ *                   [schema_name.]table_name format, using standard <a
+ *                   href="../../concepts/tables.html#table-name-resolution"
+ *                   target="_top">name resolution rules</a>.
  * @param columnNames  List of column names on which the operation would be
  *                     performed. If n columns are provided then each of the k
  *                     result points will have n dimensions corresponding to
@@ -2381,7 +3117,10 @@ AggregateMinMaxResponse& aggregateMinMax( const AggregateMinMaxRequest& request_
  * in a table.
  * 
  * @param tableName  Name of the table on which the operation will be
- *                   performed. Must be an existing table.
+ *                   performed. Must be an existing table, in
+ *                   [schema_name.]table_name format, using standard <a
+ *                   href="../../concepts/tables.html#table-name-resolution"
+ *                   target="_top">name resolution rules</a>.
  * @param columnName  Name of a column or an expression of one or more column
  *                    on which the min-max will be calculated.
  * @param options  Optional parameters.
@@ -2399,7 +3138,10 @@ AggregateMinMaxResponse aggregateMinMax( const std::string& tableName,
  * in a table.
  * 
  * @param tableName  Name of the table on which the operation will be
- *                   performed. Must be an existing table.
+ *                   performed. Must be an existing table, in
+ *                   [schema_name.]table_name format, using standard <a
+ *                   href="../../concepts/tables.html#table-name-resolution"
+ *                   target="_top">name resolution rules</a>.
  * @param columnName  Name of a column or an expression of one or more column
  *                    on which the min-max will be calculated.
  * @param options  Optional parameters.
@@ -2417,8 +3159,8 @@ AggregateMinMaxResponse& aggregateMinMax( const std::string& tableName,
                                           AggregateMinMaxResponse& response_ ) const;
 
 /**
- * Calculates and returns the minimum and maximum x- and y-coordinates of a
- * particular geospatial geometry column in a table.
+ * Calculates and returns the minimum and maximum x- and y-coordinates
+ * of a particular geospatial geometry column in a table.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -2430,8 +3172,8 @@ AggregateMinMaxResponse& aggregateMinMax( const std::string& tableName,
 AggregateMinMaxGeometryResponse aggregateMinMaxGeometry( const AggregateMinMaxGeometryRequest& request_ ) const;
 
 /**
- * Calculates and returns the minimum and maximum x- and y-coordinates of a
- * particular geospatial geometry column in a table.
+ * Calculates and returns the minimum and maximum x- and y-coordinates
+ * of a particular geospatial geometry column in a table.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -2447,11 +3189,14 @@ AggregateMinMaxGeometryResponse& aggregateMinMaxGeometry( const AggregateMinMaxG
                                                           AggregateMinMaxGeometryResponse& response_ ) const;
 
 /**
- * Calculates and returns the minimum and maximum x- and y-coordinates of a
- * particular geospatial geometry column in a table.
+ * Calculates and returns the minimum and maximum x- and y-coordinates
+ * of a particular geospatial geometry column in a table.
  * 
  * @param tableName  Name of the table on which the operation will be
- *                   performed. Must be an existing table.
+ *                   performed. Must be an existing table, in
+ *                   [schema_name.]table_name format, using standard <a
+ *                   href="../../concepts/tables.html#table-name-resolution"
+ *                   target="_top">name resolution rules</a>.
  * @param columnName  Name of a geospatial geometry column on which the min-max
  *                    will be calculated.
  * @param options  Optional parameters.
@@ -2465,11 +3210,14 @@ AggregateMinMaxGeometryResponse aggregateMinMaxGeometry( const std::string& tabl
                                                          const std::map<std::string, std::string>& options ) const;
 
 /**
- * Calculates and returns the minimum and maximum x- and y-coordinates of a
- * particular geospatial geometry column in a table.
+ * Calculates and returns the minimum and maximum x- and y-coordinates
+ * of a particular geospatial geometry column in a table.
  * 
  * @param tableName  Name of the table on which the operation will be
- *                   performed. Must be an existing table.
+ *                   performed. Must be an existing table, in
+ *                   [schema_name.]table_name format, using standard <a
+ *                   href="../../concepts/tables.html#table-name-resolution"
+ *                   target="_top">name resolution rules</a>.
  * @param columnName  Name of a geospatial geometry column on which the min-max
  *                    will be calculated.
  * @param options  Optional parameters.
@@ -2487,42 +3235,63 @@ AggregateMinMaxGeometryResponse& aggregateMinMaxGeometry( const std::string& tab
                                                           AggregateMinMaxGeometryResponse& response_ ) const;
 
 /**
- * Calculates the requested statistics of the given column(s) in a given table.
+ * Calculates the requested statistics of the given column(s) in a
+ * given table.
  * <p>
- * The available statistics are @a count (number of total objects), @a mean, @a
- * stdv (standard deviation), @a variance, @a skew, @a kurtosis, @a sum, @a
- * min, @a max, @a weighted_average, @a cardinality (unique count), @a
- * estimated_cardinality, @a percentile and @a percentile_rank.
+ * The available statistics are:
+ *   @a count (number of total objects),
+ *   @a mean,
+ *   @a stdv (standard deviation),
+ *   @a variance,
+ *   @a skew,
+ *   @a kurtosis,
+ *   @a sum,
+ *   @a min,
+ *   @a max,
+ *   @a weighted_average,
+ *   @a cardinality (unique count),
+ *   @a estimated_cardinality,
+ *   @a percentile, and
+ *   @a percentile_rank.
  * <p>
  * Estimated cardinality is calculated by using the hyperloglog approximation
  * technique.
  * <p>
  * Percentiles and percentile ranks are approximate and are calculated using
- * the t-digest algorithm. They must include the desired @a percentile/@a
- * percentile_rank. To compute multiple percentiles each value must be
- * specified separately (i.e.
+ * the
+ * t-digest algorithm. They must include the desired
+ * @a percentile/@a percentile_rank.
+ * To compute multiple percentiles each value must be specified separately
+ * (i.e.
  * 'percentile(75.0),percentile(99.0),percentile_rank(1234.56),percentile_rank(-5)').
  * <p>
- * A second, comma-separated value can be added to the @a percentile statistic
- * to calculate percentile resolution, e.g., a 50th percentile with 200
- * resolution would be 'percentile(50,200)'.
+ * A second, comma-separated value can be added to the
+ * @a percentile statistic to calculate percentile
+ * resolution, e.g., a 50th percentile with 200 resolution would be
+ * 'percentile(50,200)'.
  * <p>
- * The weighted average statistic requires a @a weight_column_name to be
- * specified in @a options. The weighted average is then defined as the sum of
- * the products of @a columnName times the @a weight_column_name values divided
- * by the sum of the @a weight_column_name values.
+ * The weighted average statistic requires a weight column to be specified in
+ * @a weight_column_name.  The weighted average is then
+ * defined as the sum of the products of @a columnName times the
+ * @a weight_column_name values divided by the sum of the
+ * @a weight_column_name values.
  * <p>
- * Additional columns can be used in the calculation of statistics via the @a
- * additional_column_names option.  Values in these columns will be included in
- * the overall aggregate calculation--individual aggregates will not be
- * calculated per additional column.  For instance, requesting the @a count &
- * @a mean of @a columnName x and @a additional_column_names y & z, where x
- * holds the numbers 1-10, y holds 11-20, and z holds 21-30, would return the
- * total number of x, y, & z values (30), and the single average value across
- * all x, y, & z values (15.5).
+ * Additional columns can be used in the calculation of statistics via
+ * @a additional_column_names.  Values in these columns will
+ * be included in the overall aggregate calculation--individual aggregates will
+ * not
+ * be calculated per additional column.  For instance, requesting the
+ * @a count & @a mean of
+ * @a columnName x and @a additional_column_names
+ * y & z, where x holds the numbers 1-10, y holds 11-20, and z holds 21-30,
+ * would
+ * return the total number of x, y, & z values (30), and the single average
+ * value
+ * across all x, y, & z values (15.5).
  * <p>
  * The response includes a list of key/value pairs of each statistic requested
- * and its corresponding value.
+ * and
+ * its corresponding value.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -2534,42 +3303,63 @@ AggregateMinMaxGeometryResponse& aggregateMinMaxGeometry( const std::string& tab
 AggregateStatisticsResponse aggregateStatistics( const AggregateStatisticsRequest& request_ ) const;
 
 /**
- * Calculates the requested statistics of the given column(s) in a given table.
+ * Calculates the requested statistics of the given column(s) in a
+ * given table.
  * <p>
- * The available statistics are @a count (number of total objects), @a mean, @a
- * stdv (standard deviation), @a variance, @a skew, @a kurtosis, @a sum, @a
- * min, @a max, @a weighted_average, @a cardinality (unique count), @a
- * estimated_cardinality, @a percentile and @a percentile_rank.
+ * The available statistics are:
+ *   @a count (number of total objects),
+ *   @a mean,
+ *   @a stdv (standard deviation),
+ *   @a variance,
+ *   @a skew,
+ *   @a kurtosis,
+ *   @a sum,
+ *   @a min,
+ *   @a max,
+ *   @a weighted_average,
+ *   @a cardinality (unique count),
+ *   @a estimated_cardinality,
+ *   @a percentile, and
+ *   @a percentile_rank.
  * <p>
  * Estimated cardinality is calculated by using the hyperloglog approximation
  * technique.
  * <p>
  * Percentiles and percentile ranks are approximate and are calculated using
- * the t-digest algorithm. They must include the desired @a percentile/@a
- * percentile_rank. To compute multiple percentiles each value must be
- * specified separately (i.e.
+ * the
+ * t-digest algorithm. They must include the desired
+ * @a percentile/@a percentile_rank.
+ * To compute multiple percentiles each value must be specified separately
+ * (i.e.
  * 'percentile(75.0),percentile(99.0),percentile_rank(1234.56),percentile_rank(-5)').
  * <p>
- * A second, comma-separated value can be added to the @a percentile statistic
- * to calculate percentile resolution, e.g., a 50th percentile with 200
- * resolution would be 'percentile(50,200)'.
+ * A second, comma-separated value can be added to the
+ * @a percentile statistic to calculate percentile
+ * resolution, e.g., a 50th percentile with 200 resolution would be
+ * 'percentile(50,200)'.
  * <p>
- * The weighted average statistic requires a @a weight_column_name to be
- * specified in @a options. The weighted average is then defined as the sum of
- * the products of @a columnName times the @a weight_column_name values divided
- * by the sum of the @a weight_column_name values.
+ * The weighted average statistic requires a weight column to be specified in
+ * @a weight_column_name.  The weighted average is then
+ * defined as the sum of the products of @a columnName times the
+ * @a weight_column_name values divided by the sum of the
+ * @a weight_column_name values.
  * <p>
- * Additional columns can be used in the calculation of statistics via the @a
- * additional_column_names option.  Values in these columns will be included in
- * the overall aggregate calculation--individual aggregates will not be
- * calculated per additional column.  For instance, requesting the @a count &
- * @a mean of @a columnName x and @a additional_column_names y & z, where x
- * holds the numbers 1-10, y holds 11-20, and z holds 21-30, would return the
- * total number of x, y, & z values (30), and the single average value across
- * all x, y, & z values (15.5).
+ * Additional columns can be used in the calculation of statistics via
+ * @a additional_column_names.  Values in these columns will
+ * be included in the overall aggregate calculation--individual aggregates will
+ * not
+ * be calculated per additional column.  For instance, requesting the
+ * @a count & @a mean of
+ * @a columnName x and @a additional_column_names
+ * y & z, where x holds the numbers 1-10, y holds 11-20, and z holds 21-30,
+ * would
+ * return the total number of x, y, & z values (30), and the single average
+ * value
+ * across all x, y, & z values (15.5).
  * <p>
  * The response includes a list of key/value pairs of each statistic requested
- * and its corresponding value.
+ * and
+ * its corresponding value.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -2585,45 +3375,69 @@ AggregateStatisticsResponse& aggregateStatistics( const AggregateStatisticsReque
                                                   AggregateStatisticsResponse& response_ ) const;
 
 /**
- * Calculates the requested statistics of the given column(s) in a given table.
+ * Calculates the requested statistics of the given column(s) in a
+ * given table.
  * <p>
- * The available statistics are @a count (number of total objects), @a mean, @a
- * stdv (standard deviation), @a variance, @a skew, @a kurtosis, @a sum, @a
- * min, @a max, @a weighted_average, @a cardinality (unique count), @a
- * estimated_cardinality, @a percentile and @a percentile_rank.
+ * The available statistics are:
+ *   @a count (number of total objects),
+ *   @a mean,
+ *   @a stdv (standard deviation),
+ *   @a variance,
+ *   @a skew,
+ *   @a kurtosis,
+ *   @a sum,
+ *   @a min,
+ *   @a max,
+ *   @a weighted_average,
+ *   @a cardinality (unique count),
+ *   @a estimated_cardinality,
+ *   @a percentile, and
+ *   @a percentile_rank.
  * <p>
  * Estimated cardinality is calculated by using the hyperloglog approximation
  * technique.
  * <p>
  * Percentiles and percentile ranks are approximate and are calculated using
- * the t-digest algorithm. They must include the desired @a percentile/@a
- * percentile_rank. To compute multiple percentiles each value must be
- * specified separately (i.e.
+ * the
+ * t-digest algorithm. They must include the desired
+ * @a percentile/@a percentile_rank.
+ * To compute multiple percentiles each value must be specified separately
+ * (i.e.
  * 'percentile(75.0),percentile(99.0),percentile_rank(1234.56),percentile_rank(-5)').
  * <p>
- * A second, comma-separated value can be added to the @a percentile statistic
- * to calculate percentile resolution, e.g., a 50th percentile with 200
- * resolution would be 'percentile(50,200)'.
+ * A second, comma-separated value can be added to the
+ * @a percentile statistic to calculate percentile
+ * resolution, e.g., a 50th percentile with 200 resolution would be
+ * 'percentile(50,200)'.
  * <p>
- * The weighted average statistic requires a @a weight_column_name to be
- * specified in @a options. The weighted average is then defined as the sum of
- * the products of @a columnName times the @a weight_column_name values divided
- * by the sum of the @a weight_column_name values.
+ * The weighted average statistic requires a weight column to be specified in
+ * @a weight_column_name.  The weighted average is then
+ * defined as the sum of the products of @a columnName times the
+ * @a weight_column_name values divided by the sum of the
+ * @a weight_column_name values.
  * <p>
- * Additional columns can be used in the calculation of statistics via the @a
- * additional_column_names option.  Values in these columns will be included in
- * the overall aggregate calculation--individual aggregates will not be
- * calculated per additional column.  For instance, requesting the @a count &
- * @a mean of @a columnName x and @a additional_column_names y & z, where x
- * holds the numbers 1-10, y holds 11-20, and z holds 21-30, would return the
- * total number of x, y, & z values (30), and the single average value across
- * all x, y, & z values (15.5).
+ * Additional columns can be used in the calculation of statistics via
+ * @a additional_column_names.  Values in these columns will
+ * be included in the overall aggregate calculation--individual aggregates will
+ * not
+ * be calculated per additional column.  For instance, requesting the
+ * @a count & @a mean of
+ * @a columnName x and @a additional_column_names
+ * y & z, where x holds the numbers 1-10, y holds 11-20, and z holds 21-30,
+ * would
+ * return the total number of x, y, & z values (30), and the single average
+ * value
+ * across all x, y, & z values (15.5).
  * <p>
  * The response includes a list of key/value pairs of each statistic requested
- * and its corresponding value.
+ * and
+ * its corresponding value.
  * 
  * @param tableName  Name of the table on which the statistics operation will
- *                   be performed.
+ *                   be performed, in [schema_name.]table_name format, using
+ *                   standard <a
+ *                   href="../../concepts/tables.html#table-name-resolution"
+ *                   target="_top">name resolution rules</a>.
  * @param columnName  Name of the primary column for which the statistics are
  *                    to be calculated.
  * @param stats  Comma separated list of the statistics to calculate, e.g.
@@ -2691,45 +3505,69 @@ AggregateStatisticsResponse aggregateStatistics( const std::string& tableName,
                                                  const std::map<std::string, std::string>& options ) const;
 
 /**
- * Calculates the requested statistics of the given column(s) in a given table.
+ * Calculates the requested statistics of the given column(s) in a
+ * given table.
  * <p>
- * The available statistics are @a count (number of total objects), @a mean, @a
- * stdv (standard deviation), @a variance, @a skew, @a kurtosis, @a sum, @a
- * min, @a max, @a weighted_average, @a cardinality (unique count), @a
- * estimated_cardinality, @a percentile and @a percentile_rank.
+ * The available statistics are:
+ *   @a count (number of total objects),
+ *   @a mean,
+ *   @a stdv (standard deviation),
+ *   @a variance,
+ *   @a skew,
+ *   @a kurtosis,
+ *   @a sum,
+ *   @a min,
+ *   @a max,
+ *   @a weighted_average,
+ *   @a cardinality (unique count),
+ *   @a estimated_cardinality,
+ *   @a percentile, and
+ *   @a percentile_rank.
  * <p>
  * Estimated cardinality is calculated by using the hyperloglog approximation
  * technique.
  * <p>
  * Percentiles and percentile ranks are approximate and are calculated using
- * the t-digest algorithm. They must include the desired @a percentile/@a
- * percentile_rank. To compute multiple percentiles each value must be
- * specified separately (i.e.
+ * the
+ * t-digest algorithm. They must include the desired
+ * @a percentile/@a percentile_rank.
+ * To compute multiple percentiles each value must be specified separately
+ * (i.e.
  * 'percentile(75.0),percentile(99.0),percentile_rank(1234.56),percentile_rank(-5)').
  * <p>
- * A second, comma-separated value can be added to the @a percentile statistic
- * to calculate percentile resolution, e.g., a 50th percentile with 200
- * resolution would be 'percentile(50,200)'.
+ * A second, comma-separated value can be added to the
+ * @a percentile statistic to calculate percentile
+ * resolution, e.g., a 50th percentile with 200 resolution would be
+ * 'percentile(50,200)'.
  * <p>
- * The weighted average statistic requires a @a weight_column_name to be
- * specified in @a options. The weighted average is then defined as the sum of
- * the products of @a columnName times the @a weight_column_name values divided
- * by the sum of the @a weight_column_name values.
+ * The weighted average statistic requires a weight column to be specified in
+ * @a weight_column_name.  The weighted average is then
+ * defined as the sum of the products of @a columnName times the
+ * @a weight_column_name values divided by the sum of the
+ * @a weight_column_name values.
  * <p>
- * Additional columns can be used in the calculation of statistics via the @a
- * additional_column_names option.  Values in these columns will be included in
- * the overall aggregate calculation--individual aggregates will not be
- * calculated per additional column.  For instance, requesting the @a count &
- * @a mean of @a columnName x and @a additional_column_names y & z, where x
- * holds the numbers 1-10, y holds 11-20, and z holds 21-30, would return the
- * total number of x, y, & z values (30), and the single average value across
- * all x, y, & z values (15.5).
+ * Additional columns can be used in the calculation of statistics via
+ * @a additional_column_names.  Values in these columns will
+ * be included in the overall aggregate calculation--individual aggregates will
+ * not
+ * be calculated per additional column.  For instance, requesting the
+ * @a count & @a mean of
+ * @a columnName x and @a additional_column_names
+ * y & z, where x holds the numbers 1-10, y holds 11-20, and z holds 21-30,
+ * would
+ * return the total number of x, y, & z values (30), and the single average
+ * value
+ * across all x, y, & z values (15.5).
  * <p>
  * The response includes a list of key/value pairs of each statistic requested
- * and its corresponding value.
+ * and
+ * its corresponding value.
  * 
  * @param tableName  Name of the table on which the statistics operation will
- *                   be performed.
+ *                   be performed, in [schema_name.]table_name format, using
+ *                   standard <a
+ *                   href="../../concepts/tables.html#table-name-resolution"
+ *                   target="_top">name resolution rules</a>.
  * @param columnName  Name of the primary column for which the statistics are
  *                    to be calculated.
  * @param stats  Comma separated list of the statistics to calculate, e.g.
@@ -2801,31 +3639,39 @@ AggregateStatisticsResponse& aggregateStatistics( const std::string& tableName,
                                                   AggregateStatisticsResponse& response_ ) const;
 
 /**
- * Divides the given set into bins and calculates statistics of the values of a
- * value-column in each bin.  The bins are based on the values of a given
- * binning-column.  The statistics that may be requested are mean, stdv
+ * Divides the given set into bins and calculates statistics of the
+ * values of a value-column in each bin.  The bins are based on the values of a
+ * given binning-column.  The statistics that may be requested are mean, stdv
  * (standard deviation), variance, skew, kurtosis, sum, min, max, first, last
- * and weighted average. In addition to the requested statistics the count of
- * total samples in each bin is returned. This counts vector is just the
- * histogram of the column used to divide the set members into bins. The
- * weighted average statistic requires a weight_column to be specified in @a
- * options. The weighted average is then defined as the sum of the products of
- * the value column times the weight column divided by the sum of the weight
- * column.
+ * and
+ * weighted average. In addition to the requested statistics the count of total
+ * samples in each bin is returned. This counts vector is just the histogram of
+ * the
+ * column used to divide the set members into bins. The weighted average
+ * statistic
+ * requires a weight column to be specified in
+ * @a weight_column_name. The weighted average is then
+ * defined as the sum of the products of the value column times the weight
+ * column
+ * divided by the sum of the weight column.
  * <p>
  * There are two methods for binning the set members. In the first, which can
- * be used for numeric valued binning-columns, a min, max and interval are
- * specified. The number of bins, nbins, is the integer upper bound of
- * (max-min)/interval. Values that fall in the range
- * [min+n*interval,min+(n+1)*interval) are placed in the nth bin where n ranges
- * from 0..nbin-2. The final bin is [min+(nbin-1)*interval,max]. In the second
- * method, @a options bin_values specifies a list of binning column values.
- * Binning-columns whose value matches the nth member of the bin_values list
- * are placed in the nth bin. When a list is provided the binning-column must
- * be of type string or int.
+ * be
+ * used for numeric valued binning-columns, a min, max and interval are
+ * specified.
+ * The number of bins, nbins, is the integer upper bound of (max-min)/interval.
+ * Values that fall in the range [min+n*interval,min+(n+1)*interval) are placed
+ * in
+ * the nth bin where n ranges from 0..nbin-2. The final bin is
+ * [min+(nbin-1)*interval,max]. In the second method,
+ * @a bin_values specifies a list of binning column values.
+ * Binning-columns whose value matches the nth member of the
+ * @a bin_values list are placed in the nth bin. When a list
+ * is provided, the binning-column must be of type string or int.
  * <p>
  * NOTE:  The Kinetica instance being accessed must be running a CUDA
- * (GPU-based) build to service this request.
+ * (GPU-based)
+ * build to service this request.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -2837,31 +3683,39 @@ AggregateStatisticsResponse& aggregateStatistics( const std::string& tableName,
 AggregateStatisticsByRangeResponse aggregateStatisticsByRange( const AggregateStatisticsByRangeRequest& request_ ) const;
 
 /**
- * Divides the given set into bins and calculates statistics of the values of a
- * value-column in each bin.  The bins are based on the values of a given
- * binning-column.  The statistics that may be requested are mean, stdv
+ * Divides the given set into bins and calculates statistics of the
+ * values of a value-column in each bin.  The bins are based on the values of a
+ * given binning-column.  The statistics that may be requested are mean, stdv
  * (standard deviation), variance, skew, kurtosis, sum, min, max, first, last
- * and weighted average. In addition to the requested statistics the count of
- * total samples in each bin is returned. This counts vector is just the
- * histogram of the column used to divide the set members into bins. The
- * weighted average statistic requires a weight_column to be specified in @a
- * options. The weighted average is then defined as the sum of the products of
- * the value column times the weight column divided by the sum of the weight
- * column.
+ * and
+ * weighted average. In addition to the requested statistics the count of total
+ * samples in each bin is returned. This counts vector is just the histogram of
+ * the
+ * column used to divide the set members into bins. The weighted average
+ * statistic
+ * requires a weight column to be specified in
+ * @a weight_column_name. The weighted average is then
+ * defined as the sum of the products of the value column times the weight
+ * column
+ * divided by the sum of the weight column.
  * <p>
  * There are two methods for binning the set members. In the first, which can
- * be used for numeric valued binning-columns, a min, max and interval are
- * specified. The number of bins, nbins, is the integer upper bound of
- * (max-min)/interval. Values that fall in the range
- * [min+n*interval,min+(n+1)*interval) are placed in the nth bin where n ranges
- * from 0..nbin-2. The final bin is [min+(nbin-1)*interval,max]. In the second
- * method, @a options bin_values specifies a list of binning column values.
- * Binning-columns whose value matches the nth member of the bin_values list
- * are placed in the nth bin. When a list is provided the binning-column must
- * be of type string or int.
+ * be
+ * used for numeric valued binning-columns, a min, max and interval are
+ * specified.
+ * The number of bins, nbins, is the integer upper bound of (max-min)/interval.
+ * Values that fall in the range [min+n*interval,min+(n+1)*interval) are placed
+ * in
+ * the nth bin where n ranges from 0..nbin-2. The final bin is
+ * [min+(nbin-1)*interval,max]. In the second method,
+ * @a bin_values specifies a list of binning column values.
+ * Binning-columns whose value matches the nth member of the
+ * @a bin_values list are placed in the nth bin. When a list
+ * is provided, the binning-column must be of type string or int.
  * <p>
  * NOTE:  The Kinetica instance being accessed must be running a CUDA
- * (GPU-based) build to service this request.
+ * (GPU-based)
+ * build to service this request.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -2877,34 +3731,45 @@ AggregateStatisticsByRangeResponse& aggregateStatisticsByRange( const AggregateS
                                                                 AggregateStatisticsByRangeResponse& response_ ) const;
 
 /**
- * Divides the given set into bins and calculates statistics of the values of a
- * value-column in each bin.  The bins are based on the values of a given
- * binning-column.  The statistics that may be requested are mean, stdv
+ * Divides the given set into bins and calculates statistics of the
+ * values of a value-column in each bin.  The bins are based on the values of a
+ * given binning-column.  The statistics that may be requested are mean, stdv
  * (standard deviation), variance, skew, kurtosis, sum, min, max, first, last
- * and weighted average. In addition to the requested statistics the count of
- * total samples in each bin is returned. This counts vector is just the
- * histogram of the column used to divide the set members into bins. The
- * weighted average statistic requires a weight_column to be specified in @a
- * options. The weighted average is then defined as the sum of the products of
- * the value column times the weight column divided by the sum of the weight
- * column.
+ * and
+ * weighted average. In addition to the requested statistics the count of total
+ * samples in each bin is returned. This counts vector is just the histogram of
+ * the
+ * column used to divide the set members into bins. The weighted average
+ * statistic
+ * requires a weight column to be specified in
+ * @a weight_column_name. The weighted average is then
+ * defined as the sum of the products of the value column times the weight
+ * column
+ * divided by the sum of the weight column.
  * <p>
  * There are two methods for binning the set members. In the first, which can
- * be used for numeric valued binning-columns, a min, max and interval are
- * specified. The number of bins, nbins, is the integer upper bound of
- * (max-min)/interval. Values that fall in the range
- * [min+n*interval,min+(n+1)*interval) are placed in the nth bin where n ranges
- * from 0..nbin-2. The final bin is [min+(nbin-1)*interval,max]. In the second
- * method, @a options bin_values specifies a list of binning column values.
- * Binning-columns whose value matches the nth member of the bin_values list
- * are placed in the nth bin. When a list is provided the binning-column must
- * be of type string or int.
+ * be
+ * used for numeric valued binning-columns, a min, max and interval are
+ * specified.
+ * The number of bins, nbins, is the integer upper bound of (max-min)/interval.
+ * Values that fall in the range [min+n*interval,min+(n+1)*interval) are placed
+ * in
+ * the nth bin where n ranges from 0..nbin-2. The final bin is
+ * [min+(nbin-1)*interval,max]. In the second method,
+ * @a bin_values specifies a list of binning column values.
+ * Binning-columns whose value matches the nth member of the
+ * @a bin_values list are placed in the nth bin. When a list
+ * is provided, the binning-column must be of type string or int.
  * <p>
  * NOTE:  The Kinetica instance being accessed must be running a CUDA
- * (GPU-based) build to service this request.
+ * (GPU-based)
+ * build to service this request.
  * 
  * @param tableName  Name of the table on which the ranged-statistics operation
- *                   will be performed.
+ *                   will be performed, in [schema_name.]table_name format,
+ *                   using standard <a
+ *                   href="../../concepts/tables.html#table-name-resolution"
+ *                   target="_top">name resolution rules</a>.
  * @param selectExpression  For a non-empty expression statistics are
  *                          calculated for those records for which the
  *                          expression is true.
@@ -2955,34 +3820,45 @@ AggregateStatisticsByRangeResponse aggregateStatisticsByRange( const std::string
                                                                const std::map<std::string, std::string>& options ) const;
 
 /**
- * Divides the given set into bins and calculates statistics of the values of a
- * value-column in each bin.  The bins are based on the values of a given
- * binning-column.  The statistics that may be requested are mean, stdv
+ * Divides the given set into bins and calculates statistics of the
+ * values of a value-column in each bin.  The bins are based on the values of a
+ * given binning-column.  The statistics that may be requested are mean, stdv
  * (standard deviation), variance, skew, kurtosis, sum, min, max, first, last
- * and weighted average. In addition to the requested statistics the count of
- * total samples in each bin is returned. This counts vector is just the
- * histogram of the column used to divide the set members into bins. The
- * weighted average statistic requires a weight_column to be specified in @a
- * options. The weighted average is then defined as the sum of the products of
- * the value column times the weight column divided by the sum of the weight
- * column.
+ * and
+ * weighted average. In addition to the requested statistics the count of total
+ * samples in each bin is returned. This counts vector is just the histogram of
+ * the
+ * column used to divide the set members into bins. The weighted average
+ * statistic
+ * requires a weight column to be specified in
+ * @a weight_column_name. The weighted average is then
+ * defined as the sum of the products of the value column times the weight
+ * column
+ * divided by the sum of the weight column.
  * <p>
  * There are two methods for binning the set members. In the first, which can
- * be used for numeric valued binning-columns, a min, max and interval are
- * specified. The number of bins, nbins, is the integer upper bound of
- * (max-min)/interval. Values that fall in the range
- * [min+n*interval,min+(n+1)*interval) are placed in the nth bin where n ranges
- * from 0..nbin-2. The final bin is [min+(nbin-1)*interval,max]. In the second
- * method, @a options bin_values specifies a list of binning column values.
- * Binning-columns whose value matches the nth member of the bin_values list
- * are placed in the nth bin. When a list is provided the binning-column must
- * be of type string or int.
+ * be
+ * used for numeric valued binning-columns, a min, max and interval are
+ * specified.
+ * The number of bins, nbins, is the integer upper bound of (max-min)/interval.
+ * Values that fall in the range [min+n*interval,min+(n+1)*interval) are placed
+ * in
+ * the nth bin where n ranges from 0..nbin-2. The final bin is
+ * [min+(nbin-1)*interval,max]. In the second method,
+ * @a bin_values specifies a list of binning column values.
+ * Binning-columns whose value matches the nth member of the
+ * @a bin_values list are placed in the nth bin. When a list
+ * is provided, the binning-column must be of type string or int.
  * <p>
  * NOTE:  The Kinetica instance being accessed must be running a CUDA
- * (GPU-based) build to service this request.
+ * (GPU-based)
+ * build to service this request.
  * 
  * @param tableName  Name of the table on which the ranged-statistics operation
- *                   will be performed.
+ *                   will be performed, in [schema_name.]table_name format,
+ *                   using standard <a
+ *                   href="../../concepts/tables.html#table-name-resolution"
+ *                   target="_top">name resolution rules</a>.
  * @param selectExpression  For a non-empty expression statistics are
  *                          calculated for those records for which the
  *                          expression is true.
@@ -3037,36 +3913,44 @@ AggregateStatisticsByRangeResponse& aggregateStatisticsByRange( const std::strin
                                                                 AggregateStatisticsByRangeResponse& response_ ) const;
 
 /**
- * Returns all the unique values from a particular column (specified by @a
- * columnName) of a particular table or view (specified by @a tableName). If @a
- * columnName is a numeric column the values will be in @a
- * binaryEncodedResponse. Otherwise if @a columnName is a string column the
- * values will be in @a jsonEncodedResponse.  The results can be paged via the
- * @a offset and @a limit parameters.
+ * Returns all the unique values from a particular column
+ * (specified by @a columnName) of a particular table or view
+ * (specified by @a tableName). If @a columnName is a numeric column,
+ * the values will be in @a binaryEncodedResponse. Otherwise if
+ * @a columnName is a string column, the values will be in
+ * @a jsonEncodedResponse.  The results can be paged via @a offset
+ * and @a limit parameters.
  * <p>
  * Columns marked as <a href="../../concepts/types.html#data-handling"
- * target="_top">store-only</a> are unable to be used with this function.
+ * target="_top">store-only</a>
+ * are unable to be used with this function.
  * <p>
  * To get the first 10 unique values sorted in descending order @a options
  * would be::
  * <p>
  * {"limit":"10","sort_order":"descending"}.
  * <p>
- * The response is returned as a dynamic schema. For details see: <a
- * href="../../api/index.html#dynamic-schemas" target="_top">dynamic schemas
+ * The response is returned as a dynamic schema. For details see:
+ * <a href="../../api/index.html#dynamic-schemas" target="_top">dynamic schemas
  * documentation</a>.
  * <p>
- * If a @a result_table name is specified in the @a options, the results are
- * stored in a new table with that name--no results are returned in the
- * response.  Both the table name and resulting column name must adhere to <a
- * href="../../concepts/tables.html#table" target="_top">standard naming
- * conventions</a>; any column expression will need to be aliased.  If the
- * source table's <a href="../../concepts/tables.html#shard-keys"
- * target="_top">shard key</a> is used as the @a columnName, the result table
- * will be sharded, in all other cases it will be replicated.  Sorting will
- * properly function only if the result table is replicated or if there is only
- * one processing node and should not be relied upon in other cases.  Not
- * available if the value of @a columnName is an unrestricted-length string.
+ * If a @a result_table name is specified in the
+ * @a options, the results are stored in a new table with that name--no
+ * results are returned in the response.  Both the table name and resulting
+ * column
+ * name must adhere to
+ * <a href="../../concepts/tables.html#table" target="_top">standard naming
+ * conventions</a>;
+ * any column expression will need to be aliased.  If the source table's
+ * <a href="../../concepts/tables.html#shard-keys" target="_top">shard key</a>
+ * is used as the
+ * @a columnName, the result table will be sharded, in all other cases it
+ * will be replicated.  Sorting will properly function only if the result table
+ * is
+ * replicated or if there is only one processing node and should not be relied
+ * upon
+ * in other cases.  Not available if the value of @a columnName is an
+ * unrestricted-length string.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -3078,36 +3962,44 @@ AggregateStatisticsByRangeResponse& aggregateStatisticsByRange( const std::strin
 RawAggregateUniqueResponse aggregateUniqueRaw( const AggregateUniqueRequest& request_ ) const;
 
 /**
- * Returns all the unique values from a particular column (specified by @a
- * columnName) of a particular table or view (specified by @a tableName). If @a
- * columnName is a numeric column the values will be in @a
- * binaryEncodedResponse. Otherwise if @a columnName is a string column the
- * values will be in @a jsonEncodedResponse.  The results can be paged via the
- * @a offset and @a limit parameters.
+ * Returns all the unique values from a particular column
+ * (specified by @a columnName) of a particular table or view
+ * (specified by @a tableName). If @a columnName is a numeric column,
+ * the values will be in @a binaryEncodedResponse. Otherwise if
+ * @a columnName is a string column, the values will be in
+ * @a jsonEncodedResponse.  The results can be paged via @a offset
+ * and @a limit parameters.
  * <p>
  * Columns marked as <a href="../../concepts/types.html#data-handling"
- * target="_top">store-only</a> are unable to be used with this function.
+ * target="_top">store-only</a>
+ * are unable to be used with this function.
  * <p>
  * To get the first 10 unique values sorted in descending order @a options
  * would be::
  * <p>
  * {"limit":"10","sort_order":"descending"}.
  * <p>
- * The response is returned as a dynamic schema. For details see: <a
- * href="../../api/index.html#dynamic-schemas" target="_top">dynamic schemas
+ * The response is returned as a dynamic schema. For details see:
+ * <a href="../../api/index.html#dynamic-schemas" target="_top">dynamic schemas
  * documentation</a>.
  * <p>
- * If a @a result_table name is specified in the @a options, the results are
- * stored in a new table with that name--no results are returned in the
- * response.  Both the table name and resulting column name must adhere to <a
- * href="../../concepts/tables.html#table" target="_top">standard naming
- * conventions</a>; any column expression will need to be aliased.  If the
- * source table's <a href="../../concepts/tables.html#shard-keys"
- * target="_top">shard key</a> is used as the @a columnName, the result table
- * will be sharded, in all other cases it will be replicated.  Sorting will
- * properly function only if the result table is replicated or if there is only
- * one processing node and should not be relied upon in other cases.  Not
- * available if the value of @a columnName is an unrestricted-length string.
+ * If a @a result_table name is specified in the
+ * @a options, the results are stored in a new table with that name--no
+ * results are returned in the response.  Both the table name and resulting
+ * column
+ * name must adhere to
+ * <a href="../../concepts/tables.html#table" target="_top">standard naming
+ * conventions</a>;
+ * any column expression will need to be aliased.  If the source table's
+ * <a href="../../concepts/tables.html#shard-keys" target="_top">shard key</a>
+ * is used as the
+ * @a columnName, the result table will be sharded, in all other cases it
+ * will be replicated.  Sorting will properly function only if the result table
+ * is
+ * replicated or if there is only one processing node and should not be relied
+ * upon
+ * in other cases.  Not available if the value of @a columnName is an
+ * unrestricted-length string.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -3123,36 +4015,44 @@ RawAggregateUniqueResponse& aggregateUniqueRaw( const AggregateUniqueRequest& re
                                                 RawAggregateUniqueResponse& response_ ) const;
 
 /**
- * Returns all the unique values from a particular column (specified by @a
- * columnName) of a particular table or view (specified by @a tableName). If @a
- * columnName is a numeric column the values will be in @a
- * binaryEncodedResponse. Otherwise if @a columnName is a string column the
- * values will be in @a jsonEncodedResponse.  The results can be paged via the
- * @a offset and @a limit parameters.
+ * Returns all the unique values from a particular column
+ * (specified by @a columnName) of a particular table or view
+ * (specified by @a tableName). If @a columnName is a numeric column,
+ * the values will be in @a binaryEncodedResponse. Otherwise if
+ * @a columnName is a string column, the values will be in
+ * @a jsonEncodedResponse.  The results can be paged via @a offset
+ * and @a limit parameters.
  * <p>
  * Columns marked as <a href="../../concepts/types.html#data-handling"
- * target="_top">store-only</a> are unable to be used with this function.
+ * target="_top">store-only</a>
+ * are unable to be used with this function.
  * <p>
  * To get the first 10 unique values sorted in descending order @a options
  * would be::
  * <p>
  * {"limit":"10","sort_order":"descending"}.
  * <p>
- * The response is returned as a dynamic schema. For details see: <a
- * href="../../api/index.html#dynamic-schemas" target="_top">dynamic schemas
+ * The response is returned as a dynamic schema. For details see:
+ * <a href="../../api/index.html#dynamic-schemas" target="_top">dynamic schemas
  * documentation</a>.
  * <p>
- * If a @a result_table name is specified in the @a options, the results are
- * stored in a new table with that name--no results are returned in the
- * response.  Both the table name and resulting column name must adhere to <a
- * href="../../concepts/tables.html#table" target="_top">standard naming
- * conventions</a>; any column expression will need to be aliased.  If the
- * source table's <a href="../../concepts/tables.html#shard-keys"
- * target="_top">shard key</a> is used as the @a columnName, the result table
- * will be sharded, in all other cases it will be replicated.  Sorting will
- * properly function only if the result table is replicated or if there is only
- * one processing node and should not be relied upon in other cases.  Not
- * available if the value of @a columnName is an unrestricted-length string.
+ * If a @a result_table name is specified in the
+ * @a options, the results are stored in a new table with that name--no
+ * results are returned in the response.  Both the table name and resulting
+ * column
+ * name must adhere to
+ * <a href="../../concepts/tables.html#table" target="_top">standard naming
+ * conventions</a>;
+ * any column expression will need to be aliased.  If the source table's
+ * <a href="../../concepts/tables.html#shard-keys" target="_top">shard key</a>
+ * is used as the
+ * @a columnName, the result table will be sharded, in all other cases it
+ * will be replicated.  Sorting will properly function only if the result table
+ * is
+ * replicated or if there is only one processing node and should not be relied
+ * upon
+ * in other cases.  Not available if the value of @a columnName is an
+ * unrestricted-length string.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -3164,36 +4064,44 @@ RawAggregateUniqueResponse& aggregateUniqueRaw( const AggregateUniqueRequest& re
 AggregateUniqueResponse aggregateUnique( const AggregateUniqueRequest& request_ ) const;
 
 /**
- * Returns all the unique values from a particular column (specified by @a
- * columnName) of a particular table or view (specified by @a tableName). If @a
- * columnName is a numeric column the values will be in @a
- * binaryEncodedResponse. Otherwise if @a columnName is a string column the
- * values will be in @a jsonEncodedResponse.  The results can be paged via the
- * @a offset and @a limit parameters.
+ * Returns all the unique values from a particular column
+ * (specified by @a columnName) of a particular table or view
+ * (specified by @a tableName). If @a columnName is a numeric column,
+ * the values will be in @a binaryEncodedResponse. Otherwise if
+ * @a columnName is a string column, the values will be in
+ * @a jsonEncodedResponse.  The results can be paged via @a offset
+ * and @a limit parameters.
  * <p>
  * Columns marked as <a href="../../concepts/types.html#data-handling"
- * target="_top">store-only</a> are unable to be used with this function.
+ * target="_top">store-only</a>
+ * are unable to be used with this function.
  * <p>
  * To get the first 10 unique values sorted in descending order @a options
  * would be::
  * <p>
  * {"limit":"10","sort_order":"descending"}.
  * <p>
- * The response is returned as a dynamic schema. For details see: <a
- * href="../../api/index.html#dynamic-schemas" target="_top">dynamic schemas
+ * The response is returned as a dynamic schema. For details see:
+ * <a href="../../api/index.html#dynamic-schemas" target="_top">dynamic schemas
  * documentation</a>.
  * <p>
- * If a @a result_table name is specified in the @a options, the results are
- * stored in a new table with that name--no results are returned in the
- * response.  Both the table name and resulting column name must adhere to <a
- * href="../../concepts/tables.html#table" target="_top">standard naming
- * conventions</a>; any column expression will need to be aliased.  If the
- * source table's <a href="../../concepts/tables.html#shard-keys"
- * target="_top">shard key</a> is used as the @a columnName, the result table
- * will be sharded, in all other cases it will be replicated.  Sorting will
- * properly function only if the result table is replicated or if there is only
- * one processing node and should not be relied upon in other cases.  Not
- * available if the value of @a columnName is an unrestricted-length string.
+ * If a @a result_table name is specified in the
+ * @a options, the results are stored in a new table with that name--no
+ * results are returned in the response.  Both the table name and resulting
+ * column
+ * name must adhere to
+ * <a href="../../concepts/tables.html#table" target="_top">standard naming
+ * conventions</a>;
+ * any column expression will need to be aliased.  If the source table's
+ * <a href="../../concepts/tables.html#shard-keys" target="_top">shard key</a>
+ * is used as the
+ * @a columnName, the result table will be sharded, in all other cases it
+ * will be replicated.  Sorting will properly function only if the result table
+ * is
+ * replicated or if there is only one processing node and should not be relied
+ * upon
+ * in other cases.  Not available if the value of @a columnName is an
+ * unrestricted-length string.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -3209,39 +4117,50 @@ AggregateUniqueResponse& aggregateUnique( const AggregateUniqueRequest& request_
                                           AggregateUniqueResponse& response_ ) const;
 
 /**
- * Returns all the unique values from a particular column (specified by @a
- * columnName) of a particular table or view (specified by @a tableName). If @a
- * columnName is a numeric column the values will be in @a
- * binaryEncodedResponse. Otherwise if @a columnName is a string column the
- * values will be in @a jsonEncodedResponse.  The results can be paged via the
- * @a offset and @a limit parameters.
+ * Returns all the unique values from a particular column
+ * (specified by @a columnName) of a particular table or view
+ * (specified by @a tableName). If @a columnName is a numeric column,
+ * the values will be in @a binaryEncodedResponse. Otherwise if
+ * @a columnName is a string column, the values will be in
+ * @a jsonEncodedResponse.  The results can be paged via @a offset
+ * and @a limit parameters.
  * <p>
  * Columns marked as <a href="../../concepts/types.html#data-handling"
- * target="_top">store-only</a> are unable to be used with this function.
+ * target="_top">store-only</a>
+ * are unable to be used with this function.
  * <p>
  * To get the first 10 unique values sorted in descending order @a options
  * would be::
  * <p>
  * {"limit":"10","sort_order":"descending"}.
  * <p>
- * The response is returned as a dynamic schema. For details see: <a
- * href="../../api/index.html#dynamic-schemas" target="_top">dynamic schemas
+ * The response is returned as a dynamic schema. For details see:
+ * <a href="../../api/index.html#dynamic-schemas" target="_top">dynamic schemas
  * documentation</a>.
  * <p>
- * If a @a result_table name is specified in the @a options, the results are
- * stored in a new table with that name--no results are returned in the
- * response.  Both the table name and resulting column name must adhere to <a
- * href="../../concepts/tables.html#table" target="_top">standard naming
- * conventions</a>; any column expression will need to be aliased.  If the
- * source table's <a href="../../concepts/tables.html#shard-keys"
- * target="_top">shard key</a> is used as the @a columnName, the result table
- * will be sharded, in all other cases it will be replicated.  Sorting will
- * properly function only if the result table is replicated or if there is only
- * one processing node and should not be relied upon in other cases.  Not
- * available if the value of @a columnName is an unrestricted-length string.
+ * If a @a result_table name is specified in the
+ * @a options, the results are stored in a new table with that name--no
+ * results are returned in the response.  Both the table name and resulting
+ * column
+ * name must adhere to
+ * <a href="../../concepts/tables.html#table" target="_top">standard naming
+ * conventions</a>;
+ * any column expression will need to be aliased.  If the source table's
+ * <a href="../../concepts/tables.html#shard-keys" target="_top">shard key</a>
+ * is used as the
+ * @a columnName, the result table will be sharded, in all other cases it
+ * will be replicated.  Sorting will properly function only if the result table
+ * is
+ * replicated or if there is only one processing node and should not be relied
+ * upon
+ * in other cases.  Not available if the value of @a columnName is an
+ * unrestricted-length string.
  * 
  * @param tableName  Name of an existing table or view on which the operation
- *                   will be performed.
+ *                   will be performed, in [schema_name.]table_name format,
+ *                   using standard <a
+ *                   href="../../concepts/tables.html#table-name-resolution"
+ *                   target="_top">name resolution rules</a>.
  * @param columnName  Name of the column or an expression containing one or
  *                    more column names on which the unique function would be
  *                    applied.
@@ -3260,11 +4179,12 @@ AggregateUniqueResponse& aggregateUnique( const AggregateUniqueRequest& request_
  *               request subsequent pages of results.
  * @param options  Optional parameters.
  *                 <ul>
- *                         <li> gpudb::aggregate_unique_collection_name: Name
- *                 of a collection which is to contain the table specified in
- *                 @a result_table. If the collection provided is non-existent,
- *                 the collection will be automatically created. If empty, then
- *                 the table will be a top-level table.
+ *                         <li> gpudb::aggregate_unique_collection_name:
+ *                 [DEPRECATED--please specify the containing schema as part of
+ *                 @a result_table and use /create/schema to create the schema
+ *                 if non-existent]  Name of a schema which is to contain the
+ *                 table specified in @a result_table. If the schema provided
+ *                 is non-existent, it will be automatically created.
  *                         <li> gpudb::aggregate_unique_expression: Optional
  *                 filter expression to apply to the table.
  *                         <li> gpudb::aggregate_unique_sort_order: String
@@ -3275,11 +4195,14 @@ AggregateUniqueResponse& aggregateUnique( const AggregateUniqueRequest& request_
  *                 </ul>
  *                 The default value is gpudb::aggregate_unique_ascending.
  *                         <li> gpudb::aggregate_unique_result_table: The name
- *                 of the table used to store the results. If present, no
- *                 results are returned in the response. Has the same naming
- *                 restrictions as <a href="../../concepts/tables.html"
- *                 target="_top">tables</a>.  Not available if @a columnName is
- *                 an unrestricted-length string.
+ *                 of the table used to store the results, in
+ *                 [schema_name.]table_name format, using standard <a
+ *                 href="../../concepts/tables.html#table-name-resolution"
+ *                 target="_top">name resolution rules</a> and meeting <a
+ *                 href="../../concepts/tables.html#table-naming-criteria"
+ *                 target="_top">table naming criteria</a>.  If present, no
+ *                 results are returned in the response.  Not available if @a
+ *                 columnName is an unrestricted-length string.
  *                         <li> gpudb::aggregate_unique_result_table_persist:
  *                 If @a true, then the result table specified in @a
  *                 result_table will be persisted and will not expire unless a
@@ -3332,39 +4255,50 @@ AggregateUniqueResponse aggregateUnique( const std::string& tableName,
                                          const std::map<std::string, std::string>& options ) const;
 
 /**
- * Returns all the unique values from a particular column (specified by @a
- * columnName) of a particular table or view (specified by @a tableName). If @a
- * columnName is a numeric column the values will be in @a
- * binaryEncodedResponse. Otherwise if @a columnName is a string column the
- * values will be in @a jsonEncodedResponse.  The results can be paged via the
- * @a offset and @a limit parameters.
+ * Returns all the unique values from a particular column
+ * (specified by @a columnName) of a particular table or view
+ * (specified by @a tableName). If @a columnName is a numeric column,
+ * the values will be in @a binaryEncodedResponse. Otherwise if
+ * @a columnName is a string column, the values will be in
+ * @a jsonEncodedResponse.  The results can be paged via @a offset
+ * and @a limit parameters.
  * <p>
  * Columns marked as <a href="../../concepts/types.html#data-handling"
- * target="_top">store-only</a> are unable to be used with this function.
+ * target="_top">store-only</a>
+ * are unable to be used with this function.
  * <p>
  * To get the first 10 unique values sorted in descending order @a options
  * would be::
  * <p>
  * {"limit":"10","sort_order":"descending"}.
  * <p>
- * The response is returned as a dynamic schema. For details see: <a
- * href="../../api/index.html#dynamic-schemas" target="_top">dynamic schemas
+ * The response is returned as a dynamic schema. For details see:
+ * <a href="../../api/index.html#dynamic-schemas" target="_top">dynamic schemas
  * documentation</a>.
  * <p>
- * If a @a result_table name is specified in the @a options, the results are
- * stored in a new table with that name--no results are returned in the
- * response.  Both the table name and resulting column name must adhere to <a
- * href="../../concepts/tables.html#table" target="_top">standard naming
- * conventions</a>; any column expression will need to be aliased.  If the
- * source table's <a href="../../concepts/tables.html#shard-keys"
- * target="_top">shard key</a> is used as the @a columnName, the result table
- * will be sharded, in all other cases it will be replicated.  Sorting will
- * properly function only if the result table is replicated or if there is only
- * one processing node and should not be relied upon in other cases.  Not
- * available if the value of @a columnName is an unrestricted-length string.
+ * If a @a result_table name is specified in the
+ * @a options, the results are stored in a new table with that name--no
+ * results are returned in the response.  Both the table name and resulting
+ * column
+ * name must adhere to
+ * <a href="../../concepts/tables.html#table" target="_top">standard naming
+ * conventions</a>;
+ * any column expression will need to be aliased.  If the source table's
+ * <a href="../../concepts/tables.html#shard-keys" target="_top">shard key</a>
+ * is used as the
+ * @a columnName, the result table will be sharded, in all other cases it
+ * will be replicated.  Sorting will properly function only if the result table
+ * is
+ * replicated or if there is only one processing node and should not be relied
+ * upon
+ * in other cases.  Not available if the value of @a columnName is an
+ * unrestricted-length string.
  * 
  * @param tableName  Name of an existing table or view on which the operation
- *                   will be performed.
+ *                   will be performed, in [schema_name.]table_name format,
+ *                   using standard <a
+ *                   href="../../concepts/tables.html#table-name-resolution"
+ *                   target="_top">name resolution rules</a>.
  * @param columnName  Name of the column or an expression containing one or
  *                    more column names on which the unique function would be
  *                    applied.
@@ -3383,11 +4317,12 @@ AggregateUniqueResponse aggregateUnique( const std::string& tableName,
  *               request subsequent pages of results.
  * @param options  Optional parameters.
  *                 <ul>
- *                         <li> gpudb::aggregate_unique_collection_name: Name
- *                 of a collection which is to contain the table specified in
- *                 @a result_table. If the collection provided is non-existent,
- *                 the collection will be automatically created. If empty, then
- *                 the table will be a top-level table.
+ *                         <li> gpudb::aggregate_unique_collection_name:
+ *                 [DEPRECATED--please specify the containing schema as part of
+ *                 @a result_table and use /create/schema to create the schema
+ *                 if non-existent]  Name of a schema which is to contain the
+ *                 table specified in @a result_table. If the schema provided
+ *                 is non-existent, it will be automatically created.
  *                         <li> gpudb::aggregate_unique_expression: Optional
  *                 filter expression to apply to the table.
  *                         <li> gpudb::aggregate_unique_sort_order: String
@@ -3398,11 +4333,14 @@ AggregateUniqueResponse aggregateUnique( const std::string& tableName,
  *                 </ul>
  *                 The default value is gpudb::aggregate_unique_ascending.
  *                         <li> gpudb::aggregate_unique_result_table: The name
- *                 of the table used to store the results. If present, no
- *                 results are returned in the response. Has the same naming
- *                 restrictions as <a href="../../concepts/tables.html"
- *                 target="_top">tables</a>.  Not available if @a columnName is
- *                 an unrestricted-length string.
+ *                 of the table used to store the results, in
+ *                 [schema_name.]table_name format, using standard <a
+ *                 href="../../concepts/tables.html#table-name-resolution"
+ *                 target="_top">name resolution rules</a> and meeting <a
+ *                 href="../../concepts/tables.html#table-naming-criteria"
+ *                 target="_top">table naming criteria</a>.  If present, no
+ *                 results are returned in the response.  Not available if @a
+ *                 columnName is an unrestricted-length string.
  *                         <li> gpudb::aggregate_unique_result_table_persist:
  *                 If @a true, then the result table specified in @a
  *                 result_table will be persisted and will not expire unless a
@@ -3461,20 +4399,24 @@ AggregateUniqueResponse& aggregateUnique( const std::string& tableName,
 /**
  * Rotate the column values into rows values.
  * <p>
- * For unpivot details and examples, see <a href="../../concepts/unpivot.html"
- * target="_top">Unpivot</a>.  For limitations, see <a
- * href="../../concepts/unpivot.html#limitations" target="_top">Unpivot
+ * For unpivot details and examples, see
+ * <a href="../../concepts/unpivot.html" target="_top">Unpivot</a>.  For
+ * limitations, see
+ * <a href="../../concepts/unpivot.html#limitations" target="_top">Unpivot
  * Limitations</a>.
  * <p>
  * Unpivot is used to normalize tables that are built for cross tabular
- * reporting purposes. The unpivot operator rotates the column values for all
- * the pivoted columns. A variable column, value column and all columns from
- * the source table except the unpivot columns are projected into the result
- * table. The variable column and value columns in the result table indicate
- * the pivoted column name and values respectively.
+ * reporting
+ * purposes. The unpivot operator rotates the column values for all the pivoted
+ * columns. A variable column, value column and all columns from the source
+ * table
+ * except the unpivot columns are projected into the result table. The variable
+ * column and value columns in the result table indicate the pivoted column
+ * name
+ * and values respectively.
  * <p>
- * The response is returned as a dynamic schema. For details see: <a
- * href="../../api/index.html#dynamic-schemas" target="_top">dynamic schemas
+ * The response is returned as a dynamic schema. For details see:
+ * <a href="../../api/index.html#dynamic-schemas" target="_top">dynamic schemas
  * documentation</a>.
  * 
  * @param[in] request_  Request object containing the parameters for the
@@ -3489,20 +4431,24 @@ RawAggregateUnpivotResponse aggregateUnpivotRaw( const AggregateUnpivotRequest& 
 /**
  * Rotate the column values into rows values.
  * <p>
- * For unpivot details and examples, see <a href="../../concepts/unpivot.html"
- * target="_top">Unpivot</a>.  For limitations, see <a
- * href="../../concepts/unpivot.html#limitations" target="_top">Unpivot
+ * For unpivot details and examples, see
+ * <a href="../../concepts/unpivot.html" target="_top">Unpivot</a>.  For
+ * limitations, see
+ * <a href="../../concepts/unpivot.html#limitations" target="_top">Unpivot
  * Limitations</a>.
  * <p>
  * Unpivot is used to normalize tables that are built for cross tabular
- * reporting purposes. The unpivot operator rotates the column values for all
- * the pivoted columns. A variable column, value column and all columns from
- * the source table except the unpivot columns are projected into the result
- * table. The variable column and value columns in the result table indicate
- * the pivoted column name and values respectively.
+ * reporting
+ * purposes. The unpivot operator rotates the column values for all the pivoted
+ * columns. A variable column, value column and all columns from the source
+ * table
+ * except the unpivot columns are projected into the result table. The variable
+ * column and value columns in the result table indicate the pivoted column
+ * name
+ * and values respectively.
  * <p>
- * The response is returned as a dynamic schema. For details see: <a
- * href="../../api/index.html#dynamic-schemas" target="_top">dynamic schemas
+ * The response is returned as a dynamic schema. For details see:
+ * <a href="../../api/index.html#dynamic-schemas" target="_top">dynamic schemas
  * documentation</a>.
  * 
  * @param[in] request_  Request object containing the parameters for the
@@ -3521,20 +4467,24 @@ RawAggregateUnpivotResponse& aggregateUnpivotRaw( const AggregateUnpivotRequest&
 /**
  * Rotate the column values into rows values.
  * <p>
- * For unpivot details and examples, see <a href="../../concepts/unpivot.html"
- * target="_top">Unpivot</a>.  For limitations, see <a
- * href="../../concepts/unpivot.html#limitations" target="_top">Unpivot
+ * For unpivot details and examples, see
+ * <a href="../../concepts/unpivot.html" target="_top">Unpivot</a>.  For
+ * limitations, see
+ * <a href="../../concepts/unpivot.html#limitations" target="_top">Unpivot
  * Limitations</a>.
  * <p>
  * Unpivot is used to normalize tables that are built for cross tabular
- * reporting purposes. The unpivot operator rotates the column values for all
- * the pivoted columns. A variable column, value column and all columns from
- * the source table except the unpivot columns are projected into the result
- * table. The variable column and value columns in the result table indicate
- * the pivoted column name and values respectively.
+ * reporting
+ * purposes. The unpivot operator rotates the column values for all the pivoted
+ * columns. A variable column, value column and all columns from the source
+ * table
+ * except the unpivot columns are projected into the result table. The variable
+ * column and value columns in the result table indicate the pivoted column
+ * name
+ * and values respectively.
  * <p>
- * The response is returned as a dynamic schema. For details see: <a
- * href="../../api/index.html#dynamic-schemas" target="_top">dynamic schemas
+ * The response is returned as a dynamic schema. For details see:
+ * <a href="../../api/index.html#dynamic-schemas" target="_top">dynamic schemas
  * documentation</a>.
  * 
  * @param[in] request_  Request object containing the parameters for the
@@ -3549,20 +4499,24 @@ AggregateUnpivotResponse aggregateUnpivot( const AggregateUnpivotRequest& reques
 /**
  * Rotate the column values into rows values.
  * <p>
- * For unpivot details and examples, see <a href="../../concepts/unpivot.html"
- * target="_top">Unpivot</a>.  For limitations, see <a
- * href="../../concepts/unpivot.html#limitations" target="_top">Unpivot
+ * For unpivot details and examples, see
+ * <a href="../../concepts/unpivot.html" target="_top">Unpivot</a>.  For
+ * limitations, see
+ * <a href="../../concepts/unpivot.html#limitations" target="_top">Unpivot
  * Limitations</a>.
  * <p>
  * Unpivot is used to normalize tables that are built for cross tabular
- * reporting purposes. The unpivot operator rotates the column values for all
- * the pivoted columns. A variable column, value column and all columns from
- * the source table except the unpivot columns are projected into the result
- * table. The variable column and value columns in the result table indicate
- * the pivoted column name and values respectively.
+ * reporting
+ * purposes. The unpivot operator rotates the column values for all the pivoted
+ * columns. A variable column, value column and all columns from the source
+ * table
+ * except the unpivot columns are projected into the result table. The variable
+ * column and value columns in the result table indicate the pivoted column
+ * name
+ * and values respectively.
  * <p>
- * The response is returned as a dynamic schema. For details see: <a
- * href="../../api/index.html#dynamic-schemas" target="_top">dynamic schemas
+ * The response is returned as a dynamic schema. For details see:
+ * <a href="../../api/index.html#dynamic-schemas" target="_top">dynamic schemas
  * documentation</a>.
  * 
  * @param[in] request_  Request object containing the parameters for the
@@ -3581,24 +4535,31 @@ AggregateUnpivotResponse& aggregateUnpivot( const AggregateUnpivotRequest& reque
 /**
  * Rotate the column values into rows values.
  * <p>
- * For unpivot details and examples, see <a href="../../concepts/unpivot.html"
- * target="_top">Unpivot</a>.  For limitations, see <a
- * href="../../concepts/unpivot.html#limitations" target="_top">Unpivot
+ * For unpivot details and examples, see
+ * <a href="../../concepts/unpivot.html" target="_top">Unpivot</a>.  For
+ * limitations, see
+ * <a href="../../concepts/unpivot.html#limitations" target="_top">Unpivot
  * Limitations</a>.
  * <p>
  * Unpivot is used to normalize tables that are built for cross tabular
- * reporting purposes. The unpivot operator rotates the column values for all
- * the pivoted columns. A variable column, value column and all columns from
- * the source table except the unpivot columns are projected into the result
- * table. The variable column and value columns in the result table indicate
- * the pivoted column name and values respectively.
+ * reporting
+ * purposes. The unpivot operator rotates the column values for all the pivoted
+ * columns. A variable column, value column and all columns from the source
+ * table
+ * except the unpivot columns are projected into the result table. The variable
+ * column and value columns in the result table indicate the pivoted column
+ * name
+ * and values respectively.
  * <p>
- * The response is returned as a dynamic schema. For details see: <a
- * href="../../api/index.html#dynamic-schemas" target="_top">dynamic schemas
+ * The response is returned as a dynamic schema. For details see:
+ * <a href="../../api/index.html#dynamic-schemas" target="_top">dynamic schemas
  * documentation</a>.
  * 
  * @param tableName  Name of the table on which the operation will be
- *                   performed. Must be an existing table/view.
+ *                   performed. Must be an existing table/view, in
+ *                   [schema_name.]table_name format, using standard <a
+ *                   href="../../concepts/tables.html#table-name-resolution"
+ *                   target="_top">name resolution rules</a>.
  * @param columnNames  List of column names or expressions. A wildcard '*' can
  *                     be used to include all the non-pivoted columns from the
  *                     source table.
@@ -3609,16 +4570,20 @@ AggregateUnpivotResponse& aggregateUnpivot( const AggregateUnpivotRequest& reque
  *                        table must have the same data type.
  * @param options  Optional parameters.
  *                 <ul>
- *                         <li> gpudb::aggregate_unpivot_collection_name: Name
- *                 of a collection which is to contain the table specified in
- *                 @a result_table. If the collection provided is non-existent,
- *                 the collection will be automatically created. If empty, then
- *                 the table will be a top-level table.
+ *                         <li> gpudb::aggregate_unpivot_collection_name:
+ *                 [DEPRECATED--please specify the containing schema as part of
+ *                 @a result_table and use /create/schema to create the schema
+ *                 if non-existent]  Name of a schema which is to contain the
+ *                 table specified in @a result_table. If the schema is
+ *                 non-existent, it will be automatically created.
  *                         <li> gpudb::aggregate_unpivot_result_table: The name
- *                 of the table used to store the results. Has the same naming
- *                 restrictions as <a href="../../concepts/tables.html"
- *                 target="_top">tables</a>. If present, no results are
- *                 returned in the response.
+ *                 of a table used to store the results, in
+ *                 [schema_name.]table_name format, using standard <a
+ *                 href="../../concepts/tables.html#table-name-resolution"
+ *                 target="_top">name resolution rules</a> and meeting <a
+ *                 href="../../concepts/tables.html#table-naming-criteria"
+ *                 target="_top">table naming criteria</a>. If present, no
+ *                 results are returned in the response.
  *                         <li> gpudb::aggregate_unpivot_result_table_persist:
  *                 If @a true, then the result table specified in @a
  *                 result_table will be persisted and will not expire unless a
@@ -3696,24 +4661,31 @@ AggregateUnpivotResponse aggregateUnpivot( const std::string& tableName,
 /**
  * Rotate the column values into rows values.
  * <p>
- * For unpivot details and examples, see <a href="../../concepts/unpivot.html"
- * target="_top">Unpivot</a>.  For limitations, see <a
- * href="../../concepts/unpivot.html#limitations" target="_top">Unpivot
+ * For unpivot details and examples, see
+ * <a href="../../concepts/unpivot.html" target="_top">Unpivot</a>.  For
+ * limitations, see
+ * <a href="../../concepts/unpivot.html#limitations" target="_top">Unpivot
  * Limitations</a>.
  * <p>
  * Unpivot is used to normalize tables that are built for cross tabular
- * reporting purposes. The unpivot operator rotates the column values for all
- * the pivoted columns. A variable column, value column and all columns from
- * the source table except the unpivot columns are projected into the result
- * table. The variable column and value columns in the result table indicate
- * the pivoted column name and values respectively.
+ * reporting
+ * purposes. The unpivot operator rotates the column values for all the pivoted
+ * columns. A variable column, value column and all columns from the source
+ * table
+ * except the unpivot columns are projected into the result table. The variable
+ * column and value columns in the result table indicate the pivoted column
+ * name
+ * and values respectively.
  * <p>
- * The response is returned as a dynamic schema. For details see: <a
- * href="../../api/index.html#dynamic-schemas" target="_top">dynamic schemas
+ * The response is returned as a dynamic schema. For details see:
+ * <a href="../../api/index.html#dynamic-schemas" target="_top">dynamic schemas
  * documentation</a>.
  * 
  * @param tableName  Name of the table on which the operation will be
- *                   performed. Must be an existing table/view.
+ *                   performed. Must be an existing table/view, in
+ *                   [schema_name.]table_name format, using standard <a
+ *                   href="../../concepts/tables.html#table-name-resolution"
+ *                   target="_top">name resolution rules</a>.
  * @param columnNames  List of column names or expressions. A wildcard '*' can
  *                     be used to include all the non-pivoted columns from the
  *                     source table.
@@ -3724,16 +4696,20 @@ AggregateUnpivotResponse aggregateUnpivot( const std::string& tableName,
  *                        table must have the same data type.
  * @param options  Optional parameters.
  *                 <ul>
- *                         <li> gpudb::aggregate_unpivot_collection_name: Name
- *                 of a collection which is to contain the table specified in
- *                 @a result_table. If the collection provided is non-existent,
- *                 the collection will be automatically created. If empty, then
- *                 the table will be a top-level table.
+ *                         <li> gpudb::aggregate_unpivot_collection_name:
+ *                 [DEPRECATED--please specify the containing schema as part of
+ *                 @a result_table and use /create/schema to create the schema
+ *                 if non-existent]  Name of a schema which is to contain the
+ *                 table specified in @a result_table. If the schema is
+ *                 non-existent, it will be automatically created.
  *                         <li> gpudb::aggregate_unpivot_result_table: The name
- *                 of the table used to store the results. Has the same naming
- *                 restrictions as <a href="../../concepts/tables.html"
- *                 target="_top">tables</a>. If present, no results are
- *                 returned in the response.
+ *                 of a table used to store the results, in
+ *                 [schema_name.]table_name format, using standard <a
+ *                 href="../../concepts/tables.html#table-name-resolution"
+ *                 target="_top">name resolution rules</a> and meeting <a
+ *                 href="../../concepts/tables.html#table-naming-criteria"
+ *                 target="_top">table naming criteria</a>. If present, no
+ *                 results are returned in the response.
  *                         <li> gpudb::aggregate_unpivot_result_table_persist:
  *                 If @a true, then the result table specified in @a
  *                 result_table will be persisted and will not expire unless a
@@ -3811,6 +4787,200 @@ AggregateUnpivotResponse& aggregateUnpivot( const std::string& tableName,
                                             const std::vector<std::string>& pivotedColumns,
                                             const std::map<std::string, std::string>& options,
                                             AggregateUnpivotResponse& response_ ) const;
+
+/**
+ * Alters the properties of an existing <a
+ * href="../../concepts/data_sources.html" target="_top">data source</a>
+ * 
+ * @param[in] request_  Request object containing the parameters for the
+ *                      operation.
+ * 
+ * @return Response object containing the result of the operation.
+ * 
+ */
+
+AlterDatasourceResponse alterDatasource( const AlterDatasourceRequest& request_ ) const;
+
+/**
+ * Alters the properties of an existing <a
+ * href="../../concepts/data_sources.html" target="_top">data source</a>
+ * 
+ * @param[in] request_  Request object containing the parameters for the
+ *                      operation.
+ * @param[out] response_  Response object containing the results of the
+ *                        operation.
+ * 
+ * @return Response object containing the result of the operation (initially
+ *         passed in by reference).
+ * 
+ */
+
+AlterDatasourceResponse& alterDatasource( const AlterDatasourceRequest& request_,
+                                          AlterDatasourceResponse& response_ ) const;
+
+/**
+ * Alters the properties of an existing <a
+ * href="../../concepts/data_sources.html" target="_top">data source</a>
+ * 
+ * @param name  Name of the data source to be altered. Must be an existing data
+ *              source.
+ * @param datasourceUpdatesMap  Map containing the properties of the data
+ *                              source to be updated. Error if empty.
+ *                              <ul>
+ *                                      <li> gpudb::alter_datasource_location:
+ *                              Location of the remote storage in
+ *                              'storage_provider_type://[storage_path[:storage_port]]'
+ *                              format.
+ *                              Supported storage provider types are 'hdfs' and
+ *                              's3'.
+ *                                      <li> gpudb::alter_datasource_user_name:
+ *                              Name of the remote system user; may be an empty
+ *                              string
+ *                                      <li> gpudb::alter_datasource_password:
+ *                              Password for the remote system user; may be an
+ *                              empty string
+ *                                      <li>
+ *                              gpudb::alter_datasource_skip_validation: Bypass
+ *                              validation of connection to remote source.
+ *                              <ul>
+ *                                      <li> gpudb::alter_datasource_true
+ *                                      <li> gpudb::alter_datasource_false
+ *                              </ul>
+ *                              The default value is
+ *                              gpudb::alter_datasource_false.
+ *                                      <li>
+ *                              gpudb::alter_datasource_connection_timeout:
+ *                              Timeout in seconds for connecting to this
+ *                              storage provider
+ *                                      <li>
+ *                              gpudb::alter_datasource_wait_timeout: Timeout
+ *                              in seconds for reading from this storage
+ *                              provider
+ *                                      <li>
+ *                              gpudb::alter_datasource_s3_bucket_name: Name of
+ *                              the Amazon S3 bucket to use as the data source
+ *                                      <li> gpudb::alter_datasource_s3_region:
+ *                              Name of the Amazon S3 region where the given
+ *                              bucket is located
+ *                                      <li>
+ *                              gpudb::alter_datasource_hdfs_kerberos_keytab:
+ *                              Kerberos keytab file location for the given
+ *                              HDFS user
+ *                                      <li>
+ *                              gpudb::alter_datasource_hdfs_delegation_token:
+ *                              Delegation token for the given HDFS user
+ *                                      <li>
+ *                              gpudb::alter_datasource_hdfs_use_kerberos: Use
+ *                              kerberos authentication for the given HDFS
+ *                              cluster
+ *                              <ul>
+ *                                      <li> gpudb::alter_datasource_true
+ *                                      <li> gpudb::alter_datasource_false
+ *                              </ul>
+ *                              The default value is
+ *                              gpudb::alter_datasource_false.
+ *                                      <li>
+ *                              gpudb::alter_datasource_azure_container_name:
+ *                              Name of the Azure storage container to use as
+ *                              the data source
+ *                                      <li>
+ *                              gpudb::alter_datasource_azure_sas_token: Shared
+ *                              access signature token for Azure storage
+ *                              account to use as the data source
+ *                              </ul>
+ * @param options  Optional parameters.
+ * 
+ * @return Response object containing the result of the operation.
+ * 
+ */
+
+AlterDatasourceResponse alterDatasource( const std::string& name,
+                                         const std::map<std::string, std::string>& datasourceUpdatesMap,
+                                         const std::map<std::string, std::string>& options ) const;
+
+/**
+ * Alters the properties of an existing <a
+ * href="../../concepts/data_sources.html" target="_top">data source</a>
+ * 
+ * @param name  Name of the data source to be altered. Must be an existing data
+ *              source.
+ * @param datasourceUpdatesMap  Map containing the properties of the data
+ *                              source to be updated. Error if empty.
+ *                              <ul>
+ *                                      <li> gpudb::alter_datasource_location:
+ *                              Location of the remote storage in
+ *                              'storage_provider_type://[storage_path[:storage_port]]'
+ *                              format.
+ *                              Supported storage provider types are 'hdfs' and
+ *                              's3'.
+ *                                      <li> gpudb::alter_datasource_user_name:
+ *                              Name of the remote system user; may be an empty
+ *                              string
+ *                                      <li> gpudb::alter_datasource_password:
+ *                              Password for the remote system user; may be an
+ *                              empty string
+ *                                      <li>
+ *                              gpudb::alter_datasource_skip_validation: Bypass
+ *                              validation of connection to remote source.
+ *                              <ul>
+ *                                      <li> gpudb::alter_datasource_true
+ *                                      <li> gpudb::alter_datasource_false
+ *                              </ul>
+ *                              The default value is
+ *                              gpudb::alter_datasource_false.
+ *                                      <li>
+ *                              gpudb::alter_datasource_connection_timeout:
+ *                              Timeout in seconds for connecting to this
+ *                              storage provider
+ *                                      <li>
+ *                              gpudb::alter_datasource_wait_timeout: Timeout
+ *                              in seconds for reading from this storage
+ *                              provider
+ *                                      <li>
+ *                              gpudb::alter_datasource_s3_bucket_name: Name of
+ *                              the Amazon S3 bucket to use as the data source
+ *                                      <li> gpudb::alter_datasource_s3_region:
+ *                              Name of the Amazon S3 region where the given
+ *                              bucket is located
+ *                                      <li>
+ *                              gpudb::alter_datasource_hdfs_kerberos_keytab:
+ *                              Kerberos keytab file location for the given
+ *                              HDFS user
+ *                                      <li>
+ *                              gpudb::alter_datasource_hdfs_delegation_token:
+ *                              Delegation token for the given HDFS user
+ *                                      <li>
+ *                              gpudb::alter_datasource_hdfs_use_kerberos: Use
+ *                              kerberos authentication for the given HDFS
+ *                              cluster
+ *                              <ul>
+ *                                      <li> gpudb::alter_datasource_true
+ *                                      <li> gpudb::alter_datasource_false
+ *                              </ul>
+ *                              The default value is
+ *                              gpudb::alter_datasource_false.
+ *                                      <li>
+ *                              gpudb::alter_datasource_azure_container_name:
+ *                              Name of the Azure storage container to use as
+ *                              the data source
+ *                                      <li>
+ *                              gpudb::alter_datasource_azure_sas_token: Shared
+ *                              access signature token for Azure storage
+ *                              account to use as the data source
+ *                              </ul>
+ * @param options  Optional parameters.
+ * @param[out] response_  Response object containing the results of the
+ *                        operation.
+ * 
+ * @return Response object containing the result of the operation (initially
+ *         passed in by reference).
+ * 
+ */
+
+AlterDatasourceResponse& alterDatasource( const std::string& name,
+                                          const std::map<std::string, std::string>& datasourceUpdatesMap,
+                                          const std::map<std::string, std::string>& options,
+                                          AlterDatasourceResponse& response_ ) const;
 
 /**
  * Alters the properties of an exisiting resource group to facilitate resource
@@ -4065,6 +5235,90 @@ AlterRoleResponse& alterRole( const std::string& name,
                               AlterRoleResponse& response_ ) const;
 
 /**
+ * Used to change the name of a SQL-style <a href="../../concepts/schemas.html"
+ * target="_top">schema</a>, specified in @a schemaName.
+ * 
+ * @param[in] request_  Request object containing the parameters for the
+ *                      operation.
+ * 
+ * @return Response object containing the result of the operation.
+ * 
+ */
+
+AlterSchemaResponse alterSchema( const AlterSchemaRequest& request_ ) const;
+
+/**
+ * Used to change the name of a SQL-style <a href="../../concepts/schemas.html"
+ * target="_top">schema</a>, specified in @a schemaName.
+ * 
+ * @param[in] request_  Request object containing the parameters for the
+ *                      operation.
+ * @param[out] response_  Response object containing the results of the
+ *                        operation.
+ * 
+ * @return Response object containing the result of the operation (initially
+ *         passed in by reference).
+ * 
+ */
+
+AlterSchemaResponse& alterSchema( const AlterSchemaRequest& request_,
+                                  AlterSchemaResponse& response_ ) const;
+
+/**
+ * Used to change the name of a SQL-style <a href="../../concepts/schemas.html"
+ * target="_top">schema</a>, specified in @a schemaName.
+ * 
+ * @param schemaName  Name of the schema to be altered.
+ * @param action  Modification operation to be applied
+ *                <ul>
+ *                        <li> gpudb::alter_schema_rename_schema: Renames a
+ *                schema to @a value. Has the same naming restrictions as <a
+ *                href="../../concepts/tables.html" target="_top">tables</a>.
+ *                </ul>
+ * @param value  The value of the modification, depending on @a action.  For
+ *               now the only value of @a action is @a rename_schema.  In this
+ *               case the value is the new name of the schema.
+ * @param options  Optional parameters.
+ * 
+ * @return Response object containing the result of the operation.
+ * 
+ */
+
+AlterSchemaResponse alterSchema( const std::string& schemaName,
+                                 const std::string& action,
+                                 const std::string& value,
+                                 const std::map<std::string, std::string>& options ) const;
+
+/**
+ * Used to change the name of a SQL-style <a href="../../concepts/schemas.html"
+ * target="_top">schema</a>, specified in @a schemaName.
+ * 
+ * @param schemaName  Name of the schema to be altered.
+ * @param action  Modification operation to be applied
+ *                <ul>
+ *                        <li> gpudb::alter_schema_rename_schema: Renames a
+ *                schema to @a value. Has the same naming restrictions as <a
+ *                href="../../concepts/tables.html" target="_top">tables</a>.
+ *                </ul>
+ * @param value  The value of the modification, depending on @a action.  For
+ *               now the only value of @a action is @a rename_schema.  In this
+ *               case the value is the new name of the schema.
+ * @param options  Optional parameters.
+ * @param[out] response_  Response object containing the results of the
+ *                        operation.
+ * 
+ * @return Response object containing the result of the operation (initially
+ *         passed in by reference).
+ * 
+ */
+
+AlterSchemaResponse& alterSchema( const std::string& schemaName,
+                                  const std::string& action,
+                                  const std::string& value,
+                                  const std::map<std::string, std::string>& options,
+                                  AlterSchemaResponse& response_ ) const;
+
+/**
  * The {@link
  * #alterSystemProperties(const AlterSystemPropertiesRequest&) const}
  * endpoint is primarily used to simplify the testing of the system and is not
@@ -4119,9 +5373,8 @@ AlterSystemPropertiesResponse& alterSystemProperties( const AlterSystemPropertie
  *                                    <li>
  *                            gpudb::alter_system_properties_sm_omp_threads:
  *                            Set the number of OpenMP threads that will be
- *                            used to service filter & aggregation requests
- *                            against collections to the specified integer
- *                            value.
+ *                            used to service filter & aggregation requests to
+ *                            the specified integer value.
  *                                    <li>
  *                            gpudb::alter_system_properties_kernel_omp_threads:
  *                            Set the number of kernel OpenMP threads to the
@@ -4194,8 +5447,8 @@ AlterSystemPropertiesResponse& alterSystemProperties( const AlterSystemPropertie
  *                            gpudb::alter_system_properties_set_message_timers_enabled:
  *                            Enables the communicator test to collect
  *                            additional timing statistics when the value
- *                            string is @a true. Disables the collection when
- *                            the value string is @a false
+ *                            string is @a true. Disables collecting statistics
+ *                            when the value string is @a false
  *                            <ul>
  *                                    <li> gpudb::alter_system_properties_true
  *                                    <li> gpudb::alter_system_properties_false
@@ -4254,10 +5507,6 @@ AlterSystemPropertiesResponse& alterSystemProperties( const AlterSystemPropertie
  *                            gpudb::alter_system_properties_enable_overlapped_equi_join:
  *                            Enable overlapped-equi-join filter.  The default
  *                            value is 'true'.
- *                                    <li>
- *                            gpudb::alter_system_properties_enable_compound_equi_join:
- *                            Enable compound-equi-join filter plan type.  The
- *                            default value is 'false'.
  *                            </ul>
  * @param options  Optional parameters.
  * 
@@ -4283,9 +5532,8 @@ AlterSystemPropertiesResponse alterSystemProperties( const std::map<std::string,
  *                                    <li>
  *                            gpudb::alter_system_properties_sm_omp_threads:
  *                            Set the number of OpenMP threads that will be
- *                            used to service filter & aggregation requests
- *                            against collections to the specified integer
- *                            value.
+ *                            used to service filter & aggregation requests to
+ *                            the specified integer value.
  *                                    <li>
  *                            gpudb::alter_system_properties_kernel_omp_threads:
  *                            Set the number of kernel OpenMP threads to the
@@ -4358,8 +5606,8 @@ AlterSystemPropertiesResponse alterSystemProperties( const std::map<std::string,
  *                            gpudb::alter_system_properties_set_message_timers_enabled:
  *                            Enables the communicator test to collect
  *                            additional timing statistics when the value
- *                            string is @a true. Disables the collection when
- *                            the value string is @a false
+ *                            string is @a true. Disables collecting statistics
+ *                            when the value string is @a false
  *                            <ul>
  *                                    <li> gpudb::alter_system_properties_true
  *                                    <li> gpudb::alter_system_properties_false
@@ -4418,10 +5666,6 @@ AlterSystemPropertiesResponse alterSystemProperties( const std::map<std::string,
  *                            gpudb::alter_system_properties_enable_overlapped_equi_join:
  *                            Enable overlapped-equi-join filter.  The default
  *                            value is 'true'.
- *                                    <li>
- *                            gpudb::alter_system_properties_enable_compound_equi_join:
- *                            Enable compound-equi-join filter plan type.  The
- *                            default value is 'false'.
  *                            </ul>
  * @param options  Optional parameters.
  * @param[out] response_  Response object containing the results of the
@@ -4437,7 +5681,7 @@ AlterSystemPropertiesResponse& alterSystemProperties( const std::map<std::string
                                                       AlterSystemPropertiesResponse& response_ ) const;
 
 /**
- * Apply various modifications to a table, view, or collection.  The
+ * Apply various modifications to a table or view.  The
  * available modifications include the following:
  * <p>
  * Manage a table's columns--a column can be added, removed, or have its
@@ -4445,6 +5689,8 @@ AlterSystemPropertiesResponse& alterSystemProperties( const std::map<std::string
  * modified, including
  * whether it is <a href="../../concepts/compression.html"
  * target="_top">compressed</a> or not.
+ * <p>
+ * External tables cannot be modified except for their refresh method.
  * <p>
  * Create or delete an <a href="../../concepts/indexes.html#column-index"
  * target="_top">index</a> on a
@@ -4470,13 +5716,13 @@ AlterSystemPropertiesResponse& alterSystemProperties( const std::map<std::string
  * <p>
  * Refresh and manage the refresh mode of a
  * <a href="../../concepts/materialized_views.html" target="_top">materialized
- * view</a>.
+ * view</a> or an
+ * <a href="../../concepts/external_tables.html" target="_top">external
+ * table</a>.
  * <p>
  * Set the <a href="../../concepts/ttl.html" target="_top">time-to-live
  * (TTL)</a>. This can be applied
- * to tables, views, or collections.  When applied to collections, every
- * contained
- * table & view that is not protected will have its TTL set to the given value.
+ * to tables or views.
  * <p>
  * Set the global access mode (i.e. locking) for a table. This setting trumps
  * any
@@ -4485,11 +5731,6 @@ AlterSystemPropertiesResponse& alterSystemProperties( const std::map<std::string
  * to a table marked read-only will not be able to insert records into it. The
  * mode
  * can be set to read-only, write-only, read/write, and no access.
- * <p>
- * Change the <a href="../../concepts/protection.html"
- * target="_top">protection</a> mode to prevent or
- * allow automatic expiration. This can be applied to tables, views, and
- * collections.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -4501,7 +5742,7 @@ AlterSystemPropertiesResponse& alterSystemProperties( const std::map<std::string
 AlterTableResponse alterTable( const AlterTableRequest& request_ ) const;
 
 /**
- * Apply various modifications to a table, view, or collection.  The
+ * Apply various modifications to a table or view.  The
  * available modifications include the following:
  * <p>
  * Manage a table's columns--a column can be added, removed, or have its
@@ -4509,6 +5750,8 @@ AlterTableResponse alterTable( const AlterTableRequest& request_ ) const;
  * modified, including
  * whether it is <a href="../../concepts/compression.html"
  * target="_top">compressed</a> or not.
+ * <p>
+ * External tables cannot be modified except for their refresh method.
  * <p>
  * Create or delete an <a href="../../concepts/indexes.html#column-index"
  * target="_top">index</a> on a
@@ -4534,13 +5777,13 @@ AlterTableResponse alterTable( const AlterTableRequest& request_ ) const;
  * <p>
  * Refresh and manage the refresh mode of a
  * <a href="../../concepts/materialized_views.html" target="_top">materialized
- * view</a>.
+ * view</a> or an
+ * <a href="../../concepts/external_tables.html" target="_top">external
+ * table</a>.
  * <p>
  * Set the <a href="../../concepts/ttl.html" target="_top">time-to-live
  * (TTL)</a>. This can be applied
- * to tables, views, or collections.  When applied to collections, every
- * contained
- * table & view that is not protected will have its TTL set to the given value.
+ * to tables or views.
  * <p>
  * Set the global access mode (i.e. locking) for a table. This setting trumps
  * any
@@ -4549,11 +5792,6 @@ AlterTableResponse alterTable( const AlterTableRequest& request_ ) const;
  * to a table marked read-only will not be able to insert records into it. The
  * mode
  * can be set to read-only, write-only, read/write, and no access.
- * <p>
- * Change the <a href="../../concepts/protection.html"
- * target="_top">protection</a> mode to prevent or
- * allow automatic expiration. This can be applied to tables, views, and
- * collections.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -4569,7 +5807,7 @@ AlterTableResponse& alterTable( const AlterTableRequest& request_,
                                 AlterTableResponse& response_ ) const;
 
 /**
- * Apply various modifications to a table, view, or collection.  The
+ * Apply various modifications to a table or view.  The
  * available modifications include the following:
  * <p>
  * Manage a table's columns--a column can be added, removed, or have its
@@ -4577,6 +5815,8 @@ AlterTableResponse& alterTable( const AlterTableRequest& request_,
  * modified, including
  * whether it is <a href="../../concepts/compression.html"
  * target="_top">compressed</a> or not.
+ * <p>
+ * External tables cannot be modified except for their refresh method.
  * <p>
  * Create or delete an <a href="../../concepts/indexes.html#column-index"
  * target="_top">index</a> on a
@@ -4602,13 +5842,13 @@ AlterTableResponse& alterTable( const AlterTableRequest& request_,
  * <p>
  * Refresh and manage the refresh mode of a
  * <a href="../../concepts/materialized_views.html" target="_top">materialized
- * view</a>.
+ * view</a> or an
+ * <a href="../../concepts/external_tables.html" target="_top">external
+ * table</a>.
  * <p>
  * Set the <a href="../../concepts/ttl.html" target="_top">time-to-live
  * (TTL)</a>. This can be applied
- * to tables, views, or collections.  When applied to collections, every
- * contained
- * table & view that is not protected will have its TTL set to the given value.
+ * to tables or views.
  * <p>
  * Set the global access mode (i.e. locking) for a table. This setting trumps
  * any
@@ -4617,14 +5857,12 @@ AlterTableResponse& alterTable( const AlterTableRequest& request_,
  * to a table marked read-only will not be able to insert records into it. The
  * mode
  * can be set to read-only, write-only, read/write, and no access.
- * <p>
- * Change the <a href="../../concepts/protection.html"
- * target="_top">protection</a> mode to prevent or
- * allow automatic expiration. This can be applied to tables, views, and
- * collections.
  * 
- * @param tableName  Table on which the operation will be performed. Must be an
- *                   existing table, view, or collection.
+ * @param tableName  Table on which the operation will be performed, in
+ *                   [schema_name.]table_name format, using standard <a
+ *                   href="../../concepts/tables.html#table-name-resolution"
+ *                   target="_top">name resolution rules</a>.  Must be an
+ *                   existing table or view.
  * @param action  Modification operation to be applied
  *                <ul>
  *                        <li> gpudb::alter_table_allow_homogeneous_tables: No
@@ -4645,24 +5883,27 @@ AlterTableResponse& alterTable( const AlterTableRequest& request_,
  *                specified @a index_type, on the column name specified in @a
  *                value. If this column does not have the specified index, an
  *                error will be returned.
- *                        <li> gpudb::alter_table_move_to_collection: Moves a
- *                table or view into a collection named @a value.  If the
- *                collection provided is non-existent, the collection will be
- *                automatically created. If @a value is empty, then the table
- *                or view will be top-level.
- *                        <li> gpudb::alter_table_protected: Sets whether the
- *                given @a tableName should be <a
- *                href="../../concepts/protection.html"
- *                target="_top">protected</a> or not. The @a value must be
- *                either 'true' or 'false'.
- *                        <li> gpudb::alter_table_rename_table: Renames a
- *                table, view or collection to @a value. Has the same naming
- *                restrictions as <a href="../../concepts/tables.html"
+ *                        <li> gpudb::alter_table_move_to_collection:
+ *                [DEPRECATED--please use @a move_to_schema and use
+ *                /create/schema to create the schema if non-existent]  Moves a
+ *                table or view into a schema named @a value.  If the schema
+ *                provided is non-existent, it will be automatically created.
+ *                        <li> gpudb::alter_table_move_to_schema: Moves a table
+ *                or view into a schema named @a value.  If the schema provided
+ *                is non-existent, an error will be thrown. If @a value is
+ *                empty, then the table or view will be placed in the user's
+ *                default schema.
+ *                        <li> gpudb::alter_table_protected: No longer used.
+ *                Previously set whether the given @a tableName should be
+ *                protected or not. The @a value would have been either 'true'
+ *                or 'false'.
+ *                        <li> gpudb::alter_table_rename_table: Renames a table
+ *                or view within its current schema to @a value. Has the same
+ *                naming restrictions as <a href="../../concepts/tables.html"
  *                target="_top">tables</a>.
  *                        <li> gpudb::alter_table_ttl: Sets the <a
  *                href="../../concepts/ttl.html" target="_top">time-to-live</a>
- *                in minutes of the table, view, or collection specified in @a
- *                tableName.
+ *                in minutes of the table or view specified in @a tableName.
  *                        <li> gpudb::alter_table_add_column: Adds the column
  *                specified in @a value to the table specified in @a tableName.
  *                Use @a column_type and @a column_properties in @a options to
@@ -4720,16 +5961,24 @@ AlterTableResponse& alterTable( const AlterTableRequest& request_,
  *                in @a tableName. Specify the access mode in @a value. Valid
  *                modes are 'no_access', 'read_only', 'write_only' and
  *                'read_write'.
- *                        <li> gpudb::alter_table_refresh: Replays all the
- *                table creation commands required to create this <a
+ *                        <li> gpudb::alter_table_refresh: For a <a
  *                href="../../concepts/materialized_views.html"
- *                target="_top">materialized view</a>.
- *                        <li> gpudb::alter_table_set_refresh_method: Sets the
- *                method by which this <a
+ *                target="_top">materialized view</a>, replays all the table
+ *                creation commands required to create the view.  For an <a
+ *                href="../../concepts/external_tables.html"
+ *                target="_top">external table</a>, reloads all data in the
+ *                table from its associated source files or <a
+ *                href="../../concepts/data_sources.html" target="_top">data
+ *                source</a>.
+ *                        <li> gpudb::alter_table_set_refresh_method: For a <a
  *                href="../../concepts/materialized_views.html"
- *                target="_top">materialized view</a> is refreshed to the
- *                method specified in @a value - one of 'manual', 'periodic',
- *                'on_change'.
+ *                target="_top">materialized view</a>, sets the method by which
+ *                the view is refreshed to the method specified in @a value -
+ *                one of 'manual', 'periodic', or 'on_change'.  For an <a
+ *                href="../../concepts/external_tables.html"
+ *                target="_top">external table</a>, sets the method by which
+ *                the table is refreshed to the method specified in @a value -
+ *                either 'manual' or 'on_start'.
  *                        <li> gpudb::alter_table_set_refresh_start_time: Sets
  *                the time to start periodic refreshes of this <a
  *                href="../../concepts/materialized_views.html"
@@ -4793,18 +6042,18 @@ AlterTableResponse& alterTable( const AlterTableRequest& request_,
  *                 </ul>
  *                 The default value is gpudb::alter_table_snappy.
  *                         <li> gpudb::alter_table_copy_values_from_column:
- *                 Deprecated.  Please use @a add_column_expression instead.
+ *                 [DEPRECATED--please use @a add_column_expression instead.]
  *                         <li> gpudb::alter_table_rename_column: When changing
  *                 a column, specify new column name.
  *                         <li> gpudb::alter_table_validate_change_column: When
- *                 changing a column, validate the change before applying it.
- *                 If @a true, then validate all values. A value too large (or
- *                 too long) for the new type will prevent any change. If @a
- *                 false, then when a value is too large or long, it will be
- *                 truncated.
+ *                 changing a column, validate the change before applying it
+ *                 (or not).
  *                 <ul>
- *                         <li> gpudb::alter_table_true: true
- *                         <li> gpudb::alter_table_false: false
+ *                         <li> gpudb::alter_table_true: Validate all values. A
+ *                 value too large (or too long) for the new type will prevent
+ *                 any change.
+ *                         <li> gpudb::alter_table_false: When a value is too
+ *                 large or long, it will be truncated.
  *                 </ul>
  *                 The default value is gpudb::alter_table_true.
  *                         <li> gpudb::alter_table_update_last_access_time:
@@ -4859,7 +6108,7 @@ AlterTableResponse alterTable( const std::string& tableName,
                                const std::map<std::string, std::string>& options ) const;
 
 /**
- * Apply various modifications to a table, view, or collection.  The
+ * Apply various modifications to a table or view.  The
  * available modifications include the following:
  * <p>
  * Manage a table's columns--a column can be added, removed, or have its
@@ -4867,6 +6116,8 @@ AlterTableResponse alterTable( const std::string& tableName,
  * modified, including
  * whether it is <a href="../../concepts/compression.html"
  * target="_top">compressed</a> or not.
+ * <p>
+ * External tables cannot be modified except for their refresh method.
  * <p>
  * Create or delete an <a href="../../concepts/indexes.html#column-index"
  * target="_top">index</a> on a
@@ -4892,13 +6143,13 @@ AlterTableResponse alterTable( const std::string& tableName,
  * <p>
  * Refresh and manage the refresh mode of a
  * <a href="../../concepts/materialized_views.html" target="_top">materialized
- * view</a>.
+ * view</a> or an
+ * <a href="../../concepts/external_tables.html" target="_top">external
+ * table</a>.
  * <p>
  * Set the <a href="../../concepts/ttl.html" target="_top">time-to-live
  * (TTL)</a>. This can be applied
- * to tables, views, or collections.  When applied to collections, every
- * contained
- * table & view that is not protected will have its TTL set to the given value.
+ * to tables or views.
  * <p>
  * Set the global access mode (i.e. locking) for a table. This setting trumps
  * any
@@ -4907,14 +6158,12 @@ AlterTableResponse alterTable( const std::string& tableName,
  * to a table marked read-only will not be able to insert records into it. The
  * mode
  * can be set to read-only, write-only, read/write, and no access.
- * <p>
- * Change the <a href="../../concepts/protection.html"
- * target="_top">protection</a> mode to prevent or
- * allow automatic expiration. This can be applied to tables, views, and
- * collections.
  * 
- * @param tableName  Table on which the operation will be performed. Must be an
- *                   existing table, view, or collection.
+ * @param tableName  Table on which the operation will be performed, in
+ *                   [schema_name.]table_name format, using standard <a
+ *                   href="../../concepts/tables.html#table-name-resolution"
+ *                   target="_top">name resolution rules</a>.  Must be an
+ *                   existing table or view.
  * @param action  Modification operation to be applied
  *                <ul>
  *                        <li> gpudb::alter_table_allow_homogeneous_tables: No
@@ -4935,24 +6184,27 @@ AlterTableResponse alterTable( const std::string& tableName,
  *                specified @a index_type, on the column name specified in @a
  *                value. If this column does not have the specified index, an
  *                error will be returned.
- *                        <li> gpudb::alter_table_move_to_collection: Moves a
- *                table or view into a collection named @a value.  If the
- *                collection provided is non-existent, the collection will be
- *                automatically created. If @a value is empty, then the table
- *                or view will be top-level.
- *                        <li> gpudb::alter_table_protected: Sets whether the
- *                given @a tableName should be <a
- *                href="../../concepts/protection.html"
- *                target="_top">protected</a> or not. The @a value must be
- *                either 'true' or 'false'.
- *                        <li> gpudb::alter_table_rename_table: Renames a
- *                table, view or collection to @a value. Has the same naming
- *                restrictions as <a href="../../concepts/tables.html"
+ *                        <li> gpudb::alter_table_move_to_collection:
+ *                [DEPRECATED--please use @a move_to_schema and use
+ *                /create/schema to create the schema if non-existent]  Moves a
+ *                table or view into a schema named @a value.  If the schema
+ *                provided is non-existent, it will be automatically created.
+ *                        <li> gpudb::alter_table_move_to_schema: Moves a table
+ *                or view into a schema named @a value.  If the schema provided
+ *                is non-existent, an error will be thrown. If @a value is
+ *                empty, then the table or view will be placed in the user's
+ *                default schema.
+ *                        <li> gpudb::alter_table_protected: No longer used.
+ *                Previously set whether the given @a tableName should be
+ *                protected or not. The @a value would have been either 'true'
+ *                or 'false'.
+ *                        <li> gpudb::alter_table_rename_table: Renames a table
+ *                or view within its current schema to @a value. Has the same
+ *                naming restrictions as <a href="../../concepts/tables.html"
  *                target="_top">tables</a>.
  *                        <li> gpudb::alter_table_ttl: Sets the <a
  *                href="../../concepts/ttl.html" target="_top">time-to-live</a>
- *                in minutes of the table, view, or collection specified in @a
- *                tableName.
+ *                in minutes of the table or view specified in @a tableName.
  *                        <li> gpudb::alter_table_add_column: Adds the column
  *                specified in @a value to the table specified in @a tableName.
  *                Use @a column_type and @a column_properties in @a options to
@@ -5010,16 +6262,24 @@ AlterTableResponse alterTable( const std::string& tableName,
  *                in @a tableName. Specify the access mode in @a value. Valid
  *                modes are 'no_access', 'read_only', 'write_only' and
  *                'read_write'.
- *                        <li> gpudb::alter_table_refresh: Replays all the
- *                table creation commands required to create this <a
+ *                        <li> gpudb::alter_table_refresh: For a <a
  *                href="../../concepts/materialized_views.html"
- *                target="_top">materialized view</a>.
- *                        <li> gpudb::alter_table_set_refresh_method: Sets the
- *                method by which this <a
+ *                target="_top">materialized view</a>, replays all the table
+ *                creation commands required to create the view.  For an <a
+ *                href="../../concepts/external_tables.html"
+ *                target="_top">external table</a>, reloads all data in the
+ *                table from its associated source files or <a
+ *                href="../../concepts/data_sources.html" target="_top">data
+ *                source</a>.
+ *                        <li> gpudb::alter_table_set_refresh_method: For a <a
  *                href="../../concepts/materialized_views.html"
- *                target="_top">materialized view</a> is refreshed to the
- *                method specified in @a value - one of 'manual', 'periodic',
- *                'on_change'.
+ *                target="_top">materialized view</a>, sets the method by which
+ *                the view is refreshed to the method specified in @a value -
+ *                one of 'manual', 'periodic', or 'on_change'.  For an <a
+ *                href="../../concepts/external_tables.html"
+ *                target="_top">external table</a>, sets the method by which
+ *                the table is refreshed to the method specified in @a value -
+ *                either 'manual' or 'on_start'.
  *                        <li> gpudb::alter_table_set_refresh_start_time: Sets
  *                the time to start periodic refreshes of this <a
  *                href="../../concepts/materialized_views.html"
@@ -5083,18 +6343,18 @@ AlterTableResponse alterTable( const std::string& tableName,
  *                 </ul>
  *                 The default value is gpudb::alter_table_snappy.
  *                         <li> gpudb::alter_table_copy_values_from_column:
- *                 Deprecated.  Please use @a add_column_expression instead.
+ *                 [DEPRECATED--please use @a add_column_expression instead.]
  *                         <li> gpudb::alter_table_rename_column: When changing
  *                 a column, specify new column name.
  *                         <li> gpudb::alter_table_validate_change_column: When
- *                 changing a column, validate the change before applying it.
- *                 If @a true, then validate all values. A value too large (or
- *                 too long) for the new type will prevent any change. If @a
- *                 false, then when a value is too large or long, it will be
- *                 truncated.
+ *                 changing a column, validate the change before applying it
+ *                 (or not).
  *                 <ul>
- *                         <li> gpudb::alter_table_true: true
- *                         <li> gpudb::alter_table_false: false
+ *                         <li> gpudb::alter_table_true: Validate all values. A
+ *                 value too large (or too long) for the new type will prevent
+ *                 any change.
+ *                         <li> gpudb::alter_table_false: When a value is too
+ *                 large or long, it will be truncated.
  *                 </ul>
  *                 The default value is gpudb::alter_table_true.
  *                         <li> gpudb::alter_table_update_last_access_time:
@@ -5229,19 +6489,19 @@ AlterTableColumnsResponse& alterTableColumns( const AlterTableColumnsRequest& re
  * target="_top">compression</a> for a column.
  * 
  * @param tableName  Table on which the operation will be performed. Must be an
- *                   existing table or view.
- * @param columnAlterations  list of alter table add/delete/change column
- *                           requests - all for the same table.
- *                                           each request is a map that
- *                           includes 'column_name', 'action' and the options
- *                           specific for the action,
- *                                           note that the same options as in
- *                           alter table requests but in the same map as the
- *                           column name and the action. For example:
- *                           [{'column_name':'col_1','action':'change_column','rename_column':'col_2'},
- *                           {'column_name':'col_1','action':'add_column',
- *                           'type':'int','default_value':'1'}
- *                                           ]
+ *                   existing table or view, in [schema_name.]table_name
+ *                   format, using standard <a
+ *                   href="../../concepts/tables.html#table-name-resolution"
+ *                   target="_top">name resolution rules</a>.
+ * @param columnAlterations  List of alter table add/delete/change column
+ *                           requests - all for the same table. Each request is
+ *                           a map that includes 'column_name', 'action' and
+ *                           the options specific for the action. Note that the
+ *                           same options as in alter table requests but in the
+ *                           same map as the column name and the action. For
+ *                           example:
+ *                           [{'column_name':'col_1','action':'change_column','rename_column':'col_2'},{'column_name':'col_1','action':'add_column',
+ *                           'type':'int','default_value':'1'}]
  * @param options  Optional parameters.
  * 
  * @return Response object containing the result of the operation.
@@ -5271,19 +6531,19 @@ AlterTableColumnsResponse alterTableColumns( const std::string& tableName,
  * target="_top">compression</a> for a column.
  * 
  * @param tableName  Table on which the operation will be performed. Must be an
- *                   existing table or view.
- * @param columnAlterations  list of alter table add/delete/change column
- *                           requests - all for the same table.
- *                                           each request is a map that
- *                           includes 'column_name', 'action' and the options
- *                           specific for the action,
- *                                           note that the same options as in
- *                           alter table requests but in the same map as the
- *                           column name and the action. For example:
- *                           [{'column_name':'col_1','action':'change_column','rename_column':'col_2'},
- *                           {'column_name':'col_1','action':'add_column',
- *                           'type':'int','default_value':'1'}
- *                                           ]
+ *                   existing table or view, in [schema_name.]table_name
+ *                   format, using standard <a
+ *                   href="../../concepts/tables.html#table-name-resolution"
+ *                   target="_top">name resolution rules</a>.
+ * @param columnAlterations  List of alter table add/delete/change column
+ *                           requests - all for the same table. Each request is
+ *                           a map that includes 'column_name', 'action' and
+ *                           the options specific for the action. Note that the
+ *                           same options as in alter table requests but in the
+ *                           same map as the column name and the action. For
+ *                           example:
+ *                           [{'column_name':'col_1','action':'change_column','rename_column':'col_2'},{'column_name':'col_1','action':'add_column',
+ *                           'type':'int','default_value':'1'}]
  * @param options  Optional parameters.
  * @param[out] response_  Response object containing the results of the
  *                        operation.
@@ -5299,10 +6559,12 @@ AlterTableColumnsResponse& alterTableColumns( const std::string& tableName,
                                               AlterTableColumnsResponse& response_ ) const;
 
 /**
- * Updates (adds or changes) metadata for tables. The metadata key and values
- * must both be strings. This is an easy way to annotate whole tables rather
+ * Updates (adds or changes) metadata for tables. The metadata key and
+ * values must both be strings. This is an easy way to annotate whole tables
+ * rather
  * than single records within tables.  Some examples of metadata are owner of
- * the table, table creation timestamp etc.
+ * the
+ * table, table creation timestamp etc.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -5314,10 +6576,12 @@ AlterTableColumnsResponse& alterTableColumns( const std::string& tableName,
 AlterTableMetadataResponse alterTableMetadata( const AlterTableMetadataRequest& request_ ) const;
 
 /**
- * Updates (adds or changes) metadata for tables. The metadata key and values
- * must both be strings. This is an easy way to annotate whole tables rather
+ * Updates (adds or changes) metadata for tables. The metadata key and
+ * values must both be strings. This is an easy way to annotate whole tables
+ * rather
  * than single records within tables.  Some examples of metadata are owner of
- * the table, table creation timestamp etc.
+ * the
+ * table, table creation timestamp etc.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -5333,14 +6597,18 @@ AlterTableMetadataResponse& alterTableMetadata( const AlterTableMetadataRequest&
                                                 AlterTableMetadataResponse& response_ ) const;
 
 /**
- * Updates (adds or changes) metadata for tables. The metadata key and values
- * must both be strings. This is an easy way to annotate whole tables rather
+ * Updates (adds or changes) metadata for tables. The metadata key and
+ * values must both be strings. This is an easy way to annotate whole tables
+ * rather
  * than single records within tables.  Some examples of metadata are owner of
- * the table, table creation timestamp etc.
+ * the
+ * table, table creation timestamp etc.
  * 
- * @param tableNames  Names of the tables whose metadata will be updated. All
- *                    specified tables must exist, or an error will be
- *                    returned.
+ * @param tableNames  Names of the tables whose metadata will be updated, in
+ *                    [schema_name.]table_name format, using standard <a
+ *                    href="../../concepts/tables.html#table-name-resolution"
+ *                    target="_top">name resolution rules</a>.  All specified
+ *                    tables must exist, or an error will be returned.
  * @param metadataMap  A map which contains the metadata of the tables that are
  *                     to be updated. Note that only one map is provided for
  *                     all the tables; so the change will be applied to every
@@ -5357,14 +6625,18 @@ AlterTableMetadataResponse alterTableMetadata( const std::vector<std::string>& t
                                                const std::map<std::string, std::string>& options ) const;
 
 /**
- * Updates (adds or changes) metadata for tables. The metadata key and values
- * must both be strings. This is an easy way to annotate whole tables rather
+ * Updates (adds or changes) metadata for tables. The metadata key and
+ * values must both be strings. This is an easy way to annotate whole tables
+ * rather
  * than single records within tables.  Some examples of metadata are owner of
- * the table, table creation timestamp etc.
+ * the
+ * table, table creation timestamp etc.
  * 
- * @param tableNames  Names of the tables whose metadata will be updated. All
- *                    specified tables must exist, or an error will be
- *                    returned.
+ * @param tableNames  Names of the tables whose metadata will be updated, in
+ *                    [schema_name.]table_name format, using standard <a
+ *                    href="../../concepts/tables.html#table-name-resolution"
+ *                    target="_top">name resolution rules</a>.  All specified
+ *                    tables must exist, or an error will be returned.
  * @param metadataMap  A map which contains the metadata of the tables that are
  *                     to be updated. Note that only one map is provided for
  *                     all the tables; so the change will be applied to every
@@ -5385,13 +6657,15 @@ AlterTableMetadataResponse& alterTableMetadata( const std::vector<std::string>& 
                                                 AlterTableMetadataResponse& response_ ) const;
 
 /**
- * Alters properties of an exisiting <a
- * href="../../rm/concepts.html#storage-tiers" target="_top">tier</a> to
- * facilitate <a href="../../rm/concepts.html" target="_top">resource
- * management</a>.
+ * Alters properties of an exisiting
+ * <a href="../../rm/concepts.html#storage-tiers" target="_top">tier</a> to
+ * facilitate
+ * <a href="../../rm/concepts.html" target="_top">resource management</a>.
  * <p>
- * To disable <a href="../../rm/concepts.html#watermark-based-eviction"
- * target="_top">watermark-based eviction</a>, set both @a high_watermark and
+ * To disable
+ * <a href="../../rm/concepts.html#watermark-based-eviction"
+ * target="_top">watermark-based eviction</a>,
+ * set both @a high_watermark and
  * @a low_watermark to 100.
  * 
  * @param[in] request_  Request object containing the parameters for the
@@ -5404,13 +6678,15 @@ AlterTableMetadataResponse& alterTableMetadata( const std::vector<std::string>& 
 AlterTierResponse alterTier( const AlterTierRequest& request_ ) const;
 
 /**
- * Alters properties of an exisiting <a
- * href="../../rm/concepts.html#storage-tiers" target="_top">tier</a> to
- * facilitate <a href="../../rm/concepts.html" target="_top">resource
- * management</a>.
+ * Alters properties of an exisiting
+ * <a href="../../rm/concepts.html#storage-tiers" target="_top">tier</a> to
+ * facilitate
+ * <a href="../../rm/concepts.html" target="_top">resource management</a>.
  * <p>
- * To disable <a href="../../rm/concepts.html#watermark-based-eviction"
- * target="_top">watermark-based eviction</a>, set both @a high_watermark and
+ * To disable
+ * <a href="../../rm/concepts.html#watermark-based-eviction"
+ * target="_top">watermark-based eviction</a>,
+ * set both @a high_watermark and
  * @a low_watermark to 100.
  * 
  * @param[in] request_  Request object containing the parameters for the
@@ -5427,13 +6703,15 @@ AlterTierResponse& alterTier( const AlterTierRequest& request_,
                               AlterTierResponse& response_ ) const;
 
 /**
- * Alters properties of an exisiting <a
- * href="../../rm/concepts.html#storage-tiers" target="_top">tier</a> to
- * facilitate <a href="../../rm/concepts.html" target="_top">resource
- * management</a>.
+ * Alters properties of an exisiting
+ * <a href="../../rm/concepts.html#storage-tiers" target="_top">tier</a> to
+ * facilitate
+ * <a href="../../rm/concepts.html" target="_top">resource management</a>.
  * <p>
- * To disable <a href="../../rm/concepts.html#watermark-based-eviction"
- * target="_top">watermark-based eviction</a>, set both @a high_watermark and
+ * To disable
+ * <a href="../../rm/concepts.html#watermark-based-eviction"
+ * target="_top">watermark-based eviction</a>,
+ * set both @a high_watermark and
  * @a low_watermark to 100.
  * 
  * @param name  Name of the tier to be altered. Must be an existing tier group
@@ -5459,13 +6737,15 @@ AlterTierResponse alterTier( const std::string& name,
                              const std::map<std::string, std::string>& options ) const;
 
 /**
- * Alters properties of an exisiting <a
- * href="../../rm/concepts.html#storage-tiers" target="_top">tier</a> to
- * facilitate <a href="../../rm/concepts.html" target="_top">resource
- * management</a>.
+ * Alters properties of an exisiting
+ * <a href="../../rm/concepts.html#storage-tiers" target="_top">tier</a> to
+ * facilitate
+ * <a href="../../rm/concepts.html" target="_top">resource management</a>.
  * <p>
- * To disable <a href="../../rm/concepts.html#watermark-based-eviction"
- * target="_top">watermark-based eviction</a>, set both @a high_watermark and
+ * To disable
+ * <a href="../../rm/concepts.html#watermark-based-eviction"
+ * target="_top">watermark-based eviction</a>,
+ * set both @a high_watermark and
  * @a low_watermark to 100.
  * 
  * @param name  Name of the tier to be altered. Must be an existing tier group
@@ -5534,6 +6814,9 @@ AlterUserResponse& alterUser( const AlterUserRequest& request_,
  *                resource group for an internal user. The resource group must
  *                exist, otherwise, an empty string assigns the user to the
  *                default resource group.
+ *                        <li> gpudb::alter_user_set_default_schema: Set the
+ *                default_schema for an internal user. An empty string means
+ *                the user will have no default schema.
  *                </ul>
  * @param value  The value of the modification, depending on @a action.
  * @param options  Optional parameters.
@@ -5559,6 +6842,9 @@ AlterUserResponse alterUser( const std::string& name,
  *                resource group for an internal user. The resource group must
  *                exist, otherwise, an empty string assigns the user to the
  *                default resource group.
+ *                        <li> gpudb::alter_user_set_default_schema: Set the
+ *                default_schema for an internal user. An empty string means
+ *                the user will have no default schema.
  *                </ul>
  * @param value  The value of the modification, depending on @a action.
  * @param options  Optional parameters.
@@ -5577,10 +6863,11 @@ AlterUserResponse& alterUser( const std::string& name,
                               AlterUserResponse& response_ ) const;
 
 /**
- * Append (or insert) all records from a source table (specified by @a
- * sourceTableName) to a particular target table (specified by @a tableName).
- * The field map (specified by @a fieldMap) holds the user specified map of
- * target table column names with their mapped source column names.
+ * Append (or insert) all records from a source table
+ * (specified by @a sourceTableName) to a particular target table
+ * (specified by @a tableName). The field map
+ * (specified by @a fieldMap) holds the user specified map of target table
+ * column names with their mapped source column names.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -5592,10 +6879,11 @@ AlterUserResponse& alterUser( const std::string& name,
 AppendRecordsResponse appendRecords( const AppendRecordsRequest& request_ ) const;
 
 /**
- * Append (or insert) all records from a source table (specified by @a
- * sourceTableName) to a particular target table (specified by @a tableName).
- * The field map (specified by @a fieldMap) holds the user specified map of
- * target table column names with their mapped source column names.
+ * Append (or insert) all records from a source table
+ * (specified by @a sourceTableName) to a particular target table
+ * (specified by @a tableName). The field map
+ * (specified by @a fieldMap) holds the user specified map of target table
+ * column names with their mapped source column names.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -5611,15 +6899,22 @@ AppendRecordsResponse& appendRecords( const AppendRecordsRequest& request_,
                                       AppendRecordsResponse& response_ ) const;
 
 /**
- * Append (or insert) all records from a source table (specified by @a
- * sourceTableName) to a particular target table (specified by @a tableName).
- * The field map (specified by @a fieldMap) holds the user specified map of
- * target table column names with their mapped source column names.
+ * Append (or insert) all records from a source table
+ * (specified by @a sourceTableName) to a particular target table
+ * (specified by @a tableName). The field map
+ * (specified by @a fieldMap) holds the user specified map of target table
+ * column names with their mapped source column names.
  * 
- * @param tableName  The table name for the records to be appended. Must be an
+ * @param tableName  The table name for the records to be appended, in
+ *                   [schema_name.]table_name format, using standard <a
+ *                   href="../../concepts/tables.html#table-name-resolution"
+ *                   target="_top">name resolution rules</a>.  Must be an
  *                   existing table.
- * @param sourceTableName  The source table name to get records from. Must be
- *                         an existing table name.
+ * @param sourceTableName  The source table name to get records from, in
+ *                         [schema_name.]table_name format, using standard <a
+ *                         href="../../concepts/tables.html#table-name-resolution"
+ *                         target="_top">name resolution rules</a>.  Must be an
+ *                         existing table name.
  * @param fieldMap  Contains the mapping of column names from the target table
  *                  (specified by @a tableName) as the keys, and corresponding
  *                  column names or expressions (e.g., 'col_name+1') from the
@@ -5688,15 +6983,22 @@ AppendRecordsResponse appendRecords( const std::string& tableName,
                                      const std::map<std::string, std::string>& options ) const;
 
 /**
- * Append (or insert) all records from a source table (specified by @a
- * sourceTableName) to a particular target table (specified by @a tableName).
- * The field map (specified by @a fieldMap) holds the user specified map of
- * target table column names with their mapped source column names.
+ * Append (or insert) all records from a source table
+ * (specified by @a sourceTableName) to a particular target table
+ * (specified by @a tableName). The field map
+ * (specified by @a fieldMap) holds the user specified map of target table
+ * column names with their mapped source column names.
  * 
- * @param tableName  The table name for the records to be appended. Must be an
+ * @param tableName  The table name for the records to be appended, in
+ *                   [schema_name.]table_name format, using standard <a
+ *                   href="../../concepts/tables.html#table-name-resolution"
+ *                   target="_top">name resolution rules</a>.  Must be an
  *                   existing table.
- * @param sourceTableName  The source table name to get records from. Must be
- *                         an existing table name.
+ * @param sourceTableName  The source table name to get records from, in
+ *                         [schema_name.]table_name format, using standard <a
+ *                         href="../../concepts/tables.html#table-name-resolution"
+ *                         target="_top">name resolution rules</a>.  Must be an
+ *                         existing table name.
  * @param fieldMap  Contains the mapping of column names from the target table
  *                  (specified by @a tableName) as the keys, and corresponding
  *                  column names or expressions (e.g., 'col_name+1') from the
@@ -5802,7 +7104,11 @@ ClearStatisticsResponse& clearStatistics( const ClearStatisticsRequest& request_
  * Clears statistics (cardinality, mean value, etc.) for a column in a
  * specified table.
  * 
- * @param tableName  Name of a table. Must be an existing table.
+ * @param tableName  Name of a table, in [schema_name.]table_name format, using
+ *                   standard <a
+ *                   href="../../concepts/tables.html#table-name-resolution"
+ *                   target="_top">name resolution rules</a>. Must be an
+ *                   existing table.
  * @param columnName  Name of the column in @a tableName for which to clear
  *                    statistics. The column must be from an existing table. An
  *                    empty string clears statistics for all columns in the
@@ -5821,7 +7127,11 @@ ClearStatisticsResponse clearStatistics( const std::string& tableName,
  * Clears statistics (cardinality, mean value, etc.) for a column in a
  * specified table.
  * 
- * @param tableName  Name of a table. Must be an existing table.
+ * @param tableName  Name of a table, in [schema_name.]table_name format, using
+ *                   standard <a
+ *                   href="../../concepts/tables.html#table-name-resolution"
+ *                   target="_top">name resolution rules</a>. Must be an
+ *                   existing table.
  * @param columnName  Name of the column in @a tableName for which to clear
  *                    statistics. The column must be from an existing table. An
  *                    empty string clears statistics for all columns in the
@@ -5841,10 +7151,11 @@ ClearStatisticsResponse& clearStatistics( const std::string& tableName,
                                           ClearStatisticsResponse& response_ ) const;
 
 /**
- * Clears (drops) one or all tables in the database cluster. The operation is
- * synchronous meaning that the table will be cleared before the function
- * returns. The response payload returns the status of the operation along with
- * the name of the table that was cleared.
+ * Clears (drops) one or all tables in the database cluster. The
+ * operation is synchronous meaning that the table will be cleared before the
+ * function returns. The response payload returns the status of the operation
+ * along
+ * with the name of the table that was cleared.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -5856,10 +7167,11 @@ ClearStatisticsResponse& clearStatistics( const std::string& tableName,
 ClearTableResponse clearTable( const ClearTableRequest& request_ ) const;
 
 /**
- * Clears (drops) one or all tables in the database cluster. The operation is
- * synchronous meaning that the table will be cleared before the function
- * returns. The response payload returns the status of the operation along with
- * the name of the table that was cleared.
+ * Clears (drops) one or all tables in the database cluster. The
+ * operation is synchronous meaning that the table will be cleared before the
+ * function returns. The response payload returns the status of the operation
+ * along
+ * with the name of the table that was cleared.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -5875,15 +7187,19 @@ ClearTableResponse& clearTable( const ClearTableRequest& request_,
                                 ClearTableResponse& response_ ) const;
 
 /**
- * Clears (drops) one or all tables in the database cluster. The operation is
- * synchronous meaning that the table will be cleared before the function
- * returns. The response payload returns the status of the operation along with
- * the name of the table that was cleared.
+ * Clears (drops) one or all tables in the database cluster. The
+ * operation is synchronous meaning that the table will be cleared before the
+ * function returns. The response payload returns the status of the operation
+ * along
+ * with the name of the table that was cleared.
  * 
- * @param tableName  Name of the table to be cleared. Must be an existing
- *                   table. Empty string clears all available tables, though
- *                   this behavior is be prevented by default via gpudb.conf
- *                   parameter 'disable_clear_all'.
+ * @param tableName  Name of the table to be cleared, in
+ *                   [schema_name.]table_name format, using standard <a
+ *                   href="../../concepts/tables.html#table-name-resolution"
+ *                   target="_top">name resolution rules</a>. Must be an
+ *                   existing table. Empty string clears all available tables,
+ *                   though this behavior is be prevented by default via
+ *                   gpudb.conf parameter 'disable_clear_all'.
  * @param authorization  No longer used. User can pass an empty string.
  * @param options  Optional parameters.
  *                 <ul>
@@ -5908,15 +7224,19 @@ ClearTableResponse clearTable( const std::string& tableName,
                                const std::map<std::string, std::string>& options ) const;
 
 /**
- * Clears (drops) one or all tables in the database cluster. The operation is
- * synchronous meaning that the table will be cleared before the function
- * returns. The response payload returns the status of the operation along with
- * the name of the table that was cleared.
+ * Clears (drops) one or all tables in the database cluster. The
+ * operation is synchronous meaning that the table will be cleared before the
+ * function returns. The response payload returns the status of the operation
+ * along
+ * with the name of the table that was cleared.
  * 
- * @param tableName  Name of the table to be cleared. Must be an existing
- *                   table. Empty string clears all available tables, though
- *                   this behavior is be prevented by default via gpudb.conf
- *                   parameter 'disable_clear_all'.
+ * @param tableName  Name of the table to be cleared, in
+ *                   [schema_name.]table_name format, using standard <a
+ *                   href="../../concepts/tables.html#table-name-resolution"
+ *                   target="_top">name resolution rules</a>. Must be an
+ *                   existing table. Empty string clears all available tables,
+ *                   though this behavior is be prevented by default via
+ *                   gpudb.conf parameter 'disable_clear_all'.
  * @param authorization  No longer used. User can pass an empty string.
  * @param options  Optional parameters.
  *                 <ul>
@@ -6103,7 +7423,11 @@ CollectStatisticsResponse& collectStatistics( const CollectStatisticsRequest& re
 /**
  * Collect statistics for a column(s) in a specified table.
  * 
- * @param tableName  Name of a table. Must be an existing table.
+ * @param tableName  Name of a table, in [schema_name.]table_name format, using
+ *                   standard <a
+ *                   href="../../concepts/tables.html#table-name-resolution"
+ *                   target="_top">name resolution rules</a>.  Must be an
+ *                   existing table.
  * @param columnNames  List of one or more column names in @a tableName for
  *                     which to collect statistics (cardinality, mean value,
  *                     etc.).
@@ -6120,7 +7444,11 @@ CollectStatisticsResponse collectStatistics( const std::string& tableName,
 /**
  * Collect statistics for a column(s) in a specified table.
  * 
- * @param tableName  Name of a table. Must be an existing table.
+ * @param tableName  Name of a table, in [schema_name.]table_name format, using
+ *                   standard <a
+ *                   href="../../concepts/tables.html#table-name-resolution"
+ *                   target="_top">name resolution rules</a>.  Must be an
+ *                   existing table.
  * @param columnNames  List of one or more column names in @a tableName for
  *                     which to collect statistics (cardinality, mean value,
  *                     etc.).
@@ -6139,7 +7467,10 @@ CollectStatisticsResponse& collectStatistics( const std::string& tableName,
                                               CollectStatisticsResponse& response_ ) const;
 
 /**
- * @private
+ * Creates a <a href="../../concepts/data_sources.html" target="_top">data
+ * source</a>, which contains the
+ * location and connection information for a data store that is external to the
+ * database.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -6148,10 +7479,13 @@ CollectStatisticsResponse& collectStatistics( const std::string& tableName,
  * 
  */
 
-CreateExternalTableResponse createExternalTable( const CreateExternalTableRequest& request_ ) const;
+CreateDatasourceResponse createDatasource( const CreateDatasourceRequest& request_ ) const;
 
 /**
- * @private
+ * Creates a <a href="../../concepts/data_sources.html" target="_top">data
+ * source</a>, which contains the
+ * location and connection information for a data store that is external to the
+ * database.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -6163,192 +7497,115 @@ CreateExternalTableResponse createExternalTable( const CreateExternalTableReques
  * 
  */
 
-CreateExternalTableResponse& createExternalTable( const CreateExternalTableRequest& request_,
-                                                  CreateExternalTableResponse& response_ ) const;
+CreateDatasourceResponse& createDatasource( const CreateDatasourceRequest& request_,
+                                            CreateDatasourceResponse& response_ ) const;
 
 /**
- * @private
+ * Creates a <a href="../../concepts/data_sources.html" target="_top">data
+ * source</a>, which contains the
+ * location and connection information for a data store that is external to the
+ * database.
  * 
- * @param tableName
- * @param filepaths
- * @param createTableOptions
- *                            <ul>
- *                                    <li>
- *                            gpudb::create_external_table_type_id:   The
- *                            default value is ''.
- *                            </ul>
- * @param options
+ * @param name  Name of the data source to be created.
+ * @param location  Location of the remote storage in
+ *                  'storage_provider_type://[storage_path[:storage_port]]'
+ *                  format.
+ *                  Supported storage provider types are 'hdfs' and 's3'.
+ * @param userName  Name of the remote system user; may be an empty string
+ * @param password  Password for the remote system user; may be an empty string
+ * @param options  Optional parameters.
  *                 <ul>
- *                         <li> gpudb::create_external_table_table_type:
+ *                         <li> gpudb::create_datasource_skip_validation:
+ *                 Bypass validation of connection to remote source.
  *                 <ul>
- *                         <li> gpudb::create_external_table_materialized
- *                         <li> gpudb::create_external_table_logical
- *                         <li> gpudb::create_external_table_logical_tmp
+ *                         <li> gpudb::create_datasource_true
+ *                         <li> gpudb::create_datasource_false
  *                 </ul>
- *                 The default value is
- *                 gpudb::create_external_table_materialized.
- *                         <li> gpudb::create_external_table_file_type:
+ *                 The default value is gpudb::create_datasource_false.
+ *                         <li> gpudb::create_datasource_connection_timeout:
+ *                 Timeout in seconds for connecting to this storage provider
+ *                         <li> gpudb::create_datasource_wait_timeout: Timeout
+ *                 in seconds for reading from this storage provider
+ *                         <li> gpudb::create_datasource_s3_bucket_name: Name
+ *                 of the Amazon S3 bucket to use as the data source
+ *                         <li> gpudb::create_datasource_s3_region: Name of the
+ *                 Amazon S3 region where the given bucket is located
+ *                         <li> gpudb::create_datasource_hdfs_kerberos_keytab:
+ *                 Kerberos keytab file location for the given HDFS user
+ *                         <li> gpudb::create_datasource_hdfs_delegation_token:
+ *                 Delegation token for the given HDFS user
+ *                         <li> gpudb::create_datasource_hdfs_use_kerberos: Use
+ *                 kerberos authentication for the given HDFS cluster
  *                 <ul>
- *                         <li> gpudb::create_external_table_delimited_text
- *                         <li> gpudb::create_external_table_parquet
+ *                         <li> gpudb::create_datasource_true
+ *                         <li> gpudb::create_datasource_false
  *                 </ul>
- *                 The default value is
- *                 gpudb::create_external_table_delimited_text.
- *                         <li> gpudb::create_external_table_loading_mode:
- *                 <ul>
- *                         <li> gpudb::create_external_table_head
- *                         <li> gpudb::create_external_table_distributed_shared
- *                         <li> gpudb::create_external_table_distributed_local
- *                 </ul>
- *                 The default value is gpudb::create_external_table_head.
- *                         <li> gpudb::create_external_table_error_handling:
- *                 <ul>
- *                         <li> gpudb::create_external_table_permissive
- *                         <li> gpudb::create_external_table_ignore_bad_records
- *                         <li> gpudb::create_external_table_abort
- *                 </ul>
- *                 The default value is
- *                 gpudb::create_external_table_Permissive.
- *                         <li> gpudb::create_external_table_batch_size
- *                         <li> gpudb::create_external_table_refresh_method:
- *                 <ul>
- *                         <li> gpudb::create_external_table_manual
- *                         <li> gpudb::create_external_table_on_start
- *                 </ul>
- *                 The default value is gpudb::create_external_table_manual.
- *                         <li> gpudb::create_external_table_column_formats
- *                         <li>
- *                 gpudb::create_external_table_default_column_formats
- *                         <li> gpudb::create_external_table_dry_run:
- *                 <ul>
- *                         <li> gpudb::create_external_table_false
- *                         <li> gpudb::create_external_table_true
- *                 </ul>
- *                 The default value is gpudb::create_external_table_false.
- *                         <li> gpudb::create_external_table_text_has_header:
- *                 <ul>
- *                         <li> gpudb::create_external_table_true
- *                         <li> gpudb::create_external_table_false
- *                 </ul>
- *                 The default value is gpudb::create_external_table_true.
- *                         <li> gpudb::create_external_table_text_delimiter:
- *                 The default value is ','.
- *                         <li>
- *                 gpudb::create_external_table_text_header_property_delimiter:
- *                 The default value is '|'.
- *                         <li> gpudb::create_external_table_columns_to_load
- *                         <li>
- *                 gpudb::create_external_table_text_comment_string:   The
- *                 default value is '#'.
- *                         <li> gpudb::create_external_table_text_null_string:
- *                 The default value is ''.
- *                         <li>
- *                 gpudb::create_external_table_text_quote_character:   The
- *                 default value is '"'.
- *                         <li>
- *                 gpudb::create_external_table_text_escape_character
- *                         <li>
- *                 gpudb::create_external_table_external_storage_location
- *                         <li> gpudb::create_external_table_s3_bucket_name
- *                         <li> gpudb::create_external_table_s3_region
- *                         <li> gpudb::create_external_table_num_tasks_per_rank
+ *                 The default value is gpudb::create_datasource_false.
+ *                         <li> gpudb::create_datasource_azure_container_name:
+ *                 Name of the Azure storage container to use as the data
+ *                 source
+ *                         <li> gpudb::create_datasource_azure_sas_token:
+ *                 Shared access signature token for Azure storage account to
+ *                 use as the data source
  *                 </ul>
  * 
  * @return Response object containing the result of the operation.
  * 
  */
 
-CreateExternalTableResponse createExternalTable( const std::string& tableName,
-                                                 const std::vector<std::string>& filepaths,
-                                                 const std::map<std::string, std::string>& createTableOptions,
-                                                 const std::map<std::string, std::string>& options ) const;
+CreateDatasourceResponse createDatasource( const std::string& name,
+                                           const std::string& location,
+                                           const std::string& userName,
+                                           const std::string& password,
+                                           const std::map<std::string, std::string>& options ) const;
 
 /**
- * @private
+ * Creates a <a href="../../concepts/data_sources.html" target="_top">data
+ * source</a>, which contains the
+ * location and connection information for a data store that is external to the
+ * database.
  * 
- * @param tableName
- * @param filepaths
- * @param createTableOptions
- *                            <ul>
- *                                    <li>
- *                            gpudb::create_external_table_type_id:   The
- *                            default value is ''.
- *                            </ul>
- * @param options
+ * @param name  Name of the data source to be created.
+ * @param location  Location of the remote storage in
+ *                  'storage_provider_type://[storage_path[:storage_port]]'
+ *                  format.
+ *                  Supported storage provider types are 'hdfs' and 's3'.
+ * @param userName  Name of the remote system user; may be an empty string
+ * @param password  Password for the remote system user; may be an empty string
+ * @param options  Optional parameters.
  *                 <ul>
- *                         <li> gpudb::create_external_table_table_type:
+ *                         <li> gpudb::create_datasource_skip_validation:
+ *                 Bypass validation of connection to remote source.
  *                 <ul>
- *                         <li> gpudb::create_external_table_materialized
- *                         <li> gpudb::create_external_table_logical
- *                         <li> gpudb::create_external_table_logical_tmp
+ *                         <li> gpudb::create_datasource_true
+ *                         <li> gpudb::create_datasource_false
  *                 </ul>
- *                 The default value is
- *                 gpudb::create_external_table_materialized.
- *                         <li> gpudb::create_external_table_file_type:
+ *                 The default value is gpudb::create_datasource_false.
+ *                         <li> gpudb::create_datasource_connection_timeout:
+ *                 Timeout in seconds for connecting to this storage provider
+ *                         <li> gpudb::create_datasource_wait_timeout: Timeout
+ *                 in seconds for reading from this storage provider
+ *                         <li> gpudb::create_datasource_s3_bucket_name: Name
+ *                 of the Amazon S3 bucket to use as the data source
+ *                         <li> gpudb::create_datasource_s3_region: Name of the
+ *                 Amazon S3 region where the given bucket is located
+ *                         <li> gpudb::create_datasource_hdfs_kerberos_keytab:
+ *                 Kerberos keytab file location for the given HDFS user
+ *                         <li> gpudb::create_datasource_hdfs_delegation_token:
+ *                 Delegation token for the given HDFS user
+ *                         <li> gpudb::create_datasource_hdfs_use_kerberos: Use
+ *                 kerberos authentication for the given HDFS cluster
  *                 <ul>
- *                         <li> gpudb::create_external_table_delimited_text
- *                         <li> gpudb::create_external_table_parquet
+ *                         <li> gpudb::create_datasource_true
+ *                         <li> gpudb::create_datasource_false
  *                 </ul>
- *                 The default value is
- *                 gpudb::create_external_table_delimited_text.
- *                         <li> gpudb::create_external_table_loading_mode:
- *                 <ul>
- *                         <li> gpudb::create_external_table_head
- *                         <li> gpudb::create_external_table_distributed_shared
- *                         <li> gpudb::create_external_table_distributed_local
- *                 </ul>
- *                 The default value is gpudb::create_external_table_head.
- *                         <li> gpudb::create_external_table_error_handling:
- *                 <ul>
- *                         <li> gpudb::create_external_table_permissive
- *                         <li> gpudb::create_external_table_ignore_bad_records
- *                         <li> gpudb::create_external_table_abort
- *                 </ul>
- *                 The default value is
- *                 gpudb::create_external_table_Permissive.
- *                         <li> gpudb::create_external_table_batch_size
- *                         <li> gpudb::create_external_table_refresh_method:
- *                 <ul>
- *                         <li> gpudb::create_external_table_manual
- *                         <li> gpudb::create_external_table_on_start
- *                 </ul>
- *                 The default value is gpudb::create_external_table_manual.
- *                         <li> gpudb::create_external_table_column_formats
- *                         <li>
- *                 gpudb::create_external_table_default_column_formats
- *                         <li> gpudb::create_external_table_dry_run:
- *                 <ul>
- *                         <li> gpudb::create_external_table_false
- *                         <li> gpudb::create_external_table_true
- *                 </ul>
- *                 The default value is gpudb::create_external_table_false.
- *                         <li> gpudb::create_external_table_text_has_header:
- *                 <ul>
- *                         <li> gpudb::create_external_table_true
- *                         <li> gpudb::create_external_table_false
- *                 </ul>
- *                 The default value is gpudb::create_external_table_true.
- *                         <li> gpudb::create_external_table_text_delimiter:
- *                 The default value is ','.
- *                         <li>
- *                 gpudb::create_external_table_text_header_property_delimiter:
- *                 The default value is '|'.
- *                         <li> gpudb::create_external_table_columns_to_load
- *                         <li>
- *                 gpudb::create_external_table_text_comment_string:   The
- *                 default value is '#'.
- *                         <li> gpudb::create_external_table_text_null_string:
- *                 The default value is ''.
- *                         <li>
- *                 gpudb::create_external_table_text_quote_character:   The
- *                 default value is '"'.
- *                         <li>
- *                 gpudb::create_external_table_text_escape_character
- *                         <li>
- *                 gpudb::create_external_table_external_storage_location
- *                         <li> gpudb::create_external_table_s3_bucket_name
- *                         <li> gpudb::create_external_table_s3_region
- *                         <li> gpudb::create_external_table_num_tasks_per_rank
+ *                 The default value is gpudb::create_datasource_false.
+ *                         <li> gpudb::create_datasource_azure_container_name:
+ *                 Name of the Azure storage container to use as the data
+ *                 source
+ *                         <li> gpudb::create_datasource_azure_sas_token:
+ *                 Shared access signature token for Azure storage account to
+ *                 use as the data source
  *                 </ul>
  * @param[out] response_  Response object containing the results of the
  *                        operation.
@@ -6358,11 +7615,12 @@ CreateExternalTableResponse createExternalTable( const std::string& tableName,
  * 
  */
 
-CreateExternalTableResponse& createExternalTable( const std::string& tableName,
-                                                  const std::vector<std::string>& filepaths,
-                                                  const std::map<std::string, std::string>& createTableOptions,
-                                                  const std::map<std::string, std::string>& options,
-                                                  CreateExternalTableResponse& response_ ) const;
+CreateDatasourceResponse& createDatasource( const std::string& name,
+                                            const std::string& location,
+                                            const std::string& userName,
+                                            const std::string& password,
+                                            const std::map<std::string, std::string>& options,
+                                            CreateDatasourceResponse& response_ ) const;
 
 /**
  * Creates a new graph network using given nodes, edges, weights, and
@@ -6579,7 +7837,12 @@ CreateGraphResponse& createGraph( const CreateGraphRequest& request_,
  *                 The default value is gpudb::create_graph_false.
  *                         <li> gpudb::create_graph_graph_table: If specified,
  *                 the created graph is also created as a table with the given
- *                 name and following identifier columns: 'EDGE_ID',
+ *                 name, in [schema_name.]table_name format, using standard <a
+ *                 href="../../concepts/tables.html#table-name-resolution"
+ *                 target="_top">name resolution rules</a> and meeting <a
+ *                 href="../../concepts/tables.html#table-naming-criteria"
+ *                 target="_top">table naming criteria</a>.  The table will
+ *                 have the following identifier columns: 'EDGE_ID',
  *                 'EDGE_NODE1_ID', 'EDGE_NODE2_ID'. If left blank, no table is
  *                 created.  The default value is ''.
  *                         <li> gpudb::create_graph_remove_label_only: When
@@ -6795,7 +8058,12 @@ CreateGraphResponse createGraph( const std::string& graphName,
  *                 The default value is gpudb::create_graph_false.
  *                         <li> gpudb::create_graph_graph_table: If specified,
  *                 the created graph is also created as a table with the given
- *                 name and following identifier columns: 'EDGE_ID',
+ *                 name, in [schema_name.]table_name format, using standard <a
+ *                 href="../../concepts/tables.html#table-name-resolution"
+ *                 target="_top">name resolution rules</a> and meeting <a
+ *                 href="../../concepts/tables.html#table-naming-criteria"
+ *                 target="_top">table naming criteria</a>.  The table will
+ *                 have the following identifier columns: 'EDGE_ID',
  *                 'EDGE_NODE1_ID', 'EDGE_NODE2_ID'. If left blank, no table is
  *                 created.  The default value is ''.
  *                         <li> gpudb::create_graph_remove_label_only: When
@@ -6905,6 +8173,17 @@ CreateJobResponse& createJob( const CreateJobRequest& request_,
  *                 values must (or can) be specified.  If this parameter is
  *                 used, then @a requestEncoding must be @a json.
  * @param options  Optional parameters.
+ *                 <ul>
+ *                         <li> gpudb::create_job_remove_job_on_complete:
+ *                 <ul>
+ *                         <li> gpudb::create_job_true
+ *                         <li> gpudb::create_job_false
+ *                 </ul>
+ *                         <li> gpudb::create_job_job_tag: Tag to use for
+ *                 submitted job. The same tag could be used on backup cluster
+ *                 to retrieve response for the job. Tags can use letter,
+ *                 numbers, '_' and '-'
+ *                 </ul>
  * 
  * @return Response object containing the result of the operation.
  * 
@@ -6943,6 +8222,17 @@ CreateJobResponse createJob( const std::string& endpoint,
  *                 values must (or can) be specified.  If this parameter is
  *                 used, then @a requestEncoding must be @a json.
  * @param options  Optional parameters.
+ *                 <ul>
+ *                         <li> gpudb::create_job_remove_job_on_complete:
+ *                 <ul>
+ *                         <li> gpudb::create_job_true
+ *                         <li> gpudb::create_job_false
+ *                 </ul>
+ *                         <li> gpudb::create_job_job_tag: Tag to use for
+ *                 submitted job. The same tag could be used on backup cluster
+ *                 to retrieve response for the job. Tags can use letter,
+ *                 numbers, '_' and '-'
+ *                 </ul>
  * @param[out] response_  Response object containing the results of the
  *                        operation.
  * 
@@ -7004,12 +8294,17 @@ CreateJoinTableResponse& createJoinTable( const CreateJoinTableRequest& request_
  * href="../../concepts/joins.html#limitations-cautions" target="_top">Join
  * Limitations and Cautions</a>.
  * 
- * @param joinTableName  Name of the join table to be created.  Has the same
- *                       naming restrictions as <a
- *                       href="../../concepts/tables.html"
- *                       target="_top">tables</a>.
- * @param tableNames  The list of table names composing the join.  Corresponds
- *                    to a SQL statement FROM clause.
+ * @param joinTableName  Name of the join table to be created, in
+ *                       [schema_name.]table_name format, using standard <a
+ *                       href="../../concepts/tables.html#table-name-resolution"
+ *                       target="_top">name resolution rules</a> and meeting <a
+ *                       href="../../concepts/tables.html#table-naming-criteria"
+ *                       target="_top">table naming criteria</a>.
+ * @param tableNames  The list of table names composing the join, each in
+ *                    [schema_name.]table_name format, using standard <a
+ *                    href="../../concepts/tables.html#table-name-resolution"
+ *                    target="_top">name resolution rules</a>.  Corresponds to
+ *                    a SQL statement FROM clause.
  * @param columnNames  List of member table columns or column expressions to be
  *                     included in the join. Columns can be prefixed with
  *                     'table_id.column_name', where 'table_id' is the table
@@ -7027,13 +8322,14 @@ CreateJoinTableResponse& createJoinTable( const CreateJoinTableRequest& request_
  *                     target="_top">expressions</a>.
  * @param options  Optional parameters.
  *                 <ul>
- *                         <li> gpudb::create_join_table_collection_name: Name
- *                 of a collection which is to contain the join. If the
- *                 collection provided is non-existent, the collection will be
- *                 automatically created. If empty, then the join will be at
- *                 the top level.  The default value is ''.
+ *                         <li> gpudb::create_join_table_collection_name:
+ *                 [DEPRECATED--please specify the containing schema for the
+ *                 join as part of @a joinTableName and use /create/schema to
+ *                 create the schema if non-existent]  Name of a schema for the
+ *                 join. If the schema is non-existent, it will be
+ *                 automatically created.  The default value is ''.
  *                         <li> gpudb::create_join_table_max_query_dimensions:
- *                 Obsolete in GPUdb v7.0
+ *                 No longer used.
  *                         <li> gpudb::create_join_table_optimize_lookups: Use
  *                 more memory to speed up the joining of tables.
  *                 <ul>
@@ -7073,12 +8369,17 @@ CreateJoinTableResponse createJoinTable( const std::string& joinTableName,
  * href="../../concepts/joins.html#limitations-cautions" target="_top">Join
  * Limitations and Cautions</a>.
  * 
- * @param joinTableName  Name of the join table to be created.  Has the same
- *                       naming restrictions as <a
- *                       href="../../concepts/tables.html"
- *                       target="_top">tables</a>.
- * @param tableNames  The list of table names composing the join.  Corresponds
- *                    to a SQL statement FROM clause.
+ * @param joinTableName  Name of the join table to be created, in
+ *                       [schema_name.]table_name format, using standard <a
+ *                       href="../../concepts/tables.html#table-name-resolution"
+ *                       target="_top">name resolution rules</a> and meeting <a
+ *                       href="../../concepts/tables.html#table-naming-criteria"
+ *                       target="_top">table naming criteria</a>.
+ * @param tableNames  The list of table names composing the join, each in
+ *                    [schema_name.]table_name format, using standard <a
+ *                    href="../../concepts/tables.html#table-name-resolution"
+ *                    target="_top">name resolution rules</a>.  Corresponds to
+ *                    a SQL statement FROM clause.
  * @param columnNames  List of member table columns or column expressions to be
  *                     included in the join. Columns can be prefixed with
  *                     'table_id.column_name', where 'table_id' is the table
@@ -7096,13 +8397,14 @@ CreateJoinTableResponse createJoinTable( const std::string& joinTableName,
  *                     target="_top">expressions</a>.
  * @param options  Optional parameters.
  *                 <ul>
- *                         <li> gpudb::create_join_table_collection_name: Name
- *                 of a collection which is to contain the join. If the
- *                 collection provided is non-existent, the collection will be
- *                 automatically created. If empty, then the join will be at
- *                 the top level.  The default value is ''.
+ *                         <li> gpudb::create_join_table_collection_name:
+ *                 [DEPRECATED--please specify the containing schema for the
+ *                 join as part of @a joinTableName and use /create/schema to
+ *                 create the schema if non-existent]  Name of a schema for the
+ *                 join. If the schema is non-existent, it will be
+ *                 automatically created.  The default value is ''.
  *                         <li> gpudb::create_join_table_max_query_dimensions:
- *                 Obsolete in GPUdb v7.0
+ *                 No longer used.
  *                         <li> gpudb::create_join_table_optimize_lookups: Use
  *                 more memory to speed up the joining of tables.
  *                 <ul>
@@ -7139,16 +8441,18 @@ CreateJoinTableResponse& createJoinTable( const std::string& joinTableName,
                                           CreateJoinTableResponse& response_ ) const;
 
 /**
- * Initiates the process of creating a materialized view, reserving the view's
- * name to prevent other views or tables from being created with that name.
+ * Initiates the process of creating a materialized view, reserving the
+ * view's name to prevent other views or tables from being created with that
+ * name.
  * <p>
- * For materialized view details and examples, see <a
- * href="../../concepts/materialized_views.html" target="_top">Materialized
+ * For materialized view details and examples, see
+ * <a href="../../concepts/materialized_views.html" target="_top">Materialized
  * Views</a>.
  * <p>
  * The response contains @a viewId, which is used to tag each subsequent
  * operation (projection, union, aggregation, filter, or join) that will
- * compose the view.
+ * compose
+ * the view.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -7160,16 +8464,18 @@ CreateJoinTableResponse& createJoinTable( const std::string& joinTableName,
 CreateMaterializedViewResponse createMaterializedView( const CreateMaterializedViewRequest& request_ ) const;
 
 /**
- * Initiates the process of creating a materialized view, reserving the view's
- * name to prevent other views or tables from being created with that name.
+ * Initiates the process of creating a materialized view, reserving the
+ * view's name to prevent other views or tables from being created with that
+ * name.
  * <p>
- * For materialized view details and examples, see <a
- * href="../../concepts/materialized_views.html" target="_top">Materialized
+ * For materialized view details and examples, see
+ * <a href="../../concepts/materialized_views.html" target="_top">Materialized
  * Views</a>.
  * <p>
  * The response contains @a viewId, which is used to tag each subsequent
  * operation (projection, union, aggregation, filter, or join) that will
- * compose the view.
+ * compose
+ * the view.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -7185,27 +8491,36 @@ CreateMaterializedViewResponse& createMaterializedView( const CreateMaterialized
                                                         CreateMaterializedViewResponse& response_ ) const;
 
 /**
- * Initiates the process of creating a materialized view, reserving the view's
- * name to prevent other views or tables from being created with that name.
+ * Initiates the process of creating a materialized view, reserving the
+ * view's name to prevent other views or tables from being created with that
+ * name.
  * <p>
- * For materialized view details and examples, see <a
- * href="../../concepts/materialized_views.html" target="_top">Materialized
+ * For materialized view details and examples, see
+ * <a href="../../concepts/materialized_views.html" target="_top">Materialized
  * Views</a>.
  * <p>
  * The response contains @a viewId, which is used to tag each subsequent
  * operation (projection, union, aggregation, filter, or join) that will
- * compose the view.
+ * compose
+ * the view.
  * 
  * @param tableName  Name of the table to be created that is the top-level
- *                   table of the materialized view.
+ *                   table of the materialized view, in
+ *                   [schema_name.]table_name format, using standard <a
+ *                   href="../../concepts/tables.html#table-name-resolution"
+ *                   target="_top">name resolution rules</a> and meeting <a
+ *                   href="../../concepts/tables.html#table-naming-criteria"
+ *                   target="_top">table naming criteria</a>.
  * @param options  Optional parameters.
  *                 <ul>
  *                         <li>
- *                 gpudb::create_materialized_view_collection_name: Name of a
- *                 collection which is to contain the newly created view. If
- *                 the collection provided is non-existent, the collection will
- *                 be automatically created. If empty, then the newly created
- *                 table will be a top-level table.
+ *                 gpudb::create_materialized_view_collection_name:
+ *                 [DEPRECATED--please specify the containing schema for the
+ *                 materialized view as part of @a tableName and use
+ *                 /create/schema to create the schema if non-existent]  Name
+ *                 of a schema which is to contain the newly created view. If
+ *                 the schema provided is non-existent, it will be
+ *                 automatically created.
  *                         <li> gpudb::create_materialized_view_ttl: Sets the
  *                 <a href="../../concepts/ttl.html" target="_top">TTL</a> of
  *                 the table specified in @a tableName.
@@ -7257,27 +8572,36 @@ CreateMaterializedViewResponse createMaterializedView( const std::string& tableN
                                                        const std::map<std::string, std::string>& options ) const;
 
 /**
- * Initiates the process of creating a materialized view, reserving the view's
- * name to prevent other views or tables from being created with that name.
+ * Initiates the process of creating a materialized view, reserving the
+ * view's name to prevent other views or tables from being created with that
+ * name.
  * <p>
- * For materialized view details and examples, see <a
- * href="../../concepts/materialized_views.html" target="_top">Materialized
+ * For materialized view details and examples, see
+ * <a href="../../concepts/materialized_views.html" target="_top">Materialized
  * Views</a>.
  * <p>
  * The response contains @a viewId, which is used to tag each subsequent
  * operation (projection, union, aggregation, filter, or join) that will
- * compose the view.
+ * compose
+ * the view.
  * 
  * @param tableName  Name of the table to be created that is the top-level
- *                   table of the materialized view.
+ *                   table of the materialized view, in
+ *                   [schema_name.]table_name format, using standard <a
+ *                   href="../../concepts/tables.html#table-name-resolution"
+ *                   target="_top">name resolution rules</a> and meeting <a
+ *                   href="../../concepts/tables.html#table-naming-criteria"
+ *                   target="_top">table naming criteria</a>.
  * @param options  Optional parameters.
  *                 <ul>
  *                         <li>
- *                 gpudb::create_materialized_view_collection_name: Name of a
- *                 collection which is to contain the newly created view. If
- *                 the collection provided is non-existent, the collection will
- *                 be automatically created. If empty, then the newly created
- *                 table will be a top-level table.
+ *                 gpudb::create_materialized_view_collection_name:
+ *                 [DEPRECATED--please specify the containing schema for the
+ *                 materialized view as part of @a tableName and use
+ *                 /create/schema to create the schema if non-existent]  Name
+ *                 of a schema which is to contain the newly created view. If
+ *                 the schema provided is non-existent, it will be
+ *                 automatically created.
  *                         <li> gpudb::create_materialized_view_ttl: Sets the
  *                 <a href="../../concepts/ttl.html" target="_top">TTL</a> of
  *                 the table specified in @a tableName.
@@ -7492,33 +8816,38 @@ CreateProcResponse& createProc( const std::string& procName,
 
 /**
  * Creates a new <a href="../../concepts/projections.html"
- * target="_top">projection</a> of an existing table. A projection represents a
- * subset of the columns (potentially including derived columns) of a table.
+ * target="_top">projection</a> of
+ * an existing table. A projection represents a subset of the columns
+ * (potentially
+ * including derived columns) of a table.
  * <p>
- * For projection details and examples, see <a
- * href="../../concepts/projections.html" target="_top">Projections</a>.  For
- * limitations, see <a
- * href="../../concepts/projections.html#limitations-and-cautions"
+ * For projection details and examples, see
+ * <a href="../../concepts/projections.html" target="_top">Projections</a>.
+ * For limitations, see
+ * <a href="../../concepts/projections.html#limitations-and-cautions"
  * target="_top">Projection Limitations and Cautions</a>.
  * <p>
  * <a href="../../concepts/window.html" target="_top">Window functions</a>,
- * which can perform operations like moving averages, are available through
- * this endpoint as well as {@link
- * #getRecordsByColumnRaw(const GetRecordsByColumnRequest&) const}.
+ * which can perform
+ * operations like moving averages, are available through this endpoint as well
+ * as
+ * {@link #getRecordsByColumnRaw(const GetRecordsByColumnRequest&) const}.
  * <p>
- * A projection can be created with a different <a
- * href="../../concepts/tables.html#shard-keys" target="_top">shard key</a>
- * than the source table.  By specifying @a shard_key, the projection will be
- * sharded according to the specified columns, regardless of how the source
- * table is sharded.  The source table can even be unsharded or replicated.
+ * A projection can be created with a different
+ * <a href="../../concepts/tables.html#shard-keys" target="_top">shard key</a>
+ * than the source table.
+ * By specifying @a shard_key, the projection will be sharded
+ * according to the specified columns, regardless of how the source table is
+ * sharded.  The source table can even be unsharded or replicated.
  * <p>
  * If @a tableName is empty, selection is performed against a single-row
- * virtual table.  This can be useful in executing temporal (<a
- * href="../../concepts/expressions.html#date-time-functions"
- * target="_top">NOW()</a>), identity (<a
- * href="../../concepts/expressions.html#user-security-functions"
- * target="_top">USER()</a>), or constant-based functions (<a
- * href="../../concepts/expressions.html#scalar-functions"
+ * virtual table.  This can be useful in executing temporal
+ * (<a href="../../concepts/expressions.html#date-time-functions"
+ * target="_top">NOW()</a>), identity
+ * (<a href="../../concepts/expressions.html#user-security-functions"
+ * target="_top">USER()</a>), or
+ * constant-based functions
+ * (<a href="../../concepts/expressions.html#scalar-functions"
  * target="_top">GEODIST(-77.11, 38.88, -71.06, 42.36)</a>).
  * 
  * @param[in] request_  Request object containing the parameters for the
@@ -7532,33 +8861,39 @@ CreateProjectionResponse createProjection( const CreateProjectionRequest& reques
 
 /**
  * Creates a new <a href="../../concepts/projections.html"
- * target="_top">projection</a> of an existing table. A projection represents a
- * subset of the columns (potentially including derived columns) of a table.
+ * target="_top">projection</a> of
+ * an existing table. A projection represents a subset of the columns
+ * (potentially
+ * including derived columns) of a table.
  * <p>
- * For projection details and examples, see <a
- * href="../../concepts/projections.html" target="_top">Projections</a>.  For
- * limitations, see <a
- * href="../../concepts/projections.html#limitations-and-cautions"
+ * For projection details and examples, see
+ * <a href="../../concepts/projections.html" target="_top">Projections</a>.
+ * For limitations, see
+ * <a href="../../concepts/projections.html#limitations-and-cautions"
  * target="_top">Projection Limitations and Cautions</a>.
  * <p>
  * <a href="../../concepts/window.html" target="_top">Window functions</a>,
- * which can perform operations like moving averages, are available through
- * this endpoint as well as {@link
+ * which can perform
+ * operations like moving averages, are available through this endpoint as well
+ * as
+ * {@link
  * #getRecordsByColumnRaw(const GetRecordsByColumnRequest&,RawGetRecordsByColumnResponse&) const}.
  * <p>
- * A projection can be created with a different <a
- * href="../../concepts/tables.html#shard-keys" target="_top">shard key</a>
- * than the source table.  By specifying @a shard_key, the projection will be
- * sharded according to the specified columns, regardless of how the source
- * table is sharded.  The source table can even be unsharded or replicated.
+ * A projection can be created with a different
+ * <a href="../../concepts/tables.html#shard-keys" target="_top">shard key</a>
+ * than the source table.
+ * By specifying @a shard_key, the projection will be sharded
+ * according to the specified columns, regardless of how the source table is
+ * sharded.  The source table can even be unsharded or replicated.
  * <p>
  * If @a tableName is empty, selection is performed against a single-row
- * virtual table.  This can be useful in executing temporal (<a
- * href="../../concepts/expressions.html#date-time-functions"
- * target="_top">NOW()</a>), identity (<a
- * href="../../concepts/expressions.html#user-security-functions"
- * target="_top">USER()</a>), or constant-based functions (<a
- * href="../../concepts/expressions.html#scalar-functions"
+ * virtual table.  This can be useful in executing temporal
+ * (<a href="../../concepts/expressions.html#date-time-functions"
+ * target="_top">NOW()</a>), identity
+ * (<a href="../../concepts/expressions.html#user-security-functions"
+ * target="_top">USER()</a>), or
+ * constant-based functions
+ * (<a href="../../concepts/expressions.html#scalar-functions"
  * target="_top">GEODIST(-77.11, 38.88, -71.06, 42.36)</a>).
  * 
  * @param[in] request_  Request object containing the parameters for the
@@ -7576,56 +8911,68 @@ CreateProjectionResponse& createProjection( const CreateProjectionRequest& reque
 
 /**
  * Creates a new <a href="../../concepts/projections.html"
- * target="_top">projection</a> of an existing table. A projection represents a
- * subset of the columns (potentially including derived columns) of a table.
+ * target="_top">projection</a> of
+ * an existing table. A projection represents a subset of the columns
+ * (potentially
+ * including derived columns) of a table.
  * <p>
- * For projection details and examples, see <a
- * href="../../concepts/projections.html" target="_top">Projections</a>.  For
- * limitations, see <a
- * href="../../concepts/projections.html#limitations-and-cautions"
+ * For projection details and examples, see
+ * <a href="../../concepts/projections.html" target="_top">Projections</a>.
+ * For limitations, see
+ * <a href="../../concepts/projections.html#limitations-and-cautions"
  * target="_top">Projection Limitations and Cautions</a>.
  * <p>
  * <a href="../../concepts/window.html" target="_top">Window functions</a>,
- * which can perform operations like moving averages, are available through
- * this endpoint as well as {@link
- * #getRecordsByColumnRaw(const GetRecordsByColumnRequest&) const}.
+ * which can perform
+ * operations like moving averages, are available through this endpoint as well
+ * as
+ * {@link #getRecordsByColumnRaw(const GetRecordsByColumnRequest&) const}.
  * <p>
- * A projection can be created with a different <a
- * href="../../concepts/tables.html#shard-keys" target="_top">shard key</a>
- * than the source table.  By specifying @a shard_key, the projection will be
- * sharded according to the specified columns, regardless of how the source
- * table is sharded.  The source table can even be unsharded or replicated.
+ * A projection can be created with a different
+ * <a href="../../concepts/tables.html#shard-keys" target="_top">shard key</a>
+ * than the source table.
+ * By specifying @a shard_key, the projection will be sharded
+ * according to the specified columns, regardless of how the source table is
+ * sharded.  The source table can even be unsharded or replicated.
  * <p>
  * If @a tableName is empty, selection is performed against a single-row
- * virtual table.  This can be useful in executing temporal (<a
- * href="../../concepts/expressions.html#date-time-functions"
- * target="_top">NOW()</a>), identity (<a
- * href="../../concepts/expressions.html#user-security-functions"
- * target="_top">USER()</a>), or constant-based functions (<a
- * href="../../concepts/expressions.html#scalar-functions"
+ * virtual table.  This can be useful in executing temporal
+ * (<a href="../../concepts/expressions.html#date-time-functions"
+ * target="_top">NOW()</a>), identity
+ * (<a href="../../concepts/expressions.html#user-security-functions"
+ * target="_top">USER()</a>), or
+ * constant-based functions
+ * (<a href="../../concepts/expressions.html#scalar-functions"
  * target="_top">GEODIST(-77.11, 38.88, -71.06, 42.36)</a>).
  * 
  * @param tableName  Name of the existing table on which the projection is to
- *                   be applied.  An empty table name creates a projection from
- *                   a single-row virtual table, where columns specified should
- *                   be constants or constant expressions.
- * @param projectionName  Name of the projection to be created. Has the same
- *                        naming restrictions as <a
- *                        href="../../concepts/tables.html"
- *                        target="_top">tables</a>.
+ *                   be applied, in [schema_name.]table_name format, using
+ *                   standard <a
+ *                   href="../../concepts/tables.html#table-name-resolution"
+ *                   target="_top">name resolution rules</a>.  An empty table
+ *                   name creates a projection from a single-row virtual table,
+ *                   where columns specified should be constants or constant
+ *                   expressions.
+ * @param projectionName  Name of the projection to be created, in
+ *                        [schema_name.]table_name format, using standard <a
+ *                        href="../../concepts/tables.html#table-name-resolution"
+ *                        target="_top">name resolution rules</a> and meeting
+ *                        <a
+ *                        href="../../concepts/tables.html#table-naming-criteria"
+ *                        target="_top">table naming criteria</a>.
  * @param columnNames  List of columns from @a tableName to be included in the
  *                     projection. Can include derived columns. Can be
  *                     specified as aliased via the syntax 'column_name as
  *                     alias'.
  * @param options  Optional parameters.
  *                 <ul>
- *                         <li> gpudb::create_projection_collection_name: Name
- *                 of a <a href="../../concepts/collections.html"
- *                 target="_top">collection</a> to which the projection is to
- *                 be assigned as a child. If the collection provided is
- *                 non-existent, the collection will be automatically created.
- *                 If empty, then the projection will be at the top level.  The
- *                 default value is ''.
+ *                         <li> gpudb::create_projection_collection_name:
+ *                 [DEPRECATED--please specify the containing schema for the
+ *                 projection as part of @a projectionName and use
+ *                 /create/schema to create the schema if non-existent]  Name
+ *                 of a schema for the projection. If the schema is
+ *                 non-existent, it will be automatically created.  The default
+ *                 value is ''.
  *                         <li> gpudb::create_projection_expression: An
  *                 optional filter <a href="../../concepts/expressions.html"
  *                 target="_top">expression</a> to be applied to the source
@@ -7720,56 +9067,68 @@ CreateProjectionResponse createProjection( const std::string& tableName,
 
 /**
  * Creates a new <a href="../../concepts/projections.html"
- * target="_top">projection</a> of an existing table. A projection represents a
- * subset of the columns (potentially including derived columns) of a table.
+ * target="_top">projection</a> of
+ * an existing table. A projection represents a subset of the columns
+ * (potentially
+ * including derived columns) of a table.
  * <p>
- * For projection details and examples, see <a
- * href="../../concepts/projections.html" target="_top">Projections</a>.  For
- * limitations, see <a
- * href="../../concepts/projections.html#limitations-and-cautions"
+ * For projection details and examples, see
+ * <a href="../../concepts/projections.html" target="_top">Projections</a>.
+ * For limitations, see
+ * <a href="../../concepts/projections.html#limitations-and-cautions"
  * target="_top">Projection Limitations and Cautions</a>.
  * <p>
  * <a href="../../concepts/window.html" target="_top">Window functions</a>,
- * which can perform operations like moving averages, are available through
- * this endpoint as well as {@link
- * #getRecordsByColumnRaw(const GetRecordsByColumnRequest&) const}.
+ * which can perform
+ * operations like moving averages, are available through this endpoint as well
+ * as
+ * {@link #getRecordsByColumnRaw(const GetRecordsByColumnRequest&) const}.
  * <p>
- * A projection can be created with a different <a
- * href="../../concepts/tables.html#shard-keys" target="_top">shard key</a>
- * than the source table.  By specifying @a shard_key, the projection will be
- * sharded according to the specified columns, regardless of how the source
- * table is sharded.  The source table can even be unsharded or replicated.
+ * A projection can be created with a different
+ * <a href="../../concepts/tables.html#shard-keys" target="_top">shard key</a>
+ * than the source table.
+ * By specifying @a shard_key, the projection will be sharded
+ * according to the specified columns, regardless of how the source table is
+ * sharded.  The source table can even be unsharded or replicated.
  * <p>
  * If @a tableName is empty, selection is performed against a single-row
- * virtual table.  This can be useful in executing temporal (<a
- * href="../../concepts/expressions.html#date-time-functions"
- * target="_top">NOW()</a>), identity (<a
- * href="../../concepts/expressions.html#user-security-functions"
- * target="_top">USER()</a>), or constant-based functions (<a
- * href="../../concepts/expressions.html#scalar-functions"
+ * virtual table.  This can be useful in executing temporal
+ * (<a href="../../concepts/expressions.html#date-time-functions"
+ * target="_top">NOW()</a>), identity
+ * (<a href="../../concepts/expressions.html#user-security-functions"
+ * target="_top">USER()</a>), or
+ * constant-based functions
+ * (<a href="../../concepts/expressions.html#scalar-functions"
  * target="_top">GEODIST(-77.11, 38.88, -71.06, 42.36)</a>).
  * 
  * @param tableName  Name of the existing table on which the projection is to
- *                   be applied.  An empty table name creates a projection from
- *                   a single-row virtual table, where columns specified should
- *                   be constants or constant expressions.
- * @param projectionName  Name of the projection to be created. Has the same
- *                        naming restrictions as <a
- *                        href="../../concepts/tables.html"
- *                        target="_top">tables</a>.
+ *                   be applied, in [schema_name.]table_name format, using
+ *                   standard <a
+ *                   href="../../concepts/tables.html#table-name-resolution"
+ *                   target="_top">name resolution rules</a>.  An empty table
+ *                   name creates a projection from a single-row virtual table,
+ *                   where columns specified should be constants or constant
+ *                   expressions.
+ * @param projectionName  Name of the projection to be created, in
+ *                        [schema_name.]table_name format, using standard <a
+ *                        href="../../concepts/tables.html#table-name-resolution"
+ *                        target="_top">name resolution rules</a> and meeting
+ *                        <a
+ *                        href="../../concepts/tables.html#table-naming-criteria"
+ *                        target="_top">table naming criteria</a>.
  * @param columnNames  List of columns from @a tableName to be included in the
  *                     projection. Can include derived columns. Can be
  *                     specified as aliased via the syntax 'column_name as
  *                     alias'.
  * @param options  Optional parameters.
  *                 <ul>
- *                         <li> gpudb::create_projection_collection_name: Name
- *                 of a <a href="../../concepts/collections.html"
- *                 target="_top">collection</a> to which the projection is to
- *                 be assigned as a child. If the collection provided is
- *                 non-existent, the collection will be automatically created.
- *                 If empty, then the projection will be at the top level.  The
- *                 default value is ''.
+ *                         <li> gpudb::create_projection_collection_name:
+ *                 [DEPRECATED--please specify the containing schema for the
+ *                 projection as part of @a projectionName and use
+ *                 /create/schema to create the schema if non-existent]  Name
+ *                 of a schema for the projection. If the schema is
+ *                 non-existent, it will be automatically created.  The default
+ *                 value is ''.
  *                         <li> gpudb::create_projection_expression: An
  *                 optional filter <a href="../../concepts/expressions.html"
  *                 target="_top">expression</a> to be applied to the source
@@ -8083,29 +9442,114 @@ CreateRoleResponse& createRole( const std::string& name,
                                 CreateRoleResponse& response_ ) const;
 
 /**
- * Creates a new table or collection. If a new table is being created,
+ * Creates a SQL-style <a href="../../concepts/schemas.html"
+ * target="_top">schema</a>. Schemas are containers for tables and views.
+ * Multiple tables and views can be defined with the same name in different
+ * schemas.
+ * 
+ * @param[in] request_  Request object containing the parameters for the
+ *                      operation.
+ * 
+ * @return Response object containing the result of the operation.
+ * 
+ */
+
+CreateSchemaResponse createSchema( const CreateSchemaRequest& request_ ) const;
+
+/**
+ * Creates a SQL-style <a href="../../concepts/schemas.html"
+ * target="_top">schema</a>. Schemas are containers for tables and views.
+ * Multiple tables and views can be defined with the same name in different
+ * schemas.
+ * 
+ * @param[in] request_  Request object containing the parameters for the
+ *                      operation.
+ * @param[out] response_  Response object containing the results of the
+ *                        operation.
+ * 
+ * @return Response object containing the result of the operation (initially
+ *         passed in by reference).
+ * 
+ */
+
+CreateSchemaResponse& createSchema( const CreateSchemaRequest& request_,
+                                    CreateSchemaResponse& response_ ) const;
+
+/**
+ * Creates a SQL-style <a href="../../concepts/schemas.html"
+ * target="_top">schema</a>. Schemas are containers for tables and views.
+ * Multiple tables and views can be defined with the same name in different
+ * schemas.
+ * 
+ * @param schemaName  Name of the schema to be created.  Has the same naming
+ *                    restrictions as <a href="../../concepts/tables.html"
+ *                    target="_top">tables</a>.
+ * @param options  Optional parameters.
+ *                 <ul>
+ *                         <li> gpudb::create_schema_no_error_if_exists: If @a
+ *                 true, prevents an error from occurring if the schema already
+ *                 exists.
+ *                 <ul>
+ *                         <li> gpudb::create_schema_true
+ *                         <li> gpudb::create_schema_false
+ *                 </ul>
+ *                 The default value is gpudb::create_schema_false.
+ *                 </ul>
+ * 
+ * @return Response object containing the result of the operation.
+ * 
+ */
+
+CreateSchemaResponse createSchema( const std::string& schemaName,
+                                   const std::map<std::string, std::string>& options ) const;
+
+/**
+ * Creates a SQL-style <a href="../../concepts/schemas.html"
+ * target="_top">schema</a>. Schemas are containers for tables and views.
+ * Multiple tables and views can be defined with the same name in different
+ * schemas.
+ * 
+ * @param schemaName  Name of the schema to be created.  Has the same naming
+ *                    restrictions as <a href="../../concepts/tables.html"
+ *                    target="_top">tables</a>.
+ * @param options  Optional parameters.
+ *                 <ul>
+ *                         <li> gpudb::create_schema_no_error_if_exists: If @a
+ *                 true, prevents an error from occurring if the schema already
+ *                 exists.
+ *                 <ul>
+ *                         <li> gpudb::create_schema_true
+ *                         <li> gpudb::create_schema_false
+ *                 </ul>
+ *                 The default value is gpudb::create_schema_false.
+ *                 </ul>
+ * @param[out] response_  Response object containing the results of the
+ *                        operation.
+ * 
+ * @return Response object containing the result of the operation (initially
+ *         passed in by reference).
+ * 
+ */
+
+CreateSchemaResponse& createSchema( const std::string& schemaName,
+                                    const std::map<std::string, std::string>& options,
+                                    CreateSchemaResponse& response_ ) const;
+
+/**
+ * Creates a new table. If a new table is being created,
  * the type of the table is given by @a typeId, which must be the ID of
  * a currently registered type (i.e. one created via {@link
- * #createType(const CreateTypeRequest&) const}). The
- * table will be created inside a collection if the option
- * @a collection_name is specified. If that collection does
- * not already exist, it will be created.
- * <p>
- * To create a new collection, specify the name of the collection in
- * @a tableName and set the @a is_collection option to
- * @a true; @a typeId will be
- * ignored.
+ * #createType(const CreateTypeRequest&) const}).
  * <p>
  * A table may optionally be designated to use a
  * <a href="../../concepts/tables.html#replication"
  * target="_top">replicated</a> distribution scheme,
- * have <a href="../../concepts/tables.html#foreign-keys" target="_top">foreign
- * keys</a> to other
- * tables assigned, be assigned a
- * <a href="../../concepts/tables.html#partitioning"
- * target="_top">partitioning</a> scheme, or have a
- * <a href="../../rm/concepts.html#tier-strategies" target="_top">tier
- * strategy</a> assigned.
+ * or be assigned: <a href="../../concepts/tables.html#foreign-keys"
+ * target="_top">foreign keys</a> to
+ * other tables, a <a href="../../concepts/tables.html#partitioning"
+ * target="_top">partitioning</a>
+ * scheme, and/or a <a href="../../rm/concepts.html#tier-strategies"
+ * target="_top">tier strategy</a>.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -8117,29 +9561,20 @@ CreateRoleResponse& createRole( const std::string& name,
 CreateTableResponse createTable( const CreateTableRequest& request_ ) const;
 
 /**
- * Creates a new table or collection. If a new table is being created,
+ * Creates a new table. If a new table is being created,
  * the type of the table is given by @a typeId, which must be the ID of
  * a currently registered type (i.e. one created via {@link
- * #createType(const CreateTypeRequest&,CreateTypeResponse&) const}). The
- * table will be created inside a collection if the option
- * @a collection_name is specified. If that collection does
- * not already exist, it will be created.
- * <p>
- * To create a new collection, specify the name of the collection in
- * @a tableName and set the @a is_collection option to
- * @a true; @a typeId will be
- * ignored.
+ * #createType(const CreateTypeRequest&,CreateTypeResponse&) const}).
  * <p>
  * A table may optionally be designated to use a
  * <a href="../../concepts/tables.html#replication"
  * target="_top">replicated</a> distribution scheme,
- * have <a href="../../concepts/tables.html#foreign-keys" target="_top">foreign
- * keys</a> to other
- * tables assigned, be assigned a
- * <a href="../../concepts/tables.html#partitioning"
- * target="_top">partitioning</a> scheme, or have a
- * <a href="../../rm/concepts.html#tier-strategies" target="_top">tier
- * strategy</a> assigned.
+ * or be assigned: <a href="../../concepts/tables.html#foreign-keys"
+ * target="_top">foreign keys</a> to
+ * other tables, a <a href="../../concepts/tables.html#partitioning"
+ * target="_top">partitioning</a>
+ * scheme, and/or a <a href="../../rm/concepts.html#tier-strategies"
+ * target="_top">tier strategy</a>.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -8155,39 +9590,32 @@ CreateTableResponse& createTable( const CreateTableRequest& request_,
                                   CreateTableResponse& response_ ) const;
 
 /**
- * Creates a new table or collection. If a new table is being created,
+ * Creates a new table. If a new table is being created,
  * the type of the table is given by @a typeId, which must be the ID of
  * a currently registered type (i.e. one created via {@link
  * #createType(const std::string&,const std::string&,const std::map<std::string, std::vector<std::string> >&,const std::map<std::string, std::string>&) const}).
- * The
- * table will be created inside a collection if the option
- * @a collection_name is specified. If that collection does
- * not already exist, it will be created.
- * <p>
- * To create a new collection, specify the name of the collection in
- * @a tableName and set the @a is_collection option to
- * @a true; @a typeId will be
- * ignored.
  * <p>
  * A table may optionally be designated to use a
  * <a href="../../concepts/tables.html#replication"
  * target="_top">replicated</a> distribution scheme,
- * have <a href="../../concepts/tables.html#foreign-keys" target="_top">foreign
- * keys</a> to other
- * tables assigned, be assigned a
- * <a href="../../concepts/tables.html#partitioning"
- * target="_top">partitioning</a> scheme, or have a
- * <a href="../../rm/concepts.html#tier-strategies" target="_top">tier
- * strategy</a> assigned.
+ * or be assigned: <a href="../../concepts/tables.html#foreign-keys"
+ * target="_top">foreign keys</a> to
+ * other tables, a <a href="../../concepts/tables.html#partitioning"
+ * target="_top">partitioning</a>
+ * scheme, and/or a <a href="../../rm/concepts.html#tier-strategies"
+ * target="_top">tier strategy</a>.
  * 
- * @param tableName  Name of the table to be created. Error for requests with
- *                   existing table of the same name and type ID may be
- *                   suppressed by using the @a no_error_if_exists option.  See
- *                   <a href="../../concepts/tables.html"
- *                   target="_top">Tables</a> for naming restrictions.
+ * @param tableName  Name of the table to be created, in
+ *                   [schema_name.]table_name format, using standard <a
+ *                   href="../../concepts/tables.html#table-name-resolution"
+ *                   target="_top">name resolution rules</a> and meeting <a
+ *                   href="../../concepts/tables.html#table-naming-criteria"
+ *                   target="_top">table naming criteria</a>. Error for
+ *                   requests with existing table of the same name and type ID
+ *                   may be suppressed by using the @a no_error_if_exists
+ *                   option.
  * @param typeId  ID of a currently registered type. All objects added to the
- *                newly created table will be of this type.  Ignored if @a
- *                is_collection is @a true.
+ *                newly created table will be of this type.
  * @param options  Optional parameters.
  *                 <ul>
  *                         <li> gpudb::create_table_no_error_if_exists: If @a
@@ -8199,13 +9627,16 @@ CreateTableResponse& createTable( const CreateTableRequest& request_,
  *                         <li> gpudb::create_table_false
  *                 </ul>
  *                 The default value is gpudb::create_table_false.
- *                         <li> gpudb::create_table_collection_name: Name of a
- *                 collection which is to contain the newly created table. If
- *                 the collection provided is non-existent, the collection will
- *                 be automatically created. If empty, then the newly created
- *                 table will be a top-level table.
- *                         <li> gpudb::create_table_is_collection: Indicates
- *                 whether the new table to be created will be a collection.
+ *                         <li> gpudb::create_table_collection_name:
+ *                 [DEPRECATED--please specify the containing schema as part of
+ *                 @a tableName and use /create/schema to create the schema if
+ *                 non-existent]  Name of a schema which is to contain the
+ *                 newly created table. If the schema is non-existent, it will
+ *                 be automatically created.
+ *                         <li> gpudb::create_table_is_collection:
+ *                 [DEPRECATED--please use /create/schema to create a schema
+ *                 instead]  Indicates whether to create a schema instead of a
+ *                 table.
  *                 <ul>
  *                         <li> gpudb::create_table_true
  *                         <li> gpudb::create_table_false
@@ -8219,16 +9650,15 @@ CreateTableResponse& createTable( const CreateTableRequest& request_,
  *                         <li> gpudb::create_table_false
  *                 </ul>
  *                 The default value is gpudb::create_table_false.
- *                         <li> gpudb::create_table_is_replicated: For a table,
- *                 affects the <a
- *                 href="../../concepts/tables.html#distribution"
+ *                         <li> gpudb::create_table_is_replicated: Affects the
+ *                 <a href="../../concepts/tables.html#distribution"
  *                 target="_top">distribution scheme</a> for the table's data.
- *                 If true and the given type has no explicit <a
+ *                 If @a true and the given type has no explicit <a
  *                 href="../../concepts/tables.html#shard-key"
  *                 target="_top">shard key</a> defined, the table will be <a
  *                 href="../../concepts/tables.html#replication"
- *                 target="_top">replicated</a>.  If false, the table will be
- *                 <a href="../../concepts/tables.html#sharding"
+ *                 target="_top">replicated</a>.  If @a false, the table will
+ *                 be <a href="../../concepts/tables.html#sharding"
  *                 target="_top">sharded</a> according to the shard key
  *                 specified in the given @a typeId, or <a
  *                 href="../../concepts/tables.html#random-sharding"
@@ -8283,9 +9713,9 @@ CreateTableResponse& createTable( const CreateTableRequest& request_,
  *                 href="../../concepts/tables.html#partitioning-by-hash"
  *                 target="_top">hash partitioning</a> for example formats.
  *                         <li> gpudb::create_table_is_automatic_partition: If
- *                 true, a new partition will be created for values which don't
- *                 fall into an existing partition.  Currently only supported
- *                 for <a
+ *                 @a true, a new partition will be created for values which
+ *                 don't fall into an existing partition.  Currently only
+ *                 supported for <a
  *                 href="../../concepts/tables.html#partitioning-by-list"
  *                 target="_top">list partitions</a>.
  *                 <ul>
@@ -8293,16 +9723,21 @@ CreateTableResponse& createTable( const CreateTableRequest& request_,
  *                         <li> gpudb::create_table_false
  *                 </ul>
  *                 The default value is gpudb::create_table_false.
- *                         <li> gpudb::create_table_ttl: For a table, sets the
- *                 <a href="../../concepts/ttl.html" target="_top">TTL</a> of
- *                 the table specified in @a tableName.
+ *                         <li> gpudb::create_table_ttl: Sets the <a
+ *                 href="../../concepts/ttl.html" target="_top">TTL</a> of the
+ *                 table specified in @a tableName.
  *                         <li> gpudb::create_table_chunk_size: Indicates the
  *                 number of records per chunk to be used for this table.
- *                         <li> gpudb::create_table_is_result_table: For a
- *                 table, indicates whether the table is an in-memory table. A
- *                 result table cannot contain store_only, text_search, or
- *                 string columns (charN columns are acceptable), and it will
- *                 not be retained if the server is restarted.
+ *                         <li> gpudb::create_table_is_result_table: Indicates
+ *                 whether the table is a <a
+ *                 href="../../concepts/tables_memory_only.html"
+ *                 target="_top">memory-only table</a>. A result table cannot
+ *                 contain columns with store_only or text_search <a
+ *                 href="../../concepts/types.html#data-handling"
+ *                 target="_top">data-handling</a> or that are <a
+ *                 href="../../concepts/types.html#primitive-types"
+ *                 target="_top">non-charN strings</a>, and it will not be
+ *                 retained if the server is restarted.
  *                 <ul>
  *                         <li> gpudb::create_table_true
  *                         <li> gpudb::create_table_false
@@ -8327,39 +9762,32 @@ CreateTableResponse createTable( const std::string& tableName,
                                  const std::map<std::string, std::string>& options ) const;
 
 /**
- * Creates a new table or collection. If a new table is being created,
+ * Creates a new table. If a new table is being created,
  * the type of the table is given by @a typeId, which must be the ID of
  * a currently registered type (i.e. one created via {@link
  * #createType(const std::string&,const std::string&,const std::map<std::string, std::vector<std::string> >&,const std::map<std::string, std::string>&,CreateTypeResponse&) const}).
- * The
- * table will be created inside a collection if the option
- * @a collection_name is specified. If that collection does
- * not already exist, it will be created.
- * <p>
- * To create a new collection, specify the name of the collection in
- * @a tableName and set the @a is_collection option to
- * @a true; @a typeId will be
- * ignored.
  * <p>
  * A table may optionally be designated to use a
  * <a href="../../concepts/tables.html#replication"
  * target="_top">replicated</a> distribution scheme,
- * have <a href="../../concepts/tables.html#foreign-keys" target="_top">foreign
- * keys</a> to other
- * tables assigned, be assigned a
- * <a href="../../concepts/tables.html#partitioning"
- * target="_top">partitioning</a> scheme, or have a
- * <a href="../../rm/concepts.html#tier-strategies" target="_top">tier
- * strategy</a> assigned.
+ * or be assigned: <a href="../../concepts/tables.html#foreign-keys"
+ * target="_top">foreign keys</a> to
+ * other tables, a <a href="../../concepts/tables.html#partitioning"
+ * target="_top">partitioning</a>
+ * scheme, and/or a <a href="../../rm/concepts.html#tier-strategies"
+ * target="_top">tier strategy</a>.
  * 
- * @param tableName  Name of the table to be created. Error for requests with
- *                   existing table of the same name and type ID may be
- *                   suppressed by using the @a no_error_if_exists option.  See
- *                   <a href="../../concepts/tables.html"
- *                   target="_top">Tables</a> for naming restrictions.
+ * @param tableName  Name of the table to be created, in
+ *                   [schema_name.]table_name format, using standard <a
+ *                   href="../../concepts/tables.html#table-name-resolution"
+ *                   target="_top">name resolution rules</a> and meeting <a
+ *                   href="../../concepts/tables.html#table-naming-criteria"
+ *                   target="_top">table naming criteria</a>. Error for
+ *                   requests with existing table of the same name and type ID
+ *                   may be suppressed by using the @a no_error_if_exists
+ *                   option.
  * @param typeId  ID of a currently registered type. All objects added to the
- *                newly created table will be of this type.  Ignored if @a
- *                is_collection is @a true.
+ *                newly created table will be of this type.
  * @param options  Optional parameters.
  *                 <ul>
  *                         <li> gpudb::create_table_no_error_if_exists: If @a
@@ -8371,13 +9799,16 @@ CreateTableResponse createTable( const std::string& tableName,
  *                         <li> gpudb::create_table_false
  *                 </ul>
  *                 The default value is gpudb::create_table_false.
- *                         <li> gpudb::create_table_collection_name: Name of a
- *                 collection which is to contain the newly created table. If
- *                 the collection provided is non-existent, the collection will
- *                 be automatically created. If empty, then the newly created
- *                 table will be a top-level table.
- *                         <li> gpudb::create_table_is_collection: Indicates
- *                 whether the new table to be created will be a collection.
+ *                         <li> gpudb::create_table_collection_name:
+ *                 [DEPRECATED--please specify the containing schema as part of
+ *                 @a tableName and use /create/schema to create the schema if
+ *                 non-existent]  Name of a schema which is to contain the
+ *                 newly created table. If the schema is non-existent, it will
+ *                 be automatically created.
+ *                         <li> gpudb::create_table_is_collection:
+ *                 [DEPRECATED--please use /create/schema to create a schema
+ *                 instead]  Indicates whether to create a schema instead of a
+ *                 table.
  *                 <ul>
  *                         <li> gpudb::create_table_true
  *                         <li> gpudb::create_table_false
@@ -8391,16 +9822,15 @@ CreateTableResponse createTable( const std::string& tableName,
  *                         <li> gpudb::create_table_false
  *                 </ul>
  *                 The default value is gpudb::create_table_false.
- *                         <li> gpudb::create_table_is_replicated: For a table,
- *                 affects the <a
- *                 href="../../concepts/tables.html#distribution"
+ *                         <li> gpudb::create_table_is_replicated: Affects the
+ *                 <a href="../../concepts/tables.html#distribution"
  *                 target="_top">distribution scheme</a> for the table's data.
- *                 If true and the given type has no explicit <a
+ *                 If @a true and the given type has no explicit <a
  *                 href="../../concepts/tables.html#shard-key"
  *                 target="_top">shard key</a> defined, the table will be <a
  *                 href="../../concepts/tables.html#replication"
- *                 target="_top">replicated</a>.  If false, the table will be
- *                 <a href="../../concepts/tables.html#sharding"
+ *                 target="_top">replicated</a>.  If @a false, the table will
+ *                 be <a href="../../concepts/tables.html#sharding"
  *                 target="_top">sharded</a> according to the shard key
  *                 specified in the given @a typeId, or <a
  *                 href="../../concepts/tables.html#random-sharding"
@@ -8455,9 +9885,9 @@ CreateTableResponse createTable( const std::string& tableName,
  *                 href="../../concepts/tables.html#partitioning-by-hash"
  *                 target="_top">hash partitioning</a> for example formats.
  *                         <li> gpudb::create_table_is_automatic_partition: If
- *                 true, a new partition will be created for values which don't
- *                 fall into an existing partition.  Currently only supported
- *                 for <a
+ *                 @a true, a new partition will be created for values which
+ *                 don't fall into an existing partition.  Currently only
+ *                 supported for <a
  *                 href="../../concepts/tables.html#partitioning-by-list"
  *                 target="_top">list partitions</a>.
  *                 <ul>
@@ -8465,16 +9895,21 @@ CreateTableResponse createTable( const std::string& tableName,
  *                         <li> gpudb::create_table_false
  *                 </ul>
  *                 The default value is gpudb::create_table_false.
- *                         <li> gpudb::create_table_ttl: For a table, sets the
- *                 <a href="../../concepts/ttl.html" target="_top">TTL</a> of
- *                 the table specified in @a tableName.
+ *                         <li> gpudb::create_table_ttl: Sets the <a
+ *                 href="../../concepts/ttl.html" target="_top">TTL</a> of the
+ *                 table specified in @a tableName.
  *                         <li> gpudb::create_table_chunk_size: Indicates the
  *                 number of records per chunk to be used for this table.
- *                         <li> gpudb::create_table_is_result_table: For a
- *                 table, indicates whether the table is an in-memory table. A
- *                 result table cannot contain store_only, text_search, or
- *                 string columns (charN columns are acceptable), and it will
- *                 not be retained if the server is restarted.
+ *                         <li> gpudb::create_table_is_result_table: Indicates
+ *                 whether the table is a <a
+ *                 href="../../concepts/tables_memory_only.html"
+ *                 target="_top">memory-only table</a>. A result table cannot
+ *                 contain columns with store_only or text_search <a
+ *                 href="../../concepts/types.html#data-handling"
+ *                 target="_top">data-handling</a> or that are <a
+ *                 href="../../concepts/types.html#primitive-types"
+ *                 target="_top">non-charN strings</a>, and it will not be
+ *                 retained if the server is restarted.
  *                 <ul>
  *                         <li> gpudb::create_table_true
  *                         <li> gpudb::create_table_false
@@ -8501,6 +9936,1092 @@ CreateTableResponse& createTable( const std::string& tableName,
                                   const std::string& typeId,
                                   const std::map<std::string, std::string>& options,
                                   CreateTableResponse& response_ ) const;
+
+/**
+ * Creates a new <a href="../../concepts/external_tables.html"
+ * target="_top">external table</a>, which is a
+ * local database object whose source data is located externally to the
+ * database.  The source data can
+ * be located either on the cluster, accessible to the database; or remotely,
+ * accessible via a
+ * pre-defined external <a href="../../concepts/data_sources.html"
+ * target="_top">data source</a>.
+ * <p>
+ * The external table can have its structure defined explicitly, via @a
+ * createTableOptions,
+ * which contains many of the options from {@link
+ * #createTable(const CreateTableRequest&) const}; or defined implicitly,
+ * inferred
+ * from the source data.
+ * 
+ * @param[in] request_  Request object containing the parameters for the
+ *                      operation.
+ * 
+ * @return Response object containing the result of the operation.
+ * 
+ */
+
+CreateTableExternalResponse createTableExternal( const CreateTableExternalRequest& request_ ) const;
+
+/**
+ * Creates a new <a href="../../concepts/external_tables.html"
+ * target="_top">external table</a>, which is a
+ * local database object whose source data is located externally to the
+ * database.  The source data can
+ * be located either on the cluster, accessible to the database; or remotely,
+ * accessible via a
+ * pre-defined external <a href="../../concepts/data_sources.html"
+ * target="_top">data source</a>.
+ * <p>
+ * The external table can have its structure defined explicitly, via @a
+ * createTableOptions,
+ * which contains many of the options from {@link
+ * #createTable(const CreateTableRequest&,CreateTableResponse&) const}; or
+ * defined implicitly, inferred
+ * from the source data.
+ * 
+ * @param[in] request_  Request object containing the parameters for the
+ *                      operation.
+ * @param[out] response_  Response object containing the results of the
+ *                        operation.
+ * 
+ * @return Response object containing the result of the operation (initially
+ *         passed in by reference).
+ * 
+ */
+
+CreateTableExternalResponse& createTableExternal( const CreateTableExternalRequest& request_,
+                                                  CreateTableExternalResponse& response_ ) const;
+
+/**
+ * Creates a new <a href="../../concepts/external_tables.html"
+ * target="_top">external table</a>, which is a
+ * local database object whose source data is located externally to the
+ * database.  The source data can
+ * be located either on the cluster, accessible to the database; or remotely,
+ * accessible via a
+ * pre-defined external <a href="../../concepts/data_sources.html"
+ * target="_top">data source</a>.
+ * <p>
+ * The external table can have its structure defined explicitly, via @a
+ * createTableOptions,
+ * which contains many of the options from {@link
+ * #createTable(const std::string&,const std::string&,const std::map<std::string, std::string>&) const};
+ * or defined implicitly, inferred
+ * from the source data.
+ * 
+ * @param tableName  Name of the table to be created, in
+ *                   [schema_name.]table_name format, using
+ *                   standard <a
+ *                   href="../../concepts/tables.html#table-name-resolution"
+ *                   target="_top">name resolution rules</a> and meeting
+ *                   <a href="../../concepts/tables.html#table-naming-criteria"
+ *                   target="_top">table naming criteria</a>.
+ * @param filepaths  A list of file paths from which data will be sourced;
+ *                   wildcards (*) can be used
+ *                   to specify a group of files.
+ *                   If an external data source is specified in @a
+ *                   datasource_name, these file
+ *                   paths must resolve to accessible files at that data source
+ *                   location. Also, wildcards will only work
+ *                   when used within the file name, not the path.
+ *                   If no data source is specified, the files are assumed to
+ *                   be local to the database and must all be
+ *                   accessible to the gpudb user, residing on the path (or
+ *                   relative to the path) specified by the
+ *                   external files directory in the Kinetica
+ *                   <a href="../../config/index.html#external-files"
+ *                   target="_top">configuration file</a>.
+ * @param modifyColumns  Not implemented yet
+ * @param createTableOptions  Options from /create/table, allowing the
+ *                            structure of the table to
+ *                            be defined independently of the data source
+ *                            <ul>
+ *                                    <li>
+ *                            gpudb::create_table_external_type_id: ID of a
+ *                            currently registered <a
+ *                            href="../../concepts/types.html"
+ *                            target="_top">type</a>.  The default value is ''.
+ *                                    <li>
+ *                            gpudb::create_table_external_no_error_if_exists:
+ *                            If @a true,
+ *                            prevents an error from occurring if the table
+ *                            already exists and is of the given type.  If a
+ *                            table with
+ *                            the same name but a different type exists, it is
+ *                            still an error.
+ *                            <ul>
+ *                                    <li> gpudb::create_table_external_true
+ *                                    <li> gpudb::create_table_external_false
+ *                            </ul>
+ *                            The default value is
+ *                            gpudb::create_table_external_false.
+ *                                    <li>
+ *                            gpudb::create_table_external_is_replicated:
+ *                            Affects the <a
+ *                            href="../../concepts/tables.html#distribution"
+ *                            target="_top">distribution scheme</a>
+ *                            for the table's data.  If @a true and the
+ *                            given table has no explicit <a
+ *                            href="../../concepts/tables.html#shard-key"
+ *                            target="_top">shard key</a> defined, the
+ *                            table will be <a
+ *                            href="../../concepts/tables.html#replication"
+ *                            target="_top">replicated</a>.  If
+ *                            @a false, the table will be
+ *                            <a href="../../concepts/tables.html#sharding"
+ *                            target="_top">sharded</a> according to the shard
+ *                            key specified in the
+ *                            given @a type_id, or
+ *                            <a
+ *                            href="../../concepts/tables.html#random-sharding"
+ *                            target="_top">randomly sharded</a>, if no shard
+ *                            key is specified.
+ *                             Note that a type containing a shard key cannot
+ *                            be used to create a replicated table.
+ *                            <ul>
+ *                                    <li> gpudb::create_table_external_true
+ *                                    <li> gpudb::create_table_external_false
+ *                            </ul>
+ *                            The default value is
+ *                            gpudb::create_table_external_false.
+ *                                    <li>
+ *                            gpudb::create_table_external_foreign_keys:
+ *                            Semicolon-separated list of
+ *                            <a href="../../concepts/tables.html#foreign-keys"
+ *                            target="_top">foreign keys</a>, of the format
+ *                            '(source_column_name [, ...]) references
+ *                            target_table_name(primary_key_column_name [,
+ *                            ...]) [as foreign_key_name]'.
+ *                                    <li>
+ *                            gpudb::create_table_external_foreign_shard_key:
+ *                            Foreign shard key of the format
+ *                            'source_column references shard_by_column from
+ *                            target_table(primary_key_column)'.
+ *                                    <li>
+ *                            gpudb::create_table_external_partition_type: <a
+ *                            href="../../concepts/tables.html#partitioning"
+ *                            target="_top">Partitioning</a> scheme to use.
+ *                            <ul>
+ *                                    <li> gpudb::create_table_external_RANGE:
+ *                            Use <a
+ *                            href="../../concepts/tables.html#partitioning-by-range"
+ *                            target="_top">range partitioning</a>.
+ *                                    <li>
+ *                            gpudb::create_table_external_INTERVAL: Use <a
+ *                            href="../../concepts/tables.html#partitioning-by-interval"
+ *                            target="_top">interval partitioning</a>.
+ *                                    <li> gpudb::create_table_external_LIST:
+ *                            Use <a
+ *                            href="../../concepts/tables.html#partitioning-by-list"
+ *                            target="_top">list partitioning</a>.
+ *                                    <li> gpudb::create_table_external_HASH:
+ *                            Use <a
+ *                            href="../../concepts/tables.html#partitioning-by-hash"
+ *                            target="_top">hash partitioning</a>.
+ *                            </ul>
+ *                                    <li>
+ *                            gpudb::create_table_external_partition_keys:
+ *                            Comma-separated list of partition keys, which are
+ *                            the columns or
+ *                            column expressions by which records will be
+ *                            assigned to partitions defined by
+ *                            @a partition_definitions.
+ *                                    <li>
+ *                            gpudb::create_table_external_partition_definitions:
+ *                            Comma-separated list of partition definitions,
+ *                            whose format depends
+ *                            on the choice of @a partition_type.  See
+ *                            <a
+ *                            href="../../concepts/tables.html#partitioning-by-range"
+ *                            target="_top">range partitioning</a>,
+ *                            <a
+ *                            href="../../concepts/tables.html#partitioning-by-interval"
+ *                            target="_top">interval partitioning</a>,
+ *                            <a
+ *                            href="../../concepts/tables.html#partitioning-by-list"
+ *                            target="_top">list partitioning</a>, or
+ *                            <a
+ *                            href="../../concepts/tables.html#partitioning-by-hash"
+ *                            target="_top">hash partitioning</a> for example
+ *                            formats.
+ *                                    <li>
+ *                            gpudb::create_table_external_is_automatic_partition:
+ *                            If @a true,
+ *                            a new partition will be created for values which
+ *                            don't fall into an existing partition.  Currently
+ *                            only supported for <a
+ *                            href="../../concepts/tables.html#partitioning-by-list"
+ *                            target="_top">list partitions</a>.
+ *                            <ul>
+ *                                    <li> gpudb::create_table_external_true
+ *                                    <li> gpudb::create_table_external_false
+ *                            </ul>
+ *                            The default value is
+ *                            gpudb::create_table_external_false.
+ *                                    <li> gpudb::create_table_external_ttl:
+ *                            Sets the <a href="../../concepts/ttl.html"
+ *                            target="_top">TTL</a> of the table specified in
+ *                            @a tableName.
+ *                                    <li>
+ *                            gpudb::create_table_external_chunk_size:
+ *                            Indicates the number of records per chunk to be
+ *                            used for this table.
+ *                                    <li>
+ *                            gpudb::create_table_external_is_result_table:
+ *                            Indicates whether the table is a
+ *                            <a href="../../concepts/tables_memory_only.html"
+ *                            target="_top">memory-only table</a>. A result
+ *                            table cannot contain
+ *                            columns with store_only or text_search
+ *                            <a href="../../concepts/types.html#data-handling"
+ *                            target="_top">data-handling</a> or that are
+ *                            <a
+ *                            href="../../concepts/types.html#primitive-types"
+ *                            target="_top">non-charN strings</a>, and it will
+ *                            not be retained if
+ *                            the server is restarted.
+ *                            <ul>
+ *                                    <li> gpudb::create_table_external_true
+ *                                    <li> gpudb::create_table_external_false
+ *                            </ul>
+ *                            The default value is
+ *                            gpudb::create_table_external_false.
+ *                                    <li>
+ *                            gpudb::create_table_external_strategy_definition:
+ *                            The <a
+ *                            href="../../rm/concepts.html#tier-strategies"
+ *                            target="_top">tier strategy</a>
+ *                            for the table and its columns. See
+ *                            <a href="../../rm/concepts.html#tier-strategies"
+ *                            target="_top">tier strategy usage</a> for format
+ *                            and
+ *                            <a href="../../rm/usage.html#tier-strategies"
+ *                            target="_top">tier strategy examples</a> for
+ *                            examples.
+ *                            </ul>
+ * @param options  Optional parameters.
+ *                 <ul>
+ *                         <li>
+ *                 gpudb::create_table_external_bad_record_table_name: Optional
+ *                 name of a table to which records that were rejected are
+ *                 written.  The bad-record-table has the following columns:
+ *                 line_number (long), line_rejected (string), error_message
+ *                 (string).
+ *                         <li>
+ *                 gpudb::create_table_external_bad_record_table_limit: A
+ *                 positive integer indicating the maximum number of records
+ *                 that can be  written to the bad-record-table.   Default
+ *                 value is 10000
+ *                         <li> gpudb::create_table_external_batch_size:
+ *                 Internal tuning parameter--number of records per batch when
+ *                 inserting data
+ *                         <li> gpudb::create_table_external_column_formats:
+ *                 For each target column specified, applies the
+ *                 column-property-bound
+ *                 format to the source data loaded into that column.  Each
+ *                 column format will contain a mapping of one
+ *                 or more of its column properties to an appropriate format
+ *                 for each property.  Currently supported
+ *                 column properties include date, time, & datetime. The
+ *                 parameter value must be formatted as a JSON
+ *                 string of maps of column names to maps of column properties
+ *                 to their corresponding column formats,
+ *                 e.g.,
+ *                 '{ "order_date" : { "date" : "%Y.%m.%d" }, "order_time" : {
+ *                 "time" : "%H:%M:%S" } }'.
+ *                 See @a default_column_formats for valid format syntax.
+ *                         <li> gpudb::create_table_external_columns_to_load:
+ *                 Specifies a comma-delimited list of columns from the source
+ *                 data to
+ *                 load.  If more than one file is being loaded, this list
+ *                 applies to all files.
+ *                 Column numbers can be specified discretely or as a range.
+ *                 For example, a value of '5,7,1..3' will
+ *                 insert values from the fifth column in the source data into
+ *                 the first column in the target table,
+ *                 from the seventh column in the source data into the second
+ *                 column in the target table, and from the
+ *                 first through third columns in the source data into the
+ *                 third through fifth columns in the target
+ *                 table.
+ *                 If the source data contains a header, column names matching
+ *                 the file header names may be provided
+ *                 instead of column numbers.  If the target table doesn't
+ *                 exist, the table will be created with the
+ *                 columns in this order.  If the target table does exist with
+ *                 columns in a different order than the
+ *                 source data, this list can be used to match the order of the
+ *                 target table.  For example, a value of
+ *                 'C, B, A' will create a three column table with column C,
+ *                 followed by column B, followed by column
+ *                 A; or will insert those fields in that order into a table
+ *                 created with columns in that order.  If
+ *                 the target table exists, the column names must match the
+ *                 source data field names for a name-mapping
+ *                 to be successful.
+ *                         <li> gpudb::create_table_external_columns_to_skip:
+ *                 Specifies a comma-delimited list of columns from the source
+ *                 data to
+ *                 skip.  Mutually exclusive to columns_to_load.
+ *                         <li> gpudb::create_table_external_datasource_name:
+ *                 Name of an existing external data source from which data
+ *                 file(s) specified in @a filepaths will be loaded
+ *                         <li>
+ *                 gpudb::create_table_external_default_column_formats:
+ *                 Specifies the default format to be applied to source data
+ *                 loaded
+ *                 into columns with the corresponding column property.
+ *                 Currently supported column properties include
+ *                 date, time, & datetime.  This default column-property-bound
+ *                 format can be overridden by specifying a
+ *                 column property & format for a given target column in @a
+ *                 column_formats. For
+ *                 each specified annotation, the format will apply to all
+ *                 columns with that annotation unless a custom
+ *                 @a column_formats for that annotation is specified.
+ *                 The parameter value must be formatted as a JSON string that
+ *                 is a map of column properties to their
+ *                 respective column formats, e.g., '{ "date" : "%Y.%m.%d",
+ *                 "time" : "%H:%M:%S" }'.  Column
+ *                 formats are specified as a string of control characters and
+ *                 plain text. The supported control
+ *                 characters are 'Y', 'm', 'd', 'H', 'M', 'S', and 's', which
+ *                 follow the Linux 'strptime()'
+ *                 specification, as well as 's', which specifies seconds and
+ *                 fractional seconds (though the fractional
+ *                 component will be truncated past milliseconds).
+ *                 Formats for the 'date' annotation must include the 'Y', 'm',
+ *                 and 'd' control characters. Formats for
+ *                 the 'time' annotation must include the 'H', 'M', and either
+ *                 'S' or 's' (but not both) control
+ *                 characters. Formats for the 'datetime' annotation meet both
+ *                 the 'date' and 'time' control character
+ *                 requirements. For example, '{"datetime" : "%m/%d/%Y
+ *                 %H:%M:%S" }' would be used to interpret text
+ *                 as "05/04/2000 12:12:11"
+ *                         <li> gpudb::create_table_external_error_handling:
+ *                 Specifies how errors should be handled upon insertion.
+ *                 <ul>
+ *                         <li> gpudb::create_table_external_permissive:
+ *                 Records with missing columns are populated with nulls if
+ *                 possible; otherwise, malformed records are skipped.
+ *                         <li>
+ *                 gpudb::create_table_external_ignore_bad_records: Malformed
+ *                 records are skipped.
+ *                         <li> gpudb::create_table_external_abort: Current
+ *                 insertion is stopped and entire operation is aborted when an
+ *                 error is encountered.  Primary key collisions are considered
+ *                 abortable errors in this mode.
+ *                 </ul>
+ *                 The default value is
+ *                 gpudb::create_table_external_permissive.
+ *                         <li>
+ *                 gpudb::create_table_external_external_table_type: Specifies
+ *                 whether the external table holds a local copy of the
+ *                 external data.
+ *                 <ul>
+ *                         <li> gpudb::create_table_external_materialized:
+ *                 Loads a copy of the external data into the database,
+ *                 refreshed on demand
+ *                         <li> gpudb::create_table_external_logical: External
+ *                 data will not be loaded into the database; the data will be
+ *                 retrieved from the source upon servicing each query against
+ *                 the external table
+ *                 </ul>
+ *                 The default value is
+ *                 gpudb::create_table_external_materialized.
+ *                         <li> gpudb::create_table_external_file_type:
+ *                 Specifies the type of the external data file(s) used as the
+ *                 source of data for this table.
+ *                 <ul>
+ *                         <li> gpudb::create_table_external_delimited_text:
+ *                 Delimited text format; e.g., CSV, TSV, PSV, etc.
+ *                         <li> gpudb::create_table_external_parquet: Apache
+ *                 Parquet format
+ *                 </ul>
+ *                 The default value is
+ *                 gpudb::create_table_external_delimited_text.
+ *                         <li> gpudb::create_table_external_ingestion_mode:
+ *                 For @a materialized external tables, whether to do a full
+ *                 load, dry run, or perform a type inference on the source
+ *                 data.
+ *                 <ul>
+ *                         <li> gpudb::create_table_external_full: Run a type
+ *                 inference on the source data (if needed) and ingest
+ *                         <li> gpudb::create_table_external_dry_run: Does not
+ *                 load data, but walks through the source data and determines
+ *                 the number of valid records, taking into account the current
+ *                 mode of @a error_handling.
+ *                         <li>
+ *                 gpudb::create_table_external_type_inference_only: Infer the
+ *                 type of the source data and return, without creating the
+ *                 table and ingesting data.  The inferred type is returned in
+ *                 the response.
+ *                 </ul>
+ *                 The default value is gpudb::create_table_external_full.
+ *                         <li> gpudb::create_table_external_loading_mode:
+ *                 Scheme for distributing the extraction and loading of data
+ *                 from the source data file(s).
+ *                 <ul>
+ *                         <li> gpudb::create_table_external_head: The head
+ *                 node loads all data. All files must be available to the head
+ *                 node.
+ *                         <li>
+ *                 gpudb::create_table_external_distributed_shared: The head
+ *                 node coordinates loading data by worker
+ *                 processes across all nodes from shared files available to
+ *                 all workers.
+ *                 NOTE:
+ *                 Instead of existing on a shared source, the files can be
+ *                 duplicated on a source local to each host
+ *                 to improve performance, though the files must appear as the
+ *                 same data set from the perspective of
+ *                 all hosts performing the load.
+ *                         <li> gpudb::create_table_external_distributed_local:
+ *                 A single worker process on each node loads all files
+ *                 that are available to it. This option works best when each
+ *                 worker loads files from its own file
+ *                 system, to maximize performance. In order to avoid data
+ *                 duplication, either each worker performing
+ *                 the load needs to have visibility to a set of files unique
+ *                 to it (no file is visible to more than
+ *                 one node) or the target table needs to have a primary key
+ *                 (which will allow the worker to
+ *                 automatically deduplicate data).
+ *                 NOTE:
+ *                 If the table's columns aren't defined, table structure will
+ *                 be determined by the head node. If the
+ *                 head node has no files local to it, it will be unable to
+ *                 determine the structure and the request
+ *                 will fail.
+ *                 This mode should not be used in conjunction with a data
+ *                 source, as data sources are seen by all
+ *                 worker processes as shared resources with no 'local'
+ *                 component.
+ *                 If the head node is configured to have no worker processes,
+ *                 no data strictly accessible to the head
+ *                 node will be loaded.
+ *                 </ul>
+ *                 The default value is gpudb::create_table_external_head.
+ *                         <li> gpudb::create_table_external_primary_keys:
+ *                 Optional: comma separated list of column names, to set as
+ *                 primary keys, when not specified in the type.  The default
+ *                 value is ''.
+ *                         <li> gpudb::create_table_external_shard_keys:
+ *                 Optional: comma separated list of column names, to set as
+ *                 primary keys, when not specified in the type.  The default
+ *                 value is ''.
+ *                         <li> gpudb::create_table_external_refresh_method:
+ *                 Method by which the table can be refreshed from its source
+ *                 data.
+ *                 <ul>
+ *                         <li> gpudb::create_table_external_manual: Refresh
+ *                 only occurs when manually requested by invoking the refresh
+ *                 action of /alter/table on this table.
+ *                         <li> gpudb::create_table_external_on_start: Refresh
+ *                 table on database startup and when manually requested by
+ *                 invoking the refresh action of /alter/table on this table.
+ *                 </ul>
+ *                 The default value is gpudb::create_table_external_manual.
+ *                         <li>
+ *                 gpudb::create_table_external_text_comment_string: Specifies
+ *                 the character string that should be interpreted as a comment
+ *                 line
+ *                 prefix in the source data.  All lines in the data starting
+ *                 with the provided string are ignored.
+ *                 For @a delimited_text @a file_type only.  The default value
+ *                 is '#'.
+ *                         <li> gpudb::create_table_external_text_delimiter:
+ *                 Specifies the character delimiting field values in the
+ *                 source data
+ *                 and field names in the header (if present).
+ *                 For @a delimited_text @a file_type only.  The default value
+ *                 is ','.
+ *                         <li>
+ *                 gpudb::create_table_external_text_escape_character:
+ *                 Specifies the character that is used to escape other
+ *                 characters in
+ *                 the source data.
+ *                 An 'a', 'b', 'f', 'n', 'r', 't', or 'v' preceded by an
+ *                 escape character will be interpreted as the
+ *                 ASCII bell, backspace, form feed, line feed, carriage
+ *                 return, horizontal tab, & vertical tab,
+ *                 respectively.  For example, the escape character followed by
+ *                 an 'n' will be interpreted as a newline
+ *                 within a field value.
+ *                 The escape character can also be used to escape the quoting
+ *                 character, and will be treated as an
+ *                 escape character whether it is within a quoted field value
+ *                 or not.
+ *                 For @a delimited_text @a file_type only.
+ *                         <li> gpudb::create_table_external_text_has_header:
+ *                 Indicates whether the source data contains a header row.
+ *                 For @a delimited_text @a file_type only.
+ *                 <ul>
+ *                         <li> gpudb::create_table_external_true
+ *                         <li> gpudb::create_table_external_false
+ *                 </ul>
+ *                 The default value is gpudb::create_table_external_true.
+ *                         <li>
+ *                 gpudb::create_table_external_text_header_property_delimiter:
+ *                 Specifies the delimiter for
+ *                 <a href="../../concepts/types.html#column-properties"
+ *                 target="_top">column properties</a> in the header row (if
+ *                 present).  Cannot be set to same value as @a text_delimiter.
+ *                 For @a delimited_text @a file_type only.  The default value
+ *                 is '|'.
+ *                         <li> gpudb::create_table_external_text_null_string:
+ *                 Specifies the character string that should be interpreted as
+ *                 a null
+ *                 value in the source data.
+ *                 For @a delimited_text @a file_type only.  The default value
+ *                 is ''.
+ *                         <li>
+ *                 gpudb::create_table_external_text_quote_character: Specifies
+ *                 the character that should be interpreted as a field value
+ *                 quoting character in the source data.  The character must
+ *                 appear at beginning and end of field value
+ *                 to take effect.  Delimiters within quoted fields are treated
+ *                 as literals and not delimiters.  Within
+ *                 a quoted field, two consecutive quote characters will be
+ *                 interpreted as a single literal quote
+ *                 character, effectively escaping it.  To not have a quote
+ *                 character, specify an empty string.
+ *                 For @a delimited_text @a file_type only.  The default value
+ *                 is '"'.
+ *                         <li>
+ *                 gpudb::create_table_external_num_tasks_per_rank: Optional:
+ *                 number of tasks for reading file per rank. Default will be
+ *                 external_file_reader_num_tasks
+ *                 </ul>
+ * 
+ * @return Response object containing the result of the operation.
+ * 
+ */
+
+CreateTableExternalResponse createTableExternal( const std::string& tableName,
+                                                 const std::vector<std::string>& filepaths,
+                                                 const std::map<std::string, std::map<std::string, std::string> >& modifyColumns,
+                                                 const std::map<std::string, std::string>& createTableOptions,
+                                                 const std::map<std::string, std::string>& options ) const;
+
+/**
+ * Creates a new <a href="../../concepts/external_tables.html"
+ * target="_top">external table</a>, which is a
+ * local database object whose source data is located externally to the
+ * database.  The source data can
+ * be located either on the cluster, accessible to the database; or remotely,
+ * accessible via a
+ * pre-defined external <a href="../../concepts/data_sources.html"
+ * target="_top">data source</a>.
+ * <p>
+ * The external table can have its structure defined explicitly, via @a
+ * createTableOptions,
+ * which contains many of the options from {@link
+ * #createTable(const std::string&,const std::string&,const std::map<std::string, std::string>&,CreateTableResponse&) const};
+ * or defined implicitly, inferred
+ * from the source data.
+ * 
+ * @param tableName  Name of the table to be created, in
+ *                   [schema_name.]table_name format, using
+ *                   standard <a
+ *                   href="../../concepts/tables.html#table-name-resolution"
+ *                   target="_top">name resolution rules</a> and meeting
+ *                   <a href="../../concepts/tables.html#table-naming-criteria"
+ *                   target="_top">table naming criteria</a>.
+ * @param filepaths  A list of file paths from which data will be sourced;
+ *                   wildcards (*) can be used
+ *                   to specify a group of files.
+ *                   If an external data source is specified in @a
+ *                   datasource_name, these file
+ *                   paths must resolve to accessible files at that data source
+ *                   location. Also, wildcards will only work
+ *                   when used within the file name, not the path.
+ *                   If no data source is specified, the files are assumed to
+ *                   be local to the database and must all be
+ *                   accessible to the gpudb user, residing on the path (or
+ *                   relative to the path) specified by the
+ *                   external files directory in the Kinetica
+ *                   <a href="../../config/index.html#external-files"
+ *                   target="_top">configuration file</a>.
+ * @param modifyColumns  Not implemented yet
+ * @param createTableOptions  Options from /create/table, allowing the
+ *                            structure of the table to
+ *                            be defined independently of the data source
+ *                            <ul>
+ *                                    <li>
+ *                            gpudb::create_table_external_type_id: ID of a
+ *                            currently registered <a
+ *                            href="../../concepts/types.html"
+ *                            target="_top">type</a>.  The default value is ''.
+ *                                    <li>
+ *                            gpudb::create_table_external_no_error_if_exists:
+ *                            If @a true,
+ *                            prevents an error from occurring if the table
+ *                            already exists and is of the given type.  If a
+ *                            table with
+ *                            the same name but a different type exists, it is
+ *                            still an error.
+ *                            <ul>
+ *                                    <li> gpudb::create_table_external_true
+ *                                    <li> gpudb::create_table_external_false
+ *                            </ul>
+ *                            The default value is
+ *                            gpudb::create_table_external_false.
+ *                                    <li>
+ *                            gpudb::create_table_external_is_replicated:
+ *                            Affects the <a
+ *                            href="../../concepts/tables.html#distribution"
+ *                            target="_top">distribution scheme</a>
+ *                            for the table's data.  If @a true and the
+ *                            given table has no explicit <a
+ *                            href="../../concepts/tables.html#shard-key"
+ *                            target="_top">shard key</a> defined, the
+ *                            table will be <a
+ *                            href="../../concepts/tables.html#replication"
+ *                            target="_top">replicated</a>.  If
+ *                            @a false, the table will be
+ *                            <a href="../../concepts/tables.html#sharding"
+ *                            target="_top">sharded</a> according to the shard
+ *                            key specified in the
+ *                            given @a type_id, or
+ *                            <a
+ *                            href="../../concepts/tables.html#random-sharding"
+ *                            target="_top">randomly sharded</a>, if no shard
+ *                            key is specified.
+ *                             Note that a type containing a shard key cannot
+ *                            be used to create a replicated table.
+ *                            <ul>
+ *                                    <li> gpudb::create_table_external_true
+ *                                    <li> gpudb::create_table_external_false
+ *                            </ul>
+ *                            The default value is
+ *                            gpudb::create_table_external_false.
+ *                                    <li>
+ *                            gpudb::create_table_external_foreign_keys:
+ *                            Semicolon-separated list of
+ *                            <a href="../../concepts/tables.html#foreign-keys"
+ *                            target="_top">foreign keys</a>, of the format
+ *                            '(source_column_name [, ...]) references
+ *                            target_table_name(primary_key_column_name [,
+ *                            ...]) [as foreign_key_name]'.
+ *                                    <li>
+ *                            gpudb::create_table_external_foreign_shard_key:
+ *                            Foreign shard key of the format
+ *                            'source_column references shard_by_column from
+ *                            target_table(primary_key_column)'.
+ *                                    <li>
+ *                            gpudb::create_table_external_partition_type: <a
+ *                            href="../../concepts/tables.html#partitioning"
+ *                            target="_top">Partitioning</a> scheme to use.
+ *                            <ul>
+ *                                    <li> gpudb::create_table_external_RANGE:
+ *                            Use <a
+ *                            href="../../concepts/tables.html#partitioning-by-range"
+ *                            target="_top">range partitioning</a>.
+ *                                    <li>
+ *                            gpudb::create_table_external_INTERVAL: Use <a
+ *                            href="../../concepts/tables.html#partitioning-by-interval"
+ *                            target="_top">interval partitioning</a>.
+ *                                    <li> gpudb::create_table_external_LIST:
+ *                            Use <a
+ *                            href="../../concepts/tables.html#partitioning-by-list"
+ *                            target="_top">list partitioning</a>.
+ *                                    <li> gpudb::create_table_external_HASH:
+ *                            Use <a
+ *                            href="../../concepts/tables.html#partitioning-by-hash"
+ *                            target="_top">hash partitioning</a>.
+ *                            </ul>
+ *                                    <li>
+ *                            gpudb::create_table_external_partition_keys:
+ *                            Comma-separated list of partition keys, which are
+ *                            the columns or
+ *                            column expressions by which records will be
+ *                            assigned to partitions defined by
+ *                            @a partition_definitions.
+ *                                    <li>
+ *                            gpudb::create_table_external_partition_definitions:
+ *                            Comma-separated list of partition definitions,
+ *                            whose format depends
+ *                            on the choice of @a partition_type.  See
+ *                            <a
+ *                            href="../../concepts/tables.html#partitioning-by-range"
+ *                            target="_top">range partitioning</a>,
+ *                            <a
+ *                            href="../../concepts/tables.html#partitioning-by-interval"
+ *                            target="_top">interval partitioning</a>,
+ *                            <a
+ *                            href="../../concepts/tables.html#partitioning-by-list"
+ *                            target="_top">list partitioning</a>, or
+ *                            <a
+ *                            href="../../concepts/tables.html#partitioning-by-hash"
+ *                            target="_top">hash partitioning</a> for example
+ *                            formats.
+ *                                    <li>
+ *                            gpudb::create_table_external_is_automatic_partition:
+ *                            If @a true,
+ *                            a new partition will be created for values which
+ *                            don't fall into an existing partition.  Currently
+ *                            only supported for <a
+ *                            href="../../concepts/tables.html#partitioning-by-list"
+ *                            target="_top">list partitions</a>.
+ *                            <ul>
+ *                                    <li> gpudb::create_table_external_true
+ *                                    <li> gpudb::create_table_external_false
+ *                            </ul>
+ *                            The default value is
+ *                            gpudb::create_table_external_false.
+ *                                    <li> gpudb::create_table_external_ttl:
+ *                            Sets the <a href="../../concepts/ttl.html"
+ *                            target="_top">TTL</a> of the table specified in
+ *                            @a tableName.
+ *                                    <li>
+ *                            gpudb::create_table_external_chunk_size:
+ *                            Indicates the number of records per chunk to be
+ *                            used for this table.
+ *                                    <li>
+ *                            gpudb::create_table_external_is_result_table:
+ *                            Indicates whether the table is a
+ *                            <a href="../../concepts/tables_memory_only.html"
+ *                            target="_top">memory-only table</a>. A result
+ *                            table cannot contain
+ *                            columns with store_only or text_search
+ *                            <a href="../../concepts/types.html#data-handling"
+ *                            target="_top">data-handling</a> or that are
+ *                            <a
+ *                            href="../../concepts/types.html#primitive-types"
+ *                            target="_top">non-charN strings</a>, and it will
+ *                            not be retained if
+ *                            the server is restarted.
+ *                            <ul>
+ *                                    <li> gpudb::create_table_external_true
+ *                                    <li> gpudb::create_table_external_false
+ *                            </ul>
+ *                            The default value is
+ *                            gpudb::create_table_external_false.
+ *                                    <li>
+ *                            gpudb::create_table_external_strategy_definition:
+ *                            The <a
+ *                            href="../../rm/concepts.html#tier-strategies"
+ *                            target="_top">tier strategy</a>
+ *                            for the table and its columns. See
+ *                            <a href="../../rm/concepts.html#tier-strategies"
+ *                            target="_top">tier strategy usage</a> for format
+ *                            and
+ *                            <a href="../../rm/usage.html#tier-strategies"
+ *                            target="_top">tier strategy examples</a> for
+ *                            examples.
+ *                            </ul>
+ * @param options  Optional parameters.
+ *                 <ul>
+ *                         <li>
+ *                 gpudb::create_table_external_bad_record_table_name: Optional
+ *                 name of a table to which records that were rejected are
+ *                 written.  The bad-record-table has the following columns:
+ *                 line_number (long), line_rejected (string), error_message
+ *                 (string).
+ *                         <li>
+ *                 gpudb::create_table_external_bad_record_table_limit: A
+ *                 positive integer indicating the maximum number of records
+ *                 that can be  written to the bad-record-table.   Default
+ *                 value is 10000
+ *                         <li> gpudb::create_table_external_batch_size:
+ *                 Internal tuning parameter--number of records per batch when
+ *                 inserting data
+ *                         <li> gpudb::create_table_external_column_formats:
+ *                 For each target column specified, applies the
+ *                 column-property-bound
+ *                 format to the source data loaded into that column.  Each
+ *                 column format will contain a mapping of one
+ *                 or more of its column properties to an appropriate format
+ *                 for each property.  Currently supported
+ *                 column properties include date, time, & datetime. The
+ *                 parameter value must be formatted as a JSON
+ *                 string of maps of column names to maps of column properties
+ *                 to their corresponding column formats,
+ *                 e.g.,
+ *                 '{ "order_date" : { "date" : "%Y.%m.%d" }, "order_time" : {
+ *                 "time" : "%H:%M:%S" } }'.
+ *                 See @a default_column_formats for valid format syntax.
+ *                         <li> gpudb::create_table_external_columns_to_load:
+ *                 Specifies a comma-delimited list of columns from the source
+ *                 data to
+ *                 load.  If more than one file is being loaded, this list
+ *                 applies to all files.
+ *                 Column numbers can be specified discretely or as a range.
+ *                 For example, a value of '5,7,1..3' will
+ *                 insert values from the fifth column in the source data into
+ *                 the first column in the target table,
+ *                 from the seventh column in the source data into the second
+ *                 column in the target table, and from the
+ *                 first through third columns in the source data into the
+ *                 third through fifth columns in the target
+ *                 table.
+ *                 If the source data contains a header, column names matching
+ *                 the file header names may be provided
+ *                 instead of column numbers.  If the target table doesn't
+ *                 exist, the table will be created with the
+ *                 columns in this order.  If the target table does exist with
+ *                 columns in a different order than the
+ *                 source data, this list can be used to match the order of the
+ *                 target table.  For example, a value of
+ *                 'C, B, A' will create a three column table with column C,
+ *                 followed by column B, followed by column
+ *                 A; or will insert those fields in that order into a table
+ *                 created with columns in that order.  If
+ *                 the target table exists, the column names must match the
+ *                 source data field names for a name-mapping
+ *                 to be successful.
+ *                         <li> gpudb::create_table_external_columns_to_skip:
+ *                 Specifies a comma-delimited list of columns from the source
+ *                 data to
+ *                 skip.  Mutually exclusive to columns_to_load.
+ *                         <li> gpudb::create_table_external_datasource_name:
+ *                 Name of an existing external data source from which data
+ *                 file(s) specified in @a filepaths will be loaded
+ *                         <li>
+ *                 gpudb::create_table_external_default_column_formats:
+ *                 Specifies the default format to be applied to source data
+ *                 loaded
+ *                 into columns with the corresponding column property.
+ *                 Currently supported column properties include
+ *                 date, time, & datetime.  This default column-property-bound
+ *                 format can be overridden by specifying a
+ *                 column property & format for a given target column in @a
+ *                 column_formats. For
+ *                 each specified annotation, the format will apply to all
+ *                 columns with that annotation unless a custom
+ *                 @a column_formats for that annotation is specified.
+ *                 The parameter value must be formatted as a JSON string that
+ *                 is a map of column properties to their
+ *                 respective column formats, e.g., '{ "date" : "%Y.%m.%d",
+ *                 "time" : "%H:%M:%S" }'.  Column
+ *                 formats are specified as a string of control characters and
+ *                 plain text. The supported control
+ *                 characters are 'Y', 'm', 'd', 'H', 'M', 'S', and 's', which
+ *                 follow the Linux 'strptime()'
+ *                 specification, as well as 's', which specifies seconds and
+ *                 fractional seconds (though the fractional
+ *                 component will be truncated past milliseconds).
+ *                 Formats for the 'date' annotation must include the 'Y', 'm',
+ *                 and 'd' control characters. Formats for
+ *                 the 'time' annotation must include the 'H', 'M', and either
+ *                 'S' or 's' (but not both) control
+ *                 characters. Formats for the 'datetime' annotation meet both
+ *                 the 'date' and 'time' control character
+ *                 requirements. For example, '{"datetime" : "%m/%d/%Y
+ *                 %H:%M:%S" }' would be used to interpret text
+ *                 as "05/04/2000 12:12:11"
+ *                         <li> gpudb::create_table_external_error_handling:
+ *                 Specifies how errors should be handled upon insertion.
+ *                 <ul>
+ *                         <li> gpudb::create_table_external_permissive:
+ *                 Records with missing columns are populated with nulls if
+ *                 possible; otherwise, malformed records are skipped.
+ *                         <li>
+ *                 gpudb::create_table_external_ignore_bad_records: Malformed
+ *                 records are skipped.
+ *                         <li> gpudb::create_table_external_abort: Current
+ *                 insertion is stopped and entire operation is aborted when an
+ *                 error is encountered.  Primary key collisions are considered
+ *                 abortable errors in this mode.
+ *                 </ul>
+ *                 The default value is
+ *                 gpudb::create_table_external_permissive.
+ *                         <li>
+ *                 gpudb::create_table_external_external_table_type: Specifies
+ *                 whether the external table holds a local copy of the
+ *                 external data.
+ *                 <ul>
+ *                         <li> gpudb::create_table_external_materialized:
+ *                 Loads a copy of the external data into the database,
+ *                 refreshed on demand
+ *                         <li> gpudb::create_table_external_logical: External
+ *                 data will not be loaded into the database; the data will be
+ *                 retrieved from the source upon servicing each query against
+ *                 the external table
+ *                 </ul>
+ *                 The default value is
+ *                 gpudb::create_table_external_materialized.
+ *                         <li> gpudb::create_table_external_file_type:
+ *                 Specifies the type of the external data file(s) used as the
+ *                 source of data for this table.
+ *                 <ul>
+ *                         <li> gpudb::create_table_external_delimited_text:
+ *                 Delimited text format; e.g., CSV, TSV, PSV, etc.
+ *                         <li> gpudb::create_table_external_parquet: Apache
+ *                 Parquet format
+ *                 </ul>
+ *                 The default value is
+ *                 gpudb::create_table_external_delimited_text.
+ *                         <li> gpudb::create_table_external_ingestion_mode:
+ *                 For @a materialized external tables, whether to do a full
+ *                 load, dry run, or perform a type inference on the source
+ *                 data.
+ *                 <ul>
+ *                         <li> gpudb::create_table_external_full: Run a type
+ *                 inference on the source data (if needed) and ingest
+ *                         <li> gpudb::create_table_external_dry_run: Does not
+ *                 load data, but walks through the source data and determines
+ *                 the number of valid records, taking into account the current
+ *                 mode of @a error_handling.
+ *                         <li>
+ *                 gpudb::create_table_external_type_inference_only: Infer the
+ *                 type of the source data and return, without creating the
+ *                 table and ingesting data.  The inferred type is returned in
+ *                 the response.
+ *                 </ul>
+ *                 The default value is gpudb::create_table_external_full.
+ *                         <li> gpudb::create_table_external_loading_mode:
+ *                 Scheme for distributing the extraction and loading of data
+ *                 from the source data file(s).
+ *                 <ul>
+ *                         <li> gpudb::create_table_external_head: The head
+ *                 node loads all data. All files must be available to the head
+ *                 node.
+ *                         <li>
+ *                 gpudb::create_table_external_distributed_shared: The head
+ *                 node coordinates loading data by worker
+ *                 processes across all nodes from shared files available to
+ *                 all workers.
+ *                 NOTE:
+ *                 Instead of existing on a shared source, the files can be
+ *                 duplicated on a source local to each host
+ *                 to improve performance, though the files must appear as the
+ *                 same data set from the perspective of
+ *                 all hosts performing the load.
+ *                         <li> gpudb::create_table_external_distributed_local:
+ *                 A single worker process on each node loads all files
+ *                 that are available to it. This option works best when each
+ *                 worker loads files from its own file
+ *                 system, to maximize performance. In order to avoid data
+ *                 duplication, either each worker performing
+ *                 the load needs to have visibility to a set of files unique
+ *                 to it (no file is visible to more than
+ *                 one node) or the target table needs to have a primary key
+ *                 (which will allow the worker to
+ *                 automatically deduplicate data).
+ *                 NOTE:
+ *                 If the table's columns aren't defined, table structure will
+ *                 be determined by the head node. If the
+ *                 head node has no files local to it, it will be unable to
+ *                 determine the structure and the request
+ *                 will fail.
+ *                 This mode should not be used in conjunction with a data
+ *                 source, as data sources are seen by all
+ *                 worker processes as shared resources with no 'local'
+ *                 component.
+ *                 If the head node is configured to have no worker processes,
+ *                 no data strictly accessible to the head
+ *                 node will be loaded.
+ *                 </ul>
+ *                 The default value is gpudb::create_table_external_head.
+ *                         <li> gpudb::create_table_external_primary_keys:
+ *                 Optional: comma separated list of column names, to set as
+ *                 primary keys, when not specified in the type.  The default
+ *                 value is ''.
+ *                         <li> gpudb::create_table_external_shard_keys:
+ *                 Optional: comma separated list of column names, to set as
+ *                 primary keys, when not specified in the type.  The default
+ *                 value is ''.
+ *                         <li> gpudb::create_table_external_refresh_method:
+ *                 Method by which the table can be refreshed from its source
+ *                 data.
+ *                 <ul>
+ *                         <li> gpudb::create_table_external_manual: Refresh
+ *                 only occurs when manually requested by invoking the refresh
+ *                 action of /alter/table on this table.
+ *                         <li> gpudb::create_table_external_on_start: Refresh
+ *                 table on database startup and when manually requested by
+ *                 invoking the refresh action of /alter/table on this table.
+ *                 </ul>
+ *                 The default value is gpudb::create_table_external_manual.
+ *                         <li>
+ *                 gpudb::create_table_external_text_comment_string: Specifies
+ *                 the character string that should be interpreted as a comment
+ *                 line
+ *                 prefix in the source data.  All lines in the data starting
+ *                 with the provided string are ignored.
+ *                 For @a delimited_text @a file_type only.  The default value
+ *                 is '#'.
+ *                         <li> gpudb::create_table_external_text_delimiter:
+ *                 Specifies the character delimiting field values in the
+ *                 source data
+ *                 and field names in the header (if present).
+ *                 For @a delimited_text @a file_type only.  The default value
+ *                 is ','.
+ *                         <li>
+ *                 gpudb::create_table_external_text_escape_character:
+ *                 Specifies the character that is used to escape other
+ *                 characters in
+ *                 the source data.
+ *                 An 'a', 'b', 'f', 'n', 'r', 't', or 'v' preceded by an
+ *                 escape character will be interpreted as the
+ *                 ASCII bell, backspace, form feed, line feed, carriage
+ *                 return, horizontal tab, & vertical tab,
+ *                 respectively.  For example, the escape character followed by
+ *                 an 'n' will be interpreted as a newline
+ *                 within a field value.
+ *                 The escape character can also be used to escape the quoting
+ *                 character, and will be treated as an
+ *                 escape character whether it is within a quoted field value
+ *                 or not.
+ *                 For @a delimited_text @a file_type only.
+ *                         <li> gpudb::create_table_external_text_has_header:
+ *                 Indicates whether the source data contains a header row.
+ *                 For @a delimited_text @a file_type only.
+ *                 <ul>
+ *                         <li> gpudb::create_table_external_true
+ *                         <li> gpudb::create_table_external_false
+ *                 </ul>
+ *                 The default value is gpudb::create_table_external_true.
+ *                         <li>
+ *                 gpudb::create_table_external_text_header_property_delimiter:
+ *                 Specifies the delimiter for
+ *                 <a href="../../concepts/types.html#column-properties"
+ *                 target="_top">column properties</a> in the header row (if
+ *                 present).  Cannot be set to same value as @a text_delimiter.
+ *                 For @a delimited_text @a file_type only.  The default value
+ *                 is '|'.
+ *                         <li> gpudb::create_table_external_text_null_string:
+ *                 Specifies the character string that should be interpreted as
+ *                 a null
+ *                 value in the source data.
+ *                 For @a delimited_text @a file_type only.  The default value
+ *                 is ''.
+ *                         <li>
+ *                 gpudb::create_table_external_text_quote_character: Specifies
+ *                 the character that should be interpreted as a field value
+ *                 quoting character in the source data.  The character must
+ *                 appear at beginning and end of field value
+ *                 to take effect.  Delimiters within quoted fields are treated
+ *                 as literals and not delimiters.  Within
+ *                 a quoted field, two consecutive quote characters will be
+ *                 interpreted as a single literal quote
+ *                 character, effectively escaping it.  To not have a quote
+ *                 character, specify an empty string.
+ *                 For @a delimited_text @a file_type only.  The default value
+ *                 is '"'.
+ *                         <li>
+ *                 gpudb::create_table_external_num_tasks_per_rank: Optional:
+ *                 number of tasks for reading file per rank. Default will be
+ *                 external_file_reader_num_tasks
+ *                 </ul>
+ * @param[out] response_  Response object containing the results of the
+ *                        operation.
+ * 
+ * @return Response object containing the result of the operation (initially
+ *         passed in by reference).
+ * 
+ */
+
+CreateTableExternalResponse& createTableExternal( const std::string& tableName,
+                                                  const std::vector<std::string>& filepaths,
+                                                  const std::map<std::string, std::map<std::string, std::string> >& modifyColumns,
+                                                  const std::map<std::string, std::string>& createTableOptions,
+                                                  const std::map<std::string, std::string>& options,
+                                                  CreateTableExternalResponse& response_ ) const;
 
 /**
  * Creates a monitor that watches for a single table modification event
@@ -8580,8 +11101,10 @@ CreateTableMonitorResponse& createTableMonitor( const CreateTableMonitorRequest&
  * <a href="../../concepts/table_monitors.html" target="_top">Table
  * Monitors</a>.
  * 
- * @param tableName  Name of the table to monitor. Must not refer to a
- *                   collection.
+ * @param tableName  Name of the table to monitor, in [schema_name.]table_name
+ *                   format, using standard <a
+ *                   href="../../concepts/tables.html#table-name-resolution"
+ *                   target="_top">name resolution rules</a>.
  * @param options  Optional parameters.
  *                 <ul>
  *                         <li> gpudb::create_table_monitor_event: Type of
@@ -8627,8 +11150,10 @@ CreateTableMonitorResponse createTableMonitor( const std::string& tableName,
  * <a href="../../concepts/table_monitors.html" target="_top">Table
  * Monitors</a>.
  * 
- * @param tableName  Name of the table to monitor. Must not refer to a
- *                   collection.
+ * @param tableName  Name of the table to monitor, in [schema_name.]table_name
+ *                   format, using standard <a
+ *                   href="../../concepts/tables.html#table-name-resolution"
+ *                   target="_top">name resolution rules</a>.
  * @param options  Optional parameters.
  *                 <ul>
  *                         <li> gpudb::create_table_monitor_event: Type of
@@ -8660,21 +11185,26 @@ CreateTableMonitorResponse& createTableMonitor( const std::string& tableName,
                                                 CreateTableMonitorResponse& response_ ) const;
 
 /**
- * Sets up an area trigger mechanism for two column_names for one or more
- * tables. (This function is essentially the two-dimensional version of {@link
+ * Sets up an area trigger mechanism for two column_names for one or
+ * more tables. (This function is essentially the two-dimensional version of
+ * {@link
  * #createTriggerByRange(const CreateTriggerByRangeRequest&) const}.) Once
- * the trigger has been activated, any record added to the listed tables(s) via
- * {@link #insertRecordsRaw(const RawInsertRecordsRequest&) const} with the
+ * the trigger has been activated, any
+ * record added to the listed tables(s) via {@link
+ * #insertRecordsRaw(const RawInsertRecordsRequest&) const} with the
  * chosen columns' values falling within the specified region will trip the
  * trigger. All such records will be queued at the trigger port (by default
- * '9001' but able to be retrieved via {@link
+ * '9001'
+ * but able to be retrieved via {@link
  * #showSystemStatus(const ShowSystemStatusRequest&) const}) for any
- * listening client to collect. Active triggers can be cancelled by using the
+ * listening
+ * client to collect. Active triggers can be cancelled by using the
  * {@link #clearTrigger(const ClearTriggerRequest&) const} endpoint or by
  * clearing all relevant tables.
  * <p>
  * The output returns the trigger handle as well as indicating success or
- * failure of the trigger activation.
+ * failure
+ * of the trigger activation.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -8686,23 +11216,28 @@ CreateTableMonitorResponse& createTableMonitor( const std::string& tableName,
 CreateTriggerByAreaResponse createTriggerByArea( const CreateTriggerByAreaRequest& request_ ) const;
 
 /**
- * Sets up an area trigger mechanism for two column_names for one or more
- * tables. (This function is essentially the two-dimensional version of {@link
+ * Sets up an area trigger mechanism for two column_names for one or
+ * more tables. (This function is essentially the two-dimensional version of
+ * {@link
  * #createTriggerByRange(const CreateTriggerByRangeRequest&,CreateTriggerByRangeResponse&) const}.)
- * Once the trigger has been activated, any record added to the listed
- * tables(s) via {@link
+ * Once the trigger has been activated, any
+ * record added to the listed tables(s) via {@link
  * #insertRecordsRaw(const RawInsertRecordsRequest&,InsertRecordsResponse&) const}
- * with the chosen columns' values falling within the specified region will
- * trip the trigger. All such records will be queued at the trigger port (by
- * default '9001' but able to be retrieved via {@link
+ * with the
+ * chosen columns' values falling within the specified region will trip the
+ * trigger. All such records will be queued at the trigger port (by default
+ * '9001'
+ * but able to be retrieved via {@link
  * #showSystemStatus(const ShowSystemStatusRequest&,ShowSystemStatusResponse&) const})
- * for any listening client to collect. Active triggers can be cancelled by
- * using the {@link
+ * for any listening
+ * client to collect. Active triggers can be cancelled by using the
+ * {@link
  * #clearTrigger(const ClearTriggerRequest&,ClearTriggerResponse&) const}
  * endpoint or by clearing all relevant tables.
  * <p>
  * The output returns the trigger handle as well as indicating success or
- * failure of the trigger activation.
+ * failure
+ * of the trigger activation.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -8718,29 +11253,36 @@ CreateTriggerByAreaResponse& createTriggerByArea( const CreateTriggerByAreaReque
                                                   CreateTriggerByAreaResponse& response_ ) const;
 
 /**
- * Sets up an area trigger mechanism for two column_names for one or more
- * tables. (This function is essentially the two-dimensional version of {@link
+ * Sets up an area trigger mechanism for two column_names for one or
+ * more tables. (This function is essentially the two-dimensional version of
+ * {@link
  * #createTriggerByRange(const std::string&,const std::vector<std::string>&,const std::string&,const double,const double,const std::map<std::string, std::string>&) const}.)
- * Once the trigger has been activated, any record added to the listed
- * tables(s) via {@link
- * #insertRecordsRaw(const RawInsertRecordsRequest&) const} with the chosen
- * columns' values falling within the specified region will trip the trigger.
- * All such records will be queued at the trigger port (by default '9001' but
- * able to be retrieved via {@link
+ * Once the trigger has been activated, any
+ * record added to the listed tables(s) via {@link
+ * #insertRecordsRaw(const RawInsertRecordsRequest&) const} with the
+ * chosen columns' values falling within the specified region will trip the
+ * trigger. All such records will be queued at the trigger port (by default
+ * '9001'
+ * but able to be retrieved via {@link
  * #showSystemStatus(const std::map<std::string, std::string>&) const})
- * for any listening client to collect. Active triggers can be cancelled by
- * using the {@link
+ * for any listening
+ * client to collect. Active triggers can be cancelled by using the
+ * {@link
  * #clearTrigger(const std::string&,const std::map<std::string, std::string>&) const}
  * endpoint or by clearing all relevant tables.
  * <p>
  * The output returns the trigger handle as well as indicating success or
- * failure of the trigger activation.
+ * failure
+ * of the trigger activation.
  * 
  * @param requestId  User-created ID for the trigger. The ID can be
  *                   alphanumeric, contain symbols, and must contain at least
  *                   one character.
  * @param tableNames  Names of the tables on which the trigger will be
- *                    activated and maintained.
+ *                    activated and maintained, each in
+ *                    [schema_name.]table_name format, using standard <a
+ *                    href="../../concepts/tables.html#table-name-resolution"
+ *                    target="_top">name resolution rules</a>.
  * @param xColumnName  Name of a numeric column on which the trigger is
  *                     activated. Usually 'x' for geospatial data points.
  * @param xVector  The respective coordinate values for the region on which the
@@ -8767,29 +11309,36 @@ CreateTriggerByAreaResponse createTriggerByArea( const std::string& requestId,
                                                  const std::map<std::string, std::string>& options ) const;
 
 /**
- * Sets up an area trigger mechanism for two column_names for one or more
- * tables. (This function is essentially the two-dimensional version of {@link
+ * Sets up an area trigger mechanism for two column_names for one or
+ * more tables. (This function is essentially the two-dimensional version of
+ * {@link
  * #createTriggerByRange(const std::string&,const std::vector<std::string>&,const std::string&,const double,const double,const std::map<std::string, std::string>&,CreateTriggerByRangeResponse&) const}.)
- * Once the trigger has been activated, any record added to the listed
- * tables(s) via {@link
- * #insertRecordsRaw(const RawInsertRecordsRequest&) const} with the chosen
- * columns' values falling within the specified region will trip the trigger.
- * All such records will be queued at the trigger port (by default '9001' but
- * able to be retrieved via {@link
+ * Once the trigger has been activated, any
+ * record added to the listed tables(s) via {@link
+ * #insertRecordsRaw(const RawInsertRecordsRequest&) const} with the
+ * chosen columns' values falling within the specified region will trip the
+ * trigger. All such records will be queued at the trigger port (by default
+ * '9001'
+ * but able to be retrieved via {@link
  * #showSystemStatus(const std::map<std::string, std::string>&,ShowSystemStatusResponse&) const})
- * for any listening client to collect. Active triggers can be cancelled by
- * using the {@link
+ * for any listening
+ * client to collect. Active triggers can be cancelled by using the
+ * {@link
  * #clearTrigger(const std::string&,const std::map<std::string, std::string>&,ClearTriggerResponse&) const}
  * endpoint or by clearing all relevant tables.
  * <p>
  * The output returns the trigger handle as well as indicating success or
- * failure of the trigger activation.
+ * failure
+ * of the trigger activation.
  * 
  * @param requestId  User-created ID for the trigger. The ID can be
  *                   alphanumeric, contain symbols, and must contain at least
  *                   one character.
  * @param tableNames  Names of the tables on which the trigger will be
- *                    activated and maintained.
+ *                    activated and maintained, each in
+ *                    [schema_name.]table_name format, using standard <a
+ *                    href="../../concepts/tables.html#table-name-resolution"
+ *                    target="_top">name resolution rules</a>.
  * @param xColumnName  Name of a numeric column on which the trigger is
  *                     activated. Usually 'x' for geospatial data points.
  * @param xVector  The respective coordinate values for the region on which the
@@ -8820,20 +11369,24 @@ CreateTriggerByAreaResponse& createTriggerByArea( const std::string& requestId,
                                                   CreateTriggerByAreaResponse& response_ ) const;
 
 /**
- * Sets up a simple range trigger for a column_name for one or more tables.
- * Once the trigger has been activated, any record added to the listed
+ * Sets up a simple range trigger for a column_name for one or more
+ * tables. Once the trigger has been activated, any record added to the listed
  * tables(s) via {@link
  * #insertRecordsRaw(const RawInsertRecordsRequest&) const} with the chosen
- * column_name's value falling within the specified range will trip the
- * trigger. All such records will be queued at the trigger port (by default
- * '9001' but able to be retrieved via {@link
- * #showSystemStatus(const ShowSystemStatusRequest&) const}) for any
- * listening client to collect. Active triggers can be cancelled by using the
- * {@link #clearTrigger(const ClearTriggerRequest&) const} endpoint or by
+ * column_name's value
+ * falling within the specified range will trip the trigger. All such records
+ * will
+ * be queued at the trigger port (by default '9001' but able to be retrieved
+ * via
+ * {@link #showSystemStatus(const ShowSystemStatusRequest&) const}) for any
+ * listening client to collect. Active
+ * triggers can be cancelled by using the {@link
+ * #clearTrigger(const ClearTriggerRequest&) const} endpoint or by
  * clearing all relevant tables.
  * <p>
  * The output returns the trigger handle as well as indicating success or
- * failure of the trigger activation.
+ * failure
+ * of the trigger activation.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -8845,21 +11398,26 @@ CreateTriggerByAreaResponse& createTriggerByArea( const std::string& requestId,
 CreateTriggerByRangeResponse createTriggerByRange( const CreateTriggerByRangeRequest& request_ ) const;
 
 /**
- * Sets up a simple range trigger for a column_name for one or more tables.
- * Once the trigger has been activated, any record added to the listed
+ * Sets up a simple range trigger for a column_name for one or more
+ * tables. Once the trigger has been activated, any record added to the listed
  * tables(s) via {@link
  * #insertRecordsRaw(const RawInsertRecordsRequest&,InsertRecordsResponse&) const}
- * with the chosen column_name's value falling within the specified range will
- * trip the trigger. All such records will be queued at the trigger port (by
- * default '9001' but able to be retrieved via {@link
+ * with the chosen column_name's value
+ * falling within the specified range will trip the trigger. All such records
+ * will
+ * be queued at the trigger port (by default '9001' but able to be retrieved
+ * via
+ * {@link
  * #showSystemStatus(const ShowSystemStatusRequest&,ShowSystemStatusResponse&) const})
- * for any listening client to collect. Active triggers can be cancelled by
- * using the {@link
+ * for any listening client to collect. Active
+ * triggers can be cancelled by using the {@link
  * #clearTrigger(const ClearTriggerRequest&,ClearTriggerResponse&) const}
- * endpoint or by clearing all relevant tables.
+ * endpoint or by
+ * clearing all relevant tables.
  * <p>
  * The output returns the trigger handle as well as indicating success or
- * failure of the trigger activation.
+ * failure
+ * of the trigger activation.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -8875,26 +11433,34 @@ CreateTriggerByRangeResponse& createTriggerByRange( const CreateTriggerByRangeRe
                                                     CreateTriggerByRangeResponse& response_ ) const;
 
 /**
- * Sets up a simple range trigger for a column_name for one or more tables.
- * Once the trigger has been activated, any record added to the listed
+ * Sets up a simple range trigger for a column_name for one or more
+ * tables. Once the trigger has been activated, any record added to the listed
  * tables(s) via {@link
  * #insertRecordsRaw(const RawInsertRecordsRequest&) const} with the chosen
- * column_name's value falling within the specified range will trip the
- * trigger. All such records will be queued at the trigger port (by default
- * '9001' but able to be retrieved via {@link
+ * column_name's value
+ * falling within the specified range will trip the trigger. All such records
+ * will
+ * be queued at the trigger port (by default '9001' but able to be retrieved
+ * via
+ * {@link
  * #showSystemStatus(const std::map<std::string, std::string>&) const})
- * for any listening client to collect. Active triggers can be cancelled by
- * using the {@link
+ * for any listening client to collect. Active
+ * triggers can be cancelled by using the {@link
  * #clearTrigger(const std::string&,const std::map<std::string, std::string>&) const}
- * endpoint or by clearing all relevant tables.
+ * endpoint or by
+ * clearing all relevant tables.
  * <p>
  * The output returns the trigger handle as well as indicating success or
- * failure of the trigger activation.
+ * failure
+ * of the trigger activation.
  * 
  * @param requestId  User-created ID for the trigger. The ID can be
  *                   alphanumeric, contain symbols, and must contain at least
  *                   one character.
- * @param tableNames  Tables on which the trigger will be active.
+ * @param tableNames  Tables on which the trigger will be active, each in
+ *                    [schema_name.]table_name format, using standard <a
+ *                    href="../../concepts/tables.html#table-name-resolution"
+ *                    target="_top">name resolution rules</a>.
  * @param columnName  Name of a numeric column_name on which the trigger is
  *                    activated.
  * @param min  The lower bound (inclusive) for the trigger range.
@@ -8913,26 +11479,34 @@ CreateTriggerByRangeResponse createTriggerByRange( const std::string& requestId,
                                                    const std::map<std::string, std::string>& options ) const;
 
 /**
- * Sets up a simple range trigger for a column_name for one or more tables.
- * Once the trigger has been activated, any record added to the listed
+ * Sets up a simple range trigger for a column_name for one or more
+ * tables. Once the trigger has been activated, any record added to the listed
  * tables(s) via {@link
  * #insertRecordsRaw(const RawInsertRecordsRequest&) const} with the chosen
- * column_name's value falling within the specified range will trip the
- * trigger. All such records will be queued at the trigger port (by default
- * '9001' but able to be retrieved via {@link
+ * column_name's value
+ * falling within the specified range will trip the trigger. All such records
+ * will
+ * be queued at the trigger port (by default '9001' but able to be retrieved
+ * via
+ * {@link
  * #showSystemStatus(const std::map<std::string, std::string>&,ShowSystemStatusResponse&) const})
- * for any listening client to collect. Active triggers can be cancelled by
- * using the {@link
+ * for any listening client to collect. Active
+ * triggers can be cancelled by using the {@link
  * #clearTrigger(const std::string&,const std::map<std::string, std::string>&,ClearTriggerResponse&) const}
- * endpoint or by clearing all relevant tables.
+ * endpoint or by
+ * clearing all relevant tables.
  * <p>
  * The output returns the trigger handle as well as indicating success or
- * failure of the trigger activation.
+ * failure
+ * of the trigger activation.
  * 
  * @param requestId  User-created ID for the trigger. The ID can be
  *                   alphanumeric, contain symbols, and must contain at least
  *                   one character.
- * @param tableNames  Tables on which the trigger will be active.
+ * @param tableNames  Tables on which the trigger will be active, each in
+ *                    [schema_name.]table_name format, using standard <a
+ *                    href="../../concepts/tables.html#table-name-resolution"
+ *                    target="_top">name resolution rules</a>.
  * @param columnName  Name of a numeric column_name on which the trigger is
  *                    activated.
  * @param min  The lower bound (inclusive) for the trigger range.
@@ -8955,13 +11529,13 @@ CreateTriggerByRangeResponse& createTriggerByRange( const std::string& requestId
                                                     CreateTriggerByRangeResponse& response_ ) const;
 
 /**
- * Creates a new type describing the layout or schema of a table. The type
- * definition is a JSON string describing the fields (i.e. columns) of the
- * type. Each field consists of a name and a data type. Supported data types
- * are: double, float, int, long, string, and bytes. In addition one or more
- * properties can be specified for each column which customize the memory usage
- * and query availability of that column.  Note that some properties are
- * mutually exclusive--i.e. they cannot be specified for any given column
+ * Creates a new type describing the layout of a table. The type definition is
+ * a JSON string describing the fields (i.e. columns) of the type. Each field
+ * consists of a name and a data type. Supported data types are: double, float,
+ * int, long, string, and bytes. In addition, one or more properties can be
+ * specified for each column which customize the memory usage and query
+ * availability of that column.  Note that some properties are mutually
+ * exclusive--i.e. they cannot be specified for any given column
  * simultaneously.  One example of mutually exclusive properties are @a data
  * and @a store_only.
  * <p>
@@ -8970,7 +11544,8 @@ CreateTriggerByRangeResponse& createTriggerByRange( const std::string& requestId
  * href="../../concepts/tables.html#shard-keys" target="_top">shard key</a> can
  * be set across one or more columns. If a primary key is specified, then a
  * uniqueness constraint is enforced, in that only a single object can exist
- * with a given primary key. When {@link
+ * with a given primary key column value (or set of values for the key columns,
+ * if using a composite primary key). When {@link
  * #insertRecordsRaw(const RawInsertRecordsRequest&) const inserting} data
  * into a table with a primary key, depending on the parameters in the request,
  * incoming objects with primary key values that match existing objects will
@@ -9006,13 +11581,13 @@ CreateTriggerByRangeResponse& createTriggerByRange( const std::string& requestId
 CreateTypeResponse createType( const CreateTypeRequest& request_ ) const;
 
 /**
- * Creates a new type describing the layout or schema of a table. The type
- * definition is a JSON string describing the fields (i.e. columns) of the
- * type. Each field consists of a name and a data type. Supported data types
- * are: double, float, int, long, string, and bytes. In addition one or more
- * properties can be specified for each column which customize the memory usage
- * and query availability of that column.  Note that some properties are
- * mutually exclusive--i.e. they cannot be specified for any given column
+ * Creates a new type describing the layout of a table. The type definition is
+ * a JSON string describing the fields (i.e. columns) of the type. Each field
+ * consists of a name and a data type. Supported data types are: double, float,
+ * int, long, string, and bytes. In addition, one or more properties can be
+ * specified for each column which customize the memory usage and query
+ * availability of that column.  Note that some properties are mutually
+ * exclusive--i.e. they cannot be specified for any given column
  * simultaneously.  One example of mutually exclusive properties are @a data
  * and @a store_only.
  * <p>
@@ -9021,7 +11596,8 @@ CreateTypeResponse createType( const CreateTypeRequest& request_ ) const;
  * href="../../concepts/tables.html#shard-keys" target="_top">shard key</a> can
  * be set across one or more columns. If a primary key is specified, then a
  * uniqueness constraint is enforced, in that only a single object can exist
- * with a given primary key. When {@link
+ * with a given primary key column value (or set of values for the key columns,
+ * if using a composite primary key). When {@link
  * #insertRecordsRaw(const RawInsertRecordsRequest&,InsertRecordsResponse&) const
  * inserting} data into a table with a primary key, depending on the parameters
  * in the request, incoming objects with primary key values that match existing
@@ -9061,13 +11637,13 @@ CreateTypeResponse& createType( const CreateTypeRequest& request_,
                                 CreateTypeResponse& response_ ) const;
 
 /**
- * Creates a new type describing the layout or schema of a table. The type
- * definition is a JSON string describing the fields (i.e. columns) of the
- * type. Each field consists of a name and a data type. Supported data types
- * are: double, float, int, long, string, and bytes. In addition one or more
- * properties can be specified for each column which customize the memory usage
- * and query availability of that column.  Note that some properties are
- * mutually exclusive--i.e. they cannot be specified for any given column
+ * Creates a new type describing the layout of a table. The type definition is
+ * a JSON string describing the fields (i.e. columns) of the type. Each field
+ * consists of a name and a data type. Supported data types are: double, float,
+ * int, long, string, and bytes. In addition, one or more properties can be
+ * specified for each column which customize the memory usage and query
+ * availability of that column.  Note that some properties are mutually
+ * exclusive--i.e. they cannot be specified for any given column
  * simultaneously.  One example of mutually exclusive properties are @a data
  * and @a store_only.
  * <p>
@@ -9076,7 +11652,8 @@ CreateTypeResponse& createType( const CreateTypeRequest& request_,
  * href="../../concepts/tables.html#shard-keys" target="_top">shard key</a> can
  * be set across one or more columns. If a primary key is specified, then a
  * uniqueness constraint is enforced, in that only a single object can exist
- * with a given primary key. When {@link
+ * with a given primary key column value (or set of values for the key columns,
+ * if using a composite primary key). When {@link
  * #insertRecordsRaw(const RawInsertRecordsRequest&) const inserting} data
  * into a table with a primary key, depending on the parameters in the request,
  * incoming objects with primary key values that match existing objects will
@@ -9145,6 +11722,9 @@ CreateTypeResponse& createType( const CreateTypeRequest& request_,
  *                    data type. The string can only be interpreted as an
  *                    unsigned long data type with minimum value of zero, and
  *                    maximum value of 18446744073709551615.
+ *                            <li> gpudb::create_type_uuid: Valid only for
+ *                    'string' columns.  It represents an uuid data type.
+ *                    Internally, it is stored as an 128-bit ingeger.
  *                            <li> gpudb::create_type_decimal: Valid only for
  *                    'string' columns.  It represents a SQL type NUMERIC(19,
  *                    4) data type.  There can be up to 15 digits before the
@@ -9274,13 +11854,13 @@ CreateTypeResponse createType( const std::string& typeDefinition,
                                const std::map<std::string, std::string>& options ) const;
 
 /**
- * Creates a new type describing the layout or schema of a table. The type
- * definition is a JSON string describing the fields (i.e. columns) of the
- * type. Each field consists of a name and a data type. Supported data types
- * are: double, float, int, long, string, and bytes. In addition one or more
- * properties can be specified for each column which customize the memory usage
- * and query availability of that column.  Note that some properties are
- * mutually exclusive--i.e. they cannot be specified for any given column
+ * Creates a new type describing the layout of a table. The type definition is
+ * a JSON string describing the fields (i.e. columns) of the type. Each field
+ * consists of a name and a data type. Supported data types are: double, float,
+ * int, long, string, and bytes. In addition, one or more properties can be
+ * specified for each column which customize the memory usage and query
+ * availability of that column.  Note that some properties are mutually
+ * exclusive--i.e. they cannot be specified for any given column
  * simultaneously.  One example of mutually exclusive properties are @a data
  * and @a store_only.
  * <p>
@@ -9289,7 +11869,8 @@ CreateTypeResponse createType( const std::string& typeDefinition,
  * href="../../concepts/tables.html#shard-keys" target="_top">shard key</a> can
  * be set across one or more columns. If a primary key is specified, then a
  * uniqueness constraint is enforced, in that only a single object can exist
- * with a given primary key. When {@link
+ * with a given primary key column value (or set of values for the key columns,
+ * if using a composite primary key). When {@link
  * #insertRecordsRaw(const RawInsertRecordsRequest&) const inserting} data
  * into a table with a primary key, depending on the parameters in the request,
  * incoming objects with primary key values that match existing objects will
@@ -9358,6 +11939,9 @@ CreateTypeResponse createType( const std::string& typeDefinition,
  *                    data type. The string can only be interpreted as an
  *                    unsigned long data type with minimum value of zero, and
  *                    maximum value of 18446744073709551615.
+ *                            <li> gpudb::create_type_uuid: Valid only for
+ *                    'string' columns.  It represents an uuid data type.
+ *                    Internally, it is stored as an 128-bit ingeger.
  *                            <li> gpudb::create_type_decimal: Valid only for
  *                    'string' columns.  It represents a SQL type NUMERIC(19,
  *                    4) data type.  There can be up to 15 digits before the
@@ -9602,22 +12186,29 @@ CreateUnionResponse& createUnion( const CreateUnionRequest& request_,
  * columns marked as <a href="../../concepts/types.html#data-handling"
  * target="_top">store-only</a>.
  * 
- * @param tableName  Name of the table to be created. Has the same naming
- *                   restrictions as <a href="../../concepts/tables.html"
- *                   target="_top">tables</a>.
- * @param tableNames  The list of table names to merge. Must contain the names
- *                    of one or more existing tables.
+ * @param tableName  Name of the table to be created, in
+ *                   [schema_name.]table_name format, using standard <a
+ *                   href="../../concepts/tables.html#table-name-resolution"
+ *                   target="_top">name resolution rules</a> and meeting <a
+ *                   href="../../concepts/tables.html#table-naming-criteria"
+ *                   target="_top">table naming criteria</a>.
+ * @param tableNames  The list of table names to merge, in
+ *                    [schema_name.]table_name format, using standard <a
+ *                    href="../../concepts/tables.html#table-name-resolution"
+ *                    target="_top">name resolution rules</a>.  Must contain
+ *                    the names of one or more existing tables.
  * @param inputColumnNames  The list of columns from each of the corresponding
  *                          input tables.
  * @param outputColumnNames  The list of names of the columns to be stored in
  *                           the output table.
  * @param options  Optional parameters.
  *                 <ul>
- *                         <li> gpudb::create_union_collection_name: Name of a
- *                 collection which is to contain the output table. If the
- *                 collection provided is non-existent, the collection will be
- *                 automatically created. If empty, the output table will be a
- *                 top-level table.  The default value is ''.
+ *                         <li> gpudb::create_union_collection_name:
+ *                 [DEPRECATED--please specify the containing schema for the
+ *                 projection as part of @a tableName and use /create/schema to
+ *                 create the schema if non-existent]  Name of the schema for
+ *                 the output table. If the schema provided is non-existent, it
+ *                 will be automatically created.  The default value is ''.
  *                         <li> gpudb::create_union_materialize_on_gpu: No
  *                 longer used.  See <a href="../../rm/concepts.html"
  *                 target="_top">Resource Management Concepts</a> for
@@ -9740,22 +12331,29 @@ CreateUnionResponse createUnion( const std::string& tableName,
  * columns marked as <a href="../../concepts/types.html#data-handling"
  * target="_top">store-only</a>.
  * 
- * @param tableName  Name of the table to be created. Has the same naming
- *                   restrictions as <a href="../../concepts/tables.html"
- *                   target="_top">tables</a>.
- * @param tableNames  The list of table names to merge. Must contain the names
- *                    of one or more existing tables.
+ * @param tableName  Name of the table to be created, in
+ *                   [schema_name.]table_name format, using standard <a
+ *                   href="../../concepts/tables.html#table-name-resolution"
+ *                   target="_top">name resolution rules</a> and meeting <a
+ *                   href="../../concepts/tables.html#table-naming-criteria"
+ *                   target="_top">table naming criteria</a>.
+ * @param tableNames  The list of table names to merge, in
+ *                    [schema_name.]table_name format, using standard <a
+ *                    href="../../concepts/tables.html#table-name-resolution"
+ *                    target="_top">name resolution rules</a>.  Must contain
+ *                    the names of one or more existing tables.
  * @param inputColumnNames  The list of columns from each of the corresponding
  *                          input tables.
  * @param outputColumnNames  The list of names of the columns to be stored in
  *                           the output table.
  * @param options  Optional parameters.
  *                 <ul>
- *                         <li> gpudb::create_union_collection_name: Name of a
- *                 collection which is to contain the output table. If the
- *                 collection provided is non-existent, the collection will be
- *                 automatically created. If empty, the output table will be a
- *                 top-level table.  The default value is ''.
+ *                         <li> gpudb::create_union_collection_name:
+ *                 [DEPRECATED--please specify the containing schema for the
+ *                 projection as part of @a tableName and use /create/schema to
+ *                 create the schema if non-existent]  Name of the schema for
+ *                 the output table. If the schema provided is non-existent, it
+ *                 will be automatically created.  The default value is ''.
  *                         <li> gpudb::create_union_materialize_on_gpu: No
  *                 longer used.  See <a href="../../rm/concepts.html"
  *                 target="_top">Resource Management Concepts</a> for
@@ -9962,6 +12560,8 @@ CreateUserInternalResponse& createUserInternal( const CreateUserInternalRequest&
  *                         <li> gpudb::create_user_internal_resource_group:
  *                 Name of an existing resource group to associate with this
  *                 user
+ *                         <li> gpudb::create_user_internal_default_schema:
+ *                 default schema associate with this user
  *                 </ul>
  * 
  * @return Response object containing the result of the operation.
@@ -9986,6 +12586,8 @@ CreateUserInternalResponse createUserInternal( const std::string& name,
  *                         <li> gpudb::create_user_internal_resource_group:
  *                 Name of an existing resource group to associate with this
  *                 user
+ *                         <li> gpudb::create_user_internal_default_schema:
+ *                 default schema associate with this user
  *                 </ul>
  * @param[out] response_  Response object containing the results of the
  *                        operation.
@@ -10148,9 +12750,9 @@ DeleteProcResponse& deleteProc( const std::string& procName,
  * (matching multiple records), a single record identified by @a record_id
  * options, or all records when using @a delete_all_records.  Note that the
  * three selection criteria are mutually exclusive.  This operation cannot be
- * run on a collection or a view.  The operation is synchronous meaning that a
- * response will not be available until the request is completely processed and
- * all the matching records are deleted.
+ * run on a view.  The operation is synchronous meaning that a response will
+ * not be available until the request is completely processed and all the
+ * matching records are deleted.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -10167,9 +12769,9 @@ DeleteRecordsResponse deleteRecords( const DeleteRecordsRequest& request_ ) cons
  * (matching multiple records), a single record identified by @a record_id
  * options, or all records when using @a delete_all_records.  Note that the
  * three selection criteria are mutually exclusive.  This operation cannot be
- * run on a collection or a view.  The operation is synchronous meaning that a
- * response will not be available until the request is completely processed and
- * all the matching records are deleted.
+ * run on a view.  The operation is synchronous meaning that a response will
+ * not be available until the request is completely processed and all the
+ * matching records are deleted.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -10190,13 +12792,15 @@ DeleteRecordsResponse& deleteRecords( const DeleteRecordsRequest& request_,
  * (matching multiple records), a single record identified by @a record_id
  * options, or all records when using @a delete_all_records.  Note that the
  * three selection criteria are mutually exclusive.  This operation cannot be
- * run on a collection or a view.  The operation is synchronous meaning that a
- * response will not be available until the request is completely processed and
- * all the matching records are deleted.
+ * run on a view.  The operation is synchronous meaning that a response will
+ * not be available until the request is completely processed and all the
+ * matching records are deleted.
  * 
- * @param tableName  Name of the table from which to delete records. The set
- *                   must be a currently existing table and not a collection or
- *                   a view.
+ * @param tableName  Name of the table from which to delete records, in
+ *                   [schema_name.]table_name format, using standard <a
+ *                   href="../../concepts/tables.html#table-name-resolution"
+ *                   target="_top">name resolution rules</a>. Must contain the
+ *                   name of an existing table; not applicable to views.
  * @param expressions  A list of the actual predicates, one for each select;
  *                     format should follow the guidelines provided <a
  *                     href="../../concepts/expressions.html"
@@ -10239,13 +12843,15 @@ DeleteRecordsResponse deleteRecords( const std::string& tableName,
  * (matching multiple records), a single record identified by @a record_id
  * options, or all records when using @a delete_all_records.  Note that the
  * three selection criteria are mutually exclusive.  This operation cannot be
- * run on a collection or a view.  The operation is synchronous meaning that a
- * response will not be available until the request is completely processed and
- * all the matching records are deleted.
+ * run on a view.  The operation is synchronous meaning that a response will
+ * not be available until the request is completely processed and all the
+ * matching records are deleted.
  * 
- * @param tableName  Name of the table from which to delete records. The set
- *                   must be a currently existing table and not a collection or
- *                   a view.
+ * @param tableName  Name of the table from which to delete records, in
+ *                   [schema_name.]table_name format, using standard <a
+ *                   href="../../concepts/tables.html#table-name-resolution"
+ *                   target="_top">name resolution rules</a>. Must contain the
+ *                   name of an existing table; not applicable to views.
  * @param expressions  A list of the actual predicates, one for each select;
  *                     format should follow the guidelines provided <a
  *                     href="../../concepts/expressions.html"
@@ -10461,6 +13067,182 @@ DeleteUserResponse& deleteUser( const std::string& name,
                                 DeleteUserResponse& response_ ) const;
 
 /**
+ * Drops an existing <a href="../../concepts/data_sources.html"
+ * target="_top">data source</a>.  Any external
+ * tables that depend on the data source must be dropped before it can be
+ * dropped.
+ * 
+ * @param[in] request_  Request object containing the parameters for the
+ *                      operation.
+ * 
+ * @return Response object containing the result of the operation.
+ * 
+ */
+
+DropDatasourceResponse dropDatasource( const DropDatasourceRequest& request_ ) const;
+
+/**
+ * Drops an existing <a href="../../concepts/data_sources.html"
+ * target="_top">data source</a>.  Any external
+ * tables that depend on the data source must be dropped before it can be
+ * dropped.
+ * 
+ * @param[in] request_  Request object containing the parameters for the
+ *                      operation.
+ * @param[out] response_  Response object containing the results of the
+ *                        operation.
+ * 
+ * @return Response object containing the result of the operation (initially
+ *         passed in by reference).
+ * 
+ */
+
+DropDatasourceResponse& dropDatasource( const DropDatasourceRequest& request_,
+                                        DropDatasourceResponse& response_ ) const;
+
+/**
+ * Drops an existing <a href="../../concepts/data_sources.html"
+ * target="_top">data source</a>.  Any external
+ * tables that depend on the data source must be dropped before it can be
+ * dropped.
+ * 
+ * @param name  Name of the data source to be dropped. Must be an existing data
+ *              source.
+ * @param options  Optional parameters.
+ * 
+ * @return Response object containing the result of the operation.
+ * 
+ */
+
+DropDatasourceResponse dropDatasource( const std::string& name,
+                                       const std::map<std::string, std::string>& options ) const;
+
+/**
+ * Drops an existing <a href="../../concepts/data_sources.html"
+ * target="_top">data source</a>.  Any external
+ * tables that depend on the data source must be dropped before it can be
+ * dropped.
+ * 
+ * @param name  Name of the data source to be dropped. Must be an existing data
+ *              source.
+ * @param options  Optional parameters.
+ * @param[out] response_  Response object containing the results of the
+ *                        operation.
+ * 
+ * @return Response object containing the result of the operation (initially
+ *         passed in by reference).
+ * 
+ */
+
+DropDatasourceResponse& dropDatasource( const std::string& name,
+                                        const std::map<std::string, std::string>& options,
+                                        DropDatasourceResponse& response_ ) const;
+
+/**
+ * Drops an existing SQL-style <a href="../../concepts/schemas.html"
+ * target="_top">schema</a>, specified in @a schemaName.
+ * 
+ * @param[in] request_  Request object containing the parameters for the
+ *                      operation.
+ * 
+ * @return Response object containing the result of the operation.
+ * 
+ */
+
+DropSchemaResponse dropSchema( const DropSchemaRequest& request_ ) const;
+
+/**
+ * Drops an existing SQL-style <a href="../../concepts/schemas.html"
+ * target="_top">schema</a>, specified in @a schemaName.
+ * 
+ * @param[in] request_  Request object containing the parameters for the
+ *                      operation.
+ * @param[out] response_  Response object containing the results of the
+ *                        operation.
+ * 
+ * @return Response object containing the result of the operation (initially
+ *         passed in by reference).
+ * 
+ */
+
+DropSchemaResponse& dropSchema( const DropSchemaRequest& request_,
+                                DropSchemaResponse& response_ ) const;
+
+/**
+ * Drops an existing SQL-style <a href="../../concepts/schemas.html"
+ * target="_top">schema</a>, specified in @a schemaName.
+ * 
+ * @param schemaName  Name of the schema to be dropped. Must be an existing
+ *                    schema.
+ * @param options  Optional parameters.
+ *                 <ul>
+ *                         <li> gpudb::drop_schema_no_error_if_not_exists: If
+ *                 @a true and if the schema specified in @a schemaName does
+ *                 not exist, no error is returned. If @a false and if the
+ *                 schema specified in @a schemaName does not exist, then an
+ *                 error is returned.
+ *                 <ul>
+ *                         <li> gpudb::drop_schema_true
+ *                         <li> gpudb::drop_schema_false
+ *                 </ul>
+ *                 The default value is gpudb::drop_schema_false.
+ *                         <li> gpudb::drop_schema_cascade: If @a true, all
+ *                 tables within the schema will be dropped. If @a false, the
+ *                 schema will be dropped only if empty.
+ *                 <ul>
+ *                         <li> gpudb::drop_schema_true
+ *                         <li> gpudb::drop_schema_false
+ *                 </ul>
+ *                 The default value is gpudb::drop_schema_false.
+ *                 </ul>
+ * 
+ * @return Response object containing the result of the operation.
+ * 
+ */
+
+DropSchemaResponse dropSchema( const std::string& schemaName,
+                               const std::map<std::string, std::string>& options ) const;
+
+/**
+ * Drops an existing SQL-style <a href="../../concepts/schemas.html"
+ * target="_top">schema</a>, specified in @a schemaName.
+ * 
+ * @param schemaName  Name of the schema to be dropped. Must be an existing
+ *                    schema.
+ * @param options  Optional parameters.
+ *                 <ul>
+ *                         <li> gpudb::drop_schema_no_error_if_not_exists: If
+ *                 @a true and if the schema specified in @a schemaName does
+ *                 not exist, no error is returned. If @a false and if the
+ *                 schema specified in @a schemaName does not exist, then an
+ *                 error is returned.
+ *                 <ul>
+ *                         <li> gpudb::drop_schema_true
+ *                         <li> gpudb::drop_schema_false
+ *                 </ul>
+ *                 The default value is gpudb::drop_schema_false.
+ *                         <li> gpudb::drop_schema_cascade: If @a true, all
+ *                 tables within the schema will be dropped. If @a false, the
+ *                 schema will be dropped only if empty.
+ *                 <ul>
+ *                         <li> gpudb::drop_schema_true
+ *                         <li> gpudb::drop_schema_false
+ *                 </ul>
+ *                 The default value is gpudb::drop_schema_false.
+ *                 </ul>
+ * @param[out] response_  Response object containing the results of the
+ *                        operation.
+ * 
+ * @return Response object containing the result of the operation (initially
+ *         passed in by reference).
+ * 
+ */
+
+DropSchemaResponse& dropSchema( const std::string& schemaName,
+                                const std::map<std::string, std::string>& options,
+                                DropSchemaResponse& response_ ) const;
+
+/**
  * Executes a proc. This endpoint is asynchronous and does not wait for the
  * proc to complete before returning.
  * 
@@ -10504,8 +13286,12 @@ ExecuteProcResponse& executeProc( const ExecuteProcRequest& request_,
  *                   parameter and its value.
  * @param inputTableNames  Names of the tables containing data to be passed to
  *                         the proc. Each name specified must be the name of a
- *                         currently existing table. If no table names are
- *                         specified, no data will be passed to the proc.
+ *                         currently existing table, in
+ *                         [schema_name.]table_name format, using standard <a
+ *                         href="../../concepts/tables.html#table-name-resolution"
+ *                         target="_top">name resolution rules</a>.  If no
+ *                         table names are specified, no data will be passed to
+ *                         the proc.
  * @param inputColumnNames  Map of table names from @a inputTableNames to lists
  *                          of names of columns from those tables that will be
  *                          passed to the proc. Each column name specified must
@@ -10514,15 +13300,21 @@ ExecuteProcResponse& executeProc( const ExecuteProcRequest& request_,
  *                          inputTableNames is not included, all columns from
  *                          that table will be passed to the proc.
  * @param outputTableNames  Names of the tables to which output data from the
- *                          proc will be written. If a specified table does not
- *                          exist, it will automatically be created with the
- *                          same schema as the corresponding table (by order)
- *                          from @a inputTableNames, excluding any primary and
- *                          shard keys. If a specified table is a
- *                          non-persistent result table, it must not have
- *                          primary or shard keys. If no table names are
- *                          specified, no output data can be returned from the
- *                          proc.
+ *                          proc will be written, each in
+ *                          [schema_name.]table_name format, using standard <a
+ *                          href="../../concepts/tables.html#table-name-resolution"
+ *                          target="_top">name resolution rules</a> and meeting
+ *                          <a
+ *                          href="../../concepts/tables.html#table-naming-criteria"
+ *                          target="_top">table naming criteria</a>. If a
+ *                          specified table does not exist, it will
+ *                          automatically be created with the same schema as
+ *                          the corresponding table (by order) from @a
+ *                          inputTableNames, excluding any primary and shard
+ *                          keys. If a specified table is a non-persistent
+ *                          result table, it must not have primary or shard
+ *                          keys. If no table names are specified, no output
+ *                          data can be returned from the proc.
  * @param options  Optional parameters.
  *                 <ul>
  *                         <li> gpudb::execute_proc_cache_input: A
@@ -10583,8 +13375,12 @@ ExecuteProcResponse executeProc( const std::string& procName,
  *                   parameter and its value.
  * @param inputTableNames  Names of the tables containing data to be passed to
  *                         the proc. Each name specified must be the name of a
- *                         currently existing table. If no table names are
- *                         specified, no data will be passed to the proc.
+ *                         currently existing table, in
+ *                         [schema_name.]table_name format, using standard <a
+ *                         href="../../concepts/tables.html#table-name-resolution"
+ *                         target="_top">name resolution rules</a>.  If no
+ *                         table names are specified, no data will be passed to
+ *                         the proc.
  * @param inputColumnNames  Map of table names from @a inputTableNames to lists
  *                          of names of columns from those tables that will be
  *                          passed to the proc. Each column name specified must
@@ -10593,15 +13389,21 @@ ExecuteProcResponse executeProc( const std::string& procName,
  *                          inputTableNames is not included, all columns from
  *                          that table will be passed to the proc.
  * @param outputTableNames  Names of the tables to which output data from the
- *                          proc will be written. If a specified table does not
- *                          exist, it will automatically be created with the
- *                          same schema as the corresponding table (by order)
- *                          from @a inputTableNames, excluding any primary and
- *                          shard keys. If a specified table is a
- *                          non-persistent result table, it must not have
- *                          primary or shard keys. If no table names are
- *                          specified, no output data can be returned from the
- *                          proc.
+ *                          proc will be written, each in
+ *                          [schema_name.]table_name format, using standard <a
+ *                          href="../../concepts/tables.html#table-name-resolution"
+ *                          target="_top">name resolution rules</a> and meeting
+ *                          <a
+ *                          href="../../concepts/tables.html#table-naming-criteria"
+ *                          target="_top">table naming criteria</a>. If a
+ *                          specified table does not exist, it will
+ *                          automatically be created with the same schema as
+ *                          the corresponding table (by order) from @a
+ *                          inputTableNames, excluding any primary and shard
+ *                          keys. If a specified table is a non-persistent
+ *                          result table, it must not have primary or shard
+ *                          keys. If no table names are specified, no output
+ *                          data can be returned from the proc.
  * @param options  Optional parameters.
  *                 <ul>
  *                         <li> gpudb::execute_proc_cache_input: A
@@ -10653,7 +13455,10 @@ ExecuteProcResponse& executeProc( const std::string& procName,
                                   ExecuteProcResponse& response_ ) const;
 
 /**
- * SQL Request
+ * Execute a SQL statement (query, DML, or DDL).
+ * <p>
+ * See <a href="../../concepts/sql.html" target="_top">SQL Support</a> for the
+ * complete set of supported SQL commands.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -10665,7 +13470,10 @@ ExecuteProcResponse& executeProc( const std::string& procName,
 RawExecuteSqlResponse executeSqlRaw( const ExecuteSqlRequest& request_ ) const;
 
 /**
- * SQL Request
+ * Execute a SQL statement (query, DML, or DDL).
+ * <p>
+ * See <a href="../../concepts/sql.html" target="_top">SQL Support</a> for the
+ * complete set of supported SQL commands.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -10681,7 +13489,10 @@ RawExecuteSqlResponse& executeSqlRaw( const ExecuteSqlRequest& request_,
                                       RawExecuteSqlResponse& response_ ) const;
 
 /**
- * SQL Request
+ * Execute a SQL statement (query, DML, or DDL).
+ * <p>
+ * See <a href="../../concepts/sql.html" target="_top">SQL Support</a> for the
+ * complete set of supported SQL commands.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -10693,7 +13504,10 @@ RawExecuteSqlResponse& executeSqlRaw( const ExecuteSqlRequest& request_,
 ExecuteSqlResponse executeSql( const ExecuteSqlRequest& request_ ) const;
 
 /**
- * SQL Request
+ * Execute a SQL statement (query, DML, or DDL).
+ * <p>
+ * See <a href="../../concepts/sql.html" target="_top">SQL Support</a> for the
+ * complete set of supported SQL commands.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -10709,7 +13523,10 @@ ExecuteSqlResponse& executeSql( const ExecuteSqlRequest& request_,
                                 ExecuteSqlResponse& response_ ) const;
 
 /**
- * SQL Request
+ * Execute a SQL statement (query, DML, or DDL).
+ * <p>
+ * See <a href="../../concepts/sql.html" target="_top">SQL Support</a> for the
+ * complete set of supported SQL commands.
  * 
  * @param statement  SQL statement (query, DML, or DDL) to be executed
  * @param offset  A positive integer indicating the number of initial results
@@ -10841,8 +13658,8 @@ ExecuteSqlResponse& executeSql( const ExecuteSqlRequest& request_,
  *                 any change. If @a false, then when a value is too large or
  *                 long, it will be truncated.
  *                 <ul>
- *                         <li> gpudb::execute_sql_true: true
- *                         <li> gpudb::execute_sql_false: false
+ *                         <li> gpudb::execute_sql_true
+ *                         <li> gpudb::execute_sql_false
  *                 </ul>
  *                 The default value is gpudb::execute_sql_true.
  *                         <li> gpudb::execute_sql_prepare_mode: If @a true,
@@ -10854,10 +13671,6 @@ ExecuteSqlResponse& executeSql( const ExecuteSqlRequest& request_,
  *                         <li> gpudb::execute_sql_false
  *                 </ul>
  *                 The default value is gpudb::execute_sql_false.
- *                         <li> gpudb::execute_sql_view_id: <DEVELOPER>  The
- *                 default value is ''.
- *                         <li> gpudb::execute_sql_no_count: <DEVELOPER>  The
- *                 default value is 'false'.
  *                 </ul>
  * 
  * @return Response object containing the result of the operation.
@@ -10872,7 +13685,10 @@ ExecuteSqlResponse executeSql( const std::string& statement,
                                const std::map<std::string, std::string>& options ) const;
 
 /**
- * SQL Request
+ * Execute a SQL statement (query, DML, or DDL).
+ * <p>
+ * See <a href="../../concepts/sql.html" target="_top">SQL Support</a> for the
+ * complete set of supported SQL commands.
  * 
  * @param statement  SQL statement (query, DML, or DDL) to be executed
  * @param offset  A positive integer indicating the number of initial results
@@ -11004,8 +13820,8 @@ ExecuteSqlResponse executeSql( const std::string& statement,
  *                 any change. If @a false, then when a value is too large or
  *                 long, it will be truncated.
  *                 <ul>
- *                         <li> gpudb::execute_sql_true: true
- *                         <li> gpudb::execute_sql_false: false
+ *                         <li> gpudb::execute_sql_true
+ *                         <li> gpudb::execute_sql_false
  *                 </ul>
  *                 The default value is gpudb::execute_sql_true.
  *                         <li> gpudb::execute_sql_prepare_mode: If @a true,
@@ -11017,10 +13833,6 @@ ExecuteSqlResponse executeSql( const std::string& statement,
  *                         <li> gpudb::execute_sql_false
  *                 </ul>
  *                 The default value is gpudb::execute_sql_false.
- *                         <li> gpudb::execute_sql_view_id: <DEVELOPER>  The
- *                 default value is ''.
- *                         <li> gpudb::execute_sql_no_count: <DEVELOPER>  The
- *                 default value is 'false'.
  *                 </ul>
  * @param[out] response_  Response object containing the results of the
  *                        operation.
@@ -11039,9 +13851,10 @@ ExecuteSqlResponse& executeSql( const std::string& statement,
                                 ExecuteSqlResponse& response_ ) const;
 
 /**
- * Filters data based on the specified expression.  The results are stored in a
- * <a href="../../concepts/filtered_views.html" target="_top">result set</a>
- * with the given @a viewName.
+ * Filters data based on the specified expression.  The results are
+ * stored in a <a href="../../concepts/filtered_views.html"
+ * target="_top">result set</a> with the
+ * given @a viewName.
  * <p>
  * For details see <a href="../../concepts/expressions.html"
  * target="_top">Expressions</a>.
@@ -11059,9 +13872,10 @@ ExecuteSqlResponse& executeSql( const std::string& statement,
 FilterResponse filter( const FilterRequest& request_ ) const;
 
 /**
- * Filters data based on the specified expression.  The results are stored in a
- * <a href="../../concepts/filtered_views.html" target="_top">result set</a>
- * with the given @a viewName.
+ * Filters data based on the specified expression.  The results are
+ * stored in a <a href="../../concepts/filtered_views.html"
+ * target="_top">result set</a> with the
+ * given @a viewName.
  * <p>
  * For details see <a href="../../concepts/expressions.html"
  * target="_top">Expressions</a>.
@@ -11083,9 +13897,10 @@ FilterResponse& filter( const FilterRequest& request_,
                         FilterResponse& response_ ) const;
 
 /**
- * Filters data based on the specified expression.  The results are stored in a
- * <a href="../../concepts/filtered_views.html" target="_top">result set</a>
- * with the given @a viewName.
+ * Filters data based on the specified expression.  The results are
+ * stored in a <a href="../../concepts/filtered_views.html"
+ * target="_top">result set</a> with the
+ * given @a viewName.
  * <p>
  * For details see <a href="../../concepts/expressions.html"
  * target="_top">Expressions</a>.
@@ -11093,26 +13908,30 @@ FilterResponse& filter( const FilterRequest& request_,
  * The response message contains the number of points for which the expression
  * evaluated to be true, which is equivalent to the size of the result view.
  * 
- * @param tableName  Name of the table to filter.  This may be the name of a
- *                   collection, a table, or a view (when chaining queries).
- *                   If filtering a collection, all child tables where the
- *                   filter expression is valid will be filtered; the filtered
- *                   result tables will then be placed in a collection
- *                   specified by @a viewName.
+ * @param tableName  Name of the table to filter, in [schema_name.]table_name
+ *                   format, using standard <a
+ *                   href="../../concepts/tables.html#table-name-resolution"
+ *                   target="_top">name resolution rules</a>.  This may be the
+ *                   name of a table or a view (when chaining queries).
  * @param viewName  If provided, then this will be the name of the view
- *                  containing the results. Has the same naming restrictions as
- *                  <a href="../../concepts/tables.html"
- *                  target="_top">tables</a>.
+ *                  containing the results, in [schema_name.]view_name format,
+ *                  using standard <a
+ *                  href="../../concepts/tables.html#table-name-resolution"
+ *                  target="_top">name resolution rules</a> and meeting <a
+ *                  href="../../concepts/tables.html#table-naming-criteria"
+ *                  target="_top">table naming criteria</a>.  Must not be an
+ *                  already existing table or view.
  * @param expression  The select expression to filter the specified table.  For
  *                    details see <a href="../../concepts/expressions.html"
  *                    target="_top">Expressions</a>.
  * @param options  Optional parameters.
  *                 <ul>
- *                         <li> gpudb::filter_collection_name: Name of a
- *                 collection which is to contain the newly created view. If
- *                 the collection provided is non-existent, the collection will
- *                 be automatically created. If empty, then the newly created
- *                 view will be top-level.
+ *                         <li> gpudb::filter_collection_name:
+ *                 [DEPRECATED--please specify the containing schema for the
+ *                 view as part of @a viewName and use /create/schema to create
+ *                 the schema if non-existent]  Name of a schema for the newly
+ *                 created view. If the schema is non-existent, it will be
+ *                 automatically created.
  *                         <li> gpudb::filter_view_id: view this filtered-view
  *                 is part of.  The default value is ''.
  *                         <li> gpudb::filter_ttl: Sets the <a
@@ -11130,9 +13949,10 @@ FilterResponse filter( const std::string& tableName,
                        const std::map<std::string, std::string>& options ) const;
 
 /**
- * Filters data based on the specified expression.  The results are stored in a
- * <a href="../../concepts/filtered_views.html" target="_top">result set</a>
- * with the given @a viewName.
+ * Filters data based on the specified expression.  The results are
+ * stored in a <a href="../../concepts/filtered_views.html"
+ * target="_top">result set</a> with the
+ * given @a viewName.
  * <p>
  * For details see <a href="../../concepts/expressions.html"
  * target="_top">Expressions</a>.
@@ -11140,26 +13960,30 @@ FilterResponse filter( const std::string& tableName,
  * The response message contains the number of points for which the expression
  * evaluated to be true, which is equivalent to the size of the result view.
  * 
- * @param tableName  Name of the table to filter.  This may be the name of a
- *                   collection, a table, or a view (when chaining queries).
- *                   If filtering a collection, all child tables where the
- *                   filter expression is valid will be filtered; the filtered
- *                   result tables will then be placed in a collection
- *                   specified by @a viewName.
+ * @param tableName  Name of the table to filter, in [schema_name.]table_name
+ *                   format, using standard <a
+ *                   href="../../concepts/tables.html#table-name-resolution"
+ *                   target="_top">name resolution rules</a>.  This may be the
+ *                   name of a table or a view (when chaining queries).
  * @param viewName  If provided, then this will be the name of the view
- *                  containing the results. Has the same naming restrictions as
- *                  <a href="../../concepts/tables.html"
- *                  target="_top">tables</a>.
+ *                  containing the results, in [schema_name.]view_name format,
+ *                  using standard <a
+ *                  href="../../concepts/tables.html#table-name-resolution"
+ *                  target="_top">name resolution rules</a> and meeting <a
+ *                  href="../../concepts/tables.html#table-naming-criteria"
+ *                  target="_top">table naming criteria</a>.  Must not be an
+ *                  already existing table or view.
  * @param expression  The select expression to filter the specified table.  For
  *                    details see <a href="../../concepts/expressions.html"
  *                    target="_top">Expressions</a>.
  * @param options  Optional parameters.
  *                 <ul>
- *                         <li> gpudb::filter_collection_name: Name of a
- *                 collection which is to contain the newly created view. If
- *                 the collection provided is non-existent, the collection will
- *                 be automatically created. If empty, then the newly created
- *                 view will be top-level.
+ *                         <li> gpudb::filter_collection_name:
+ *                 [DEPRECATED--please specify the containing schema for the
+ *                 view as part of @a viewName and use /create/schema to create
+ *                 the schema if non-existent]  Name of a schema for the newly
+ *                 created view. If the schema is non-existent, it will be
+ *                 automatically created.
  *                         <li> gpudb::filter_view_id: view this filtered-view
  *                 is part of.  The default value is ''.
  *                         <li> gpudb::filter_ttl: Sets the <a
@@ -11181,12 +14005,15 @@ FilterResponse& filter( const std::string& tableName,
                         FilterResponse& response_ ) const;
 
 /**
- * Calculates which objects from a table are within a named area of interest
- * (NAI/polygon). The operation is synchronous, meaning that a response will
- * not be returned until all the matching objects are fully available. The
+ * Calculates which objects from a table are within a named area of
+ * interest (NAI/polygon). The operation is synchronous, meaning that a
+ * response
+ * will not be returned until all the matching objects are fully available. The
  * response payload provides the count of the resulting set. A new resultant
- * set (view) which satisfies the input NAI restriction specification is
- * created with the name @a viewName passed in as part of the input.
+ * set
+ * (view) which satisfies the input NAI restriction specification is created
+ * with
+ * the name @a viewName passed in as part of the input.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -11198,12 +14025,15 @@ FilterResponse& filter( const std::string& tableName,
 FilterByAreaResponse filterByArea( const FilterByAreaRequest& request_ ) const;
 
 /**
- * Calculates which objects from a table are within a named area of interest
- * (NAI/polygon). The operation is synchronous, meaning that a response will
- * not be returned until all the matching objects are fully available. The
+ * Calculates which objects from a table are within a named area of
+ * interest (NAI/polygon). The operation is synchronous, meaning that a
+ * response
+ * will not be returned until all the matching objects are fully available. The
  * response payload provides the count of the resulting set. A new resultant
- * set (view) which satisfies the input NAI restriction specification is
- * created with the name @a viewName passed in as part of the input.
+ * set
+ * (view) which satisfies the input NAI restriction specification is created
+ * with
+ * the name @a viewName passed in as part of the input.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -11219,23 +14049,29 @@ FilterByAreaResponse& filterByArea( const FilterByAreaRequest& request_,
                                     FilterByAreaResponse& response_ ) const;
 
 /**
- * Calculates which objects from a table are within a named area of interest
- * (NAI/polygon). The operation is synchronous, meaning that a response will
- * not be returned until all the matching objects are fully available. The
+ * Calculates which objects from a table are within a named area of
+ * interest (NAI/polygon). The operation is synchronous, meaning that a
+ * response
+ * will not be returned until all the matching objects are fully available. The
  * response payload provides the count of the resulting set. A new resultant
- * set (view) which satisfies the input NAI restriction specification is
- * created with the name @a viewName passed in as part of the input.
+ * set
+ * (view) which satisfies the input NAI restriction specification is created
+ * with
+ * the name @a viewName passed in as part of the input.
  * 
- * @param tableName  Name of the table to filter.  This may be the name of a
- *                   collection, a table, or a view (when chaining queries).
- *                   If filtering a collection, all child tables where the
- *                   filter expression is valid will be filtered; the filtered
- *                   result tables will then be placed in a collection
- *                   specified by @a viewName.
+ * @param tableName  Name of the table to filter, in [schema_name.]table_name
+ *                   format, using standard <a
+ *                   href="../../concepts/tables.html#table-name-resolution"
+ *                   target="_top">name resolution rules</a>.  This may be the
+ *                   name of a table or a view (when chaining queries).
  * @param viewName  If provided, then this will be the name of the view
- *                  containing the results. Has the same naming restrictions as
- *                  <a href="../../concepts/tables.html"
- *                  target="_top">tables</a>.
+ *                  containing the results, in [schema_name.]view_name format,
+ *                  using standard <a
+ *                  href="../../concepts/tables.html#table-name-resolution"
+ *                  target="_top">name resolution rules</a> and meeting <a
+ *                  href="../../concepts/tables.html#table-naming-criteria"
+ *                  target="_top">table naming criteria</a>.  Must not be an
+ *                  already existing table or view.
  * @param xColumnName  Name of the column containing the x values to be
  *                     filtered.
  * @param xVector  List of x coordinates of the vertices of the polygon
@@ -11246,11 +14082,12 @@ FilterByAreaResponse& filterByArea( const FilterByAreaRequest& request_,
  *                 representing the area to be filtered.
  * @param options  Optional parameters.
  *                 <ul>
- *                         <li> gpudb::filter_by_area_collection_name: Name of
- *                 a collection which is to contain the newly created view. If
- *                 the collection provided is non-existent, the collection will
- *                 be automatically created.  If empty, then the newly created
- *                 view will be top-level.
+ *                         <li> gpudb::filter_by_area_collection_name:
+ *                 [DEPRECATED--please specify the containing schema for the
+ *                 view as part of @a viewName and use /create/schema to create
+ *                 the schema if non-existent]  Name of a schema for the newly
+ *                 created view. If the schema provided is non-existent, it
+ *                 will be automatically created.
  *                 </ul>
  * 
  * @return Response object containing the result of the operation.
@@ -11266,23 +14103,29 @@ FilterByAreaResponse filterByArea( const std::string& tableName,
                                    const std::map<std::string, std::string>& options ) const;
 
 /**
- * Calculates which objects from a table are within a named area of interest
- * (NAI/polygon). The operation is synchronous, meaning that a response will
- * not be returned until all the matching objects are fully available. The
+ * Calculates which objects from a table are within a named area of
+ * interest (NAI/polygon). The operation is synchronous, meaning that a
+ * response
+ * will not be returned until all the matching objects are fully available. The
  * response payload provides the count of the resulting set. A new resultant
- * set (view) which satisfies the input NAI restriction specification is
- * created with the name @a viewName passed in as part of the input.
+ * set
+ * (view) which satisfies the input NAI restriction specification is created
+ * with
+ * the name @a viewName passed in as part of the input.
  * 
- * @param tableName  Name of the table to filter.  This may be the name of a
- *                   collection, a table, or a view (when chaining queries).
- *                   If filtering a collection, all child tables where the
- *                   filter expression is valid will be filtered; the filtered
- *                   result tables will then be placed in a collection
- *                   specified by @a viewName.
+ * @param tableName  Name of the table to filter, in [schema_name.]table_name
+ *                   format, using standard <a
+ *                   href="../../concepts/tables.html#table-name-resolution"
+ *                   target="_top">name resolution rules</a>.  This may be the
+ *                   name of a table or a view (when chaining queries).
  * @param viewName  If provided, then this will be the name of the view
- *                  containing the results. Has the same naming restrictions as
- *                  <a href="../../concepts/tables.html"
- *                  target="_top">tables</a>.
+ *                  containing the results, in [schema_name.]view_name format,
+ *                  using standard <a
+ *                  href="../../concepts/tables.html#table-name-resolution"
+ *                  target="_top">name resolution rules</a> and meeting <a
+ *                  href="../../concepts/tables.html#table-naming-criteria"
+ *                  target="_top">table naming criteria</a>.  Must not be an
+ *                  already existing table or view.
  * @param xColumnName  Name of the column containing the x values to be
  *                     filtered.
  * @param xVector  List of x coordinates of the vertices of the polygon
@@ -11293,11 +14136,12 @@ FilterByAreaResponse filterByArea( const std::string& tableName,
  *                 representing the area to be filtered.
  * @param options  Optional parameters.
  *                 <ul>
- *                         <li> gpudb::filter_by_area_collection_name: Name of
- *                 a collection which is to contain the newly created view. If
- *                 the collection provided is non-existent, the collection will
- *                 be automatically created.  If empty, then the newly created
- *                 view will be top-level.
+ *                         <li> gpudb::filter_by_area_collection_name:
+ *                 [DEPRECATED--please specify the containing schema for the
+ *                 view as part of @a viewName and use /create/schema to create
+ *                 the schema if non-existent]  Name of a schema for the newly
+ *                 created view. If the schema provided is non-existent, it
+ *                 will be automatically created.
  *                 </ul>
  * @param[out] response_  Response object containing the results of the
  *                        operation.
@@ -11317,13 +14161,16 @@ FilterByAreaResponse& filterByArea( const std::string& tableName,
                                     FilterByAreaResponse& response_ ) const;
 
 /**
- * Calculates which geospatial geometry objects from a table intersect a named
- * area of interest (NAI/polygon). The operation is synchronous, meaning that a
- * response will not be returned until all the matching objects are fully
+ * Calculates which geospatial geometry objects from a table intersect
+ * a named area of interest (NAI/polygon). The operation is synchronous,
+ * meaning
+ * that a response will not be returned until all the matching objects are
+ * fully
  * available. The response payload provides the count of the resulting set. A
- * new resultant set (view) which satisfies the input NAI restriction
- * specification is created with the name @a viewName passed in as part of the
- * input.
+ * new
+ * resultant set (view) which satisfies the input NAI restriction specification
+ * is
+ * created with the name @a viewName passed in as part of the input.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -11335,13 +14182,16 @@ FilterByAreaResponse& filterByArea( const std::string& tableName,
 FilterByAreaGeometryResponse filterByAreaGeometry( const FilterByAreaGeometryRequest& request_ ) const;
 
 /**
- * Calculates which geospatial geometry objects from a table intersect a named
- * area of interest (NAI/polygon). The operation is synchronous, meaning that a
- * response will not be returned until all the matching objects are fully
+ * Calculates which geospatial geometry objects from a table intersect
+ * a named area of interest (NAI/polygon). The operation is synchronous,
+ * meaning
+ * that a response will not be returned until all the matching objects are
+ * fully
  * available. The response payload provides the count of the resulting set. A
- * new resultant set (view) which satisfies the input NAI restriction
- * specification is created with the name @a viewName passed in as part of the
- * input.
+ * new
+ * resultant set (view) which satisfies the input NAI restriction specification
+ * is
+ * created with the name @a viewName passed in as part of the input.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -11357,23 +14207,30 @@ FilterByAreaGeometryResponse& filterByAreaGeometry( const FilterByAreaGeometryRe
                                                     FilterByAreaGeometryResponse& response_ ) const;
 
 /**
- * Calculates which geospatial geometry objects from a table intersect a named
- * area of interest (NAI/polygon). The operation is synchronous, meaning that a
- * response will not be returned until all the matching objects are fully
+ * Calculates which geospatial geometry objects from a table intersect
+ * a named area of interest (NAI/polygon). The operation is synchronous,
+ * meaning
+ * that a response will not be returned until all the matching objects are
+ * fully
  * available. The response payload provides the count of the resulting set. A
- * new resultant set (view) which satisfies the input NAI restriction
- * specification is created with the name @a viewName passed in as part of the
- * input.
+ * new
+ * resultant set (view) which satisfies the input NAI restriction specification
+ * is
+ * created with the name @a viewName passed in as part of the input.
  * 
- * @param tableName  Name of the table to filter.  This may be the name of a
- *                   collection, a table, or a view (when chaining queries).
- *                   If filtering a collection, all child tables where the
- *                   filter expression is valid will be filtered; the filtered
- *                   result tables will then be placed in a collection
- *                   specified by @a viewName.
+ * @param tableName  Name of the table to filter, in [schema_name.]table_name
+ *                   format, using standard <a
+ *                   href="../../concepts/tables.html#table-name-resolution"
+ *                   target="_top">name resolution rules</a>.  This may be the
+ *                   name of a table or a view (when chaining queries).
  * @param viewName  If provided, then this will be the name of the view
- *                  containing the results. Must not be an already existing
- *                  collection, table or view.
+ *                  containing the results, in [schema_name.]view_name format,
+ *                  using standard <a
+ *                  href="../../concepts/tables.html#table-name-resolution"
+ *                  target="_top">name resolution rules</a> and meeting <a
+ *                  href="../../concepts/tables.html#table-naming-criteria"
+ *                  target="_top">table naming criteria</a>.  Must not be an
+ *                  already existing table or view.
  * @param columnName  Name of the geospatial geometry column to be filtered.
  * @param xVector  List of x coordinates of the vertices of the polygon
  *                 representing the area to be filtered.
@@ -11382,10 +14239,11 @@ FilterByAreaGeometryResponse& filterByAreaGeometry( const FilterByAreaGeometryRe
  * @param options  Optional parameters.
  *                 <ul>
  *                         <li> gpudb::filter_by_area_geometry_collection_name:
- *                 Name of a collection which is to contain the newly created
- *                 view. If the collection provided is non-existent, the
- *                 collection will be automatically created. If empty, then the
- *                 newly created view will be top-level.
+ *                 [DEPRECATED--please specify the containing schema for the
+ *                 view as part of @a viewName and use /create/schema to create
+ *                 the schema if non-existent]  The schema for the newly
+ *                 created view. If the schema is non-existent, it will be
+ *                 automatically created.
  *                 </ul>
  * 
  * @return Response object containing the result of the operation.
@@ -11400,23 +14258,30 @@ FilterByAreaGeometryResponse filterByAreaGeometry( const std::string& tableName,
                                                    const std::map<std::string, std::string>& options ) const;
 
 /**
- * Calculates which geospatial geometry objects from a table intersect a named
- * area of interest (NAI/polygon). The operation is synchronous, meaning that a
- * response will not be returned until all the matching objects are fully
+ * Calculates which geospatial geometry objects from a table intersect
+ * a named area of interest (NAI/polygon). The operation is synchronous,
+ * meaning
+ * that a response will not be returned until all the matching objects are
+ * fully
  * available. The response payload provides the count of the resulting set. A
- * new resultant set (view) which satisfies the input NAI restriction
- * specification is created with the name @a viewName passed in as part of the
- * input.
+ * new
+ * resultant set (view) which satisfies the input NAI restriction specification
+ * is
+ * created with the name @a viewName passed in as part of the input.
  * 
- * @param tableName  Name of the table to filter.  This may be the name of a
- *                   collection, a table, or a view (when chaining queries).
- *                   If filtering a collection, all child tables where the
- *                   filter expression is valid will be filtered; the filtered
- *                   result tables will then be placed in a collection
- *                   specified by @a viewName.
+ * @param tableName  Name of the table to filter, in [schema_name.]table_name
+ *                   format, using standard <a
+ *                   href="../../concepts/tables.html#table-name-resolution"
+ *                   target="_top">name resolution rules</a>.  This may be the
+ *                   name of a table or a view (when chaining queries).
  * @param viewName  If provided, then this will be the name of the view
- *                  containing the results. Must not be an already existing
- *                  collection, table or view.
+ *                  containing the results, in [schema_name.]view_name format,
+ *                  using standard <a
+ *                  href="../../concepts/tables.html#table-name-resolution"
+ *                  target="_top">name resolution rules</a> and meeting <a
+ *                  href="../../concepts/tables.html#table-naming-criteria"
+ *                  target="_top">table naming criteria</a>.  Must not be an
+ *                  already existing table or view.
  * @param columnName  Name of the geospatial geometry column to be filtered.
  * @param xVector  List of x coordinates of the vertices of the polygon
  *                 representing the area to be filtered.
@@ -11425,10 +14290,11 @@ FilterByAreaGeometryResponse filterByAreaGeometry( const std::string& tableName,
  * @param options  Optional parameters.
  *                 <ul>
  *                         <li> gpudb::filter_by_area_geometry_collection_name:
- *                 Name of a collection which is to contain the newly created
- *                 view. If the collection provided is non-existent, the
- *                 collection will be automatically created. If empty, then the
- *                 newly created view will be top-level.
+ *                 [DEPRECATED--please specify the containing schema for the
+ *                 view as part of @a viewName and use /create/schema to create
+ *                 the schema if non-existent]  The schema for the newly
+ *                 created view. If the schema is non-existent, it will be
+ *                 automatically created.
  *                 </ul>
  * @param[out] response_  Response object containing the results of the
  *                        operation.
@@ -11447,12 +14313,14 @@ FilterByAreaGeometryResponse& filterByAreaGeometry( const std::string& tableName
                                                     FilterByAreaGeometryResponse& response_ ) const;
 
 /**
- * Calculates how many objects within the given table lie in a rectangular box.
- * The operation is synchronous, meaning that a response will not be returned
- * until all the objects are fully available. The response payload provides the
- * count of the resulting set. A new resultant set which satisfies the input
- * NAI restriction specification is also created when a @a viewName is passed
- * in as part of the input payload.
+ * Calculates how many objects within the given table lie in a
+ * rectangular box. The operation is synchronous, meaning that a response will
+ * not
+ * be returned until all the objects are fully available. The response payload
+ * provides the count of the resulting set. A new resultant set which satisfies
+ * the
+ * input NAI restriction specification is also created when a @a viewName is
+ * passed in as part of the input payload.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -11464,12 +14332,14 @@ FilterByAreaGeometryResponse& filterByAreaGeometry( const std::string& tableName
 FilterByBoxResponse filterByBox( const FilterByBoxRequest& request_ ) const;
 
 /**
- * Calculates how many objects within the given table lie in a rectangular box.
- * The operation is synchronous, meaning that a response will not be returned
- * until all the objects are fully available. The response payload provides the
- * count of the resulting set. A new resultant set which satisfies the input
- * NAI restriction specification is also created when a @a viewName is passed
- * in as part of the input payload.
+ * Calculates how many objects within the given table lie in a
+ * rectangular box. The operation is synchronous, meaning that a response will
+ * not
+ * be returned until all the objects are fully available. The response payload
+ * provides the count of the resulting set. A new resultant set which satisfies
+ * the
+ * input NAI restriction specification is also created when a @a viewName is
+ * passed in as part of the input payload.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -11485,19 +14355,29 @@ FilterByBoxResponse& filterByBox( const FilterByBoxRequest& request_,
                                   FilterByBoxResponse& response_ ) const;
 
 /**
- * Calculates how many objects within the given table lie in a rectangular box.
- * The operation is synchronous, meaning that a response will not be returned
- * until all the objects are fully available. The response payload provides the
- * count of the resulting set. A new resultant set which satisfies the input
- * NAI restriction specification is also created when a @a viewName is passed
- * in as part of the input payload.
+ * Calculates how many objects within the given table lie in a
+ * rectangular box. The operation is synchronous, meaning that a response will
+ * not
+ * be returned until all the objects are fully available. The response payload
+ * provides the count of the resulting set. A new resultant set which satisfies
+ * the
+ * input NAI restriction specification is also created when a @a viewName is
+ * passed in as part of the input payload.
  * 
  * @param tableName  Name of the table on which the bounding box operation will
- *                   be performed. Must be an existing table.
- * @param viewName  Optional name of the result view that will be created
- *                  containing the results of the query. Has the same naming
- *                  restrictions as <a href="../../concepts/tables.html"
- *                  target="_top">tables</a>.
+ *                   be performed, in [schema_name.]table_name format, using
+ *                   standard <a
+ *                   href="../../concepts/tables.html#table-name-resolution"
+ *                   target="_top">name resolution rules</a>.  Must be an
+ *                   existing table.
+ * @param viewName  If provided, then this will be the name of the view
+ *                  containing the results, in [schema_name.]view_name format,
+ *                  using standard <a
+ *                  href="../../concepts/tables.html#table-name-resolution"
+ *                  target="_top">name resolution rules</a> and meeting <a
+ *                  href="../../concepts/tables.html#table-naming-criteria"
+ *                  target="_top">table naming criteria</a>.  Must not be an
+ *                  already existing table or view.
  * @param xColumnName  Name of the column on which to perform the bounding box
  *                     query. Must be a valid numeric column.
  * @param minX  Lower bound for the column chosen by @a xColumnName.  Must be
@@ -11512,11 +14392,12 @@ FilterByBoxResponse& filterByBox( const FilterByBoxRequest& request_,
  *              to @a minY.
  * @param options  Optional parameters.
  *                 <ul>
- *                         <li> gpudb::filter_by_box_collection_name: Name of a
- *                 collection which is to contain the newly created view. If
- *                 the collection provided is non-existent, the collection will
- *                 be automatically created. If empty, then the newly created
- *                 view will be top-level.
+ *                         <li> gpudb::filter_by_box_collection_name:
+ *                 [DEPRECATED--please specify the containing schema for the
+ *                 view as part of @a viewName and use /create/schema to create
+ *                 the schema if non-existent]  Name of a schema for the newly
+ *                 created view. If the schema is non-existent, it will be
+ *                 automatically created.
  *                 </ul>
  * 
  * @return Response object containing the result of the operation.
@@ -11534,19 +14415,29 @@ FilterByBoxResponse filterByBox( const std::string& tableName,
                                  const std::map<std::string, std::string>& options ) const;
 
 /**
- * Calculates how many objects within the given table lie in a rectangular box.
- * The operation is synchronous, meaning that a response will not be returned
- * until all the objects are fully available. The response payload provides the
- * count of the resulting set. A new resultant set which satisfies the input
- * NAI restriction specification is also created when a @a viewName is passed
- * in as part of the input payload.
+ * Calculates how many objects within the given table lie in a
+ * rectangular box. The operation is synchronous, meaning that a response will
+ * not
+ * be returned until all the objects are fully available. The response payload
+ * provides the count of the resulting set. A new resultant set which satisfies
+ * the
+ * input NAI restriction specification is also created when a @a viewName is
+ * passed in as part of the input payload.
  * 
  * @param tableName  Name of the table on which the bounding box operation will
- *                   be performed. Must be an existing table.
- * @param viewName  Optional name of the result view that will be created
- *                  containing the results of the query. Has the same naming
- *                  restrictions as <a href="../../concepts/tables.html"
- *                  target="_top">tables</a>.
+ *                   be performed, in [schema_name.]table_name format, using
+ *                   standard <a
+ *                   href="../../concepts/tables.html#table-name-resolution"
+ *                   target="_top">name resolution rules</a>.  Must be an
+ *                   existing table.
+ * @param viewName  If provided, then this will be the name of the view
+ *                  containing the results, in [schema_name.]view_name format,
+ *                  using standard <a
+ *                  href="../../concepts/tables.html#table-name-resolution"
+ *                  target="_top">name resolution rules</a> and meeting <a
+ *                  href="../../concepts/tables.html#table-naming-criteria"
+ *                  target="_top">table naming criteria</a>.  Must not be an
+ *                  already existing table or view.
  * @param xColumnName  Name of the column on which to perform the bounding box
  *                     query. Must be a valid numeric column.
  * @param minX  Lower bound for the column chosen by @a xColumnName.  Must be
@@ -11561,11 +14452,12 @@ FilterByBoxResponse filterByBox( const std::string& tableName,
  *              to @a minY.
  * @param options  Optional parameters.
  *                 <ul>
- *                         <li> gpudb::filter_by_box_collection_name: Name of a
- *                 collection which is to contain the newly created view. If
- *                 the collection provided is non-existent, the collection will
- *                 be automatically created. If empty, then the newly created
- *                 view will be top-level.
+ *                         <li> gpudb::filter_by_box_collection_name:
+ *                 [DEPRECATED--please specify the containing schema for the
+ *                 view as part of @a viewName and use /create/schema to create
+ *                 the schema if non-existent]  Name of a schema for the newly
+ *                 created view. If the schema is non-existent, it will be
+ *                 automatically created.
  *                 </ul>
  * @param[out] response_  Response object containing the results of the
  *                        operation.
@@ -11587,12 +14479,15 @@ FilterByBoxResponse& filterByBox( const std::string& tableName,
                                   FilterByBoxResponse& response_ ) const;
 
 /**
- * Calculates which geospatial geometry objects from a table intersect a
- * rectangular box. The operation is synchronous, meaning that a response will
+ * Calculates which geospatial geometry objects from a table intersect
+ * a rectangular box. The operation is synchronous, meaning that a response
+ * will
  * not be returned until all the objects are fully available. The response
- * payload provides the count of the resulting set. A new resultant set which
- * satisfies the input NAI restriction specification is also created when a @a
- * viewName is passed in as part of the input payload.
+ * payload
+ * provides the count of the resulting set. A new resultant set which satisfies
+ * the
+ * input NAI restriction specification is also created when a @a viewName is
+ * passed in as part of the input payload.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -11604,12 +14499,15 @@ FilterByBoxResponse& filterByBox( const std::string& tableName,
 FilterByBoxGeometryResponse filterByBoxGeometry( const FilterByBoxGeometryRequest& request_ ) const;
 
 /**
- * Calculates which geospatial geometry objects from a table intersect a
- * rectangular box. The operation is synchronous, meaning that a response will
+ * Calculates which geospatial geometry objects from a table intersect
+ * a rectangular box. The operation is synchronous, meaning that a response
+ * will
  * not be returned until all the objects are fully available. The response
- * payload provides the count of the resulting set. A new resultant set which
- * satisfies the input NAI restriction specification is also created when a @a
- * viewName is passed in as part of the input payload.
+ * payload
+ * provides the count of the resulting set. A new resultant set which satisfies
+ * the
+ * input NAI restriction specification is also created when a @a viewName is
+ * passed in as part of the input payload.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -11625,18 +14523,30 @@ FilterByBoxGeometryResponse& filterByBoxGeometry( const FilterByBoxGeometryReque
                                                   FilterByBoxGeometryResponse& response_ ) const;
 
 /**
- * Calculates which geospatial geometry objects from a table intersect a
- * rectangular box. The operation is synchronous, meaning that a response will
+ * Calculates which geospatial geometry objects from a table intersect
+ * a rectangular box. The operation is synchronous, meaning that a response
+ * will
  * not be returned until all the objects are fully available. The response
- * payload provides the count of the resulting set. A new resultant set which
- * satisfies the input NAI restriction specification is also created when a @a
- * viewName is passed in as part of the input payload.
+ * payload
+ * provides the count of the resulting set. A new resultant set which satisfies
+ * the
+ * input NAI restriction specification is also created when a @a viewName is
+ * passed in as part of the input payload.
  * 
  * @param tableName  Name of the table on which the bounding box operation will
- *                   be performed. Must be an existing table.
- * @param viewName  Optional name of the result view that will be created
- *                  containing the results of the query. Must not be an already
- *                  existing collection, table or view.
+ *                   be performed, in [schema_name.]table_name format, using
+ *                   standard <a
+ *                   href="../../concepts/tables.html#table-name-resolution"
+ *                   target="_top">name resolution rules</a>. Must be an
+ *                   existing table.
+ * @param viewName  If provided, then this will be the name of the view
+ *                  containing the results, in [schema_name.]view_name format,
+ *                  using standard <a
+ *                  href="../../concepts/tables.html#table-name-resolution"
+ *                  target="_top">name resolution rules</a> and meeting <a
+ *                  href="../../concepts/tables.html#table-naming-criteria"
+ *                  target="_top">table naming criteria</a>.  Must not be an
+ *                  already existing table or view.
  * @param columnName  Name of the geospatial geometry column to be filtered.
  * @param minX  Lower bound for the x-coordinate of the rectangular box.  Must
  *              be less than or equal to @a maxX.
@@ -11649,10 +14559,11 @@ FilterByBoxGeometryResponse& filterByBoxGeometry( const FilterByBoxGeometryReque
  * @param options  Optional parameters.
  *                 <ul>
  *                         <li> gpudb::filter_by_box_geometry_collection_name:
- *                 Name of a collection which is to contain the newly created
- *                 view. If the collection provided is non-existent, the
- *                 collection will be automatically created. If empty, then the
- *                 newly created view will be top-level.
+ *                 [DEPRECATED--please specify the containing schema for the
+ *                 view as part of @a viewName and use /create/schema to create
+ *                 the schema if non-existent]  Name of a schema for the newly
+ *                 created view. If the schema provided is non-existent, it
+ *                 will be automatically created.
  *                 </ul>
  * 
  * @return Response object containing the result of the operation.
@@ -11669,18 +14580,30 @@ FilterByBoxGeometryResponse filterByBoxGeometry( const std::string& tableName,
                                                  const std::map<std::string, std::string>& options ) const;
 
 /**
- * Calculates which geospatial geometry objects from a table intersect a
- * rectangular box. The operation is synchronous, meaning that a response will
+ * Calculates which geospatial geometry objects from a table intersect
+ * a rectangular box. The operation is synchronous, meaning that a response
+ * will
  * not be returned until all the objects are fully available. The response
- * payload provides the count of the resulting set. A new resultant set which
- * satisfies the input NAI restriction specification is also created when a @a
- * viewName is passed in as part of the input payload.
+ * payload
+ * provides the count of the resulting set. A new resultant set which satisfies
+ * the
+ * input NAI restriction specification is also created when a @a viewName is
+ * passed in as part of the input payload.
  * 
  * @param tableName  Name of the table on which the bounding box operation will
- *                   be performed. Must be an existing table.
- * @param viewName  Optional name of the result view that will be created
- *                  containing the results of the query. Must not be an already
- *                  existing collection, table or view.
+ *                   be performed, in [schema_name.]table_name format, using
+ *                   standard <a
+ *                   href="../../concepts/tables.html#table-name-resolution"
+ *                   target="_top">name resolution rules</a>. Must be an
+ *                   existing table.
+ * @param viewName  If provided, then this will be the name of the view
+ *                  containing the results, in [schema_name.]view_name format,
+ *                  using standard <a
+ *                  href="../../concepts/tables.html#table-name-resolution"
+ *                  target="_top">name resolution rules</a> and meeting <a
+ *                  href="../../concepts/tables.html#table-naming-criteria"
+ *                  target="_top">table naming criteria</a>.  Must not be an
+ *                  already existing table or view.
  * @param columnName  Name of the geospatial geometry column to be filtered.
  * @param minX  Lower bound for the x-coordinate of the rectangular box.  Must
  *              be less than or equal to @a maxX.
@@ -11693,10 +14616,11 @@ FilterByBoxGeometryResponse filterByBoxGeometry( const std::string& tableName,
  * @param options  Optional parameters.
  *                 <ul>
  *                         <li> gpudb::filter_by_box_geometry_collection_name:
- *                 Name of a collection which is to contain the newly created
- *                 view. If the collection provided is non-existent, the
- *                 collection will be automatically created. If empty, then the
- *                 newly created view will be top-level.
+ *                 [DEPRECATED--please specify the containing schema for the
+ *                 view as part of @a viewName and use /create/schema to create
+ *                 the schema if non-existent]  Name of a schema for the newly
+ *                 created view. If the schema provided is non-existent, it
+ *                 will be automatically created.
  *                 </ul>
  * @param[out] response_  Response object containing the results of the
  *                        operation.
@@ -11717,9 +14641,8 @@ FilterByBoxGeometryResponse& filterByBoxGeometry( const std::string& tableName,
                                                   FilterByBoxGeometryResponse& response_ ) const;
 
 /**
- * Applies a geometry filter against a geospatial geometry column in a given
- * table, collection or view. The filtering geometry is provided by @a
- * inputWkt.
+ * Applies a geometry filter against a geospatial geometry column in a
+ * given table or view. The filtering geometry is provided by @a inputWkt.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -11731,9 +14654,8 @@ FilterByBoxGeometryResponse& filterByBoxGeometry( const std::string& tableName,
 FilterByGeometryResponse filterByGeometry( const FilterByGeometryRequest& request_ ) const;
 
 /**
- * Applies a geometry filter against a geospatial geometry column in a given
- * table, collection or view. The filtering geometry is provided by @a
- * inputWkt.
+ * Applies a geometry filter against a geospatial geometry column in a
+ * given table or view. The filtering geometry is provided by @a inputWkt.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -11749,17 +14671,24 @@ FilterByGeometryResponse& filterByGeometry( const FilterByGeometryRequest& reque
                                             FilterByGeometryResponse& response_ ) const;
 
 /**
- * Applies a geometry filter against a geospatial geometry column in a given
- * table, collection or view. The filtering geometry is provided by @a
- * inputWkt.
+ * Applies a geometry filter against a geospatial geometry column in a
+ * given table or view. The filtering geometry is provided by @a inputWkt.
  * 
  * @param tableName  Name of the table on which the filter by geometry will be
- *                   performed.  Must be an existing table, collection or view
- *                   containing a geospatial geometry column.
+ *                   performed, in [schema_name.]table_name format, using
+ *                   standard <a
+ *                   href="../../concepts/tables.html#table-name-resolution"
+ *                   target="_top">name resolution rules</a>.  Must be an
+ *                   existing table or view containing a geospatial geometry
+ *                   column.
  * @param viewName  If provided, then this will be the name of the view
- *                  containing the results. Has the same naming restrictions as
- *                  <a href="../../concepts/tables.html"
- *                  target="_top">tables</a>.
+ *                  containing the results, in [schema_name.]view_name format,
+ *                  using standard <a
+ *                  href="../../concepts/tables.html#table-name-resolution"
+ *                  target="_top">name resolution rules</a> and meeting <a
+ *                  href="../../concepts/tables.html#table-naming-criteria"
+ *                  target="_top">table naming criteria</a>.  Must not be an
+ *                  already existing table or view.
  * @param columnName  Name of the column to be used in the filter. Must be a
  *                    geospatial geometry column.
  * @param inputWkt  A geometry in WKT format that will be used to filter the
@@ -11786,11 +14715,12 @@ FilterByGeometryResponse& filterByGeometry( const FilterByGeometryRequest& reque
  *                   </ul>
  * @param options  Optional parameters.
  *                 <ul>
- *                         <li> gpudb::filter_by_geometry_collection_name: Name
- *                 of a collection which is to contain the newly created view.
- *                 If the collection provided is non-existent, the collection
- *                 will be automatically created. If empty, then the newly
- *                 created view will be top-level.
+ *                         <li> gpudb::filter_by_geometry_collection_name:
+ *                 [DEPRECATED--please specify the containing schema for the
+ *                 view as part of @a viewName and use /create/schema to create
+ *                 the schema if non-existent]  Name of a schema for the newly
+ *                 created view. If the schema provided is non-existent, it
+ *                 will be automatically created.
  *                 </ul>
  * 
  * @return Response object containing the result of the operation.
@@ -11805,17 +14735,24 @@ FilterByGeometryResponse filterByGeometry( const std::string& tableName,
                                            const std::map<std::string, std::string>& options ) const;
 
 /**
- * Applies a geometry filter against a geospatial geometry column in a given
- * table, collection or view. The filtering geometry is provided by @a
- * inputWkt.
+ * Applies a geometry filter against a geospatial geometry column in a
+ * given table or view. The filtering geometry is provided by @a inputWkt.
  * 
  * @param tableName  Name of the table on which the filter by geometry will be
- *                   performed.  Must be an existing table, collection or view
- *                   containing a geospatial geometry column.
+ *                   performed, in [schema_name.]table_name format, using
+ *                   standard <a
+ *                   href="../../concepts/tables.html#table-name-resolution"
+ *                   target="_top">name resolution rules</a>.  Must be an
+ *                   existing table or view containing a geospatial geometry
+ *                   column.
  * @param viewName  If provided, then this will be the name of the view
- *                  containing the results. Has the same naming restrictions as
- *                  <a href="../../concepts/tables.html"
- *                  target="_top">tables</a>.
+ *                  containing the results, in [schema_name.]view_name format,
+ *                  using standard <a
+ *                  href="../../concepts/tables.html#table-name-resolution"
+ *                  target="_top">name resolution rules</a> and meeting <a
+ *                  href="../../concepts/tables.html#table-naming-criteria"
+ *                  target="_top">table naming criteria</a>.  Must not be an
+ *                  already existing table or view.
  * @param columnName  Name of the column to be used in the filter. Must be a
  *                    geospatial geometry column.
  * @param inputWkt  A geometry in WKT format that will be used to filter the
@@ -11842,11 +14779,12 @@ FilterByGeometryResponse filterByGeometry( const std::string& tableName,
  *                   </ul>
  * @param options  Optional parameters.
  *                 <ul>
- *                         <li> gpudb::filter_by_geometry_collection_name: Name
- *                 of a collection which is to contain the newly created view.
- *                 If the collection provided is non-existent, the collection
- *                 will be automatically created. If empty, then the newly
- *                 created view will be top-level.
+ *                         <li> gpudb::filter_by_geometry_collection_name:
+ *                 [DEPRECATED--please specify the containing schema for the
+ *                 view as part of @a viewName and use /create/schema to create
+ *                 the schema if non-existent]  Name of a schema for the newly
+ *                 created view. If the schema provided is non-existent, it
+ *                 will be automatically created.
  *                 </ul>
  * @param[out] response_  Response object containing the results of the
  *                        operation.
@@ -11865,20 +14803,24 @@ FilterByGeometryResponse& filterByGeometry( const std::string& tableName,
                                             FilterByGeometryResponse& response_ ) const;
 
 /**
- * Calculates which records from a table have values in the given list for the
- * corresponding column. The operation is synchronous, meaning that a response
- * will not be returned until all the objects are fully available. The response
- * payload provides the count of the resulting set. A new resultant set (view)
- * which satisfies the input filter specification is also created if a @a
- * viewName is passed in as part of the request.
+ * Calculates which records from a table have values in the given list
+ * for the corresponding column. The operation is synchronous, meaning that a
+ * response will not be returned until all the objects are fully available. The
+ * response payload provides the count of the resulting set. A new resultant
+ * set
+ * (view) which satisfies the input filter specification is also created if a
+ * @a viewName is passed in as part of the request.
  * <p>
  * For example, if a type definition has the columns 'x' and 'y', then a filter
- * by list query with the column map {"x":["10.1", "2.3"], "y":["0.0", "-31.5",
- * "42.0"]} will return the count of all data points whose x and y values match
- * both in the respective x- and y-lists, e.g., "x = 10.1 and y = 0.0", "x =
- * 2.3 and y = -31.5", etc. However, a record with "x = 10.1 and y = -31.5" or
- * "x = 2.3 and y = 0.0" would not be returned because the values in the given
- * lists do not correspond.
+ * by
+ * list query with the column map
+ * {"x":["10.1", "2.3"], "y":["0.0", "-31.5", "42.0"]} will return
+ * the count of all data points whose x and y values match both in the
+ * respective
+ * x- and y-lists, e.g., "x = 10.1 and y = 0.0", "x = 2.3 and y = -31.5", etc.
+ * However, a record with "x = 10.1 and y = -31.5" or "x = 2.3 and y = 0.0"
+ * would not be returned because the values in the given lists do not
+ * correspond.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -11890,20 +14832,24 @@ FilterByGeometryResponse& filterByGeometry( const std::string& tableName,
 FilterByListResponse filterByList( const FilterByListRequest& request_ ) const;
 
 /**
- * Calculates which records from a table have values in the given list for the
- * corresponding column. The operation is synchronous, meaning that a response
- * will not be returned until all the objects are fully available. The response
- * payload provides the count of the resulting set. A new resultant set (view)
- * which satisfies the input filter specification is also created if a @a
- * viewName is passed in as part of the request.
+ * Calculates which records from a table have values in the given list
+ * for the corresponding column. The operation is synchronous, meaning that a
+ * response will not be returned until all the objects are fully available. The
+ * response payload provides the count of the resulting set. A new resultant
+ * set
+ * (view) which satisfies the input filter specification is also created if a
+ * @a viewName is passed in as part of the request.
  * <p>
  * For example, if a type definition has the columns 'x' and 'y', then a filter
- * by list query with the column map {"x":["10.1", "2.3"], "y":["0.0", "-31.5",
- * "42.0"]} will return the count of all data points whose x and y values match
- * both in the respective x- and y-lists, e.g., "x = 10.1 and y = 0.0", "x =
- * 2.3 and y = -31.5", etc. However, a record with "x = 10.1 and y = -31.5" or
- * "x = 2.3 and y = 0.0" would not be returned because the values in the given
- * lists do not correspond.
+ * by
+ * list query with the column map
+ * {"x":["10.1", "2.3"], "y":["0.0", "-31.5", "42.0"]} will return
+ * the count of all data points whose x and y values match both in the
+ * respective
+ * x- and y-lists, e.g., "x = 10.1 and y = 0.0", "x = 2.3 and y = -31.5", etc.
+ * However, a record with "x = 10.1 and y = -31.5" or "x = 2.3 and y = 0.0"
+ * would not be returned because the values in the given lists do not
+ * correspond.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -11919,40 +14865,48 @@ FilterByListResponse& filterByList( const FilterByListRequest& request_,
                                     FilterByListResponse& response_ ) const;
 
 /**
- * Calculates which records from a table have values in the given list for the
- * corresponding column. The operation is synchronous, meaning that a response
- * will not be returned until all the objects are fully available. The response
- * payload provides the count of the resulting set. A new resultant set (view)
- * which satisfies the input filter specification is also created if a @a
- * viewName is passed in as part of the request.
+ * Calculates which records from a table have values in the given list
+ * for the corresponding column. The operation is synchronous, meaning that a
+ * response will not be returned until all the objects are fully available. The
+ * response payload provides the count of the resulting set. A new resultant
+ * set
+ * (view) which satisfies the input filter specification is also created if a
+ * @a viewName is passed in as part of the request.
  * <p>
  * For example, if a type definition has the columns 'x' and 'y', then a filter
- * by list query with the column map {"x":["10.1", "2.3"], "y":["0.0", "-31.5",
- * "42.0"]} will return the count of all data points whose x and y values match
- * both in the respective x- and y-lists, e.g., "x = 10.1 and y = 0.0", "x =
- * 2.3 and y = -31.5", etc. However, a record with "x = 10.1 and y = -31.5" or
- * "x = 2.3 and y = 0.0" would not be returned because the values in the given
- * lists do not correspond.
+ * by
+ * list query with the column map
+ * {"x":["10.1", "2.3"], "y":["0.0", "-31.5", "42.0"]} will return
+ * the count of all data points whose x and y values match both in the
+ * respective
+ * x- and y-lists, e.g., "x = 10.1 and y = 0.0", "x = 2.3 and y = -31.5", etc.
+ * However, a record with "x = 10.1 and y = -31.5" or "x = 2.3 and y = 0.0"
+ * would not be returned because the values in the given lists do not
+ * correspond.
  * 
- * @param tableName  Name of the table to filter.  This may be the name of a
- *                   collection, a table, or a view (when chaining queries).
- *                   If filtering a collection, all child tables where the
- *                   filter expression is valid will be filtered; the filtered
- *                   result tables will then be placed in a collection
- *                   specified by @a viewName.
+ * @param tableName  Name of the table to filter, in [schema_name.]table_name
+ *                   format, using standard <a
+ *                   href="../../concepts/tables.html#table-name-resolution"
+ *                   target="_top">name resolution rules</a>.  This may be the
+ *                   name of a table or a view (when chaining queries).
  * @param viewName  If provided, then this will be the name of the view
- *                  containing the results. Has the same naming restrictions as
- *                  <a href="../../concepts/tables.html"
- *                  target="_top">tables</a>.
+ *                  containing the results, in [schema_name.]view_name format,
+ *                  using standard <a
+ *                  href="../../concepts/tables.html#table-name-resolution"
+ *                  target="_top">name resolution rules</a> and meeting <a
+ *                  href="../../concepts/tables.html#table-naming-criteria"
+ *                  target="_top">table naming criteria</a>.  Must not be an
+ *                  already existing table or view.
  * @param columnValuesMap  List of values for the corresponding column in the
  *                         table
  * @param options  Optional parameters.
  *                 <ul>
- *                         <li> gpudb::filter_by_list_collection_name: Name of
- *                 a collection which is to contain the newly created view. If
- *                 the collection provided is non-existent, the collection will
- *                 be automatically created. If empty, then the newly created
- *                 view will be top-level.
+ *                         <li> gpudb::filter_by_list_collection_name:
+ *                 [DEPRECATED--please specify the containing schema for the
+ *                 view as part of @a viewName and use /create/schema to create
+ *                 the schema if non-existent]  Name of a schema for the newly
+ *                 created view. If the schema provided is non-existent, it
+ *                 will be automatically created.
  *                         <li> gpudb::filter_by_list_filter_mode: String
  *                 indicating the filter mode, either 'in_list' or
  *                 'not_in_list'.
@@ -11975,40 +14929,48 @@ FilterByListResponse filterByList( const std::string& tableName,
                                    const std::map<std::string, std::string>& options ) const;
 
 /**
- * Calculates which records from a table have values in the given list for the
- * corresponding column. The operation is synchronous, meaning that a response
- * will not be returned until all the objects are fully available. The response
- * payload provides the count of the resulting set. A new resultant set (view)
- * which satisfies the input filter specification is also created if a @a
- * viewName is passed in as part of the request.
+ * Calculates which records from a table have values in the given list
+ * for the corresponding column. The operation is synchronous, meaning that a
+ * response will not be returned until all the objects are fully available. The
+ * response payload provides the count of the resulting set. A new resultant
+ * set
+ * (view) which satisfies the input filter specification is also created if a
+ * @a viewName is passed in as part of the request.
  * <p>
  * For example, if a type definition has the columns 'x' and 'y', then a filter
- * by list query with the column map {"x":["10.1", "2.3"], "y":["0.0", "-31.5",
- * "42.0"]} will return the count of all data points whose x and y values match
- * both in the respective x- and y-lists, e.g., "x = 10.1 and y = 0.0", "x =
- * 2.3 and y = -31.5", etc. However, a record with "x = 10.1 and y = -31.5" or
- * "x = 2.3 and y = 0.0" would not be returned because the values in the given
- * lists do not correspond.
+ * by
+ * list query with the column map
+ * {"x":["10.1", "2.3"], "y":["0.0", "-31.5", "42.0"]} will return
+ * the count of all data points whose x and y values match both in the
+ * respective
+ * x- and y-lists, e.g., "x = 10.1 and y = 0.0", "x = 2.3 and y = -31.5", etc.
+ * However, a record with "x = 10.1 and y = -31.5" or "x = 2.3 and y = 0.0"
+ * would not be returned because the values in the given lists do not
+ * correspond.
  * 
- * @param tableName  Name of the table to filter.  This may be the name of a
- *                   collection, a table, or a view (when chaining queries).
- *                   If filtering a collection, all child tables where the
- *                   filter expression is valid will be filtered; the filtered
- *                   result tables will then be placed in a collection
- *                   specified by @a viewName.
+ * @param tableName  Name of the table to filter, in [schema_name.]table_name
+ *                   format, using standard <a
+ *                   href="../../concepts/tables.html#table-name-resolution"
+ *                   target="_top">name resolution rules</a>.  This may be the
+ *                   name of a table or a view (when chaining queries).
  * @param viewName  If provided, then this will be the name of the view
- *                  containing the results. Has the same naming restrictions as
- *                  <a href="../../concepts/tables.html"
- *                  target="_top">tables</a>.
+ *                  containing the results, in [schema_name.]view_name format,
+ *                  using standard <a
+ *                  href="../../concepts/tables.html#table-name-resolution"
+ *                  target="_top">name resolution rules</a> and meeting <a
+ *                  href="../../concepts/tables.html#table-naming-criteria"
+ *                  target="_top">table naming criteria</a>.  Must not be an
+ *                  already existing table or view.
  * @param columnValuesMap  List of values for the corresponding column in the
  *                         table
  * @param options  Optional parameters.
  *                 <ul>
- *                         <li> gpudb::filter_by_list_collection_name: Name of
- *                 a collection which is to contain the newly created view. If
- *                 the collection provided is non-existent, the collection will
- *                 be automatically created. If empty, then the newly created
- *                 view will be top-level.
+ *                         <li> gpudb::filter_by_list_collection_name:
+ *                 [DEPRECATED--please specify the containing schema for the
+ *                 view as part of @a viewName and use /create/schema to create
+ *                 the schema if non-existent]  Name of a schema for the newly
+ *                 created view. If the schema provided is non-existent, it
+ *                 will be automatically created.
  *                         <li> gpudb::filter_by_list_filter_mode: String
  *                 indicating the filter mode, either 'in_list' or
  *                 'not_in_list'.
@@ -12035,17 +14997,21 @@ FilterByListResponse& filterByList( const std::string& tableName,
                                     FilterByListResponse& response_ ) const;
 
 /**
- * Calculates which objects from a table lie within a circle with the given
- * radius and center point (i.e. circular NAI). The operation is synchronous,
+ * Calculates which objects from a table lie within a circle with the
+ * given radius and center point (i.e. circular NAI). The operation is
+ * synchronous,
  * meaning that a response will not be returned until all the objects are fully
  * available. The response payload provides the count of the resulting set. A
- * new resultant set (view) which satisfies the input circular NAI restriction
- * specification is also created if a @a viewName is passed in as part of the
- * request.
+ * new
+ * resultant set (view) which satisfies the input circular NAI restriction
+ * specification is also created if a @a viewName is passed in as part of
+ * the request.
  * <p>
  * For track data, all track points that lie within the circle plus one point
- * on either side of the circle (if the track goes beyond the circle) will be
- * included in the result.
+ * on
+ * either side of the circle (if the track goes beyond the circle) will be
+ * included
+ * in the result.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -12057,17 +15023,21 @@ FilterByListResponse& filterByList( const std::string& tableName,
 FilterByRadiusResponse filterByRadius( const FilterByRadiusRequest& request_ ) const;
 
 /**
- * Calculates which objects from a table lie within a circle with the given
- * radius and center point (i.e. circular NAI). The operation is synchronous,
+ * Calculates which objects from a table lie within a circle with the
+ * given radius and center point (i.e. circular NAI). The operation is
+ * synchronous,
  * meaning that a response will not be returned until all the objects are fully
  * available. The response payload provides the count of the resulting set. A
- * new resultant set (view) which satisfies the input circular NAI restriction
- * specification is also created if a @a viewName is passed in as part of the
- * request.
+ * new
+ * resultant set (view) which satisfies the input circular NAI restriction
+ * specification is also created if a @a viewName is passed in as part of
+ * the request.
  * <p>
  * For track data, all track points that lie within the circle plus one point
- * on either side of the circle (if the track goes beyond the circle) will be
- * included in the result.
+ * on
+ * either side of the circle (if the track goes beyond the circle) will be
+ * included
+ * in the result.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -12083,24 +15053,36 @@ FilterByRadiusResponse& filterByRadius( const FilterByRadiusRequest& request_,
                                         FilterByRadiusResponse& response_ ) const;
 
 /**
- * Calculates which objects from a table lie within a circle with the given
- * radius and center point (i.e. circular NAI). The operation is synchronous,
+ * Calculates which objects from a table lie within a circle with the
+ * given radius and center point (i.e. circular NAI). The operation is
+ * synchronous,
  * meaning that a response will not be returned until all the objects are fully
  * available. The response payload provides the count of the resulting set. A
- * new resultant set (view) which satisfies the input circular NAI restriction
- * specification is also created if a @a viewName is passed in as part of the
- * request.
+ * new
+ * resultant set (view) which satisfies the input circular NAI restriction
+ * specification is also created if a @a viewName is passed in as part of
+ * the request.
  * <p>
  * For track data, all track points that lie within the circle plus one point
- * on either side of the circle (if the track goes beyond the circle) will be
- * included in the result.
+ * on
+ * either side of the circle (if the track goes beyond the circle) will be
+ * included
+ * in the result.
  * 
  * @param tableName  Name of the table on which the filter by radius operation
- *                   will be performed.  Must be an existing table.
+ *                   will be performed, in [schema_name.]table_name format,
+ *                   using standard <a
+ *                   href="../../concepts/tables.html#table-name-resolution"
+ *                   target="_top">name resolution rules</a>.  Must be an
+ *                   existing table.
  * @param viewName  If provided, then this will be the name of the view
- *                  containing the results. Has the same naming restrictions as
- *                  <a href="../../concepts/tables.html"
- *                  target="_top">tables</a>.
+ *                  containing the results, in [schema_name.]view_name format,
+ *                  using standard <a
+ *                  href="../../concepts/tables.html#table-name-resolution"
+ *                  target="_top">name resolution rules</a> and meeting <a
+ *                  href="../../concepts/tables.html#table-naming-criteria"
+ *                  target="_top">table naming criteria</a>.  Must not be an
+ *                  already existing table or view.
  * @param xColumnName  Name of the column to be used for the x-coordinate (the
  *                     longitude) of the center.
  * @param xCenter  Value of the longitude of the center. Must be within
@@ -12118,11 +15100,12 @@ FilterByRadiusResponse& filterByRadius( const FilterByRadiusRequest& request_,
  *                MAX_INT.
  * @param options  Optional parameters.
  *                 <ul>
- *                         <li> gpudb::filter_by_radius_collection_name: Name
- *                 of a collection which is to contain the newly created view.
- *                 If the collection provided is non-existent, the collection
- *                 will be automatically created. If empty, then the newly
- *                 created view will be top-level.
+ *                         <li> gpudb::filter_by_radius_collection_name:
+ *                 [DEPRECATED--please specify the containing schema for the
+ *                 view as part of @a viewName and use /create/schema to create
+ *                 the schema if non-existent]  Name of a schema which is to
+ *                 contain the newly created view. If the schema is
+ *                 non-existent, it will be automatically created.
  *                 </ul>
  * 
  * @return Response object containing the result of the operation.
@@ -12139,24 +15122,36 @@ FilterByRadiusResponse filterByRadius( const std::string& tableName,
                                        const std::map<std::string, std::string>& options ) const;
 
 /**
- * Calculates which objects from a table lie within a circle with the given
- * radius and center point (i.e. circular NAI). The operation is synchronous,
+ * Calculates which objects from a table lie within a circle with the
+ * given radius and center point (i.e. circular NAI). The operation is
+ * synchronous,
  * meaning that a response will not be returned until all the objects are fully
  * available. The response payload provides the count of the resulting set. A
- * new resultant set (view) which satisfies the input circular NAI restriction
- * specification is also created if a @a viewName is passed in as part of the
- * request.
+ * new
+ * resultant set (view) which satisfies the input circular NAI restriction
+ * specification is also created if a @a viewName is passed in as part of
+ * the request.
  * <p>
  * For track data, all track points that lie within the circle plus one point
- * on either side of the circle (if the track goes beyond the circle) will be
- * included in the result.
+ * on
+ * either side of the circle (if the track goes beyond the circle) will be
+ * included
+ * in the result.
  * 
  * @param tableName  Name of the table on which the filter by radius operation
- *                   will be performed.  Must be an existing table.
+ *                   will be performed, in [schema_name.]table_name format,
+ *                   using standard <a
+ *                   href="../../concepts/tables.html#table-name-resolution"
+ *                   target="_top">name resolution rules</a>.  Must be an
+ *                   existing table.
  * @param viewName  If provided, then this will be the name of the view
- *                  containing the results. Has the same naming restrictions as
- *                  <a href="../../concepts/tables.html"
- *                  target="_top">tables</a>.
+ *                  containing the results, in [schema_name.]view_name format,
+ *                  using standard <a
+ *                  href="../../concepts/tables.html#table-name-resolution"
+ *                  target="_top">name resolution rules</a> and meeting <a
+ *                  href="../../concepts/tables.html#table-naming-criteria"
+ *                  target="_top">table naming criteria</a>.  Must not be an
+ *                  already existing table or view.
  * @param xColumnName  Name of the column to be used for the x-coordinate (the
  *                     longitude) of the center.
  * @param xCenter  Value of the longitude of the center. Must be within
@@ -12174,11 +15169,12 @@ FilterByRadiusResponse filterByRadius( const std::string& tableName,
  *                MAX_INT.
  * @param options  Optional parameters.
  *                 <ul>
- *                         <li> gpudb::filter_by_radius_collection_name: Name
- *                 of a collection which is to contain the newly created view.
- *                 If the collection provided is non-existent, the collection
- *                 will be automatically created. If empty, then the newly
- *                 created view will be top-level.
+ *                         <li> gpudb::filter_by_radius_collection_name:
+ *                 [DEPRECATED--please specify the containing schema for the
+ *                 view as part of @a viewName and use /create/schema to create
+ *                 the schema if non-existent]  Name of a schema which is to
+ *                 contain the newly created view. If the schema is
+ *                 non-existent, it will be automatically created.
  *                 </ul>
  * @param[out] response_  Response object containing the results of the
  *                        operation.
@@ -12199,12 +15195,15 @@ FilterByRadiusResponse& filterByRadius( const std::string& tableName,
                                         FilterByRadiusResponse& response_ ) const;
 
 /**
- * Calculates which geospatial geometry objects from a table intersect a circle
- * with the given radius and center point (i.e. circular NAI). The operation is
- * synchronous, meaning that a response will not be returned until all the
- * objects are fully available. The response payload provides the count of the
+ * Calculates which geospatial geometry objects from a table intersect
+ * a circle with the given radius and center point (i.e. circular NAI). The
+ * operation is synchronous, meaning that a response will not be returned until
+ * all
+ * the objects are fully available. The response payload provides the count of
+ * the
  * resulting set. A new resultant set (view) which satisfies the input circular
- * NAI restriction specification is also created if a @a viewName is passed in
+ * NAI
+ * restriction specification is also created if a @a viewName is passed in
  * as part of the request.
  * 
  * @param[in] request_  Request object containing the parameters for the
@@ -12217,12 +15216,15 @@ FilterByRadiusResponse& filterByRadius( const std::string& tableName,
 FilterByRadiusGeometryResponse filterByRadiusGeometry( const FilterByRadiusGeometryRequest& request_ ) const;
 
 /**
- * Calculates which geospatial geometry objects from a table intersect a circle
- * with the given radius and center point (i.e. circular NAI). The operation is
- * synchronous, meaning that a response will not be returned until all the
- * objects are fully available. The response payload provides the count of the
+ * Calculates which geospatial geometry objects from a table intersect
+ * a circle with the given radius and center point (i.e. circular NAI). The
+ * operation is synchronous, meaning that a response will not be returned until
+ * all
+ * the objects are fully available. The response payload provides the count of
+ * the
  * resulting set. A new resultant set (view) which satisfies the input circular
- * NAI restriction specification is also created if a @a viewName is passed in
+ * NAI
+ * restriction specification is also created if a @a viewName is passed in
  * as part of the request.
  * 
  * @param[in] request_  Request object containing the parameters for the
@@ -12239,19 +15241,31 @@ FilterByRadiusGeometryResponse& filterByRadiusGeometry( const FilterByRadiusGeom
                                                         FilterByRadiusGeometryResponse& response_ ) const;
 
 /**
- * Calculates which geospatial geometry objects from a table intersect a circle
- * with the given radius and center point (i.e. circular NAI). The operation is
- * synchronous, meaning that a response will not be returned until all the
- * objects are fully available. The response payload provides the count of the
+ * Calculates which geospatial geometry objects from a table intersect
+ * a circle with the given radius and center point (i.e. circular NAI). The
+ * operation is synchronous, meaning that a response will not be returned until
+ * all
+ * the objects are fully available. The response payload provides the count of
+ * the
  * resulting set. A new resultant set (view) which satisfies the input circular
- * NAI restriction specification is also created if a @a viewName is passed in
+ * NAI
+ * restriction specification is also created if a @a viewName is passed in
  * as part of the request.
  * 
  * @param tableName  Name of the table on which the filter by radius operation
- *                   will be performed.  Must be an existing table.
+ *                   will be performed, in [schema_name.]table_name format,
+ *                   using standard <a
+ *                   href="../../concepts/tables.html#table-name-resolution"
+ *                   target="_top">name resolution rules</a>.  Must be an
+ *                   existing table.
  * @param viewName  If provided, then this will be the name of the view
- *                  containing the results. Must not be an already existing
- *                  collection, table or view.
+ *                  containing the results, in [schema_name.]view_name format,
+ *                  using standard <a
+ *                  href="../../concepts/tables.html#table-name-resolution"
+ *                  target="_top">name resolution rules</a> and meeting <a
+ *                  href="../../concepts/tables.html#table-naming-criteria"
+ *                  target="_top">table naming criteria</a>.  Must not be an
+ *                  already existing table or view.
  * @param columnName  Name of the geospatial geometry column to be filtered.
  * @param xCenter  Value of the longitude of the center. Must be within
  *                 [-180.0, 180.0].  The minimum allowed value is -180. The
@@ -12267,11 +15281,12 @@ FilterByRadiusGeometryResponse& filterByRadiusGeometry( const FilterByRadiusGeom
  * @param options  Optional parameters.
  *                 <ul>
  *                         <li>
- *                 gpudb::filter_by_radius_geometry_collection_name: Name of a
- *                 collection which is to contain the newly created view. If
- *                 the collection provided is non-existent, the collection will
- *                 be automatically created. If empty, then the newly created
- *                 view will be top-level.
+ *                 gpudb::filter_by_radius_geometry_collection_name:
+ *                 [DEPRECATED--please specify the containing schema for the
+ *                 view as part of @a viewName and use /create/schema to create
+ *                 the schema if non-existent]  Name of a schema for the newly
+ *                 created view. If the schema provided is non-existent, it
+ *                 will be automatically created.
  *                 </ul>
  * 
  * @return Response object containing the result of the operation.
@@ -12287,19 +15302,31 @@ FilterByRadiusGeometryResponse filterByRadiusGeometry( const std::string& tableN
                                                        const std::map<std::string, std::string>& options ) const;
 
 /**
- * Calculates which geospatial geometry objects from a table intersect a circle
- * with the given radius and center point (i.e. circular NAI). The operation is
- * synchronous, meaning that a response will not be returned until all the
- * objects are fully available. The response payload provides the count of the
+ * Calculates which geospatial geometry objects from a table intersect
+ * a circle with the given radius and center point (i.e. circular NAI). The
+ * operation is synchronous, meaning that a response will not be returned until
+ * all
+ * the objects are fully available. The response payload provides the count of
+ * the
  * resulting set. A new resultant set (view) which satisfies the input circular
- * NAI restriction specification is also created if a @a viewName is passed in
+ * NAI
+ * restriction specification is also created if a @a viewName is passed in
  * as part of the request.
  * 
  * @param tableName  Name of the table on which the filter by radius operation
- *                   will be performed.  Must be an existing table.
+ *                   will be performed, in [schema_name.]table_name format,
+ *                   using standard <a
+ *                   href="../../concepts/tables.html#table-name-resolution"
+ *                   target="_top">name resolution rules</a>.  Must be an
+ *                   existing table.
  * @param viewName  If provided, then this will be the name of the view
- *                  containing the results. Must not be an already existing
- *                  collection, table or view.
+ *                  containing the results, in [schema_name.]view_name format,
+ *                  using standard <a
+ *                  href="../../concepts/tables.html#table-name-resolution"
+ *                  target="_top">name resolution rules</a> and meeting <a
+ *                  href="../../concepts/tables.html#table-naming-criteria"
+ *                  target="_top">table naming criteria</a>.  Must not be an
+ *                  already existing table or view.
  * @param columnName  Name of the geospatial geometry column to be filtered.
  * @param xCenter  Value of the longitude of the center. Must be within
  *                 [-180.0, 180.0].  The minimum allowed value is -180. The
@@ -12315,11 +15342,12 @@ FilterByRadiusGeometryResponse filterByRadiusGeometry( const std::string& tableN
  * @param options  Optional parameters.
  *                 <ul>
  *                         <li>
- *                 gpudb::filter_by_radius_geometry_collection_name: Name of a
- *                 collection which is to contain the newly created view. If
- *                 the collection provided is non-existent, the collection will
- *                 be automatically created. If empty, then the newly created
- *                 view will be top-level.
+ *                 gpudb::filter_by_radius_geometry_collection_name:
+ *                 [DEPRECATED--please specify the containing schema for the
+ *                 view as part of @a viewName and use /create/schema to create
+ *                 the schema if non-existent]  Name of a schema for the newly
+ *                 created view. If the schema provided is non-existent, it
+ *                 will be automatically created.
  *                 </ul>
  * @param[out] response_  Response object containing the results of the
  *                        operation.
@@ -12339,13 +15367,15 @@ FilterByRadiusGeometryResponse& filterByRadiusGeometry( const std::string& table
                                                         FilterByRadiusGeometryResponse& response_ ) const;
 
 /**
- * Calculates which objects from a table have a column that is within the given
- * bounds. An object from the table identified by @a tableName is added to the
- * view @a viewName if its column is within [@a lowerBound, @a upperBound]
- * (inclusive). The operation is synchronous. The response provides a count of
- * the number of objects which passed the bound filter.  Although this
- * functionality can also be accomplished with the standard filter function, it
- * is more efficient.
+ * Calculates which objects from a table have a column that is within
+ * the given bounds. An object from the table identified by @a tableName is
+ * added to the view @a viewName if its column is within
+ * [@a lowerBound, @a upperBound] (inclusive). The operation is
+ * synchronous. The response provides a count of the number of objects which
+ * passed
+ * the bound filter.  Although this functionality can also be accomplished with
+ * the
+ * standard filter function, it is more efficient.
  * <p>
  * For track objects, the count reflects how many points fall within the given
  * bounds (which may not include all the track points of any given track).
@@ -12360,13 +15390,15 @@ FilterByRadiusGeometryResponse& filterByRadiusGeometry( const std::string& table
 FilterByRangeResponse filterByRange( const FilterByRangeRequest& request_ ) const;
 
 /**
- * Calculates which objects from a table have a column that is within the given
- * bounds. An object from the table identified by @a tableName is added to the
- * view @a viewName if its column is within [@a lowerBound, @a upperBound]
- * (inclusive). The operation is synchronous. The response provides a count of
- * the number of objects which passed the bound filter.  Although this
- * functionality can also be accomplished with the standard filter function, it
- * is more efficient.
+ * Calculates which objects from a table have a column that is within
+ * the given bounds. An object from the table identified by @a tableName is
+ * added to the view @a viewName if its column is within
+ * [@a lowerBound, @a upperBound] (inclusive). The operation is
+ * synchronous. The response provides a count of the number of objects which
+ * passed
+ * the bound filter.  Although this functionality can also be accomplished with
+ * the
+ * standard filter function, it is more efficient.
  * <p>
  * For track objects, the count reflects how many points fall within the given
  * bounds (which may not include all the track points of any given track).
@@ -12385,33 +15417,44 @@ FilterByRangeResponse& filterByRange( const FilterByRangeRequest& request_,
                                       FilterByRangeResponse& response_ ) const;
 
 /**
- * Calculates which objects from a table have a column that is within the given
- * bounds. An object from the table identified by @a tableName is added to the
- * view @a viewName if its column is within [@a lowerBound, @a upperBound]
- * (inclusive). The operation is synchronous. The response provides a count of
- * the number of objects which passed the bound filter.  Although this
- * functionality can also be accomplished with the standard filter function, it
- * is more efficient.
+ * Calculates which objects from a table have a column that is within
+ * the given bounds. An object from the table identified by @a tableName is
+ * added to the view @a viewName if its column is within
+ * [@a lowerBound, @a upperBound] (inclusive). The operation is
+ * synchronous. The response provides a count of the number of objects which
+ * passed
+ * the bound filter.  Although this functionality can also be accomplished with
+ * the
+ * standard filter function, it is more efficient.
  * <p>
  * For track objects, the count reflects how many points fall within the given
  * bounds (which may not include all the track points of any given track).
  * 
  * @param tableName  Name of the table on which the filter by range operation
- *                   will be performed.  Must be an existing table.
+ *                   will be performed, in [schema_name.]table_name format,
+ *                   using standard <a
+ *                   href="../../concepts/tables.html#table-name-resolution"
+ *                   target="_top">name resolution rules</a>.  Must be an
+ *                   existing table.
  * @param viewName  If provided, then this will be the name of the view
- *                  containing the results. Has the same naming restrictions as
- *                  <a href="../../concepts/tables.html"
- *                  target="_top">tables</a>.
+ *                  containing the results, in [schema_name.]view_name format,
+ *                  using standard <a
+ *                  href="../../concepts/tables.html#table-name-resolution"
+ *                  target="_top">name resolution rules</a> and meeting <a
+ *                  href="../../concepts/tables.html#table-naming-criteria"
+ *                  target="_top">table naming criteria</a>.  Must not be an
+ *                  already existing table or view.
  * @param columnName  Name of a column on which the operation would be applied.
  * @param lowerBound  Value of the lower bound (inclusive).
  * @param upperBound  Value of the upper bound (inclusive).
  * @param options  Optional parameters.
  *                 <ul>
- *                         <li> gpudb::filter_by_range_collection_name: Name of
- *                 a collection which is to contain the newly created view. If
- *                 the collection provided is non-existent, the collection will
- *                 be automatically created. If empty, then the newly created
- *                 view will be top-level.
+ *                         <li> gpudb::filter_by_range_collection_name:
+ *                 [DEPRECATED--please specify the containing schema for the
+ *                 view as part of @a viewName and use /create/schema to create
+ *                 the schema if non-existent]  Name of a schema for the newly
+ *                 created view. If the schema is non-existent, it will be
+ *                 automatically created.
  *                 </ul>
  * 
  * @return Response object containing the result of the operation.
@@ -12426,33 +15469,44 @@ FilterByRangeResponse filterByRange( const std::string& tableName,
                                      const std::map<std::string, std::string>& options ) const;
 
 /**
- * Calculates which objects from a table have a column that is within the given
- * bounds. An object from the table identified by @a tableName is added to the
- * view @a viewName if its column is within [@a lowerBound, @a upperBound]
- * (inclusive). The operation is synchronous. The response provides a count of
- * the number of objects which passed the bound filter.  Although this
- * functionality can also be accomplished with the standard filter function, it
- * is more efficient.
+ * Calculates which objects from a table have a column that is within
+ * the given bounds. An object from the table identified by @a tableName is
+ * added to the view @a viewName if its column is within
+ * [@a lowerBound, @a upperBound] (inclusive). The operation is
+ * synchronous. The response provides a count of the number of objects which
+ * passed
+ * the bound filter.  Although this functionality can also be accomplished with
+ * the
+ * standard filter function, it is more efficient.
  * <p>
  * For track objects, the count reflects how many points fall within the given
  * bounds (which may not include all the track points of any given track).
  * 
  * @param tableName  Name of the table on which the filter by range operation
- *                   will be performed.  Must be an existing table.
+ *                   will be performed, in [schema_name.]table_name format,
+ *                   using standard <a
+ *                   href="../../concepts/tables.html#table-name-resolution"
+ *                   target="_top">name resolution rules</a>.  Must be an
+ *                   existing table.
  * @param viewName  If provided, then this will be the name of the view
- *                  containing the results. Has the same naming restrictions as
- *                  <a href="../../concepts/tables.html"
- *                  target="_top">tables</a>.
+ *                  containing the results, in [schema_name.]view_name format,
+ *                  using standard <a
+ *                  href="../../concepts/tables.html#table-name-resolution"
+ *                  target="_top">name resolution rules</a> and meeting <a
+ *                  href="../../concepts/tables.html#table-naming-criteria"
+ *                  target="_top">table naming criteria</a>.  Must not be an
+ *                  already existing table or view.
  * @param columnName  Name of a column on which the operation would be applied.
  * @param lowerBound  Value of the lower bound (inclusive).
  * @param upperBound  Value of the upper bound (inclusive).
  * @param options  Optional parameters.
  *                 <ul>
- *                         <li> gpudb::filter_by_range_collection_name: Name of
- *                 a collection which is to contain the newly created view. If
- *                 the collection provided is non-existent, the collection will
- *                 be automatically created. If empty, then the newly created
- *                 view will be top-level.
+ *                         <li> gpudb::filter_by_range_collection_name:
+ *                 [DEPRECATED--please specify the containing schema for the
+ *                 view as part of @a viewName and use /create/schema to create
+ *                 the schema if non-existent]  Name of a schema for the newly
+ *                 created view. If the schema is non-existent, it will be
+ *                 automatically created.
  *                 </ul>
  * @param[out] response_  Response object containing the results of the
  *                        operation.
@@ -12471,17 +15525,22 @@ FilterByRangeResponse& filterByRange( const std::string& tableName,
                                       FilterByRangeResponse& response_ ) const;
 
 /**
- * Filters objects matching all points of the given track (works only on track
- * type data).  It allows users to specify a particular track to find all other
- * points in the table that fall within specified ranges-spatial and
- * temporal-of all points of the given track. Additionally, the user can
- * specify another track to see if the two intersect (or go close to each other
- * within the specified ranges). The user also has the flexibility of using
- * different metrics for the spatial distance calculation: Euclidean (flat
- * geometry) or Great Circle (spherical geometry to approximate the Earth's
- * surface distances). The filtered points are stored in a newly created result
- * set. The return value of the function is the number of points in the
- * resultant set (view).
+ * Filters objects matching all points of the given track (works only
+ * on track type data).  It allows users to specify a particular track to find
+ * all
+ * other points in the table that fall within specified ranges (spatial and
+ * temporal) of all points of the given track. Additionally, the user can
+ * specify
+ * another track to see if the two intersect (or go close to each other within
+ * the
+ * specified ranges). The user also has the flexibility of using different
+ * metrics
+ * for the spatial distance calculation: Euclidean (flat geometry) or Great
+ * Circle
+ * (spherical geometry to approximate the Earth's surface distances). The
+ * filtered
+ * points are stored in a newly created result set. The return value of the
+ * function is the number of points in the resultant set (view).
  * <p>
  * This operation is synchronous, meaning that a response will not be returned
  * until all the objects are fully available.
@@ -12496,17 +15555,22 @@ FilterByRangeResponse& filterByRange( const std::string& tableName,
 FilterBySeriesResponse filterBySeries( const FilterBySeriesRequest& request_ ) const;
 
 /**
- * Filters objects matching all points of the given track (works only on track
- * type data).  It allows users to specify a particular track to find all other
- * points in the table that fall within specified ranges-spatial and
- * temporal-of all points of the given track. Additionally, the user can
- * specify another track to see if the two intersect (or go close to each other
- * within the specified ranges). The user also has the flexibility of using
- * different metrics for the spatial distance calculation: Euclidean (flat
- * geometry) or Great Circle (spherical geometry to approximate the Earth's
- * surface distances). The filtered points are stored in a newly created result
- * set. The return value of the function is the number of points in the
- * resultant set (view).
+ * Filters objects matching all points of the given track (works only
+ * on track type data).  It allows users to specify a particular track to find
+ * all
+ * other points in the table that fall within specified ranges (spatial and
+ * temporal) of all points of the given track. Additionally, the user can
+ * specify
+ * another track to see if the two intersect (or go close to each other within
+ * the
+ * specified ranges). The user also has the flexibility of using different
+ * metrics
+ * for the spatial distance calculation: Euclidean (flat geometry) or Great
+ * Circle
+ * (spherical geometry to approximate the Earth's surface distances). The
+ * filtered
+ * points are stored in a newly created result set. The return value of the
+ * function is the number of points in the resultant set (view).
  * <p>
  * This operation is synchronous, meaning that a response will not be returned
  * until all the objects are fully available.
@@ -12525,29 +15589,42 @@ FilterBySeriesResponse& filterBySeries( const FilterBySeriesRequest& request_,
                                         FilterBySeriesResponse& response_ ) const;
 
 /**
- * Filters objects matching all points of the given track (works only on track
- * type data).  It allows users to specify a particular track to find all other
- * points in the table that fall within specified ranges-spatial and
- * temporal-of all points of the given track. Additionally, the user can
- * specify another track to see if the two intersect (or go close to each other
- * within the specified ranges). The user also has the flexibility of using
- * different metrics for the spatial distance calculation: Euclidean (flat
- * geometry) or Great Circle (spherical geometry to approximate the Earth's
- * surface distances). The filtered points are stored in a newly created result
- * set. The return value of the function is the number of points in the
- * resultant set (view).
+ * Filters objects matching all points of the given track (works only
+ * on track type data).  It allows users to specify a particular track to find
+ * all
+ * other points in the table that fall within specified ranges (spatial and
+ * temporal) of all points of the given track. Additionally, the user can
+ * specify
+ * another track to see if the two intersect (or go close to each other within
+ * the
+ * specified ranges). The user also has the flexibility of using different
+ * metrics
+ * for the spatial distance calculation: Euclidean (flat geometry) or Great
+ * Circle
+ * (spherical geometry to approximate the Earth's surface distances). The
+ * filtered
+ * points are stored in a newly created result set. The return value of the
+ * function is the number of points in the resultant set (view).
  * <p>
  * This operation is synchronous, meaning that a response will not be returned
  * until all the objects are fully available.
  * 
  * @param tableName  Name of the table on which the filter by track operation
- *                   will be performed. Must be a currently existing table with
- *                   a <a href="../../geospatial/geo_objects.html"
+ *                   will be performed, in [schema_name.]table_name format,
+ *                   using standard <a
+ *                   href="../../concepts/tables.html#table-name-resolution"
+ *                   target="_top">name resolution rules</a>. Must be a
+ *                   currently existing table with a <a
+ *                   href="../../geospatial/geo_objects.html"
  *                   target="_top">track</a> present.
  * @param viewName  If provided, then this will be the name of the view
- *                  containing the results. Has the same naming restrictions as
- *                  <a href="../../concepts/tables.html"
- *                  target="_top">tables</a>.
+ *                  containing the results, in [schema_name.]view_name format,
+ *                  using standard <a
+ *                  href="../../concepts/tables.html#table-name-resolution"
+ *                  target="_top">name resolution rules</a> and meeting <a
+ *                  href="../../concepts/tables.html#table-naming-criteria"
+ *                  target="_top">table naming criteria</a>.  Must not be an
+ *                  already existing table or view.
  * @param trackId  The ID of the track which will act as the filtering points.
  *                 Must be an existing track within the given table.
  * @param targetTrackIds  Up to one track ID to intersect with the "filter"
@@ -12555,11 +15632,12 @@ FilterBySeriesResponse& filterBySeries( const FilterBySeriesRequest& request_,
  *                        within the given set.
  * @param options  Optional parameters.
  *                 <ul>
- *                         <li> gpudb::filter_by_series_collection_name: Name
- *                 of a collection which is to contain the newly created view.
- *                 If the collection provided is non-existent, the collection
- *                 will be automatically created. If empty, then the newly
- *                 created view will be top-level.
+ *                         <li> gpudb::filter_by_series_collection_name:
+ *                 [DEPRECATED--please specify the containing schema for the
+ *                 view as part of @a viewName and use /create/schema to create
+ *                 the schema if non-existent]  Name of a schema for the newly
+ *                 created view. If the schema is non-existent, it will be
+ *                 automatically created.
  *                         <li> gpudb::filter_by_series_spatial_radius: A
  *                 positive number passed as a string representing the radius
  *                 of the search area centered around each track point's
@@ -12592,29 +15670,42 @@ FilterBySeriesResponse filterBySeries( const std::string& tableName,
                                        const std::map<std::string, std::string>& options ) const;
 
 /**
- * Filters objects matching all points of the given track (works only on track
- * type data).  It allows users to specify a particular track to find all other
- * points in the table that fall within specified ranges-spatial and
- * temporal-of all points of the given track. Additionally, the user can
- * specify another track to see if the two intersect (or go close to each other
- * within the specified ranges). The user also has the flexibility of using
- * different metrics for the spatial distance calculation: Euclidean (flat
- * geometry) or Great Circle (spherical geometry to approximate the Earth's
- * surface distances). The filtered points are stored in a newly created result
- * set. The return value of the function is the number of points in the
- * resultant set (view).
+ * Filters objects matching all points of the given track (works only
+ * on track type data).  It allows users to specify a particular track to find
+ * all
+ * other points in the table that fall within specified ranges (spatial and
+ * temporal) of all points of the given track. Additionally, the user can
+ * specify
+ * another track to see if the two intersect (or go close to each other within
+ * the
+ * specified ranges). The user also has the flexibility of using different
+ * metrics
+ * for the spatial distance calculation: Euclidean (flat geometry) or Great
+ * Circle
+ * (spherical geometry to approximate the Earth's surface distances). The
+ * filtered
+ * points are stored in a newly created result set. The return value of the
+ * function is the number of points in the resultant set (view).
  * <p>
  * This operation is synchronous, meaning that a response will not be returned
  * until all the objects are fully available.
  * 
  * @param tableName  Name of the table on which the filter by track operation
- *                   will be performed. Must be a currently existing table with
- *                   a <a href="../../geospatial/geo_objects.html"
+ *                   will be performed, in [schema_name.]table_name format,
+ *                   using standard <a
+ *                   href="../../concepts/tables.html#table-name-resolution"
+ *                   target="_top">name resolution rules</a>. Must be a
+ *                   currently existing table with a <a
+ *                   href="../../geospatial/geo_objects.html"
  *                   target="_top">track</a> present.
  * @param viewName  If provided, then this will be the name of the view
- *                  containing the results. Has the same naming restrictions as
- *                  <a href="../../concepts/tables.html"
- *                  target="_top">tables</a>.
+ *                  containing the results, in [schema_name.]view_name format,
+ *                  using standard <a
+ *                  href="../../concepts/tables.html#table-name-resolution"
+ *                  target="_top">name resolution rules</a> and meeting <a
+ *                  href="../../concepts/tables.html#table-naming-criteria"
+ *                  target="_top">table naming criteria</a>.  Must not be an
+ *                  already existing table or view.
  * @param trackId  The ID of the track which will act as the filtering points.
  *                 Must be an existing track within the given table.
  * @param targetTrackIds  Up to one track ID to intersect with the "filter"
@@ -12622,11 +15713,12 @@ FilterBySeriesResponse filterBySeries( const std::string& tableName,
  *                        within the given set.
  * @param options  Optional parameters.
  *                 <ul>
- *                         <li> gpudb::filter_by_series_collection_name: Name
- *                 of a collection which is to contain the newly created view.
- *                 If the collection provided is non-existent, the collection
- *                 will be automatically created. If empty, then the newly
- *                 created view will be top-level.
+ *                         <li> gpudb::filter_by_series_collection_name:
+ *                 [DEPRECATED--please specify the containing schema for the
+ *                 view as part of @a viewName and use /create/schema to create
+ *                 the schema if non-existent]  Name of a schema for the newly
+ *                 created view. If the schema is non-existent, it will be
+ *                 automatically created.
  *                         <li> gpudb::filter_by_series_spatial_radius: A
  *                 positive number passed as a string representing the radius
  *                 of the search area centered around each track point's
@@ -12663,11 +15755,13 @@ FilterBySeriesResponse& filterBySeries( const std::string& tableName,
                                         FilterBySeriesResponse& response_ ) const;
 
 /**
- * Calculates which objects from a table, collection, or view match a string
- * expression for the given string columns. The options 'case_sensitive' can be
- * used to modify the behavior for all modes except 'search'. For 'search' mode
- * details and limitations, see <a href="../../concepts/full_text_search.html"
- * target="_top">Full Text Search</a>.
+ * Calculates which objects from a table or view match a string
+ * expression for the given string columns. Setting
+ * @a case_sensitive can modify case sensitivity in matching
+ * for all modes except @a search. For
+ * @a search mode details and limitations, see
+ * <a href="../../concepts/full_text_search.html" target="_top">Full Text
+ * Search</a>.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -12679,11 +15773,13 @@ FilterBySeriesResponse& filterBySeries( const std::string& tableName,
 FilterByStringResponse filterByString( const FilterByStringRequest& request_ ) const;
 
 /**
- * Calculates which objects from a table, collection, or view match a string
- * expression for the given string columns. The options 'case_sensitive' can be
- * used to modify the behavior for all modes except 'search'. For 'search' mode
- * details and limitations, see <a href="../../concepts/full_text_search.html"
- * target="_top">Full Text Search</a>.
+ * Calculates which objects from a table or view match a string
+ * expression for the given string columns. Setting
+ * @a case_sensitive can modify case sensitivity in matching
+ * for all modes except @a search. For
+ * @a search mode details and limitations, see
+ * <a href="../../concepts/full_text_search.html" target="_top">Full Text
+ * Search</a>.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -12699,18 +15795,28 @@ FilterByStringResponse& filterByString( const FilterByStringRequest& request_,
                                         FilterByStringResponse& response_ ) const;
 
 /**
- * Calculates which objects from a table, collection, or view match a string
- * expression for the given string columns. The options 'case_sensitive' can be
- * used to modify the behavior for all modes except 'search'. For 'search' mode
- * details and limitations, see <a href="../../concepts/full_text_search.html"
- * target="_top">Full Text Search</a>.
+ * Calculates which objects from a table or view match a string
+ * expression for the given string columns. Setting
+ * @a case_sensitive can modify case sensitivity in matching
+ * for all modes except @a search. For
+ * @a search mode details and limitations, see
+ * <a href="../../concepts/full_text_search.html" target="_top">Full Text
+ * Search</a>.
  * 
  * @param tableName  Name of the table on which the filter operation will be
- *                   performed.  Must be an existing table, collection or view.
+ *                   performed, in [schema_name.]table_name format, using
+ *                   standard <a
+ *                   href="../../concepts/tables.html#table-name-resolution"
+ *                   target="_top">name resolution rules</a>.  Must be an
+ *                   existing table or view.
  * @param viewName  If provided, then this will be the name of the view
- *                  containing the results. Has the same naming restrictions as
- *                  <a href="../../concepts/tables.html"
- *                  target="_top">tables</a>.
+ *                  containing the results, in [schema_name.]view_name format,
+ *                  using standard <a
+ *                  href="../../concepts/tables.html#table-name-resolution"
+ *                  target="_top">name resolution rules</a> and meeting <a
+ *                  href="../../concepts/tables.html#table-naming-criteria"
+ *                  target="_top">table naming criteria</a>.  Must not be an
+ *                  already existing table or view.
  * @param expression  The expression with which to filter the table.
  * @param mode  The string filtering mode to apply. See below for details.
  *              <ul>
@@ -12735,17 +15841,18 @@ FilterByStringResponse& filterByString( const FilterByStringRequest& request_,
  *              will return 0.
  *              </ul>
  * @param columnNames  List of columns on which to apply the filter. Ignored
- *                     for 'search' mode.
+ *                     for @a search mode.
  * @param options  Optional parameters.
  *                 <ul>
- *                         <li> gpudb::filter_by_string_collection_name: Name
- *                 of a collection which is to contain the newly created view.
- *                 If the collection provided is non-existent, the collection
- *                 will be automatically created. If empty, then the newly
- *                 created view will be top-level.
- *                         <li> gpudb::filter_by_string_case_sensitive: If
- *                 'false' then string filtering will ignore case. Does not
- *                 apply to 'search' mode.
+ *                         <li> gpudb::filter_by_string_collection_name:
+ *                 [DEPRECATED--please specify the containing schema for the
+ *                 view as part of @a viewName and use /create/schema to create
+ *                 the schema if non-existent]  Name of a schema for the newly
+ *                 created view. If the schema is non-existent, it will be
+ *                 automatically created.
+ *                         <li> gpudb::filter_by_string_case_sensitive: If @a
+ *                 false then string filtering will ignore case. Does not apply
+ *                 to @a search mode.
  *                 <ul>
  *                         <li> gpudb::filter_by_string_true
  *                         <li> gpudb::filter_by_string_false
@@ -12765,18 +15872,28 @@ FilterByStringResponse filterByString( const std::string& tableName,
                                        const std::map<std::string, std::string>& options ) const;
 
 /**
- * Calculates which objects from a table, collection, or view match a string
- * expression for the given string columns. The options 'case_sensitive' can be
- * used to modify the behavior for all modes except 'search'. For 'search' mode
- * details and limitations, see <a href="../../concepts/full_text_search.html"
- * target="_top">Full Text Search</a>.
+ * Calculates which objects from a table or view match a string
+ * expression for the given string columns. Setting
+ * @a case_sensitive can modify case sensitivity in matching
+ * for all modes except @a search. For
+ * @a search mode details and limitations, see
+ * <a href="../../concepts/full_text_search.html" target="_top">Full Text
+ * Search</a>.
  * 
  * @param tableName  Name of the table on which the filter operation will be
- *                   performed.  Must be an existing table, collection or view.
+ *                   performed, in [schema_name.]table_name format, using
+ *                   standard <a
+ *                   href="../../concepts/tables.html#table-name-resolution"
+ *                   target="_top">name resolution rules</a>.  Must be an
+ *                   existing table or view.
  * @param viewName  If provided, then this will be the name of the view
- *                  containing the results. Has the same naming restrictions as
- *                  <a href="../../concepts/tables.html"
- *                  target="_top">tables</a>.
+ *                  containing the results, in [schema_name.]view_name format,
+ *                  using standard <a
+ *                  href="../../concepts/tables.html#table-name-resolution"
+ *                  target="_top">name resolution rules</a> and meeting <a
+ *                  href="../../concepts/tables.html#table-naming-criteria"
+ *                  target="_top">table naming criteria</a>.  Must not be an
+ *                  already existing table or view.
  * @param expression  The expression with which to filter the table.
  * @param mode  The string filtering mode to apply. See below for details.
  *              <ul>
@@ -12801,17 +15918,18 @@ FilterByStringResponse filterByString( const std::string& tableName,
  *              will return 0.
  *              </ul>
  * @param columnNames  List of columns on which to apply the filter. Ignored
- *                     for 'search' mode.
+ *                     for @a search mode.
  * @param options  Optional parameters.
  *                 <ul>
- *                         <li> gpudb::filter_by_string_collection_name: Name
- *                 of a collection which is to contain the newly created view.
- *                 If the collection provided is non-existent, the collection
- *                 will be automatically created. If empty, then the newly
- *                 created view will be top-level.
- *                         <li> gpudb::filter_by_string_case_sensitive: If
- *                 'false' then string filtering will ignore case. Does not
- *                 apply to 'search' mode.
+ *                         <li> gpudb::filter_by_string_collection_name:
+ *                 [DEPRECATED--please specify the containing schema for the
+ *                 view as part of @a viewName and use /create/schema to create
+ *                 the schema if non-existent]  Name of a schema for the newly
+ *                 created view. If the schema is non-existent, it will be
+ *                 automatically created.
+ *                         <li> gpudb::filter_by_string_case_sensitive: If @a
+ *                 false then string filtering will ignore case. Does not apply
+ *                 to @a search mode.
  *                 <ul>
  *                         <li> gpudb::filter_by_string_true
  *                         <li> gpudb::filter_by_string_false
@@ -12835,15 +15953,17 @@ FilterByStringResponse& filterByString( const std::string& tableName,
                                         FilterByStringResponse& response_ ) const;
 
 /**
- * Filters objects in one table based on objects in another table. The user
- * must specify matching column types from the two tables (i.e. the target
+ * Filters objects in one table based on objects in another table. The
+ * user must specify matching column types from the two tables (i.e. the target
  * table from which objects will be filtered and the source table based on
- * which the filter will be created); the column names need not be the same. If
- * a @a viewName is specified, then the filtered objects will then be put in a
+ * which
+ * the filter will be created); the column names need not be the same. If a
+ * @a viewName is specified, then the filtered objects will then be put in a
  * newly created view. The operation is synchronous, meaning that a response
- * will not be returned until all objects are fully available in the result
- * view. The return value contains the count (i.e. the size) of the resulting
- * view.
+ * will
+ * not be returned until all objects are fully available in the result view.
+ * The
+ * return value contains the count (i.e. the size) of the resulting view.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -12855,15 +15975,17 @@ FilterByStringResponse& filterByString( const std::string& tableName,
 FilterByTableResponse filterByTable( const FilterByTableRequest& request_ ) const;
 
 /**
- * Filters objects in one table based on objects in another table. The user
- * must specify matching column types from the two tables (i.e. the target
+ * Filters objects in one table based on objects in another table. The
+ * user must specify matching column types from the two tables (i.e. the target
  * table from which objects will be filtered and the source table based on
- * which the filter will be created); the column names need not be the same. If
- * a @a viewName is specified, then the filtered objects will then be put in a
+ * which
+ * the filter will be created); the column names need not be the same. If a
+ * @a viewName is specified, then the filtered objects will then be put in a
  * newly created view. The operation is synchronous, meaning that a response
- * will not be returned until all objects are fully available in the result
- * view. The return value contains the count (i.e. the size) of the resulting
- * view.
+ * will
+ * not be returned until all objects are fully available in the result view.
+ * The
+ * return value contains the count (i.e. the size) of the resulting view.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -12879,26 +16001,38 @@ FilterByTableResponse& filterByTable( const FilterByTableRequest& request_,
                                       FilterByTableResponse& response_ ) const;
 
 /**
- * Filters objects in one table based on objects in another table. The user
- * must specify matching column types from the two tables (i.e. the target
+ * Filters objects in one table based on objects in another table. The
+ * user must specify matching column types from the two tables (i.e. the target
  * table from which objects will be filtered and the source table based on
- * which the filter will be created); the column names need not be the same. If
- * a @a viewName is specified, then the filtered objects will then be put in a
+ * which
+ * the filter will be created); the column names need not be the same. If a
+ * @a viewName is specified, then the filtered objects will then be put in a
  * newly created view. The operation is synchronous, meaning that a response
- * will not be returned until all objects are fully available in the result
- * view. The return value contains the count (i.e. the size) of the resulting
- * view.
+ * will
+ * not be returned until all objects are fully available in the result view.
+ * The
+ * return value contains the count (i.e. the size) of the resulting view.
  * 
- * @param tableName  Name of the table whose data will be filtered. Must be an
+ * @param tableName  Name of the table whose data will be filtered, in
+ *                   [schema_name.]table_name format, using standard <a
+ *                   href="../../concepts/tables.html#table-name-resolution"
+ *                   target="_top">name resolution rules</a>.  Must be an
  *                   existing table.
  * @param viewName  If provided, then this will be the name of the view
- *                  containing the results. Has the same naming restrictions as
- *                  <a href="../../concepts/tables.html"
- *                  target="_top">tables</a>.
+ *                  containing the results, in [schema_name.]view_name format,
+ *                  using standard <a
+ *                  href="../../concepts/tables.html#table-name-resolution"
+ *                  target="_top">name resolution rules</a> and meeting <a
+ *                  href="../../concepts/tables.html#table-naming-criteria"
+ *                  target="_top">table naming criteria</a>.  Must not be an
+ *                  already existing table or view.
  * @param columnName  Name of the column by whose value the data will be
  *                    filtered from the table designated by @a tableName.
  * @param sourceTableName  Name of the table whose data will be compared
- *                         against in the table called @a tableName. Must be an
+ *                         against in the table called @a tableName, in
+ *                         [schema_name.]table_name format, using standard <a
+ *                         href="../../concepts/tables.html#table-name-resolution"
+ *                         target="_top">name resolution rules</a>.  Must be an
  *                         existing table.
  * @param sourceTableColumnName  Name of the column in the @a sourceTableName
  *                               whose values will be used as the filter for
@@ -12908,11 +16042,12 @@ FilterByTableResponse& filterByTable( const FilterByTableRequest& request_,
  *                               columnName.
  * @param options  Optional parameters.
  *                 <ul>
- *                         <li> gpudb::filter_by_table_collection_name: Name of
- *                 a collection which is to contain the newly created view. If
- *                 the collection provided is non-existent, the collection will
- *                 be automatically created. If empty, then the newly created
- *                 view will be top-level.
+ *                         <li> gpudb::filter_by_table_collection_name:
+ *                 [DEPRECATED--please specify the containing schema for the
+ *                 view as part of @a viewName and use /create/schema to create
+ *                 the schema if non-existent]  Name of a schema for the newly
+ *                 created view. If the schema is non-existent, it will be
+ *                 automatically created.
  *                         <li> gpudb::filter_by_table_filter_mode: String
  *                 indicating the filter mode, either @a in_table or @a
  *                 not_in_table.
@@ -12966,26 +16101,38 @@ FilterByTableResponse filterByTable( const std::string& tableName,
                                      const std::map<std::string, std::string>& options ) const;
 
 /**
- * Filters objects in one table based on objects in another table. The user
- * must specify matching column types from the two tables (i.e. the target
+ * Filters objects in one table based on objects in another table. The
+ * user must specify matching column types from the two tables (i.e. the target
  * table from which objects will be filtered and the source table based on
- * which the filter will be created); the column names need not be the same. If
- * a @a viewName is specified, then the filtered objects will then be put in a
+ * which
+ * the filter will be created); the column names need not be the same. If a
+ * @a viewName is specified, then the filtered objects will then be put in a
  * newly created view. The operation is synchronous, meaning that a response
- * will not be returned until all objects are fully available in the result
- * view. The return value contains the count (i.e. the size) of the resulting
- * view.
+ * will
+ * not be returned until all objects are fully available in the result view.
+ * The
+ * return value contains the count (i.e. the size) of the resulting view.
  * 
- * @param tableName  Name of the table whose data will be filtered. Must be an
+ * @param tableName  Name of the table whose data will be filtered, in
+ *                   [schema_name.]table_name format, using standard <a
+ *                   href="../../concepts/tables.html#table-name-resolution"
+ *                   target="_top">name resolution rules</a>.  Must be an
  *                   existing table.
  * @param viewName  If provided, then this will be the name of the view
- *                  containing the results. Has the same naming restrictions as
- *                  <a href="../../concepts/tables.html"
- *                  target="_top">tables</a>.
+ *                  containing the results, in [schema_name.]view_name format,
+ *                  using standard <a
+ *                  href="../../concepts/tables.html#table-name-resolution"
+ *                  target="_top">name resolution rules</a> and meeting <a
+ *                  href="../../concepts/tables.html#table-naming-criteria"
+ *                  target="_top">table naming criteria</a>.  Must not be an
+ *                  already existing table or view.
  * @param columnName  Name of the column by whose value the data will be
  *                    filtered from the table designated by @a tableName.
  * @param sourceTableName  Name of the table whose data will be compared
- *                         against in the table called @a tableName. Must be an
+ *                         against in the table called @a tableName, in
+ *                         [schema_name.]table_name format, using standard <a
+ *                         href="../../concepts/tables.html#table-name-resolution"
+ *                         target="_top">name resolution rules</a>.  Must be an
  *                         existing table.
  * @param sourceTableColumnName  Name of the column in the @a sourceTableName
  *                               whose values will be used as the filter for
@@ -12995,11 +16142,12 @@ FilterByTableResponse filterByTable( const std::string& tableName,
  *                               columnName.
  * @param options  Optional parameters.
  *                 <ul>
- *                         <li> gpudb::filter_by_table_collection_name: Name of
- *                 a collection which is to contain the newly created view. If
- *                 the collection provided is non-existent, the collection will
- *                 be automatically created. If empty, then the newly created
- *                 view will be top-level.
+ *                         <li> gpudb::filter_by_table_collection_name:
+ *                 [DEPRECATED--please specify the containing schema for the
+ *                 view as part of @a viewName and use /create/schema to create
+ *                 the schema if non-existent]  Name of a schema for the newly
+ *                 created view. If the schema is non-existent, it will be
+ *                 automatically created.
  *                         <li> gpudb::filter_by_table_filter_mode: String
  *                 indicating the filter mode, either @a in_table or @a
  *                 not_in_table.
@@ -13059,14 +16207,18 @@ FilterByTableResponse& filterByTable( const std::string& tableName,
 /**
  * Calculates which objects from a table has a particular value for a
  * particular column. The input parameters provide a way to specify either a
- * String or a Double valued column and a desired value for the column on which
- * the filter is performed. The operation is synchronous, meaning that a
- * response will not be returned until all the objects are fully available. The
- * response payload provides the count of the resulting set. A new result view
- * which satisfies the input filter restriction specification is also created
- * with a view name passed in as part of the input payload.  Although this
- * functionality can also be accomplished with the standard filter function, it
- * is more efficient.
+ * String
+ * or a Double valued column and a desired value for the column on which the
+ * filter
+ * is performed. The operation is synchronous, meaning that a response will not
+ * be
+ * returned until all the objects are fully available. The response payload
+ * provides the count of the resulting set. A new result view which satisfies
+ * the
+ * input filter restriction specification is also created with a view name
+ * passed
+ * in as part of the input payload.  Although this functionality can also be
+ * accomplished with the standard filter function, it is more efficient.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -13080,14 +16232,18 @@ FilterByValueResponse filterByValue( const FilterByValueRequest& request_ ) cons
 /**
  * Calculates which objects from a table has a particular value for a
  * particular column. The input parameters provide a way to specify either a
- * String or a Double valued column and a desired value for the column on which
- * the filter is performed. The operation is synchronous, meaning that a
- * response will not be returned until all the objects are fully available. The
- * response payload provides the count of the resulting set. A new result view
- * which satisfies the input filter restriction specification is also created
- * with a view name passed in as part of the input payload.  Although this
- * functionality can also be accomplished with the standard filter function, it
- * is more efficient.
+ * String
+ * or a Double valued column and a desired value for the column on which the
+ * filter
+ * is performed. The operation is synchronous, meaning that a response will not
+ * be
+ * returned until all the objects are fully available. The response payload
+ * provides the count of the resulting set. A new result view which satisfies
+ * the
+ * input filter restriction specification is also created with a view name
+ * passed
+ * in as part of the input payload.  Although this functionality can also be
+ * accomplished with the standard filter function, it is more efficient.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -13105,21 +16261,32 @@ FilterByValueResponse& filterByValue( const FilterByValueRequest& request_,
 /**
  * Calculates which objects from a table has a particular value for a
  * particular column. The input parameters provide a way to specify either a
- * String or a Double valued column and a desired value for the column on which
- * the filter is performed. The operation is synchronous, meaning that a
- * response will not be returned until all the objects are fully available. The
- * response payload provides the count of the resulting set. A new result view
- * which satisfies the input filter restriction specification is also created
- * with a view name passed in as part of the input payload.  Although this
- * functionality can also be accomplished with the standard filter function, it
- * is more efficient.
+ * String
+ * or a Double valued column and a desired value for the column on which the
+ * filter
+ * is performed. The operation is synchronous, meaning that a response will not
+ * be
+ * returned until all the objects are fully available. The response payload
+ * provides the count of the resulting set. A new result view which satisfies
+ * the
+ * input filter restriction specification is also created with a view name
+ * passed
+ * in as part of the input payload.  Although this functionality can also be
+ * accomplished with the standard filter function, it is more efficient.
  * 
  * @param tableName  Name of an existing table on which to perform the
- *                   calculation.
+ *                   calculation, in [schema_name.]table_name format, using
+ *                   standard <a
+ *                   href="../../concepts/tables.html#table-name-resolution"
+ *                   target="_top">name resolution rules</a>.
  * @param viewName  If provided, then this will be the name of the view
- *                  containing the results. Has the same naming restrictions as
- *                  <a href="../../concepts/tables.html"
- *                  target="_top">tables</a>.
+ *                  containing the results, in [schema_name.]view_name format,
+ *                  using standard <a
+ *                  href="../../concepts/tables.html#table-name-resolution"
+ *                  target="_top">name resolution rules</a> and meeting <a
+ *                  href="../../concepts/tables.html#table-naming-criteria"
+ *                  target="_top">table naming criteria</a>.  Must not be an
+ *                  already existing table or view.
  * @param isString  Indicates whether the value being searched for is string or
  *                  numeric.
  * @param value  The value to search for.
@@ -13128,11 +16295,12 @@ FilterByValueResponse& filterByValue( const FilterByValueRequest& request_,
  *                    applied.
  * @param options  Optional parameters.
  *                 <ul>
- *                         <li> gpudb::filter_by_value_collection_name: Name of
- *                 a collection which is to contain the newly created view. If
- *                 the collection provided is non-existent, the collection will
- *                 be automatically created. If empty, then the newly created
- *                 view will be top-level.
+ *                         <li> gpudb::filter_by_value_collection_name:
+ *                 [DEPRECATED--please specify the containing schema for the
+ *                 view as part of @a viewName and use /create/schema to create
+ *                 the schema if non-existent]  Name of a schema for the newly
+ *                 created view. If the schema is non-existent, it will be
+ *                 automatically created.
  *                 </ul>
  * 
  * @return Response object containing the result of the operation.
@@ -13150,21 +16318,32 @@ FilterByValueResponse filterByValue( const std::string& tableName,
 /**
  * Calculates which objects from a table has a particular value for a
  * particular column. The input parameters provide a way to specify either a
- * String or a Double valued column and a desired value for the column on which
- * the filter is performed. The operation is synchronous, meaning that a
- * response will not be returned until all the objects are fully available. The
- * response payload provides the count of the resulting set. A new result view
- * which satisfies the input filter restriction specification is also created
- * with a view name passed in as part of the input payload.  Although this
- * functionality can also be accomplished with the standard filter function, it
- * is more efficient.
+ * String
+ * or a Double valued column and a desired value for the column on which the
+ * filter
+ * is performed. The operation is synchronous, meaning that a response will not
+ * be
+ * returned until all the objects are fully available. The response payload
+ * provides the count of the resulting set. A new result view which satisfies
+ * the
+ * input filter restriction specification is also created with a view name
+ * passed
+ * in as part of the input payload.  Although this functionality can also be
+ * accomplished with the standard filter function, it is more efficient.
  * 
  * @param tableName  Name of an existing table on which to perform the
- *                   calculation.
+ *                   calculation, in [schema_name.]table_name format, using
+ *                   standard <a
+ *                   href="../../concepts/tables.html#table-name-resolution"
+ *                   target="_top">name resolution rules</a>.
  * @param viewName  If provided, then this will be the name of the view
- *                  containing the results. Has the same naming restrictions as
- *                  <a href="../../concepts/tables.html"
- *                  target="_top">tables</a>.
+ *                  containing the results, in [schema_name.]view_name format,
+ *                  using standard <a
+ *                  href="../../concepts/tables.html#table-name-resolution"
+ *                  target="_top">name resolution rules</a> and meeting <a
+ *                  href="../../concepts/tables.html#table-naming-criteria"
+ *                  target="_top">table naming criteria</a>.  Must not be an
+ *                  already existing table or view.
  * @param isString  Indicates whether the value being searched for is string or
  *                  numeric.
  * @param value  The value to search for.
@@ -13173,11 +16352,12 @@ FilterByValueResponse filterByValue( const std::string& tableName,
  *                    applied.
  * @param options  Optional parameters.
  *                 <ul>
- *                         <li> gpudb::filter_by_value_collection_name: Name of
- *                 a collection which is to contain the newly created view. If
- *                 the collection provided is non-existent, the collection will
- *                 be automatically created. If empty, then the newly created
- *                 view will be top-level.
+ *                         <li> gpudb::filter_by_value_collection_name:
+ *                 [DEPRECATED--please specify the containing schema for the
+ *                 view as part of @a viewName and use /create/schema to create
+ *                 the schema if non-existent]  Name of a schema for the newly
+ *                 created view. If the schema is non-existent, it will be
+ *                 automatically created.
  *                 </ul>
  * @param[out] response_  Response object containing the results of the
  *                        operation.
@@ -13239,6 +16419,10 @@ GetJobResponse& getJob( const GetJobRequest& request_,
  * @param jobId  A unique identifier for the job whose status and result is to
  *               be fetched.
  * @param options  Optional parameters.
+ *                 <ul>
+ *                         <li> gpudb::get_job_job_tag: Job tag returned in
+ *                 call to create the job
+ *                 </ul>
  * 
  * @return Response object containing the result of the operation.
  * 
@@ -13256,6 +16440,10 @@ GetJobResponse getJob( const int64_t jobId,
  * @param jobId  A unique identifier for the job whose status and result is to
  *               be fetched.
  * @param options  Optional parameters.
+ *                 <ul>
+ *                         <li> gpudb::get_job_job_tag: Job tag returned in
+ *                 call to create the job
+ *                 </ul>
  * @param[out] response_  Response object containing the results of the
  *                        operation.
  * 
@@ -13269,16 +16457,18 @@ GetJobResponse& getJob( const int64_t jobId,
                         GetJobResponse& response_ ) const;
 
 /**
- * Retrieves records from a given table, optionally filtered by an expression
- * and/or sorted by a column. This operation can be performed on tables, views,
- * or on homogeneous collections (collections containing tables of all the same
- * type). Records can be returned encoded as binary, json or geojson.
+ * Retrieves records from a given table, optionally filtered by an
+ * expression and/or sorted by a column. This operation can be performed on
+ * tables
+ * and views. Records can be returned encoded as binary, json, or geojson.
  * <p>
- * This operation supports paging through the data via the @a offset and @a
- * limit parameters. Note that when paging through a table, if the table (or
- * the underlying table in case of a view) is updated (records are inserted,
+ * This operation supports paging through the data via the @a offset and
+ * @a limit parameters.  Note that when paging through a table, if the table
+ * (or the underlying table in case of a view) is updated (records are
+ * inserted,
  * deleted or modified) the records retrieved may differ between calls based on
- * the updates applied.
+ * the
+ * updates applied.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -13290,16 +16480,18 @@ GetJobResponse& getJob( const int64_t jobId,
 RawGetRecordsResponse getRecordsRaw( const GetRecordsRequest& request_ ) const;
 
 /**
- * Retrieves records from a given table, optionally filtered by an expression
- * and/or sorted by a column. This operation can be performed on tables, views,
- * or on homogeneous collections (collections containing tables of all the same
- * type). Records can be returned encoded as binary, json or geojson.
+ * Retrieves records from a given table, optionally filtered by an
+ * expression and/or sorted by a column. This operation can be performed on
+ * tables
+ * and views. Records can be returned encoded as binary, json, or geojson.
  * <p>
- * This operation supports paging through the data via the @a offset and @a
- * limit parameters. Note that when paging through a table, if the table (or
- * the underlying table in case of a view) is updated (records are inserted,
+ * This operation supports paging through the data via the @a offset and
+ * @a limit parameters.  Note that when paging through a table, if the table
+ * (or the underlying table in case of a view) is updated (records are
+ * inserted,
  * deleted or modified) the records retrieved may differ between calls based on
- * the updates applied.
+ * the
+ * updates applied.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -13315,16 +16507,18 @@ RawGetRecordsResponse& getRecordsRaw( const GetRecordsRequest& request_,
                                       RawGetRecordsResponse& response_ ) const;
 
 /**
- * Retrieves records from a given table, optionally filtered by an expression
- * and/or sorted by a column. This operation can be performed on tables, views,
- * or on homogeneous collections (collections containing tables of all the same
- * type). Records can be returned encoded as binary, json or geojson.
+ * Retrieves records from a given table, optionally filtered by an
+ * expression and/or sorted by a column. This operation can be performed on
+ * tables
+ * and views. Records can be returned encoded as binary, json, or geojson.
  * <p>
- * This operation supports paging through the data via the @a offset and @a
- * limit parameters. Note that when paging through a table, if the table (or
- * the underlying table in case of a view) is updated (records are inserted,
+ * This operation supports paging through the data via the @a offset and
+ * @a limit parameters.  Note that when paging through a table, if the table
+ * (or the underlying table in case of a view) is updated (records are
+ * inserted,
  * deleted or modified) the records retrieved may differ between calls based on
- * the updates applied.
+ * the
+ * updates applied.
  * 
  * @tparam <TResponse>  The type of object being retrieved.
  * 
@@ -13356,16 +16550,18 @@ GetRecordsResponse<TResponse> getRecords( const GetRecordsRequest& request_ ) co
 
 
 /**
- * Retrieves records from a given table, optionally filtered by an expression
- * and/or sorted by a column. This operation can be performed on tables, views,
- * or on homogeneous collections (collections containing tables of all the same
- * type). Records can be returned encoded as binary, json or geojson.
+ * Retrieves records from a given table, optionally filtered by an
+ * expression and/or sorted by a column. This operation can be performed on
+ * tables
+ * and views. Records can be returned encoded as binary, json, or geojson.
  * <p>
- * This operation supports paging through the data via the @a offset and @a
- * limit parameters. Note that when paging through a table, if the table (or
- * the underlying table in case of a view) is updated (records are inserted,
+ * This operation supports paging through the data via the @a offset and
+ * @a limit parameters.  Note that when paging through a table, if the table
+ * (or the underlying table in case of a view) is updated (records are
+ * inserted,
  * deleted or modified) the records retrieved may differ between calls based on
- * the updates applied.
+ * the
+ * updates applied.
  * 
  * @tparam <TResponse>  The type of object being retrieved.
  * 
@@ -13400,21 +16596,26 @@ GetRecordsResponse<TResponse>& getRecords( const GetRecordsRequest& request_,
 
 
 /**
- * Retrieves records from a given table, optionally filtered by an expression
- * and/or sorted by a column. This operation can be performed on tables, views,
- * or on homogeneous collections (collections containing tables of all the same
- * type). Records can be returned encoded as binary, json or geojson.
+ * Retrieves records from a given table, optionally filtered by an
+ * expression and/or sorted by a column. This operation can be performed on
+ * tables
+ * and views. Records can be returned encoded as binary, json, or geojson.
  * <p>
- * This operation supports paging through the data via the @a offset and @a
- * limit parameters. Note that when paging through a table, if the table (or
- * the underlying table in case of a view) is updated (records are inserted,
+ * This operation supports paging through the data via the @a offset and
+ * @a limit parameters.  Note that when paging through a table, if the table
+ * (or the underlying table in case of a view) is updated (records are
+ * inserted,
  * deleted or modified) the records retrieved may differ between calls based on
- * the updates applied.
+ * the
+ * updates applied.
  * 
  * @tparam <TResponse>  The type of object being retrieved.
  * 
- * @param tableName  Name of the table from which the records will be fetched.
- *                   Must be a table, view or homogeneous collection.
+ * @param tableName  Name of the table or view from which the records will be
+ *                   fetched, in [schema_name.]table_name format, using
+ *                   standard <a
+ *                   href="../../concepts/tables.html#table-name-resolution"
+ *                   target="_top">name resolution rules</a>.
  * @param offset  A positive integer indicating the number of initial results
  *                to skip (this can be useful for paging through the results).
  *                The minimum allowed value is 0. The maximum allowed value is
@@ -13487,21 +16688,26 @@ GetRecordsResponse<TResponse> getRecords( const std::string& tableName,
 
 
 /**
- * Retrieves records from a given table, optionally filtered by an expression
- * and/or sorted by a column. This operation can be performed on tables, views,
- * or on homogeneous collections (collections containing tables of all the same
- * type). Records can be returned encoded as binary, json or geojson.
+ * Retrieves records from a given table, optionally filtered by an
+ * expression and/or sorted by a column. This operation can be performed on
+ * tables
+ * and views. Records can be returned encoded as binary, json, or geojson.
  * <p>
- * This operation supports paging through the data via the @a offset and @a
- * limit parameters. Note that when paging through a table, if the table (or
- * the underlying table in case of a view) is updated (records are inserted,
+ * This operation supports paging through the data via the @a offset and
+ * @a limit parameters.  Note that when paging through a table, if the table
+ * (or the underlying table in case of a view) is updated (records are
+ * inserted,
  * deleted or modified) the records retrieved may differ between calls based on
- * the updates applied.
+ * the
+ * updates applied.
  * 
  * @tparam <TResponse>  The type of object being retrieved.
  * 
- * @param tableName  Name of the table from which the records will be fetched.
- *                   Must be a table, view or homogeneous collection.
+ * @param tableName  Name of the table or view from which the records will be
+ *                   fetched, in [schema_name.]table_name format, using
+ *                   standard <a
+ *                   href="../../concepts/tables.html#table-name-resolution"
+ *                   target="_top">name resolution rules</a>.
  * @param offset  A positive integer indicating the number of initial results
  *                to skip (this can be useful for paging through the results).
  *                The minimum allowed value is 0. The maximum allowed value is
@@ -13577,16 +16783,18 @@ GetRecordsResponse<TResponse>& getRecords( const std::string& tableName,
 
 
 /**
- * Retrieves records from a given table, optionally filtered by an expression
- * and/or sorted by a column. This operation can be performed on tables, views,
- * or on homogeneous collections (collections containing tables of all the same
- * type). Records can be returned encoded as binary, json or geojson.
+ * Retrieves records from a given table, optionally filtered by an
+ * expression and/or sorted by a column. This operation can be performed on
+ * tables
+ * and views. Records can be returned encoded as binary, json, or geojson.
  * <p>
- * This operation supports paging through the data via the @a offset and @a
- * limit parameters. Note that when paging through a table, if the table (or
- * the underlying table in case of a view) is updated (records are inserted,
+ * This operation supports paging through the data via the @a offset and
+ * @a limit parameters.  Note that when paging through a table, if the table
+ * (or the underlying table in case of a view) is updated (records are
+ * inserted,
  * deleted or modified) the records retrieved may differ between calls based on
- * the updates applied.
+ * the
+ * updates applied.
  * 
  * @tparam <TResponse>  The type of object being retrieved.
  * 
@@ -13620,16 +16828,18 @@ GetRecordsResponse<TResponse> getRecords( const ::avro::ValidSchema& schema_,
 
 
 /**
- * Retrieves records from a given table, optionally filtered by an expression
- * and/or sorted by a column. This operation can be performed on tables, views,
- * or on homogeneous collections (collections containing tables of all the same
- * type). Records can be returned encoded as binary, json or geojson.
+ * Retrieves records from a given table, optionally filtered by an
+ * expression and/or sorted by a column. This operation can be performed on
+ * tables
+ * and views. Records can be returned encoded as binary, json, or geojson.
  * <p>
- * This operation supports paging through the data via the @a offset and @a
- * limit parameters. Note that when paging through a table, if the table (or
- * the underlying table in case of a view) is updated (records are inserted,
+ * This operation supports paging through the data via the @a offset and
+ * @a limit parameters.  Note that when paging through a table, if the table
+ * (or the underlying table in case of a view) is updated (records are
+ * inserted,
  * deleted or modified) the records retrieved may differ between calls based on
- * the updates applied.
+ * the
+ * updates applied.
  * 
  * @tparam <TResponse>  The type of object being retrieved.
  * 
@@ -13663,16 +16873,18 @@ GetRecordsResponse<TResponse> getRecords( const Type& type_,
 
 
 /**
- * Retrieves records from a given table, optionally filtered by an expression
- * and/or sorted by a column. This operation can be performed on tables, views,
- * or on homogeneous collections (collections containing tables of all the same
- * type). Records can be returned encoded as binary, json or geojson.
+ * Retrieves records from a given table, optionally filtered by an
+ * expression and/or sorted by a column. This operation can be performed on
+ * tables
+ * and views. Records can be returned encoded as binary, json, or geojson.
  * <p>
- * This operation supports paging through the data via the @a offset and @a
- * limit parameters. Note that when paging through a table, if the table (or
- * the underlying table in case of a view) is updated (records are inserted,
+ * This operation supports paging through the data via the @a offset and
+ * @a limit parameters.  Note that when paging through a table, if the table
+ * (or the underlying table in case of a view) is updated (records are
+ * inserted,
  * deleted or modified) the records retrieved may differ between calls based on
- * the updates applied.
+ * the
+ * updates applied.
  * 
  * @tparam <TResponse>  The type of object being retrieved.
  * 
@@ -13709,16 +16921,18 @@ GetRecordsResponse<TResponse>& getRecords( const ::avro::ValidSchema& schema_,
 
 
 /**
- * Retrieves records from a given table, optionally filtered by an expression
- * and/or sorted by a column. This operation can be performed on tables, views,
- * or on homogeneous collections (collections containing tables of all the same
- * type). Records can be returned encoded as binary, json or geojson.
+ * Retrieves records from a given table, optionally filtered by an
+ * expression and/or sorted by a column. This operation can be performed on
+ * tables
+ * and views. Records can be returned encoded as binary, json, or geojson.
  * <p>
- * This operation supports paging through the data via the @a offset and @a
- * limit parameters. Note that when paging through a table, if the table (or
- * the underlying table in case of a view) is updated (records are inserted,
+ * This operation supports paging through the data via the @a offset and
+ * @a limit parameters.  Note that when paging through a table, if the table
+ * (or the underlying table in case of a view) is updated (records are
+ * inserted,
  * deleted or modified) the records retrieved may differ between calls based on
- * the updates applied.
+ * the
+ * updates applied.
  * 
  * @tparam <TResponse>  The type of object being retrieved.
  * 
@@ -13755,22 +16969,27 @@ GetRecordsResponse<TResponse>& getRecords( const Type& type_,
 
 
 /**
- * Retrieves records from a given table, optionally filtered by an expression
- * and/or sorted by a column. This operation can be performed on tables, views,
- * or on homogeneous collections (collections containing tables of all the same
- * type). Records can be returned encoded as binary, json or geojson.
+ * Retrieves records from a given table, optionally filtered by an
+ * expression and/or sorted by a column. This operation can be performed on
+ * tables
+ * and views. Records can be returned encoded as binary, json, or geojson.
  * <p>
- * This operation supports paging through the data via the @a offset and @a
- * limit parameters. Note that when paging through a table, if the table (or
- * the underlying table in case of a view) is updated (records are inserted,
+ * This operation supports paging through the data via the @a offset and
+ * @a limit parameters.  Note that when paging through a table, if the table
+ * (or the underlying table in case of a view) is updated (records are
+ * inserted,
  * deleted or modified) the records retrieved may differ between calls based on
- * the updates applied.
+ * the
+ * updates applied.
  * 
  * @tparam <TResponse>  The type of object being retrieved.
  * 
  * @param[in] schema_  Avro schema object used for decoding returned objects.
- * @param tableName  Name of the table from which the records will be fetched.
- *                   Must be a table, view or homogeneous collection.
+ * @param tableName  Name of the table or view from which the records will be
+ *                   fetched, in [schema_name.]table_name format, using
+ *                   standard <a
+ *                   href="../../concepts/tables.html#table-name-resolution"
+ *                   target="_top">name resolution rules</a>.
  * @param offset  A positive integer indicating the number of initial results
  *                to skip (this can be useful for paging through the results).
  *                The minimum allowed value is 0. The maximum allowed value is
@@ -13844,22 +17063,27 @@ GetRecordsResponse<TResponse> getRecords( const ::avro::ValidSchema& schema_,
 
 
 /**
- * Retrieves records from a given table, optionally filtered by an expression
- * and/or sorted by a column. This operation can be performed on tables, views,
- * or on homogeneous collections (collections containing tables of all the same
- * type). Records can be returned encoded as binary, json or geojson.
+ * Retrieves records from a given table, optionally filtered by an
+ * expression and/or sorted by a column. This operation can be performed on
+ * tables
+ * and views. Records can be returned encoded as binary, json, or geojson.
  * <p>
- * This operation supports paging through the data via the @a offset and @a
- * limit parameters. Note that when paging through a table, if the table (or
- * the underlying table in case of a view) is updated (records are inserted,
+ * This operation supports paging through the data via the @a offset and
+ * @a limit parameters.  Note that when paging through a table, if the table
+ * (or the underlying table in case of a view) is updated (records are
+ * inserted,
  * deleted or modified) the records retrieved may differ between calls based on
- * the updates applied.
+ * the
+ * updates applied.
  * 
  * @tparam <TResponse>  The type of object being retrieved.
  * 
  * @param[in] type_  Type object used for decoding returned objects.
- * @param tableName  Name of the table from which the records will be fetched.
- *                   Must be a table, view or homogeneous collection.
+ * @param tableName  Name of the table or view from which the records will be
+ *                   fetched, in [schema_name.]table_name format, using
+ *                   standard <a
+ *                   href="../../concepts/tables.html#table-name-resolution"
+ *                   target="_top">name resolution rules</a>.
  * @param offset  A positive integer indicating the number of initial results
  *                to skip (this can be useful for paging through the results).
  *                The minimum allowed value is 0. The maximum allowed value is
@@ -13933,22 +17157,27 @@ GetRecordsResponse<TResponse> getRecords( const Type& type_,
 
 
 /**
- * Retrieves records from a given table, optionally filtered by an expression
- * and/or sorted by a column. This operation can be performed on tables, views,
- * or on homogeneous collections (collections containing tables of all the same
- * type). Records can be returned encoded as binary, json or geojson.
+ * Retrieves records from a given table, optionally filtered by an
+ * expression and/or sorted by a column. This operation can be performed on
+ * tables
+ * and views. Records can be returned encoded as binary, json, or geojson.
  * <p>
- * This operation supports paging through the data via the @a offset and @a
- * limit parameters. Note that when paging through a table, if the table (or
- * the underlying table in case of a view) is updated (records are inserted,
+ * This operation supports paging through the data via the @a offset and
+ * @a limit parameters.  Note that when paging through a table, if the table
+ * (or the underlying table in case of a view) is updated (records are
+ * inserted,
  * deleted or modified) the records retrieved may differ between calls based on
- * the updates applied.
+ * the
+ * updates applied.
  * 
  * @tparam <TResponse>  The type of object being retrieved.
  * 
  * @param[in] schema_  Avro schema object used for decoding returned objects.
- * @param tableName  Name of the table from which the records will be fetched.
- *                   Must be a table, view or homogeneous collection.
+ * @param tableName  Name of the table or view from which the records will be
+ *                   fetched, in [schema_name.]table_name format, using
+ *                   standard <a
+ *                   href="../../concepts/tables.html#table-name-resolution"
+ *                   target="_top">name resolution rules</a>.
  * @param offset  A positive integer indicating the number of initial results
  *                to skip (this can be useful for paging through the results).
  *                The minimum allowed value is 0. The maximum allowed value is
@@ -14025,22 +17254,27 @@ GetRecordsResponse<TResponse>& getRecords( const ::avro::ValidSchema& schema_,
 
 
 /**
- * Retrieves records from a given table, optionally filtered by an expression
- * and/or sorted by a column. This operation can be performed on tables, views,
- * or on homogeneous collections (collections containing tables of all the same
- * type). Records can be returned encoded as binary, json or geojson.
+ * Retrieves records from a given table, optionally filtered by an
+ * expression and/or sorted by a column. This operation can be performed on
+ * tables
+ * and views. Records can be returned encoded as binary, json, or geojson.
  * <p>
- * This operation supports paging through the data via the @a offset and @a
- * limit parameters. Note that when paging through a table, if the table (or
- * the underlying table in case of a view) is updated (records are inserted,
+ * This operation supports paging through the data via the @a offset and
+ * @a limit parameters.  Note that when paging through a table, if the table
+ * (or the underlying table in case of a view) is updated (records are
+ * inserted,
  * deleted or modified) the records retrieved may differ between calls based on
- * the updates applied.
+ * the
+ * updates applied.
  * 
  * @tparam <TResponse>  The type of object being retrieved.
  * 
  * @param[in] type_  Type object used for decoding returned objects.
- * @param tableName  Name of the table from which the records will be fetched.
- *                   Must be a table, view or homogeneous collection.
+ * @param tableName  Name of the table or view from which the records will be
+ *                   fetched, in [schema_name.]table_name format, using
+ *                   standard <a
+ *                   href="../../concepts/tables.html#table-name-resolution"
+ *                   target="_top">name resolution rules</a>.
  * @param offset  A positive integer indicating the number of initial results
  *                to skip (this can be useful for paging through the results).
  *                The minimum allowed value is 0. The maximum allowed value is
@@ -14117,33 +17351,39 @@ GetRecordsResponse<TResponse>& getRecords( const Type& type_,
 
 
 /**
- * For a given table, retrieves the values from the requested column(s). Maps
- * of column name to the array of values as well as the column data type are
- * returned. This endpoint supports pagination with the @a offset and @a limit
- * parameters.
+ * For a given table, retrieves the values from the requested
+ * column(s). Maps of column name to the array of values as well as the column
+ * data
+ * type are returned. This endpoint supports pagination with the @a offset
+ * and @a limit parameters.
  * <p>
  * <a href="../../concepts/window.html" target="_top">Window functions</a>,
- * which can perform operations like moving averages, are available through
- * this endpoint as well as {@link
- * #createProjection(const CreateProjectionRequest&) const}.
+ * which can perform
+ * operations like moving averages, are available through this endpoint as well
+ * as
+ * {@link #createProjection(const CreateProjectionRequest&) const}.
  * <p>
  * When using pagination, if the table (or the underlying table in the case of
- * a view) is modified (records are inserted, updated, or deleted) during a
- * call to the endpoint, the records or values retrieved may differ between
- * calls based on the type of the update, e.g., the contiguity across pages
- * cannot be relied upon.
+ * a
+ * view) is modified (records are inserted, updated, or deleted) during a call
+ * to
+ * the endpoint, the records or values retrieved may differ between calls based
+ * on
+ * the type of the update, e.g., the contiguity across pages cannot be relied
+ * upon.
  * <p>
  * If @a tableName is empty, selection is performed against a single-row
- * virtual table.  This can be useful in executing temporal (<a
- * href="../../concepts/expressions.html#date-time-functions"
- * target="_top">NOW()</a>), identity (<a
- * href="../../concepts/expressions.html#user-security-functions"
- * target="_top">USER()</a>), or constant-based functions (<a
- * href="../../concepts/expressions.html#scalar-functions"
+ * virtual table.  This can be useful in executing temporal
+ * (<a href="../../concepts/expressions.html#date-time-functions"
+ * target="_top">NOW()</a>), identity
+ * (<a href="../../concepts/expressions.html#user-security-functions"
+ * target="_top">USER()</a>), or
+ * constant-based functions
+ * (<a href="../../concepts/expressions.html#scalar-functions"
  * target="_top">GEODIST(-77.11, 38.88, -71.06, 42.36)</a>).
  * <p>
- * The response is returned as a dynamic schema. For details see: <a
- * href="../../api/index.html#dynamic-schemas" target="_top">dynamic schemas
+ * The response is returned as a dynamic schema. For details see:
+ * <a href="../../api/index.html#dynamic-schemas" target="_top">dynamic schemas
  * documentation</a>.
  * 
  * @param[in] request_  Request object containing the parameters for the
@@ -14156,33 +17396,40 @@ GetRecordsResponse<TResponse>& getRecords( const Type& type_,
 RawGetRecordsByColumnResponse getRecordsByColumnRaw( const GetRecordsByColumnRequest& request_ ) const;
 
 /**
- * For a given table, retrieves the values from the requested column(s). Maps
- * of column name to the array of values as well as the column data type are
- * returned. This endpoint supports pagination with the @a offset and @a limit
- * parameters.
+ * For a given table, retrieves the values from the requested
+ * column(s). Maps of column name to the array of values as well as the column
+ * data
+ * type are returned. This endpoint supports pagination with the @a offset
+ * and @a limit parameters.
  * <p>
  * <a href="../../concepts/window.html" target="_top">Window functions</a>,
- * which can perform operations like moving averages, are available through
- * this endpoint as well as {@link
+ * which can perform
+ * operations like moving averages, are available through this endpoint as well
+ * as
+ * {@link
  * #createProjection(const CreateProjectionRequest&,CreateProjectionResponse&) const}.
  * <p>
  * When using pagination, if the table (or the underlying table in the case of
- * a view) is modified (records are inserted, updated, or deleted) during a
- * call to the endpoint, the records or values retrieved may differ between
- * calls based on the type of the update, e.g., the contiguity across pages
- * cannot be relied upon.
+ * a
+ * view) is modified (records are inserted, updated, or deleted) during a call
+ * to
+ * the endpoint, the records or values retrieved may differ between calls based
+ * on
+ * the type of the update, e.g., the contiguity across pages cannot be relied
+ * upon.
  * <p>
  * If @a tableName is empty, selection is performed against a single-row
- * virtual table.  This can be useful in executing temporal (<a
- * href="../../concepts/expressions.html#date-time-functions"
- * target="_top">NOW()</a>), identity (<a
- * href="../../concepts/expressions.html#user-security-functions"
- * target="_top">USER()</a>), or constant-based functions (<a
- * href="../../concepts/expressions.html#scalar-functions"
+ * virtual table.  This can be useful in executing temporal
+ * (<a href="../../concepts/expressions.html#date-time-functions"
+ * target="_top">NOW()</a>), identity
+ * (<a href="../../concepts/expressions.html#user-security-functions"
+ * target="_top">USER()</a>), or
+ * constant-based functions
+ * (<a href="../../concepts/expressions.html#scalar-functions"
  * target="_top">GEODIST(-77.11, 38.88, -71.06, 42.36)</a>).
  * <p>
- * The response is returned as a dynamic schema. For details see: <a
- * href="../../api/index.html#dynamic-schemas" target="_top">dynamic schemas
+ * The response is returned as a dynamic schema. For details see:
+ * <a href="../../api/index.html#dynamic-schemas" target="_top">dynamic schemas
  * documentation</a>.
  * 
  * @param[in] request_  Request object containing the parameters for the
@@ -14199,33 +17446,39 @@ RawGetRecordsByColumnResponse& getRecordsByColumnRaw( const GetRecordsByColumnRe
                                                       RawGetRecordsByColumnResponse& response_ ) const;
 
 /**
- * For a given table, retrieves the values from the requested column(s). Maps
- * of column name to the array of values as well as the column data type are
- * returned. This endpoint supports pagination with the @a offset and @a limit
- * parameters.
+ * For a given table, retrieves the values from the requested
+ * column(s). Maps of column name to the array of values as well as the column
+ * data
+ * type are returned. This endpoint supports pagination with the @a offset
+ * and @a limit parameters.
  * <p>
  * <a href="../../concepts/window.html" target="_top">Window functions</a>,
- * which can perform operations like moving averages, are available through
- * this endpoint as well as {@link
- * #createProjection(const CreateProjectionRequest&) const}.
+ * which can perform
+ * operations like moving averages, are available through this endpoint as well
+ * as
+ * {@link #createProjection(const CreateProjectionRequest&) const}.
  * <p>
  * When using pagination, if the table (or the underlying table in the case of
- * a view) is modified (records are inserted, updated, or deleted) during a
- * call to the endpoint, the records or values retrieved may differ between
- * calls based on the type of the update, e.g., the contiguity across pages
- * cannot be relied upon.
+ * a
+ * view) is modified (records are inserted, updated, or deleted) during a call
+ * to
+ * the endpoint, the records or values retrieved may differ between calls based
+ * on
+ * the type of the update, e.g., the contiguity across pages cannot be relied
+ * upon.
  * <p>
  * If @a tableName is empty, selection is performed against a single-row
- * virtual table.  This can be useful in executing temporal (<a
- * href="../../concepts/expressions.html#date-time-functions"
- * target="_top">NOW()</a>), identity (<a
- * href="../../concepts/expressions.html#user-security-functions"
- * target="_top">USER()</a>), or constant-based functions (<a
- * href="../../concepts/expressions.html#scalar-functions"
+ * virtual table.  This can be useful in executing temporal
+ * (<a href="../../concepts/expressions.html#date-time-functions"
+ * target="_top">NOW()</a>), identity
+ * (<a href="../../concepts/expressions.html#user-security-functions"
+ * target="_top">USER()</a>), or
+ * constant-based functions
+ * (<a href="../../concepts/expressions.html#scalar-functions"
  * target="_top">GEODIST(-77.11, 38.88, -71.06, 42.36)</a>).
  * <p>
- * The response is returned as a dynamic schema. For details see: <a
- * href="../../api/index.html#dynamic-schemas" target="_top">dynamic schemas
+ * The response is returned as a dynamic schema. For details see:
+ * <a href="../../api/index.html#dynamic-schemas" target="_top">dynamic schemas
  * documentation</a>.
  * 
  * @param[in] request_  Request object containing the parameters for the
@@ -14238,33 +17491,39 @@ RawGetRecordsByColumnResponse& getRecordsByColumnRaw( const GetRecordsByColumnRe
 GetRecordsByColumnResponse getRecordsByColumn( const GetRecordsByColumnRequest& request_ ) const;
 
 /**
- * For a given table, retrieves the values from the requested column(s). Maps
- * of column name to the array of values as well as the column data type are
- * returned. This endpoint supports pagination with the @a offset and @a limit
- * parameters.
+ * For a given table, retrieves the values from the requested
+ * column(s). Maps of column name to the array of values as well as the column
+ * data
+ * type are returned. This endpoint supports pagination with the @a offset
+ * and @a limit parameters.
  * <p>
  * <a href="../../concepts/window.html" target="_top">Window functions</a>,
- * which can perform operations like moving averages, are available through
- * this endpoint as well as {@link
- * #createProjection(const CreateProjectionRequest&) const}.
+ * which can perform
+ * operations like moving averages, are available through this endpoint as well
+ * as
+ * {@link #createProjection(const CreateProjectionRequest&) const}.
  * <p>
  * When using pagination, if the table (or the underlying table in the case of
- * a view) is modified (records are inserted, updated, or deleted) during a
- * call to the endpoint, the records or values retrieved may differ between
- * calls based on the type of the update, e.g., the contiguity across pages
- * cannot be relied upon.
+ * a
+ * view) is modified (records are inserted, updated, or deleted) during a call
+ * to
+ * the endpoint, the records or values retrieved may differ between calls based
+ * on
+ * the type of the update, e.g., the contiguity across pages cannot be relied
+ * upon.
  * <p>
  * If @a tableName is empty, selection is performed against a single-row
- * virtual table.  This can be useful in executing temporal (<a
- * href="../../concepts/expressions.html#date-time-functions"
- * target="_top">NOW()</a>), identity (<a
- * href="../../concepts/expressions.html#user-security-functions"
- * target="_top">USER()</a>), or constant-based functions (<a
- * href="../../concepts/expressions.html#scalar-functions"
+ * virtual table.  This can be useful in executing temporal
+ * (<a href="../../concepts/expressions.html#date-time-functions"
+ * target="_top">NOW()</a>), identity
+ * (<a href="../../concepts/expressions.html#user-security-functions"
+ * target="_top">USER()</a>), or
+ * constant-based functions
+ * (<a href="../../concepts/expressions.html#scalar-functions"
  * target="_top">GEODIST(-77.11, 38.88, -71.06, 42.36)</a>).
  * <p>
- * The response is returned as a dynamic schema. For details see: <a
- * href="../../api/index.html#dynamic-schemas" target="_top">dynamic schemas
+ * The response is returned as a dynamic schema. For details see:
+ * <a href="../../api/index.html#dynamic-schemas" target="_top">dynamic schemas
  * documentation</a>.
  * 
  * @param[in] request_  Request object containing the parameters for the
@@ -14281,40 +17540,50 @@ GetRecordsByColumnResponse& getRecordsByColumn( const GetRecordsByColumnRequest&
                                                 GetRecordsByColumnResponse& response_ ) const;
 
 /**
- * For a given table, retrieves the values from the requested column(s). Maps
- * of column name to the array of values as well as the column data type are
- * returned. This endpoint supports pagination with the @a offset and @a limit
- * parameters.
+ * For a given table, retrieves the values from the requested
+ * column(s). Maps of column name to the array of values as well as the column
+ * data
+ * type are returned. This endpoint supports pagination with the @a offset
+ * and @a limit parameters.
  * <p>
  * <a href="../../concepts/window.html" target="_top">Window functions</a>,
- * which can perform operations like moving averages, are available through
- * this endpoint as well as {@link
+ * which can perform
+ * operations like moving averages, are available through this endpoint as well
+ * as
+ * {@link
  * #createProjection(const std::string&,const std::string&,const std::vector<std::string>&,const std::map<std::string, std::string>&) const}.
  * <p>
  * When using pagination, if the table (or the underlying table in the case of
- * a view) is modified (records are inserted, updated, or deleted) during a
- * call to the endpoint, the records or values retrieved may differ between
- * calls based on the type of the update, e.g., the contiguity across pages
- * cannot be relied upon.
+ * a
+ * view) is modified (records are inserted, updated, or deleted) during a call
+ * to
+ * the endpoint, the records or values retrieved may differ between calls based
+ * on
+ * the type of the update, e.g., the contiguity across pages cannot be relied
+ * upon.
  * <p>
  * If @a tableName is empty, selection is performed against a single-row
- * virtual table.  This can be useful in executing temporal (<a
- * href="../../concepts/expressions.html#date-time-functions"
- * target="_top">NOW()</a>), identity (<a
- * href="../../concepts/expressions.html#user-security-functions"
- * target="_top">USER()</a>), or constant-based functions (<a
- * href="../../concepts/expressions.html#scalar-functions"
+ * virtual table.  This can be useful in executing temporal
+ * (<a href="../../concepts/expressions.html#date-time-functions"
+ * target="_top">NOW()</a>), identity
+ * (<a href="../../concepts/expressions.html#user-security-functions"
+ * target="_top">USER()</a>), or
+ * constant-based functions
+ * (<a href="../../concepts/expressions.html#scalar-functions"
  * target="_top">GEODIST(-77.11, 38.88, -71.06, 42.36)</a>).
  * <p>
- * The response is returned as a dynamic schema. For details see: <a
- * href="../../api/index.html#dynamic-schemas" target="_top">dynamic schemas
+ * The response is returned as a dynamic schema. For details see:
+ * <a href="../../api/index.html#dynamic-schemas" target="_top">dynamic schemas
  * documentation</a>.
  * 
- * @param tableName  Name of the table on which this operation will be
- *                   performed.  An empty table name retrieves one record from
- *                   a single-row virtual table, where columns specified should
- *                   be constants or constant expressions.  The table cannot be
- *                   a parent set.
+ * @param tableName  Name of the table or view on which this operation will be
+ *                   performed, in [schema_name.]table_name format, using
+ *                   standard <a
+ *                   href="../../concepts/tables.html#table-name-resolution"
+ *                   target="_top">name resolution rules</a>.  An empty table
+ *                   name retrieves one record from a single-row virtual table,
+ *                   where columns specified should be constants or constant
+ *                   expressions.
  * @param columnNames  The list of column values to retrieve.
  * @param offset  A positive integer indicating the number of initial results
  *                to skip (this can be useful for paging through the results).
@@ -14353,8 +17622,8 @@ GetRecordsByColumnResponse& getRecordsByColumn( const GetRecordsByColumnRequest&
  *                 as the sort direction, e.g., 'timestamp asc, x desc'.  The
  *                 default value is ''.
  *                         <li>
- *                 gpudb::get_records_by_column_convert_wkts_to_wkbs: If true,
- *                 then WKT string columns will be returned as WKB bytes.
+ *                 gpudb::get_records_by_column_convert_wkts_to_wkbs: If @a
+ *                 true, then WKT string columns will be returned as WKB bytes.
  *                 <ul>
  *                         <li> gpudb::get_records_by_column_true
  *                         <li> gpudb::get_records_by_column_false
@@ -14373,40 +17642,50 @@ GetRecordsByColumnResponse getRecordsByColumn( const std::string& tableName,
                                                const std::map<std::string, std::string>& options ) const;
 
 /**
- * For a given table, retrieves the values from the requested column(s). Maps
- * of column name to the array of values as well as the column data type are
- * returned. This endpoint supports pagination with the @a offset and @a limit
- * parameters.
+ * For a given table, retrieves the values from the requested
+ * column(s). Maps of column name to the array of values as well as the column
+ * data
+ * type are returned. This endpoint supports pagination with the @a offset
+ * and @a limit parameters.
  * <p>
  * <a href="../../concepts/window.html" target="_top">Window functions</a>,
- * which can perform operations like moving averages, are available through
- * this endpoint as well as {@link
+ * which can perform
+ * operations like moving averages, are available through this endpoint as well
+ * as
+ * {@link
  * #createProjection(const std::string&,const std::string&,const std::vector<std::string>&,const std::map<std::string, std::string>&) const}.
  * <p>
  * When using pagination, if the table (or the underlying table in the case of
- * a view) is modified (records are inserted, updated, or deleted) during a
- * call to the endpoint, the records or values retrieved may differ between
- * calls based on the type of the update, e.g., the contiguity across pages
- * cannot be relied upon.
+ * a
+ * view) is modified (records are inserted, updated, or deleted) during a call
+ * to
+ * the endpoint, the records or values retrieved may differ between calls based
+ * on
+ * the type of the update, e.g., the contiguity across pages cannot be relied
+ * upon.
  * <p>
  * If @a tableName is empty, selection is performed against a single-row
- * virtual table.  This can be useful in executing temporal (<a
- * href="../../concepts/expressions.html#date-time-functions"
- * target="_top">NOW()</a>), identity (<a
- * href="../../concepts/expressions.html#user-security-functions"
- * target="_top">USER()</a>), or constant-based functions (<a
- * href="../../concepts/expressions.html#scalar-functions"
+ * virtual table.  This can be useful in executing temporal
+ * (<a href="../../concepts/expressions.html#date-time-functions"
+ * target="_top">NOW()</a>), identity
+ * (<a href="../../concepts/expressions.html#user-security-functions"
+ * target="_top">USER()</a>), or
+ * constant-based functions
+ * (<a href="../../concepts/expressions.html#scalar-functions"
  * target="_top">GEODIST(-77.11, 38.88, -71.06, 42.36)</a>).
  * <p>
- * The response is returned as a dynamic schema. For details see: <a
- * href="../../api/index.html#dynamic-schemas" target="_top">dynamic schemas
+ * The response is returned as a dynamic schema. For details see:
+ * <a href="../../api/index.html#dynamic-schemas" target="_top">dynamic schemas
  * documentation</a>.
  * 
- * @param tableName  Name of the table on which this operation will be
- *                   performed.  An empty table name retrieves one record from
- *                   a single-row virtual table, where columns specified should
- *                   be constants or constant expressions.  The table cannot be
- *                   a parent set.
+ * @param tableName  Name of the table or view on which this operation will be
+ *                   performed, in [schema_name.]table_name format, using
+ *                   standard <a
+ *                   href="../../concepts/tables.html#table-name-resolution"
+ *                   target="_top">name resolution rules</a>.  An empty table
+ *                   name retrieves one record from a single-row virtual table,
+ *                   where columns specified should be constants or constant
+ *                   expressions.
  * @param columnNames  The list of column values to retrieve.
  * @param offset  A positive integer indicating the number of initial results
  *                to skip (this can be useful for paging through the results).
@@ -14445,8 +17724,8 @@ GetRecordsByColumnResponse getRecordsByColumn( const std::string& tableName,
  *                 as the sort direction, e.g., 'timestamp asc, x desc'.  The
  *                 default value is ''.
  *                         <li>
- *                 gpudb::get_records_by_column_convert_wkts_to_wkbs: If true,
- *                 then WKT string columns will be returned as WKB bytes.
+ *                 gpudb::get_records_by_column_convert_wkts_to_wkbs: If @a
+ *                 true, then WKT string columns will be returned as WKB bytes.
  *                 <ul>
  *                         <li> gpudb::get_records_by_column_true
  *                         <li> gpudb::get_records_by_column_false
@@ -14469,17 +17748,18 @@ GetRecordsByColumnResponse& getRecordsByColumn( const std::string& tableName,
                                                 GetRecordsByColumnResponse& response_ ) const;
 
 /**
- * Retrieves the complete series/track records from the given @a worldTableName
- * based on the partial track information contained in the @a tableName.
+ * Retrieves the complete series/track records from the given
+ * @a worldTableName based on the partial track information contained in
+ * the @a tableName.
  * <p>
- * This operation supports paging through the data via the @a offset and @a
- * limit parameters.
+ * This operation supports paging through the data via the @a offset and
+ * @a limit parameters.
  * <p>
  * In contrast to {@link #getRecordsRaw(const GetRecordsRequest&) const}
- * this returns records grouped by series/track. So if @a offset is 0 and @a
- * limit is 5 this operation would return the first 5 series/tracks in @a
- * tableName. Each series/track will be returned sorted by their TIMESTAMP
- * column.
+ * this returns records grouped by
+ * series/track. So if @a offset is 0 and @a limit is 5 this operation
+ * would return the first 5 series/tracks in @a tableName. Each series/track
+ * will be returned sorted by their TIMESTAMP column.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -14491,18 +17771,19 @@ GetRecordsByColumnResponse& getRecordsByColumn( const std::string& tableName,
 RawGetRecordsBySeriesResponse getRecordsBySeriesRaw( const GetRecordsBySeriesRequest& request_ ) const;
 
 /**
- * Retrieves the complete series/track records from the given @a worldTableName
- * based on the partial track information contained in the @a tableName.
+ * Retrieves the complete series/track records from the given
+ * @a worldTableName based on the partial track information contained in
+ * the @a tableName.
  * <p>
- * This operation supports paging through the data via the @a offset and @a
- * limit parameters.
+ * This operation supports paging through the data via the @a offset and
+ * @a limit parameters.
  * <p>
  * In contrast to {@link
  * #getRecordsRaw(const GetRecordsRequest&,RawGetRecordsResponse&) const}
- * this returns records grouped by series/track. So if @a offset is 0 and @a
- * limit is 5 this operation would return the first 5 series/tracks in @a
- * tableName. Each series/track will be returned sorted by their TIMESTAMP
- * column.
+ * this returns records grouped by
+ * series/track. So if @a offset is 0 and @a limit is 5 this operation
+ * would return the first 5 series/tracks in @a tableName. Each series/track
+ * will be returned sorted by their TIMESTAMP column.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -14518,16 +17799,18 @@ RawGetRecordsBySeriesResponse& getRecordsBySeriesRaw( const GetRecordsBySeriesRe
                                                       RawGetRecordsBySeriesResponse& response_ ) const;
 
 /**
- * Retrieves the complete series/track records from the given @a worldTableName
- * based on the partial track information contained in the @a tableName.
+ * Retrieves the complete series/track records from the given
+ * @a worldTableName based on the partial track information contained in
+ * the @a tableName.
  * <p>
- * This operation supports paging through the data via the @a offset and @a
- * limit parameters.
+ * This operation supports paging through the data via the @a offset and
+ * @a limit parameters.
  * <p>
  * In contrast to {@link #getRecords(const GetRecordsRequest&) const} this
- * returns records grouped by series/track. So if @a offset is 0 and @a limit
- * is 5 this operation would return the first 5 series/tracks in @a tableName.
- * Each series/track will be returned sorted by their TIMESTAMP column.
+ * returns records grouped by
+ * series/track. So if @a offset is 0 and @a limit is 5 this operation
+ * would return the first 5 series/tracks in @a tableName. Each series/track
+ * will be returned sorted by their TIMESTAMP column.
  * 
  * @tparam <TResponse>  The type of object being retrieved.
  * 
@@ -14563,18 +17846,19 @@ GetRecordsBySeriesResponse<TResponse> getRecordsBySeries( const GetRecordsBySeri
 
 
 /**
- * Retrieves the complete series/track records from the given @a worldTableName
- * based on the partial track information contained in the @a tableName.
+ * Retrieves the complete series/track records from the given
+ * @a worldTableName based on the partial track information contained in
+ * the @a tableName.
  * <p>
- * This operation supports paging through the data via the @a offset and @a
- * limit parameters.
+ * This operation supports paging through the data via the @a offset and
+ * @a limit parameters.
  * <p>
  * In contrast to {@link
  * #getRecords(const GetRecordsRequest&,GetRecordsResponse<TResponse>&) const}
- * this returns records grouped by series/track. So if @a offset is 0 and @a
- * limit is 5 this operation would return the first 5 series/tracks in @a
- * tableName. Each series/track will be returned sorted by their TIMESTAMP
- * column.
+ * this returns records grouped by
+ * series/track. So if @a offset is 0 and @a limit is 5 this operation
+ * would return the first 5 series/tracks in @a tableName. Each series/track
+ * will be returned sorted by their TIMESTAMP column.
  * 
  * @tparam <TResponse>  The type of object being retrieved.
  * 
@@ -14613,30 +17897,37 @@ GetRecordsBySeriesResponse<TResponse>& getRecordsBySeries( const GetRecordsBySer
 
 
 /**
- * Retrieves the complete series/track records from the given @a worldTableName
- * based on the partial track information contained in the @a tableName.
+ * Retrieves the complete series/track records from the given
+ * @a worldTableName based on the partial track information contained in
+ * the @a tableName.
  * <p>
- * This operation supports paging through the data via the @a offset and @a
- * limit parameters.
+ * This operation supports paging through the data via the @a offset and
+ * @a limit parameters.
  * <p>
  * In contrast to {@link
  * #getRecords(const std::string&,const int64_t,const int64_t,const std::map<std::string, std::string>&) const}
- * this returns records grouped by series/track. So if @a offset is 0 and @a
- * limit is 5 this operation would return the first 5 series/tracks in @a
- * tableName. Each series/track will be returned sorted by their TIMESTAMP
- * column.
+ * this returns records grouped by
+ * series/track. So if @a offset is 0 and @a limit is 5 this operation
+ * would return the first 5 series/tracks in @a tableName. Each series/track
+ * will be returned sorted by their TIMESTAMP column.
  * 
  * @tparam <TResponse>  The type of object being retrieved.
  * 
- * @param tableName  Name of the collection/table/view for which series/tracks
- *                   will be fetched.
+ * @param tableName  Name of the table or view for which series/tracks will be
+ *                   fetched, in [schema_name.]table_name format, using
+ *                   standard <a
+ *                   href="../../concepts/tables.html#table-name-resolution"
+ *                   target="_top">name resolution rules</a>.
  * @param worldTableName  Name of the table containing the complete
  *                        series/track information to be returned for the
- *                        tracks present in the @a tableName. Typically this is
- *                        used when retrieving series/tracks from a view (which
- *                        contains partial series/tracks) but the user wants to
- *                        retrieve the entire original series/tracks. Can be
- *                        blank.
+ *                        tracks present in the @a tableName, in
+ *                        [schema_name.]table_name format, using standard <a
+ *                        href="../../concepts/tables.html#table-name-resolution"
+ *                        target="_top">name resolution rules</a>.  Typically
+ *                        this is used when retrieving series/tracks from a
+ *                        view (which contains partial series/tracks) but the
+ *                        user wants to retrieve the entire original
+ *                        series/tracks. Can be blank.
  * @param offset  A positive integer indicating the number of initial
  *                series/tracks to skip (useful for paging through the
  *                results).  The minimum allowed value is 0. The maximum
@@ -14682,30 +17973,37 @@ GetRecordsBySeriesResponse<TResponse> getRecordsBySeries( const std::string& tab
 
 
 /**
- * Retrieves the complete series/track records from the given @a worldTableName
- * based on the partial track information contained in the @a tableName.
+ * Retrieves the complete series/track records from the given
+ * @a worldTableName based on the partial track information contained in
+ * the @a tableName.
  * <p>
- * This operation supports paging through the data via the @a offset and @a
- * limit parameters.
+ * This operation supports paging through the data via the @a offset and
+ * @a limit parameters.
  * <p>
  * In contrast to {@link
  * #getRecords(const std::string&,const int64_t,const int64_t,const std::map<std::string, std::string>&,GetRecordsResponse<TResponse>&) const}
- * this returns records grouped by series/track. So if @a offset is 0 and @a
- * limit is 5 this operation would return the first 5 series/tracks in @a
- * tableName. Each series/track will be returned sorted by their TIMESTAMP
- * column.
+ * this returns records grouped by
+ * series/track. So if @a offset is 0 and @a limit is 5 this operation
+ * would return the first 5 series/tracks in @a tableName. Each series/track
+ * will be returned sorted by their TIMESTAMP column.
  * 
  * @tparam <TResponse>  The type of object being retrieved.
  * 
- * @param tableName  Name of the collection/table/view for which series/tracks
- *                   will be fetched.
+ * @param tableName  Name of the table or view for which series/tracks will be
+ *                   fetched, in [schema_name.]table_name format, using
+ *                   standard <a
+ *                   href="../../concepts/tables.html#table-name-resolution"
+ *                   target="_top">name resolution rules</a>.
  * @param worldTableName  Name of the table containing the complete
  *                        series/track information to be returned for the
- *                        tracks present in the @a tableName. Typically this is
- *                        used when retrieving series/tracks from a view (which
- *                        contains partial series/tracks) but the user wants to
- *                        retrieve the entire original series/tracks. Can be
- *                        blank.
+ *                        tracks present in the @a tableName, in
+ *                        [schema_name.]table_name format, using standard <a
+ *                        href="../../concepts/tables.html#table-name-resolution"
+ *                        target="_top">name resolution rules</a>.  Typically
+ *                        this is used when retrieving series/tracks from a
+ *                        view (which contains partial series/tracks) but the
+ *                        user wants to retrieve the entire original
+ *                        series/tracks. Can be blank.
  * @param offset  A positive integer indicating the number of initial
  *                series/tracks to skip (useful for paging through the
  *                results).  The minimum allowed value is 0. The maximum
@@ -14754,18 +18052,19 @@ GetRecordsBySeriesResponse<TResponse>& getRecordsBySeries( const std::string& ta
 
 
 /**
- * Retrieves the complete series/track records from the given @a worldTableName
- * based on the partial track information contained in the @a tableName.
+ * Retrieves the complete series/track records from the given
+ * @a worldTableName based on the partial track information contained in
+ * the @a tableName.
  * <p>
- * This operation supports paging through the data via the @a offset and @a
- * limit parameters.
+ * This operation supports paging through the data via the @a offset and
+ * @a limit parameters.
  * <p>
  * In contrast to {@link
  * #getRecords(const ::avro::ValidSchema&,const GetRecordsRequest&) const}
- * this returns records grouped by series/track. So if @a offset is 0 and @a
- * limit is 5 this operation would return the first 5 series/tracks in @a
- * tableName. Each series/track will be returned sorted by their TIMESTAMP
- * column.
+ * this returns records grouped by
+ * series/track. So if @a offset is 0 and @a limit is 5 this operation
+ * would return the first 5 series/tracks in @a tableName. Each series/track
+ * will be returned sorted by their TIMESTAMP column.
  * 
  * @tparam <TResponse>  The type of object being retrieved.
  * 
@@ -14803,17 +18102,19 @@ GetRecordsBySeriesResponse<TResponse> getRecordsBySeries( const ::avro::ValidSch
 
 
 /**
- * Retrieves the complete series/track records from the given @a worldTableName
- * based on the partial track information contained in the @a tableName.
+ * Retrieves the complete series/track records from the given
+ * @a worldTableName based on the partial track information contained in
+ * the @a tableName.
  * <p>
- * This operation supports paging through the data via the @a offset and @a
- * limit parameters.
+ * This operation supports paging through the data via the @a offset and
+ * @a limit parameters.
  * <p>
  * In contrast to {@link
  * #getRecords(const Type&,const GetRecordsRequest&) const} this returns
- * records grouped by series/track. So if @a offset is 0 and @a limit is 5 this
- * operation would return the first 5 series/tracks in @a tableName. Each
- * series/track will be returned sorted by their TIMESTAMP column.
+ * records grouped by
+ * series/track. So if @a offset is 0 and @a limit is 5 this operation
+ * would return the first 5 series/tracks in @a tableName. Each series/track
+ * will be returned sorted by their TIMESTAMP column.
  * 
  * @tparam <TResponse>  The type of object being retrieved.
  * 
@@ -14851,18 +18152,19 @@ GetRecordsBySeriesResponse<TResponse> getRecordsBySeries( const Type& type_,
 
 
 /**
- * Retrieves the complete series/track records from the given @a worldTableName
- * based on the partial track information contained in the @a tableName.
+ * Retrieves the complete series/track records from the given
+ * @a worldTableName based on the partial track information contained in
+ * the @a tableName.
  * <p>
- * This operation supports paging through the data via the @a offset and @a
- * limit parameters.
+ * This operation supports paging through the data via the @a offset and
+ * @a limit parameters.
  * <p>
  * In contrast to {@link
  * #getRecords(const ::avro::ValidSchema&,const GetRecordsRequest&,GetRecordsResponse<TResponse>&) const}
- * this returns records grouped by series/track. So if @a offset is 0 and @a
- * limit is 5 this operation would return the first 5 series/tracks in @a
- * tableName. Each series/track will be returned sorted by their TIMESTAMP
- * column.
+ * this returns records grouped by
+ * series/track. So if @a offset is 0 and @a limit is 5 this operation
+ * would return the first 5 series/tracks in @a tableName. Each series/track
+ * will be returned sorted by their TIMESTAMP column.
  * 
  * @tparam <TResponse>  The type of object being retrieved.
  * 
@@ -14903,18 +18205,19 @@ GetRecordsBySeriesResponse<TResponse>& getRecordsBySeries( const ::avro::ValidSc
 
 
 /**
- * Retrieves the complete series/track records from the given @a worldTableName
- * based on the partial track information contained in the @a tableName.
+ * Retrieves the complete series/track records from the given
+ * @a worldTableName based on the partial track information contained in
+ * the @a tableName.
  * <p>
- * This operation supports paging through the data via the @a offset and @a
- * limit parameters.
+ * This operation supports paging through the data via the @a offset and
+ * @a limit parameters.
  * <p>
  * In contrast to {@link
  * #getRecords(const Type&,const GetRecordsRequest&,GetRecordsResponse<TResponse>&) const}
- * this returns records grouped by series/track. So if @a offset is 0 and @a
- * limit is 5 this operation would return the first 5 series/tracks in @a
- * tableName. Each series/track will be returned sorted by their TIMESTAMP
- * column.
+ * this returns records grouped by
+ * series/track. So if @a offset is 0 and @a limit is 5 this operation
+ * would return the first 5 series/tracks in @a tableName. Each series/track
+ * will be returned sorted by their TIMESTAMP column.
  * 
  * @tparam <TResponse>  The type of object being retrieved.
  * 
@@ -14955,31 +18258,38 @@ GetRecordsBySeriesResponse<TResponse>& getRecordsBySeries( const Type& type_,
 
 
 /**
- * Retrieves the complete series/track records from the given @a worldTableName
- * based on the partial track information contained in the @a tableName.
+ * Retrieves the complete series/track records from the given
+ * @a worldTableName based on the partial track information contained in
+ * the @a tableName.
  * <p>
- * This operation supports paging through the data via the @a offset and @a
- * limit parameters.
+ * This operation supports paging through the data via the @a offset and
+ * @a limit parameters.
  * <p>
  * In contrast to {@link
  * #getRecords(const ::avro::ValidSchema&,const std::string&,const int64_t,const int64_t,const std::map<std::string, std::string>&) const}
- * this returns records grouped by series/track. So if @a offset is 0 and @a
- * limit is 5 this operation would return the first 5 series/tracks in @a
- * tableName. Each series/track will be returned sorted by their TIMESTAMP
- * column.
+ * this returns records grouped by
+ * series/track. So if @a offset is 0 and @a limit is 5 this operation
+ * would return the first 5 series/tracks in @a tableName. Each series/track
+ * will be returned sorted by their TIMESTAMP column.
  * 
  * @tparam <TResponse>  The type of object being retrieved.
  * 
  * @param[in] schema_  Avro schema object used for decoding returned objects.
- * @param tableName  Name of the collection/table/view for which series/tracks
- *                   will be fetched.
+ * @param tableName  Name of the table or view for which series/tracks will be
+ *                   fetched, in [schema_name.]table_name format, using
+ *                   standard <a
+ *                   href="../../concepts/tables.html#table-name-resolution"
+ *                   target="_top">name resolution rules</a>.
  * @param worldTableName  Name of the table containing the complete
  *                        series/track information to be returned for the
- *                        tracks present in the @a tableName. Typically this is
- *                        used when retrieving series/tracks from a view (which
- *                        contains partial series/tracks) but the user wants to
- *                        retrieve the entire original series/tracks. Can be
- *                        blank.
+ *                        tracks present in the @a tableName, in
+ *                        [schema_name.]table_name format, using standard <a
+ *                        href="../../concepts/tables.html#table-name-resolution"
+ *                        target="_top">name resolution rules</a>.  Typically
+ *                        this is used when retrieving series/tracks from a
+ *                        view (which contains partial series/tracks) but the
+ *                        user wants to retrieve the entire original
+ *                        series/tracks. Can be blank.
  * @param offset  A positive integer indicating the number of initial
  *                series/tracks to skip (useful for paging through the
  *                results).  The minimum allowed value is 0. The maximum
@@ -15026,31 +18336,38 @@ GetRecordsBySeriesResponse<TResponse> getRecordsBySeries( const ::avro::ValidSch
 
 
 /**
- * Retrieves the complete series/track records from the given @a worldTableName
- * based on the partial track information contained in the @a tableName.
+ * Retrieves the complete series/track records from the given
+ * @a worldTableName based on the partial track information contained in
+ * the @a tableName.
  * <p>
- * This operation supports paging through the data via the @a offset and @a
- * limit parameters.
+ * This operation supports paging through the data via the @a offset and
+ * @a limit parameters.
  * <p>
  * In contrast to {@link
  * #getRecords(const Type&,const std::string&,const int64_t,const int64_t,const std::map<std::string, std::string>&) const}
- * this returns records grouped by series/track. So if @a offset is 0 and @a
- * limit is 5 this operation would return the first 5 series/tracks in @a
- * tableName. Each series/track will be returned sorted by their TIMESTAMP
- * column.
+ * this returns records grouped by
+ * series/track. So if @a offset is 0 and @a limit is 5 this operation
+ * would return the first 5 series/tracks in @a tableName. Each series/track
+ * will be returned sorted by their TIMESTAMP column.
  * 
  * @tparam <TResponse>  The type of object being retrieved.
  * 
  * @param[in] type_  Type object used for decoding returned objects.
- * @param tableName  Name of the collection/table/view for which series/tracks
- *                   will be fetched.
+ * @param tableName  Name of the table or view for which series/tracks will be
+ *                   fetched, in [schema_name.]table_name format, using
+ *                   standard <a
+ *                   href="../../concepts/tables.html#table-name-resolution"
+ *                   target="_top">name resolution rules</a>.
  * @param worldTableName  Name of the table containing the complete
  *                        series/track information to be returned for the
- *                        tracks present in the @a tableName. Typically this is
- *                        used when retrieving series/tracks from a view (which
- *                        contains partial series/tracks) but the user wants to
- *                        retrieve the entire original series/tracks. Can be
- *                        blank.
+ *                        tracks present in the @a tableName, in
+ *                        [schema_name.]table_name format, using standard <a
+ *                        href="../../concepts/tables.html#table-name-resolution"
+ *                        target="_top">name resolution rules</a>.  Typically
+ *                        this is used when retrieving series/tracks from a
+ *                        view (which contains partial series/tracks) but the
+ *                        user wants to retrieve the entire original
+ *                        series/tracks. Can be blank.
  * @param offset  A positive integer indicating the number of initial
  *                series/tracks to skip (useful for paging through the
  *                results).  The minimum allowed value is 0. The maximum
@@ -15097,31 +18414,38 @@ GetRecordsBySeriesResponse<TResponse> getRecordsBySeries( const Type& type_,
 
 
 /**
- * Retrieves the complete series/track records from the given @a worldTableName
- * based on the partial track information contained in the @a tableName.
+ * Retrieves the complete series/track records from the given
+ * @a worldTableName based on the partial track information contained in
+ * the @a tableName.
  * <p>
- * This operation supports paging through the data via the @a offset and @a
- * limit parameters.
+ * This operation supports paging through the data via the @a offset and
+ * @a limit parameters.
  * <p>
  * In contrast to {@link
  * #getRecords(const ::avro::ValidSchema&,const std::string&,const int64_t,const int64_t,const std::map<std::string, std::string>&,GetRecordsResponse<TResponse>&) const}
- * this returns records grouped by series/track. So if @a offset is 0 and @a
- * limit is 5 this operation would return the first 5 series/tracks in @a
- * tableName. Each series/track will be returned sorted by their TIMESTAMP
- * column.
+ * this returns records grouped by
+ * series/track. So if @a offset is 0 and @a limit is 5 this operation
+ * would return the first 5 series/tracks in @a tableName. Each series/track
+ * will be returned sorted by their TIMESTAMP column.
  * 
  * @tparam <TResponse>  The type of object being retrieved.
  * 
  * @param[in] schema_  Avro schema object used for decoding returned objects.
- * @param tableName  Name of the collection/table/view for which series/tracks
- *                   will be fetched.
+ * @param tableName  Name of the table or view for which series/tracks will be
+ *                   fetched, in [schema_name.]table_name format, using
+ *                   standard <a
+ *                   href="../../concepts/tables.html#table-name-resolution"
+ *                   target="_top">name resolution rules</a>.
  * @param worldTableName  Name of the table containing the complete
  *                        series/track information to be returned for the
- *                        tracks present in the @a tableName. Typically this is
- *                        used when retrieving series/tracks from a view (which
- *                        contains partial series/tracks) but the user wants to
- *                        retrieve the entire original series/tracks. Can be
- *                        blank.
+ *                        tracks present in the @a tableName, in
+ *                        [schema_name.]table_name format, using standard <a
+ *                        href="../../concepts/tables.html#table-name-resolution"
+ *                        target="_top">name resolution rules</a>.  Typically
+ *                        this is used when retrieving series/tracks from a
+ *                        view (which contains partial series/tracks) but the
+ *                        user wants to retrieve the entire original
+ *                        series/tracks. Can be blank.
  * @param offset  A positive integer indicating the number of initial
  *                series/tracks to skip (useful for paging through the
  *                results).  The minimum allowed value is 0. The maximum
@@ -15171,31 +18495,38 @@ GetRecordsBySeriesResponse<TResponse>& getRecordsBySeries( const ::avro::ValidSc
 
 
 /**
- * Retrieves the complete series/track records from the given @a worldTableName
- * based on the partial track information contained in the @a tableName.
+ * Retrieves the complete series/track records from the given
+ * @a worldTableName based on the partial track information contained in
+ * the @a tableName.
  * <p>
- * This operation supports paging through the data via the @a offset and @a
- * limit parameters.
+ * This operation supports paging through the data via the @a offset and
+ * @a limit parameters.
  * <p>
  * In contrast to {@link
  * #getRecords(const Type&,const std::string&,const int64_t,const int64_t,const std::map<std::string, std::string>&,GetRecordsResponse<TResponse>&) const}
- * this returns records grouped by series/track. So if @a offset is 0 and @a
- * limit is 5 this operation would return the first 5 series/tracks in @a
- * tableName. Each series/track will be returned sorted by their TIMESTAMP
- * column.
+ * this returns records grouped by
+ * series/track. So if @a offset is 0 and @a limit is 5 this operation
+ * would return the first 5 series/tracks in @a tableName. Each series/track
+ * will be returned sorted by their TIMESTAMP column.
  * 
  * @tparam <TResponse>  The type of object being retrieved.
  * 
  * @param[in] type_  Type object used for decoding returned objects.
- * @param tableName  Name of the collection/table/view for which series/tracks
- *                   will be fetched.
+ * @param tableName  Name of the table or view for which series/tracks will be
+ *                   fetched, in [schema_name.]table_name format, using
+ *                   standard <a
+ *                   href="../../concepts/tables.html#table-name-resolution"
+ *                   target="_top">name resolution rules</a>.
  * @param worldTableName  Name of the table containing the complete
  *                        series/track information to be returned for the
- *                        tracks present in the @a tableName. Typically this is
- *                        used when retrieving series/tracks from a view (which
- *                        contains partial series/tracks) but the user wants to
- *                        retrieve the entire original series/tracks. Can be
- *                        blank.
+ *                        tracks present in the @a tableName, in
+ *                        [schema_name.]table_name format, using standard <a
+ *                        href="../../concepts/tables.html#table-name-resolution"
+ *                        target="_top">name resolution rules</a>.  Typically
+ *                        this is used when retrieving series/tracks from a
+ *                        view (which contains partial series/tracks) but the
+ *                        user wants to retrieve the entire original
+ *                        series/tracks. Can be blank.
  * @param offset  A positive integer indicating the number of initial
  *                series/tracks to skip (useful for paging through the
  *                results).  The minimum allowed value is 0. The maximum
@@ -15245,15 +18576,17 @@ GetRecordsBySeriesResponse<TResponse>& getRecordsBySeries( const Type& type_,
 
 
 /**
- * Retrieves records from a collection. The operation can optionally return the
- * record IDs which can be used in certain queries such as {@link
- * #deleteRecords(const DeleteRecordsRequest&) const}.
+ * Retrieves records from a collection. The operation can optionally
+ * return the record IDs which can be used in certain queries such as
+ * {@link #deleteRecords(const DeleteRecordsRequest&) const}.
  * <p>
- * This operation supports paging through the data via the @a offset and @a
- * limit parameters.
+ * This operation supports paging through the data via the @a offset and
+ * @a limit parameters.
  * <p>
  * Note that when using the Java API, it is not possible to retrieve records
- * from join tables using this operation.
+ * from
+ * join views using this operation.
+ * (DEPRECATED)
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -15265,15 +18598,18 @@ GetRecordsBySeriesResponse<TResponse>& getRecordsBySeries( const Type& type_,
 RawGetRecordsFromCollectionResponse getRecordsFromCollectionRaw( const GetRecordsFromCollectionRequest& request_ ) const;
 
 /**
- * Retrieves records from a collection. The operation can optionally return the
- * record IDs which can be used in certain queries such as {@link
+ * Retrieves records from a collection. The operation can optionally
+ * return the record IDs which can be used in certain queries such as
+ * {@link
  * #deleteRecords(const DeleteRecordsRequest&,DeleteRecordsResponse&) const}.
  * <p>
- * This operation supports paging through the data via the @a offset and @a
- * limit parameters.
+ * This operation supports paging through the data via the @a offset and
+ * @a limit parameters.
  * <p>
  * Note that when using the Java API, it is not possible to retrieve records
- * from join tables using this operation.
+ * from
+ * join views using this operation.
+ * (DEPRECATED)
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -15289,15 +18625,17 @@ RawGetRecordsFromCollectionResponse& getRecordsFromCollectionRaw( const GetRecor
                                                                   RawGetRecordsFromCollectionResponse& response_ ) const;
 
 /**
- * Retrieves records from a collection. The operation can optionally return the
- * record IDs which can be used in certain queries such as {@link
- * #deleteRecords(const DeleteRecordsRequest&) const}.
+ * Retrieves records from a collection. The operation can optionally
+ * return the record IDs which can be used in certain queries such as
+ * {@link #deleteRecords(const DeleteRecordsRequest&) const}.
  * <p>
- * This operation supports paging through the data via the @a offset and @a
- * limit parameters.
+ * This operation supports paging through the data via the @a offset and
+ * @a limit parameters.
  * <p>
  * Note that when using the Java API, it is not possible to retrieve records
- * from join tables using this operation.
+ * from
+ * join views using this operation.
+ * (DEPRECATED)
  * 
  * @tparam <TResponse>  The type of object being retrieved.
  * 
@@ -15327,15 +18665,18 @@ GetRecordsFromCollectionResponse<TResponse> getRecordsFromCollection( const GetR
 
 
 /**
- * Retrieves records from a collection. The operation can optionally return the
- * record IDs which can be used in certain queries such as {@link
+ * Retrieves records from a collection. The operation can optionally
+ * return the record IDs which can be used in certain queries such as
+ * {@link
  * #deleteRecords(const DeleteRecordsRequest&,DeleteRecordsResponse&) const}.
  * <p>
- * This operation supports paging through the data via the @a offset and @a
- * limit parameters.
+ * This operation supports paging through the data via the @a offset and
+ * @a limit parameters.
  * <p>
  * Note that when using the Java API, it is not possible to retrieve records
- * from join tables using this operation.
+ * from
+ * join views using this operation.
+ * (DEPRECATED)
  * 
  * @tparam <TResponse>  The type of object being retrieved.
  * 
@@ -15368,20 +18709,27 @@ GetRecordsFromCollectionResponse<TResponse>& getRecordsFromCollection( const Get
 
 
 /**
- * Retrieves records from a collection. The operation can optionally return the
- * record IDs which can be used in certain queries such as {@link
+ * Retrieves records from a collection. The operation can optionally
+ * return the record IDs which can be used in certain queries such as
+ * {@link
  * #deleteRecords(const std::string&,const std::vector<std::string>&,const std::map<std::string, std::string>&) const}.
  * <p>
- * This operation supports paging through the data via the @a offset and @a
- * limit parameters.
+ * This operation supports paging through the data via the @a offset and
+ * @a limit parameters.
  * <p>
  * Note that when using the Java API, it is not possible to retrieve records
- * from join tables using this operation.
+ * from
+ * join views using this operation.
+ * (DEPRECATED)
  * 
  * @tparam <TResponse>  The type of object being retrieved.
  * 
  * @param tableName  Name of the collection or table from which records are to
- *                   be retrieved. Must be an existing collection or table.
+ *                   be retrieved, in [schema_name.]table_name format, using
+ *                   standard <a
+ *                   href="../../concepts/tables.html#table-name-resolution"
+ *                   target="_top">name resolution rules</a>.  Must be an
+ *                   existing collection or table.
  * @param offset  A positive integer indicating the number of initial results
  *                to skip (this can be useful for paging through the results).
  *                The minimum allowed value is 0. The maximum allowed value is
@@ -15397,9 +18745,9 @@ GetRecordsFromCollectionResponse<TResponse>& getRecordsFromCollection( const Get
  * @param options
  *                 <ul>
  *                         <li>
- *                 gpudb::get_records_from_collection_return_record_ids: If
- *                 'true' then return the internal record ID along with each
- *                 returned record. Default is 'false'.
+ *                 gpudb::get_records_from_collection_return_record_ids: If @a
+ *                 true then return the internal record ID along with each
+ *                 returned record.
  *                 <ul>
  *                         <li> gpudb::get_records_from_collection_true
  *                         <li> gpudb::get_records_from_collection_false
@@ -15436,20 +18784,27 @@ GetRecordsFromCollectionResponse<TResponse> getRecordsFromCollection( const std:
 
 
 /**
- * Retrieves records from a collection. The operation can optionally return the
- * record IDs which can be used in certain queries such as {@link
+ * Retrieves records from a collection. The operation can optionally
+ * return the record IDs which can be used in certain queries such as
+ * {@link
  * #deleteRecords(const std::string&,const std::vector<std::string>&,const std::map<std::string, std::string>&,DeleteRecordsResponse&) const}.
  * <p>
- * This operation supports paging through the data via the @a offset and @a
- * limit parameters.
+ * This operation supports paging through the data via the @a offset and
+ * @a limit parameters.
  * <p>
  * Note that when using the Java API, it is not possible to retrieve records
- * from join tables using this operation.
+ * from
+ * join views using this operation.
+ * (DEPRECATED)
  * 
  * @tparam <TResponse>  The type of object being retrieved.
  * 
  * @param tableName  Name of the collection or table from which records are to
- *                   be retrieved. Must be an existing collection or table.
+ *                   be retrieved, in [schema_name.]table_name format, using
+ *                   standard <a
+ *                   href="../../concepts/tables.html#table-name-resolution"
+ *                   target="_top">name resolution rules</a>.  Must be an
+ *                   existing collection or table.
  * @param offset  A positive integer indicating the number of initial results
  *                to skip (this can be useful for paging through the results).
  *                The minimum allowed value is 0. The maximum allowed value is
@@ -15465,9 +18820,9 @@ GetRecordsFromCollectionResponse<TResponse> getRecordsFromCollection( const std:
  * @param options
  *                 <ul>
  *                         <li>
- *                 gpudb::get_records_from_collection_return_record_ids: If
- *                 'true' then return the internal record ID along with each
- *                 returned record. Default is 'false'.
+ *                 gpudb::get_records_from_collection_return_record_ids: If @a
+ *                 true then return the internal record ID along with each
+ *                 returned record.
  *                 <ul>
  *                         <li> gpudb::get_records_from_collection_true
  *                         <li> gpudb::get_records_from_collection_false
@@ -15507,15 +18862,17 @@ GetRecordsFromCollectionResponse<TResponse>& getRecordsFromCollection( const std
 
 
 /**
- * Retrieves records from a collection. The operation can optionally return the
- * record IDs which can be used in certain queries such as {@link
- * #deleteRecords(const DeleteRecordsRequest&) const}.
+ * Retrieves records from a collection. The operation can optionally
+ * return the record IDs which can be used in certain queries such as
+ * {@link #deleteRecords(const DeleteRecordsRequest&) const}.
  * <p>
- * This operation supports paging through the data via the @a offset and @a
- * limit parameters.
+ * This operation supports paging through the data via the @a offset and
+ * @a limit parameters.
  * <p>
  * Note that when using the Java API, it is not possible to retrieve records
- * from join tables using this operation.
+ * from
+ * join views using this operation.
+ * (DEPRECATED)
  * 
  * @tparam <TResponse>  The type of object being retrieved.
  * 
@@ -15547,15 +18904,17 @@ GetRecordsFromCollectionResponse<TResponse> getRecordsFromCollection( const ::av
 
 
 /**
- * Retrieves records from a collection. The operation can optionally return the
- * record IDs which can be used in certain queries such as {@link
- * #deleteRecords(const DeleteRecordsRequest&) const}.
+ * Retrieves records from a collection. The operation can optionally
+ * return the record IDs which can be used in certain queries such as
+ * {@link #deleteRecords(const DeleteRecordsRequest&) const}.
  * <p>
- * This operation supports paging through the data via the @a offset and @a
- * limit parameters.
+ * This operation supports paging through the data via the @a offset and
+ * @a limit parameters.
  * <p>
  * Note that when using the Java API, it is not possible to retrieve records
- * from join tables using this operation.
+ * from
+ * join views using this operation.
+ * (DEPRECATED)
  * 
  * @tparam <TResponse>  The type of object being retrieved.
  * 
@@ -15587,15 +18946,17 @@ GetRecordsFromCollectionResponse<TResponse> getRecordsFromCollection( const Type
 
 
 /**
- * Retrieves records from a collection. The operation can optionally return the
- * record IDs which can be used in certain queries such as {@link
- * #deleteRecords(const DeleteRecordsRequest&) const}.
+ * Retrieves records from a collection. The operation can optionally
+ * return the record IDs which can be used in certain queries such as
+ * {@link #deleteRecords(const DeleteRecordsRequest&) const}.
  * <p>
- * This operation supports paging through the data via the @a offset and @a
- * limit parameters.
+ * This operation supports paging through the data via the @a offset and
+ * @a limit parameters.
  * <p>
  * Note that when using the Java API, it is not possible to retrieve records
- * from join tables using this operation.
+ * from
+ * join views using this operation.
+ * (DEPRECATED)
  * 
  * @tparam <TResponse>  The type of object being retrieved.
  * 
@@ -15630,15 +18991,17 @@ GetRecordsFromCollectionResponse<TResponse>& getRecordsFromCollection( const ::a
 
 
 /**
- * Retrieves records from a collection. The operation can optionally return the
- * record IDs which can be used in certain queries such as {@link
- * #deleteRecords(const DeleteRecordsRequest&) const}.
+ * Retrieves records from a collection. The operation can optionally
+ * return the record IDs which can be used in certain queries such as
+ * {@link #deleteRecords(const DeleteRecordsRequest&) const}.
  * <p>
- * This operation supports paging through the data via the @a offset and @a
- * limit parameters.
+ * This operation supports paging through the data via the @a offset and
+ * @a limit parameters.
  * <p>
  * Note that when using the Java API, it is not possible to retrieve records
- * from join tables using this operation.
+ * from
+ * join views using this operation.
+ * (DEPRECATED)
  * 
  * @tparam <TResponse>  The type of object being retrieved.
  * 
@@ -15673,21 +19036,28 @@ GetRecordsFromCollectionResponse<TResponse>& getRecordsFromCollection( const Typ
 
 
 /**
- * Retrieves records from a collection. The operation can optionally return the
- * record IDs which can be used in certain queries such as {@link
+ * Retrieves records from a collection. The operation can optionally
+ * return the record IDs which can be used in certain queries such as
+ * {@link
  * #deleteRecords(const std::string&,const std::vector<std::string>&,const std::map<std::string, std::string>&) const}.
  * <p>
- * This operation supports paging through the data via the @a offset and @a
- * limit parameters.
+ * This operation supports paging through the data via the @a offset and
+ * @a limit parameters.
  * <p>
  * Note that when using the Java API, it is not possible to retrieve records
- * from join tables using this operation.
+ * from
+ * join views using this operation.
+ * (DEPRECATED)
  * 
  * @tparam <TResponse>  The type of object being retrieved.
  * 
  * @param[in] schema_  Avro schema object used for decoding returned objects.
  * @param tableName  Name of the collection or table from which records are to
- *                   be retrieved. Must be an existing collection or table.
+ *                   be retrieved, in [schema_name.]table_name format, using
+ *                   standard <a
+ *                   href="../../concepts/tables.html#table-name-resolution"
+ *                   target="_top">name resolution rules</a>.  Must be an
+ *                   existing collection or table.
  * @param offset  A positive integer indicating the number of initial results
  *                to skip (this can be useful for paging through the results).
  *                The minimum allowed value is 0. The maximum allowed value is
@@ -15703,9 +19073,9 @@ GetRecordsFromCollectionResponse<TResponse>& getRecordsFromCollection( const Typ
  * @param options
  *                 <ul>
  *                         <li>
- *                 gpudb::get_records_from_collection_return_record_ids: If
- *                 'true' then return the internal record ID along with each
- *                 returned record. Default is 'false'.
+ *                 gpudb::get_records_from_collection_return_record_ids: If @a
+ *                 true then return the internal record ID along with each
+ *                 returned record.
  *                 <ul>
  *                         <li> gpudb::get_records_from_collection_true
  *                         <li> gpudb::get_records_from_collection_false
@@ -15743,21 +19113,28 @@ GetRecordsFromCollectionResponse<TResponse> getRecordsFromCollection( const ::av
 
 
 /**
- * Retrieves records from a collection. The operation can optionally return the
- * record IDs which can be used in certain queries such as {@link
+ * Retrieves records from a collection. The operation can optionally
+ * return the record IDs which can be used in certain queries such as
+ * {@link
  * #deleteRecords(const std::string&,const std::vector<std::string>&,const std::map<std::string, std::string>&) const}.
  * <p>
- * This operation supports paging through the data via the @a offset and @a
- * limit parameters.
+ * This operation supports paging through the data via the @a offset and
+ * @a limit parameters.
  * <p>
  * Note that when using the Java API, it is not possible to retrieve records
- * from join tables using this operation.
+ * from
+ * join views using this operation.
+ * (DEPRECATED)
  * 
  * @tparam <TResponse>  The type of object being retrieved.
  * 
  * @param[in] type_  Type object used for decoding returned objects.
  * @param tableName  Name of the collection or table from which records are to
- *                   be retrieved. Must be an existing collection or table.
+ *                   be retrieved, in [schema_name.]table_name format, using
+ *                   standard <a
+ *                   href="../../concepts/tables.html#table-name-resolution"
+ *                   target="_top">name resolution rules</a>.  Must be an
+ *                   existing collection or table.
  * @param offset  A positive integer indicating the number of initial results
  *                to skip (this can be useful for paging through the results).
  *                The minimum allowed value is 0. The maximum allowed value is
@@ -15773,9 +19150,9 @@ GetRecordsFromCollectionResponse<TResponse> getRecordsFromCollection( const ::av
  * @param options
  *                 <ul>
  *                         <li>
- *                 gpudb::get_records_from_collection_return_record_ids: If
- *                 'true' then return the internal record ID along with each
- *                 returned record. Default is 'false'.
+ *                 gpudb::get_records_from_collection_return_record_ids: If @a
+ *                 true then return the internal record ID along with each
+ *                 returned record.
  *                 <ul>
  *                         <li> gpudb::get_records_from_collection_true
  *                         <li> gpudb::get_records_from_collection_false
@@ -15813,21 +19190,28 @@ GetRecordsFromCollectionResponse<TResponse> getRecordsFromCollection( const Type
 
 
 /**
- * Retrieves records from a collection. The operation can optionally return the
- * record IDs which can be used in certain queries such as {@link
+ * Retrieves records from a collection. The operation can optionally
+ * return the record IDs which can be used in certain queries such as
+ * {@link
  * #deleteRecords(const std::string&,const std::vector<std::string>&,const std::map<std::string, std::string>&) const}.
  * <p>
- * This operation supports paging through the data via the @a offset and @a
- * limit parameters.
+ * This operation supports paging through the data via the @a offset and
+ * @a limit parameters.
  * <p>
  * Note that when using the Java API, it is not possible to retrieve records
- * from join tables using this operation.
+ * from
+ * join views using this operation.
+ * (DEPRECATED)
  * 
  * @tparam <TResponse>  The type of object being retrieved.
  * 
  * @param[in] schema_  Avro schema object used for decoding returned objects.
  * @param tableName  Name of the collection or table from which records are to
- *                   be retrieved. Must be an existing collection or table.
+ *                   be retrieved, in [schema_name.]table_name format, using
+ *                   standard <a
+ *                   href="../../concepts/tables.html#table-name-resolution"
+ *                   target="_top">name resolution rules</a>.  Must be an
+ *                   existing collection or table.
  * @param offset  A positive integer indicating the number of initial results
  *                to skip (this can be useful for paging through the results).
  *                The minimum allowed value is 0. The maximum allowed value is
@@ -15843,9 +19227,9 @@ GetRecordsFromCollectionResponse<TResponse> getRecordsFromCollection( const Type
  * @param options
  *                 <ul>
  *                         <li>
- *                 gpudb::get_records_from_collection_return_record_ids: If
- *                 'true' then return the internal record ID along with each
- *                 returned record. Default is 'false'.
+ *                 gpudb::get_records_from_collection_return_record_ids: If @a
+ *                 true then return the internal record ID along with each
+ *                 returned record.
  *                 <ul>
  *                         <li> gpudb::get_records_from_collection_true
  *                         <li> gpudb::get_records_from_collection_false
@@ -15886,21 +19270,28 @@ GetRecordsFromCollectionResponse<TResponse>& getRecordsFromCollection( const ::a
 
 
 /**
- * Retrieves records from a collection. The operation can optionally return the
- * record IDs which can be used in certain queries such as {@link
+ * Retrieves records from a collection. The operation can optionally
+ * return the record IDs which can be used in certain queries such as
+ * {@link
  * #deleteRecords(const std::string&,const std::vector<std::string>&,const std::map<std::string, std::string>&) const}.
  * <p>
- * This operation supports paging through the data via the @a offset and @a
- * limit parameters.
+ * This operation supports paging through the data via the @a offset and
+ * @a limit parameters.
  * <p>
  * Note that when using the Java API, it is not possible to retrieve records
- * from join tables using this operation.
+ * from
+ * join views using this operation.
+ * (DEPRECATED)
  * 
  * @tparam <TResponse>  The type of object being retrieved.
  * 
  * @param[in] type_  Type object used for decoding returned objects.
  * @param tableName  Name of the collection or table from which records are to
- *                   be retrieved. Must be an existing collection or table.
+ *                   be retrieved, in [schema_name.]table_name format, using
+ *                   standard <a
+ *                   href="../../concepts/tables.html#table-name-resolution"
+ *                   target="_top">name resolution rules</a>.  Must be an
+ *                   existing collection or table.
  * @param offset  A positive integer indicating the number of initial results
  *                to skip (this can be useful for paging through the results).
  *                The minimum allowed value is 0. The maximum allowed value is
@@ -15916,9 +19307,9 @@ GetRecordsFromCollectionResponse<TResponse>& getRecordsFromCollection( const ::a
  * @param options
  *                 <ul>
  *                         <li>
- *                 gpudb::get_records_from_collection_return_record_ids: If
- *                 'true' then return the internal record ID along with each
- *                 returned record. Default is 'false'.
+ *                 gpudb::get_records_from_collection_return_record_ids: If @a
+ *                 true then return the internal record ID along with each
+ *                 returned record.
  *                 <ul>
  *                         <li> gpudb::get_records_from_collection_true
  *                         <li> gpudb::get_records_from_collection_false
@@ -16035,6 +19426,90 @@ GetVectortileResponse& getVectortile( const std::vector<std::string>& tableNames
                                       const int32_t zoom,
                                       const std::map<std::string, std::string>& options,
                                       GetVectortileResponse& response_ ) const;
+
+/**
+ * Grants a <a href="../../concepts/data_sources.html" target="_top">data
+ * source</a> permission to a user or role.
+ * 
+ * @param[in] request_  Request object containing the parameters for the
+ *                      operation.
+ * 
+ * @return Response object containing the result of the operation.
+ * 
+ */
+
+GrantPermissionDatasourceResponse grantPermissionDatasource( const GrantPermissionDatasourceRequest& request_ ) const;
+
+/**
+ * Grants a <a href="../../concepts/data_sources.html" target="_top">data
+ * source</a> permission to a user or role.
+ * 
+ * @param[in] request_  Request object containing the parameters for the
+ *                      operation.
+ * @param[out] response_  Response object containing the results of the
+ *                        operation.
+ * 
+ * @return Response object containing the result of the operation (initially
+ *         passed in by reference).
+ * 
+ */
+
+GrantPermissionDatasourceResponse& grantPermissionDatasource( const GrantPermissionDatasourceRequest& request_,
+                                                              GrantPermissionDatasourceResponse& response_ ) const;
+
+/**
+ * Grants a <a href="../../concepts/data_sources.html" target="_top">data
+ * source</a> permission to a user or role.
+ * 
+ * @param name  Name of the user or role to which the permission will be
+ *              granted. Must be an existing user or role.
+ * @param permission  Permission to grant to the user or role
+ *                    <ul>
+ *                            <li> gpudb::grant_permission_datasource_connect:
+ *                    Connect access on the given data source
+ *                    </ul>
+ * @param datasourceName  Name of the data source on which the permission will
+ *                        be granted. Must be an existing data source, or an
+ *                        empty string to grant permission on all data sources.
+ * @param options  Optional parameters.
+ * 
+ * @return Response object containing the result of the operation.
+ * 
+ */
+
+GrantPermissionDatasourceResponse grantPermissionDatasource( const std::string& name,
+                                                             const std::string& permission,
+                                                             const std::string& datasourceName,
+                                                             const std::map<std::string, std::string>& options ) const;
+
+/**
+ * Grants a <a href="../../concepts/data_sources.html" target="_top">data
+ * source</a> permission to a user or role.
+ * 
+ * @param name  Name of the user or role to which the permission will be
+ *              granted. Must be an existing user or role.
+ * @param permission  Permission to grant to the user or role
+ *                    <ul>
+ *                            <li> gpudb::grant_permission_datasource_connect:
+ *                    Connect access on the given data source
+ *                    </ul>
+ * @param datasourceName  Name of the data source on which the permission will
+ *                        be granted. Must be an existing data source, or an
+ *                        empty string to grant permission on all data sources.
+ * @param options  Optional parameters.
+ * @param[out] response_  Response object containing the results of the
+ *                        operation.
+ * 
+ * @return Response object containing the result of the operation (initially
+ *         passed in by reference).
+ * 
+ */
+
+GrantPermissionDatasourceResponse& grantPermissionDatasource( const std::string& name,
+                                                              const std::string& permission,
+                                                              const std::string& datasourceName,
+                                                              const std::map<std::string, std::string>& options,
+                                                              GrantPermissionDatasourceResponse& response_ ) const;
 
 /**
  * Grants a proc-level permission to a user or role.
@@ -16250,10 +19725,12 @@ GrantPermissionTableResponse& grantPermissionTable( const GrantPermissionTableRe
  *                            <li> gpudb::grant_permission_table_table_read:
  *                    Read access to the table.
  *                    </ul>
- * @param tableName  Name of the table to which the permission grants access.
- *                   Must be an existing table, collection, or view. If a
- *                   collection, the permission also applies to tables and
- *                   views in the collection.
+ * @param tableName  Name of the table to which the permission grants access,
+ *                   in [schema_name.]table_name format, using standard <a
+ *                   href="../../concepts/tables.html#table-name-resolution"
+ *                   target="_top">name resolution rules</a>.  Must be an
+ *                   existing table, view, or schema. If a schema, the
+ *                   permission also applies to tables and views in the schema.
  * @param filterExpression  Optional filter expression to apply to this grant.
  *                          Only rows that match the filter will be affected.
  * @param options  Optional parameters.
@@ -16291,10 +19768,12 @@ GrantPermissionTableResponse grantPermissionTable( const std::string& name,
  *                            <li> gpudb::grant_permission_table_table_read:
  *                    Read access to the table.
  *                    </ul>
- * @param tableName  Name of the table to which the permission grants access.
- *                   Must be an existing table, collection, or view. If a
- *                   collection, the permission also applies to tables and
- *                   views in the collection.
+ * @param tableName  Name of the table to which the permission grants access,
+ *                   in [schema_name.]table_name format, using standard <a
+ *                   href="../../concepts/tables.html#table-name-resolution"
+ *                   target="_top">name resolution rules</a>.  Must be an
+ *                   existing table, view, or schema. If a schema, the
+ *                   permission also applies to tables and views in the schema.
  * @param filterExpression  Optional filter expression to apply to this grant.
  *                          Only rows that match the filter will be affected.
  * @param options  Optional parameters.
@@ -16443,6 +19922,70 @@ HasProcResponse& hasProc( const std::string& procName,
                           HasProcResponse& response_ ) const;
 
 /**
+ * Checks for the existence of a schema with the given name.
+ * 
+ * @param[in] request_  Request object containing the parameters for the
+ *                      operation.
+ * 
+ * @return Response object containing the result of the operation.
+ * 
+ */
+
+HasSchemaResponse hasSchema( const HasSchemaRequest& request_ ) const;
+
+/**
+ * Checks for the existence of a schema with the given name.
+ * 
+ * @param[in] request_  Request object containing the parameters for the
+ *                      operation.
+ * @param[out] response_  Response object containing the results of the
+ *                        operation.
+ * 
+ * @return Response object containing the result of the operation (initially
+ *         passed in by reference).
+ * 
+ */
+
+HasSchemaResponse& hasSchema( const HasSchemaRequest& request_,
+                              HasSchemaResponse& response_ ) const;
+
+/**
+ * Checks for the existence of a schema with the given name.
+ * 
+ * @param schemaName  Name of the schema to check for existence, in root, using
+ *                    standard <a
+ *                    href="../../concepts/tables.html#table-name-resolution"
+ *                    target="_top">name resolution rules</a>.
+ * @param options  Optional parameters.
+ * 
+ * @return Response object containing the result of the operation.
+ * 
+ */
+
+HasSchemaResponse hasSchema( const std::string& schemaName,
+                             const std::map<std::string, std::string>& options ) const;
+
+/**
+ * Checks for the existence of a schema with the given name.
+ * 
+ * @param schemaName  Name of the schema to check for existence, in root, using
+ *                    standard <a
+ *                    href="../../concepts/tables.html#table-name-resolution"
+ *                    target="_top">name resolution rules</a>.
+ * @param options  Optional parameters.
+ * @param[out] response_  Response object containing the results of the
+ *                        operation.
+ * 
+ * @return Response object containing the result of the operation (initially
+ *         passed in by reference).
+ * 
+ */
+
+HasSchemaResponse& hasSchema( const std::string& schemaName,
+                              const std::map<std::string, std::string>& options,
+                              HasSchemaResponse& response_ ) const;
+
+/**
  * Checks for the existence of a table with the given name.
  * 
  * @param[in] request_  Request object containing the parameters for the
@@ -16473,7 +20016,10 @@ HasTableResponse& hasTable( const HasTableRequest& request_,
 /**
  * Checks for the existence of a table with the given name.
  * 
- * @param tableName  Name of the table to check for existence.
+ * @param tableName  Name of the table to check for existence, in
+ *                   [schema_name.]table_name format, using standard <a
+ *                   href="../../concepts/tables.html#table-name-resolution"
+ *                   target="_top">name resolution rules</a>.
  * @param options  Optional parameters.
  * 
  * @return Response object containing the result of the operation.
@@ -16486,7 +20032,10 @@ HasTableResponse hasTable( const std::string& tableName,
 /**
  * Checks for the existence of a table with the given name.
  * 
- * @param tableName  Name of the table to check for existence.
+ * @param tableName  Name of the table to check for existence, in
+ *                   [schema_name.]table_name format, using standard <a
+ *                   href="../../concepts/tables.html#table-name-resolution"
+ *                   target="_top">name resolution rules</a>.
  * @param options  Optional parameters.
  * @param[out] response_  Response object containing the results of the
  *                        operation.
@@ -16559,21 +20108,25 @@ HasTypeResponse& hasType( const std::string& typeId,
                           HasTypeResponse& response_ ) const;
 
 /**
- * Adds multiple records to the specified table. The operation is synchronous,
- * meaning that a response will not be returned until all the records are fully
- * inserted and available. The response payload provides the counts of the
- * number of records actually inserted and/or updated, and can provide the
+ * Adds multiple records to the specified table. The operation is
+ * synchronous, meaning that a response will not be returned until all the
+ * records
+ * are fully inserted and available. The response payload provides the counts
+ * of
+ * the number of records actually inserted and/or updated, and can provide the
  * unique identifier of each added record.
  * <p>
- * The @a options parameter can be used to customize this function's behavior.
+ * The @a options parameter can be used to customize this function's
+ * behavior.
  * <p>
- * The @a update_on_existing_pk option specifies the record collision policy
- * for inserting into a table with a <a
- * href="../../concepts/tables.html#primary-keys" target="_top">primary
- * key</a>, but is ignored if no primary key exists.
+ * The @a update_on_existing_pk option specifies the record
+ * collision policy for inserting into a table with a
+ * <a href="../../concepts/tables.html#primary-keys" target="_top">primary
+ * key</a>, but is ignored if
+ * no primary key exists.
  * <p>
- * The @a return_record_ids option indicates that the database should return
- * the unique identifiers of inserted records.
+ * The @a return_record_ids option indicates that the
+ * database should return the unique identifiers of inserted records.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -16585,21 +20138,25 @@ HasTypeResponse& hasType( const std::string& typeId,
 InsertRecordsResponse insertRecordsRaw( const RawInsertRecordsRequest& request_ ) const;
 
 /**
- * Adds multiple records to the specified table. The operation is synchronous,
- * meaning that a response will not be returned until all the records are fully
- * inserted and available. The response payload provides the counts of the
- * number of records actually inserted and/or updated, and can provide the
+ * Adds multiple records to the specified table. The operation is
+ * synchronous, meaning that a response will not be returned until all the
+ * records
+ * are fully inserted and available. The response payload provides the counts
+ * of
+ * the number of records actually inserted and/or updated, and can provide the
  * unique identifier of each added record.
  * <p>
- * The @a options parameter can be used to customize this function's behavior.
+ * The @a options parameter can be used to customize this function's
+ * behavior.
  * <p>
- * The @a update_on_existing_pk option specifies the record collision policy
- * for inserting into a table with a <a
- * href="../../concepts/tables.html#primary-keys" target="_top">primary
- * key</a>, but is ignored if no primary key exists.
+ * The @a update_on_existing_pk option specifies the record
+ * collision policy for inserting into a table with a
+ * <a href="../../concepts/tables.html#primary-keys" target="_top">primary
+ * key</a>, but is ignored if
+ * no primary key exists.
  * <p>
- * The @a return_record_ids option indicates that the database should return
- * the unique identifiers of inserted records.
+ * The @a return_record_ids option indicates that the
+ * database should return the unique identifiers of inserted records.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -16615,21 +20172,25 @@ InsertRecordsResponse& insertRecordsRaw( const RawInsertRecordsRequest& request_
                                          InsertRecordsResponse& response_ ) const;
 
 /**
- * Adds multiple records to the specified table. The operation is synchronous,
- * meaning that a response will not be returned until all the records are fully
- * inserted and available. The response payload provides the counts of the
- * number of records actually inserted and/or updated, and can provide the
+ * Adds multiple records to the specified table. The operation is
+ * synchronous, meaning that a response will not be returned until all the
+ * records
+ * are fully inserted and available. The response payload provides the counts
+ * of
+ * the number of records actually inserted and/or updated, and can provide the
  * unique identifier of each added record.
  * <p>
- * The @a options parameter can be used to customize this function's behavior.
+ * The @a options parameter can be used to customize this function's
+ * behavior.
  * <p>
- * The @a update_on_existing_pk option specifies the record collision policy
- * for inserting into a table with a <a
- * href="../../concepts/tables.html#primary-keys" target="_top">primary
- * key</a>, but is ignored if no primary key exists.
+ * The @a update_on_existing_pk option specifies the record
+ * collision policy for inserting into a table with a
+ * <a href="../../concepts/tables.html#primary-keys" target="_top">primary
+ * key</a>, but is ignored if
+ * no primary key exists.
  * <p>
- * The @a return_record_ids option indicates that the database should return
- * the unique identifiers of inserted records.
+ * The @a return_record_ids option indicates that the
+ * database should return the unique identifiers of inserted records.
  * 
  * @tparam <TRequest>  The type of object being added.
  * 
@@ -16653,21 +20214,25 @@ InsertRecordsResponse insertRecords( const InsertRecordsRequest<TRequest>& reque
 
 
 /**
- * Adds multiple records to the specified table. The operation is synchronous,
- * meaning that a response will not be returned until all the records are fully
- * inserted and available. The response payload provides the counts of the
- * number of records actually inserted and/or updated, and can provide the
+ * Adds multiple records to the specified table. The operation is
+ * synchronous, meaning that a response will not be returned until all the
+ * records
+ * are fully inserted and available. The response payload provides the counts
+ * of
+ * the number of records actually inserted and/or updated, and can provide the
  * unique identifier of each added record.
  * <p>
- * The @a options parameter can be used to customize this function's behavior.
+ * The @a options parameter can be used to customize this function's
+ * behavior.
  * <p>
- * The @a update_on_existing_pk option specifies the record collision policy
- * for inserting into a table with a <a
- * href="../../concepts/tables.html#primary-keys" target="_top">primary
- * key</a>, but is ignored if no primary key exists.
+ * The @a update_on_existing_pk option specifies the record
+ * collision policy for inserting into a table with a
+ * <a href="../../concepts/tables.html#primary-keys" target="_top">primary
+ * key</a>, but is ignored if
+ * no primary key exists.
  * <p>
- * The @a return_record_ids option indicates that the database should return
- * the unique identifiers of inserted records.
+ * The @a return_record_ids option indicates that the
+ * database should return the unique identifiers of inserted records.
  * 
  * @tparam <TRequest>  The type of object being added.
  * 
@@ -16694,25 +20259,32 @@ InsertRecordsResponse& insertRecords( const InsertRecordsRequest<TRequest>& requ
 
 
 /**
- * Adds multiple records to the specified table. The operation is synchronous,
- * meaning that a response will not be returned until all the records are fully
- * inserted and available. The response payload provides the counts of the
- * number of records actually inserted and/or updated, and can provide the
+ * Adds multiple records to the specified table. The operation is
+ * synchronous, meaning that a response will not be returned until all the
+ * records
+ * are fully inserted and available. The response payload provides the counts
+ * of
+ * the number of records actually inserted and/or updated, and can provide the
  * unique identifier of each added record.
  * <p>
- * The @a options parameter can be used to customize this function's behavior.
+ * The @a options parameter can be used to customize this function's
+ * behavior.
  * <p>
- * The @a update_on_existing_pk option specifies the record collision policy
- * for inserting into a table with a <a
- * href="../../concepts/tables.html#primary-keys" target="_top">primary
- * key</a>, but is ignored if no primary key exists.
+ * The @a update_on_existing_pk option specifies the record
+ * collision policy for inserting into a table with a
+ * <a href="../../concepts/tables.html#primary-keys" target="_top">primary
+ * key</a>, but is ignored if
+ * no primary key exists.
  * <p>
- * The @a return_record_ids option indicates that the database should return
- * the unique identifiers of inserted records.
+ * The @a return_record_ids option indicates that the
+ * database should return the unique identifiers of inserted records.
  * 
  * @tparam <TRequest>  The type of object being added.
  * 
- * @param tableName  Table to which the records are to be added. Must be an
+ * @param tableName  Name of table to which the records are to be added, in
+ *                   [schema_name.]table_name format, using standard <a
+ *                   href="../../concepts/tables.html#table-name-resolution"
+ *                   target="_top">name resolution rules</a>.  Must be an
  *                   existing table.
  * @param data  An array of binary-encoded data for the records to be added.
  *              All records must be of the same type as that of the table.
@@ -16802,25 +20374,32 @@ InsertRecordsResponse insertRecords( const std::string& tableName,
 
 
 /**
- * Adds multiple records to the specified table. The operation is synchronous,
- * meaning that a response will not be returned until all the records are fully
- * inserted and available. The response payload provides the counts of the
- * number of records actually inserted and/or updated, and can provide the
+ * Adds multiple records to the specified table. The operation is
+ * synchronous, meaning that a response will not be returned until all the
+ * records
+ * are fully inserted and available. The response payload provides the counts
+ * of
+ * the number of records actually inserted and/or updated, and can provide the
  * unique identifier of each added record.
  * <p>
- * The @a options parameter can be used to customize this function's behavior.
+ * The @a options parameter can be used to customize this function's
+ * behavior.
  * <p>
- * The @a update_on_existing_pk option specifies the record collision policy
- * for inserting into a table with a <a
- * href="../../concepts/tables.html#primary-keys" target="_top">primary
- * key</a>, but is ignored if no primary key exists.
+ * The @a update_on_existing_pk option specifies the record
+ * collision policy for inserting into a table with a
+ * <a href="../../concepts/tables.html#primary-keys" target="_top">primary
+ * key</a>, but is ignored if
+ * no primary key exists.
  * <p>
- * The @a return_record_ids option indicates that the database should return
- * the unique identifiers of inserted records.
+ * The @a return_record_ids option indicates that the
+ * database should return the unique identifiers of inserted records.
  * 
  * @tparam <TRequest>  The type of object being added.
  * 
- * @param tableName  Table to which the records are to be added. Must be an
+ * @param tableName  Name of table to which the records are to be added, in
+ *                   [schema_name.]table_name format, using standard <a
+ *                   href="../../concepts/tables.html#table-name-resolution"
+ *                   target="_top">name resolution rules</a>.  Must be an
  *                   existing table.
  * @param data  An array of binary-encoded data for the records to be added.
  *              All records must be of the same type as that of the table.
@@ -16914,17 +20493,22 @@ InsertRecordsResponse& insertRecords( const std::string& tableName,
 
 /**
  * Reads from one or more files located on the server and inserts the data into
- * a new or existing table.
+ * a new or
+ * existing table.
  * <p>
- * For CSV files, there are two loading schemes: positional and name-based. The
- * name-based loading scheme is enabled when the file has a header present and
- * @a text_has_header is set to @a true. In this scheme, the source file(s)
- * field names must match the target table's column names exactly; however, the
- * source file can have more fields than the target table has columns. If @a
- * error_handling is set to @a permissive, the source file can have fewer
- * fields than the target table has columns. If the name-based loading scheme
- * is being used, names matching the file header's names may be provided to @a
- * columns_to_load instead of numbers, but ranges are not supported.
+ * For delimited text files, there are two loading schemes: positional and
+ * name-based. The name-based
+ * loading scheme is enabled when the file has a header present and
+ * @a text_has_header is set to
+ * @a true. In this scheme, the source file(s) field names
+ * must match the target table's column names exactly; however, the source file
+ * can have more fields
+ * than the target table has columns. If @a error_handling is set to
+ * @a permissive, the source file can have fewer fields
+ * than the target table has columns. If the name-based loading scheme is being
+ * used, names matching
+ * the file header's names may be provided to @a columns_to_load instead of
+ * numbers, but ranges are not supported.
 
  * Returns once all files are processed.
  * 
@@ -16939,17 +20523,22 @@ InsertRecordsFromFilesResponse insertRecordsFromFiles( const InsertRecordsFromFi
 
 /**
  * Reads from one or more files located on the server and inserts the data into
- * a new or existing table.
+ * a new or
+ * existing table.
  * <p>
- * For CSV files, there are two loading schemes: positional and name-based. The
- * name-based loading scheme is enabled when the file has a header present and
- * @a text_has_header is set to @a true. In this scheme, the source file(s)
- * field names must match the target table's column names exactly; however, the
- * source file can have more fields than the target table has columns. If @a
- * error_handling is set to @a permissive, the source file can have fewer
- * fields than the target table has columns. If the name-based loading scheme
- * is being used, names matching the file header's names may be provided to @a
- * columns_to_load instead of numbers, but ranges are not supported.
+ * For delimited text files, there are two loading schemes: positional and
+ * name-based. The name-based
+ * loading scheme is enabled when the file has a header present and
+ * @a text_has_header is set to
+ * @a true. In this scheme, the source file(s) field names
+ * must match the target table's column names exactly; however, the source file
+ * can have more fields
+ * than the target table has columns. If @a error_handling is set to
+ * @a permissive, the source file can have fewer fields
+ * than the target table has columns. If the name-based loading scheme is being
+ * used, names matching
+ * the file header's names may be provided to @a columns_to_load instead of
+ * numbers, but ranges are not supported.
 
  * Returns once all files are processed.
  * 
@@ -16968,24 +20557,35 @@ InsertRecordsFromFilesResponse& insertRecordsFromFiles( const InsertRecordsFromF
 
 /**
  * Reads from one or more files located on the server and inserts the data into
- * a new or existing table.
+ * a new or
+ * existing table.
  * <p>
- * For CSV files, there are two loading schemes: positional and name-based. The
- * name-based loading scheme is enabled when the file has a header present and
- * @a text_has_header is set to @a true. In this scheme, the source file(s)
- * field names must match the target table's column names exactly; however, the
- * source file can have more fields than the target table has columns. If @a
- * error_handling is set to @a permissive, the source file can have fewer
- * fields than the target table has columns. If the name-based loading scheme
- * is being used, names matching the file header's names may be provided to @a
- * columns_to_load instead of numbers, but ranges are not supported.
+ * For delimited text files, there are two loading schemes: positional and
+ * name-based. The name-based
+ * loading scheme is enabled when the file has a header present and
+ * @a text_has_header is set to
+ * @a true. In this scheme, the source file(s) field names
+ * must match the target table's column names exactly; however, the source file
+ * can have more fields
+ * than the target table has columns. If @a error_handling is set to
+ * @a permissive, the source file can have fewer fields
+ * than the target table has columns. If the name-based loading scheme is being
+ * used, names matching
+ * the file header's names may be provided to @a columns_to_load instead of
+ * numbers, but ranges are not supported.
 
  * Returns once all files are processed.
  * 
- * @param tableName  Name of the table into which the data will be inserted. If
- *                   the table does not exist, the table will be created using
- *                   either an existing @a type_id or the type inferred from
- *                   the file.
+ * @param tableName  Name of the table into which the data will be inserted, in
+ *                   [schema_name.]table_name format, using standard
+ *                   <a href="../../concepts/tables.html#table-name-resolution"
+ *                   target="_top">name resolution rules</a>.
+ *                   If the table does not exist, the table will be created
+ *                   using either an existing
+ *                   @a type_id or the type inferred from the
+ *                   file, and the new table name will have to meet standard
+ *                   <a href="../../concepts/tables.html#table-naming-criteria"
+ *                   target="_top">table naming criteria</a>.
  * @param filepaths  Absolute or relative filepath(s) from where files will be
  *                   loaded. Relative filepaths are relative to the defined <a
  *                   href="../../config/index.html#external-files"
@@ -16995,7 +20595,8 @@ InsertRecordsFromFilesResponse& insertRecordsFromFiles( const InsertRecordsFromF
  *                   delimiter will be defaulted to a tab character. If the
  *                   first path ends in .psv, the text delimiter will be
  *                   defaulted to a pipe character (|).
- * @param createTableOptions  Options used when creating a new table.
+ * @param modifyColumns  Not implemented yet
+ * @param createTableOptions  Options used when creating the target table.
  *                            <ul>
  *                                    <li>
  *                            gpudb::insert_records_from_files_type_id: ID of a
@@ -17017,24 +20618,17 @@ InsertRecordsFromFilesResponse& insertRecordsFromFiles( const InsertRecordsFromF
  *                            The default value is
  *                            gpudb::insert_records_from_files_false.
  *                                    <li>
- *                            gpudb::insert_records_from_files_collection_name:
- *                            Name of a collection which is to contain the
- *                            newly created table. If the collection provided
- *                            is non-existent, the collection will be
- *                            automatically created. If empty, then the newly
- *                            created table will be a top-level table.
- *                                    <li>
  *                            gpudb::insert_records_from_files_is_replicated:
- *                            For a table, affects the <a
+ *                            Affects the <a
  *                            href="../../concepts/tables.html#distribution"
  *                            target="_top">distribution scheme</a> for the
- *                            table's data.  If true and the given type has no
- *                            explicit <a
+ *                            table's data.  If @a true and the given type has
+ *                            no explicit <a
  *                            href="../../concepts/tables.html#shard-key"
  *                            target="_top">shard key</a> defined, the table
  *                            will be <a
  *                            href="../../concepts/tables.html#replication"
- *                            target="_top">replicated</a>.  If false, the
+ *                            target="_top">replicated</a>.  If @a false, the
  *                            table will be <a
  *                            href="../../concepts/tables.html#sharding"
  *                            target="_top">sharded</a> according to the shard
@@ -17109,7 +20703,7 @@ InsertRecordsFromFilesResponse& insertRecordsFromFiles( const InsertRecordsFromF
  *                            formats.
  *                                    <li>
  *                            gpudb::insert_records_from_files_is_automatic_partition:
- *                            If true, a new partition will be created for
+ *                            If @a true, a new partition will be created for
  *                            values which don't fall into an existing
  *                            partition.  Currently only supported for <a
  *                            href="../../concepts/tables.html#partitioning-by-list"
@@ -17123,8 +20717,8 @@ InsertRecordsFromFilesResponse& insertRecordsFromFiles( const InsertRecordsFromF
  *                            The default value is
  *                            gpudb::insert_records_from_files_false.
  *                                    <li>
- *                            gpudb::insert_records_from_files_ttl: For a
- *                            table, sets the <a href="../../concepts/ttl.html"
+ *                            gpudb::insert_records_from_files_ttl: Sets the <a
+ *                            href="../../concepts/ttl.html"
  *                            target="_top">TTL</a> of the table specified in
  *                            @a tableName.
  *                                    <li>
@@ -17133,11 +20727,16 @@ InsertRecordsFromFilesResponse& insertRecordsFromFiles( const InsertRecordsFromF
  *                            used for this table.
  *                                    <li>
  *                            gpudb::insert_records_from_files_is_result_table:
- *                            For a table, indicates whether the table is an
- *                            in-memory table. A result table cannot contain
- *                            store_only, text_search, or string columns (charN
- *                            columns are acceptable), and it will not be
- *                            retained if the server is restarted.
+ *                            Indicates whether the table is a <a
+ *                            href="../../concepts/tables_memory_only.html"
+ *                            target="_top">memory-only table</a>. A result
+ *                            table cannot contain columns with store_only or
+ *                            text_search <a
+ *                            href="../../concepts/types.html#data-handling"
+ *                            target="_top">data-handling</a> or that are <a
+ *                            href="../../concepts/types.html#primitive-types"
+ *                            target="_top">non-charN strings</a>, and it will
+ *                            not be retained if the server is restarted.
  *                            <ul>
  *                                    <li>
  *                            gpudb::insert_records_from_files_true
@@ -17160,68 +20759,105 @@ InsertRecordsFromFilesResponse& insertRecordsFromFiles( const InsertRecordsFromF
  *                            </ul>
  * @param options  Optional parameters.
  *                 <ul>
+ *                         <li>
+ *                 gpudb::insert_records_from_files_bad_record_table_name:
+ *                 Optional name of a table to which records that were rejected
+ *                 are written.  The bad-record-table has the following
+ *                 columns: line_number (long), line_rejected (string),
+ *                 error_message (string).
+ *                         <li>
+ *                 gpudb::insert_records_from_files_bad_record_table_limit: A
+ *                 positive integer indicating the maximum number of records
+ *                 that can be  written to the bad-record-table.   Default
+ *                 value is 10000
  *                         <li> gpudb::insert_records_from_files_batch_size:
- *                 Specifies number of records to process before inserting.
+ *                 Internal tuning parameter--number of records per batch when
+ *                 inserting data.
  *                         <li>
  *                 gpudb::insert_records_from_files_column_formats: For each
  *                 target column specified, applies the column-property-bound
- *                 format to the source data loaded into that column.  Each
- *                 column format will contain a mapping of one or more of its
- *                 column properties to an appropriate format for each
- *                 property.  Currently supported column properties include
- *                 date, time, & datetime. The parameter value must be
- *                 formatted as a JSON string of maps of column names to maps
- *                 of column properties to their corresponding column formats,
- *                 e.g., { "order_date" : { "date" : "%Y.%m.%d" }, "order_time"
- *                 : { "time" : "%H:%M:%S" } }.  See @a default_column_formats
- *                 for valid format syntax.
+ *                 format to the source data
+ *                 loaded into that column.  Each column format will contain a
+ *                 mapping of one or more of its column
+ *                 properties to an appropriate format for each property.
+ *                 Currently supported column properties
+ *                 include date, time, & datetime. The parameter value must be
+ *                 formatted as a JSON string of maps of
+ *                 column names to maps of column properties to their
+ *                 corresponding column formats, e.g.,
+ *                 '{ "order_date" : { "date" : "%Y.%m.%d" }, "order_time" : {
+ *                 "time" : "%H:%M:%S" } }'.
+ *                 See @a default_column_formats for valid format syntax.
  *                         <li>
- *                 gpudb::insert_records_from_files_columns_to_load: For @a
- *                 delimited_text @a file_type only. Specifies a
- *                 comma-delimited list of column positions or names to load
- *                 instead of loading all columns in the file(s); if more than
- *                 one file is being loaded, the list of columns will apply to
- *                 all files. Column numbers can be specified discretely or as
- *                 a range, e.g., a value of '5,7,1..3' will create a table
- *                 with the first column in the table being the fifth column in
- *                 the file, followed by seventh column in the file, then the
- *                 first column through the fourth column in the file.
+ *                 gpudb::insert_records_from_files_columns_to_load: Specifies
+ *                 a comma-delimited list of columns from the source data to
+ *                 load.  If more than one file is being loaded, this list
+ *                 applies to all files.
+ *                 Column numbers can be specified discretely or as a range.
+ *                 For example, a value of '5,7,1..3' will
+ *                 insert values from the fifth column in the source data into
+ *                 the first column in the target table,
+ *                 from the seventh column in the source data into the second
+ *                 column in the target table, and from the
+ *                 first through third columns in the source data into the
+ *                 third through fifth columns in the target
+ *                 table.
+ *                 If the source data contains a header, column names matching
+ *                 the file header names may be provided
+ *                 instead of column numbers.  If the target table doesn't
+ *                 exist, the table will be created with the
+ *                 columns in this order.  If the target table does exist with
+ *                 columns in a different order than the
+ *                 source data, this list can be used to match the order of the
+ *                 target table.  For example, a value of
+ *                 'C, B, A' will create a three column table with column C,
+ *                 followed by column B, followed by column
+ *                 A; or will insert those fields in that order into a table
+ *                 created with columns in that order.  If
+ *                 the target table exists, the column names must match the
+ *                 source data field names for a name-mapping
+ *                 to be successful.
+ *                         <li>
+ *                 gpudb::insert_records_from_files_columns_to_skip: Specifies
+ *                 a comma-delimited list of columns from the source data to
+ *                 skip.  Mutually exclusive to columns_to_load.
+ *                         <li>
+ *                 gpudb::insert_records_from_files_datasource_name: Name of an
+ *                 existing external data source from which data file(s)
+ *                 specified in @a filepaths will be loaded
  *                         <li>
  *                 gpudb::insert_records_from_files_default_column_formats:
  *                 Specifies the default format to be applied to source data
- *                 loaded into columns with the corresponding column property.
- *                 This default column-property-bound format can be overridden
- *                 by specifying a column property & format for a given target
- *                 column in @a column_formats. For each specified annotation,
- *                 the format will apply to all columns with that annotation
- *                 unless a custom @a column_formats for that annotation is
- *                 specified. The parameter value must be formatted as a JSON
- *                 string that is a map of column properties to their
- *                 respective column formats, e.g., { "date" : "%Y.%m.%d",
- *                 "time" : "%H:%M:%S" }. Column formats are specified as a
- *                 string of control characters and plain text. The supported
- *                 control characters are 'Y', 'm', 'd', 'H', 'M', 'S', and
- *                 's', which follow the Linux 'strptime()' specification, as
- *                 well as 's', which specifies seconds and fractional seconds
- *                 (though the fractional component will be truncated past
- *                 milliseconds). Formats for the 'date' annotation must
- *                 include the 'Y', 'm', and 'd' control characters. Formats
- *                 for the 'time' annotation must include the 'H', 'M', and
- *                 either 'S' or 's' (but not both) control characters. Formats
- *                 for the 'datetime' annotation meet both the 'date' and
- *                 'time' control character requirements. For example,
- *                 '{"datetime" : "%m/%d/%Y %H:%M:%S" }' would be used to
- *                 interpret text as "05/04/2000 12:12:11"
- *                         <li> gpudb::insert_records_from_files_dry_run: If
- *                 set to @a true, no data will be inserted but the file will
- *                 be read with the applied @a error_handling mode and the
- *                 number of valid records that would be normally inserted are
- *                 returned.
- *                 <ul>
- *                         <li> gpudb::insert_records_from_files_false
- *                         <li> gpudb::insert_records_from_files_true
- *                 </ul>
- *                 The default value is gpudb::insert_records_from_files_false.
+ *                 loaded
+ *                 into columns with the corresponding column property.
+ *                 Currently supported column properties include
+ *                 date, time, & datetime.  This default column-property-bound
+ *                 format can be overridden by specifying a
+ *                 column property & format for a given target column in @a
+ *                 column_formats. For
+ *                 each specified annotation, the format will apply to all
+ *                 columns with that annotation unless a custom
+ *                 @a column_formats for that annotation is specified.
+ *                 The parameter value must be formatted as a JSON string that
+ *                 is a map of column properties to their
+ *                 respective column formats, e.g., '{ "date" : "%Y.%m.%d",
+ *                 "time" : "%H:%M:%S" }'.  Column
+ *                 formats are specified as a string of control characters and
+ *                 plain text. The supported control
+ *                 characters are 'Y', 'm', 'd', 'H', 'M', 'S', and 's', which
+ *                 follow the Linux 'strptime()'
+ *                 specification, as well as 's', which specifies seconds and
+ *                 fractional seconds (though the fractional
+ *                 component will be truncated past milliseconds).
+ *                 Formats for the 'date' annotation must include the 'Y', 'm',
+ *                 and 'd' control characters. Formats for
+ *                 the 'time' annotation must include the 'H', 'M', and either
+ *                 'S' or 's' (but not both) control
+ *                 characters. Formats for the 'datetime' annotation meet both
+ *                 the 'date' and 'time' control character
+ *                 requirements. For example, '{"datetime" : "%m/%d/%Y
+ *                 %H:%M:%S" }' would be used to interpret text
+ *                 as "05/04/2000 12:12:11"
  *                         <li>
  *                 gpudb::insert_records_from_files_error_handling: Specifies
  *                 how errors should be handled upon insertion.
@@ -17234,62 +20870,130 @@ InsertRecordsFromFilesResponse& insertRecordsFromFiles( const InsertRecordsFromF
  *                 Malformed records are skipped.
  *                         <li> gpudb::insert_records_from_files_abort: Stops
  *                 current insertion and aborts entire operation when an error
- *                 is encountered.
+ *                 is encountered.  Primary key collisions are considered
+ *                 abortable errors in this mode.
  *                 </ul>
  *                 The default value is
- *                 gpudb::insert_records_from_files_Permissive.
+ *                 gpudb::insert_records_from_files_permissive.
  *                         <li> gpudb::insert_records_from_files_file_type:
- *                 File type for the file(s).
+ *                 Specifies the type of the file(s) whose records will be
+ *                 inserted.
  *                 <ul>
  *                         <li>
  *                 gpudb::insert_records_from_files_delimited_text: Indicates
- *                 the file(s) are in delimited text format, e.g., CSV, TSV,
+ *                 the file(s) are in delimited text format; e.g., CSV, TSV,
  *                 PSV, etc.
+ *                         <li> gpudb::insert_records_from_files_parquet:
+ *                 Indicates the file(s) are in Parquet format. Parquet files
+ *                 are not supported yet.
  *                 </ul>
  *                 The default value is
  *                 gpudb::insert_records_from_files_delimited_text.
+ *                         <li>
+ *                 gpudb::insert_records_from_files_ingestion_mode: Whether to
+ *                 do a full load, dry run, or perform a type inference on the
+ *                 source data.
+ *                 <ul>
+ *                         <li> gpudb::insert_records_from_files_full: Run a
+ *                 type inference on the source data (if needed) and ingest
+ *                         <li> gpudb::insert_records_from_files_dry_run: Does
+ *                 not load data, but walks through the source data and
+ *                 determines the number of valid records, taking into account
+ *                 the current mode of @a error_handling.
+ *                         <li>
+ *                 gpudb::insert_records_from_files_type_inference_only: Infer
+ *                 the type of the source data and return, without ingesting
+ *                 any data.  The inferred type is returned in the response.
+ *                 </ul>
+ *                 The default value is gpudb::insert_records_from_files_full.
  *                         <li> gpudb::insert_records_from_files_loading_mode:
- *                 Specifies how to divide data loading among nodes.
+ *                 Scheme for distributing the extraction and loading of data
+ *                 from the source data file(s).
  *                 <ul>
  *                         <li> gpudb::insert_records_from_files_head: The head
- *                 node loads all data. All files must be available on the head
+ *                 node loads all data. All files must be available to the head
  *                 node.
  *                         <li>
  *                 gpudb::insert_records_from_files_distributed_shared: The
- *                 worker nodes coordinate loading a set of files that are
- *                 available to all of them. All files must be available on all
- *                 nodes. This option is best when there is a shared file
- *                 system.
+ *                 head node coordinates loading data by worker
+ *                 processes across all nodes from shared files available to
+ *                 all workers.
+ *                 NOTE:
+ *                 Instead of existing on a shared source, the files can be
+ *                 duplicated on a source local to each host
+ *                 to improve performance, though the files must appear as the
+ *                 same data set from the perspective of
+ *                 all hosts performing the load.
  *                         <li>
- *                 gpudb::insert_records_from_files_distributed_local: Each
- *                 worker node loads all files that are available to it. This
- *                 option is best when each worker node has its own file
- *                 system.
+ *                 gpudb::insert_records_from_files_distributed_local: A single
+ *                 worker process on each node loads all files
+ *                 that are available to it. This option works best when each
+ *                 worker loads files from its own file
+ *                 system, to maximize performance. In order to avoid data
+ *                 duplication, either each worker performing
+ *                 the load needs to have visibility to a set of files unique
+ *                 to it (no file is visible to more than
+ *                 one node) or the target table needs to have a primary key
+ *                 (which will allow the worker to
+ *                 automatically deduplicate data).
+ *                 NOTE:
+ *                 If the target table doesn't exist, the table structure will
+ *                 be determined by the head node. If the
+ *                 head node has no files local to it, it will be unable to
+ *                 determine the structure and the request
+ *                 will fail.
+ *                 This mode should not be used in conjuction with a data
+ *                 source, as data sources are seen by all
+ *                 worker processes as shared resources with no 'local'
+ *                 component.
+ *                 If the head node is configured to have no worker processes,
+ *                 no data strictly accessible to the head
+ *                 node will be loaded.
  *                 </ul>
  *                 The default value is gpudb::insert_records_from_files_head.
+ *                         <li> gpudb::insert_records_from_files_primary_keys:
+ *                 Optional: comma separated list of column names, to set as
+ *                 primary keys, when not specified in the type.  The default
+ *                 value is ''.
+ *                         <li> gpudb::insert_records_from_files_shard_keys:
+ *                 Optional: comma separated list of column names, to set as
+ *                 primary keys, when not specified in the type.  The default
+ *                 value is ''.
  *                         <li>
- *                 gpudb::insert_records_from_files_text_comment_string: For @a
- *                 delimited_text @a file_type only. All lines in the file(s)
- *                 starting with the provided string are ignored. The comment
- *                 string has no effect unless it appears at the beginning of a
- *                 line.  The default value is '#'.
+ *                 gpudb::insert_records_from_files_text_comment_string:
+ *                 Specifies the character string that should be interpreted as
+ *                 a comment line
+ *                 prefix in the source data.  All lines in the data starting
+ *                 with the provided string are ignored.
+ *                 For @a delimited_text @a file_type only.  The default value
+ *                 is '#'.
  *                         <li>
- *                 gpudb::insert_records_from_files_text_delimiter: For @a
- *                 delimited_text @a file_type only. Specifies the delimiter
- *                 for values and columns in the header row (if present). Must
- *                 be a single character.  The default value is ','.
+ *                 gpudb::insert_records_from_files_text_delimiter: Specifies
+ *                 the character delimiting field values in the source data
+ *                 and field names in the header (if present).
+ *                 For @a delimited_text @a file_type only.  The default value
+ *                 is ','.
  *                         <li>
- *                 gpudb::insert_records_from_files_text_escape_character: For
- *                 @a delimited_text @a file_type only.  The character used in
- *                 the file(s) to escape certain character sequences in text.
- *                 For example, the escape character followed by a literal 'n'
- *                 escapes to a newline character within the field. Can be used
- *                 within quoted string to escape a quote character. An empty
- *                 value for this option does not specify an escape character.
+ *                 gpudb::insert_records_from_files_text_escape_character:
+ *                 Specifies the character that is used to escape other
+ *                 characters in
+ *                 the source data.
+ *                 An 'a', 'b', 'f', 'n', 'r', 't', or 'v' preceded by an
+ *                 escape character will be interpreted as the
+ *                 ASCII bell, backspace, form feed, line feed, carriage
+ *                 return, horizontal tab, & vertical tab,
+ *                 respectively.  For example, the escape character followed by
+ *                 an 'n' will be interpreted as a newline
+ *                 within a field value.
+ *                 The escape character can also be used to escape the quoting
+ *                 character, and will be treated as an
+ *                 escape character whether it is within a quoted field value
+ *                 or not.
+ *                 For @a delimited_text @a file_type only.
  *                         <li>
- *                 gpudb::insert_records_from_files_text_has_header: For @a
- *                 delimited_text @a file_type only. Indicates whether the
- *                 delimited text files have a header row.
+ *                 gpudb::insert_records_from_files_text_has_header: Indicates
+ *                 whether the source data contains a header row.
+ *                 For @a delimited_text @a file_type only.
  *                 <ul>
  *                         <li> gpudb::insert_records_from_files_true
  *                         <li> gpudb::insert_records_from_files_false
@@ -17297,25 +21001,32 @@ InsertRecordsFromFilesResponse& insertRecordsFromFiles( const InsertRecordsFromF
  *                 The default value is gpudb::insert_records_from_files_true.
  *                         <li>
  *                 gpudb::insert_records_from_files_text_header_property_delimiter:
- *                 For @a delimited_text @a file_type only. Specifies the
- *                 delimiter for column properties in the header row (if
- *                 present). Cannot be set to same value as text_delimiter.
- *                 The default value is '|'.
+ *                 Specifies the delimiter for
+ *                 <a href="../../concepts/types.html#column-properties"
+ *                 target="_top">column properties</a> in the header row (if
+ *                 present).  Cannot be set to same value as @a text_delimiter.
+ *                 For @a delimited_text @a file_type only.  The default value
+ *                 is '|'.
  *                         <li>
- *                 gpudb::insert_records_from_files_text_null_string: For @a
- *                 delimited_text @a file_type only. The value in the file(s)
- *                 to treat as a null value in the database.  The default value
+ *                 gpudb::insert_records_from_files_text_null_string: Specifies
+ *                 the character string that should be interpreted as a null
+ *                 value in the source data.
+ *                 For @a delimited_text @a file_type only.  The default value
  *                 is ''.
  *                         <li>
- *                 gpudb::insert_records_from_files_text_quote_character: For
- *                 @a delimited_text @a file_type only. The quote character
- *                 used in the file(s), typically encompassing a field value.
- *                 The character must appear at beginning and end of field to
- *                 take effect. Delimiters within quoted fields are not treated
- *                 as delimiters. Within a quoted field, double quotes (") can
- *                 be used to escape a single literal quote character. To not
- *                 have a quote character, specify an empty string ("").  The
- *                 default value is '"'.
+ *                 gpudb::insert_records_from_files_text_quote_character:
+ *                 Specifies the character that should be interpreted as a
+ *                 field value
+ *                 quoting character in the source data.  The character must
+ *                 appear at beginning and end of field value
+ *                 to take effect.  Delimiters within quoted fields are treated
+ *                 as literals and not delimiters.  Within
+ *                 a quoted field, two consecutive quote characters will be
+ *                 interpreted as a single literal quote
+ *                 character, effectively escaping it.  To not have a quote
+ *                 character, specify an empty string.
+ *                 For @a delimited_text @a file_type only.  The default value
+ *                 is '"'.
  *                         <li>
  *                 gpudb::insert_records_from_files_truncate_table: If set to
  *                 @a true, truncates the table specified by @a tableName prior
@@ -17337,29 +21048,41 @@ InsertRecordsFromFilesResponse& insertRecordsFromFiles( const InsertRecordsFromF
 
 InsertRecordsFromFilesResponse insertRecordsFromFiles( const std::string& tableName,
                                                        const std::vector<std::string>& filepaths,
+                                                       const std::map<std::string, std::map<std::string, std::string> >& modifyColumns,
                                                        const std::map<std::string, std::string>& createTableOptions,
                                                        const std::map<std::string, std::string>& options ) const;
 
 /**
  * Reads from one or more files located on the server and inserts the data into
- * a new or existing table.
+ * a new or
+ * existing table.
  * <p>
- * For CSV files, there are two loading schemes: positional and name-based. The
- * name-based loading scheme is enabled when the file has a header present and
- * @a text_has_header is set to @a true. In this scheme, the source file(s)
- * field names must match the target table's column names exactly; however, the
- * source file can have more fields than the target table has columns. If @a
- * error_handling is set to @a permissive, the source file can have fewer
- * fields than the target table has columns. If the name-based loading scheme
- * is being used, names matching the file header's names may be provided to @a
- * columns_to_load instead of numbers, but ranges are not supported.
+ * For delimited text files, there are two loading schemes: positional and
+ * name-based. The name-based
+ * loading scheme is enabled when the file has a header present and
+ * @a text_has_header is set to
+ * @a true. In this scheme, the source file(s) field names
+ * must match the target table's column names exactly; however, the source file
+ * can have more fields
+ * than the target table has columns. If @a error_handling is set to
+ * @a permissive, the source file can have fewer fields
+ * than the target table has columns. If the name-based loading scheme is being
+ * used, names matching
+ * the file header's names may be provided to @a columns_to_load instead of
+ * numbers, but ranges are not supported.
 
  * Returns once all files are processed.
  * 
- * @param tableName  Name of the table into which the data will be inserted. If
- *                   the table does not exist, the table will be created using
- *                   either an existing @a type_id or the type inferred from
- *                   the file.
+ * @param tableName  Name of the table into which the data will be inserted, in
+ *                   [schema_name.]table_name format, using standard
+ *                   <a href="../../concepts/tables.html#table-name-resolution"
+ *                   target="_top">name resolution rules</a>.
+ *                   If the table does not exist, the table will be created
+ *                   using either an existing
+ *                   @a type_id or the type inferred from the
+ *                   file, and the new table name will have to meet standard
+ *                   <a href="../../concepts/tables.html#table-naming-criteria"
+ *                   target="_top">table naming criteria</a>.
  * @param filepaths  Absolute or relative filepath(s) from where files will be
  *                   loaded. Relative filepaths are relative to the defined <a
  *                   href="../../config/index.html#external-files"
@@ -17369,7 +21092,8 @@ InsertRecordsFromFilesResponse insertRecordsFromFiles( const std::string& tableN
  *                   delimiter will be defaulted to a tab character. If the
  *                   first path ends in .psv, the text delimiter will be
  *                   defaulted to a pipe character (|).
- * @param createTableOptions  Options used when creating a new table.
+ * @param modifyColumns  Not implemented yet
+ * @param createTableOptions  Options used when creating the target table.
  *                            <ul>
  *                                    <li>
  *                            gpudb::insert_records_from_files_type_id: ID of a
@@ -17391,24 +21115,17 @@ InsertRecordsFromFilesResponse insertRecordsFromFiles( const std::string& tableN
  *                            The default value is
  *                            gpudb::insert_records_from_files_false.
  *                                    <li>
- *                            gpudb::insert_records_from_files_collection_name:
- *                            Name of a collection which is to contain the
- *                            newly created table. If the collection provided
- *                            is non-existent, the collection will be
- *                            automatically created. If empty, then the newly
- *                            created table will be a top-level table.
- *                                    <li>
  *                            gpudb::insert_records_from_files_is_replicated:
- *                            For a table, affects the <a
+ *                            Affects the <a
  *                            href="../../concepts/tables.html#distribution"
  *                            target="_top">distribution scheme</a> for the
- *                            table's data.  If true and the given type has no
- *                            explicit <a
+ *                            table's data.  If @a true and the given type has
+ *                            no explicit <a
  *                            href="../../concepts/tables.html#shard-key"
  *                            target="_top">shard key</a> defined, the table
  *                            will be <a
  *                            href="../../concepts/tables.html#replication"
- *                            target="_top">replicated</a>.  If false, the
+ *                            target="_top">replicated</a>.  If @a false, the
  *                            table will be <a
  *                            href="../../concepts/tables.html#sharding"
  *                            target="_top">sharded</a> according to the shard
@@ -17483,7 +21200,7 @@ InsertRecordsFromFilesResponse insertRecordsFromFiles( const std::string& tableN
  *                            formats.
  *                                    <li>
  *                            gpudb::insert_records_from_files_is_automatic_partition:
- *                            If true, a new partition will be created for
+ *                            If @a true, a new partition will be created for
  *                            values which don't fall into an existing
  *                            partition.  Currently only supported for <a
  *                            href="../../concepts/tables.html#partitioning-by-list"
@@ -17497,8 +21214,8 @@ InsertRecordsFromFilesResponse insertRecordsFromFiles( const std::string& tableN
  *                            The default value is
  *                            gpudb::insert_records_from_files_false.
  *                                    <li>
- *                            gpudb::insert_records_from_files_ttl: For a
- *                            table, sets the <a href="../../concepts/ttl.html"
+ *                            gpudb::insert_records_from_files_ttl: Sets the <a
+ *                            href="../../concepts/ttl.html"
  *                            target="_top">TTL</a> of the table specified in
  *                            @a tableName.
  *                                    <li>
@@ -17507,11 +21224,16 @@ InsertRecordsFromFilesResponse insertRecordsFromFiles( const std::string& tableN
  *                            used for this table.
  *                                    <li>
  *                            gpudb::insert_records_from_files_is_result_table:
- *                            For a table, indicates whether the table is an
- *                            in-memory table. A result table cannot contain
- *                            store_only, text_search, or string columns (charN
- *                            columns are acceptable), and it will not be
- *                            retained if the server is restarted.
+ *                            Indicates whether the table is a <a
+ *                            href="../../concepts/tables_memory_only.html"
+ *                            target="_top">memory-only table</a>. A result
+ *                            table cannot contain columns with store_only or
+ *                            text_search <a
+ *                            href="../../concepts/types.html#data-handling"
+ *                            target="_top">data-handling</a> or that are <a
+ *                            href="../../concepts/types.html#primitive-types"
+ *                            target="_top">non-charN strings</a>, and it will
+ *                            not be retained if the server is restarted.
  *                            <ul>
  *                                    <li>
  *                            gpudb::insert_records_from_files_true
@@ -17534,68 +21256,105 @@ InsertRecordsFromFilesResponse insertRecordsFromFiles( const std::string& tableN
  *                            </ul>
  * @param options  Optional parameters.
  *                 <ul>
+ *                         <li>
+ *                 gpudb::insert_records_from_files_bad_record_table_name:
+ *                 Optional name of a table to which records that were rejected
+ *                 are written.  The bad-record-table has the following
+ *                 columns: line_number (long), line_rejected (string),
+ *                 error_message (string).
+ *                         <li>
+ *                 gpudb::insert_records_from_files_bad_record_table_limit: A
+ *                 positive integer indicating the maximum number of records
+ *                 that can be  written to the bad-record-table.   Default
+ *                 value is 10000
  *                         <li> gpudb::insert_records_from_files_batch_size:
- *                 Specifies number of records to process before inserting.
+ *                 Internal tuning parameter--number of records per batch when
+ *                 inserting data.
  *                         <li>
  *                 gpudb::insert_records_from_files_column_formats: For each
  *                 target column specified, applies the column-property-bound
- *                 format to the source data loaded into that column.  Each
- *                 column format will contain a mapping of one or more of its
- *                 column properties to an appropriate format for each
- *                 property.  Currently supported column properties include
- *                 date, time, & datetime. The parameter value must be
- *                 formatted as a JSON string of maps of column names to maps
- *                 of column properties to their corresponding column formats,
- *                 e.g., { "order_date" : { "date" : "%Y.%m.%d" }, "order_time"
- *                 : { "time" : "%H:%M:%S" } }.  See @a default_column_formats
- *                 for valid format syntax.
+ *                 format to the source data
+ *                 loaded into that column.  Each column format will contain a
+ *                 mapping of one or more of its column
+ *                 properties to an appropriate format for each property.
+ *                 Currently supported column properties
+ *                 include date, time, & datetime. The parameter value must be
+ *                 formatted as a JSON string of maps of
+ *                 column names to maps of column properties to their
+ *                 corresponding column formats, e.g.,
+ *                 '{ "order_date" : { "date" : "%Y.%m.%d" }, "order_time" : {
+ *                 "time" : "%H:%M:%S" } }'.
+ *                 See @a default_column_formats for valid format syntax.
  *                         <li>
- *                 gpudb::insert_records_from_files_columns_to_load: For @a
- *                 delimited_text @a file_type only. Specifies a
- *                 comma-delimited list of column positions or names to load
- *                 instead of loading all columns in the file(s); if more than
- *                 one file is being loaded, the list of columns will apply to
- *                 all files. Column numbers can be specified discretely or as
- *                 a range, e.g., a value of '5,7,1..3' will create a table
- *                 with the first column in the table being the fifth column in
- *                 the file, followed by seventh column in the file, then the
- *                 first column through the fourth column in the file.
+ *                 gpudb::insert_records_from_files_columns_to_load: Specifies
+ *                 a comma-delimited list of columns from the source data to
+ *                 load.  If more than one file is being loaded, this list
+ *                 applies to all files.
+ *                 Column numbers can be specified discretely or as a range.
+ *                 For example, a value of '5,7,1..3' will
+ *                 insert values from the fifth column in the source data into
+ *                 the first column in the target table,
+ *                 from the seventh column in the source data into the second
+ *                 column in the target table, and from the
+ *                 first through third columns in the source data into the
+ *                 third through fifth columns in the target
+ *                 table.
+ *                 If the source data contains a header, column names matching
+ *                 the file header names may be provided
+ *                 instead of column numbers.  If the target table doesn't
+ *                 exist, the table will be created with the
+ *                 columns in this order.  If the target table does exist with
+ *                 columns in a different order than the
+ *                 source data, this list can be used to match the order of the
+ *                 target table.  For example, a value of
+ *                 'C, B, A' will create a three column table with column C,
+ *                 followed by column B, followed by column
+ *                 A; or will insert those fields in that order into a table
+ *                 created with columns in that order.  If
+ *                 the target table exists, the column names must match the
+ *                 source data field names for a name-mapping
+ *                 to be successful.
+ *                         <li>
+ *                 gpudb::insert_records_from_files_columns_to_skip: Specifies
+ *                 a comma-delimited list of columns from the source data to
+ *                 skip.  Mutually exclusive to columns_to_load.
+ *                         <li>
+ *                 gpudb::insert_records_from_files_datasource_name: Name of an
+ *                 existing external data source from which data file(s)
+ *                 specified in @a filepaths will be loaded
  *                         <li>
  *                 gpudb::insert_records_from_files_default_column_formats:
  *                 Specifies the default format to be applied to source data
- *                 loaded into columns with the corresponding column property.
- *                 This default column-property-bound format can be overridden
- *                 by specifying a column property & format for a given target
- *                 column in @a column_formats. For each specified annotation,
- *                 the format will apply to all columns with that annotation
- *                 unless a custom @a column_formats for that annotation is
- *                 specified. The parameter value must be formatted as a JSON
- *                 string that is a map of column properties to their
- *                 respective column formats, e.g., { "date" : "%Y.%m.%d",
- *                 "time" : "%H:%M:%S" }. Column formats are specified as a
- *                 string of control characters and plain text. The supported
- *                 control characters are 'Y', 'm', 'd', 'H', 'M', 'S', and
- *                 's', which follow the Linux 'strptime()' specification, as
- *                 well as 's', which specifies seconds and fractional seconds
- *                 (though the fractional component will be truncated past
- *                 milliseconds). Formats for the 'date' annotation must
- *                 include the 'Y', 'm', and 'd' control characters. Formats
- *                 for the 'time' annotation must include the 'H', 'M', and
- *                 either 'S' or 's' (but not both) control characters. Formats
- *                 for the 'datetime' annotation meet both the 'date' and
- *                 'time' control character requirements. For example,
- *                 '{"datetime" : "%m/%d/%Y %H:%M:%S" }' would be used to
- *                 interpret text as "05/04/2000 12:12:11"
- *                         <li> gpudb::insert_records_from_files_dry_run: If
- *                 set to @a true, no data will be inserted but the file will
- *                 be read with the applied @a error_handling mode and the
- *                 number of valid records that would be normally inserted are
- *                 returned.
- *                 <ul>
- *                         <li> gpudb::insert_records_from_files_false
- *                         <li> gpudb::insert_records_from_files_true
- *                 </ul>
- *                 The default value is gpudb::insert_records_from_files_false.
+ *                 loaded
+ *                 into columns with the corresponding column property.
+ *                 Currently supported column properties include
+ *                 date, time, & datetime.  This default column-property-bound
+ *                 format can be overridden by specifying a
+ *                 column property & format for a given target column in @a
+ *                 column_formats. For
+ *                 each specified annotation, the format will apply to all
+ *                 columns with that annotation unless a custom
+ *                 @a column_formats for that annotation is specified.
+ *                 The parameter value must be formatted as a JSON string that
+ *                 is a map of column properties to their
+ *                 respective column formats, e.g., '{ "date" : "%Y.%m.%d",
+ *                 "time" : "%H:%M:%S" }'.  Column
+ *                 formats are specified as a string of control characters and
+ *                 plain text. The supported control
+ *                 characters are 'Y', 'm', 'd', 'H', 'M', 'S', and 's', which
+ *                 follow the Linux 'strptime()'
+ *                 specification, as well as 's', which specifies seconds and
+ *                 fractional seconds (though the fractional
+ *                 component will be truncated past milliseconds).
+ *                 Formats for the 'date' annotation must include the 'Y', 'm',
+ *                 and 'd' control characters. Formats for
+ *                 the 'time' annotation must include the 'H', 'M', and either
+ *                 'S' or 's' (but not both) control
+ *                 characters. Formats for the 'datetime' annotation meet both
+ *                 the 'date' and 'time' control character
+ *                 requirements. For example, '{"datetime" : "%m/%d/%Y
+ *                 %H:%M:%S" }' would be used to interpret text
+ *                 as "05/04/2000 12:12:11"
  *                         <li>
  *                 gpudb::insert_records_from_files_error_handling: Specifies
  *                 how errors should be handled upon insertion.
@@ -17608,62 +21367,130 @@ InsertRecordsFromFilesResponse insertRecordsFromFiles( const std::string& tableN
  *                 Malformed records are skipped.
  *                         <li> gpudb::insert_records_from_files_abort: Stops
  *                 current insertion and aborts entire operation when an error
- *                 is encountered.
+ *                 is encountered.  Primary key collisions are considered
+ *                 abortable errors in this mode.
  *                 </ul>
  *                 The default value is
- *                 gpudb::insert_records_from_files_Permissive.
+ *                 gpudb::insert_records_from_files_permissive.
  *                         <li> gpudb::insert_records_from_files_file_type:
- *                 File type for the file(s).
+ *                 Specifies the type of the file(s) whose records will be
+ *                 inserted.
  *                 <ul>
  *                         <li>
  *                 gpudb::insert_records_from_files_delimited_text: Indicates
- *                 the file(s) are in delimited text format, e.g., CSV, TSV,
+ *                 the file(s) are in delimited text format; e.g., CSV, TSV,
  *                 PSV, etc.
+ *                         <li> gpudb::insert_records_from_files_parquet:
+ *                 Indicates the file(s) are in Parquet format. Parquet files
+ *                 are not supported yet.
  *                 </ul>
  *                 The default value is
  *                 gpudb::insert_records_from_files_delimited_text.
+ *                         <li>
+ *                 gpudb::insert_records_from_files_ingestion_mode: Whether to
+ *                 do a full load, dry run, or perform a type inference on the
+ *                 source data.
+ *                 <ul>
+ *                         <li> gpudb::insert_records_from_files_full: Run a
+ *                 type inference on the source data (if needed) and ingest
+ *                         <li> gpudb::insert_records_from_files_dry_run: Does
+ *                 not load data, but walks through the source data and
+ *                 determines the number of valid records, taking into account
+ *                 the current mode of @a error_handling.
+ *                         <li>
+ *                 gpudb::insert_records_from_files_type_inference_only: Infer
+ *                 the type of the source data and return, without ingesting
+ *                 any data.  The inferred type is returned in the response.
+ *                 </ul>
+ *                 The default value is gpudb::insert_records_from_files_full.
  *                         <li> gpudb::insert_records_from_files_loading_mode:
- *                 Specifies how to divide data loading among nodes.
+ *                 Scheme for distributing the extraction and loading of data
+ *                 from the source data file(s).
  *                 <ul>
  *                         <li> gpudb::insert_records_from_files_head: The head
- *                 node loads all data. All files must be available on the head
+ *                 node loads all data. All files must be available to the head
  *                 node.
  *                         <li>
  *                 gpudb::insert_records_from_files_distributed_shared: The
- *                 worker nodes coordinate loading a set of files that are
- *                 available to all of them. All files must be available on all
- *                 nodes. This option is best when there is a shared file
- *                 system.
+ *                 head node coordinates loading data by worker
+ *                 processes across all nodes from shared files available to
+ *                 all workers.
+ *                 NOTE:
+ *                 Instead of existing on a shared source, the files can be
+ *                 duplicated on a source local to each host
+ *                 to improve performance, though the files must appear as the
+ *                 same data set from the perspective of
+ *                 all hosts performing the load.
  *                         <li>
- *                 gpudb::insert_records_from_files_distributed_local: Each
- *                 worker node loads all files that are available to it. This
- *                 option is best when each worker node has its own file
- *                 system.
+ *                 gpudb::insert_records_from_files_distributed_local: A single
+ *                 worker process on each node loads all files
+ *                 that are available to it. This option works best when each
+ *                 worker loads files from its own file
+ *                 system, to maximize performance. In order to avoid data
+ *                 duplication, either each worker performing
+ *                 the load needs to have visibility to a set of files unique
+ *                 to it (no file is visible to more than
+ *                 one node) or the target table needs to have a primary key
+ *                 (which will allow the worker to
+ *                 automatically deduplicate data).
+ *                 NOTE:
+ *                 If the target table doesn't exist, the table structure will
+ *                 be determined by the head node. If the
+ *                 head node has no files local to it, it will be unable to
+ *                 determine the structure and the request
+ *                 will fail.
+ *                 This mode should not be used in conjuction with a data
+ *                 source, as data sources are seen by all
+ *                 worker processes as shared resources with no 'local'
+ *                 component.
+ *                 If the head node is configured to have no worker processes,
+ *                 no data strictly accessible to the head
+ *                 node will be loaded.
  *                 </ul>
  *                 The default value is gpudb::insert_records_from_files_head.
+ *                         <li> gpudb::insert_records_from_files_primary_keys:
+ *                 Optional: comma separated list of column names, to set as
+ *                 primary keys, when not specified in the type.  The default
+ *                 value is ''.
+ *                         <li> gpudb::insert_records_from_files_shard_keys:
+ *                 Optional: comma separated list of column names, to set as
+ *                 primary keys, when not specified in the type.  The default
+ *                 value is ''.
  *                         <li>
- *                 gpudb::insert_records_from_files_text_comment_string: For @a
- *                 delimited_text @a file_type only. All lines in the file(s)
- *                 starting with the provided string are ignored. The comment
- *                 string has no effect unless it appears at the beginning of a
- *                 line.  The default value is '#'.
+ *                 gpudb::insert_records_from_files_text_comment_string:
+ *                 Specifies the character string that should be interpreted as
+ *                 a comment line
+ *                 prefix in the source data.  All lines in the data starting
+ *                 with the provided string are ignored.
+ *                 For @a delimited_text @a file_type only.  The default value
+ *                 is '#'.
  *                         <li>
- *                 gpudb::insert_records_from_files_text_delimiter: For @a
- *                 delimited_text @a file_type only. Specifies the delimiter
- *                 for values and columns in the header row (if present). Must
- *                 be a single character.  The default value is ','.
+ *                 gpudb::insert_records_from_files_text_delimiter: Specifies
+ *                 the character delimiting field values in the source data
+ *                 and field names in the header (if present).
+ *                 For @a delimited_text @a file_type only.  The default value
+ *                 is ','.
  *                         <li>
- *                 gpudb::insert_records_from_files_text_escape_character: For
- *                 @a delimited_text @a file_type only.  The character used in
- *                 the file(s) to escape certain character sequences in text.
- *                 For example, the escape character followed by a literal 'n'
- *                 escapes to a newline character within the field. Can be used
- *                 within quoted string to escape a quote character. An empty
- *                 value for this option does not specify an escape character.
+ *                 gpudb::insert_records_from_files_text_escape_character:
+ *                 Specifies the character that is used to escape other
+ *                 characters in
+ *                 the source data.
+ *                 An 'a', 'b', 'f', 'n', 'r', 't', or 'v' preceded by an
+ *                 escape character will be interpreted as the
+ *                 ASCII bell, backspace, form feed, line feed, carriage
+ *                 return, horizontal tab, & vertical tab,
+ *                 respectively.  For example, the escape character followed by
+ *                 an 'n' will be interpreted as a newline
+ *                 within a field value.
+ *                 The escape character can also be used to escape the quoting
+ *                 character, and will be treated as an
+ *                 escape character whether it is within a quoted field value
+ *                 or not.
+ *                 For @a delimited_text @a file_type only.
  *                         <li>
- *                 gpudb::insert_records_from_files_text_has_header: For @a
- *                 delimited_text @a file_type only. Indicates whether the
- *                 delimited text files have a header row.
+ *                 gpudb::insert_records_from_files_text_has_header: Indicates
+ *                 whether the source data contains a header row.
+ *                 For @a delimited_text @a file_type only.
  *                 <ul>
  *                         <li> gpudb::insert_records_from_files_true
  *                         <li> gpudb::insert_records_from_files_false
@@ -17671,25 +21498,32 @@ InsertRecordsFromFilesResponse insertRecordsFromFiles( const std::string& tableN
  *                 The default value is gpudb::insert_records_from_files_true.
  *                         <li>
  *                 gpudb::insert_records_from_files_text_header_property_delimiter:
- *                 For @a delimited_text @a file_type only. Specifies the
- *                 delimiter for column properties in the header row (if
- *                 present). Cannot be set to same value as text_delimiter.
- *                 The default value is '|'.
+ *                 Specifies the delimiter for
+ *                 <a href="../../concepts/types.html#column-properties"
+ *                 target="_top">column properties</a> in the header row (if
+ *                 present).  Cannot be set to same value as @a text_delimiter.
+ *                 For @a delimited_text @a file_type only.  The default value
+ *                 is '|'.
  *                         <li>
- *                 gpudb::insert_records_from_files_text_null_string: For @a
- *                 delimited_text @a file_type only. The value in the file(s)
- *                 to treat as a null value in the database.  The default value
+ *                 gpudb::insert_records_from_files_text_null_string: Specifies
+ *                 the character string that should be interpreted as a null
+ *                 value in the source data.
+ *                 For @a delimited_text @a file_type only.  The default value
  *                 is ''.
  *                         <li>
- *                 gpudb::insert_records_from_files_text_quote_character: For
- *                 @a delimited_text @a file_type only. The quote character
- *                 used in the file(s), typically encompassing a field value.
- *                 The character must appear at beginning and end of field to
- *                 take effect. Delimiters within quoted fields are not treated
- *                 as delimiters. Within a quoted field, double quotes (") can
- *                 be used to escape a single literal quote character. To not
- *                 have a quote character, specify an empty string ("").  The
- *                 default value is '"'.
+ *                 gpudb::insert_records_from_files_text_quote_character:
+ *                 Specifies the character that should be interpreted as a
+ *                 field value
+ *                 quoting character in the source data.  The character must
+ *                 appear at beginning and end of field value
+ *                 to take effect.  Delimiters within quoted fields are treated
+ *                 as literals and not delimiters.  Within
+ *                 a quoted field, two consecutive quote characters will be
+ *                 interpreted as a single literal quote
+ *                 character, effectively escaping it.  To not have a quote
+ *                 character, specify an empty string.
+ *                 For @a delimited_text @a file_type only.  The default value
+ *                 is '"'.
  *                         <li>
  *                 gpudb::insert_records_from_files_truncate_table: If set to
  *                 @a true, truncates the table specified by @a tableName prior
@@ -17714,17 +21548,918 @@ InsertRecordsFromFilesResponse insertRecordsFromFiles( const std::string& tableN
 
 InsertRecordsFromFilesResponse& insertRecordsFromFiles( const std::string& tableName,
                                                         const std::vector<std::string>& filepaths,
+                                                        const std::map<std::string, std::map<std::string, std::string> >& modifyColumns,
                                                         const std::map<std::string, std::string>& createTableOptions,
                                                         const std::map<std::string, std::string>& options,
                                                         InsertRecordsFromFilesResponse& response_ ) const;
 
 /**
+ * Reads from the given text-based or binary payload and inserts the
+ * data into a new or existing table.  The table will be created if it doesn't
+ * already exist.
+ * <p>
+ * Returns once all records are processed.
+ * 
+ * @param[in] request_  Request object containing the parameters for the
+ *                      operation.
+ * 
+ * @return Response object containing the result of the operation.
+ * 
+ */
+
+InsertRecordsFromPayloadResponse insertRecordsFromPayload( const InsertRecordsFromPayloadRequest& request_ ) const;
+
+/**
+ * Reads from the given text-based or binary payload and inserts the
+ * data into a new or existing table.  The table will be created if it doesn't
+ * already exist.
+ * <p>
+ * Returns once all records are processed.
+ * 
+ * @param[in] request_  Request object containing the parameters for the
+ *                      operation.
+ * @param[out] response_  Response object containing the results of the
+ *                        operation.
+ * 
+ * @return Response object containing the result of the operation (initially
+ *         passed in by reference).
+ * 
+ */
+
+InsertRecordsFromPayloadResponse& insertRecordsFromPayload( const InsertRecordsFromPayloadRequest& request_,
+                                                            InsertRecordsFromPayloadResponse& response_ ) const;
+
+/**
+ * Reads from the given text-based or binary payload and inserts the
+ * data into a new or existing table.  The table will be created if it doesn't
+ * already exist.
+ * <p>
+ * Returns once all records are processed.
+ * 
+ * @param tableName  Name of the table into which the data will be inserted, in
+ *                   [schema_name.]table_name format, using standard
+ *                   <a href="../../concepts/tables.html#table-name-resolution"
+ *                   target="_top">name resolution rules</a>.
+ *                   If the table does not exist, the table will be created
+ *                   using either an existing
+ *                   @a type_id or the type inferred from the
+ *                   payload, and the new table name will have to meet standard
+ *                   <a href="../../concepts/tables.html#table-naming-criteria"
+ *                   target="_top">table naming criteria</a>.
+ * @param dataText  Records formatted as delimited text
+ * @param dataBytes  Records formatted as binary data
+ * @param modifyColumns  Not implemented yet
+ * @param createTableOptions  Options used when creating the target table.
+ *                            Includes type to use. The other options match
+ *                            those in /create/table
+ *                            <ul>
+ *                                    <li>
+ *                            gpudb::insert_records_from_payload_type_id: ID of
+ *                            a currently registered <a
+ *                            href="../../concepts/types.html"
+ *                            target="_top">type</a>.  The default value is ''.
+ *                                    <li>
+ *                            gpudb::insert_records_from_payload_no_error_if_exists:
+ *                            If @a true, prevents an error from occurring if
+ *                            the table already exists and is of the given
+ *                            type.  If a table with the same ID but a
+ *                            different type exists, it is still an error.
+ *                            <ul>
+ *                                    <li>
+ *                            gpudb::insert_records_from_payload_true
+ *                                    <li>
+ *                            gpudb::insert_records_from_payload_false
+ *                            </ul>
+ *                            The default value is
+ *                            gpudb::insert_records_from_payload_false.
+ *                                    <li>
+ *                            gpudb::insert_records_from_payload_is_replicated:
+ *                            Affects the <a
+ *                            href="../../concepts/tables.html#distribution"
+ *                            target="_top">distribution scheme</a> for the
+ *                            table's data.  If @a true and the given type has
+ *                            no explicit <a
+ *                            href="../../concepts/tables.html#shard-key"
+ *                            target="_top">shard key</a> defined, the table
+ *                            will be <a
+ *                            href="../../concepts/tables.html#replication"
+ *                            target="_top">replicated</a>.  If @a false, the
+ *                            table will be <a
+ *                            href="../../concepts/tables.html#sharding"
+ *                            target="_top">sharded</a> according to the shard
+ *                            key specified in the given @a type_id, or <a
+ *                            href="../../concepts/tables.html#random-sharding"
+ *                            target="_top">randomly sharded</a>, if no shard
+ *                            key is specified.  Note that a type containing a
+ *                            shard key cannot be used to create a replicated
+ *                            table.
+ *                            <ul>
+ *                                    <li>
+ *                            gpudb::insert_records_from_payload_true
+ *                                    <li>
+ *                            gpudb::insert_records_from_payload_false
+ *                            </ul>
+ *                            The default value is
+ *                            gpudb::insert_records_from_payload_false.
+ *                                    <li>
+ *                            gpudb::insert_records_from_payload_foreign_keys:
+ *                            Semicolon-separated list of <a
+ *                            href="../../concepts/tables.html#foreign-keys"
+ *                            target="_top">foreign keys</a>, of the format
+ *                            '(source_column_name [, ...]) references
+ *                            target_table_name(primary_key_column_name [,
+ *                            ...]) [as foreign_key_name]'.
+ *                                    <li>
+ *                            gpudb::insert_records_from_payload_foreign_shard_key:
+ *                            Foreign shard key of the format 'source_column
+ *                            references shard_by_column from
+ *                            target_table(primary_key_column)'.
+ *                                    <li>
+ *                            gpudb::insert_records_from_payload_partition_type:
+ *                            <a href="../../concepts/tables.html#partitioning"
+ *                            target="_top">Partitioning</a> scheme to use.
+ *                            <ul>
+ *                                    <li>
+ *                            gpudb::insert_records_from_payload_RANGE: Use <a
+ *                            href="../../concepts/tables.html#partitioning-by-range"
+ *                            target="_top">range partitioning</a>.
+ *                                    <li>
+ *                            gpudb::insert_records_from_payload_INTERVAL: Use
+ *                            <a
+ *                            href="../../concepts/tables.html#partitioning-by-interval"
+ *                            target="_top">interval partitioning</a>.
+ *                                    <li>
+ *                            gpudb::insert_records_from_payload_LIST: Use <a
+ *                            href="../../concepts/tables.html#partitioning-by-list"
+ *                            target="_top">list partitioning</a>.
+ *                                    <li>
+ *                            gpudb::insert_records_from_payload_HASH: Use <a
+ *                            href="../../concepts/tables.html#partitioning-by-hash"
+ *                            target="_top">hash partitioning</a>.
+ *                            </ul>
+ *                                    <li>
+ *                            gpudb::insert_records_from_payload_partition_keys:
+ *                            Comma-separated list of partition keys, which are
+ *                            the columns or column expressions by which
+ *                            records will be assigned to partitions defined by
+ *                            @a partition_definitions.
+ *                                    <li>
+ *                            gpudb::insert_records_from_payload_partition_definitions:
+ *                            Comma-separated list of partition definitions,
+ *                            whose format depends on the choice of @a
+ *                            partition_type.  See <a
+ *                            href="../../concepts/tables.html#partitioning-by-range"
+ *                            target="_top">range partitioning</a>, <a
+ *                            href="../../concepts/tables.html#partitioning-by-interval"
+ *                            target="_top">interval partitioning</a>, <a
+ *                            href="../../concepts/tables.html#partitioning-by-list"
+ *                            target="_top">list partitioning</a>, or <a
+ *                            href="../../concepts/tables.html#partitioning-by-hash"
+ *                            target="_top">hash partitioning</a> for example
+ *                            formats.
+ *                                    <li>
+ *                            gpudb::insert_records_from_payload_is_automatic_partition:
+ *                            If @a true, a new partition will be created for
+ *                            values which don't fall into an existing
+ *                            partition.  Currently only supported for <a
+ *                            href="../../concepts/tables.html#partitioning-by-list"
+ *                            target="_top">list partitions</a>.
+ *                            <ul>
+ *                                    <li>
+ *                            gpudb::insert_records_from_payload_true
+ *                                    <li>
+ *                            gpudb::insert_records_from_payload_false
+ *                            </ul>
+ *                            The default value is
+ *                            gpudb::insert_records_from_payload_false.
+ *                                    <li>
+ *                            gpudb::insert_records_from_payload_ttl: Sets the
+ *                            <a href="../../concepts/ttl.html"
+ *                            target="_top">TTL</a> of the table specified in
+ *                            @a tableName.
+ *                                    <li>
+ *                            gpudb::insert_records_from_payload_chunk_size:
+ *                            Indicates the number of records per chunk to be
+ *                            used for this table.
+ *                                    <li>
+ *                            gpudb::insert_records_from_payload_is_result_table:
+ *                            Indicates whether the table is a <a
+ *                            href="../../concepts/tables_memory_only.html"
+ *                            target="_top">memory-only table</a>. A result
+ *                            table cannot contain columns with store_only or
+ *                            text_search <a
+ *                            href="../../concepts/types.html#data-handling"
+ *                            target="_top">data-handling</a> or that are <a
+ *                            href="../../concepts/types.html#primitive-types"
+ *                            target="_top">non-charN strings</a>, and it will
+ *                            not be retained if the server is restarted.
+ *                            <ul>
+ *                                    <li>
+ *                            gpudb::insert_records_from_payload_true
+ *                                    <li>
+ *                            gpudb::insert_records_from_payload_false
+ *                            </ul>
+ *                            The default value is
+ *                            gpudb::insert_records_from_payload_false.
+ *                                    <li>
+ *                            gpudb::insert_records_from_payload_strategy_definition:
+ *                            The <a
+ *                            href="../../rm/concepts.html#tier-strategies"
+ *                            target="_top">tier strategy</a> for the table and
+ *                            its columns. See <a
+ *                            href="../../rm/concepts.html#tier-strategies"
+ *                            target="_top">tier strategy usage</a> for format
+ *                            and <a href="../../rm/usage.html#tier-strategies"
+ *                            target="_top">tier strategy examples</a> for
+ *                            examples.
+ *                            </ul>
+ * @param options  Optional parameters.
+ *                 <ul>
+ *                         <li>
+ *                 gpudb::insert_records_from_payload_bad_record_table_name:
+ *                 Optional name of a table to which records that were rejected
+ *                 are written.  The bad-record-table has the following
+ *                 columns: line_number (long), line_rejected (string),
+ *                 error_message (string).
+ *                         <li>
+ *                 gpudb::insert_records_from_payload_bad_record_table_limit: A
+ *                 positive integer indicating the maximum number of records
+ *                 that can be  written to the bad-record-table.   Default
+ *                 value is 10000
+ *                         <li> gpudb::insert_records_from_payload_batch_size:
+ *                 Internal tuning parameter--number of records per batch when
+ *                 inserting data.
+ *                         <li>
+ *                 gpudb::insert_records_from_payload_column_formats: For each
+ *                 target column specified, applies the column-property-bound
+ *                 format to the source data
+ *                 loaded into that column.  Each column format will contain a
+ *                 mapping of one or more of its column
+ *                 properties to an appropriate format for each property.
+ *                 Currently supported column properties
+ *                 include date, time, & datetime. The parameter value must be
+ *                 formatted as a JSON string of maps of
+ *                 column names to maps of column properties to their
+ *                 corresponding column formats, e.g.,
+ *                 '{ "order_date" : { "date" : "%Y.%m.%d" }, "order_time" : {
+ *                 "time" : "%H:%M:%S" } }'.
+ *                 See @a default_column_formats for valid format syntax.
+ *                         <li>
+ *                 gpudb::insert_records_from_payload_columns_to_load:
+ *                 Specifies a comma-delimited list of columns from the source
+ *                 data to
+ *                 load.  If more than one file is being loaded, this list
+ *                 applies to all files.
+ *                 Column numbers can be specified discretely or as a range.
+ *                 For example, a value of '5,7,1..3' will
+ *                 insert values from the fifth column in the source data into
+ *                 the first column in the target table,
+ *                 from the seventh column in the source data into the second
+ *                 column in the target table, and from the
+ *                 first through third columns in the source data into the
+ *                 third through fifth columns in the target
+ *                 table.
+ *                 If the source data contains a header, column names matching
+ *                 the file header names may be provided
+ *                 instead of column numbers.  If the target table doesn't
+ *                 exist, the table will be created with the
+ *                 columns in this order.  If the target table does exist with
+ *                 columns in a different order than the
+ *                 source data, this list can be used to match the order of the
+ *                 target table.  For example, a value of
+ *                 'C, B, A' will create a three column table with column C,
+ *                 followed by column B, followed by column
+ *                 A; or will insert those fields in that order into a table
+ *                 created with columns in that order.  If
+ *                 the target table exists, the column names must match the
+ *                 source data field names for a name-mapping
+ *                 to be successful.
+ *                         <li>
+ *                 gpudb::insert_records_from_payload_columns_to_skip:
+ *                 Specifies a comma-delimited list of columns from the source
+ *                 data to
+ *                 skip.  Mutually exclusive to columns_to_load.
+ *                         <li>
+ *                 gpudb::insert_records_from_payload_default_column_formats:
+ *                 Specifies the default format to be applied to source data
+ *                 loaded
+ *                 into columns with the corresponding column property.
+ *                 Currently supported column properties include
+ *                 date, time, & datetime.  This default column-property-bound
+ *                 format can be overridden by specifying a
+ *                 column property & format for a given target column in @a
+ *                 column_formats. For
+ *                 each specified annotation, the format will apply to all
+ *                 columns with that annotation unless a custom
+ *                 @a column_formats for that annotation is specified.
+ *                 The parameter value must be formatted as a JSON string that
+ *                 is a map of column properties to their
+ *                 respective column formats, e.g., '{ "date" : "%Y.%m.%d",
+ *                 "time" : "%H:%M:%S" }'.  Column
+ *                 formats are specified as a string of control characters and
+ *                 plain text. The supported control
+ *                 characters are 'Y', 'm', 'd', 'H', 'M', 'S', and 's', which
+ *                 follow the Linux 'strptime()'
+ *                 specification, as well as 's', which specifies seconds and
+ *                 fractional seconds (though the fractional
+ *                 component will be truncated past milliseconds).
+ *                 Formats for the 'date' annotation must include the 'Y', 'm',
+ *                 and 'd' control characters. Formats for
+ *                 the 'time' annotation must include the 'H', 'M', and either
+ *                 'S' or 's' (but not both) control
+ *                 characters. Formats for the 'datetime' annotation meet both
+ *                 the 'date' and 'time' control character
+ *                 requirements. For example, '{"datetime" : "%m/%d/%Y
+ *                 %H:%M:%S" }' would be used to interpret text
+ *                 as "05/04/2000 12:12:11"
+ *                         <li>
+ *                 gpudb::insert_records_from_payload_error_handling: Specifies
+ *                 how errors should be handled upon insertion.
+ *                 <ul>
+ *                         <li> gpudb::insert_records_from_payload_permissive:
+ *                 Records with missing columns are populated with nulls if
+ *                 possible; otherwise, malformed records are skipped.
+ *                         <li>
+ *                 gpudb::insert_records_from_payload_ignore_bad_records:
+ *                 Malformed records are skipped.
+ *                         <li> gpudb::insert_records_from_payload_abort: Stops
+ *                 current insertion and aborts entire operation when an error
+ *                 is encountered.  Primary key collisions are considered
+ *                 abortable errors in this mode.
+ *                 </ul>
+ *                 The default value is
+ *                 gpudb::insert_records_from_payload_permissive.
+ *                         <li> gpudb::insert_records_from_payload_file_type:
+ *                 Specifies the type of the file(s) whose records will be
+ *                 inserted.
+ *                 <ul>
+ *                         <li>
+ *                 gpudb::insert_records_from_payload_delimited_text: Indicates
+ *                 the file(s) are in delimited text format; e.g., CSV, TSV,
+ *                 PSV, etc.
+ *                         <li> gpudb::insert_records_from_payload_parquet:
+ *                 Indicates the file(s) are in Parquet format. Parquet files
+ *                 are not supported yet.
+ *                 </ul>
+ *                 The default value is
+ *                 gpudb::insert_records_from_payload_delimited_text.
+ *                         <li>
+ *                 gpudb::insert_records_from_payload_ingestion_mode: Whether
+ *                 to do a full load, dry run, or perform a type inference on
+ *                 the source data.
+ *                 <ul>
+ *                         <li> gpudb::insert_records_from_payload_full: Run a
+ *                 type inference on the source data (if needed) and ingest
+ *                         <li> gpudb::insert_records_from_payload_dry_run:
+ *                 Does not load data, but walks through the source data and
+ *                 determines the number of valid records, taking into account
+ *                 the current mode of @a error_handling.
+ *                         <li>
+ *                 gpudb::insert_records_from_payload_type_inference_only:
+ *                 Infer the type of the source data and return, without
+ *                 ingesting any data.  The inferred type is returned in the
+ *                 response.
+ *                 </ul>
+ *                 The default value is
+ *                 gpudb::insert_records_from_payload_full.
+ *                         <li>
+ *                 gpudb::insert_records_from_payload_primary_keys: Optional:
+ *                 comma separated list of column names, to set as primary
+ *                 keys, when not specified in the type.  The default value is
+ *                 ''.
+ *                         <li> gpudb::insert_records_from_payload_shard_keys:
+ *                 Optional: comma separated list of column names, to set as
+ *                 primary keys, when not specified in the type.  The default
+ *                 value is ''.
+ *                         <li>
+ *                 gpudb::insert_records_from_payload_text_comment_string:
+ *                 Specifies the character string that should be interpreted as
+ *                 a comment line
+ *                 prefix in the source data.  All lines in the data starting
+ *                 with the provided string are ignored.
+ *                 For @a delimited_text @a file_type only.  The default value
+ *                 is '#'.
+ *                         <li>
+ *                 gpudb::insert_records_from_payload_text_delimiter: Specifies
+ *                 the character delimiting field values in the source data
+ *                 and field names in the header (if present).
+ *                 For @a delimited_text @a file_type only.  The default value
+ *                 is ','.
+ *                         <li>
+ *                 gpudb::insert_records_from_payload_text_escape_character:
+ *                 Specifies the character that is used to escape other
+ *                 characters in
+ *                 the source data.
+ *                 An 'a', 'b', 'f', 'n', 'r', 't', or 'v' preceded by an
+ *                 escape character will be interpreted as the
+ *                 ASCII bell, backspace, form feed, line feed, carriage
+ *                 return, horizontal tab, & vertical tab,
+ *                 respectively.  For example, the escape character followed by
+ *                 an 'n' will be interpreted as a newline
+ *                 within a field value.
+ *                 The escape character can also be used to escape the quoting
+ *                 character, and will be treated as an
+ *                 escape character whether it is within a quoted field value
+ *                 or not.
+ *                 For @a delimited_text @a file_type only.
+ *                         <li>
+ *                 gpudb::insert_records_from_payload_text_has_header:
+ *                 Indicates whether the source data contains a header row.
+ *                 For @a delimited_text @a file_type only.
+ *                 <ul>
+ *                         <li> gpudb::insert_records_from_payload_true
+ *                         <li> gpudb::insert_records_from_payload_false
+ *                 </ul>
+ *                 The default value is
+ *                 gpudb::insert_records_from_payload_true.
+ *                         <li>
+ *                 gpudb::insert_records_from_payload_text_header_property_delimiter:
+ *                 Specifies the delimiter for
+ *                 <a href="../../concepts/types.html#column-properties"
+ *                 target="_top">column properties</a> in the header row (if
+ *                 present).  Cannot be set to same value as @a text_delimiter.
+ *                 For @a delimited_text @a file_type only.  The default value
+ *                 is '|'.
+ *                         <li>
+ *                 gpudb::insert_records_from_payload_text_null_string:
+ *                 Specifies the character string that should be interpreted as
+ *                 a null
+ *                 value in the source data.
+ *                 For @a delimited_text @a file_type only.  The default value
+ *                 is ''.
+ *                         <li>
+ *                 gpudb::insert_records_from_payload_text_quote_character:
+ *                 Specifies the character that should be interpreted as a
+ *                 field value
+ *                 quoting character in the source data.  The character must
+ *                 appear at beginning and end of field value
+ *                 to take effect.  Delimiters within quoted fields are treated
+ *                 as literals and not delimiters.  Within
+ *                 a quoted field, two consecutive quote characters will be
+ *                 interpreted as a single literal quote
+ *                 character, effectively escaping it.  To not have a quote
+ *                 character, specify an empty string.
+ *                 For @a delimited_text @a file_type only.  The default value
+ *                 is '"'.
+ *                         <li>
+ *                 gpudb::insert_records_from_payload_num_tasks_per_rank:
+ *                 Optional: number of tasks for reading file per rank. Default
+ *                 will be external_file_reader_num_tasks
+ *                 </ul>
+ * 
+ * @return Response object containing the result of the operation.
+ * 
+ */
+
+InsertRecordsFromPayloadResponse insertRecordsFromPayload( const std::string& tableName,
+                                                           const std::string& dataText,
+                                                           const std::vector<uint8_t>& dataBytes,
+                                                           const std::map<std::string, std::map<std::string, std::string> >& modifyColumns,
+                                                           const std::map<std::string, std::string>& createTableOptions,
+                                                           const std::map<std::string, std::string>& options ) const;
+
+/**
+ * Reads from the given text-based or binary payload and inserts the
+ * data into a new or existing table.  The table will be created if it doesn't
+ * already exist.
+ * <p>
+ * Returns once all records are processed.
+ * 
+ * @param tableName  Name of the table into which the data will be inserted, in
+ *                   [schema_name.]table_name format, using standard
+ *                   <a href="../../concepts/tables.html#table-name-resolution"
+ *                   target="_top">name resolution rules</a>.
+ *                   If the table does not exist, the table will be created
+ *                   using either an existing
+ *                   @a type_id or the type inferred from the
+ *                   payload, and the new table name will have to meet standard
+ *                   <a href="../../concepts/tables.html#table-naming-criteria"
+ *                   target="_top">table naming criteria</a>.
+ * @param dataText  Records formatted as delimited text
+ * @param dataBytes  Records formatted as binary data
+ * @param modifyColumns  Not implemented yet
+ * @param createTableOptions  Options used when creating the target table.
+ *                            Includes type to use. The other options match
+ *                            those in /create/table
+ *                            <ul>
+ *                                    <li>
+ *                            gpudb::insert_records_from_payload_type_id: ID of
+ *                            a currently registered <a
+ *                            href="../../concepts/types.html"
+ *                            target="_top">type</a>.  The default value is ''.
+ *                                    <li>
+ *                            gpudb::insert_records_from_payload_no_error_if_exists:
+ *                            If @a true, prevents an error from occurring if
+ *                            the table already exists and is of the given
+ *                            type.  If a table with the same ID but a
+ *                            different type exists, it is still an error.
+ *                            <ul>
+ *                                    <li>
+ *                            gpudb::insert_records_from_payload_true
+ *                                    <li>
+ *                            gpudb::insert_records_from_payload_false
+ *                            </ul>
+ *                            The default value is
+ *                            gpudb::insert_records_from_payload_false.
+ *                                    <li>
+ *                            gpudb::insert_records_from_payload_is_replicated:
+ *                            Affects the <a
+ *                            href="../../concepts/tables.html#distribution"
+ *                            target="_top">distribution scheme</a> for the
+ *                            table's data.  If @a true and the given type has
+ *                            no explicit <a
+ *                            href="../../concepts/tables.html#shard-key"
+ *                            target="_top">shard key</a> defined, the table
+ *                            will be <a
+ *                            href="../../concepts/tables.html#replication"
+ *                            target="_top">replicated</a>.  If @a false, the
+ *                            table will be <a
+ *                            href="../../concepts/tables.html#sharding"
+ *                            target="_top">sharded</a> according to the shard
+ *                            key specified in the given @a type_id, or <a
+ *                            href="../../concepts/tables.html#random-sharding"
+ *                            target="_top">randomly sharded</a>, if no shard
+ *                            key is specified.  Note that a type containing a
+ *                            shard key cannot be used to create a replicated
+ *                            table.
+ *                            <ul>
+ *                                    <li>
+ *                            gpudb::insert_records_from_payload_true
+ *                                    <li>
+ *                            gpudb::insert_records_from_payload_false
+ *                            </ul>
+ *                            The default value is
+ *                            gpudb::insert_records_from_payload_false.
+ *                                    <li>
+ *                            gpudb::insert_records_from_payload_foreign_keys:
+ *                            Semicolon-separated list of <a
+ *                            href="../../concepts/tables.html#foreign-keys"
+ *                            target="_top">foreign keys</a>, of the format
+ *                            '(source_column_name [, ...]) references
+ *                            target_table_name(primary_key_column_name [,
+ *                            ...]) [as foreign_key_name]'.
+ *                                    <li>
+ *                            gpudb::insert_records_from_payload_foreign_shard_key:
+ *                            Foreign shard key of the format 'source_column
+ *                            references shard_by_column from
+ *                            target_table(primary_key_column)'.
+ *                                    <li>
+ *                            gpudb::insert_records_from_payload_partition_type:
+ *                            <a href="../../concepts/tables.html#partitioning"
+ *                            target="_top">Partitioning</a> scheme to use.
+ *                            <ul>
+ *                                    <li>
+ *                            gpudb::insert_records_from_payload_RANGE: Use <a
+ *                            href="../../concepts/tables.html#partitioning-by-range"
+ *                            target="_top">range partitioning</a>.
+ *                                    <li>
+ *                            gpudb::insert_records_from_payload_INTERVAL: Use
+ *                            <a
+ *                            href="../../concepts/tables.html#partitioning-by-interval"
+ *                            target="_top">interval partitioning</a>.
+ *                                    <li>
+ *                            gpudb::insert_records_from_payload_LIST: Use <a
+ *                            href="../../concepts/tables.html#partitioning-by-list"
+ *                            target="_top">list partitioning</a>.
+ *                                    <li>
+ *                            gpudb::insert_records_from_payload_HASH: Use <a
+ *                            href="../../concepts/tables.html#partitioning-by-hash"
+ *                            target="_top">hash partitioning</a>.
+ *                            </ul>
+ *                                    <li>
+ *                            gpudb::insert_records_from_payload_partition_keys:
+ *                            Comma-separated list of partition keys, which are
+ *                            the columns or column expressions by which
+ *                            records will be assigned to partitions defined by
+ *                            @a partition_definitions.
+ *                                    <li>
+ *                            gpudb::insert_records_from_payload_partition_definitions:
+ *                            Comma-separated list of partition definitions,
+ *                            whose format depends on the choice of @a
+ *                            partition_type.  See <a
+ *                            href="../../concepts/tables.html#partitioning-by-range"
+ *                            target="_top">range partitioning</a>, <a
+ *                            href="../../concepts/tables.html#partitioning-by-interval"
+ *                            target="_top">interval partitioning</a>, <a
+ *                            href="../../concepts/tables.html#partitioning-by-list"
+ *                            target="_top">list partitioning</a>, or <a
+ *                            href="../../concepts/tables.html#partitioning-by-hash"
+ *                            target="_top">hash partitioning</a> for example
+ *                            formats.
+ *                                    <li>
+ *                            gpudb::insert_records_from_payload_is_automatic_partition:
+ *                            If @a true, a new partition will be created for
+ *                            values which don't fall into an existing
+ *                            partition.  Currently only supported for <a
+ *                            href="../../concepts/tables.html#partitioning-by-list"
+ *                            target="_top">list partitions</a>.
+ *                            <ul>
+ *                                    <li>
+ *                            gpudb::insert_records_from_payload_true
+ *                                    <li>
+ *                            gpudb::insert_records_from_payload_false
+ *                            </ul>
+ *                            The default value is
+ *                            gpudb::insert_records_from_payload_false.
+ *                                    <li>
+ *                            gpudb::insert_records_from_payload_ttl: Sets the
+ *                            <a href="../../concepts/ttl.html"
+ *                            target="_top">TTL</a> of the table specified in
+ *                            @a tableName.
+ *                                    <li>
+ *                            gpudb::insert_records_from_payload_chunk_size:
+ *                            Indicates the number of records per chunk to be
+ *                            used for this table.
+ *                                    <li>
+ *                            gpudb::insert_records_from_payload_is_result_table:
+ *                            Indicates whether the table is a <a
+ *                            href="../../concepts/tables_memory_only.html"
+ *                            target="_top">memory-only table</a>. A result
+ *                            table cannot contain columns with store_only or
+ *                            text_search <a
+ *                            href="../../concepts/types.html#data-handling"
+ *                            target="_top">data-handling</a> or that are <a
+ *                            href="../../concepts/types.html#primitive-types"
+ *                            target="_top">non-charN strings</a>, and it will
+ *                            not be retained if the server is restarted.
+ *                            <ul>
+ *                                    <li>
+ *                            gpudb::insert_records_from_payload_true
+ *                                    <li>
+ *                            gpudb::insert_records_from_payload_false
+ *                            </ul>
+ *                            The default value is
+ *                            gpudb::insert_records_from_payload_false.
+ *                                    <li>
+ *                            gpudb::insert_records_from_payload_strategy_definition:
+ *                            The <a
+ *                            href="../../rm/concepts.html#tier-strategies"
+ *                            target="_top">tier strategy</a> for the table and
+ *                            its columns. See <a
+ *                            href="../../rm/concepts.html#tier-strategies"
+ *                            target="_top">tier strategy usage</a> for format
+ *                            and <a href="../../rm/usage.html#tier-strategies"
+ *                            target="_top">tier strategy examples</a> for
+ *                            examples.
+ *                            </ul>
+ * @param options  Optional parameters.
+ *                 <ul>
+ *                         <li>
+ *                 gpudb::insert_records_from_payload_bad_record_table_name:
+ *                 Optional name of a table to which records that were rejected
+ *                 are written.  The bad-record-table has the following
+ *                 columns: line_number (long), line_rejected (string),
+ *                 error_message (string).
+ *                         <li>
+ *                 gpudb::insert_records_from_payload_bad_record_table_limit: A
+ *                 positive integer indicating the maximum number of records
+ *                 that can be  written to the bad-record-table.   Default
+ *                 value is 10000
+ *                         <li> gpudb::insert_records_from_payload_batch_size:
+ *                 Internal tuning parameter--number of records per batch when
+ *                 inserting data.
+ *                         <li>
+ *                 gpudb::insert_records_from_payload_column_formats: For each
+ *                 target column specified, applies the column-property-bound
+ *                 format to the source data
+ *                 loaded into that column.  Each column format will contain a
+ *                 mapping of one or more of its column
+ *                 properties to an appropriate format for each property.
+ *                 Currently supported column properties
+ *                 include date, time, & datetime. The parameter value must be
+ *                 formatted as a JSON string of maps of
+ *                 column names to maps of column properties to their
+ *                 corresponding column formats, e.g.,
+ *                 '{ "order_date" : { "date" : "%Y.%m.%d" }, "order_time" : {
+ *                 "time" : "%H:%M:%S" } }'.
+ *                 See @a default_column_formats for valid format syntax.
+ *                         <li>
+ *                 gpudb::insert_records_from_payload_columns_to_load:
+ *                 Specifies a comma-delimited list of columns from the source
+ *                 data to
+ *                 load.  If more than one file is being loaded, this list
+ *                 applies to all files.
+ *                 Column numbers can be specified discretely or as a range.
+ *                 For example, a value of '5,7,1..3' will
+ *                 insert values from the fifth column in the source data into
+ *                 the first column in the target table,
+ *                 from the seventh column in the source data into the second
+ *                 column in the target table, and from the
+ *                 first through third columns in the source data into the
+ *                 third through fifth columns in the target
+ *                 table.
+ *                 If the source data contains a header, column names matching
+ *                 the file header names may be provided
+ *                 instead of column numbers.  If the target table doesn't
+ *                 exist, the table will be created with the
+ *                 columns in this order.  If the target table does exist with
+ *                 columns in a different order than the
+ *                 source data, this list can be used to match the order of the
+ *                 target table.  For example, a value of
+ *                 'C, B, A' will create a three column table with column C,
+ *                 followed by column B, followed by column
+ *                 A; or will insert those fields in that order into a table
+ *                 created with columns in that order.  If
+ *                 the target table exists, the column names must match the
+ *                 source data field names for a name-mapping
+ *                 to be successful.
+ *                         <li>
+ *                 gpudb::insert_records_from_payload_columns_to_skip:
+ *                 Specifies a comma-delimited list of columns from the source
+ *                 data to
+ *                 skip.  Mutually exclusive to columns_to_load.
+ *                         <li>
+ *                 gpudb::insert_records_from_payload_default_column_formats:
+ *                 Specifies the default format to be applied to source data
+ *                 loaded
+ *                 into columns with the corresponding column property.
+ *                 Currently supported column properties include
+ *                 date, time, & datetime.  This default column-property-bound
+ *                 format can be overridden by specifying a
+ *                 column property & format for a given target column in @a
+ *                 column_formats. For
+ *                 each specified annotation, the format will apply to all
+ *                 columns with that annotation unless a custom
+ *                 @a column_formats for that annotation is specified.
+ *                 The parameter value must be formatted as a JSON string that
+ *                 is a map of column properties to their
+ *                 respective column formats, e.g., '{ "date" : "%Y.%m.%d",
+ *                 "time" : "%H:%M:%S" }'.  Column
+ *                 formats are specified as a string of control characters and
+ *                 plain text. The supported control
+ *                 characters are 'Y', 'm', 'd', 'H', 'M', 'S', and 's', which
+ *                 follow the Linux 'strptime()'
+ *                 specification, as well as 's', which specifies seconds and
+ *                 fractional seconds (though the fractional
+ *                 component will be truncated past milliseconds).
+ *                 Formats for the 'date' annotation must include the 'Y', 'm',
+ *                 and 'd' control characters. Formats for
+ *                 the 'time' annotation must include the 'H', 'M', and either
+ *                 'S' or 's' (but not both) control
+ *                 characters. Formats for the 'datetime' annotation meet both
+ *                 the 'date' and 'time' control character
+ *                 requirements. For example, '{"datetime" : "%m/%d/%Y
+ *                 %H:%M:%S" }' would be used to interpret text
+ *                 as "05/04/2000 12:12:11"
+ *                         <li>
+ *                 gpudb::insert_records_from_payload_error_handling: Specifies
+ *                 how errors should be handled upon insertion.
+ *                 <ul>
+ *                         <li> gpudb::insert_records_from_payload_permissive:
+ *                 Records with missing columns are populated with nulls if
+ *                 possible; otherwise, malformed records are skipped.
+ *                         <li>
+ *                 gpudb::insert_records_from_payload_ignore_bad_records:
+ *                 Malformed records are skipped.
+ *                         <li> gpudb::insert_records_from_payload_abort: Stops
+ *                 current insertion and aborts entire operation when an error
+ *                 is encountered.  Primary key collisions are considered
+ *                 abortable errors in this mode.
+ *                 </ul>
+ *                 The default value is
+ *                 gpudb::insert_records_from_payload_permissive.
+ *                         <li> gpudb::insert_records_from_payload_file_type:
+ *                 Specifies the type of the file(s) whose records will be
+ *                 inserted.
+ *                 <ul>
+ *                         <li>
+ *                 gpudb::insert_records_from_payload_delimited_text: Indicates
+ *                 the file(s) are in delimited text format; e.g., CSV, TSV,
+ *                 PSV, etc.
+ *                         <li> gpudb::insert_records_from_payload_parquet:
+ *                 Indicates the file(s) are in Parquet format. Parquet files
+ *                 are not supported yet.
+ *                 </ul>
+ *                 The default value is
+ *                 gpudb::insert_records_from_payload_delimited_text.
+ *                         <li>
+ *                 gpudb::insert_records_from_payload_ingestion_mode: Whether
+ *                 to do a full load, dry run, or perform a type inference on
+ *                 the source data.
+ *                 <ul>
+ *                         <li> gpudb::insert_records_from_payload_full: Run a
+ *                 type inference on the source data (if needed) and ingest
+ *                         <li> gpudb::insert_records_from_payload_dry_run:
+ *                 Does not load data, but walks through the source data and
+ *                 determines the number of valid records, taking into account
+ *                 the current mode of @a error_handling.
+ *                         <li>
+ *                 gpudb::insert_records_from_payload_type_inference_only:
+ *                 Infer the type of the source data and return, without
+ *                 ingesting any data.  The inferred type is returned in the
+ *                 response.
+ *                 </ul>
+ *                 The default value is
+ *                 gpudb::insert_records_from_payload_full.
+ *                         <li>
+ *                 gpudb::insert_records_from_payload_primary_keys: Optional:
+ *                 comma separated list of column names, to set as primary
+ *                 keys, when not specified in the type.  The default value is
+ *                 ''.
+ *                         <li> gpudb::insert_records_from_payload_shard_keys:
+ *                 Optional: comma separated list of column names, to set as
+ *                 primary keys, when not specified in the type.  The default
+ *                 value is ''.
+ *                         <li>
+ *                 gpudb::insert_records_from_payload_text_comment_string:
+ *                 Specifies the character string that should be interpreted as
+ *                 a comment line
+ *                 prefix in the source data.  All lines in the data starting
+ *                 with the provided string are ignored.
+ *                 For @a delimited_text @a file_type only.  The default value
+ *                 is '#'.
+ *                         <li>
+ *                 gpudb::insert_records_from_payload_text_delimiter: Specifies
+ *                 the character delimiting field values in the source data
+ *                 and field names in the header (if present).
+ *                 For @a delimited_text @a file_type only.  The default value
+ *                 is ','.
+ *                         <li>
+ *                 gpudb::insert_records_from_payload_text_escape_character:
+ *                 Specifies the character that is used to escape other
+ *                 characters in
+ *                 the source data.
+ *                 An 'a', 'b', 'f', 'n', 'r', 't', or 'v' preceded by an
+ *                 escape character will be interpreted as the
+ *                 ASCII bell, backspace, form feed, line feed, carriage
+ *                 return, horizontal tab, & vertical tab,
+ *                 respectively.  For example, the escape character followed by
+ *                 an 'n' will be interpreted as a newline
+ *                 within a field value.
+ *                 The escape character can also be used to escape the quoting
+ *                 character, and will be treated as an
+ *                 escape character whether it is within a quoted field value
+ *                 or not.
+ *                 For @a delimited_text @a file_type only.
+ *                         <li>
+ *                 gpudb::insert_records_from_payload_text_has_header:
+ *                 Indicates whether the source data contains a header row.
+ *                 For @a delimited_text @a file_type only.
+ *                 <ul>
+ *                         <li> gpudb::insert_records_from_payload_true
+ *                         <li> gpudb::insert_records_from_payload_false
+ *                 </ul>
+ *                 The default value is
+ *                 gpudb::insert_records_from_payload_true.
+ *                         <li>
+ *                 gpudb::insert_records_from_payload_text_header_property_delimiter:
+ *                 Specifies the delimiter for
+ *                 <a href="../../concepts/types.html#column-properties"
+ *                 target="_top">column properties</a> in the header row (if
+ *                 present).  Cannot be set to same value as @a text_delimiter.
+ *                 For @a delimited_text @a file_type only.  The default value
+ *                 is '|'.
+ *                         <li>
+ *                 gpudb::insert_records_from_payload_text_null_string:
+ *                 Specifies the character string that should be interpreted as
+ *                 a null
+ *                 value in the source data.
+ *                 For @a delimited_text @a file_type only.  The default value
+ *                 is ''.
+ *                         <li>
+ *                 gpudb::insert_records_from_payload_text_quote_character:
+ *                 Specifies the character that should be interpreted as a
+ *                 field value
+ *                 quoting character in the source data.  The character must
+ *                 appear at beginning and end of field value
+ *                 to take effect.  Delimiters within quoted fields are treated
+ *                 as literals and not delimiters.  Within
+ *                 a quoted field, two consecutive quote characters will be
+ *                 interpreted as a single literal quote
+ *                 character, effectively escaping it.  To not have a quote
+ *                 character, specify an empty string.
+ *                 For @a delimited_text @a file_type only.  The default value
+ *                 is '"'.
+ *                         <li>
+ *                 gpudb::insert_records_from_payload_num_tasks_per_rank:
+ *                 Optional: number of tasks for reading file per rank. Default
+ *                 will be external_file_reader_num_tasks
+ *                 </ul>
+ * @param[out] response_  Response object containing the results of the
+ *                        operation.
+ * 
+ * @return Response object containing the result of the operation (initially
+ *         passed in by reference).
+ * 
+ */
+
+InsertRecordsFromPayloadResponse& insertRecordsFromPayload( const std::string& tableName,
+                                                            const std::string& dataText,
+                                                            const std::vector<uint8_t>& dataBytes,
+                                                            const std::map<std::string, std::map<std::string, std::string> >& modifyColumns,
+                                                            const std::map<std::string, std::string>& createTableOptions,
+                                                            const std::map<std::string, std::string>& options,
+                                                            InsertRecordsFromPayloadResponse& response_ ) const;
+
+/**
  * Generates a specified number of random records and adds them to the given
- * table. There is an optional parameter that allows the user to customize the
- * ranges of the column values. It also allows the user to specify linear
- * profiles for some or all columns in which case linear values are generated
- * rather than random ones. Only individual tables are supported for this
- * operation.
+ * table.
+ * There is an optional parameter that allows the user to customize the ranges
+ * of
+ * the column values. It also allows the user to specify linear profiles for
+ * some
+ * or all columns in which case linear values are generated rather than random
+ * ones. Only individual tables are supported for this operation.
  * <p>
  * This operation is synchronous, meaning that a response will not be returned
  * until all random records are fully available.
@@ -17740,11 +22475,13 @@ InsertRecordsRandomResponse insertRecordsRandom( const InsertRecordsRandomReques
 
 /**
  * Generates a specified number of random records and adds them to the given
- * table. There is an optional parameter that allows the user to customize the
- * ranges of the column values. It also allows the user to specify linear
- * profiles for some or all columns in which case linear values are generated
- * rather than random ones. Only individual tables are supported for this
- * operation.
+ * table.
+ * There is an optional parameter that allows the user to customize the ranges
+ * of
+ * the column values. It also allows the user to specify linear profiles for
+ * some
+ * or all columns in which case linear values are generated rather than random
+ * ones. Only individual tables are supported for this operation.
  * <p>
  * This operation is synchronous, meaning that a response will not be returned
  * until all random records are fully available.
@@ -17764,18 +22501,22 @@ InsertRecordsRandomResponse& insertRecordsRandom( const InsertRecordsRandomReque
 
 /**
  * Generates a specified number of random records and adds them to the given
- * table. There is an optional parameter that allows the user to customize the
- * ranges of the column values. It also allows the user to specify linear
- * profiles for some or all columns in which case linear values are generated
- * rather than random ones. Only individual tables are supported for this
- * operation.
+ * table.
+ * There is an optional parameter that allows the user to customize the ranges
+ * of
+ * the column values. It also allows the user to specify linear profiles for
+ * some
+ * or all columns in which case linear values are generated rather than random
+ * ones. Only individual tables are supported for this operation.
  * <p>
  * This operation is synchronous, meaning that a response will not be returned
  * until all random records are fully available.
  * 
- * @param tableName  Table to which random records will be added. Must be an
- *                   existing table.  Also, must be an individual table, not a
- *                   collection of tables, nor a view of a table.
+ * @param tableName  Table to which random records will be added, in
+ *                   [schema_name.]table_name format, using standard <a
+ *                   href="../../concepts/tables.html#table-name-resolution"
+ *                   target="_top">name resolution rules</a>.  Must be an
+ *                   existing table, not a view.
  * @param count  Number of records to generate.
  * @param options  Optional parameter to pass in specifications for the
  *                 randomness of the values.  This map is different from the
@@ -17799,8 +22540,8 @@ InsertRecordsRandomResponse& insertRecordsRandom( const InsertRecordsRandomReque
  *                 something equivalent to: 'options' = {'seed': { 'value': 100
  *                 } }
  *                 <ul>
- *                         <li> gpudb::insert_records_random_value: Pass the
- *                 seed value here.
+ *                         <li> gpudb::insert_records_random_value: The seed
+ *                 value to use
  *                 </ul>
  *                         <li> gpudb::insert_records_random_all: This key
  *                 indicates that the specifications relayed in the internal
@@ -17956,18 +22697,22 @@ InsertRecordsRandomResponse insertRecordsRandom( const std::string& tableName,
 
 /**
  * Generates a specified number of random records and adds them to the given
- * table. There is an optional parameter that allows the user to customize the
- * ranges of the column values. It also allows the user to specify linear
- * profiles for some or all columns in which case linear values are generated
- * rather than random ones. Only individual tables are supported for this
- * operation.
+ * table.
+ * There is an optional parameter that allows the user to customize the ranges
+ * of
+ * the column values. It also allows the user to specify linear profiles for
+ * some
+ * or all columns in which case linear values are generated rather than random
+ * ones. Only individual tables are supported for this operation.
  * <p>
  * This operation is synchronous, meaning that a response will not be returned
  * until all random records are fully available.
  * 
- * @param tableName  Table to which random records will be added. Must be an
- *                   existing table.  Also, must be an individual table, not a
- *                   collection of tables, nor a view of a table.
+ * @param tableName  Table to which random records will be added, in
+ *                   [schema_name.]table_name format, using standard <a
+ *                   href="../../concepts/tables.html#table-name-resolution"
+ *                   target="_top">name resolution rules</a>.  Must be an
+ *                   existing table, not a view.
  * @param count  Number of records to generate.
  * @param options  Optional parameter to pass in specifications for the
  *                 randomness of the values.  This map is different from the
@@ -17991,8 +22736,8 @@ InsertRecordsRandomResponse insertRecordsRandom( const std::string& tableName,
  *                 something equivalent to: 'options' = {'seed': { 'value': 100
  *                 } }
  *                 <ul>
- *                         <li> gpudb::insert_records_random_value: Pass the
- *                 seed value here.
+ *                         <li> gpudb::insert_records_random_value: The seed
+ *                 value to use
  *                 </ul>
  *                         <li> gpudb::insert_records_random_all: This key
  *                 indicates that the specifications relayed in the internal
@@ -18473,8 +23218,11 @@ LockTableResponse& lockTable( const LockTableRequest& request_,
  * on the table.  The lock status can be queried by setting @a lockType to @a
  * status.
  * 
- * @param tableName  Name of the table to be locked. It must be a currently
- *                   existing table, collection, or view.
+ * @param tableName  Name of the table to be locked, in
+ *                   [schema_name.]table_name format, using standard <a
+ *                   href="../../concepts/tables.html#table-name-resolution"
+ *                   target="_top">name resolution rules</a>.  It must be a
+ *                   currently existing table or view.
  * @param lockType  The type of lock being applied to the table. Setting it to
  *                  @a status will return the current lock status of the table
  *                  without changing it.
@@ -18509,8 +23257,11 @@ LockTableResponse lockTable( const std::string& tableName,
  * on the table.  The lock status can be queried by setting @a lockType to @a
  * status.
  * 
- * @param tableName  Name of the table to be locked. It must be a currently
- *                   existing table, collection, or view.
+ * @param tableName  Name of the table to be locked, in
+ *                   [schema_name.]table_name format, using standard <a
+ *                   href="../../concepts/tables.html#table-name-resolution"
+ *                   target="_top">name resolution rules</a>.  It must be a
+ *                   currently existing table or view.
  * @param lockType  The type of lock being applied to the table. Setting it to
  *                  @a status will return the current lock status of the table
  *                  without changing it.
@@ -18541,16 +23292,21 @@ LockTableResponse& lockTable( const std::string& tableName,
                               LockTableResponse& response_ ) const;
 
 /**
- * Matches a directed route implied by a given set of latitude/longitude points
- * to an existing underlying road network graph using a given solution type.
+ * Matches a directed route implied by a given set of
+ * latitude/longitude points to an existing underlying road network graph using
+ * a
+ * given solution type.
 
- * IMPORTANT: It's highly recommended that you review the <a
- * href="../../graph_solver/network_graph_solver.html" target="_top">Network
- * Graphs & Solvers</a> concepts documentation, the <a
- * href="../../graph_solver/examples/graph_rest_guide.html" target="_top">Graph
- * REST Tutorial</a>, and/or some <a
- * href="../../graph_solver/examples.html#match-graph"
- * target="_top">/match/graph examples</a> before using this endpoint.
+ * IMPORTANT: It's highly recommended that you review the
+ * <a href="../../graph_solver/network_graph_solver.html" target="_top">Network
+ * Graphs & Solvers</a>
+ * concepts documentation, the
+ * <a href="../../graph_solver/examples/graph_rest_guide.html"
+ * target="_top">Graph REST Tutorial</a>,
+ * and/or some
+ * <a href="../../graph_solver/examples.html#match-graph"
+ * target="_top">/match/graph examples</a>
+ * before using this endpoint.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -18562,16 +23318,21 @@ LockTableResponse& lockTable( const std::string& tableName,
 MatchGraphResponse matchGraph( const MatchGraphRequest& request_ ) const;
 
 /**
- * Matches a directed route implied by a given set of latitude/longitude points
- * to an existing underlying road network graph using a given solution type.
+ * Matches a directed route implied by a given set of
+ * latitude/longitude points to an existing underlying road network graph using
+ * a
+ * given solution type.
 
- * IMPORTANT: It's highly recommended that you review the <a
- * href="../../graph_solver/network_graph_solver.html" target="_top">Network
- * Graphs & Solvers</a> concepts documentation, the <a
- * href="../../graph_solver/examples/graph_rest_guide.html" target="_top">Graph
- * REST Tutorial</a>, and/or some <a
- * href="../../graph_solver/examples.html#match-graph"
- * target="_top">/match/graph examples</a> before using this endpoint.
+ * IMPORTANT: It's highly recommended that you review the
+ * <a href="../../graph_solver/network_graph_solver.html" target="_top">Network
+ * Graphs & Solvers</a>
+ * concepts documentation, the
+ * <a href="../../graph_solver/examples/graph_rest_guide.html"
+ * target="_top">Graph REST Tutorial</a>,
+ * and/or some
+ * <a href="../../graph_solver/examples.html#match-graph"
+ * target="_top">/match/graph examples</a>
+ * before using this endpoint.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -18587,16 +23348,21 @@ MatchGraphResponse& matchGraph( const MatchGraphRequest& request_,
                                 MatchGraphResponse& response_ ) const;
 
 /**
- * Matches a directed route implied by a given set of latitude/longitude points
- * to an existing underlying road network graph using a given solution type.
+ * Matches a directed route implied by a given set of
+ * latitude/longitude points to an existing underlying road network graph using
+ * a
+ * given solution type.
 
- * IMPORTANT: It's highly recommended that you review the <a
- * href="../../graph_solver/network_graph_solver.html" target="_top">Network
- * Graphs & Solvers</a> concepts documentation, the <a
- * href="../../graph_solver/examples/graph_rest_guide.html" target="_top">Graph
- * REST Tutorial</a>, and/or some <a
- * href="../../graph_solver/examples.html#match-graph"
- * target="_top">/match/graph examples</a> before using this endpoint.
+ * IMPORTANT: It's highly recommended that you review the
+ * <a href="../../graph_solver/network_graph_solver.html" target="_top">Network
+ * Graphs & Solvers</a>
+ * concepts documentation, the
+ * <a href="../../graph_solver/examples/graph_rest_guide.html"
+ * target="_top">Graph REST Tutorial</a>,
+ * and/or some
+ * <a href="../../graph_solver/examples.html#match-graph"
+ * target="_top">/match/graph examples</a>
+ * before using this endpoint.
  * 
  * @param graphName  Name of the underlying geospatial graph resource to match
  *                   to using @a samplePoints.
@@ -18637,19 +23403,21 @@ MatchGraphResponse& matchGraph( const MatchGraphRequest& request_,
  *                     the shortest path solves in batch mode.
  *                     </ul>
  *                     The default value is gpudb::match_graph_markov_chain.
- * @param solutionTable  The name of the table used to store the results; this
- *                       table contains a <a
+ * @param solutionTable  The name of the table used to store the results, in
+ *                       [schema_name.]table_name format, using standard <a
+ *                       href="../../concepts/tables.html#table-name-resolution"
+ *                       target="_top">name resolution rules</a> and meeting <a
+ *                       href="../../concepts/tables.html#table-naming-criteria"
+ *                       target="_top">table naming criteria</a>.  This table
+ *                       contains a <a
  *                       href="../../geospatial/geo_objects.html#geospatial-tracks"
  *                       target="_top">track</a> of geospatial points for the
  *                       matched portion of the graph, a track ID, and a score
  *                       value. Also outputs a details table containing a trip
  *                       ID (that matches the track ID), the latitude/longitude
  *                       pair, the timestamp the point was recorded at, and an
- *                       edge ID corresponding to the matched road segment. Has
- *                       the same naming restrictions as <a
- *                       href="../../concepts/tables.html"
- *                       target="_top">tables</a>. Must not be an existing
- *                       table of the same name.
+ *                       edge ID corresponding to the matched road segment.
+ *                       Must not be an existing table of the same name.
  * @param options  Additional parameters
  *                 <ul>
  *                         <li> gpudb::match_graph_gps_noise: GPS noise value
@@ -18789,16 +23557,21 @@ MatchGraphResponse matchGraph( const std::string& graphName,
                                const std::map<std::string, std::string>& options ) const;
 
 /**
- * Matches a directed route implied by a given set of latitude/longitude points
- * to an existing underlying road network graph using a given solution type.
+ * Matches a directed route implied by a given set of
+ * latitude/longitude points to an existing underlying road network graph using
+ * a
+ * given solution type.
 
- * IMPORTANT: It's highly recommended that you review the <a
- * href="../../graph_solver/network_graph_solver.html" target="_top">Network
- * Graphs & Solvers</a> concepts documentation, the <a
- * href="../../graph_solver/examples/graph_rest_guide.html" target="_top">Graph
- * REST Tutorial</a>, and/or some <a
- * href="../../graph_solver/examples.html#match-graph"
- * target="_top">/match/graph examples</a> before using this endpoint.
+ * IMPORTANT: It's highly recommended that you review the
+ * <a href="../../graph_solver/network_graph_solver.html" target="_top">Network
+ * Graphs & Solvers</a>
+ * concepts documentation, the
+ * <a href="../../graph_solver/examples/graph_rest_guide.html"
+ * target="_top">Graph REST Tutorial</a>,
+ * and/or some
+ * <a href="../../graph_solver/examples.html#match-graph"
+ * target="_top">/match/graph examples</a>
+ * before using this endpoint.
  * 
  * @param graphName  Name of the underlying geospatial graph resource to match
  *                   to using @a samplePoints.
@@ -18839,19 +23612,21 @@ MatchGraphResponse matchGraph( const std::string& graphName,
  *                     the shortest path solves in batch mode.
  *                     </ul>
  *                     The default value is gpudb::match_graph_markov_chain.
- * @param solutionTable  The name of the table used to store the results; this
- *                       table contains a <a
+ * @param solutionTable  The name of the table used to store the results, in
+ *                       [schema_name.]table_name format, using standard <a
+ *                       href="../../concepts/tables.html#table-name-resolution"
+ *                       target="_top">name resolution rules</a> and meeting <a
+ *                       href="../../concepts/tables.html#table-naming-criteria"
+ *                       target="_top">table naming criteria</a>.  This table
+ *                       contains a <a
  *                       href="../../geospatial/geo_objects.html#geospatial-tracks"
  *                       target="_top">track</a> of geospatial points for the
  *                       matched portion of the graph, a track ID, and a score
  *                       value. Also outputs a details table containing a trip
  *                       ID (that matches the track ID), the latitude/longitude
  *                       pair, the timestamp the point was recorded at, and an
- *                       edge ID corresponding to the matched road segment. Has
- *                       the same naming restrictions as <a
- *                       href="../../concepts/tables.html"
- *                       target="_top">tables</a>. Must not be an existing
- *                       table of the same name.
+ *                       edge ID corresponding to the matched road segment.
+ *                       Must not be an existing table of the same name.
  * @param options  Additional parameters
  *                 <ul>
  *                         <li> gpudb::match_graph_gps_noise: GPS noise value
@@ -18995,20 +23770,22 @@ MatchGraphResponse& matchGraph( const std::string& graphName,
                                 MatchGraphResponse& response_ ) const;
 
 /**
- * Create a new empty result table (specified by @a tableName), and insert all
- * records from source tables (specified by @a sourceTableNames) based on the
- * field mapping information (specified by @a fieldMaps).
+ * Create a new empty result table (specified by @a tableName),
+ * and insert all records from source tables
+ * (specified by @a sourceTableNames) based on the field mapping
+ * information (specified by @a fieldMaps).
  * <p>
- * For merge records details and examples, see <a
- * href="../../concepts/merge_records.html" target="_top">Merge Records</a>.
- * For limitations, see <a
- * href="../../concepts/merge_records.html#limitations-and-cautions"
+ * For merge records details and examples, see
+ * <a href="../../concepts/merge_records.html" target="_top">Merge Records</a>.
+ * For limitations, see
+ * <a href="../../concepts/merge_records.html#limitations-and-cautions"
  * target="_top">Merge Records Limitations and Cautions</a>.
 
- * The field map (specified by @a fieldMaps) holds the user-specified maps of
- * target table column names to source table columns. The array of @a fieldMaps
- * must match one-to-one with the @a sourceTableNames, e.g., there's a map
- * present in @a fieldMaps for each table listed in @a sourceTableNames.
+ * The field map (specified by @a fieldMaps) holds the user-specified maps
+ * of target table column names to source table columns. The array of
+ * @a fieldMaps must match one-to-one with the @a sourceTableNames,
+ * e.g., there's a map present in @a fieldMaps for each table listed in
+ * @a sourceTableNames.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -19020,20 +23797,22 @@ MatchGraphResponse& matchGraph( const std::string& graphName,
 MergeRecordsResponse mergeRecords( const MergeRecordsRequest& request_ ) const;
 
 /**
- * Create a new empty result table (specified by @a tableName), and insert all
- * records from source tables (specified by @a sourceTableNames) based on the
- * field mapping information (specified by @a fieldMaps).
+ * Create a new empty result table (specified by @a tableName),
+ * and insert all records from source tables
+ * (specified by @a sourceTableNames) based on the field mapping
+ * information (specified by @a fieldMaps).
  * <p>
- * For merge records details and examples, see <a
- * href="../../concepts/merge_records.html" target="_top">Merge Records</a>.
- * For limitations, see <a
- * href="../../concepts/merge_records.html#limitations-and-cautions"
+ * For merge records details and examples, see
+ * <a href="../../concepts/merge_records.html" target="_top">Merge Records</a>.
+ * For limitations, see
+ * <a href="../../concepts/merge_records.html#limitations-and-cautions"
  * target="_top">Merge Records Limitations and Cautions</a>.
 
- * The field map (specified by @a fieldMaps) holds the user-specified maps of
- * target table column names to source table columns. The array of @a fieldMaps
- * must match one-to-one with the @a sourceTableNames, e.g., there's a map
- * present in @a fieldMaps for each table listed in @a sourceTableNames.
+ * The field map (specified by @a fieldMaps) holds the user-specified maps
+ * of target table column names to source table columns. The array of
+ * @a fieldMaps must match one-to-one with the @a sourceTableNames,
+ * e.g., there's a map present in @a fieldMaps for each table listed in
+ * @a sourceTableNames.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -19049,25 +23828,37 @@ MergeRecordsResponse& mergeRecords( const MergeRecordsRequest& request_,
                                     MergeRecordsResponse& response_ ) const;
 
 /**
- * Create a new empty result table (specified by @a tableName), and insert all
- * records from source tables (specified by @a sourceTableNames) based on the
- * field mapping information (specified by @a fieldMaps).
+ * Create a new empty result table (specified by @a tableName),
+ * and insert all records from source tables
+ * (specified by @a sourceTableNames) based on the field mapping
+ * information (specified by @a fieldMaps).
  * <p>
- * For merge records details and examples, see <a
- * href="../../concepts/merge_records.html" target="_top">Merge Records</a>.
- * For limitations, see <a
- * href="../../concepts/merge_records.html#limitations-and-cautions"
+ * For merge records details and examples, see
+ * <a href="../../concepts/merge_records.html" target="_top">Merge Records</a>.
+ * For limitations, see
+ * <a href="../../concepts/merge_records.html#limitations-and-cautions"
  * target="_top">Merge Records Limitations and Cautions</a>.
 
- * The field map (specified by @a fieldMaps) holds the user-specified maps of
- * target table column names to source table columns. The array of @a fieldMaps
- * must match one-to-one with the @a sourceTableNames, e.g., there's a map
- * present in @a fieldMaps for each table listed in @a sourceTableNames.
+ * The field map (specified by @a fieldMaps) holds the user-specified maps
+ * of target table column names to source table columns. The array of
+ * @a fieldMaps must match one-to-one with the @a sourceTableNames,
+ * e.g., there's a map present in @a fieldMaps for each table listed in
+ * @a sourceTableNames.
  * 
- * @param tableName  The new result table name for the records to be merged.
- *                   Must NOT be an existing table.
- * @param sourceTableNames  The list of source table names to get the records
- *                          from. Must be existing table names.
+ * @param tableName  The name of the new result table for the records to be
+ *                   merged into, in [schema_name.]table_name format, using
+ *                   standard <a
+ *                   href="../../concepts/tables.html#table-name-resolution"
+ *                   target="_top">name resolution rules</a> and meeting <a
+ *                   href="../../concepts/tables.html#table-naming-criteria"
+ *                   target="_top">table naming criteria</a>.  Must NOT be an
+ *                   existing table.
+ * @param sourceTableNames  The list of names of source tables to get the
+ *                          records from, each in [schema_name.]table_name
+ *                          format, using standard <a
+ *                          href="../../concepts/tables.html#table-name-resolution"
+ *                          target="_top">name resolution rules</a>.  Must be
+ *                          existing table names.
  * @param fieldMaps  Contains a list of source/target column mappings, one
  *                   mapping for each source table listed in @a
  *                   sourceTableNames being merged into the target table
@@ -19081,12 +23872,11 @@ MergeRecordsResponse& mergeRecords( const MergeRecordsRequest& request_,
  *                   determine the type of the new target column.
  * @param options  Optional parameters.
  *                 <ul>
- *                         <li> gpudb::merge_records_collection_name: Name of a
- *                 collection which is to contain the newly created merged
- *                 table specified by @a tableName. If the collection provided
- *                 is non-existent, the collection will be automatically
- *                 created. If empty, then the newly created merged table will
- *                 be a top-level table.
+ *                         <li> gpudb::merge_records_collection_name:
+ *                 [DEPRECATED--please specify the containing schema for the
+ *                 merged table as part of @a tableName and use /create/schema
+ *                 to create the schema if non-existent]  Name of a schema for
+ *                 the newly created merged table specified by @a tableName.
  *                         <li> gpudb::merge_records_is_replicated: Indicates
  *                 the <a href="../../concepts/tables.html#distribution"
  *                 target="_top">distribution scheme</a> for the data of the
@@ -19130,25 +23920,37 @@ MergeRecordsResponse mergeRecords( const std::string& tableName,
                                    const std::map<std::string, std::string>& options ) const;
 
 /**
- * Create a new empty result table (specified by @a tableName), and insert all
- * records from source tables (specified by @a sourceTableNames) based on the
- * field mapping information (specified by @a fieldMaps).
+ * Create a new empty result table (specified by @a tableName),
+ * and insert all records from source tables
+ * (specified by @a sourceTableNames) based on the field mapping
+ * information (specified by @a fieldMaps).
  * <p>
- * For merge records details and examples, see <a
- * href="../../concepts/merge_records.html" target="_top">Merge Records</a>.
- * For limitations, see <a
- * href="../../concepts/merge_records.html#limitations-and-cautions"
+ * For merge records details and examples, see
+ * <a href="../../concepts/merge_records.html" target="_top">Merge Records</a>.
+ * For limitations, see
+ * <a href="../../concepts/merge_records.html#limitations-and-cautions"
  * target="_top">Merge Records Limitations and Cautions</a>.
 
- * The field map (specified by @a fieldMaps) holds the user-specified maps of
- * target table column names to source table columns. The array of @a fieldMaps
- * must match one-to-one with the @a sourceTableNames, e.g., there's a map
- * present in @a fieldMaps for each table listed in @a sourceTableNames.
+ * The field map (specified by @a fieldMaps) holds the user-specified maps
+ * of target table column names to source table columns. The array of
+ * @a fieldMaps must match one-to-one with the @a sourceTableNames,
+ * e.g., there's a map present in @a fieldMaps for each table listed in
+ * @a sourceTableNames.
  * 
- * @param tableName  The new result table name for the records to be merged.
- *                   Must NOT be an existing table.
- * @param sourceTableNames  The list of source table names to get the records
- *                          from. Must be existing table names.
+ * @param tableName  The name of the new result table for the records to be
+ *                   merged into, in [schema_name.]table_name format, using
+ *                   standard <a
+ *                   href="../../concepts/tables.html#table-name-resolution"
+ *                   target="_top">name resolution rules</a> and meeting <a
+ *                   href="../../concepts/tables.html#table-naming-criteria"
+ *                   target="_top">table naming criteria</a>.  Must NOT be an
+ *                   existing table.
+ * @param sourceTableNames  The list of names of source tables to get the
+ *                          records from, each in [schema_name.]table_name
+ *                          format, using standard <a
+ *                          href="../../concepts/tables.html#table-name-resolution"
+ *                          target="_top">name resolution rules</a>.  Must be
+ *                          existing table names.
  * @param fieldMaps  Contains a list of source/target column mappings, one
  *                   mapping for each source table listed in @a
  *                   sourceTableNames being merged into the target table
@@ -19162,12 +23964,11 @@ MergeRecordsResponse mergeRecords( const std::string& tableName,
  *                   determine the type of the new target column.
  * @param options  Optional parameters.
  *                 <ul>
- *                         <li> gpudb::merge_records_collection_name: Name of a
- *                 collection which is to contain the newly created merged
- *                 table specified by @a tableName. If the collection provided
- *                 is non-existent, the collection will be automatically
- *                 created. If empty, then the newly created merged table will
- *                 be a top-level table.
+ *                         <li> gpudb::merge_records_collection_name:
+ *                 [DEPRECATED--please specify the containing schema for the
+ *                 merged table as part of @a tableName and use /create/schema
+ *                 to create the schema if non-existent]  Name of a schema for
+ *                 the newly created merged table specified by @a tableName.
  *                         <li> gpudb::merge_records_is_replicated: Indicates
  *                 the <a href="../../concepts/tables.html#distribution"
  *                 target="_top">distribution scheme</a> for the data of the
@@ -19218,12 +24019,16 @@ MergeRecordsResponse& mergeRecords( const std::string& tableName,
  * Update an existing graph network using given nodes, edges, weights,
  * restrictions, and options.
 
- * IMPORTANT: It's highly recommended that you review the <a
- * href="../../graph_solver/network_graph_solver.html" target="_top">Network
- * Graphs & Solvers</a> concepts documentation, the <a
- * href="../../graph_solver/examples/graph_rest_guide.html" target="_top">Graph
- * REST Tutorial</a>, and/or some <a href="../../graph_solver/examples.html"
- * target="_top">graph examples</a> before using this endpoint.
+ * IMPORTANT: It's highly recommended that you review the
+ * <a href="../../graph_solver/network_graph_solver.html" target="_top">Network
+ * Graphs & Solvers</a>
+ * concepts documentation, the
+ * <a href="../../graph_solver/examples/graph_rest_guide.html"
+ * target="_top">Graph REST Tutorial</a>,
+ * and/or some
+ * <a href="../../graph_solver/examples.html#match-graph"
+ * target="_top">/match/graph examples</a>
+ * before using this endpoint.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -19238,12 +24043,16 @@ ModifyGraphResponse modifyGraph( const ModifyGraphRequest& request_ ) const;
  * Update an existing graph network using given nodes, edges, weights,
  * restrictions, and options.
 
- * IMPORTANT: It's highly recommended that you review the <a
- * href="../../graph_solver/network_graph_solver.html" target="_top">Network
- * Graphs & Solvers</a> concepts documentation, the <a
- * href="../../graph_solver/examples/graph_rest_guide.html" target="_top">Graph
- * REST Tutorial</a>, and/or some <a href="../../graph_solver/examples.html"
- * target="_top">graph examples</a> before using this endpoint.
+ * IMPORTANT: It's highly recommended that you review the
+ * <a href="../../graph_solver/network_graph_solver.html" target="_top">Network
+ * Graphs & Solvers</a>
+ * concepts documentation, the
+ * <a href="../../graph_solver/examples/graph_rest_guide.html"
+ * target="_top">Graph REST Tutorial</a>,
+ * and/or some
+ * <a href="../../graph_solver/examples.html#match-graph"
+ * target="_top">/match/graph examples</a>
+ * before using this endpoint.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -19262,12 +24071,16 @@ ModifyGraphResponse& modifyGraph( const ModifyGraphRequest& request_,
  * Update an existing graph network using given nodes, edges, weights,
  * restrictions, and options.
 
- * IMPORTANT: It's highly recommended that you review the <a
- * href="../../graph_solver/network_graph_solver.html" target="_top">Network
- * Graphs & Solvers</a> concepts documentation, the <a
- * href="../../graph_solver/examples/graph_rest_guide.html" target="_top">Graph
- * REST Tutorial</a>, and/or some <a href="../../graph_solver/examples.html"
- * target="_top">graph examples</a> before using this endpoint.
+ * IMPORTANT: It's highly recommended that you review the
+ * <a href="../../graph_solver/network_graph_solver.html" target="_top">Network
+ * Graphs & Solvers</a>
+ * concepts documentation, the
+ * <a href="../../graph_solver/examples/graph_rest_guide.html"
+ * target="_top">Graph REST Tutorial</a>,
+ * and/or some
+ * <a href="../../graph_solver/examples.html#match-graph"
+ * target="_top">/match/graph examples</a>
+ * before using this endpoint.
  * 
  * @param graphName  Name of the graph resource to modify.
  * @param nodes  Nodes with which to update existing @a nodes in graph
@@ -19399,7 +24212,12 @@ ModifyGraphResponse& modifyGraph( const ModifyGraphRequest& request_,
  *                 The default value is gpudb::modify_graph_false.
  *                         <li> gpudb::modify_graph_graph_table: If specified,
  *                 the created graph is also created as a table with the given
- *                 name and following identifier columns: 'EDGE_ID',
+ *                 name, in [schema_name.]table_name format, using standard <a
+ *                 href="../../concepts/tables.html#table-name-resolution"
+ *                 target="_top">name resolution rules</a> and meeting <a
+ *                 href="../../concepts/tables.html#table-naming-criteria"
+ *                 target="_top">table naming criteria</a>.  This table will
+ *                 have the following identifier columns: 'EDGE_ID',
  *                 'EDGE_NODE1_ID', 'EDGE_NODE2_ID'. If left blank, no table is
  *                 created.  The default value is ''.
  *                         <li> gpudb::modify_graph_remove_label_only: When
@@ -19447,12 +24265,16 @@ ModifyGraphResponse modifyGraph( const std::string& graphName,
  * Update an existing graph network using given nodes, edges, weights,
  * restrictions, and options.
 
- * IMPORTANT: It's highly recommended that you review the <a
- * href="../../graph_solver/network_graph_solver.html" target="_top">Network
- * Graphs & Solvers</a> concepts documentation, the <a
- * href="../../graph_solver/examples/graph_rest_guide.html" target="_top">Graph
- * REST Tutorial</a>, and/or some <a href="../../graph_solver/examples.html"
- * target="_top">graph examples</a> before using this endpoint.
+ * IMPORTANT: It's highly recommended that you review the
+ * <a href="../../graph_solver/network_graph_solver.html" target="_top">Network
+ * Graphs & Solvers</a>
+ * concepts documentation, the
+ * <a href="../../graph_solver/examples/graph_rest_guide.html"
+ * target="_top">Graph REST Tutorial</a>,
+ * and/or some
+ * <a href="../../graph_solver/examples.html#match-graph"
+ * target="_top">/match/graph examples</a>
+ * before using this endpoint.
  * 
  * @param graphName  Name of the graph resource to modify.
  * @param nodes  Nodes with which to update existing @a nodes in graph
@@ -19584,7 +24406,12 @@ ModifyGraphResponse modifyGraph( const std::string& graphName,
  *                 The default value is gpudb::modify_graph_false.
  *                         <li> gpudb::modify_graph_graph_table: If specified,
  *                 the created graph is also created as a table with the given
- *                 name and following identifier columns: 'EDGE_ID',
+ *                 name, in [schema_name.]table_name format, using standard <a
+ *                 href="../../concepts/tables.html#table-name-resolution"
+ *                 target="_top">name resolution rules</a> and meeting <a
+ *                 href="../../concepts/tables.html#table-naming-criteria"
+ *                 target="_top">table naming criteria</a>.  This table will
+ *                 have the following identifier columns: 'EDGE_ID',
  *                 'EDGE_NODE1_ID', 'EDGE_NODE2_ID'. If left blank, no table is
  *                 created.  The default value is ''.
  *                         <li> gpudb::modify_graph_remove_label_only: When
@@ -19633,32 +24460,41 @@ ModifyGraphResponse& modifyGraph( const std::string& graphName,
                                   ModifyGraphResponse& response_ ) const;
 
 /**
- * Employs a topological query on a network graph generated a-priori by {@link
- * #createGraph(const CreateGraphRequest&) const} and returns a list of
- * adjacent edge(s) or node(s), also known as an adjacency list, depending on
- * what's been provided to the endpoint; providing edges will return nodes and
- * providing nodes will return edges.
+ * Employs a topological query on a network graph generated a-priori by
+ * {@link #createGraph(const CreateGraphRequest&) const} and returns a list
+ * of adjacent edge(s) or node(s),
+ * also known as an adjacency list, depending on what's been provided to the
+ * endpoint; providing edges will return nodes and providing nodes will return
+ * edges.
  * <p>
  * To determine the node(s) or edge(s) adjacent to a value from a given column,
  * provide a list of values to @a queries. This field can be populated with
  * column values from any table as long as the type is supported by the given
- * identifier. See <a
- * href="../../graph_solver/network_graph_solver.html#query-identifiers"
- * target="_top">Query Identifiers</a> for more information.
+ * identifier. See
+ * <a href="../../graph_solver/network_graph_solver.html#query-identifiers"
+ * target="_top">Query Identifiers</a>
+ * for more information.
  * <p>
- * To return the adjacency list in the response, leave @a adjacencyTable empty.
- * To return the adjacency list in a table and not in the response, provide a
- * value to @a adjacencyTable and set @a export_query_results to @a false. To
- * return the adjacency list both in a table and the response, provide a value
- * to @a adjacencyTable and set @a export_query_results to @a true.
+ * To return the adjacency list in the response, leave @a adjacencyTable
+ * empty. To return the adjacency list in a table and not in the response,
+ * provide
+ * a value to @a adjacencyTable and set
+ * @a export_query_results to
+ * @a false. To return the
+ * adjacency list both in a table and the response, provide a value to
+ * @a adjacencyTable and set @a export_query_results
+ * to @a true.
  * <p>
- * IMPORTANT: It's highly recommended that you review the <a
- * href="../../graph_solver/network_graph_solver.html" target="_top">Network
- * Graphs & Solvers</a> concepts documentation, the <a
- * href="../../graph_solver/examples/graph_rest_guide.html" target="_top">Graph
- * REST Tutorial</a>, and/or some <a
- * href="../../graph_solver/examples.html#query-graph"
- * target="_top">/query/graph examples</a> before using this endpoint.
+ * IMPORTANT: It's highly recommended that you review the
+ * <a href="../../graph_solver/network_graph_solver.html" target="_top">Network
+ * Graphs & Solvers</a>
+ * concepts documentation, the
+ * <a href="../../graph_solver/examples/graph_rest_guide.html"
+ * target="_top">Graph REST Tutorial</a>,
+ * and/or some
+ * <a href="../../graph_solver/examples.html#match-graph"
+ * target="_top">/match/graph examples</a>
+ * before using this endpoint.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -19670,32 +24506,42 @@ ModifyGraphResponse& modifyGraph( const std::string& graphName,
 QueryGraphResponse queryGraph( const QueryGraphRequest& request_ ) const;
 
 /**
- * Employs a topological query on a network graph generated a-priori by {@link
+ * Employs a topological query on a network graph generated a-priori by
+ * {@link
  * #createGraph(const CreateGraphRequest&,CreateGraphResponse&) const} and
- * returns a list of adjacent edge(s) or node(s), also known as an adjacency
- * list, depending on what's been provided to the endpoint; providing edges
- * will return nodes and providing nodes will return edges.
+ * returns a list of adjacent edge(s) or node(s),
+ * also known as an adjacency list, depending on what's been provided to the
+ * endpoint; providing edges will return nodes and providing nodes will return
+ * edges.
  * <p>
  * To determine the node(s) or edge(s) adjacent to a value from a given column,
  * provide a list of values to @a queries. This field can be populated with
  * column values from any table as long as the type is supported by the given
- * identifier. See <a
- * href="../../graph_solver/network_graph_solver.html#query-identifiers"
- * target="_top">Query Identifiers</a> for more information.
+ * identifier. See
+ * <a href="../../graph_solver/network_graph_solver.html#query-identifiers"
+ * target="_top">Query Identifiers</a>
+ * for more information.
  * <p>
- * To return the adjacency list in the response, leave @a adjacencyTable empty.
- * To return the adjacency list in a table and not in the response, provide a
- * value to @a adjacencyTable and set @a export_query_results to @a false. To
- * return the adjacency list both in a table and the response, provide a value
- * to @a adjacencyTable and set @a export_query_results to @a true.
+ * To return the adjacency list in the response, leave @a adjacencyTable
+ * empty. To return the adjacency list in a table and not in the response,
+ * provide
+ * a value to @a adjacencyTable and set
+ * @a export_query_results to
+ * @a false. To return the
+ * adjacency list both in a table and the response, provide a value to
+ * @a adjacencyTable and set @a export_query_results
+ * to @a true.
  * <p>
- * IMPORTANT: It's highly recommended that you review the <a
- * href="../../graph_solver/network_graph_solver.html" target="_top">Network
- * Graphs & Solvers</a> concepts documentation, the <a
- * href="../../graph_solver/examples/graph_rest_guide.html" target="_top">Graph
- * REST Tutorial</a>, and/or some <a
- * href="../../graph_solver/examples.html#query-graph"
- * target="_top">/query/graph examples</a> before using this endpoint.
+ * IMPORTANT: It's highly recommended that you review the
+ * <a href="../../graph_solver/network_graph_solver.html" target="_top">Network
+ * Graphs & Solvers</a>
+ * concepts documentation, the
+ * <a href="../../graph_solver/examples/graph_rest_guide.html"
+ * target="_top">Graph REST Tutorial</a>,
+ * and/or some
+ * <a href="../../graph_solver/examples.html#match-graph"
+ * target="_top">/match/graph examples</a>
+ * before using this endpoint.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -19711,32 +24557,42 @@ QueryGraphResponse& queryGraph( const QueryGraphRequest& request_,
                                 QueryGraphResponse& response_ ) const;
 
 /**
- * Employs a topological query on a network graph generated a-priori by {@link
+ * Employs a topological query on a network graph generated a-priori by
+ * {@link
  * #createGraph(const std::string&,const bool,const std::vector<std::string>&,const std::vector<std::string>&,const std::vector<std::string>&,const std::vector<std::string>&,const std::map<std::string, std::string>&) const}
- * and returns a list of adjacent edge(s) or node(s), also known as an
- * adjacency list, depending on what's been provided to the endpoint; providing
- * edges will return nodes and providing nodes will return edges.
+ * and returns a list of adjacent edge(s) or node(s),
+ * also known as an adjacency list, depending on what's been provided to the
+ * endpoint; providing edges will return nodes and providing nodes will return
+ * edges.
  * <p>
  * To determine the node(s) or edge(s) adjacent to a value from a given column,
  * provide a list of values to @a queries. This field can be populated with
  * column values from any table as long as the type is supported by the given
- * identifier. See <a
- * href="../../graph_solver/network_graph_solver.html#query-identifiers"
- * target="_top">Query Identifiers</a> for more information.
+ * identifier. See
+ * <a href="../../graph_solver/network_graph_solver.html#query-identifiers"
+ * target="_top">Query Identifiers</a>
+ * for more information.
  * <p>
- * To return the adjacency list in the response, leave @a adjacencyTable empty.
- * To return the adjacency list in a table and not in the response, provide a
- * value to @a adjacencyTable and set @a export_query_results to @a false. To
- * return the adjacency list both in a table and the response, provide a value
- * to @a adjacencyTable and set @a export_query_results to @a true.
+ * To return the adjacency list in the response, leave @a adjacencyTable
+ * empty. To return the adjacency list in a table and not in the response,
+ * provide
+ * a value to @a adjacencyTable and set
+ * @a export_query_results to
+ * @a false. To return the
+ * adjacency list both in a table and the response, provide a value to
+ * @a adjacencyTable and set @a export_query_results
+ * to @a true.
  * <p>
- * IMPORTANT: It's highly recommended that you review the <a
- * href="../../graph_solver/network_graph_solver.html" target="_top">Network
- * Graphs & Solvers</a> concepts documentation, the <a
- * href="../../graph_solver/examples/graph_rest_guide.html" target="_top">Graph
- * REST Tutorial</a>, and/or some <a
- * href="../../graph_solver/examples.html#query-graph"
- * target="_top">/query/graph examples</a> before using this endpoint.
+ * IMPORTANT: It's highly recommended that you review the
+ * <a href="../../graph_solver/network_graph_solver.html" target="_top">Network
+ * Graphs & Solvers</a>
+ * concepts documentation, the
+ * <a href="../../graph_solver/examples/graph_rest_guide.html"
+ * target="_top">Graph REST Tutorial</a>,
+ * and/or some
+ * <a href="../../graph_solver/examples.html#match-graph"
+ * target="_top">/match/graph examples</a>
+ * before using this endpoint.
  * 
  * @param graphName  Name of the graph resource to query.
  * @param queries  Nodes or edges to be queried specified using <a
@@ -19763,15 +24619,20 @@ QueryGraphResponse& queryGraph( const QueryGraphRequest& request_,
  *                      0, 0, 1} AS RESTRICTIONS_ONOFFCOMPARED'. If using raw
  *                      values in an identifier combination, the number of
  *                      values specified must match across the combination.
- * @param adjacencyTable  Name of the table to store the resulting adjacencies.
- *                        If left blank, the query results are instead returned
- *                        in the response even if @a export_query_results is
- *                        set to @a false. If the 'QUERY_TARGET_NODE_LABEL' <a
+ * @param adjacencyTable  Name of the table to store the resulting adjacencies,
+ *                        in [schema_name.]table_name format, using standard <a
+ *                        href="../../concepts/tables.html#table-name-resolution"
+ *                        target="_top">name resolution rules</a> and meeting
+ *                        <a
+ *                        href="../../concepts/tables.html#table-naming-criteria"
+ *                        target="_top">table naming criteria</a>.  If left
+ *                        blank, the query results are instead returned in the
+ *                        response even if @a export_query_results is set to @a
+ *                        false. If the 'QUERY_TARGET_NODE_LABEL' <a
  *                        href="../../graph_solver/network_graph_solver.html#query-identifiers"
  *                        target="_top">query identifier</a> is used in @a
  *                        queries, then two additional columns will be
- *                        available: 'PATH_ID' and 'RING_ID'. See
- *                                    <a
+ *                        available: 'PATH_ID' and 'RING_ID'. See <a
  *                        href="../../graph_solver/network_graph_solver.html#using-labels"
  *                        target="_top">Using Labels</a> for more information.
  * @param rings  Sets the number of rings around the node to query for
@@ -19806,9 +24667,14 @@ QueryGraphResponse& queryGraph( const QueryGraphRequest& request_,
  *                 The default value is an empty std::map.
  *                         <li> gpudb::query_graph_target_nodes_table: Name of
  *                 the table to store the list of the final nodes reached
- *                 during the traversal. If this value is left as the default,
- *                 the table name will default to the @a adjacencyTable value
- *                 plus a '_nodes' suffix, e.g.,
+ *                 during the traversal, in [schema_name.]table_name format,
+ *                 using standard <a
+ *                 href="../../concepts/tables.html#table-name-resolution"
+ *                 target="_top">name resolution rules</a> and meeting <a
+ *                 href="../../concepts/tables.html#table-naming-criteria"
+ *                 target="_top">table naming criteria</a>.  If this value is
+ *                 left as the default, the table name will default to the @a
+ *                 adjacencyTable value plus a '_nodes' suffix, e.g.,
  *                 '<adjacency_table_name>_nodes'.  The default value is ''.
  *                         <li> gpudb::query_graph_restriction_threshold_value:
  *                 Value-based restriction comparison. Any node or edge with a
@@ -19863,32 +24729,42 @@ QueryGraphResponse queryGraph( const std::string& graphName,
                                const std::map<std::string, std::string>& options ) const;
 
 /**
- * Employs a topological query on a network graph generated a-priori by {@link
+ * Employs a topological query on a network graph generated a-priori by
+ * {@link
  * #createGraph(const std::string&,const bool,const std::vector<std::string>&,const std::vector<std::string>&,const std::vector<std::string>&,const std::vector<std::string>&,const std::map<std::string, std::string>&,CreateGraphResponse&) const}
- * and returns a list of adjacent edge(s) or node(s), also known as an
- * adjacency list, depending on what's been provided to the endpoint; providing
- * edges will return nodes and providing nodes will return edges.
+ * and returns a list of adjacent edge(s) or node(s),
+ * also known as an adjacency list, depending on what's been provided to the
+ * endpoint; providing edges will return nodes and providing nodes will return
+ * edges.
  * <p>
  * To determine the node(s) or edge(s) adjacent to a value from a given column,
  * provide a list of values to @a queries. This field can be populated with
  * column values from any table as long as the type is supported by the given
- * identifier. See <a
- * href="../../graph_solver/network_graph_solver.html#query-identifiers"
- * target="_top">Query Identifiers</a> for more information.
+ * identifier. See
+ * <a href="../../graph_solver/network_graph_solver.html#query-identifiers"
+ * target="_top">Query Identifiers</a>
+ * for more information.
  * <p>
- * To return the adjacency list in the response, leave @a adjacencyTable empty.
- * To return the adjacency list in a table and not in the response, provide a
- * value to @a adjacencyTable and set @a export_query_results to @a false. To
- * return the adjacency list both in a table and the response, provide a value
- * to @a adjacencyTable and set @a export_query_results to @a true.
+ * To return the adjacency list in the response, leave @a adjacencyTable
+ * empty. To return the adjacency list in a table and not in the response,
+ * provide
+ * a value to @a adjacencyTable and set
+ * @a export_query_results to
+ * @a false. To return the
+ * adjacency list both in a table and the response, provide a value to
+ * @a adjacencyTable and set @a export_query_results
+ * to @a true.
  * <p>
- * IMPORTANT: It's highly recommended that you review the <a
- * href="../../graph_solver/network_graph_solver.html" target="_top">Network
- * Graphs & Solvers</a> concepts documentation, the <a
- * href="../../graph_solver/examples/graph_rest_guide.html" target="_top">Graph
- * REST Tutorial</a>, and/or some <a
- * href="../../graph_solver/examples.html#query-graph"
- * target="_top">/query/graph examples</a> before using this endpoint.
+ * IMPORTANT: It's highly recommended that you review the
+ * <a href="../../graph_solver/network_graph_solver.html" target="_top">Network
+ * Graphs & Solvers</a>
+ * concepts documentation, the
+ * <a href="../../graph_solver/examples/graph_rest_guide.html"
+ * target="_top">Graph REST Tutorial</a>,
+ * and/or some
+ * <a href="../../graph_solver/examples.html#match-graph"
+ * target="_top">/match/graph examples</a>
+ * before using this endpoint.
  * 
  * @param graphName  Name of the graph resource to query.
  * @param queries  Nodes or edges to be queried specified using <a
@@ -19915,15 +24791,20 @@ QueryGraphResponse queryGraph( const std::string& graphName,
  *                      0, 0, 1} AS RESTRICTIONS_ONOFFCOMPARED'. If using raw
  *                      values in an identifier combination, the number of
  *                      values specified must match across the combination.
- * @param adjacencyTable  Name of the table to store the resulting adjacencies.
- *                        If left blank, the query results are instead returned
- *                        in the response even if @a export_query_results is
- *                        set to @a false. If the 'QUERY_TARGET_NODE_LABEL' <a
+ * @param adjacencyTable  Name of the table to store the resulting adjacencies,
+ *                        in [schema_name.]table_name format, using standard <a
+ *                        href="../../concepts/tables.html#table-name-resolution"
+ *                        target="_top">name resolution rules</a> and meeting
+ *                        <a
+ *                        href="../../concepts/tables.html#table-naming-criteria"
+ *                        target="_top">table naming criteria</a>.  If left
+ *                        blank, the query results are instead returned in the
+ *                        response even if @a export_query_results is set to @a
+ *                        false. If the 'QUERY_TARGET_NODE_LABEL' <a
  *                        href="../../graph_solver/network_graph_solver.html#query-identifiers"
  *                        target="_top">query identifier</a> is used in @a
  *                        queries, then two additional columns will be
- *                        available: 'PATH_ID' and 'RING_ID'. See
- *                                    <a
+ *                        available: 'PATH_ID' and 'RING_ID'. See <a
  *                        href="../../graph_solver/network_graph_solver.html#using-labels"
  *                        target="_top">Using Labels</a> for more information.
  * @param rings  Sets the number of rings around the node to query for
@@ -19958,9 +24839,14 @@ QueryGraphResponse queryGraph( const std::string& graphName,
  *                 The default value is an empty std::map.
  *                         <li> gpudb::query_graph_target_nodes_table: Name of
  *                 the table to store the list of the final nodes reached
- *                 during the traversal. If this value is left as the default,
- *                 the table name will default to the @a adjacencyTable value
- *                 plus a '_nodes' suffix, e.g.,
+ *                 during the traversal, in [schema_name.]table_name format,
+ *                 using standard <a
+ *                 href="../../concepts/tables.html#table-name-resolution"
+ *                 target="_top">name resolution rules</a> and meeting <a
+ *                 href="../../concepts/tables.html#table-naming-criteria"
+ *                 target="_top">table naming criteria</a>.  If this value is
+ *                 left as the default, the table name will default to the @a
+ *                 adjacencyTable value plus a '_nodes' suffix, e.g.,
  *                 '<adjacency_table_name>_nodes'.  The default value is ''.
  *                         <li> gpudb::query_graph_restriction_threshold_value:
  *                 Value-based restriction comparison. Any node or edge with a
@@ -20017,6 +24903,92 @@ QueryGraphResponse& queryGraph( const std::string& graphName,
                                 const int32_t rings,
                                 const std::map<std::string, std::string>& options,
                                 QueryGraphResponse& response_ ) const;
+
+/**
+ * Revokes a <a href="../../concepts/data_sources.html" target="_top">data
+ * source</a> permission from a user or role.
+ * 
+ * @param[in] request_  Request object containing the parameters for the
+ *                      operation.
+ * 
+ * @return Response object containing the result of the operation.
+ * 
+ */
+
+RevokePermissionDatasourceResponse revokePermissionDatasource( const RevokePermissionDatasourceRequest& request_ ) const;
+
+/**
+ * Revokes a <a href="../../concepts/data_sources.html" target="_top">data
+ * source</a> permission from a user or role.
+ * 
+ * @param[in] request_  Request object containing the parameters for the
+ *                      operation.
+ * @param[out] response_  Response object containing the results of the
+ *                        operation.
+ * 
+ * @return Response object containing the result of the operation (initially
+ *         passed in by reference).
+ * 
+ */
+
+RevokePermissionDatasourceResponse& revokePermissionDatasource( const RevokePermissionDatasourceRequest& request_,
+                                                                RevokePermissionDatasourceResponse& response_ ) const;
+
+/**
+ * Revokes a <a href="../../concepts/data_sources.html" target="_top">data
+ * source</a> permission from a user or role.
+ * 
+ * @param name  Name of the user or role from which the permission will be
+ *              revoked. Must be an existing user or role.
+ * @param permission  Permission to revoke from the user or role
+ *                    <ul>
+ *                            <li> gpudb::revoke_permission_datasource_connect:
+ *                    Connect access on the given data source
+ *                    </ul>
+ * @param datasourceName  Name of the data source on which the permission will
+ *                        be revoked. Must be an existing data source, or an
+ *                        empty string to revoke permission from all data
+ *                        sources.
+ * @param options  Optional parameters.
+ * 
+ * @return Response object containing the result of the operation.
+ * 
+ */
+
+RevokePermissionDatasourceResponse revokePermissionDatasource( const std::string& name,
+                                                               const std::string& permission,
+                                                               const std::string& datasourceName,
+                                                               const std::map<std::string, std::string>& options ) const;
+
+/**
+ * Revokes a <a href="../../concepts/data_sources.html" target="_top">data
+ * source</a> permission from a user or role.
+ * 
+ * @param name  Name of the user or role from which the permission will be
+ *              revoked. Must be an existing user or role.
+ * @param permission  Permission to revoke from the user or role
+ *                    <ul>
+ *                            <li> gpudb::revoke_permission_datasource_connect:
+ *                    Connect access on the given data source
+ *                    </ul>
+ * @param datasourceName  Name of the data source on which the permission will
+ *                        be revoked. Must be an existing data source, or an
+ *                        empty string to revoke permission from all data
+ *                        sources.
+ * @param options  Optional parameters.
+ * @param[out] response_  Response object containing the results of the
+ *                        operation.
+ * 
+ * @return Response object containing the result of the operation (initially
+ *         passed in by reference).
+ * 
+ */
+
+RevokePermissionDatasourceResponse& revokePermissionDatasource( const std::string& name,
+                                                                const std::string& permission,
+                                                                const std::string& datasourceName,
+                                                                const std::map<std::string, std::string>& options,
+                                                                RevokePermissionDatasourceResponse& response_ ) const;
 
 /**
  * Revokes a proc-level permission from a user or role.
@@ -20236,8 +25208,11 @@ RevokePermissionTableResponse& revokePermissionTable( const RevokePermissionTabl
  *                            <li> gpudb::revoke_permission_table_table_read:
  *                    Read access to the table.
  *                    </ul>
- * @param tableName  Name of the table to which the permission grants access.
- *                   Must be an existing table, collection, or view.
+ * @param tableName  Name of the table to which the permission grants access,
+ *                   in [schema_name.]table_name format, using standard <a
+ *                   href="../../concepts/tables.html#table-name-resolution"
+ *                   target="_top">name resolution rules</a>.  Must be an
+ *                   existing table, view or schema.
  * @param options  Optional parameters.
  *                 <ul>
  *                         <li> gpudb::revoke_permission_table_columns: Apply
@@ -20272,8 +25247,11 @@ RevokePermissionTableResponse revokePermissionTable( const std::string& name,
  *                            <li> gpudb::revoke_permission_table_table_read:
  *                    Read access to the table.
  *                    </ul>
- * @param tableName  Name of the table to which the permission grants access.
- *                   Must be an existing table, collection, or view.
+ * @param tableName  Name of the table to which the permission grants access,
+ *                   in [schema_name.]table_name format, using standard <a
+ *                   href="../../concepts/tables.html#table-name-resolution"
+ *                   target="_top">name resolution rules</a>.  Must be an
+ *                   existing table, view or schema.
  * @param options  Optional parameters.
  *                 <ul>
  *                         <li> gpudb::revoke_permission_table_columns: Apply
@@ -20359,6 +25337,76 @@ RevokeRoleResponse& revokeRole( const std::string& role,
                                 const std::string& member,
                                 const std::map<std::string, std::string>& options,
                                 RevokeRoleResponse& response_ ) const;
+
+/**
+ * Shows information about a specified <a
+ * href="../../concepts/data_sources.html" target="_top">data source</a> or all
+ * data sources.
+ * 
+ * @param[in] request_  Request object containing the parameters for the
+ *                      operation.
+ * 
+ * @return Response object containing the result of the operation.
+ * 
+ */
+
+ShowDatasourceResponse showDatasource( const ShowDatasourceRequest& request_ ) const;
+
+/**
+ * Shows information about a specified <a
+ * href="../../concepts/data_sources.html" target="_top">data source</a> or all
+ * data sources.
+ * 
+ * @param[in] request_  Request object containing the parameters for the
+ *                      operation.
+ * @param[out] response_  Response object containing the results of the
+ *                        operation.
+ * 
+ * @return Response object containing the result of the operation (initially
+ *         passed in by reference).
+ * 
+ */
+
+ShowDatasourceResponse& showDatasource( const ShowDatasourceRequest& request_,
+                                        ShowDatasourceResponse& response_ ) const;
+
+/**
+ * Shows information about a specified <a
+ * href="../../concepts/data_sources.html" target="_top">data source</a> or all
+ * data sources.
+ * 
+ * @param name  Name of the data source for which to retrieve information. The
+ *              name must refer to a currently existing data source. If '*' is
+ *              specified, information about all data sources will be returned.
+ * @param options  Optional parameters.
+ * 
+ * @return Response object containing the result of the operation.
+ * 
+ */
+
+ShowDatasourceResponse showDatasource( const std::string& name,
+                                       const std::map<std::string, std::string>& options ) const;
+
+/**
+ * Shows information about a specified <a
+ * href="../../concepts/data_sources.html" target="_top">data source</a> or all
+ * data sources.
+ * 
+ * @param name  Name of the data source for which to retrieve information. The
+ *              name must refer to a currently existing data source. If '*' is
+ *              specified, information about all data sources will be returned.
+ * @param options  Optional parameters.
+ * @param[out] response_  Response object containing the results of the
+ *                        operation.
+ * 
+ * @return Response object containing the result of the operation (initially
+ *         passed in by reference).
+ * 
+ */
+
+ShowDatasourceResponse& showDatasource( const std::string& name,
+                                        const std::map<std::string, std::string>& options,
+                                        ShowDatasourceResponse& response_ ) const;
 
 /**
  * Shows information and characteristics of graphs that exist on the graph
@@ -20857,6 +25905,92 @@ ShowResourceGroupsResponse& showResourceGroups( const std::vector<std::string>& 
                                                 ShowResourceGroupsResponse& response_ ) const;
 
 /**
+ * Retrieves information about a <a href="../../concepts/schemas.html"
+ * target="_top">schema</a> (or all schemas), as specified in @a schemaName.
+ * 
+ * @param[in] request_  Request object containing the parameters for the
+ *                      operation.
+ * 
+ * @return Response object containing the result of the operation.
+ * 
+ */
+
+ShowSchemaResponse showSchema( const ShowSchemaRequest& request_ ) const;
+
+/**
+ * Retrieves information about a <a href="../../concepts/schemas.html"
+ * target="_top">schema</a> (or all schemas), as specified in @a schemaName.
+ * 
+ * @param[in] request_  Request object containing the parameters for the
+ *                      operation.
+ * @param[out] response_  Response object containing the results of the
+ *                        operation.
+ * 
+ * @return Response object containing the result of the operation (initially
+ *         passed in by reference).
+ * 
+ */
+
+ShowSchemaResponse& showSchema( const ShowSchemaRequest& request_,
+                                ShowSchemaResponse& response_ ) const;
+
+/**
+ * Retrieves information about a <a href="../../concepts/schemas.html"
+ * target="_top">schema</a> (or all schemas), as specified in @a schemaName.
+ * 
+ * @param schemaName  Name of the schema for which to retrieve the information.
+ *                    If blank, then info for all schemas is returned.
+ * @param options  Optional parameters.
+ *                 <ul>
+ *                         <li> gpudb::show_schema_no_error_if_not_exists: If
+ *                 @a false will return an error if the provided @a schemaName
+ *                 does not exist. If @a true then it will return an empty
+ *                 result if the provided @a schemaName does not exist.
+ *                 <ul>
+ *                         <li> gpudb::show_schema_true
+ *                         <li> gpudb::show_schema_false
+ *                 </ul>
+ *                 The default value is gpudb::show_schema_false.
+ *                 </ul>
+ * 
+ * @return Response object containing the result of the operation.
+ * 
+ */
+
+ShowSchemaResponse showSchema( const std::string& schemaName,
+                               const std::map<std::string, std::string>& options ) const;
+
+/**
+ * Retrieves information about a <a href="../../concepts/schemas.html"
+ * target="_top">schema</a> (or all schemas), as specified in @a schemaName.
+ * 
+ * @param schemaName  Name of the schema for which to retrieve the information.
+ *                    If blank, then info for all schemas is returned.
+ * @param options  Optional parameters.
+ *                 <ul>
+ *                         <li> gpudb::show_schema_no_error_if_not_exists: If
+ *                 @a false will return an error if the provided @a schemaName
+ *                 does not exist. If @a true then it will return an empty
+ *                 result if the provided @a schemaName does not exist.
+ *                 <ul>
+ *                         <li> gpudb::show_schema_true
+ *                         <li> gpudb::show_schema_false
+ *                 </ul>
+ *                 The default value is gpudb::show_schema_false.
+ *                 </ul>
+ * @param[out] response_  Response object containing the results of the
+ *                        operation.
+ * 
+ * @return Response object containing the result of the operation (initially
+ *         passed in by reference).
+ * 
+ */
+
+ShowSchemaResponse& showSchema( const std::string& schemaName,
+                                const std::map<std::string, std::string>& options,
+                                ShowSchemaResponse& response_ ) const;
+
+/**
  * Shows security information relating to users and/or roles. If the caller is
  * not a system administrator, only information relating to the caller and
  * their roles is returned.
@@ -21015,7 +26149,7 @@ ShowSqlProcResponse& showSqlProc( const std::string& procedureName,
                                   ShowSqlProcResponse& response_ ) const;
 
 /**
- * Retrieves the collected column statistics for the specified table.
+ * Retrieves the collected column statistics for the specified table(s).
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -21027,7 +26161,7 @@ ShowSqlProcResponse& showSqlProc( const std::string& procedureName,
 ShowStatisticsResponse showStatistics( const ShowStatisticsRequest& request_ ) const;
 
 /**
- * Retrieves the collected column statistics for the specified table.
+ * Retrieves the collected column statistics for the specified table(s).
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -21043,9 +26177,12 @@ ShowStatisticsResponse& showStatistics( const ShowStatisticsRequest& request_,
                                         ShowStatisticsResponse& response_ ) const;
 
 /**
- * Retrieves the collected column statistics for the specified table.
+ * Retrieves the collected column statistics for the specified table(s).
  * 
- * @param tableNames  Tables whose metadata will be fetched. All provided
+ * @param tableNames  Names of tables whose metadata will be fetched, each in
+ *                    [schema_name.]table_name format, using standard <a
+ *                    href="../../concepts/tables.html#table-name-resolution"
+ *                    target="_top">name resolution rules</a>.  All provided
  *                    tables must exist, or an error is returned.
  * @param options  Optional parameters.
  * 
@@ -21057,9 +26194,12 @@ ShowStatisticsResponse showStatistics( const std::vector<std::string>& tableName
                                        const std::map<std::string, std::string>& options ) const;
 
 /**
- * Retrieves the collected column statistics for the specified table.
+ * Retrieves the collected column statistics for the specified table(s).
  * 
- * @param tableNames  Tables whose metadata will be fetched. All provided
+ * @param tableNames  Names of tables whose metadata will be fetched, each in
+ *                    [schema_name.]table_name format, using standard <a
+ *                    href="../../concepts/tables.html#table-name-resolution"
+ *                    target="_top">name resolution rules</a>.  All provided
  *                    tables must exist, or an error is returned.
  * @param options  Optional parameters.
  * @param[out] response_  Response object containing the results of the
@@ -21263,11 +26403,11 @@ ShowSystemTimingResponse& showSystemTiming( const std::map<std::string, std::str
                                             ShowSystemTimingResponse& response_ ) const;
 
 /**
- * Retrieves detailed information about a table, view, or collection, specified
- * in @a tableName. If the supplied @a tableName is a collection, the call can
- * return information about either the collection itself or the tables and
- * views it contains. If @a tableName is empty, information about all
- * collections and top-level tables and views can be returned.
+ * Retrieves detailed information about a table, view, or schema,
+ * specified in @a tableName. If the supplied @a tableName is a
+ * schema the call can return information about either the schema itself or the
+ * tables and views it contains. If @a tableName is empty, information about
+ * all schemas will be returned.
  * <p>
  * If the option @a get_sizes is set to
  * @a true, then the number of records
@@ -21275,13 +26415,17 @@ ShowSystemTimingResponse& showSystemTiming( const std::map<std::string, std::str
  * @a fullSizes), along with the total number of objects across all
  * requested tables (in @a totalSize and @a totalFullSize).
  * <p>
- * For a collection, setting the @a show_children option to @a false returns
- * only information about the collection itself; setting @a show_children to @a
- * true returns a list of tables and views contained in the collection, along
- * with their corresponding detail.
+ * For a schema, setting the @a show_children option to
+ * @a false returns only information
+ * about the schema itself; setting @a show_children to
+ * @a true returns a list of tables and
+ * views contained in the schema, along with their corresponding detail.
  * <p>
- * To retrieve a list of every table, view, and collection in the database, set
- * @a tableName to '*' and @a show_children to @a true.
+ * To retrieve a list of every table, view, and schema in the database, set
+ * @a tableName to '*' and @a show_children to
+ * @a true.  When doing this, the
+ * returned @a totalSize and @a totalFullSize will not include the sizes of
+ * non-base tables (e.g., filters, views, joins, etc.).
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -21293,11 +26437,11 @@ ShowSystemTimingResponse& showSystemTiming( const std::map<std::string, std::str
 ShowTableResponse showTable( const ShowTableRequest& request_ ) const;
 
 /**
- * Retrieves detailed information about a table, view, or collection, specified
- * in @a tableName. If the supplied @a tableName is a collection, the call can
- * return information about either the collection itself or the tables and
- * views it contains. If @a tableName is empty, information about all
- * collections and top-level tables and views can be returned.
+ * Retrieves detailed information about a table, view, or schema,
+ * specified in @a tableName. If the supplied @a tableName is a
+ * schema the call can return information about either the schema itself or the
+ * tables and views it contains. If @a tableName is empty, information about
+ * all schemas will be returned.
  * <p>
  * If the option @a get_sizes is set to
  * @a true, then the number of records
@@ -21305,13 +26449,17 @@ ShowTableResponse showTable( const ShowTableRequest& request_ ) const;
  * @a fullSizes), along with the total number of objects across all
  * requested tables (in @a totalSize and @a totalFullSize).
  * <p>
- * For a collection, setting the @a show_children option to @a false returns
- * only information about the collection itself; setting @a show_children to @a
- * true returns a list of tables and views contained in the collection, along
- * with their corresponding detail.
+ * For a schema, setting the @a show_children option to
+ * @a false returns only information
+ * about the schema itself; setting @a show_children to
+ * @a true returns a list of tables and
+ * views contained in the schema, along with their corresponding detail.
  * <p>
- * To retrieve a list of every table, view, and collection in the database, set
- * @a tableName to '*' and @a show_children to @a true.
+ * To retrieve a list of every table, view, and schema in the database, set
+ * @a tableName to '*' and @a show_children to
+ * @a true.  When doing this, the
+ * returned @a totalSize and @a totalFullSize will not include the sizes of
+ * non-base tables (e.g., filters, views, joins, etc.).
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -21327,11 +26475,11 @@ ShowTableResponse& showTable( const ShowTableRequest& request_,
                               ShowTableResponse& response_ ) const;
 
 /**
- * Retrieves detailed information about a table, view, or collection, specified
- * in @a tableName. If the supplied @a tableName is a collection, the call can
- * return information about either the collection itself or the tables and
- * views it contains. If @a tableName is empty, information about all
- * collections and top-level tables and views can be returned.
+ * Retrieves detailed information about a table, view, or schema,
+ * specified in @a tableName. If the supplied @a tableName is a
+ * schema the call can return information about either the schema itself or the
+ * tables and views it contains. If @a tableName is empty, information about
+ * all schemas will be returned.
  * <p>
  * If the option @a get_sizes is set to
  * @a true, then the number of records
@@ -21339,17 +26487,23 @@ ShowTableResponse& showTable( const ShowTableRequest& request_,
  * @a fullSizes), along with the total number of objects across all
  * requested tables (in @a totalSize and @a totalFullSize).
  * <p>
- * For a collection, setting the @a show_children option to @a false returns
- * only information about the collection itself; setting @a show_children to @a
- * true returns a list of tables and views contained in the collection, along
- * with their corresponding detail.
+ * For a schema, setting the @a show_children option to
+ * @a false returns only information
+ * about the schema itself; setting @a show_children to
+ * @a true returns a list of tables and
+ * views contained in the schema, along with their corresponding detail.
  * <p>
- * To retrieve a list of every table, view, and collection in the database, set
- * @a tableName to '*' and @a show_children to @a true.
+ * To retrieve a list of every table, view, and schema in the database, set
+ * @a tableName to '*' and @a show_children to
+ * @a true.  When doing this, the
+ * returned @a totalSize and @a totalFullSize will not include the sizes of
+ * non-base tables (e.g., filters, views, joins, etc.).
  * 
- * @param tableName  Name of the table for which to retrieve the information.
- *                   If blank, then information about all collections and
- *                   top-level tables and views is returned.
+ * @param tableName  Name of the table for which to retrieve the information,
+ *                   in [schema_name.]table_name format, using standard <a
+ *                   href="../../concepts/tables.html#table-name-resolution"
+ *                   target="_top">name resolution rules</a>.  If blank, then
+ *                   returns information about all tables and views.
  * @param options  Optional parameters.
  *                 <ul>
  *                         <li> gpudb::show_table_force_synchronous: If @a true
@@ -21369,12 +26523,11 @@ ShowTableResponse& showTable( const ShowTableRequest& request_,
  *                 </ul>
  *                 The default value is gpudb::show_table_false.
  *                         <li> gpudb::show_table_show_children: If @a
- *                 tableName is a collection, then @a true will return
- *                 information about the children of the collection, and @a
- *                 false will return information about the collection itself.
- *                 If @a tableName is a table or view, @a show_children must be
- *                 @a false. If @a tableName is empty, then @a show_children
- *                 must be @a true.
+ *                 tableName is a schema, then @a true will return information
+ *                 about the tables and views in the schema, and @a false will
+ *                 return information about the schema itself. If @a tableName
+ *                 is a table or view, @a show_children must be @a false. If @a
+ *                 tableName is empty, then @a show_children must be @a true.
  *                 <ul>
  *                         <li> gpudb::show_table_true
  *                         <li> gpudb::show_table_false
@@ -21405,11 +26558,11 @@ ShowTableResponse showTable( const std::string& tableName,
                              const std::map<std::string, std::string>& options ) const;
 
 /**
- * Retrieves detailed information about a table, view, or collection, specified
- * in @a tableName. If the supplied @a tableName is a collection, the call can
- * return information about either the collection itself or the tables and
- * views it contains. If @a tableName is empty, information about all
- * collections and top-level tables and views can be returned.
+ * Retrieves detailed information about a table, view, or schema,
+ * specified in @a tableName. If the supplied @a tableName is a
+ * schema the call can return information about either the schema itself or the
+ * tables and views it contains. If @a tableName is empty, information about
+ * all schemas will be returned.
  * <p>
  * If the option @a get_sizes is set to
  * @a true, then the number of records
@@ -21417,17 +26570,23 @@ ShowTableResponse showTable( const std::string& tableName,
  * @a fullSizes), along with the total number of objects across all
  * requested tables (in @a totalSize and @a totalFullSize).
  * <p>
- * For a collection, setting the @a show_children option to @a false returns
- * only information about the collection itself; setting @a show_children to @a
- * true returns a list of tables and views contained in the collection, along
- * with their corresponding detail.
+ * For a schema, setting the @a show_children option to
+ * @a false returns only information
+ * about the schema itself; setting @a show_children to
+ * @a true returns a list of tables and
+ * views contained in the schema, along with their corresponding detail.
  * <p>
- * To retrieve a list of every table, view, and collection in the database, set
- * @a tableName to '*' and @a show_children to @a true.
+ * To retrieve a list of every table, view, and schema in the database, set
+ * @a tableName to '*' and @a show_children to
+ * @a true.  When doing this, the
+ * returned @a totalSize and @a totalFullSize will not include the sizes of
+ * non-base tables (e.g., filters, views, joins, etc.).
  * 
- * @param tableName  Name of the table for which to retrieve the information.
- *                   If blank, then information about all collections and
- *                   top-level tables and views is returned.
+ * @param tableName  Name of the table for which to retrieve the information,
+ *                   in [schema_name.]table_name format, using standard <a
+ *                   href="../../concepts/tables.html#table-name-resolution"
+ *                   target="_top">name resolution rules</a>.  If blank, then
+ *                   returns information about all tables and views.
  * @param options  Optional parameters.
  *                 <ul>
  *                         <li> gpudb::show_table_force_synchronous: If @a true
@@ -21447,12 +26606,11 @@ ShowTableResponse showTable( const std::string& tableName,
  *                 </ul>
  *                 The default value is gpudb::show_table_false.
  *                         <li> gpudb::show_table_show_children: If @a
- *                 tableName is a collection, then @a true will return
- *                 information about the children of the collection, and @a
- *                 false will return information about the collection itself.
- *                 If @a tableName is a table or view, @a show_children must be
- *                 @a false. If @a tableName is empty, then @a show_children
- *                 must be @a true.
+ *                 tableName is a schema, then @a true will return information
+ *                 about the tables and views in the schema, and @a false will
+ *                 return information about the schema itself. If @a tableName
+ *                 is a table or view, @a show_children must be @a false. If @a
+ *                 tableName is empty, then @a show_children must be @a true.
  *                 <ul>
  *                         <li> gpudb::show_table_true
  *                         <li> gpudb::show_table_false
@@ -21517,7 +26675,10 @@ ShowTableMetadataResponse& showTableMetadata( const ShowTableMetadataRequest& re
 /**
  * Retrieves the user provided metadata for the specified tables.
  * 
- * @param tableNames  Tables whose metadata will be fetched. All provided
+ * @param tableNames  Names of tables whose metadata will be fetched, in
+ *                    [schema_name.]table_name format, using standard <a
+ *                    href="../../concepts/tables.html#table-name-resolution"
+ *                    target="_top">name resolution rules</a>.  All provided
  *                    tables must exist, or an error is returned.
  * @param options  Optional parameters.
  * 
@@ -21531,7 +26692,10 @@ ShowTableMetadataResponse showTableMetadata( const std::vector<std::string>& tab
 /**
  * Retrieves the user provided metadata for the specified tables.
  * 
- * @param tableNames  Tables whose metadata will be fetched. All provided
+ * @param tableNames  Names of tables whose metadata will be fetched, in
+ *                    [schema_name.]table_name format, using standard <a
+ *                    href="../../concepts/tables.html#table-name-resolution"
+ *                    target="_top">name resolution rules</a>.  All provided
  *                    tables must exist, or an error is returned.
  * @param options  Optional parameters.
  * @param[out] response_  Response object containing the results of the
@@ -21783,17 +26947,21 @@ ShowTypesResponse& showTypes( const std::string& typeId,
                               ShowTypesResponse& response_ ) const;
 
 /**
- * Solves an existing graph for a type of problem (e.g., shortest path, page
- * rank, travelling salesman, etc.) using source nodes, destination nodes, and
+ * Solves an existing graph for a type of problem (e.g., shortest path,
+ * page rank, travelling salesman, etc.) using source nodes, destination nodes,
+ * and
  * additional, optional weights and restrictions.
  * <p>
- * IMPORTANT: It's highly recommended that you review the <a
- * href="../../graph_solver/network_graph_solver.html" target="_top">Network
- * Graphs & Solvers</a> concepts documentation, the <a
- * href="../../graph_solver/examples/graph_rest_guide.html" target="_top">Graph
- * REST Tutorial</a>, and/or some <a
- * href="../../graph_solver/examples.html#solve-graph"
- * target="_top">/solve/graph examples</a> before using this endpoint.
+ * IMPORTANT: It's highly recommended that you review the
+ * <a href="../../graph_solver/network_graph_solver.html" target="_top">Network
+ * Graphs & Solvers</a>
+ * concepts documentation, the
+ * <a href="../../graph_solver/examples/graph_rest_guide.html"
+ * target="_top">Graph REST Tutorial</a>,
+ * and/or some
+ * <a href="../../graph_solver/examples.html#match-graph"
+ * target="_top">/match/graph examples</a>
+ * before using this endpoint.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -21805,17 +26973,21 @@ ShowTypesResponse& showTypes( const std::string& typeId,
 SolveGraphResponse solveGraph( const SolveGraphRequest& request_ ) const;
 
 /**
- * Solves an existing graph for a type of problem (e.g., shortest path, page
- * rank, travelling salesman, etc.) using source nodes, destination nodes, and
+ * Solves an existing graph for a type of problem (e.g., shortest path,
+ * page rank, travelling salesman, etc.) using source nodes, destination nodes,
+ * and
  * additional, optional weights and restrictions.
  * <p>
- * IMPORTANT: It's highly recommended that you review the <a
- * href="../../graph_solver/network_graph_solver.html" target="_top">Network
- * Graphs & Solvers</a> concepts documentation, the <a
- * href="../../graph_solver/examples/graph_rest_guide.html" target="_top">Graph
- * REST Tutorial</a>, and/or some <a
- * href="../../graph_solver/examples.html#solve-graph"
- * target="_top">/solve/graph examples</a> before using this endpoint.
+ * IMPORTANT: It's highly recommended that you review the
+ * <a href="../../graph_solver/network_graph_solver.html" target="_top">Network
+ * Graphs & Solvers</a>
+ * concepts documentation, the
+ * <a href="../../graph_solver/examples/graph_rest_guide.html"
+ * target="_top">Graph REST Tutorial</a>,
+ * and/or some
+ * <a href="../../graph_solver/examples.html#match-graph"
+ * target="_top">/match/graph examples</a>
+ * before using this endpoint.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -21831,17 +27003,21 @@ SolveGraphResponse& solveGraph( const SolveGraphRequest& request_,
                                 SolveGraphResponse& response_ ) const;
 
 /**
- * Solves an existing graph for a type of problem (e.g., shortest path, page
- * rank, travelling salesman, etc.) using source nodes, destination nodes, and
+ * Solves an existing graph for a type of problem (e.g., shortest path,
+ * page rank, travelling salesman, etc.) using source nodes, destination nodes,
+ * and
  * additional, optional weights and restrictions.
  * <p>
- * IMPORTANT: It's highly recommended that you review the <a
- * href="../../graph_solver/network_graph_solver.html" target="_top">Network
- * Graphs & Solvers</a> concepts documentation, the <a
- * href="../../graph_solver/examples/graph_rest_guide.html" target="_top">Graph
- * REST Tutorial</a>, and/or some <a
- * href="../../graph_solver/examples.html#solve-graph"
- * target="_top">/solve/graph examples</a> before using this endpoint.
+ * IMPORTANT: It's highly recommended that you review the
+ * <a href="../../graph_solver/network_graph_solver.html" target="_top">Network
+ * Graphs & Solvers</a>
+ * concepts documentation, the
+ * <a href="../../graph_solver/examples/graph_rest_guide.html"
+ * target="_top">Graph REST Tutorial</a>,
+ * and/or some
+ * <a href="../../graph_solver/examples.html#match-graph"
+ * target="_top">/match/graph examples</a>
+ * before using this endpoint.
  * 
  * @param graphName  Name of the graph resource to solve.
  * @param weightsOnEdges  Additional weights to apply to the edges of an
@@ -21925,7 +27101,10 @@ SolveGraphResponse& solveGraph( const SolveGraphRequest& request_,
  *                          'NODE_WKTPOINT' for destination (target) nodes. For
  *                          @a BACKHAUL_ROUTING, this list depicts the remote
  *                          assets.
- * @param solutionTable  Name of the table to store the solution.
+ * @param solutionTable  Name of the table to store the solution, in
+ *                       [schema_name.]table_name format, using standard <a
+ *                       href="../../concepts/tables.html#table-name-resolution"
+ *                       target="_top">name resolution rules</a>.
  * @param options  Additional parameters
  *                 <ul>
  *                         <li> gpudb::solve_graph_max_solution_radius: For @a
@@ -22026,6 +27205,24 @@ SolveGraphResponse& solveGraph( const SolveGraphRequest& request_,
  *                         <li> gpudb::solve_graph_false
  *                 </ul>
  *                 The default value is gpudb::solve_graph_true.
+ *                         <li> gpudb::solve_graph_output_edge_path: If true
+ *                 then concatenated edge ids will be added as the EDGE path
+ *                 column of the solution table for each source and target pair
+ *                 in shortest path solves.
+ *                 <ul>
+ *                         <li> gpudb::solve_graph_true
+ *                         <li> gpudb::solve_graph_false
+ *                 </ul>
+ *                 The default value is gpudb::solve_graph_false.
+ *                         <li> gpudb::solve_graph_output_wkt_path: If true
+ *                 then concatenated wkt line segments will be added as the
+ *                 Wktroute column of the solution table for each source and
+ *                 target pair in shortest path solves.
+ *                 <ul>
+ *                         <li> gpudb::solve_graph_true
+ *                         <li> gpudb::solve_graph_false
+ *                 </ul>
+ *                 The default value is gpudb::solve_graph_true.
  *                 </ul>
  * 
  * @return Response object containing the result of the operation.
@@ -22042,17 +27239,21 @@ SolveGraphResponse solveGraph( const std::string& graphName,
                                const std::map<std::string, std::string>& options ) const;
 
 /**
- * Solves an existing graph for a type of problem (e.g., shortest path, page
- * rank, travelling salesman, etc.) using source nodes, destination nodes, and
+ * Solves an existing graph for a type of problem (e.g., shortest path,
+ * page rank, travelling salesman, etc.) using source nodes, destination nodes,
+ * and
  * additional, optional weights and restrictions.
  * <p>
- * IMPORTANT: It's highly recommended that you review the <a
- * href="../../graph_solver/network_graph_solver.html" target="_top">Network
- * Graphs & Solvers</a> concepts documentation, the <a
- * href="../../graph_solver/examples/graph_rest_guide.html" target="_top">Graph
- * REST Tutorial</a>, and/or some <a
- * href="../../graph_solver/examples.html#solve-graph"
- * target="_top">/solve/graph examples</a> before using this endpoint.
+ * IMPORTANT: It's highly recommended that you review the
+ * <a href="../../graph_solver/network_graph_solver.html" target="_top">Network
+ * Graphs & Solvers</a>
+ * concepts documentation, the
+ * <a href="../../graph_solver/examples/graph_rest_guide.html"
+ * target="_top">Graph REST Tutorial</a>,
+ * and/or some
+ * <a href="../../graph_solver/examples.html#match-graph"
+ * target="_top">/match/graph examples</a>
+ * before using this endpoint.
  * 
  * @param graphName  Name of the graph resource to solve.
  * @param weightsOnEdges  Additional weights to apply to the edges of an
@@ -22136,7 +27337,10 @@ SolveGraphResponse solveGraph( const std::string& graphName,
  *                          'NODE_WKTPOINT' for destination (target) nodes. For
  *                          @a BACKHAUL_ROUTING, this list depicts the remote
  *                          assets.
- * @param solutionTable  Name of the table to store the solution.
+ * @param solutionTable  Name of the table to store the solution, in
+ *                       [schema_name.]table_name format, using standard <a
+ *                       href="../../concepts/tables.html#table-name-resolution"
+ *                       target="_top">name resolution rules</a>.
  * @param options  Additional parameters
  *                 <ul>
  *                         <li> gpudb::solve_graph_max_solution_radius: For @a
@@ -22232,6 +27436,24 @@ SolveGraphResponse solveGraph( const std::string& graphName,
  *                 difference is well less than 1 percent. In batch runs, since
  *                 the performance is of utmost importance, the option is
  *                 always considered 'false'.
+ *                 <ul>
+ *                         <li> gpudb::solve_graph_true
+ *                         <li> gpudb::solve_graph_false
+ *                 </ul>
+ *                 The default value is gpudb::solve_graph_true.
+ *                         <li> gpudb::solve_graph_output_edge_path: If true
+ *                 then concatenated edge ids will be added as the EDGE path
+ *                 column of the solution table for each source and target pair
+ *                 in shortest path solves.
+ *                 <ul>
+ *                         <li> gpudb::solve_graph_true
+ *                         <li> gpudb::solve_graph_false
+ *                 </ul>
+ *                 The default value is gpudb::solve_graph_false.
+ *                         <li> gpudb::solve_graph_output_wkt_path: If true
+ *                 then concatenated wkt line segments will be added as the
+ *                 Wktroute column of the solution table for each source and
+ *                 target pair in shortest path solves.
  *                 <ul>
  *                         <li> gpudb::solve_graph_true
  *                         <li> gpudb::solve_graph_false
@@ -22257,31 +27479,37 @@ SolveGraphResponse& solveGraph( const std::string& graphName,
                                 SolveGraphResponse& response_ ) const;
 
 /**
- * Runs multiple predicate-based updates in a single call.  With the list of
- * given expressions, any matching record's column values will be updated as
- * provided in @a newValuesMaps.  There is also an optional 'upsert' capability
- * where if a particular predicate doesn't match any existing record, then a
- * new record can be inserted.
+ * Runs multiple predicate-based updates in a single call.  With the
+ * list of given expressions, any matching record's column values will be
+ * updated
+ * as provided in @a newValuesMaps.  There is also an optional 'upsert'
+ * capability where if a particular predicate doesn't match any existing
+ * record,
+ * then a new record can be inserted.
  * <p>
  * Note that this operation can only be run on an original table and not on a
- * collection or a result view.
+ * result view.
  * <p>
- * This operation can update primary key values.  By default only 'pure primary
- * key' predicates are allowed when updating primary key values. If the primary
- * key for a table is the column 'attr1', then the operation will only accept
- * predicates of the form: "attr1 == 'foo'" if the attr1 column is being
+ * This operation can update primary key values.  By default only
+ * 'pure primary key' predicates are allowed when updating primary key values.
+ * If
+ * the primary key for a table is the column 'attr1', then the operation will
+ * only
+ * accept predicates of the form: "attr1 == 'foo'" if the attr1 column is being
  * updated.  For a composite primary key (e.g. columns 'attr1' and 'attr2')
- * then this operation will only accept predicates of the form: "(attr1 ==
- * 'foo') and (attr2 == 'bar')".  Meaning, all primary key columns must appear
- * in an equality predicate in the expressions.  Furthermore each 'pure primary
- * key' predicate must be unique within a given request.  These restrictions
- * can be removed by utilizing some available options through @a options.Note
- * that this operation can only be run on an original table and not on a
- * collection or a result view.
+ * then
+ * this operation will only accept predicates of the form:
+ * "(attr1 == 'foo') and (attr2 == 'bar')".  Meaning, all primary key columns
+ * must appear in an equality predicate in the expressions.  Furthermore each
+ * 'pure primary key' predicate must be unique within a given request.  These
+ * restrictions can be removed by utilizing some available options through
+ * @a options.
  * <p>
- * The @a update_on_existing_pk option specifies the record collision policy
- * for tables with a <a href="../../concepts/tables.html#primary-keys"
- * target="_top">primary key</a>, and is ignored on tables with no primary key.
+ * The @a update_on_existing_pk option specifies the record
+ * collision policy for tables with a <a
+ * href="../../concepts/tables.html#primary-keys" target="_top">primary
+ * key</a>, and
+ * is ignored on tables with no primary key.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -22293,31 +27521,37 @@ SolveGraphResponse& solveGraph( const std::string& graphName,
 UpdateRecordsResponse updateRecordsRaw( const RawUpdateRecordsRequest& request_ ) const;
 
 /**
- * Runs multiple predicate-based updates in a single call.  With the list of
- * given expressions, any matching record's column values will be updated as
- * provided in @a newValuesMaps.  There is also an optional 'upsert' capability
- * where if a particular predicate doesn't match any existing record, then a
- * new record can be inserted.
+ * Runs multiple predicate-based updates in a single call.  With the
+ * list of given expressions, any matching record's column values will be
+ * updated
+ * as provided in @a newValuesMaps.  There is also an optional 'upsert'
+ * capability where if a particular predicate doesn't match any existing
+ * record,
+ * then a new record can be inserted.
  * <p>
  * Note that this operation can only be run on an original table and not on a
- * collection or a result view.
+ * result view.
  * <p>
- * This operation can update primary key values.  By default only 'pure primary
- * key' predicates are allowed when updating primary key values. If the primary
- * key for a table is the column 'attr1', then the operation will only accept
- * predicates of the form: "attr1 == 'foo'" if the attr1 column is being
+ * This operation can update primary key values.  By default only
+ * 'pure primary key' predicates are allowed when updating primary key values.
+ * If
+ * the primary key for a table is the column 'attr1', then the operation will
+ * only
+ * accept predicates of the form: "attr1 == 'foo'" if the attr1 column is being
  * updated.  For a composite primary key (e.g. columns 'attr1' and 'attr2')
- * then this operation will only accept predicates of the form: "(attr1 ==
- * 'foo') and (attr2 == 'bar')".  Meaning, all primary key columns must appear
- * in an equality predicate in the expressions.  Furthermore each 'pure primary
- * key' predicate must be unique within a given request.  These restrictions
- * can be removed by utilizing some available options through @a options.Note
- * that this operation can only be run on an original table and not on a
- * collection or a result view.
+ * then
+ * this operation will only accept predicates of the form:
+ * "(attr1 == 'foo') and (attr2 == 'bar')".  Meaning, all primary key columns
+ * must appear in an equality predicate in the expressions.  Furthermore each
+ * 'pure primary key' predicate must be unique within a given request.  These
+ * restrictions can be removed by utilizing some available options through
+ * @a options.
  * <p>
- * The @a update_on_existing_pk option specifies the record collision policy
- * for tables with a <a href="../../concepts/tables.html#primary-keys"
- * target="_top">primary key</a>, and is ignored on tables with no primary key.
+ * The @a update_on_existing_pk option specifies the record
+ * collision policy for tables with a <a
+ * href="../../concepts/tables.html#primary-keys" target="_top">primary
+ * key</a>, and
+ * is ignored on tables with no primary key.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -22333,31 +27567,37 @@ UpdateRecordsResponse& updateRecordsRaw( const RawUpdateRecordsRequest& request_
                                          UpdateRecordsResponse& response_ ) const;
 
 /**
- * Runs multiple predicate-based updates in a single call.  With the list of
- * given expressions, any matching record's column values will be updated as
- * provided in @a newValuesMaps.  There is also an optional 'upsert' capability
- * where if a particular predicate doesn't match any existing record, then a
- * new record can be inserted.
+ * Runs multiple predicate-based updates in a single call.  With the
+ * list of given expressions, any matching record's column values will be
+ * updated
+ * as provided in @a newValuesMaps.  There is also an optional 'upsert'
+ * capability where if a particular predicate doesn't match any existing
+ * record,
+ * then a new record can be inserted.
  * <p>
  * Note that this operation can only be run on an original table and not on a
- * collection or a result view.
+ * result view.
  * <p>
- * This operation can update primary key values.  By default only 'pure primary
- * key' predicates are allowed when updating primary key values. If the primary
- * key for a table is the column 'attr1', then the operation will only accept
- * predicates of the form: "attr1 == 'foo'" if the attr1 column is being
+ * This operation can update primary key values.  By default only
+ * 'pure primary key' predicates are allowed when updating primary key values.
+ * If
+ * the primary key for a table is the column 'attr1', then the operation will
+ * only
+ * accept predicates of the form: "attr1 == 'foo'" if the attr1 column is being
  * updated.  For a composite primary key (e.g. columns 'attr1' and 'attr2')
- * then this operation will only accept predicates of the form: "(attr1 ==
- * 'foo') and (attr2 == 'bar')".  Meaning, all primary key columns must appear
- * in an equality predicate in the expressions.  Furthermore each 'pure primary
- * key' predicate must be unique within a given request.  These restrictions
- * can be removed by utilizing some available options through @a options.Note
- * that this operation can only be run on an original table and not on a
- * collection or a result view.
+ * then
+ * this operation will only accept predicates of the form:
+ * "(attr1 == 'foo') and (attr2 == 'bar')".  Meaning, all primary key columns
+ * must appear in an equality predicate in the expressions.  Furthermore each
+ * 'pure primary key' predicate must be unique within a given request.  These
+ * restrictions can be removed by utilizing some available options through
+ * @a options.
  * <p>
- * The @a update_on_existing_pk option specifies the record collision policy
- * for tables with a <a href="../../concepts/tables.html#primary-keys"
- * target="_top">primary key</a>, and is ignored on tables with no primary key.
+ * The @a update_on_existing_pk option specifies the record
+ * collision policy for tables with a <a
+ * href="../../concepts/tables.html#primary-keys" target="_top">primary
+ * key</a>, and
+ * is ignored on tables with no primary key.
  * 
  * @tparam <TRequest>  The type of object being added.
  * 
@@ -22383,31 +27623,37 @@ UpdateRecordsResponse updateRecords( const UpdateRecordsRequest<TRequest>& reque
 
 
 /**
- * Runs multiple predicate-based updates in a single call.  With the list of
- * given expressions, any matching record's column values will be updated as
- * provided in @a newValuesMaps.  There is also an optional 'upsert' capability
- * where if a particular predicate doesn't match any existing record, then a
- * new record can be inserted.
+ * Runs multiple predicate-based updates in a single call.  With the
+ * list of given expressions, any matching record's column values will be
+ * updated
+ * as provided in @a newValuesMaps.  There is also an optional 'upsert'
+ * capability where if a particular predicate doesn't match any existing
+ * record,
+ * then a new record can be inserted.
  * <p>
  * Note that this operation can only be run on an original table and not on a
- * collection or a result view.
+ * result view.
  * <p>
- * This operation can update primary key values.  By default only 'pure primary
- * key' predicates are allowed when updating primary key values. If the primary
- * key for a table is the column 'attr1', then the operation will only accept
- * predicates of the form: "attr1 == 'foo'" if the attr1 column is being
+ * This operation can update primary key values.  By default only
+ * 'pure primary key' predicates are allowed when updating primary key values.
+ * If
+ * the primary key for a table is the column 'attr1', then the operation will
+ * only
+ * accept predicates of the form: "attr1 == 'foo'" if the attr1 column is being
  * updated.  For a composite primary key (e.g. columns 'attr1' and 'attr2')
- * then this operation will only accept predicates of the form: "(attr1 ==
- * 'foo') and (attr2 == 'bar')".  Meaning, all primary key columns must appear
- * in an equality predicate in the expressions.  Furthermore each 'pure primary
- * key' predicate must be unique within a given request.  These restrictions
- * can be removed by utilizing some available options through @a options.Note
- * that this operation can only be run on an original table and not on a
- * collection or a result view.
+ * then
+ * this operation will only accept predicates of the form:
+ * "(attr1 == 'foo') and (attr2 == 'bar')".  Meaning, all primary key columns
+ * must appear in an equality predicate in the expressions.  Furthermore each
+ * 'pure primary key' predicate must be unique within a given request.  These
+ * restrictions can be removed by utilizing some available options through
+ * @a options.
  * <p>
- * The @a update_on_existing_pk option specifies the record collision policy
- * for tables with a <a href="../../concepts/tables.html#primary-keys"
- * target="_top">primary key</a>, and is ignored on tables with no primary key.
+ * The @a update_on_existing_pk option specifies the record
+ * collision policy for tables with a <a
+ * href="../../concepts/tables.html#primary-keys" target="_top">primary
+ * key</a>, and
+ * is ignored on tables with no primary key.
  * 
  * @tparam <TRequest>  The type of object being added.
  * 
@@ -22436,36 +27682,45 @@ UpdateRecordsResponse& updateRecords( const UpdateRecordsRequest<TRequest>& requ
 
 
 /**
- * Runs multiple predicate-based updates in a single call.  With the list of
- * given expressions, any matching record's column values will be updated as
- * provided in @a newValuesMaps.  There is also an optional 'upsert' capability
- * where if a particular predicate doesn't match any existing record, then a
- * new record can be inserted.
+ * Runs multiple predicate-based updates in a single call.  With the
+ * list of given expressions, any matching record's column values will be
+ * updated
+ * as provided in @a newValuesMaps.  There is also an optional 'upsert'
+ * capability where if a particular predicate doesn't match any existing
+ * record,
+ * then a new record can be inserted.
  * <p>
  * Note that this operation can only be run on an original table and not on a
- * collection or a result view.
+ * result view.
  * <p>
- * This operation can update primary key values.  By default only 'pure primary
- * key' predicates are allowed when updating primary key values. If the primary
- * key for a table is the column 'attr1', then the operation will only accept
- * predicates of the form: "attr1 == 'foo'" if the attr1 column is being
+ * This operation can update primary key values.  By default only
+ * 'pure primary key' predicates are allowed when updating primary key values.
+ * If
+ * the primary key for a table is the column 'attr1', then the operation will
+ * only
+ * accept predicates of the form: "attr1 == 'foo'" if the attr1 column is being
  * updated.  For a composite primary key (e.g. columns 'attr1' and 'attr2')
- * then this operation will only accept predicates of the form: "(attr1 ==
- * 'foo') and (attr2 == 'bar')".  Meaning, all primary key columns must appear
- * in an equality predicate in the expressions.  Furthermore each 'pure primary
- * key' predicate must be unique within a given request.  These restrictions
- * can be removed by utilizing some available options through @a options.Note
- * that this operation can only be run on an original table and not on a
- * collection or a result view.
+ * then
+ * this operation will only accept predicates of the form:
+ * "(attr1 == 'foo') and (attr2 == 'bar')".  Meaning, all primary key columns
+ * must appear in an equality predicate in the expressions.  Furthermore each
+ * 'pure primary key' predicate must be unique within a given request.  These
+ * restrictions can be removed by utilizing some available options through
+ * @a options.
  * <p>
- * The @a update_on_existing_pk option specifies the record collision policy
- * for tables with a <a href="../../concepts/tables.html#primary-keys"
- * target="_top">primary key</a>, and is ignored on tables with no primary key.
+ * The @a update_on_existing_pk option specifies the record
+ * collision policy for tables with a <a
+ * href="../../concepts/tables.html#primary-keys" target="_top">primary
+ * key</a>, and
+ * is ignored on tables with no primary key.
  * 
  * @tparam <TRequest>  The type of object being added.
  * 
- * @param tableName  Table to be updated. Must be a currently existing table
- *                   and not a collection or view.
+ * @param tableName  Name of table to be updated, in [schema_name.]table_name
+ *                   format, using standard <a
+ *                   href="../../concepts/tables.html#table-name-resolution"
+ *                   target="_top">name resolution rules</a>.  Must be a
+ *                   currently existing table and not a view.
  * @param expressions  A list of the actual predicates, one for each update;
  *                     format should follow the guidelines /filter.
  * @param newValuesMaps  List of new values for the matching records.  Each
@@ -22577,36 +27832,45 @@ UpdateRecordsResponse updateRecords( const std::string& tableName,
 
 
 /**
- * Runs multiple predicate-based updates in a single call.  With the list of
- * given expressions, any matching record's column values will be updated as
- * provided in @a newValuesMaps.  There is also an optional 'upsert' capability
- * where if a particular predicate doesn't match any existing record, then a
- * new record can be inserted.
+ * Runs multiple predicate-based updates in a single call.  With the
+ * list of given expressions, any matching record's column values will be
+ * updated
+ * as provided in @a newValuesMaps.  There is also an optional 'upsert'
+ * capability where if a particular predicate doesn't match any existing
+ * record,
+ * then a new record can be inserted.
  * <p>
  * Note that this operation can only be run on an original table and not on a
- * collection or a result view.
+ * result view.
  * <p>
- * This operation can update primary key values.  By default only 'pure primary
- * key' predicates are allowed when updating primary key values. If the primary
- * key for a table is the column 'attr1', then the operation will only accept
- * predicates of the form: "attr1 == 'foo'" if the attr1 column is being
+ * This operation can update primary key values.  By default only
+ * 'pure primary key' predicates are allowed when updating primary key values.
+ * If
+ * the primary key for a table is the column 'attr1', then the operation will
+ * only
+ * accept predicates of the form: "attr1 == 'foo'" if the attr1 column is being
  * updated.  For a composite primary key (e.g. columns 'attr1' and 'attr2')
- * then this operation will only accept predicates of the form: "(attr1 ==
- * 'foo') and (attr2 == 'bar')".  Meaning, all primary key columns must appear
- * in an equality predicate in the expressions.  Furthermore each 'pure primary
- * key' predicate must be unique within a given request.  These restrictions
- * can be removed by utilizing some available options through @a options.Note
- * that this operation can only be run on an original table and not on a
- * collection or a result view.
+ * then
+ * this operation will only accept predicates of the form:
+ * "(attr1 == 'foo') and (attr2 == 'bar')".  Meaning, all primary key columns
+ * must appear in an equality predicate in the expressions.  Furthermore each
+ * 'pure primary key' predicate must be unique within a given request.  These
+ * restrictions can be removed by utilizing some available options through
+ * @a options.
  * <p>
- * The @a update_on_existing_pk option specifies the record collision policy
- * for tables with a <a href="../../concepts/tables.html#primary-keys"
- * target="_top">primary key</a>, and is ignored on tables with no primary key.
+ * The @a update_on_existing_pk option specifies the record
+ * collision policy for tables with a <a
+ * href="../../concepts/tables.html#primary-keys" target="_top">primary
+ * key</a>, and
+ * is ignored on tables with no primary key.
  * 
  * @tparam <TRequest>  The type of object being added.
  * 
- * @param tableName  Table to be updated. Must be a currently existing table
- *                   and not a collection or view.
+ * @param tableName  Name of table to be updated, in [schema_name.]table_name
+ *                   format, using standard <a
+ *                   href="../../concepts/tables.html#table-name-resolution"
+ *                   target="_top">name resolution rules</a>.  Must be a
+ *                   currently existing table and not a view.
  * @param expressions  A list of the actual predicates, one for each update;
  *                     format should follow the guidelines /filter.
  * @param newValuesMaps  List of new values for the matching records.  Each
@@ -22721,9 +27985,9 @@ UpdateRecordsResponse& updateRecords( const std::string& tableName,
 
 
 /**
- * Updates the view specified by @a tableName to include full series (track)
- * information from the @a worldTableName for the series (tracks) present in
- * the @a viewName.
+ * Updates the view specified by @a tableName to include full
+ * series (track) information from the @a worldTableName for the series
+ * (tracks) present in the @a viewName.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -22735,9 +27999,9 @@ UpdateRecordsResponse& updateRecords( const std::string& tableName,
 UpdateRecordsBySeriesResponse updateRecordsBySeries( const UpdateRecordsBySeriesRequest& request_ ) const;
 
 /**
- * Updates the view specified by @a tableName to include full series (track)
- * information from the @a worldTableName for the series (tracks) present in
- * the @a viewName.
+ * Updates the view specified by @a tableName to include full
+ * series (track) information from the @a worldTableName for the series
+ * (tracks) present in the @a viewName.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -22753,16 +28017,26 @@ UpdateRecordsBySeriesResponse& updateRecordsBySeries( const UpdateRecordsBySerie
                                                       UpdateRecordsBySeriesResponse& response_ ) const;
 
 /**
- * Updates the view specified by @a tableName to include full series (track)
- * information from the @a worldTableName for the series (tracks) present in
- * the @a viewName.
+ * Updates the view specified by @a tableName to include full
+ * series (track) information from the @a worldTableName for the series
+ * (tracks) present in the @a viewName.
  * 
  * @param tableName  Name of the view on which the update operation will be
- *                   performed. Must be an existing view.
+ *                   performed, in [schema_name.]view_name format, using
+ *                   standard <a
+ *                   href="../../concepts/tables.html#table-name-resolution"
+ *                   target="_top">name resolution rules</a>.  Must be an
+ *                   existing view.
  * @param worldTableName  Name of the table containing the complete series
- *                        (track) information.
- * @param viewName  name of the view containing the series (tracks) which have
- *                  to be updated.
+ *                        (track) information, in [schema_name.]table_name
+ *                        format, using standard <a
+ *                        href="../../concepts/tables.html#table-name-resolution"
+ *                        target="_top">name resolution rules</a>.
+ * @param viewName  Name of the view containing the series (tracks) which have
+ *                  to be updated, in [schema_name.]view_name format, using
+ *                  standard <a
+ *                  href="../../concepts/tables.html#table-name-resolution"
+ *                  target="_top">name resolution rules</a>.
  * @param reserved
  * @param options  Optional parameters.
  * 
@@ -22777,16 +28051,26 @@ UpdateRecordsBySeriesResponse updateRecordsBySeries( const std::string& tableNam
                                                      const std::map<std::string, std::string>& options ) const;
 
 /**
- * Updates the view specified by @a tableName to include full series (track)
- * information from the @a worldTableName for the series (tracks) present in
- * the @a viewName.
+ * Updates the view specified by @a tableName to include full
+ * series (track) information from the @a worldTableName for the series
+ * (tracks) present in the @a viewName.
  * 
  * @param tableName  Name of the view on which the update operation will be
- *                   performed. Must be an existing view.
+ *                   performed, in [schema_name.]view_name format, using
+ *                   standard <a
+ *                   href="../../concepts/tables.html#table-name-resolution"
+ *                   target="_top">name resolution rules</a>.  Must be an
+ *                   existing view.
  * @param worldTableName  Name of the table containing the complete series
- *                        (track) information.
- * @param viewName  name of the view containing the series (tracks) which have
- *                  to be updated.
+ *                        (track) information, in [schema_name.]table_name
+ *                        format, using standard <a
+ *                        href="../../concepts/tables.html#table-name-resolution"
+ *                        target="_top">name resolution rules</a>.
+ * @param viewName  Name of the view containing the series (tracks) which have
+ *                  to be updated, in [schema_name.]view_name format, using
+ *                  standard <a
+ *                  href="../../concepts/tables.html#table-name-resolution"
+ *                  target="_top">name resolution rules</a>.
  * @param reserved
  * @param options  Optional parameters.
  * @param[out] response_  Response object containing the results of the
@@ -23204,7 +28488,9 @@ VisualizeImageChartResponse& visualizeImageChart( const VisualizeImageChartReque
  * The image is contained in the @a imageData field.
  * 
  * @param tableName  Name of the table containing the data to be drawn as a
- *                   chart.
+ *                   chart, in [schema_name.]table_name format, using standard
+ *                   <a href="../../concepts/tables.html#table-name-resolution"
+ *                   target="_top">name resolution rules</a>.
  * @param xColumnNames  Names of the columns containing the data mapped to the
  *                      x axis of a chart.
  * @param yColumnNames  Names of the columns containing the data mapped to the
@@ -23365,7 +28651,9 @@ VisualizeImageChartResponse visualizeImageChart( const std::string& tableName,
  * The image is contained in the @a imageData field.
  * 
  * @param tableName  Name of the table containing the data to be drawn as a
- *                   chart.
+ *                   chart, in [schema_name.]table_name format, using standard
+ *                   <a href="../../concepts/tables.html#table-name-resolution"
+ *                   target="_top">name resolution rules</a>.
  * @param xColumnNames  Names of the columns containing the data mapped to the
  *                      x axis of a chart.
  * @param yColumnNames  Names of the columns containing the data mapped to the
@@ -24975,11 +30263,13 @@ VisualizeImageLabelsResponse& visualizeImageLabels( const std::string& tableName
                                                     VisualizeImageLabelsResponse& response_ ) const;
 
 /**
- * Generate an image containing isolines for travel results using an existing
- * graph. Isolines represent curves of equal cost, with cost typically
+ * Generate an image containing isolines for travel results using an
+ * existing graph. Isolines represent curves of equal cost, with cost typically
  * referring to the time or distance assigned as the weights of the underlying
- * graph. See <a href="../../graph_solver/network_graph_solver.html"
- * target="_top">Network Graphs & Solvers</a> for more information on graphs.
+ * graph. See
+ * <a href="../../graph_solver/network_graph_solver.html" target="_top">Network
+ * Graphs & Solvers</a>
+ * for more information on graphs.
  * .
  * 
  * @param[in] request_  Request object containing the parameters for the
@@ -24992,11 +30282,13 @@ VisualizeImageLabelsResponse& visualizeImageLabels( const std::string& tableName
 VisualizeIsochroneResponse visualizeIsochrone( const VisualizeIsochroneRequest& request_ ) const;
 
 /**
- * Generate an image containing isolines for travel results using an existing
- * graph. Isolines represent curves of equal cost, with cost typically
+ * Generate an image containing isolines for travel results using an
+ * existing graph. Isolines represent curves of equal cost, with cost typically
  * referring to the time or distance assigned as the weights of the underlying
- * graph. See <a href="../../graph_solver/network_graph_solver.html"
- * target="_top">Network Graphs & Solvers</a> for more information on graphs.
+ * graph. See
+ * <a href="../../graph_solver/network_graph_solver.html" target="_top">Network
+ * Graphs & Solvers</a>
+ * for more information on graphs.
  * .
  * 
  * @param[in] request_  Request object containing the parameters for the
@@ -25013,11 +30305,13 @@ VisualizeIsochroneResponse& visualizeIsochrone( const VisualizeIsochroneRequest&
                                                 VisualizeIsochroneResponse& response_ ) const;
 
 /**
- * Generate an image containing isolines for travel results using an existing
- * graph. Isolines represent curves of equal cost, with cost typically
+ * Generate an image containing isolines for travel results using an
+ * existing graph. Isolines represent curves of equal cost, with cost typically
  * referring to the time or distance assigned as the weights of the underlying
- * graph. See <a href="../../graph_solver/network_graph_solver.html"
- * target="_top">Network Graphs & Solvers</a> for more information on graphs.
+ * graph. See
+ * <a href="../../graph_solver/network_graph_solver.html" target="_top">Network
+ * Graphs & Solvers</a>
+ * for more information on graphs.
  * .
  * 
  * @param graphName  Name of the graph on which the isochrone is to be
@@ -25065,9 +30359,14 @@ VisualizeIsochroneResponse& visualizeIsochrone( const VisualizeIsochroneRequest&
  *                               <li> gpudb::visualize_isochrone_false
  *                       </ul>
  *                       The default value is gpudb::visualize_isochrone_true.
- * @param levelsTable  Name of the table to output the isochrones, containing
- *                     levels and their corresponding WKT geometry. If no value
- *                     is provided, the table is not generated.
+ * @param levelsTable  Name of the table to output the isochrones to, in
+ *                     [schema_name.]table_name format, using standard <a
+ *                     href="../../concepts/tables.html#table-name-resolution"
+ *                     target="_top">name resolution rules</a> and meeting <a
+ *                     href="../../concepts/tables.html#table-naming-criteria"
+ *                     target="_top">table naming criteria</a>.  The table will
+ *                     contain levels and their corresponding WKT geometry. If
+ *                     no value is provided, the table is not generated.
  * @param styleOptions  Various style related options of the isochrone image.
  *                      <ul>
  *                              <li> gpudb::visualize_isochrone_line_size: The
@@ -25289,11 +30588,16 @@ VisualizeIsochroneResponse& visualizeIsochrone( const VisualizeIsochroneRequest&
  * @param options  Additional parameters
  *                 <ul>
  *                         <li> gpudb::visualize_isochrone_solve_table: Name of
- *                 the table to host intermediate solve results containing the
- *                 position and cost for each vertex in the graph. If the
- *                 default value is used, a temporary table is created and
- *                 deleted once the solution is calculated.  The default value
- *                 is ''.
+ *                 the table to host intermediate solve results, in
+ *                 [schema_name.]table_name format, using standard <a
+ *                 href="../../concepts/tables.html#table-name-resolution"
+ *                 target="_top">name resolution rules</a> and meeting <a
+ *                 href="../../concepts/tables.html#table-naming-criteria"
+ *                 target="_top">table naming criteria</a>.  This table will
+ *                 contain the position and cost for each vertex in the graph.
+ *                 If the default value is used, a temporary table is created
+ *                 and deleted once the solution is calculated.  The default
+ *                 value is ''.
  *                         <li> gpudb::visualize_isochrone_is_replicated: If
  *                 set to @a true, replicate the @a solve_table.
  *                 <ul>
@@ -25360,11 +30664,13 @@ VisualizeIsochroneResponse visualizeIsochrone( const std::string& graphName,
                                                const std::map<std::string, std::string>& options ) const;
 
 /**
- * Generate an image containing isolines for travel results using an existing
- * graph. Isolines represent curves of equal cost, with cost typically
+ * Generate an image containing isolines for travel results using an
+ * existing graph. Isolines represent curves of equal cost, with cost typically
  * referring to the time or distance assigned as the weights of the underlying
- * graph. See <a href="../../graph_solver/network_graph_solver.html"
- * target="_top">Network Graphs & Solvers</a> for more information on graphs.
+ * graph. See
+ * <a href="../../graph_solver/network_graph_solver.html" target="_top">Network
+ * Graphs & Solvers</a>
+ * for more information on graphs.
  * .
  * 
  * @param graphName  Name of the graph on which the isochrone is to be
@@ -25412,9 +30718,14 @@ VisualizeIsochroneResponse visualizeIsochrone( const std::string& graphName,
  *                               <li> gpudb::visualize_isochrone_false
  *                       </ul>
  *                       The default value is gpudb::visualize_isochrone_true.
- * @param levelsTable  Name of the table to output the isochrones, containing
- *                     levels and their corresponding WKT geometry. If no value
- *                     is provided, the table is not generated.
+ * @param levelsTable  Name of the table to output the isochrones to, in
+ *                     [schema_name.]table_name format, using standard <a
+ *                     href="../../concepts/tables.html#table-name-resolution"
+ *                     target="_top">name resolution rules</a> and meeting <a
+ *                     href="../../concepts/tables.html#table-naming-criteria"
+ *                     target="_top">table naming criteria</a>.  The table will
+ *                     contain levels and their corresponding WKT geometry. If
+ *                     no value is provided, the table is not generated.
  * @param styleOptions  Various style related options of the isochrone image.
  *                      <ul>
  *                              <li> gpudb::visualize_isochrone_line_size: The
@@ -25636,11 +30947,16 @@ VisualizeIsochroneResponse visualizeIsochrone( const std::string& graphName,
  * @param options  Additional parameters
  *                 <ul>
  *                         <li> gpudb::visualize_isochrone_solve_table: Name of
- *                 the table to host intermediate solve results containing the
- *                 position and cost for each vertex in the graph. If the
- *                 default value is used, a temporary table is created and
- *                 deleted once the solution is calculated.  The default value
- *                 is ''.
+ *                 the table to host intermediate solve results, in
+ *                 [schema_name.]table_name format, using standard <a
+ *                 href="../../concepts/tables.html#table-name-resolution"
+ *                 target="_top">name resolution rules</a> and meeting <a
+ *                 href="../../concepts/tables.html#table-naming-criteria"
+ *                 target="_top">table naming criteria</a>.  This table will
+ *                 contain the position and cost for each vertex in the graph.
+ *                 If the default value is used, a temporary table is created
+ *                 and deleted once the solution is calculated.  The default
+ *                 value is ''.
  *                         <li> gpudb::visualize_isochrone_is_replicated: If
  *                 set to @a true, replicate the @a solve_table.
  *                 <ul>

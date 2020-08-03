@@ -64,6 +64,19 @@ namespace gpudb
          *                      this parameter is used, then @a requestEncoding
          *                      must be @a json.
          * @param[in] options_  Optional parameters.
+         *                      <ul>
+         *                              <li>
+         *                      gpudb::create_job_remove_job_on_complete:
+         *                      <ul>
+         *                              <li> gpudb::create_job_true
+         *                              <li> gpudb::create_job_false
+         *                      </ul>
+         *                              <li> gpudb::create_job_job_tag: Tag to
+         *                      use for submitted job. The same tag could be
+         *                      used on backup cluster to retrieve response for
+         *                      the job. Tags can use letter, numbers, '_' and
+         *                      '-'
+         *                      </ul>
          * 
          */
         CreateJobRequest(const std::string& endpoint_, const std::string& requestEncoding_, const std::vector<uint8_t>& data_, const std::string& dataStr_, const std::map<std::string, std::string>& options_):

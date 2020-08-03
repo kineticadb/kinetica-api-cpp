@@ -17,20 +17,26 @@ namespace gpudb
      * <p>
      * Rotate the column values into rows values.
      * <p>
-     * For unpivot details and examples, see <a
-     * href="../../concepts/unpivot.html" target="_top">Unpivot</a>.  For
-     * limitations, see <a href="../../concepts/unpivot.html#limitations"
-     * target="_top">Unpivot Limitations</a>.
+     * For unpivot details and examples, see
+     * <a href="../../concepts/unpivot.html" target="_top">Unpivot</a>.  For
+     * limitations, see
+     * <a href="../../concepts/unpivot.html#limitations" target="_top">Unpivot
+     * Limitations</a>.
      * <p>
      * Unpivot is used to normalize tables that are built for cross tabular
-     * reporting purposes. The unpivot operator rotates the column values for
-     * all the pivoted columns. A variable column, value column and all columns
-     * from the source table except the unpivot columns are projected into the
-     * result table. The variable column and value columns in the result table
-     * indicate the pivoted column name and values respectively.
+     * reporting
+     * purposes. The unpivot operator rotates the column values for all the
+     * pivoted
+     * columns. A variable column, value column and all columns from the source
+     * table
+     * except the unpivot columns are projected into the result table. The
+     * variable
+     * column and value columns in the result table indicate the pivoted column
+     * name
+     * and values respectively.
      * <p>
-     * The response is returned as a dynamic schema. For details see: <a
-     * href="../../api/index.html#dynamic-schemas" target="_top">dynamic
+     * The response is returned as a dynamic schema. For details see:
+     * <a href="../../api/index.html#dynamic-schemas" target="_top">dynamic
      * schemas documentation</a>.
      */
     struct AggregateUnpivotRequest
@@ -56,7 +62,11 @@ namespace gpudb
          * parameters.
          * 
          * @param[in] tableName_  Name of the table on which the operation will
-         *                        be performed. Must be an existing table/view.
+         *                        be performed. Must be an existing table/view,
+         *                        in [schema_name.]table_name format, using
+         *                        standard <a
+         *                        href="../../concepts/tables.html#table-name-resolution"
+         *                        target="_top">name resolution rules</a>.
          * @param[in] columnNames_  List of column names or expressions. A
          *                          wildcard '*' can be used to include all the
          *                          non-pivoted columns from the source table.
@@ -70,19 +80,26 @@ namespace gpudb
          * @param[in] options_  Optional parameters.
          *                      <ul>
          *                              <li>
-         *                      gpudb::aggregate_unpivot_collection_name: Name
-         *                      of a collection which is to contain the table
-         *                      specified in @a result_table. If the collection
-         *                      provided is non-existent, the collection will
-         *                      be automatically created. If empty, then the
-         *                      table will be a top-level table.
+         *                      gpudb::aggregate_unpivot_collection_name:
+         *                      [DEPRECATED--please specify the containing
+         *                      schema as part of @a result_table and use
+         *                      /create/schema to create the schema if
+         *                      non-existent]  Name of a schema which is to
+         *                      contain the table specified in @a result_table.
+         *                      If the schema is non-existent, it will be
+         *                      automatically created.
          *                              <li>
          *                      gpudb::aggregate_unpivot_result_table: The name
-         *                      of the table used to store the results. Has the
-         *                      same naming restrictions as <a
-         *                      href="../../concepts/tables.html"
-         *                      target="_top">tables</a>. If present, no
-         *                      results are returned in the response.
+         *                      of a table used to store the results, in
+         *                      [schema_name.]table_name format, using standard
+         *                      <a
+         *                      href="../../concepts/tables.html#table-name-resolution"
+         *                      target="_top">name resolution rules</a> and
+         *                      meeting <a
+         *                      href="../../concepts/tables.html#table-naming-criteria"
+         *                      target="_top">table naming criteria</a>. If
+         *                      present, no results are returned in the
+         *                      response.
          *                              <li>
          *                      gpudb::aggregate_unpivot_result_table_persist:
          *                      If @a true, then the result table specified in
@@ -179,7 +196,11 @@ namespace gpudb
          * parameters.
          * 
          * @param[in] tableName_  Name of the table on which the operation will
-         *                        be performed. Must be an existing table/view.
+         *                        be performed. Must be an existing table/view,
+         *                        in [schema_name.]table_name format, using
+         *                        standard <a
+         *                        href="../../concepts/tables.html#table-name-resolution"
+         *                        target="_top">name resolution rules</a>.
          * @param[in] columnNames_  List of column names or expressions. A
          *                          wildcard '*' can be used to include all the
          *                          non-pivoted columns from the source table.
@@ -204,19 +225,26 @@ namespace gpudb
          * @param[in] options_  Optional parameters.
          *                      <ul>
          *                              <li>
-         *                      gpudb::aggregate_unpivot_collection_name: Name
-         *                      of a collection which is to contain the table
-         *                      specified in @a result_table. If the collection
-         *                      provided is non-existent, the collection will
-         *                      be automatically created. If empty, then the
-         *                      table will be a top-level table.
+         *                      gpudb::aggregate_unpivot_collection_name:
+         *                      [DEPRECATED--please specify the containing
+         *                      schema as part of @a result_table and use
+         *                      /create/schema to create the schema if
+         *                      non-existent]  Name of a schema which is to
+         *                      contain the table specified in @a result_table.
+         *                      If the schema is non-existent, it will be
+         *                      automatically created.
          *                              <li>
          *                      gpudb::aggregate_unpivot_result_table: The name
-         *                      of the table used to store the results. Has the
-         *                      same naming restrictions as <a
-         *                      href="../../concepts/tables.html"
-         *                      target="_top">tables</a>. If present, no
-         *                      results are returned in the response.
+         *                      of a table used to store the results, in
+         *                      [schema_name.]table_name format, using standard
+         *                      <a
+         *                      href="../../concepts/tables.html#table-name-resolution"
+         *                      target="_top">name resolution rules</a> and
+         *                      meeting <a
+         *                      href="../../concepts/tables.html#table-naming-criteria"
+         *                      target="_top">table naming criteria</a>. If
+         *                      present, no results are returned in the
+         *                      response.
          *                              <li>
          *                      gpudb::aggregate_unpivot_result_table_persist:
          *                      If @a true, then the result table specified in
@@ -399,20 +427,26 @@ namespace gpudb
      * <p>
      * Rotate the column values into rows values.
      * <p>
-     * For unpivot details and examples, see <a
-     * href="../../concepts/unpivot.html" target="_top">Unpivot</a>.  For
-     * limitations, see <a href="../../concepts/unpivot.html#limitations"
-     * target="_top">Unpivot Limitations</a>.
+     * For unpivot details and examples, see
+     * <a href="../../concepts/unpivot.html" target="_top">Unpivot</a>.  For
+     * limitations, see
+     * <a href="../../concepts/unpivot.html#limitations" target="_top">Unpivot
+     * Limitations</a>.
      * <p>
      * Unpivot is used to normalize tables that are built for cross tabular
-     * reporting purposes. The unpivot operator rotates the column values for
-     * all the pivoted columns. A variable column, value column and all columns
-     * from the source table except the unpivot columns are projected into the
-     * result table. The variable column and value columns in the result table
-     * indicate the pivoted column name and values respectively.
+     * reporting
+     * purposes. The unpivot operator rotates the column values for all the
+     * pivoted
+     * columns. A variable column, value column and all columns from the source
+     * table
+     * except the unpivot columns are projected into the result table. The
+     * variable
+     * column and value columns in the result table indicate the pivoted column
+     * name
+     * and values respectively.
      * <p>
-     * The response is returned as a dynamic schema. For details see: <a
-     * href="../../api/index.html#dynamic-schemas" target="_top">dynamic
+     * The response is returned as a dynamic schema. For details see:
+     * <a href="../../api/index.html#dynamic-schemas" target="_top">dynamic
      * schemas documentation</a>.
      */
     struct RawAggregateUnpivotResponse
@@ -524,20 +558,26 @@ namespace gpudb
      * <p>
      * Rotate the column values into rows values.
      * <p>
-     * For unpivot details and examples, see <a
-     * href="../../concepts/unpivot.html" target="_top">Unpivot</a>.  For
-     * limitations, see <a href="../../concepts/unpivot.html#limitations"
-     * target="_top">Unpivot Limitations</a>.
+     * For unpivot details and examples, see
+     * <a href="../../concepts/unpivot.html" target="_top">Unpivot</a>.  For
+     * limitations, see
+     * <a href="../../concepts/unpivot.html#limitations" target="_top">Unpivot
+     * Limitations</a>.
      * <p>
      * Unpivot is used to normalize tables that are built for cross tabular
-     * reporting purposes. The unpivot operator rotates the column values for
-     * all the pivoted columns. A variable column, value column and all columns
-     * from the source table except the unpivot columns are projected into the
-     * result table. The variable column and value columns in the result table
-     * indicate the pivoted column name and values respectively.
+     * reporting
+     * purposes. The unpivot operator rotates the column values for all the
+     * pivoted
+     * columns. A variable column, value column and all columns from the source
+     * table
+     * except the unpivot columns are projected into the result table. The
+     * variable
+     * column and value columns in the result table indicate the pivoted column
+     * name
+     * and values respectively.
      * <p>
-     * The response is returned as a dynamic schema. For details see: <a
-     * href="../../api/index.html#dynamic-schemas" target="_top">dynamic
+     * The response is returned as a dynamic schema. For details see:
+     * <a href="../../api/index.html#dynamic-schemas" target="_top">dynamic
      * schemas documentation</a>.
      */
     struct AggregateUnpivotResponse

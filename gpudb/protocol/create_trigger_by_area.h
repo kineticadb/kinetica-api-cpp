@@ -13,23 +13,27 @@ namespace gpudb
      * A set of input parameters for {@link
      * #createTriggerByArea(const CreateTriggerByAreaRequest&) const}.
      * <p>
-     * Sets up an area trigger mechanism for two column_names for one or more
-     * tables. (This function is essentially the two-dimensional version of
+     * Sets up an area trigger mechanism for two column_names for one or
+     * more tables. (This function is essentially the two-dimensional version
+     * of
      * {@link
      * #createTriggerByRange(const CreateTriggerByRangeRequest&) const}.)
-     * Once the trigger has been activated, any record added to the listed
-     * tables(s) via {@link
+     * Once the trigger has been activated, any
+     * record added to the listed tables(s) via {@link
      * #insertRecordsRaw(const RawInsertRecordsRequest&) const} with the
      * chosen columns' values falling within the specified region will trip the
      * trigger. All such records will be queued at the trigger port (by default
-     * '9001' but able to be retrieved via {@link
+     * '9001'
+     * but able to be retrieved via {@link
      * #showSystemStatus(const ShowSystemStatusRequest&) const}) for any
-     * listening client to collect. Active triggers can be cancelled by using
-     * the {@link #clearTrigger(const ClearTriggerRequest&) const} endpoint
-     * or by clearing all relevant tables.
+     * listening
+     * client to collect. Active triggers can be cancelled by using the
+     * {@link #clearTrigger(const ClearTriggerRequest&) const} endpoint or
+     * by clearing all relevant tables.
      * <p>
      * The output returns the trigger handle as well as indicating success or
-     * failure of the trigger activation.
+     * failure
+     * of the trigger activation.
      */
     struct CreateTriggerByAreaRequest
     {
@@ -57,7 +61,11 @@ namespace gpudb
          *                        be alphanumeric, contain symbols, and must
          *                        contain at least one character.
          * @param[in] tableNames_  Names of the tables on which the trigger
-         *                         will be activated and maintained.
+         *                         will be activated and maintained, each in
+         *                         [schema_name.]table_name format, using
+         *                         standard <a
+         *                         href="../../concepts/tables.html#table-name-resolution"
+         *                         target="_top">name resolution rules</a>.
          * @param[in] xColumnName_  Name of a numeric column on which the
          *                          trigger is activated. Usually 'x' for
          *                          geospatial data points.
@@ -175,23 +183,27 @@ namespace gpudb
      * A set of output parameters for {@link
      * #createTriggerByArea(const CreateTriggerByAreaRequest&) const}.
      * <p>
-     * Sets up an area trigger mechanism for two column_names for one or more
-     * tables. (This function is essentially the two-dimensional version of
+     * Sets up an area trigger mechanism for two column_names for one or
+     * more tables. (This function is essentially the two-dimensional version
+     * of
      * {@link
      * #createTriggerByRange(const CreateTriggerByRangeRequest&) const}.)
-     * Once the trigger has been activated, any record added to the listed
-     * tables(s) via {@link
+     * Once the trigger has been activated, any
+     * record added to the listed tables(s) via {@link
      * #insertRecordsRaw(const RawInsertRecordsRequest&) const} with the
      * chosen columns' values falling within the specified region will trip the
      * trigger. All such records will be queued at the trigger port (by default
-     * '9001' but able to be retrieved via {@link
+     * '9001'
+     * but able to be retrieved via {@link
      * #showSystemStatus(const ShowSystemStatusRequest&) const}) for any
-     * listening client to collect. Active triggers can be cancelled by using
-     * the {@link #clearTrigger(const ClearTriggerRequest&) const} endpoint
-     * or by clearing all relevant tables.
+     * listening
+     * client to collect. Active triggers can be cancelled by using the
+     * {@link #clearTrigger(const ClearTriggerRequest&) const} endpoint or
+     * by clearing all relevant tables.
      * <p>
      * The output returns the trigger handle as well as indicating success or
-     * failure of the trigger activation.
+     * failure
+     * of the trigger activation.
      */
     struct CreateTriggerByAreaResponse
     {

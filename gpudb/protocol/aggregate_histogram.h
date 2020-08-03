@@ -16,17 +16,20 @@ namespace gpudb
      * Performs a histogram calculation given a table, a column, and an
      * interval function. The @a interval is used to produce bins of that size
      * and the result, computed over the records falling within each bin, is
-     * returned.  For each bin, the start value is inclusive, but the end value
-     * is exclusive--except for the very last bin for which the end value is
-     * also inclusive.  The value returned for each bin is the number of
-     * records in it, except when a column name is provided as a @a
-     * value_column.  In this latter case the sum of the values corresponding
-     * to the @a value_column is used as the result instead.  The total number
-     * of bins requested cannot exceed 10,000.
+     * returned.
+     * For each bin, the start value is inclusive, but the end value is
+     * exclusive--except for the very last bin for which the end value is also
+     * inclusive.  The value returned for each bin is the number of records in
+     * it,
+     * except when a column name is provided as a
+     * @a value_column.  In this latter case the sum of the
+     * values corresponding to the @a value_column is used as the
+     * result instead.  The total number of bins requested cannot exceed
+     * 10,000.
      * <p>
      * NOTE:  The Kinetica instance being accessed must be running a CUDA
-     * (GPU-based) build to service a request that specifies a @a value_column
-     * option.
+     * (GPU-based)
+     * build to service a request that specifies a @a value_column.
      */
     struct AggregateHistogramRequest
     {
@@ -50,8 +53,11 @@ namespace gpudb
          * parameters.
          * 
          * @param[in] tableName_  Name of the table on which the operation will
-         *                        be performed. Must be an existing table or
-         *                        collection.
+         *                        be performed. Must be an existing table, in
+         *                        [schema_name.]table_name format, using
+         *                        standard <a
+         *                        href="../../concepts/tables.html#table-name-resolution"
+         *                        target="_top">name resolution rules</a>.
          * @param[in] columnName_  Name of a column or an expression of one or
          *                         more column names over which the histogram
          *                         will be calculated.
@@ -167,17 +173,20 @@ namespace gpudb
      * Performs a histogram calculation given a table, a column, and an
      * interval function. The @a interval is used to produce bins of that size
      * and the result, computed over the records falling within each bin, is
-     * returned.  For each bin, the start value is inclusive, but the end value
-     * is exclusive--except for the very last bin for which the end value is
-     * also inclusive.  The value returned for each bin is the number of
-     * records in it, except when a column name is provided as a @a
-     * value_column.  In this latter case the sum of the values corresponding
-     * to the @a value_column is used as the result instead.  The total number
-     * of bins requested cannot exceed 10,000.
+     * returned.
+     * For each bin, the start value is inclusive, but the end value is
+     * exclusive--except for the very last bin for which the end value is also
+     * inclusive.  The value returned for each bin is the number of records in
+     * it,
+     * except when a column name is provided as a
+     * @a value_column.  In this latter case the sum of the
+     * values corresponding to the @a value_column is used as the
+     * result instead.  The total number of bins requested cannot exceed
+     * 10,000.
      * <p>
      * NOTE:  The Kinetica instance being accessed must be running a CUDA
-     * (GPU-based) build to service a request that specifies a @a value_column
-     * option.
+     * (GPU-based)
+     * build to service a request that specifies a @a value_column.
      */
     struct AggregateHistogramResponse
     {

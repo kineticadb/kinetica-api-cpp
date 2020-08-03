@@ -13,43 +13,65 @@ namespace gpudb
      * A set of input parameters for {@link
      * #aggregateStatistics(const AggregateStatisticsRequest&) const}.
      * <p>
-     * Calculates the requested statistics of the given column(s) in a given
-     * table.
+     * Calculates the requested statistics of the given column(s) in a
+     * given table.
      * <p>
-     * The available statistics are @a count (number of total objects), @a
-     * mean, @a stdv (standard deviation), @a variance, @a skew, @a kurtosis,
-     * @a sum, @a min, @a max, @a weighted_average, @a cardinality (unique
-     * count), @a estimated_cardinality, @a percentile and @a percentile_rank.
+     * The available statistics are:
+     *   @a count (number of total objects),
+     *   @a mean,
+     *   @a stdv (standard deviation),
+     *   @a variance,
+     *   @a skew,
+     *   @a kurtosis,
+     *   @a sum,
+     *   @a min,
+     *   @a max,
+     *   @a weighted_average,
+     *   @a cardinality (unique count),
+     *   @a estimated_cardinality,
+     *   @a percentile, and
+     *   @a percentile_rank.
      * <p>
      * Estimated cardinality is calculated by using the hyperloglog
-     * approximation technique.
+     * approximation
+     * technique.
      * <p>
      * Percentiles and percentile ranks are approximate and are calculated
-     * using the t-digest algorithm. They must include the desired @a
-     * percentile/@a percentile_rank. To compute multiple percentiles each
-     * value must be specified separately (i.e.
+     * using the
+     * t-digest algorithm. They must include the desired
+     * @a percentile/@a percentile_rank.
+     * To compute multiple percentiles each value must be specified separately
+     * (i.e.
      * 'percentile(75.0),percentile(99.0),percentile_rank(1234.56),percentile_rank(-5)').
      * <p>
-     * A second, comma-separated value can be added to the @a percentile
-     * statistic to calculate percentile resolution, e.g., a 50th percentile
-     * with 200 resolution would be 'percentile(50,200)'.
+     * A second, comma-separated value can be added to the
+     * @a percentile statistic to calculate percentile
+     * resolution, e.g., a 50th percentile with 200 resolution would be
+     * 'percentile(50,200)'.
      * <p>
-     * The weighted average statistic requires a @a weight_column_name to be
-     * specified in @a options. The weighted average is then defined as the sum
-     * of the products of @a columnName times the @a weight_column_name values
-     * divided by the sum of the @a weight_column_name values.
+     * The weighted average statistic requires a weight column to be specified
+     * in
+     * @a weight_column_name.  The weighted average is then
+     * defined as the sum of the products of @a columnName times the
+     * @a weight_column_name values divided by the sum of the
+     * @a weight_column_name values.
      * <p>
-     * Additional columns can be used in the calculation of statistics via the
-     * @a additional_column_names option.  Values in these columns will be
-     * included in the overall aggregate calculation--individual aggregates
-     * will not be calculated per additional column.  For instance, requesting
-     * the @a count & @a mean of @a columnName x and @a additional_column_names
+     * Additional columns can be used in the calculation of statistics via
+     * @a additional_column_names.  Values in these columns will
+     * be included in the overall aggregate calculation--individual aggregates
+     * will not
+     * be calculated per additional column.  For instance, requesting the
+     * @a count & @a mean of
+     * @a columnName x and @a additional_column_names
      * y & z, where x holds the numbers 1-10, y holds 11-20, and z holds 21-30,
-     * would return the total number of x, y, & z values (30), and the single
-     * average value across all x, y, & z values (15.5).
+     * would
+     * return the total number of x, y, & z values (30), and the single average
+     * value
+     * across all x, y, & z values (15.5).
      * <p>
      * The response includes a list of key/value pairs of each statistic
-     * requested and its corresponding value.
+     * requested and
+     * its corresponding value.
      */
     struct AggregateStatisticsRequest
     {
@@ -71,7 +93,11 @@ namespace gpudb
          * parameters.
          * 
          * @param[in] tableName_  Name of the table on which the statistics
-         *                        operation will be performed.
+         *                        operation will be performed, in
+         *                        [schema_name.]table_name format, using
+         *                        standard <a
+         *                        href="../../concepts/tables.html#table-name-resolution"
+         *                        target="_top">name resolution rules</a>.
          * @param[in] columnName_  Name of the primary column for which the
          *                         statistics are to be calculated.
          * @param[in] stats_  Comma separated list of the statistics to
@@ -219,43 +245,65 @@ namespace gpudb
      * A set of output parameters for {@link
      * #aggregateStatistics(const AggregateStatisticsRequest&) const}.
      * <p>
-     * Calculates the requested statistics of the given column(s) in a given
-     * table.
+     * Calculates the requested statistics of the given column(s) in a
+     * given table.
      * <p>
-     * The available statistics are @a count (number of total objects), @a
-     * mean, @a stdv (standard deviation), @a variance, @a skew, @a kurtosis,
-     * @a sum, @a min, @a max, @a weighted_average, @a cardinality (unique
-     * count), @a estimated_cardinality, @a percentile and @a percentile_rank.
+     * The available statistics are:
+     *   @a count (number of total objects),
+     *   @a mean,
+     *   @a stdv (standard deviation),
+     *   @a variance,
+     *   @a skew,
+     *   @a kurtosis,
+     *   @a sum,
+     *   @a min,
+     *   @a max,
+     *   @a weighted_average,
+     *   @a cardinality (unique count),
+     *   @a estimated_cardinality,
+     *   @a percentile, and
+     *   @a percentile_rank.
      * <p>
      * Estimated cardinality is calculated by using the hyperloglog
-     * approximation technique.
+     * approximation
+     * technique.
      * <p>
      * Percentiles and percentile ranks are approximate and are calculated
-     * using the t-digest algorithm. They must include the desired @a
-     * percentile/@a percentile_rank. To compute multiple percentiles each
-     * value must be specified separately (i.e.
+     * using the
+     * t-digest algorithm. They must include the desired
+     * @a percentile/@a percentile_rank.
+     * To compute multiple percentiles each value must be specified separately
+     * (i.e.
      * 'percentile(75.0),percentile(99.0),percentile_rank(1234.56),percentile_rank(-5)').
      * <p>
-     * A second, comma-separated value can be added to the @a percentile
-     * statistic to calculate percentile resolution, e.g., a 50th percentile
-     * with 200 resolution would be 'percentile(50,200)'.
+     * A second, comma-separated value can be added to the
+     * @a percentile statistic to calculate percentile
+     * resolution, e.g., a 50th percentile with 200 resolution would be
+     * 'percentile(50,200)'.
      * <p>
-     * The weighted average statistic requires a @a weight_column_name to be
-     * specified in @a options. The weighted average is then defined as the sum
-     * of the products of @a columnName times the @a weight_column_name values
-     * divided by the sum of the @a weight_column_name values.
+     * The weighted average statistic requires a weight column to be specified
+     * in
+     * @a weight_column_name.  The weighted average is then
+     * defined as the sum of the products of @a columnName times the
+     * @a weight_column_name values divided by the sum of the
+     * @a weight_column_name values.
      * <p>
-     * Additional columns can be used in the calculation of statistics via the
-     * @a additional_column_names option.  Values in these columns will be
-     * included in the overall aggregate calculation--individual aggregates
-     * will not be calculated per additional column.  For instance, requesting
-     * the @a count & @a mean of @a columnName x and @a additional_column_names
+     * Additional columns can be used in the calculation of statistics via
+     * @a additional_column_names.  Values in these columns will
+     * be included in the overall aggregate calculation--individual aggregates
+     * will not
+     * be calculated per additional column.  For instance, requesting the
+     * @a count & @a mean of
+     * @a columnName x and @a additional_column_names
      * y & z, where x holds the numbers 1-10, y holds 11-20, and z holds 21-30,
-     * would return the total number of x, y, & z values (30), and the single
-     * average value across all x, y, & z values (15.5).
+     * would
+     * return the total number of x, y, & z values (30), and the single average
+     * value
+     * across all x, y, & z values (15.5).
      * <p>
      * The response includes a list of key/value pairs of each statistic
-     * requested and its corresponding value.
+     * requested and
+     * its corresponding value.
      */
     struct AggregateStatisticsResponse
     {

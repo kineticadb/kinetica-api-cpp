@@ -36,8 +36,11 @@ namespace gpudb
          * parameters.
          * 
          * @param[in] tableName_  Name of table on which the operation will be
-         *                        performed. Must be an existing table.  It
-         *                        cannot be a collection.
+         *                        performed. Must be an existing table, in
+         *                        [schema_name.]table_name format, using
+         *                        standard <a
+         *                        href="../../concepts/tables.html#table-name-resolution"
+         *                        target="_top">name resolution rules</a>.
          * @param[in] xColumnName_  Name of the column containing the x
          *                          coordinates of the points for the operation
          *                          being performed.

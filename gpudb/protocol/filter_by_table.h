@@ -13,15 +13,19 @@ namespace gpudb
      * A set of input parameters for {@link
      * #filterByTable(const FilterByTableRequest&) const}.
      * <p>
-     * Filters objects in one table based on objects in another table. The user
-     * must specify matching column types from the two tables (i.e. the target
+     * Filters objects in one table based on objects in another table. The
+     * user must specify matching column types from the two tables (i.e. the
+     * target
      * table from which objects will be filtered and the source table based on
-     * which the filter will be created); the column names need not be the
-     * same. If a @a viewName is specified, then the filtered objects will then
-     * be put in a newly created view. The operation is synchronous, meaning
-     * that a response will not be returned until all objects are fully
-     * available in the result view. The return value contains the count (i.e.
-     * the size) of the resulting view.
+     * which
+     * the filter will be created); the column names need not be the same. If a
+     * @a viewName is specified, then the filtered objects will then be put in
+     * a
+     * newly created view. The operation is synchronous, meaning that a
+     * response will
+     * not be returned until all objects are fully available in the result
+     * view. The
+     * return value contains the count (i.e. the size) of the resulting view.
      */
     struct FilterByTableRequest
     {
@@ -45,18 +49,31 @@ namespace gpudb
          * parameters.
          * 
          * @param[in] tableName_  Name of the table whose data will be
-         *                        filtered. Must be an existing table.
+         *                        filtered, in [schema_name.]table_name format,
+         *                        using standard <a
+         *                        href="../../concepts/tables.html#table-name-resolution"
+         *                        target="_top">name resolution rules</a>.
+         *                        Must be an existing table.
          * @param[in] viewName_  If provided, then this will be the name of the
-         *                       view containing the results. Has the same
-         *                       naming restrictions as <a
-         *                       href="../../concepts/tables.html"
-         *                       target="_top">tables</a>.
+         *                       view containing the results, in
+         *                       [schema_name.]view_name format, using standard
+         *                       <a
+         *                       href="../../concepts/tables.html#table-name-resolution"
+         *                       target="_top">name resolution rules</a> and
+         *                       meeting <a
+         *                       href="../../concepts/tables.html#table-naming-criteria"
+         *                       target="_top">table naming criteria</a>.  Must
+         *                       not be an already existing table or view.
          * @param[in] columnName_  Name of the column by whose value the data
          *                         will be filtered from the table designated
          *                         by @a tableName.
          * @param[in] sourceTableName_  Name of the table whose data will be
          *                              compared against in the table called @a
-         *                              tableName. Must be an existing table.
+         *                              tableName, in [schema_name.]table_name
+         *                              format, using standard <a
+         *                              href="../../concepts/tables.html#table-name-resolution"
+         *                              target="_top">name resolution
+         *                              rules</a>.  Must be an existing table.
          * @param[in] sourceTableColumnName_  Name of the column in the @a
          *                                    sourceTableName whose values will
          *                                    be used as the filter for table
@@ -68,12 +85,13 @@ namespace gpudb
          * @param[in] options_  Optional parameters.
          *                      <ul>
          *                              <li>
-         *                      gpudb::filter_by_table_collection_name: Name of
-         *                      a collection which is to contain the newly
-         *                      created view. If the collection provided is
-         *                      non-existent, the collection will be
-         *                      automatically created. If empty, then the newly
-         *                      created view will be top-level.
+         *                      gpudb::filter_by_table_collection_name:
+         *                      [DEPRECATED--please specify the containing
+         *                      schema for the view as part of @a viewName and
+         *                      use /create/schema to create the schema if
+         *                      non-existent]  Name of a schema for the newly
+         *                      created view. If the schema is non-existent, it
+         *                      will be automatically created.
          *                              <li>
          *                      gpudb::filter_by_table_filter_mode: String
          *                      indicating the filter mode, either @a in_table
@@ -222,15 +240,19 @@ namespace gpudb
      * A set of output parameters for {@link
      * #filterByTable(const FilterByTableRequest&) const}.
      * <p>
-     * Filters objects in one table based on objects in another table. The user
-     * must specify matching column types from the two tables (i.e. the target
+     * Filters objects in one table based on objects in another table. The
+     * user must specify matching column types from the two tables (i.e. the
+     * target
      * table from which objects will be filtered and the source table based on
-     * which the filter will be created); the column names need not be the
-     * same. If a @a viewName is specified, then the filtered objects will then
-     * be put in a newly created view. The operation is synchronous, meaning
-     * that a response will not be returned until all objects are fully
-     * available in the result view. The return value contains the count (i.e.
-     * the size) of the resulting view.
+     * which
+     * the filter will be created); the column names need not be the same. If a
+     * @a viewName is specified, then the filtered objects will then be put in
+     * a
+     * newly created view. The operation is synchronous, meaning that a
+     * response will
+     * not be returned until all objects are fully available in the result
+     * view. The
+     * return value contains the count (i.e. the size) of the resulting view.
      */
     struct FilterByTableResponse
     {

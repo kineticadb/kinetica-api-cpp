@@ -50,8 +50,11 @@ namespace gpudb
          * Constructs a CreateTableMonitorRequest object with the specified
          * parameters.
          * 
-         * @param[in] tableName_  Name of the table to monitor. Must not refer
-         *                        to a collection.
+         * @param[in] tableName_  Name of the table to monitor, in
+         *                        [schema_name.]table_name format, using
+         *                        standard <a
+         *                        href="../../concepts/tables.html#table-name-resolution"
+         *                        target="_top">name resolution rules</a>.
          * @param[in] options_  Optional parameters.
          *                      <ul>
          *                              <li> gpudb::create_table_monitor_event:

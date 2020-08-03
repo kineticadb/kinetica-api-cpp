@@ -13,26 +13,27 @@ namespace gpudb
      * A set of input parameters for {@link
      * #adminAddRanks(const AdminAddRanksRequest&) const}.
      * <p>
-     * Add one or more new ranks to the Kinetica cluster. The new ranks will
-     * not contain any data initially, other than replicated tables, and not be
-     * assigned any shards. To rebalance data across the cluster, which
-     * includes shifting some shard key assignments to newly added ranks, see
-     * {@link #adminRebalance(const AdminRebalanceRequest&) const}.
+     * Add one or more ranks to an existing Kinetica cluster. The new ranks
+     * will not contain any data initially (other than replicated tables) and
+     * will not be assigned any shards. To rebalance data and shards across the
+     * cluster, use {@link
+     * #adminRebalance(const AdminRebalanceRequest&) const}.
      * <p>
      * For example, if attempting to add three new ranks (two ranks on host
      * 172.123.45.67 and one rank on host 172.123.45.68) to a Kinetica cluster
      * with additional configuration parameters:
      * <p>
-     * * @a hosts would be an array including 172.123.45.67 in the first two
-     * indices (signifying two ranks being added to host 172.123.45.67) and
-     * 172.123.45.68 in the last index (signifying one rank being added to host
-     * 172.123.45.67)
-     * <p>
-     * * @a configParams would be an array of maps, with each map corresponding
-     * to the ranks being added in @a hosts. The key of each map would be the
-     * configuration parameter name and the value would be the parameter's
-     * value, e.g. 'rank.gpu':'1'
-     * <p>
+     * * @a hosts
+     *   would be an array including 172.123.45.67 in the first two indices
+     *   (signifying two ranks being added to host 172.123.45.67) and
+     *   172.123.45.68 in the last index (signifying one rank being added
+     *   to host 172.123.45.67)
+     * * @a configParams
+     *   would be an array of maps, with each map corresponding to the ranks
+     *   being added in @a hosts. The key of each map would be
+     *   the configuration parameter name and the value would be the
+     *   parameter's value, e.g. '{"rank.gpu":"1"}'
+
      * This endpoint's processing includes copying all replicated table data to
      * the new rank(s) and therefore could take a long time. The API call may
      * time out if run directly.  It is recommended to run this endpoint
@@ -57,24 +58,53 @@ namespace gpudb
          * Constructs an AdminAddRanksRequest object with the specified
          * parameters.
          * 
-         * @param[in] hosts_  The IP address of each rank being added to the
-         *                    cluster. Insert one entry per rank, even if they
-         *                    are on the same host. The order of the hosts in
-         *                    the array only matters as it relates to the @a
-         *                    configParams.
-         * @param[in] configParams_  Configuration parameters to apply to the
-         *                           new ranks, e.g., which GPU to use.
-         *                           Configuration parameters that start with
-         *                           'rankN.', where N is the rank number,
-         *                           should omit the N, as the new rank
-         *                           number(s) are not allocated until the
-         *                           ranks are created. Each entry in this
+         * @param[in] hosts_  Array of host IP addresses (matching a
+         *                    hostN.address from the gpudb.conf file), or host
+         *                    identifiers (e.g. 'host0' from the gpudb.conf
+         *                    file), on which to add ranks to the cluster. The
+         *                    hosts must already be in the cluster. If needed
+         *                    beforehand, to add a new host to the cluster use
+         *                    /admin/add/host. Include the same entry as many
+         *                    times as there are ranks to add to the cluster,
+         *                    e.g., if two ranks on host 172.123.45.67 should
+         *                    be added, @a hosts could look like
+         *                    '["172.123.45.67", "172.123.45.67"]'. All ranks
+         *                    will be added simultaneously, i.e. they're not
+         *                    added in the order of this array. Each entry in
+         *                    this array corresponds to the entry at the same
+         *                    index in the @a configParams.
+         * @param[in] configParams_  Array of maps containing configuration
+         *                           parameters to apply to the new ranks found
+         *                           in @a hosts. For example,
+         *                           '{"rank.gpu":"2",
+         *                           "tier.ram.rank.limit":"10000000000"}'.
+         *                           Currently, the available parameters are
+         *                           rank-specific parameters in the <a
+         *                           href="../../config/index.html#network"
+         *                           target="_top">Network</a>, <a
+         *                           href="../../config/index.html#hardware"
+         *                           target="_top">Hardware</a>, <a
+         *                           href="../../config/index.html#text-search"
+         *                           target="_top">Text Search</a>, and <a
+         *                           href="../../config/index.html#ram-tier"
+         *                           target="_top">RAM Tiered Storage</a>
+         *                           sections in the gpudb.conf file, with the
+         *                           key exception of the 'rankN.host' settings
+         *                           in the Network section that will be
+         *                           determined by @a hosts instead. Though
+         *                           many of these configuration parameters
+         *                           typically are affixed with 'rankN' in the
+         *                           gpudb.conf file (where N is the rank
+         *                           number), the 'N' should be omitted in @a
+         *                           configParams as the new rank number(s) are
+         *                           not allocated until the ranks have been
+         *                           added to the cluster. Each entry in this
          *                           array corresponds to the entry at the same
-         *                           array index in the @a hosts. This array
-         *                           must either be completely empty or have
-         *                           the same number of elements as the hosts
-         *                           array.  An empty array will result in the
-         *                           new ranks being set only with default
+         *                           index in the @a hosts. This array must
+         *                           either be completely empty or have the
+         *                           same number of elements as the @a hosts.
+         *                           An empty @a configParams array will result
+         *                           in the new ranks being set with default
          *                           parameters.
          * @param[in] options_  Optional parameters.
          *                      <ul>
@@ -158,26 +188,27 @@ namespace gpudb
      * A set of output parameters for {@link
      * #adminAddRanks(const AdminAddRanksRequest&) const}.
      * <p>
-     * Add one or more new ranks to the Kinetica cluster. The new ranks will
-     * not contain any data initially, other than replicated tables, and not be
-     * assigned any shards. To rebalance data across the cluster, which
-     * includes shifting some shard key assignments to newly added ranks, see
-     * {@link #adminRebalance(const AdminRebalanceRequest&) const}.
+     * Add one or more ranks to an existing Kinetica cluster. The new ranks
+     * will not contain any data initially (other than replicated tables) and
+     * will not be assigned any shards. To rebalance data and shards across the
+     * cluster, use {@link
+     * #adminRebalance(const AdminRebalanceRequest&) const}.
      * <p>
      * For example, if attempting to add three new ranks (two ranks on host
      * 172.123.45.67 and one rank on host 172.123.45.68) to a Kinetica cluster
      * with additional configuration parameters:
      * <p>
-     * * @a hosts would be an array including 172.123.45.67 in the first two
-     * indices (signifying two ranks being added to host 172.123.45.67) and
-     * 172.123.45.68 in the last index (signifying one rank being added to host
-     * 172.123.45.67)
-     * <p>
-     * * @a configParams would be an array of maps, with each map corresponding
-     * to the ranks being added in @a hosts. The key of each map would be the
-     * configuration parameter name and the value would be the parameter's
-     * value, e.g. 'rank.gpu':'1'
-     * <p>
+     * * @a hosts
+     *   would be an array including 172.123.45.67 in the first two indices
+     *   (signifying two ranks being added to host 172.123.45.67) and
+     *   172.123.45.68 in the last index (signifying one rank being added
+     *   to host 172.123.45.67)
+     * * @a configParams
+     *   would be an array of maps, with each map corresponding to the ranks
+     *   being added in @a hosts. The key of each map would be
+     *   the configuration parameter name and the value would be the
+     *   parameter's value, e.g. '{"rank.gpu":"1"}'
+
      * This endpoint's processing includes copying all replicated table data to
      * the new rank(s) and therefore could take a long time. The API call may
      * time out if run directly.  It is recommended to run this endpoint
@@ -192,14 +223,12 @@ namespace gpudb
          * values.
          */
         AdminAddRanksResponse() :
-            addedRanks(std::vector<int32_t>()),
-            results(std::vector<std::string>()),
+            addedRanks(std::vector<std::string>()),
             info(std::map<std::string, std::string>())
         {
         }
 
-        std::vector<int32_t> addedRanks;
-        std::vector<std::string> results;
+        std::vector<std::string> addedRanks;
         std::map<std::string, std::string> info;
     };
 }
@@ -211,7 +240,6 @@ namespace avro
         static void encode(Encoder& e, const gpudb::AdminAddRanksResponse& v)
         {
             ::avro::encode(e, v.addedRanks);
-            ::avro::encode(e, v.results);
             ::avro::encode(e, v.info);
         }
 
@@ -230,10 +258,6 @@ namespace avro
                             break;
 
                         case 1:
-                            ::avro::decode(d, v.results);
-                            break;
-
-                        case 2:
                             ::avro::decode(d, v.info);
                             break;
 
@@ -245,7 +269,6 @@ namespace avro
             else
             {
                 ::avro::decode(d, v.addedRanks);
-                ::avro::decode(d, v.results);
                 ::avro::decode(d, v.info);
             }
         }

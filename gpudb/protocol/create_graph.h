@@ -239,8 +239,16 @@ namespace gpudb
          *                      The default value is gpudb::create_graph_false.
          *                              <li> gpudb::create_graph_graph_table:
          *                      If specified, the created graph is also created
-         *                      as a table with the given name and following
-         *                      identifier columns: 'EDGE_ID', 'EDGE_NODE1_ID',
+         *                      as a table with the given name, in
+         *                      [schema_name.]table_name format, using standard
+         *                      <a
+         *                      href="../../concepts/tables.html#table-name-resolution"
+         *                      target="_top">name resolution rules</a> and
+         *                      meeting <a
+         *                      href="../../concepts/tables.html#table-naming-criteria"
+         *                      target="_top">table naming criteria</a>.  The
+         *                      table will have the following identifier
+         *                      columns: 'EDGE_ID', 'EDGE_NODE1_ID',
          *                      'EDGE_NODE2_ID'. If left blank, no table is
          *                      created.  The default value is ''.
          *                              <li>

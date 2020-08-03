@@ -13,32 +13,42 @@ namespace gpudb
      * A set of input parameters for {@link
      * #updateRecordsRaw(const RawUpdateRecordsRequest&) const}.
      * <p>
-     * Runs multiple predicate-based updates in a single call.  With the list
-     * of given expressions, any matching record's column values will be
-     * updated as provided in @a newValuesMaps.  There is also an optional
-     * 'upsert' capability where if a particular predicate doesn't match any
-     * existing record, then a new record can be inserted.
+     * Runs multiple predicate-based updates in a single call.  With the
+     * list of given expressions, any matching record's column values will be
+     * updated
+     * as provided in @a newValuesMaps.  There is also an optional 'upsert'
+     * capability where if a particular predicate doesn't match any existing
+     * record,
+     * then a new record can be inserted.
      * <p>
      * Note that this operation can only be run on an original table and not on
-     * a collection or a result view.
+     * a
+     * result view.
      * <p>
-     * This operation can update primary key values.  By default only 'pure
-     * primary key' predicates are allowed when updating primary key values. If
+     * This operation can update primary key values.  By default only
+     * 'pure primary key' predicates are allowed when updating primary key
+     * values. If
      * the primary key for a table is the column 'attr1', then the operation
-     * will only accept predicates of the form: "attr1 == 'foo'" if the attr1
-     * column is being updated.  For a composite primary key (e.g. columns
-     * 'attr1' and 'attr2') then this operation will only accept predicates of
-     * the form: "(attr1 == 'foo') and (attr2 == 'bar')".  Meaning, all primary
-     * key columns must appear in an equality predicate in the expressions.
-     * Furthermore each 'pure primary key' predicate must be unique within a
-     * given request.  These restrictions can be removed by utilizing some
-     * available options through @a options.Note that this operation can only
-     * be run on an original table and not on a collection or a result view.
+     * will only
+     * accept predicates of the form: "attr1 == 'foo'" if the attr1 column is
+     * being
+     * updated.  For a composite primary key (e.g. columns 'attr1' and 'attr2')
+     * then
+     * this operation will only accept predicates of the form:
+     * "(attr1 == 'foo') and (attr2 == 'bar')".  Meaning, all primary key
+     * columns
+     * must appear in an equality predicate in the expressions.  Furthermore
+     * each
+     * 'pure primary key' predicate must be unique within a given request.
+     * These
+     * restrictions can be removed by utilizing some available options through
+     * @a options.
      * <p>
-     * The @a update_on_existing_pk option specifies the record collision
-     * policy for tables with a <a
+     * The @a update_on_existing_pk option specifies the record
+     * collision policy for tables with a <a
      * href="../../concepts/tables.html#primary-keys" target="_top">primary
-     * key</a>, and is ignored on tables with no primary key.
+     * key</a>, and
+     * is ignored on tables with no primary key.
      */
     struct RawUpdateRecordsRequest
     {
@@ -62,8 +72,13 @@ namespace gpudb
          * Constructs a RawUpdateRecordsRequest object with the specified
          * parameters.
          * 
-         * @param[in] tableName_  Table to be updated. Must be a currently
-         *                        existing table and not a collection or view.
+         * @param[in] tableName_  Name of table to be updated, in
+         *                        [schema_name.]table_name format, using
+         *                        standard <a
+         *                        href="../../concepts/tables.html#table-name-resolution"
+         *                        target="_top">name resolution rules</a>.
+         *                        Must be a currently existing table and not a
+         *                        view.
          * @param[in] expressions_  A list of the actual predicates, one for
          *                          each update; format should follow the
          *                          guidelines /filter.
@@ -196,8 +211,13 @@ namespace gpudb
          * Constructs a RawUpdateRecordsRequest object with the specified
          * parameters.
          * 
-         * @param[in] tableName_  Table to be updated. Must be a currently
-         *                        existing table and not a collection or view.
+         * @param[in] tableName_  Name of table to be updated, in
+         *                        [schema_name.]table_name format, using
+         *                        standard <a
+         *                        href="../../concepts/tables.html#table-name-resolution"
+         *                        target="_top">name resolution rules</a>.
+         *                        Must be a currently existing table and not a
+         *                        view.
          * @param[in] expressions_  A list of the actual predicates, one for
          *                          each update; format should follow the
          *                          guidelines /filter.
@@ -430,32 +450,42 @@ namespace gpudb
      * A set of input parameters for {@link
      * #updateRecordsRaw(const RawUpdateRecordsRequest&) const}.
      * <p>
-     * Runs multiple predicate-based updates in a single call.  With the list
-     * of given expressions, any matching record's column values will be
-     * updated as provided in @a newValuesMaps.  There is also an optional
-     * 'upsert' capability where if a particular predicate doesn't match any
-     * existing record, then a new record can be inserted.
+     * Runs multiple predicate-based updates in a single call.  With the
+     * list of given expressions, any matching record's column values will be
+     * updated
+     * as provided in @a newValuesMaps.  There is also an optional 'upsert'
+     * capability where if a particular predicate doesn't match any existing
+     * record,
+     * then a new record can be inserted.
      * <p>
      * Note that this operation can only be run on an original table and not on
-     * a collection or a result view.
+     * a
+     * result view.
      * <p>
-     * This operation can update primary key values.  By default only 'pure
-     * primary key' predicates are allowed when updating primary key values. If
+     * This operation can update primary key values.  By default only
+     * 'pure primary key' predicates are allowed when updating primary key
+     * values. If
      * the primary key for a table is the column 'attr1', then the operation
-     * will only accept predicates of the form: "attr1 == 'foo'" if the attr1
-     * column is being updated.  For a composite primary key (e.g. columns
-     * 'attr1' and 'attr2') then this operation will only accept predicates of
-     * the form: "(attr1 == 'foo') and (attr2 == 'bar')".  Meaning, all primary
-     * key columns must appear in an equality predicate in the expressions.
-     * Furthermore each 'pure primary key' predicate must be unique within a
-     * given request.  These restrictions can be removed by utilizing some
-     * available options through @a options.Note that this operation can only
-     * be run on an original table and not on a collection or a result view.
+     * will only
+     * accept predicates of the form: "attr1 == 'foo'" if the attr1 column is
+     * being
+     * updated.  For a composite primary key (e.g. columns 'attr1' and 'attr2')
+     * then
+     * this operation will only accept predicates of the form:
+     * "(attr1 == 'foo') and (attr2 == 'bar')".  Meaning, all primary key
+     * columns
+     * must appear in an equality predicate in the expressions.  Furthermore
+     * each
+     * 'pure primary key' predicate must be unique within a given request.
+     * These
+     * restrictions can be removed by utilizing some available options through
+     * @a options.
      * <p>
-     * The @a update_on_existing_pk option specifies the record collision
-     * policy for tables with a <a
+     * The @a update_on_existing_pk option specifies the record
+     * collision policy for tables with a <a
      * href="../../concepts/tables.html#primary-keys" target="_top">primary
-     * key</a>, and is ignored on tables with no primary key.
+     * key</a>, and
+     * is ignored on tables with no primary key.
      * 
      * @param <T>  The type of object being processed.
      * 
@@ -480,8 +510,13 @@ namespace gpudb
          * Constructs an UpdateRecordsRequest object with the specified
          * parameters.
          * 
-         * @param[in] tableName_  Table to be updated. Must be a currently
-         *                        existing table and not a collection or view.
+         * @param[in] tableName_  Name of table to be updated, in
+         *                        [schema_name.]table_name format, using
+         *                        standard <a
+         *                        href="../../concepts/tables.html#table-name-resolution"
+         *                        target="_top">name resolution rules</a>.
+         *                        Must be a currently existing table and not a
+         *                        view.
          * @param[in] expressions_  A list of the actual predicates, one for
          *                          each update; format should follow the
          *                          guidelines /filter.
@@ -621,32 +656,42 @@ namespace gpudb
      * A set of output parameters for {@link
      * #updateRecordsRaw(const RawUpdateRecordsRequest&) const}.
      * <p>
-     * Runs multiple predicate-based updates in a single call.  With the list
-     * of given expressions, any matching record's column values will be
-     * updated as provided in @a newValuesMaps.  There is also an optional
-     * 'upsert' capability where if a particular predicate doesn't match any
-     * existing record, then a new record can be inserted.
+     * Runs multiple predicate-based updates in a single call.  With the
+     * list of given expressions, any matching record's column values will be
+     * updated
+     * as provided in @a newValuesMaps.  There is also an optional 'upsert'
+     * capability where if a particular predicate doesn't match any existing
+     * record,
+     * then a new record can be inserted.
      * <p>
      * Note that this operation can only be run on an original table and not on
-     * a collection or a result view.
+     * a
+     * result view.
      * <p>
-     * This operation can update primary key values.  By default only 'pure
-     * primary key' predicates are allowed when updating primary key values. If
+     * This operation can update primary key values.  By default only
+     * 'pure primary key' predicates are allowed when updating primary key
+     * values. If
      * the primary key for a table is the column 'attr1', then the operation
-     * will only accept predicates of the form: "attr1 == 'foo'" if the attr1
-     * column is being updated.  For a composite primary key (e.g. columns
-     * 'attr1' and 'attr2') then this operation will only accept predicates of
-     * the form: "(attr1 == 'foo') and (attr2 == 'bar')".  Meaning, all primary
-     * key columns must appear in an equality predicate in the expressions.
-     * Furthermore each 'pure primary key' predicate must be unique within a
-     * given request.  These restrictions can be removed by utilizing some
-     * available options through @a options.Note that this operation can only
-     * be run on an original table and not on a collection or a result view.
+     * will only
+     * accept predicates of the form: "attr1 == 'foo'" if the attr1 column is
+     * being
+     * updated.  For a composite primary key (e.g. columns 'attr1' and 'attr2')
+     * then
+     * this operation will only accept predicates of the form:
+     * "(attr1 == 'foo') and (attr2 == 'bar')".  Meaning, all primary key
+     * columns
+     * must appear in an equality predicate in the expressions.  Furthermore
+     * each
+     * 'pure primary key' predicate must be unique within a given request.
+     * These
+     * restrictions can be removed by utilizing some available options through
+     * @a options.
      * <p>
-     * The @a update_on_existing_pk option specifies the record collision
-     * policy for tables with a <a
+     * The @a update_on_existing_pk option specifies the record
+     * collision policy for tables with a <a
      * href="../../concepts/tables.html#primary-keys" target="_top">primary
-     * key</a>, and is ignored on tables with no primary key.
+     * key</a>, and
+     * is ignored on tables with no primary key.
      */
     struct UpdateRecordsResponse
     {

@@ -13,18 +13,20 @@ namespace gpudb
      * A set of input parameters for {@link
      * #getRecordsBySeriesRaw(const GetRecordsBySeriesRequest&) const}.
      * <p>
-     * Retrieves the complete series/track records from the given @a
-     * worldTableName based on the partial track information contained in the
-     * @a tableName.
+     * Retrieves the complete series/track records from the given
+     * @a worldTableName based on the partial track information contained in
+     * the @a tableName.
      * <p>
-     * This operation supports paging through the data via the @a offset and @a
-     * limit parameters.
+     * This operation supports paging through the data via the @a offset and
+     * @a limit parameters.
      * <p>
      * In contrast to {@link
      * #getRecordsRaw(const GetRecordsRequest&) const} this returns records
-     * grouped by series/track. So if @a offset is 0 and @a limit is 5 this
-     * operation would return the first 5 series/tracks in @a tableName. Each
-     * series/track will be returned sorted by their TIMESTAMP column.
+     * grouped by
+     * series/track. So if @a offset is 0 and @a limit is 5 this operation
+     * would return the first 5 series/tracks in @a tableName. Each
+     * series/track
+     * will be returned sorted by their TIMESTAMP column.
      */
     struct GetRecordsBySeriesRequest
     {
@@ -47,17 +49,25 @@ namespace gpudb
          * Constructs a GetRecordsBySeriesRequest object with the specified
          * parameters.
          * 
-         * @param[in] tableName_  Name of the collection/table/view for which
-         *                        series/tracks will be fetched.
+         * @param[in] tableName_  Name of the table or view for which
+         *                        series/tracks will be fetched, in
+         *                        [schema_name.]table_name format, using
+         *                        standard <a
+         *                        href="../../concepts/tables.html#table-name-resolution"
+         *                        target="_top">name resolution rules</a>.
          * @param[in] worldTableName_  Name of the table containing the
          *                             complete series/track information to be
          *                             returned for the tracks present in the
-         *                             @a tableName. Typically this is used
-         *                             when retrieving series/tracks from a
-         *                             view (which contains partial
-         *                             series/tracks) but the user wants to
-         *                             retrieve the entire original
-         *                             series/tracks. Can be blank.
+         *                             @a tableName, in
+         *                             [schema_name.]table_name format, using
+         *                             standard <a
+         *                             href="../../concepts/tables.html#table-name-resolution"
+         *                             target="_top">name resolution rules</a>.
+         *                             Typically this is used when retrieving
+         *                             series/tracks from a view (which
+         *                             contains partial series/tracks) but the
+         *                             user wants to retrieve the entire
+         *                             original series/tracks. Can be blank.
          * @param[in] offset_  A positive integer indicating the number of
          *                     initial series/tracks to skip (useful for paging
          *                     through the results).  The minimum allowed value
@@ -83,17 +93,25 @@ namespace gpudb
          * Constructs a GetRecordsBySeriesRequest object with the specified
          * parameters.
          * 
-         * @param[in] tableName_  Name of the collection/table/view for which
-         *                        series/tracks will be fetched.
+         * @param[in] tableName_  Name of the table or view for which
+         *                        series/tracks will be fetched, in
+         *                        [schema_name.]table_name format, using
+         *                        standard <a
+         *                        href="../../concepts/tables.html#table-name-resolution"
+         *                        target="_top">name resolution rules</a>.
          * @param[in] worldTableName_  Name of the table containing the
          *                             complete series/track information to be
          *                             returned for the tracks present in the
-         *                             @a tableName. Typically this is used
-         *                             when retrieving series/tracks from a
-         *                             view (which contains partial
-         *                             series/tracks) but the user wants to
-         *                             retrieve the entire original
-         *                             series/tracks. Can be blank.
+         *                             @a tableName, in
+         *                             [schema_name.]table_name format, using
+         *                             standard <a
+         *                             href="../../concepts/tables.html#table-name-resolution"
+         *                             target="_top">name resolution rules</a>.
+         *                             Typically this is used when retrieving
+         *                             series/tracks from a view (which
+         *                             contains partial series/tracks) but the
+         *                             user wants to retrieve the entire
+         *                             original series/tracks. Can be blank.
          * @param[in] offset_  A positive integer indicating the number of
          *                     initial series/tracks to skip (useful for paging
          *                     through the results).  The minimum allowed value
@@ -103,7 +121,7 @@ namespace gpudb
          *                    (-9999) to indicate that the max number of
          *                    results should be returned.
          * @param[in] encoding_  Specifies the encoding for returned records;
-         *                       either 'binary' or 'json'.
+         *                       either @a binary or @a json.
          *                       <ul>
          *                               <li>
          *                       gpudb::get_records_by_series_binary
@@ -206,18 +224,20 @@ namespace gpudb
      * A set of output parameters for {@link
      * #getRecordsBySeriesRaw(const GetRecordsBySeriesRequest&) const}.
      * <p>
-     * Retrieves the complete series/track records from the given @a
-     * worldTableName based on the partial track information contained in the
-     * @a tableName.
+     * Retrieves the complete series/track records from the given
+     * @a worldTableName based on the partial track information contained in
+     * the @a tableName.
      * <p>
-     * This operation supports paging through the data via the @a offset and @a
-     * limit parameters.
+     * This operation supports paging through the data via the @a offset and
+     * @a limit parameters.
      * <p>
      * In contrast to {@link
      * #getRecordsRaw(const GetRecordsRequest&) const} this returns records
-     * grouped by series/track. So if @a offset is 0 and @a limit is 5 this
-     * operation would return the first 5 series/tracks in @a tableName. Each
-     * series/track will be returned sorted by their TIMESTAMP column.
+     * grouped by
+     * series/track. So if @a offset is 0 and @a limit is 5 this operation
+     * would return the first 5 series/tracks in @a tableName. Each
+     * series/track
+     * will be returned sorted by their TIMESTAMP column.
      */
     struct RawGetRecordsBySeriesResponse
     {
@@ -318,18 +338,19 @@ namespace gpudb
      * A set of output parameters for {@link
      * #getRecordsBySeries(const GetRecordsBySeriesRequest&) const}.
      * <p>
-     * Retrieves the complete series/track records from the given @a
-     * worldTableName based on the partial track information contained in the
-     * @a tableName.
+     * Retrieves the complete series/track records from the given
+     * @a worldTableName based on the partial track information contained in
+     * the @a tableName.
      * <p>
-     * This operation supports paging through the data via the @a offset and @a
-     * limit parameters.
+     * This operation supports paging through the data via the @a offset and
+     * @a limit parameters.
      * <p>
      * In contrast to {@link #getRecords(const GetRecordsRequest&) const}
-     * this returns records grouped by series/track. So if @a offset is 0 and
-     * @a limit is 5 this operation would return the first 5 series/tracks in
-     * @a tableName. Each series/track will be returned sorted by their
-     * TIMESTAMP column.
+     * this returns records grouped by
+     * series/track. So if @a offset is 0 and @a limit is 5 this operation
+     * would return the first 5 series/tracks in @a tableName. Each
+     * series/track
+     * will be returned sorted by their TIMESTAMP column.
      * 
      * @param <T>  The type of object being processed.
      * 

@@ -13,20 +13,26 @@ namespace gpudb
      * A set of input parameters for {@link
      * #filterBySeries(const FilterBySeriesRequest&) const}.
      * <p>
-     * Filters objects matching all points of the given track (works only on
-     * track type data).  It allows users to specify a particular track to find
-     * all other points in the table that fall within specified ranges-spatial
-     * and temporal-of all points of the given track. Additionally, the user
-     * can specify another track to see if the two intersect (or go close to
-     * each other within the specified ranges). The user also has the
-     * flexibility of using different metrics for the spatial distance
-     * calculation: Euclidean (flat geometry) or Great Circle (spherical
-     * geometry to approximate the Earth's surface distances). The filtered
+     * Filters objects matching all points of the given track (works only
+     * on track type data).  It allows users to specify a particular track to
+     * find all
+     * other points in the table that fall within specified ranges (spatial and
+     * temporal) of all points of the given track. Additionally, the user can
+     * specify
+     * another track to see if the two intersect (or go close to each other
+     * within the
+     * specified ranges). The user also has the flexibility of using different
+     * metrics
+     * for the spatial distance calculation: Euclidean (flat geometry) or Great
+     * Circle
+     * (spherical geometry to approximate the Earth's surface distances). The
+     * filtered
      * points are stored in a newly created result set. The return value of the
      * function is the number of points in the resultant set (view).
      * <p>
      * This operation is synchronous, meaning that a response will not be
-     * returned until all the objects are fully available.
+     * returned
+     * until all the objects are fully available.
      */
     struct FilterBySeriesRequest
     {
@@ -49,15 +55,24 @@ namespace gpudb
          * parameters.
          * 
          * @param[in] tableName_  Name of the table on which the filter by
-         *                        track operation will be performed. Must be a
-         *                        currently existing table with a <a
+         *                        track operation will be performed, in
+         *                        [schema_name.]table_name format, using
+         *                        standard <a
+         *                        href="../../concepts/tables.html#table-name-resolution"
+         *                        target="_top">name resolution rules</a>. Must
+         *                        be a currently existing table with a <a
          *                        href="../../geospatial/geo_objects.html"
          *                        target="_top">track</a> present.
          * @param[in] viewName_  If provided, then this will be the name of the
-         *                       view containing the results. Has the same
-         *                       naming restrictions as <a
-         *                       href="../../concepts/tables.html"
-         *                       target="_top">tables</a>.
+         *                       view containing the results, in
+         *                       [schema_name.]view_name format, using standard
+         *                       <a
+         *                       href="../../concepts/tables.html#table-name-resolution"
+         *                       target="_top">name resolution rules</a> and
+         *                       meeting <a
+         *                       href="../../concepts/tables.html#table-naming-criteria"
+         *                       target="_top">table naming criteria</a>.  Must
+         *                       not be an already existing table or view.
          * @param[in] trackId_  The ID of the track which will act as the
          *                      filtering points. Must be an existing track
          *                      within the given table.
@@ -68,12 +83,13 @@ namespace gpudb
          * @param[in] options_  Optional parameters.
          *                      <ul>
          *                              <li>
-         *                      gpudb::filter_by_series_collection_name: Name
-         *                      of a collection which is to contain the newly
-         *                      created view. If the collection provided is
-         *                      non-existent, the collection will be
-         *                      automatically created. If empty, then the newly
-         *                      created view will be top-level.
+         *                      gpudb::filter_by_series_collection_name:
+         *                      [DEPRECATED--please specify the containing
+         *                      schema for the view as part of @a viewName and
+         *                      use /create/schema to create the schema if
+         *                      non-existent]  Name of a schema for the newly
+         *                      created view. If the schema is non-existent, it
+         *                      will be automatically created.
          *                              <li>
          *                      gpudb::filter_by_series_spatial_radius: A
          *                      positive number passed as a string representing
@@ -186,20 +202,26 @@ namespace gpudb
      * A set of output parameters for {@link
      * #filterBySeries(const FilterBySeriesRequest&) const}.
      * <p>
-     * Filters objects matching all points of the given track (works only on
-     * track type data).  It allows users to specify a particular track to find
-     * all other points in the table that fall within specified ranges-spatial
-     * and temporal-of all points of the given track. Additionally, the user
-     * can specify another track to see if the two intersect (or go close to
-     * each other within the specified ranges). The user also has the
-     * flexibility of using different metrics for the spatial distance
-     * calculation: Euclidean (flat geometry) or Great Circle (spherical
-     * geometry to approximate the Earth's surface distances). The filtered
+     * Filters objects matching all points of the given track (works only
+     * on track type data).  It allows users to specify a particular track to
+     * find all
+     * other points in the table that fall within specified ranges (spatial and
+     * temporal) of all points of the given track. Additionally, the user can
+     * specify
+     * another track to see if the two intersect (or go close to each other
+     * within the
+     * specified ranges). The user also has the flexibility of using different
+     * metrics
+     * for the spatial distance calculation: Euclidean (flat geometry) or Great
+     * Circle
+     * (spherical geometry to approximate the Earth's surface distances). The
+     * filtered
      * points are stored in a newly created result set. The return value of the
      * function is the number of points in the resultant set (view).
      * <p>
      * This operation is synchronous, meaning that a response will not be
-     * returned until all the objects are fully available.
+     * returned
+     * until all the objects are fully available.
      */
     struct FilterBySeriesResponse
     {

@@ -64,13 +64,21 @@ namespace gpudb
          * Constructs a CreateUnionRequest object with the specified
          * parameters.
          * 
-         * @param[in] tableName_  Name of the table to be created. Has the same
-         *                        naming restrictions as <a
-         *                        href="../../concepts/tables.html"
-         *                        target="_top">tables</a>.
-         * @param[in] tableNames_  The list of table names to merge. Must
-         *                         contain the names of one or more existing
-         *                         tables.
+         * @param[in] tableName_  Name of the table to be created, in
+         *                        [schema_name.]table_name format, using
+         *                        standard <a
+         *                        href="../../concepts/tables.html#table-name-resolution"
+         *                        target="_top">name resolution rules</a> and
+         *                        meeting <a
+         *                        href="../../concepts/tables.html#table-naming-criteria"
+         *                        target="_top">table naming criteria</a>.
+         * @param[in] tableNames_  The list of table names to merge, in
+         *                         [schema_name.]table_name format, using
+         *                         standard <a
+         *                         href="../../concepts/tables.html#table-name-resolution"
+         *                         target="_top">name resolution rules</a>.
+         *                         Must contain the names of one or more
+         *                         existing tables.
          * @param[in] inputColumnNames_  The list of columns from each of the
          *                               corresponding input tables.
          * @param[in] outputColumnNames_  The list of names of the columns to
@@ -78,13 +86,14 @@ namespace gpudb
          * @param[in] options_  Optional parameters.
          *                      <ul>
          *                              <li>
-         *                      gpudb::create_union_collection_name: Name of a
-         *                      collection which is to contain the output
-         *                      table. If the collection provided is
-         *                      non-existent, the collection will be
-         *                      automatically created. If empty, the output
-         *                      table will be a top-level table.  The default
-         *                      value is ''.
+         *                      gpudb::create_union_collection_name:
+         *                      [DEPRECATED--please specify the containing
+         *                      schema for the projection as part of @a
+         *                      tableName and use /create/schema to create the
+         *                      schema if non-existent]  Name of the schema for
+         *                      the output table. If the schema provided is
+         *                      non-existent, it will be automatically created.
+         *                      The default value is ''.
          *                              <li>
          *                      gpudb::create_union_materialize_on_gpu: No
          *                      longer used.  See <a

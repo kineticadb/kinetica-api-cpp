@@ -34,7 +34,11 @@ namespace gpudb
          * Constructs a ClearStatisticsRequest object with the specified
          * parameters.
          * 
-         * @param[in] tableName_  Name of a table. Must be an existing table.
+         * @param[in] tableName_  Name of a table, in [schema_name.]table_name
+         *                        format, using standard <a
+         *                        href="../../concepts/tables.html#table-name-resolution"
+         *                        target="_top">name resolution rules</a>. Must
+         *                        be an existing table.
          * @param[in] columnName_  Name of the column in @a tableName for which
          *                         to clear statistics. The column must be from
          *                         an existing table. An empty string clears

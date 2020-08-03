@@ -13,22 +13,23 @@ namespace gpudb
      * A set of input parameters for {@link
      * #createType(const CreateTypeRequest&) const}.
      * <p>
-     * Creates a new type describing the layout or schema of a table. The type
-     * definition is a JSON string describing the fields (i.e. columns) of the
-     * type. Each field consists of a name and a data type. Supported data
-     * types are: double, float, int, long, string, and bytes. In addition one
-     * or more properties can be specified for each column which customize the
-     * memory usage and query availability of that column.  Note that some
-     * properties are mutually exclusive--i.e. they cannot be specified for any
-     * given column simultaneously.  One example of mutually exclusive
-     * properties are @a data and @a store_only.
+     * Creates a new type describing the layout of a table. The type definition
+     * is a JSON string describing the fields (i.e. columns) of the type. Each
+     * field consists of a name and a data type. Supported data types are:
+     * double, float, int, long, string, and bytes. In addition, one or more
+     * properties can be specified for each column which customize the memory
+     * usage and query availability of that column.  Note that some properties
+     * are mutually exclusive--i.e. they cannot be specified for any given
+     * column simultaneously.  One example of mutually exclusive properties are
+     * @a data and @a store_only.
      * <p>
      * A single <a href="../../concepts/tables.html#primary-keys"
      * target="_top">primary key</a> and/or single <a
      * href="../../concepts/tables.html#shard-keys" target="_top">shard key</a>
      * can be set across one or more columns. If a primary key is specified,
      * then a uniqueness constraint is enforced, in that only a single object
-     * can exist with a given primary key. When {@link
+     * can exist with a given primary key column value (or set of values for
+     * the key columns, if using a composite primary key). When {@link
      * #insertRecordsRaw(const RawInsertRecordsRequest&) const inserting}
      * data into a table with a primary key, depending on the parameters in the
      * request, incoming objects with primary key values that match existing
@@ -123,6 +124,10 @@ namespace gpudb
          *                         can only be interpreted as an unsigned long
          *                         data type with minimum value of zero, and
          *                         maximum value of 18446744073709551615.
+         *                                 <li> gpudb::create_type_uuid: Valid
+         *                         only for 'string' columns.  It represents an
+         *                         uuid data type. Internally, it is stored as
+         *                         an 128-bit ingeger.
          *                                 <li> gpudb::create_type_decimal:
          *                         Valid only for 'string' columns.  It
          *                         represents a SQL type NUMERIC(19, 4) data
@@ -346,22 +351,23 @@ namespace gpudb
      * A set of output parameters for {@link
      * #createType(const CreateTypeRequest&) const}.
      * <p>
-     * Creates a new type describing the layout or schema of a table. The type
-     * definition is a JSON string describing the fields (i.e. columns) of the
-     * type. Each field consists of a name and a data type. Supported data
-     * types are: double, float, int, long, string, and bytes. In addition one
-     * or more properties can be specified for each column which customize the
-     * memory usage and query availability of that column.  Note that some
-     * properties are mutually exclusive--i.e. they cannot be specified for any
-     * given column simultaneously.  One example of mutually exclusive
-     * properties are @a data and @a store_only.
+     * Creates a new type describing the layout of a table. The type definition
+     * is a JSON string describing the fields (i.e. columns) of the type. Each
+     * field consists of a name and a data type. Supported data types are:
+     * double, float, int, long, string, and bytes. In addition, one or more
+     * properties can be specified for each column which customize the memory
+     * usage and query availability of that column.  Note that some properties
+     * are mutually exclusive--i.e. they cannot be specified for any given
+     * column simultaneously.  One example of mutually exclusive properties are
+     * @a data and @a store_only.
      * <p>
      * A single <a href="../../concepts/tables.html#primary-keys"
      * target="_top">primary key</a> and/or single <a
      * href="../../concepts/tables.html#shard-keys" target="_top">shard key</a>
      * can be set across one or more columns. If a primary key is specified,
      * then a uniqueness constraint is enforced, in that only a single object
-     * can exist with a given primary key. When {@link
+     * can exist with a given primary key column value (or set of values for
+     * the key columns, if using a composite primary key). When {@link
      * #insertRecordsRaw(const RawInsertRecordsRequest&) const inserting}
      * data into a table with a primary key, depending on the parameters in the
      * request, incoming objects with primary key values that match existing

@@ -15,20 +15,24 @@ namespace gpudb
      * <p>
      * Adds multiple records to the specified table. The operation is
      * synchronous, meaning that a response will not be returned until all the
-     * records are fully inserted and available. The response payload provides
-     * the counts of the number of records actually inserted and/or updated,
-     * and can provide the unique identifier of each added record.
+     * records
+     * are fully inserted and available. The response payload provides the
+     * counts of
+     * the number of records actually inserted and/or updated, and can provide
+     * the
+     * unique identifier of each added record.
      * <p>
      * The @a options parameter can be used to customize this function's
      * behavior.
      * <p>
-     * The @a update_on_existing_pk option specifies the record collision
-     * policy for inserting into a table with a <a
-     * href="../../concepts/tables.html#primary-keys" target="_top">primary
-     * key</a>, but is ignored if no primary key exists.
+     * The @a update_on_existing_pk option specifies the record
+     * collision policy for inserting into a table with a
+     * <a href="../../concepts/tables.html#primary-keys" target="_top">primary
+     * key</a>, but is ignored if
+     * no primary key exists.
      * <p>
-     * The @a return_record_ids option indicates that the database should
-     * return the unique identifiers of inserted records.
+     * The @a return_record_ids option indicates that the
+     * database should return the unique identifiers of inserted records.
      */
     struct RawInsertRecordsRequest
     {
@@ -50,7 +54,11 @@ namespace gpudb
          * Constructs a RawInsertRecordsRequest object with the specified
          * parameters.
          * 
-         * @param[in] tableName_  Table to which the records are to be added.
+         * @param[in] tableName_  Name of table to which the records are to be
+         *                        added, in [schema_name.]table_name format,
+         *                        using standard <a
+         *                        href="../../concepts/tables.html#table-name-resolution"
+         *                        target="_top">name resolution rules</a>.
          *                        Must be an existing table.
          * @param[in] list_  An array of binary-encoded data for the records to
          *                   be added. All records must be of the same type as
@@ -152,7 +160,11 @@ namespace gpudb
          * Constructs a RawInsertRecordsRequest object with the specified
          * parameters.
          * 
-         * @param[in] tableName_  Table to which the records are to be added.
+         * @param[in] tableName_  Name of table to which the records are to be
+         *                        added, in [schema_name.]table_name format,
+         *                        using standard <a
+         *                        href="../../concepts/tables.html#table-name-resolution"
+         *                        target="_top">name resolution rules</a>.
          *                        Must be an existing table.
          * @param[in] list_  An array of binary-encoded data for the records to
          *                   be added. All records must be of the same type as
@@ -339,20 +351,24 @@ namespace gpudb
      * <p>
      * Adds multiple records to the specified table. The operation is
      * synchronous, meaning that a response will not be returned until all the
-     * records are fully inserted and available. The response payload provides
-     * the counts of the number of records actually inserted and/or updated,
-     * and can provide the unique identifier of each added record.
+     * records
+     * are fully inserted and available. The response payload provides the
+     * counts of
+     * the number of records actually inserted and/or updated, and can provide
+     * the
+     * unique identifier of each added record.
      * <p>
      * The @a options parameter can be used to customize this function's
      * behavior.
      * <p>
-     * The @a update_on_existing_pk option specifies the record collision
-     * policy for inserting into a table with a <a
-     * href="../../concepts/tables.html#primary-keys" target="_top">primary
-     * key</a>, but is ignored if no primary key exists.
+     * The @a update_on_existing_pk option specifies the record
+     * collision policy for inserting into a table with a
+     * <a href="../../concepts/tables.html#primary-keys" target="_top">primary
+     * key</a>, but is ignored if
+     * no primary key exists.
      * <p>
-     * The @a return_record_ids option indicates that the database should
-     * return the unique identifiers of inserted records.
+     * The @a return_record_ids option indicates that the
+     * database should return the unique identifiers of inserted records.
      * 
      * @param <T>  The type of object being processed.
      * 
@@ -375,7 +391,11 @@ namespace gpudb
          * Constructs an InsertRecordsRequest object with the specified
          * parameters.
          * 
-         * @param[in] tableName_  Table to which the records are to be added.
+         * @param[in] tableName_  Name of table to which the records are to be
+         *                        added, in [schema_name.]table_name format,
+         *                        using standard <a
+         *                        href="../../concepts/tables.html#table-name-resolution"
+         *                        target="_top">name resolution rules</a>.
          *                        Must be an existing table.
          * @param[in] data_  An array of binary-encoded data for the records to
          *                   be added. All records must be of the same type as
@@ -486,20 +506,24 @@ namespace gpudb
      * <p>
      * Adds multiple records to the specified table. The operation is
      * synchronous, meaning that a response will not be returned until all the
-     * records are fully inserted and available. The response payload provides
-     * the counts of the number of records actually inserted and/or updated,
-     * and can provide the unique identifier of each added record.
+     * records
+     * are fully inserted and available. The response payload provides the
+     * counts of
+     * the number of records actually inserted and/or updated, and can provide
+     * the
+     * unique identifier of each added record.
      * <p>
      * The @a options parameter can be used to customize this function's
      * behavior.
      * <p>
-     * The @a update_on_existing_pk option specifies the record collision
-     * policy for inserting into a table with a <a
-     * href="../../concepts/tables.html#primary-keys" target="_top">primary
-     * key</a>, but is ignored if no primary key exists.
+     * The @a update_on_existing_pk option specifies the record
+     * collision policy for inserting into a table with a
+     * <a href="../../concepts/tables.html#primary-keys" target="_top">primary
+     * key</a>, but is ignored if
+     * no primary key exists.
      * <p>
-     * The @a return_record_ids option indicates that the database should
-     * return the unique identifiers of inserted records.
+     * The @a return_record_ids option indicates that the
+     * database should return the unique identifiers of inserted records.
      */
     struct InsertRecordsResponse
     {

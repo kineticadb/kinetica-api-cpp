@@ -33,7 +33,11 @@ namespace gpudb
          * Constructs a CollectStatisticsRequest object with the specified
          * parameters.
          * 
-         * @param[in] tableName_  Name of a table. Must be an existing table.
+         * @param[in] tableName_  Name of a table, in [schema_name.]table_name
+         *                        format, using standard <a
+         *                        href="../../concepts/tables.html#table-name-resolution"
+         *                        target="_top">name resolution rules</a>.
+         *                        Must be an existing table.
          * @param[in] columnNames_  List of one or more column names in @a
          *                          tableName for which to collect statistics
          *                          (cardinality, mean value, etc.).

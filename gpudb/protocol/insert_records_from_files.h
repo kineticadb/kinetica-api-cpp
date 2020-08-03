@@ -14,18 +14,22 @@ namespace gpudb
      * #insertRecordsFromFiles(const InsertRecordsFromFilesRequest&) const}.
      * <p>
      * Reads from one or more files located on the server and inserts the data
-     * into a new or existing table.
+     * into a new or
+     * existing table.
      * <p>
-     * For CSV files, there are two loading schemes: positional and name-based.
-     * The name-based loading scheme is enabled when the file has a header
-     * present and @a text_has_header is set to @a true. In this scheme, the
-     * source file(s) field names must match the target table's column names
-     * exactly; however, the source file can have more fields than the target
-     * table has columns. If @a error_handling is set to @a permissive, the
-     * source file can have fewer fields than the target table has columns. If
-     * the name-based loading scheme is being used, names matching the file
-     * header's names may be provided to @a columns_to_load instead of numbers,
-     * but ranges are not supported.
+     * For delimited text files, there are two loading schemes: positional and
+     * name-based. The name-based
+     * loading scheme is enabled when the file has a header present and
+     * @a text_has_header is set to
+     * @a true. In this scheme, the source file(s) field names
+     * must match the target table's column names exactly; however, the source
+     * file can have more fields
+     * than the target table has columns. If @a error_handling is set to
+     * @a permissive, the source file can have fewer fields
+     * than the target table has columns. If the name-based loading scheme is
+     * being used, names matching
+     * the file header's names may be provided to @a columns_to_load instead of
+     * numbers, but ranges are not supported.
 
      * Returns once all files are processed.
      */
@@ -39,6 +43,7 @@ namespace gpudb
         InsertRecordsFromFilesRequest() :
             tableName(std::string()),
             filepaths(std::vector<std::string>()),
+            modifyColumns(std::map<std::string, std::map<std::string, std::string> >()),
             createTableOptions(std::map<std::string, std::string>()),
             options(std::map<std::string, std::string>())
         {
@@ -49,10 +54,20 @@ namespace gpudb
          * specified parameters.
          * 
          * @param[in] tableName_  Name of the table into which the data will be
-         *                        inserted. If the table does not exist, the
-         *                        table will be created using either an
-         *                        existing @a type_id or the type inferred from
-         *                        the file.
+         *                        inserted, in
+         *                        [schema_name.]table_name format, using
+         *                        standard
+         *                        <a
+         *                        href="../../concepts/tables.html#table-name-resolution"
+         *                        target="_top">name resolution rules</a>.
+         *                        If the table does not exist, the table will
+         *                        be created using either an existing
+         *                        @a type_id or the type inferred from the
+         *                        file, and the new table name will have to
+         *                        meet standard
+         *                        <a
+         *                        href="../../concepts/tables.html#table-naming-criteria"
+         *                        target="_top">table naming criteria</a>.
          * @param[in] filepaths_  Absolute or relative filepath(s) from where
          *                        files will be loaded. Relative filepaths are
          *                        relative to the defined <a
@@ -64,8 +79,9 @@ namespace gpudb
          *                        will be defaulted to a tab character. If the
          *                        first path ends in .psv, the text delimiter
          *                        will be defaulted to a pipe character (|).
-         * @param[in] createTableOptions_  Options used when creating a new
-         *                                 table.
+         * @param[in] modifyColumns_  Not implemented yet
+         * @param[in] createTableOptions_  Options used when creating the
+         *                                 target table.
          *                                 <ul>
          *                                         <li>
          *                                 gpudb::insert_records_from_files_type_id:
@@ -90,27 +106,18 @@ namespace gpudb
          *                                 The default value is
          *                                 gpudb::insert_records_from_files_false.
          *                                         <li>
-         *                                 gpudb::insert_records_from_files_collection_name:
-         *                                 Name of a collection which is to
-         *                                 contain the newly created table. If
-         *                                 the collection provided is
-         *                                 non-existent, the collection will be
-         *                                 automatically created. If empty,
-         *                                 then the newly created table will be
-         *                                 a top-level table.
-         *                                         <li>
          *                                 gpudb::insert_records_from_files_is_replicated:
-         *                                 For a table, affects the <a
+         *                                 Affects the <a
          *                                 href="../../concepts/tables.html#distribution"
          *                                 target="_top">distribution
          *                                 scheme</a> for the table's data.  If
-         *                                 true and the given type has no
+         *                                 @a true and the given type has no
          *                                 explicit <a
          *                                 href="../../concepts/tables.html#shard-key"
          *                                 target="_top">shard key</a> defined,
          *                                 the table will be <a
          *                                 href="../../concepts/tables.html#replication"
-         *                                 target="_top">replicated</a>.  If
+         *                                 target="_top">replicated</a>.  If @a
          *                                 false, the table will be <a
          *                                 href="../../concepts/tables.html#sharding"
          *                                 target="_top">sharded</a> according
@@ -202,7 +209,7 @@ namespace gpudb
          *                                 for example formats.
          *                                         <li>
          *                                 gpudb::insert_records_from_files_is_automatic_partition:
-         *                                 If true, a new partition will be
+         *                                 If @a true, a new partition will be
          *                                 created for values which don't fall
          *                                 into an existing partition.
          *                                 Currently only supported for <a
@@ -218,7 +225,7 @@ namespace gpudb
          *                                 gpudb::insert_records_from_files_false.
          *                                         <li>
          *                                 gpudb::insert_records_from_files_ttl:
-         *                                 For a table, sets the <a
+         *                                 Sets the <a
          *                                 href="../../concepts/ttl.html"
          *                                 target="_top">TTL</a> of the table
          *                                 specified in @a tableName.
@@ -228,13 +235,19 @@ namespace gpudb
          *                                 chunk to be used for this table.
          *                                         <li>
          *                                 gpudb::insert_records_from_files_is_result_table:
-         *                                 For a table, indicates whether the
-         *                                 table is an in-memory table. A
-         *                                 result table cannot contain
-         *                                 store_only, text_search, or string
-         *                                 columns (charN columns are
-         *                                 acceptable), and it will not be
-         *                                 retained if the server is restarted.
+         *                                 Indicates whether the table is a <a
+         *                                 href="../../concepts/tables_memory_only.html"
+         *                                 target="_top">memory-only table</a>.
+         *                                 A result table cannot contain
+         *                                 columns with store_only or
+         *                                 text_search <a
+         *                                 href="../../concepts/types.html#data-handling"
+         *                                 target="_top">data-handling</a> or
+         *                                 that are <a
+         *                                 href="../../concepts/types.html#primitive-types"
+         *                                 target="_top">non-charN strings</a>,
+         *                                 and it will not be retained if the
+         *                                 server is restarted.
          *                                 <ul>
          *                                         <li>
          *                                 gpudb::insert_records_from_files_true
@@ -259,87 +272,135 @@ namespace gpudb
          * @param[in] options_  Optional parameters.
          *                      <ul>
          *                              <li>
+         *                      gpudb::insert_records_from_files_bad_record_table_name:
+         *                      Optional name of a table to which records that
+         *                      were rejected are written.  The
+         *                      bad-record-table has the following columns:
+         *                      line_number (long), line_rejected (string),
+         *                      error_message (string).
+         *                              <li>
+         *                      gpudb::insert_records_from_files_bad_record_table_limit:
+         *                      A positive integer indicating the maximum
+         *                      number of records that can be  written to the
+         *                      bad-record-table.   Default value is 10000
+         *                              <li>
          *                      gpudb::insert_records_from_files_batch_size:
-         *                      Specifies number of records to process before
-         *                      inserting.
+         *                      Internal tuning parameter--number of records
+         *                      per batch when inserting data.
          *                              <li>
          *                      gpudb::insert_records_from_files_column_formats:
          *                      For each target column specified, applies the
          *                      column-property-bound format to the source data
          *                      loaded into that column.  Each column format
          *                      will contain a mapping of one or more of its
-         *                      column properties to an appropriate format for
-         *                      each property.  Currently supported column
-         *                      properties include date, time, & datetime. The
-         *                      parameter value must be formatted as a JSON
-         *                      string of maps of column names to maps of
-         *                      column properties to their corresponding column
-         *                      formats, e.g., { "order_date" : { "date" :
-         *                      "%Y.%m.%d" }, "order_time" : { "time" :
-         *                      "%H:%M:%S" } }.  See @a default_column_formats
-         *                      for valid format syntax.
+         *                      column
+         *                      properties to an appropriate format for each
+         *                      property.  Currently supported column
+         *                      properties
+         *                      include date, time, & datetime. The parameter
+         *                      value must be formatted as a JSON string of
+         *                      maps of
+         *                      column names to maps of column properties to
+         *                      their corresponding column formats, e.g.,
+         *                      '{ "order_date" : { "date" : "%Y.%m.%d" },
+         *                      "order_time" : { "time" : "%H:%M:%S" } }'.
+         *                      See @a default_column_formats for valid format
+         *                      syntax.
          *                              <li>
          *                      gpudb::insert_records_from_files_columns_to_load:
-         *                      For @a delimited_text @a file_type only.
-         *                      Specifies a comma-delimited list of column
-         *                      positions or names to load instead of loading
-         *                      all columns in the file(s); if more than one
-         *                      file is being loaded, the list of columns will
-         *                      apply to all files. Column numbers can be
-         *                      specified discretely or as a range, e.g., a
-         *                      value of '5,7,1..3' will create a table with
-         *                      the first column in the table being the fifth
-         *                      column in the file, followed by seventh column
-         *                      in the file, then the first column through the
-         *                      fourth column in the file.
+         *                      Specifies a comma-delimited list of columns
+         *                      from the source data to
+         *                      load.  If more than one file is being loaded,
+         *                      this list applies to all files.
+         *                      Column numbers can be specified discretely or
+         *                      as a range.  For example, a value of '5,7,1..3'
+         *                      will
+         *                      insert values from the fifth column in the
+         *                      source data into the first column in the target
+         *                      table,
+         *                      from the seventh column in the source data into
+         *                      the second column in the target table, and from
+         *                      the
+         *                      first through third columns in the source data
+         *                      into the third through fifth columns in the
+         *                      target
+         *                      table.
+         *                      If the source data contains a header, column
+         *                      names matching the file header names may be
+         *                      provided
+         *                      instead of column numbers.  If the target table
+         *                      doesn't exist, the table will be created with
+         *                      the
+         *                      columns in this order.  If the target table
+         *                      does exist with columns in a different order
+         *                      than the
+         *                      source data, this list can be used to match the
+         *                      order of the target table.  For example, a
+         *                      value of
+         *                      'C, B, A' will create a three column table with
+         *                      column C, followed by column B, followed by
+         *                      column
+         *                      A; or will insert those fields in that order
+         *                      into a table created with columns in that
+         *                      order.  If
+         *                      the target table exists, the column names must
+         *                      match the source data field names for a
+         *                      name-mapping
+         *                      to be successful.
+         *                              <li>
+         *                      gpudb::insert_records_from_files_columns_to_skip:
+         *                      Specifies a comma-delimited list of columns
+         *                      from the source data to
+         *                      skip.  Mutually exclusive to columns_to_load.
+         *                              <li>
+         *                      gpudb::insert_records_from_files_datasource_name:
+         *                      Name of an existing external data source from
+         *                      which data file(s) specified in @a filepaths
+         *                      will be loaded
          *                              <li>
          *                      gpudb::insert_records_from_files_default_column_formats:
          *                      Specifies the default format to be applied to
-         *                      source data loaded into columns with the
-         *                      corresponding column property.  This default
+         *                      source data loaded
+         *                      into columns with the corresponding column
+         *                      property.  Currently supported column
+         *                      properties include
+         *                      date, time, & datetime.  This default
          *                      column-property-bound format can be overridden
-         *                      by specifying a column property & format for a
-         *                      given target column in @a column_formats. For
+         *                      by specifying a
+         *                      column property & format for a given target
+         *                      column in @a column_formats. For
          *                      each specified annotation, the format will
          *                      apply to all columns with that annotation
-         *                      unless a custom @a column_formats for that
-         *                      annotation is specified. The parameter value
-         *                      must be formatted as a JSON string that is a
-         *                      map of column properties to their respective
-         *                      column formats, e.g., { "date" : "%Y.%m.%d",
-         *                      "time" : "%H:%M:%S" }. Column formats are
-         *                      specified as a string of control characters and
-         *                      plain text. The supported control characters
-         *                      are 'Y', 'm', 'd', 'H', 'M', 'S', and 's',
-         *                      which follow the Linux 'strptime()'
+         *                      unless a custom
+         *                      @a column_formats for that annotation is
+         *                      specified.
+         *                      The parameter value must be formatted as a JSON
+         *                      string that is a map of column properties to
+         *                      their
+         *                      respective column formats, e.g., '{ "date" :
+         *                      "%Y.%m.%d", "time" : "%H:%M:%S" }'.  Column
+         *                      formats are specified as a string of control
+         *                      characters and plain text. The supported
+         *                      control
+         *                      characters are 'Y', 'm', 'd', 'H', 'M', 'S',
+         *                      and 's', which follow the Linux 'strptime()'
          *                      specification, as well as 's', which specifies
          *                      seconds and fractional seconds (though the
-         *                      fractional component will be truncated past
-         *                      milliseconds). Formats for the 'date'
-         *                      annotation must include the 'Y', 'm', and 'd'
-         *                      control characters. Formats for the 'time'
-         *                      annotation must include the 'H', 'M', and
-         *                      either 'S' or 's' (but not both) control
+         *                      fractional
+         *                      component will be truncated past milliseconds).
+         *                      Formats for the 'date' annotation must include
+         *                      the 'Y', 'm', and 'd' control characters.
+         *                      Formats for
+         *                      the 'time' annotation must include the 'H',
+         *                      'M', and either 'S' or 's' (but not both)
+         *                      control
          *                      characters. Formats for the 'datetime'
          *                      annotation meet both the 'date' and 'time'
-         *                      control character requirements. For example,
-         *                      '{"datetime" : "%m/%d/%Y %H:%M:%S" }' would be
-         *                      used to interpret text as "05/04/2000 12:12:11"
-         *                              <li>
-         *                      gpudb::insert_records_from_files_dry_run: If
-         *                      set to @a true, no data will be inserted but
-         *                      the file will be read with the applied @a
-         *                      error_handling mode and the number of valid
-         *                      records that would be normally inserted are
-         *                      returned.
-         *                      <ul>
-         *                              <li>
-         *                      gpudb::insert_records_from_files_false
-         *                              <li>
-         *                      gpudb::insert_records_from_files_true
-         *                      </ul>
-         *                      The default value is
-         *                      gpudb::insert_records_from_files_false.
+         *                      control character
+         *                      requirements. For example, '{"datetime" :
+         *                      "%m/%d/%Y %H:%M:%S" }' would be used to
+         *                      interpret text
+         *                      as "05/04/2000 12:12:11"
          *                              <li>
          *                      gpudb::insert_records_from_files_error_handling:
          *                      Specifies how errors should be handled upon
@@ -356,74 +417,161 @@ namespace gpudb
          *                              <li>
          *                      gpudb::insert_records_from_files_abort: Stops
          *                      current insertion and aborts entire operation
-         *                      when an error is encountered.
+         *                      when an error is encountered.  Primary key
+         *                      collisions are considered abortable errors in
+         *                      this mode.
          *                      </ul>
          *                      The default value is
-         *                      gpudb::insert_records_from_files_Permissive.
+         *                      gpudb::insert_records_from_files_permissive.
          *                              <li>
          *                      gpudb::insert_records_from_files_file_type:
-         *                      File type for the file(s).
+         *                      Specifies the type of the file(s) whose records
+         *                      will be inserted.
          *                      <ul>
          *                              <li>
          *                      gpudb::insert_records_from_files_delimited_text:
          *                      Indicates the file(s) are in delimited text
-         *                      format, e.g., CSV, TSV, PSV, etc.
+         *                      format; e.g., CSV, TSV, PSV, etc.
+         *                              <li>
+         *                      gpudb::insert_records_from_files_parquet:
+         *                      Indicates the file(s) are in Parquet format.
+         *                      Parquet files are not supported yet.
          *                      </ul>
          *                      The default value is
          *                      gpudb::insert_records_from_files_delimited_text.
          *                              <li>
+         *                      gpudb::insert_records_from_files_ingestion_mode:
+         *                      Whether to do a full load, dry run, or perform
+         *                      a type inference on the source data.
+         *                      <ul>
+         *                              <li>
+         *                      gpudb::insert_records_from_files_full: Run a
+         *                      type inference on the source data (if needed)
+         *                      and ingest
+         *                              <li>
+         *                      gpudb::insert_records_from_files_dry_run: Does
+         *                      not load data, but walks through the source
+         *                      data and determines the number of valid
+         *                      records, taking into account the current mode
+         *                      of @a error_handling.
+         *                              <li>
+         *                      gpudb::insert_records_from_files_type_inference_only:
+         *                      Infer the type of the source data and return,
+         *                      without ingesting any data.  The inferred type
+         *                      is returned in the response.
+         *                      </ul>
+         *                      The default value is
+         *                      gpudb::insert_records_from_files_full.
+         *                              <li>
          *                      gpudb::insert_records_from_files_loading_mode:
-         *                      Specifies how to divide data loading among
-         *                      nodes.
+         *                      Scheme for distributing the extraction and
+         *                      loading of data from the source data file(s).
          *                      <ul>
          *                              <li>
          *                      gpudb::insert_records_from_files_head: The head
          *                      node loads all data. All files must be
-         *                      available on the head node.
+         *                      available to the head node.
          *                              <li>
          *                      gpudb::insert_records_from_files_distributed_shared:
-         *                      The worker nodes coordinate loading a set of
-         *                      files that are available to all of them. All
-         *                      files must be available on all nodes. This
-         *                      option is best when there is a shared file
-         *                      system.
+         *                      The head node coordinates loading data by
+         *                      worker
+         *                      processes across all nodes from shared files
+         *                      available to all workers.
+         *                      NOTE:
+         *                      Instead of existing on a shared source, the
+         *                      files can be duplicated on a source local to
+         *                      each host
+         *                      to improve performance, though the files must
+         *                      appear as the same data set from the
+         *                      perspective of
+         *                      all hosts performing the load.
          *                              <li>
          *                      gpudb::insert_records_from_files_distributed_local:
-         *                      Each worker node loads all files that are
-         *                      available to it. This option is best when each
-         *                      worker node has its own file system.
+         *                      A single worker process on each node loads all
+         *                      files
+         *                      that are available to it. This option works
+         *                      best when each worker loads files from its own
+         *                      file
+         *                      system, to maximize performance. In order to
+         *                      avoid data duplication, either each worker
+         *                      performing
+         *                      the load needs to have visibility to a set of
+         *                      files unique to it (no file is visible to more
+         *                      than
+         *                      one node) or the target table needs to have a
+         *                      primary key (which will allow the worker to
+         *                      automatically deduplicate data).
+         *                      NOTE:
+         *                      If the target table doesn't exist, the table
+         *                      structure will be determined by the head node.
+         *                      If the
+         *                      head node has no files local to it, it will be
+         *                      unable to determine the structure and the
+         *                      request
+         *                      will fail.
+         *                      This mode should not be used in conjuction with
+         *                      a data source, as data sources are seen by all
+         *                      worker processes as shared resources with no
+         *                      'local' component.
+         *                      If the head node is configured to have no
+         *                      worker processes, no data strictly accessible
+         *                      to the head
+         *                      node will be loaded.
          *                      </ul>
          *                      The default value is
          *                      gpudb::insert_records_from_files_head.
          *                              <li>
+         *                      gpudb::insert_records_from_files_primary_keys:
+         *                      Optional: comma separated list of column names,
+         *                      to set as primary keys, when not specified in
+         *                      the type.  The default value is ''.
+         *                              <li>
+         *                      gpudb::insert_records_from_files_shard_keys:
+         *                      Optional: comma separated list of column names,
+         *                      to set as primary keys, when not specified in
+         *                      the type.  The default value is ''.
+         *                              <li>
          *                      gpudb::insert_records_from_files_text_comment_string:
-         *                      For @a delimited_text @a file_type only. All
-         *                      lines in the file(s) starting with the provided
-         *                      string are ignored. The comment string has no
-         *                      effect unless it appears at the beginning of a
-         *                      line.  The default value is '#'.
+         *                      Specifies the character string that should be
+         *                      interpreted as a comment line
+         *                      prefix in the source data.  All lines in the
+         *                      data starting with the provided string are
+         *                      ignored.
+         *                      For @a delimited_text @a file_type only.  The
+         *                      default value is '#'.
          *                              <li>
          *                      gpudb::insert_records_from_files_text_delimiter:
-         *                      For @a delimited_text @a file_type only.
-         *                      Specifies the delimiter for values and columns
-         *                      in the header row (if present). Must be a
-         *                      single character.  The default value is ','.
+         *                      Specifies the character delimiting field values
+         *                      in the source data
+         *                      and field names in the header (if present).
+         *                      For @a delimited_text @a file_type only.  The
+         *                      default value is ','.
          *                              <li>
          *                      gpudb::insert_records_from_files_text_escape_character:
-         *                      For @a delimited_text @a file_type only.  The
-         *                      character used in the file(s) to escape certain
-         *                      character sequences in text. For example, the
-         *                      escape character followed by a literal 'n'
-         *                      escapes to a newline character within the
-         *                      field. Can be used within quoted string to
-         *                      escape a quote character. An empty value for
-         *                      this option does not specify an escape
-         *                      character.
+         *                      Specifies the character that is used to escape
+         *                      other characters in
+         *                      the source data.
+         *                      An 'a', 'b', 'f', 'n', 'r', 't', or 'v'
+         *                      preceded by an escape character will be
+         *                      interpreted as the
+         *                      ASCII bell, backspace, form feed, line feed,
+         *                      carriage return, horizontal tab, & vertical
+         *                      tab,
+         *                      respectively.  For example, the escape
+         *                      character followed by an 'n' will be
+         *                      interpreted as a newline
+         *                      within a field value.
+         *                      The escape character can also be used to escape
+         *                      the quoting character, and will be treated as
+         *                      an
+         *                      escape character whether it is within a quoted
+         *                      field value or not.
+         *                      For @a delimited_text @a file_type only.
          *                              <li>
          *                      gpudb::insert_records_from_files_text_has_header:
+         *                      Indicates whether the source data contains a
+         *                      header row.
          *                      For @a delimited_text @a file_type only.
-         *                      Indicates whether the delimited text files have
-         *                      a header row.
          *                      <ul>
          *                              <li>
          *                      gpudb::insert_records_from_files_true
@@ -434,28 +582,40 @@ namespace gpudb
          *                      gpudb::insert_records_from_files_true.
          *                              <li>
          *                      gpudb::insert_records_from_files_text_header_property_delimiter:
-         *                      For @a delimited_text @a file_type only.
-         *                      Specifies the delimiter for column properties
-         *                      in the header row (if present). Cannot be set
-         *                      to same value as text_delimiter.  The default
-         *                      value is '|'.
+         *                      Specifies the delimiter for
+         *                      <a
+         *                      href="../../concepts/types.html#column-properties"
+         *                      target="_top">column properties</a> in the
+         *                      header row (if
+         *                      present).  Cannot be set to same value as @a
+         *                      text_delimiter.
+         *                      For @a delimited_text @a file_type only.  The
+         *                      default value is '|'.
          *                              <li>
          *                      gpudb::insert_records_from_files_text_null_string:
-         *                      For @a delimited_text @a file_type only. The
-         *                      value in the file(s) to treat as a null value
-         *                      in the database.  The default value is ''.
+         *                      Specifies the character string that should be
+         *                      interpreted as a null
+         *                      value in the source data.
+         *                      For @a delimited_text @a file_type only.  The
+         *                      default value is ''.
          *                              <li>
          *                      gpudb::insert_records_from_files_text_quote_character:
-         *                      For @a delimited_text @a file_type only. The
-         *                      quote character used in the file(s), typically
-         *                      encompassing a field value. The character must
-         *                      appear at beginning and end of field to take
-         *                      effect. Delimiters within quoted fields are not
-         *                      treated as delimiters. Within a quoted field,
-         *                      double quotes (") can be used to escape a
-         *                      single literal quote character. To not have a
-         *                      quote character, specify an empty string ("").
-         *                      The default value is '"'.
+         *                      Specifies the character that should be
+         *                      interpreted as a field value
+         *                      quoting character in the source data.  The
+         *                      character must appear at beginning and end of
+         *                      field value
+         *                      to take effect.  Delimiters within quoted
+         *                      fields are treated as literals and not
+         *                      delimiters.  Within
+         *                      a quoted field, two consecutive quote
+         *                      characters will be interpreted as a single
+         *                      literal quote
+         *                      character, effectively escaping it.  To not
+         *                      have a quote character, specify an empty
+         *                      string.
+         *                      For @a delimited_text @a file_type only.  The
+         *                      default value is '"'.
          *                              <li>
          *                      gpudb::insert_records_from_files_truncate_table:
          *                      If set to @a true, truncates the table
@@ -477,9 +637,10 @@ namespace gpudb
          *                      </ul>
          * 
          */
-        InsertRecordsFromFilesRequest(const std::string& tableName_, const std::vector<std::string>& filepaths_, const std::map<std::string, std::string>& createTableOptions_, const std::map<std::string, std::string>& options_):
+        InsertRecordsFromFilesRequest(const std::string& tableName_, const std::vector<std::string>& filepaths_, const std::map<std::string, std::map<std::string, std::string> >& modifyColumns_, const std::map<std::string, std::string>& createTableOptions_, const std::map<std::string, std::string>& options_):
             tableName( tableName_ ),
             filepaths( filepaths_ ),
+            modifyColumns( modifyColumns_ ),
             createTableOptions( createTableOptions_ ),
             options( options_ )
         {
@@ -487,6 +648,7 @@ namespace gpudb
 
         std::string tableName;
         std::vector<std::string> filepaths;
+        std::map<std::string, std::map<std::string, std::string> > modifyColumns;
         std::map<std::string, std::string> createTableOptions;
         std::map<std::string, std::string> options;
     };
@@ -500,6 +662,7 @@ namespace avro
         {
             ::avro::encode(e, v.tableName);
             ::avro::encode(e, v.filepaths);
+            ::avro::encode(e, v.modifyColumns);
             ::avro::encode(e, v.createTableOptions);
             ::avro::encode(e, v.options);
         }
@@ -523,10 +686,14 @@ namespace avro
                             break;
 
                         case 2:
-                            ::avro::decode(d, v.createTableOptions);
+                            ::avro::decode(d, v.modifyColumns);
                             break;
 
                         case 3:
+                            ::avro::decode(d, v.createTableOptions);
+                            break;
+
+                        case 4:
                             ::avro::decode(d, v.options);
                             break;
 
@@ -539,6 +706,7 @@ namespace avro
             {
                 ::avro::decode(d, v.tableName);
                 ::avro::decode(d, v.filepaths);
+                ::avro::decode(d, v.modifyColumns);
                 ::avro::decode(d, v.createTableOptions);
                 ::avro::decode(d, v.options);
             }
@@ -554,18 +722,22 @@ namespace gpudb
      * #insertRecordsFromFiles(const InsertRecordsFromFilesRequest&) const}.
      * <p>
      * Reads from one or more files located on the server and inserts the data
-     * into a new or existing table.
+     * into a new or
+     * existing table.
      * <p>
-     * For CSV files, there are two loading schemes: positional and name-based.
-     * The name-based loading scheme is enabled when the file has a header
-     * present and @a text_has_header is set to @a true. In this scheme, the
-     * source file(s) field names must match the target table's column names
-     * exactly; however, the source file can have more fields than the target
-     * table has columns. If @a error_handling is set to @a permissive, the
-     * source file can have fewer fields than the target table has columns. If
-     * the name-based loading scheme is being used, names matching the file
-     * header's names may be provided to @a columns_to_load instead of numbers,
-     * but ranges are not supported.
+     * For delimited text files, there are two loading schemes: positional and
+     * name-based. The name-based
+     * loading scheme is enabled when the file has a header present and
+     * @a text_has_header is set to
+     * @a true. In this scheme, the source file(s) field names
+     * must match the target table's column names exactly; however, the source
+     * file can have more fields
+     * than the target table has columns. If @a error_handling is set to
+     * @a permissive, the source file can have fewer fields
+     * than the target table has columns. If the name-based loading scheme is
+     * being used, names matching
+     * the file header's names may be provided to @a columns_to_load instead of
+     * numbers, but ranges are not supported.
 
      * Returns once all files are processed.
      */
@@ -579,6 +751,9 @@ namespace gpudb
         InsertRecordsFromFilesResponse() :
             tableName(std::string()),
             typeId(std::string()),
+            typeDefinition(std::string()),
+            typeLabel(std::string()),
+            typeProperties(std::map<std::string, std::vector<std::string> >()),
             countInserted(int64_t()),
             countSkipped(int64_t()),
             countUpdated(int64_t()),
@@ -588,6 +763,9 @@ namespace gpudb
 
         std::string tableName;
         std::string typeId;
+        std::string typeDefinition;
+        std::string typeLabel;
+        std::map<std::string, std::vector<std::string> > typeProperties;
         int64_t countInserted;
         int64_t countSkipped;
         int64_t countUpdated;
@@ -603,6 +781,9 @@ namespace avro
         {
             ::avro::encode(e, v.tableName);
             ::avro::encode(e, v.typeId);
+            ::avro::encode(e, v.typeDefinition);
+            ::avro::encode(e, v.typeLabel);
+            ::avro::encode(e, v.typeProperties);
             ::avro::encode(e, v.countInserted);
             ::avro::encode(e, v.countSkipped);
             ::avro::encode(e, v.countUpdated);
@@ -628,18 +809,30 @@ namespace avro
                             break;
 
                         case 2:
-                            ::avro::decode(d, v.countInserted);
+                            ::avro::decode(d, v.typeDefinition);
                             break;
 
                         case 3:
-                            ::avro::decode(d, v.countSkipped);
+                            ::avro::decode(d, v.typeLabel);
                             break;
 
                         case 4:
-                            ::avro::decode(d, v.countUpdated);
+                            ::avro::decode(d, v.typeProperties);
                             break;
 
                         case 5:
+                            ::avro::decode(d, v.countInserted);
+                            break;
+
+                        case 6:
+                            ::avro::decode(d, v.countSkipped);
+                            break;
+
+                        case 7:
+                            ::avro::decode(d, v.countUpdated);
+                            break;
+
+                        case 8:
                             ::avro::decode(d, v.info);
                             break;
 
@@ -652,6 +845,9 @@ namespace avro
             {
                 ::avro::decode(d, v.tableName);
                 ::avro::decode(d, v.typeId);
+                ::avro::decode(d, v.typeDefinition);
+                ::avro::decode(d, v.typeLabel);
+                ::avro::decode(d, v.typeProperties);
                 ::avro::decode(d, v.countInserted);
                 ::avro::decode(d, v.countSkipped);
                 ::avro::decode(d, v.countUpdated);

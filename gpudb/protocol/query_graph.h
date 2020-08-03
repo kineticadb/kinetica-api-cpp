@@ -15,31 +15,43 @@ namespace gpudb
      * <p>
      * Employs a topological query on a network graph generated a-priori by
      * {@link #createGraph(const CreateGraphRequest&) const} and returns a
-     * list of adjacent edge(s) or node(s), also known as an adjacency list,
-     * depending on what's been provided to the endpoint; providing edges will
-     * return nodes and providing nodes will return edges.
+     * list of adjacent edge(s) or node(s),
+     * also known as an adjacency list, depending on what's been provided to
+     * the
+     * endpoint; providing edges will return nodes and providing nodes will
+     * return
+     * edges.
      * <p>
      * To determine the node(s) or edge(s) adjacent to a value from a given
-     * column, provide a list of values to @a queries. This field can be
-     * populated with column values from any table as long as the type is
-     * supported by the given identifier. See <a
-     * href="../../graph_solver/network_graph_solver.html#query-identifiers"
-     * target="_top">Query Identifiers</a> for more information.
+     * column,
+     * provide a list of values to @a queries. This field can be populated with
+     * column values from any table as long as the type is supported by the
+     * given
+     * identifier. See
+     * <a href="../../graph_solver/network_graph_solver.html#query-identifiers"
+     * target="_top">Query Identifiers</a>
+     * for more information.
      * <p>
      * To return the adjacency list in the response, leave @a adjacencyTable
      * empty. To return the adjacency list in a table and not in the response,
-     * provide a value to @a adjacencyTable and set @a export_query_results to
-     * @a false. To return the adjacency list both in a table and the response,
-     * provide a value to @a adjacencyTable and set @a export_query_results to
-     * @a true.
+     * provide
+     * a value to @a adjacencyTable and set
+     * @a export_query_results to
+     * @a false. To return the
+     * adjacency list both in a table and the response, provide a value to
+     * @a adjacencyTable and set @a export_query_results
+     * to @a true.
      * <p>
-     * IMPORTANT: It's highly recommended that you review the <a
-     * href="../../graph_solver/network_graph_solver.html"
-     * target="_top">Network Graphs & Solvers</a> concepts documentation, the
+     * IMPORTANT: It's highly recommended that you review the
+     * <a href="../../graph_solver/network_graph_solver.html"
+     * target="_top">Network Graphs & Solvers</a>
+     * concepts documentation, the
      * <a href="../../graph_solver/examples/graph_rest_guide.html"
-     * target="_top">Graph REST Tutorial</a>, and/or some <a
-     * href="../../graph_solver/examples.html#query-graph"
-     * target="_top">/query/graph examples</a> before using this endpoint.
+     * target="_top">Graph REST Tutorial</a>,
+     * and/or some
+     * <a href="../../graph_solver/examples.html#match-graph"
+     * target="_top">/match/graph examples</a>
+     * before using this endpoint.
      */
     struct QueryGraphRequest
     {
@@ -92,17 +104,23 @@ namespace gpudb
          *                           number of values specified must match
          *                           across the combination.
          * @param[in] adjacencyTable_  Name of the table to store the resulting
-         *                             adjacencies. If left blank, the query
-         *                             results are instead returned in the
-         *                             response even if @a export_query_results
-         *                             is set to @a false. If the
-         *                             'QUERY_TARGET_NODE_LABEL' <a
+         *                             adjacencies, in [schema_name.]table_name
+         *                             format, using standard <a
+         *                             href="../../concepts/tables.html#table-name-resolution"
+         *                             target="_top">name resolution rules</a>
+         *                             and meeting <a
+         *                             href="../../concepts/tables.html#table-naming-criteria"
+         *                             target="_top">table naming criteria</a>.
+         *                             If left blank, the query results are
+         *                             instead returned in the response even if
+         *                             @a export_query_results is set to @a
+         *                             false. If the 'QUERY_TARGET_NODE_LABEL'
+         *                             <a
          *                             href="../../graph_solver/network_graph_solver.html#query-identifiers"
          *                             target="_top">query identifier</a> is
          *                             used in @a queries, then two additional
          *                             columns will be available: 'PATH_ID' and
-         *                             'RING_ID'. See
-         *                                         <a
+         *                             'RING_ID'. See <a
          *                             href="../../graph_solver/network_graph_solver.html#using-labels"
          *                             target="_top">Using Labels</a> for more
          *                             information.
@@ -147,10 +165,17 @@ namespace gpudb
          *                              <li>
          *                      gpudb::query_graph_target_nodes_table: Name of
          *                      the table to store the list of the final nodes
-         *                      reached during the traversal. If this value is
-         *                      left as the default, the table name will
-         *                      default to the @a adjacencyTable value plus a
-         *                      '_nodes' suffix, e.g.,
+         *                      reached during the traversal, in
+         *                      [schema_name.]table_name format, using standard
+         *                      <a
+         *                      href="../../concepts/tables.html#table-name-resolution"
+         *                      target="_top">name resolution rules</a> and
+         *                      meeting <a
+         *                      href="../../concepts/tables.html#table-naming-criteria"
+         *                      target="_top">table naming criteria</a>.  If
+         *                      this value is left as the default, the table
+         *                      name will default to the @a adjacencyTable
+         *                      value plus a '_nodes' suffix, e.g.,
          *                      '<adjacency_table_name>_nodes'.  The default
          *                      value is ''.
          *                              <li>
@@ -296,31 +321,43 @@ namespace gpudb
      * <p>
      * Employs a topological query on a network graph generated a-priori by
      * {@link #createGraph(const CreateGraphRequest&) const} and returns a
-     * list of adjacent edge(s) or node(s), also known as an adjacency list,
-     * depending on what's been provided to the endpoint; providing edges will
-     * return nodes and providing nodes will return edges.
+     * list of adjacent edge(s) or node(s),
+     * also known as an adjacency list, depending on what's been provided to
+     * the
+     * endpoint; providing edges will return nodes and providing nodes will
+     * return
+     * edges.
      * <p>
      * To determine the node(s) or edge(s) adjacent to a value from a given
-     * column, provide a list of values to @a queries. This field can be
-     * populated with column values from any table as long as the type is
-     * supported by the given identifier. See <a
-     * href="../../graph_solver/network_graph_solver.html#query-identifiers"
-     * target="_top">Query Identifiers</a> for more information.
+     * column,
+     * provide a list of values to @a queries. This field can be populated with
+     * column values from any table as long as the type is supported by the
+     * given
+     * identifier. See
+     * <a href="../../graph_solver/network_graph_solver.html#query-identifiers"
+     * target="_top">Query Identifiers</a>
+     * for more information.
      * <p>
      * To return the adjacency list in the response, leave @a adjacencyTable
      * empty. To return the adjacency list in a table and not in the response,
-     * provide a value to @a adjacencyTable and set @a export_query_results to
-     * @a false. To return the adjacency list both in a table and the response,
-     * provide a value to @a adjacencyTable and set @a export_query_results to
-     * @a true.
+     * provide
+     * a value to @a adjacencyTable and set
+     * @a export_query_results to
+     * @a false. To return the
+     * adjacency list both in a table and the response, provide a value to
+     * @a adjacencyTable and set @a export_query_results
+     * to @a true.
      * <p>
-     * IMPORTANT: It's highly recommended that you review the <a
-     * href="../../graph_solver/network_graph_solver.html"
-     * target="_top">Network Graphs & Solvers</a> concepts documentation, the
+     * IMPORTANT: It's highly recommended that you review the
+     * <a href="../../graph_solver/network_graph_solver.html"
+     * target="_top">Network Graphs & Solvers</a>
+     * concepts documentation, the
      * <a href="../../graph_solver/examples/graph_rest_guide.html"
-     * target="_top">Graph REST Tutorial</a>, and/or some <a
-     * href="../../graph_solver/examples.html#query-graph"
-     * target="_top">/query/graph examples</a> before using this endpoint.
+     * target="_top">Graph REST Tutorial</a>,
+     * and/or some
+     * <a href="../../graph_solver/examples.html#match-graph"
+     * target="_top">/match/graph examples</a>
+     * before using this endpoint.
      */
     struct QueryGraphResponse
     {

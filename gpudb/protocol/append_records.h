@@ -13,11 +13,11 @@ namespace gpudb
      * A set of input parameters for {@link
      * #appendRecords(const AppendRecordsRequest&) const}.
      * <p>
-     * Append (or insert) all records from a source table (specified by @a
-     * sourceTableName) to a particular target table (specified by @a
-     * tableName). The field map (specified by @a fieldMap) holds the user
-     * specified map of target table column names with their mapped source
-     * column names.
+     * Append (or insert) all records from a source table
+     * (specified by @a sourceTableName) to a particular target table
+     * (specified by @a tableName). The field map
+     * (specified by @a fieldMap) holds the user specified map of target table
+     * column names with their mapped source column names.
      */
     struct AppendRecordsRequest
     {
@@ -39,9 +39,18 @@ namespace gpudb
          * parameters.
          * 
          * @param[in] tableName_  The table name for the records to be
-         *                        appended. Must be an existing table.
+         *                        appended, in [schema_name.]table_name format,
+         *                        using standard <a
+         *                        href="../../concepts/tables.html#table-name-resolution"
+         *                        target="_top">name resolution rules</a>.
+         *                        Must be an existing table.
          * @param[in] sourceTableName_  The source table name to get records
-         *                              from. Must be an existing table name.
+         *                              from, in [schema_name.]table_name
+         *                              format, using standard <a
+         *                              href="../../concepts/tables.html#table-name-resolution"
+         *                              target="_top">name resolution
+         *                              rules</a>.  Must be an existing table
+         *                              name.
          * @param[in] fieldMap_  Contains the mapping of column names from the
          *                       target table (specified by @a tableName) as
          *                       the keys, and corresponding column names or
@@ -191,11 +200,11 @@ namespace gpudb
      * A set of output parameters for {@link
      * #appendRecords(const AppendRecordsRequest&) const}.
      * <p>
-     * Append (or insert) all records from a source table (specified by @a
-     * sourceTableName) to a particular target table (specified by @a
-     * tableName). The field map (specified by @a fieldMap) holds the user
-     * specified map of target table column names with their mapped source
-     * column names.
+     * Append (or insert) all records from a source table
+     * (specified by @a sourceTableName) to a particular target table
+     * (specified by @a tableName). The field map
+     * (specified by @a fieldMap) holds the user specified map of target table
+     * column names with their mapped source column names.
      */
     struct AppendRecordsResponse
     {

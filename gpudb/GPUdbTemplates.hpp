@@ -5,16 +5,18 @@
  */
 
 /**
- * Retrieves records from a given table, optionally filtered by an expression
- * and/or sorted by a column. This operation can be performed on tables, views,
- * or on homogeneous collections (collections containing tables of all the same
- * type). Records can be returned encoded as binary, json or geojson.
+ * Retrieves records from a given table, optionally filtered by an
+ * expression and/or sorted by a column. This operation can be performed on
+ * tables
+ * and views. Records can be returned encoded as binary, json, or geojson.
  * <p>
- * This operation supports paging through the data via the @a offset and @a
- * limit parameters. Note that when paging through a table, if the table (or
- * the underlying table in case of a view) is updated (records are inserted,
+ * This operation supports paging through the data via the @a offset and
+ * @a limit parameters.  Note that when paging through a table, if the table
+ * (or the underlying table in case of a view) is updated (records are
+ * inserted,
  * deleted or modified) the records retrieved may differ between calls based on
- * the updates applied.
+ * the
+ * updates applied.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -26,16 +28,18 @@ template<>
 GetRecordsResponse<boost::any> GPUdb::getRecords( const GetRecordsRequest& request_ ) const;
 
 /**
- * Retrieves records from a given table, optionally filtered by an expression
- * and/or sorted by a column. This operation can be performed on tables, views,
- * or on homogeneous collections (collections containing tables of all the same
- * type). Records can be returned encoded as binary, json or geojson.
+ * Retrieves records from a given table, optionally filtered by an
+ * expression and/or sorted by a column. This operation can be performed on
+ * tables
+ * and views. Records can be returned encoded as binary, json, or geojson.
  * <p>
- * This operation supports paging through the data via the @a offset and @a
- * limit parameters. Note that when paging through a table, if the table (or
- * the underlying table in case of a view) is updated (records are inserted,
+ * This operation supports paging through the data via the @a offset and
+ * @a limit parameters.  Note that when paging through a table, if the table
+ * (or the underlying table in case of a view) is updated (records are
+ * inserted,
  * deleted or modified) the records retrieved may differ between calls based on
- * the updates applied.
+ * the
+ * updates applied.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -51,19 +55,24 @@ GetRecordsResponse<boost::any>& GPUdb::getRecords( const GetRecordsRequest& requ
                                                    GetRecordsResponse<boost::any>& response_ ) const;
 
 /**
- * Retrieves records from a given table, optionally filtered by an expression
- * and/or sorted by a column. This operation can be performed on tables, views,
- * or on homogeneous collections (collections containing tables of all the same
- * type). Records can be returned encoded as binary, json or geojson.
+ * Retrieves records from a given table, optionally filtered by an
+ * expression and/or sorted by a column. This operation can be performed on
+ * tables
+ * and views. Records can be returned encoded as binary, json, or geojson.
  * <p>
- * This operation supports paging through the data via the @a offset and @a
- * limit parameters. Note that when paging through a table, if the table (or
- * the underlying table in case of a view) is updated (records are inserted,
+ * This operation supports paging through the data via the @a offset and
+ * @a limit parameters.  Note that when paging through a table, if the table
+ * (or the underlying table in case of a view) is updated (records are
+ * inserted,
  * deleted or modified) the records retrieved may differ between calls based on
- * the updates applied.
+ * the
+ * updates applied.
  * 
- * @param tableName  Name of the table from which the records will be fetched.
- *                   Must be a table, view or homogeneous collection.
+ * @param tableName  Name of the table or view from which the records will be
+ *                   fetched, in [schema_name.]table_name format, using
+ *                   standard <a
+ *                   href="../../concepts/tables.html#table-name-resolution"
+ *                   target="_top">name resolution rules</a>.
  * @param offset  A positive integer indicating the number of initial results
  *                to skip (this can be useful for paging through the results).
  *                The minimum allowed value is 0. The maximum allowed value is
@@ -116,19 +125,24 @@ GetRecordsResponse<boost::any> GPUdb::getRecords( const std::string& tableName,
                                                   const std::map<std::string, std::string>& options ) const;
 
 /**
- * Retrieves records from a given table, optionally filtered by an expression
- * and/or sorted by a column. This operation can be performed on tables, views,
- * or on homogeneous collections (collections containing tables of all the same
- * type). Records can be returned encoded as binary, json or geojson.
+ * Retrieves records from a given table, optionally filtered by an
+ * expression and/or sorted by a column. This operation can be performed on
+ * tables
+ * and views. Records can be returned encoded as binary, json, or geojson.
  * <p>
- * This operation supports paging through the data via the @a offset and @a
- * limit parameters. Note that when paging through a table, if the table (or
- * the underlying table in case of a view) is updated (records are inserted,
+ * This operation supports paging through the data via the @a offset and
+ * @a limit parameters.  Note that when paging through a table, if the table
+ * (or the underlying table in case of a view) is updated (records are
+ * inserted,
  * deleted or modified) the records retrieved may differ between calls based on
- * the updates applied.
+ * the
+ * updates applied.
  * 
- * @param tableName  Name of the table from which the records will be fetched.
- *                   Must be a table, view or homogeneous collection.
+ * @param tableName  Name of the table or view from which the records will be
+ *                   fetched, in [schema_name.]table_name format, using
+ *                   standard <a
+ *                   href="../../concepts/tables.html#table-name-resolution"
+ *                   target="_top">name resolution rules</a>.
  * @param offset  A positive integer indicating the number of initial results
  *                to skip (this can be useful for paging through the results).
  *                The minimum allowed value is 0. The maximum allowed value is
@@ -185,16 +199,18 @@ GetRecordsResponse<boost::any>& GPUdb::getRecords( const std::string& tableName,
                                                    GetRecordsResponse<boost::any>& response_ ) const;
 
 /**
- * Retrieves the complete series/track records from the given @a worldTableName
- * based on the partial track information contained in the @a tableName.
+ * Retrieves the complete series/track records from the given
+ * @a worldTableName based on the partial track information contained in
+ * the @a tableName.
  * <p>
- * This operation supports paging through the data via the @a offset and @a
- * limit parameters.
+ * This operation supports paging through the data via the @a offset and
+ * @a limit parameters.
  * <p>
  * In contrast to {@link #getRecords(const GetRecordsRequest&) const} this
- * returns records grouped by series/track. So if @a offset is 0 and @a limit
- * is 5 this operation would return the first 5 series/tracks in @a tableName.
- * Each series/track will be returned sorted by their TIMESTAMP column.
+ * returns records grouped by
+ * series/track. So if @a offset is 0 and @a limit is 5 this operation
+ * would return the first 5 series/tracks in @a tableName. Each series/track
+ * will be returned sorted by their TIMESTAMP column.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -206,18 +222,19 @@ template<>
 GetRecordsBySeriesResponse<boost::any> GPUdb::getRecordsBySeries( const GetRecordsBySeriesRequest& request_ ) const;
 
 /**
- * Retrieves the complete series/track records from the given @a worldTableName
- * based on the partial track information contained in the @a tableName.
+ * Retrieves the complete series/track records from the given
+ * @a worldTableName based on the partial track information contained in
+ * the @a tableName.
  * <p>
- * This operation supports paging through the data via the @a offset and @a
- * limit parameters.
+ * This operation supports paging through the data via the @a offset and
+ * @a limit parameters.
  * <p>
  * In contrast to {@link
  * #getRecords(const GetRecordsRequest&,GetRecordsResponse<boost::any>&) const}
- * this returns records grouped by series/track. So if @a offset is 0 and @a
- * limit is 5 this operation would return the first 5 series/tracks in @a
- * tableName. Each series/track will be returned sorted by their TIMESTAMP
- * column.
+ * this returns records grouped by
+ * series/track. So if @a offset is 0 and @a limit is 5 this operation
+ * would return the first 5 series/tracks in @a tableName. Each series/track
+ * will be returned sorted by their TIMESTAMP column.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -233,28 +250,35 @@ GetRecordsBySeriesResponse<boost::any>& GPUdb::getRecordsBySeries( const GetReco
                                                                    GetRecordsBySeriesResponse<boost::any>& response_ ) const;
 
 /**
- * Retrieves the complete series/track records from the given @a worldTableName
- * based on the partial track information contained in the @a tableName.
+ * Retrieves the complete series/track records from the given
+ * @a worldTableName based on the partial track information contained in
+ * the @a tableName.
  * <p>
- * This operation supports paging through the data via the @a offset and @a
- * limit parameters.
+ * This operation supports paging through the data via the @a offset and
+ * @a limit parameters.
  * <p>
  * In contrast to {@link
  * #getRecords(const std::string&,const int64_t,const int64_t,const std::map<std::string, std::string>&) const}
- * this returns records grouped by series/track. So if @a offset is 0 and @a
- * limit is 5 this operation would return the first 5 series/tracks in @a
- * tableName. Each series/track will be returned sorted by their TIMESTAMP
- * column.
+ * this returns records grouped by
+ * series/track. So if @a offset is 0 and @a limit is 5 this operation
+ * would return the first 5 series/tracks in @a tableName. Each series/track
+ * will be returned sorted by their TIMESTAMP column.
  * 
- * @param tableName  Name of the collection/table/view for which series/tracks
- *                   will be fetched.
+ * @param tableName  Name of the table or view for which series/tracks will be
+ *                   fetched, in [schema_name.]table_name format, using
+ *                   standard <a
+ *                   href="../../concepts/tables.html#table-name-resolution"
+ *                   target="_top">name resolution rules</a>.
  * @param worldTableName  Name of the table containing the complete
  *                        series/track information to be returned for the
- *                        tracks present in the @a tableName. Typically this is
- *                        used when retrieving series/tracks from a view (which
- *                        contains partial series/tracks) but the user wants to
- *                        retrieve the entire original series/tracks. Can be
- *                        blank.
+ *                        tracks present in the @a tableName, in
+ *                        [schema_name.]table_name format, using standard <a
+ *                        href="../../concepts/tables.html#table-name-resolution"
+ *                        target="_top">name resolution rules</a>.  Typically
+ *                        this is used when retrieving series/tracks from a
+ *                        view (which contains partial series/tracks) but the
+ *                        user wants to retrieve the entire original
+ *                        series/tracks. Can be blank.
  * @param offset  A positive integer indicating the number of initial
  *                series/tracks to skip (useful for paging through the
  *                results).  The minimum allowed value is 0. The maximum
@@ -275,28 +299,35 @@ GetRecordsBySeriesResponse<boost::any> GPUdb::getRecordsBySeries( const std::str
                                                                   const std::map<std::string, std::string>& options ) const;
 
 /**
- * Retrieves the complete series/track records from the given @a worldTableName
- * based on the partial track information contained in the @a tableName.
+ * Retrieves the complete series/track records from the given
+ * @a worldTableName based on the partial track information contained in
+ * the @a tableName.
  * <p>
- * This operation supports paging through the data via the @a offset and @a
- * limit parameters.
+ * This operation supports paging through the data via the @a offset and
+ * @a limit parameters.
  * <p>
  * In contrast to {@link
  * #getRecords(const std::string&,const int64_t,const int64_t,const std::map<std::string, std::string>&,GetRecordsResponse<boost::any>&) const}
- * this returns records grouped by series/track. So if @a offset is 0 and @a
- * limit is 5 this operation would return the first 5 series/tracks in @a
- * tableName. Each series/track will be returned sorted by their TIMESTAMP
- * column.
+ * this returns records grouped by
+ * series/track. So if @a offset is 0 and @a limit is 5 this operation
+ * would return the first 5 series/tracks in @a tableName. Each series/track
+ * will be returned sorted by their TIMESTAMP column.
  * 
- * @param tableName  Name of the collection/table/view for which series/tracks
- *                   will be fetched.
+ * @param tableName  Name of the table or view for which series/tracks will be
+ *                   fetched, in [schema_name.]table_name format, using
+ *                   standard <a
+ *                   href="../../concepts/tables.html#table-name-resolution"
+ *                   target="_top">name resolution rules</a>.
  * @param worldTableName  Name of the table containing the complete
  *                        series/track information to be returned for the
- *                        tracks present in the @a tableName. Typically this is
- *                        used when retrieving series/tracks from a view (which
- *                        contains partial series/tracks) but the user wants to
- *                        retrieve the entire original series/tracks. Can be
- *                        blank.
+ *                        tracks present in the @a tableName, in
+ *                        [schema_name.]table_name format, using standard <a
+ *                        href="../../concepts/tables.html#table-name-resolution"
+ *                        target="_top">name resolution rules</a>.  Typically
+ *                        this is used when retrieving series/tracks from a
+ *                        view (which contains partial series/tracks) but the
+ *                        user wants to retrieve the entire original
+ *                        series/tracks. Can be blank.
  * @param offset  A positive integer indicating the number of initial
  *                series/tracks to skip (useful for paging through the
  *                results).  The minimum allowed value is 0. The maximum
@@ -321,15 +352,17 @@ GetRecordsBySeriesResponse<boost::any>& GPUdb::getRecordsBySeries( const std::st
                                                                    GetRecordsBySeriesResponse<boost::any>& response_ ) const;
 
 /**
- * Retrieves records from a collection. The operation can optionally return the
- * record IDs which can be used in certain queries such as {@link
- * #deleteRecords(const DeleteRecordsRequest&) const}.
+ * Retrieves records from a collection. The operation can optionally
+ * return the record IDs which can be used in certain queries such as
+ * {@link #deleteRecords(const DeleteRecordsRequest&) const}.
  * <p>
- * This operation supports paging through the data via the @a offset and @a
- * limit parameters.
+ * This operation supports paging through the data via the @a offset and
+ * @a limit parameters.
  * <p>
  * Note that when using the Java API, it is not possible to retrieve records
- * from join tables using this operation.
+ * from
+ * join views using this operation.
+ * (DEPRECATED)
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -341,15 +374,18 @@ template<>
 GetRecordsFromCollectionResponse<boost::any> GPUdb::getRecordsFromCollection( const GetRecordsFromCollectionRequest& request_ ) const;
 
 /**
- * Retrieves records from a collection. The operation can optionally return the
- * record IDs which can be used in certain queries such as {@link
+ * Retrieves records from a collection. The operation can optionally
+ * return the record IDs which can be used in certain queries such as
+ * {@link
  * #deleteRecords(const DeleteRecordsRequest&,DeleteRecordsResponse&) const}.
  * <p>
- * This operation supports paging through the data via the @a offset and @a
- * limit parameters.
+ * This operation supports paging through the data via the @a offset and
+ * @a limit parameters.
  * <p>
  * Note that when using the Java API, it is not possible to retrieve records
- * from join tables using this operation.
+ * from
+ * join views using this operation.
+ * (DEPRECATED)
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -365,18 +401,25 @@ GetRecordsFromCollectionResponse<boost::any>& GPUdb::getRecordsFromCollection( c
                                                                                GetRecordsFromCollectionResponse<boost::any>& response_ ) const;
 
 /**
- * Retrieves records from a collection. The operation can optionally return the
- * record IDs which can be used in certain queries such as {@link
+ * Retrieves records from a collection. The operation can optionally
+ * return the record IDs which can be used in certain queries such as
+ * {@link
  * #deleteRecords(const std::string&,const std::vector<std::string>&,const std::map<std::string, std::string>&) const}.
  * <p>
- * This operation supports paging through the data via the @a offset and @a
- * limit parameters.
+ * This operation supports paging through the data via the @a offset and
+ * @a limit parameters.
  * <p>
  * Note that when using the Java API, it is not possible to retrieve records
- * from join tables using this operation.
+ * from
+ * join views using this operation.
+ * (DEPRECATED)
  * 
  * @param tableName  Name of the collection or table from which records are to
- *                   be retrieved. Must be an existing collection or table.
+ *                   be retrieved, in [schema_name.]table_name format, using
+ *                   standard <a
+ *                   href="../../concepts/tables.html#table-name-resolution"
+ *                   target="_top">name resolution rules</a>.  Must be an
+ *                   existing collection or table.
  * @param offset  A positive integer indicating the number of initial results
  *                to skip (this can be useful for paging through the results).
  *                The minimum allowed value is 0. The maximum allowed value is
@@ -392,9 +435,9 @@ GetRecordsFromCollectionResponse<boost::any>& GPUdb::getRecordsFromCollection( c
  * @param options
  *                 <ul>
  *                         <li>
- *                 gpudb::get_records_from_collection_return_record_ids: If
- *                 'true' then return the internal record ID along with each
- *                 returned record. Default is 'false'.
+ *                 gpudb::get_records_from_collection_return_record_ids: If @a
+ *                 true then return the internal record ID along with each
+ *                 returned record.
  *                 <ul>
  *                         <li> gpudb::get_records_from_collection_true
  *                         <li> gpudb::get_records_from_collection_false
@@ -413,18 +456,25 @@ GetRecordsFromCollectionResponse<boost::any> GPUdb::getRecordsFromCollection( co
                                                                               const std::map<std::string, std::string>& options ) const;
 
 /**
- * Retrieves records from a collection. The operation can optionally return the
- * record IDs which can be used in certain queries such as {@link
+ * Retrieves records from a collection. The operation can optionally
+ * return the record IDs which can be used in certain queries such as
+ * {@link
  * #deleteRecords(const std::string&,const std::vector<std::string>&,const std::map<std::string, std::string>&,DeleteRecordsResponse&) const}.
  * <p>
- * This operation supports paging through the data via the @a offset and @a
- * limit parameters.
+ * This operation supports paging through the data via the @a offset and
+ * @a limit parameters.
  * <p>
  * Note that when using the Java API, it is not possible to retrieve records
- * from join tables using this operation.
+ * from
+ * join views using this operation.
+ * (DEPRECATED)
  * 
  * @param tableName  Name of the collection or table from which records are to
- *                   be retrieved. Must be an existing collection or table.
+ *                   be retrieved, in [schema_name.]table_name format, using
+ *                   standard <a
+ *                   href="../../concepts/tables.html#table-name-resolution"
+ *                   target="_top">name resolution rules</a>.  Must be an
+ *                   existing collection or table.
  * @param offset  A positive integer indicating the number of initial results
  *                to skip (this can be useful for paging through the results).
  *                The minimum allowed value is 0. The maximum allowed value is
@@ -440,9 +490,9 @@ GetRecordsFromCollectionResponse<boost::any> GPUdb::getRecordsFromCollection( co
  * @param options
  *                 <ul>
  *                         <li>
- *                 gpudb::get_records_from_collection_return_record_ids: If
- *                 'true' then return the internal record ID along with each
- *                 returned record. Default is 'false'.
+ *                 gpudb::get_records_from_collection_return_record_ids: If @a
+ *                 true then return the internal record ID along with each
+ *                 returned record.
  *                 <ul>
  *                         <li> gpudb::get_records_from_collection_true
  *                         <li> gpudb::get_records_from_collection_false

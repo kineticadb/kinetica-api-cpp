@@ -40,11 +40,19 @@ namespace gpudb
          * Constructs a CreateJoinTableRequest object with the specified
          * parameters.
          * 
-         * @param[in] joinTableName_  Name of the join table to be created.
-         *                            Has the same naming restrictions as <a
-         *                            href="../../concepts/tables.html"
-         *                            target="_top">tables</a>.
-         * @param[in] tableNames_  The list of table names composing the join.
+         * @param[in] joinTableName_  Name of the join table to be created, in
+         *                            [schema_name.]table_name format, using
+         *                            standard <a
+         *                            href="../../concepts/tables.html#table-name-resolution"
+         *                            target="_top">name resolution rules</a>
+         *                            and meeting <a
+         *                            href="../../concepts/tables.html#table-naming-criteria"
+         *                            target="_top">table naming criteria</a>.
+         * @param[in] tableNames_  The list of table names composing the join,
+         *                         each in [schema_name.]table_name format,
+         *                         using standard <a
+         *                         href="../../concepts/tables.html#table-name-resolution"
+         *                         target="_top">name resolution rules</a>.
          *                         Corresponds to a SQL statement FROM clause.
          * @param[in] columnNames_  List of member table columns or column
          *                          expressions to be included in the join.
@@ -69,15 +77,17 @@ namespace gpudb
          * @param[in] options_  Optional parameters.
          *                      <ul>
          *                              <li>
-         *                      gpudb::create_join_table_collection_name: Name
-         *                      of a collection which is to contain the join.
-         *                      If the collection provided is non-existent, the
-         *                      collection will be automatically created. If
-         *                      empty, then the join will be at the top level.
-         *                      The default value is ''.
+         *                      gpudb::create_join_table_collection_name:
+         *                      [DEPRECATED--please specify the containing
+         *                      schema for the join as part of @a joinTableName
+         *                      and use /create/schema to create the schema if
+         *                      non-existent]  Name of a schema for the join.
+         *                      If the schema is non-existent, it will be
+         *                      automatically created.  The default value is
+         *                      ''.
          *                              <li>
          *                      gpudb::create_join_table_max_query_dimensions:
-         *                      Obsolete in GPUdb v7.0
+         *                      No longer used.
          *                              <li>
          *                      gpudb::create_join_table_optimize_lookups: Use
          *                      more memory to speed up the joining of tables.

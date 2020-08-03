@@ -46,6 +46,11 @@ namespace gpudb
          *                     resource group must exist, otherwise, an empty
          *                     string assigns the user to the default resource
          *                     group.
+         *                             <li>
+         *                     gpudb::alter_user_set_default_schema: Set the
+         *                     default_schema for an internal user. An empty
+         *                     string means the user will have no default
+         *                     schema.
          *                     </ul>
          * @param[in] value_  The value of the modification, depending on @a
          *                    action.

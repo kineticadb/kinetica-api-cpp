@@ -13,16 +13,18 @@ namespace gpudb
      * A set of input parameters for {@link
      * #filter(const FilterRequest&) const}.
      * <p>
-     * Filters data based on the specified expression.  The results are stored
-     * in a <a href="../../concepts/filtered_views.html" target="_top">result
-     * set</a> with the given @a viewName.
+     * Filters data based on the specified expression.  The results are
+     * stored in a <a href="../../concepts/filtered_views.html"
+     * target="_top">result set</a> with the
+     * given @a viewName.
      * <p>
      * For details see <a href="../../concepts/expressions.html"
      * target="_top">Expressions</a>.
      * <p>
      * The response message contains the number of points for which the
-     * expression evaluated to be true, which is equivalent to the size of the
-     * result view.
+     * expression
+     * evaluated to be true, which is equivalent to the size of the result
+     * view.
      */
     struct FilterRequest
     {
@@ -41,18 +43,23 @@ namespace gpudb
         /**
          * Constructs a FilterRequest object with the specified parameters.
          * 
-         * @param[in] tableName_  Name of the table to filter.  This may be the
-         *                        name of a collection, a table, or a view
-         *                        (when chaining queries).  If filtering a
-         *                        collection, all child tables where the filter
-         *                        expression is valid will be filtered; the
-         *                        filtered result tables will then be placed in
-         *                        a collection specified by @a viewName.
+         * @param[in] tableName_  Name of the table to filter, in
+         *                        [schema_name.]table_name format, using
+         *                        standard <a
+         *                        href="../../concepts/tables.html#table-name-resolution"
+         *                        target="_top">name resolution rules</a>.
+         *                        This may be the name of a table or a view
+         *                        (when chaining queries).
          * @param[in] viewName_  If provided, then this will be the name of the
-         *                       view containing the results. Has the same
-         *                       naming restrictions as <a
-         *                       href="../../concepts/tables.html"
-         *                       target="_top">tables</a>.
+         *                       view containing the results, in
+         *                       [schema_name.]view_name format, using standard
+         *                       <a
+         *                       href="../../concepts/tables.html#table-name-resolution"
+         *                       target="_top">name resolution rules</a> and
+         *                       meeting <a
+         *                       href="../../concepts/tables.html#table-naming-criteria"
+         *                       target="_top">table naming criteria</a>.  Must
+         *                       not be an already existing table or view.
          * @param[in] expression_  The select expression to filter the
          *                         specified table.  For details see <a
          *                         href="../../concepts/expressions.html"
@@ -60,11 +67,12 @@ namespace gpudb
          * @param[in] options_  Optional parameters.
          *                      <ul>
          *                              <li> gpudb::filter_collection_name:
-         *                      Name of a collection which is to contain the
-         *                      newly created view. If the collection provided
-         *                      is non-existent, the collection will be
-         *                      automatically created. If empty, then the newly
-         *                      created view will be top-level.
+         *                      [DEPRECATED--please specify the containing
+         *                      schema for the view as part of @a viewName and
+         *                      use /create/schema to create the schema if
+         *                      non-existent]  Name of a schema for the newly
+         *                      created view. If the schema is non-existent, it
+         *                      will be automatically created.
          *                              <li> gpudb::filter_view_id: view this
          *                      filtered-view is part of.  The default value is
          *                      ''.
@@ -151,16 +159,18 @@ namespace gpudb
      * A set of output parameters for {@link
      * #filter(const FilterRequest&) const}.
      * <p>
-     * Filters data based on the specified expression.  The results are stored
-     * in a <a href="../../concepts/filtered_views.html" target="_top">result
-     * set</a> with the given @a viewName.
+     * Filters data based on the specified expression.  The results are
+     * stored in a <a href="../../concepts/filtered_views.html"
+     * target="_top">result set</a> with the
+     * given @a viewName.
      * <p>
      * For details see <a href="../../concepts/expressions.html"
      * target="_top">Expressions</a>.
      * <p>
      * The response message contains the number of points for which the
-     * expression evaluated to be true, which is equivalent to the size of the
-     * result view.
+     * expression
+     * evaluated to be true, which is equivalent to the size of the result
+     * view.
      */
     struct FilterResponse
     {

@@ -17,8 +17,8 @@ namespace gpudb
      * the type of job and the current state of execution, the action may not
      * be successfully executed. The final result of the attempted actions for
      * each specified job is returned in the status array of the response. See
-     * <a href="../../gpudbAdmin/job_manager.html" target="_top">Job
-     * Manager</a> for more information.
+     * <a href="../../admin/job_manager.html" target="_top">Job Manager</a> for
+     * more information.
      */
     struct AdminAlterJobsRequest
     {
@@ -45,6 +45,10 @@ namespace gpudb
          *                             <li> gpudb::admin_alter_jobs_cancel
          *                     </ul>
          * @param[in] options_  Optional parameters.
+         *                      <ul>
+         *                              <li> gpudb::admin_alter_jobs_job_tag:
+         *                      Job tag returned in call to create the job
+         *                      </ul>
          * 
          */
         AdminAlterJobsRequest(const std::vector<int64_t>& jobIds_, const std::string& action_, const std::map<std::string, std::string>& options_):
@@ -119,8 +123,8 @@ namespace gpudb
      * the type of job and the current state of execution, the action may not
      * be successfully executed. The final result of the attempted actions for
      * each specified job is returned in the status array of the response. See
-     * <a href="../../gpudbAdmin/job_manager.html" target="_top">Job
-     * Manager</a> for more information.
+     * <a href="../../admin/job_manager.html" target="_top">Job Manager</a> for
+     * more information.
      */
     struct AdminAlterJobsResponse
     {

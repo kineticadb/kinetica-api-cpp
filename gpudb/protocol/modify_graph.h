@@ -16,12 +16,15 @@ namespace gpudb
      * Update an existing graph network using given nodes, edges, weights,
      * restrictions, and options.
 
-     * IMPORTANT: It's highly recommended that you review the <a
-     * href="../../graph_solver/network_graph_solver.html"
-     * target="_top">Network Graphs & Solvers</a> concepts documentation, the
+     * IMPORTANT: It's highly recommended that you review the
+     * <a href="../../graph_solver/network_graph_solver.html"
+     * target="_top">Network Graphs & Solvers</a>
+     * concepts documentation, the
      * <a href="../../graph_solver/examples/graph_rest_guide.html"
-     * target="_top">Graph REST Tutorial</a>, and/or some <a
-     * href="../../graph_solver/examples.html" target="_top">graph examples</a>
+     * target="_top">Graph REST Tutorial</a>,
+     * and/or some
+     * <a href="../../graph_solver/examples.html#match-graph"
+     * target="_top">/match/graph examples</a>
      * before using this endpoint.
      */
     struct ModifyGraphRequest
@@ -202,8 +205,16 @@ namespace gpudb
          *                      The default value is gpudb::modify_graph_false.
          *                              <li> gpudb::modify_graph_graph_table:
          *                      If specified, the created graph is also created
-         *                      as a table with the given name and following
-         *                      identifier columns: 'EDGE_ID', 'EDGE_NODE1_ID',
+         *                      as a table with the given name, in
+         *                      [schema_name.]table_name format, using standard
+         *                      <a
+         *                      href="../../concepts/tables.html#table-name-resolution"
+         *                      target="_top">name resolution rules</a> and
+         *                      meeting <a
+         *                      href="../../concepts/tables.html#table-naming-criteria"
+         *                      target="_top">table naming criteria</a>.  This
+         *                      table will have the following identifier
+         *                      columns: 'EDGE_ID', 'EDGE_NODE1_ID',
          *                      'EDGE_NODE2_ID'. If left blank, no table is
          *                      created.  The default value is ''.
          *                              <li>
@@ -338,12 +349,15 @@ namespace gpudb
      * Update an existing graph network using given nodes, edges, weights,
      * restrictions, and options.
 
-     * IMPORTANT: It's highly recommended that you review the <a
-     * href="../../graph_solver/network_graph_solver.html"
-     * target="_top">Network Graphs & Solvers</a> concepts documentation, the
+     * IMPORTANT: It's highly recommended that you review the
+     * <a href="../../graph_solver/network_graph_solver.html"
+     * target="_top">Network Graphs & Solvers</a>
+     * concepts documentation, the
      * <a href="../../graph_solver/examples/graph_rest_guide.html"
-     * target="_top">Graph REST Tutorial</a>, and/or some <a
-     * href="../../graph_solver/examples.html" target="_top">graph examples</a>
+     * target="_top">Graph REST Tutorial</a>,
+     * and/or some
+     * <a href="../../graph_solver/examples.html#match-graph"
+     * target="_top">/match/graph examples</a>
      * before using this endpoint.
      */
     struct ModifyGraphResponse

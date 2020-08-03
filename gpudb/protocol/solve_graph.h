@@ -15,15 +15,19 @@ namespace gpudb
      * <p>
      * Solves an existing graph for a type of problem (e.g., shortest path,
      * page rank, travelling salesman, etc.) using source nodes, destination
-     * nodes, and additional, optional weights and restrictions.
+     * nodes, and
+     * additional, optional weights and restrictions.
      * <p>
-     * IMPORTANT: It's highly recommended that you review the <a
-     * href="../../graph_solver/network_graph_solver.html"
-     * target="_top">Network Graphs & Solvers</a> concepts documentation, the
+     * IMPORTANT: It's highly recommended that you review the
+     * <a href="../../graph_solver/network_graph_solver.html"
+     * target="_top">Network Graphs & Solvers</a>
+     * concepts documentation, the
      * <a href="../../graph_solver/examples/graph_rest_guide.html"
-     * target="_top">Graph REST Tutorial</a>, and/or some <a
-     * href="../../graph_solver/examples.html#solve-graph"
-     * target="_top">/solve/graph examples</a> before using this endpoint.
+     * target="_top">Graph REST Tutorial</a>,
+     * and/or some
+     * <a href="../../graph_solver/examples.html#match-graph"
+     * target="_top">/match/graph examples</a>
+     * before using this endpoint.
      */
     struct SolveGraphRequest
     {
@@ -155,7 +159,11 @@ namespace gpudb
          *                               (target) nodes. For @a
          *                               BACKHAUL_ROUTING, this list depicts
          *                               the remote assets.
-         * @param[in] solutionTable_  Name of the table to store the solution.
+         * @param[in] solutionTable_  Name of the table to store the solution,
+         *                            in [schema_name.]table_name format, using
+         *                            standard <a
+         *                            href="../../concepts/tables.html#table-name-resolution"
+         *                            target="_top">name resolution rules</a>.
          * @param[in] options_  Additional parameters
          *                      <ul>
          *                              <li>
@@ -281,6 +289,27 @@ namespace gpudb
          *                              <li> gpudb::solve_graph_false
          *                      </ul>
          *                      The default value is gpudb::solve_graph_true.
+         *                              <li>
+         *                      gpudb::solve_graph_output_edge_path: If true
+         *                      then concatenated edge ids will be added as the
+         *                      EDGE path column of the solution table for each
+         *                      source and target pair in shortest path solves.
+         *                      <ul>
+         *                              <li> gpudb::solve_graph_true
+         *                              <li> gpudb::solve_graph_false
+         *                      </ul>
+         *                      The default value is gpudb::solve_graph_false.
+         *                              <li>
+         *                      gpudb::solve_graph_output_wkt_path: If true
+         *                      then concatenated wkt line segments will be
+         *                      added as the Wktroute column of the solution
+         *                      table for each source and target pair in
+         *                      shortest path solves.
+         *                      <ul>
+         *                              <li> gpudb::solve_graph_true
+         *                              <li> gpudb::solve_graph_false
+         *                      </ul>
+         *                      The default value is gpudb::solve_graph_true.
          *                      </ul>
          * 
          */
@@ -394,15 +423,19 @@ namespace gpudb
      * <p>
      * Solves an existing graph for a type of problem (e.g., shortest path,
      * page rank, travelling salesman, etc.) using source nodes, destination
-     * nodes, and additional, optional weights and restrictions.
+     * nodes, and
+     * additional, optional weights and restrictions.
      * <p>
-     * IMPORTANT: It's highly recommended that you review the <a
-     * href="../../graph_solver/network_graph_solver.html"
-     * target="_top">Network Graphs & Solvers</a> concepts documentation, the
+     * IMPORTANT: It's highly recommended that you review the
+     * <a href="../../graph_solver/network_graph_solver.html"
+     * target="_top">Network Graphs & Solvers</a>
+     * concepts documentation, the
      * <a href="../../graph_solver/examples/graph_rest_guide.html"
-     * target="_top">Graph REST Tutorial</a>, and/or some <a
-     * href="../../graph_solver/examples.html#solve-graph"
-     * target="_top">/solve/graph examples</a> before using this endpoint.
+     * target="_top">Graph REST Tutorial</a>,
+     * and/or some
+     * <a href="../../graph_solver/examples.html#match-graph"
+     * target="_top">/match/graph examples</a>
+     * before using this endpoint.
      */
     struct SolveGraphResponse
     {

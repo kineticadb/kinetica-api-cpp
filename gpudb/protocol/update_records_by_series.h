@@ -13,9 +13,9 @@ namespace gpudb
      * A set of input parameters for {@link
      * #updateRecordsBySeries(const UpdateRecordsBySeriesRequest&) const}.
      * <p>
-     * Updates the view specified by @a tableName to include full series
-     * (track) information from the @a worldTableName for the series (tracks)
-     * present in the @a viewName.
+     * Updates the view specified by @a tableName to include full
+     * series (track) information from the @a worldTableName for the series
+     * (tracks) present in the @a viewName.
      */
     struct UpdateRecordsBySeriesRequest
     {
@@ -38,12 +38,24 @@ namespace gpudb
          * parameters.
          * 
          * @param[in] tableName_  Name of the view on which the update
-         *                        operation will be performed. Must be an
-         *                        existing view.
+         *                        operation will be performed, in
+         *                        [schema_name.]view_name format, using
+         *                        standard <a
+         *                        href="../../concepts/tables.html#table-name-resolution"
+         *                        target="_top">name resolution rules</a>.
+         *                        Must be an existing view.
          * @param[in] worldTableName_  Name of the table containing the
-         *                             complete series (track) information.
-         * @param[in] viewName_  name of the view containing the series
-         *                       (tracks) which have to be updated.
+         *                             complete series (track) information, in
+         *                             [schema_name.]table_name format, using
+         *                             standard <a
+         *                             href="../../concepts/tables.html#table-name-resolution"
+         *                             target="_top">name resolution rules</a>.
+         * @param[in] viewName_  Name of the view containing the series
+         *                       (tracks) which have to be updated, in
+         *                       [schema_name.]view_name format, using standard
+         *                       <a
+         *                       href="../../concepts/tables.html#table-name-resolution"
+         *                       target="_top">name resolution rules</a>.
          * @param[in] reserved_
          * @param[in] options_  Optional parameters.
          * 
@@ -132,9 +144,9 @@ namespace gpudb
      * A set of output parameters for {@link
      * #updateRecordsBySeries(const UpdateRecordsBySeriesRequest&) const}.
      * <p>
-     * Updates the view specified by @a tableName to include full series
-     * (track) information from the @a worldTableName for the series (tracks)
-     * present in the @a viewName.
+     * Updates the view specified by @a tableName to include full
+     * series (track) information from the @a worldTableName for the series
+     * (tracks) present in the @a viewName.
      */
     struct UpdateRecordsBySeriesResponse
     {

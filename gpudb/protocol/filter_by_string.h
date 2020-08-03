@@ -13,11 +13,12 @@ namespace gpudb
      * A set of input parameters for {@link
      * #filterByString(const FilterByStringRequest&) const}.
      * <p>
-     * Calculates which objects from a table, collection, or view match a
-     * string expression for the given string columns. The options
-     * 'case_sensitive' can be used to modify the behavior for all modes except
-     * 'search'. For 'search' mode details and limitations, see <a
-     * href="../../concepts/full_text_search.html" target="_top">Full Text
+     * Calculates which objects from a table or view match a string
+     * expression for the given string columns. Setting
+     * @a case_sensitive can modify case sensitivity in matching
+     * for all modes except @a search. For
+     * @a search mode details and limitations, see
+     * <a href="../../concepts/full_text_search.html" target="_top">Full Text
      * Search</a>.
      */
     struct FilterByStringRequest
@@ -42,13 +43,22 @@ namespace gpudb
          * parameters.
          * 
          * @param[in] tableName_  Name of the table on which the filter
-         *                        operation will be performed.  Must be an
-         *                        existing table, collection or view.
+         *                        operation will be performed, in
+         *                        [schema_name.]table_name format, using
+         *                        standard <a
+         *                        href="../../concepts/tables.html#table-name-resolution"
+         *                        target="_top">name resolution rules</a>.
+         *                        Must be an existing table or view.
          * @param[in] viewName_  If provided, then this will be the name of the
-         *                       view containing the results. Has the same
-         *                       naming restrictions as <a
-         *                       href="../../concepts/tables.html"
-         *                       target="_top">tables</a>.
+         *                       view containing the results, in
+         *                       [schema_name.]view_name format, using standard
+         *                       <a
+         *                       href="../../concepts/tables.html#table-name-resolution"
+         *                       target="_top">name resolution rules</a> and
+         *                       meeting <a
+         *                       href="../../concepts/tables.html#table-naming-criteria"
+         *                       target="_top">table naming criteria</a>.  Must
+         *                       not be an already existing table or view.
          * @param[in] expression_  The expression with which to filter the
          *                         table.
          * @param[in] mode_  The string filtering mode to apply. See below for
@@ -77,20 +87,21 @@ namespace gpudb
          *                   number of records is too large, it will return 0.
          *                   </ul>
          * @param[in] columnNames_  List of columns on which to apply the
-         *                          filter. Ignored for 'search' mode.
+         *                          filter. Ignored for @a search mode.
          * @param[in] options_  Optional parameters.
          *                      <ul>
          *                              <li>
-         *                      gpudb::filter_by_string_collection_name: Name
-         *                      of a collection which is to contain the newly
-         *                      created view. If the collection provided is
-         *                      non-existent, the collection will be
-         *                      automatically created. If empty, then the newly
-         *                      created view will be top-level.
+         *                      gpudb::filter_by_string_collection_name:
+         *                      [DEPRECATED--please specify the containing
+         *                      schema for the view as part of @a viewName and
+         *                      use /create/schema to create the schema if
+         *                      non-existent]  Name of a schema for the newly
+         *                      created view. If the schema is non-existent, it
+         *                      will be automatically created.
          *                              <li>
-         *                      gpudb::filter_by_string_case_sensitive: If
-         *                      'false' then string filtering will ignore case.
-         *                      Does not apply to 'search' mode.
+         *                      gpudb::filter_by_string_case_sensitive: If @a
+         *                      false then string filtering will ignore case.
+         *                      Does not apply to @a search mode.
          *                      <ul>
          *                              <li> gpudb::filter_by_string_true
          *                              <li> gpudb::filter_by_string_false
@@ -192,11 +203,12 @@ namespace gpudb
      * A set of output parameters for {@link
      * #filterByString(const FilterByStringRequest&) const}.
      * <p>
-     * Calculates which objects from a table, collection, or view match a
-     * string expression for the given string columns. The options
-     * 'case_sensitive' can be used to modify the behavior for all modes except
-     * 'search'. For 'search' mode details and limitations, see <a
-     * href="../../concepts/full_text_search.html" target="_top">Full Text
+     * Calculates which objects from a table or view match a string
+     * expression for the given string columns. Setting
+     * @a case_sensitive can modify case sensitivity in matching
+     * for all modes except @a search. For
+     * @a search mode details and limitations, see
+     * <a href="../../concepts/full_text_search.html" target="_top">Full Text
      * Search</a>.
      */
     struct FilterByStringResponse

@@ -18,9 +18,9 @@ namespace gpudb
      * (matching multiple records), a single record identified by @a record_id
      * options, or all records when using @a delete_all_records.  Note that the
      * three selection criteria are mutually exclusive.  This operation cannot
-     * be run on a collection or a view.  The operation is synchronous meaning
-     * that a response will not be available until the request is completely
-     * processed and all the matching records are deleted.
+     * be run on a view.  The operation is synchronous meaning that a response
+     * will not be available until the request is completely processed and all
+     * the matching records are deleted.
      */
     struct DeleteRecordsRequest
     {
@@ -41,8 +41,12 @@ namespace gpudb
          * parameters.
          * 
          * @param[in] tableName_  Name of the table from which to delete
-         *                        records. The set must be a currently existing
-         *                        table and not a collection or a view.
+         *                        records, in [schema_name.]table_name format,
+         *                        using standard <a
+         *                        href="../../concepts/tables.html#table-name-resolution"
+         *                        target="_top">name resolution rules</a>. Must
+         *                        contain the name of an existing table; not
+         *                        applicable to views.
          * @param[in] expressions_  A list of the actual predicates, one for
          *                          each select; format should follow the
          *                          guidelines provided <a
@@ -153,9 +157,9 @@ namespace gpudb
      * (matching multiple records), a single record identified by @a record_id
      * options, or all records when using @a delete_all_records.  Note that the
      * three selection criteria are mutually exclusive.  This operation cannot
-     * be run on a collection or a view.  The operation is synchronous meaning
-     * that a response will not be available until the request is completely
-     * processed and all the matching records are deleted.
+     * be run on a view.  The operation is synchronous meaning that a response
+     * will not be available until the request is completely processed and all
+     * the matching records are deleted.
      */
     struct DeleteRecordsResponse
     {

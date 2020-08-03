@@ -13,17 +13,19 @@ namespace gpudb
      * A set of input parameters for {@link
      * #filterByRange(const FilterByRangeRequest&) const}.
      * <p>
-     * Calculates which objects from a table have a column that is within the
-     * given bounds. An object from the table identified by @a tableName is
-     * added to the view @a viewName if its column is within [@a lowerBound, @a
-     * upperBound] (inclusive). The operation is synchronous. The response
-     * provides a count of the number of objects which passed the bound filter.
-     * Although this functionality can also be accomplished with the standard
-     * filter function, it is more efficient.
+     * Calculates which objects from a table have a column that is within
+     * the given bounds. An object from the table identified by @a tableName is
+     * added to the view @a viewName if its column is within
+     * [@a lowerBound, @a upperBound] (inclusive). The operation is
+     * synchronous. The response provides a count of the number of objects
+     * which passed
+     * the bound filter.  Although this functionality can also be accomplished
+     * with the
+     * standard filter function, it is more efficient.
      * <p>
      * For track objects, the count reflects how many points fall within the
-     * given bounds (which may not include all the track points of any given
-     * track).
+     * given
+     * bounds (which may not include all the track points of any given track).
      */
     struct FilterByRangeRequest
     {
@@ -47,13 +49,22 @@ namespace gpudb
          * parameters.
          * 
          * @param[in] tableName_  Name of the table on which the filter by
-         *                        range operation will be performed.  Must be
-         *                        an existing table.
+         *                        range operation will be performed, in
+         *                        [schema_name.]table_name format, using
+         *                        standard <a
+         *                        href="../../concepts/tables.html#table-name-resolution"
+         *                        target="_top">name resolution rules</a>.
+         *                        Must be an existing table.
          * @param[in] viewName_  If provided, then this will be the name of the
-         *                       view containing the results. Has the same
-         *                       naming restrictions as <a
-         *                       href="../../concepts/tables.html"
-         *                       target="_top">tables</a>.
+         *                       view containing the results, in
+         *                       [schema_name.]view_name format, using standard
+         *                       <a
+         *                       href="../../concepts/tables.html#table-name-resolution"
+         *                       target="_top">name resolution rules</a> and
+         *                       meeting <a
+         *                       href="../../concepts/tables.html#table-naming-criteria"
+         *                       target="_top">table naming criteria</a>.  Must
+         *                       not be an already existing table or view.
          * @param[in] columnName_  Name of a column on which the operation
          *                         would be applied.
          * @param[in] lowerBound_  Value of the lower bound (inclusive).
@@ -61,12 +72,13 @@ namespace gpudb
          * @param[in] options_  Optional parameters.
          *                      <ul>
          *                              <li>
-         *                      gpudb::filter_by_range_collection_name: Name of
-         *                      a collection which is to contain the newly
-         *                      created view. If the collection provided is
-         *                      non-existent, the collection will be
-         *                      automatically created. If empty, then the newly
-         *                      created view will be top-level.
+         *                      gpudb::filter_by_range_collection_name:
+         *                      [DEPRECATED--please specify the containing
+         *                      schema for the view as part of @a viewName and
+         *                      use /create/schema to create the schema if
+         *                      non-existent]  Name of a schema for the newly
+         *                      created view. If the schema is non-existent, it
+         *                      will be automatically created.
          *                      </ul>
          * 
          */
@@ -162,17 +174,19 @@ namespace gpudb
      * A set of output parameters for {@link
      * #filterByRange(const FilterByRangeRequest&) const}.
      * <p>
-     * Calculates which objects from a table have a column that is within the
-     * given bounds. An object from the table identified by @a tableName is
-     * added to the view @a viewName if its column is within [@a lowerBound, @a
-     * upperBound] (inclusive). The operation is synchronous. The response
-     * provides a count of the number of objects which passed the bound filter.
-     * Although this functionality can also be accomplished with the standard
-     * filter function, it is more efficient.
+     * Calculates which objects from a table have a column that is within
+     * the given bounds. An object from the table identified by @a tableName is
+     * added to the view @a viewName if its column is within
+     * [@a lowerBound, @a upperBound] (inclusive). The operation is
+     * synchronous. The response provides a count of the number of objects
+     * which passed
+     * the bound filter.  Although this functionality can also be accomplished
+     * with the
+     * standard filter function, it is more efficient.
      * <p>
      * For track objects, the count reflects how many points fall within the
-     * given bounds (which may not include all the track points of any given
-     * track).
+     * given
+     * bounds (which may not include all the track points of any given track).
      */
     struct FilterByRangeResponse
     {

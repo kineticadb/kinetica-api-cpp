@@ -13,13 +13,16 @@ namespace gpudb
      * A set of input parameters for {@link
      * #filterByBoxGeometry(const FilterByBoxGeometryRequest&) const}.
      * <p>
-     * Calculates which geospatial geometry objects from a table intersect a
-     * rectangular box. The operation is synchronous, meaning that a response
-     * will not be returned until all the objects are fully available. The
-     * response payload provides the count of the resulting set. A new
-     * resultant set which satisfies the input NAI restriction specification is
-     * also created when a @a viewName is passed in as part of the input
-     * payload.
+     * Calculates which geospatial geometry objects from a table intersect
+     * a rectangular box. The operation is synchronous, meaning that a response
+     * will
+     * not be returned until all the objects are fully available. The response
+     * payload
+     * provides the count of the resulting set. A new resultant set which
+     * satisfies the
+     * input NAI restriction specification is also created when a @a viewName
+     * is
+     * passed in as part of the input payload.
      */
     struct FilterByBoxGeometryRequest
     {
@@ -45,12 +48,22 @@ namespace gpudb
          * parameters.
          * 
          * @param[in] tableName_  Name of the table on which the bounding box
-         *                        operation will be performed. Must be an
-         *                        existing table.
-         * @param[in] viewName_  Optional name of the result view that will be
-         *                       created containing the results of the query.
-         *                       Must not be an already existing collection,
-         *                       table or view.
+         *                        operation will be performed, in
+         *                        [schema_name.]table_name format, using
+         *                        standard <a
+         *                        href="../../concepts/tables.html#table-name-resolution"
+         *                        target="_top">name resolution rules</a>. Must
+         *                        be an existing table.
+         * @param[in] viewName_  If provided, then this will be the name of the
+         *                       view containing the results, in
+         *                       [schema_name.]view_name format, using standard
+         *                       <a
+         *                       href="../../concepts/tables.html#table-name-resolution"
+         *                       target="_top">name resolution rules</a> and
+         *                       meeting <a
+         *                       href="../../concepts/tables.html#table-naming-criteria"
+         *                       target="_top">table naming criteria</a>.  Must
+         *                       not be an already existing table or view.
          * @param[in] columnName_  Name of the geospatial geometry column to be
          *                         filtered.
          * @param[in] minX_  Lower bound for the x-coordinate of the
@@ -69,11 +82,12 @@ namespace gpudb
          *                      <ul>
          *                              <li>
          *                      gpudb::filter_by_box_geometry_collection_name:
-         *                      Name of a collection which is to contain the
-         *                      newly created view. If the collection provided
-         *                      is non-existent, the collection will be
-         *                      automatically created. If empty, then the newly
-         *                      created view will be top-level.
+         *                      [DEPRECATED--please specify the containing
+         *                      schema for the view as part of @a viewName and
+         *                      use /create/schema to create the schema if
+         *                      non-existent]  Name of a schema for the newly
+         *                      created view. If the schema provided is
+         *                      non-existent, it will be automatically created.
          *                      </ul>
          * 
          */
@@ -185,13 +199,16 @@ namespace gpudb
      * A set of output parameters for {@link
      * #filterByBoxGeometry(const FilterByBoxGeometryRequest&) const}.
      * <p>
-     * Calculates which geospatial geometry objects from a table intersect a
-     * rectangular box. The operation is synchronous, meaning that a response
-     * will not be returned until all the objects are fully available. The
-     * response payload provides the count of the resulting set. A new
-     * resultant set which satisfies the input NAI restriction specification is
-     * also created when a @a viewName is passed in as part of the input
-     * payload.
+     * Calculates which geospatial geometry objects from a table intersect
+     * a rectangular box. The operation is synchronous, meaning that a response
+     * will
+     * not be returned until all the objects are fully available. The response
+     * payload
+     * provides the count of the resulting set. A new resultant set which
+     * satisfies the
+     * input NAI restriction specification is also created when a @a viewName
+     * is
+     * passed in as part of the input payload.
      */
     struct FilterByBoxGeometryResponse
     {

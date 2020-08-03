@@ -15,15 +15,17 @@ namespace gpudb
      * <p>
      * Retrieves records from a given table, optionally filtered by an
      * expression and/or sorted by a column. This operation can be performed on
-     * tables, views, or on homogeneous collections (collections containing
-     * tables of all the same type). Records can be returned encoded as binary,
-     * json or geojson.
+     * tables
+     * and views. Records can be returned encoded as binary, json, or geojson.
      * <p>
-     * This operation supports paging through the data via the @a offset and @a
-     * limit parameters. Note that when paging through a table, if the table
+     * This operation supports paging through the data via the @a offset and
+     * @a limit parameters.  Note that when paging through a table, if the
+     * table
      * (or the underlying table in case of a view) is updated (records are
-     * inserted, deleted or modified) the records retrieved may differ between
-     * calls based on the updates applied.
+     * inserted,
+     * deleted or modified) the records retrieved may differ between calls
+     * based on the
+     * updates applied.
      */
     struct GetRecordsRequest
     {
@@ -43,9 +45,12 @@ namespace gpudb
         /**
          * Constructs a GetRecordsRequest object with the specified parameters.
          * 
-         * @param[in] tableName_  Name of the table from which the records will
-         *                        be fetched. Must be a table, view or
-         *                        homogeneous collection.
+         * @param[in] tableName_  Name of the table or view from which the
+         *                        records will be fetched, in
+         *                        [schema_name.]table_name format, using
+         *                        standard <a
+         *                        href="../../concepts/tables.html#table-name-resolution"
+         *                        target="_top">name resolution rules</a>.
          * @param[in] offset_  A positive integer indicating the number of
          *                     initial results to skip (this can be useful for
          *                     paging through the results).  The minimum
@@ -111,9 +116,12 @@ namespace gpudb
         /**
          * Constructs a GetRecordsRequest object with the specified parameters.
          * 
-         * @param[in] tableName_  Name of the table from which the records will
-         *                        be fetched. Must be a table, view or
-         *                        homogeneous collection.
+         * @param[in] tableName_  Name of the table or view from which the
+         *                        records will be fetched, in
+         *                        [schema_name.]table_name format, using
+         *                        standard <a
+         *                        href="../../concepts/tables.html#table-name-resolution"
+         *                        target="_top">name resolution rules</a>.
          * @param[in] offset_  A positive integer indicating the number of
          *                     initial results to skip (this can be useful for
          *                     paging through the results).  The minimum
@@ -130,7 +138,8 @@ namespace gpudb
          *                    hasMoreRecords to see if more records exist in
          *                    the result to be fetched, and @a offset & @a
          *                    limit to request subsequent pages of results.
-         * @param[in] encoding_  Specifies the encoding for returned records.
+         * @param[in] encoding_  Specifies the encoding for returned records;
+         *                       one of @a binary, @a json, or @a geojson.
          *                       <ul>
          *                               <li> gpudb::get_records_binary
          *                               <li> gpudb::get_records_json
@@ -261,15 +270,17 @@ namespace gpudb
      * <p>
      * Retrieves records from a given table, optionally filtered by an
      * expression and/or sorted by a column. This operation can be performed on
-     * tables, views, or on homogeneous collections (collections containing
-     * tables of all the same type). Records can be returned encoded as binary,
-     * json or geojson.
+     * tables
+     * and views. Records can be returned encoded as binary, json, or geojson.
      * <p>
-     * This operation supports paging through the data via the @a offset and @a
-     * limit parameters. Note that when paging through a table, if the table
+     * This operation supports paging through the data via the @a offset and
+     * @a limit parameters.  Note that when paging through a table, if the
+     * table
      * (or the underlying table in case of a view) is updated (records are
-     * inserted, deleted or modified) the records retrieved may differ between
-     * calls based on the updates applied.
+     * inserted,
+     * deleted or modified) the records retrieved may differ between calls
+     * based on the
+     * updates applied.
      */
     struct RawGetRecordsResponse
     {
@@ -388,15 +399,17 @@ namespace gpudb
      * <p>
      * Retrieves records from a given table, optionally filtered by an
      * expression and/or sorted by a column. This operation can be performed on
-     * tables, views, or on homogeneous collections (collections containing
-     * tables of all the same type). Records can be returned encoded as binary,
-     * json or geojson.
+     * tables
+     * and views. Records can be returned encoded as binary, json, or geojson.
      * <p>
-     * This operation supports paging through the data via the @a offset and @a
-     * limit parameters. Note that when paging through a table, if the table
+     * This operation supports paging through the data via the @a offset and
+     * @a limit parameters.  Note that when paging through a table, if the
+     * table
      * (or the underlying table in case of a view) is updated (records are
-     * inserted, deleted or modified) the records retrieved may differ between
-     * calls based on the updates applied.
+     * inserted,
+     * deleted or modified) the records retrieved may differ between calls
+     * based on the
+     * updates applied.
      * 
      * @param <T>  The type of object being processed.
      * 

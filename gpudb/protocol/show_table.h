@@ -13,11 +13,13 @@ namespace gpudb
      * A set of input parameters for {@link
      * #showTable(const ShowTableRequest&) const}.
      * <p>
-     * Retrieves detailed information about a table, view, or collection,
-     * specified in @a tableName. If the supplied @a tableName is a collection,
-     * the call can return information about either the collection itself or
-     * the tables and views it contains. If @a tableName is empty, information
-     * about all collections and top-level tables and views can be returned.
+     * Retrieves detailed information about a table, view, or schema,
+     * specified in @a tableName. If the supplied @a tableName is a
+     * schema the call can return information about either the schema itself or
+     * the
+     * tables and views it contains. If @a tableName is empty, information
+     * about
+     * all schemas will be returned.
      * <p>
      * If the option @a get_sizes is set to
      * @a true, then the number of records
@@ -25,13 +27,17 @@ namespace gpudb
      * @a fullSizes), along with the total number of objects across all
      * requested tables (in @a totalSize and @a totalFullSize).
      * <p>
-     * For a collection, setting the @a show_children option to @a false
-     * returns only information about the collection itself; setting @a
-     * show_children to @a true returns a list of tables and views contained in
-     * the collection, along with their corresponding detail.
+     * For a schema, setting the @a show_children option to
+     * @a false returns only information
+     * about the schema itself; setting @a show_children to
+     * @a true returns a list of tables and
+     * views contained in the schema, along with their corresponding detail.
      * <p>
-     * To retrieve a list of every table, view, and collection in the database,
-     * set @a tableName to '*' and @a show_children to @a true.
+     * To retrieve a list of every table, view, and schema in the database, set
+     * @a tableName to '*' and @a show_children to
+     * @a true.  When doing this, the
+     * returned @a totalSize and @a totalFullSize will not include the sizes of
+     * non-base tables (e.g., filters, views, joins, etc.).
      */
     struct ShowTableRequest
     {
@@ -49,9 +55,12 @@ namespace gpudb
          * Constructs a ShowTableRequest object with the specified parameters.
          * 
          * @param[in] tableName_  Name of the table for which to retrieve the
-         *                        information. If blank, then information about
-         *                        all collections and top-level tables and
-         *                        views is returned.
+         *                        information, in [schema_name.]table_name
+         *                        format, using standard <a
+         *                        href="../../concepts/tables.html#table-name-resolution"
+         *                        target="_top">name resolution rules</a>.  If
+         *                        blank, then returns information about all
+         *                        tables and views.
          * @param[in] options_  Optional parameters.
          *                      <ul>
          *                              <li>
@@ -73,10 +82,10 @@ namespace gpudb
          *                      </ul>
          *                      The default value is gpudb::show_table_false.
          *                              <li> gpudb::show_table_show_children:
-         *                      If @a tableName is a collection, then @a true
-         *                      will return information about the children of
-         *                      the collection, and @a false will return
-         *                      information about the collection itself. If @a
+         *                      If @a tableName is a schema, then @a true will
+         *                      return information about the tables and views
+         *                      in the schema, and @a false will return
+         *                      information about the schema itself. If @a
          *                      tableName is a table or view, @a show_children
          *                      must be @a false. If @a tableName is empty,
          *                      then @a show_children must be @a true.
@@ -166,11 +175,13 @@ namespace gpudb
      * A set of output parameters for {@link
      * #showTable(const ShowTableRequest&) const}.
      * <p>
-     * Retrieves detailed information about a table, view, or collection,
-     * specified in @a tableName. If the supplied @a tableName is a collection,
-     * the call can return information about either the collection itself or
-     * the tables and views it contains. If @a tableName is empty, information
-     * about all collections and top-level tables and views can be returned.
+     * Retrieves detailed information about a table, view, or schema,
+     * specified in @a tableName. If the supplied @a tableName is a
+     * schema the call can return information about either the schema itself or
+     * the
+     * tables and views it contains. If @a tableName is empty, information
+     * about
+     * all schemas will be returned.
      * <p>
      * If the option @a get_sizes is set to
      * @a true, then the number of records
@@ -178,13 +189,17 @@ namespace gpudb
      * @a fullSizes), along with the total number of objects across all
      * requested tables (in @a totalSize and @a totalFullSize).
      * <p>
-     * For a collection, setting the @a show_children option to @a false
-     * returns only information about the collection itself; setting @a
-     * show_children to @a true returns a list of tables and views contained in
-     * the collection, along with their corresponding detail.
+     * For a schema, setting the @a show_children option to
+     * @a false returns only information
+     * about the schema itself; setting @a show_children to
+     * @a true returns a list of tables and
+     * views contained in the schema, along with their corresponding detail.
      * <p>
-     * To retrieve a list of every table, view, and collection in the database,
-     * set @a tableName to '*' and @a show_children to @a true.
+     * To retrieve a list of every table, view, and schema in the database, set
+     * @a tableName to '*' and @a show_children to
+     * @a true.  When doing this, the
+     * returned @a totalSize and @a totalFullSize will not include the sizes of
+     * non-base tables (e.g., filters, views, joins, etc.).
      */
     struct ShowTableResponse
     {

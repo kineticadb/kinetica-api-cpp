@@ -13,15 +13,19 @@ namespace gpudb
      * A set of input parameters for {@link
      * #adminRemoveRanks(const AdminRemoveRanksRequest&) const}.
      * <p>
-     * Remove one or more ranks from the cluster. All data in the ranks to be
-     * removed is rebalanced to other ranks before the node is removed unless
+     * Remove one or more ranks from an existing Kinetica cluster. All data
+     * will be rebalanced to other ranks before the rank(s) is removed unless
      * the @a rebalance_sharded_data or @a rebalance_unsharded_data parameters
-     * are set to @a false in the @a options.
+     * are set to @a false in the @a options, in which case the corresponding
+     * <a href="../../concepts/tables.html#sharding" target="_top">sharded
+     * data</a> and/or unsharded data (a.k.a. <a
+     * href="../../concepts/tables.html#random-sharding"
+     * target="_top">randomly-sharded</a>) will be deleted.
      * <p>
-     * Due to the rebalancing, this endpoint may take a long time to run,
-     * depending on the amount of data in the system. The API call may time out
-     * if run directly.  It is recommended to run this endpoint asynchronously
-     * via {@link #createJob(const CreateJobRequest&) const}.
+     * This endpoint's processing time depends on the amount of data in the
+     * system, thus the API call may time out if run directly.  It is
+     * recommended to run this endpoint asynchronously via {@link
+     * #createJob(const CreateJobRequest&) const}.
      */
     struct AdminRemoveRanksRequest
     {
@@ -31,7 +35,7 @@ namespace gpudb
          * values.
          */
         AdminRemoveRanksRequest() :
-            ranks(std::vector<int32_t>()),
+            ranks(std::vector<std::string>()),
             options(std::map<std::string, std::string>())
         {
         }
@@ -40,17 +44,28 @@ namespace gpudb
          * Constructs an AdminRemoveRanksRequest object with the specified
          * parameters.
          * 
-         * @param[in] ranks_  Rank numbers of the ranks to be removed from the
-         *                    cluster.
+         * @param[in] ranks_  Each array value designates one or more ranks to
+         *                    remove from the cluster. Values can be formatted
+         *                    as 'rankN' for a specific rank, 'hostN' (from the
+         *                    gpudb.conf file) to remove all ranks on that
+         *                    host, or the host IP address (hostN.address from
+         *                    the gpub.conf file) which also removes all ranks
+         *                    on that host. Rank 0 (the head rank) cannot be
+         *                    removed (but can be moved to another host using
+         *                    /admin/switchover). At least one worker rank must
+         *                    be left in the cluster after the operation.
          * @param[in] options_  Optional parameters.
          *                      <ul>
          *                              <li>
          *                      gpudb::admin_remove_ranks_rebalance_sharded_data:
-         *                      When @a true, data with primary keys or shard
-         *                      keys will be rebalanced to other ranks prior to
-         *                      rank removal. Note that for big clusters, this
-         *                      data transfer could be time consuming and
-         *                      result in delayed query responses.
+         *                      If @a true, <a
+         *                      href="../../concepts/tables.html#sharding"
+         *                      target="_top">sharded data</a> will be
+         *                      rebalanced approximately equally across the
+         *                      cluster. Note that for clusters with large
+         *                      amounts of sharded data, this data transfer
+         *                      could be time consuming and result in delayed
+         *                      query responses.
          *                      <ul>
          *                              <li> gpudb::admin_remove_ranks_true
          *                              <li> gpudb::admin_remove_ranks_false
@@ -59,12 +74,14 @@ namespace gpudb
          *                      gpudb::admin_remove_ranks_true.
          *                              <li>
          *                      gpudb::admin_remove_ranks_rebalance_unsharded_data:
-         *                      When @a true, unsharded data (data without
-         *                      primary keys and without shard keys) will be
-         *                      rebalanced to other ranks prior to rank
-         *                      removal. Note that for big clusters, this data
-         *                      transfer could be time consuming and result in
-         *                      delayed query responses.
+         *                      If @a true, unsharded data (a.k.a. <a
+         *                      href="../../concepts/tables.html#random-sharding"
+         *                      target="_top">randomly-sharded</a>) will be
+         *                      rebalanced approximately equally across the
+         *                      cluster. Note that for clusters with large
+         *                      amounts of unsharded data, this data transfer
+         *                      could be time consuming and result in delayed
+         *                      query responses.
          *                      <ul>
          *                              <li> gpudb::admin_remove_ranks_true
          *                              <li> gpudb::admin_remove_ranks_false
@@ -73,24 +90,24 @@ namespace gpudb
          *                      gpudb::admin_remove_ranks_true.
          *                              <li>
          *                      gpudb::admin_remove_ranks_aggressiveness:
-         *                      Influences how much data to send per rebalance
-         *                      round, during the rebalance portion of removing
-         *                      ranks.  A higher aggressiveness setting will
-         *                      complete the rebalance faster.  A lower
-         *                      aggressiveness setting will take longer, but
-         *                      allow for better interleaving between the
-         *                      rebalance and other queries. Allowed values are
-         *                      1 through 10.  The default value is '1'.
+         *                      Influences how much data is moved at a time
+         *                      during rebalance.  A higher @a aggressiveness
+         *                      will complete the rebalance faster.  A lower @a
+         *                      aggressiveness will take longer but allow for
+         *                      better interleaving between the rebalance and
+         *                      other queries. Valid values are constants from
+         *                      1 (lowest) to 10 (highest).  The default value
+         *                      is '1'.
          *                      </ul>
          * 
          */
-        AdminRemoveRanksRequest(const std::vector<int32_t>& ranks_, const std::map<std::string, std::string>& options_):
+        AdminRemoveRanksRequest(const std::vector<std::string>& ranks_, const std::map<std::string, std::string>& options_):
             ranks( ranks_ ),
             options( options_ )
         {
         }
 
-        std::vector<int32_t> ranks;
+        std::vector<std::string> ranks;
         std::map<std::string, std::string> options;
     };
 }
@@ -144,15 +161,19 @@ namespace gpudb
      * A set of output parameters for {@link
      * #adminRemoveRanks(const AdminRemoveRanksRequest&) const}.
      * <p>
-     * Remove one or more ranks from the cluster. All data in the ranks to be
-     * removed is rebalanced to other ranks before the node is removed unless
+     * Remove one or more ranks from an existing Kinetica cluster. All data
+     * will be rebalanced to other ranks before the rank(s) is removed unless
      * the @a rebalance_sharded_data or @a rebalance_unsharded_data parameters
-     * are set to @a false in the @a options.
+     * are set to @a false in the @a options, in which case the corresponding
+     * <a href="../../concepts/tables.html#sharding" target="_top">sharded
+     * data</a> and/or unsharded data (a.k.a. <a
+     * href="../../concepts/tables.html#random-sharding"
+     * target="_top">randomly-sharded</a>) will be deleted.
      * <p>
-     * Due to the rebalancing, this endpoint may take a long time to run,
-     * depending on the amount of data in the system. The API call may time out
-     * if run directly.  It is recommended to run this endpoint asynchronously
-     * via {@link #createJob(const CreateJobRequest&) const}.
+     * This endpoint's processing time depends on the amount of data in the
+     * system, thus the API call may time out if run directly.  It is
+     * recommended to run this endpoint asynchronously via {@link
+     * #createJob(const CreateJobRequest&) const}.
      */
     struct AdminRemoveRanksResponse
     {
@@ -162,14 +183,12 @@ namespace gpudb
          * values.
          */
         AdminRemoveRanksResponse() :
-            removedRanks(std::vector<int32_t>()),
-            results(std::vector<std::string>()),
+            removedRanks(std::vector<std::string>()),
             info(std::map<std::string, std::string>())
         {
         }
 
-        std::vector<int32_t> removedRanks;
-        std::vector<std::string> results;
+        std::vector<std::string> removedRanks;
         std::map<std::string, std::string> info;
     };
 }
@@ -181,7 +200,6 @@ namespace avro
         static void encode(Encoder& e, const gpudb::AdminRemoveRanksResponse& v)
         {
             ::avro::encode(e, v.removedRanks);
-            ::avro::encode(e, v.results);
             ::avro::encode(e, v.info);
         }
 
@@ -200,10 +218,6 @@ namespace avro
                             break;
 
                         case 1:
-                            ::avro::decode(d, v.results);
-                            break;
-
-                        case 2:
                             ::avro::decode(d, v.info);
                             break;
 
@@ -215,7 +229,6 @@ namespace avro
             else
             {
                 ::avro::decode(d, v.removedRanks);
-                ::avro::decode(d, v.results);
                 ::avro::decode(d, v.info);
             }
         }

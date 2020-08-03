@@ -42,7 +42,7 @@ namespace gpudb {
     const std::string GPUdb::HEADER_AUTHORIZATION  = "Authorization";
     const std::string GPUdb::HEADER_CONTENT_TYPE   = "Content-type";
     const std::string GPUdb::HEADER_CONTENT_LENGTH = "Content-length";
-    const std::string GPUdb::HEADER_HA_SYNC_MODE   = "ha_sync_mode";
+    const std::string GPUdb::HEADER_HA_SYNC_MODE   = "X-Kinetica-Group";
 
     const std::string GPUdb::PROTECTED_HEADERS[] = { HEADER_AUTHORIZATION,
                                                      HEADER_CONTENT_TYPE,
@@ -50,9 +50,11 @@ namespace gpudb {
                                                      HEADER_HA_SYNC_MODE
     };
 
-    const std::string GPUdb::HA_SYNCHRONICITY_MODE_VALUES[] = { "none",
-                                                                "sync",
-                                                                "async"
+    const std::string GPUdb::HA_SYNCHRONICITY_MODE_VALUES[] = {
+        "default",
+        "REPL_NONE",
+        "REPL_SYNC",
+        "REPL_ASYNC"
     };
     
     std::string base64Encode(const std::string& value)

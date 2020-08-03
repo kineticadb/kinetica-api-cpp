@@ -13,15 +13,17 @@ namespace gpudb
      * A set of input parameters for {@link
      * #getRecordsFromCollectionRaw(const GetRecordsFromCollectionRequest&) const}.
      * <p>
-     * Retrieves records from a collection. The operation can optionally return
-     * the record IDs which can be used in certain queries such as {@link
-     * #deleteRecords(const DeleteRecordsRequest&) const}.
+     * Retrieves records from a collection. The operation can optionally
+     * return the record IDs which can be used in certain queries such as
+     * {@link #deleteRecords(const DeleteRecordsRequest&) const}.
      * <p>
-     * This operation supports paging through the data via the @a offset and @a
-     * limit parameters.
+     * This operation supports paging through the data via the @a offset and
+     * @a limit parameters.
      * <p>
      * Note that when using the Java API, it is not possible to retrieve
-     * records from join tables using this operation.
+     * records from
+     * join views using this operation.
+     * (DEPRECATED)
      */
     struct GetRecordsFromCollectionRequest
     {
@@ -44,8 +46,12 @@ namespace gpudb
          * specified parameters.
          * 
          * @param[in] tableName_  Name of the collection or table from which
-         *                        records are to be retrieved. Must be an
-         *                        existing collection or table.
+         *                        records are to be retrieved, in
+         *                        [schema_name.]table_name format, using
+         *                        standard <a
+         *                        href="../../concepts/tables.html#table-name-resolution"
+         *                        target="_top">name resolution rules</a>.
+         *                        Must be an existing collection or table.
          * @param[in] offset_  A positive integer indicating the number of
          *                     initial results to skip (this can be useful for
          *                     paging through the results).  The minimum
@@ -64,9 +70,8 @@ namespace gpudb
          *                      <ul>
          *                              <li>
          *                      gpudb::get_records_from_collection_return_record_ids:
-         *                      If 'true' then return the internal record ID
-         *                      along with each returned record. Default is
-         *                      'false'.
+         *                      If @a true then return the internal record ID
+         *                      along with each returned record.
          *                      <ul>
          *                              <li>
          *                      gpudb::get_records_from_collection_true
@@ -92,8 +97,12 @@ namespace gpudb
          * specified parameters.
          * 
          * @param[in] tableName_  Name of the collection or table from which
-         *                        records are to be retrieved. Must be an
-         *                        existing collection or table.
+         *                        records are to be retrieved, in
+         *                        [schema_name.]table_name format, using
+         *                        standard <a
+         *                        href="../../concepts/tables.html#table-name-resolution"
+         *                        target="_top">name resolution rules</a>.
+         *                        Must be an existing collection or table.
          * @param[in] offset_  A positive integer indicating the number of
          *                     initial results to skip (this can be useful for
          *                     paging through the results).  The minimum
@@ -109,7 +118,7 @@ namespace gpudb
          *                    in the server configuration.  Use @a offset & @a
          *                    limit to request subsequent pages of results.
          * @param[in] encoding_  Specifies the encoding for returned records;
-         *                       either 'binary' or 'json'.
+         *                       either @a binary or @a json.
          *                       <ul>
          *                               <li>
          *                       gpudb::get_records_from_collection_binary
@@ -122,9 +131,8 @@ namespace gpudb
          *                      <ul>
          *                              <li>
          *                      gpudb::get_records_from_collection_return_record_ids:
-         *                      If 'true' then return the internal record ID
-         *                      along with each returned record. Default is
-         *                      'false'.
+         *                      If @a true then return the internal record ID
+         *                      along with each returned record.
          *                      <ul>
          *                              <li>
          *                      gpudb::get_records_from_collection_true
@@ -220,15 +228,17 @@ namespace gpudb
      * A set of output parameters for {@link
      * #getRecordsFromCollectionRaw(const GetRecordsFromCollectionRequest&) const}.
      * <p>
-     * Retrieves records from a collection. The operation can optionally return
-     * the record IDs which can be used in certain queries such as {@link
-     * #deleteRecords(const DeleteRecordsRequest&) const}.
+     * Retrieves records from a collection. The operation can optionally
+     * return the record IDs which can be used in certain queries such as
+     * {@link #deleteRecords(const DeleteRecordsRequest&) const}.
      * <p>
-     * This operation supports paging through the data via the @a offset and @a
-     * limit parameters.
+     * This operation supports paging through the data via the @a offset and
+     * @a limit parameters.
      * <p>
      * Note that when using the Java API, it is not possible to retrieve
-     * records from join tables using this operation.
+     * records from
+     * join views using this operation.
+     * (DEPRECATED)
      */
     struct RawGetRecordsFromCollectionResponse
     {
@@ -329,15 +339,17 @@ namespace gpudb
      * A set of output parameters for {@link
      * #getRecordsFromCollection(const GetRecordsFromCollectionRequest&) const}.
      * <p>
-     * Retrieves records from a collection. The operation can optionally return
-     * the record IDs which can be used in certain queries such as {@link
-     * #deleteRecords(const DeleteRecordsRequest&) const}.
+     * Retrieves records from a collection. The operation can optionally
+     * return the record IDs which can be used in certain queries such as
+     * {@link #deleteRecords(const DeleteRecordsRequest&) const}.
      * <p>
-     * This operation supports paging through the data via the @a offset and @a
-     * limit parameters.
+     * This operation supports paging through the data via the @a offset and
+     * @a limit parameters.
      * <p>
      * Note that when using the Java API, it is not possible to retrieve
-     * records from join tables using this operation.
+     * records from
+     * join views using this operation.
+     * (DEPRECATED)
      * 
      * @param <T>  The type of object being processed.
      * 

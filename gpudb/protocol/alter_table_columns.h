@@ -50,22 +50,22 @@ namespace gpudb
          * parameters.
          * 
          * @param[in] tableName_  Table on which the operation will be
-         *                        performed. Must be an existing table or view.
-         * @param[in] columnAlterations_  list of alter table add/delete/change
+         *                        performed. Must be an existing table or view,
+         *                        in [schema_name.]table_name format, using
+         *                        standard <a
+         *                        href="../../concepts/tables.html#table-name-resolution"
+         *                        target="_top">name resolution rules</a>.
+         * @param[in] columnAlterations_  List of alter table add/delete/change
          *                                column requests - all for the same
-         *                                table.
-         *                                                each request is a map
-         *                                that includes 'column_name', 'action'
-         *                                and the options specific for the
-         *                                action,
-         *                                                note that the same
-         *                                options as in alter table requests
-         *                                but in the same map as the column
-         *                                name and the action. For example:
-         *                                [{'column_name':'col_1','action':'change_column','rename_column':'col_2'},
-         *                                {'column_name':'col_1','action':'add_column',
-         *                                'type':'int','default_value':'1'}
-         *                                                ]
+         *                                table. Each request is a map that
+         *                                includes 'column_name', 'action' and
+         *                                the options specific for the action.
+         *                                Note that the same options as in
+         *                                alter table requests but in the same
+         *                                map as the column name and the
+         *                                action. For example:
+         *                                [{'column_name':'col_1','action':'change_column','rename_column':'col_2'},{'column_name':'col_1','action':'add_column',
+         *                                'type':'int','default_value':'1'}]
          * @param[in] options_  Optional parameters.
          * 
          */
