@@ -50,18 +50,23 @@ namespace gpudb
          * @param[in] graphName_  Name of the underlying geospatial graph
          *                        resource to match to using @a samplePoints.
          * @param[in] samplePoints_  Sample points used to match to an
-         *                           underlying geospatial graph. Sample points
-         *                           must be specified using <a
+         *                           underlying geospatial
+         *                           graph. Sample points must be specified
+         *                           using
+         *                           <a
          *                           href="../../graph_solver/network_graph_solver.html#match-identifiers"
-         *                           target="_top">identifiers</a>; identifiers
-         *                           are grouped as <a
+         *                           target="_top">identifiers</a>;
+         *                           identifiers are grouped as
+         *                           <a
          *                           href="../../graph_solver/network_graph_solver.html#match-combinations"
          *                           target="_top">combinations</a>.
          *                           Identifiers can be used with: existing
-         *                           column names, e.g., 'table.column AS
-         *                           SAMPLE_X'; expressions, e.g.,
+         *                           column names, e.g.,
+         *                           'table.column AS SAMPLE_X'; expressions,
+         *                           e.g.,
          *                           'ST_MAKEPOINT(table.x, table.y) AS
-         *                           SAMPLE_WKTPOINT'; or raw values, e.g.,
+         *                           SAMPLE_WKTPOINT'; or constant values,
+         *                           e.g.,
          *                           '{1, 2, 10} AS SAMPLE_TRIPID'.
          * @param[in] solveMethod_  The type of solver to use for graph
          *                          matching.

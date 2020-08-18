@@ -126,6 +126,7 @@
 #include "revoke_permission_table.h"
 #include "revoke_role.h"
 #include "show_datasource.h"
+#include "show_functions.h"
 #include "show_graph.h"
 #include "show_graph_grammar.h"
 #include "show_proc.h"

@@ -673,7 +673,6 @@ namespace gpudb
     extern const std::string create_type_time;
     extern const std::string create_type_timestamp;
     extern const std::string create_type_ulong;
-    extern const std::string create_type_uuid;
     extern const std::string create_type_wkt;
 
     // Keywords for /create/union request
@@ -1279,6 +1278,17 @@ namespace gpudb
     extern const std::string show_datasource_s3_bucket_name;
     extern const std::string show_datasource_s3_region;
     extern const std::string show_datasource_user_name;
+
+    // Keywords for /show/functions request
+    extern const std::string show_functions_properties;
+
+    // Keywords for /show/functions response
+    extern const std::string show_functions_aggregate;
+    extern const std::string show_functions_cast;
+    extern const std::string show_functions_nondeterministic;
+    extern const std::string show_functions_scalar;
+    extern const std::string show_functions_sql;
+    extern const std::string show_functions_udf;
 
     // Keywords for /show/graph request
     extern const std::string show_graph_false;

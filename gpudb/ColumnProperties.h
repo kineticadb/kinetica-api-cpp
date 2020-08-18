@@ -66,13 +66,6 @@ namespace gpudb
 
 
         /**
-         * Valid only for 'string' columns.  It represents an uuid data type.
-         * Internally, it is stored as an 128-bit ingeger.
-         */
-        extern const std::string UUID;
-
-
-        /**
          * Valid only for 'string' columns.  It represents a SQL type
          * NUMERIC(19, 4) data type.  There can be up to 15 digits before the
          * decimal point and up to four digits in the fractional part.  The

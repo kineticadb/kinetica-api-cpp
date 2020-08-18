@@ -673,7 +673,6 @@ namespace gpudb
     const std::string create_type_time          ( "time"           );
     const std::string create_type_timestamp     ( "timestamp"      );
     const std::string create_type_ulong         ( "ulong"          );
-    const std::string create_type_uuid          ( "uuid"           );
     const std::string create_type_wkt           ( "wkt"            );
 
     // Keywords for /create/union request
@@ -1279,6 +1278,17 @@ namespace gpudb
     const std::string show_datasource_s3_bucket_name      ( "s3_bucket_name"       );
     const std::string show_datasource_s3_region           ( "s3_region"            );
     const std::string show_datasource_user_name           ( "user_name"            );
+
+    // Keywords for /show/functions request
+    const std::string show_functions_properties( "properties" );
+
+    // Keywords for /show/functions response
+    const std::string show_functions_aggregate       ( "aggregate"        );
+    const std::string show_functions_cast            ( "cast"             );
+    const std::string show_functions_nondeterministic( "nondeterministic" );
+    const std::string show_functions_scalar          ( "scalar"           );
+    const std::string show_functions_sql             ( "sql"              );
+    const std::string show_functions_udf             ( "udf"              );
 
     // Keywords for /show/graph request
     const std::string show_graph_false                ( "false"                 );

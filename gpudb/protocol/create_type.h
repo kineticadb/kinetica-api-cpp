@@ -124,10 +124,6 @@ namespace gpudb
          *                         can only be interpreted as an unsigned long
          *                         data type with minimum value of zero, and
          *                         maximum value of 18446744073709551615.
-         *                                 <li> gpudb::create_type_uuid: Valid
-         *                         only for 'string' columns.  It represents an
-         *                         uuid data type. Internally, it is stored as
-         *                         an 128-bit ingeger.
          *                                 <li> gpudb::create_type_decimal:
          *                         Valid only for 'string' columns.  It
          *                         represents a SQL type NUMERIC(19, 4) data

@@ -9039,12 +9039,15 @@ CreateDatasourceResponse& GPUdb::createDatasource( const std::string& name,
  * Creates a new graph network using given nodes, edges, weights, and
  * restrictions.
 
- * IMPORTANT: It's highly recommended that you review the <a
- * href="../../graph_solver/network_graph_solver.html" target="_top">Network
- * Graphs & Solvers</a> concepts documentation, the <a
- * href="../../graph_solver/examples/graph_rest_guide.html" target="_top">Graph
- * REST Tutorial</a>, and/or some <a href="../../graph_solver/examples.html"
- * target="_top">graph examples</a> before using this endpoint.
+ * IMPORTANT: It's highly recommended that you review the
+ * <a href="../../graph_solver/network_graph_solver.html" target="_top">Network
+ * Graphs & Solvers</a>
+ * concepts documentation, the
+ * <a href="../../graph_solver/examples/graph_rest_guide.html"
+ * target="_top">Graph REST Tutorial</a>,
+ * and/or some <a href="../../graph_solver/examples.html" target="_top">graph
+ * examples</a> before
+ * using this endpoint.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -9065,12 +9068,15 @@ CreateGraphResponse GPUdb::createGraph( const CreateGraphRequest& request_ ) con
  * Creates a new graph network using given nodes, edges, weights, and
  * restrictions.
 
- * IMPORTANT: It's highly recommended that you review the <a
- * href="../../graph_solver/network_graph_solver.html" target="_top">Network
- * Graphs & Solvers</a> concepts documentation, the <a
- * href="../../graph_solver/examples/graph_rest_guide.html" target="_top">Graph
- * REST Tutorial</a>, and/or some <a href="../../graph_solver/examples.html"
- * target="_top">graph examples</a> before using this endpoint.
+ * IMPORTANT: It's highly recommended that you review the
+ * <a href="../../graph_solver/network_graph_solver.html" target="_top">Network
+ * Graphs & Solvers</a>
+ * concepts documentation, the
+ * <a href="../../graph_solver/examples/graph_rest_guide.html"
+ * target="_top">Graph REST Tutorial</a>,
+ * and/or some <a href="../../graph_solver/examples.html" target="_top">graph
+ * examples</a> before
+ * using this endpoint.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -9094,12 +9100,15 @@ CreateGraphResponse& GPUdb::createGraph( const CreateGraphRequest& request_,
  * Creates a new graph network using given nodes, edges, weights, and
  * restrictions.
 
- * IMPORTANT: It's highly recommended that you review the <a
- * href="../../graph_solver/network_graph_solver.html" target="_top">Network
- * Graphs & Solvers</a> concepts documentation, the <a
- * href="../../graph_solver/examples/graph_rest_guide.html" target="_top">Graph
- * REST Tutorial</a>, and/or some <a href="../../graph_solver/examples.html"
- * target="_top">graph examples</a> before using this endpoint.
+ * IMPORTANT: It's highly recommended that you review the
+ * <a href="../../graph_solver/network_graph_solver.html" target="_top">Network
+ * Graphs & Solvers</a>
+ * concepts documentation, the
+ * <a href="../../graph_solver/examples/graph_rest_guide.html"
+ * target="_top">Graph REST Tutorial</a>,
+ * and/or some <a href="../../graph_solver/examples.html" target="_top">graph
+ * examples</a> before
+ * using this endpoint.
  * 
  * @param graphName  Name of the graph resource to generate.
  * @param directedGraph  If set to @a true, the graph will be directed. If set
@@ -9113,55 +9122,80 @@ CreateGraphResponse& GPUdb::createGraph( const CreateGraphRequest& request_,
  *                       </ul>
  *                       The default value is gpudb::create_graph_true.
  * @param nodes  Nodes represent fundamental topological units of a graph.
- *               Nodes must be specified using <a
+ *               Nodes must be specified using
+ *               <a
  *               href="../../graph_solver/network_graph_solver.html#identifiers"
- *               target="_top">identifiers</a>; identifiers are grouped as <a
+ *               target="_top">identifiers</a>;
+ *               identifiers are grouped as
+ *               <a
  *               href="../../graph_solver/network_graph_solver.html#id-combos"
- *               target="_top">combinations</a>. Identifiers can be used with
- *               existing column names, e.g., 'table.column AS NODE_ID',
- *               expressions, e.g., 'ST_MAKEPOINT(column1, column2) AS
- *               NODE_WKTPOINT', or raw values, e.g., '{9, 10, 11} AS NODE_ID'.
- *               If using raw values in an identifier combination, the number
- *               of values specified must match across the combination.
- * @param edges  Edges represent the required fundamental topological unit of a
- *               graph that typically connect nodes. Edges must be specified
- *               using <a
+ *               target="_top">combinations</a>.
+ *               Identifiers can be used with existing column names, e.g.,
+ *               'table.column AS NODE_ID', expressions, e.g.,
+ *               'ST_MAKEPOINT(column1, column2) AS NODE_WKTPOINT', or constant
+ *               values, e.g.,
+ *               '{9, 10, 11} AS NODE_ID'.
+ *               If using constant values in an identifier combination, the
+ *               number of values
+ *               specified must match across the combination.
+ * @param edges  Edges represent the required fundamental topological unit of
+ *               a graph that typically connect nodes. Edges must be specified
+ *               using
+ *               <a
  *               href="../../graph_solver/network_graph_solver.html#identifiers"
- *               target="_top">identifiers</a>; identifiers are grouped as <a
+ *               target="_top">identifiers</a>;
+ *               identifiers are grouped as
+ *               <a
  *               href="../../graph_solver/network_graph_solver.html#id-combos"
- *               target="_top">combinations</a>. Identifiers can be used with
- *               existing column names, e.g., 'table.column AS EDGE_ID',
- *               expressions, e.g., 'SUBSTR(column, 1, 6) AS EDGE_NODE1_NAME',
- *               or raw values, e.g., "{'family', 'coworker'} AS EDGE_LABEL".
- *               If using raw values in an identifier combination, the number
- *               of values specified must match across the combination.
+ *               target="_top">combinations</a>.
+ *               Identifiers can be used with existing column names, e.g.,
+ *               'table.column AS EDGE_ID', expressions, e.g.,
+ *               'SUBSTR(column, 1, 6) AS EDGE_NODE1_NAME', or constant values,
+ *               e.g.,
+ *               "{'family', 'coworker'} AS EDGE_LABEL".
+ *               If using constant values in an identifier combination, the
+ *               number of values
+ *               specified must match across the combination.
  * @param weights  Weights represent a method of informing the graph solver of
  *                 the cost of including a given edge in a solution. Weights
- *                 must be specified using <a
+ *                 must be specified
+ *                 using
+ *                 <a
  *                 href="../../graph_solver/network_graph_solver.html#identifiers"
- *                 target="_top">identifiers</a>; identifiers are grouped as <a
+ *                 target="_top">identifiers</a>;
+ *                 identifiers are grouped as
+ *                 <a
  *                 href="../../graph_solver/network_graph_solver.html#id-combos"
- *                 target="_top">combinations</a>. Identifiers can be used with
- *                 existing column names, e.g., 'table.column AS
- *                 WEIGHTS_EDGE_ID', expressions, e.g., 'ST_LENGTH(wkt) AS
- *                 WEIGHTS_VALUESPECIFIED', or raw values, e.g., '{4, 15} AS
- *                 WEIGHTS_VALUESPECIFIED'. If using raw values in an
- *                 identifier combination, the number of values specified must
- *                 match across the combination.
+ *                 target="_top">combinations</a>.
+ *                 Identifiers can be used with existing column names, e.g.,
+ *                 'table.column AS WEIGHTS_EDGE_ID', expressions, e.g.,
+ *                 'ST_LENGTH(wkt) AS WEIGHTS_VALUESPECIFIED', or constant
+ *                 values, e.g.,
+ *                 '{4, 15} AS WEIGHTS_VALUESPECIFIED'.
+ *                 If using constant values in an identifier combination, the
+ *                 number of values specified
+ *                 must match across the combination.
  * @param restrictions  Restrictions represent a method of informing the graph
  *                      solver which edges and/or nodes should be ignored for
- *                      the solution. Restrictions must be specified using <a
+ *                      the solution. Restrictions
+ *                      must be specified using
+ *                      <a
  *                      href="../../graph_solver/network_graph_solver.html#identifiers"
- *                      target="_top">identifiers</a>; identifiers are grouped
- *                      as <a
+ *                      target="_top">identifiers</a>;
+ *                      identifiers are grouped as
+ *                      <a
  *                      href="../../graph_solver/network_graph_solver.html#id-combos"
- *                      target="_top">combinations</a>. Identifiers can be used
- *                      with existing column names, e.g., 'table.column AS
- *                      RESTRICTIONS_EDGE_ID', expressions, e.g., 'column/2 AS
- *                      RESTRICTIONS_VALUECOMPARED', or raw values, e.g., '{0,
- *                      0, 0, 1} AS RESTRICTIONS_ONOFFCOMPARED'. If using raw
- *                      values in an identifier combination, the number of
- *                      values specified must match across the combination.
+ *                      target="_top">combinations</a>.
+ *                      Identifiers can be used with existing column names,
+ *                      e.g.,
+ *                      'table.column AS RESTRICTIONS_EDGE_ID', expressions,
+ *                      e.g.,
+ *                      'column/2 AS RESTRICTIONS_VALUECOMPARED', or constant
+ *                      values, e.g.,
+ *                      '{0, 0, 0, 1} AS RESTRICTIONS_ONOFFCOMPARED'.
+ *                      If using constant values in an identifier combination,
+ *                      the number of values
+ *                      specified must match across the combination.
  * @param options  Optional parameters.
  *                 <ul>
  *                         <li>
@@ -9329,12 +9363,15 @@ CreateGraphResponse GPUdb::createGraph( const std::string& graphName,
  * Creates a new graph network using given nodes, edges, weights, and
  * restrictions.
 
- * IMPORTANT: It's highly recommended that you review the <a
- * href="../../graph_solver/network_graph_solver.html" target="_top">Network
- * Graphs & Solvers</a> concepts documentation, the <a
- * href="../../graph_solver/examples/graph_rest_guide.html" target="_top">Graph
- * REST Tutorial</a>, and/or some <a href="../../graph_solver/examples.html"
- * target="_top">graph examples</a> before using this endpoint.
+ * IMPORTANT: It's highly recommended that you review the
+ * <a href="../../graph_solver/network_graph_solver.html" target="_top">Network
+ * Graphs & Solvers</a>
+ * concepts documentation, the
+ * <a href="../../graph_solver/examples/graph_rest_guide.html"
+ * target="_top">Graph REST Tutorial</a>,
+ * and/or some <a href="../../graph_solver/examples.html" target="_top">graph
+ * examples</a> before
+ * using this endpoint.
  * 
  * @param graphName  Name of the graph resource to generate.
  * @param directedGraph  If set to @a true, the graph will be directed. If set
@@ -9348,55 +9385,80 @@ CreateGraphResponse GPUdb::createGraph( const std::string& graphName,
  *                       </ul>
  *                       The default value is gpudb::create_graph_true.
  * @param nodes  Nodes represent fundamental topological units of a graph.
- *               Nodes must be specified using <a
+ *               Nodes must be specified using
+ *               <a
  *               href="../../graph_solver/network_graph_solver.html#identifiers"
- *               target="_top">identifiers</a>; identifiers are grouped as <a
+ *               target="_top">identifiers</a>;
+ *               identifiers are grouped as
+ *               <a
  *               href="../../graph_solver/network_graph_solver.html#id-combos"
- *               target="_top">combinations</a>. Identifiers can be used with
- *               existing column names, e.g., 'table.column AS NODE_ID',
- *               expressions, e.g., 'ST_MAKEPOINT(column1, column2) AS
- *               NODE_WKTPOINT', or raw values, e.g., '{9, 10, 11} AS NODE_ID'.
- *               If using raw values in an identifier combination, the number
- *               of values specified must match across the combination.
- * @param edges  Edges represent the required fundamental topological unit of a
- *               graph that typically connect nodes. Edges must be specified
- *               using <a
+ *               target="_top">combinations</a>.
+ *               Identifiers can be used with existing column names, e.g.,
+ *               'table.column AS NODE_ID', expressions, e.g.,
+ *               'ST_MAKEPOINT(column1, column2) AS NODE_WKTPOINT', or constant
+ *               values, e.g.,
+ *               '{9, 10, 11} AS NODE_ID'.
+ *               If using constant values in an identifier combination, the
+ *               number of values
+ *               specified must match across the combination.
+ * @param edges  Edges represent the required fundamental topological unit of
+ *               a graph that typically connect nodes. Edges must be specified
+ *               using
+ *               <a
  *               href="../../graph_solver/network_graph_solver.html#identifiers"
- *               target="_top">identifiers</a>; identifiers are grouped as <a
+ *               target="_top">identifiers</a>;
+ *               identifiers are grouped as
+ *               <a
  *               href="../../graph_solver/network_graph_solver.html#id-combos"
- *               target="_top">combinations</a>. Identifiers can be used with
- *               existing column names, e.g., 'table.column AS EDGE_ID',
- *               expressions, e.g., 'SUBSTR(column, 1, 6) AS EDGE_NODE1_NAME',
- *               or raw values, e.g., "{'family', 'coworker'} AS EDGE_LABEL".
- *               If using raw values in an identifier combination, the number
- *               of values specified must match across the combination.
+ *               target="_top">combinations</a>.
+ *               Identifiers can be used with existing column names, e.g.,
+ *               'table.column AS EDGE_ID', expressions, e.g.,
+ *               'SUBSTR(column, 1, 6) AS EDGE_NODE1_NAME', or constant values,
+ *               e.g.,
+ *               "{'family', 'coworker'} AS EDGE_LABEL".
+ *               If using constant values in an identifier combination, the
+ *               number of values
+ *               specified must match across the combination.
  * @param weights  Weights represent a method of informing the graph solver of
  *                 the cost of including a given edge in a solution. Weights
- *                 must be specified using <a
+ *                 must be specified
+ *                 using
+ *                 <a
  *                 href="../../graph_solver/network_graph_solver.html#identifiers"
- *                 target="_top">identifiers</a>; identifiers are grouped as <a
+ *                 target="_top">identifiers</a>;
+ *                 identifiers are grouped as
+ *                 <a
  *                 href="../../graph_solver/network_graph_solver.html#id-combos"
- *                 target="_top">combinations</a>. Identifiers can be used with
- *                 existing column names, e.g., 'table.column AS
- *                 WEIGHTS_EDGE_ID', expressions, e.g., 'ST_LENGTH(wkt) AS
- *                 WEIGHTS_VALUESPECIFIED', or raw values, e.g., '{4, 15} AS
- *                 WEIGHTS_VALUESPECIFIED'. If using raw values in an
- *                 identifier combination, the number of values specified must
- *                 match across the combination.
+ *                 target="_top">combinations</a>.
+ *                 Identifiers can be used with existing column names, e.g.,
+ *                 'table.column AS WEIGHTS_EDGE_ID', expressions, e.g.,
+ *                 'ST_LENGTH(wkt) AS WEIGHTS_VALUESPECIFIED', or constant
+ *                 values, e.g.,
+ *                 '{4, 15} AS WEIGHTS_VALUESPECIFIED'.
+ *                 If using constant values in an identifier combination, the
+ *                 number of values specified
+ *                 must match across the combination.
  * @param restrictions  Restrictions represent a method of informing the graph
  *                      solver which edges and/or nodes should be ignored for
- *                      the solution. Restrictions must be specified using <a
+ *                      the solution. Restrictions
+ *                      must be specified using
+ *                      <a
  *                      href="../../graph_solver/network_graph_solver.html#identifiers"
- *                      target="_top">identifiers</a>; identifiers are grouped
- *                      as <a
+ *                      target="_top">identifiers</a>;
+ *                      identifiers are grouped as
+ *                      <a
  *                      href="../../graph_solver/network_graph_solver.html#id-combos"
- *                      target="_top">combinations</a>. Identifiers can be used
- *                      with existing column names, e.g., 'table.column AS
- *                      RESTRICTIONS_EDGE_ID', expressions, e.g., 'column/2 AS
- *                      RESTRICTIONS_VALUECOMPARED', or raw values, e.g., '{0,
- *                      0, 0, 1} AS RESTRICTIONS_ONOFFCOMPARED'. If using raw
- *                      values in an identifier combination, the number of
- *                      values specified must match across the combination.
+ *                      target="_top">combinations</a>.
+ *                      Identifiers can be used with existing column names,
+ *                      e.g.,
+ *                      'table.column AS RESTRICTIONS_EDGE_ID', expressions,
+ *                      e.g.,
+ *                      'column/2 AS RESTRICTIONS_VALUECOMPARED', or constant
+ *                      values, e.g.,
+ *                      '{0, 0, 0, 1} AS RESTRICTIONS_ONOFFCOMPARED'.
+ *                      If using constant values in an identifier combination,
+ *                      the number of values
+ *                      specified must match across the combination.
  * @param options  Optional parameters.
  *                 <ul>
  *                         <li>
@@ -13612,9 +13674,6 @@ CreateTypeResponse& GPUdb::createType( const CreateTypeRequest& request_,
  *                    data type. The string can only be interpreted as an
  *                    unsigned long data type with minimum value of zero, and
  *                    maximum value of 18446744073709551615.
- *                            <li> gpudb::create_type_uuid: Valid only for
- *                    'string' columns.  It represents an uuid data type.
- *                    Internally, it is stored as an 128-bit ingeger.
  *                            <li> gpudb::create_type_decimal: Valid only for
  *                    'string' columns.  It represents a SQL type NUMERIC(19,
  *                    4) data type.  There can be up to 15 digits before the
@@ -13844,9 +13903,6 @@ CreateTypeResponse GPUdb::createType( const std::string& typeDefinition,
  *                    data type. The string can only be interpreted as an
  *                    unsigned long data type with minimum value of zero, and
  *                    maximum value of 18446744073709551615.
- *                            <li> gpudb::create_type_uuid: Valid only for
- *                    'string' columns.  It represents an uuid data type.
- *                    Internally, it is stored as an 128-bit ingeger.
  *                            <li> gpudb::create_type_decimal: Valid only for
  *                    'string' columns.  It represents a SQL type NUMERIC(19,
  *                    4) data type.  There can be up to 15 digits before the
@@ -25125,16 +25181,20 @@ MatchGraphResponse& GPUdb::matchGraph( const MatchGraphRequest& request_,
  * @param graphName  Name of the underlying geospatial graph resource to match
  *                   to using @a samplePoints.
  * @param samplePoints  Sample points used to match to an underlying geospatial
- *                      graph. Sample points must be specified using <a
+ *                      graph. Sample points must be specified using
+ *                      <a
  *                      href="../../graph_solver/network_graph_solver.html#match-identifiers"
- *                      target="_top">identifiers</a>; identifiers are grouped
- *                      as <a
+ *                      target="_top">identifiers</a>;
+ *                      identifiers are grouped as
+ *                      <a
  *                      href="../../graph_solver/network_graph_solver.html#match-combinations"
- *                      target="_top">combinations</a>. Identifiers can be used
- *                      with: existing column names, e.g., 'table.column AS
- *                      SAMPLE_X'; expressions, e.g., 'ST_MAKEPOINT(table.x,
- *                      table.y) AS SAMPLE_WKTPOINT'; or raw values, e.g., '{1,
- *                      2, 10} AS SAMPLE_TRIPID'.
+ *                      target="_top">combinations</a>.
+ *                      Identifiers can be used with: existing column names,
+ *                      e.g.,
+ *                      'table.column AS SAMPLE_X'; expressions, e.g.,
+ *                      'ST_MAKEPOINT(table.x, table.y) AS SAMPLE_WKTPOINT'; or
+ *                      constant values, e.g.,
+ *                      '{1, 2, 10} AS SAMPLE_TRIPID'.
  * @param solveMethod  The type of solver to use for graph matching.
  *                     <ul>
  *                             <li> gpudb::match_graph_markov_chain: Matches @a
@@ -25346,16 +25406,20 @@ MatchGraphResponse GPUdb::matchGraph( const std::string& graphName,
  * @param graphName  Name of the underlying geospatial graph resource to match
  *                   to using @a samplePoints.
  * @param samplePoints  Sample points used to match to an underlying geospatial
- *                      graph. Sample points must be specified using <a
+ *                      graph. Sample points must be specified using
+ *                      <a
  *                      href="../../graph_solver/network_graph_solver.html#match-identifiers"
- *                      target="_top">identifiers</a>; identifiers are grouped
- *                      as <a
+ *                      target="_top">identifiers</a>;
+ *                      identifiers are grouped as
+ *                      <a
  *                      href="../../graph_solver/network_graph_solver.html#match-combinations"
- *                      target="_top">combinations</a>. Identifiers can be used
- *                      with: existing column names, e.g., 'table.column AS
- *                      SAMPLE_X'; expressions, e.g., 'ST_MAKEPOINT(table.x,
- *                      table.y) AS SAMPLE_WKTPOINT'; or raw values, e.g., '{1,
- *                      2, 10} AS SAMPLE_TRIPID'.
+ *                      target="_top">combinations</a>.
+ *                      Identifiers can be used with: existing column names,
+ *                      e.g.,
+ *                      'table.column AS SAMPLE_X'; expressions, e.g.,
+ *                      'ST_MAKEPOINT(table.x, table.y) AS SAMPLE_WKTPOINT'; or
+ *                      constant values, e.g.,
+ *                      '{1, 2, 10} AS SAMPLE_TRIPID'.
  * @param solveMethod  The type of solver to use for graph matching.
  *                     <ul>
  *                             <li> gpudb::match_graph_markov_chain: Matches @a
@@ -27473,6 +27537,92 @@ ShowDatasourceResponse& GPUdb::showDatasource( const std::string& name,
     actualRequest_.name = name;
     actualRequest_.options = options;
     submitRequest("/show/datasource", actualRequest_, response_, false);
+    return response_;
+}
+
+
+/**
+ * @private
+ * 
+ * @param[in] request_  Request object containing the parameters for the
+ *                      operation.
+ * 
+ * @return Response object containing the result of the operation.
+ * 
+ */
+
+ShowFunctionsResponse GPUdb::showFunctions( const ShowFunctionsRequest& request_ ) const
+{
+    ShowFunctionsResponse actualResponse_;
+    submitRequest("/show/functions", request_, actualResponse_, false);
+    return actualResponse_;
+}
+
+
+/**
+ * @private
+ * 
+ * @param[in] request_  Request object containing the parameters for the
+ *                      operation.
+ * @param[out] response_  Response object containing the results of the
+ *                        operation.
+ * 
+ * @return Response object containing the result of the operation (initially
+ *         passed in by reference).
+ * 
+ */
+
+ShowFunctionsResponse& GPUdb::showFunctions( const ShowFunctionsRequest& request_,
+                                             ShowFunctionsResponse& response_ ) const
+{
+    submitRequest("/show/functions", request_, response_, false);
+    return response_;
+}
+
+
+/**
+ * @private
+ * 
+ * @param options
+ *                 <ul>
+ *                         <li> gpudb::show_functions_properties
+ *                 </ul>
+ * 
+ * @return Response object containing the result of the operation.
+ * 
+ */
+
+ShowFunctionsResponse GPUdb::showFunctions( const std::map<std::string, std::string>& options ) const
+{
+    ShowFunctionsRequest actualRequest_;
+    actualRequest_.options = options;
+    ShowFunctionsResponse actualResponse_;
+    submitRequest("/show/functions", actualRequest_, actualResponse_, false);
+    return actualResponse_;
+}
+
+
+/**
+ * @private
+ * 
+ * @param options
+ *                 <ul>
+ *                         <li> gpudb::show_functions_properties
+ *                 </ul>
+ * @param[out] response_  Response object containing the results of the
+ *                        operation.
+ * 
+ * @return Response object containing the result of the operation (initially
+ *         passed in by reference).
+ * 
+ */
+
+ShowFunctionsResponse& GPUdb::showFunctions( const std::map<std::string, std::string>& options,
+                                             ShowFunctionsResponse& response_ ) const
+{
+    ShowFunctionsRequest actualRequest_;
+    actualRequest_.options = options;
+    submitRequest("/show/functions", actualRequest_, response_, false);
     return response_;
 }
 
@@ -29646,8 +29796,8 @@ ShowTypesResponse& GPUdb::showTypes( const std::string& typeId,
  * <a href="../../graph_solver/examples/graph_rest_guide.html"
  * target="_top">Graph REST Tutorial</a>,
  * and/or some
- * <a href="../../graph_solver/examples.html#match-graph"
- * target="_top">/match/graph examples</a>
+ * <a href="../../graph_solver/examples.html#solve-graph"
+ * target="_top">/solve/graph examples</a>
  * before using this endpoint.
  * 
  * @param[in] request_  Request object containing the parameters for the
@@ -29678,8 +29828,8 @@ SolveGraphResponse GPUdb::solveGraph( const SolveGraphRequest& request_ ) const
  * <a href="../../graph_solver/examples/graph_rest_guide.html"
  * target="_top">Graph REST Tutorial</a>,
  * and/or some
- * <a href="../../graph_solver/examples.html#match-graph"
- * target="_top">/match/graph examples</a>
+ * <a href="../../graph_solver/examples.html#solve-graph"
+ * target="_top">/solve/graph examples</a>
  * before using this endpoint.
  * 
  * @param[in] request_  Request object containing the parameters for the
@@ -29713,47 +29863,63 @@ SolveGraphResponse& GPUdb::solveGraph( const SolveGraphRequest& request_,
  * <a href="../../graph_solver/examples/graph_rest_guide.html"
  * target="_top">Graph REST Tutorial</a>,
  * and/or some
- * <a href="../../graph_solver/examples.html#match-graph"
- * target="_top">/match/graph examples</a>
+ * <a href="../../graph_solver/examples.html#solve-graph"
+ * target="_top">/solve/graph examples</a>
  * before using this endpoint.
  * 
  * @param graphName  Name of the graph resource to solve.
  * @param weightsOnEdges  Additional weights to apply to the edges of an
- *                        existing graph. Weights must be specified using <a
+ *                        existing
+ *                        graph. Weights must be specified using
+ *                        <a
  *                        href="../../graph_solver/network_graph_solver.html#identifiers"
- *                        target="_top">identifiers</a>; identifiers are
- *                        grouped as <a
+ *                        target="_top">identifiers</a>;
+ *                        identifiers are grouped as
+ *                        <a
  *                        href="../../graph_solver/network_graph_solver.html#id-combos"
- *                        target="_top">combinations</a>. Identifiers can be
- *                        used with existing column names, e.g., 'table.column
- *                        AS WEIGHTS_EDGE_ID', expressions, e.g.,
- *                        'ST_LENGTH(wkt) AS WEIGHTS_VALUESPECIFIED', or raw
- *                        values, e.g., '{4, 15, 2} AS WEIGHTS_VALUESPECIFIED'.
- *                        Any provided weights will be added (in the case of
- *                        'WEIGHTS_VALUESPECIFIED') to or multiplied with (in
- *                        the case of 'WEIGHTS_FACTORSPECIFIED') the existing
- *                        weight(s). If using raw values in an identifier
- *                        combination, the number of values specified must
- *                        match across the combination.
+ *                        target="_top">combinations</a>.
+ *                        Identifiers can be used with existing column names,
+ *                        e.g.,
+ *                        'table.column AS WEIGHTS_EDGE_ID', expressions, e.g.,
+ *                        'ST_LENGTH(wkt) AS WEIGHTS_VALUESPECIFIED', or
+ *                        constant values, e.g.,
+ *                        '{4, 15, 2} AS WEIGHTS_VALUESPECIFIED'. Any provided
+ *                        weights will be added
+ *                        (in the case of 'WEIGHTS_VALUESPECIFIED') to or
+ *                        multiplied with
+ *                        (in the case of 'WEIGHTS_FACTORSPECIFIED') the
+ *                        existing weight(s). If using
+ *                        constant values in an identifier combination, the
+ *                        number of values specified
+ *                        must match across the combination.
  * @param restrictions  Additional restrictions to apply to the nodes/edges of
- *                      an existing graph. Restrictions must be specified using
+ *                      an
+ *                      existing graph. Restrictions must be specified using
  *                      <a
  *                      href="../../graph_solver/network_graph_solver.html#identifiers"
- *                      target="_top">identifiers</a>; identifiers are grouped
- *                      as <a
+ *                      target="_top">identifiers</a>;
+ *                      identifiers are grouped as
+ *                      <a
  *                      href="../../graph_solver/network_graph_solver.html#id-combos"
- *                      target="_top">combinations</a>. Identifiers can be used
- *                      with existing column names, e.g., 'table.column AS
- *                      RESTRICTIONS_EDGE_ID', expressions, e.g., 'column/2 AS
- *                      RESTRICTIONS_VALUECOMPARED', or raw values, e.g., '{0,
- *                      0, 0, 1} AS RESTRICTIONS_ONOFFCOMPARED'. If using raw
- *                      values in an identifier combination, the number of
- *                      values specified must match across the combination. If
- *                      @a remove_previous_restrictions is set to @a true, any
+ *                      target="_top">combinations</a>.
+ *                      Identifiers can be used with existing column names,
+ *                      e.g.,
+ *                      'table.column AS RESTRICTIONS_EDGE_ID', expressions,
+ *                      e.g.,
+ *                      'column/2 AS RESTRICTIONS_VALUECOMPARED', or constant
+ *                      values, e.g.,
+ *                      '{0, 0, 0, 1} AS RESTRICTIONS_ONOFFCOMPARED'. If using
+ *                      constant values in an
+ *                      identifier combination, the number of values specified
+ *                      must match across the
+ *                      combination. If @a remove_previous_restrictions is set
+ *                      to @a true, any
  *                      provided restrictions will replace the existing
- *                      restrictions. If @a remove_previous_restrictions is set
- *                      to @a false, any provided restrictions will be added
- *                      (in the case of 'RESTRICTIONS_VALUECOMPARED') to or
+ *                      restrictions. If
+ *                      @a remove_previous_restrictions is set to
+ *                      @a false, any provided
+ *                      restrictions will be added (in the case of
+ *                      'RESTRICTIONS_VALUECOMPARED') to or
  *                      replaced (in the case of 'RESTRICTIONS_ONOFFCOMPARED').
  * @param solverType  The type of solver to use for the graph.
  *                    <ul>
@@ -29964,47 +30130,63 @@ SolveGraphResponse GPUdb::solveGraph( const std::string& graphName,
  * <a href="../../graph_solver/examples/graph_rest_guide.html"
  * target="_top">Graph REST Tutorial</a>,
  * and/or some
- * <a href="../../graph_solver/examples.html#match-graph"
- * target="_top">/match/graph examples</a>
+ * <a href="../../graph_solver/examples.html#solve-graph"
+ * target="_top">/solve/graph examples</a>
  * before using this endpoint.
  * 
  * @param graphName  Name of the graph resource to solve.
  * @param weightsOnEdges  Additional weights to apply to the edges of an
- *                        existing graph. Weights must be specified using <a
+ *                        existing
+ *                        graph. Weights must be specified using
+ *                        <a
  *                        href="../../graph_solver/network_graph_solver.html#identifiers"
- *                        target="_top">identifiers</a>; identifiers are
- *                        grouped as <a
+ *                        target="_top">identifiers</a>;
+ *                        identifiers are grouped as
+ *                        <a
  *                        href="../../graph_solver/network_graph_solver.html#id-combos"
- *                        target="_top">combinations</a>. Identifiers can be
- *                        used with existing column names, e.g., 'table.column
- *                        AS WEIGHTS_EDGE_ID', expressions, e.g.,
- *                        'ST_LENGTH(wkt) AS WEIGHTS_VALUESPECIFIED', or raw
- *                        values, e.g., '{4, 15, 2} AS WEIGHTS_VALUESPECIFIED'.
- *                        Any provided weights will be added (in the case of
- *                        'WEIGHTS_VALUESPECIFIED') to or multiplied with (in
- *                        the case of 'WEIGHTS_FACTORSPECIFIED') the existing
- *                        weight(s). If using raw values in an identifier
- *                        combination, the number of values specified must
- *                        match across the combination.
+ *                        target="_top">combinations</a>.
+ *                        Identifiers can be used with existing column names,
+ *                        e.g.,
+ *                        'table.column AS WEIGHTS_EDGE_ID', expressions, e.g.,
+ *                        'ST_LENGTH(wkt) AS WEIGHTS_VALUESPECIFIED', or
+ *                        constant values, e.g.,
+ *                        '{4, 15, 2} AS WEIGHTS_VALUESPECIFIED'. Any provided
+ *                        weights will be added
+ *                        (in the case of 'WEIGHTS_VALUESPECIFIED') to or
+ *                        multiplied with
+ *                        (in the case of 'WEIGHTS_FACTORSPECIFIED') the
+ *                        existing weight(s). If using
+ *                        constant values in an identifier combination, the
+ *                        number of values specified
+ *                        must match across the combination.
  * @param restrictions  Additional restrictions to apply to the nodes/edges of
- *                      an existing graph. Restrictions must be specified using
+ *                      an
+ *                      existing graph. Restrictions must be specified using
  *                      <a
  *                      href="../../graph_solver/network_graph_solver.html#identifiers"
- *                      target="_top">identifiers</a>; identifiers are grouped
- *                      as <a
+ *                      target="_top">identifiers</a>;
+ *                      identifiers are grouped as
+ *                      <a
  *                      href="../../graph_solver/network_graph_solver.html#id-combos"
- *                      target="_top">combinations</a>. Identifiers can be used
- *                      with existing column names, e.g., 'table.column AS
- *                      RESTRICTIONS_EDGE_ID', expressions, e.g., 'column/2 AS
- *                      RESTRICTIONS_VALUECOMPARED', or raw values, e.g., '{0,
- *                      0, 0, 1} AS RESTRICTIONS_ONOFFCOMPARED'. If using raw
- *                      values in an identifier combination, the number of
- *                      values specified must match across the combination. If
- *                      @a remove_previous_restrictions is set to @a true, any
+ *                      target="_top">combinations</a>.
+ *                      Identifiers can be used with existing column names,
+ *                      e.g.,
+ *                      'table.column AS RESTRICTIONS_EDGE_ID', expressions,
+ *                      e.g.,
+ *                      'column/2 AS RESTRICTIONS_VALUECOMPARED', or constant
+ *                      values, e.g.,
+ *                      '{0, 0, 0, 1} AS RESTRICTIONS_ONOFFCOMPARED'. If using
+ *                      constant values in an
+ *                      identifier combination, the number of values specified
+ *                      must match across the
+ *                      combination. If @a remove_previous_restrictions is set
+ *                      to @a true, any
  *                      provided restrictions will replace the existing
- *                      restrictions. If @a remove_previous_restrictions is set
- *                      to @a false, any provided restrictions will be added
- *                      (in the case of 'RESTRICTIONS_VALUECOMPARED') to or
+ *                      restrictions. If
+ *                      @a remove_previous_restrictions is set to
+ *                      @a false, any provided
+ *                      restrictions will be added (in the case of
+ *                      'RESTRICTIONS_VALUECOMPARED') to or
  *                      replaced (in the case of 'RESTRICTIONS_ONOFFCOMPARED').
  * @param solverType  The type of solver to use for the graph.
  *                    <ul>
