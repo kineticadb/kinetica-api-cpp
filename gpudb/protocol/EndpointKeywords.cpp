@@ -945,6 +945,17 @@ namespace gpudb
     const std::string revoke_permission_table_table_read  ( "table_read"   );
     const std::string revoke_permission_table_table_update( "table_update" );
 
+    // Keywords for /show/functions request
+    const std::string show_functions_properties( "properties" );
+
+    // Keywords for /show/functions response
+    const std::string show_functions_aggregate       ( "aggregate"        );
+    const std::string show_functions_cast            ( "cast"             );
+    const std::string show_functions_nondeterministic( "nondeterministic" );
+    const std::string show_functions_scalar          ( "scalar"           );
+    const std::string show_functions_sql             ( "sql"              );
+    const std::string show_functions_udf             ( "udf"              );
+
     // Keywords for /show/graph request
     const std::string show_graph_false                ( "false"                 );
     const std::string show_graph_show_original_request( "show_original_request" );
@@ -1091,6 +1102,8 @@ namespace gpudb
     const std::string solve_graph_max_solution_targets        ( "max_solution_targets"         );
     const std::string solve_graph_min_solution_radius         ( "min_solution_radius"          );
     const std::string solve_graph_num_best_paths              ( "num_best_paths"               );
+    const std::string solve_graph_output_edge_path            ( "output_edge_path"             );
+    const std::string solve_graph_output_wkt_path             ( "output_wkt_path"              );
     const std::string solve_graph_remove_previous_restrictions( "remove_previous_restrictions" );
     const std::string solve_graph_restriction_threshold_value ( "restriction_threshold_value"  );
     const std::string solve_graph_right_turn_penalty          ( "right_turn_penalty"           );

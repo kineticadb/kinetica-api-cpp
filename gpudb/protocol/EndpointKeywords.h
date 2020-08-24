@@ -945,6 +945,17 @@ namespace gpudb
     extern const std::string revoke_permission_table_table_read;
     extern const std::string revoke_permission_table_table_update;
 
+    // Keywords for /show/functions request
+    extern const std::string show_functions_properties;
+
+    // Keywords for /show/functions response
+    extern const std::string show_functions_aggregate;
+    extern const std::string show_functions_cast;
+    extern const std::string show_functions_nondeterministic;
+    extern const std::string show_functions_scalar;
+    extern const std::string show_functions_sql;
+    extern const std::string show_functions_udf;
+
     // Keywords for /show/graph request
     extern const std::string show_graph_false;
     extern const std::string show_graph_show_original_request;
@@ -1091,6 +1102,8 @@ namespace gpudb
     extern const std::string solve_graph_max_solution_targets;
     extern const std::string solve_graph_min_solution_radius;
     extern const std::string solve_graph_num_best_paths;
+    extern const std::string solve_graph_output_edge_path;
+    extern const std::string solve_graph_output_wkt_path;
     extern const std::string solve_graph_remove_previous_restrictions;
     extern const std::string solve_graph_restriction_threshold_value;
     extern const std::string solve_graph_right_turn_penalty;

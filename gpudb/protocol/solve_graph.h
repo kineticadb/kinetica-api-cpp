@@ -15,15 +15,19 @@ namespace gpudb
      * <p>
      * Solves an existing graph for a type of problem (e.g., shortest path,
      * page rank, travelling salesman, etc.) using source nodes, destination
-     * nodes, and additional, optional weights and restrictions.
+     * nodes, and
+     * additional, optional weights and restrictions.
      * <p>
-     * IMPORTANT: It's highly recommended that you review the <a
-     * href="../../graph_solver/network_graph_solver.html"
-     * target="_top">Network Graphs & Solvers</a> concepts documentation, the
+     * IMPORTANT: It's highly recommended that you review the
+     * <a href="../../graph_solver/network_graph_solver.html"
+     * target="_top">Network Graphs & Solvers</a>
+     * concepts documentation, the
      * <a href="../../graph_solver/examples/graph_rest_guide.html"
-     * target="_top">Graph REST Tutorial</a>, and/or some <a
-     * href="../../graph_solver/examples.html#solve-graph"
-     * target="_top">/solve/graph examples</a> before using this endpoint.
+     * target="_top">Graph REST Tutorial</a>,
+     * and/or some
+     * <a href="../../graph_solver/examples.html#solve-graph"
+     * target="_top">/solve/graph examples</a>
+     * before using this endpoint.
      */
     struct SolveGraphRequest
     {
@@ -48,51 +52,64 @@ namespace gpudb
          * 
          * @param[in] graphName_  Name of the graph resource to solve.
          * @param[in] weightsOnEdges_  Additional weights to apply to the edges
-         *                             of an existing graph. Weights must be
-         *                             specified using <a
+         *                             of an existing
+         *                             graph. Weights must be specified using
+         *                             <a
          *                             href="../../graph_solver/network_graph_solver.html#identifiers"
          *                             target="_top">identifiers</a>;
-         *                             identifiers are grouped as <a
+         *                             identifiers are grouped as
+         *                             <a
          *                             href="../../graph_solver/network_graph_solver.html#id-combos"
          *                             target="_top">combinations</a>.
          *                             Identifiers can be used with existing
-         *                             column names, e.g., 'table.column AS
-         *                             WEIGHTS_EDGE_ID', expressions, e.g.,
+         *                             column names, e.g.,
+         *                             'table.column AS WEIGHTS_EDGE_ID',
+         *                             expressions, e.g.,
          *                             'ST_LENGTH(wkt) AS
-         *                             WEIGHTS_VALUESPECIFIED', or raw values,
-         *                             e.g., '{4, 15, 2} AS
-         *                             WEIGHTS_VALUESPECIFIED'. Any provided
-         *                             weights will be added (in the case of
+         *                             WEIGHTS_VALUESPECIFIED', or constant
+         *                             values, e.g.,
+         *                             '{4, 15, 2} AS WEIGHTS_VALUESPECIFIED'.
+         *                             Any provided weights will be added
+         *                             (in the case of
          *                             'WEIGHTS_VALUESPECIFIED') to or
-         *                             multiplied with (in the case of
+         *                             multiplied with
+         *                             (in the case of
          *                             'WEIGHTS_FACTORSPECIFIED') the existing
-         *                             weight(s). If using raw values in an
-         *                             identifier combination, the number of
-         *                             values specified must match across the
-         *                             combination.
+         *                             weight(s). If using
+         *                             constant values in an identifier
+         *                             combination, the number of values
+         *                             specified
+         *                             must match across the combination.
          * @param[in] restrictions_  Additional restrictions to apply to the
-         *                           nodes/edges of an existing graph.
-         *                           Restrictions must be specified using <a
+         *                           nodes/edges of an
+         *                           existing graph. Restrictions must be
+         *                           specified using
+         *                           <a
          *                           href="../../graph_solver/network_graph_solver.html#identifiers"
-         *                           target="_top">identifiers</a>; identifiers
-         *                           are grouped as <a
+         *                           target="_top">identifiers</a>;
+         *                           identifiers are grouped as
+         *                           <a
          *                           href="../../graph_solver/network_graph_solver.html#id-combos"
          *                           target="_top">combinations</a>.
          *                           Identifiers can be used with existing
-         *                           column names, e.g., 'table.column AS
-         *                           RESTRICTIONS_EDGE_ID', expressions, e.g.,
+         *                           column names, e.g.,
+         *                           'table.column AS RESTRICTIONS_EDGE_ID',
+         *                           expressions, e.g.,
          *                           'column/2 AS RESTRICTIONS_VALUECOMPARED',
-         *                           or raw values, e.g., '{0, 0, 0, 1} AS
-         *                           RESTRICTIONS_ONOFFCOMPARED'. If using raw
-         *                           values in an identifier combination, the
-         *                           number of values specified must match
-         *                           across the combination. If @a
-         *                           remove_previous_restrictions is set to @a
-         *                           true, any provided restrictions will
-         *                           replace the existing restrictions. If @a
-         *                           remove_previous_restrictions is set to @a
-         *                           false, any provided restrictions will be
-         *                           added (in the case of
+         *                           or constant values, e.g.,
+         *                           '{0, 0, 0, 1} AS
+         *                           RESTRICTIONS_ONOFFCOMPARED'. If using
+         *                           constant values in an
+         *                           identifier combination, the number of
+         *                           values specified must match across the
+         *                           combination. If @a
+         *                           remove_previous_restrictions is set
+         *                           to @a true, any
+         *                           provided restrictions will replace the
+         *                           existing restrictions. If
+         *                           @a remove_previous_restrictions is set to
+         *                           @a false, any provided
+         *                           restrictions will be added (in the case of
          *                           'RESTRICTIONS_VALUECOMPARED') to or
          *                           replaced (in the case of
          *                           'RESTRICTIONS_ONOFFCOMPARED').
@@ -281,6 +298,27 @@ namespace gpudb
          *                              <li> gpudb::solve_graph_false
          *                      </ul>
          *                      The default value is gpudb::solve_graph_true.
+         *                              <li>
+         *                      gpudb::solve_graph_output_edge_path: If true
+         *                      then concatenated edge ids will be added as the
+         *                      EDGE path column of the solution table for each
+         *                      source and target pair in shortest path solves.
+         *                      <ul>
+         *                              <li> gpudb::solve_graph_true
+         *                              <li> gpudb::solve_graph_false
+         *                      </ul>
+         *                      The default value is gpudb::solve_graph_false.
+         *                              <li>
+         *                      gpudb::solve_graph_output_wkt_path: If true
+         *                      then concatenated wkt line segments will be
+         *                      added as the Wktroute column of the solution
+         *                      table for each source and target pair in
+         *                      shortest path solves.
+         *                      <ul>
+         *                              <li> gpudb::solve_graph_true
+         *                              <li> gpudb::solve_graph_false
+         *                      </ul>
+         *                      The default value is gpudb::solve_graph_true.
          *                      </ul>
          * 
          */
@@ -394,15 +432,19 @@ namespace gpudb
      * <p>
      * Solves an existing graph for a type of problem (e.g., shortest path,
      * page rank, travelling salesman, etc.) using source nodes, destination
-     * nodes, and additional, optional weights and restrictions.
+     * nodes, and
+     * additional, optional weights and restrictions.
      * <p>
-     * IMPORTANT: It's highly recommended that you review the <a
-     * href="../../graph_solver/network_graph_solver.html"
-     * target="_top">Network Graphs & Solvers</a> concepts documentation, the
+     * IMPORTANT: It's highly recommended that you review the
+     * <a href="../../graph_solver/network_graph_solver.html"
+     * target="_top">Network Graphs & Solvers</a>
+     * concepts documentation, the
      * <a href="../../graph_solver/examples/graph_rest_guide.html"
-     * target="_top">Graph REST Tutorial</a>, and/or some <a
-     * href="../../graph_solver/examples.html#solve-graph"
-     * target="_top">/solve/graph examples</a> before using this endpoint.
+     * target="_top">Graph REST Tutorial</a>,
+     * and/or some
+     * <a href="../../graph_solver/examples.html#solve-graph"
+     * target="_top">/solve/graph examples</a>
+     * before using this endpoint.
      */
     struct SolveGraphResponse
     {
