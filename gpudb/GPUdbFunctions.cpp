@@ -6,7 +6,7 @@
 
 
 // GPUdb Version
-const std::string GPUdb::API_VERSION( "7.1.0.0" );
+const std::string GPUdb::API_VERSION( "7.1.1.0" );
 
 
 
@@ -5784,13 +5784,24 @@ AlterDatasourceResponse& GPUdb::alterDatasource( const AlterDatasourceRequest& r
  *                              The default value is
  *                              gpudb::alter_datasource_false.
  *                                      <li>
+ *                              gpudb::alter_datasource_azure_storage_account_name:
+ *                              Name of the Azure storage account to use as the
+ *                              data source, this is valid only if tenant_id is
+ *                              specified
+ *                                      <li>
  *                              gpudb::alter_datasource_azure_container_name:
  *                              Name of the Azure storage container to use as
  *                              the data source
  *                                      <li>
+ *                              gpudb::alter_datasource_azure_tenant_id: Active
+ *                              Directory tenant ID (or directory ID)
+ *                                      <li>
  *                              gpudb::alter_datasource_azure_sas_token: Shared
  *                              access signature token for Azure storage
  *                              account to use as the data source
+ *                                      <li>
+ *                              gpudb::alter_datasource_azure_oauth_token:
+ *                              Oauth token to access given storage container
  *                              </ul>
  * @param options  Optional parameters.
  * 
@@ -5874,13 +5885,24 @@ AlterDatasourceResponse GPUdb::alterDatasource( const std::string& name,
  *                              The default value is
  *                              gpudb::alter_datasource_false.
  *                                      <li>
+ *                              gpudb::alter_datasource_azure_storage_account_name:
+ *                              Name of the Azure storage account to use as the
+ *                              data source, this is valid only if tenant_id is
+ *                              specified
+ *                                      <li>
  *                              gpudb::alter_datasource_azure_container_name:
  *                              Name of the Azure storage container to use as
  *                              the data source
  *                                      <li>
+ *                              gpudb::alter_datasource_azure_tenant_id: Active
+ *                              Directory tenant ID (or directory ID)
+ *                                      <li>
  *                              gpudb::alter_datasource_azure_sas_token: Shared
  *                              access signature token for Azure storage
  *                              account to use as the data source
+ *                                      <li>
+ *                              gpudb::alter_datasource_azure_oauth_token:
+ *                              Oauth token to access given storage container
  *                              </ul>
  * @param options  Optional parameters.
  * @param[out] response_  Response object containing the results of the
@@ -8931,12 +8953,20 @@ CreateDatasourceResponse& GPUdb::createDatasource( const CreateDatasourceRequest
  *                         <li> gpudb::create_datasource_false
  *                 </ul>
  *                 The default value is gpudb::create_datasource_false.
+ *                         <li>
+ *                 gpudb::create_datasource_azure_storage_account_name: Name of
+ *                 the Azure storage account to use as the data source, this is
+ *                 valid only if tenant_id is specified
  *                         <li> gpudb::create_datasource_azure_container_name:
  *                 Name of the Azure storage container to use as the data
  *                 source
+ *                         <li> gpudb::create_datasource_azure_tenant_id:
+ *                 Active Directory tenant ID (or directory ID)
  *                         <li> gpudb::create_datasource_azure_sas_token:
  *                 Shared access signature token for Azure storage account to
  *                 use as the data source
+ *                         <li> gpudb::create_datasource_azure_oauth_token:
+ *                 Oauth token to access given storage container
  *                 </ul>
  * 
  * @return Response object containing the result of the operation.
@@ -9002,12 +9032,20 @@ CreateDatasourceResponse GPUdb::createDatasource( const std::string& name,
  *                         <li> gpudb::create_datasource_false
  *                 </ul>
  *                 The default value is gpudb::create_datasource_false.
+ *                         <li>
+ *                 gpudb::create_datasource_azure_storage_account_name: Name of
+ *                 the Azure storage account to use as the data source, this is
+ *                 valid only if tenant_id is specified
  *                         <li> gpudb::create_datasource_azure_container_name:
  *                 Name of the Azure storage container to use as the data
  *                 source
+ *                         <li> gpudb::create_datasource_azure_tenant_id:
+ *                 Active Directory tenant ID (or directory ID)
  *                         <li> gpudb::create_datasource_azure_sas_token:
  *                 Shared access signature token for Azure storage account to
  *                 use as the data source
+ *                         <li> gpudb::create_datasource_azure_oauth_token:
+ *                 Oauth token to access given storage container
  *                 </ul>
  * @param[out] response_  Response object containing the results of the
  *                        operation.
@@ -13674,6 +13712,9 @@ CreateTypeResponse& GPUdb::createType( const CreateTypeRequest& request_,
  *                    data type. The string can only be interpreted as an
  *                    unsigned long data type with minimum value of zero, and
  *                    maximum value of 18446744073709551615.
+ *                            <li> gpudb::create_type_uuid: Valid only for
+ *                    'string' columns.  It represents an uuid data type.
+ *                    Internally, it is stored as a 128-bit integer.
  *                            <li> gpudb::create_type_decimal: Valid only for
  *                    'string' columns.  It represents a SQL type NUMERIC(19,
  *                    4) data type.  There can be up to 15 digits before the
@@ -13790,6 +13831,9 @@ CreateTypeResponse& GPUdb::createType( const CreateTypeRequest& request_,
  *                    'date', 'time', 'datetime', or 'timestamp' column types,
  *                    replace empty strings and invalid timestamps with 'NOW()'
  *                    upon insert.
+ *                            <li> gpudb::create_type_init_with_uuid: For
+ *                    'uuid' type,  repalce empty strings and invalid uuid
+ *                    values with new_uuid()' upon insert.
  *                    </ul>
  * @param options  Optional parameters.
  * 
@@ -13903,6 +13947,9 @@ CreateTypeResponse GPUdb::createType( const std::string& typeDefinition,
  *                    data type. The string can only be interpreted as an
  *                    unsigned long data type with minimum value of zero, and
  *                    maximum value of 18446744073709551615.
+ *                            <li> gpudb::create_type_uuid: Valid only for
+ *                    'string' columns.  It represents an uuid data type.
+ *                    Internally, it is stored as a 128-bit integer.
  *                            <li> gpudb::create_type_decimal: Valid only for
  *                    'string' columns.  It represents a SQL type NUMERIC(19,
  *                    4) data type.  There can be up to 15 digits before the
@@ -14019,6 +14066,9 @@ CreateTypeResponse GPUdb::createType( const std::string& typeDefinition,
  *                    'date', 'time', 'datetime', or 'timestamp' column types,
  *                    replace empty strings and invalid timestamps with 'NOW()'
  *                    upon insert.
+ *                            <li> gpudb::create_type_init_with_uuid: For
+ *                    'uuid' type,  repalce empty strings and invalid uuid
+ *                    values with new_uuid()' upon insert.
  *                    </ul>
  * @param options  Optional parameters.
  * @param[out] response_  Response object containing the results of the
@@ -22480,8 +22530,7 @@ InsertRecordsFromFilesResponse& GPUdb::insertRecordsFromFiles( const InsertRecor
  *                 the file(s) are in delimited text format; e.g., CSV, TSV,
  *                 PSV, etc.
  *                         <li> gpudb::insert_records_from_files_parquet:
- *                 Indicates the file(s) are in Parquet format. Parquet files
- *                 are not supported yet.
+ *                 Indicates the file(s) are in Parquet format.
  *                 </ul>
  *                 The default value is
  *                 gpudb::insert_records_from_files_delimited_text.
@@ -22989,8 +23038,7 @@ InsertRecordsFromFilesResponse GPUdb::insertRecordsFromFiles( const std::string&
  *                 the file(s) are in delimited text format; e.g., CSV, TSV,
  *                 PSV, etc.
  *                         <li> gpudb::insert_records_from_files_parquet:
- *                 Indicates the file(s) are in Parquet format. Parquet files
- *                 are not supported yet.
+ *                 Indicates the file(s) are in Parquet format.
  *                 </ul>
  *                 The default value is
  *                 gpudb::insert_records_from_files_delimited_text.
@@ -23528,8 +23576,7 @@ InsertRecordsFromPayloadResponse& GPUdb::insertRecordsFromPayload( const InsertR
  *                 the file(s) are in delimited text format; e.g., CSV, TSV,
  *                 PSV, etc.
  *                         <li> gpudb::insert_records_from_payload_parquet:
- *                 Indicates the file(s) are in Parquet format. Parquet files
- *                 are not supported yet.
+ *                 Indicates the file(s) are in Parquet format.
  *                 </ul>
  *                 The default value is
  *                 gpudb::insert_records_from_payload_delimited_text.
@@ -23970,8 +24017,7 @@ InsertRecordsFromPayloadResponse GPUdb::insertRecordsFromPayload( const std::str
  *                 the file(s) are in delimited text format; e.g., CSV, TSV,
  *                 PSV, etc.
  *                         <li> gpudb::insert_records_from_payload_parquet:
- *                 Indicates the file(s) are in Parquet format. Parquet files
- *                 are not supported yet.
+ *                 Indicates the file(s) are in Parquet format.
  *                 </ul>
  *                 The default value is
  *                 gpudb::insert_records_from_payload_delimited_text.

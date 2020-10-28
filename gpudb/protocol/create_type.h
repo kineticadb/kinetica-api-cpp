@@ -124,6 +124,10 @@ namespace gpudb
          *                         can only be interpreted as an unsigned long
          *                         data type with minimum value of zero, and
          *                         maximum value of 18446744073709551615.
+         *                                 <li> gpudb::create_type_uuid: Valid
+         *                         only for 'string' columns.  It represents an
+         *                         uuid data type. Internally, it is stored as
+         *                         a 128-bit integer.
          *                                 <li> gpudb::create_type_decimal:
          *                         Valid only for 'string' columns.  It
          *                         represents a SQL type NUMERIC(19, 4) data
@@ -267,6 +271,11 @@ namespace gpudb
          *                         'date', 'time', 'datetime', or 'timestamp'
          *                         column types, replace empty strings and
          *                         invalid timestamps with 'NOW()' upon insert.
+         *                                 <li>
+         *                         gpudb::create_type_init_with_uuid: For
+         *                         'uuid' type,  repalce empty strings and
+         *                         invalid uuid values with new_uuid()' upon
+         *                         insert.
          *                         </ul>
          * @param[in] options_  Optional parameters.
          * 

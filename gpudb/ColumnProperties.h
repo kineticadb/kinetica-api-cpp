@@ -66,6 +66,13 @@ namespace gpudb
 
 
         /**
+         * Valid only for 'string' columns.  It represents an uuid data type.
+         * Internally, it is stored as a 128-bit integer.
+         */
+        extern const std::string UUID;
+
+
+        /**
          * Valid only for 'string' columns.  It represents a SQL type
          * NUMERIC(19, 4) data type.  There can be up to 15 digits before the
          * decimal point and up to four digits in the fractional part.  The
@@ -260,6 +267,13 @@ namespace gpudb
          * empty strings and invalid timestamps with 'NOW()' upon insert.
          */
         extern const std::string INIT_WITH_NOW;
+
+
+        /**
+         * For 'uuid' type,  repalce empty strings and invalid uuid values with
+         * new_uuid()' upon insert.
+         */
+        extern const std::string INIT_WITH_UUID;
 
 
     } // end namespace ColumnProperty

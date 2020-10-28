@@ -25,6 +25,8 @@ namespace gpudb
 
         const std::string ULONG         ( "ulong"          );
 
+        const std::string UUID          ( "uuid"           );
+
         const std::string DECIMAL       ( "decimal"        );
 
         const std::string DATE          ( "date"           );
@@ -68,6 +70,8 @@ namespace gpudb
         const std::string DICT          ( "dict"           );
 
         const std::string INIT_WITH_NOW ( "init_with_now"  );
+
+        const std::string INIT_WITH_UUID( "init_with_uuid" );
 
     } // end namespace ColumnProperty
 } // end namespace gpudb

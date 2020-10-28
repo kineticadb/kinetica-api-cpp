@@ -219,21 +219,24 @@ namespace gpudb
     const std::string aggregate_unpivot_qualified_result_table_name( "qualified_result_table_name" );
 
     // Keywords for /alter/datasource request
-    const std::string alter_datasource_azure_container_name ( "azure_container_name"  );
-    const std::string alter_datasource_azure_sas_token      ( "azure_sas_token"       );
-    const std::string alter_datasource_connection_timeout   ( "connection_timeout"    );
-    const std::string alter_datasource_false                ( "false"                 );
-    const std::string alter_datasource_hdfs_delegation_token( "hdfs_delegation_token" );
-    const std::string alter_datasource_hdfs_kerberos_keytab ( "hdfs_kerberos_keytab"  );
-    const std::string alter_datasource_hdfs_use_kerberos    ( "hdfs_use_kerberos"     );
-    const std::string alter_datasource_location             ( "location"              );
-    const std::string alter_datasource_password             ( "password"              );
-    const std::string alter_datasource_s3_bucket_name       ( "s3_bucket_name"        );
-    const std::string alter_datasource_s3_region            ( "s3_region"             );
-    const std::string alter_datasource_skip_validation      ( "skip_validation"       );
-    const std::string alter_datasource_true                 ( "true"                  );
-    const std::string alter_datasource_user_name            ( "user_name"             );
-    const std::string alter_datasource_wait_timeout         ( "wait_timeout"          );
+    const std::string alter_datasource_azure_container_name      ( "azure_container_name"       );
+    const std::string alter_datasource_azure_oauth_token         ( "azure_oauth_token"          );
+    const std::string alter_datasource_azure_sas_token           ( "azure_sas_token"            );
+    const std::string alter_datasource_azure_storage_account_name( "azure_storage_account_name" );
+    const std::string alter_datasource_azure_tenant_id           ( "azure_tenant_id"            );
+    const std::string alter_datasource_connection_timeout        ( "connection_timeout"         );
+    const std::string alter_datasource_false                     ( "false"                      );
+    const std::string alter_datasource_hdfs_delegation_token     ( "hdfs_delegation_token"      );
+    const std::string alter_datasource_hdfs_kerberos_keytab      ( "hdfs_kerberos_keytab"       );
+    const std::string alter_datasource_hdfs_use_kerberos         ( "hdfs_use_kerberos"          );
+    const std::string alter_datasource_location                  ( "location"                   );
+    const std::string alter_datasource_password                  ( "password"                   );
+    const std::string alter_datasource_s3_bucket_name            ( "s3_bucket_name"             );
+    const std::string alter_datasource_s3_region                 ( "s3_region"                  );
+    const std::string alter_datasource_skip_validation           ( "skip_validation"            );
+    const std::string alter_datasource_true                      ( "true"                       );
+    const std::string alter_datasource_user_name                 ( "user_name"                  );
+    const std::string alter_datasource_wait_timeout              ( "wait_timeout"               );
 
     // Keywords for /alter/resourcegroup request
     const std::string alter_resource_group_empty_string           ( ""                        );
@@ -356,18 +359,21 @@ namespace gpudb
     const std::string clear_table_true                  ( "true"                   );
 
     // Keywords for /create/datasource request
-    const std::string create_datasource_azure_container_name ( "azure_container_name"  );
-    const std::string create_datasource_azure_sas_token      ( "azure_sas_token"       );
-    const std::string create_datasource_connection_timeout   ( "connection_timeout"    );
-    const std::string create_datasource_false                ( "false"                 );
-    const std::string create_datasource_hdfs_delegation_token( "hdfs_delegation_token" );
-    const std::string create_datasource_hdfs_kerberos_keytab ( "hdfs_kerberos_keytab"  );
-    const std::string create_datasource_hdfs_use_kerberos    ( "hdfs_use_kerberos"     );
-    const std::string create_datasource_s3_bucket_name       ( "s3_bucket_name"        );
-    const std::string create_datasource_s3_region            ( "s3_region"             );
-    const std::string create_datasource_skip_validation      ( "skip_validation"       );
-    const std::string create_datasource_true                 ( "true"                  );
-    const std::string create_datasource_wait_timeout         ( "wait_timeout"          );
+    const std::string create_datasource_azure_container_name      ( "azure_container_name"       );
+    const std::string create_datasource_azure_oauth_token         ( "azure_oauth_token"          );
+    const std::string create_datasource_azure_sas_token           ( "azure_sas_token"            );
+    const std::string create_datasource_azure_storage_account_name( "azure_storage_account_name" );
+    const std::string create_datasource_azure_tenant_id           ( "azure_tenant_id"            );
+    const std::string create_datasource_connection_timeout        ( "connection_timeout"         );
+    const std::string create_datasource_false                     ( "false"                      );
+    const std::string create_datasource_hdfs_delegation_token     ( "hdfs_delegation_token"      );
+    const std::string create_datasource_hdfs_kerberos_keytab      ( "hdfs_kerberos_keytab"       );
+    const std::string create_datasource_hdfs_use_kerberos         ( "hdfs_use_kerberos"          );
+    const std::string create_datasource_s3_bucket_name            ( "s3_bucket_name"             );
+    const std::string create_datasource_s3_region                 ( "s3_region"                  );
+    const std::string create_datasource_skip_validation           ( "skip_validation"            );
+    const std::string create_datasource_true                      ( "true"                       );
+    const std::string create_datasource_wait_timeout              ( "wait_timeout"               );
 
     // Keywords for /create/graph request
     const std::string create_graph_add_table_monitor          ( "add_table_monitor"           );
@@ -662,6 +668,7 @@ namespace gpudb
     const std::string create_type_dict          ( "dict"           );
     const std::string create_type_disk_optimized( "disk_optimized" );
     const std::string create_type_init_with_now ( "init_with_now"  );
+    const std::string create_type_init_with_uuid( "init_with_uuid" );
     const std::string create_type_int16         ( "int16"          );
     const std::string create_type_int8          ( "int8"           );
     const std::string create_type_ipv4          ( "ipv4"           );
@@ -673,6 +680,7 @@ namespace gpudb
     const std::string create_type_time          ( "time"           );
     const std::string create_type_timestamp     ( "timestamp"      );
     const std::string create_type_ulong         ( "ulong"          );
+    const std::string create_type_uuid          ( "uuid"           );
     const std::string create_type_wkt           ( "wkt"            );
 
     // Keywords for /create/union request

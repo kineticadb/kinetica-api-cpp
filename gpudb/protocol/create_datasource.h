@@ -94,13 +94,24 @@ namespace gpudb
          *                      The default value is
          *                      gpudb::create_datasource_false.
          *                              <li>
+         *                      gpudb::create_datasource_azure_storage_account_name:
+         *                      Name of the Azure storage account to use as the
+         *                      data source, this is valid only if tenant_id is
+         *                      specified
+         *                              <li>
          *                      gpudb::create_datasource_azure_container_name:
          *                      Name of the Azure storage container to use as
          *                      the data source
          *                              <li>
+         *                      gpudb::create_datasource_azure_tenant_id:
+         *                      Active Directory tenant ID (or directory ID)
+         *                              <li>
          *                      gpudb::create_datasource_azure_sas_token:
          *                      Shared access signature token for Azure storage
          *                      account to use as the data source
+         *                              <li>
+         *                      gpudb::create_datasource_azure_oauth_token:
+         *                      Oauth token to access given storage container
          *                      </ul>
          * 
          */

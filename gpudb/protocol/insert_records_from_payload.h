@@ -411,7 +411,6 @@ namespace gpudb
          *                              <li>
          *                      gpudb::insert_records_from_payload_parquet:
          *                      Indicates the file(s) are in Parquet format.
-         *                      Parquet files are not supported yet.
          *                      </ul>
          *                      The default value is
          *                      gpudb::insert_records_from_payload_delimited_text.

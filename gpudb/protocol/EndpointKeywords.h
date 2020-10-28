@@ -220,7 +220,10 @@ namespace gpudb
 
     // Keywords for /alter/datasource request
     extern const std::string alter_datasource_azure_container_name;
+    extern const std::string alter_datasource_azure_oauth_token;
     extern const std::string alter_datasource_azure_sas_token;
+    extern const std::string alter_datasource_azure_storage_account_name;
+    extern const std::string alter_datasource_azure_tenant_id;
     extern const std::string alter_datasource_connection_timeout;
     extern const std::string alter_datasource_false;
     extern const std::string alter_datasource_hdfs_delegation_token;
@@ -357,7 +360,10 @@ namespace gpudb
 
     // Keywords for /create/datasource request
     extern const std::string create_datasource_azure_container_name;
+    extern const std::string create_datasource_azure_oauth_token;
     extern const std::string create_datasource_azure_sas_token;
+    extern const std::string create_datasource_azure_storage_account_name;
+    extern const std::string create_datasource_azure_tenant_id;
     extern const std::string create_datasource_connection_timeout;
     extern const std::string create_datasource_false;
     extern const std::string create_datasource_hdfs_delegation_token;
@@ -662,6 +668,7 @@ namespace gpudb
     extern const std::string create_type_dict;
     extern const std::string create_type_disk_optimized;
     extern const std::string create_type_init_with_now;
+    extern const std::string create_type_init_with_uuid;
     extern const std::string create_type_int16;
     extern const std::string create_type_int8;
     extern const std::string create_type_ipv4;
@@ -673,6 +680,7 @@ namespace gpudb
     extern const std::string create_type_time;
     extern const std::string create_type_timestamp;
     extern const std::string create_type_ulong;
+    extern const std::string create_type_uuid;
     extern const std::string create_type_wkt;
 
     // Keywords for /create/union request
