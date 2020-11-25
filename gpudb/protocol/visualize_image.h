@@ -143,7 +143,7 @@ namespace gpudb
          *                                   <li>
          *                           gpudb::visualize_image_hollowdiamond
          *                                   <li>
-         *                           gpudb::visualize_image_SYMBOLCODE
+         *                           gpudb::visualize_image_symbolcode
          *                           </ul>
          *                           The default value is
          *                           gpudb::visualize_image_square.
@@ -212,7 +212,7 @@ namespace gpudb
          *                                   <li>
          *                           gpudb::visualize_image_oriented_triangle
          *                                   <li>
-         *                           gpudb::visualize_image_SYMBOLCODE
+         *                           gpudb::visualize_image_symbolcode
          *                           </ul>
          *                           The default value is
          *                           gpudb::visualize_image_circle.
@@ -237,7 +237,7 @@ namespace gpudb
          *                                   <li>
          *                           gpudb::visualize_image_hollowdiamond
          *                                   <li>
-         *                           gpudb::visualize_image_SYMBOLCODE
+         *                           gpudb::visualize_image_symbolcode
          *                           </ul>
          *                           The default value is
          *                           gpudb::visualize_image_hollowdiamond.

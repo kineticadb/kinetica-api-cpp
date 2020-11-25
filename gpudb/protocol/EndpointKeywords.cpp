@@ -432,6 +432,7 @@ namespace gpudb
     const std::string create_table_INTERVAL                    ( "INTERVAL"                     );
     const std::string create_table_LIST                        ( "LIST"                         );
     const std::string create_table_RANGE                       ( "RANGE"                        );
+    const std::string create_table_SERIES                      ( "SERIES"                       );
     const std::string create_table_chunk_size                  ( "chunk_size"                   );
     const std::string create_table_collection_name             ( "collection_name"              );
     const std::string create_table_disallow_homogeneous_tables ( "disallow_homogeneous_tables"  );
@@ -1003,6 +1004,7 @@ namespace gpudb
     const std::string show_sql_proc_true                  ( "true"                   );
 
     // Keywords for /show/sql/proc response
+    const std::string show_sql_proc_execute_as        ( "execute_as"         );
     const std::string show_sql_proc_execute_interval  ( "execute_interval"   );
     const std::string show_sql_proc_execute_start_time( "execute_start_time" );
 
@@ -1133,7 +1135,6 @@ namespace gpudb
     const std::string visualize_image_EPSG_4326          ( "EPSG:4326"           );
     const std::string visualize_image_EPSG_900913        ( "EPSG:900913"         );
     const std::string visualize_image_PLATE_CARREE       ( "PLATE_CARREE"        );
-    const std::string visualize_image_SYMBOLCODE         ( "SYMBOLCODE"          );
     const std::string visualize_image_WEB_MERCATOR       ( "WEB_MERCATOR"        );
     const std::string visualize_image_circle             ( "circle"              );
     const std::string visualize_image_diamond            ( "diamond"             );
@@ -1164,6 +1165,7 @@ namespace gpudb
     const std::string visualize_image_shapelinepatterns  ( "shapelinepatterns"   );
     const std::string visualize_image_shapelinewidths    ( "shapelinewidths"     );
     const std::string visualize_image_square             ( "square"              );
+    const std::string visualize_image_symbolcode         ( "symbolcode"          );
     const std::string visualize_image_symbolrotations    ( "symbolrotations"     );
     const std::string visualize_image_trackheadcolors    ( "trackheadcolors"     );
     const std::string visualize_image_trackheadshapes    ( "trackheadshapes"     );
@@ -1217,7 +1219,6 @@ namespace gpudb
     const std::string visualize_image_classbreak_EPSG_4326          ( "EPSG:4326"           );
     const std::string visualize_image_classbreak_EPSG_900913        ( "EPSG:900913"         );
     const std::string visualize_image_classbreak_PLATE_CARREE       ( "PLATE_CARREE"        );
-    const std::string visualize_image_classbreak_SYMBOLCODE         ( "SYMBOLCODE"          );
     const std::string visualize_image_classbreak_WEB_MERCATOR       ( "WEB_MERCATOR"        );
     const std::string visualize_image_classbreak_cb_pointalphas     ( "cb_pointalphas"      );
     const std::string visualize_image_classbreak_circle             ( "circle"              );
@@ -1236,6 +1237,8 @@ namespace gpudb
     const std::string visualize_image_classbreak_hollowdiamond      ( "hollowdiamond"       );
     const std::string visualize_image_classbreak_hollowsquare       ( "hollowsquare"        );
     const std::string visualize_image_classbreak_none               ( "none"                );
+    const std::string visualize_image_classbreak_oriented_arrow     ( "oriented_arrow"      );
+    const std::string visualize_image_classbreak_oriented_triangle  ( "oriented_triangle"   );
     const std::string visualize_image_classbreak_pointcolors        ( "pointcolors"         );
     const std::string visualize_image_classbreak_pointoffset_x      ( "pointoffset_x"       );
     const std::string visualize_image_classbreak_pointoffset_y      ( "pointoffset_y"       );
@@ -1247,6 +1250,8 @@ namespace gpudb
     const std::string visualize_image_classbreak_shapelinepatterns  ( "shapelinepatterns"   );
     const std::string visualize_image_classbreak_shapelinewidths    ( "shapelinewidths"     );
     const std::string visualize_image_classbreak_square             ( "square"              );
+    const std::string visualize_image_classbreak_symbolcode         ( "symbolcode"          );
+    const std::string visualize_image_classbreak_symbolrotations    ( "symbolrotations"     );
     const std::string visualize_image_classbreak_trackheadcolors    ( "trackheadcolors"     );
     const std::string visualize_image_classbreak_trackheadshapes    ( "trackheadshapes"     );
     const std::string visualize_image_classbreak_trackheadsizes     ( "trackheadsizes"      );
@@ -1610,7 +1615,6 @@ namespace gpudb
     const std::string visualize_video_EPSG_4326        ( "EPSG:4326"         );
     const std::string visualize_video_EPSG_900913      ( "EPSG:900913"       );
     const std::string visualize_video_PLATE_CARREE     ( "PLATE_CARREE"      );
-    const std::string visualize_video_SYMBOLCODE       ( "SYMBOLCODE"        );
     const std::string visualize_video_WEB_MERCATOR     ( "WEB_MERCATOR"      );
     const std::string visualize_video_circle           ( "circle"            );
     const std::string visualize_video_diamond          ( "diamond"           );
@@ -1629,6 +1633,7 @@ namespace gpudb
     const std::string visualize_video_shapelinecolors  ( "shapelinecolors"   );
     const std::string visualize_video_shapelinewidths  ( "shapelinewidths"   );
     const std::string visualize_video_square           ( "square"            );
+    const std::string visualize_video_symbolcode       ( "symbolcode"        );
     const std::string visualize_video_trackheadcolors  ( "trackheadcolors"   );
     const std::string visualize_video_trackheadshapes  ( "trackheadshapes"   );
     const std::string visualize_video_trackheadsizes   ( "trackheadsizes"    );

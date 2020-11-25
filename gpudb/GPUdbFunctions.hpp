@@ -7395,10 +7395,10 @@ CreateMaterializedViewResponse& createMaterializedView( const std::string& table
                                                         CreateMaterializedViewResponse& response_ ) const;
 
 /**
- * Creates an instance (proc) of the user-defined function (UDF) specified by
- * the given command, options, and files, and makes it available for execution.
- * For details on UDFs, see: <a href="../../concepts/udf.html"
- * target="_top">User-Defined Functions</a>
+ * Creates an instance (proc) of the
+ * <a href="../../concepts/udf.html" target="_top">user-defined functions</a>
+ * (UDF) specified by the
+ * given command, options, and files, and makes it available for execution.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -7410,10 +7410,10 @@ CreateMaterializedViewResponse& createMaterializedView( const std::string& table
 CreateProcResponse createProc( const CreateProcRequest& request_ ) const;
 
 /**
- * Creates an instance (proc) of the user-defined function (UDF) specified by
- * the given command, options, and files, and makes it available for execution.
- * For details on UDFs, see: <a href="../../concepts/udf.html"
- * target="_top">User-Defined Functions</a>
+ * Creates an instance (proc) of the
+ * <a href="../../concepts/udf.html" target="_top">user-defined functions</a>
+ * (UDF) specified by the
+ * given command, options, and files, and makes it available for execution.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -7429,44 +7429,56 @@ CreateProcResponse& createProc( const CreateProcRequest& request_,
                                 CreateProcResponse& response_ ) const;
 
 /**
- * Creates an instance (proc) of the user-defined function (UDF) specified by
- * the given command, options, and files, and makes it available for execution.
- * For details on UDFs, see: <a href="../../concepts/udf.html"
- * target="_top">User-Defined Functions</a>
+ * Creates an instance (proc) of the
+ * <a href="../../concepts/udf.html" target="_top">user-defined functions</a>
+ * (UDF) specified by the
+ * given command, options, and files, and makes it available for execution.
  * 
  * @param procName  Name of the proc to be created. Must not be the name of a
  *                  currently existing proc.
  * @param executionMode  The execution mode of the proc.
  *                       <ul>
  *                               <li> gpudb::create_proc_distributed: Input
- *                       table data will be divided into data segments that are
- *                       distributed across all nodes in the cluster, and the
- *                       proc command will be invoked once per data segment in
- *                       parallel. Output table data from each invocation will
- *                       be saved to the same node as the corresponding input
+ *                       table data will be divided into data
+ *                       segments that are distributed across all nodes in the
+ *                       cluster, and the proc
+ *                       command will be invoked once per data segment in
+ *                       parallel. Output table data
+ *                       from each invocation will be saved to the same node as
+ *                       the corresponding input
  *                       data.
  *                               <li> gpudb::create_proc_nondistributed: The
- *                       proc command will be invoked only once per execution,
- *                       and will not have access to any input or output table
- *                       data.
+ *                       proc command will be invoked only once per
+ *                       execution, and will not have direct access to any
+ *                       tables named as input or
+ *                       output table parameters in the call to /execute/proc.
+ *                       It will,
+ *                       however, be able to access the database using native
+ *                       API calls.
  *                       </ul>
  *                       The default value is gpudb::create_proc_distributed.
- * @param files  A map of the files that make up the proc. The keys of the map
- *               are file names, and the values are the binary contents of the
- *               files. The file names may include subdirectory names (e.g.
- *               'subdir/file') but must not resolve to a directory above the
- *               root for the proc.
+ * @param files  A map of the files that make up the proc. The keys of the
+ *               map are file names, and the values are the binary contents of
+ *               the files. The
+ *               file names may include subdirectory names (e.g. 'subdir/file')
+ *               but must not
+ *               resolve to a directory above the root for the proc.
  * @param command  The command (excluding arguments) that will be invoked when
  *                 the proc is executed. It will be invoked from the directory
- *                 containing the proc @a files and may be any command that can
- *                 be resolved from that directory. It need not refer to a file
- *                 actually in that directory; for example, it could be 'java'
- *                 if the proc is a Java application; however, any necessary
- *                 external programs must be preinstalled on every database
- *                 node. If the command refers to a file in that directory, it
- *                 must be preceded with './' as per Linux convention. If not
- *                 specified, and exactly one file is provided in @a files,
- *                 that file will be invoked.
+ *                 containing the proc
+ *                 @a files and may be any command that can be resolved from
+ *                 that directory.
+ *                 It need not refer to a file actually in that directory; for
+ *                 example, it could be
+ *                 'java' if the proc is a Java application; however, any
+ *                 necessary external
+ *                 programs must be preinstalled on every database node. If the
+ *                 command refers to a
+ *                 file in that directory, it must be preceded with './' as per
+ *                 Linux convention.
+ *                 If not specified, and exactly one file is provided in @a
+ *                 files, that file
+ *                 will be invoked.
  * @param args  An array of command-line arguments that will be passed to @a
  *              command when the proc is executed.
  * @param options  Optional parameters.
@@ -7489,44 +7501,56 @@ CreateProcResponse createProc( const std::string& procName,
                                const std::map<std::string, std::string>& options ) const;
 
 /**
- * Creates an instance (proc) of the user-defined function (UDF) specified by
- * the given command, options, and files, and makes it available for execution.
- * For details on UDFs, see: <a href="../../concepts/udf.html"
- * target="_top">User-Defined Functions</a>
+ * Creates an instance (proc) of the
+ * <a href="../../concepts/udf.html" target="_top">user-defined functions</a>
+ * (UDF) specified by the
+ * given command, options, and files, and makes it available for execution.
  * 
  * @param procName  Name of the proc to be created. Must not be the name of a
  *                  currently existing proc.
  * @param executionMode  The execution mode of the proc.
  *                       <ul>
  *                               <li> gpudb::create_proc_distributed: Input
- *                       table data will be divided into data segments that are
- *                       distributed across all nodes in the cluster, and the
- *                       proc command will be invoked once per data segment in
- *                       parallel. Output table data from each invocation will
- *                       be saved to the same node as the corresponding input
+ *                       table data will be divided into data
+ *                       segments that are distributed across all nodes in the
+ *                       cluster, and the proc
+ *                       command will be invoked once per data segment in
+ *                       parallel. Output table data
+ *                       from each invocation will be saved to the same node as
+ *                       the corresponding input
  *                       data.
  *                               <li> gpudb::create_proc_nondistributed: The
- *                       proc command will be invoked only once per execution,
- *                       and will not have access to any input or output table
- *                       data.
+ *                       proc command will be invoked only once per
+ *                       execution, and will not have direct access to any
+ *                       tables named as input or
+ *                       output table parameters in the call to /execute/proc.
+ *                       It will,
+ *                       however, be able to access the database using native
+ *                       API calls.
  *                       </ul>
  *                       The default value is gpudb::create_proc_distributed.
- * @param files  A map of the files that make up the proc. The keys of the map
- *               are file names, and the values are the binary contents of the
- *               files. The file names may include subdirectory names (e.g.
- *               'subdir/file') but must not resolve to a directory above the
- *               root for the proc.
+ * @param files  A map of the files that make up the proc. The keys of the
+ *               map are file names, and the values are the binary contents of
+ *               the files. The
+ *               file names may include subdirectory names (e.g. 'subdir/file')
+ *               but must not
+ *               resolve to a directory above the root for the proc.
  * @param command  The command (excluding arguments) that will be invoked when
  *                 the proc is executed. It will be invoked from the directory
- *                 containing the proc @a files and may be any command that can
- *                 be resolved from that directory. It need not refer to a file
- *                 actually in that directory; for example, it could be 'java'
- *                 if the proc is a Java application; however, any necessary
- *                 external programs must be preinstalled on every database
- *                 node. If the command refers to a file in that directory, it
- *                 must be preceded with './' as per Linux convention. If not
- *                 specified, and exactly one file is provided in @a files,
- *                 that file will be invoked.
+ *                 containing the proc
+ *                 @a files and may be any command that can be resolved from
+ *                 that directory.
+ *                 It need not refer to a file actually in that directory; for
+ *                 example, it could be
+ *                 'java' if the proc is a Java application; however, any
+ *                 necessary external
+ *                 programs must be preinstalled on every database node. If the
+ *                 command refers to a
+ *                 file in that directory, it must be preceded with './' as per
+ *                 Linux convention.
+ *                 If not specified, and exactly one file is provided in @a
+ *                 files, that file
+ *                 will be invoked.
  * @param args  An array of command-line arguments that will be passed to @a
  *              command when the proc is executed.
  * @param options  Optional parameters.
@@ -8328,6 +8352,9 @@ CreateTableResponse& createTable( const CreateTableRequest& request_,
  *                         <li> gpudb::create_table_HASH: Use <a
  *                 href="../../concepts/tables.html#partitioning-by-hash"
  *                 target="_top">hash partitioning</a>.
+ *                         <li> gpudb::create_table_SERIES: Use <a
+ *                 href="../../concepts/tables.html#partitioning-by-series"
+ *                 target="_top">series partitioning</a>.
  *                 </ul>
  *                         <li> gpudb::create_table_partition_keys:
  *                 Comma-separated list of partition keys, which are the
@@ -8500,6 +8527,9 @@ CreateTableResponse createTable( const std::string& tableName,
  *                         <li> gpudb::create_table_HASH: Use <a
  *                 href="../../concepts/tables.html#partitioning-by-hash"
  *                 target="_top">hash partitioning</a>.
+ *                         <li> gpudb::create_table_SERIES: Use <a
+ *                 href="../../concepts/tables.html#partitioning-by-series"
+ *                 target="_top">series partitioning</a>.
  *                 </ul>
  *                         <li> gpudb::create_table_partition_keys:
  *                 Comma-separated list of partition keys, which are the
@@ -10523,8 +10553,17 @@ DeleteUserResponse& deleteUser( const std::string& name,
                                 DeleteUserResponse& response_ ) const;
 
 /**
- * Executes a proc. This endpoint is asynchronous and does not wait for the
- * proc to complete before returning.
+ * Executes a proc. This endpoint is asynchronous and does not wait for
+ * the proc to complete before returning.
+ * <p>
+ * If the proc being executed is distributed, @a inputTableNames &
+ * @a inputColumnNames may be passed to the proc to use for reading data,
+ * and @a outputTableNames may be passed to the proc to use for writing
+ * data.
+ * <p>
+ * If the proc being executed is non-distributed, these table parameters will
+ * be
+ * ignored.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -10536,8 +10575,17 @@ DeleteUserResponse& deleteUser( const std::string& name,
 ExecuteProcResponse executeProc( const ExecuteProcRequest& request_ ) const;
 
 /**
- * Executes a proc. This endpoint is asynchronous and does not wait for the
- * proc to complete before returning.
+ * Executes a proc. This endpoint is asynchronous and does not wait for
+ * the proc to complete before returning.
+ * <p>
+ * If the proc being executed is distributed, @a inputTableNames &
+ * @a inputColumnNames may be passed to the proc to use for reading data,
+ * and @a outputTableNames may be passed to the proc to use for writing
+ * data.
+ * <p>
+ * If the proc being executed is non-distributed, these table parameters will
+ * be
+ * ignored.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -10553,8 +10601,17 @@ ExecuteProcResponse& executeProc( const ExecuteProcRequest& request_,
                                   ExecuteProcResponse& response_ ) const;
 
 /**
- * Executes a proc. This endpoint is asynchronous and does not wait for the
- * proc to complete before returning.
+ * Executes a proc. This endpoint is asynchronous and does not wait for
+ * the proc to complete before returning.
+ * <p>
+ * If the proc being executed is distributed, @a inputTableNames &
+ * @a inputColumnNames may be passed to the proc to use for reading data,
+ * and @a outputTableNames may be passed to the proc to use for writing
+ * data.
+ * <p>
+ * If the proc being executed is non-distributed, these table parameters will
+ * be
+ * ignored.
  * 
  * @param procName  Name of the proc to execute. Must be the name of a
  *                  currently existing proc.
@@ -10565,26 +10622,38 @@ ExecuteProcResponse& executeProc( const ExecuteProcRequest& request_,
  *                   proc. Each key/value pair specifies the name of a
  *                   parameter and its value.
  * @param inputTableNames  Names of the tables containing data to be passed to
- *                         the proc. Each name specified must be the name of a
- *                         currently existing table. If no table names are
- *                         specified, no data will be passed to the proc.
+ *                         the
+ *                         proc. Each name specified must be the name of a
+ *                         currently existing table.
+ *                         If no table names are specified, no data will be
+ *                         passed to the proc.  This
+ *                         parameter is ignored if the proc has a
+ *                         non-distributed execution mode.
  * @param inputColumnNames  Map of table names from @a inputTableNames to lists
  *                          of names of columns from those tables that will be
- *                          passed to the proc. Each column name specified must
- *                          be the name of an existing column in the
+ *                          passed to the proc. Each
+ *                          column name specified must be the name of an
+ *                          existing column in the
  *                          corresponding table. If a table name from @a
- *                          inputTableNames is not included, all columns from
- *                          that table will be passed to the proc.
+ *                          inputTableNames is not
+ *                          included, all columns from that table will be
+ *                          passed to the proc.  This
+ *                          parameter is ignored if the proc has a
+ *                          non-distributed execution mode.
  * @param outputTableNames  Names of the tables to which output data from the
- *                          proc will be written. If a specified table does not
- *                          exist, it will automatically be created with the
- *                          same schema as the corresponding table (by order)
- *                          from @a inputTableNames, excluding any primary and
- *                          shard keys. If a specified table is a
- *                          non-persistent result table, it must not have
- *                          primary or shard keys. If no table names are
- *                          specified, no output data can be returned from the
- *                          proc.
+ *                          proc will
+ *                          be written.  If a specified table does not exist,
+ *                          it will automatically be
+ *                          created with the same schema as the corresponding
+ *                          table (by order) from
+ *                          @a inputTableNames, excluding any primary and shard
+ *                          keys. If a specified
+ *                          table is a non-persistent result table, it must not
+ *                          have primary or shard keys.
+ *                          If no table names are specified, no output data can
+ *                          be returned from the proc.
+ *                          This parameter is ignored if the proc has a
+ *                          non-distributed execution mode.
  * @param options  Optional parameters.
  *                 <ul>
  *                         <li> gpudb::execute_proc_cache_input: A
@@ -10632,8 +10701,17 @@ ExecuteProcResponse executeProc( const std::string& procName,
                                  const std::map<std::string, std::string>& options ) const;
 
 /**
- * Executes a proc. This endpoint is asynchronous and does not wait for the
- * proc to complete before returning.
+ * Executes a proc. This endpoint is asynchronous and does not wait for
+ * the proc to complete before returning.
+ * <p>
+ * If the proc being executed is distributed, @a inputTableNames &
+ * @a inputColumnNames may be passed to the proc to use for reading data,
+ * and @a outputTableNames may be passed to the proc to use for writing
+ * data.
+ * <p>
+ * If the proc being executed is non-distributed, these table parameters will
+ * be
+ * ignored.
  * 
  * @param procName  Name of the proc to execute. Must be the name of a
  *                  currently existing proc.
@@ -10644,26 +10722,38 @@ ExecuteProcResponse executeProc( const std::string& procName,
  *                   proc. Each key/value pair specifies the name of a
  *                   parameter and its value.
  * @param inputTableNames  Names of the tables containing data to be passed to
- *                         the proc. Each name specified must be the name of a
- *                         currently existing table. If no table names are
- *                         specified, no data will be passed to the proc.
+ *                         the
+ *                         proc. Each name specified must be the name of a
+ *                         currently existing table.
+ *                         If no table names are specified, no data will be
+ *                         passed to the proc.  This
+ *                         parameter is ignored if the proc has a
+ *                         non-distributed execution mode.
  * @param inputColumnNames  Map of table names from @a inputTableNames to lists
  *                          of names of columns from those tables that will be
- *                          passed to the proc. Each column name specified must
- *                          be the name of an existing column in the
+ *                          passed to the proc. Each
+ *                          column name specified must be the name of an
+ *                          existing column in the
  *                          corresponding table. If a table name from @a
- *                          inputTableNames is not included, all columns from
- *                          that table will be passed to the proc.
+ *                          inputTableNames is not
+ *                          included, all columns from that table will be
+ *                          passed to the proc.  This
+ *                          parameter is ignored if the proc has a
+ *                          non-distributed execution mode.
  * @param outputTableNames  Names of the tables to which output data from the
- *                          proc will be written. If a specified table does not
- *                          exist, it will automatically be created with the
- *                          same schema as the corresponding table (by order)
- *                          from @a inputTableNames, excluding any primary and
- *                          shard keys. If a specified table is a
- *                          non-persistent result table, it must not have
- *                          primary or shard keys. If no table names are
- *                          specified, no output data can be returned from the
- *                          proc.
+ *                          proc will
+ *                          be written.  If a specified table does not exist,
+ *                          it will automatically be
+ *                          created with the same schema as the corresponding
+ *                          table (by order) from
+ *                          @a inputTableNames, excluding any primary and shard
+ *                          keys. If a specified
+ *                          table is a non-persistent result table, it must not
+ *                          have primary or shard keys.
+ *                          If no table names are specified, no output data can
+ *                          be returned from the proc.
+ *                          This parameter is ignored if the proc has a
+ *                          non-distributed execution mode.
  * @param options  Optional parameters.
  *                 <ul>
  *                         <li> gpudb::execute_proc_cache_input: A
@@ -23138,7 +23228,7 @@ VisualizeImageResponse& visualizeImage( const VisualizeImageRequest& request_,
  *                              <li> gpudb::visualize_image_hollowcircle
  *                              <li> gpudb::visualize_image_hollowsquare
  *                              <li> gpudb::visualize_image_hollowdiamond
- *                              <li> gpudb::visualize_image_SYMBOLCODE
+ *                              <li> gpudb::visualize_image_symbolcode
  *                      </ul>
  *                      The default value is gpudb::visualize_image_square.
  *                              <li> gpudb::visualize_image_symbolrotations:
@@ -23183,7 +23273,7 @@ VisualizeImageResponse& visualizeImage( const VisualizeImageRequest& request_,
  *                              <li> gpudb::visualize_image_hollowdiamond
  *                              <li> gpudb::visualize_image_oriented_arrow
  *                              <li> gpudb::visualize_image_oriented_triangle
- *                              <li> gpudb::visualize_image_SYMBOLCODE
+ *                              <li> gpudb::visualize_image_symbolcode
  *                      </ul>
  *                      The default value is gpudb::visualize_image_circle.
  *                              <li> gpudb::visualize_image_trackheadcolors:
@@ -23199,7 +23289,7 @@ VisualizeImageResponse& visualizeImage( const VisualizeImageRequest& request_,
  *                              <li> gpudb::visualize_image_hollowcircle
  *                              <li> gpudb::visualize_image_hollowsquare
  *                              <li> gpudb::visualize_image_hollowdiamond
- *                              <li> gpudb::visualize_image_SYMBOLCODE
+ *                              <li> gpudb::visualize_image_symbolcode
  *                      </ul>
  *                      The default value is
  *                      gpudb::visualize_image_hollowdiamond.
@@ -23300,7 +23390,7 @@ VisualizeImageResponse visualizeImage( const std::vector<std::string>& tableName
  *                              <li> gpudb::visualize_image_hollowcircle
  *                              <li> gpudb::visualize_image_hollowsquare
  *                              <li> gpudb::visualize_image_hollowdiamond
- *                              <li> gpudb::visualize_image_SYMBOLCODE
+ *                              <li> gpudb::visualize_image_symbolcode
  *                      </ul>
  *                      The default value is gpudb::visualize_image_square.
  *                              <li> gpudb::visualize_image_symbolrotations:
@@ -23345,7 +23435,7 @@ VisualizeImageResponse visualizeImage( const std::vector<std::string>& tableName
  *                              <li> gpudb::visualize_image_hollowdiamond
  *                              <li> gpudb::visualize_image_oriented_arrow
  *                              <li> gpudb::visualize_image_oriented_triangle
- *                              <li> gpudb::visualize_image_SYMBOLCODE
+ *                              <li> gpudb::visualize_image_symbolcode
  *                      </ul>
  *                      The default value is gpudb::visualize_image_circle.
  *                              <li> gpudb::visualize_image_trackheadcolors:
@@ -23361,7 +23451,7 @@ VisualizeImageResponse visualizeImage( const std::vector<std::string>& tableName
  *                              <li> gpudb::visualize_image_hollowcircle
  *                              <li> gpudb::visualize_image_hollowsquare
  *                              <li> gpudb::visualize_image_hollowdiamond
- *                              <li> gpudb::visualize_image_SYMBOLCODE
+ *                              <li> gpudb::visualize_image_symbolcode
  *                      </ul>
  *                      The default value is
  *                      gpudb::visualize_image_hollowdiamond.
@@ -23791,6 +23881,7 @@ VisualizeImageClassbreakResponse& visualizeImageClassbreak( const VisualizeImage
  * @param worldTableNames
  * @param xColumnName
  * @param yColumnName
+ * @param symbolColumnName
  * @param geometryColumnName
  * @param trackIds
  * @param cbAttr
@@ -23891,10 +23982,13 @@ VisualizeImageClassbreakResponse& visualizeImageClassbreak( const VisualizeImage
  *                              <li>
  *                      gpudb::visualize_image_classbreak_hollowdiamond
  *                              <li>
- *                      gpudb::visualize_image_classbreak_SYMBOLCODE
+ *                      gpudb::visualize_image_classbreak_symbolcode
  *                      </ul>
  *                      The default value is
  *                      gpudb::visualize_image_classbreak_none.
+ *                              <li>
+ *                      gpudb::visualize_image_classbreak_symbolrotations:
+ *                      The default value is '0'.
  *                              <li>
  *                      gpudb::visualize_image_classbreak_shapelinewidths:
  *                      The default value is '3'.
@@ -23951,7 +24045,11 @@ VisualizeImageClassbreakResponse& visualizeImageClassbreak( const VisualizeImage
  *                              <li>
  *                      gpudb::visualize_image_classbreak_hollowdiamond
  *                              <li>
- *                      gpudb::visualize_image_classbreak_SYMBOLCODE
+ *                      gpudb::visualize_image_classbreak_oriented_arrow
+ *                              <li>
+ *                      gpudb::visualize_image_classbreak_oriented_triangle
+ *                              <li>
+ *                      gpudb::visualize_image_classbreak_symbolcode
  *                      </ul>
  *                      The default value is
  *                      gpudb::visualize_image_classbreak_none.
@@ -23975,7 +24073,7 @@ VisualizeImageClassbreakResponse& visualizeImageClassbreak( const VisualizeImage
  *                              <li>
  *                      gpudb::visualize_image_classbreak_hollowdiamond
  *                              <li>
- *                      gpudb::visualize_image_classbreak_SYMBOLCODE
+ *                      gpudb::visualize_image_classbreak_symbolcode
  *                      </ul>
  *                      The default value is
  *                      gpudb::visualize_image_classbreak_circle.
@@ -23991,6 +24089,7 @@ VisualizeImageClassbreakResponse visualizeImageClassbreak( const std::vector<std
                                                            const std::vector<std::string>& worldTableNames,
                                                            const std::string& xColumnName,
                                                            const std::string& yColumnName,
+                                                           const std::string& symbolColumnName,
                                                            const std::string& geometryColumnName,
                                                            const std::vector<std::vector<std::string> >& trackIds,
                                                            const std::string& cbAttr,
@@ -24022,6 +24121,7 @@ VisualizeImageClassbreakResponse visualizeImageClassbreak( const std::vector<std
  * @param worldTableNames
  * @param xColumnName
  * @param yColumnName
+ * @param symbolColumnName
  * @param geometryColumnName
  * @param trackIds
  * @param cbAttr
@@ -24122,10 +24222,13 @@ VisualizeImageClassbreakResponse visualizeImageClassbreak( const std::vector<std
  *                              <li>
  *                      gpudb::visualize_image_classbreak_hollowdiamond
  *                              <li>
- *                      gpudb::visualize_image_classbreak_SYMBOLCODE
+ *                      gpudb::visualize_image_classbreak_symbolcode
  *                      </ul>
  *                      The default value is
  *                      gpudb::visualize_image_classbreak_none.
+ *                              <li>
+ *                      gpudb::visualize_image_classbreak_symbolrotations:
+ *                      The default value is '0'.
  *                              <li>
  *                      gpudb::visualize_image_classbreak_shapelinewidths:
  *                      The default value is '3'.
@@ -24182,7 +24285,11 @@ VisualizeImageClassbreakResponse visualizeImageClassbreak( const std::vector<std
  *                              <li>
  *                      gpudb::visualize_image_classbreak_hollowdiamond
  *                              <li>
- *                      gpudb::visualize_image_classbreak_SYMBOLCODE
+ *                      gpudb::visualize_image_classbreak_oriented_arrow
+ *                              <li>
+ *                      gpudb::visualize_image_classbreak_oriented_triangle
+ *                              <li>
+ *                      gpudb::visualize_image_classbreak_symbolcode
  *                      </ul>
  *                      The default value is
  *                      gpudb::visualize_image_classbreak_none.
@@ -24206,7 +24313,7 @@ VisualizeImageClassbreakResponse visualizeImageClassbreak( const std::vector<std
  *                              <li>
  *                      gpudb::visualize_image_classbreak_hollowdiamond
  *                              <li>
- *                      gpudb::visualize_image_classbreak_SYMBOLCODE
+ *                      gpudb::visualize_image_classbreak_symbolcode
  *                      </ul>
  *                      The default value is
  *                      gpudb::visualize_image_classbreak_circle.
@@ -24225,6 +24332,7 @@ VisualizeImageClassbreakResponse& visualizeImageClassbreak( const std::vector<st
                                                             const std::vector<std::string>& worldTableNames,
                                                             const std::string& xColumnName,
                                                             const std::string& yColumnName,
+                                                            const std::string& symbolColumnName,
                                                             const std::string& geometryColumnName,
                                                             const std::vector<std::vector<std::string> >& trackIds,
                                                             const std::string& cbAttr,
@@ -26037,7 +26145,7 @@ VisualizeVideoResponse& visualizeVideo( const VisualizeVideoRequest& request_,
  *                              <li> gpudb::visualize_video_hollowcircle
  *                              <li> gpudb::visualize_video_hollowsquare
  *                              <li> gpudb::visualize_video_hollowdiamond
- *                              <li> gpudb::visualize_video_SYMBOLCODE
+ *                              <li> gpudb::visualize_video_symbolcode
  *                      </ul>
  *                              <li> gpudb::visualize_video_shapelinewidths:
  *                      The default value is '3'.
@@ -26062,7 +26170,7 @@ VisualizeVideoResponse& visualizeVideo( const VisualizeVideoRequest& request_,
  *                              <li> gpudb::visualize_video_hollowcircle
  *                              <li> gpudb::visualize_video_hollowsquare
  *                              <li> gpudb::visualize_video_hollowdiamond
- *                              <li> gpudb::visualize_video_SYMBOLCODE
+ *                              <li> gpudb::visualize_video_symbolcode
  *                      </ul>
  *                      The default value is gpudb::visualize_video_none.
  *                              <li> gpudb::visualize_video_trackheadcolors:
@@ -26078,7 +26186,7 @@ VisualizeVideoResponse& visualizeVideo( const VisualizeVideoRequest& request_,
  *                              <li> gpudb::visualize_video_hollowcircle
  *                              <li> gpudb::visualize_video_hollowsquare
  *                              <li> gpudb::visualize_video_hollowdiamond
- *                              <li> gpudb::visualize_video_SYMBOLCODE
+ *                              <li> gpudb::visualize_video_symbolcode
  *                      </ul>
  *                      The default value is gpudb::visualize_video_circle.
  *                      </ul>
@@ -26173,7 +26281,7 @@ VisualizeVideoResponse visualizeVideo( const std::vector<std::string>& tableName
  *                              <li> gpudb::visualize_video_hollowcircle
  *                              <li> gpudb::visualize_video_hollowsquare
  *                              <li> gpudb::visualize_video_hollowdiamond
- *                              <li> gpudb::visualize_video_SYMBOLCODE
+ *                              <li> gpudb::visualize_video_symbolcode
  *                      </ul>
  *                              <li> gpudb::visualize_video_shapelinewidths:
  *                      The default value is '3'.
@@ -26198,7 +26306,7 @@ VisualizeVideoResponse visualizeVideo( const std::vector<std::string>& tableName
  *                              <li> gpudb::visualize_video_hollowcircle
  *                              <li> gpudb::visualize_video_hollowsquare
  *                              <li> gpudb::visualize_video_hollowdiamond
- *                              <li> gpudb::visualize_video_SYMBOLCODE
+ *                              <li> gpudb::visualize_video_symbolcode
  *                      </ul>
  *                      The default value is gpudb::visualize_video_none.
  *                              <li> gpudb::visualize_video_trackheadcolors:
@@ -26214,7 +26322,7 @@ VisualizeVideoResponse visualizeVideo( const std::vector<std::string>& tableName
  *                              <li> gpudb::visualize_video_hollowcircle
  *                              <li> gpudb::visualize_video_hollowsquare
  *                              <li> gpudb::visualize_video_hollowdiamond
- *                              <li> gpudb::visualize_video_SYMBOLCODE
+ *                              <li> gpudb::visualize_video_symbolcode
  *                      </ul>
  *                      The default value is gpudb::visualize_video_circle.
  *                      </ul>

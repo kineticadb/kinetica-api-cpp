@@ -216,11 +216,11 @@ namespace gpudb
          *                              updated, then the corresponding element
          *                              from this list will be added to the
          *                              table.
-         * @param[in] recordsToInsertStr_  An optional list of new json-avro
-         *                                 encoded objects to insert, one for
-         *                                 each update, to be added to the set
-         *                                 if the particular update did not
-         *                                 affect any objects.
+         * @param[in] recordsToInsertStr_  An optional list of JSON encoded
+         *                                 objects to insert, one for each
+         *                                 update, to be added if the
+         *                                 particular update did not match any
+         *                                 objects.
          * @param[in] recordEncoding_  Identifies which of @a recordsToInsert
          *                             and @a recordsToInsertStr should be
          *                             used.

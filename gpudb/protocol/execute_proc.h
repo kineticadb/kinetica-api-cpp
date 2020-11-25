@@ -13,8 +13,17 @@ namespace gpudb
      * A set of input parameters for {@link
      * #executeProc(const ExecuteProcRequest&) const}.
      * <p>
-     * Executes a proc. This endpoint is asynchronous and does not wait for the
-     * proc to complete before returning.
+     * Executes a proc. This endpoint is asynchronous and does not wait for
+     * the proc to complete before returning.
+     * <p>
+     * If the proc being executed is distributed, @a inputTableNames &
+     * @a inputColumnNames may be passed to the proc to use for reading data,
+     * and @a outputTableNames may be passed to the proc to use for writing
+     * data.
+     * <p>
+     * If the proc being executed is non-distributed, these table parameters
+     * will be
+     * ignored.
      */
     struct ExecuteProcRequest
     {
@@ -48,33 +57,41 @@ namespace gpudb
          *                        specifies the name of a parameter and its
          *                        value.
          * @param[in] inputTableNames_  Names of the tables containing data to
-         *                              be passed to the proc. Each name
-         *                              specified must be the name of a
-         *                              currently existing table. If no table
-         *                              names are specified, no data will be
-         *                              passed to the proc.
+         *                              be passed to the
+         *                              proc. Each name specified must be the
+         *                              name of a currently existing table.
+         *                              If no table names are specified, no
+         *                              data will be passed to the proc.  This
+         *                              parameter is ignored if the proc has a
+         *                              non-distributed execution mode.
          * @param[in] inputColumnNames_  Map of table names from @a
-         *                               inputTableNames to lists of names of
-         *                               columns from those tables that will be
-         *                               passed to the proc. Each column name
-         *                               specified must be the name of an
-         *                               existing column in the corresponding
-         *                               table. If a table name from @a
-         *                               inputTableNames is not included, all
-         *                               columns from that table will be passed
-         *                               to the proc.
+         *                               inputTableNames to lists
+         *                               of names of columns from those tables
+         *                               that will be passed to the proc. Each
+         *                               column name specified must be the name
+         *                               of an existing column in the
+         *                               corresponding table. If a table name
+         *                               from @a inputTableNames is not
+         *                               included, all columns from that table
+         *                               will be passed to the proc.  This
+         *                               parameter is ignored if the proc has a
+         *                               non-distributed execution mode.
          * @param[in] outputTableNames_  Names of the tables to which output
-         *                               data from the proc will be written. If
-         *                               a specified table does not exist, it
-         *                               will automatically be created with the
-         *                               same schema as the corresponding table
-         *                               (by order) from @a inputTableNames,
-         *                               excluding any primary and shard keys.
-         *                               If a specified table is a
-         *                               non-persistent result table, it must
-         *                               not have primary or shard keys. If no
-         *                               table names are specified, no output
-         *                               data can be returned from the proc.
+         *                               data from the proc will
+         *                               be written.  If a specified table does
+         *                               not exist, it will automatically be
+         *                               created with the same schema as the
+         *                               corresponding table (by order) from
+         *                               @a inputTableNames, excluding any
+         *                               primary and shard keys. If a specified
+         *                               table is a non-persistent result
+         *                               table, it must not have primary or
+         *                               shard keys.
+         *                               If no table names are specified, no
+         *                               output data can be returned from the
+         *                               proc.
+         *                               This parameter is ignored if the proc
+         *                               has a non-distributed execution mode.
          * @param[in] options_  Optional parameters.
          *                      <ul>
          *                              <li> gpudb::execute_proc_cache_input: A
@@ -219,8 +236,17 @@ namespace gpudb
      * A set of output parameters for {@link
      * #executeProc(const ExecuteProcRequest&) const}.
      * <p>
-     * Executes a proc. This endpoint is asynchronous and does not wait for the
-     * proc to complete before returning.
+     * Executes a proc. This endpoint is asynchronous and does not wait for
+     * the proc to complete before returning.
+     * <p>
+     * If the proc being executed is distributed, @a inputTableNames &
+     * @a inputColumnNames may be passed to the proc to use for reading data,
+     * and @a outputTableNames may be passed to the proc to use for writing
+     * data.
+     * <p>
+     * If the proc being executed is non-distributed, these table parameters
+     * will be
+     * ignored.
      */
     struct ExecuteProcResponse
     {

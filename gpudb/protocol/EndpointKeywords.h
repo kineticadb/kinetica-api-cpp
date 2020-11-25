@@ -432,6 +432,7 @@ namespace gpudb
     extern const std::string create_table_INTERVAL;
     extern const std::string create_table_LIST;
     extern const std::string create_table_RANGE;
+    extern const std::string create_table_SERIES;
     extern const std::string create_table_chunk_size;
     extern const std::string create_table_collection_name;
     extern const std::string create_table_disallow_homogeneous_tables;
@@ -1003,6 +1004,7 @@ namespace gpudb
     extern const std::string show_sql_proc_true;
 
     // Keywords for /show/sql/proc response
+    extern const std::string show_sql_proc_execute_as;
     extern const std::string show_sql_proc_execute_interval;
     extern const std::string show_sql_proc_execute_start_time;
 
@@ -1133,7 +1135,6 @@ namespace gpudb
     extern const std::string visualize_image_EPSG_4326;
     extern const std::string visualize_image_EPSG_900913;
     extern const std::string visualize_image_PLATE_CARREE;
-    extern const std::string visualize_image_SYMBOLCODE;
     extern const std::string visualize_image_WEB_MERCATOR;
     extern const std::string visualize_image_circle;
     extern const std::string visualize_image_diamond;
@@ -1164,6 +1165,7 @@ namespace gpudb
     extern const std::string visualize_image_shapelinepatterns;
     extern const std::string visualize_image_shapelinewidths;
     extern const std::string visualize_image_square;
+    extern const std::string visualize_image_symbolcode;
     extern const std::string visualize_image_symbolrotations;
     extern const std::string visualize_image_trackheadcolors;
     extern const std::string visualize_image_trackheadshapes;
@@ -1217,7 +1219,6 @@ namespace gpudb
     extern const std::string visualize_image_classbreak_EPSG_4326;
     extern const std::string visualize_image_classbreak_EPSG_900913;
     extern const std::string visualize_image_classbreak_PLATE_CARREE;
-    extern const std::string visualize_image_classbreak_SYMBOLCODE;
     extern const std::string visualize_image_classbreak_WEB_MERCATOR;
     extern const std::string visualize_image_classbreak_cb_pointalphas;
     extern const std::string visualize_image_classbreak_circle;
@@ -1236,6 +1237,8 @@ namespace gpudb
     extern const std::string visualize_image_classbreak_hollowdiamond;
     extern const std::string visualize_image_classbreak_hollowsquare;
     extern const std::string visualize_image_classbreak_none;
+    extern const std::string visualize_image_classbreak_oriented_arrow;
+    extern const std::string visualize_image_classbreak_oriented_triangle;
     extern const std::string visualize_image_classbreak_pointcolors;
     extern const std::string visualize_image_classbreak_pointoffset_x;
     extern const std::string visualize_image_classbreak_pointoffset_y;
@@ -1247,6 +1250,8 @@ namespace gpudb
     extern const std::string visualize_image_classbreak_shapelinepatterns;
     extern const std::string visualize_image_classbreak_shapelinewidths;
     extern const std::string visualize_image_classbreak_square;
+    extern const std::string visualize_image_classbreak_symbolcode;
+    extern const std::string visualize_image_classbreak_symbolrotations;
     extern const std::string visualize_image_classbreak_trackheadcolors;
     extern const std::string visualize_image_classbreak_trackheadshapes;
     extern const std::string visualize_image_classbreak_trackheadsizes;
@@ -1610,7 +1615,6 @@ namespace gpudb
     extern const std::string visualize_video_EPSG_4326;
     extern const std::string visualize_video_EPSG_900913;
     extern const std::string visualize_video_PLATE_CARREE;
-    extern const std::string visualize_video_SYMBOLCODE;
     extern const std::string visualize_video_WEB_MERCATOR;
     extern const std::string visualize_video_circle;
     extern const std::string visualize_video_diamond;
@@ -1629,6 +1633,7 @@ namespace gpudb
     extern const std::string visualize_video_shapelinecolors;
     extern const std::string visualize_video_shapelinewidths;
     extern const std::string visualize_video_square;
+    extern const std::string visualize_video_symbolcode;
     extern const std::string visualize_video_trackheadcolors;
     extern const std::string visualize_video_trackheadshapes;
     extern const std::string visualize_video_trackheadsizes;

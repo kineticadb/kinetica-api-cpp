@@ -134,7 +134,7 @@ namespace gpudb
          *                                   <li>
          *                           gpudb::visualize_video_hollowdiamond
          *                                   <li>
-         *                           gpudb::visualize_video_SYMBOLCODE
+         *                           gpudb::visualize_video_symbolcode
          *                           </ul>
          *                                   <li>
          *                           gpudb::visualize_video_shapelinewidths:
@@ -172,7 +172,7 @@ namespace gpudb
          *                                   <li>
          *                           gpudb::visualize_video_hollowdiamond
          *                                   <li>
-         *                           gpudb::visualize_video_SYMBOLCODE
+         *                           gpudb::visualize_video_symbolcode
          *                           </ul>
          *                           The default value is
          *                           gpudb::visualize_video_none.
@@ -197,7 +197,7 @@ namespace gpudb
          *                                   <li>
          *                           gpudb::visualize_video_hollowdiamond
          *                                   <li>
-         *                           gpudb::visualize_video_SYMBOLCODE
+         *                           gpudb::visualize_video_symbolcode
          *                           </ul>
          *                           The default value is
          *                           gpudb::visualize_video_circle.
