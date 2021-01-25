@@ -19,6 +19,9 @@ namespace gpudb
      * cluster, use {@link
      * #adminRebalance(const AdminRebalanceRequest&) const}.
      * <p>
+     * The database must be offline for this operation, see {@link
+     * #adminOffline(const AdminOfflineRequest&) const}
+     * <p>
      * For example, if attempting to add three new ranks (two ranks on host
      * 172.123.45.67 and one rank on host 172.123.45.68) to a Kinetica cluster
      * with additional configuration parameters:
@@ -193,6 +196,9 @@ namespace gpudb
      * will not be assigned any shards. To rebalance data and shards across the
      * cluster, use {@link
      * #adminRebalance(const AdminRebalanceRequest&) const}.
+     * <p>
+     * The database must be offline for this operation, see {@link
+     * #adminOffline(const AdminOfflineRequest&) const}
      * <p>
      * For example, if attempting to add three new ranks (two ranks on host
      * 172.123.45.67 and one rank on host 172.123.45.68) to a Kinetica cluster

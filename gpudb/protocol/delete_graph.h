@@ -47,6 +47,10 @@ namespace gpudb
          *                              <li> gpudb::delete_graph_false
          *                      </ul>
          *                      The default value is gpudb::delete_graph_true.
+         *                              <li> gpudb::delete_graph_server_id:
+         *                      Indicates which graph server(s) to send the
+         *                      request to. Default is to send to get
+         *                      information about all the servers.
          *                      </ul>
          * 
          */

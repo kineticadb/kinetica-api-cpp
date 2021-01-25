@@ -633,6 +633,21 @@ namespace gpudb
          *                      Optional: number of tasks for reading file per
          *                      rank. Default will be
          *                      external_file_reader_num_tasks
+         *                              <li>
+         *                      gpudb::insert_records_from_files_type_inference_mode:
+         *                      optimize type inference for:
+         *                      <ul>
+         *                              <li>
+         *                      gpudb::insert_records_from_files_accuracy:
+         *                      scans all data to get exactly-typed & sized
+         *                      columns for all data present
+         *                              <li>
+         *                      gpudb::insert_records_from_files_speed: picks
+         *                      the widest possible column types so that 'all'
+         *                      values will fit with minimum data scanned
+         *                      </ul>
+         *                      The default value is
+         *                      gpudb::insert_records_from_files_accuracy.
          *                      </ul>
          * 
          */
@@ -756,7 +771,8 @@ namespace gpudb
             countInserted(int64_t()),
             countSkipped(int64_t()),
             countUpdated(int64_t()),
-            info(std::map<std::string, std::string>())
+            info(std::map<std::string, std::string>()),
+            files(std::vector<std::string>())
         {
         }
 
@@ -769,6 +785,7 @@ namespace gpudb
         int64_t countSkipped;
         int64_t countUpdated;
         std::map<std::string, std::string> info;
+        std::vector<std::string> files;
     };
 }
 
@@ -787,6 +804,7 @@ namespace avro
             ::avro::encode(e, v.countSkipped);
             ::avro::encode(e, v.countUpdated);
             ::avro::encode(e, v.info);
+            ::avro::encode(e, v.files);
         }
 
         static void decode(Decoder& d, gpudb::InsertRecordsFromFilesResponse& v)
@@ -835,6 +853,10 @@ namespace avro
                             ::avro::decode(d, v.info);
                             break;
 
+                        case 9:
+                            ::avro::decode(d, v.files);
+                            break;
+
                         default:
                             break;
                     }
@@ -851,6 +873,7 @@ namespace avro
                 ::avro::decode(d, v.countSkipped);
                 ::avro::decode(d, v.countUpdated);
                 ::avro::decode(d, v.info);
+                ::avro::decode(d, v.files);
             }
         }
     };

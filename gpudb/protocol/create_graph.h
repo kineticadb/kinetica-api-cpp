@@ -307,6 +307,26 @@ namespace gpudb
          *                      larger the threshold for right and left turns;
          *                      0 < turn_angle < 90.  The default value is
          *                      '60'.
+         *                              <li>
+         *                      gpudb::create_graph_is_partitioned:
+         *                      <ul>
+         *                              <li> gpudb::create_graph_true
+         *                              <li> gpudb::create_graph_false
+         *                      </ul>
+         *                      The default value is gpudb::create_graph_false.
+         *                              <li> gpudb::create_graph_server_id:
+         *                      Indicates which graph server(s) to send the
+         *                      request to. Default is to send to the server
+         *                      with the most available memory.
+         *                              <li> gpudb::create_graph_use_rtree: Use
+         *                      an range tree structure to accelerate and
+         *                      improve the accuracy of snapping, especially to
+         *                      edges.
+         *                      <ul>
+         *                              <li> gpudb::create_graph_true
+         *                              <li> gpudb::create_graph_false
+         *                      </ul>
+         *                      The default value is gpudb::create_graph_false.
          *                      </ul>
          * 
          */
@@ -431,6 +451,7 @@ namespace gpudb
          * values.
          */
         CreateGraphResponse() :
+            result(bool()),
             numNodes(int64_t()),
             numEdges(int64_t()),
             edgesIds(std::vector<int64_t>()),
@@ -438,6 +459,7 @@ namespace gpudb
         {
         }
 
+        bool result;
         int64_t numNodes;
         int64_t numEdges;
         std::vector<int64_t> edgesIds;
@@ -451,6 +473,7 @@ namespace avro
     {
         static void encode(Encoder& e, const gpudb::CreateGraphResponse& v)
         {
+            ::avro::encode(e, v.result);
             ::avro::encode(e, v.numNodes);
             ::avro::encode(e, v.numEdges);
             ::avro::encode(e, v.edgesIds);
@@ -468,18 +491,22 @@ namespace avro
                     switch (*it)
                     {
                         case 0:
-                            ::avro::decode(d, v.numNodes);
+                            ::avro::decode(d, v.result);
                             break;
 
                         case 1:
-                            ::avro::decode(d, v.numEdges);
+                            ::avro::decode(d, v.numNodes);
                             break;
 
                         case 2:
-                            ::avro::decode(d, v.edgesIds);
+                            ::avro::decode(d, v.numEdges);
                             break;
 
                         case 3:
+                            ::avro::decode(d, v.edgesIds);
+                            break;
+
+                        case 4:
                             ::avro::decode(d, v.info);
                             break;
 
@@ -490,6 +517,7 @@ namespace avro
             }
             else
             {
+                ::avro::decode(d, v.result);
                 ::avro::decode(d, v.numNodes);
                 ::avro::decode(d, v.numEdges);
                 ::avro::decode(d, v.edgesIds);

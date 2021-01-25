@@ -321,6 +321,7 @@ namespace gpudb
     const std::string alter_table_rename_table                 ( "rename_table"                  );
     const std::string alter_table_set_column_compression       ( "set_column_compression"        );
     const std::string alter_table_set_global_access_mode       ( "set_global_access_mode"        );
+    const std::string alter_table_set_refresh_execute_as       ( "set_refresh_execute_as"        );
     const std::string alter_table_set_refresh_method           ( "set_refresh_method"            );
     const std::string alter_table_set_refresh_period           ( "set_refresh_period"            );
     const std::string alter_table_set_refresh_start_time       ( "set_refresh_start_time"        );
@@ -382,6 +383,7 @@ namespace gpudb
     const std::string create_graph_export_create_results      ( "export_create_results"       );
     const std::string create_graph_false                      ( "false"                       );
     const std::string create_graph_graph_table                ( "graph_table"                 );
+    const std::string create_graph_is_partitioned             ( "is_partitioned"              );
     const std::string create_graph_max_x                      ( "max_x"                       );
     const std::string create_graph_max_y                      ( "max_y"                       );
     const std::string create_graph_merge_tolerance            ( "merge_tolerance"             );
@@ -392,9 +394,11 @@ namespace gpudb
     const std::string create_graph_remove_label_only          ( "remove_label_only"           );
     const std::string create_graph_restriction_threshold_value( "restriction_threshold_value" );
     const std::string create_graph_save_persist               ( "save_persist"                );
+    const std::string create_graph_server_id                  ( "server_id"                   );
     const std::string create_graph_sync_db                    ( "sync_db"                     );
     const std::string create_graph_true                       ( "true"                        );
     const std::string create_graph_turn_angle                 ( "turn_angle"                  );
+    const std::string create_graph_use_rtree                  ( "use_rtree"                   );
 
     // Keywords for /create/job request
     const std::string create_job_binary                ( "binary"                 );
@@ -435,6 +439,7 @@ namespace gpudb
 
     // Keywords for /create/materializedview request
     const std::string create_materialized_view_collection_name   ( "collection_name"    );
+    const std::string create_materialized_view_execute_as        ( "execute_as"         );
     const std::string create_materialized_view_false             ( "false"              );
     const std::string create_materialized_view_manual            ( "manual"             );
     const std::string create_materialized_view_on_change         ( "on_change"          );
@@ -506,6 +511,7 @@ namespace gpudb
     const std::string create_table_INTERVAL                    ( "INTERVAL"                     );
     const std::string create_table_LIST                        ( "LIST"                         );
     const std::string create_table_RANGE                       ( "RANGE"                        );
+    const std::string create_table_SERIES                      ( "SERIES"                       );
     const std::string create_table_chunk_size                  ( "chunk_size"                   );
     const std::string create_table_collection_name             ( "collection_name"              );
     const std::string create_table_disallow_homogeneous_tables ( "disallow_homogeneous_tables"  );
@@ -561,6 +567,7 @@ namespace gpudb
     const std::string create_table_external_LIST                          ( "LIST"                           );
     const std::string create_table_external_RANGE                         ( "RANGE"                          );
     const std::string create_table_external_abort                         ( "abort"                          );
+    const std::string create_table_external_accuracy                      ( "accuracy"                       );
     const std::string create_table_external_bad_record_table_limit        ( "bad_record_table_limit"         );
     const std::string create_table_external_bad_record_table_name         ( "bad_record_table_name"          );
     const std::string create_table_external_batch_size                    ( "batch_size"                     );
@@ -632,6 +639,7 @@ namespace gpudb
     const std::string create_table_external_primary_keys                  ( "primary_keys"                   );
     const std::string create_table_external_refresh_method                ( "refresh_method"                 );
     const std::string create_table_external_shard_keys                    ( "shard_keys"                     );
+    const std::string create_table_external_speed                         ( "speed"                          );
     const std::string create_table_external_strategy_definition           ( "strategy_definition"            );
     const std::string create_table_external_text_comment_string           ( "text_comment_string"            );
     const std::string create_table_external_text_delimiter                ( "text_delimiter"                 );
@@ -643,6 +651,7 @@ namespace gpudb
     const std::string create_table_external_true                          ( "true"                           );
     const std::string create_table_external_ttl                           ( "ttl"                            );
     const std::string create_table_external_type_id                       ( "type_id"                        );
+    const std::string create_table_external_type_inference_mode           ( "type_inference_mode"            );
     const std::string create_table_external_type_inference_only           ( "type_inference_only"            );
 
     // Keywords for /create/tablemonitor request
@@ -721,6 +730,7 @@ namespace gpudb
     // Keywords for /delete/graph request
     const std::string delete_graph_delete_persist( "delete_persist" );
     const std::string delete_graph_false         ( "false"          );
+    const std::string delete_graph_server_id     ( "server_id"      );
     const std::string delete_graph_true          ( "true"           );
 
     // Keywords for /delete/records request
@@ -1011,6 +1021,7 @@ namespace gpudb
     const std::string insert_records_from_files_LIST                          ( "LIST"                           );
     const std::string insert_records_from_files_RANGE                         ( "RANGE"                          );
     const std::string insert_records_from_files_abort                         ( "abort"                          );
+    const std::string insert_records_from_files_accuracy                      ( "accuracy"                       );
     const std::string insert_records_from_files_bad_record_table_limit        ( "bad_record_table_limit"         );
     const std::string insert_records_from_files_bad_record_table_name         ( "bad_record_table_name"          );
     const std::string insert_records_from_files_batch_size                    ( "batch_size"                     );
@@ -1074,6 +1085,7 @@ namespace gpudb
     const std::string insert_records_from_files_permissive                    ( "permissive"                     );
     const std::string insert_records_from_files_primary_keys                  ( "primary_keys"                   );
     const std::string insert_records_from_files_shard_keys                    ( "shard_keys"                     );
+    const std::string insert_records_from_files_speed                         ( "speed"                          );
     const std::string insert_records_from_files_strategy_definition           ( "strategy_definition"            );
     const std::string insert_records_from_files_text_comment_string           ( "text_comment_string"            );
     const std::string insert_records_from_files_text_delimiter                ( "text_delimiter"                 );
@@ -1086,6 +1098,7 @@ namespace gpudb
     const std::string insert_records_from_files_truncate_table                ( "truncate_table"                 );
     const std::string insert_records_from_files_ttl                           ( "ttl"                            );
     const std::string insert_records_from_files_type_id                       ( "type_id"                        );
+    const std::string insert_records_from_files_type_inference_mode           ( "type_inference_mode"            );
     const std::string insert_records_from_files_type_inference_only           ( "type_inference_only"            );
 
     // Keywords for /insert/records/frompayload request
@@ -1094,6 +1107,7 @@ namespace gpudb
     const std::string insert_records_from_payload_LIST                          ( "LIST"                           );
     const std::string insert_records_from_payload_RANGE                         ( "RANGE"                          );
     const std::string insert_records_from_payload_abort                         ( "abort"                          );
+    const std::string insert_records_from_payload_accuracy                      ( "accuracy"                       );
     const std::string insert_records_from_payload_bad_record_table_limit        ( "bad_record_table_limit"         );
     const std::string insert_records_from_payload_bad_record_table_name         ( "bad_record_table_name"          );
     const std::string insert_records_from_payload_batch_size                    ( "batch_size"                     );
@@ -1152,6 +1166,7 @@ namespace gpudb
     const std::string insert_records_from_payload_permissive                    ( "permissive"                     );
     const std::string insert_records_from_payload_primary_keys                  ( "primary_keys"                   );
     const std::string insert_records_from_payload_shard_keys                    ( "shard_keys"                     );
+    const std::string insert_records_from_payload_speed                         ( "speed"                          );
     const std::string insert_records_from_payload_strategy_definition           ( "strategy_definition"            );
     const std::string insert_records_from_payload_text_comment_string           ( "text_comment_string"            );
     const std::string insert_records_from_payload_text_delimiter                ( "text_delimiter"                 );
@@ -1163,6 +1178,7 @@ namespace gpudb
     const std::string insert_records_from_payload_true                          ( "true"                           );
     const std::string insert_records_from_payload_ttl                           ( "ttl"                            );
     const std::string insert_records_from_payload_type_id                       ( "type_id"                        );
+    const std::string insert_records_from_payload_type_inference_mode           ( "type_inference_mode"            );
     const std::string insert_records_from_payload_type_inference_only           ( "type_inference_only"            );
 
     // Keywords for /insert/records/random request
@@ -1212,9 +1228,11 @@ namespace gpudb
     const std::string match_graph_max_num_threads     ( "max_num_threads"      );
     const std::string match_graph_max_trip_cost       ( "max_trip_cost"        );
     const std::string match_graph_num_segments        ( "num_segments"         );
+    const std::string match_graph_output_tracks       ( "output_tracks"        );
     const std::string match_graph_partial_loading     ( "partial_loading"      );
     const std::string match_graph_right_turn_penalty  ( "right_turn_penalty"   );
     const std::string match_graph_search_radius       ( "search_radius"        );
+    const std::string match_graph_server_id           ( "server_id"            );
     const std::string match_graph_sharp_turn_penalty  ( "sharp_turn_penalty"   );
     const std::string match_graph_source              ( "source"               );
     const std::string match_graph_truck_service_limit ( "truck_service_limit"  );
@@ -1251,10 +1269,12 @@ namespace gpudb
     const std::string query_graph_and_labels                 ( "and_labels"                  );
     const std::string query_graph_enable_graph_draw          ( "enable_graph_draw"           );
     const std::string query_graph_export_query_results       ( "export_query_results"        );
+    const std::string query_graph_export_solve_results       ( "export_solve_results"        );
     const std::string query_graph_false                      ( "false"                       );
     const std::string query_graph_force_undirected           ( "force_undirected"            );
     const std::string query_graph_limit                      ( "limit"                       );
     const std::string query_graph_restriction_threshold_value( "restriction_threshold_value" );
+    const std::string query_graph_server_id                  ( "server_id"                   );
     const std::string query_graph_target_nodes_table         ( "target_nodes_table"          );
     const std::string query_graph_true                       ( "true"                        );
 
@@ -1300,6 +1320,7 @@ namespace gpudb
 
     // Keywords for /show/graph request
     const std::string show_graph_false                ( "false"                 );
+    const std::string show_graph_server_id            ( "server_id"             );
     const std::string show_graph_show_original_request( "show_original_request" );
     const std::string show_graph_true                 ( "true"                  );
 
@@ -1350,6 +1371,7 @@ namespace gpudb
     const std::string show_sql_proc_true                  ( "true"                   );
 
     // Keywords for /show/sql/proc response
+    const std::string show_sql_proc_execute_as        ( "execute_as"         );
     const std::string show_sql_proc_execute_interval  ( "execute_interval"   );
     const std::string show_sql_proc_execute_start_time( "execute_start_time" );
 
@@ -1459,6 +1481,7 @@ namespace gpudb
     const std::string solve_graph_remove_previous_restrictions( "remove_previous_restrictions" );
     const std::string solve_graph_restriction_threshold_value ( "restriction_threshold_value"  );
     const std::string solve_graph_right_turn_penalty          ( "right_turn_penalty"           );
+    const std::string solve_graph_server_id                   ( "server_id"                    );
     const std::string solve_graph_sharp_turn_penalty          ( "sharp_turn_penalty"           );
     const std::string solve_graph_true                        ( "true"                         );
     const std::string solve_graph_uniform_weights             ( "uniform_weights"              );
@@ -1485,7 +1508,6 @@ namespace gpudb
     const std::string visualize_image_EPSG_4326          ( "EPSG:4326"           );
     const std::string visualize_image_EPSG_900913        ( "EPSG:900913"         );
     const std::string visualize_image_PLATE_CARREE       ( "PLATE_CARREE"        );
-    const std::string visualize_image_SYMBOLCODE         ( "SYMBOLCODE"          );
     const std::string visualize_image_WEB_MERCATOR       ( "WEB_MERCATOR"        );
     const std::string visualize_image_circle             ( "circle"              );
     const std::string visualize_image_diamond            ( "diamond"             );
@@ -1516,6 +1538,7 @@ namespace gpudb
     const std::string visualize_image_shapelinepatterns  ( "shapelinepatterns"   );
     const std::string visualize_image_shapelinewidths    ( "shapelinewidths"     );
     const std::string visualize_image_square             ( "square"              );
+    const std::string visualize_image_symbolcode         ( "symbolcode"          );
     const std::string visualize_image_symbolrotations    ( "symbolrotations"     );
     const std::string visualize_image_trackheadcolors    ( "trackheadcolors"     );
     const std::string visualize_image_trackheadshapes    ( "trackheadshapes"     );
@@ -1569,7 +1592,6 @@ namespace gpudb
     const std::string visualize_image_classbreak_EPSG_4326          ( "EPSG:4326"           );
     const std::string visualize_image_classbreak_EPSG_900913        ( "EPSG:900913"         );
     const std::string visualize_image_classbreak_PLATE_CARREE       ( "PLATE_CARREE"        );
-    const std::string visualize_image_classbreak_SYMBOLCODE         ( "SYMBOLCODE"          );
     const std::string visualize_image_classbreak_WEB_MERCATOR       ( "WEB_MERCATOR"        );
     const std::string visualize_image_classbreak_cb_pointalphas     ( "cb_pointalphas"      );
     const std::string visualize_image_classbreak_circle             ( "circle"              );
@@ -1588,6 +1610,8 @@ namespace gpudb
     const std::string visualize_image_classbreak_hollowdiamond      ( "hollowdiamond"       );
     const std::string visualize_image_classbreak_hollowsquare       ( "hollowsquare"        );
     const std::string visualize_image_classbreak_none               ( "none"                );
+    const std::string visualize_image_classbreak_oriented_arrow     ( "oriented_arrow"      );
+    const std::string visualize_image_classbreak_oriented_triangle  ( "oriented_triangle"   );
     const std::string visualize_image_classbreak_pointcolors        ( "pointcolors"         );
     const std::string visualize_image_classbreak_pointoffset_x      ( "pointoffset_x"       );
     const std::string visualize_image_classbreak_pointoffset_y      ( "pointoffset_y"       );
@@ -1599,6 +1623,8 @@ namespace gpudb
     const std::string visualize_image_classbreak_shapelinepatterns  ( "shapelinepatterns"   );
     const std::string visualize_image_classbreak_shapelinewidths    ( "shapelinewidths"     );
     const std::string visualize_image_classbreak_square             ( "square"              );
+    const std::string visualize_image_classbreak_symbolcode         ( "symbolcode"          );
+    const std::string visualize_image_classbreak_symbolrotations    ( "symbolrotations"     );
     const std::string visualize_image_classbreak_trackheadcolors    ( "trackheadcolors"     );
     const std::string visualize_image_classbreak_trackheadshapes    ( "trackheadshapes"     );
     const std::string visualize_image_classbreak_trackheadsizes     ( "trackheadsizes"      );
@@ -1962,7 +1988,6 @@ namespace gpudb
     const std::string visualize_video_EPSG_4326        ( "EPSG:4326"         );
     const std::string visualize_video_EPSG_900913      ( "EPSG:900913"       );
     const std::string visualize_video_PLATE_CARREE     ( "PLATE_CARREE"      );
-    const std::string visualize_video_SYMBOLCODE       ( "SYMBOLCODE"        );
     const std::string visualize_video_WEB_MERCATOR     ( "WEB_MERCATOR"      );
     const std::string visualize_video_circle           ( "circle"            );
     const std::string visualize_video_diamond          ( "diamond"           );
@@ -1981,6 +2006,7 @@ namespace gpudb
     const std::string visualize_video_shapelinecolors  ( "shapelinecolors"   );
     const std::string visualize_video_shapelinewidths  ( "shapelinewidths"   );
     const std::string visualize_video_square           ( "square"            );
+    const std::string visualize_video_symbolcode       ( "symbolcode"        );
     const std::string visualize_video_trackheadcolors  ( "trackheadcolors"   );
     const std::string visualize_video_trackheadshapes  ( "trackheadshapes"   );
     const std::string visualize_video_trackheadsizes   ( "trackheadsizes"    );

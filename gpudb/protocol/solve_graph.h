@@ -25,8 +25,8 @@ namespace gpudb
      * <a href="../../graph_solver/examples/graph_rest_guide.html"
      * target="_top">Graph REST Tutorial</a>,
      * and/or some
-     * <a href="../../graph_solver/examples.html#solve-graph"
-     * target="_top">/solve/graph examples</a>
+     * <a href="../../graph_solver/examples.html#match-graph"
+     * target="_top">/match/graph examples</a>
      * before using this endpoint.
      */
     struct SolveGraphRequest
@@ -323,6 +323,14 @@ namespace gpudb
          *                              <li> gpudb::solve_graph_false
          *                      </ul>
          *                      The default value is gpudb::solve_graph_true.
+         *                              <li> gpudb::solve_graph_server_id:
+         *                      Indicates which graph server(s) to send the
+         *                      request to. Default is to send to the server,
+         *                      amongst those containing the corresponding
+         *                      graph, that has the most computational
+         *                      bandwidth. For SHORTEST_PATH solver type, the
+         *                      input is split amongst the server containing
+         *                      the corresponding graph.
          *                      </ul>
          * 
          */
@@ -446,8 +454,8 @@ namespace gpudb
      * <a href="../../graph_solver/examples/graph_rest_guide.html"
      * target="_top">Graph REST Tutorial</a>,
      * and/or some
-     * <a href="../../graph_solver/examples.html#solve-graph"
-     * target="_top">/solve/graph examples</a>
+     * <a href="../../graph_solver/examples.html#match-graph"
+     * target="_top">/match/graph examples</a>
      * before using this endpoint.
      */
     struct SolveGraphResponse

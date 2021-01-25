@@ -224,6 +224,22 @@ namespace gpudb
          *                              <li> gpudb::query_graph_false
          *                      </ul>
          *                      The default value is gpudb::query_graph_false.
+         *                              <li>
+         *                      gpudb::query_graph_export_solve_results:
+         *                      Returns solution results inside the @a
+         *                      adjacencyListIntArray array in the response if
+         *                      set to @a true.
+         *                      <ul>
+         *                              <li> gpudb::query_graph_true
+         *                              <li> gpudb::query_graph_false
+         *                      </ul>
+         *                      The default value is gpudb::query_graph_false.
+         *                              <li> gpudb::query_graph_server_id:
+         *                      Indicates which graph server(s) to send the
+         *                      request to. Default is to send to the server,
+         *                      amongst those containing the corresponding
+         *                      graph, that has the most computational
+         *                      bandwidth.
          *                      </ul>
          * 
          */

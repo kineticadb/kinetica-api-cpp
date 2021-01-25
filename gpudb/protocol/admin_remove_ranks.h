@@ -22,6 +22,9 @@ namespace gpudb
      * href="../../concepts/tables.html#random-sharding"
      * target="_top">randomly-sharded</a>) will be deleted.
      * <p>
+     * The database must be offline for this operation, see {@link
+     * #adminOffline(const AdminOfflineRequest&) const}
+     * <p>
      * This endpoint's processing time depends on the amount of data in the
      * system, thus the API call may time out if run directly.  It is
      * recommended to run this endpoint asynchronously via {@link
@@ -97,7 +100,7 @@ namespace gpudb
          *                      better interleaving between the rebalance and
          *                      other queries. Valid values are constants from
          *                      1 (lowest) to 10 (highest).  The default value
-         *                      is '1'.
+         *                      is '10'.
          *                      </ul>
          * 
          */
@@ -169,6 +172,9 @@ namespace gpudb
      * data</a> and/or unsharded data (a.k.a. <a
      * href="../../concepts/tables.html#random-sharding"
      * target="_top">randomly-sharded</a>) will be deleted.
+     * <p>
+     * The database must be offline for this operation, see {@link
+     * #adminOffline(const AdminOfflineRequest&) const}
      * <p>
      * This endpoint's processing time depends on the amount of data in the
      * system, thus the API call may time out if run directly.  It is

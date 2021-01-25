@@ -321,6 +321,7 @@ namespace gpudb
     extern const std::string alter_table_rename_table;
     extern const std::string alter_table_set_column_compression;
     extern const std::string alter_table_set_global_access_mode;
+    extern const std::string alter_table_set_refresh_execute_as;
     extern const std::string alter_table_set_refresh_method;
     extern const std::string alter_table_set_refresh_period;
     extern const std::string alter_table_set_refresh_start_time;
@@ -382,6 +383,7 @@ namespace gpudb
     extern const std::string create_graph_export_create_results;
     extern const std::string create_graph_false;
     extern const std::string create_graph_graph_table;
+    extern const std::string create_graph_is_partitioned;
     extern const std::string create_graph_max_x;
     extern const std::string create_graph_max_y;
     extern const std::string create_graph_merge_tolerance;
@@ -392,9 +394,11 @@ namespace gpudb
     extern const std::string create_graph_remove_label_only;
     extern const std::string create_graph_restriction_threshold_value;
     extern const std::string create_graph_save_persist;
+    extern const std::string create_graph_server_id;
     extern const std::string create_graph_sync_db;
     extern const std::string create_graph_true;
     extern const std::string create_graph_turn_angle;
+    extern const std::string create_graph_use_rtree;
 
     // Keywords for /create/job request
     extern const std::string create_job_binary;
@@ -435,6 +439,7 @@ namespace gpudb
 
     // Keywords for /create/materializedview request
     extern const std::string create_materialized_view_collection_name;
+    extern const std::string create_materialized_view_execute_as;
     extern const std::string create_materialized_view_false;
     extern const std::string create_materialized_view_manual;
     extern const std::string create_materialized_view_on_change;
@@ -506,6 +511,7 @@ namespace gpudb
     extern const std::string create_table_INTERVAL;
     extern const std::string create_table_LIST;
     extern const std::string create_table_RANGE;
+    extern const std::string create_table_SERIES;
     extern const std::string create_table_chunk_size;
     extern const std::string create_table_collection_name;
     extern const std::string create_table_disallow_homogeneous_tables;
@@ -561,6 +567,7 @@ namespace gpudb
     extern const std::string create_table_external_LIST;
     extern const std::string create_table_external_RANGE;
     extern const std::string create_table_external_abort;
+    extern const std::string create_table_external_accuracy;
     extern const std::string create_table_external_bad_record_table_limit;
     extern const std::string create_table_external_bad_record_table_name;
     extern const std::string create_table_external_batch_size;
@@ -632,6 +639,7 @@ namespace gpudb
     extern const std::string create_table_external_primary_keys;
     extern const std::string create_table_external_refresh_method;
     extern const std::string create_table_external_shard_keys;
+    extern const std::string create_table_external_speed;
     extern const std::string create_table_external_strategy_definition;
     extern const std::string create_table_external_text_comment_string;
     extern const std::string create_table_external_text_delimiter;
@@ -643,6 +651,7 @@ namespace gpudb
     extern const std::string create_table_external_true;
     extern const std::string create_table_external_ttl;
     extern const std::string create_table_external_type_id;
+    extern const std::string create_table_external_type_inference_mode;
     extern const std::string create_table_external_type_inference_only;
 
     // Keywords for /create/tablemonitor request
@@ -721,6 +730,7 @@ namespace gpudb
     // Keywords for /delete/graph request
     extern const std::string delete_graph_delete_persist;
     extern const std::string delete_graph_false;
+    extern const std::string delete_graph_server_id;
     extern const std::string delete_graph_true;
 
     // Keywords for /delete/records request
@@ -1011,6 +1021,7 @@ namespace gpudb
     extern const std::string insert_records_from_files_LIST;
     extern const std::string insert_records_from_files_RANGE;
     extern const std::string insert_records_from_files_abort;
+    extern const std::string insert_records_from_files_accuracy;
     extern const std::string insert_records_from_files_bad_record_table_limit;
     extern const std::string insert_records_from_files_bad_record_table_name;
     extern const std::string insert_records_from_files_batch_size;
@@ -1074,6 +1085,7 @@ namespace gpudb
     extern const std::string insert_records_from_files_permissive;
     extern const std::string insert_records_from_files_primary_keys;
     extern const std::string insert_records_from_files_shard_keys;
+    extern const std::string insert_records_from_files_speed;
     extern const std::string insert_records_from_files_strategy_definition;
     extern const std::string insert_records_from_files_text_comment_string;
     extern const std::string insert_records_from_files_text_delimiter;
@@ -1086,6 +1098,7 @@ namespace gpudb
     extern const std::string insert_records_from_files_truncate_table;
     extern const std::string insert_records_from_files_ttl;
     extern const std::string insert_records_from_files_type_id;
+    extern const std::string insert_records_from_files_type_inference_mode;
     extern const std::string insert_records_from_files_type_inference_only;
 
     // Keywords for /insert/records/frompayload request
@@ -1094,6 +1107,7 @@ namespace gpudb
     extern const std::string insert_records_from_payload_LIST;
     extern const std::string insert_records_from_payload_RANGE;
     extern const std::string insert_records_from_payload_abort;
+    extern const std::string insert_records_from_payload_accuracy;
     extern const std::string insert_records_from_payload_bad_record_table_limit;
     extern const std::string insert_records_from_payload_bad_record_table_name;
     extern const std::string insert_records_from_payload_batch_size;
@@ -1152,6 +1166,7 @@ namespace gpudb
     extern const std::string insert_records_from_payload_permissive;
     extern const std::string insert_records_from_payload_primary_keys;
     extern const std::string insert_records_from_payload_shard_keys;
+    extern const std::string insert_records_from_payload_speed;
     extern const std::string insert_records_from_payload_strategy_definition;
     extern const std::string insert_records_from_payload_text_comment_string;
     extern const std::string insert_records_from_payload_text_delimiter;
@@ -1163,6 +1178,7 @@ namespace gpudb
     extern const std::string insert_records_from_payload_true;
     extern const std::string insert_records_from_payload_ttl;
     extern const std::string insert_records_from_payload_type_id;
+    extern const std::string insert_records_from_payload_type_inference_mode;
     extern const std::string insert_records_from_payload_type_inference_only;
 
     // Keywords for /insert/records/random request
@@ -1212,9 +1228,11 @@ namespace gpudb
     extern const std::string match_graph_max_num_threads;
     extern const std::string match_graph_max_trip_cost;
     extern const std::string match_graph_num_segments;
+    extern const std::string match_graph_output_tracks;
     extern const std::string match_graph_partial_loading;
     extern const std::string match_graph_right_turn_penalty;
     extern const std::string match_graph_search_radius;
+    extern const std::string match_graph_server_id;
     extern const std::string match_graph_sharp_turn_penalty;
     extern const std::string match_graph_source;
     extern const std::string match_graph_truck_service_limit;
@@ -1251,10 +1269,12 @@ namespace gpudb
     extern const std::string query_graph_and_labels;
     extern const std::string query_graph_enable_graph_draw;
     extern const std::string query_graph_export_query_results;
+    extern const std::string query_graph_export_solve_results;
     extern const std::string query_graph_false;
     extern const std::string query_graph_force_undirected;
     extern const std::string query_graph_limit;
     extern const std::string query_graph_restriction_threshold_value;
+    extern const std::string query_graph_server_id;
     extern const std::string query_graph_target_nodes_table;
     extern const std::string query_graph_true;
 
@@ -1300,6 +1320,7 @@ namespace gpudb
 
     // Keywords for /show/graph request
     extern const std::string show_graph_false;
+    extern const std::string show_graph_server_id;
     extern const std::string show_graph_show_original_request;
     extern const std::string show_graph_true;
 
@@ -1350,6 +1371,7 @@ namespace gpudb
     extern const std::string show_sql_proc_true;
 
     // Keywords for /show/sql/proc response
+    extern const std::string show_sql_proc_execute_as;
     extern const std::string show_sql_proc_execute_interval;
     extern const std::string show_sql_proc_execute_start_time;
 
@@ -1459,6 +1481,7 @@ namespace gpudb
     extern const std::string solve_graph_remove_previous_restrictions;
     extern const std::string solve_graph_restriction_threshold_value;
     extern const std::string solve_graph_right_turn_penalty;
+    extern const std::string solve_graph_server_id;
     extern const std::string solve_graph_sharp_turn_penalty;
     extern const std::string solve_graph_true;
     extern const std::string solve_graph_uniform_weights;
@@ -1485,7 +1508,6 @@ namespace gpudb
     extern const std::string visualize_image_EPSG_4326;
     extern const std::string visualize_image_EPSG_900913;
     extern const std::string visualize_image_PLATE_CARREE;
-    extern const std::string visualize_image_SYMBOLCODE;
     extern const std::string visualize_image_WEB_MERCATOR;
     extern const std::string visualize_image_circle;
     extern const std::string visualize_image_diamond;
@@ -1516,6 +1538,7 @@ namespace gpudb
     extern const std::string visualize_image_shapelinepatterns;
     extern const std::string visualize_image_shapelinewidths;
     extern const std::string visualize_image_square;
+    extern const std::string visualize_image_symbolcode;
     extern const std::string visualize_image_symbolrotations;
     extern const std::string visualize_image_trackheadcolors;
     extern const std::string visualize_image_trackheadshapes;
@@ -1569,7 +1592,6 @@ namespace gpudb
     extern const std::string visualize_image_classbreak_EPSG_4326;
     extern const std::string visualize_image_classbreak_EPSG_900913;
     extern const std::string visualize_image_classbreak_PLATE_CARREE;
-    extern const std::string visualize_image_classbreak_SYMBOLCODE;
     extern const std::string visualize_image_classbreak_WEB_MERCATOR;
     extern const std::string visualize_image_classbreak_cb_pointalphas;
     extern const std::string visualize_image_classbreak_circle;
@@ -1588,6 +1610,8 @@ namespace gpudb
     extern const std::string visualize_image_classbreak_hollowdiamond;
     extern const std::string visualize_image_classbreak_hollowsquare;
     extern const std::string visualize_image_classbreak_none;
+    extern const std::string visualize_image_classbreak_oriented_arrow;
+    extern const std::string visualize_image_classbreak_oriented_triangle;
     extern const std::string visualize_image_classbreak_pointcolors;
     extern const std::string visualize_image_classbreak_pointoffset_x;
     extern const std::string visualize_image_classbreak_pointoffset_y;
@@ -1599,6 +1623,8 @@ namespace gpudb
     extern const std::string visualize_image_classbreak_shapelinepatterns;
     extern const std::string visualize_image_classbreak_shapelinewidths;
     extern const std::string visualize_image_classbreak_square;
+    extern const std::string visualize_image_classbreak_symbolcode;
+    extern const std::string visualize_image_classbreak_symbolrotations;
     extern const std::string visualize_image_classbreak_trackheadcolors;
     extern const std::string visualize_image_classbreak_trackheadshapes;
     extern const std::string visualize_image_classbreak_trackheadsizes;
@@ -1962,7 +1988,6 @@ namespace gpudb
     extern const std::string visualize_video_EPSG_4326;
     extern const std::string visualize_video_EPSG_900913;
     extern const std::string visualize_video_PLATE_CARREE;
-    extern const std::string visualize_video_SYMBOLCODE;
     extern const std::string visualize_video_WEB_MERCATOR;
     extern const std::string visualize_video_circle;
     extern const std::string visualize_video_diamond;
@@ -1981,6 +2006,7 @@ namespace gpudb
     extern const std::string visualize_video_shapelinecolors;
     extern const std::string visualize_video_shapelinewidths;
     extern const std::string visualize_video_square;
+    extern const std::string visualize_video_symbolcode;
     extern const std::string visualize_video_trackheadcolors;
     extern const std::string visualize_video_trackheadshapes;
     extern const std::string visualize_video_trackheadsizes;

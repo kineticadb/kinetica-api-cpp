@@ -6,7 +6,7 @@
 
 
 // GPUdb Version
-const std::string GPUdb::API_VERSION( "7.1.1.0" );
+const std::string GPUdb::API_VERSION( "7.1.2.0" );
 
 
 
@@ -194,6 +194,9 @@ AdminAddHostResponse& GPUdb::adminAddHost( const std::string& hostAddress,
  * be assigned any shards. To rebalance data and shards across the cluster, use
  * {@link #adminRebalance(const AdminRebalanceRequest&) const}.
  * <p>
+ * The database must be offline for this operation, see {@link
+ * #adminOffline(const AdminOfflineRequest&) const}
+ * <p>
  * For example, if attempting to add three new ranks (two ranks on host
  * 172.123.45.67 and one rank on host 172.123.45.68) to a Kinetica cluster with
  * additional configuration parameters:
@@ -235,6 +238,9 @@ AdminAddRanksResponse GPUdb::adminAddRanks( const AdminAddRanksRequest& request_
  * be assigned any shards. To rebalance data and shards across the cluster, use
  * {@link
  * #adminRebalance(const AdminRebalanceRequest&,AdminRebalanceResponse&) const}.
+ * <p>
+ * The database must be offline for this operation, see {@link
+ * #adminOffline(const AdminOfflineRequest&,AdminOfflineResponse&) const}
  * <p>
  * For example, if attempting to add three new ranks (two ranks on host
  * 172.123.45.67 and one rank on host 172.123.45.68) to a Kinetica cluster with
@@ -280,6 +286,9 @@ AdminAddRanksResponse& GPUdb::adminAddRanks( const AdminAddRanksRequest& request
  * be assigned any shards. To rebalance data and shards across the cluster, use
  * {@link
  * #adminRebalance(const std::map<std::string, std::string>&) const}.
+ * <p>
+ * The database must be offline for this operation, see {@link
+ * #adminOffline(const bool,const std::map<std::string, std::string>&) const}
  * <p>
  * For example, if attempting to add three new ranks (two ranks on host
  * 172.123.45.67 and one rank on host 172.123.45.68) to a Kinetica cluster with
@@ -376,6 +385,9 @@ AdminAddRanksResponse GPUdb::adminAddRanks( const std::vector<std::string>& host
  * be assigned any shards. To rebalance data and shards across the cluster, use
  * {@link
  * #adminRebalance(const std::map<std::string, std::string>&,AdminRebalanceResponse&) const}.
+ * <p>
+ * The database must be offline for this operation, see {@link
+ * #adminOffline(const bool,const std::map<std::string, std::string>&,AdminOfflineResponse&) const}
  * <p>
  * For example, if attempting to add three new ranks (two ranks on host
  * 172.123.45.67 and one rank on host 172.123.45.68) to a Kinetica cluster with
@@ -836,6 +848,9 @@ AdminOfflineResponse& GPUdb::adminOffline( const bool offline,
  * of records approximately and/or rebalance the shards to be equally
  * distributed (as much as possible) across all the ranks.
  * <p>
+ * The database must be offline for this operation, see {@link
+ * #adminOffline(const AdminOfflineRequest&) const}
+ * <p>
  * * If {@link #adminRebalance(const AdminRebalanceRequest&) const} is
  * invoked after a change is made to the
  *   cluster, e.g., a host was added or removed,
@@ -879,6 +894,9 @@ AdminRebalanceResponse GPUdb::adminRebalance( const AdminRebalanceRequest& reque
  * Rebalance the data in the cluster so that all nodes contain an equal number
  * of records approximately and/or rebalance the shards to be equally
  * distributed (as much as possible) across all the ranks.
+ * <p>
+ * The database must be offline for this operation, see {@link
+ * #adminOffline(const AdminOfflineRequest&,AdminOfflineResponse&) const}
  * <p>
  * * If {@link
  * #adminRebalance(const AdminRebalanceRequest&,AdminRebalanceResponse&) const}
@@ -928,6 +946,9 @@ AdminRebalanceResponse& GPUdb::adminRebalance( const AdminRebalanceRequest& requ
  * Rebalance the data in the cluster so that all nodes contain an equal number
  * of records approximately and/or rebalance the shards to be equally
  * distributed (as much as possible) across all the ranks.
+ * <p>
+ * The database must be offline for this operation, see {@link
+ * #adminOffline(const bool,const std::map<std::string, std::string>&) const}
  * <p>
  * * If {@link
  * #adminRebalance(const std::map<std::string, std::string>&) const} is
@@ -1001,7 +1022,7 @@ AdminRebalanceResponse& GPUdb::adminRebalance( const AdminRebalanceRequest& requ
  *                 rebalance faster.  A lower @a aggressiveness will take
  *                 longer but allow for better interleaving between the
  *                 rebalance and other queries. Valid values are constants from
- *                 1 (lowest) to 10 (highest).  The default value is '1'.
+ *                 1 (lowest) to 10 (highest).  The default value is '10'.
  *                         <li> gpudb::admin_rebalance_compact_after_rebalance:
  *                 Perform compaction of deleted records once the rebalance
  *                 completes to reclaim memory and disk space. Default is @a
@@ -1058,6 +1079,9 @@ AdminRebalanceResponse GPUdb::adminRebalance( const std::map<std::string, std::s
  * Rebalance the data in the cluster so that all nodes contain an equal number
  * of records approximately and/or rebalance the shards to be equally
  * distributed (as much as possible) across all the ranks.
+ * <p>
+ * The database must be offline for this operation, see {@link
+ * #adminOffline(const bool,const std::map<std::string, std::string>&,AdminOfflineResponse&) const}
  * <p>
  * * If {@link
  * #adminRebalance(const std::map<std::string, std::string>&,AdminRebalanceResponse&) const}
@@ -1131,7 +1155,7 @@ AdminRebalanceResponse GPUdb::adminRebalance( const std::map<std::string, std::s
  *                 rebalance faster.  A lower @a aggressiveness will take
  *                 longer but allow for better interleaving between the
  *                 rebalance and other queries. Valid values are constants from
- *                 1 (lowest) to 10 (highest).  The default value is '1'.
+ *                 1 (lowest) to 10 (highest).  The default value is '10'.
  *                         <li> gpudb::admin_rebalance_compact_after_rebalance:
  *                 Perform compaction of deleted records once the rebalance
  *                 completes to reclaim memory and disk space. Default is @a
@@ -1338,6 +1362,9 @@ AdminRemoveHostResponse& GPUdb::adminRemoveHost( const std::string& host,
  * href="../../concepts/tables.html#random-sharding"
  * target="_top">randomly-sharded</a>) will be deleted.
  * <p>
+ * The database must be offline for this operation, see {@link
+ * #adminOffline(const AdminOfflineRequest&) const}
+ * <p>
  * This endpoint's processing time depends on the amount of data in the system,
  * thus the API call may time out if run directly.  It is recommended to run
  * this endpoint asynchronously via {@link
@@ -1367,6 +1394,9 @@ AdminRemoveRanksResponse GPUdb::adminRemoveRanks( const AdminRemoveRanksRequest&
  * and/or unsharded data (a.k.a. <a
  * href="../../concepts/tables.html#random-sharding"
  * target="_top">randomly-sharded</a>) will be deleted.
+ * <p>
+ * The database must be offline for this operation, see {@link
+ * #adminOffline(const AdminOfflineRequest&,AdminOfflineResponse&) const}
  * <p>
  * This endpoint's processing time depends on the amount of data in the system,
  * thus the API call may time out if run directly.  It is recommended to run
@@ -1400,6 +1430,9 @@ AdminRemoveRanksResponse& GPUdb::adminRemoveRanks( const AdminRemoveRanksRequest
  * and/or unsharded data (a.k.a. <a
  * href="../../concepts/tables.html#random-sharding"
  * target="_top">randomly-sharded</a>) will be deleted.
+ * <p>
+ * The database must be offline for this operation, see {@link
+ * #adminOffline(const bool,const std::map<std::string, std::string>&) const}
  * <p>
  * This endpoint's processing time depends on the amount of data in the system,
  * thus the API call may time out if run directly.  It is recommended to run
@@ -1449,7 +1482,7 @@ AdminRemoveRanksResponse& GPUdb::adminRemoveRanks( const AdminRemoveRanksRequest
  *                 rebalance faster.  A lower @a aggressiveness will take
  *                 longer but allow for better interleaving between the
  *                 rebalance and other queries. Valid values are constants from
- *                 1 (lowest) to 10 (highest).  The default value is '1'.
+ *                 1 (lowest) to 10 (highest).  The default value is '10'.
  *                 </ul>
  * 
  * @return Response object containing the result of the operation.
@@ -1477,6 +1510,9 @@ AdminRemoveRanksResponse GPUdb::adminRemoveRanks( const std::vector<std::string>
  * and/or unsharded data (a.k.a. <a
  * href="../../concepts/tables.html#random-sharding"
  * target="_top">randomly-sharded</a>) will be deleted.
+ * <p>
+ * The database must be offline for this operation, see {@link
+ * #adminOffline(const bool,const std::map<std::string, std::string>&,AdminOfflineResponse&) const}
  * <p>
  * This endpoint's processing time depends on the amount of data in the system,
  * thus the API call may time out if run directly.  It is recommended to run
@@ -1526,7 +1562,7 @@ AdminRemoveRanksResponse GPUdb::adminRemoveRanks( const std::vector<std::string>
  *                 rebalance faster.  A lower @a aggressiveness will take
  *                 longer but allow for better interleaving between the
  *                 rebalance and other queries. Valid values are constants from
- *                 1 (lowest) to 10 (highest).  The default value is '1'.
+ *                 1 (lowest) to 10 (highest).  The default value is '10'.
  *                 </ul>
  * @param[out] response_  Response object containing the results of the
  *                        operation.
@@ -7074,6 +7110,11 @@ AlterTableResponse& GPUdb::alterTable( const AlterTableRequest& request_,
  *                target="_top">materialized view</a> to the value specified in
  *                @a value.  Also, sets the refresh method to periodic if not
  *                already set.
+ *                        <li> gpudb::alter_table_set_refresh_execute_as: Sets
+ *                the user name to refresh this <a
+ *                href="../../concepts/materialized_views.html"
+ *                target="_top">materialized view</a> to the value specified in
+ *                @a value.
  *                        <li>
  *                gpudb::alter_table_remove_text_search_attributes: Removes <a
  *                href="../../concepts/full_text_search.html"
@@ -7386,6 +7427,11 @@ AlterTableResponse GPUdb::alterTable( const std::string& tableName,
  *                target="_top">materialized view</a> to the value specified in
  *                @a value.  Also, sets the refresh method to periodic if not
  *                already set.
+ *                        <li> gpudb::alter_table_set_refresh_execute_as: Sets
+ *                the user name to refresh this <a
+ *                href="../../concepts/materialized_views.html"
+ *                target="_top">materialized view</a> to the value specified in
+ *                @a value.
  *                        <li>
  *                gpudb::alter_table_remove_text_search_attributes: Removes <a
  *                href="../../concepts/full_text_search.html"
@@ -9369,6 +9415,23 @@ CreateGraphResponse& GPUdb::createGraph( const CreateGraphRequest& request_,
  *                 and intersections; the smaller the value, the larger the
  *                 threshold for right and left turns; 0 < turn_angle < 90.
  *                 The default value is '60'.
+ *                         <li> gpudb::create_graph_is_partitioned:
+ *                 <ul>
+ *                         <li> gpudb::create_graph_true
+ *                         <li> gpudb::create_graph_false
+ *                 </ul>
+ *                 The default value is gpudb::create_graph_false.
+ *                         <li> gpudb::create_graph_server_id: Indicates which
+ *                 graph server(s) to send the request to. Default is to send
+ *                 to the server with the most available memory.
+ *                         <li> gpudb::create_graph_use_rtree: Use an range
+ *                 tree structure to accelerate and improve the accuracy of
+ *                 snapping, especially to edges.
+ *                 <ul>
+ *                         <li> gpudb::create_graph_true
+ *                         <li> gpudb::create_graph_false
+ *                 </ul>
+ *                 The default value is gpudb::create_graph_false.
  *                 </ul>
  * 
  * @return Response object containing the result of the operation.
@@ -9632,6 +9695,23 @@ CreateGraphResponse GPUdb::createGraph( const std::string& graphName,
  *                 and intersections; the smaller the value, the larger the
  *                 threshold for right and left turns; 0 < turn_angle < 90.
  *                 The default value is '60'.
+ *                         <li> gpudb::create_graph_is_partitioned:
+ *                 <ul>
+ *                         <li> gpudb::create_graph_true
+ *                         <li> gpudb::create_graph_false
+ *                 </ul>
+ *                 The default value is gpudb::create_graph_false.
+ *                         <li> gpudb::create_graph_server_id: Indicates which
+ *                 graph server(s) to send the request to. Default is to send
+ *                 to the server with the most available memory.
+ *                         <li> gpudb::create_graph_use_rtree: Use an range
+ *                 tree structure to accelerate and improve the accuracy of
+ *                 snapping, especially to edges.
+ *                 <ul>
+ *                         <li> gpudb::create_graph_true
+ *                         <li> gpudb::create_graph_false
+ *                 </ul>
+ *                 The default value is gpudb::create_graph_false.
  *                 </ul>
  * @param[out] response_  Response object containing the results of the
  *                        operation.
@@ -10192,6 +10272,8 @@ CreateMaterializedViewResponse& GPUdb::createMaterializedView( const CreateMater
  *                 refresh_method is @a periodic, specifies the first time at
  *                 which a refresh is to be done.  Value is a datetime string
  *                 with format 'YYYY-MM-DD HH:MM:SS'.
+ *                         <li> gpudb::create_materialized_view_execute_as:
+ *                 User name to use to run the refresh job
  *                 </ul>
  * 
  * @return Response object containing the result of the operation.
@@ -10282,6 +10364,8 @@ CreateMaterializedViewResponse GPUdb::createMaterializedView( const std::string&
  *                 refresh_method is @a periodic, specifies the first time at
  *                 which a refresh is to be done.  Value is a datetime string
  *                 with format 'YYYY-MM-DD HH:MM:SS'.
+ *                         <li> gpudb::create_materialized_view_execute_as:
+ *                 User name to use to run the refresh job
  *                 </ul>
  * @param[out] response_  Response object containing the results of the
  *                        operation.
@@ -10304,10 +10388,10 @@ CreateMaterializedViewResponse& GPUdb::createMaterializedView( const std::string
 
 
 /**
- * Creates an instance (proc) of the user-defined function (UDF) specified by
- * the given command, options, and files, and makes it available for execution.
- * For details on UDFs, see: <a href="../../concepts/udf.html"
- * target="_top">User-Defined Functions</a>
+ * Creates an instance (proc) of the
+ * <a href="../../concepts/udf.html" target="_top">user-defined functions</a>
+ * (UDF) specified by the
+ * given command, options, and files, and makes it available for execution.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -10325,10 +10409,10 @@ CreateProcResponse GPUdb::createProc( const CreateProcRequest& request_ ) const
 
 
 /**
- * Creates an instance (proc) of the user-defined function (UDF) specified by
- * the given command, options, and files, and makes it available for execution.
- * For details on UDFs, see: <a href="../../concepts/udf.html"
- * target="_top">User-Defined Functions</a>
+ * Creates an instance (proc) of the
+ * <a href="../../concepts/udf.html" target="_top">user-defined functions</a>
+ * (UDF) specified by the
+ * given command, options, and files, and makes it available for execution.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -10349,44 +10433,56 @@ CreateProcResponse& GPUdb::createProc( const CreateProcRequest& request_,
 
 
 /**
- * Creates an instance (proc) of the user-defined function (UDF) specified by
- * the given command, options, and files, and makes it available for execution.
- * For details on UDFs, see: <a href="../../concepts/udf.html"
- * target="_top">User-Defined Functions</a>
+ * Creates an instance (proc) of the
+ * <a href="../../concepts/udf.html" target="_top">user-defined functions</a>
+ * (UDF) specified by the
+ * given command, options, and files, and makes it available for execution.
  * 
  * @param procName  Name of the proc to be created. Must not be the name of a
  *                  currently existing proc.
  * @param executionMode  The execution mode of the proc.
  *                       <ul>
  *                               <li> gpudb::create_proc_distributed: Input
- *                       table data will be divided into data segments that are
- *                       distributed across all nodes in the cluster, and the
- *                       proc command will be invoked once per data segment in
- *                       parallel. Output table data from each invocation will
- *                       be saved to the same node as the corresponding input
+ *                       table data will be divided into data
+ *                       segments that are distributed across all nodes in the
+ *                       cluster, and the proc
+ *                       command will be invoked once per data segment in
+ *                       parallel. Output table data
+ *                       from each invocation will be saved to the same node as
+ *                       the corresponding input
  *                       data.
  *                               <li> gpudb::create_proc_nondistributed: The
- *                       proc command will be invoked only once per execution,
- *                       and will not have access to any input or output table
- *                       data.
+ *                       proc command will be invoked only once per
+ *                       execution, and will not have direct access to any
+ *                       tables named as input or
+ *                       output table parameters in the call to /execute/proc.
+ *                       It will,
+ *                       however, be able to access the database using native
+ *                       API calls.
  *                       </ul>
  *                       The default value is gpudb::create_proc_distributed.
- * @param files  A map of the files that make up the proc. The keys of the map
- *               are file names, and the values are the binary contents of the
- *               files. The file names may include subdirectory names (e.g.
- *               'subdir/file') but must not resolve to a directory above the
- *               root for the proc.
+ * @param files  A map of the files that make up the proc. The keys of the
+ *               map are file names, and the values are the binary contents of
+ *               the files. The
+ *               file names may include subdirectory names (e.g. 'subdir/file')
+ *               but must not
+ *               resolve to a directory above the root for the proc.
  * @param command  The command (excluding arguments) that will be invoked when
  *                 the proc is executed. It will be invoked from the directory
- *                 containing the proc @a files and may be any command that can
- *                 be resolved from that directory. It need not refer to a file
- *                 actually in that directory; for example, it could be 'java'
- *                 if the proc is a Java application; however, any necessary
- *                 external programs must be preinstalled on every database
- *                 node. If the command refers to a file in that directory, it
- *                 must be preceded with './' as per Linux convention. If not
- *                 specified, and exactly one file is provided in @a files,
- *                 that file will be invoked.
+ *                 containing the proc
+ *                 @a files and may be any command that can be resolved from
+ *                 that directory.
+ *                 It need not refer to a file actually in that directory; for
+ *                 example, it could be
+ *                 'java' if the proc is a Java application; however, any
+ *                 necessary external
+ *                 programs must be preinstalled on every database node. If the
+ *                 command refers to a
+ *                 file in that directory, it must be preceded with './' as per
+ *                 Linux convention.
+ *                 If not specified, and exactly one file is provided in @a
+ *                 files, that file
+ *                 will be invoked.
  * @param args  An array of command-line arguments that will be passed to @a
  *              command when the proc is executed.
  * @param options  Optional parameters.
@@ -10422,44 +10518,56 @@ CreateProcResponse GPUdb::createProc( const std::string& procName,
 
 
 /**
- * Creates an instance (proc) of the user-defined function (UDF) specified by
- * the given command, options, and files, and makes it available for execution.
- * For details on UDFs, see: <a href="../../concepts/udf.html"
- * target="_top">User-Defined Functions</a>
+ * Creates an instance (proc) of the
+ * <a href="../../concepts/udf.html" target="_top">user-defined functions</a>
+ * (UDF) specified by the
+ * given command, options, and files, and makes it available for execution.
  * 
  * @param procName  Name of the proc to be created. Must not be the name of a
  *                  currently existing proc.
  * @param executionMode  The execution mode of the proc.
  *                       <ul>
  *                               <li> gpudb::create_proc_distributed: Input
- *                       table data will be divided into data segments that are
- *                       distributed across all nodes in the cluster, and the
- *                       proc command will be invoked once per data segment in
- *                       parallel. Output table data from each invocation will
- *                       be saved to the same node as the corresponding input
+ *                       table data will be divided into data
+ *                       segments that are distributed across all nodes in the
+ *                       cluster, and the proc
+ *                       command will be invoked once per data segment in
+ *                       parallel. Output table data
+ *                       from each invocation will be saved to the same node as
+ *                       the corresponding input
  *                       data.
  *                               <li> gpudb::create_proc_nondistributed: The
- *                       proc command will be invoked only once per execution,
- *                       and will not have access to any input or output table
- *                       data.
+ *                       proc command will be invoked only once per
+ *                       execution, and will not have direct access to any
+ *                       tables named as input or
+ *                       output table parameters in the call to /execute/proc.
+ *                       It will,
+ *                       however, be able to access the database using native
+ *                       API calls.
  *                       </ul>
  *                       The default value is gpudb::create_proc_distributed.
- * @param files  A map of the files that make up the proc. The keys of the map
- *               are file names, and the values are the binary contents of the
- *               files. The file names may include subdirectory names (e.g.
- *               'subdir/file') but must not resolve to a directory above the
- *               root for the proc.
+ * @param files  A map of the files that make up the proc. The keys of the
+ *               map are file names, and the values are the binary contents of
+ *               the files. The
+ *               file names may include subdirectory names (e.g. 'subdir/file')
+ *               but must not
+ *               resolve to a directory above the root for the proc.
  * @param command  The command (excluding arguments) that will be invoked when
  *                 the proc is executed. It will be invoked from the directory
- *                 containing the proc @a files and may be any command that can
- *                 be resolved from that directory. It need not refer to a file
- *                 actually in that directory; for example, it could be 'java'
- *                 if the proc is a Java application; however, any necessary
- *                 external programs must be preinstalled on every database
- *                 node. If the command refers to a file in that directory, it
- *                 must be preceded with './' as per Linux convention. If not
- *                 specified, and exactly one file is provided in @a files,
- *                 that file will be invoked.
+ *                 containing the proc
+ *                 @a files and may be any command that can be resolved from
+ *                 that directory.
+ *                 It need not refer to a file actually in that directory; for
+ *                 example, it could be
+ *                 'java' if the proc is a Java application; however, any
+ *                 necessary external
+ *                 programs must be preinstalled on every database node. If the
+ *                 command refers to a
+ *                 file in that directory, it must be preceded with './' as per
+ *                 Linux convention.
+ *                 If not specified, and exactly one file is provided in @a
+ *                 files, that file
+ *                 will be invoked.
  * @param args  An array of command-line arguments that will be passed to @a
  *              command when the proc is executed.
  * @param options  Optional parameters.
@@ -11512,6 +11620,9 @@ CreateTableResponse& GPUdb::createTable( const CreateTableRequest& request_,
  *                         <li> gpudb::create_table_HASH: Use <a
  *                 href="../../concepts/tables.html#partitioning-by-hash"
  *                 target="_top">hash partitioning</a>.
+ *                         <li> gpudb::create_table_SERIES: Use <a
+ *                 href="../../concepts/tables.html#partitioning-by-series"
+ *                 target="_top">series partitioning</a>.
  *                 </ul>
  *                         <li> gpudb::create_table_partition_keys:
  *                 Comma-separated list of partition keys, which are the
@@ -11694,6 +11805,9 @@ CreateTableResponse GPUdb::createTable( const std::string& tableName,
  *                         <li> gpudb::create_table_HASH: Use <a
  *                 href="../../concepts/tables.html#partitioning-by-hash"
  *                 target="_top">hash partitioning</a>.
+ *                         <li> gpudb::create_table_SERIES: Use <a
+ *                 href="../../concepts/tables.html#partitioning-by-series"
+ *                 target="_top">series partitioning</a>.
  *                 </ul>
  *                         <li> gpudb::create_table_partition_keys:
  *                 Comma-separated list of partition keys, which are the
@@ -11923,8 +12037,8 @@ CreateTableExternalResponse& GPUdb::createTableExternal( const CreateTableExtern
  *                            href="../../concepts/tables.html#random-sharding"
  *                            target="_top">randomly sharded</a>, if no shard
  *                            key is specified.
- *                             Note that a type containing a shard key cannot
- *                            be used to create a replicated table.
+ *                            Note that a type containing a shard key cannot be
+ *                            used to create a replicated table.
  *                            <ul>
  *                                    <li> gpudb::create_table_external_true
  *                                    <li> gpudb::create_table_external_false
@@ -12340,6 +12454,18 @@ CreateTableExternalResponse& GPUdb::createTableExternal( const CreateTableExtern
  *                 gpudb::create_table_external_num_tasks_per_rank: Optional:
  *                 number of tasks for reading file per rank. Default will be
  *                 external_file_reader_num_tasks
+ *                         <li>
+ *                 gpudb::create_table_external_type_inference_mode: optimize
+ *                 type inference for:
+ *                 <ul>
+ *                         <li> gpudb::create_table_external_accuracy: scans
+ *                 all data to get exactly-typed & sized columns for all data
+ *                 present
+ *                         <li> gpudb::create_table_external_speed: picks the
+ *                 widest possible column types so that 'all' values will fit
+ *                 with minimum data scanned
+ *                 </ul>
+ *                 The default value is gpudb::create_table_external_accuracy.
  *                 </ul>
  * 
  * @return Response object containing the result of the operation.
@@ -12448,8 +12574,8 @@ CreateTableExternalResponse GPUdb::createTableExternal( const std::string& table
  *                            href="../../concepts/tables.html#random-sharding"
  *                            target="_top">randomly sharded</a>, if no shard
  *                            key is specified.
- *                             Note that a type containing a shard key cannot
- *                            be used to create a replicated table.
+ *                            Note that a type containing a shard key cannot be
+ *                            used to create a replicated table.
  *                            <ul>
  *                                    <li> gpudb::create_table_external_true
  *                                    <li> gpudb::create_table_external_false
@@ -12865,6 +12991,18 @@ CreateTableExternalResponse GPUdb::createTableExternal( const std::string& table
  *                 gpudb::create_table_external_num_tasks_per_rank: Optional:
  *                 number of tasks for reading file per rank. Default will be
  *                 external_file_reader_num_tasks
+ *                         <li>
+ *                 gpudb::create_table_external_type_inference_mode: optimize
+ *                 type inference for:
+ *                 <ul>
+ *                         <li> gpudb::create_table_external_accuracy: scans
+ *                 all data to get exactly-typed & sized columns for all data
+ *                 present
+ *                         <li> gpudb::create_table_external_speed: picks the
+ *                 widest possible column types so that 'all' values will fit
+ *                 with minimum data scanned
+ *                 </ul>
+ *                 The default value is gpudb::create_table_external_accuracy.
  *                 </ul>
  * @param[out] response_  Response object containing the results of the
  *                        operation.
@@ -14774,6 +14912,9 @@ DeleteGraphResponse& GPUdb::deleteGraph( const DeleteGraphRequest& request_,
  *                         <li> gpudb::delete_graph_false
  *                 </ul>
  *                 The default value is gpudb::delete_graph_true.
+ *                         <li> gpudb::delete_graph_server_id: Indicates which
+ *                 graph server(s) to send the request to. Default is to send
+ *                 to get information about all the servers.
  *                 </ul>
  * 
  * @return Response object containing the result of the operation.
@@ -14808,6 +14949,9 @@ DeleteGraphResponse GPUdb::deleteGraph( const std::string& graphName,
  *                         <li> gpudb::delete_graph_false
  *                 </ul>
  *                 The default value is gpudb::delete_graph_true.
+ *                         <li> gpudb::delete_graph_server_id: Indicates which
+ *                 graph server(s) to send the request to. Default is to send
+ *                 to get information about all the servers.
  *                 </ul>
  * @param[out] response_  Response object containing the results of the
  *                        operation.
@@ -15586,8 +15730,17 @@ DropSchemaResponse& GPUdb::dropSchema( const std::string& schemaName,
 
 
 /**
- * Executes a proc. This endpoint is asynchronous and does not wait for the
- * proc to complete before returning.
+ * Executes a proc. This endpoint is asynchronous and does not wait for
+ * the proc to complete before returning.
+ * <p>
+ * If the proc being executed is distributed, @a inputTableNames &
+ * @a inputColumnNames may be passed to the proc to use for reading data,
+ * and @a outputTableNames may be passed to the proc to use for writing
+ * data.
+ * <p>
+ * If the proc being executed is non-distributed, these table parameters will
+ * be
+ * ignored.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -15605,8 +15758,17 @@ ExecuteProcResponse GPUdb::executeProc( const ExecuteProcRequest& request_ ) con
 
 
 /**
- * Executes a proc. This endpoint is asynchronous and does not wait for the
- * proc to complete before returning.
+ * Executes a proc. This endpoint is asynchronous and does not wait for
+ * the proc to complete before returning.
+ * <p>
+ * If the proc being executed is distributed, @a inputTableNames &
+ * @a inputColumnNames may be passed to the proc to use for reading data,
+ * and @a outputTableNames may be passed to the proc to use for writing
+ * data.
+ * <p>
+ * If the proc being executed is non-distributed, these table parameters will
+ * be
+ * ignored.
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -15627,8 +15789,17 @@ ExecuteProcResponse& GPUdb::executeProc( const ExecuteProcRequest& request_,
 
 
 /**
- * Executes a proc. This endpoint is asynchronous and does not wait for the
- * proc to complete before returning.
+ * Executes a proc. This endpoint is asynchronous and does not wait for
+ * the proc to complete before returning.
+ * <p>
+ * If the proc being executed is distributed, @a inputTableNames &
+ * @a inputColumnNames may be passed to the proc to use for reading data,
+ * and @a outputTableNames may be passed to the proc to use for writing
+ * data.
+ * <p>
+ * If the proc being executed is non-distributed, these table parameters will
+ * be
+ * ignored.
  * 
  * @param procName  Name of the proc to execute. Must be the name of a
  *                  currently existing proc.
@@ -15639,36 +15810,50 @@ ExecuteProcResponse& GPUdb::executeProc( const ExecuteProcRequest& request_,
  *                   proc. Each key/value pair specifies the name of a
  *                   parameter and its value.
  * @param inputTableNames  Names of the tables containing data to be passed to
- *                         the proc. Each name specified must be the name of a
+ *                         the
+ *                         proc. Each name specified must be the name of a
  *                         currently existing table, in
- *                         [schema_name.]table_name format, using standard <a
+ *                         [schema_name.]table_name format, using standard
+ *                         <a
  *                         href="../../concepts/tables.html#table-name-resolution"
- *                         target="_top">name resolution rules</a>.  If no
- *                         table names are specified, no data will be passed to
- *                         the proc.
+ *                         target="_top">name resolution rules</a>.
+ *                         If no table names are specified, no data will be
+ *                         passed to the proc.  This
+ *                         parameter is ignored if the proc has a
+ *                         non-distributed execution mode.
  * @param inputColumnNames  Map of table names from @a inputTableNames to lists
  *                          of names of columns from those tables that will be
- *                          passed to the proc. Each column name specified must
- *                          be the name of an existing column in the
+ *                          passed to the proc. Each
+ *                          column name specified must be the name of an
+ *                          existing column in the
  *                          corresponding table. If a table name from @a
- *                          inputTableNames is not included, all columns from
- *                          that table will be passed to the proc.
+ *                          inputTableNames is not
+ *                          included, all columns from that table will be
+ *                          passed to the proc.  This
+ *                          parameter is ignored if the proc has a
+ *                          non-distributed execution mode.
  * @param outputTableNames  Names of the tables to which output data from the
- *                          proc will be written, each in
- *                          [schema_name.]table_name format, using standard <a
- *                          href="../../concepts/tables.html#table-name-resolution"
- *                          target="_top">name resolution rules</a> and meeting
+ *                          proc will
+ *                          be written, each in [schema_name.]table_name
+ *                          format, using standard
  *                          <a
+ *                          href="../../concepts/tables.html#table-name-resolution"
+ *                          target="_top">name resolution rules</a>
+ *                          and meeting <a
  *                          href="../../concepts/tables.html#table-naming-criteria"
- *                          target="_top">table naming criteria</a>. If a
- *                          specified table does not exist, it will
- *                          automatically be created with the same schema as
- *                          the corresponding table (by order) from @a
- *                          inputTableNames, excluding any primary and shard
- *                          keys. If a specified table is a non-persistent
- *                          result table, it must not have primary or shard
- *                          keys. If no table names are specified, no output
- *                          data can be returned from the proc.
+ *                          target="_top">table naming criteria</a>.
+ *                          If a specified table does not exist, it will
+ *                          automatically be created with the
+ *                          same schema as the corresponding table (by order)
+ *                          from
+ *                          @a inputTableNames, excluding any primary and shard
+ *                          keys. If a specified
+ *                          table is a non-persistent result table, it must not
+ *                          have primary or shard keys.
+ *                          If no table names are specified, no output data can
+ *                          be returned from the proc.
+ *                          This parameter is ignored if the proc has a
+ *                          non-distributed execution mode.
  * @param options  Optional parameters.
  *                 <ul>
  *                         <li> gpudb::execute_proc_cache_input: A
@@ -15730,8 +15915,17 @@ ExecuteProcResponse GPUdb::executeProc( const std::string& procName,
 
 
 /**
- * Executes a proc. This endpoint is asynchronous and does not wait for the
- * proc to complete before returning.
+ * Executes a proc. This endpoint is asynchronous and does not wait for
+ * the proc to complete before returning.
+ * <p>
+ * If the proc being executed is distributed, @a inputTableNames &
+ * @a inputColumnNames may be passed to the proc to use for reading data,
+ * and @a outputTableNames may be passed to the proc to use for writing
+ * data.
+ * <p>
+ * If the proc being executed is non-distributed, these table parameters will
+ * be
+ * ignored.
  * 
  * @param procName  Name of the proc to execute. Must be the name of a
  *                  currently existing proc.
@@ -15742,36 +15936,50 @@ ExecuteProcResponse GPUdb::executeProc( const std::string& procName,
  *                   proc. Each key/value pair specifies the name of a
  *                   parameter and its value.
  * @param inputTableNames  Names of the tables containing data to be passed to
- *                         the proc. Each name specified must be the name of a
+ *                         the
+ *                         proc. Each name specified must be the name of a
  *                         currently existing table, in
- *                         [schema_name.]table_name format, using standard <a
+ *                         [schema_name.]table_name format, using standard
+ *                         <a
  *                         href="../../concepts/tables.html#table-name-resolution"
- *                         target="_top">name resolution rules</a>.  If no
- *                         table names are specified, no data will be passed to
- *                         the proc.
+ *                         target="_top">name resolution rules</a>.
+ *                         If no table names are specified, no data will be
+ *                         passed to the proc.  This
+ *                         parameter is ignored if the proc has a
+ *                         non-distributed execution mode.
  * @param inputColumnNames  Map of table names from @a inputTableNames to lists
  *                          of names of columns from those tables that will be
- *                          passed to the proc. Each column name specified must
- *                          be the name of an existing column in the
+ *                          passed to the proc. Each
+ *                          column name specified must be the name of an
+ *                          existing column in the
  *                          corresponding table. If a table name from @a
- *                          inputTableNames is not included, all columns from
- *                          that table will be passed to the proc.
+ *                          inputTableNames is not
+ *                          included, all columns from that table will be
+ *                          passed to the proc.  This
+ *                          parameter is ignored if the proc has a
+ *                          non-distributed execution mode.
  * @param outputTableNames  Names of the tables to which output data from the
- *                          proc will be written, each in
- *                          [schema_name.]table_name format, using standard <a
- *                          href="../../concepts/tables.html#table-name-resolution"
- *                          target="_top">name resolution rules</a> and meeting
+ *                          proc will
+ *                          be written, each in [schema_name.]table_name
+ *                          format, using standard
  *                          <a
+ *                          href="../../concepts/tables.html#table-name-resolution"
+ *                          target="_top">name resolution rules</a>
+ *                          and meeting <a
  *                          href="../../concepts/tables.html#table-naming-criteria"
- *                          target="_top">table naming criteria</a>. If a
- *                          specified table does not exist, it will
- *                          automatically be created with the same schema as
- *                          the corresponding table (by order) from @a
- *                          inputTableNames, excluding any primary and shard
- *                          keys. If a specified table is a non-persistent
- *                          result table, it must not have primary or shard
- *                          keys. If no table names are specified, no output
- *                          data can be returned from the proc.
+ *                          target="_top">table naming criteria</a>.
+ *                          If a specified table does not exist, it will
+ *                          automatically be created with the
+ *                          same schema as the corresponding table (by order)
+ *                          from
+ *                          @a inputTableNames, excluding any primary and shard
+ *                          keys. If a specified
+ *                          table is a non-persistent result table, it must not
+ *                          have primary or shard keys.
+ *                          If no table names are specified, no output data can
+ *                          be returned from the proc.
+ *                          This parameter is ignored if the proc has a
+ *                          non-distributed execution mode.
  * @param options  Optional parameters.
  *                 <ul>
  *                         <li> gpudb::execute_proc_cache_input: A
@@ -22685,6 +22893,19 @@ InsertRecordsFromFilesResponse& GPUdb::insertRecordsFromFiles( const InsertRecor
  *                 gpudb::insert_records_from_files_num_tasks_per_rank:
  *                 Optional: number of tasks for reading file per rank. Default
  *                 will be external_file_reader_num_tasks
+ *                         <li>
+ *                 gpudb::insert_records_from_files_type_inference_mode:
+ *                 optimize type inference for:
+ *                 <ul>
+ *                         <li> gpudb::insert_records_from_files_accuracy:
+ *                 scans all data to get exactly-typed & sized columns for all
+ *                 data present
+ *                         <li> gpudb::insert_records_from_files_speed: picks
+ *                 the widest possible column types so that 'all' values will
+ *                 fit with minimum data scanned
+ *                 </ul>
+ *                 The default value is
+ *                 gpudb::insert_records_from_files_accuracy.
  *                 </ul>
  * 
  * @return Response object containing the result of the operation.
@@ -23193,6 +23414,19 @@ InsertRecordsFromFilesResponse GPUdb::insertRecordsFromFiles( const std::string&
  *                 gpudb::insert_records_from_files_num_tasks_per_rank:
  *                 Optional: number of tasks for reading file per rank. Default
  *                 will be external_file_reader_num_tasks
+ *                         <li>
+ *                 gpudb::insert_records_from_files_type_inference_mode:
+ *                 optimize type inference for:
+ *                 <ul>
+ *                         <li> gpudb::insert_records_from_files_accuracy:
+ *                 scans all data to get exactly-typed & sized columns for all
+ *                 data present
+ *                         <li> gpudb::insert_records_from_files_speed: picks
+ *                 the widest possible column types so that 'all' values will
+ *                 fit with minimum data scanned
+ *                 </ul>
+ *                 The default value is
+ *                 gpudb::insert_records_from_files_accuracy.
  *                 </ul>
  * @param[out] response_  Response object containing the results of the
  *                        operation.
@@ -23682,6 +23916,19 @@ InsertRecordsFromPayloadResponse& GPUdb::insertRecordsFromPayload( const InsertR
  *                 gpudb::insert_records_from_payload_num_tasks_per_rank:
  *                 Optional: number of tasks for reading file per rank. Default
  *                 will be external_file_reader_num_tasks
+ *                         <li>
+ *                 gpudb::insert_records_from_payload_type_inference_mode:
+ *                 optimize type inference for:
+ *                 <ul>
+ *                         <li> gpudb::insert_records_from_payload_accuracy:
+ *                 scans all data to get exactly-typed & sized columns for all
+ *                 data present
+ *                         <li> gpudb::insert_records_from_payload_speed: picks
+ *                 the widest possible column types so that 'all' values will
+ *                 fit with minimum data scanned
+ *                 </ul>
+ *                 The default value is
+ *                 gpudb::insert_records_from_payload_accuracy.
  *                 </ul>
  * 
  * @return Response object containing the result of the operation.
@@ -24123,6 +24370,19 @@ InsertRecordsFromPayloadResponse GPUdb::insertRecordsFromPayload( const std::str
  *                 gpudb::insert_records_from_payload_num_tasks_per_rank:
  *                 Optional: number of tasks for reading file per rank. Default
  *                 will be external_file_reader_num_tasks
+ *                         <li>
+ *                 gpudb::insert_records_from_payload_type_inference_mode:
+ *                 optimize type inference for:
+ *                 <ul>
+ *                         <li> gpudb::insert_records_from_payload_accuracy:
+ *                 scans all data to get exactly-typed & sized columns for all
+ *                 data present
+ *                         <li> gpudb::insert_records_from_payload_speed: picks
+ *                 the widest possible column types so that 'all' values will
+ *                 fit with minimum data scanned
+ *                 </ul>
+ *                 The default value is
+ *                 gpudb::insert_records_from_payload_accuracy.
  *                 </ul>
  * @param[out] response_  Response object containing the results of the
  *                        operation.
@@ -25358,6 +25618,12 @@ MatchGraphResponse& GPUdb::matchGraph( const MatchGraphRequest& request_,
  *                 Otherwise, each record shows a single scheduled truck route
  *                 (LINESTRING) towards a particular demand location (store id)
  *                 with its corresponding cost.  The default value is 'true'.
+ *                         <li> gpudb::match_graph_output_tracks: For the @a
+ *                 match_supply_demand solver only. When it is true
+ *                 (non-default), the output will be in tracks format for all
+ *                 the round trips of each truck in which the timestamps are
+ *                 populated directly from the edge weights starting from their
+ *                 originating depots.  The default value is 'false'.
  *                         <li> gpudb::match_graph_max_trip_cost: For the @a
  *                 match_supply_demand solver only. If this constraint is
  *                 greater than zero (default) then the trucks will skip
@@ -25393,7 +25659,7 @@ MatchGraphResponse& GPUdb::matchGraph( const MatchGraphRequest& request_,
  *                 algorithm to set the maximal number of threads within these
  *                 constraints.  The default value is '0'.
  *                         <li> gpudb::match_graph_truck_service_limit: For the
- *                 @a match_supply_demand solver only. If specified (greather
+ *                 @a match_supply_demand solver only. If specified (greater
  *                 than zero), any truck's total service cost (distance or
  *                 time) will be limited by the specified value including
  *                 multiple rounds (if set).  The default value is '0.0'.
@@ -25408,6 +25674,11 @@ MatchGraphResponse& GPUdb::matchGraph( const MatchGraphRequest& request_,
  *                 only once from their depots.
  *                 </ul>
  *                 The default value is gpudb::match_graph_false.
+ *                         <li> gpudb::match_graph_server_id: Indicates which
+ *                 graph server(s) to send the request to. Default is to send
+ *                 to the server, amongst those containing the corresponding
+ *                 graph, that has the most computational bandwidth.  The
+ *                 default value is ''.
  *                 </ul>
  * 
  * @return Response object containing the result of the operation.
@@ -25583,6 +25854,12 @@ MatchGraphResponse GPUdb::matchGraph( const std::string& graphName,
  *                 Otherwise, each record shows a single scheduled truck route
  *                 (LINESTRING) towards a particular demand location (store id)
  *                 with its corresponding cost.  The default value is 'true'.
+ *                         <li> gpudb::match_graph_output_tracks: For the @a
+ *                 match_supply_demand solver only. When it is true
+ *                 (non-default), the output will be in tracks format for all
+ *                 the round trips of each truck in which the timestamps are
+ *                 populated directly from the edge weights starting from their
+ *                 originating depots.  The default value is 'false'.
  *                         <li> gpudb::match_graph_max_trip_cost: For the @a
  *                 match_supply_demand solver only. If this constraint is
  *                 greater than zero (default) then the trucks will skip
@@ -25618,7 +25895,7 @@ MatchGraphResponse GPUdb::matchGraph( const std::string& graphName,
  *                 algorithm to set the maximal number of threads within these
  *                 constraints.  The default value is '0'.
  *                         <li> gpudb::match_graph_truck_service_limit: For the
- *                 @a match_supply_demand solver only. If specified (greather
+ *                 @a match_supply_demand solver only. If specified (greater
  *                 than zero), any truck's total service cost (distance or
  *                 time) will be limited by the specified value including
  *                 multiple rounds (if set).  The default value is '0.0'.
@@ -25633,6 +25910,11 @@ MatchGraphResponse GPUdb::matchGraph( const std::string& graphName,
  *                 only once from their depots.
  *                 </ul>
  *                 The default value is gpudb::match_graph_false.
+ *                         <li> gpudb::match_graph_server_id: Indicates which
+ *                 graph server(s) to send the request to. Default is to send
+ *                 to the server, amongst those containing the corresponding
+ *                 graph, that has the most computational bandwidth.  The
+ *                 default value is ''.
  *                 </ul>
  * @param[out] response_  Response object containing the results of the
  *                        operation.
@@ -26685,6 +26967,18 @@ QueryGraphResponse& GPUdb::queryGraph( const QueryGraphRequest& request_,
  *                         <li> gpudb::query_graph_false
  *                 </ul>
  *                 The default value is gpudb::query_graph_false.
+ *                         <li> gpudb::query_graph_export_solve_results:
+ *                 Returns solution results inside the @a adjacencyListIntArray
+ *                 array in the response if set to @a true.
+ *                 <ul>
+ *                         <li> gpudb::query_graph_true
+ *                         <li> gpudb::query_graph_false
+ *                 </ul>
+ *                 The default value is gpudb::query_graph_false.
+ *                         <li> gpudb::query_graph_server_id: Indicates which
+ *                 graph server(s) to send the request to. Default is to send
+ *                 to the server, amongst those containing the corresponding
+ *                 graph, that has the most computational bandwidth.
  *                 </ul>
  * 
  * @return Response object containing the result of the operation.
@@ -26870,6 +27164,18 @@ QueryGraphResponse GPUdb::queryGraph( const std::string& graphName,
  *                         <li> gpudb::query_graph_false
  *                 </ul>
  *                 The default value is gpudb::query_graph_false.
+ *                         <li> gpudb::query_graph_export_solve_results:
+ *                 Returns solution results inside the @a adjacencyListIntArray
+ *                 array in the response if set to @a true.
+ *                 <ul>
+ *                         <li> gpudb::query_graph_true
+ *                         <li> gpudb::query_graph_false
+ *                 </ul>
+ *                 The default value is gpudb::query_graph_false.
+ *                         <li> gpudb::query_graph_server_id: Indicates which
+ *                 graph server(s) to send the request to. Default is to send
+ *                 to the server, amongst those containing the corresponding
+ *                 graph, that has the most computational bandwidth.
  *                 </ul>
  * @param[out] response_  Response object containing the results of the
  *                        operation.
@@ -27731,6 +28037,9 @@ ShowGraphResponse& GPUdb::showGraph( const ShowGraphRequest& request_,
  *                         <li> gpudb::show_graph_false
  *                 </ul>
  *                 The default value is gpudb::show_graph_true.
+ *                         <li> gpudb::show_graph_server_id: Indicates which
+ *                 graph server(s) to send the request to. Default is to send
+ *                 to get information about all the servers.
  *                 </ul>
  * 
  * @return Response object containing the result of the operation.
@@ -27766,6 +28075,9 @@ ShowGraphResponse GPUdb::showGraph( const std::string& graphName,
  *                         <li> gpudb::show_graph_false
  *                 </ul>
  *                 The default value is gpudb::show_graph_true.
+ *                         <li> gpudb::show_graph_server_id: Indicates which
+ *                 graph server(s) to send the request to. Default is to send
+ *                 to get information about all the servers.
  *                 </ul>
  * @param[out] response_  Response object containing the results of the
  *                        operation.
@@ -29842,8 +30154,8 @@ ShowTypesResponse& GPUdb::showTypes( const std::string& typeId,
  * <a href="../../graph_solver/examples/graph_rest_guide.html"
  * target="_top">Graph REST Tutorial</a>,
  * and/or some
- * <a href="../../graph_solver/examples.html#solve-graph"
- * target="_top">/solve/graph examples</a>
+ * <a href="../../graph_solver/examples.html#match-graph"
+ * target="_top">/match/graph examples</a>
  * before using this endpoint.
  * 
  * @param[in] request_  Request object containing the parameters for the
@@ -29874,8 +30186,8 @@ SolveGraphResponse GPUdb::solveGraph( const SolveGraphRequest& request_ ) const
  * <a href="../../graph_solver/examples/graph_rest_guide.html"
  * target="_top">Graph REST Tutorial</a>,
  * and/or some
- * <a href="../../graph_solver/examples.html#solve-graph"
- * target="_top">/solve/graph examples</a>
+ * <a href="../../graph_solver/examples.html#match-graph"
+ * target="_top">/match/graph examples</a>
  * before using this endpoint.
  * 
  * @param[in] request_  Request object containing the parameters for the
@@ -29909,8 +30221,8 @@ SolveGraphResponse& GPUdb::solveGraph( const SolveGraphRequest& request_,
  * <a href="../../graph_solver/examples/graph_rest_guide.html"
  * target="_top">Graph REST Tutorial</a>,
  * and/or some
- * <a href="../../graph_solver/examples.html#solve-graph"
- * target="_top">/solve/graph examples</a>
+ * <a href="../../graph_solver/examples.html#match-graph"
+ * target="_top">/match/graph examples</a>
  * before using this endpoint.
  * 
  * @param graphName  Name of the graph resource to solve.
@@ -30133,6 +30445,12 @@ SolveGraphResponse& GPUdb::solveGraph( const SolveGraphRequest& request_,
  *                         <li> gpudb::solve_graph_false
  *                 </ul>
  *                 The default value is gpudb::solve_graph_true.
+ *                         <li> gpudb::solve_graph_server_id: Indicates which
+ *                 graph server(s) to send the request to. Default is to send
+ *                 to the server, amongst those containing the corresponding
+ *                 graph, that has the most computational bandwidth. For
+ *                 SHORTEST_PATH solver type, the input is split amongst the
+ *                 server containing the corresponding graph.
  *                 </ul>
  * 
  * @return Response object containing the result of the operation.
@@ -30176,8 +30494,8 @@ SolveGraphResponse GPUdb::solveGraph( const std::string& graphName,
  * <a href="../../graph_solver/examples/graph_rest_guide.html"
  * target="_top">Graph REST Tutorial</a>,
  * and/or some
- * <a href="../../graph_solver/examples.html#solve-graph"
- * target="_top">/solve/graph examples</a>
+ * <a href="../../graph_solver/examples.html#match-graph"
+ * target="_top">/match/graph examples</a>
  * before using this endpoint.
  * 
  * @param graphName  Name of the graph resource to solve.
@@ -30400,6 +30718,12 @@ SolveGraphResponse GPUdb::solveGraph( const std::string& graphName,
  *                         <li> gpudb::solve_graph_false
  *                 </ul>
  *                 The default value is gpudb::solve_graph_true.
+ *                         <li> gpudb::solve_graph_server_id: Indicates which
+ *                 graph server(s) to send the request to. Default is to send
+ *                 to the server, amongst those containing the corresponding
+ *                 graph, that has the most computational bandwidth. For
+ *                 SHORTEST_PATH solver type, the input is split amongst the
+ *                 server containing the corresponding graph.
  *                 </ul>
  * @param[out] response_  Response object containing the results of the
  *                        operation.
@@ -30781,7 +31105,7 @@ VisualizeImageResponse& GPUdb::visualizeImage( const VisualizeImageRequest& requ
  *                              <li> gpudb::visualize_image_hollowcircle
  *                              <li> gpudb::visualize_image_hollowsquare
  *                              <li> gpudb::visualize_image_hollowdiamond
- *                              <li> gpudb::visualize_image_SYMBOLCODE
+ *                              <li> gpudb::visualize_image_symbolcode
  *                      </ul>
  *                      The default value is gpudb::visualize_image_square.
  *                              <li> gpudb::visualize_image_symbolrotations:
@@ -30826,7 +31150,7 @@ VisualizeImageResponse& GPUdb::visualizeImage( const VisualizeImageRequest& requ
  *                              <li> gpudb::visualize_image_hollowdiamond
  *                              <li> gpudb::visualize_image_oriented_arrow
  *                              <li> gpudb::visualize_image_oriented_triangle
- *                              <li> gpudb::visualize_image_SYMBOLCODE
+ *                              <li> gpudb::visualize_image_symbolcode
  *                      </ul>
  *                      The default value is gpudb::visualize_image_circle.
  *                              <li> gpudb::visualize_image_trackheadcolors:
@@ -30842,7 +31166,7 @@ VisualizeImageResponse& GPUdb::visualizeImage( const VisualizeImageRequest& requ
  *                              <li> gpudb::visualize_image_hollowcircle
  *                              <li> gpudb::visualize_image_hollowsquare
  *                              <li> gpudb::visualize_image_hollowdiamond
- *                              <li> gpudb::visualize_image_SYMBOLCODE
+ *                              <li> gpudb::visualize_image_symbolcode
  *                      </ul>
  *                      The default value is
  *                      gpudb::visualize_image_hollowdiamond.
@@ -30967,7 +31291,7 @@ VisualizeImageResponse GPUdb::visualizeImage( const std::vector<std::string>& ta
  *                              <li> gpudb::visualize_image_hollowcircle
  *                              <li> gpudb::visualize_image_hollowsquare
  *                              <li> gpudb::visualize_image_hollowdiamond
- *                              <li> gpudb::visualize_image_SYMBOLCODE
+ *                              <li> gpudb::visualize_image_symbolcode
  *                      </ul>
  *                      The default value is gpudb::visualize_image_square.
  *                              <li> gpudb::visualize_image_symbolrotations:
@@ -31012,7 +31336,7 @@ VisualizeImageResponse GPUdb::visualizeImage( const std::vector<std::string>& ta
  *                              <li> gpudb::visualize_image_hollowdiamond
  *                              <li> gpudb::visualize_image_oriented_arrow
  *                              <li> gpudb::visualize_image_oriented_triangle
- *                              <li> gpudb::visualize_image_SYMBOLCODE
+ *                              <li> gpudb::visualize_image_symbolcode
  *                      </ul>
  *                      The default value is gpudb::visualize_image_circle.
  *                              <li> gpudb::visualize_image_trackheadcolors:
@@ -31028,7 +31352,7 @@ VisualizeImageResponse GPUdb::visualizeImage( const std::vector<std::string>& ta
  *                              <li> gpudb::visualize_image_hollowcircle
  *                              <li> gpudb::visualize_image_hollowsquare
  *                              <li> gpudb::visualize_image_hollowdiamond
- *                              <li> gpudb::visualize_image_SYMBOLCODE
+ *                              <li> gpudb::visualize_image_symbolcode
  *                      </ul>
  *                      The default value is
  *                      gpudb::visualize_image_hollowdiamond.
@@ -31544,6 +31868,7 @@ VisualizeImageClassbreakResponse& GPUdb::visualizeImageClassbreak( const Visuali
  * @param worldTableNames
  * @param xColumnName
  * @param yColumnName
+ * @param symbolColumnName
  * @param geometryColumnName
  * @param trackIds
  * @param cbAttr
@@ -31644,10 +31969,13 @@ VisualizeImageClassbreakResponse& GPUdb::visualizeImageClassbreak( const Visuali
  *                              <li>
  *                      gpudb::visualize_image_classbreak_hollowdiamond
  *                              <li>
- *                      gpudb::visualize_image_classbreak_SYMBOLCODE
+ *                      gpudb::visualize_image_classbreak_symbolcode
  *                      </ul>
  *                      The default value is
  *                      gpudb::visualize_image_classbreak_none.
+ *                              <li>
+ *                      gpudb::visualize_image_classbreak_symbolrotations:
+ *                      The default value is '0'.
  *                              <li>
  *                      gpudb::visualize_image_classbreak_shapelinewidths:
  *                      The default value is '3'.
@@ -31704,7 +32032,11 @@ VisualizeImageClassbreakResponse& GPUdb::visualizeImageClassbreak( const Visuali
  *                              <li>
  *                      gpudb::visualize_image_classbreak_hollowdiamond
  *                              <li>
- *                      gpudb::visualize_image_classbreak_SYMBOLCODE
+ *                      gpudb::visualize_image_classbreak_oriented_arrow
+ *                              <li>
+ *                      gpudb::visualize_image_classbreak_oriented_triangle
+ *                              <li>
+ *                      gpudb::visualize_image_classbreak_symbolcode
  *                      </ul>
  *                      The default value is
  *                      gpudb::visualize_image_classbreak_none.
@@ -31728,7 +32060,7 @@ VisualizeImageClassbreakResponse& GPUdb::visualizeImageClassbreak( const Visuali
  *                              <li>
  *                      gpudb::visualize_image_classbreak_hollowdiamond
  *                              <li>
- *                      gpudb::visualize_image_classbreak_SYMBOLCODE
+ *                      gpudb::visualize_image_classbreak_symbolcode
  *                      </ul>
  *                      The default value is
  *                      gpudb::visualize_image_classbreak_circle.
@@ -31744,6 +32076,7 @@ VisualizeImageClassbreakResponse GPUdb::visualizeImageClassbreak( const std::vec
                                                                   const std::vector<std::string>& worldTableNames,
                                                                   const std::string& xColumnName,
                                                                   const std::string& yColumnName,
+                                                                  const std::string& symbolColumnName,
                                                                   const std::string& geometryColumnName,
                                                                   const std::vector<std::vector<std::string> >& trackIds,
                                                                   const std::string& cbAttr,
@@ -31773,6 +32106,7 @@ VisualizeImageClassbreakResponse GPUdb::visualizeImageClassbreak( const std::vec
     actualRequest_.worldTableNames = worldTableNames;
     actualRequest_.xColumnName = xColumnName;
     actualRequest_.yColumnName = yColumnName;
+    actualRequest_.symbolColumnName = symbolColumnName;
     actualRequest_.geometryColumnName = geometryColumnName;
     actualRequest_.trackIds = trackIds;
     actualRequest_.cbAttr = cbAttr;
@@ -31809,6 +32143,7 @@ VisualizeImageClassbreakResponse GPUdb::visualizeImageClassbreak( const std::vec
  * @param worldTableNames
  * @param xColumnName
  * @param yColumnName
+ * @param symbolColumnName
  * @param geometryColumnName
  * @param trackIds
  * @param cbAttr
@@ -31909,10 +32244,13 @@ VisualizeImageClassbreakResponse GPUdb::visualizeImageClassbreak( const std::vec
  *                              <li>
  *                      gpudb::visualize_image_classbreak_hollowdiamond
  *                              <li>
- *                      gpudb::visualize_image_classbreak_SYMBOLCODE
+ *                      gpudb::visualize_image_classbreak_symbolcode
  *                      </ul>
  *                      The default value is
  *                      gpudb::visualize_image_classbreak_none.
+ *                              <li>
+ *                      gpudb::visualize_image_classbreak_symbolrotations:
+ *                      The default value is '0'.
  *                              <li>
  *                      gpudb::visualize_image_classbreak_shapelinewidths:
  *                      The default value is '3'.
@@ -31969,7 +32307,11 @@ VisualizeImageClassbreakResponse GPUdb::visualizeImageClassbreak( const std::vec
  *                              <li>
  *                      gpudb::visualize_image_classbreak_hollowdiamond
  *                              <li>
- *                      gpudb::visualize_image_classbreak_SYMBOLCODE
+ *                      gpudb::visualize_image_classbreak_oriented_arrow
+ *                              <li>
+ *                      gpudb::visualize_image_classbreak_oriented_triangle
+ *                              <li>
+ *                      gpudb::visualize_image_classbreak_symbolcode
  *                      </ul>
  *                      The default value is
  *                      gpudb::visualize_image_classbreak_none.
@@ -31993,7 +32335,7 @@ VisualizeImageClassbreakResponse GPUdb::visualizeImageClassbreak( const std::vec
  *                              <li>
  *                      gpudb::visualize_image_classbreak_hollowdiamond
  *                              <li>
- *                      gpudb::visualize_image_classbreak_SYMBOLCODE
+ *                      gpudb::visualize_image_classbreak_symbolcode
  *                      </ul>
  *                      The default value is
  *                      gpudb::visualize_image_classbreak_circle.
@@ -32012,6 +32354,7 @@ VisualizeImageClassbreakResponse& GPUdb::visualizeImageClassbreak( const std::ve
                                                                    const std::vector<std::string>& worldTableNames,
                                                                    const std::string& xColumnName,
                                                                    const std::string& yColumnName,
+                                                                   const std::string& symbolColumnName,
                                                                    const std::string& geometryColumnName,
                                                                    const std::vector<std::vector<std::string> >& trackIds,
                                                                    const std::string& cbAttr,
@@ -32042,6 +32385,7 @@ VisualizeImageClassbreakResponse& GPUdb::visualizeImageClassbreak( const std::ve
     actualRequest_.worldTableNames = worldTableNames;
     actualRequest_.xColumnName = xColumnName;
     actualRequest_.yColumnName = yColumnName;
+    actualRequest_.symbolColumnName = symbolColumnName;
     actualRequest_.geometryColumnName = geometryColumnName;
     actualRequest_.trackIds = trackIds;
     actualRequest_.cbAttr = cbAttr;
@@ -34122,7 +34466,7 @@ VisualizeVideoResponse& GPUdb::visualizeVideo( const VisualizeVideoRequest& requ
  *                              <li> gpudb::visualize_video_hollowcircle
  *                              <li> gpudb::visualize_video_hollowsquare
  *                              <li> gpudb::visualize_video_hollowdiamond
- *                              <li> gpudb::visualize_video_SYMBOLCODE
+ *                              <li> gpudb::visualize_video_symbolcode
  *                      </ul>
  *                              <li> gpudb::visualize_video_shapelinewidths:
  *                      The default value is '3'.
@@ -34147,7 +34491,7 @@ VisualizeVideoResponse& GPUdb::visualizeVideo( const VisualizeVideoRequest& requ
  *                              <li> gpudb::visualize_video_hollowcircle
  *                              <li> gpudb::visualize_video_hollowsquare
  *                              <li> gpudb::visualize_video_hollowdiamond
- *                              <li> gpudb::visualize_video_SYMBOLCODE
+ *                              <li> gpudb::visualize_video_symbolcode
  *                      </ul>
  *                      The default value is gpudb::visualize_video_none.
  *                              <li> gpudb::visualize_video_trackheadcolors:
@@ -34163,7 +34507,7 @@ VisualizeVideoResponse& GPUdb::visualizeVideo( const VisualizeVideoRequest& requ
  *                              <li> gpudb::visualize_video_hollowcircle
  *                              <li> gpudb::visualize_video_hollowsquare
  *                              <li> gpudb::visualize_video_hollowdiamond
- *                              <li> gpudb::visualize_video_SYMBOLCODE
+ *                              <li> gpudb::visualize_video_symbolcode
  *                      </ul>
  *                      The default value is gpudb::visualize_video_circle.
  *                      </ul>
@@ -34284,7 +34628,7 @@ VisualizeVideoResponse GPUdb::visualizeVideo( const std::vector<std::string>& ta
  *                              <li> gpudb::visualize_video_hollowcircle
  *                              <li> gpudb::visualize_video_hollowsquare
  *                              <li> gpudb::visualize_video_hollowdiamond
- *                              <li> gpudb::visualize_video_SYMBOLCODE
+ *                              <li> gpudb::visualize_video_symbolcode
  *                      </ul>
  *                              <li> gpudb::visualize_video_shapelinewidths:
  *                      The default value is '3'.
@@ -34309,7 +34653,7 @@ VisualizeVideoResponse GPUdb::visualizeVideo( const std::vector<std::string>& ta
  *                              <li> gpudb::visualize_video_hollowcircle
  *                              <li> gpudb::visualize_video_hollowsquare
  *                              <li> gpudb::visualize_video_hollowdiamond
- *                              <li> gpudb::visualize_video_SYMBOLCODE
+ *                              <li> gpudb::visualize_video_symbolcode
  *                      </ul>
  *                      The default value is gpudb::visualize_video_none.
  *                              <li> gpudb::visualize_video_trackheadcolors:
@@ -34325,7 +34669,7 @@ VisualizeVideoResponse GPUdb::visualizeVideo( const std::vector<std::string>& ta
  *                              <li> gpudb::visualize_video_hollowcircle
  *                              <li> gpudb::visualize_video_hollowsquare
  *                              <li> gpudb::visualize_video_hollowdiamond
- *                              <li> gpudb::visualize_video_SYMBOLCODE
+ *                              <li> gpudb::visualize_video_symbolcode
  *                      </ul>
  *                      The default value is gpudb::visualize_video_circle.
  *                      </ul>

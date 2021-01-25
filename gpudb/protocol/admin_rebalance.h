@@ -17,6 +17,9 @@ namespace gpudb
      * number of records approximately and/or rebalance the shards to be
      * equally distributed (as much as possible) across all the ranks.
      * <p>
+     * The database must be offline for this operation, see {@link
+     * #adminOffline(const AdminOfflineRequest&) const}
+     * <p>
      * * If {@link #adminRebalance(const AdminRebalanceRequest&) const} is
      * invoked after a change is made to the
      *   cluster, e.g., a host was added or removed,
@@ -116,7 +119,7 @@ namespace gpudb
          *                      better interleaving between the rebalance and
          *                      other queries. Valid values are constants from
          *                      1 (lowest) to 10 (highest).  The default value
-         *                      is '1'.
+         *                      is '10'.
          *                              <li>
          *                      gpudb::admin_rebalance_compact_after_rebalance:
          *                      Perform compaction of deleted records once the
@@ -220,6 +223,9 @@ namespace gpudb
      * Rebalance the data in the cluster so that all nodes contain an equal
      * number of records approximately and/or rebalance the shards to be
      * equally distributed (as much as possible) across all the ranks.
+     * <p>
+     * The database must be offline for this operation, see {@link
+     * #adminOffline(const AdminOfflineRequest&) const}
      * <p>
      * * If {@link #adminRebalance(const AdminRebalanceRequest&) const} is
      * invoked after a change is made to the

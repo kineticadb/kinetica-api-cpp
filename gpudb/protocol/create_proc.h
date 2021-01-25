@@ -13,10 +13,10 @@ namespace gpudb
      * A set of input parameters for {@link
      * #createProc(const CreateProcRequest&) const}.
      * <p>
-     * Creates an instance (proc) of the user-defined function (UDF) specified
-     * by the given command, options, and files, and makes it available for
-     * execution.  For details on UDFs, see: <a href="../../concepts/udf.html"
-     * target="_top">User-Defined Functions</a>
+     * Creates an instance (proc) of the
+     * <a href="../../concepts/udf.html" target="_top">user-defined
+     * functions</a> (UDF) specified by the
+     * given command, options, and files, and makes it available for execution.
      */
     struct CreateProcRequest
     {
@@ -54,31 +54,41 @@ namespace gpudb
          *                                    <li>
          *                            gpudb::create_proc_nondistributed: The
          *                            proc command will be invoked only once
-         *                            per execution, and will not have access
-         *                            to any input or output table data.
+         *                            per
+         *                            execution, and will not have direct
+         *                            access to any tables named as input or
+         *                            output table parameters in the call to
+         *                            /execute/proc.  It will,
+         *                            however, be able to access the database
+         *                            using native API calls.
          *                            </ul>
          *                            The default value is
          *                            gpudb::create_proc_distributed.
          * @param[in] files_  A map of the files that make up the proc. The
-         *                    keys of the map are file names, and the values
-         *                    are the binary contents of the files. The file
-         *                    names may include subdirectory names (e.g.
-         *                    'subdir/file') but must not resolve to a
-         *                    directory above the root for the proc.
+         *                    keys of the
+         *                    map are file names, and the values are the binary
+         *                    contents of the files. The
+         *                    file names may include subdirectory names (e.g.
+         *                    'subdir/file') but must not
+         *                    resolve to a directory above the root for the
+         *                    proc.
          * @param[in] command_  The command (excluding arguments) that will be
-         *                      invoked when the proc is executed. It will be
-         *                      invoked from the directory containing the proc
+         *                      invoked when
+         *                      the proc is executed. It will be invoked from
+         *                      the directory containing the proc
          *                      @a files and may be any command that can be
-         *                      resolved from that directory. It need not refer
-         *                      to a file actually in that directory; for
-         *                      example, it could be 'java' if the proc is a
-         *                      Java application; however, any necessary
-         *                      external programs must be preinstalled on every
-         *                      database node. If the command refers to a file
-         *                      in that directory, it must be preceded with
-         *                      './' as per Linux convention. If not specified,
-         *                      and exactly one file is provided in @a files,
-         *                      that file will be invoked.
+         *                      resolved from that directory.
+         *                      It need not refer to a file actually in that
+         *                      directory; for example, it could be
+         *                      'java' if the proc is a Java application;
+         *                      however, any necessary external
+         *                      programs must be preinstalled on every database
+         *                      node. If the command refers to a
+         *                      file in that directory, it must be preceded
+         *                      with './' as per Linux convention.
+         *                      If not specified, and exactly one file is
+         *                      provided in @a files, that file
+         *                      will be invoked.
          * @param[in] args_  An array of command-line arguments that will be
          *                   passed to @a command when the proc is executed.
          * @param[in] options_  Optional parameters.
@@ -184,10 +194,10 @@ namespace gpudb
      * A set of output parameters for {@link
      * #createProc(const CreateProcRequest&) const}.
      * <p>
-     * Creates an instance (proc) of the user-defined function (UDF) specified
-     * by the given command, options, and files, and makes it available for
-     * execution.  For details on UDFs, see: <a href="../../concepts/udf.html"
-     * target="_top">User-Defined Functions</a>
+     * Creates an instance (proc) of the
+     * <a href="../../concepts/udf.html" target="_top">user-defined
+     * functions</a> (UDF) specified by the
+     * given command, options, and files, and makes it available for execution.
      */
     struct CreateProcResponse
     {

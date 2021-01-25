@@ -46,6 +46,10 @@ namespace gpudb
          *                              <li> gpudb::show_graph_false
          *                      </ul>
          *                      The default value is gpudb::show_graph_true.
+         *                              <li> gpudb::show_graph_server_id:
+         *                      Indicates which graph server(s) to send the
+         *                      request to. Default is to send to get
+         *                      information about all the servers.
          *                      </ul>
          * 
          */
@@ -120,7 +124,10 @@ namespace gpudb
          */
         ShowGraphResponse() :
             result(bool()),
+            load(std::vector<int32_t>()),
+            memory(std::vector<int64_t>()),
             graphNames(std::vector<std::string>()),
+            graphServerIds(std::vector<int32_t>()),
             directed(std::vector<bool>()),
             numNodes(std::vector<int64_t>()),
             numEdges(std::vector<int64_t>()),
@@ -133,7 +140,10 @@ namespace gpudb
         }
 
         bool result;
+        std::vector<int32_t> load;
+        std::vector<int64_t> memory;
         std::vector<std::string> graphNames;
+        std::vector<int32_t> graphServerIds;
         std::vector<bool> directed;
         std::vector<int64_t> numNodes;
         std::vector<int64_t> numEdges;
@@ -152,7 +162,10 @@ namespace avro
         static void encode(Encoder& e, const gpudb::ShowGraphResponse& v)
         {
             ::avro::encode(e, v.result);
+            ::avro::encode(e, v.load);
+            ::avro::encode(e, v.memory);
             ::avro::encode(e, v.graphNames);
+            ::avro::encode(e, v.graphServerIds);
             ::avro::encode(e, v.directed);
             ::avro::encode(e, v.numNodes);
             ::avro::encode(e, v.numEdges);
@@ -178,38 +191,50 @@ namespace avro
                             break;
 
                         case 1:
-                            ::avro::decode(d, v.graphNames);
+                            ::avro::decode(d, v.load);
                             break;
 
                         case 2:
-                            ::avro::decode(d, v.directed);
+                            ::avro::decode(d, v.memory);
                             break;
 
                         case 3:
-                            ::avro::decode(d, v.numNodes);
+                            ::avro::decode(d, v.graphNames);
                             break;
 
                         case 4:
-                            ::avro::decode(d, v.numEdges);
+                            ::avro::decode(d, v.graphServerIds);
                             break;
 
                         case 5:
-                            ::avro::decode(d, v.isPersisted);
+                            ::avro::decode(d, v.directed);
                             break;
 
                         case 6:
-                            ::avro::decode(d, v.isSyncDb);
+                            ::avro::decode(d, v.numNodes);
                             break;
 
                         case 7:
-                            ::avro::decode(d, v.hasInsertTableMonitor);
+                            ::avro::decode(d, v.numEdges);
                             break;
 
                         case 8:
-                            ::avro::decode(d, v.originalRequest);
+                            ::avro::decode(d, v.isPersisted);
                             break;
 
                         case 9:
+                            ::avro::decode(d, v.isSyncDb);
+                            break;
+
+                        case 10:
+                            ::avro::decode(d, v.hasInsertTableMonitor);
+                            break;
+
+                        case 11:
+                            ::avro::decode(d, v.originalRequest);
+                            break;
+
+                        case 12:
                             ::avro::decode(d, v.info);
                             break;
 
@@ -221,7 +246,10 @@ namespace avro
             else
             {
                 ::avro::decode(d, v.result);
+                ::avro::decode(d, v.load);
+                ::avro::decode(d, v.memory);
                 ::avro::decode(d, v.graphNames);
+                ::avro::decode(d, v.graphServerIds);
                 ::avro::decode(d, v.directed);
                 ::avro::decode(d, v.numNodes);
                 ::avro::decode(d, v.numEdges);

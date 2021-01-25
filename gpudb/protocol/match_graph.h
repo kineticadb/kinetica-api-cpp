@@ -224,6 +224,14 @@ namespace gpudb
          *                      (LINESTRING) towards a particular demand
          *                      location (store id) with its corresponding
          *                      cost.  The default value is 'true'.
+         *                              <li> gpudb::match_graph_output_tracks:
+         *                      For the @a match_supply_demand solver only.
+         *                      When it is true (non-default), the output will
+         *                      be in tracks format for all the round trips of
+         *                      each truck in which the timestamps are
+         *                      populated directly from the edge weights
+         *                      starting from their originating depots.  The
+         *                      default value is 'false'.
          *                              <li> gpudb::match_graph_max_trip_cost:
          *                      For the @a match_supply_demand solver only. If
          *                      this constraint is greater than zero (default)
@@ -269,7 +277,7 @@ namespace gpudb
          *                              <li>
          *                      gpudb::match_graph_truck_service_limit: For the
          *                      @a match_supply_demand solver only. If
-         *                      specified (greather than zero), any truck's
+         *                      specified (greater than zero), any truck's
          *                      total service cost (distance or time) will be
          *                      limited by the specified value including
          *                      multiple rounds (if set).  The default value is
@@ -287,6 +295,12 @@ namespace gpudb
          *                      are scheduled only once from their depots.
          *                      </ul>
          *                      The default value is gpudb::match_graph_false.
+         *                              <li> gpudb::match_graph_server_id:
+         *                      Indicates which graph server(s) to send the
+         *                      request to. Default is to send to the server,
+         *                      amongst those containing the corresponding
+         *                      graph, that has the most computational
+         *                      bandwidth.  The default value is ''.
          *                      </ul>
          * 
          */

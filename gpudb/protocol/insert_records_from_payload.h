@@ -538,6 +538,21 @@ namespace gpudb
          *                      Optional: number of tasks for reading file per
          *                      rank. Default will be
          *                      external_file_reader_num_tasks
+         *                              <li>
+         *                      gpudb::insert_records_from_payload_type_inference_mode:
+         *                      optimize type inference for:
+         *                      <ul>
+         *                              <li>
+         *                      gpudb::insert_records_from_payload_accuracy:
+         *                      scans all data to get exactly-typed & sized
+         *                      columns for all data present
+         *                              <li>
+         *                      gpudb::insert_records_from_payload_speed: picks
+         *                      the widest possible column types so that 'all'
+         *                      values will fit with minimum data scanned
+         *                      </ul>
+         *                      The default value is
+         *                      gpudb::insert_records_from_payload_accuracy.
          *                      </ul>
          * 
          */

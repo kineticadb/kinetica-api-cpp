@@ -122,6 +122,9 @@ namespace gpudb
          *                      specifies the first time at which a refresh is
          *                      to be done.  Value is a datetime string with
          *                      format 'YYYY-MM-DD HH:MM:SS'.
+         *                              <li>
+         *                      gpudb::create_materialized_view_execute_as:
+         *                      User name to use to run the refresh job
          *                      </ul>
          * 
          */

@@ -155,6 +155,9 @@ namespace gpudb
          *                              <li> gpudb::create_table_HASH: Use <a
          *                      href="../../concepts/tables.html#partitioning-by-hash"
          *                      target="_top">hash partitioning</a>.
+         *                              <li> gpudb::create_table_SERIES: Use <a
+         *                      href="../../concepts/tables.html#partitioning-by-series"
+         *                      target="_top">series partitioning</a>.
          *                      </ul>
          *                              <li>
          *                      gpudb::create_table_partition_keys:

@@ -256,6 +256,12 @@ namespace gpudb
          *                     specified in @a value.  Also, sets the refresh
          *                     method to periodic if not already set.
          *                             <li>
+         *                     gpudb::alter_table_set_refresh_execute_as: Sets
+         *                     the user name to refresh this <a
+         *                     href="../../concepts/materialized_views.html"
+         *                     target="_top">materialized view</a> to the value
+         *                     specified in @a value.
+         *                             <li>
          *                     gpudb::alter_table_remove_text_search_attributes:
          *                     Removes <a
          *                     href="../../concepts/full_text_search.html"
