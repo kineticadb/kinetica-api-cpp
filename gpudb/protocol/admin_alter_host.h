@@ -44,9 +44,8 @@ namespace gpudb
          *                      set to @a true, the host will accept processes
          *                      (ranks, graph server, etc.) in the event of a
          *                      failover on another node in the cluster. See <a
-         *                      href="../../n_plus_1/index.html"
-         *                      target="_top">Cluster Resilience</a> for more
-         *                      information.
+         *                      href="../../../n_plus_1/" target="_top">Cluster
+         *                      Resilience</a> for more information.
          *                      <ul>
          *                              <li> gpudb::admin_alter_host_true
          *                              <li> gpudb::admin_alter_host_false

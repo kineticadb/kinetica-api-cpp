@@ -14,11 +14,11 @@ namespace gpudb
      * #filter(const FilterRequest&) const}.
      * <p>
      * Filters data based on the specified expression.  The results are
-     * stored in a <a href="../../concepts/filtered_views.html"
+     * stored in a <a href="../../../concepts/filtered_views/"
      * target="_top">result set</a> with the
      * given @a viewName.
      * <p>
-     * For details see <a href="../../concepts/expressions.html"
+     * For details see <a href="../../../concepts/expressions/"
      * target="_top">Expressions</a>.
      * <p>
      * The response message contains the number of points for which the
@@ -46,7 +46,7 @@ namespace gpudb
          * @param[in] tableName_  Name of the table to filter, in
          *                        [schema_name.]table_name format, using
          *                        standard <a
-         *                        href="../../concepts/tables.html#table-name-resolution"
+         *                        href="../../../concepts/tables/#table-name-resolution"
          *                        target="_top">name resolution rules</a>.
          *                        This may be the name of a table or a view
          *                        (when chaining queries).
@@ -54,15 +54,15 @@ namespace gpudb
          *                       view containing the results, in
          *                       [schema_name.]view_name format, using standard
          *                       <a
-         *                       href="../../concepts/tables.html#table-name-resolution"
+         *                       href="../../../concepts/tables/#table-name-resolution"
          *                       target="_top">name resolution rules</a> and
          *                       meeting <a
-         *                       href="../../concepts/tables.html#table-naming-criteria"
+         *                       href="../../../concepts/tables/#table-naming-criteria"
          *                       target="_top">table naming criteria</a>.  Must
          *                       not be an already existing table or view.
          * @param[in] expression_  The select expression to filter the
          *                         specified table.  For details see <a
-         *                         href="../../concepts/expressions.html"
+         *                         href="../../../concepts/expressions/"
          *                         target="_top">Expressions</a>.
          * @param[in] options_  Optional parameters.
          *                      <ul>
@@ -77,7 +77,7 @@ namespace gpudb
          *                      filtered-view is part of.  The default value is
          *                      ''.
          *                              <li> gpudb::filter_ttl: Sets the <a
-         *                      href="../../concepts/ttl.html"
+         *                      href="../../../concepts/ttl/"
          *                      target="_top">TTL</a> of the view specified in
          *                      @a viewName.
          *                      </ul>
@@ -160,11 +160,11 @@ namespace gpudb
      * #filter(const FilterRequest&) const}.
      * <p>
      * Filters data based on the specified expression.  The results are
-     * stored in a <a href="../../concepts/filtered_views.html"
+     * stored in a <a href="../../../concepts/filtered_views/"
      * target="_top">result set</a> with the
      * given @a viewName.
      * <p>
-     * For details see <a href="../../concepts/expressions.html"
+     * For details see <a href="../../../concepts/expressions/"
      * target="_top">Expressions</a>.
      * <p>
      * The response message contains the number of points for which the

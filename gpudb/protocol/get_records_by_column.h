@@ -21,7 +21,7 @@ namespace gpudb
      * type are returned. This endpoint supports pagination with the @a offset
      * and @a limit parameters.
      * <p>
-     * <a href="../../concepts/window.html" target="_top">Window functions</a>,
+     * <a href="../../../concepts/window/" target="_top">Window functions</a>,
      * which can perform
      * operations like moving averages, are available through this endpoint as
      * well as
@@ -38,17 +38,17 @@ namespace gpudb
      * <p>
      * If @a tableName is empty, selection is performed against a single-row
      * virtual table.  This can be useful in executing temporal
-     * (<a href="../../concepts/expressions.html#date-time-functions"
+     * (<a href="../../../concepts/expressions/#date-time-functions"
      * target="_top">NOW()</a>), identity
-     * (<a href="../../concepts/expressions.html#user-security-functions"
+     * (<a href="../../../concepts/expressions/#user-security-functions"
      * target="_top">USER()</a>), or
      * constant-based functions
-     * (<a href="../../concepts/expressions.html#scalar-functions"
+     * (<a href="../../../concepts/expressions/#scalar-functions"
      * target="_top">GEODIST(-77.11, 38.88, -71.06, 42.36)</a>).
      * <p>
      * The response is returned as a dynamic schema. For details see:
-     * <a href="../../api/index.html#dynamic-schemas" target="_top">dynamic
-     * schemas documentation</a>.
+     * <a href="../../../api/#dynamic-schemas" target="_top">dynamic schemas
+     * documentation</a>.
      */
     struct GetRecordsByColumnRequest
     {
@@ -75,7 +75,7 @@ namespace gpudb
          *                        operation will be performed, in
          *                        [schema_name.]table_name format, using
          *                        standard <a
-         *                        href="../../concepts/tables.html#table-name-resolution"
+         *                        href="../../../concepts/tables/#table-name-resolution"
          *                        target="_top">name resolution rules</a>.  An
          *                        empty table name retrieves one record from a
          *                        single-row virtual table, where columns
@@ -93,7 +93,7 @@ namespace gpudb
          *                    allowed by the server should be returned.  The
          *                    number of records returned will never exceed the
          *                    server's own limit, defined by the <a
-         *                    href="../../config/index.html#general"
+         *                    href="../../../config/#general"
          *                    target="_top">max_get_records_size</a> parameter
          *                    in the server configuration.  Use @a
          *                    hasMoreRecords to see if more records exist in
@@ -163,7 +163,7 @@ namespace gpudb
          *                        operation will be performed, in
          *                        [schema_name.]table_name format, using
          *                        standard <a
-         *                        href="../../concepts/tables.html#table-name-resolution"
+         *                        href="../../../concepts/tables/#table-name-resolution"
          *                        target="_top">name resolution rules</a>.  An
          *                        empty table name retrieves one record from a
          *                        single-row virtual table, where columns
@@ -181,7 +181,7 @@ namespace gpudb
          *                    allowed by the server should be returned.  The
          *                    number of records returned will never exceed the
          *                    server's own limit, defined by the <a
-         *                    href="../../config/index.html#general"
+         *                    href="../../../config/#general"
          *                    target="_top">max_get_records_size</a> parameter
          *                    in the server configuration.  Use @a
          *                    hasMoreRecords to see if more records exist in
@@ -340,7 +340,7 @@ namespace gpudb
      * type are returned. This endpoint supports pagination with the @a offset
      * and @a limit parameters.
      * <p>
-     * <a href="../../concepts/window.html" target="_top">Window functions</a>,
+     * <a href="../../../concepts/window/" target="_top">Window functions</a>,
      * which can perform
      * operations like moving averages, are available through this endpoint as
      * well as
@@ -357,17 +357,17 @@ namespace gpudb
      * <p>
      * If @a tableName is empty, selection is performed against a single-row
      * virtual table.  This can be useful in executing temporal
-     * (<a href="../../concepts/expressions.html#date-time-functions"
+     * (<a href="../../../concepts/expressions/#date-time-functions"
      * target="_top">NOW()</a>), identity
-     * (<a href="../../concepts/expressions.html#user-security-functions"
+     * (<a href="../../../concepts/expressions/#user-security-functions"
      * target="_top">USER()</a>), or
      * constant-based functions
-     * (<a href="../../concepts/expressions.html#scalar-functions"
+     * (<a href="../../../concepts/expressions/#scalar-functions"
      * target="_top">GEODIST(-77.11, 38.88, -71.06, 42.36)</a>).
      * <p>
      * The response is returned as a dynamic schema. For details see:
-     * <a href="../../api/index.html#dynamic-schemas" target="_top">dynamic
-     * schemas documentation</a>.
+     * <a href="../../../api/#dynamic-schemas" target="_top">dynamic schemas
+     * documentation</a>.
      */
     struct RawGetRecordsByColumnResponse
     {
@@ -482,7 +482,7 @@ namespace gpudb
      * type are returned. This endpoint supports pagination with the @a offset
      * and @a limit parameters.
      * <p>
-     * <a href="../../concepts/window.html" target="_top">Window functions</a>,
+     * <a href="../../../concepts/window/" target="_top">Window functions</a>,
      * which can perform
      * operations like moving averages, are available through this endpoint as
      * well as
@@ -499,17 +499,17 @@ namespace gpudb
      * <p>
      * If @a tableName is empty, selection is performed against a single-row
      * virtual table.  This can be useful in executing temporal
-     * (<a href="../../concepts/expressions.html#date-time-functions"
+     * (<a href="../../../concepts/expressions/#date-time-functions"
      * target="_top">NOW()</a>), identity
-     * (<a href="../../concepts/expressions.html#user-security-functions"
+     * (<a href="../../../concepts/expressions/#user-security-functions"
      * target="_top">USER()</a>), or
      * constant-based functions
-     * (<a href="../../concepts/expressions.html#scalar-functions"
+     * (<a href="../../../concepts/expressions/#scalar-functions"
      * target="_top">GEODIST(-77.11, 38.88, -71.06, 42.36)</a>).
      * <p>
      * The response is returned as a dynamic schema. For details see:
-     * <a href="../../api/index.html#dynamic-schemas" target="_top">dynamic
-     * schemas documentation</a>.
+     * <a href="../../../api/#dynamic-schemas" target="_top">dynamic schemas
+     * documentation</a>.
      */
     struct GetRecordsByColumnResponse
     {

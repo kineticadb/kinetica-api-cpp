@@ -43,14 +43,14 @@ namespace gpudb
          * @param[in] tableName_  Name of the table from which to delete
          *                        records, in [schema_name.]table_name format,
          *                        using standard <a
-         *                        href="../../concepts/tables.html#table-name-resolution"
+         *                        href="../../../concepts/tables/#table-name-resolution"
          *                        target="_top">name resolution rules</a>. Must
          *                        contain the name of an existing table; not
          *                        applicable to views.
          * @param[in] expressions_  A list of the actual predicates, one for
          *                          each select; format should follow the
          *                          guidelines provided <a
-         *                          href="../../concepts/expressions.html"
+         *                          href="../../../concepts/expressions/"
          *                          target="_top">here</a>. Specifying one or
          *                          more @a expressions is mutually exclusive
          *                          to specifying @a record_id in the @a
@@ -68,7 +68,7 @@ namespace gpudb
          *                      /get/records/fromcollection with the
          *                      *return_record_ids* option. This option cannot
          *                      be used to delete records from <a
-         *                      href="../../concepts/tables.html#replication"
+         *                      href="../../../concepts/tables/#replication"
          *                      target="_top">replicated</a> tables.
          *                              <li>
          *                      gpudb::delete_records_delete_all_records: If

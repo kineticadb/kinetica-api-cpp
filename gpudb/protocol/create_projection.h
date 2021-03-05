@@ -13,19 +13,19 @@ namespace gpudb
      * A set of input parameters for {@link
      * #createProjection(const CreateProjectionRequest&) const}.
      * <p>
-     * Creates a new <a href="../../concepts/projections.html"
+     * Creates a new <a href="../../../concepts/projections/"
      * target="_top">projection</a> of
      * an existing table. A projection represents a subset of the columns
      * (potentially
      * including derived columns) of a table.
      * <p>
      * For projection details and examples, see
-     * <a href="../../concepts/projections.html" target="_top">Projections</a>.
+     * <a href="../../../concepts/projections/" target="_top">Projections</a>.
      * For limitations, see
-     * <a href="../../concepts/projections.html#limitations-and-cautions"
+     * <a href="../../../concepts/projections/#limitations-and-cautions"
      * target="_top">Projection Limitations and Cautions</a>.
      * <p>
-     * <a href="../../concepts/window.html" target="_top">Window functions</a>,
+     * <a href="../../../concepts/window/" target="_top">Window functions</a>,
      * which can perform
      * operations like moving averages, are available through this endpoint as
      * well as
@@ -33,7 +33,7 @@ namespace gpudb
      * #getRecordsByColumnRaw(const GetRecordsByColumnRequest&) const}.
      * <p>
      * A projection can be created with a different
-     * <a href="../../concepts/tables.html#shard-keys" target="_top">shard
+     * <a href="../../../concepts/tables/#shard-keys" target="_top">shard
      * key</a> than the source table.
      * By specifying @a shard_key, the projection will be sharded
      * according to the specified columns, regardless of how the source table
@@ -42,12 +42,12 @@ namespace gpudb
      * <p>
      * If @a tableName is empty, selection is performed against a single-row
      * virtual table.  This can be useful in executing temporal
-     * (<a href="../../concepts/expressions.html#date-time-functions"
+     * (<a href="../../../concepts/expressions/#date-time-functions"
      * target="_top">NOW()</a>), identity
-     * (<a href="../../concepts/expressions.html#user-security-functions"
+     * (<a href="../../../concepts/expressions/#user-security-functions"
      * target="_top">USER()</a>), or
      * constant-based functions
-     * (<a href="../../concepts/expressions.html#scalar-functions"
+     * (<a href="../../../concepts/expressions/#scalar-functions"
      * target="_top">GEODIST(-77.11, 38.88, -71.06, 42.36)</a>).
      */
     struct CreateProjectionRequest
@@ -73,7 +73,7 @@ namespace gpudb
          *                        projection is to be applied, in
          *                        [schema_name.]table_name format, using
          *                        standard <a
-         *                        href="../../concepts/tables.html#table-name-resolution"
+         *                        href="../../../concepts/tables/#table-name-resolution"
          *                        target="_top">name resolution rules</a>.  An
          *                        empty table name creates a projection from a
          *                        single-row virtual table, where columns
@@ -82,10 +82,10 @@ namespace gpudb
          * @param[in] projectionName_  Name of the projection to be created, in
          *                             [schema_name.]table_name format, using
          *                             standard <a
-         *                             href="../../concepts/tables.html#table-name-resolution"
+         *                             href="../../../concepts/tables/#table-name-resolution"
          *                             target="_top">name resolution rules</a>
          *                             and meeting <a
-         *                             href="../../concepts/tables.html#table-naming-criteria"
+         *                             href="../../../concepts/tables/#table-naming-criteria"
          *                             target="_top">table naming criteria</a>.
          * @param[in] columnNames_  List of columns from @a tableName to be
          *                          included in the projection. Can include
@@ -106,7 +106,7 @@ namespace gpudb
          *                              <li>
          *                      gpudb::create_projection_expression: An
          *                      optional filter <a
-         *                      href="../../concepts/expressions.html"
+         *                      href="../../../concepts/expressions/"
          *                      target="_top">expression</a> to be applied to
          *                      the source table prior to the projection.  The
          *                      default value is ''.
@@ -134,13 +134,13 @@ namespace gpudb
          *                              <li>
          *                      gpudb::create_projection_materialize_on_gpu: No
          *                      longer used.  See <a
-         *                      href="../../rm/concepts.html"
+         *                      href="../../../rm/concepts/"
          *                      target="_top">Resource Management Concepts</a>
          *                      for information about how resources are
-         *                      managed, <a href="../../rm/concepts.html"
+         *                      managed, <a href="../../../rm/concepts/"
          *                      target="_top">Tier Strategy Concepts</a> for
          *                      how resources are targeted for VRAM, and <a
-         *                      href="../../rm/usage.html#tier-strategies"
+         *                      href="../../../rm/usage/#tier-strategies"
          *                      target="_top">Tier Strategy Usage</a> for how
          *                      to specify a table's priority in VRAM.
          *                      <ul>
@@ -162,7 +162,7 @@ namespace gpudb
          *                      alias must be used, rather than the original
          *                      column name.
          *                              <li> gpudb::create_projection_ttl: Sets
-         *                      the <a href="../../concepts/ttl.html"
+         *                      the <a href="../../../concepts/ttl/"
          *                      target="_top">TTL</a> of the projection
          *                      specified in @a projectionName.
          *                              <li>
@@ -291,19 +291,19 @@ namespace gpudb
      * A set of output parameters for {@link
      * #createProjection(const CreateProjectionRequest&) const}.
      * <p>
-     * Creates a new <a href="../../concepts/projections.html"
+     * Creates a new <a href="../../../concepts/projections/"
      * target="_top">projection</a> of
      * an existing table. A projection represents a subset of the columns
      * (potentially
      * including derived columns) of a table.
      * <p>
      * For projection details and examples, see
-     * <a href="../../concepts/projections.html" target="_top">Projections</a>.
+     * <a href="../../../concepts/projections/" target="_top">Projections</a>.
      * For limitations, see
-     * <a href="../../concepts/projections.html#limitations-and-cautions"
+     * <a href="../../../concepts/projections/#limitations-and-cautions"
      * target="_top">Projection Limitations and Cautions</a>.
      * <p>
-     * <a href="../../concepts/window.html" target="_top">Window functions</a>,
+     * <a href="../../../concepts/window/" target="_top">Window functions</a>,
      * which can perform
      * operations like moving averages, are available through this endpoint as
      * well as
@@ -311,7 +311,7 @@ namespace gpudb
      * #getRecordsByColumnRaw(const GetRecordsByColumnRequest&) const}.
      * <p>
      * A projection can be created with a different
-     * <a href="../../concepts/tables.html#shard-keys" target="_top">shard
+     * <a href="../../../concepts/tables/#shard-keys" target="_top">shard
      * key</a> than the source table.
      * By specifying @a shard_key, the projection will be sharded
      * according to the specified columns, regardless of how the source table
@@ -320,12 +320,12 @@ namespace gpudb
      * <p>
      * If @a tableName is empty, selection is performed against a single-row
      * virtual table.  This can be useful in executing temporal
-     * (<a href="../../concepts/expressions.html#date-time-functions"
+     * (<a href="../../../concepts/expressions/#date-time-functions"
      * target="_top">NOW()</a>), identity
-     * (<a href="../../concepts/expressions.html#user-security-functions"
+     * (<a href="../../../concepts/expressions/#user-security-functions"
      * target="_top">USER()</a>), or
      * constant-based functions
-     * (<a href="../../concepts/expressions.html#scalar-functions"
+     * (<a href="../../../concepts/expressions/#scalar-functions"
      * target="_top">GEODIST(-77.11, 38.88, -71.06, 42.36)</a>).
      */
     struct CreateProjectionResponse

@@ -56,7 +56,7 @@ namespace gpudb
          *                        be performed. Must be an existing table, in
          *                        [schema_name.]table_name format, using
          *                        standard <a
-         *                        href="../../concepts/tables.html#table-name-resolution"
+         *                        href="../../../concepts/tables/#table-name-resolution"
          *                        target="_top">name resolution rules</a>.
          * @param[in] columnNames_  List of column names on which the operation
          *                          would be performed. If n columns are

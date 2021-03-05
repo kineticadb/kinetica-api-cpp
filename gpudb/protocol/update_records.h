@@ -46,7 +46,7 @@ namespace gpudb
      * <p>
      * The @a update_on_existing_pk option specifies the record
      * collision policy for tables with a <a
-     * href="../../concepts/tables.html#primary-keys" target="_top">primary
+     * href="../../../concepts/tables/#primary-keys" target="_top">primary
      * key</a>, and
      * is ignored on tables with no primary key.
      */
@@ -75,7 +75,7 @@ namespace gpudb
          * @param[in] tableName_  Name of table to be updated, in
          *                        [schema_name.]table_name format, using
          *                        standard <a
-         *                        href="../../concepts/tables.html#table-name-resolution"
+         *                        href="../../../concepts/tables/#table-name-resolution"
          *                        target="_top">name resolution rules</a>.
          *                        Must be a currently existing table and not a
          *                        view.
@@ -126,10 +126,10 @@ namespace gpudb
          *                      gpudb::update_records_update_on_existing_pk:
          *                      Specifies the record collision policy for
          *                      tables with a <a
-         *                      href="../../concepts/tables.html#primary-keys"
+         *                      href="../../../concepts/tables/#primary-keys"
          *                      target="_top">primary key</a> when updating
          *                      columns of the <a
-         *                      href="../../concepts/tables.html#primary-keys"
+         *                      href="../../../concepts/tables/#primary-keys"
          *                      target="_top">primary key</a> or inserting new
          *                      records.  If @a true, existing records with
          *                      primary key values that match those of a record
@@ -214,7 +214,7 @@ namespace gpudb
          * @param[in] tableName_  Name of table to be updated, in
          *                        [schema_name.]table_name format, using
          *                        standard <a
-         *                        href="../../concepts/tables.html#table-name-resolution"
+         *                        href="../../../concepts/tables/#table-name-resolution"
          *                        target="_top">name resolution rules</a>.
          *                        Must be a currently existing table and not a
          *                        view.
@@ -280,10 +280,10 @@ namespace gpudb
          *                      gpudb::update_records_update_on_existing_pk:
          *                      Specifies the record collision policy for
          *                      tables with a <a
-         *                      href="../../concepts/tables.html#primary-keys"
+         *                      href="../../../concepts/tables/#primary-keys"
          *                      target="_top">primary key</a> when updating
          *                      columns of the <a
-         *                      href="../../concepts/tables.html#primary-keys"
+         *                      href="../../../concepts/tables/#primary-keys"
          *                      target="_top">primary key</a> or inserting new
          *                      records.  If @a true, existing records with
          *                      primary key values that match those of a record
@@ -483,7 +483,7 @@ namespace gpudb
      * <p>
      * The @a update_on_existing_pk option specifies the record
      * collision policy for tables with a <a
-     * href="../../concepts/tables.html#primary-keys" target="_top">primary
+     * href="../../../concepts/tables/#primary-keys" target="_top">primary
      * key</a>, and
      * is ignored on tables with no primary key.
      * 
@@ -513,7 +513,7 @@ namespace gpudb
          * @param[in] tableName_  Name of table to be updated, in
          *                        [schema_name.]table_name format, using
          *                        standard <a
-         *                        href="../../concepts/tables.html#table-name-resolution"
+         *                        href="../../../concepts/tables/#table-name-resolution"
          *                        target="_top">name resolution rules</a>.
          *                        Must be a currently existing table and not a
          *                        view.
@@ -562,10 +562,10 @@ namespace gpudb
          *                      gpudb::update_records_update_on_existing_pk:
          *                      Specifies the record collision policy for
          *                      tables with a <a
-         *                      href="../../concepts/tables.html#primary-keys"
+         *                      href="../../../concepts/tables/#primary-keys"
          *                      target="_top">primary key</a> when updating
          *                      columns of the <a
-         *                      href="../../concepts/tables.html#primary-keys"
+         *                      href="../../../concepts/tables/#primary-keys"
          *                      target="_top">primary key</a> or inserting new
          *                      records.  If @a true, existing records with
          *                      primary key values that match those of a record
@@ -689,7 +689,7 @@ namespace gpudb
      * <p>
      * The @a update_on_existing_pk option specifies the record
      * collision policy for tables with a <a
-     * href="../../concepts/tables.html#primary-keys" target="_top">primary
+     * href="../../../concepts/tables/#primary-keys" target="_top">primary
      * key</a>, and
      * is ignored on tables with no primary key.
      */

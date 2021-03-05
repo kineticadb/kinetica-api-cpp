@@ -17,13 +17,13 @@ namespace gpudb
      * restrictions, and options.
 
      * IMPORTANT: It's highly recommended that you review the
-     * <a href="../../graph_solver/network_graph_solver.html"
+     * <a href="../../../graph_solver/network_graph_solver/"
      * target="_top">Network Graphs & Solvers</a>
      * concepts documentation, the
-     * <a href="../../graph_solver/examples/graph_rest_guide.html"
+     * <a href="../../../graph_solver/examples/graph_rest_guide/"
      * target="_top">Graph REST Tutorial</a>,
      * and/or some
-     * <a href="../../graph_solver/examples.html#match-graph"
+     * <a href="../../../graph_solver/examples/#match-graph"
      * target="_top">/match/graph examples</a>
      * before using this endpoint.
      */
@@ -51,13 +51,13 @@ namespace gpudb
          * @param[in] graphName_  Name of the graph resource to modify.
          * @param[in] nodes_  Nodes with which to update existing @a nodes in
          *                    graph specified by @a graphName. Review <a
-         *                    href="../../graph_solver/network_graph_solver.html#nodes"
+         *                    href="../../../graph_solver/network_graph_solver/#nodes"
          *                    target="_top">Nodes</a> for more information.
          *                    Nodes must be specified using <a
-         *                    href="../../graph_solver/network_graph_solver.html#identifiers"
+         *                    href="../../../graph_solver/network_graph_solver/#identifiers"
          *                    target="_top">identifiers</a>; identifiers are
          *                    grouped as <a
-         *                    href="../../graph_solver/network_graph_solver.html#id-combos"
+         *                    href="../../../graph_solver/network_graph_solver/#id-combos"
          *                    target="_top">combinations</a>. Identifiers can
          *                    be used with existing column names, e.g.,
          *                    'table.column AS NODE_ID', expressions, e.g.,
@@ -73,13 +73,13 @@ namespace gpudb
          *                    graph.
          * @param[in] edges_  Edges with which to update existing @a edges in
          *                    graph specified by @a graphName. Review <a
-         *                    href="../../graph_solver/network_graph_solver.html#edges"
+         *                    href="../../../graph_solver/network_graph_solver/#edges"
          *                    target="_top">Edges</a> for more information.
          *                    Edges must be specified using <a
-         *                    href="../../graph_solver/network_graph_solver.html#identifiers"
+         *                    href="../../../graph_solver/network_graph_solver/#identifiers"
          *                    target="_top">identifiers</a>; identifiers are
          *                    grouped as <a
-         *                    href="../../graph_solver/network_graph_solver.html#id-combos"
+         *                    href="../../../graph_solver/network_graph_solver/#id-combos"
          *                    target="_top">combinations</a>. Identifiers can
          *                    be used with existing column names, e.g.,
          *                    'table.column AS EDGE_ID', expressions, e.g.,
@@ -96,13 +96,13 @@ namespace gpudb
          * @param[in] weights_  Weights with which to update existing @a
          *                      weights in graph specified by @a graphName.
          *                      Review <a
-         *                      href="../../graph_solver/network_graph_solver.html#graph-weights"
+         *                      href="../../../graph_solver/network_graph_solver/#graph-weights"
          *                      target="_top">Weights</a> for more information.
          *                      Weights must be specified using <a
-         *                      href="../../graph_solver/network_graph_solver.html#identifiers"
+         *                      href="../../../graph_solver/network_graph_solver/#identifiers"
          *                      target="_top">identifiers</a>; identifiers are
          *                      grouped as <a
-         *                      href="../../graph_solver/network_graph_solver.html#id-combos"
+         *                      href="../../../graph_solver/network_graph_solver/#id-combos"
          *                      target="_top">combinations</a>. Identifiers can
          *                      be used with existing column names, e.g.,
          *                      'table.column AS WEIGHTS_EDGE_ID', expressions,
@@ -119,14 +119,14 @@ namespace gpudb
          * @param[in] restrictions_  Restrictions with which to update existing
          *                           @a restrictions in graph specified by @a
          *                           graphName. Review <a
-         *                           href="../../graph_solver/network_graph_solver.html#graph-restrictions"
+         *                           href="../../../graph_solver/network_graph_solver/#graph-restrictions"
          *                           target="_top">Restrictions</a> for more
          *                           information. Restrictions must be
          *                           specified using <a
-         *                           href="../../graph_solver/network_graph_solver.html#identifiers"
+         *                           href="../../../graph_solver/network_graph_solver/#identifiers"
          *                           target="_top">identifiers</a>; identifiers
          *                           are grouped as <a
-         *                           href="../../graph_solver/network_graph_solver.html#id-combos"
+         *                           href="../../../graph_solver/network_graph_solver/#id-combos"
          *                           target="_top">combinations</a>.
          *                           Identifiers can be used with existing
          *                           column names, e.g., 'table.column AS
@@ -177,11 +177,10 @@ namespace gpudb
          *                              <li> gpudb::modify_graph_save_persist:
          *                      If set to @a true, the graph will be saved in
          *                      the persist directory (see the <a
-         *                      href="../../config/index.html"
-         *                      target="_top">config reference</a> for more
-         *                      information). If set to @a false, the graph
-         *                      will be removed when the graph server is
-         *                      shutdown.
+         *                      href="../../../config/" target="_top">config
+         *                      reference</a> for more information). If set to
+         *                      @a false, the graph will be removed when the
+         *                      graph server is shutdown.
          *                      <ul>
          *                              <li> gpudb::modify_graph_true
          *                              <li> gpudb::modify_graph_false
@@ -208,10 +207,10 @@ namespace gpudb
          *                      as a table with the given name, in
          *                      [schema_name.]table_name format, using standard
          *                      <a
-         *                      href="../../concepts/tables.html#table-name-resolution"
+         *                      href="../../../concepts/tables/#table-name-resolution"
          *                      target="_top">name resolution rules</a> and
          *                      meeting <a
-         *                      href="../../concepts/tables.html#table-naming-criteria"
+         *                      href="../../../concepts/tables/#table-naming-criteria"
          *                      target="_top">table naming criteria</a>.  This
          *                      table will have the following identifier
          *                      columns: 'EDGE_ID', 'EDGE_NODE1_ID',
@@ -350,13 +349,13 @@ namespace gpudb
      * restrictions, and options.
 
      * IMPORTANT: It's highly recommended that you review the
-     * <a href="../../graph_solver/network_graph_solver.html"
+     * <a href="../../../graph_solver/network_graph_solver/"
      * target="_top">Network Graphs & Solvers</a>
      * concepts documentation, the
-     * <a href="../../graph_solver/examples/graph_rest_guide.html"
+     * <a href="../../../graph_solver/examples/graph_rest_guide/"
      * target="_top">Graph REST Tutorial</a>,
      * and/or some
-     * <a href="../../graph_solver/examples.html#match-graph"
+     * <a href="../../../graph_solver/examples/#match-graph"
      * target="_top">/match/graph examples</a>
      * before using this endpoint.
      */

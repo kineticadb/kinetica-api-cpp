@@ -52,9 +52,8 @@ namespace gpudb
          *                      to @a true, the host will accept processes
          *                      (ranks, graph server, etc.) in the event of a
          *                      failover on another node in the cluster. See <a
-         *                      href="../../n_plus_1/index.html"
-         *                      target="_top">Cluster Resilience</a> for more
-         *                      information.
+         *                      href="../../../n_plus_1/" target="_top">Cluster
+         *                      Resilience</a> for more information.
          *                      <ul>
          *                              <li> gpudb::admin_add_host_true
          *                              <li> gpudb::admin_add_host_false
@@ -74,7 +73,7 @@ namespace gpudb
          *                      host manager on the host being added, e.g.,
          *                      'http://172.123.45.67:9300'. The default host
          *                      manager port can be found in the <a
-         *                      href="../../install/shared/ports.html"
+         *                      href="../../../install/shared/ports/"
          *                      target="_top">list of ports</a> used by
          *                      Kinetica.
          *                              <li> gpudb::admin_add_host_ram_limit:

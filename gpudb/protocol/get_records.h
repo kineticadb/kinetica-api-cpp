@@ -49,7 +49,7 @@ namespace gpudb
          *                        records will be fetched, in
          *                        [schema_name.]table_name format, using
          *                        standard <a
-         *                        href="../../concepts/tables.html#table-name-resolution"
+         *                        href="../../../concepts/tables/#table-name-resolution"
          *                        target="_top">name resolution rules</a>.
          * @param[in] offset_  A positive integer indicating the number of
          *                     initial results to skip (this can be useful for
@@ -61,7 +61,7 @@ namespace gpudb
          *                    to indicate that the max number of results should
          *                    be returned.  The number of records returned will
          *                    never exceed the server's own limit, defined by
-         *                    the <a href="../../config/index.html#general"
+         *                    the <a href="../../../config/#general"
          *                    target="_top">max_get_records_size</a> parameter
          *                    in the server configuration.  Use @a
          *                    hasMoreRecords to see if more records exist in
@@ -120,7 +120,7 @@ namespace gpudb
          *                        records will be fetched, in
          *                        [schema_name.]table_name format, using
          *                        standard <a
-         *                        href="../../concepts/tables.html#table-name-resolution"
+         *                        href="../../../concepts/tables/#table-name-resolution"
          *                        target="_top">name resolution rules</a>.
          * @param[in] offset_  A positive integer indicating the number of
          *                     initial results to skip (this can be useful for
@@ -132,7 +132,7 @@ namespace gpudb
          *                    to indicate that the max number of results should
          *                    be returned.  The number of records returned will
          *                    never exceed the server's own limit, defined by
-         *                    the <a href="../../config/index.html#general"
+         *                    the <a href="../../../config/#general"
          *                    target="_top">max_get_records_size</a> parameter
          *                    in the server configuration.  Use @a
          *                    hasMoreRecords to see if more records exist in

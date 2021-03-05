@@ -13,7 +13,7 @@ namespace gpudb
      * A set of input parameters for {@link
      * #grantPermissionDatasource(const GrantPermissionDatasourceRequest&) const}.
      * <p>
-     * Grants a <a href="../../concepts/data_sources.html" target="_top">data
+     * Grants a <a href="../../../concepts/data_sources/" target="_top">data
      * source</a> permission to a user or role.
      */
     struct GrantPermissionDatasourceRequest
@@ -126,7 +126,7 @@ namespace gpudb
      * A set of output parameters for {@link
      * #grantPermissionDatasource(const GrantPermissionDatasourceRequest&) const}.
      * <p>
-     * Grants a <a href="../../concepts/data_sources.html" target="_top">data
+     * Grants a <a href="../../../concepts/data_sources/" target="_top">data
      * source</a> permission to a user or role.
      */
     struct GrantPermissionDatasourceResponse

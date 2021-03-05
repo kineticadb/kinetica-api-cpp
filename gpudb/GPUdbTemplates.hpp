@@ -71,7 +71,7 @@ GetRecordsResponse<boost::any>& GPUdb::getRecords( const GetRecordsRequest& requ
  * @param tableName  Name of the table or view from which the records will be
  *                   fetched, in [schema_name.]table_name format, using
  *                   standard <a
- *                   href="../../concepts/tables.html#table-name-resolution"
+ *                   href="../../../concepts/tables/#table-name-resolution"
  *                   target="_top">name resolution rules</a>.
  * @param offset  A positive integer indicating the number of initial results
  *                to skip (this can be useful for paging through the results).
@@ -81,7 +81,7 @@ GetRecordsResponse<boost::any>& GPUdb::getRecords( const GetRecordsRequest& requ
  *               be returned. Or END_OF_SET (-9999) to indicate that the max
  *               number of results should be returned.  The number of records
  *               returned will never exceed the server's own limit, defined by
- *               the <a href="../../config/index.html#general"
+ *               the <a href="../../../config/#general"
  *               target="_top">max_get_records_size</a> parameter in the server
  *               configuration.  Use @a hasMoreRecords to see if more records
  *               exist in the result to be fetched, and @a offset & @a limit to
@@ -141,7 +141,7 @@ GetRecordsResponse<boost::any> GPUdb::getRecords( const std::string& tableName,
  * @param tableName  Name of the table or view from which the records will be
  *                   fetched, in [schema_name.]table_name format, using
  *                   standard <a
- *                   href="../../concepts/tables.html#table-name-resolution"
+ *                   href="../../../concepts/tables/#table-name-resolution"
  *                   target="_top">name resolution rules</a>.
  * @param offset  A positive integer indicating the number of initial results
  *                to skip (this can be useful for paging through the results).
@@ -151,7 +151,7 @@ GetRecordsResponse<boost::any> GPUdb::getRecords( const std::string& tableName,
  *               be returned. Or END_OF_SET (-9999) to indicate that the max
  *               number of results should be returned.  The number of records
  *               returned will never exceed the server's own limit, defined by
- *               the <a href="../../config/index.html#general"
+ *               the <a href="../../../config/#general"
  *               target="_top">max_get_records_size</a> parameter in the server
  *               configuration.  Use @a hasMoreRecords to see if more records
  *               exist in the result to be fetched, and @a offset & @a limit to
@@ -267,13 +267,13 @@ GetRecordsBySeriesResponse<boost::any>& GPUdb::getRecordsBySeries( const GetReco
  * @param tableName  Name of the table or view for which series/tracks will be
  *                   fetched, in [schema_name.]table_name format, using
  *                   standard <a
- *                   href="../../concepts/tables.html#table-name-resolution"
+ *                   href="../../../concepts/tables/#table-name-resolution"
  *                   target="_top">name resolution rules</a>.
  * @param worldTableName  Name of the table containing the complete
  *                        series/track information to be returned for the
  *                        tracks present in the @a tableName, in
  *                        [schema_name.]table_name format, using standard <a
- *                        href="../../concepts/tables.html#table-name-resolution"
+ *                        href="../../../concepts/tables/#table-name-resolution"
  *                        target="_top">name resolution rules</a>.  Typically
  *                        this is used when retrieving series/tracks from a
  *                        view (which contains partial series/tracks) but the
@@ -316,13 +316,13 @@ GetRecordsBySeriesResponse<boost::any> GPUdb::getRecordsBySeries( const std::str
  * @param tableName  Name of the table or view for which series/tracks will be
  *                   fetched, in [schema_name.]table_name format, using
  *                   standard <a
- *                   href="../../concepts/tables.html#table-name-resolution"
+ *                   href="../../../concepts/tables/#table-name-resolution"
  *                   target="_top">name resolution rules</a>.
  * @param worldTableName  Name of the table containing the complete
  *                        series/track information to be returned for the
  *                        tracks present in the @a tableName, in
  *                        [schema_name.]table_name format, using standard <a
- *                        href="../../concepts/tables.html#table-name-resolution"
+ *                        href="../../../concepts/tables/#table-name-resolution"
  *                        target="_top">name resolution rules</a>.  Typically
  *                        this is used when retrieving series/tracks from a
  *                        view (which contains partial series/tracks) but the
@@ -417,7 +417,7 @@ GetRecordsFromCollectionResponse<boost::any>& GPUdb::getRecordsFromCollection( c
  * @param tableName  Name of the collection or table from which records are to
  *                   be retrieved, in [schema_name.]table_name format, using
  *                   standard <a
- *                   href="../../concepts/tables.html#table-name-resolution"
+ *                   href="../../../concepts/tables/#table-name-resolution"
  *                   target="_top">name resolution rules</a>.  Must be an
  *                   existing collection or table.
  * @param offset  A positive integer indicating the number of initial results
@@ -428,7 +428,7 @@ GetRecordsFromCollectionResponse<boost::any>& GPUdb::getRecordsFromCollection( c
  *               be returned, or END_OF_SET (-9999) to indicate that the max
  *               number of results should be returned.  The number of records
  *               returned will never exceed the server's own limit, defined by
- *               the <a href="../../config/index.html#general"
+ *               the <a href="../../../config/#general"
  *               target="_top">max_get_records_size</a> parameter in the server
  *               configuration.  Use @a offset & @a limit to request subsequent
  *               pages of results.
@@ -472,7 +472,7 @@ GetRecordsFromCollectionResponse<boost::any> GPUdb::getRecordsFromCollection( co
  * @param tableName  Name of the collection or table from which records are to
  *                   be retrieved, in [schema_name.]table_name format, using
  *                   standard <a
- *                   href="../../concepts/tables.html#table-name-resolution"
+ *                   href="../../../concepts/tables/#table-name-resolution"
  *                   target="_top">name resolution rules</a>.  Must be an
  *                   existing collection or table.
  * @param offset  A positive integer indicating the number of initial results
@@ -483,7 +483,7 @@ GetRecordsFromCollectionResponse<boost::any> GPUdb::getRecordsFromCollection( co
  *               be returned, or END_OF_SET (-9999) to indicate that the max
  *               number of results should be returned.  The number of records
  *               returned will never exceed the server's own limit, defined by
- *               the <a href="../../config/index.html#general"
+ *               the <a href="../../../config/#general"
  *               target="_top">max_get_records_size</a> parameter in the server
  *               configuration.  Use @a offset & @a limit to request subsequent
  *               pages of results.

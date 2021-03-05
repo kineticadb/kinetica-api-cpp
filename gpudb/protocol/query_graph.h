@@ -28,7 +28,7 @@ namespace gpudb
      * column values from any table as long as the type is supported by the
      * given
      * identifier. See
-     * <a href="../../graph_solver/network_graph_solver.html#query-identifiers"
+     * <a href="../../../graph_solver/network_graph_solver/#query-identifiers"
      * target="_top">Query Identifiers</a>
      * for more information.
      * <p>
@@ -43,13 +43,13 @@ namespace gpudb
      * to @a true.
      * <p>
      * IMPORTANT: It's highly recommended that you review the
-     * <a href="../../graph_solver/network_graph_solver.html"
+     * <a href="../../../graph_solver/network_graph_solver/"
      * target="_top">Network Graphs & Solvers</a>
      * concepts documentation, the
-     * <a href="../../graph_solver/examples/graph_rest_guide.html"
+     * <a href="../../../graph_solver/examples/graph_rest_guide/"
      * target="_top">Graph REST Tutorial</a>,
      * and/or some
-     * <a href="../../graph_solver/examples.html#match-graph"
+     * <a href="../../../graph_solver/examples/#match-graph"
      * target="_top">/match/graph examples</a>
      * before using this endpoint.
      */
@@ -74,7 +74,7 @@ namespace gpudb
          * 
          * @param[in] graphName_  Name of the graph resource to query.
          * @param[in] queries_  Nodes or edges to be queried specified using <a
-         *                      href="../../graph_solver/network_graph_solver.html#query-identifiers"
+         *                      href="../../../graph_solver/network_graph_solver/#query-identifiers"
          *                      target="_top">query identifiers</a>.
          *                      Identifiers can be used with existing column
          *                      names, e.g., 'table.column AS QUERY_NODE_ID',
@@ -89,10 +89,10 @@ namespace gpudb
          * @param[in] restrictions_  Additional restrictions to apply to the
          *                           nodes/edges of an existing graph.
          *                           Restrictions must be specified using <a
-         *                           href="../../graph_solver/network_graph_solver.html#identifiers"
+         *                           href="../../../graph_solver/network_graph_solver/#identifiers"
          *                           target="_top">identifiers</a>; identifiers
          *                           are grouped as <a
-         *                           href="../../graph_solver/network_graph_solver.html#id-combos"
+         *                           href="../../../graph_solver/network_graph_solver/#id-combos"
          *                           target="_top">combinations</a>.
          *                           Identifiers can be used with existing
          *                           column names, e.g., 'table.column AS
@@ -106,22 +106,22 @@ namespace gpudb
          * @param[in] adjacencyTable_  Name of the table to store the resulting
          *                             adjacencies, in [schema_name.]table_name
          *                             format, using standard <a
-         *                             href="../../concepts/tables.html#table-name-resolution"
+         *                             href="../../../concepts/tables/#table-name-resolution"
          *                             target="_top">name resolution rules</a>
          *                             and meeting <a
-         *                             href="../../concepts/tables.html#table-naming-criteria"
+         *                             href="../../../concepts/tables/#table-naming-criteria"
          *                             target="_top">table naming criteria</a>.
          *                             If left blank, the query results are
          *                             instead returned in the response even if
          *                             @a export_query_results is set to @a
          *                             false. If the 'QUERY_TARGET_NODE_LABEL'
          *                             <a
-         *                             href="../../graph_solver/network_graph_solver.html#query-identifiers"
+         *                             href="../../../graph_solver/network_graph_solver/#query-identifiers"
          *                             target="_top">query identifier</a> is
          *                             used in @a queries, then two additional
          *                             columns will be available: 'PATH_ID' and
          *                             'RING_ID'. See <a
-         *                             href="../../graph_solver/network_graph_solver.html#using-labels"
+         *                             href="../../../graph_solver/network_graph_solver/#using-labels"
          *                             target="_top">Using Labels</a> for more
          *                             information.
          * @param[in] rings_  Sets the number of rings around the node to query
@@ -148,7 +148,7 @@ namespace gpudb
          *                      only applicable if the queried graph @a
          *                      graphName is directed and when querying nodes.
          *                      Consult <a
-         *                      href="../../graph_solver/network_graph_solver.html#directed-graphs"
+         *                      href="../../../graph_solver/network_graph_solver/#directed-graphs"
          *                      target="_top">Directed Graphs</a> for more
          *                      details.
          *                      <ul>
@@ -168,10 +168,10 @@ namespace gpudb
          *                      reached during the traversal, in
          *                      [schema_name.]table_name format, using standard
          *                      <a
-         *                      href="../../concepts/tables.html#table-name-resolution"
+         *                      href="../../../concepts/tables/#table-name-resolution"
          *                      target="_top">name resolution rules</a> and
          *                      meeting <a
-         *                      href="../../concepts/tables.html#table-naming-criteria"
+         *                      href="../../../concepts/tables/#table-naming-criteria"
          *                      target="_top">table naming criteria</a>.  If
          *                      this value is left as the default, the table
          *                      name will default to the @a adjacencyTable
@@ -207,7 +207,7 @@ namespace gpudb
          *                      source graph (if available) or auto-generated
          *                      WKT values (if there are no WKT values in the
          *                      source graph). A subsequent call to the <a
-         *                      href="../../api/rest/wms_rest.html"
+         *                      href="../../../api/rest/wms_rest/"
          *                      target="_top">/wms</a> endpoint can then be
          *                      made to display the query results on a map.
          *                      <ul>
@@ -350,7 +350,7 @@ namespace gpudb
      * column values from any table as long as the type is supported by the
      * given
      * identifier. See
-     * <a href="../../graph_solver/network_graph_solver.html#query-identifiers"
+     * <a href="../../../graph_solver/network_graph_solver/#query-identifiers"
      * target="_top">Query Identifiers</a>
      * for more information.
      * <p>
@@ -365,13 +365,13 @@ namespace gpudb
      * to @a true.
      * <p>
      * IMPORTANT: It's highly recommended that you review the
-     * <a href="../../graph_solver/network_graph_solver.html"
+     * <a href="../../../graph_solver/network_graph_solver/"
      * target="_top">Network Graphs & Solvers</a>
      * concepts documentation, the
-     * <a href="../../graph_solver/examples/graph_rest_guide.html"
+     * <a href="../../../graph_solver/examples/graph_rest_guide/"
      * target="_top">Graph REST Tutorial</a>,
      * and/or some
-     * <a href="../../graph_solver/examples.html#match-graph"
+     * <a href="../../../graph_solver/examples/#match-graph"
      * target="_top">/match/graph examples</a>
      * before using this endpoint.
      */

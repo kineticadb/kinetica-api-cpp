@@ -13,7 +13,7 @@ namespace gpudb
      * A set of input parameters for {@link
      * #dropSchema(const DropSchemaRequest&) const}.
      * <p>
-     * Drops an existing SQL-style <a href="../../concepts/schemas.html"
+     * Drops an existing SQL-style <a href="../../../concepts/schemas/"
      * target="_top">schema</a>, specified in @a schemaName.
      */
     struct DropSchemaRequest
@@ -119,7 +119,7 @@ namespace gpudb
      * A set of output parameters for {@link
      * #dropSchema(const DropSchemaRequest&) const}.
      * <p>
-     * Drops an existing SQL-style <a href="../../concepts/schemas.html"
+     * Drops an existing SQL-style <a href="../../../concepts/schemas/"
      * target="_top">schema</a>, specified in @a schemaName.
      */
     struct DropSchemaResponse

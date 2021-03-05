@@ -19,9 +19,9 @@ namespace gpudb
      * information (specified by @a fieldMaps).
      * <p>
      * For merge records details and examples, see
-     * <a href="../../concepts/merge_records.html" target="_top">Merge
+     * <a href="../../../concepts/merge_records/" target="_top">Merge
      * Records</a>.  For limitations, see
-     * <a href="../../concepts/merge_records.html#limitations-and-cautions"
+     * <a href="../../../concepts/merge_records/#limitations-and-cautions"
      * target="_top">Merge Records Limitations and Cautions</a>.
 
      * The field map (specified by @a fieldMaps) holds the user-specified maps
@@ -53,17 +53,17 @@ namespace gpudb
          *                        records to be merged into, in
          *                        [schema_name.]table_name format, using
          *                        standard <a
-         *                        href="../../concepts/tables.html#table-name-resolution"
+         *                        href="../../../concepts/tables/#table-name-resolution"
          *                        target="_top">name resolution rules</a> and
          *                        meeting <a
-         *                        href="../../concepts/tables.html#table-naming-criteria"
+         *                        href="../../../concepts/tables/#table-naming-criteria"
          *                        target="_top">table naming criteria</a>.
          *                        Must NOT be an existing table.
          * @param[in] sourceTableNames_  The list of names of source tables to
          *                               get the records from, each in
          *                               [schema_name.]table_name format, using
          *                               standard <a
-         *                               href="../../concepts/tables.html#table-name-resolution"
+         *                               href="../../../concepts/tables/#table-name-resolution"
          *                               target="_top">name resolution
          *                               rules</a>.  Must be existing table
          *                               names.
@@ -74,7 +74,7 @@ namespace gpudb
          *                        tableName.  Each mapping contains the target
          *                        column names (as keys) that the data in the
          *                        mapped source columns or column <a
-         *                        href="../../concepts/expressions.html"
+         *                        href="../../../concepts/expressions/"
          *                        target="_top">expressions</a> (as values)
          *                        will be merged into.  All of the source
          *                        columns being merged into a given target
@@ -93,14 +93,14 @@ namespace gpudb
          *                              <li>
          *                      gpudb::merge_records_is_replicated: Indicates
          *                      the <a
-         *                      href="../../concepts/tables.html#distribution"
+         *                      href="../../../concepts/tables/#distribution"
          *                      target="_top">distribution scheme</a> for the
          *                      data of the merged table specified in @a
          *                      tableName.  If true, the table will be <a
-         *                      href="../../concepts/tables.html#replication"
+         *                      href="../../../concepts/tables/#replication"
          *                      target="_top">replicated</a>.  If false, the
          *                      table will be <a
-         *                      href="../../concepts/tables.html#random-sharding"
+         *                      href="../../../concepts/tables/#random-sharding"
          *                      target="_top">randomly sharded</a>.
          *                      <ul>
          *                              <li> gpudb::merge_records_true
@@ -109,7 +109,7 @@ namespace gpudb
          *                      The default value is
          *                      gpudb::merge_records_false.
          *                              <li> gpudb::merge_records_ttl: Sets the
-         *                      <a href="../../concepts/ttl.html"
+         *                      <a href="../../../concepts/ttl/"
          *                      target="_top">TTL</a> of the merged table
          *                      specified in @a tableName.
          *                              <li> gpudb::merge_records_persist: If
@@ -216,9 +216,9 @@ namespace gpudb
      * information (specified by @a fieldMaps).
      * <p>
      * For merge records details and examples, see
-     * <a href="../../concepts/merge_records.html" target="_top">Merge
+     * <a href="../../../concepts/merge_records/" target="_top">Merge
      * Records</a>.  For limitations, see
-     * <a href="../../concepts/merge_records.html#limitations-and-cautions"
+     * <a href="../../../concepts/merge_records/#limitations-and-cautions"
      * target="_top">Merge Records Limitations and Cautions</a>.
 
      * The field map (specified by @a fieldMaps) holds the user-specified maps

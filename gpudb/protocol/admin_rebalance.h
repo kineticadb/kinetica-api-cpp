@@ -23,7 +23,7 @@ namespace gpudb
      * * If {@link #adminRebalance(const AdminRebalanceRequest&) const} is
      * invoked after a change is made to the
      *   cluster, e.g., a host was added or removed,
-     *   <a href="../../concepts/tables.html#sharding" target="_top">sharded
+     *   <a href="../../../concepts/tables/#sharding" target="_top">sharded
      * data</a> will be
      *   evenly redistributed across the cluster by number of shards per rank
      *   while unsharded data will be redistributed across the cluster by data
@@ -31,7 +31,7 @@ namespace gpudb
      * * If {@link #adminRebalance(const AdminRebalanceRequest&) const} is
      * invoked at some point when unsharded
      *   data (a.k.a.
-     *   <a href="../../concepts/tables.html#random-sharding"
+     *   <a href="../../../concepts/tables/#random-sharding"
      * target="_top">randomly-sharded</a>)
      *   in the cluster is unevenly distributed over time, sharded data will
      *   not move while unsharded data will be redistributed across the
@@ -65,7 +65,7 @@ namespace gpudb
          *                              <li>
          *                      gpudb::admin_rebalance_rebalance_sharded_data:
          *                      If @a true, <a
-         *                      href="../../concepts/tables.html#sharding"
+         *                      href="../../../concepts/tables/#sharding"
          *                      target="_top">sharded data</a> will be
          *                      rebalanced approximately equally across the
          *                      cluster. Note that for clusters with large
@@ -81,7 +81,7 @@ namespace gpudb
          *                              <li>
          *                      gpudb::admin_rebalance_rebalance_unsharded_data:
          *                      If @a true, unsharded data (a.k.a. <a
-         *                      href="../../concepts/tables.html#random-sharding"
+         *                      href="../../../concepts/tables/#random-sharding"
          *                      target="_top">randomly-sharded</a>) will be
          *                      rebalanced approximately equally across the
          *                      cluster. Note that for clusters with large
@@ -230,7 +230,7 @@ namespace gpudb
      * * If {@link #adminRebalance(const AdminRebalanceRequest&) const} is
      * invoked after a change is made to the
      *   cluster, e.g., a host was added or removed,
-     *   <a href="../../concepts/tables.html#sharding" target="_top">sharded
+     *   <a href="../../../concepts/tables/#sharding" target="_top">sharded
      * data</a> will be
      *   evenly redistributed across the cluster by number of shards per rank
      *   while unsharded data will be redistributed across the cluster by data
@@ -238,7 +238,7 @@ namespace gpudb
      * * If {@link #adminRebalance(const AdminRebalanceRequest&) const} is
      * invoked at some point when unsharded
      *   data (a.k.a.
-     *   <a href="../../concepts/tables.html#random-sharding"
+     *   <a href="../../../concepts/tables/#random-sharding"
      * target="_top">randomly-sharded</a>)
      *   in the cluster is unevenly distributed over time, sharded data will
      *   not move while unsharded data will be redistributed across the

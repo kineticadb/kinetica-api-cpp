@@ -13,7 +13,7 @@ namespace gpudb
      * A set of input parameters for {@link
      * #createDatasource(const CreateDatasourceRequest&) const}.
      * <p>
-     * Creates a <a href="../../concepts/data_sources.html" target="_top">data
+     * Creates a <a href="../../../concepts/data_sources/" target="_top">data
      * source</a>, which contains the
      * location and connection information for a data store that is external to
      * the database.
@@ -68,6 +68,9 @@ namespace gpudb
          *                      gpudb::create_datasource_wait_timeout: Timeout
          *                      in seconds for reading from this storage
          *                      provider
+         *                              <li>
+         *                      gpudb::create_datasource_credential: Name of
+         *                      the Credential object to be used in data source
          *                              <li>
          *                      gpudb::create_datasource_s3_bucket_name: Name
          *                      of the Amazon S3 bucket to use as the data
@@ -199,7 +202,7 @@ namespace gpudb
      * A set of output parameters for {@link
      * #createDatasource(const CreateDatasourceRequest&) const}.
      * <p>
-     * Creates a <a href="../../concepts/data_sources.html" target="_top">data
+     * Creates a <a href="../../../concepts/data_sources/" target="_top">data
      * source</a>, which contains the
      * location and connection information for a data store that is external to
      * the database.

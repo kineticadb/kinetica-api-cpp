@@ -63,7 +63,7 @@ namespace gpudb
          *                              [schema_name.]table_name format, using
          *                              standard
          *                              <a
-         *                              href="../../concepts/tables.html#table-name-resolution"
+         *                              href="../../../concepts/tables/#table-name-resolution"
          *                              target="_top">name resolution
          *                              rules</a>.
          *                              If no table names are specified, no
@@ -88,11 +88,11 @@ namespace gpudb
          *                               [schema_name.]table_name format, using
          *                               standard
          *                               <a
-         *                               href="../../concepts/tables.html#table-name-resolution"
+         *                               href="../../../concepts/tables/#table-name-resolution"
          *                               target="_top">name resolution
          *                               rules</a>
          *                               and meeting <a
-         *                               href="../../concepts/tables.html#table-naming-criteria"
+         *                               href="../../../concepts/tables/#table-naming-criteria"
          *                               target="_top">table naming
          *                               criteria</a>.
          *                               If a specified table does not exist,

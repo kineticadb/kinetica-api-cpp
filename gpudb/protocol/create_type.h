@@ -23,9 +23,9 @@ namespace gpudb
      * column simultaneously.  One example of mutually exclusive properties are
      * @a data and @a store_only.
      * <p>
-     * A single <a href="../../concepts/tables.html#primary-keys"
+     * A single <a href="../../../concepts/tables/#primary-keys"
      * target="_top">primary key</a> and/or single <a
-     * href="../../concepts/tables.html#shard-keys" target="_top">shard key</a>
+     * href="../../../concepts/tables/#shard-keys" target="_top">shard key</a>
      * can be set across one or more columns. If a primary key is specified,
      * then a uniqueness constraint is enforced, in that only a single object
      * can exist with a given primary key column value (or set of values for
@@ -231,12 +231,12 @@ namespace gpudb
          *                                 <li> gpudb::create_type_primary_key:
          *                         This property indicates that this column
          *                         will be part of (or the entire) <a
-         *                         href="../../concepts/tables.html#primary-keys"
+         *                         href="../../../concepts/tables/#primary-keys"
          *                         target="_top">primary key</a>.
          *                                 <li> gpudb::create_type_shard_key:
          *                         This property indicates that this column
          *                         will be part of (or the entire) <a
-         *                         href="../../concepts/tables.html#shard-keys"
+         *                         href="../../../concepts/tables/#shard-keys"
          *                         target="_top">shard key</a>.
          *                                 <li> gpudb::create_type_nullable:
          *                         This property indicates that this column is
@@ -258,7 +258,7 @@ namespace gpudb
          *                                 <li> gpudb::create_type_dict: This
          *                         property indicates that this column should
          *                         be <a
-         *                         href="../../concepts/dictionary_encoding.html"
+         *                         href="../../../concepts/dictionary_encoding/"
          *                         target="_top">dictionary encoded</a>. It can
          *                         only be used in conjunction with restricted
          *                         string (charN), int, long or date columns.
@@ -366,9 +366,9 @@ namespace gpudb
      * column simultaneously.  One example of mutually exclusive properties are
      * @a data and @a store_only.
      * <p>
-     * A single <a href="../../concepts/tables.html#primary-keys"
+     * A single <a href="../../../concepts/tables/#primary-keys"
      * target="_top">primary key</a> and/or single <a
-     * href="../../concepts/tables.html#shard-keys" target="_top">shard key</a>
+     * href="../../../concepts/tables/#shard-keys" target="_top">shard key</a>
      * can be set across one or more columns. If a primary key is specified,
      * then a uniqueness constraint is enforced, in that only a single object
      * can exist with a given primary key column value (or set of values for

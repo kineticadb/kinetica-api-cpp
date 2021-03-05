@@ -32,7 +32,7 @@ namespace gpudb
          * 
          * @param[in] schemaName_  Name of the schema to check for existence,
          *                         in root, using standard <a
-         *                         href="../../concepts/tables.html#table-name-resolution"
+         *                         href="../../../concepts/tables/#table-name-resolution"
          *                         target="_top">name resolution rules</a>.
          * @param[in] options_  Optional parameters.
          * 

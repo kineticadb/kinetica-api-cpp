@@ -41,13 +41,13 @@ namespace gpudb
          * @param[in] tableName_  The table name for the records to be
          *                        appended, in [schema_name.]table_name format,
          *                        using standard <a
-         *                        href="../../concepts/tables.html#table-name-resolution"
+         *                        href="../../../concepts/tables/#table-name-resolution"
          *                        target="_top">name resolution rules</a>.
          *                        Must be an existing table.
          * @param[in] sourceTableName_  The source table name to get records
          *                              from, in [schema_name.]table_name
          *                              format, using standard <a
-         *                              href="../../concepts/tables.html#table-name-resolution"
+         *                              href="../../../concepts/tables/#table-name-resolution"
          *                              target="_top">name resolution
          *                              rules</a>.  Must be an existing table
          *                              name.
@@ -60,7 +60,7 @@ namespace gpudb
          *                       names in source table and target table, and
          *                       their types must be matched. For details on
          *                       using expressions, see <a
-         *                       href="../../concepts/expressions.html"
+         *                       href="../../../concepts/expressions/"
          *                       target="_top">Expressions</a>.
          * @param[in] options_  Optional parameters.
          *                      <ul>
@@ -92,7 +92,7 @@ namespace gpudb
          *                      inserting the source table records (specified
          *                      by @a sourceTableName) into the target table
          *                      (specified by @a tableName) table with a <a
-         *                      href="../../concepts/tables.html#primary-keys"
+         *                      href="../../../concepts/tables/#primary-keys"
          *                      target="_top">primary key</a>.  If set to @a
          *                      true, any existing target table record with
          *                      primary key values that match those of a source

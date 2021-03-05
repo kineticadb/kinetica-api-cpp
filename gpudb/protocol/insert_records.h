@@ -27,7 +27,7 @@ namespace gpudb
      * <p>
      * The @a update_on_existing_pk option specifies the record
      * collision policy for inserting into a table with a
-     * <a href="../../concepts/tables.html#primary-keys" target="_top">primary
+     * <a href="../../../concepts/tables/#primary-keys" target="_top">primary
      * key</a>, but is ignored if
      * no primary key exists.
      * <p>
@@ -57,7 +57,7 @@ namespace gpudb
          * @param[in] tableName_  Name of table to which the records are to be
          *                        added, in [schema_name.]table_name format,
          *                        using standard <a
-         *                        href="../../concepts/tables.html#table-name-resolution"
+         *                        href="../../../concepts/tables/#table-name-resolution"
          *                        target="_top">name resolution rules</a>.
          *                        Must be an existing table.
          * @param[in] list_  An array of binary-encoded data for the records to
@@ -70,7 +70,7 @@ namespace gpudb
          *                      gpudb::insert_records_update_on_existing_pk:
          *                      Specifies the record collision policy for
          *                      inserting into a table with a <a
-         *                      href="../../concepts/tables.html#primary-keys"
+         *                      href="../../../concepts/tables/#primary-keys"
          *                      target="_top">primary key</a>.  If set to @a
          *                      true, any existing table record with primary
          *                      key values that match those of a record being
@@ -163,7 +163,7 @@ namespace gpudb
          * @param[in] tableName_  Name of table to which the records are to be
          *                        added, in [schema_name.]table_name format,
          *                        using standard <a
-         *                        href="../../concepts/tables.html#table-name-resolution"
+         *                        href="../../../concepts/tables/#table-name-resolution"
          *                        target="_top">name resolution rules</a>.
          *                        Must be an existing table.
          * @param[in] list_  An array of binary-encoded data for the records to
@@ -188,7 +188,7 @@ namespace gpudb
          *                      gpudb::insert_records_update_on_existing_pk:
          *                      Specifies the record collision policy for
          *                      inserting into a table with a <a
-         *                      href="../../concepts/tables.html#primary-keys"
+         *                      href="../../../concepts/tables/#primary-keys"
          *                      target="_top">primary key</a>.  If set to @a
          *                      true, any existing table record with primary
          *                      key values that match those of a record being
@@ -363,7 +363,7 @@ namespace gpudb
      * <p>
      * The @a update_on_existing_pk option specifies the record
      * collision policy for inserting into a table with a
-     * <a href="../../concepts/tables.html#primary-keys" target="_top">primary
+     * <a href="../../../concepts/tables/#primary-keys" target="_top">primary
      * key</a>, but is ignored if
      * no primary key exists.
      * <p>
@@ -394,7 +394,7 @@ namespace gpudb
          * @param[in] tableName_  Name of table to which the records are to be
          *                        added, in [schema_name.]table_name format,
          *                        using standard <a
-         *                        href="../../concepts/tables.html#table-name-resolution"
+         *                        href="../../../concepts/tables/#table-name-resolution"
          *                        target="_top">name resolution rules</a>.
          *                        Must be an existing table.
          * @param[in] data_  An array of binary-encoded data for the records to
@@ -407,7 +407,7 @@ namespace gpudb
          *                      gpudb::insert_records_update_on_existing_pk:
          *                      Specifies the record collision policy for
          *                      inserting into a table with a <a
-         *                      href="../../concepts/tables.html#primary-keys"
+         *                      href="../../../concepts/tables/#primary-keys"
          *                      target="_top">primary key</a>.  If set to @a
          *                      true, any existing table record with primary
          *                      key values that match those of a record being
@@ -518,7 +518,7 @@ namespace gpudb
      * <p>
      * The @a update_on_existing_pk option specifies the record
      * collision policy for inserting into a table with a
-     * <a href="../../concepts/tables.html#primary-keys" target="_top">primary
+     * <a href="../../../concepts/tables/#primary-keys" target="_top">primary
      * key</a>, but is ignored if
      * no primary key exists.
      * <p>

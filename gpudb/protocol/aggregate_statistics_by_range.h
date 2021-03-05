@@ -79,7 +79,7 @@ namespace gpudb
          *                        ranged-statistics operation will be
          *                        performed, in [schema_name.]table_name
          *                        format, using standard <a
-         *                        href="../../concepts/tables.html#table-name-resolution"
+         *                        href="../../../concepts/tables/#table-name-resolution"
          *                        target="_top">name resolution rules</a>.
          * @param[in] selectExpression_  For a non-empty expression statistics
          *                               are calculated for those records for

@@ -53,7 +53,7 @@ namespace gpudb
          *                        series/tracks will be fetched, in
          *                        [schema_name.]table_name format, using
          *                        standard <a
-         *                        href="../../concepts/tables.html#table-name-resolution"
+         *                        href="../../../concepts/tables/#table-name-resolution"
          *                        target="_top">name resolution rules</a>.
          * @param[in] worldTableName_  Name of the table containing the
          *                             complete series/track information to be
@@ -61,7 +61,7 @@ namespace gpudb
          *                             @a tableName, in
          *                             [schema_name.]table_name format, using
          *                             standard <a
-         *                             href="../../concepts/tables.html#table-name-resolution"
+         *                             href="../../../concepts/tables/#table-name-resolution"
          *                             target="_top">name resolution rules</a>.
          *                             Typically this is used when retrieving
          *                             series/tracks from a view (which
@@ -97,7 +97,7 @@ namespace gpudb
          *                        series/tracks will be fetched, in
          *                        [schema_name.]table_name format, using
          *                        standard <a
-         *                        href="../../concepts/tables.html#table-name-resolution"
+         *                        href="../../../concepts/tables/#table-name-resolution"
          *                        target="_top">name resolution rules</a>.
          * @param[in] worldTableName_  Name of the table containing the
          *                             complete series/track information to be
@@ -105,7 +105,7 @@ namespace gpudb
          *                             @a tableName, in
          *                             [schema_name.]table_name format, using
          *                             standard <a
-         *                             href="../../concepts/tables.html#table-name-resolution"
+         *                             href="../../../concepts/tables/#table-name-resolution"
          *                             target="_top">name resolution rules</a>.
          *                             Typically this is used when retrieving
          *                             series/tracks from a view (which

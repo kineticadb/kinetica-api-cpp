@@ -13,7 +13,7 @@ namespace gpudb
      * A set of input parameters for {@link
      * #revokePermissionDatasource(const RevokePermissionDatasourceRequest&) const}.
      * <p>
-     * Revokes a <a href="../../concepts/data_sources.html" target="_top">data
+     * Revokes a <a href="../../../concepts/data_sources/" target="_top">data
      * source</a> permission from a user or role.
      */
     struct RevokePermissionDatasourceRequest
@@ -127,7 +127,7 @@ namespace gpudb
      * A set of output parameters for {@link
      * #revokePermissionDatasource(const RevokePermissionDatasourceRequest&) const}.
      * <p>
-     * Revokes a <a href="../../concepts/data_sources.html" target="_top">data
+     * Revokes a <a href="../../../concepts/data_sources/" target="_top">data
      * source</a> permission from a user or role.
      */
     struct RevokePermissionDatasourceResponse

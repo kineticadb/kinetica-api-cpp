@@ -17,9 +17,9 @@ namespace gpudb
      * will be rebalanced to other ranks before the rank(s) is removed unless
      * the @a rebalance_sharded_data or @a rebalance_unsharded_data parameters
      * are set to @a false in the @a options, in which case the corresponding
-     * <a href="../../concepts/tables.html#sharding" target="_top">sharded
+     * <a href="../../../concepts/tables/#sharding" target="_top">sharded
      * data</a> and/or unsharded data (a.k.a. <a
-     * href="../../concepts/tables.html#random-sharding"
+     * href="../../../concepts/tables/#random-sharding"
      * target="_top">randomly-sharded</a>) will be deleted.
      * <p>
      * The database must be offline for this operation, see {@link
@@ -62,7 +62,7 @@ namespace gpudb
          *                              <li>
          *                      gpudb::admin_remove_ranks_rebalance_sharded_data:
          *                      If @a true, <a
-         *                      href="../../concepts/tables.html#sharding"
+         *                      href="../../../concepts/tables/#sharding"
          *                      target="_top">sharded data</a> will be
          *                      rebalanced approximately equally across the
          *                      cluster. Note that for clusters with large
@@ -78,7 +78,7 @@ namespace gpudb
          *                              <li>
          *                      gpudb::admin_remove_ranks_rebalance_unsharded_data:
          *                      If @a true, unsharded data (a.k.a. <a
-         *                      href="../../concepts/tables.html#random-sharding"
+         *                      href="../../../concepts/tables/#random-sharding"
          *                      target="_top">randomly-sharded</a>) will be
          *                      rebalanced approximately equally across the
          *                      cluster. Note that for clusters with large
@@ -168,9 +168,9 @@ namespace gpudb
      * will be rebalanced to other ranks before the rank(s) is removed unless
      * the @a rebalance_sharded_data or @a rebalance_unsharded_data parameters
      * are set to @a false in the @a options, in which case the corresponding
-     * <a href="../../concepts/tables.html#sharding" target="_top">sharded
+     * <a href="../../../concepts/tables/#sharding" target="_top">sharded
      * data</a> and/or unsharded data (a.k.a. <a
-     * href="../../concepts/tables.html#random-sharding"
+     * href="../../../concepts/tables/#random-sharding"
      * target="_top">randomly-sharded</a>) will be deleted.
      * <p>
      * The database must be offline for this operation, see {@link

@@ -18,9 +18,9 @@ namespace gpudb
      * Rotate the column values into rows values.
      * <p>
      * For unpivot details and examples, see
-     * <a href="../../concepts/unpivot.html" target="_top">Unpivot</a>.  For
+     * <a href="../../../concepts/unpivot/" target="_top">Unpivot</a>.  For
      * limitations, see
-     * <a href="../../concepts/unpivot.html#limitations" target="_top">Unpivot
+     * <a href="../../../concepts/unpivot/#limitations" target="_top">Unpivot
      * Limitations</a>.
      * <p>
      * Unpivot is used to normalize tables that are built for cross tabular
@@ -36,8 +36,8 @@ namespace gpudb
      * and values respectively.
      * <p>
      * The response is returned as a dynamic schema. For details see:
-     * <a href="../../api/index.html#dynamic-schemas" target="_top">dynamic
-     * schemas documentation</a>.
+     * <a href="../../../api/#dynamic-schemas" target="_top">dynamic schemas
+     * documentation</a>.
      */
     struct AggregateUnpivotRequest
     {
@@ -65,7 +65,7 @@ namespace gpudb
          *                        be performed. Must be an existing table/view,
          *                        in [schema_name.]table_name format, using
          *                        standard <a
-         *                        href="../../concepts/tables.html#table-name-resolution"
+         *                        href="../../../concepts/tables/#table-name-resolution"
          *                        target="_top">name resolution rules</a>.
          * @param[in] columnNames_  List of column names or expressions. A
          *                          wildcard '*' can be used to include all the
@@ -93,10 +93,10 @@ namespace gpudb
          *                      of a table used to store the results, in
          *                      [schema_name.]table_name format, using standard
          *                      <a
-         *                      href="../../concepts/tables.html#table-name-resolution"
+         *                      href="../../../concepts/tables/#table-name-resolution"
          *                      target="_top">name resolution rules</a> and
          *                      meeting <a
-         *                      href="../../concepts/tables.html#table-naming-criteria"
+         *                      href="../../../concepts/tables/#table-naming-criteria"
          *                      target="_top">table naming criteria</a>. If
          *                      present, no results are returned in the
          *                      response.
@@ -134,7 +134,7 @@ namespace gpudb
          *                      The number of records to keep.  The default
          *                      value is ''.
          *                              <li> gpudb::aggregate_unpivot_ttl: Sets
-         *                      the <a href="../../concepts/ttl.html"
+         *                      the <a href="../../../concepts/ttl/"
          *                      target="_top">TTL</a> of the table specified in
          *                      @a result_table.
          *                              <li> gpudb::aggregate_unpivot_view_id:
@@ -143,13 +143,13 @@ namespace gpudb
          *                              <li>
          *                      gpudb::aggregate_unpivot_materialize_on_gpu: No
          *                      longer used.  See <a
-         *                      href="../../rm/concepts.html"
+         *                      href="../../../rm/concepts/"
          *                      target="_top">Resource Management Concepts</a>
          *                      for information about how resources are
-         *                      managed, <a href="../../rm/concepts.html"
+         *                      managed, <a href="../../../rm/concepts/"
          *                      target="_top">Tier Strategy Concepts</a> for
          *                      how resources are targeted for VRAM, and <a
-         *                      href="../../rm/usage.html#tier-strategies"
+         *                      href="../../../rm/usage/#tier-strategies"
          *                      target="_top">Tier Strategy Usage</a> for how
          *                      to specify a table's priority in VRAM.
          *                      <ul>
@@ -199,7 +199,7 @@ namespace gpudb
          *                        be performed. Must be an existing table/view,
          *                        in [schema_name.]table_name format, using
          *                        standard <a
-         *                        href="../../concepts/tables.html#table-name-resolution"
+         *                        href="../../../concepts/tables/#table-name-resolution"
          *                        target="_top">name resolution rules</a>.
          * @param[in] columnNames_  List of column names or expressions. A
          *                          wildcard '*' can be used to include all the
@@ -238,10 +238,10 @@ namespace gpudb
          *                      of a table used to store the results, in
          *                      [schema_name.]table_name format, using standard
          *                      <a
-         *                      href="../../concepts/tables.html#table-name-resolution"
+         *                      href="../../../concepts/tables/#table-name-resolution"
          *                      target="_top">name resolution rules</a> and
          *                      meeting <a
-         *                      href="../../concepts/tables.html#table-naming-criteria"
+         *                      href="../../../concepts/tables/#table-naming-criteria"
          *                      target="_top">table naming criteria</a>. If
          *                      present, no results are returned in the
          *                      response.
@@ -279,7 +279,7 @@ namespace gpudb
          *                      The number of records to keep.  The default
          *                      value is ''.
          *                              <li> gpudb::aggregate_unpivot_ttl: Sets
-         *                      the <a href="../../concepts/ttl.html"
+         *                      the <a href="../../../concepts/ttl/"
          *                      target="_top">TTL</a> of the table specified in
          *                      @a result_table.
          *                              <li> gpudb::aggregate_unpivot_view_id:
@@ -288,13 +288,13 @@ namespace gpudb
          *                              <li>
          *                      gpudb::aggregate_unpivot_materialize_on_gpu: No
          *                      longer used.  See <a
-         *                      href="../../rm/concepts.html"
+         *                      href="../../../rm/concepts/"
          *                      target="_top">Resource Management Concepts</a>
          *                      for information about how resources are
-         *                      managed, <a href="../../rm/concepts.html"
+         *                      managed, <a href="../../../rm/concepts/"
          *                      target="_top">Tier Strategy Concepts</a> for
          *                      how resources are targeted for VRAM, and <a
-         *                      href="../../rm/usage.html#tier-strategies"
+         *                      href="../../../rm/usage/#tier-strategies"
          *                      target="_top">Tier Strategy Usage</a> for how
          *                      to specify a table's priority in VRAM.
          *                      <ul>
@@ -428,9 +428,9 @@ namespace gpudb
      * Rotate the column values into rows values.
      * <p>
      * For unpivot details and examples, see
-     * <a href="../../concepts/unpivot.html" target="_top">Unpivot</a>.  For
+     * <a href="../../../concepts/unpivot/" target="_top">Unpivot</a>.  For
      * limitations, see
-     * <a href="../../concepts/unpivot.html#limitations" target="_top">Unpivot
+     * <a href="../../../concepts/unpivot/#limitations" target="_top">Unpivot
      * Limitations</a>.
      * <p>
      * Unpivot is used to normalize tables that are built for cross tabular
@@ -446,8 +446,8 @@ namespace gpudb
      * and values respectively.
      * <p>
      * The response is returned as a dynamic schema. For details see:
-     * <a href="../../api/index.html#dynamic-schemas" target="_top">dynamic
-     * schemas documentation</a>.
+     * <a href="../../../api/#dynamic-schemas" target="_top">dynamic schemas
+     * documentation</a>.
      */
     struct RawAggregateUnpivotResponse
     {
@@ -559,9 +559,9 @@ namespace gpudb
      * Rotate the column values into rows values.
      * <p>
      * For unpivot details and examples, see
-     * <a href="../../concepts/unpivot.html" target="_top">Unpivot</a>.  For
+     * <a href="../../../concepts/unpivot/" target="_top">Unpivot</a>.  For
      * limitations, see
-     * <a href="../../concepts/unpivot.html#limitations" target="_top">Unpivot
+     * <a href="../../../concepts/unpivot/#limitations" target="_top">Unpivot
      * Limitations</a>.
      * <p>
      * Unpivot is used to normalize tables that are built for cross tabular
@@ -577,8 +577,8 @@ namespace gpudb
      * and values respectively.
      * <p>
      * The response is returned as a dynamic schema. For details see:
-     * <a href="../../api/index.html#dynamic-schemas" target="_top">dynamic
-     * schemas documentation</a>.
+     * <a href="../../../api/#dynamic-schemas" target="_top">dynamic schemas
+     * documentation</a>.
      */
     struct AggregateUnpivotResponse
     {

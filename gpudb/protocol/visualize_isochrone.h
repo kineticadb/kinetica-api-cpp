@@ -19,7 +19,7 @@ namespace gpudb
      * referring to the time or distance assigned as the weights of the
      * underlying
      * graph. See
-     * <a href="../../graph_solver/network_graph_solver.html"
+     * <a href="../../../graph_solver/network_graph_solver/"
      * target="_top">Network Graphs & Solvers</a>
      * for more information on graphs.
      * .
@@ -61,10 +61,10 @@ namespace gpudb
          * @param[in] weightsOnEdges_  Additional weights to apply to the edges
          *                             of an existing graph. Weights must be
          *                             specified using <a
-         *                             href="../../graph_solver/network_graph_solver.html#identifiers"
+         *                             href="../../../graph_solver/network_graph_solver/#identifiers"
          *                             target="_top">identifiers</a>;
          *                             identifiers are grouped as <a
-         *                             href="../../graph_solver/network_graph_solver.html#id-combos"
+         *                             href="../../../graph_solver/network_graph_solver/#id-combos"
          *                             target="_top">combinations</a>.
          *                             Identifiers can be used with existing
          *                             column names, e.g., 'table.column AS
@@ -79,10 +79,10 @@ namespace gpudb
          * @param[in] restrictions_  Additional restrictions to apply to the
          *                           nodes/edges of an existing graph.
          *                           Restrictions must be specified using <a
-         *                           href="../../graph_solver/network_graph_solver.html#identifiers"
+         *                           href="../../../graph_solver/network_graph_solver/#identifiers"
          *                           target="_top">identifiers</a>; identifiers
          *                           are grouped as <a
-         *                           href="../../graph_solver/network_graph_solver.html#id-combos"
+         *                           href="../../../graph_solver/network_graph_solver/#id-combos"
          *                           target="_top">combinations</a>.
          *                           Identifiers can be used with existing
          *                           column names, e.g., 'table.column AS
@@ -113,10 +113,10 @@ namespace gpudb
          * @param[in] levelsTable_  Name of the table to output the isochrones
          *                          to, in [schema_name.]table_name format,
          *                          using standard <a
-         *                          href="../../concepts/tables.html#table-name-resolution"
+         *                          href="../../../concepts/tables/#table-name-resolution"
          *                          target="_top">name resolution rules</a> and
          *                          meeting <a
-         *                          href="../../concepts/tables.html#table-naming-criteria"
+         *                          href="../../../concepts/tables/#table-naming-criteria"
          *                          target="_top">table naming criteria</a>.
          *                          The table will contain levels and their
          *                          corresponding WKT geometry. If no value is
@@ -471,10 +471,10 @@ namespace gpudb
          *                      the table to host intermediate solve results,
          *                      in [schema_name.]table_name format, using
          *                      standard <a
-         *                      href="../../concepts/tables.html#table-name-resolution"
+         *                      href="../../../concepts/tables/#table-name-resolution"
          *                      target="_top">name resolution rules</a> and
          *                      meeting <a
-         *                      href="../../concepts/tables.html#table-naming-criteria"
+         *                      href="../../../concepts/tables/#table-naming-criteria"
          *                      target="_top">table naming criteria</a>.  This
          *                      table will contain the position and cost for
          *                      each vertex in the graph. If the default value
@@ -696,7 +696,7 @@ namespace gpudb
      * referring to the time or distance assigned as the weights of the
      * underlying
      * graph. See
-     * <a href="../../graph_solver/network_graph_solver.html"
+     * <a href="../../../graph_solver/network_graph_solver/"
      * target="_top">Network Graphs & Solvers</a>
      * for more information on graphs.
      * .

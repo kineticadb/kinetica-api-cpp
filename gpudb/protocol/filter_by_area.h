@@ -49,7 +49,7 @@ namespace gpudb
          * @param[in] tableName_  Name of the table to filter, in
          *                        [schema_name.]table_name format, using
          *                        standard <a
-         *                        href="../../concepts/tables.html#table-name-resolution"
+         *                        href="../../../concepts/tables/#table-name-resolution"
          *                        target="_top">name resolution rules</a>.
          *                        This may be the name of a table or a view
          *                        (when chaining queries).
@@ -57,10 +57,10 @@ namespace gpudb
          *                       view containing the results, in
          *                       [schema_name.]view_name format, using standard
          *                       <a
-         *                       href="../../concepts/tables.html#table-name-resolution"
+         *                       href="../../../concepts/tables/#table-name-resolution"
          *                       target="_top">name resolution rules</a> and
          *                       meeting <a
-         *                       href="../../concepts/tables.html#table-naming-criteria"
+         *                       href="../../../concepts/tables/#table-naming-criteria"
          *                       target="_top">table naming criteria</a>.  Must
          *                       not be an already existing table or view.
          * @param[in] xColumnName_  Name of the column containing the x values

@@ -41,7 +41,7 @@ namespace gpudb
          * @param[in] tableNames_  Names of the tables whose metadata will be
          *                         updated, in [schema_name.]table_name format,
          *                         using standard <a
-         *                         href="../../concepts/tables.html#table-name-resolution"
+         *                         href="../../../concepts/tables/#table-name-resolution"
          *                         target="_top">name resolution rules</a>.
          *                         All specified tables must exist, or an error
          *                         will be returned.

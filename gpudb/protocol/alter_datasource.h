@@ -14,7 +14,7 @@ namespace gpudb
      * #alterDatasource(const AlterDatasourceRequest&) const}.
      * <p>
      * Alters the properties of an existing <a
-     * href="../../concepts/data_sources.html" target="_top">data source</a>
+     * href="../../../concepts/data_sources/" target="_top">data source</a>
      */
     struct AlterDatasourceRequest
     {
@@ -75,6 +75,10 @@ namespace gpudb
          *                                   gpudb::alter_datasource_wait_timeout:
          *                                   Timeout in seconds for reading
          *                                   from this storage provider
+         *                                           <li>
+         *                                   gpudb::alter_datasource_credential:
+         *                                   Name of the Credential object to
+         *                                   be used in data source
          *                                           <li>
          *                                   gpudb::alter_datasource_s3_bucket_name:
          *                                   Name of the Amazon S3 bucket to
@@ -200,7 +204,7 @@ namespace gpudb
      * #alterDatasource(const AlterDatasourceRequest&) const}.
      * <p>
      * Alters the properties of an existing <a
-     * href="../../concepts/data_sources.html" target="_top">data source</a>
+     * href="../../../concepts/data_sources/" target="_top">data source</a>
      */
     struct AlterDatasourceResponse
     {

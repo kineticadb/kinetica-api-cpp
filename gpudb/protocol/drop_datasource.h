@@ -13,7 +13,7 @@ namespace gpudb
      * A set of input parameters for {@link
      * #dropDatasource(const DropDatasourceRequest&) const}.
      * <p>
-     * Drops an existing <a href="../../concepts/data_sources.html"
+     * Drops an existing <a href="../../../concepts/data_sources/"
      * target="_top">data source</a>.  Any external
      * tables that depend on the data source must be dropped before it can be
      * dropped.
@@ -100,7 +100,7 @@ namespace gpudb
      * A set of output parameters for {@link
      * #dropDatasource(const DropDatasourceRequest&) const}.
      * <p>
-     * Drops an existing <a href="../../concepts/data_sources.html"
+     * Drops an existing <a href="../../../concepts/data_sources/"
      * target="_top">data source</a>.  Any external
      * tables that depend on the data source must be dropped before it can be
      * dropped.

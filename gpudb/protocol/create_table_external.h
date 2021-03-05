@@ -13,13 +13,13 @@ namespace gpudb
      * A set of input parameters for {@link
      * #createTableExternal(const CreateTableExternalRequest&) const}.
      * <p>
-     * Creates a new <a href="../../concepts/external_tables.html"
+     * Creates a new <a href="../../../concepts/external_tables/"
      * target="_top">external table</a>, which is a
      * local database object whose source data is located externally to the
      * database.  The source data can
      * be located either on the cluster, accessible to the database; or
      * remotely, accessible via a
-     * pre-defined external <a href="../../concepts/data_sources.html"
+     * pre-defined external <a href="../../../concepts/data_sources/"
      * target="_top">data source</a>.
      * <p>
      * The external table can have its structure defined explicitly, via @a
@@ -52,11 +52,11 @@ namespace gpudb
          * @param[in] tableName_  Name of the table to be created, in
          *                        [schema_name.]table_name format, using
          *                        standard <a
-         *                        href="../../concepts/tables.html#table-name-resolution"
+         *                        href="../../../concepts/tables/#table-name-resolution"
          *                        target="_top">name resolution rules</a> and
          *                        meeting
          *                        <a
-         *                        href="../../concepts/tables.html#table-naming-criteria"
+         *                        href="../../../concepts/tables/#table-naming-criteria"
          *                        target="_top">table naming criteria</a>.
          * @param[in] filepaths_  A list of file paths from which data will be
          *                        sourced; wildcards (*) can be used
@@ -74,8 +74,7 @@ namespace gpudb
          *                        path (or relative to the path) specified by
          *                        the
          *                        external files directory in the Kinetica
-         *                        <a
-         *                        href="../../config/index.html#external-files"
+         *                        <a href="../../../config/#external-files"
          *                        target="_top">configuration file</a>.
          * @param[in] modifyColumns_  Not implemented yet
          * @param[in] createTableOptions_  Options from /create/table, allowing
@@ -86,7 +85,7 @@ namespace gpudb
          *                                         <li>
          *                                 gpudb::create_table_external_type_id:
          *                                 ID of a currently registered <a
-         *                                 href="../../concepts/types.html"
+         *                                 href="../../../concepts/types/"
          *                                 target="_top">type</a>.  The default
          *                                 value is ''.
          *                                         <li>
@@ -108,26 +107,26 @@ namespace gpudb
          *                                         <li>
          *                                 gpudb::create_table_external_is_replicated:
          *                                 Affects the <a
-         *                                 href="../../concepts/tables.html#distribution"
+         *                                 href="../../../concepts/tables/#distribution"
          *                                 target="_top">distribution
          *                                 scheme</a>
          *                                 for the table's data.  If @a true
          *                                 and the
          *                                 given table has no explicit <a
-         *                                 href="../../concepts/tables.html#shard-key"
+         *                                 href="../../../concepts/tables/#shard-key"
          *                                 target="_top">shard key</a> defined,
          *                                 the
          *                                 table will be <a
-         *                                 href="../../concepts/tables.html#replication"
+         *                                 href="../../../concepts/tables/#replication"
          *                                 target="_top">replicated</a>.  If
          *                                 @a false, the table will be
          *                                 <a
-         *                                 href="../../concepts/tables.html#sharding"
+         *                                 href="../../../concepts/tables/#sharding"
          *                                 target="_top">sharded</a> according
          *                                 to the shard key specified in the
          *                                 given @a type_id, or
          *                                 <a
-         *                                 href="../../concepts/tables.html#random-sharding"
+         *                                 href="../../../concepts/tables/#random-sharding"
          *                                 target="_top">randomly sharded</a>,
          *                                 if no shard key is specified.
          *                                 Note that a type containing a shard
@@ -145,7 +144,7 @@ namespace gpudb
          *                                 gpudb::create_table_external_foreign_keys:
          *                                 Semicolon-separated list of
          *                                 <a
-         *                                 href="../../concepts/tables.html#foreign-keys"
+         *                                 href="../../../concepts/tables/#foreign-keys"
          *                                 target="_top">foreign keys</a>, of
          *                                 the format
          *                                 '(source_column_name [, ...])
@@ -161,31 +160,31 @@ namespace gpudb
          *                                         <li>
          *                                 gpudb::create_table_external_partition_type:
          *                                 <a
-         *                                 href="../../concepts/tables.html#partitioning"
+         *                                 href="../../../concepts/tables/#partitioning"
          *                                 target="_top">Partitioning</a>
          *                                 scheme to use.
          *                                 <ul>
          *                                         <li>
          *                                 gpudb::create_table_external_RANGE:
          *                                 Use <a
-         *                                 href="../../concepts/tables.html#partitioning-by-range"
+         *                                 href="../../../concepts/tables/#partitioning-by-range"
          *                                 target="_top">range
          *                                 partitioning</a>.
          *                                         <li>
          *                                 gpudb::create_table_external_INTERVAL:
          *                                 Use <a
-         *                                 href="../../concepts/tables.html#partitioning-by-interval"
+         *                                 href="../../../concepts/tables/#partitioning-by-interval"
          *                                 target="_top">interval
          *                                 partitioning</a>.
          *                                         <li>
          *                                 gpudb::create_table_external_LIST:
          *                                 Use <a
-         *                                 href="../../concepts/tables.html#partitioning-by-list"
+         *                                 href="../../../concepts/tables/#partitioning-by-list"
          *                                 target="_top">list partitioning</a>.
          *                                         <li>
          *                                 gpudb::create_table_external_HASH:
          *                                 Use <a
-         *                                 href="../../concepts/tables.html#partitioning-by-hash"
+         *                                 href="../../../concepts/tables/#partitioning-by-hash"
          *                                 target="_top">hash partitioning</a>.
          *                                 </ul>
          *                                         <li>
@@ -203,19 +202,19 @@ namespace gpudb
          *                                 on the choice of @a partition_type.
          *                                 See
          *                                 <a
-         *                                 href="../../concepts/tables.html#partitioning-by-range"
+         *                                 href="../../../concepts/tables/#partitioning-by-range"
          *                                 target="_top">range
          *                                 partitioning</a>,
          *                                 <a
-         *                                 href="../../concepts/tables.html#partitioning-by-interval"
+         *                                 href="../../../concepts/tables/#partitioning-by-interval"
          *                                 target="_top">interval
          *                                 partitioning</a>,
          *                                 <a
-         *                                 href="../../concepts/tables.html#partitioning-by-list"
+         *                                 href="../../../concepts/tables/#partitioning-by-list"
          *                                 target="_top">list partitioning</a>,
          *                                 or
          *                                 <a
-         *                                 href="../../concepts/tables.html#partitioning-by-hash"
+         *                                 href="../../../concepts/tables/#partitioning-by-hash"
          *                                 target="_top">hash partitioning</a>
          *                                 for example formats.
          *                                         <li>
@@ -225,7 +224,7 @@ namespace gpudb
          *                                 values which don't fall into an
          *                                 existing partition.  Currently
          *                                 only supported for <a
-         *                                 href="../../concepts/tables.html#partitioning-by-list"
+         *                                 href="../../../concepts/tables/#partitioning-by-list"
          *                                 target="_top">list partitions</a>.
          *                                 <ul>
          *                                         <li>
@@ -238,7 +237,7 @@ namespace gpudb
          *                                         <li>
          *                                 gpudb::create_table_external_ttl:
          *                                 Sets the <a
-         *                                 href="../../concepts/ttl.html"
+         *                                 href="../../../concepts/ttl/"
          *                                 target="_top">TTL</a> of the table
          *                                 specified in @a tableName.
          *                                         <li>
@@ -249,17 +248,17 @@ namespace gpudb
          *                                 gpudb::create_table_external_is_result_table:
          *                                 Indicates whether the table is a
          *                                 <a
-         *                                 href="../../concepts/tables_memory_only.html"
+         *                                 href="../../../concepts/tables_memory_only/"
          *                                 target="_top">memory-only table</a>.
          *                                 A result table cannot contain
          *                                 columns with store_only or
          *                                 text_search
          *                                 <a
-         *                                 href="../../concepts/types.html#data-handling"
+         *                                 href="../../../concepts/types/#data-handling"
          *                                 target="_top">data-handling</a> or
          *                                 that are
          *                                 <a
-         *                                 href="../../concepts/types.html#primitive-types"
+         *                                 href="../../../concepts/types/#primitive-types"
          *                                 target="_top">non-charN strings</a>,
          *                                 and it will not be retained if
          *                                 the server is restarted.
@@ -274,15 +273,15 @@ namespace gpudb
          *                                         <li>
          *                                 gpudb::create_table_external_strategy_definition:
          *                                 The <a
-         *                                 href="../../rm/concepts.html#tier-strategies"
+         *                                 href="../../../rm/concepts/#tier-strategies"
          *                                 target="_top">tier strategy</a>
          *                                 for the table and its columns. See
          *                                 <a
-         *                                 href="../../rm/concepts.html#tier-strategies"
+         *                                 href="../../../rm/concepts/#tier-strategies"
          *                                 target="_top">tier strategy
          *                                 usage</a> for format and
          *                                 <a
-         *                                 href="../../rm/usage.html#tier-strategies"
+         *                                 href="../../../rm/usage/#tier-strategies"
          *                                 target="_top">tier strategy
          *                                 examples</a> for examples.
          *                                 </ul>
@@ -466,11 +465,13 @@ namespace gpudb
          *                      <ul>
          *                              <li>
          *                      gpudb::create_table_external_delimited_text:
-         *                      Delimited text format; e.g., CSV, TSV, PSV,
-         *                      etc.
+         *                      Delimited text file format; e.g., CSV, TSV,
+         *                      PSV, etc.
          *                              <li>
          *                      gpudb::create_table_external_parquet: Apache
-         *                      Parquet format
+         *                      Parquet file format
+         *                              <li> gpudb::create_table_external_json:
+         *                      Json file format
          *                      </ul>
          *                      The default value is
          *                      gpudb::create_table_external_delimited_text.
@@ -635,7 +636,7 @@ namespace gpudb
          *                      gpudb::create_table_external_text_header_property_delimiter:
          *                      Specifies the delimiter for
          *                      <a
-         *                      href="../../concepts/types.html#column-properties"
+         *                      href="../../../concepts/types/#column-properties"
          *                      target="_top">column properties</a> in the
          *                      header row (if
          *                      present).  Cannot be set to same value as @a
@@ -774,13 +775,13 @@ namespace gpudb
      * A set of output parameters for {@link
      * #createTableExternal(const CreateTableExternalRequest&) const}.
      * <p>
-     * Creates a new <a href="../../concepts/external_tables.html"
+     * Creates a new <a href="../../../concepts/external_tables/"
      * target="_top">external table</a>, which is a
      * local database object whose source data is located externally to the
      * database.  The source data can
      * be located either on the cluster, accessible to the database; or
      * remotely, accessible via a
-     * pre-defined external <a href="../../concepts/data_sources.html"
+     * pre-defined external <a href="../../../concepts/data_sources/"
      * target="_top">data source</a>.
      * <p>
      * The external table can have its structure defined explicitly, via @a

@@ -49,7 +49,7 @@ namespace gpudb
          * @param[in] tableName_  Name of the table containing the data to be
          *                        drawn as a chart, in [schema_name.]table_name
          *                        format, using standard <a
-         *                        href="../../concepts/tables.html#table-name-resolution"
+         *                        href="../../../concepts/tables/#table-name-resolution"
          *                        target="_top">name resolution rules</a>.
          * @param[in] xColumnNames_  Names of the columns containing the data
          *                           mapped to the x axis of a chart.

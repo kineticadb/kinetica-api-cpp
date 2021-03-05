@@ -14,7 +14,7 @@ namespace gpudb
      * #createProc(const CreateProcRequest&) const}.
      * <p>
      * Creates an instance (proc) of the
-     * <a href="../../concepts/udf.html" target="_top">user-defined
+     * <a href="../../../concepts/udf/" target="_top">user-defined
      * functions</a> (UDF) specified by the
      * given command, options, and files, and makes it available for execution.
      */
@@ -195,7 +195,7 @@ namespace gpudb
      * #createProc(const CreateProcRequest&) const}.
      * <p>
      * Creates an instance (proc) of the
-     * <a href="../../concepts/udf.html" target="_top">user-defined
+     * <a href="../../../concepts/udf/" target="_top">user-defined
      * functions</a> (UDF) specified by the
      * given command, options, and files, and makes it available for execution.
      */

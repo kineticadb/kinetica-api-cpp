@@ -39,7 +39,7 @@ namespace gpudb
          *                        performed. Must be an existing table, in
          *                        [schema_name.]table_name format, using
          *                        standard <a
-         *                        href="../../concepts/tables.html#table-name-resolution"
+         *                        href="../../../concepts/tables/#table-name-resolution"
          *                        target="_top">name resolution rules</a>.
          * @param[in] xColumnName_  Name of the column containing the x
          *                          coordinates of the points for the operation

@@ -19,13 +19,13 @@ namespace gpudb
      * #createType(const CreateTypeRequest&) const}).
      * <p>
      * A table may optionally be designated to use a
-     * <a href="../../concepts/tables.html#replication"
+     * <a href="../../../concepts/tables/#replication"
      * target="_top">replicated</a> distribution scheme,
-     * or be assigned: <a href="../../concepts/tables.html#foreign-keys"
+     * or be assigned: <a href="../../../concepts/tables/#foreign-keys"
      * target="_top">foreign keys</a> to
-     * other tables, a <a href="../../concepts/tables.html#partitioning"
+     * other tables, a <a href="../../../concepts/tables/#partitioning"
      * target="_top">partitioning</a>
-     * scheme, and/or a <a href="../../rm/concepts.html#tier-strategies"
+     * scheme, and/or a <a href="../../../rm/concepts/#tier-strategies"
      * target="_top">tier strategy</a>.
      */
     struct CreateTableRequest
@@ -49,10 +49,10 @@ namespace gpudb
          * @param[in] tableName_  Name of the table to be created, in
          *                        [schema_name.]table_name format, using
          *                        standard <a
-         *                        href="../../concepts/tables.html#table-name-resolution"
+         *                        href="../../../concepts/tables/#table-name-resolution"
          *                        target="_top">name resolution rules</a> and
          *                        meeting <a
-         *                        href="../../concepts/tables.html#table-naming-criteria"
+         *                        href="../../../concepts/tables/#table-naming-criteria"
          *                        target="_top">table naming criteria</a>.
          *                        Error for requests with existing table of the
          *                        same name and type ID may be suppressed by
@@ -101,21 +101,21 @@ namespace gpudb
          *                      The default value is gpudb::create_table_false.
          *                              <li> gpudb::create_table_is_replicated:
          *                      Affects the <a
-         *                      href="../../concepts/tables.html#distribution"
+         *                      href="../../../concepts/tables/#distribution"
          *                      target="_top">distribution scheme</a> for the
          *                      table's data.  If @a true and the given type
          *                      has no explicit <a
-         *                      href="../../concepts/tables.html#shard-key"
+         *                      href="../../../concepts/tables/#shard-key"
          *                      target="_top">shard key</a> defined, the table
          *                      will be <a
-         *                      href="../../concepts/tables.html#replication"
+         *                      href="../../../concepts/tables/#replication"
          *                      target="_top">replicated</a>.  If @a false, the
          *                      table will be <a
-         *                      href="../../concepts/tables.html#sharding"
+         *                      href="../../../concepts/tables/#sharding"
          *                      target="_top">sharded</a> according to the
          *                      shard key specified in the given @a typeId, or
          *                      <a
-         *                      href="../../concepts/tables.html#random-sharding"
+         *                      href="../../../concepts/tables/#random-sharding"
          *                      target="_top">randomly sharded</a>, if no shard
          *                      key is specified.  Note that a type containing
          *                      a shard key cannot be used to create a
@@ -127,7 +127,7 @@ namespace gpudb
          *                      The default value is gpudb::create_table_false.
          *                              <li> gpudb::create_table_foreign_keys:
          *                      Semicolon-separated list of <a
-         *                      href="../../concepts/tables.html#foreign-keys"
+         *                      href="../../../concepts/tables/#foreign-keys"
          *                      target="_top">foreign keys</a>, of the format
          *                      '(source_column_name [, ...]) references
          *                      target_table_name(primary_key_column_name [,
@@ -139,24 +139,24 @@ namespace gpudb
          *                      target_table(primary_key_column)'.
          *                              <li>
          *                      gpudb::create_table_partition_type: <a
-         *                      href="../../concepts/tables.html#partitioning"
+         *                      href="../../../concepts/tables/#partitioning"
          *                      target="_top">Partitioning</a> scheme to use.
          *                      <ul>
          *                              <li> gpudb::create_table_RANGE: Use <a
-         *                      href="../../concepts/tables.html#partitioning-by-range"
+         *                      href="../../../concepts/tables/#partitioning-by-range"
          *                      target="_top">range partitioning</a>.
          *                              <li> gpudb::create_table_INTERVAL: Use
          *                      <a
-         *                      href="../../concepts/tables.html#partitioning-by-interval"
+         *                      href="../../../concepts/tables/#partitioning-by-interval"
          *                      target="_top">interval partitioning</a>.
          *                              <li> gpudb::create_table_LIST: Use <a
-         *                      href="../../concepts/tables.html#partitioning-by-list"
+         *                      href="../../../concepts/tables/#partitioning-by-list"
          *                      target="_top">list partitioning</a>.
          *                              <li> gpudb::create_table_HASH: Use <a
-         *                      href="../../concepts/tables.html#partitioning-by-hash"
+         *                      href="../../../concepts/tables/#partitioning-by-hash"
          *                      target="_top">hash partitioning</a>.
          *                              <li> gpudb::create_table_SERIES: Use <a
-         *                      href="../../concepts/tables.html#partitioning-by-series"
+         *                      href="../../../concepts/tables/#partitioning-by-series"
          *                      target="_top">series partitioning</a>.
          *                      </ul>
          *                              <li>
@@ -170,13 +170,13 @@ namespace gpudb
          *                      Comma-separated list of partition definitions,
          *                      whose format depends on the choice of @a
          *                      partition_type.  See <a
-         *                      href="../../concepts/tables.html#partitioning-by-range"
+         *                      href="../../../concepts/tables/#partitioning-by-range"
          *                      target="_top">range partitioning</a>, <a
-         *                      href="../../concepts/tables.html#partitioning-by-interval"
+         *                      href="../../../concepts/tables/#partitioning-by-interval"
          *                      target="_top">interval partitioning</a>, <a
-         *                      href="../../concepts/tables.html#partitioning-by-list"
+         *                      href="../../../concepts/tables/#partitioning-by-list"
          *                      target="_top">list partitioning</a>, or <a
-         *                      href="../../concepts/tables.html#partitioning-by-hash"
+         *                      href="../../../concepts/tables/#partitioning-by-hash"
          *                      target="_top">hash partitioning</a> for example
          *                      formats.
          *                              <li>
@@ -184,7 +184,7 @@ namespace gpudb
          *                      @a true, a new partition will be created for
          *                      values which don't fall into an existing
          *                      partition.  Currently only supported for <a
-         *                      href="../../concepts/tables.html#partitioning-by-list"
+         *                      href="../../../concepts/tables/#partitioning-by-list"
          *                      target="_top">list partitions</a>.
          *                      <ul>
          *                              <li> gpudb::create_table_true
@@ -192,7 +192,7 @@ namespace gpudb
          *                      </ul>
          *                      The default value is gpudb::create_table_false.
          *                              <li> gpudb::create_table_ttl: Sets the
-         *                      <a href="../../concepts/ttl.html"
+         *                      <a href="../../../concepts/ttl/"
          *                      target="_top">TTL</a> of the table specified in
          *                      @a tableName.
          *                              <li> gpudb::create_table_chunk_size:
@@ -201,13 +201,13 @@ namespace gpudb
          *                              <li>
          *                      gpudb::create_table_is_result_table: Indicates
          *                      whether the table is a <a
-         *                      href="../../concepts/tables_memory_only.html"
+         *                      href="../../../concepts/tables_memory_only/"
          *                      target="_top">memory-only table</a>. A result
          *                      table cannot contain columns with store_only or
          *                      text_search <a
-         *                      href="../../concepts/types.html#data-handling"
+         *                      href="../../../concepts/types/#data-handling"
          *                      target="_top">data-handling</a> or that are <a
-         *                      href="../../concepts/types.html#primitive-types"
+         *                      href="../../../concepts/types/#primitive-types"
          *                      target="_top">non-charN strings</a>, and it
          *                      will not be retained if the server is
          *                      restarted.
@@ -218,13 +218,13 @@ namespace gpudb
          *                      The default value is gpudb::create_table_false.
          *                              <li>
          *                      gpudb::create_table_strategy_definition: The <a
-         *                      href="../../rm/concepts.html#tier-strategies"
+         *                      href="../../../rm/concepts/#tier-strategies"
          *                      target="_top">tier strategy</a> for the table
          *                      and its columns. See <a
-         *                      href="../../rm/concepts.html#tier-strategies"
+         *                      href="../../../rm/concepts/#tier-strategies"
          *                      target="_top">tier strategy usage</a> for
          *                      format and <a
-         *                      href="../../rm/usage.html#tier-strategies"
+         *                      href="../../../rm/usage/#tier-strategies"
          *                      target="_top">tier strategy examples</a> for
          *                      examples.
          *                      </ul>
@@ -304,13 +304,13 @@ namespace gpudb
      * #createType(const CreateTypeRequest&) const}).
      * <p>
      * A table may optionally be designated to use a
-     * <a href="../../concepts/tables.html#replication"
+     * <a href="../../../concepts/tables/#replication"
      * target="_top">replicated</a> distribution scheme,
-     * or be assigned: <a href="../../concepts/tables.html#foreign-keys"
+     * or be assigned: <a href="../../../concepts/tables/#foreign-keys"
      * target="_top">foreign keys</a> to
-     * other tables, a <a href="../../concepts/tables.html#partitioning"
+     * other tables, a <a href="../../../concepts/tables/#partitioning"
      * target="_top">partitioning</a>
-     * scheme, and/or a <a href="../../rm/concepts.html#tier-strategies"
+     * scheme, and/or a <a href="../../../rm/concepts/#tier-strategies"
      * target="_top">tier strategy</a>.
      */
     struct CreateTableResponse

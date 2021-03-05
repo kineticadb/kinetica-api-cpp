@@ -40,7 +40,7 @@ namespace gpudb
          * @param[in] tableName_  Name of the table to be locked, in
          *                        [schema_name.]table_name format, using
          *                        standard <a
-         *                        href="../../concepts/tables.html#table-name-resolution"
+         *                        href="../../../concepts/tables/#table-name-resolution"
          *                        target="_top">name resolution rules</a>.  It
          *                        must be a currently existing table or view.
          * @param[in] lockType_  The type of lock being applied to the table.

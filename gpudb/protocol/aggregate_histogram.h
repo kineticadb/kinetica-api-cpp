@@ -56,7 +56,7 @@ namespace gpudb
          *                        be performed. Must be an existing table, in
          *                        [schema_name.]table_name format, using
          *                        standard <a
-         *                        href="../../concepts/tables.html#table-name-resolution"
+         *                        href="../../../concepts/tables/#table-name-resolution"
          *                        target="_top">name resolution rules</a>.
          * @param[in] columnName_  Name of a column or an expression of one or
          *                         more column names over which the histogram

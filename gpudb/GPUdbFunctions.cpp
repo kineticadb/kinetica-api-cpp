@@ -6,7 +6,7 @@
 
 
 // GPUdb Version
-const std::string GPUdb::API_VERSION( "7.1.2.0" );
+const std::string GPUdb::API_VERSION( "7.1.3.0" );
 
 
 
@@ -68,7 +68,7 @@ AdminAddHostResponse& GPUdb::adminAddHost( const AdminAddHostRequest& request_,
  *                         <li> gpudb::admin_add_host_accepts_failover: If set
  *                 to @a true, the host will accept processes (ranks, graph
  *                 server, etc.) in the event of a failover on another node in
- *                 the cluster. See <a href="../../n_plus_1/index.html"
+ *                 the cluster. See <a href="../../../n_plus_1/"
  *                 target="_top">Cluster Resilience</a> for more information.
  *                 <ul>
  *                         <li> gpudb::admin_add_host_true
@@ -84,7 +84,7 @@ AdminAddHostResponse& GPUdb::adminAddHost( const AdminAddHostRequest& request_,
  *                 The publicly-accessible full path URL to the host manager on
  *                 the host being added, e.g., 'http://172.123.45.67:9300'. The
  *                 default host manager port can be found in the <a
- *                 href="../../install/shared/ports.html" target="_top">list of
+ *                 href="../../../install/shared/ports/" target="_top">list of
  *                 ports</a> used by Kinetica.
  *                         <li> gpudb::admin_add_host_ram_limit: The desired
  *                 RAM limit for the host being added, i.e. the sum of RAM
@@ -136,7 +136,7 @@ AdminAddHostResponse GPUdb::adminAddHost( const std::string& hostAddress,
  *                         <li> gpudb::admin_add_host_accepts_failover: If set
  *                 to @a true, the host will accept processes (ranks, graph
  *                 server, etc.) in the event of a failover on another node in
- *                 the cluster. See <a href="../../n_plus_1/index.html"
+ *                 the cluster. See <a href="../../../n_plus_1/"
  *                 target="_top">Cluster Resilience</a> for more information.
  *                 <ul>
  *                         <li> gpudb::admin_add_host_true
@@ -152,7 +152,7 @@ AdminAddHostResponse GPUdb::adminAddHost( const std::string& hostAddress,
  *                 The publicly-accessible full path URL to the host manager on
  *                 the host being added, e.g., 'http://172.123.45.67:9300'. The
  *                 default host manager port can be found in the <a
- *                 href="../../install/shared/ports.html" target="_top">list of
+ *                 href="../../../install/shared/ports/" target="_top">list of
  *                 ports</a> used by Kinetica.
  *                         <li> gpudb::admin_add_host_ram_limit: The desired
  *                 RAM limit for the host being added, i.e. the sum of RAM
@@ -328,13 +328,12 @@ AdminAddRanksResponse& GPUdb::adminAddRanks( const AdminAddRanksRequest& request
  *                      '{"rank.gpu":"2",
  *                      "tier.ram.rank.limit":"10000000000"}'. Currently, the
  *                      available parameters are rank-specific parameters in
- *                      the <a href="../../config/index.html#network"
+ *                      the <a href="../../../config/#network"
  *                      target="_top">Network</a>, <a
- *                      href="../../config/index.html#hardware"
+ *                      href="../../../config/#hardware"
  *                      target="_top">Hardware</a>, <a
- *                      href="../../config/index.html#text-search"
- *                      target="_top">Text Search</a>, and <a
- *                      href="../../config/index.html#ram-tier"
+ *                      href="../../../config/#text-search" target="_top">Text
+ *                      Search</a>, and <a href="../../../config/#ram-tier"
  *                      target="_top">RAM Tiered Storage</a> sections in the
  *                      gpudb.conf file, with the key exception of the
  *                      'rankN.host' settings in the Network section that will
@@ -427,13 +426,12 @@ AdminAddRanksResponse GPUdb::adminAddRanks( const std::vector<std::string>& host
  *                      '{"rank.gpu":"2",
  *                      "tier.ram.rank.limit":"10000000000"}'. Currently, the
  *                      available parameters are rank-specific parameters in
- *                      the <a href="../../config/index.html#network"
+ *                      the <a href="../../../config/#network"
  *                      target="_top">Network</a>, <a
- *                      href="../../config/index.html#hardware"
+ *                      href="../../../config/#hardware"
  *                      target="_top">Hardware</a>, <a
- *                      href="../../config/index.html#text-search"
- *                      target="_top">Text Search</a>, and <a
- *                      href="../../config/index.html#ram-tier"
+ *                      href="../../../config/#text-search" target="_top">Text
+ *                      Search</a>, and <a href="../../../config/#ram-tier"
  *                      target="_top">RAM Tiered Storage</a> sections in the
  *                      gpudb.conf file, with the key exception of the
  *                      'rankN.host' settings in the Network section that will
@@ -537,7 +535,7 @@ AdminAlterHostResponse& GPUdb::adminAlterHost( const AdminAlterHostRequest& requ
  *                         <li> gpudb::admin_alter_host_accepts_failover: If
  *                 set to @a true, the host will accept processes (ranks, graph
  *                 server, etc.) in the event of a failover on another node in
- *                 the cluster. See <a href="../../n_plus_1/index.html"
+ *                 the cluster. See <a href="../../../n_plus_1/"
  *                 target="_top">Cluster Resilience</a> for more information.
  *                 <ul>
  *                         <li> gpudb::admin_alter_host_true
@@ -575,7 +573,7 @@ AdminAlterHostResponse GPUdb::adminAlterHost( const std::string& host,
  *                         <li> gpudb::admin_alter_host_accepts_failover: If
  *                 set to @a true, the host will accept processes (ranks, graph
  *                 server, etc.) in the event of a failover on another node in
- *                 the cluster. See <a href="../../n_plus_1/index.html"
+ *                 the cluster. See <a href="../../../n_plus_1/"
  *                 target="_top">Cluster Resilience</a> for more information.
  *                 <ul>
  *                         <li> gpudb::admin_alter_host_true
@@ -608,7 +606,7 @@ AdminAlterHostResponse& GPUdb::adminAlterHost( const std::string& host,
  * type of job and the current state of execution, the action may not be
  * successfully executed. The final result of the attempted actions for each
  * specified job is returned in the status array of the response. See <a
- * href="../../admin/job_manager.html" target="_top">Job Manager</a> for more
+ * href="../../../admin/job_manager/" target="_top">Job Manager</a> for more
  * information.
  * 
  * @param[in] request_  Request object containing the parameters for the
@@ -631,7 +629,7 @@ AdminAlterJobsResponse GPUdb::adminAlterJobs( const AdminAlterJobsRequest& reque
  * type of job and the current state of execution, the action may not be
  * successfully executed. The final result of the attempted actions for each
  * specified job is returned in the status array of the response. See <a
- * href="../../admin/job_manager.html" target="_top">Job Manager</a> for more
+ * href="../../../admin/job_manager/" target="_top">Job Manager</a> for more
  * information.
  * 
  * @param[in] request_  Request object containing the parameters for the
@@ -657,7 +655,7 @@ AdminAlterJobsResponse& GPUdb::adminAlterJobs( const AdminAlterJobsRequest& requ
  * type of job and the current state of execution, the action may not be
  * successfully executed. The final result of the attempted actions for each
  * specified job is returned in the status array of the response. See <a
- * href="../../admin/job_manager.html" target="_top">Job Manager</a> for more
+ * href="../../../admin/job_manager/" target="_top">Job Manager</a> for more
  * information.
  * 
  * @param jobIds  Jobs to be modified.
@@ -694,7 +692,7 @@ AdminAlterJobsResponse GPUdb::adminAlterJobs( const std::vector<int64_t>& jobIds
  * type of job and the current state of execution, the action may not be
  * successfully executed. The final result of the attempted actions for each
  * specified job is returned in the status array of the response. See <a
- * href="../../admin/job_manager.html" target="_top">Job Manager</a> for more
+ * href="../../../admin/job_manager/" target="_top">Job Manager</a> for more
  * information.
  * 
  * @param jobIds  Jobs to be modified.
@@ -854,7 +852,7 @@ AdminOfflineResponse& GPUdb::adminOffline( const bool offline,
  * * If {@link #adminRebalance(const AdminRebalanceRequest&) const} is
  * invoked after a change is made to the
  *   cluster, e.g., a host was added or removed,
- *   <a href="../../concepts/tables.html#sharding" target="_top">sharded
+ *   <a href="../../../concepts/tables/#sharding" target="_top">sharded
  * data</a> will be
  *   evenly redistributed across the cluster by number of shards per rank
  *   while unsharded data will be redistributed across the cluster by data
@@ -862,7 +860,7 @@ AdminOfflineResponse& GPUdb::adminOffline( const bool offline,
  * * If {@link #adminRebalance(const AdminRebalanceRequest&) const} is
  * invoked at some point when unsharded
  *   data (a.k.a.
- *   <a href="../../concepts/tables.html#random-sharding"
+ *   <a href="../../../concepts/tables/#random-sharding"
  * target="_top">randomly-sharded</a>)
  *   in the cluster is unevenly distributed over time, sharded data will
  *   not move while unsharded data will be redistributed across the
@@ -902,7 +900,7 @@ AdminRebalanceResponse GPUdb::adminRebalance( const AdminRebalanceRequest& reque
  * #adminRebalance(const AdminRebalanceRequest&,AdminRebalanceResponse&) const}
  * is invoked after a change is made to the
  *   cluster, e.g., a host was added or removed,
- *   <a href="../../concepts/tables.html#sharding" target="_top">sharded
+ *   <a href="../../../concepts/tables/#sharding" target="_top">sharded
  * data</a> will be
  *   evenly redistributed across the cluster by number of shards per rank
  *   while unsharded data will be redistributed across the cluster by data
@@ -911,7 +909,7 @@ AdminRebalanceResponse GPUdb::adminRebalance( const AdminRebalanceRequest& reque
  * #adminRebalance(const AdminRebalanceRequest&,AdminRebalanceResponse&) const}
  * is invoked at some point when unsharded
  *   data (a.k.a.
- *   <a href="../../concepts/tables.html#random-sharding"
+ *   <a href="../../../concepts/tables/#random-sharding"
  * target="_top">randomly-sharded</a>)
  *   in the cluster is unevenly distributed over time, sharded data will
  *   not move while unsharded data will be redistributed across the
@@ -954,7 +952,7 @@ AdminRebalanceResponse& GPUdb::adminRebalance( const AdminRebalanceRequest& requ
  * #adminRebalance(const std::map<std::string, std::string>&) const} is
  * invoked after a change is made to the
  *   cluster, e.g., a host was added or removed,
- *   <a href="../../concepts/tables.html#sharding" target="_top">sharded
+ *   <a href="../../../concepts/tables/#sharding" target="_top">sharded
  * data</a> will be
  *   evenly redistributed across the cluster by number of shards per rank
  *   while unsharded data will be redistributed across the cluster by data
@@ -963,7 +961,7 @@ AdminRebalanceResponse& GPUdb::adminRebalance( const AdminRebalanceRequest& requ
  * #adminRebalance(const std::map<std::string, std::string>&) const} is
  * invoked at some point when unsharded
  *   data (a.k.a.
- *   <a href="../../concepts/tables.html#random-sharding"
+ *   <a href="../../../concepts/tables/#random-sharding"
  * target="_top">randomly-sharded</a>)
  *   in the cluster is unevenly distributed over time, sharded data will
  *   not move while unsharded data will be redistributed across the
@@ -979,7 +977,7 @@ AdminRebalanceResponse& GPUdb::adminRebalance( const AdminRebalanceRequest& requ
  * @param options  Optional parameters.
  *                 <ul>
  *                         <li> gpudb::admin_rebalance_rebalance_sharded_data:
- *                 If @a true, <a href="../../concepts/tables.html#sharding"
+ *                 If @a true, <a href="../../../concepts/tables/#sharding"
  *                 target="_top">sharded data</a> will be rebalanced
  *                 approximately equally across the cluster. Note that for
  *                 clusters with large amounts of sharded data, this data
@@ -993,7 +991,7 @@ AdminRebalanceResponse& GPUdb::adminRebalance( const AdminRebalanceRequest& requ
  *                         <li>
  *                 gpudb::admin_rebalance_rebalance_unsharded_data: If @a true,
  *                 unsharded data (a.k.a. <a
- *                 href="../../concepts/tables.html#random-sharding"
+ *                 href="../../../concepts/tables/#random-sharding"
  *                 target="_top">randomly-sharded</a>) will be rebalanced
  *                 approximately equally across the cluster. Note that for
  *                 clusters with large amounts of unsharded data, this data
@@ -1087,7 +1085,7 @@ AdminRebalanceResponse GPUdb::adminRebalance( const std::map<std::string, std::s
  * #adminRebalance(const std::map<std::string, std::string>&,AdminRebalanceResponse&) const}
  * is invoked after a change is made to the
  *   cluster, e.g., a host was added or removed,
- *   <a href="../../concepts/tables.html#sharding" target="_top">sharded
+ *   <a href="../../../concepts/tables/#sharding" target="_top">sharded
  * data</a> will be
  *   evenly redistributed across the cluster by number of shards per rank
  *   while unsharded data will be redistributed across the cluster by data
@@ -1096,7 +1094,7 @@ AdminRebalanceResponse GPUdb::adminRebalance( const std::map<std::string, std::s
  * #adminRebalance(const std::map<std::string, std::string>&,AdminRebalanceResponse&) const}
  * is invoked at some point when unsharded
  *   data (a.k.a.
- *   <a href="../../concepts/tables.html#random-sharding"
+ *   <a href="../../../concepts/tables/#random-sharding"
  * target="_top">randomly-sharded</a>)
  *   in the cluster is unevenly distributed over time, sharded data will
  *   not move while unsharded data will be redistributed across the
@@ -1112,7 +1110,7 @@ AdminRebalanceResponse GPUdb::adminRebalance( const std::map<std::string, std::s
  * @param options  Optional parameters.
  *                 <ul>
  *                         <li> gpudb::admin_rebalance_rebalance_sharded_data:
- *                 If @a true, <a href="../../concepts/tables.html#sharding"
+ *                 If @a true, <a href="../../../concepts/tables/#sharding"
  *                 target="_top">sharded data</a> will be rebalanced
  *                 approximately equally across the cluster. Note that for
  *                 clusters with large amounts of sharded data, this data
@@ -1126,7 +1124,7 @@ AdminRebalanceResponse GPUdb::adminRebalance( const std::map<std::string, std::s
  *                         <li>
  *                 gpudb::admin_rebalance_rebalance_unsharded_data: If @a true,
  *                 unsharded data (a.k.a. <a
- *                 href="../../concepts/tables.html#random-sharding"
+ *                 href="../../../concepts/tables/#random-sharding"
  *                 target="_top">randomly-sharded</a>) will be rebalanced
  *                 approximately equally across the cluster. Note that for
  *                 clusters with large amounts of unsharded data, this data
@@ -1357,9 +1355,9 @@ AdminRemoveHostResponse& GPUdb::adminRemoveHost( const std::string& host,
  * rebalanced to other ranks before the rank(s) is removed unless the @a
  * rebalance_sharded_data or @a rebalance_unsharded_data parameters are set to
  * @a false in the @a options, in which case the corresponding <a
- * href="../../concepts/tables.html#sharding" target="_top">sharded data</a>
+ * href="../../../concepts/tables/#sharding" target="_top">sharded data</a>
  * and/or unsharded data (a.k.a. <a
- * href="../../concepts/tables.html#random-sharding"
+ * href="../../../concepts/tables/#random-sharding"
  * target="_top">randomly-sharded</a>) will be deleted.
  * <p>
  * The database must be offline for this operation, see {@link
@@ -1390,9 +1388,9 @@ AdminRemoveRanksResponse GPUdb::adminRemoveRanks( const AdminRemoveRanksRequest&
  * rebalanced to other ranks before the rank(s) is removed unless the @a
  * rebalance_sharded_data or @a rebalance_unsharded_data parameters are set to
  * @a false in the @a options, in which case the corresponding <a
- * href="../../concepts/tables.html#sharding" target="_top">sharded data</a>
+ * href="../../../concepts/tables/#sharding" target="_top">sharded data</a>
  * and/or unsharded data (a.k.a. <a
- * href="../../concepts/tables.html#random-sharding"
+ * href="../../../concepts/tables/#random-sharding"
  * target="_top">randomly-sharded</a>) will be deleted.
  * <p>
  * The database must be offline for this operation, see {@link
@@ -1426,9 +1424,9 @@ AdminRemoveRanksResponse& GPUdb::adminRemoveRanks( const AdminRemoveRanksRequest
  * rebalanced to other ranks before the rank(s) is removed unless the @a
  * rebalance_sharded_data or @a rebalance_unsharded_data parameters are set to
  * @a false in the @a options, in which case the corresponding <a
- * href="../../concepts/tables.html#sharding" target="_top">sharded data</a>
+ * href="../../../concepts/tables/#sharding" target="_top">sharded data</a>
  * and/or unsharded data (a.k.a. <a
- * href="../../concepts/tables.html#random-sharding"
+ * href="../../../concepts/tables/#random-sharding"
  * target="_top">randomly-sharded</a>) will be deleted.
  * <p>
  * The database must be offline for this operation, see {@link
@@ -1451,7 +1449,7 @@ AdminRemoveRanksResponse& GPUdb::adminRemoveRanks( const AdminRemoveRanksRequest
  *                 <ul>
  *                         <li>
  *                 gpudb::admin_remove_ranks_rebalance_sharded_data: If @a
- *                 true, <a href="../../concepts/tables.html#sharding"
+ *                 true, <a href="../../../concepts/tables/#sharding"
  *                 target="_top">sharded data</a> will be rebalanced
  *                 approximately equally across the cluster. Note that for
  *                 clusters with large amounts of sharded data, this data
@@ -1465,7 +1463,7 @@ AdminRemoveRanksResponse& GPUdb::adminRemoveRanks( const AdminRemoveRanksRequest
  *                         <li>
  *                 gpudb::admin_remove_ranks_rebalance_unsharded_data: If @a
  *                 true, unsharded data (a.k.a. <a
- *                 href="../../concepts/tables.html#random-sharding"
+ *                 href="../../../concepts/tables/#random-sharding"
  *                 target="_top">randomly-sharded</a>) will be rebalanced
  *                 approximately equally across the cluster. Note that for
  *                 clusters with large amounts of unsharded data, this data
@@ -1506,9 +1504,9 @@ AdminRemoveRanksResponse GPUdb::adminRemoveRanks( const std::vector<std::string>
  * rebalanced to other ranks before the rank(s) is removed unless the @a
  * rebalance_sharded_data or @a rebalance_unsharded_data parameters are set to
  * @a false in the @a options, in which case the corresponding <a
- * href="../../concepts/tables.html#sharding" target="_top">sharded data</a>
+ * href="../../../concepts/tables/#sharding" target="_top">sharded data</a>
  * and/or unsharded data (a.k.a. <a
- * href="../../concepts/tables.html#random-sharding"
+ * href="../../../concepts/tables/#random-sharding"
  * target="_top">randomly-sharded</a>) will be deleted.
  * <p>
  * The database must be offline for this operation, see {@link
@@ -1531,7 +1529,7 @@ AdminRemoveRanksResponse GPUdb::adminRemoveRanks( const std::vector<std::string>
  *                 <ul>
  *                         <li>
  *                 gpudb::admin_remove_ranks_rebalance_sharded_data: If @a
- *                 true, <a href="../../concepts/tables.html#sharding"
+ *                 true, <a href="../../../concepts/tables/#sharding"
  *                 target="_top">sharded data</a> will be rebalanced
  *                 approximately equally across the cluster. Note that for
  *                 clusters with large amounts of sharded data, this data
@@ -1545,7 +1543,7 @@ AdminRemoveRanksResponse GPUdb::adminRemoveRanks( const std::vector<std::string>
  *                         <li>
  *                 gpudb::admin_remove_ranks_rebalance_unsharded_data: If @a
  *                 true, unsharded data (a.k.a. <a
- *                 href="../../concepts/tables.html#random-sharding"
+ *                 href="../../../concepts/tables/#random-sharding"
  *                 target="_top">randomly-sharded</a>) will be rebalanced
  *                 approximately equally across the cluster. Note that for
  *                 clusters with large amounts of unsharded data, this data
@@ -2118,7 +2116,7 @@ AdminSwitchoverResponse& GPUdb::adminSwitchover( const AdminSwitchoverRequest& r
  * @param processes  Indicates the process identifier to switchover to another
  *                   host. Options are 'hostN' and 'rankN' where 'N'
  *                   corresponds to the number associated with a host or rank
- *                   in the <a href="../../config/index.html#network"
+ *                   in the <a href="../../../config/#network"
  *                   target="_top">Network</a> section of the gpudb.conf file,
  *                   e.g., 'host[N].address' or 'rank[N].host'. If 'hostN' is
  *                   provided, all processes on that host will be moved to
@@ -2129,7 +2127,7 @@ AdminSwitchoverResponse& GPUdb::adminSwitchover( const AdminSwitchoverRequest& r
  *                      corresponding process given in @a processes. Each index
  *                      must be specified as 'hostN' where 'N' corresponds to
  *                      the number associated with a host or rank in the <a
- *                      href="../../config/index.html#network"
+ *                      href="../../../config/#network"
  *                      target="_top">Network</a> section of the gpudb.conf
  *                      file, e.g., 'host[N].address'. Each entry in this array
  *                      will receive the corresponding process entry at the
@@ -2171,7 +2169,7 @@ AdminSwitchoverResponse GPUdb::adminSwitchover( const std::vector<std::string>& 
  * @param processes  Indicates the process identifier to switchover to another
  *                   host. Options are 'hostN' and 'rankN' where 'N'
  *                   corresponds to the number associated with a host or rank
- *                   in the <a href="../../config/index.html#network"
+ *                   in the <a href="../../../config/#network"
  *                   target="_top">Network</a> section of the gpudb.conf file,
  *                   e.g., 'host[N].address' or 'rank[N].host'. If 'hostN' is
  *                   provided, all processes on that host will be moved to
@@ -2182,7 +2180,7 @@ AdminSwitchoverResponse GPUdb::adminSwitchover( const std::vector<std::string>& 
  *                      corresponding process given in @a processes. Each index
  *                      must be specified as 'hostN' where 'N' corresponds to
  *                      the number associated with a host or rank in the <a
- *                      href="../../config/index.html#network"
+ *                      href="../../../config/#network"
  *                      target="_top">Network</a> section of the gpudb.conf
  *                      file, e.g., 'host[N].address'. Each entry in this array
  *                      will receive the corresponding process entry at the
@@ -2432,7 +2430,7 @@ AggregateConvexHullResponse& GPUdb::aggregateConvexHull( const AggregateConvexHu
  * @param tableName  Name of table on which the operation will be performed.
  *                   Must be an existing table, in [schema_name.]table_name
  *                   format, using standard <a
- *                   href="../../concepts/tables.html#table-name-resolution"
+ *                   href="../../../concepts/tables/#table-name-resolution"
  *                   target="_top">name resolution rules</a>.
  * @param xColumnName  Name of the column containing the x coordinates of the
  *                     points for the operation being performed.
@@ -2467,7 +2465,7 @@ AggregateConvexHullResponse GPUdb::aggregateConvexHull( const std::string& table
  * @param tableName  Name of table on which the operation will be performed.
  *                   Must be an existing table, in [schema_name.]table_name
  *                   format, using standard <a
- *                   href="../../concepts/tables.html#table-name-resolution"
+ *                   href="../../../concepts/tables/#table-name-resolution"
  *                   target="_top">name resolution rules</a>.
  * @param xColumnName  Name of the column containing the x coordinates of the
  *                     points for the operation being performed.
@@ -2504,13 +2502,13 @@ AggregateConvexHullResponse& GPUdb::aggregateConvexHull( const std::string& tabl
  * is somewhat analogous to an SQL-style SELECT...GROUP BY.
  * <p>
  * For aggregation details and examples, see <a
- * href="../../concepts/aggregation.html" target="_top">Aggregation</a>.  For
- * limitations, see <a href="../../concepts/aggregation.html#limitations"
+ * href="../../../concepts/aggregation/" target="_top">Aggregation</a>.  For
+ * limitations, see <a href="../../../concepts/aggregation/#limitations"
  * target="_top">Aggregation Limitations</a>.
  * <p>
  * Any column(s) can be grouped on, and all column types except
  * unrestricted-length strings may be used for computing applicable aggregates;
- * columns marked as <a href="../../concepts/types.html#data-handling"
+ * columns marked as <a href="../../../concepts/types/#data-handling"
  * target="_top">store-only</a> are unable to be used in grouping or
  * aggregation.
  * <p>
@@ -2527,33 +2525,33 @@ AggregateConvexHullResponse& GPUdb::aggregateConvexHull( const std::string& tabl
  * To also compute the sum of 'z' over each group, use:
  * column_names=['x','y','count(*)','sum(z)'].
  * <p>
- * Available <a href="../../concepts/expressions.html#aggregate-expressions"
+ * Available <a href="../../../concepts/expressions/#aggregate-expressions"
  * target="_top">aggregation functions</a> are: count(*), sum, min, max, avg,
  * mean, stddev, stddev_pop, stddev_samp, var, var_pop, var_samp, arg_min,
  * arg_max and count_distinct.
  * <p>
- * Available grouping functions are <a href="../../concepts/rollup.html"
- * target="_top">Rollup</a>, <a href="../../concepts/cube.html"
- * target="_top">Cube</a>, and <a href="../../concepts/grouping_sets.html"
+ * Available grouping functions are <a href="../../../concepts/rollup/"
+ * target="_top">Rollup</a>, <a href="../../../concepts/cube/"
+ * target="_top">Cube</a>, and <a href="../../../concepts/grouping_sets/"
  * target="_top">Grouping Sets</a>
  * <p>
- * This service also provides support for <a href="../../concepts/pivot.html"
+ * This service also provides support for <a href="../../../concepts/pivot/"
  * target="_top">Pivot</a> operations.
  * <p>
  * Filtering on aggregates is supported via expressions using <a
- * href="../../concepts/expressions.html#aggregate-expressions"
+ * href="../../../concepts/expressions/#aggregate-expressions"
  * target="_top">aggregation functions</a> supplied to @a having.
  * <p>
  * The response is returned as a dynamic schema. For details see: <a
- * href="../../api/index.html#dynamic-schemas" target="_top">dynamic schemas
+ * href="../../../api/#dynamic-schemas" target="_top">dynamic schemas
  * documentation</a>.
  * <p>
  * If a @a result_table name is specified in the @a options, the results are
  * stored in a new table with that name--no results are returned in the
  * response.  Both the table name and resulting column names must adhere to <a
- * href="../../concepts/tables.html#table" target="_top">standard naming
+ * href="../../../concepts/tables/#table" target="_top">standard naming
  * conventions</a>; column/aggregation expressions will need to be aliased.  If
- * the source table's <a href="../../concepts/tables.html#shard-keys"
+ * the source table's <a href="../../../concepts/tables/#shard-keys"
  * target="_top">shard key</a> is used as the grouping column(s) and all result
  * records are selected (@a offset is 0 and @a limit is -9999), the result
  * table will be sharded, in all other cases it will be replicated.  Sorting
@@ -2583,13 +2581,13 @@ RawAggregateGroupByResponse GPUdb::aggregateGroupByRaw( const AggregateGroupByRe
  * is somewhat analogous to an SQL-style SELECT...GROUP BY.
  * <p>
  * For aggregation details and examples, see <a
- * href="../../concepts/aggregation.html" target="_top">Aggregation</a>.  For
- * limitations, see <a href="../../concepts/aggregation.html#limitations"
+ * href="../../../concepts/aggregation/" target="_top">Aggregation</a>.  For
+ * limitations, see <a href="../../../concepts/aggregation/#limitations"
  * target="_top">Aggregation Limitations</a>.
  * <p>
  * Any column(s) can be grouped on, and all column types except
  * unrestricted-length strings may be used for computing applicable aggregates;
- * columns marked as <a href="../../concepts/types.html#data-handling"
+ * columns marked as <a href="../../../concepts/types/#data-handling"
  * target="_top">store-only</a> are unable to be used in grouping or
  * aggregation.
  * <p>
@@ -2606,33 +2604,33 @@ RawAggregateGroupByResponse GPUdb::aggregateGroupByRaw( const AggregateGroupByRe
  * To also compute the sum of 'z' over each group, use:
  * column_names=['x','y','count(*)','sum(z)'].
  * <p>
- * Available <a href="../../concepts/expressions.html#aggregate-expressions"
+ * Available <a href="../../../concepts/expressions/#aggregate-expressions"
  * target="_top">aggregation functions</a> are: count(*), sum, min, max, avg,
  * mean, stddev, stddev_pop, stddev_samp, var, var_pop, var_samp, arg_min,
  * arg_max and count_distinct.
  * <p>
- * Available grouping functions are <a href="../../concepts/rollup.html"
- * target="_top">Rollup</a>, <a href="../../concepts/cube.html"
- * target="_top">Cube</a>, and <a href="../../concepts/grouping_sets.html"
+ * Available grouping functions are <a href="../../../concepts/rollup/"
+ * target="_top">Rollup</a>, <a href="../../../concepts/cube/"
+ * target="_top">Cube</a>, and <a href="../../../concepts/grouping_sets/"
  * target="_top">Grouping Sets</a>
  * <p>
- * This service also provides support for <a href="../../concepts/pivot.html"
+ * This service also provides support for <a href="../../../concepts/pivot/"
  * target="_top">Pivot</a> operations.
  * <p>
  * Filtering on aggregates is supported via expressions using <a
- * href="../../concepts/expressions.html#aggregate-expressions"
+ * href="../../../concepts/expressions/#aggregate-expressions"
  * target="_top">aggregation functions</a> supplied to @a having.
  * <p>
  * The response is returned as a dynamic schema. For details see: <a
- * href="../../api/index.html#dynamic-schemas" target="_top">dynamic schemas
+ * href="../../../api/#dynamic-schemas" target="_top">dynamic schemas
  * documentation</a>.
  * <p>
  * If a @a result_table name is specified in the @a options, the results are
  * stored in a new table with that name--no results are returned in the
  * response.  Both the table name and resulting column names must adhere to <a
- * href="../../concepts/tables.html#table" target="_top">standard naming
+ * href="../../../concepts/tables/#table" target="_top">standard naming
  * conventions</a>; column/aggregation expressions will need to be aliased.  If
- * the source table's <a href="../../concepts/tables.html#shard-keys"
+ * the source table's <a href="../../../concepts/tables/#shard-keys"
  * target="_top">shard key</a> is used as the grouping column(s) and all result
  * records are selected (@a offset is 0 and @a limit is -9999), the result
  * table will be sharded, in all other cases it will be replicated.  Sorting
@@ -2665,13 +2663,13 @@ RawAggregateGroupByResponse& GPUdb::aggregateGroupByRaw( const AggregateGroupByR
  * is somewhat analogous to an SQL-style SELECT...GROUP BY.
  * <p>
  * For aggregation details and examples, see <a
- * href="../../concepts/aggregation.html" target="_top">Aggregation</a>.  For
- * limitations, see <a href="../../concepts/aggregation.html#limitations"
+ * href="../../../concepts/aggregation/" target="_top">Aggregation</a>.  For
+ * limitations, see <a href="../../../concepts/aggregation/#limitations"
  * target="_top">Aggregation Limitations</a>.
  * <p>
  * Any column(s) can be grouped on, and all column types except
  * unrestricted-length strings may be used for computing applicable aggregates;
- * columns marked as <a href="../../concepts/types.html#data-handling"
+ * columns marked as <a href="../../../concepts/types/#data-handling"
  * target="_top">store-only</a> are unable to be used in grouping or
  * aggregation.
  * <p>
@@ -2688,33 +2686,33 @@ RawAggregateGroupByResponse& GPUdb::aggregateGroupByRaw( const AggregateGroupByR
  * To also compute the sum of 'z' over each group, use:
  * column_names=['x','y','count(*)','sum(z)'].
  * <p>
- * Available <a href="../../concepts/expressions.html#aggregate-expressions"
+ * Available <a href="../../../concepts/expressions/#aggregate-expressions"
  * target="_top">aggregation functions</a> are: count(*), sum, min, max, avg,
  * mean, stddev, stddev_pop, stddev_samp, var, var_pop, var_samp, arg_min,
  * arg_max and count_distinct.
  * <p>
- * Available grouping functions are <a href="../../concepts/rollup.html"
- * target="_top">Rollup</a>, <a href="../../concepts/cube.html"
- * target="_top">Cube</a>, and <a href="../../concepts/grouping_sets.html"
+ * Available grouping functions are <a href="../../../concepts/rollup/"
+ * target="_top">Rollup</a>, <a href="../../../concepts/cube/"
+ * target="_top">Cube</a>, and <a href="../../../concepts/grouping_sets/"
  * target="_top">Grouping Sets</a>
  * <p>
- * This service also provides support for <a href="../../concepts/pivot.html"
+ * This service also provides support for <a href="../../../concepts/pivot/"
  * target="_top">Pivot</a> operations.
  * <p>
  * Filtering on aggregates is supported via expressions using <a
- * href="../../concepts/expressions.html#aggregate-expressions"
+ * href="../../../concepts/expressions/#aggregate-expressions"
  * target="_top">aggregation functions</a> supplied to @a having.
  * <p>
  * The response is returned as a dynamic schema. For details see: <a
- * href="../../api/index.html#dynamic-schemas" target="_top">dynamic schemas
+ * href="../../../api/#dynamic-schemas" target="_top">dynamic schemas
  * documentation</a>.
  * <p>
  * If a @a result_table name is specified in the @a options, the results are
  * stored in a new table with that name--no results are returned in the
  * response.  Both the table name and resulting column names must adhere to <a
- * href="../../concepts/tables.html#table" target="_top">standard naming
+ * href="../../../concepts/tables/#table" target="_top">standard naming
  * conventions</a>; column/aggregation expressions will need to be aliased.  If
- * the source table's <a href="../../concepts/tables.html#shard-keys"
+ * the source table's <a href="../../../concepts/tables/#shard-keys"
  * target="_top">shard key</a> is used as the grouping column(s) and all result
  * records are selected (@a offset is 0 and @a limit is -9999), the result
  * table will be sharded, in all other cases it will be replicated.  Sorting
@@ -2753,13 +2751,13 @@ AggregateGroupByResponse GPUdb::aggregateGroupBy( const AggregateGroupByRequest&
  * is somewhat analogous to an SQL-style SELECT...GROUP BY.
  * <p>
  * For aggregation details and examples, see <a
- * href="../../concepts/aggregation.html" target="_top">Aggregation</a>.  For
- * limitations, see <a href="../../concepts/aggregation.html#limitations"
+ * href="../../../concepts/aggregation/" target="_top">Aggregation</a>.  For
+ * limitations, see <a href="../../../concepts/aggregation/#limitations"
  * target="_top">Aggregation Limitations</a>.
  * <p>
  * Any column(s) can be grouped on, and all column types except
  * unrestricted-length strings may be used for computing applicable aggregates;
- * columns marked as <a href="../../concepts/types.html#data-handling"
+ * columns marked as <a href="../../../concepts/types/#data-handling"
  * target="_top">store-only</a> are unable to be used in grouping or
  * aggregation.
  * <p>
@@ -2776,33 +2774,33 @@ AggregateGroupByResponse GPUdb::aggregateGroupBy( const AggregateGroupByRequest&
  * To also compute the sum of 'z' over each group, use:
  * column_names=['x','y','count(*)','sum(z)'].
  * <p>
- * Available <a href="../../concepts/expressions.html#aggregate-expressions"
+ * Available <a href="../../../concepts/expressions/#aggregate-expressions"
  * target="_top">aggregation functions</a> are: count(*), sum, min, max, avg,
  * mean, stddev, stddev_pop, stddev_samp, var, var_pop, var_samp, arg_min,
  * arg_max and count_distinct.
  * <p>
- * Available grouping functions are <a href="../../concepts/rollup.html"
- * target="_top">Rollup</a>, <a href="../../concepts/cube.html"
- * target="_top">Cube</a>, and <a href="../../concepts/grouping_sets.html"
+ * Available grouping functions are <a href="../../../concepts/rollup/"
+ * target="_top">Rollup</a>, <a href="../../../concepts/cube/"
+ * target="_top">Cube</a>, and <a href="../../../concepts/grouping_sets/"
  * target="_top">Grouping Sets</a>
  * <p>
- * This service also provides support for <a href="../../concepts/pivot.html"
+ * This service also provides support for <a href="../../../concepts/pivot/"
  * target="_top">Pivot</a> operations.
  * <p>
  * Filtering on aggregates is supported via expressions using <a
- * href="../../concepts/expressions.html#aggregate-expressions"
+ * href="../../../concepts/expressions/#aggregate-expressions"
  * target="_top">aggregation functions</a> supplied to @a having.
  * <p>
  * The response is returned as a dynamic schema. For details see: <a
- * href="../../api/index.html#dynamic-schemas" target="_top">dynamic schemas
+ * href="../../../api/#dynamic-schemas" target="_top">dynamic schemas
  * documentation</a>.
  * <p>
  * If a @a result_table name is specified in the @a options, the results are
  * stored in a new table with that name--no results are returned in the
  * response.  Both the table name and resulting column names must adhere to <a
- * href="../../concepts/tables.html#table" target="_top">standard naming
+ * href="../../../concepts/tables/#table" target="_top">standard naming
  * conventions</a>; column/aggregation expressions will need to be aliased.  If
- * the source table's <a href="../../concepts/tables.html#shard-keys"
+ * the source table's <a href="../../../concepts/tables/#shard-keys"
  * target="_top">shard key</a> is used as the grouping column(s) and all result
  * records are selected (@a offset is 0 and @a limit is -9999), the result
  * table will be sharded, in all other cases it will be replicated.  Sorting
@@ -2844,13 +2842,13 @@ AggregateGroupByResponse& GPUdb::aggregateGroupBy( const AggregateGroupByRequest
  * is somewhat analogous to an SQL-style SELECT...GROUP BY.
  * <p>
  * For aggregation details and examples, see <a
- * href="../../concepts/aggregation.html" target="_top">Aggregation</a>.  For
- * limitations, see <a href="../../concepts/aggregation.html#limitations"
+ * href="../../../concepts/aggregation/" target="_top">Aggregation</a>.  For
+ * limitations, see <a href="../../../concepts/aggregation/#limitations"
  * target="_top">Aggregation Limitations</a>.
  * <p>
  * Any column(s) can be grouped on, and all column types except
  * unrestricted-length strings may be used for computing applicable aggregates;
- * columns marked as <a href="../../concepts/types.html#data-handling"
+ * columns marked as <a href="../../../concepts/types/#data-handling"
  * target="_top">store-only</a> are unable to be used in grouping or
  * aggregation.
  * <p>
@@ -2867,33 +2865,33 @@ AggregateGroupByResponse& GPUdb::aggregateGroupBy( const AggregateGroupByRequest
  * To also compute the sum of 'z' over each group, use:
  * column_names=['x','y','count(*)','sum(z)'].
  * <p>
- * Available <a href="../../concepts/expressions.html#aggregate-expressions"
+ * Available <a href="../../../concepts/expressions/#aggregate-expressions"
  * target="_top">aggregation functions</a> are: count(*), sum, min, max, avg,
  * mean, stddev, stddev_pop, stddev_samp, var, var_pop, var_samp, arg_min,
  * arg_max and count_distinct.
  * <p>
- * Available grouping functions are <a href="../../concepts/rollup.html"
- * target="_top">Rollup</a>, <a href="../../concepts/cube.html"
- * target="_top">Cube</a>, and <a href="../../concepts/grouping_sets.html"
+ * Available grouping functions are <a href="../../../concepts/rollup/"
+ * target="_top">Rollup</a>, <a href="../../../concepts/cube/"
+ * target="_top">Cube</a>, and <a href="../../../concepts/grouping_sets/"
  * target="_top">Grouping Sets</a>
  * <p>
- * This service also provides support for <a href="../../concepts/pivot.html"
+ * This service also provides support for <a href="../../../concepts/pivot/"
  * target="_top">Pivot</a> operations.
  * <p>
  * Filtering on aggregates is supported via expressions using <a
- * href="../../concepts/expressions.html#aggregate-expressions"
+ * href="../../../concepts/expressions/#aggregate-expressions"
  * target="_top">aggregation functions</a> supplied to @a having.
  * <p>
  * The response is returned as a dynamic schema. For details see: <a
- * href="../../api/index.html#dynamic-schemas" target="_top">dynamic schemas
+ * href="../../../api/#dynamic-schemas" target="_top">dynamic schemas
  * documentation</a>.
  * <p>
  * If a @a result_table name is specified in the @a options, the results are
  * stored in a new table with that name--no results are returned in the
  * response.  Both the table name and resulting column names must adhere to <a
- * href="../../concepts/tables.html#table" target="_top">standard naming
+ * href="../../../concepts/tables/#table" target="_top">standard naming
  * conventions</a>; column/aggregation expressions will need to be aliased.  If
- * the source table's <a href="../../concepts/tables.html#shard-keys"
+ * the source table's <a href="../../../concepts/tables/#shard-keys"
  * target="_top">shard key</a> is used as the grouping column(s) and all result
  * records are selected (@a offset is 0 and @a limit is -9999), the result
  * table will be sharded, in all other cases it will be replicated.  Sorting
@@ -2905,7 +2903,7 @@ AggregateGroupByResponse& GPUdb::aggregateGroupBy( const AggregateGroupByRequest
  * @param tableName  Name of an existing table or view on which the operation
  *                   will be performed, in [schema_name.]table_name format,
  *                   using standard <a
- *                   href="../../concepts/tables.html#table-name-resolution"
+ *                   href="../../../concepts/tables/#table-name-resolution"
  *                   target="_top">name resolution rules</a>.
  * @param columnNames  List of one or more column names, expressions, and
  *                     aggregate expressions.
@@ -2917,7 +2915,7 @@ AggregateGroupByResponse& GPUdb::aggregateGroupBy( const AggregateGroupByRequest
  *               be returned, or END_OF_SET (-9999) to indicate that the max
  *               number of results should be returned.  The number of records
  *               returned will never exceed the server's own limit, defined by
- *               the <a href="../../config/index.html#general"
+ *               the <a href="../../../config/#general"
  *               target="_top">max_get_records_size</a> parameter in the server
  *               configuration.  Use @a hasMoreRecords to see if more records
  *               exist in the result to be fetched, and @a offset & @a limit to
@@ -2966,9 +2964,9 @@ AggregateGroupByResponse& GPUdb::aggregateGroupBy( const AggregateGroupByRequest
  *                         <li> gpudb::aggregate_group_by_result_table: The
  *                 name of a table used to store the results, in
  *                 [schema_name.]table_name format, using standard <a
- *                 href="../../concepts/tables.html#table-name-resolution"
+ *                 href="../../../concepts/tables/#table-name-resolution"
  *                 target="_top">name resolution rules</a> and meeting <a
- *                 href="../../concepts/tables.html#table-naming-criteria"
+ *                 href="../../../concepts/tables/#table-naming-criteria"
  *                 target="_top">table naming criteria</a>.  Column names
  *                 (group-by and aggregate fields) need to be given aliases
  *                 e.g. ["FChar256 as fchar256", "sum(FDouble) as sfd"].  If
@@ -3006,7 +3004,7 @@ AggregateGroupByResponse& GPUdb::aggregateGroupBy( const AggregateGroupByRequest
  *                 </ul>
  *                 The default value is gpudb::aggregate_group_by_false.
  *                         <li> gpudb::aggregate_group_by_ttl: Sets the <a
- *                 href="../../concepts/ttl.html" target="_top">TTL</a> of the
+ *                 href="../../../concepts/ttl/" target="_top">TTL</a> of the
  *                 table specified in @a result_table.
  *                         <li> gpudb::aggregate_group_by_chunk_size: Indicates
  *                 the number of records per chunk to be used for the result
@@ -3020,14 +3018,14 @@ AggregateGroupByResponse& GPUdb::aggregateGroupBy( const AggregateGroupByRequest
  *                 of which the result table will be a member.  The default
  *                 value is ''.
  *                         <li> gpudb::aggregate_group_by_materialize_on_gpu:
- *                 No longer used.  See <a href="../../rm/concepts.html"
+ *                 No longer used.  See <a href="../../../rm/concepts/"
  *                 target="_top">Resource Management Concepts</a> for
  *                 information about how resources are managed, <a
- *                 href="../../rm/concepts.html" target="_top">Tier Strategy
+ *                 href="../../../rm/concepts/" target="_top">Tier Strategy
  *                 Concepts</a> for how resources are targeted for VRAM, and <a
- *                 href="../../rm/usage.html#tier-strategies"
- *                 target="_top">Tier Strategy Usage</a> for how to specify a
- *                 table's priority in VRAM.
+ *                 href="../../../rm/usage/#tier-strategies" target="_top">Tier
+ *                 Strategy Usage</a> for how to specify a table's priority in
+ *                 VRAM.
  *                 <ul>
  *                         <li> gpudb::aggregate_group_by_true
  *                         <li> gpudb::aggregate_group_by_false
@@ -3084,13 +3082,13 @@ AggregateGroupByResponse GPUdb::aggregateGroupBy( const std::string& tableName,
  * is somewhat analogous to an SQL-style SELECT...GROUP BY.
  * <p>
  * For aggregation details and examples, see <a
- * href="../../concepts/aggregation.html" target="_top">Aggregation</a>.  For
- * limitations, see <a href="../../concepts/aggregation.html#limitations"
+ * href="../../../concepts/aggregation/" target="_top">Aggregation</a>.  For
+ * limitations, see <a href="../../../concepts/aggregation/#limitations"
  * target="_top">Aggregation Limitations</a>.
  * <p>
  * Any column(s) can be grouped on, and all column types except
  * unrestricted-length strings may be used for computing applicable aggregates;
- * columns marked as <a href="../../concepts/types.html#data-handling"
+ * columns marked as <a href="../../../concepts/types/#data-handling"
  * target="_top">store-only</a> are unable to be used in grouping or
  * aggregation.
  * <p>
@@ -3107,33 +3105,33 @@ AggregateGroupByResponse GPUdb::aggregateGroupBy( const std::string& tableName,
  * To also compute the sum of 'z' over each group, use:
  * column_names=['x','y','count(*)','sum(z)'].
  * <p>
- * Available <a href="../../concepts/expressions.html#aggregate-expressions"
+ * Available <a href="../../../concepts/expressions/#aggregate-expressions"
  * target="_top">aggregation functions</a> are: count(*), sum, min, max, avg,
  * mean, stddev, stddev_pop, stddev_samp, var, var_pop, var_samp, arg_min,
  * arg_max and count_distinct.
  * <p>
- * Available grouping functions are <a href="../../concepts/rollup.html"
- * target="_top">Rollup</a>, <a href="../../concepts/cube.html"
- * target="_top">Cube</a>, and <a href="../../concepts/grouping_sets.html"
+ * Available grouping functions are <a href="../../../concepts/rollup/"
+ * target="_top">Rollup</a>, <a href="../../../concepts/cube/"
+ * target="_top">Cube</a>, and <a href="../../../concepts/grouping_sets/"
  * target="_top">Grouping Sets</a>
  * <p>
- * This service also provides support for <a href="../../concepts/pivot.html"
+ * This service also provides support for <a href="../../../concepts/pivot/"
  * target="_top">Pivot</a> operations.
  * <p>
  * Filtering on aggregates is supported via expressions using <a
- * href="../../concepts/expressions.html#aggregate-expressions"
+ * href="../../../concepts/expressions/#aggregate-expressions"
  * target="_top">aggregation functions</a> supplied to @a having.
  * <p>
  * The response is returned as a dynamic schema. For details see: <a
- * href="../../api/index.html#dynamic-schemas" target="_top">dynamic schemas
+ * href="../../../api/#dynamic-schemas" target="_top">dynamic schemas
  * documentation</a>.
  * <p>
  * If a @a result_table name is specified in the @a options, the results are
  * stored in a new table with that name--no results are returned in the
  * response.  Both the table name and resulting column names must adhere to <a
- * href="../../concepts/tables.html#table" target="_top">standard naming
+ * href="../../../concepts/tables/#table" target="_top">standard naming
  * conventions</a>; column/aggregation expressions will need to be aliased.  If
- * the source table's <a href="../../concepts/tables.html#shard-keys"
+ * the source table's <a href="../../../concepts/tables/#shard-keys"
  * target="_top">shard key</a> is used as the grouping column(s) and all result
  * records are selected (@a offset is 0 and @a limit is -9999), the result
  * table will be sharded, in all other cases it will be replicated.  Sorting
@@ -3145,7 +3143,7 @@ AggregateGroupByResponse GPUdb::aggregateGroupBy( const std::string& tableName,
  * @param tableName  Name of an existing table or view on which the operation
  *                   will be performed, in [schema_name.]table_name format,
  *                   using standard <a
- *                   href="../../concepts/tables.html#table-name-resolution"
+ *                   href="../../../concepts/tables/#table-name-resolution"
  *                   target="_top">name resolution rules</a>.
  * @param columnNames  List of one or more column names, expressions, and
  *                     aggregate expressions.
@@ -3157,7 +3155,7 @@ AggregateGroupByResponse GPUdb::aggregateGroupBy( const std::string& tableName,
  *               be returned, or END_OF_SET (-9999) to indicate that the max
  *               number of results should be returned.  The number of records
  *               returned will never exceed the server's own limit, defined by
- *               the <a href="../../config/index.html#general"
+ *               the <a href="../../../config/#general"
  *               target="_top">max_get_records_size</a> parameter in the server
  *               configuration.  Use @a hasMoreRecords to see if more records
  *               exist in the result to be fetched, and @a offset & @a limit to
@@ -3206,9 +3204,9 @@ AggregateGroupByResponse GPUdb::aggregateGroupBy( const std::string& tableName,
  *                         <li> gpudb::aggregate_group_by_result_table: The
  *                 name of a table used to store the results, in
  *                 [schema_name.]table_name format, using standard <a
- *                 href="../../concepts/tables.html#table-name-resolution"
+ *                 href="../../../concepts/tables/#table-name-resolution"
  *                 target="_top">name resolution rules</a> and meeting <a
- *                 href="../../concepts/tables.html#table-naming-criteria"
+ *                 href="../../../concepts/tables/#table-naming-criteria"
  *                 target="_top">table naming criteria</a>.  Column names
  *                 (group-by and aggregate fields) need to be given aliases
  *                 e.g. ["FChar256 as fchar256", "sum(FDouble) as sfd"].  If
@@ -3246,7 +3244,7 @@ AggregateGroupByResponse GPUdb::aggregateGroupBy( const std::string& tableName,
  *                 </ul>
  *                 The default value is gpudb::aggregate_group_by_false.
  *                         <li> gpudb::aggregate_group_by_ttl: Sets the <a
- *                 href="../../concepts/ttl.html" target="_top">TTL</a> of the
+ *                 href="../../../concepts/ttl/" target="_top">TTL</a> of the
  *                 table specified in @a result_table.
  *                         <li> gpudb::aggregate_group_by_chunk_size: Indicates
  *                 the number of records per chunk to be used for the result
@@ -3260,14 +3258,14 @@ AggregateGroupByResponse GPUdb::aggregateGroupBy( const std::string& tableName,
  *                 of which the result table will be a member.  The default
  *                 value is ''.
  *                         <li> gpudb::aggregate_group_by_materialize_on_gpu:
- *                 No longer used.  See <a href="../../rm/concepts.html"
+ *                 No longer used.  See <a href="../../../rm/concepts/"
  *                 target="_top">Resource Management Concepts</a> for
  *                 information about how resources are managed, <a
- *                 href="../../rm/concepts.html" target="_top">Tier Strategy
+ *                 href="../../../rm/concepts/" target="_top">Tier Strategy
  *                 Concepts</a> for how resources are targeted for VRAM, and <a
- *                 href="../../rm/usage.html#tier-strategies"
- *                 target="_top">Tier Strategy Usage</a> for how to specify a
- *                 table's priority in VRAM.
+ *                 href="../../../rm/usage/#tier-strategies" target="_top">Tier
+ *                 Strategy Usage</a> for how to specify a table's priority in
+ *                 VRAM.
  *                 <ul>
  *                         <li> gpudb::aggregate_group_by_true
  *                         <li> gpudb::aggregate_group_by_false
@@ -3408,7 +3406,7 @@ AggregateHistogramResponse& GPUdb::aggregateHistogram( const AggregateHistogramR
  * @param tableName  Name of the table on which the operation will be
  *                   performed. Must be an existing table, in
  *                   [schema_name.]table_name format, using standard <a
- *                   href="../../concepts/tables.html#table-name-resolution"
+ *                   href="../../../concepts/tables/#table-name-resolution"
  *                   target="_top">name resolution rules</a>.
  * @param columnName  Name of a column or an expression of one or more column
  *                    names over which the histogram will be calculated.
@@ -3467,7 +3465,7 @@ AggregateHistogramResponse GPUdb::aggregateHistogram( const std::string& tableNa
  * @param tableName  Name of the table on which the operation will be
  *                   performed. Must be an existing table, in
  *                   [schema_name.]table_name format, using standard <a
- *                   href="../../concepts/tables.html#table-name-resolution"
+ *                   href="../../../concepts/tables/#table-name-resolution"
  *                   target="_top">name resolution rules</a>.
  * @param columnName  Name of a column or an expression of one or more column
  *                    names over which the histogram will be calculated.
@@ -3605,7 +3603,7 @@ AggregateKMeansResponse& GPUdb::aggregateKMeans( const AggregateKMeansRequest& r
  * @param tableName  Name of the table on which the operation will be
  *                   performed. Must be an existing table, in
  *                   [schema_name.]table_name format, using standard <a
- *                   href="../../concepts/tables.html#table-name-resolution"
+ *                   href="../../../concepts/tables/#table-name-resolution"
  *                   target="_top">name resolution rules</a>.
  * @param columnNames  List of column names on which the operation would be
  *                     performed. If n columns are provided then each of the k
@@ -3673,7 +3671,7 @@ AggregateKMeansResponse GPUdb::aggregateKMeans( const std::string& tableName,
  * @param tableName  Name of the table on which the operation will be
  *                   performed. Must be an existing table, in
  *                   [schema_name.]table_name format, using standard <a
- *                   href="../../concepts/tables.html#table-name-resolution"
+ *                   href="../../../concepts/tables/#table-name-resolution"
  *                   target="_top">name resolution rules</a>.
  * @param columnNames  List of column names on which the operation would be
  *                     performed. If n columns are provided then each of the k
@@ -3769,7 +3767,7 @@ AggregateMinMaxResponse& GPUdb::aggregateMinMax( const AggregateMinMaxRequest& r
  * @param tableName  Name of the table on which the operation will be
  *                   performed. Must be an existing table, in
  *                   [schema_name.]table_name format, using standard <a
- *                   href="../../concepts/tables.html#table-name-resolution"
+ *                   href="../../../concepts/tables/#table-name-resolution"
  *                   target="_top">name resolution rules</a>.
  * @param columnName  Name of a column or an expression of one or more column
  *                    on which the min-max will be calculated.
@@ -3800,7 +3798,7 @@ AggregateMinMaxResponse GPUdb::aggregateMinMax( const std::string& tableName,
  * @param tableName  Name of the table on which the operation will be
  *                   performed. Must be an existing table, in
  *                   [schema_name.]table_name format, using standard <a
- *                   href="../../concepts/tables.html#table-name-resolution"
+ *                   href="../../../concepts/tables/#table-name-resolution"
  *                   target="_top">name resolution rules</a>.
  * @param columnName  Name of a column or an expression of one or more column
  *                    on which the min-max will be calculated.
@@ -3875,7 +3873,7 @@ AggregateMinMaxGeometryResponse& GPUdb::aggregateMinMaxGeometry( const Aggregate
  * @param tableName  Name of the table on which the operation will be
  *                   performed. Must be an existing table, in
  *                   [schema_name.]table_name format, using standard <a
- *                   href="../../concepts/tables.html#table-name-resolution"
+ *                   href="../../../concepts/tables/#table-name-resolution"
  *                   target="_top">name resolution rules</a>.
  * @param columnName  Name of a geospatial geometry column on which the min-max
  *                    will be calculated.
@@ -3906,7 +3904,7 @@ AggregateMinMaxGeometryResponse GPUdb::aggregateMinMaxGeometry( const std::strin
  * @param tableName  Name of the table on which the operation will be
  *                   performed. Must be an existing table, in
  *                   [schema_name.]table_name format, using standard <a
- *                   href="../../concepts/tables.html#table-name-resolution"
+ *                   href="../../../concepts/tables/#table-name-resolution"
  *                   target="_top">name resolution rules</a>.
  * @param columnName  Name of a geospatial geometry column on which the min-max
  *                    will be calculated.
@@ -4146,7 +4144,7 @@ AggregateStatisticsResponse& GPUdb::aggregateStatistics( const AggregateStatisti
  * @param tableName  Name of the table on which the statistics operation will
  *                   be performed, in [schema_name.]table_name format, using
  *                   standard <a
- *                   href="../../concepts/tables.html#table-name-resolution"
+ *                   href="../../../concepts/tables/#table-name-resolution"
  *                   target="_top">name resolution rules</a>.
  * @param columnName  Name of the primary column for which the statistics are
  *                    to be calculated.
@@ -4287,7 +4285,7 @@ AggregateStatisticsResponse GPUdb::aggregateStatistics( const std::string& table
  * @param tableName  Name of the table on which the statistics operation will
  *                   be performed, in [schema_name.]table_name format, using
  *                   standard <a
- *                   href="../../concepts/tables.html#table-name-resolution"
+ *                   href="../../../concepts/tables/#table-name-resolution"
  *                   target="_top">name resolution rules</a>.
  * @param columnName  Name of the primary column for which the statistics are
  *                    to be calculated.
@@ -4510,7 +4508,7 @@ AggregateStatisticsByRangeResponse& GPUdb::aggregateStatisticsByRange( const Agg
  * @param tableName  Name of the table on which the ranged-statistics operation
  *                   will be performed, in [schema_name.]table_name format,
  *                   using standard <a
- *                   href="../../concepts/tables.html#table-name-resolution"
+ *                   href="../../../concepts/tables/#table-name-resolution"
  *                   target="_top">name resolution rules</a>.
  * @param selectExpression  For a non-empty expression statistics are
  *                          calculated for those records for which the
@@ -4615,7 +4613,7 @@ AggregateStatisticsByRangeResponse GPUdb::aggregateStatisticsByRange( const std:
  * @param tableName  Name of the table on which the ranged-statistics operation
  *                   will be performed, in [schema_name.]table_name format,
  *                   using standard <a
- *                   href="../../concepts/tables.html#table-name-resolution"
+ *                   href="../../../concepts/tables/#table-name-resolution"
  *                   target="_top">name resolution rules</a>.
  * @param selectExpression  For a non-empty expression statistics are
  *                          calculated for those records for which the
@@ -4694,7 +4692,7 @@ AggregateStatisticsByRangeResponse& GPUdb::aggregateStatisticsByRange( const std
  * @a jsonEncodedResponse.  The results can be paged via @a offset
  * and @a limit parameters.
  * <p>
- * Columns marked as <a href="../../concepts/types.html#data-handling"
+ * Columns marked as <a href="../../../concepts/types/#data-handling"
  * target="_top">store-only</a>
  * are unable to be used with this function.
  * <p>
@@ -4704,7 +4702,7 @@ AggregateStatisticsByRangeResponse& GPUdb::aggregateStatisticsByRange( const std
  * {"limit":"10","sort_order":"descending"}.
  * <p>
  * The response is returned as a dynamic schema. For details see:
- * <a href="../../api/index.html#dynamic-schemas" target="_top">dynamic schemas
+ * <a href="../../../api/#dynamic-schemas" target="_top">dynamic schemas
  * documentation</a>.
  * <p>
  * If a @a result_table name is specified in the
@@ -4712,10 +4710,10 @@ AggregateStatisticsByRangeResponse& GPUdb::aggregateStatisticsByRange( const std
  * results are returned in the response.  Both the table name and resulting
  * column
  * name must adhere to
- * <a href="../../concepts/tables.html#table" target="_top">standard naming
+ * <a href="../../../concepts/tables/#table" target="_top">standard naming
  * conventions</a>;
  * any column expression will need to be aliased.  If the source table's
- * <a href="../../concepts/tables.html#shard-keys" target="_top">shard key</a>
+ * <a href="../../../concepts/tables/#shard-keys" target="_top">shard key</a>
  * is used as the
  * @a columnName, the result table will be sharded, in all other cases it
  * will be replicated.  Sorting will properly function only if the result table
@@ -4749,7 +4747,7 @@ RawAggregateUniqueResponse GPUdb::aggregateUniqueRaw( const AggregateUniqueReque
  * @a jsonEncodedResponse.  The results can be paged via @a offset
  * and @a limit parameters.
  * <p>
- * Columns marked as <a href="../../concepts/types.html#data-handling"
+ * Columns marked as <a href="../../../concepts/types/#data-handling"
  * target="_top">store-only</a>
  * are unable to be used with this function.
  * <p>
@@ -4759,7 +4757,7 @@ RawAggregateUniqueResponse GPUdb::aggregateUniqueRaw( const AggregateUniqueReque
  * {"limit":"10","sort_order":"descending"}.
  * <p>
  * The response is returned as a dynamic schema. For details see:
- * <a href="../../api/index.html#dynamic-schemas" target="_top">dynamic schemas
+ * <a href="../../../api/#dynamic-schemas" target="_top">dynamic schemas
  * documentation</a>.
  * <p>
  * If a @a result_table name is specified in the
@@ -4767,10 +4765,10 @@ RawAggregateUniqueResponse GPUdb::aggregateUniqueRaw( const AggregateUniqueReque
  * results are returned in the response.  Both the table name and resulting
  * column
  * name must adhere to
- * <a href="../../concepts/tables.html#table" target="_top">standard naming
+ * <a href="../../../concepts/tables/#table" target="_top">standard naming
  * conventions</a>;
  * any column expression will need to be aliased.  If the source table's
- * <a href="../../concepts/tables.html#shard-keys" target="_top">shard key</a>
+ * <a href="../../../concepts/tables/#shard-keys" target="_top">shard key</a>
  * is used as the
  * @a columnName, the result table will be sharded, in all other cases it
  * will be replicated.  Sorting will properly function only if the result table
@@ -4807,7 +4805,7 @@ RawAggregateUniqueResponse& GPUdb::aggregateUniqueRaw( const AggregateUniqueRequ
  * @a jsonEncodedResponse.  The results can be paged via @a offset
  * and @a limit parameters.
  * <p>
- * Columns marked as <a href="../../concepts/types.html#data-handling"
+ * Columns marked as <a href="../../../concepts/types/#data-handling"
  * target="_top">store-only</a>
  * are unable to be used with this function.
  * <p>
@@ -4817,7 +4815,7 @@ RawAggregateUniqueResponse& GPUdb::aggregateUniqueRaw( const AggregateUniqueRequ
  * {"limit":"10","sort_order":"descending"}.
  * <p>
  * The response is returned as a dynamic schema. For details see:
- * <a href="../../api/index.html#dynamic-schemas" target="_top">dynamic schemas
+ * <a href="../../../api/#dynamic-schemas" target="_top">dynamic schemas
  * documentation</a>.
  * <p>
  * If a @a result_table name is specified in the
@@ -4825,10 +4823,10 @@ RawAggregateUniqueResponse& GPUdb::aggregateUniqueRaw( const AggregateUniqueRequ
  * results are returned in the response.  Both the table name and resulting
  * column
  * name must adhere to
- * <a href="../../concepts/tables.html#table" target="_top">standard naming
+ * <a href="../../../concepts/tables/#table" target="_top">standard naming
  * conventions</a>;
  * any column expression will need to be aliased.  If the source table's
- * <a href="../../concepts/tables.html#shard-keys" target="_top">shard key</a>
+ * <a href="../../../concepts/tables/#shard-keys" target="_top">shard key</a>
  * is used as the
  * @a columnName, the result table will be sharded, in all other cases it
  * will be replicated.  Sorting will properly function only if the result table
@@ -4871,7 +4869,7 @@ AggregateUniqueResponse GPUdb::aggregateUnique( const AggregateUniqueRequest& re
  * @a jsonEncodedResponse.  The results can be paged via @a offset
  * and @a limit parameters.
  * <p>
- * Columns marked as <a href="../../concepts/types.html#data-handling"
+ * Columns marked as <a href="../../../concepts/types/#data-handling"
  * target="_top">store-only</a>
  * are unable to be used with this function.
  * <p>
@@ -4881,7 +4879,7 @@ AggregateUniqueResponse GPUdb::aggregateUnique( const AggregateUniqueRequest& re
  * {"limit":"10","sort_order":"descending"}.
  * <p>
  * The response is returned as a dynamic schema. For details see:
- * <a href="../../api/index.html#dynamic-schemas" target="_top">dynamic schemas
+ * <a href="../../../api/#dynamic-schemas" target="_top">dynamic schemas
  * documentation</a>.
  * <p>
  * If a @a result_table name is specified in the
@@ -4889,10 +4887,10 @@ AggregateUniqueResponse GPUdb::aggregateUnique( const AggregateUniqueRequest& re
  * results are returned in the response.  Both the table name and resulting
  * column
  * name must adhere to
- * <a href="../../concepts/tables.html#table" target="_top">standard naming
+ * <a href="../../../concepts/tables/#table" target="_top">standard naming
  * conventions</a>;
  * any column expression will need to be aliased.  If the source table's
- * <a href="../../concepts/tables.html#shard-keys" target="_top">shard key</a>
+ * <a href="../../../concepts/tables/#shard-keys" target="_top">shard key</a>
  * is used as the
  * @a columnName, the result table will be sharded, in all other cases it
  * will be replicated.  Sorting will properly function only if the result table
@@ -4938,7 +4936,7 @@ AggregateUniqueResponse& GPUdb::aggregateUnique( const AggregateUniqueRequest& r
  * @a jsonEncodedResponse.  The results can be paged via @a offset
  * and @a limit parameters.
  * <p>
- * Columns marked as <a href="../../concepts/types.html#data-handling"
+ * Columns marked as <a href="../../../concepts/types/#data-handling"
  * target="_top">store-only</a>
  * are unable to be used with this function.
  * <p>
@@ -4948,7 +4946,7 @@ AggregateUniqueResponse& GPUdb::aggregateUnique( const AggregateUniqueRequest& r
  * {"limit":"10","sort_order":"descending"}.
  * <p>
  * The response is returned as a dynamic schema. For details see:
- * <a href="../../api/index.html#dynamic-schemas" target="_top">dynamic schemas
+ * <a href="../../../api/#dynamic-schemas" target="_top">dynamic schemas
  * documentation</a>.
  * <p>
  * If a @a result_table name is specified in the
@@ -4956,10 +4954,10 @@ AggregateUniqueResponse& GPUdb::aggregateUnique( const AggregateUniqueRequest& r
  * results are returned in the response.  Both the table name and resulting
  * column
  * name must adhere to
- * <a href="../../concepts/tables.html#table" target="_top">standard naming
+ * <a href="../../../concepts/tables/#table" target="_top">standard naming
  * conventions</a>;
  * any column expression will need to be aliased.  If the source table's
- * <a href="../../concepts/tables.html#shard-keys" target="_top">shard key</a>
+ * <a href="../../../concepts/tables/#shard-keys" target="_top">shard key</a>
  * is used as the
  * @a columnName, the result table will be sharded, in all other cases it
  * will be replicated.  Sorting will properly function only if the result table
@@ -4972,7 +4970,7 @@ AggregateUniqueResponse& GPUdb::aggregateUnique( const AggregateUniqueRequest& r
  * @param tableName  Name of an existing table or view on which the operation
  *                   will be performed, in [schema_name.]table_name format,
  *                   using standard <a
- *                   href="../../concepts/tables.html#table-name-resolution"
+ *                   href="../../../concepts/tables/#table-name-resolution"
  *                   target="_top">name resolution rules</a>.
  * @param columnName  Name of the column or an expression containing one or
  *                    more column names on which the unique function would be
@@ -4985,7 +4983,7 @@ AggregateUniqueResponse& GPUdb::aggregateUnique( const AggregateUniqueRequest& r
  *               be returned. Or END_OF_SET (-9999) to indicate that the max
  *               number of results should be returned.  The number of records
  *               returned will never exceed the server's own limit, defined by
- *               the <a href="../../config/index.html#general"
+ *               the <a href="../../../config/#general"
  *               target="_top">max_get_records_size</a> parameter in the server
  *               configuration.  Use @a hasMoreRecords to see if more records
  *               exist in the result to be fetched, and @a offset & @a limit to
@@ -5010,9 +5008,9 @@ AggregateUniqueResponse& GPUdb::aggregateUnique( const AggregateUniqueRequest& r
  *                         <li> gpudb::aggregate_unique_result_table: The name
  *                 of the table used to store the results, in
  *                 [schema_name.]table_name format, using standard <a
- *                 href="../../concepts/tables.html#table-name-resolution"
+ *                 href="../../../concepts/tables/#table-name-resolution"
  *                 target="_top">name resolution rules</a> and meeting <a
- *                 href="../../concepts/tables.html#table-naming-criteria"
+ *                 href="../../../concepts/tables/#table-naming-criteria"
  *                 target="_top">table naming criteria</a>.  If present, no
  *                 results are returned in the response.  Not available if @a
  *                 columnName is an unrestricted-length string.
@@ -5046,7 +5044,7 @@ AggregateUniqueResponse& GPUdb::aggregateUnique( const AggregateUniqueRequest& r
  *                 </ul>
  *                 The default value is gpudb::aggregate_unique_false.
  *                         <li> gpudb::aggregate_unique_ttl: Sets the <a
- *                 href="../../concepts/ttl.html" target="_top">TTL</a> of the
+ *                 href="../../../concepts/ttl/" target="_top">TTL</a> of the
  *                 table specified in @a result_table.
  *                         <li> gpudb::aggregate_unique_chunk_size: Indicates
  *                 the number of records per chunk to be used for the result
@@ -5094,7 +5092,7 @@ AggregateUniqueResponse GPUdb::aggregateUnique( const std::string& tableName,
  * @a jsonEncodedResponse.  The results can be paged via @a offset
  * and @a limit parameters.
  * <p>
- * Columns marked as <a href="../../concepts/types.html#data-handling"
+ * Columns marked as <a href="../../../concepts/types/#data-handling"
  * target="_top">store-only</a>
  * are unable to be used with this function.
  * <p>
@@ -5104,7 +5102,7 @@ AggregateUniqueResponse GPUdb::aggregateUnique( const std::string& tableName,
  * {"limit":"10","sort_order":"descending"}.
  * <p>
  * The response is returned as a dynamic schema. For details see:
- * <a href="../../api/index.html#dynamic-schemas" target="_top">dynamic schemas
+ * <a href="../../../api/#dynamic-schemas" target="_top">dynamic schemas
  * documentation</a>.
  * <p>
  * If a @a result_table name is specified in the
@@ -5112,10 +5110,10 @@ AggregateUniqueResponse GPUdb::aggregateUnique( const std::string& tableName,
  * results are returned in the response.  Both the table name and resulting
  * column
  * name must adhere to
- * <a href="../../concepts/tables.html#table" target="_top">standard naming
+ * <a href="../../../concepts/tables/#table" target="_top">standard naming
  * conventions</a>;
  * any column expression will need to be aliased.  If the source table's
- * <a href="../../concepts/tables.html#shard-keys" target="_top">shard key</a>
+ * <a href="../../../concepts/tables/#shard-keys" target="_top">shard key</a>
  * is used as the
  * @a columnName, the result table will be sharded, in all other cases it
  * will be replicated.  Sorting will properly function only if the result table
@@ -5128,7 +5126,7 @@ AggregateUniqueResponse GPUdb::aggregateUnique( const std::string& tableName,
  * @param tableName  Name of an existing table or view on which the operation
  *                   will be performed, in [schema_name.]table_name format,
  *                   using standard <a
- *                   href="../../concepts/tables.html#table-name-resolution"
+ *                   href="../../../concepts/tables/#table-name-resolution"
  *                   target="_top">name resolution rules</a>.
  * @param columnName  Name of the column or an expression containing one or
  *                    more column names on which the unique function would be
@@ -5141,7 +5139,7 @@ AggregateUniqueResponse GPUdb::aggregateUnique( const std::string& tableName,
  *               be returned. Or END_OF_SET (-9999) to indicate that the max
  *               number of results should be returned.  The number of records
  *               returned will never exceed the server's own limit, defined by
- *               the <a href="../../config/index.html#general"
+ *               the <a href="../../../config/#general"
  *               target="_top">max_get_records_size</a> parameter in the server
  *               configuration.  Use @a hasMoreRecords to see if more records
  *               exist in the result to be fetched, and @a offset & @a limit to
@@ -5166,9 +5164,9 @@ AggregateUniqueResponse GPUdb::aggregateUnique( const std::string& tableName,
  *                         <li> gpudb::aggregate_unique_result_table: The name
  *                 of the table used to store the results, in
  *                 [schema_name.]table_name format, using standard <a
- *                 href="../../concepts/tables.html#table-name-resolution"
+ *                 href="../../../concepts/tables/#table-name-resolution"
  *                 target="_top">name resolution rules</a> and meeting <a
- *                 href="../../concepts/tables.html#table-naming-criteria"
+ *                 href="../../../concepts/tables/#table-naming-criteria"
  *                 target="_top">table naming criteria</a>.  If present, no
  *                 results are returned in the response.  Not available if @a
  *                 columnName is an unrestricted-length string.
@@ -5202,7 +5200,7 @@ AggregateUniqueResponse GPUdb::aggregateUnique( const std::string& tableName,
  *                 </ul>
  *                 The default value is gpudb::aggregate_unique_false.
  *                         <li> gpudb::aggregate_unique_ttl: Sets the <a
- *                 href="../../concepts/ttl.html" target="_top">TTL</a> of the
+ *                 href="../../../concepts/ttl/" target="_top">TTL</a> of the
  *                 table specified in @a result_table.
  *                         <li> gpudb::aggregate_unique_chunk_size: Indicates
  *                 the number of records per chunk to be used for the result
@@ -5248,9 +5246,9 @@ AggregateUniqueResponse& GPUdb::aggregateUnique( const std::string& tableName,
  * Rotate the column values into rows values.
  * <p>
  * For unpivot details and examples, see
- * <a href="../../concepts/unpivot.html" target="_top">Unpivot</a>.  For
+ * <a href="../../../concepts/unpivot/" target="_top">Unpivot</a>.  For
  * limitations, see
- * <a href="../../concepts/unpivot.html#limitations" target="_top">Unpivot
+ * <a href="../../../concepts/unpivot/#limitations" target="_top">Unpivot
  * Limitations</a>.
  * <p>
  * Unpivot is used to normalize tables that are built for cross tabular
@@ -5264,7 +5262,7 @@ AggregateUniqueResponse& GPUdb::aggregateUnique( const std::string& tableName,
  * and values respectively.
  * <p>
  * The response is returned as a dynamic schema. For details see:
- * <a href="../../api/index.html#dynamic-schemas" target="_top">dynamic schemas
+ * <a href="../../../api/#dynamic-schemas" target="_top">dynamic schemas
  * documentation</a>.
  * 
  * @param[in] request_  Request object containing the parameters for the
@@ -5286,9 +5284,9 @@ RawAggregateUnpivotResponse GPUdb::aggregateUnpivotRaw( const AggregateUnpivotRe
  * Rotate the column values into rows values.
  * <p>
  * For unpivot details and examples, see
- * <a href="../../concepts/unpivot.html" target="_top">Unpivot</a>.  For
+ * <a href="../../../concepts/unpivot/" target="_top">Unpivot</a>.  For
  * limitations, see
- * <a href="../../concepts/unpivot.html#limitations" target="_top">Unpivot
+ * <a href="../../../concepts/unpivot/#limitations" target="_top">Unpivot
  * Limitations</a>.
  * <p>
  * Unpivot is used to normalize tables that are built for cross tabular
@@ -5302,7 +5300,7 @@ RawAggregateUnpivotResponse GPUdb::aggregateUnpivotRaw( const AggregateUnpivotRe
  * and values respectively.
  * <p>
  * The response is returned as a dynamic schema. For details see:
- * <a href="../../api/index.html#dynamic-schemas" target="_top">dynamic schemas
+ * <a href="../../../api/#dynamic-schemas" target="_top">dynamic schemas
  * documentation</a>.
  * 
  * @param[in] request_  Request object containing the parameters for the
@@ -5327,9 +5325,9 @@ RawAggregateUnpivotResponse& GPUdb::aggregateUnpivotRaw( const AggregateUnpivotR
  * Rotate the column values into rows values.
  * <p>
  * For unpivot details and examples, see
- * <a href="../../concepts/unpivot.html" target="_top">Unpivot</a>.  For
+ * <a href="../../../concepts/unpivot/" target="_top">Unpivot</a>.  For
  * limitations, see
- * <a href="../../concepts/unpivot.html#limitations" target="_top">Unpivot
+ * <a href="../../../concepts/unpivot/#limitations" target="_top">Unpivot
  * Limitations</a>.
  * <p>
  * Unpivot is used to normalize tables that are built for cross tabular
@@ -5343,7 +5341,7 @@ RawAggregateUnpivotResponse& GPUdb::aggregateUnpivotRaw( const AggregateUnpivotR
  * and values respectively.
  * <p>
  * The response is returned as a dynamic schema. For details see:
- * <a href="../../api/index.html#dynamic-schemas" target="_top">dynamic schemas
+ * <a href="../../../api/#dynamic-schemas" target="_top">dynamic schemas
  * documentation</a>.
  * 
  * @param[in] request_  Request object containing the parameters for the
@@ -5375,9 +5373,9 @@ AggregateUnpivotResponse GPUdb::aggregateUnpivot( const AggregateUnpivotRequest&
  * Rotate the column values into rows values.
  * <p>
  * For unpivot details and examples, see
- * <a href="../../concepts/unpivot.html" target="_top">Unpivot</a>.  For
+ * <a href="../../../concepts/unpivot/" target="_top">Unpivot</a>.  For
  * limitations, see
- * <a href="../../concepts/unpivot.html#limitations" target="_top">Unpivot
+ * <a href="../../../concepts/unpivot/#limitations" target="_top">Unpivot
  * Limitations</a>.
  * <p>
  * Unpivot is used to normalize tables that are built for cross tabular
@@ -5391,7 +5389,7 @@ AggregateUnpivotResponse GPUdb::aggregateUnpivot( const AggregateUnpivotRequest&
  * and values respectively.
  * <p>
  * The response is returned as a dynamic schema. For details see:
- * <a href="../../api/index.html#dynamic-schemas" target="_top">dynamic schemas
+ * <a href="../../../api/#dynamic-schemas" target="_top">dynamic schemas
  * documentation</a>.
  * 
  * @param[in] request_  Request object containing the parameters for the
@@ -5426,9 +5424,9 @@ AggregateUnpivotResponse& GPUdb::aggregateUnpivot( const AggregateUnpivotRequest
  * Rotate the column values into rows values.
  * <p>
  * For unpivot details and examples, see
- * <a href="../../concepts/unpivot.html" target="_top">Unpivot</a>.  For
+ * <a href="../../../concepts/unpivot/" target="_top">Unpivot</a>.  For
  * limitations, see
- * <a href="../../concepts/unpivot.html#limitations" target="_top">Unpivot
+ * <a href="../../../concepts/unpivot/#limitations" target="_top">Unpivot
  * Limitations</a>.
  * <p>
  * Unpivot is used to normalize tables that are built for cross tabular
@@ -5442,13 +5440,13 @@ AggregateUnpivotResponse& GPUdb::aggregateUnpivot( const AggregateUnpivotRequest
  * and values respectively.
  * <p>
  * The response is returned as a dynamic schema. For details see:
- * <a href="../../api/index.html#dynamic-schemas" target="_top">dynamic schemas
+ * <a href="../../../api/#dynamic-schemas" target="_top">dynamic schemas
  * documentation</a>.
  * 
  * @param tableName  Name of the table on which the operation will be
  *                   performed. Must be an existing table/view, in
  *                   [schema_name.]table_name format, using standard <a
- *                   href="../../concepts/tables.html#table-name-resolution"
+ *                   href="../../../concepts/tables/#table-name-resolution"
  *                   target="_top">name resolution rules</a>.
  * @param columnNames  List of column names or expressions. A wildcard '*' can
  *                     be used to include all the non-pivoted columns from the
@@ -5469,9 +5467,9 @@ AggregateUnpivotResponse& GPUdb::aggregateUnpivot( const AggregateUnpivotRequest
  *                         <li> gpudb::aggregate_unpivot_result_table: The name
  *                 of a table used to store the results, in
  *                 [schema_name.]table_name format, using standard <a
- *                 href="../../concepts/tables.html#table-name-resolution"
+ *                 href="../../../concepts/tables/#table-name-resolution"
  *                 target="_top">name resolution rules</a> and meeting <a
- *                 href="../../concepts/tables.html#table-naming-criteria"
+ *                 href="../../../concepts/tables/#table-naming-criteria"
  *                 target="_top">table naming criteria</a>. If present, no
  *                 results are returned in the response.
  *                         <li> gpudb::aggregate_unpivot_result_table_persist:
@@ -5501,19 +5499,19 @@ AggregateUnpivotResponse& GPUdb::aggregateUnpivot( const AggregateUnpivotRequest
  *                         <li> gpudb::aggregate_unpivot_limit: The number of
  *                 records to keep.  The default value is ''.
  *                         <li> gpudb::aggregate_unpivot_ttl: Sets the <a
- *                 href="../../concepts/ttl.html" target="_top">TTL</a> of the
+ *                 href="../../../concepts/ttl/" target="_top">TTL</a> of the
  *                 table specified in @a result_table.
  *                         <li> gpudb::aggregate_unpivot_view_id: view this
  *                 result table is part of.  The default value is ''.
  *                         <li> gpudb::aggregate_unpivot_materialize_on_gpu: No
- *                 longer used.  See <a href="../../rm/concepts.html"
+ *                 longer used.  See <a href="../../../rm/concepts/"
  *                 target="_top">Resource Management Concepts</a> for
  *                 information about how resources are managed, <a
- *                 href="../../rm/concepts.html" target="_top">Tier Strategy
+ *                 href="../../../rm/concepts/" target="_top">Tier Strategy
  *                 Concepts</a> for how resources are targeted for VRAM, and <a
- *                 href="../../rm/usage.html#tier-strategies"
- *                 target="_top">Tier Strategy Usage</a> for how to specify a
- *                 table's priority in VRAM.
+ *                 href="../../../rm/usage/#tier-strategies" target="_top">Tier
+ *                 Strategy Usage</a> for how to specify a table's priority in
+ *                 VRAM.
  *                 <ul>
  *                         <li> gpudb::aggregate_unpivot_true
  *                         <li> gpudb::aggregate_unpivot_false
@@ -5572,9 +5570,9 @@ AggregateUnpivotResponse GPUdb::aggregateUnpivot( const std::string& tableName,
  * Rotate the column values into rows values.
  * <p>
  * For unpivot details and examples, see
- * <a href="../../concepts/unpivot.html" target="_top">Unpivot</a>.  For
+ * <a href="../../../concepts/unpivot/" target="_top">Unpivot</a>.  For
  * limitations, see
- * <a href="../../concepts/unpivot.html#limitations" target="_top">Unpivot
+ * <a href="../../../concepts/unpivot/#limitations" target="_top">Unpivot
  * Limitations</a>.
  * <p>
  * Unpivot is used to normalize tables that are built for cross tabular
@@ -5588,13 +5586,13 @@ AggregateUnpivotResponse GPUdb::aggregateUnpivot( const std::string& tableName,
  * and values respectively.
  * <p>
  * The response is returned as a dynamic schema. For details see:
- * <a href="../../api/index.html#dynamic-schemas" target="_top">dynamic schemas
+ * <a href="../../../api/#dynamic-schemas" target="_top">dynamic schemas
  * documentation</a>.
  * 
  * @param tableName  Name of the table on which the operation will be
  *                   performed. Must be an existing table/view, in
  *                   [schema_name.]table_name format, using standard <a
- *                   href="../../concepts/tables.html#table-name-resolution"
+ *                   href="../../../concepts/tables/#table-name-resolution"
  *                   target="_top">name resolution rules</a>.
  * @param columnNames  List of column names or expressions. A wildcard '*' can
  *                     be used to include all the non-pivoted columns from the
@@ -5615,9 +5613,9 @@ AggregateUnpivotResponse GPUdb::aggregateUnpivot( const std::string& tableName,
  *                         <li> gpudb::aggregate_unpivot_result_table: The name
  *                 of a table used to store the results, in
  *                 [schema_name.]table_name format, using standard <a
- *                 href="../../concepts/tables.html#table-name-resolution"
+ *                 href="../../../concepts/tables/#table-name-resolution"
  *                 target="_top">name resolution rules</a> and meeting <a
- *                 href="../../concepts/tables.html#table-naming-criteria"
+ *                 href="../../../concepts/tables/#table-naming-criteria"
  *                 target="_top">table naming criteria</a>. If present, no
  *                 results are returned in the response.
  *                         <li> gpudb::aggregate_unpivot_result_table_persist:
@@ -5647,19 +5645,19 @@ AggregateUnpivotResponse GPUdb::aggregateUnpivot( const std::string& tableName,
  *                         <li> gpudb::aggregate_unpivot_limit: The number of
  *                 records to keep.  The default value is ''.
  *                         <li> gpudb::aggregate_unpivot_ttl: Sets the <a
- *                 href="../../concepts/ttl.html" target="_top">TTL</a> of the
+ *                 href="../../../concepts/ttl/" target="_top">TTL</a> of the
  *                 table specified in @a result_table.
  *                         <li> gpudb::aggregate_unpivot_view_id: view this
  *                 result table is part of.  The default value is ''.
  *                         <li> gpudb::aggregate_unpivot_materialize_on_gpu: No
- *                 longer used.  See <a href="../../rm/concepts.html"
+ *                 longer used.  See <a href="../../../rm/concepts/"
  *                 target="_top">Resource Management Concepts</a> for
  *                 information about how resources are managed, <a
- *                 href="../../rm/concepts.html" target="_top">Tier Strategy
+ *                 href="../../../rm/concepts/" target="_top">Tier Strategy
  *                 Concepts</a> for how resources are targeted for VRAM, and <a
- *                 href="../../rm/usage.html#tier-strategies"
- *                 target="_top">Tier Strategy Usage</a> for how to specify a
- *                 table's priority in VRAM.
+ *                 href="../../../rm/usage/#tier-strategies" target="_top">Tier
+ *                 Strategy Usage</a> for how to specify a table's priority in
+ *                 VRAM.
  *                 <ul>
  *                         <li> gpudb::aggregate_unpivot_true
  *                         <li> gpudb::aggregate_unpivot_false
@@ -5718,8 +5716,154 @@ AggregateUnpivotResponse& GPUdb::aggregateUnpivot( const std::string& tableName,
 
 
 /**
+ * Alter the properties of an existing <a href="../../../concepts/credentials/"
+ * target="_top">credential</a>.
+ * 
+ * @param[in] request_  Request object containing the parameters for the
+ *                      operation.
+ * 
+ * @return Response object containing the result of the operation.
+ * 
+ */
+
+AlterCredentialResponse GPUdb::alterCredential( const AlterCredentialRequest& request_ ) const
+{
+    AlterCredentialResponse actualResponse_;
+    submitRequest("/alter/credential", request_, actualResponse_, false);
+    return actualResponse_;
+}
+
+
+/**
+ * Alter the properties of an existing <a href="../../../concepts/credentials/"
+ * target="_top">credential</a>.
+ * 
+ * @param[in] request_  Request object containing the parameters for the
+ *                      operation.
+ * @param[out] response_  Response object containing the results of the
+ *                        operation.
+ * 
+ * @return Response object containing the result of the operation (initially
+ *         passed in by reference).
+ * 
+ */
+
+AlterCredentialResponse& GPUdb::alterCredential( const AlterCredentialRequest& request_,
+                                                 AlterCredentialResponse& response_ ) const
+{
+    submitRequest("/alter/credential", request_, response_, false);
+    return response_;
+}
+
+
+/**
+ * Alter the properties of an existing <a href="../../../concepts/credentials/"
+ * target="_top">credential</a>.
+ * 
+ * @param credentialName  Name of the credential to be altered. Must be an
+ *                        existing credential.
+ * @param credentialUpdatesMap  Map containing the properties of the credential
+ *                              to be updated. Error if empty.
+ *                              <ul>
+ *                                      <li> gpudb::alter_credential_type: New
+ *                              type for the credential.
+ *                              <ul>
+ *                                      <li>
+ *                              gpudb::alter_credential_aws_access_key
+ *                                      <li>
+ *                              gpudb::alter_credential_aws_iam_role
+ *                                      <li> gpudb::alter_credential_azure_ad
+ *                                      <li>
+ *                              gpudb::alter_credential_azure_oauth
+ *                                      <li> gpudb::alter_credential_azure_sas
+ *                                      <li>
+ *                              gpudb::alter_credential_azure_storage_key
+ *                                      <li> gpudb::alter_credential_docker
+ *                                      <li> gpudb::alter_credential_hdfs
+ *                                      <li> gpudb::alter_credential_kafka
+ *                              </ul>
+ *                                      <li> gpudb::alter_credential_identity:
+ *                              New user for the credential
+ *                                      <li> gpudb::alter_credential_secret:
+ *                              New password for the credential
+ *                              </ul>
+ * @param options  Optional parameters.
+ * 
+ * @return Response object containing the result of the operation.
+ * 
+ */
+
+AlterCredentialResponse GPUdb::alterCredential( const std::string& credentialName,
+                                                const std::map<std::string, std::string>& credentialUpdatesMap,
+                                                const std::map<std::string, std::string>& options ) const
+{
+    AlterCredentialRequest actualRequest_;
+    actualRequest_.credentialName = credentialName;
+    actualRequest_.credentialUpdatesMap = credentialUpdatesMap;
+    actualRequest_.options = options;
+    AlterCredentialResponse actualResponse_;
+    submitRequest("/alter/credential", actualRequest_, actualResponse_, false);
+    return actualResponse_;
+}
+
+
+/**
+ * Alter the properties of an existing <a href="../../../concepts/credentials/"
+ * target="_top">credential</a>.
+ * 
+ * @param credentialName  Name of the credential to be altered. Must be an
+ *                        existing credential.
+ * @param credentialUpdatesMap  Map containing the properties of the credential
+ *                              to be updated. Error if empty.
+ *                              <ul>
+ *                                      <li> gpudb::alter_credential_type: New
+ *                              type for the credential.
+ *                              <ul>
+ *                                      <li>
+ *                              gpudb::alter_credential_aws_access_key
+ *                                      <li>
+ *                              gpudb::alter_credential_aws_iam_role
+ *                                      <li> gpudb::alter_credential_azure_ad
+ *                                      <li>
+ *                              gpudb::alter_credential_azure_oauth
+ *                                      <li> gpudb::alter_credential_azure_sas
+ *                                      <li>
+ *                              gpudb::alter_credential_azure_storage_key
+ *                                      <li> gpudb::alter_credential_docker
+ *                                      <li> gpudb::alter_credential_hdfs
+ *                                      <li> gpudb::alter_credential_kafka
+ *                              </ul>
+ *                                      <li> gpudb::alter_credential_identity:
+ *                              New user for the credential
+ *                                      <li> gpudb::alter_credential_secret:
+ *                              New password for the credential
+ *                              </ul>
+ * @param options  Optional parameters.
+ * @param[out] response_  Response object containing the results of the
+ *                        operation.
+ * 
+ * @return Response object containing the result of the operation (initially
+ *         passed in by reference).
+ * 
+ */
+
+AlterCredentialResponse& GPUdb::alterCredential( const std::string& credentialName,
+                                                 const std::map<std::string, std::string>& credentialUpdatesMap,
+                                                 const std::map<std::string, std::string>& options,
+                                                 AlterCredentialResponse& response_ ) const
+{
+    AlterCredentialRequest actualRequest_;
+    actualRequest_.credentialName = credentialName;
+    actualRequest_.credentialUpdatesMap = credentialUpdatesMap;
+    actualRequest_.options = options;
+    submitRequest("/alter/credential", actualRequest_, response_, false);
+    return response_;
+}
+
+
+/**
  * Alters the properties of an existing <a
- * href="../../concepts/data_sources.html" target="_top">data source</a>
+ * href="../../../concepts/data_sources/" target="_top">data source</a>
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -5738,7 +5882,7 @@ AlterDatasourceResponse GPUdb::alterDatasource( const AlterDatasourceRequest& re
 
 /**
  * Alters the properties of an existing <a
- * href="../../concepts/data_sources.html" target="_top">data source</a>
+ * href="../../../concepts/data_sources/" target="_top">data source</a>
  * 
  * @param[in] request_  Request object containing the parameters for the
  *                      operation.
@@ -5760,7 +5904,7 @@ AlterDatasourceResponse& GPUdb::alterDatasource( const AlterDatasourceRequest& r
 
 /**
  * Alters the properties of an existing <a
- * href="../../concepts/data_sources.html" target="_top">data source</a>
+ * href="../../../concepts/data_sources/" target="_top">data source</a>
  * 
  * @param name  Name of the data source to be altered. Must be an existing data
  *              source.
@@ -5796,6 +5940,9 @@ AlterDatasourceResponse& GPUdb::alterDatasource( const AlterDatasourceRequest& r
  *                              gpudb::alter_datasource_wait_timeout: Timeout
  *                              in seconds for reading from this storage
  *                              provider
+ *                                      <li>
+ *                              gpudb::alter_datasource_credential: Name of the
+ *                              Credential object to be used in data source
  *                                      <li>
  *                              gpudb::alter_datasource_s3_bucket_name: Name of
  *                              the Amazon S3 bucket to use as the data source
@@ -5861,7 +6008,7 @@ AlterDatasourceResponse GPUdb::alterDatasource( const std::string& name,
 
 /**
  * Alters the properties of an existing <a
- * href="../../concepts/data_sources.html" target="_top">data source</a>
+ * href="../../../concepts/data_sources/" target="_top">data source</a>
  * 
  * @param name  Name of the data source to be altered. Must be an existing data
  *              source.
@@ -5897,6 +6044,9 @@ AlterDatasourceResponse GPUdb::alterDatasource( const std::string& name,
  *                              gpudb::alter_datasource_wait_timeout: Timeout
  *                              in seconds for reading from this storage
  *                              provider
+ *                                      <li>
+ *                              gpudb::alter_datasource_credential: Name of the
+ *                              Credential object to be used in data source
  *                                      <li>
  *                              gpudb::alter_datasource_s3_bucket_name: Name of
  *                              the Amazon S3 bucket to use as the data source
@@ -5959,6 +6109,114 @@ AlterDatasourceResponse& GPUdb::alterDatasource( const std::string& name,
     actualRequest_.datasourceUpdatesMap = datasourceUpdatesMap;
     actualRequest_.options = options;
     submitRequest("/alter/datasource", actualRequest_, response_, false);
+    return response_;
+}
+
+
+/**
+ * @private
+ * 
+ * @param[in] request_  Request object containing the parameters for the
+ *                      operation.
+ * 
+ * @return Response object containing the result of the operation.
+ * 
+ */
+
+AlterModelResponse GPUdb::alterModel( const AlterModelRequest& request_ ) const
+{
+    AlterModelResponse actualResponse_;
+    submitRequest("/alter/model", request_, actualResponse_, false);
+    return actualResponse_;
+}
+
+
+/**
+ * @private
+ * 
+ * @param[in] request_  Request object containing the parameters for the
+ *                      operation.
+ * @param[out] response_  Response object containing the results of the
+ *                        operation.
+ * 
+ * @return Response object containing the result of the operation (initially
+ *         passed in by reference).
+ * 
+ */
+
+AlterModelResponse& GPUdb::alterModel( const AlterModelRequest& request_,
+                                       AlterModelResponse& response_ ) const
+{
+    submitRequest("/alter/model", request_, response_, false);
+    return response_;
+}
+
+
+/**
+ * @private
+ * 
+ * @param modelName
+ * @param action
+ *                <ul>
+ *                        <li> gpudb::alter_model_container
+ *                        <li> gpudb::alter_model_registry
+ *                        <li> gpudb::alter_model_refresh
+ *                </ul>
+ * @param value
+ * @param options
+ * 
+ * @return Response object containing the result of the operation.
+ * 
+ */
+
+AlterModelResponse GPUdb::alterModel( const std::string& modelName,
+                                      const std::string& action,
+                                      const std::string& value,
+                                      const std::map<std::string, std::string>& options ) const
+{
+    AlterModelRequest actualRequest_;
+    actualRequest_.modelName = modelName;
+    actualRequest_.action = action;
+    actualRequest_.value = value;
+    actualRequest_.options = options;
+    AlterModelResponse actualResponse_;
+    submitRequest("/alter/model", actualRequest_, actualResponse_, false);
+    return actualResponse_;
+}
+
+
+/**
+ * @private
+ * 
+ * @param modelName
+ * @param action
+ *                <ul>
+ *                        <li> gpudb::alter_model_container
+ *                        <li> gpudb::alter_model_registry
+ *                        <li> gpudb::alter_model_refresh
+ *                </ul>
+ * @param value
+ * @param options
+ * @param[out] response_  Response object containing the results of the
+ *                        operation.
+ * 
+ * @return Response object containing the result of the operation (initially
+ *         passed in by reference).
+ * 
+ */
+
+AlterModelResponse& GPUdb::alterModel( const std::string& modelName,
+                                       const std::string& action,
+                                       const std::string& value,
+                                       const std::map<std::string, std::string>& options,
+                                       AlterModelResponse& response_ ) const
+{
+    AlterModelRequest actualRequest_;
+    actualRequest_.modelName = modelName;
+    actualRequest_.action = action;
+    actualRequest_.value = value;
+    actualRequest_.options = options;
+    submitRequest("/alter/model", actualRequest_, response_, false);
     return response_;
 }
 
@@ -6282,7 +6540,7 @@ AlterRoleResponse& GPUdb::alterRole( const std::string& name,
 
 
 /**
- * Used to change the name of a SQL-style <a href="../../concepts/schemas.html"
+ * Used to change the name of a SQL-style <a href="../../../concepts/schemas/"
  * target="_top">schema</a>, specified in @a schemaName.
  * 
  * @param[in] request_  Request object containing the parameters for the
@@ -6301,7 +6559,7 @@ AlterSchemaResponse GPUdb::alterSchema( const AlterSchemaRequest& request_ ) con
 
 
 /**
- * Used to change the name of a SQL-style <a href="../../concepts/schemas.html"
+ * Used to change the name of a SQL-style <a href="../../../concepts/schemas/"
  * target="_top">schema</a>, specified in @a schemaName.
  * 
  * @param[in] request_  Request object containing the parameters for the
@@ -6323,7 +6581,7 @@ AlterSchemaResponse& GPUdb::alterSchema( const AlterSchemaRequest& request_,
 
 
 /**
- * Used to change the name of a SQL-style <a href="../../concepts/schemas.html"
+ * Used to change the name of a SQL-style <a href="../../../concepts/schemas/"
  * target="_top">schema</a>, specified in @a schemaName.
  * 
  * @param schemaName  Name of the schema to be altered.
@@ -6331,7 +6589,7 @@ AlterSchemaResponse& GPUdb::alterSchema( const AlterSchemaRequest& request_,
  *                <ul>
  *                        <li> gpudb::alter_schema_rename_schema: Renames a
  *                schema to @a value. Has the same naming restrictions as <a
- *                href="../../concepts/tables.html" target="_top">tables</a>.
+ *                href="../../../concepts/tables/" target="_top">tables</a>.
  *                </ul>
  * @param value  The value of the modification, depending on @a action.  For
  *               now the only value of @a action is @a rename_schema.  In this
@@ -6359,7 +6617,7 @@ AlterSchemaResponse GPUdb::alterSchema( const std::string& schemaName,
 
 
 /**
- * Used to change the name of a SQL-style <a href="../../concepts/schemas.html"
+ * Used to change the name of a SQL-style <a href="../../../concepts/schemas/"
  * target="_top">schema</a>, specified in @a schemaName.
  * 
  * @param schemaName  Name of the schema to be altered.
@@ -6367,7 +6625,7 @@ AlterSchemaResponse GPUdb::alterSchema( const std::string& schemaName,
  *                <ul>
  *                        <li> gpudb::alter_schema_rename_schema: Renames a
  *                schema to @a value. Has the same naming restrictions as <a
- *                href="../../concepts/tables.html" target="_top">tables</a>.
+ *                href="../../../concepts/tables/" target="_top">tables</a>.
  *                </ul>
  * @param value  The value of the modification, depending on @a action.  For
  *               now the only value of @a action is @a rename_schema.  In this
@@ -6792,42 +7050,42 @@ AlterSystemPropertiesResponse& GPUdb::alterSystemProperties( const std::map<std:
  * available modifications include the following:
  * <p>
  * Manage a table's columns--a column can be added, removed, or have its
- * <a href="../../concepts/types.html" target="_top">type and properties</a>
+ * <a href="../../../concepts/types/" target="_top">type and properties</a>
  * modified, including
- * whether it is <a href="../../concepts/compression.html"
+ * whether it is <a href="../../../concepts/compression/"
  * target="_top">compressed</a> or not.
  * <p>
  * External tables cannot be modified except for their refresh method.
  * <p>
- * Create or delete an <a href="../../concepts/indexes.html#column-index"
+ * Create or delete an <a href="../../../concepts/indexes/#column-index"
  * target="_top">index</a> on a
  * particular column. This can speed up certain operations when using
  * expressions
  * containing equality or relational operators on indexed columns. This only
  * applies to tables.
  * <p>
- * Create or delete a <a href="../../concepts/tables.html#foreign-key"
+ * Create or delete a <a href="../../../concepts/tables/#foreign-key"
  * target="_top">foreign key</a>
  * on a particular column.
  * <p>
  * Manage a
- * <a href="../../concepts/tables.html#partitioning-by-range"
+ * <a href="../../../concepts/tables/#partitioning-by-range"
  * target="_top">range-partitioned</a> or a
- * <a href="../../concepts/tables.html#partitioning-by-list-manual"
+ * <a href="../../../concepts/tables/#partitioning-by-list-manual"
  * target="_top">manual list-partitioned</a>
  * table's partitions.
  * <p>
- * Set (or reset) the <a href="../../rm/concepts.html#tier-strategies"
+ * Set (or reset) the <a href="../../../rm/concepts/#tier-strategies"
  * target="_top">tier strategy</a>
  * of a table or view.
  * <p>
  * Refresh and manage the refresh mode of a
- * <a href="../../concepts/materialized_views.html" target="_top">materialized
+ * <a href="../../../concepts/materialized_views/" target="_top">materialized
  * view</a> or an
- * <a href="../../concepts/external_tables.html" target="_top">external
+ * <a href="../../../concepts/external_tables/" target="_top">external
  * table</a>.
  * <p>
- * Set the <a href="../../concepts/ttl.html" target="_top">time-to-live
+ * Set the <a href="../../../concepts/ttl/" target="_top">time-to-live
  * (TTL)</a>. This can be applied
  * to tables or views.
  * <p>
@@ -6859,42 +7117,42 @@ AlterTableResponse GPUdb::alterTable( const AlterTableRequest& request_ ) const
  * available modifications include the following:
  * <p>
  * Manage a table's columns--a column can be added, removed, or have its
- * <a href="../../concepts/types.html" target="_top">type and properties</a>
+ * <a href="../../../concepts/types/" target="_top">type and properties</a>
  * modified, including
- * whether it is <a href="../../concepts/compression.html"
+ * whether it is <a href="../../../concepts/compression/"
  * target="_top">compressed</a> or not.
  * <p>
  * External tables cannot be modified except for their refresh method.
  * <p>
- * Create or delete an <a href="../../concepts/indexes.html#column-index"
+ * Create or delete an <a href="../../../concepts/indexes/#column-index"
  * target="_top">index</a> on a
  * particular column. This can speed up certain operations when using
  * expressions
  * containing equality or relational operators on indexed columns. This only
  * applies to tables.
  * <p>
- * Create or delete a <a href="../../concepts/tables.html#foreign-key"
+ * Create or delete a <a href="../../../concepts/tables/#foreign-key"
  * target="_top">foreign key</a>
  * on a particular column.
  * <p>
  * Manage a
- * <a href="../../concepts/tables.html#partitioning-by-range"
+ * <a href="../../../concepts/tables/#partitioning-by-range"
  * target="_top">range-partitioned</a> or a
- * <a href="../../concepts/tables.html#partitioning-by-list-manual"
+ * <a href="../../../concepts/tables/#partitioning-by-list-manual"
  * target="_top">manual list-partitioned</a>
  * table's partitions.
  * <p>
- * Set (or reset) the <a href="../../rm/concepts.html#tier-strategies"
+ * Set (or reset) the <a href="../../../rm/concepts/#tier-strategies"
  * target="_top">tier strategy</a>
  * of a table or view.
  * <p>
  * Refresh and manage the refresh mode of a
- * <a href="../../concepts/materialized_views.html" target="_top">materialized
+ * <a href="../../../concepts/materialized_views/" target="_top">materialized
  * view</a> or an
- * <a href="../../concepts/external_tables.html" target="_top">external
+ * <a href="../../../concepts/external_tables/" target="_top">external
  * table</a>.
  * <p>
- * Set the <a href="../../concepts/ttl.html" target="_top">time-to-live
+ * Set the <a href="../../../concepts/ttl/" target="_top">time-to-live
  * (TTL)</a>. This can be applied
  * to tables or views.
  * <p>
@@ -6929,42 +7187,42 @@ AlterTableResponse& GPUdb::alterTable( const AlterTableRequest& request_,
  * available modifications include the following:
  * <p>
  * Manage a table's columns--a column can be added, removed, or have its
- * <a href="../../concepts/types.html" target="_top">type and properties</a>
+ * <a href="../../../concepts/types/" target="_top">type and properties</a>
  * modified, including
- * whether it is <a href="../../concepts/compression.html"
+ * whether it is <a href="../../../concepts/compression/"
  * target="_top">compressed</a> or not.
  * <p>
  * External tables cannot be modified except for their refresh method.
  * <p>
- * Create or delete an <a href="../../concepts/indexes.html#column-index"
+ * Create or delete an <a href="../../../concepts/indexes/#column-index"
  * target="_top">index</a> on a
  * particular column. This can speed up certain operations when using
  * expressions
  * containing equality or relational operators on indexed columns. This only
  * applies to tables.
  * <p>
- * Create or delete a <a href="../../concepts/tables.html#foreign-key"
+ * Create or delete a <a href="../../../concepts/tables/#foreign-key"
  * target="_top">foreign key</a>
  * on a particular column.
  * <p>
  * Manage a
- * <a href="../../concepts/tables.html#partitioning-by-range"
+ * <a href="../../../concepts/tables/#partitioning-by-range"
  * target="_top">range-partitioned</a> or a
- * <a href="../../concepts/tables.html#partitioning-by-list-manual"
+ * <a href="../../../concepts/tables/#partitioning-by-list-manual"
  * target="_top">manual list-partitioned</a>
  * table's partitions.
  * <p>
- * Set (or reset) the <a href="../../rm/concepts.html#tier-strategies"
+ * Set (or reset) the <a href="../../../rm/concepts/#tier-strategies"
  * target="_top">tier strategy</a>
  * of a table or view.
  * <p>
  * Refresh and manage the refresh mode of a
- * <a href="../../concepts/materialized_views.html" target="_top">materialized
+ * <a href="../../../concepts/materialized_views/" target="_top">materialized
  * view</a> or an
- * <a href="../../concepts/external_tables.html" target="_top">external
+ * <a href="../../../concepts/external_tables/" target="_top">external
  * table</a>.
  * <p>
- * Set the <a href="../../concepts/ttl.html" target="_top">time-to-live
+ * Set the <a href="../../../concepts/ttl/" target="_top">time-to-live
  * (TTL)</a>. This can be applied
  * to tables or views.
  * <p>
@@ -6978,7 +7236,7 @@ AlterTableResponse& GPUdb::alterTable( const AlterTableRequest& request_,
  * 
  * @param tableName  Table on which the operation will be performed, in
  *                   [schema_name.]table_name format, using standard <a
- *                   href="../../concepts/tables.html#table-name-resolution"
+ *                   href="../../../concepts/tables/#table-name-resolution"
  *                   target="_top">name resolution rules</a>.  Must be an
  *                   existing table or view.
  * @param action  Modification operation to be applied
@@ -6986,17 +7244,17 @@ AlterTableResponse& GPUdb::alterTable( const AlterTableRequest& request_,
  *                        <li> gpudb::alter_table_allow_homogeneous_tables: No
  *                longer supported; action will be ignored.
  *                        <li> gpudb::alter_table_create_index: Creates either
- *                a <a href="../../concepts/indexes.html#column-index"
+ *                a <a href="../../../concepts/indexes/#column-index"
  *                target="_top">column (attribute) index</a> or <a
- *                href="../../concepts/indexes.html#chunk-skip-index"
+ *                href="../../../concepts/indexes/#chunk-skip-index"
  *                target="_top">chunk skip index</a>, depending on the
  *                specified @a index_type, on the column name specified in @a
  *                value. If this column already has the specified index, an
  *                error will be returned.
  *                        <li> gpudb::alter_table_delete_index: Deletes either
- *                a <a href="../../concepts/indexes.html#column-index"
+ *                a <a href="../../../concepts/indexes/#column-index"
  *                target="_top">column (attribute) index</a> or <a
- *                href="../../concepts/indexes.html#chunk-skip-index"
+ *                href="../../../concepts/indexes/#chunk-skip-index"
  *                target="_top">chunk skip index</a>, depending on the
  *                specified @a index_type, on the column name specified in @a
  *                value. If this column does not have the specified index, an
@@ -7017,10 +7275,10 @@ AlterTableResponse& GPUdb::alterTable( const AlterTableRequest& request_,
  *                or 'false'.
  *                        <li> gpudb::alter_table_rename_table: Renames a table
  *                or view within its current schema to @a value. Has the same
- *                naming restrictions as <a href="../../concepts/tables.html"
+ *                naming restrictions as <a href="../../../concepts/tables/"
  *                target="_top">tables</a>.
  *                        <li> gpudb::alter_table_ttl: Sets the <a
- *                href="../../concepts/ttl.html" target="_top">time-to-live</a>
+ *                href="../../../concepts/ttl/" target="_top">time-to-live</a>
  *                in minutes of the table or view specified in @a tableName.
  *                        <li> gpudb::alter_table_add_column: Adds the column
  *                specified in @a value to the table specified in @a tableName.
@@ -7036,7 +7294,7 @@ AlterTableResponse& GPUdb::alterTable( const AlterTableRequest& request_,
  *                'char4' column, both 'char4' and 'dict' must be specified in
  *                the @a options map.
  *                        <li> gpudb::alter_table_set_column_compression:
- *                Modifies the <a href="../../concepts/compression.html"
+ *                Modifies the <a href="../../../concepts/compression/"
  *                target="_top">compression</a> setting on the column specified
  *                in @a value to the compression type specified in @a
  *                compression_type.
@@ -7044,35 +7302,35 @@ AlterTableResponse& GPUdb::alterTable( const AlterTableRequest& request_,
  *                column specified in @a value from the table specified in @a
  *                tableName.
  *                        <li> gpudb::alter_table_create_foreign_key: Creates a
- *                <a href="../../concepts/tables.html#foreign-key"
+ *                <a href="../../../concepts/tables/#foreign-key"
  *                target="_top">foreign key</a> specified in @a value using the
  *                format '(source_column_name [, ...]) references
  *                target_table_name(primary_key_column_name [, ...]) [as
  *                foreign_key_name]'.
  *                        <li> gpudb::alter_table_delete_foreign_key: Deletes a
- *                <a href="../../concepts/tables.html#foreign-key"
+ *                <a href="../../../concepts/tables/#foreign-key"
  *                target="_top">foreign key</a>.  The @a value should be the
  *                foreign_key_name specified when creating the key or the
  *                complete string used to define it.
  *                        <li> gpudb::alter_table_add_partition: Adds the
  *                partition specified in @a value, to either a <a
- *                href="../../concepts/tables.html#partitioning-by-range"
+ *                href="../../../concepts/tables/#partitioning-by-range"
  *                target="_top">range-partitioned</a> or <a
- *                href="../../concepts/tables.html#partitioning-by-list-manual"
+ *                href="../../../concepts/tables/#partitioning-by-list-manual"
  *                target="_top">manual list-partitioned</a> table.
  *                        <li> gpudb::alter_table_remove_partition: Removes the
  *                partition specified in @a value (and relocates all of its
  *                data to the default partition) from either a <a
- *                href="../../concepts/tables.html#partitioning-by-range"
+ *                href="../../../concepts/tables/#partitioning-by-range"
  *                target="_top">range-partitioned</a> or <a
- *                href="../../concepts/tables.html#partitioning-by-list-manual"
+ *                href="../../../concepts/tables/#partitioning-by-list-manual"
  *                target="_top">manual list-partitioned</a> table.
  *                        <li> gpudb::alter_table_delete_partition: Deletes the
  *                partition specified in @a value (and all of its data) from
  *                either a <a
- *                href="../../concepts/tables.html#partitioning-by-range"
+ *                href="../../../concepts/tables/#partitioning-by-range"
  *                target="_top">range-partitioned</a> or <a
- *                href="../../concepts/tables.html#partitioning-by-list-manual"
+ *                href="../../../concepts/tables/#partitioning-by-list-manual"
  *                target="_top">manual list-partitioned</a> table.
  *                        <li> gpudb::alter_table_set_global_access_mode: Sets
  *                the global access mode (i.e. locking) for the table specified
@@ -7080,53 +7338,53 @@ AlterTableResponse& GPUdb::alterTable( const AlterTableRequest& request_,
  *                modes are 'no_access', 'read_only', 'write_only' and
  *                'read_write'.
  *                        <li> gpudb::alter_table_refresh: For a <a
- *                href="../../concepts/materialized_views.html"
+ *                href="../../../concepts/materialized_views/"
  *                target="_top">materialized view</a>, replays all the table
  *                creation commands required to create the view.  For an <a
- *                href="../../concepts/external_tables.html"
+ *                href="../../../concepts/external_tables/"
  *                target="_top">external table</a>, reloads all data in the
  *                table from its associated source files or <a
- *                href="../../concepts/data_sources.html" target="_top">data
+ *                href="../../../concepts/data_sources/" target="_top">data
  *                source</a>.
  *                        <li> gpudb::alter_table_set_refresh_method: For a <a
- *                href="../../concepts/materialized_views.html"
+ *                href="../../../concepts/materialized_views/"
  *                target="_top">materialized view</a>, sets the method by which
  *                the view is refreshed to the method specified in @a value -
  *                one of 'manual', 'periodic', or 'on_change'.  For an <a
- *                href="../../concepts/external_tables.html"
+ *                href="../../../concepts/external_tables/"
  *                target="_top">external table</a>, sets the method by which
  *                the table is refreshed to the method specified in @a value -
  *                either 'manual' or 'on_start'.
  *                        <li> gpudb::alter_table_set_refresh_start_time: Sets
  *                the time to start periodic refreshes of this <a
- *                href="../../concepts/materialized_views.html"
+ *                href="../../../concepts/materialized_views/"
  *                target="_top">materialized view</a> to the datetime string
  *                specified in @a value with format 'YYYY-MM-DD HH:MM:SS'.
  *                Subsequent refreshes occur at the specified time + N * the
  *                refresh period.
  *                        <li> gpudb::alter_table_set_refresh_period: Sets the
  *                time interval in seconds at which to refresh this <a
- *                href="../../concepts/materialized_views.html"
+ *                href="../../../concepts/materialized_views/"
  *                target="_top">materialized view</a> to the value specified in
  *                @a value.  Also, sets the refresh method to periodic if not
  *                already set.
  *                        <li> gpudb::alter_table_set_refresh_execute_as: Sets
  *                the user name to refresh this <a
- *                href="../../concepts/materialized_views.html"
+ *                href="../../../concepts/materialized_views/"
  *                target="_top">materialized view</a> to the value specified in
  *                @a value.
  *                        <li>
  *                gpudb::alter_table_remove_text_search_attributes: Removes <a
- *                href="../../concepts/full_text_search.html"
- *                target="_top">text search</a> attribute from all columns.
+ *                href="../../../concepts/full_text_search/" target="_top">text
+ *                search</a> attribute from all columns.
  *                        <li> gpudb::alter_table_set_strategy_definition: Sets
- *                the <a href="../../rm/concepts.html#tier-strategies"
+ *                the <a href="../../../rm/concepts/#tier-strategies"
  *                target="_top">tier strategy</a> for the table and its columns
  *                to the one specified in @a value, replacing the existing tier
  *                strategy in its entirety. See <a
- *                href="../../rm/concepts.html#tier-strategies"
+ *                href="../../../rm/concepts/#tier-strategies"
  *                target="_top">tier strategy usage</a> for format and <a
- *                href="../../rm/usage.html#tier-strategies" target="_top">tier
+ *                href="../../../rm/usage/#tier-strategies" target="_top">tier
  *                strategy examples</a> for examples.
  *                </ul>
  * @param value  The value of the modification, depending on @a action.  For
@@ -7180,7 +7438,7 @@ AlterTableResponse& GPUdb::alterTable( const AlterTableRequest& request_,
  *                 </ul>
  *                 The default value is gpudb::alter_table_true.
  *                         <li> gpudb::alter_table_update_last_access_time:
- *                 Indicates whether the <a href="../../concepts/ttl.html"
+ *                 Indicates whether the <a href="../../../concepts/ttl/"
  *                 target="_top">time-to-live</a> (TTL) expiration countdown
  *                 timer should be reset to the table's TTL.
  *                 <ul>
@@ -7198,24 +7456,24 @@ AlterTableResponse& GPUdb::alterTable( const AlterTableRequest& request_,
  *                 table.
  *                         <li> gpudb::alter_table_strategy_definition:
  *                 Optional parameter for specifying the <a
- *                 href="../../rm/concepts.html#tier-strategies"
+ *                 href="../../../rm/concepts/#tier-strategies"
  *                 target="_top">tier strategy</a> for the table and its
  *                 columns when @a action is @a set_strategy_definition,
  *                 replacing the existing tier strategy in its entirety. See <a
- *                 href="../../rm/concepts.html#tier-strategies"
+ *                 href="../../../rm/concepts/#tier-strategies"
  *                 target="_top">tier strategy usage</a> for format and <a
- *                 href="../../rm/usage.html#tier-strategies"
- *                 target="_top">tier strategy examples</a> for examples.  This
- *                 option will be ignored if @a value is also specified.
+ *                 href="../../../rm/usage/#tier-strategies" target="_top">tier
+ *                 strategy examples</a> for examples.  This option will be
+ *                 ignored if @a value is also specified.
  *                         <li> gpudb::alter_table_index_type: Type of index to
  *                 create, when @a action is @a create_index, or to delete,
  *                 when @a action is @a delete_index.
  *                 <ul>
  *                         <li> gpudb::alter_table_column: Create or delete a
- *                 <a href="../../concepts/indexes.html#column-index"
+ *                 <a href="../../../concepts/indexes/#column-index"
  *                 target="_top">column (attribute) index</a>.
  *                         <li> gpudb::alter_table_chunk_skip: Create or delete
- *                 a <a href="../../concepts/indexes.html#chunk-skip-index"
+ *                 a <a href="../../../concepts/indexes/#chunk-skip-index"
  *                 target="_top">chunk skip index</a>.
  *                 </ul>
  *                 The default value is gpudb::alter_table_column.
@@ -7246,42 +7504,42 @@ AlterTableResponse GPUdb::alterTable( const std::string& tableName,
  * available modifications include the following:
  * <p>
  * Manage a table's columns--a column can be added, removed, or have its
- * <a href="../../concepts/types.html" target="_top">type and properties</a>
+ * <a href="../../../concepts/types/" target="_top">type and properties</a>
  * modified, including
- * whether it is <a href="../../concepts/compression.html"
+ * whether it is <a href="../../../concepts/compression/"
  * target="_top">compressed</a> or not.
  * <p>
  * External tables cannot be modified except for their refresh method.
  * <p>
- * Create or delete an <a href="../../concepts/indexes.html#column-index"
+ * Create or delete an <a href="../../../concepts/indexes/#column-index"
  * target="_top">index</a> on a
  * particular column. This can speed up certain operations when using
  * expressions
  * containing equality or relational operators on indexed columns. This only
  * applies to tables.
  * <p>
- * Create or delete a <a href="../../concepts/tables.html#foreign-key"
+ * Create or delete a <a href="../../../concepts/tables/#foreign-key"
  * target="_top">foreign key</a>
  * on a particular column.
  * <p>
  * Manage a
- * <a href="../../concepts/tables.html#partitioning-by-range"
+ * <a href="../../../concepts/tables/#partitioning-by-range"
  * target="_top">range-partitioned</a> or a
- * <a href="../../concepts/tables.html#partitioning-by-list-manual"
+ * <a href="../../../concepts/tables/#partitioning-by-list-manual"
  * target="_top">manual list-partitioned</a>
  * table's partitions.
  * <p>
- * Set (or reset) the <a href="../../rm/concepts.html#tier-strategies"
+ * Set (or reset) the <a href="../../../rm/concepts/#tier-strategies"
  * target="_top">tier strategy</a>
  * of a table or view.
  * <p>
  * Refresh and manage the refresh mode of a
- * <a href="../../concepts/materialized_views.html" target="_top">materialized
+ * <a href="../../../concepts/materialized_views/" target="_top">materialized
  * view</a> or an
- * <a href="../../concepts/external_tables.html" target="_top">external
+ * <a href="../../../concepts/external_tables/" target="_top">external
  * table</a>.
  * <p>
- * Set the <a href="../../concepts/ttl.html" target="_top">time-to-live
+ * Set the <a href="../../../concepts/ttl/" target="_top">time-to-live
  * (TTL)</a>. This can be applied
  * to tables or views.
  * <p>
@@ -7295,7 +7553,7 @@ AlterTableResponse GPUdb::alterTable( const std::string& tableName,
  * 
  * @param tableName  Table on which the operation will be performed, in
  *                   [schema_name.]table_name format, using standard <a
- *                   href="../../concepts/tables.html#table-name-resolution"
+ *                   href="../../../concepts/tables/#table-name-resolution"
  *                   target="_top">name resolution rules</a>.  Must be an
  *                   existing table or view.
  * @param action  Modification operation to be applied
@@ -7303,17 +7561,17 @@ AlterTableResponse GPUdb::alterTable( const std::string& tableName,
  *                        <li> gpudb::alter_table_allow_homogeneous_tables: No
  *                longer supported; action will be ignored.
  *                        <li> gpudb::alter_table_create_index: Creates either
- *                a <a href="../../concepts/indexes.html#column-index"
+ *                a <a href="../../../concepts/indexes/#column-index"
  *                target="_top">column (attribute) index</a> or <a
- *                href="../../concepts/indexes.html#chunk-skip-index"
+ *                href="../../../concepts/indexes/#chunk-skip-index"
  *                target="_top">chunk skip index</a>, depending on the
  *                specified @a index_type, on the column name specified in @a
  *                value. If this column already has the specified index, an
  *                error will be returned.
  *                        <li> gpudb::alter_table_delete_index: Deletes either
- *                a <a href="../../concepts/indexes.html#column-index"
+ *                a <a href="../../../concepts/indexes/#column-index"
  *                target="_top">column (attribute) index</a> or <a
- *                href="../../concepts/indexes.html#chunk-skip-index"
+ *                href="../../../concepts/indexes/#chunk-skip-index"
  *                target="_top">chunk skip index</a>, depending on the
  *                specified @a index_type, on the column name specified in @a
  *                value. If this column does not have the specified index, an
@@ -7334,10 +7592,10 @@ AlterTableResponse GPUdb::alterTable( const std::string& tableName,
  *                or 'false'.
  *                        <li> gpudb::alter_table_rename_table: Renames a table
  *                or view within its current schema to @a value. Has the same
- *                naming restrictions as <a href="../../concepts/tables.html"
+ *                naming restrictions as <a href="../../../concepts/tables/"
  *                target="_top">tables</a>.
  *                        <li> gpudb::alter_table_ttl: Sets the <a
- *                href="../../concepts/ttl.html" target="_top">time-to-live</a>
+ *                href="../../../concepts/ttl/" target="_top">time-to-live</a>
  *                in minutes of the table or view specified in @a tableName.
  *                        <li> gpudb::alter_table_add_column: Adds the column
  *                specified in @a value to the table specified in @a tableName.
@@ -7353,7 +7611,7 @@ AlterTableResponse GPUdb::alterTable( const std::string& tableName,
  *                'char4' column, both 'char4' and 'dict' must be specified in
  *                the @a options map.
  *                        <li> gpudb::alter_table_set_column_compression:
- *                Modifies the <a href="../../concepts/compression.html"
+ *                Modifies the <a href="../../../concepts/compression/"
  *                target="_top">compression</a> setting on the column specified
  *                in @a value to the compression type specified in @a
  *                compression_type.
@@ -7361,35 +7619,35 @@ AlterTableResponse GPUdb::alterTable( const std::string& tableName,
  *                column specified in @a value from the table specified in @a
  *                tableName.
  *                        <li> gpudb::alter_table_create_foreign_key: Creates a
- *                <a href="../../concepts/tables.html#foreign-key"
+ *                <a href="../../../concepts/tables/#foreign-key"
  *                target="_top">foreign key</a> specified in @a value using the
  *                format '(source_column_name [, ...]) references
  *                target_table_name(primary_key_column_name [, ...]) [as
  *                foreign_key_name]'.
  *                        <li> gpudb::alter_table_delete_foreign_key: Deletes a
- *                <a href="../../concepts/tables.html#foreign-key"
+ *                <a href="../../../concepts/tables/#foreign-key"
  *                target="_top">foreign key</a>.  The @a value should be the
  *                foreign_key_name specified when creating the key or the
  *                complete string used to define it.
  *                        <li> gpudb::alter_table_add_partition: Adds the
  *                partition specified in @a value, to either a <a
- *                href="../../concepts/tables.html#partitioning-by-range"
+ *                href="../../../concepts/tables/#partitioning-by-range"
  *                target="_top">range-partitioned</a> or <a
- *                href="../../concepts/tables.html#partitioning-by-list-manual"
+ *                href="../../../concepts/tables/#partitioning-by-list-manual"
  *                target="_top">manual list-partitioned</a> table.
  *                        <li> gpudb::alter_table_remove_partition: Removes the
  *                partition specified in @a value (and relocates all of its
  *                data to the default partition) from either a <a
- *                href="../../concepts/tables.html#partitioning-by-range"
+ *                href="../../../concepts/tables/#partitioning-by-range"
  *                target="_top">range-partitioned</a> or <a
- *                href="../../concepts/tables.html#partitioning-by-list-manual"
+ *                href="../../../concepts/tables/#partitioning-by-list-manual"
  *                target="_top">manual list-partitioned</a> table.
  *                        <li> gpudb::alter_table_delete_partition: Deletes the
  *                partition specified in @a value (and all of its data) from
  *                either a <a
- *                href="../../concepts/tables.html#partitioning-by-range"
+ *                href="../../../concepts/tables/#partitioning-by-range"
  *                target="_top">range-partitioned</a> or <a
- *                href="../../concepts/tables.html#partitioning-by-list-manual"
+ *                href="../../../concepts/tables/#partitioning-by-list-manual"
  *                target="_top">manual list-partitioned</a> table.
  *                        <li> gpudb::alter_table_set_global_access_mode: Sets
  *                the global access mode (i.e. locking) for the table specified
@@ -7397,53 +7655,53 @@ AlterTableResponse GPUdb::alterTable( const std::string& tableName,
  *                modes are 'no_access', 'read_only', 'write_only' and
  *                'read_write'.
  *                        <li> gpudb::alter_table_refresh: For a <a
- *                href="../../concepts/materialized_views.html"
+ *                href="../../../concepts/materialized_views/"
  *                target="_top">materialized view</a>, replays all the table
  *                creation commands required to create the view.  For an <a
- *                href="../../concepts/external_tables.html"
+ *                href="../../../concepts/external_tables/"
  *                target="_top">external table</a>, reloads all data in the
  *                table from its associated source files or <a
- *                href="../../concepts/data_sources.html" target="_top">data
+ *                href="../../../concepts/data_sources/" target="_top">data
  *                source</a>.
  *                        <li> gpudb::alter_table_set_refresh_method: For a <a
- *                href="../../concepts/materialized_views.html"
+ *                href="../../../concepts/materialized_views/"
  *                target="_top">materialized view</a>, sets the method by which
  *                the view is refreshed to the method specified in @a value -
  *                one of 'manual', 'periodic', or 'on_change'.  For an <a
- *                href="../../concepts/external_tables.html"
+ *                href="../../../concepts/external_tables/"
  *                target="_top">external table</a>, sets the method by which
  *                the table is refreshed to the method specified in @a value -
  *                either 'manual' or 'on_start'.
  *                        <li> gpudb::alter_table_set_refresh_start_time: Sets
  *                the time to start periodic refreshes of this <a
- *                href="../../concepts/materialized_views.html"
+ *                href="../../../concepts/materialized_views/"
  *                target="_top">materialized view</a> to the datetime string
  *                specified in @a value with format 'YYYY-MM-DD HH:MM:SS'.
  *                Subsequent refreshes occur at the specified time + N * the
  *                refresh period.
  *                        <li> gpudb::alter_table_set_refresh_period: Sets the
  *                time interval in seconds at which to refresh this <a
- *                href="../../concepts/materialized_views.html"
+ *                href="../../../concepts/materialized_views/"
  *                target="_top">materialized view</a> to the value specified in
  *                @a value.  Also, sets the refresh method to periodic if not
  *                already set.
  *                        <li> gpudb::alter_table_set_refresh_execute_as: Sets
  *                the user name to refresh this <a
- *                href="../../concepts/materialized_views.html"
+ *                href="../../../concepts/materialized_views/"
  *                target="_top">materialized view</a> to the value specified in
  *                @a value.
  *                        <li>
  *                gpudb::alter_table_remove_text_search_attributes: Removes <a
- *                href="../../concepts/full_text_search.html"
- *                target="_top">text search</a> attribute from all columns.
+ *                href="../../../concepts/full_text_search/" target="_top">text
+ *                search</a> attribute from all columns.
  *                        <li> gpudb::alter_table_set_strategy_definition: Sets
- *                the <a href="../../rm/concepts.html#tier-strategies"
+ *                the <a href="../../../rm/concepts/#tier-strategies"
  *                target="_top">tier strategy</a> for the table and its columns
  *                to the one specified in @a value, replacing the existing tier
  *                strategy in its entirety. See <a
- *                href="../../rm/concepts.html#tier-strategies"
+ *                href="../../../rm/concepts/#tier-strategies"
  *                target="_top">tier strategy usage</a> for format and <a
- *                href="../../rm/usage.html#tier-strategies" target="_top">tier
+ *                href="../../../rm/usage/#tier-strategies" target="_top">tier
  *                strategy examples</a> for examples.
  *                </ul>
  * @param value  The value of the modification, depending on @a action.  For
@@ -7497,7 +7755,7 @@ AlterTableResponse GPUdb::alterTable( const std::string& tableName,
  *                 </ul>
  *                 The default value is gpudb::alter_table_true.
  *                         <li> gpudb::alter_table_update_last_access_time:
- *                 Indicates whether the <a href="../../concepts/ttl.html"
+ *                 Indicates whether the <a href="../../../concepts/ttl/"
  *                 target="_top">time-to-live</a> (TTL) expiration countdown
  *                 timer should be reset to the table's TTL.
  *                 <ul>
@@ -7515,24 +7773,24 @@ AlterTableResponse GPUdb::alterTable( const std::string& tableName,
  *                 table.
  *                         <li> gpudb::alter_table_strategy_definition:
  *                 Optional parameter for specifying the <a
- *                 href="../../rm/concepts.html#tier-strategies"
+ *                 href="../../../rm/concepts/#tier-strategies"
  *                 target="_top">tier strategy</a> for the table and its
  *                 columns when @a action is @a set_strategy_definition,
  *                 replacing the existing tier strategy in its entirety. See <a
- *                 href="../../rm/concepts.html#tier-strategies"
+ *                 href="../../../rm/concepts/#tier-strategies"
  *                 target="_top">tier strategy usage</a> for format and <a
- *                 href="../../rm/usage.html#tier-strategies"
- *                 target="_top">tier strategy examples</a> for examples.  This
- *                 option will be ignored if @a value is also specified.
+ *                 href="../../../rm/usage/#tier-strategies" target="_top">tier
+ *                 strategy examples</a> for examples.  This option will be
+ *                 ignored if @a value is also specified.
  *                         <li> gpudb::alter_table_index_type: Type of index to
  *                 create, when @a action is @a create_index, or to delete,
  *                 when @a action is @a delete_index.
  *                 <ul>
  *                         <li> gpudb::alter_table_column: Create or delete a
- *                 <a href="../../concepts/indexes.html#column-index"
+ *                 <a href="../../../concepts/indexes/#column-index"
  *                 target="_top">column (attribute) index</a>.
  *                         <li> gpudb::alter_table_chunk_skip: Create or delete
- *                 a <a href="../../concepts/indexes.html#chunk-skip-index"
+ *                 a <a href="../../../concepts/indexes/#chunk-skip-index"
  *                 target="_top">chunk skip index</a>.
  *                 </ul>
  *                 The default value is gpudb::alter_table_column.
@@ -7565,7 +7823,7 @@ AlterTableResponse& GPUdb::alterTable( const std::string& tableName,
  * Apply various modifications to columns in a table, view.  The available
  * modifications include the following:
  * <p>
- * Create or delete an <a href="../../concepts/indexes.html#column-index"
+ * Create or delete an <a href="../../../concepts/indexes/#column-index"
  * target="_top">index</a> on a
  * particular column. This can speed up certain operations when using
  * expressions
@@ -7573,10 +7831,10 @@ AlterTableResponse& GPUdb::alterTable( const std::string& tableName,
  * applies to tables.
  * <p>
  * Manage a table's columns--a column can be added, removed, or have its
- * <a href="../../concepts/types.html" target="_top">type and properties</a>
+ * <a href="../../../concepts/types/" target="_top">type and properties</a>
  * modified.
  * <p>
- * Set or unset <a href="../../concepts/compression.html"
+ * Set or unset <a href="../../../concepts/compression/"
  * target="_top">compression</a> for a column.
  * 
  * @param[in] request_  Request object containing the parameters for the
@@ -7598,7 +7856,7 @@ AlterTableColumnsResponse GPUdb::alterTableColumns( const AlterTableColumnsReque
  * Apply various modifications to columns in a table, view.  The available
  * modifications include the following:
  * <p>
- * Create or delete an <a href="../../concepts/indexes.html#column-index"
+ * Create or delete an <a href="../../../concepts/indexes/#column-index"
  * target="_top">index</a> on a
  * particular column. This can speed up certain operations when using
  * expressions
@@ -7606,10 +7864,10 @@ AlterTableColumnsResponse GPUdb::alterTableColumns( const AlterTableColumnsReque
  * applies to tables.
  * <p>
  * Manage a table's columns--a column can be added, removed, or have its
- * <a href="../../concepts/types.html" target="_top">type and properties</a>
+ * <a href="../../../concepts/types/" target="_top">type and properties</a>
  * modified.
  * <p>
- * Set or unset <a href="../../concepts/compression.html"
+ * Set or unset <a href="../../../concepts/compression/"
  * target="_top">compression</a> for a column.
  * 
  * @param[in] request_  Request object containing the parameters for the
@@ -7634,7 +7892,7 @@ AlterTableColumnsResponse& GPUdb::alterTableColumns( const AlterTableColumnsRequ
  * Apply various modifications to columns in a table, view.  The available
  * modifications include the following:
  * <p>
- * Create or delete an <a href="../../concepts/indexes.html#column-index"
+ * Create or delete an <a href="../../../concepts/indexes/#column-index"
  * target="_top">index</a> on a
  * particular column. This can speed up certain operations when using
  * expressions
@@ -7642,16 +7900,16 @@ AlterTableColumnsResponse& GPUdb::alterTableColumns( const AlterTableColumnsRequ
  * applies to tables.
  * <p>
  * Manage a table's columns--a column can be added, removed, or have its
- * <a href="../../concepts/types.html" target="_top">type and properties</a>
+ * <a href="../../../concepts/types/" target="_top">type and properties</a>
  * modified.
  * <p>
- * Set or unset <a href="../../concepts/compression.html"
+ * Set or unset <a href="../../../concepts/compression/"
  * target="_top">compression</a> for a column.
  * 
  * @param tableName  Table on which the operation will be performed. Must be an
  *                   existing table or view, in [schema_name.]table_name
  *                   format, using standard <a
- *                   href="../../concepts/tables.html#table-name-resolution"
+ *                   href="../../../concepts/tables/#table-name-resolution"
  *                   target="_top">name resolution rules</a>.
  * @param columnAlterations  List of alter table add/delete/change column
  *                           requests - all for the same table. Each request is
@@ -7686,7 +7944,7 @@ AlterTableColumnsResponse GPUdb::alterTableColumns( const std::string& tableName
  * Apply various modifications to columns in a table, view.  The available
  * modifications include the following:
  * <p>
- * Create or delete an <a href="../../concepts/indexes.html#column-index"
+ * Create or delete an <a href="../../../concepts/indexes/#column-index"
  * target="_top">index</a> on a
  * particular column. This can speed up certain operations when using
  * expressions
@@ -7694,16 +7952,16 @@ AlterTableColumnsResponse GPUdb::alterTableColumns( const std::string& tableName
  * applies to tables.
  * <p>
  * Manage a table's columns--a column can be added, removed, or have its
- * <a href="../../concepts/types.html" target="_top">type and properties</a>
+ * <a href="../../../concepts/types/" target="_top">type and properties</a>
  * modified.
  * <p>
- * Set or unset <a href="../../concepts/compression.html"
+ * Set or unset <a href="../../../concepts/compression/"
  * target="_top">compression</a> for a column.
  * 
  * @param tableName  Table on which the operation will be performed. Must be an
  *                   existing table or view, in [schema_name.]table_name
  *                   format, using standard <a
- *                   href="../../concepts/tables.html#table-name-resolution"
+ *                   href="../../../concepts/tables/#table-name-resolution"
  *                   target="_top">name resolution rules</a>.
  * @param columnAlterations  List of alter table add/delete/change column
  *                           requests - all for the same table. Each request is
@@ -7796,7 +8054,7 @@ AlterTableMetadataResponse& GPUdb::alterTableMetadata( const AlterTableMetadataR
  * 
  * @param tableNames  Names of the tables whose metadata will be updated, in
  *                    [schema_name.]table_name format, using standard <a
- *                    href="../../concepts/tables.html#table-name-resolution"
+ *                    href="../../../concepts/tables/#table-name-resolution"
  *                    target="_top">name resolution rules</a>.  All specified
  *                    tables must exist, or an error will be returned.
  * @param metadataMap  A map which contains the metadata of the tables that are
@@ -7834,7 +8092,7 @@ AlterTableMetadataResponse GPUdb::alterTableMetadata( const std::vector<std::str
  * 
  * @param tableNames  Names of the tables whose metadata will be updated, in
  *                    [schema_name.]table_name format, using standard <a
- *                    href="../../concepts/tables.html#table-name-resolution"
+ *                    href="../../../concepts/tables/#table-name-resolution"
  *                    target="_top">name resolution rules</a>.  All specified
  *                    tables must exist, or an error will be returned.
  * @param metadataMap  A map which contains the metadata of the tables that are
@@ -7867,12 +8125,12 @@ AlterTableMetadataResponse& GPUdb::alterTableMetadata( const std::vector<std::st
 
 /**
  * Alters properties of an exisiting
- * <a href="../../rm/concepts.html#storage-tiers" target="_top">tier</a> to
+ * <a href="../../../rm/concepts/#storage-tiers" target="_top">tier</a> to
  * facilitate
- * <a href="../../rm/concepts.html" target="_top">resource management</a>.
+ * <a href="../../../rm/concepts/" target="_top">resource management</a>.
  * <p>
  * To disable
- * <a href="../../rm/concepts.html#watermark-based-eviction"
+ * <a href="../../../rm/concepts/#watermark-based-eviction"
  * target="_top">watermark-based eviction</a>,
  * set both @a high_watermark and
  * @a low_watermark to 100.
@@ -7894,12 +8152,12 @@ AlterTierResponse GPUdb::alterTier( const AlterTierRequest& request_ ) const
 
 /**
  * Alters properties of an exisiting
- * <a href="../../rm/concepts.html#storage-tiers" target="_top">tier</a> to
+ * <a href="../../../rm/concepts/#storage-tiers" target="_top">tier</a> to
  * facilitate
- * <a href="../../rm/concepts.html" target="_top">resource management</a>.
+ * <a href="../../../rm/concepts/" target="_top">resource management</a>.
  * <p>
  * To disable
- * <a href="../../rm/concepts.html#watermark-based-eviction"
+ * <a href="../../../rm/concepts/#watermark-based-eviction"
  * target="_top">watermark-based eviction</a>,
  * set both @a high_watermark and
  * @a low_watermark to 100.
@@ -7924,12 +8182,12 @@ AlterTierResponse& GPUdb::alterTier( const AlterTierRequest& request_,
 
 /**
  * Alters properties of an exisiting
- * <a href="../../rm/concepts.html#storage-tiers" target="_top">tier</a> to
+ * <a href="../../../rm/concepts/#storage-tiers" target="_top">tier</a> to
  * facilitate
- * <a href="../../rm/concepts.html" target="_top">resource management</a>.
+ * <a href="../../../rm/concepts/" target="_top">resource management</a>.
  * <p>
  * To disable
- * <a href="../../rm/concepts.html#watermark-based-eviction"
+ * <a href="../../../rm/concepts/#watermark-based-eviction"
  * target="_top">watermark-based eviction</a>,
  * set both @a high_watermark and
  * @a low_watermark to 100.
@@ -7967,12 +8225,12 @@ AlterTierResponse GPUdb::alterTier( const std::string& name,
 
 /**
  * Alters properties of an exisiting
- * <a href="../../rm/concepts.html#storage-tiers" target="_top">tier</a> to
+ * <a href="../../../rm/concepts/#storage-tiers" target="_top">tier</a> to
  * facilitate
- * <a href="../../rm/concepts.html" target="_top">resource management</a>.
+ * <a href="../../../rm/concepts/" target="_top">resource management</a>.
  * <p>
  * To disable
- * <a href="../../rm/concepts.html#watermark-based-eviction"
+ * <a href="../../../rm/concepts/#watermark-based-eviction"
  * target="_top">watermark-based eviction</a>,
  * set both @a high_watermark and
  * @a low_watermark to 100.
@@ -8187,12 +8445,12 @@ AppendRecordsResponse& GPUdb::appendRecords( const AppendRecordsRequest& request
  * 
  * @param tableName  The table name for the records to be appended, in
  *                   [schema_name.]table_name format, using standard <a
- *                   href="../../concepts/tables.html#table-name-resolution"
+ *                   href="../../../concepts/tables/#table-name-resolution"
  *                   target="_top">name resolution rules</a>.  Must be an
  *                   existing table.
  * @param sourceTableName  The source table name to get records from, in
  *                         [schema_name.]table_name format, using standard <a
- *                         href="../../concepts/tables.html#table-name-resolution"
+ *                         href="../../../concepts/tables/#table-name-resolution"
  *                         target="_top">name resolution rules</a>.  Must be an
  *                         existing table name.
  * @param fieldMap  Contains the mapping of column names from the target table
@@ -8201,7 +8459,7 @@ AppendRecordsResponse& GPUdb::appendRecords( const AppendRecordsRequest& request
  *                  source table (specified by @a sourceTableName). Must be
  *                  existing column names in source table and target table, and
  *                  their types must be matched. For details on using
- *                  expressions, see <a href="../../concepts/expressions.html"
+ *                  expressions, see <a href="../../../concepts/expressions/"
  *                  target="_top">Expressions</a>.
  * @param options  Optional parameters.
  *                 <ul>
@@ -8227,7 +8485,7 @@ AppendRecordsResponse& GPUdb::appendRecords( const AppendRecordsRequest& request
  *                 Specifies the record collision policy for inserting the
  *                 source table records (specified by @a sourceTableName) into
  *                 the target table (specified by @a tableName) table with a <a
- *                 href="../../concepts/tables.html#primary-keys"
+ *                 href="../../../concepts/tables/#primary-keys"
  *                 target="_top">primary key</a>.  If set to @a true, any
  *                 existing target table record with primary key values that
  *                 match those of a source table record being inserted will be
@@ -8282,12 +8540,12 @@ AppendRecordsResponse GPUdb::appendRecords( const std::string& tableName,
  * 
  * @param tableName  The table name for the records to be appended, in
  *                   [schema_name.]table_name format, using standard <a
- *                   href="../../concepts/tables.html#table-name-resolution"
+ *                   href="../../../concepts/tables/#table-name-resolution"
  *                   target="_top">name resolution rules</a>.  Must be an
  *                   existing table.
  * @param sourceTableName  The source table name to get records from, in
  *                         [schema_name.]table_name format, using standard <a
- *                         href="../../concepts/tables.html#table-name-resolution"
+ *                         href="../../../concepts/tables/#table-name-resolution"
  *                         target="_top">name resolution rules</a>.  Must be an
  *                         existing table name.
  * @param fieldMap  Contains the mapping of column names from the target table
@@ -8296,7 +8554,7 @@ AppendRecordsResponse GPUdb::appendRecords( const std::string& tableName,
  *                  source table (specified by @a sourceTableName). Must be
  *                  existing column names in source table and target table, and
  *                  their types must be matched. For details on using
- *                  expressions, see <a href="../../concepts/expressions.html"
+ *                  expressions, see <a href="../../../concepts/expressions/"
  *                  target="_top">Expressions</a>.
  * @param options  Optional parameters.
  *                 <ul>
@@ -8322,7 +8580,7 @@ AppendRecordsResponse GPUdb::appendRecords( const std::string& tableName,
  *                 Specifies the record collision policy for inserting the
  *                 source table records (specified by @a sourceTableName) into
  *                 the target table (specified by @a tableName) table with a <a
- *                 href="../../concepts/tables.html#primary-keys"
+ *                 href="../../../concepts/tables/#primary-keys"
  *                 target="_top">primary key</a>.  If set to @a true, any
  *                 existing target table record with primary key values that
  *                 match those of a source table record being inserted will be
@@ -8418,7 +8676,7 @@ ClearStatisticsResponse& GPUdb::clearStatistics( const ClearStatisticsRequest& r
  * 
  * @param tableName  Name of a table, in [schema_name.]table_name format, using
  *                   standard <a
- *                   href="../../concepts/tables.html#table-name-resolution"
+ *                   href="../../../concepts/tables/#table-name-resolution"
  *                   target="_top">name resolution rules</a>. Must be an
  *                   existing table.
  * @param columnName  Name of the column in @a tableName for which to clear
@@ -8451,7 +8709,7 @@ ClearStatisticsResponse GPUdb::clearStatistics( const std::string& tableName,
  * 
  * @param tableName  Name of a table, in [schema_name.]table_name format, using
  *                   standard <a
- *                   href="../../concepts/tables.html#table-name-resolution"
+ *                   href="../../../concepts/tables/#table-name-resolution"
  *                   target="_top">name resolution rules</a>. Must be an
  *                   existing table.
  * @param columnName  Name of the column in @a tableName for which to clear
@@ -8537,7 +8795,7 @@ ClearTableResponse& GPUdb::clearTable( const ClearTableRequest& request_,
  * 
  * @param tableName  Name of the table to be cleared, in
  *                   [schema_name.]table_name format, using standard <a
- *                   href="../../concepts/tables.html#table-name-resolution"
+ *                   href="../../../concepts/tables/#table-name-resolution"
  *                   target="_top">name resolution rules</a>. Must be an
  *                   existing table. Empty string clears all available tables,
  *                   though this behavior is be prevented by default via
@@ -8584,7 +8842,7 @@ ClearTableResponse GPUdb::clearTable( const std::string& tableName,
  * 
  * @param tableName  Name of the table to be cleared, in
  *                   [schema_name.]table_name format, using standard <a
- *                   href="../../concepts/tables.html#table-name-resolution"
+ *                   href="../../../concepts/tables/#table-name-resolution"
  *                   target="_top">name resolution rules</a>. Must be an
  *                   existing table. Empty string clears all available tables,
  *                   though this behavior is be prevented by default via
@@ -8853,7 +9111,7 @@ CollectStatisticsResponse& GPUdb::collectStatistics( const CollectStatisticsRequ
  * 
  * @param tableName  Name of a table, in [schema_name.]table_name format, using
  *                   standard <a
- *                   href="../../concepts/tables.html#table-name-resolution"
+ *                   href="../../../concepts/tables/#table-name-resolution"
  *                   target="_top">name resolution rules</a>.  Must be an
  *                   existing table.
  * @param columnNames  List of one or more column names in @a tableName for
@@ -8884,7 +9142,7 @@ CollectStatisticsResponse GPUdb::collectStatistics( const std::string& tableName
  * 
  * @param tableName  Name of a table, in [schema_name.]table_name format, using
  *                   standard <a
- *                   href="../../concepts/tables.html#table-name-resolution"
+ *                   href="../../../concepts/tables/#table-name-resolution"
  *                   target="_top">name resolution rules</a>.  Must be an
  *                   existing table.
  * @param columnNames  List of one or more column names in @a tableName for
@@ -8914,7 +9172,257 @@ CollectStatisticsResponse& GPUdb::collectStatistics( const std::string& tableNam
 
 
 /**
- * Creates a <a href="../../concepts/data_sources.html" target="_top">data
+ * @private
+ * 
+ * @param[in] request_  Request object containing the parameters for the
+ *                      operation.
+ * 
+ * @return Response object containing the result of the operation.
+ * 
+ */
+
+CreateContainerRegistryResponse GPUdb::createContainerRegistry( const CreateContainerRegistryRequest& request_ ) const
+{
+    CreateContainerRegistryResponse actualResponse_;
+    submitRequest("/create/container/registry", request_, actualResponse_, false);
+    return actualResponse_;
+}
+
+
+/**
+ * @private
+ * 
+ * @param[in] request_  Request object containing the parameters for the
+ *                      operation.
+ * @param[out] response_  Response object containing the results of the
+ *                        operation.
+ * 
+ * @return Response object containing the result of the operation (initially
+ *         passed in by reference).
+ * 
+ */
+
+CreateContainerRegistryResponse& GPUdb::createContainerRegistry( const CreateContainerRegistryRequest& request_,
+                                                                 CreateContainerRegistryResponse& response_ ) const
+{
+    submitRequest("/create/container/registry", request_, response_, false);
+    return response_;
+}
+
+
+/**
+ * @private
+ * 
+ * @param registryName
+ * @param uri
+ * @param credential
+ * @param options
+ *                 <ul>
+ *                         <li> gpudb::create_container_registry_user_name:
+ *                 The default value is ''.
+ *                         <li> gpudb::create_container_registry_password:
+ *                 The default value is ''.
+ *                         <li> gpudb::create_container_registry_email:   The
+ *                 default value is ''.
+ *                 </ul>
+ * 
+ * @return Response object containing the result of the operation.
+ * 
+ */
+
+CreateContainerRegistryResponse GPUdb::createContainerRegistry( const std::string& registryName,
+                                                                const std::string& uri,
+                                                                const std::string& credential,
+                                                                const std::map<std::string, std::string>& options ) const
+{
+    CreateContainerRegistryRequest actualRequest_;
+    actualRequest_.registryName = registryName;
+    actualRequest_.uri = uri;
+    actualRequest_.credential = credential;
+    actualRequest_.options = options;
+    CreateContainerRegistryResponse actualResponse_;
+    submitRequest("/create/container/registry", actualRequest_, actualResponse_, false);
+    return actualResponse_;
+}
+
+
+/**
+ * @private
+ * 
+ * @param registryName
+ * @param uri
+ * @param credential
+ * @param options
+ *                 <ul>
+ *                         <li> gpudb::create_container_registry_user_name:
+ *                 The default value is ''.
+ *                         <li> gpudb::create_container_registry_password:
+ *                 The default value is ''.
+ *                         <li> gpudb::create_container_registry_email:   The
+ *                 default value is ''.
+ *                 </ul>
+ * @param[out] response_  Response object containing the results of the
+ *                        operation.
+ * 
+ * @return Response object containing the result of the operation (initially
+ *         passed in by reference).
+ * 
+ */
+
+CreateContainerRegistryResponse& GPUdb::createContainerRegistry( const std::string& registryName,
+                                                                 const std::string& uri,
+                                                                 const std::string& credential,
+                                                                 const std::map<std::string, std::string>& options,
+                                                                 CreateContainerRegistryResponse& response_ ) const
+{
+    CreateContainerRegistryRequest actualRequest_;
+    actualRequest_.registryName = registryName;
+    actualRequest_.uri = uri;
+    actualRequest_.credential = credential;
+    actualRequest_.options = options;
+    submitRequest("/create/container/registry", actualRequest_, response_, false);
+    return response_;
+}
+
+
+/**
+ * Create a new <a href="../../../concepts/credentials/"
+ * target="_top">credential</a>.
+ * 
+ * @param[in] request_  Request object containing the parameters for the
+ *                      operation.
+ * 
+ * @return Response object containing the result of the operation.
+ * 
+ */
+
+CreateCredentialResponse GPUdb::createCredential( const CreateCredentialRequest& request_ ) const
+{
+    CreateCredentialResponse actualResponse_;
+    submitRequest("/create/credential", request_, actualResponse_, false);
+    return actualResponse_;
+}
+
+
+/**
+ * Create a new <a href="../../../concepts/credentials/"
+ * target="_top">credential</a>.
+ * 
+ * @param[in] request_  Request object containing the parameters for the
+ *                      operation.
+ * @param[out] response_  Response object containing the results of the
+ *                        operation.
+ * 
+ * @return Response object containing the result of the operation (initially
+ *         passed in by reference).
+ * 
+ */
+
+CreateCredentialResponse& GPUdb::createCredential( const CreateCredentialRequest& request_,
+                                                   CreateCredentialResponse& response_ ) const
+{
+    submitRequest("/create/credential", request_, response_, false);
+    return response_;
+}
+
+
+/**
+ * Create a new <a href="../../../concepts/credentials/"
+ * target="_top">credential</a>.
+ * 
+ * @param credentialName  Name of the credential to be created. Must contain
+ *                        only letters, digits, and underscores, and cannot
+ *                        begin with a digit. Must not match an existing
+ *                        credential name.
+ * @param type  Type of the credential to be created.
+ *              <ul>
+ *                      <li> gpudb::create_credential_aws_access_key
+ *                      <li> gpudb::create_credential_aws_iam_role
+ *                      <li> gpudb::create_credential_azure_ad
+ *                      <li> gpudb::create_credential_azure_oauth
+ *                      <li> gpudb::create_credential_azure_sas
+ *                      <li> gpudb::create_credential_azure_storage_key
+ *                      <li> gpudb::create_credential_docker
+ *                      <li> gpudb::create_credential_hdfs
+ *                      <li> gpudb::create_credential_kafka
+ *              </ul>
+ * @param identity  User of the credential to be created.
+ * @param secret  Password of the credential to be created.
+ * @param options  Optional parameters.
+ * 
+ * @return Response object containing the result of the operation.
+ * 
+ */
+
+CreateCredentialResponse GPUdb::createCredential( const std::string& credentialName,
+                                                  const std::string& type,
+                                                  const std::string& identity,
+                                                  const std::string& secret,
+                                                  const std::map<std::string, std::string>& options ) const
+{
+    CreateCredentialRequest actualRequest_;
+    actualRequest_.credentialName = credentialName;
+    actualRequest_.type = type;
+    actualRequest_.identity = identity;
+    actualRequest_.secret = secret;
+    actualRequest_.options = options;
+    CreateCredentialResponse actualResponse_;
+    submitRequest("/create/credential", actualRequest_, actualResponse_, false);
+    return actualResponse_;
+}
+
+
+/**
+ * Create a new <a href="../../../concepts/credentials/"
+ * target="_top">credential</a>.
+ * 
+ * @param credentialName  Name of the credential to be created. Must contain
+ *                        only letters, digits, and underscores, and cannot
+ *                        begin with a digit. Must not match an existing
+ *                        credential name.
+ * @param type  Type of the credential to be created.
+ *              <ul>
+ *                      <li> gpudb::create_credential_aws_access_key
+ *                      <li> gpudb::create_credential_aws_iam_role
+ *                      <li> gpudb::create_credential_azure_ad
+ *                      <li> gpudb::create_credential_azure_oauth
+ *                      <li> gpudb::create_credential_azure_sas
+ *                      <li> gpudb::create_credential_azure_storage_key
+ *                      <li> gpudb::create_credential_docker
+ *                      <li> gpudb::create_credential_hdfs
+ *                      <li> gpudb::create_credential_kafka
+ *              </ul>
+ * @param identity  User of the credential to be created.
+ * @param secret  Password of the credential to be created.
+ * @param options  Optional parameters.
+ * @param[out] response_  Response object containing the results of the
+ *                        operation.
+ * 
+ * @return Response object containing the result of the operation (initially
+ *         passed in by reference).
+ * 
+ */
+
+CreateCredentialResponse& GPUdb::createCredential( const std::string& credentialName,
+                                                   const std::string& type,
+                                                   const std::string& identity,
+                                                   const std::string& secret,
+                                                   const std::map<std::string, std::string>& options,
+                                                   CreateCredentialResponse& response_ ) const
+{
+    CreateCredentialRequest actualRequest_;
+    actualRequest_.credentialName = credentialName;
+    actualRequest_.type = type;
+    actualRequest_.identity = identity;
+    actualRequest_.secret = secret;
+    actualRequest_.options = options;
+    submitRequest("/create/credential", actualRequest_, response_, false);
+    return response_;
+}
+
+
+/**
+ * Creates a <a href="../../../concepts/data_sources/" target="_top">data
  * source</a>, which contains the
  * location and connection information for a data store that is external to the
  * database.
@@ -8935,7 +9443,7 @@ CreateDatasourceResponse GPUdb::createDatasource( const CreateDatasourceRequest&
 
 
 /**
- * Creates a <a href="../../concepts/data_sources.html" target="_top">data
+ * Creates a <a href="../../../concepts/data_sources/" target="_top">data
  * source</a>, which contains the
  * location and connection information for a data store that is external to the
  * database.
@@ -8959,7 +9467,7 @@ CreateDatasourceResponse& GPUdb::createDatasource( const CreateDatasourceRequest
 
 
 /**
- * Creates a <a href="../../concepts/data_sources.html" target="_top">data
+ * Creates a <a href="../../../concepts/data_sources/" target="_top">data
  * source</a>, which contains the
  * location and connection information for a data store that is external to the
  * database.
@@ -8984,6 +9492,8 @@ CreateDatasourceResponse& GPUdb::createDatasource( const CreateDatasourceRequest
  *                 Timeout in seconds for connecting to this storage provider
  *                         <li> gpudb::create_datasource_wait_timeout: Timeout
  *                 in seconds for reading from this storage provider
+ *                         <li> gpudb::create_datasource_credential: Name of
+ *                 the Credential object to be used in data source
  *                         <li> gpudb::create_datasource_s3_bucket_name: Name
  *                 of the Amazon S3 bucket to use as the data source
  *                         <li> gpudb::create_datasource_s3_region: Name of the
@@ -9038,7 +9548,7 @@ CreateDatasourceResponse GPUdb::createDatasource( const std::string& name,
 
 
 /**
- * Creates a <a href="../../concepts/data_sources.html" target="_top">data
+ * Creates a <a href="../../../concepts/data_sources/" target="_top">data
  * source</a>, which contains the
  * location and connection information for a data store that is external to the
  * database.
@@ -9063,6 +9573,8 @@ CreateDatasourceResponse GPUdb::createDatasource( const std::string& name,
  *                 Timeout in seconds for connecting to this storage provider
  *                         <li> gpudb::create_datasource_wait_timeout: Timeout
  *                 in seconds for reading from this storage provider
+ *                         <li> gpudb::create_datasource_credential: Name of
+ *                 the Credential object to be used in data source
  *                         <li> gpudb::create_datasource_s3_bucket_name: Name
  *                 of the Amazon S3 bucket to use as the data source
  *                         <li> gpudb::create_datasource_s3_region: Name of the
@@ -9124,12 +9636,12 @@ CreateDatasourceResponse& GPUdb::createDatasource( const std::string& name,
  * restrictions.
 
  * IMPORTANT: It's highly recommended that you review the
- * <a href="../../graph_solver/network_graph_solver.html" target="_top">Network
+ * <a href="../../../graph_solver/network_graph_solver/" target="_top">Network
  * Graphs & Solvers</a>
  * concepts documentation, the
- * <a href="../../graph_solver/examples/graph_rest_guide.html"
+ * <a href="../../../graph_solver/examples/graph_rest_guide/"
  * target="_top">Graph REST Tutorial</a>,
- * and/or some <a href="../../graph_solver/examples.html" target="_top">graph
+ * and/or some <a href="../../../graph_solver/examples/" target="_top">graph
  * examples</a> before
  * using this endpoint.
  * 
@@ -9153,12 +9665,12 @@ CreateGraphResponse GPUdb::createGraph( const CreateGraphRequest& request_ ) con
  * restrictions.
 
  * IMPORTANT: It's highly recommended that you review the
- * <a href="../../graph_solver/network_graph_solver.html" target="_top">Network
+ * <a href="../../../graph_solver/network_graph_solver/" target="_top">Network
  * Graphs & Solvers</a>
  * concepts documentation, the
- * <a href="../../graph_solver/examples/graph_rest_guide.html"
+ * <a href="../../../graph_solver/examples/graph_rest_guide/"
  * target="_top">Graph REST Tutorial</a>,
- * and/or some <a href="../../graph_solver/examples.html" target="_top">graph
+ * and/or some <a href="../../../graph_solver/examples/" target="_top">graph
  * examples</a> before
  * using this endpoint.
  * 
@@ -9185,12 +9697,12 @@ CreateGraphResponse& GPUdb::createGraph( const CreateGraphRequest& request_,
  * restrictions.
 
  * IMPORTANT: It's highly recommended that you review the
- * <a href="../../graph_solver/network_graph_solver.html" target="_top">Network
+ * <a href="../../../graph_solver/network_graph_solver/" target="_top">Network
  * Graphs & Solvers</a>
  * concepts documentation, the
- * <a href="../../graph_solver/examples/graph_rest_guide.html"
+ * <a href="../../../graph_solver/examples/graph_rest_guide/"
  * target="_top">Graph REST Tutorial</a>,
- * and/or some <a href="../../graph_solver/examples.html" target="_top">graph
+ * and/or some <a href="../../../graph_solver/examples/" target="_top">graph
  * examples</a> before
  * using this endpoint.
  * 
@@ -9198,7 +9710,7 @@ CreateGraphResponse& GPUdb::createGraph( const CreateGraphRequest& request_,
  * @param directedGraph  If set to @a true, the graph will be directed. If set
  *                       to @a false, the graph will not be directed. Consult
  *                       <a
- *                       href="../../graph_solver/network_graph_solver.html#directed-graphs"
+ *                       href="../../../graph_solver/network_graph_solver/#directed-graphs"
  *                       target="_top">Directed Graphs</a> for more details.
  *                       <ul>
  *                               <li> gpudb::create_graph_true
@@ -9208,11 +9720,11 @@ CreateGraphResponse& GPUdb::createGraph( const CreateGraphRequest& request_,
  * @param nodes  Nodes represent fundamental topological units of a graph.
  *               Nodes must be specified using
  *               <a
- *               href="../../graph_solver/network_graph_solver.html#identifiers"
+ *               href="../../../graph_solver/network_graph_solver/#identifiers"
  *               target="_top">identifiers</a>;
  *               identifiers are grouped as
  *               <a
- *               href="../../graph_solver/network_graph_solver.html#id-combos"
+ *               href="../../../graph_solver/network_graph_solver/#id-combos"
  *               target="_top">combinations</a>.
  *               Identifiers can be used with existing column names, e.g.,
  *               'table.column AS NODE_ID', expressions, e.g.,
@@ -9226,11 +9738,11 @@ CreateGraphResponse& GPUdb::createGraph( const CreateGraphRequest& request_,
  *               a graph that typically connect nodes. Edges must be specified
  *               using
  *               <a
- *               href="../../graph_solver/network_graph_solver.html#identifiers"
+ *               href="../../../graph_solver/network_graph_solver/#identifiers"
  *               target="_top">identifiers</a>;
  *               identifiers are grouped as
  *               <a
- *               href="../../graph_solver/network_graph_solver.html#id-combos"
+ *               href="../../../graph_solver/network_graph_solver/#id-combos"
  *               target="_top">combinations</a>.
  *               Identifiers can be used with existing column names, e.g.,
  *               'table.column AS EDGE_ID', expressions, e.g.,
@@ -9245,11 +9757,11 @@ CreateGraphResponse& GPUdb::createGraph( const CreateGraphRequest& request_,
  *                 must be specified
  *                 using
  *                 <a
- *                 href="../../graph_solver/network_graph_solver.html#identifiers"
+ *                 href="../../../graph_solver/network_graph_solver/#identifiers"
  *                 target="_top">identifiers</a>;
  *                 identifiers are grouped as
  *                 <a
- *                 href="../../graph_solver/network_graph_solver.html#id-combos"
+ *                 href="../../../graph_solver/network_graph_solver/#id-combos"
  *                 target="_top">combinations</a>.
  *                 Identifiers can be used with existing column names, e.g.,
  *                 'table.column AS WEIGHTS_EDGE_ID', expressions, e.g.,
@@ -9264,11 +9776,11 @@ CreateGraphResponse& GPUdb::createGraph( const CreateGraphRequest& request_,
  *                      the solution. Restrictions
  *                      must be specified using
  *                      <a
- *                      href="../../graph_solver/network_graph_solver.html#identifiers"
+ *                      href="../../../graph_solver/network_graph_solver/#identifiers"
  *                      target="_top">identifiers</a>;
  *                      identifiers are grouped as
  *                      <a
- *                      href="../../graph_solver/network_graph_solver.html#id-combos"
+ *                      href="../../../graph_solver/network_graph_solver/#id-combos"
  *                      target="_top">combinations</a>.
  *                      Identifiers can be used with existing column names,
  *                      e.g.,
@@ -9345,7 +9857,7 @@ CreateGraphResponse& GPUdb::createGraph( const CreateGraphRequest& request_,
  *                 The default value is gpudb::create_graph_false.
  *                         <li> gpudb::create_graph_save_persist: If set to @a
  *                 true, the graph will be saved in the persist directory (see
- *                 the <a href="../../config/index.html" target="_top">config
+ *                 the <a href="../../../config/" target="_top">config
  *                 reference</a> for more information). If set to @a false, the
  *                 graph will be removed when the graph server is shutdown.
  *                 <ul>
@@ -9380,9 +9892,9 @@ CreateGraphResponse& GPUdb::createGraph( const CreateGraphRequest& request_,
  *                         <li> gpudb::create_graph_graph_table: If specified,
  *                 the created graph is also created as a table with the given
  *                 name, in [schema_name.]table_name format, using standard <a
- *                 href="../../concepts/tables.html#table-name-resolution"
+ *                 href="../../../concepts/tables/#table-name-resolution"
  *                 target="_top">name resolution rules</a> and meeting <a
- *                 href="../../concepts/tables.html#table-naming-criteria"
+ *                 href="../../../concepts/tables/#table-naming-criteria"
  *                 target="_top">table naming criteria</a>.  The table will
  *                 have the following identifier columns: 'EDGE_ID',
  *                 'EDGE_NODE1_ID', 'EDGE_NODE2_ID'. If left blank, no table is
@@ -9432,6 +9944,8 @@ CreateGraphResponse& GPUdb::createGraph( const CreateGraphRequest& request_,
  *                         <li> gpudb::create_graph_false
  *                 </ul>
  *                 The default value is gpudb::create_graph_false.
+ *                         <li> gpudb::create_graph_sql_request_avro_json:
+ *                 The default value is ''.
  *                 </ul>
  * 
  * @return Response object containing the result of the operation.
@@ -9465,12 +9979,12 @@ CreateGraphResponse GPUdb::createGraph( const std::string& graphName,
  * restrictions.
 
  * IMPORTANT: It's highly recommended that you review the
- * <a href="../../graph_solver/network_graph_solver.html" target="_top">Network
+ * <a href="../../../graph_solver/network_graph_solver/" target="_top">Network
  * Graphs & Solvers</a>
  * concepts documentation, the
- * <a href="../../graph_solver/examples/graph_rest_guide.html"
+ * <a href="../../../graph_solver/examples/graph_rest_guide/"
  * target="_top">Graph REST Tutorial</a>,
- * and/or some <a href="../../graph_solver/examples.html" target="_top">graph
+ * and/or some <a href="../../../graph_solver/examples/" target="_top">graph
  * examples</a> before
  * using this endpoint.
  * 
@@ -9478,7 +9992,7 @@ CreateGraphResponse GPUdb::createGraph( const std::string& graphName,
  * @param directedGraph  If set to @a true, the graph will be directed. If set
  *                       to @a false, the graph will not be directed. Consult
  *                       <a
- *                       href="../../graph_solver/network_graph_solver.html#directed-graphs"
+ *                       href="../../../graph_solver/network_graph_solver/#directed-graphs"
  *                       target="_top">Directed Graphs</a> for more details.
  *                       <ul>
  *                               <li> gpudb::create_graph_true
@@ -9488,11 +10002,11 @@ CreateGraphResponse GPUdb::createGraph( const std::string& graphName,
  * @param nodes  Nodes represent fundamental topological units of a graph.
  *               Nodes must be specified using
  *               <a
- *               href="../../graph_solver/network_graph_solver.html#identifiers"
+ *               href="../../../graph_solver/network_graph_solver/#identifiers"
  *               target="_top">identifiers</a>;
  *               identifiers are grouped as
  *               <a
- *               href="../../graph_solver/network_graph_solver.html#id-combos"
+ *               href="../../../graph_solver/network_graph_solver/#id-combos"
  *               target="_top">combinations</a>.
  *               Identifiers can be used with existing column names, e.g.,
  *               'table.column AS NODE_ID', expressions, e.g.,
@@ -9506,11 +10020,11 @@ CreateGraphResponse GPUdb::createGraph( const std::string& graphName,
  *               a graph that typically connect nodes. Edges must be specified
  *               using
  *               <a
- *               href="../../graph_solver/network_graph_solver.html#identifiers"
+ *               href="../../../graph_solver/network_graph_solver/#identifiers"
  *               target="_top">identifiers</a>;
  *               identifiers are grouped as
  *               <a
- *               href="../../graph_solver/network_graph_solver.html#id-combos"
+ *               href="../../../graph_solver/network_graph_solver/#id-combos"
  *               target="_top">combinations</a>.
  *               Identifiers can be used with existing column names, e.g.,
  *               'table.column AS EDGE_ID', expressions, e.g.,
@@ -9525,11 +10039,11 @@ CreateGraphResponse GPUdb::createGraph( const std::string& graphName,
  *                 must be specified
  *                 using
  *                 <a
- *                 href="../../graph_solver/network_graph_solver.html#identifiers"
+ *                 href="../../../graph_solver/network_graph_solver/#identifiers"
  *                 target="_top">identifiers</a>;
  *                 identifiers are grouped as
  *                 <a
- *                 href="../../graph_solver/network_graph_solver.html#id-combos"
+ *                 href="../../../graph_solver/network_graph_solver/#id-combos"
  *                 target="_top">combinations</a>.
  *                 Identifiers can be used with existing column names, e.g.,
  *                 'table.column AS WEIGHTS_EDGE_ID', expressions, e.g.,
@@ -9544,11 +10058,11 @@ CreateGraphResponse GPUdb::createGraph( const std::string& graphName,
  *                      the solution. Restrictions
  *                      must be specified using
  *                      <a
- *                      href="../../graph_solver/network_graph_solver.html#identifiers"
+ *                      href="../../../graph_solver/network_graph_solver/#identifiers"
  *                      target="_top">identifiers</a>;
  *                      identifiers are grouped as
  *                      <a
- *                      href="../../graph_solver/network_graph_solver.html#id-combos"
+ *                      href="../../../graph_solver/network_graph_solver/#id-combos"
  *                      target="_top">combinations</a>.
  *                      Identifiers can be used with existing column names,
  *                      e.g.,
@@ -9625,7 +10139,7 @@ CreateGraphResponse GPUdb::createGraph( const std::string& graphName,
  *                 The default value is gpudb::create_graph_false.
  *                         <li> gpudb::create_graph_save_persist: If set to @a
  *                 true, the graph will be saved in the persist directory (see
- *                 the <a href="../../config/index.html" target="_top">config
+ *                 the <a href="../../../config/" target="_top">config
  *                 reference</a> for more information). If set to @a false, the
  *                 graph will be removed when the graph server is shutdown.
  *                 <ul>
@@ -9660,9 +10174,9 @@ CreateGraphResponse GPUdb::createGraph( const std::string& graphName,
  *                         <li> gpudb::create_graph_graph_table: If specified,
  *                 the created graph is also created as a table with the given
  *                 name, in [schema_name.]table_name format, using standard <a
- *                 href="../../concepts/tables.html#table-name-resolution"
+ *                 href="../../../concepts/tables/#table-name-resolution"
  *                 target="_top">name resolution rules</a> and meeting <a
- *                 href="../../concepts/tables.html#table-naming-criteria"
+ *                 href="../../../concepts/tables/#table-naming-criteria"
  *                 target="_top">table naming criteria</a>.  The table will
  *                 have the following identifier columns: 'EDGE_ID',
  *                 'EDGE_NODE1_ID', 'EDGE_NODE2_ID'. If left blank, no table is
@@ -9712,6 +10226,8 @@ CreateGraphResponse GPUdb::createGraph( const std::string& graphName,
  *                         <li> gpudb::create_graph_false
  *                 </ul>
  *                 The default value is gpudb::create_graph_false.
+ *                         <li> gpudb::create_graph_sql_request_avro_json:
+ *                 The default value is ''.
  *                 </ul>
  * @param[out] response_  Response object containing the results of the
  *                        operation.
@@ -9916,9 +10432,9 @@ CreateJobResponse& GPUdb::createJob( const std::string& endpoint,
 /**
  * Creates a table that is the result of a SQL JOIN.
  * <p>
- * For join details and examples see: <a href="../../concepts/joins.html"
+ * For join details and examples see: <a href="../../../concepts/joins/"
  * target="_top">Joins</a>.  For limitations, see <a
- * href="../../concepts/joins.html#limitations-cautions" target="_top">Join
+ * href="../../../concepts/joins/#limitations-cautions" target="_top">Join
  * Limitations and Cautions</a>.
  * 
  * @param[in] request_  Request object containing the parameters for the
@@ -9939,9 +10455,9 @@ CreateJoinTableResponse GPUdb::createJoinTable( const CreateJoinTableRequest& re
 /**
  * Creates a table that is the result of a SQL JOIN.
  * <p>
- * For join details and examples see: <a href="../../concepts/joins.html"
+ * For join details and examples see: <a href="../../../concepts/joins/"
  * target="_top">Joins</a>.  For limitations, see <a
- * href="../../concepts/joins.html#limitations-cautions" target="_top">Join
+ * href="../../../concepts/joins/#limitations-cautions" target="_top">Join
  * Limitations and Cautions</a>.
  * 
  * @param[in] request_  Request object containing the parameters for the
@@ -9965,20 +10481,20 @@ CreateJoinTableResponse& GPUdb::createJoinTable( const CreateJoinTableRequest& r
 /**
  * Creates a table that is the result of a SQL JOIN.
  * <p>
- * For join details and examples see: <a href="../../concepts/joins.html"
+ * For join details and examples see: <a href="../../../concepts/joins/"
  * target="_top">Joins</a>.  For limitations, see <a
- * href="../../concepts/joins.html#limitations-cautions" target="_top">Join
+ * href="../../../concepts/joins/#limitations-cautions" target="_top">Join
  * Limitations and Cautions</a>.
  * 
  * @param joinTableName  Name of the join table to be created, in
  *                       [schema_name.]table_name format, using standard <a
- *                       href="../../concepts/tables.html#table-name-resolution"
+ *                       href="../../../concepts/tables/#table-name-resolution"
  *                       target="_top">name resolution rules</a> and meeting <a
- *                       href="../../concepts/tables.html#table-naming-criteria"
+ *                       href="../../../concepts/tables/#table-naming-criteria"
  *                       target="_top">table naming criteria</a>.
  * @param tableNames  The list of table names composing the join, each in
  *                    [schema_name.]table_name format, using standard <a
- *                    href="../../concepts/tables.html#table-name-resolution"
+ *                    href="../../../concepts/tables/#table-name-resolution"
  *                    target="_top">name resolution rules</a>.  Corresponds to
  *                    a SQL statement FROM clause.
  * @param columnNames  List of member table columns or column expressions to be
@@ -9994,7 +10510,7 @@ CreateJoinTableResponse& GPUdb::createJoinTable( const CreateJoinTableRequest& r
  * @param expressions  An optional list of expressions to combine and filter
  *                     the joined tables.  Corresponds to a SQL statement WHERE
  *                     clause. For details see: <a
- *                     href="../../concepts/expressions.html"
+ *                     href="../../../concepts/expressions/"
  *                     target="_top">expressions</a>.
  * @param options  Optional parameters.
  *                 <ul>
@@ -10014,7 +10530,7 @@ CreateJoinTableResponse& GPUdb::createJoinTable( const CreateJoinTableRequest& r
  *                 </ul>
  *                 The default value is gpudb::create_join_table_false.
  *                         <li> gpudb::create_join_table_ttl: Sets the <a
- *                 href="../../concepts/ttl.html" target="_top">TTL</a> of the
+ *                 href="../../../concepts/ttl/" target="_top">TTL</a> of the
  *                 join table specified in @a joinTableName.
  *                         <li> gpudb::create_join_table_view_id: view this
  *                 projection is part of.  The default value is ''.
@@ -10052,20 +10568,20 @@ CreateJoinTableResponse GPUdb::createJoinTable( const std::string& joinTableName
 /**
  * Creates a table that is the result of a SQL JOIN.
  * <p>
- * For join details and examples see: <a href="../../concepts/joins.html"
+ * For join details and examples see: <a href="../../../concepts/joins/"
  * target="_top">Joins</a>.  For limitations, see <a
- * href="../../concepts/joins.html#limitations-cautions" target="_top">Join
+ * href="../../../concepts/joins/#limitations-cautions" target="_top">Join
  * Limitations and Cautions</a>.
  * 
  * @param joinTableName  Name of the join table to be created, in
  *                       [schema_name.]table_name format, using standard <a
- *                       href="../../concepts/tables.html#table-name-resolution"
+ *                       href="../../../concepts/tables/#table-name-resolution"
  *                       target="_top">name resolution rules</a> and meeting <a
- *                       href="../../concepts/tables.html#table-naming-criteria"
+ *                       href="../../../concepts/tables/#table-naming-criteria"
  *                       target="_top">table naming criteria</a>.
  * @param tableNames  The list of table names composing the join, each in
  *                    [schema_name.]table_name format, using standard <a
- *                    href="../../concepts/tables.html#table-name-resolution"
+ *                    href="../../../concepts/tables/#table-name-resolution"
  *                    target="_top">name resolution rules</a>.  Corresponds to
  *                    a SQL statement FROM clause.
  * @param columnNames  List of member table columns or column expressions to be
@@ -10081,7 +10597,7 @@ CreateJoinTableResponse GPUdb::createJoinTable( const std::string& joinTableName
  * @param expressions  An optional list of expressions to combine and filter
  *                     the joined tables.  Corresponds to a SQL statement WHERE
  *                     clause. For details see: <a
- *                     href="../../concepts/expressions.html"
+ *                     href="../../../concepts/expressions/"
  *                     target="_top">expressions</a>.
  * @param options  Optional parameters.
  *                 <ul>
@@ -10101,7 +10617,7 @@ CreateJoinTableResponse GPUdb::createJoinTable( const std::string& joinTableName
  *                 </ul>
  *                 The default value is gpudb::create_join_table_false.
  *                         <li> gpudb::create_join_table_ttl: Sets the <a
- *                 href="../../concepts/ttl.html" target="_top">TTL</a> of the
+ *                 href="../../../concepts/ttl/" target="_top">TTL</a> of the
  *                 join table specified in @a joinTableName.
  *                         <li> gpudb::create_join_table_view_id: view this
  *                 projection is part of.  The default value is ''.
@@ -10145,7 +10661,7 @@ CreateJoinTableResponse& GPUdb::createJoinTable( const std::string& joinTableNam
  * name.
  * <p>
  * For materialized view details and examples, see
- * <a href="../../concepts/materialized_views.html" target="_top">Materialized
+ * <a href="../../../concepts/materialized_views/" target="_top">Materialized
  * Views</a>.
  * <p>
  * The response contains @a viewId, which is used to tag each subsequent
@@ -10174,7 +10690,7 @@ CreateMaterializedViewResponse GPUdb::createMaterializedView( const CreateMateri
  * name.
  * <p>
  * For materialized view details and examples, see
- * <a href="../../concepts/materialized_views.html" target="_top">Materialized
+ * <a href="../../../concepts/materialized_views/" target="_top">Materialized
  * Views</a>.
  * <p>
  * The response contains @a viewId, which is used to tag each subsequent
@@ -10206,7 +10722,7 @@ CreateMaterializedViewResponse& GPUdb::createMaterializedView( const CreateMater
  * name.
  * <p>
  * For materialized view details and examples, see
- * <a href="../../concepts/materialized_views.html" target="_top">Materialized
+ * <a href="../../../concepts/materialized_views/" target="_top">Materialized
  * Views</a>.
  * <p>
  * The response contains @a viewId, which is used to tag each subsequent
@@ -10217,9 +10733,9 @@ CreateMaterializedViewResponse& GPUdb::createMaterializedView( const CreateMater
  * @param tableName  Name of the table to be created that is the top-level
  *                   table of the materialized view, in
  *                   [schema_name.]table_name format, using standard <a
- *                   href="../../concepts/tables.html#table-name-resolution"
+ *                   href="../../../concepts/tables/#table-name-resolution"
  *                   target="_top">name resolution rules</a> and meeting <a
- *                   href="../../concepts/tables.html#table-naming-criteria"
+ *                   href="../../../concepts/tables/#table-naming-criteria"
  *                   target="_top">table naming criteria</a>.
  * @param options  Optional parameters.
  *                 <ul>
@@ -10232,7 +10748,7 @@ CreateMaterializedViewResponse& GPUdb::createMaterializedView( const CreateMater
  *                 the schema provided is non-existent, it will be
  *                 automatically created.
  *                         <li> gpudb::create_materialized_view_ttl: Sets the
- *                 <a href="../../concepts/ttl.html" target="_top">TTL</a> of
+ *                 <a href="../../../concepts/ttl/" target="_top">TTL</a> of
  *                 the table specified in @a tableName.
  *                         <li> gpudb::create_materialized_view_persist: If @a
  *                 true, then the materialized view specified in @a tableName
@@ -10252,8 +10768,8 @@ CreateMaterializedViewResponse& GPUdb::createMaterializedView( const CreateMater
  *                         <li> gpudb::create_materialized_view_manual: Refresh
  *                 only occurs when manually requested by calling /alter/table
  *                 with an 'action' of 'refresh'
- *                         <li> gpudb::create_materialized_view_on_query: For
- *                 future use.
+ *                         <li> gpudb::create_materialized_view_on_query:
+ *                 Refresh any time the view is queried.
  *                         <li> gpudb::create_materialized_view_on_change: If
  *                 possible, incrementally refresh (refresh just those records
  *                 added) whenever an insert, update, delete or refresh of
@@ -10298,7 +10814,7 @@ CreateMaterializedViewResponse GPUdb::createMaterializedView( const std::string&
  * name.
  * <p>
  * For materialized view details and examples, see
- * <a href="../../concepts/materialized_views.html" target="_top">Materialized
+ * <a href="../../../concepts/materialized_views/" target="_top">Materialized
  * Views</a>.
  * <p>
  * The response contains @a viewId, which is used to tag each subsequent
@@ -10309,9 +10825,9 @@ CreateMaterializedViewResponse GPUdb::createMaterializedView( const std::string&
  * @param tableName  Name of the table to be created that is the top-level
  *                   table of the materialized view, in
  *                   [schema_name.]table_name format, using standard <a
- *                   href="../../concepts/tables.html#table-name-resolution"
+ *                   href="../../../concepts/tables/#table-name-resolution"
  *                   target="_top">name resolution rules</a> and meeting <a
- *                   href="../../concepts/tables.html#table-naming-criteria"
+ *                   href="../../../concepts/tables/#table-naming-criteria"
  *                   target="_top">table naming criteria</a>.
  * @param options  Optional parameters.
  *                 <ul>
@@ -10324,7 +10840,7 @@ CreateMaterializedViewResponse GPUdb::createMaterializedView( const std::string&
  *                 the schema provided is non-existent, it will be
  *                 automatically created.
  *                         <li> gpudb::create_materialized_view_ttl: Sets the
- *                 <a href="../../concepts/ttl.html" target="_top">TTL</a> of
+ *                 <a href="../../../concepts/ttl/" target="_top">TTL</a> of
  *                 the table specified in @a tableName.
  *                         <li> gpudb::create_materialized_view_persist: If @a
  *                 true, then the materialized view specified in @a tableName
@@ -10344,8 +10860,8 @@ CreateMaterializedViewResponse GPUdb::createMaterializedView( const std::string&
  *                         <li> gpudb::create_materialized_view_manual: Refresh
  *                 only occurs when manually requested by calling /alter/table
  *                 with an 'action' of 'refresh'
- *                         <li> gpudb::create_materialized_view_on_query: For
- *                 future use.
+ *                         <li> gpudb::create_materialized_view_on_query:
+ *                 Refresh any time the view is queried.
  *                         <li> gpudb::create_materialized_view_on_change: If
  *                 possible, incrementally refresh (refresh just those records
  *                 added) whenever an insert, update, delete or refresh of
@@ -10389,7 +10905,7 @@ CreateMaterializedViewResponse& GPUdb::createMaterializedView( const std::string
 
 /**
  * Creates an instance (proc) of the
- * <a href="../../concepts/udf.html" target="_top">user-defined functions</a>
+ * <a href="../../../concepts/udf/" target="_top">user-defined functions</a>
  * (UDF) specified by the
  * given command, options, and files, and makes it available for execution.
  * 
@@ -10410,7 +10926,7 @@ CreateProcResponse GPUdb::createProc( const CreateProcRequest& request_ ) const
 
 /**
  * Creates an instance (proc) of the
- * <a href="../../concepts/udf.html" target="_top">user-defined functions</a>
+ * <a href="../../../concepts/udf/" target="_top">user-defined functions</a>
  * (UDF) specified by the
  * given command, options, and files, and makes it available for execution.
  * 
@@ -10434,7 +10950,7 @@ CreateProcResponse& GPUdb::createProc( const CreateProcRequest& request_,
 
 /**
  * Creates an instance (proc) of the
- * <a href="../../concepts/udf.html" target="_top">user-defined functions</a>
+ * <a href="../../../concepts/udf/" target="_top">user-defined functions</a>
  * (UDF) specified by the
  * given command, options, and files, and makes it available for execution.
  * 
@@ -10519,7 +11035,7 @@ CreateProcResponse GPUdb::createProc( const std::string& procName,
 
 /**
  * Creates an instance (proc) of the
- * <a href="../../concepts/udf.html" target="_top">user-defined functions</a>
+ * <a href="../../../concepts/udf/" target="_top">user-defined functions</a>
  * (UDF) specified by the
  * given command, options, and files, and makes it available for execution.
  * 
@@ -10606,26 +11122,26 @@ CreateProcResponse& GPUdb::createProc( const std::string& procName,
 
 
 /**
- * Creates a new <a href="../../concepts/projections.html"
+ * Creates a new <a href="../../../concepts/projections/"
  * target="_top">projection</a> of
  * an existing table. A projection represents a subset of the columns
  * (potentially
  * including derived columns) of a table.
  * <p>
  * For projection details and examples, see
- * <a href="../../concepts/projections.html" target="_top">Projections</a>.
- * For limitations, see
- * <a href="../../concepts/projections.html#limitations-and-cautions"
+ * <a href="../../../concepts/projections/" target="_top">Projections</a>.  For
+ * limitations, see
+ * <a href="../../../concepts/projections/#limitations-and-cautions"
  * target="_top">Projection Limitations and Cautions</a>.
  * <p>
- * <a href="../../concepts/window.html" target="_top">Window functions</a>,
+ * <a href="../../../concepts/window/" target="_top">Window functions</a>,
  * which can perform
  * operations like moving averages, are available through this endpoint as well
  * as
  * {@link #getRecordsByColumnRaw(const GetRecordsByColumnRequest&) const}.
  * <p>
  * A projection can be created with a different
- * <a href="../../concepts/tables.html#shard-keys" target="_top">shard key</a>
+ * <a href="../../../concepts/tables/#shard-keys" target="_top">shard key</a>
  * than the source table.
  * By specifying @a shard_key, the projection will be sharded
  * according to the specified columns, regardless of how the source table is
@@ -10633,12 +11149,12 @@ CreateProcResponse& GPUdb::createProc( const std::string& procName,
  * <p>
  * If @a tableName is empty, selection is performed against a single-row
  * virtual table.  This can be useful in executing temporal
- * (<a href="../../concepts/expressions.html#date-time-functions"
+ * (<a href="../../../concepts/expressions/#date-time-functions"
  * target="_top">NOW()</a>), identity
- * (<a href="../../concepts/expressions.html#user-security-functions"
+ * (<a href="../../../concepts/expressions/#user-security-functions"
  * target="_top">USER()</a>), or
  * constant-based functions
- * (<a href="../../concepts/expressions.html#scalar-functions"
+ * (<a href="../../../concepts/expressions/#scalar-functions"
  * target="_top">GEODIST(-77.11, 38.88, -71.06, 42.36)</a>).
  * 
  * @param[in] request_  Request object containing the parameters for the
@@ -10657,19 +11173,19 @@ CreateProjectionResponse GPUdb::createProjection( const CreateProjectionRequest&
 
 
 /**
- * Creates a new <a href="../../concepts/projections.html"
+ * Creates a new <a href="../../../concepts/projections/"
  * target="_top">projection</a> of
  * an existing table. A projection represents a subset of the columns
  * (potentially
  * including derived columns) of a table.
  * <p>
  * For projection details and examples, see
- * <a href="../../concepts/projections.html" target="_top">Projections</a>.
- * For limitations, see
- * <a href="../../concepts/projections.html#limitations-and-cautions"
+ * <a href="../../../concepts/projections/" target="_top">Projections</a>.  For
+ * limitations, see
+ * <a href="../../../concepts/projections/#limitations-and-cautions"
  * target="_top">Projection Limitations and Cautions</a>.
  * <p>
- * <a href="../../concepts/window.html" target="_top">Window functions</a>,
+ * <a href="../../../concepts/window/" target="_top">Window functions</a>,
  * which can perform
  * operations like moving averages, are available through this endpoint as well
  * as
@@ -10677,7 +11193,7 @@ CreateProjectionResponse GPUdb::createProjection( const CreateProjectionRequest&
  * #getRecordsByColumnRaw(const GetRecordsByColumnRequest&,RawGetRecordsByColumnResponse&) const}.
  * <p>
  * A projection can be created with a different
- * <a href="../../concepts/tables.html#shard-keys" target="_top">shard key</a>
+ * <a href="../../../concepts/tables/#shard-keys" target="_top">shard key</a>
  * than the source table.
  * By specifying @a shard_key, the projection will be sharded
  * according to the specified columns, regardless of how the source table is
@@ -10685,12 +11201,12 @@ CreateProjectionResponse GPUdb::createProjection( const CreateProjectionRequest&
  * <p>
  * If @a tableName is empty, selection is performed against a single-row
  * virtual table.  This can be useful in executing temporal
- * (<a href="../../concepts/expressions.html#date-time-functions"
+ * (<a href="../../../concepts/expressions/#date-time-functions"
  * target="_top">NOW()</a>), identity
- * (<a href="../../concepts/expressions.html#user-security-functions"
+ * (<a href="../../../concepts/expressions/#user-security-functions"
  * target="_top">USER()</a>), or
  * constant-based functions
- * (<a href="../../concepts/expressions.html#scalar-functions"
+ * (<a href="../../../concepts/expressions/#scalar-functions"
  * target="_top">GEODIST(-77.11, 38.88, -71.06, 42.36)</a>).
  * 
  * @param[in] request_  Request object containing the parameters for the
@@ -10712,26 +11228,26 @@ CreateProjectionResponse& GPUdb::createProjection( const CreateProjectionRequest
 
 
 /**
- * Creates a new <a href="../../concepts/projections.html"
+ * Creates a new <a href="../../../concepts/projections/"
  * target="_top">projection</a> of
  * an existing table. A projection represents a subset of the columns
  * (potentially
  * including derived columns) of a table.
  * <p>
  * For projection details and examples, see
- * <a href="../../concepts/projections.html" target="_top">Projections</a>.
- * For limitations, see
- * <a href="../../concepts/projections.html#limitations-and-cautions"
+ * <a href="../../../concepts/projections/" target="_top">Projections</a>.  For
+ * limitations, see
+ * <a href="../../../concepts/projections/#limitations-and-cautions"
  * target="_top">Projection Limitations and Cautions</a>.
  * <p>
- * <a href="../../concepts/window.html" target="_top">Window functions</a>,
+ * <a href="../../../concepts/window/" target="_top">Window functions</a>,
  * which can perform
  * operations like moving averages, are available through this endpoint as well
  * as
  * {@link #getRecordsByColumnRaw(const GetRecordsByColumnRequest&) const}.
  * <p>
  * A projection can be created with a different
- * <a href="../../concepts/tables.html#shard-keys" target="_top">shard key</a>
+ * <a href="../../../concepts/tables/#shard-keys" target="_top">shard key</a>
  * than the source table.
  * By specifying @a shard_key, the projection will be sharded
  * according to the specified columns, regardless of how the source table is
@@ -10739,28 +11255,28 @@ CreateProjectionResponse& GPUdb::createProjection( const CreateProjectionRequest
  * <p>
  * If @a tableName is empty, selection is performed against a single-row
  * virtual table.  This can be useful in executing temporal
- * (<a href="../../concepts/expressions.html#date-time-functions"
+ * (<a href="../../../concepts/expressions/#date-time-functions"
  * target="_top">NOW()</a>), identity
- * (<a href="../../concepts/expressions.html#user-security-functions"
+ * (<a href="../../../concepts/expressions/#user-security-functions"
  * target="_top">USER()</a>), or
  * constant-based functions
- * (<a href="../../concepts/expressions.html#scalar-functions"
+ * (<a href="../../../concepts/expressions/#scalar-functions"
  * target="_top">GEODIST(-77.11, 38.88, -71.06, 42.36)</a>).
  * 
  * @param tableName  Name of the existing table on which the projection is to
  *                   be applied, in [schema_name.]table_name format, using
  *                   standard <a
- *                   href="../../concepts/tables.html#table-name-resolution"
+ *                   href="../../../concepts/tables/#table-name-resolution"
  *                   target="_top">name resolution rules</a>.  An empty table
  *                   name creates a projection from a single-row virtual table,
  *                   where columns specified should be constants or constant
  *                   expressions.
  * @param projectionName  Name of the projection to be created, in
  *                        [schema_name.]table_name format, using standard <a
- *                        href="../../concepts/tables.html#table-name-resolution"
+ *                        href="../../../concepts/tables/#table-name-resolution"
  *                        target="_top">name resolution rules</a> and meeting
  *                        <a
- *                        href="../../concepts/tables.html#table-naming-criteria"
+ *                        href="../../../concepts/tables/#table-naming-criteria"
  *                        target="_top">table naming criteria</a>.
  * @param columnNames  List of columns from @a tableName to be included in the
  *                     projection. Can include derived columns. Can be
@@ -10776,7 +11292,7 @@ CreateProjectionResponse& GPUdb::createProjection( const CreateProjectionRequest
  *                 non-existent, it will be automatically created.  The default
  *                 value is ''.
  *                         <li> gpudb::create_projection_expression: An
- *                 optional filter <a href="../../concepts/expressions.html"
+ *                 optional filter <a href="../../../concepts/expressions/"
  *                 target="_top">expression</a> to be applied to the source
  *                 table prior to the projection.  The default value is ''.
  *                         <li> gpudb::create_projection_is_replicated: If @a
@@ -10796,14 +11312,14 @@ CreateProjectionResponse& GPUdb::createProjection( const CreateProjectionRequest
  *                 column name, the alias must be used, rather than the
  *                 original column name.  The default value is ''.
  *                         <li> gpudb::create_projection_materialize_on_gpu: No
- *                 longer used.  See <a href="../../rm/concepts.html"
+ *                 longer used.  See <a href="../../../rm/concepts/"
  *                 target="_top">Resource Management Concepts</a> for
  *                 information about how resources are managed, <a
- *                 href="../../rm/concepts.html" target="_top">Tier Strategy
+ *                 href="../../../rm/concepts/" target="_top">Tier Strategy
  *                 Concepts</a> for how resources are targeted for VRAM, and <a
- *                 href="../../rm/usage.html#tier-strategies"
- *                 target="_top">Tier Strategy Usage</a> for how to specify a
- *                 table's priority in VRAM.
+ *                 href="../../../rm/usage/#tier-strategies" target="_top">Tier
+ *                 Strategy Usage</a> for how to specify a table's priority in
+ *                 VRAM.
  *                 <ul>
  *                         <li> gpudb::create_projection_true
  *                         <li> gpudb::create_projection_false
@@ -10819,7 +11335,7 @@ CreateProjectionResponse& GPUdb::createProjection( const CreateProjectionRequest
  *                 the alias must be used, rather than the original column
  *                 name.
  *                         <li> gpudb::create_projection_ttl: Sets the <a
- *                 href="../../concepts/ttl.html" target="_top">TTL</a> of the
+ *                 href="../../../concepts/ttl/" target="_top">TTL</a> of the
  *                 projection specified in @a projectionName.
  *                         <li> gpudb::create_projection_shard_key:
  *                 Comma-separated list of the columns to be sharded on; e.g.
@@ -10879,26 +11395,26 @@ CreateProjectionResponse GPUdb::createProjection( const std::string& tableName,
 
 
 /**
- * Creates a new <a href="../../concepts/projections.html"
+ * Creates a new <a href="../../../concepts/projections/"
  * target="_top">projection</a> of
  * an existing table. A projection represents a subset of the columns
  * (potentially
  * including derived columns) of a table.
  * <p>
  * For projection details and examples, see
- * <a href="../../concepts/projections.html" target="_top">Projections</a>.
- * For limitations, see
- * <a href="../../concepts/projections.html#limitations-and-cautions"
+ * <a href="../../../concepts/projections/" target="_top">Projections</a>.  For
+ * limitations, see
+ * <a href="../../../concepts/projections/#limitations-and-cautions"
  * target="_top">Projection Limitations and Cautions</a>.
  * <p>
- * <a href="../../concepts/window.html" target="_top">Window functions</a>,
+ * <a href="../../../concepts/window/" target="_top">Window functions</a>,
  * which can perform
  * operations like moving averages, are available through this endpoint as well
  * as
  * {@link #getRecordsByColumnRaw(const GetRecordsByColumnRequest&) const}.
  * <p>
  * A projection can be created with a different
- * <a href="../../concepts/tables.html#shard-keys" target="_top">shard key</a>
+ * <a href="../../../concepts/tables/#shard-keys" target="_top">shard key</a>
  * than the source table.
  * By specifying @a shard_key, the projection will be sharded
  * according to the specified columns, regardless of how the source table is
@@ -10906,28 +11422,28 @@ CreateProjectionResponse GPUdb::createProjection( const std::string& tableName,
  * <p>
  * If @a tableName is empty, selection is performed against a single-row
  * virtual table.  This can be useful in executing temporal
- * (<a href="../../concepts/expressions.html#date-time-functions"
+ * (<a href="../../../concepts/expressions/#date-time-functions"
  * target="_top">NOW()</a>), identity
- * (<a href="../../concepts/expressions.html#user-security-functions"
+ * (<a href="../../../concepts/expressions/#user-security-functions"
  * target="_top">USER()</a>), or
  * constant-based functions
- * (<a href="../../concepts/expressions.html#scalar-functions"
+ * (<a href="../../../concepts/expressions/#scalar-functions"
  * target="_top">GEODIST(-77.11, 38.88, -71.06, 42.36)</a>).
  * 
  * @param tableName  Name of the existing table on which the projection is to
  *                   be applied, in [schema_name.]table_name format, using
  *                   standard <a
- *                   href="../../concepts/tables.html#table-name-resolution"
+ *                   href="../../../concepts/tables/#table-name-resolution"
  *                   target="_top">name resolution rules</a>.  An empty table
  *                   name creates a projection from a single-row virtual table,
  *                   where columns specified should be constants or constant
  *                   expressions.
  * @param projectionName  Name of the projection to be created, in
  *                        [schema_name.]table_name format, using standard <a
- *                        href="../../concepts/tables.html#table-name-resolution"
+ *                        href="../../../concepts/tables/#table-name-resolution"
  *                        target="_top">name resolution rules</a> and meeting
  *                        <a
- *                        href="../../concepts/tables.html#table-naming-criteria"
+ *                        href="../../../concepts/tables/#table-naming-criteria"
  *                        target="_top">table naming criteria</a>.
  * @param columnNames  List of columns from @a tableName to be included in the
  *                     projection. Can include derived columns. Can be
@@ -10943,7 +11459,7 @@ CreateProjectionResponse GPUdb::createProjection( const std::string& tableName,
  *                 non-existent, it will be automatically created.  The default
  *                 value is ''.
  *                         <li> gpudb::create_projection_expression: An
- *                 optional filter <a href="../../concepts/expressions.html"
+ *                 optional filter <a href="../../../concepts/expressions/"
  *                 target="_top">expression</a> to be applied to the source
  *                 table prior to the projection.  The default value is ''.
  *                         <li> gpudb::create_projection_is_replicated: If @a
@@ -10963,14 +11479,14 @@ CreateProjectionResponse GPUdb::createProjection( const std::string& tableName,
  *                 column name, the alias must be used, rather than the
  *                 original column name.  The default value is ''.
  *                         <li> gpudb::create_projection_materialize_on_gpu: No
- *                 longer used.  See <a href="../../rm/concepts.html"
+ *                 longer used.  See <a href="../../../rm/concepts/"
  *                 target="_top">Resource Management Concepts</a> for
  *                 information about how resources are managed, <a
- *                 href="../../rm/concepts.html" target="_top">Tier Strategy
+ *                 href="../../../rm/concepts/" target="_top">Tier Strategy
  *                 Concepts</a> for how resources are targeted for VRAM, and <a
- *                 href="../../rm/usage.html#tier-strategies"
- *                 target="_top">Tier Strategy Usage</a> for how to specify a
- *                 table's priority in VRAM.
+ *                 href="../../../rm/usage/#tier-strategies" target="_top">Tier
+ *                 Strategy Usage</a> for how to specify a table's priority in
+ *                 VRAM.
  *                 <ul>
  *                         <li> gpudb::create_projection_true
  *                         <li> gpudb::create_projection_false
@@ -10986,7 +11502,7 @@ CreateProjectionResponse GPUdb::createProjection( const std::string& tableName,
  *                 the alias must be used, rather than the original column
  *                 name.
  *                         <li> gpudb::create_projection_ttl: Sets the <a
- *                 href="../../concepts/ttl.html" target="_top">TTL</a> of the
+ *                 href="../../../concepts/ttl/" target="_top">TTL</a> of the
  *                 projection specified in @a projectionName.
  *                         <li> gpudb::create_projection_shard_key:
  *                 Comma-separated list of the columns to be sharded on; e.g.
@@ -11327,7 +11843,7 @@ CreateRoleResponse& GPUdb::createRole( const std::string& name,
 
 
 /**
- * Creates a SQL-style <a href="../../concepts/schemas.html"
+ * Creates a SQL-style <a href="../../../concepts/schemas/"
  * target="_top">schema</a>. Schemas are containers for tables and views.
  * Multiple tables and views can be defined with the same name in different
  * schemas.
@@ -11348,7 +11864,7 @@ CreateSchemaResponse GPUdb::createSchema( const CreateSchemaRequest& request_ ) 
 
 
 /**
- * Creates a SQL-style <a href="../../concepts/schemas.html"
+ * Creates a SQL-style <a href="../../../concepts/schemas/"
  * target="_top">schema</a>. Schemas are containers for tables and views.
  * Multiple tables and views can be defined with the same name in different
  * schemas.
@@ -11372,13 +11888,13 @@ CreateSchemaResponse& GPUdb::createSchema( const CreateSchemaRequest& request_,
 
 
 /**
- * Creates a SQL-style <a href="../../concepts/schemas.html"
+ * Creates a SQL-style <a href="../../../concepts/schemas/"
  * target="_top">schema</a>. Schemas are containers for tables and views.
  * Multiple tables and views can be defined with the same name in different
  * schemas.
  * 
  * @param schemaName  Name of the schema to be created.  Has the same naming
- *                    restrictions as <a href="../../concepts/tables.html"
+ *                    restrictions as <a href="../../../concepts/tables/"
  *                    target="_top">tables</a>.
  * @param options  Optional parameters.
  *                 <ul>
@@ -11409,13 +11925,13 @@ CreateSchemaResponse GPUdb::createSchema( const std::string& schemaName,
 
 
 /**
- * Creates a SQL-style <a href="../../concepts/schemas.html"
+ * Creates a SQL-style <a href="../../../concepts/schemas/"
  * target="_top">schema</a>. Schemas are containers for tables and views.
  * Multiple tables and views can be defined with the same name in different
  * schemas.
  * 
  * @param schemaName  Name of the schema to be created.  Has the same naming
- *                    restrictions as <a href="../../concepts/tables.html"
+ *                    restrictions as <a href="../../../concepts/tables/"
  *                    target="_top">tables</a>.
  * @param options  Optional parameters.
  *                 <ul>
@@ -11455,13 +11971,13 @@ CreateSchemaResponse& GPUdb::createSchema( const std::string& schemaName,
  * #createType(const CreateTypeRequest&) const}).
  * <p>
  * A table may optionally be designated to use a
- * <a href="../../concepts/tables.html#replication"
- * target="_top">replicated</a> distribution scheme,
- * or be assigned: <a href="../../concepts/tables.html#foreign-keys"
+ * <a href="../../../concepts/tables/#replication" target="_top">replicated</a>
+ * distribution scheme,
+ * or be assigned: <a href="../../../concepts/tables/#foreign-keys"
  * target="_top">foreign keys</a> to
- * other tables, a <a href="../../concepts/tables.html#partitioning"
+ * other tables, a <a href="../../../concepts/tables/#partitioning"
  * target="_top">partitioning</a>
- * scheme, and/or a <a href="../../rm/concepts.html#tier-strategies"
+ * scheme, and/or a <a href="../../../rm/concepts/#tier-strategies"
  * target="_top">tier strategy</a>.
  * 
  * @param[in] request_  Request object containing the parameters for the
@@ -11486,13 +12002,13 @@ CreateTableResponse GPUdb::createTable( const CreateTableRequest& request_ ) con
  * #createType(const CreateTypeRequest&,CreateTypeResponse&) const}).
  * <p>
  * A table may optionally be designated to use a
- * <a href="../../concepts/tables.html#replication"
- * target="_top">replicated</a> distribution scheme,
- * or be assigned: <a href="../../concepts/tables.html#foreign-keys"
+ * <a href="../../../concepts/tables/#replication" target="_top">replicated</a>
+ * distribution scheme,
+ * or be assigned: <a href="../../../concepts/tables/#foreign-keys"
  * target="_top">foreign keys</a> to
- * other tables, a <a href="../../concepts/tables.html#partitioning"
+ * other tables, a <a href="../../../concepts/tables/#partitioning"
  * target="_top">partitioning</a>
- * scheme, and/or a <a href="../../rm/concepts.html#tier-strategies"
+ * scheme, and/or a <a href="../../../rm/concepts/#tier-strategies"
  * target="_top">tier strategy</a>.
  * 
  * @param[in] request_  Request object containing the parameters for the
@@ -11520,20 +12036,20 @@ CreateTableResponse& GPUdb::createTable( const CreateTableRequest& request_,
  * #createType(const std::string&,const std::string&,const std::map<std::string, std::vector<std::string> >&,const std::map<std::string, std::string>&) const}).
  * <p>
  * A table may optionally be designated to use a
- * <a href="../../concepts/tables.html#replication"
- * target="_top">replicated</a> distribution scheme,
- * or be assigned: <a href="../../concepts/tables.html#foreign-keys"
+ * <a href="../../../concepts/tables/#replication" target="_top">replicated</a>
+ * distribution scheme,
+ * or be assigned: <a href="../../../concepts/tables/#foreign-keys"
  * target="_top">foreign keys</a> to
- * other tables, a <a href="../../concepts/tables.html#partitioning"
+ * other tables, a <a href="../../../concepts/tables/#partitioning"
  * target="_top">partitioning</a>
- * scheme, and/or a <a href="../../rm/concepts.html#tier-strategies"
+ * scheme, and/or a <a href="../../../rm/concepts/#tier-strategies"
  * target="_top">tier strategy</a>.
  * 
  * @param tableName  Name of the table to be created, in
  *                   [schema_name.]table_name format, using standard <a
- *                   href="../../concepts/tables.html#table-name-resolution"
+ *                   href="../../../concepts/tables/#table-name-resolution"
  *                   target="_top">name resolution rules</a> and meeting <a
- *                   href="../../concepts/tables.html#table-naming-criteria"
+ *                   href="../../../concepts/tables/#table-naming-criteria"
  *                   target="_top">table naming criteria</a>. Error for
  *                   requests with existing table of the same name and type ID
  *                   may be suppressed by using the @a no_error_if_exists
@@ -11575,17 +12091,17 @@ CreateTableResponse& GPUdb::createTable( const CreateTableRequest& request_,
  *                 </ul>
  *                 The default value is gpudb::create_table_false.
  *                         <li> gpudb::create_table_is_replicated: Affects the
- *                 <a href="../../concepts/tables.html#distribution"
+ *                 <a href="../../../concepts/tables/#distribution"
  *                 target="_top">distribution scheme</a> for the table's data.
  *                 If @a true and the given type has no explicit <a
- *                 href="../../concepts/tables.html#shard-key"
+ *                 href="../../../concepts/tables/#shard-key"
  *                 target="_top">shard key</a> defined, the table will be <a
- *                 href="../../concepts/tables.html#replication"
+ *                 href="../../../concepts/tables/#replication"
  *                 target="_top">replicated</a>.  If @a false, the table will
- *                 be <a href="../../concepts/tables.html#sharding"
+ *                 be <a href="../../../concepts/tables/#sharding"
  *                 target="_top">sharded</a> according to the shard key
  *                 specified in the given @a typeId, or <a
- *                 href="../../concepts/tables.html#random-sharding"
+ *                 href="../../../concepts/tables/#random-sharding"
  *                 target="_top">randomly sharded</a>, if no shard key is
  *                 specified.  Note that a type containing a shard key cannot
  *                 be used to create a replicated table.
@@ -11596,7 +12112,7 @@ CreateTableResponse& GPUdb::createTable( const CreateTableRequest& request_,
  *                 The default value is gpudb::create_table_false.
  *                         <li> gpudb::create_table_foreign_keys:
  *                 Semicolon-separated list of <a
- *                 href="../../concepts/tables.html#foreign-keys"
+ *                 href="../../../concepts/tables/#foreign-keys"
  *                 target="_top">foreign keys</a>, of the format
  *                 '(source_column_name [, ...]) references
  *                 target_table_name(primary_key_column_name [, ...]) [as
@@ -11605,23 +12121,23 @@ CreateTableResponse& GPUdb::createTable( const CreateTableRequest& request_,
  *                 shard key of the format 'source_column references
  *                 shard_by_column from target_table(primary_key_column)'.
  *                         <li> gpudb::create_table_partition_type: <a
- *                 href="../../concepts/tables.html#partitioning"
+ *                 href="../../../concepts/tables/#partitioning"
  *                 target="_top">Partitioning</a> scheme to use.
  *                 <ul>
  *                         <li> gpudb::create_table_RANGE: Use <a
- *                 href="../../concepts/tables.html#partitioning-by-range"
+ *                 href="../../../concepts/tables/#partitioning-by-range"
  *                 target="_top">range partitioning</a>.
  *                         <li> gpudb::create_table_INTERVAL: Use <a
- *                 href="../../concepts/tables.html#partitioning-by-interval"
+ *                 href="../../../concepts/tables/#partitioning-by-interval"
  *                 target="_top">interval partitioning</a>.
  *                         <li> gpudb::create_table_LIST: Use <a
- *                 href="../../concepts/tables.html#partitioning-by-list"
+ *                 href="../../../concepts/tables/#partitioning-by-list"
  *                 target="_top">list partitioning</a>.
  *                         <li> gpudb::create_table_HASH: Use <a
- *                 href="../../concepts/tables.html#partitioning-by-hash"
+ *                 href="../../../concepts/tables/#partitioning-by-hash"
  *                 target="_top">hash partitioning</a>.
  *                         <li> gpudb::create_table_SERIES: Use <a
- *                 href="../../concepts/tables.html#partitioning-by-series"
+ *                 href="../../../concepts/tables/#partitioning-by-series"
  *                 target="_top">series partitioning</a>.
  *                 </ul>
  *                         <li> gpudb::create_table_partition_keys:
@@ -11631,19 +12147,19 @@ CreateTableResponse& GPUdb::createTable( const CreateTableRequest& request_,
  *                         <li> gpudb::create_table_partition_definitions:
  *                 Comma-separated list of partition definitions, whose format
  *                 depends on the choice of @a partition_type.  See <a
- *                 href="../../concepts/tables.html#partitioning-by-range"
+ *                 href="../../../concepts/tables/#partitioning-by-range"
  *                 target="_top">range partitioning</a>, <a
- *                 href="../../concepts/tables.html#partitioning-by-interval"
+ *                 href="../../../concepts/tables/#partitioning-by-interval"
  *                 target="_top">interval partitioning</a>, <a
- *                 href="../../concepts/tables.html#partitioning-by-list"
+ *                 href="../../../concepts/tables/#partitioning-by-list"
  *                 target="_top">list partitioning</a>, or <a
- *                 href="../../concepts/tables.html#partitioning-by-hash"
+ *                 href="../../../concepts/tables/#partitioning-by-hash"
  *                 target="_top">hash partitioning</a> for example formats.
  *                         <li> gpudb::create_table_is_automatic_partition: If
  *                 @a true, a new partition will be created for values which
  *                 don't fall into an existing partition.  Currently only
  *                 supported for <a
- *                 href="../../concepts/tables.html#partitioning-by-list"
+ *                 href="../../../concepts/tables/#partitioning-by-list"
  *                 target="_top">list partitions</a>.
  *                 <ul>
  *                         <li> gpudb::create_table_true
@@ -11651,18 +12167,18 @@ CreateTableResponse& GPUdb::createTable( const CreateTableRequest& request_,
  *                 </ul>
  *                 The default value is gpudb::create_table_false.
  *                         <li> gpudb::create_table_ttl: Sets the <a
- *                 href="../../concepts/ttl.html" target="_top">TTL</a> of the
+ *                 href="../../../concepts/ttl/" target="_top">TTL</a> of the
  *                 table specified in @a tableName.
  *                         <li> gpudb::create_table_chunk_size: Indicates the
  *                 number of records per chunk to be used for this table.
  *                         <li> gpudb::create_table_is_result_table: Indicates
  *                 whether the table is a <a
- *                 href="../../concepts/tables_memory_only.html"
+ *                 href="../../../concepts/tables_memory_only/"
  *                 target="_top">memory-only table</a>. A result table cannot
  *                 contain columns with store_only or text_search <a
- *                 href="../../concepts/types.html#data-handling"
+ *                 href="../../../concepts/types/#data-handling"
  *                 target="_top">data-handling</a> or that are <a
- *                 href="../../concepts/types.html#primitive-types"
+ *                 href="../../../concepts/types/#primitive-types"
  *                 target="_top">non-charN strings</a>, and it will not be
  *                 retained if the server is restarted.
  *                 <ul>
@@ -11671,13 +12187,12 @@ CreateTableResponse& GPUdb::createTable( const CreateTableRequest& request_,
  *                 </ul>
  *                 The default value is gpudb::create_table_false.
  *                         <li> gpudb::create_table_strategy_definition: The <a
- *                 href="../../rm/concepts.html#tier-strategies"
+ *                 href="../../../rm/concepts/#tier-strategies"
  *                 target="_top">tier strategy</a> for the table and its
- *                 columns. See <a
- *                 href="../../rm/concepts.html#tier-strategies"
+ *                 columns. See <a href="../../../rm/concepts/#tier-strategies"
  *                 target="_top">tier strategy usage</a> for format and <a
- *                 href="../../rm/usage.html#tier-strategies"
- *                 target="_top">tier strategy examples</a> for examples.
+ *                 href="../../../rm/usage/#tier-strategies" target="_top">tier
+ *                 strategy examples</a> for examples.
  *                 </ul>
  * 
  * @return Response object containing the result of the operation.
@@ -11705,20 +12220,20 @@ CreateTableResponse GPUdb::createTable( const std::string& tableName,
  * #createType(const std::string&,const std::string&,const std::map<std::string, std::vector<std::string> >&,const std::map<std::string, std::string>&,CreateTypeResponse&) const}).
  * <p>
  * A table may optionally be designated to use a
- * <a href="../../concepts/tables.html#replication"
- * target="_top">replicated</a> distribution scheme,
- * or be assigned: <a href="../../concepts/tables.html#foreign-keys"
+ * <a href="../../../concepts/tables/#replication" target="_top">replicated</a>
+ * distribution scheme,
+ * or be assigned: <a href="../../../concepts/tables/#foreign-keys"
  * target="_top">foreign keys</a> to
- * other tables, a <a href="../../concepts/tables.html#partitioning"
+ * other tables, a <a href="../../../concepts/tables/#partitioning"
  * target="_top">partitioning</a>
- * scheme, and/or a <a href="../../rm/concepts.html#tier-strategies"
+ * scheme, and/or a <a href="../../../rm/concepts/#tier-strategies"
  * target="_top">tier strategy</a>.
  * 
  * @param tableName  Name of the table to be created, in
  *                   [schema_name.]table_name format, using standard <a
- *                   href="../../concepts/tables.html#table-name-resolution"
+ *                   href="../../../concepts/tables/#table-name-resolution"
  *                   target="_top">name resolution rules</a> and meeting <a
- *                   href="../../concepts/tables.html#table-naming-criteria"
+ *                   href="../../../concepts/tables/#table-naming-criteria"
  *                   target="_top">table naming criteria</a>. Error for
  *                   requests with existing table of the same name and type ID
  *                   may be suppressed by using the @a no_error_if_exists
@@ -11760,17 +12275,17 @@ CreateTableResponse GPUdb::createTable( const std::string& tableName,
  *                 </ul>
  *                 The default value is gpudb::create_table_false.
  *                         <li> gpudb::create_table_is_replicated: Affects the
- *                 <a href="../../concepts/tables.html#distribution"
+ *                 <a href="../../../concepts/tables/#distribution"
  *                 target="_top">distribution scheme</a> for the table's data.
  *                 If @a true and the given type has no explicit <a
- *                 href="../../concepts/tables.html#shard-key"
+ *                 href="../../../concepts/tables/#shard-key"
  *                 target="_top">shard key</a> defined, the table will be <a
- *                 href="../../concepts/tables.html#replication"
+ *                 href="../../../concepts/tables/#replication"
  *                 target="_top">replicated</a>.  If @a false, the table will
- *                 be <a href="../../concepts/tables.html#sharding"
+ *                 be <a href="../../../concepts/tables/#sharding"
  *                 target="_top">sharded</a> according to the shard key
  *                 specified in the given @a typeId, or <a
- *                 href="../../concepts/tables.html#random-sharding"
+ *                 href="../../../concepts/tables/#random-sharding"
  *                 target="_top">randomly sharded</a>, if no shard key is
  *                 specified.  Note that a type containing a shard key cannot
  *                 be used to create a replicated table.
@@ -11781,7 +12296,7 @@ CreateTableResponse GPUdb::createTable( const std::string& tableName,
  *                 The default value is gpudb::create_table_false.
  *                         <li> gpudb::create_table_foreign_keys:
  *                 Semicolon-separated list of <a
- *                 href="../../concepts/tables.html#foreign-keys"
+ *                 href="../../../concepts/tables/#foreign-keys"
  *                 target="_top">foreign keys</a>, of the format
  *                 '(source_column_name [, ...]) references
  *                 target_table_name(primary_key_column_name [, ...]) [as
@@ -11790,23 +12305,23 @@ CreateTableResponse GPUdb::createTable( const std::string& tableName,
  *                 shard key of the format 'source_column references
  *                 shard_by_column from target_table(primary_key_column)'.
  *                         <li> gpudb::create_table_partition_type: <a
- *                 href="../../concepts/tables.html#partitioning"
+ *                 href="../../../concepts/tables/#partitioning"
  *                 target="_top">Partitioning</a> scheme to use.
  *                 <ul>
  *                         <li> gpudb::create_table_RANGE: Use <a
- *                 href="../../concepts/tables.html#partitioning-by-range"
+ *                 href="../../../concepts/tables/#partitioning-by-range"
  *                 target="_top">range partitioning</a>.
  *                         <li> gpudb::create_table_INTERVAL: Use <a
- *                 href="../../concepts/tables.html#partitioning-by-interval"
+ *                 href="../../../concepts/tables/#partitioning-by-interval"
  *                 target="_top">interval partitioning</a>.
  *                         <li> gpudb::create_table_LIST: Use <a
- *                 href="../../concepts/tables.html#partitioning-by-list"
+ *                 href="../../../concepts/tables/#partitioning-by-list"
  *                 target="_top">list partitioning</a>.
  *                         <li> gpudb::create_table_HASH: Use <a
- *                 href="../../concepts/tables.html#partitioning-by-hash"
+ *                 href="../../../concepts/tables/#partitioning-by-hash"
  *                 target="_top">hash partitioning</a>.
  *                         <li> gpudb::create_table_SERIES: Use <a
- *                 href="../../concepts/tables.html#partitioning-by-series"
+ *                 href="../../../concepts/tables/#partitioning-by-series"
  *                 target="_top">series partitioning</a>.
  *                 </ul>
  *                         <li> gpudb::create_table_partition_keys:
@@ -11816,19 +12331,19 @@ CreateTableResponse GPUdb::createTable( const std::string& tableName,
  *                         <li> gpudb::create_table_partition_definitions:
  *                 Comma-separated list of partition definitions, whose format
  *                 depends on the choice of @a partition_type.  See <a
- *                 href="../../concepts/tables.html#partitioning-by-range"
+ *                 href="../../../concepts/tables/#partitioning-by-range"
  *                 target="_top">range partitioning</a>, <a
- *                 href="../../concepts/tables.html#partitioning-by-interval"
+ *                 href="../../../concepts/tables/#partitioning-by-interval"
  *                 target="_top">interval partitioning</a>, <a
- *                 href="../../concepts/tables.html#partitioning-by-list"
+ *                 href="../../../concepts/tables/#partitioning-by-list"
  *                 target="_top">list partitioning</a>, or <a
- *                 href="../../concepts/tables.html#partitioning-by-hash"
+ *                 href="../../../concepts/tables/#partitioning-by-hash"
  *                 target="_top">hash partitioning</a> for example formats.
  *                         <li> gpudb::create_table_is_automatic_partition: If
  *                 @a true, a new partition will be created for values which
  *                 don't fall into an existing partition.  Currently only
  *                 supported for <a
- *                 href="../../concepts/tables.html#partitioning-by-list"
+ *                 href="../../../concepts/tables/#partitioning-by-list"
  *                 target="_top">list partitions</a>.
  *                 <ul>
  *                         <li> gpudb::create_table_true
@@ -11836,18 +12351,18 @@ CreateTableResponse GPUdb::createTable( const std::string& tableName,
  *                 </ul>
  *                 The default value is gpudb::create_table_false.
  *                         <li> gpudb::create_table_ttl: Sets the <a
- *                 href="../../concepts/ttl.html" target="_top">TTL</a> of the
+ *                 href="../../../concepts/ttl/" target="_top">TTL</a> of the
  *                 table specified in @a tableName.
  *                         <li> gpudb::create_table_chunk_size: Indicates the
  *                 number of records per chunk to be used for this table.
  *                         <li> gpudb::create_table_is_result_table: Indicates
  *                 whether the table is a <a
- *                 href="../../concepts/tables_memory_only.html"
+ *                 href="../../../concepts/tables_memory_only/"
  *                 target="_top">memory-only table</a>. A result table cannot
  *                 contain columns with store_only or text_search <a
- *                 href="../../concepts/types.html#data-handling"
+ *                 href="../../../concepts/types/#data-handling"
  *                 target="_top">data-handling</a> or that are <a
- *                 href="../../concepts/types.html#primitive-types"
+ *                 href="../../../concepts/types/#primitive-types"
  *                 target="_top">non-charN strings</a>, and it will not be
  *                 retained if the server is restarted.
  *                 <ul>
@@ -11856,13 +12371,12 @@ CreateTableResponse GPUdb::createTable( const std::string& tableName,
  *                 </ul>
  *                 The default value is gpudb::create_table_false.
  *                         <li> gpudb::create_table_strategy_definition: The <a
- *                 href="../../rm/concepts.html#tier-strategies"
+ *                 href="../../../rm/concepts/#tier-strategies"
  *                 target="_top">tier strategy</a> for the table and its
- *                 columns. See <a
- *                 href="../../rm/concepts.html#tier-strategies"
+ *                 columns. See <a href="../../../rm/concepts/#tier-strategies"
  *                 target="_top">tier strategy usage</a> for format and <a
- *                 href="../../rm/usage.html#tier-strategies"
- *                 target="_top">tier strategy examples</a> for examples.
+ *                 href="../../../rm/usage/#tier-strategies" target="_top">tier
+ *                 strategy examples</a> for examples.
  *                 </ul>
  * @param[out] response_  Response object containing the results of the
  *                        operation.
@@ -11887,13 +12401,13 @@ CreateTableResponse& GPUdb::createTable( const std::string& tableName,
 
 
 /**
- * Creates a new <a href="../../concepts/external_tables.html"
+ * Creates a new <a href="../../../concepts/external_tables/"
  * target="_top">external table</a>, which is a
  * local database object whose source data is located externally to the
  * database.  The source data can
  * be located either on the cluster, accessible to the database; or remotely,
  * accessible via a
- * pre-defined external <a href="../../concepts/data_sources.html"
+ * pre-defined external <a href="../../../concepts/data_sources/"
  * target="_top">data source</a>.
  * <p>
  * The external table can have its structure defined explicitly, via @a
@@ -11919,13 +12433,13 @@ CreateTableExternalResponse GPUdb::createTableExternal( const CreateTableExterna
 
 
 /**
- * Creates a new <a href="../../concepts/external_tables.html"
+ * Creates a new <a href="../../../concepts/external_tables/"
  * target="_top">external table</a>, which is a
  * local database object whose source data is located externally to the
  * database.  The source data can
  * be located either on the cluster, accessible to the database; or remotely,
  * accessible via a
- * pre-defined external <a href="../../concepts/data_sources.html"
+ * pre-defined external <a href="../../../concepts/data_sources/"
  * target="_top">data source</a>.
  * <p>
  * The external table can have its structure defined explicitly, via @a
@@ -11954,13 +12468,13 @@ CreateTableExternalResponse& GPUdb::createTableExternal( const CreateTableExtern
 
 
 /**
- * Creates a new <a href="../../concepts/external_tables.html"
+ * Creates a new <a href="../../../concepts/external_tables/"
  * target="_top">external table</a>, which is a
  * local database object whose source data is located externally to the
  * database.  The source data can
  * be located either on the cluster, accessible to the database; or remotely,
  * accessible via a
- * pre-defined external <a href="../../concepts/data_sources.html"
+ * pre-defined external <a href="../../../concepts/data_sources/"
  * target="_top">data source</a>.
  * <p>
  * The external table can have its structure defined explicitly, via @a
@@ -11973,9 +12487,9 @@ CreateTableExternalResponse& GPUdb::createTableExternal( const CreateTableExtern
  * @param tableName  Name of the table to be created, in
  *                   [schema_name.]table_name format, using
  *                   standard <a
- *                   href="../../concepts/tables.html#table-name-resolution"
+ *                   href="../../../concepts/tables/#table-name-resolution"
  *                   target="_top">name resolution rules</a> and meeting
- *                   <a href="../../concepts/tables.html#table-naming-criteria"
+ *                   <a href="../../../concepts/tables/#table-naming-criteria"
  *                   target="_top">table naming criteria</a>.
  * @param filepaths  A list of file paths from which data will be sourced;
  *                   wildcards (*) can be used
@@ -11990,7 +12504,7 @@ CreateTableExternalResponse& GPUdb::createTableExternal( const CreateTableExtern
  *                   accessible to the gpudb user, residing on the path (or
  *                   relative to the path) specified by the
  *                   external files directory in the Kinetica
- *                   <a href="../../config/index.html#external-files"
+ *                   <a href="../../../config/#external-files"
  *                   target="_top">configuration file</a>.
  * @param modifyColumns  Not implemented yet
  * @param createTableOptions  Options from /create/table, allowing the
@@ -12000,7 +12514,7 @@ CreateTableExternalResponse& GPUdb::createTableExternal( const CreateTableExtern
  *                                    <li>
  *                            gpudb::create_table_external_type_id: ID of a
  *                            currently registered <a
- *                            href="../../concepts/types.html"
+ *                            href="../../../concepts/types/"
  *                            target="_top">type</a>.  The default value is ''.
  *                                    <li>
  *                            gpudb::create_table_external_no_error_if_exists:
@@ -12019,22 +12533,22 @@ CreateTableExternalResponse& GPUdb::createTableExternal( const CreateTableExtern
  *                                    <li>
  *                            gpudb::create_table_external_is_replicated:
  *                            Affects the <a
- *                            href="../../concepts/tables.html#distribution"
+ *                            href="../../../concepts/tables/#distribution"
  *                            target="_top">distribution scheme</a>
  *                            for the table's data.  If @a true and the
  *                            given table has no explicit <a
- *                            href="../../concepts/tables.html#shard-key"
+ *                            href="../../../concepts/tables/#shard-key"
  *                            target="_top">shard key</a> defined, the
  *                            table will be <a
- *                            href="../../concepts/tables.html#replication"
+ *                            href="../../../concepts/tables/#replication"
  *                            target="_top">replicated</a>.  If
  *                            @a false, the table will be
- *                            <a href="../../concepts/tables.html#sharding"
+ *                            <a href="../../../concepts/tables/#sharding"
  *                            target="_top">sharded</a> according to the shard
  *                            key specified in the
  *                            given @a type_id, or
  *                            <a
- *                            href="../../concepts/tables.html#random-sharding"
+ *                            href="../../../concepts/tables/#random-sharding"
  *                            target="_top">randomly sharded</a>, if no shard
  *                            key is specified.
  *                            Note that a type containing a shard key cannot be
@@ -12048,7 +12562,7 @@ CreateTableExternalResponse& GPUdb::createTableExternal( const CreateTableExtern
  *                                    <li>
  *                            gpudb::create_table_external_foreign_keys:
  *                            Semicolon-separated list of
- *                            <a href="../../concepts/tables.html#foreign-keys"
+ *                            <a href="../../../concepts/tables/#foreign-keys"
  *                            target="_top">foreign keys</a>, of the format
  *                            '(source_column_name [, ...]) references
  *                            target_table_name(primary_key_column_name [,
@@ -12060,24 +12574,24 @@ CreateTableExternalResponse& GPUdb::createTableExternal( const CreateTableExtern
  *                            target_table(primary_key_column)'.
  *                                    <li>
  *                            gpudb::create_table_external_partition_type: <a
- *                            href="../../concepts/tables.html#partitioning"
+ *                            href="../../../concepts/tables/#partitioning"
  *                            target="_top">Partitioning</a> scheme to use.
  *                            <ul>
  *                                    <li> gpudb::create_table_external_RANGE:
  *                            Use <a
- *                            href="../../concepts/tables.html#partitioning-by-range"
+ *                            href="../../../concepts/tables/#partitioning-by-range"
  *                            target="_top">range partitioning</a>.
  *                                    <li>
  *                            gpudb::create_table_external_INTERVAL: Use <a
- *                            href="../../concepts/tables.html#partitioning-by-interval"
+ *                            href="../../../concepts/tables/#partitioning-by-interval"
  *                            target="_top">interval partitioning</a>.
  *                                    <li> gpudb::create_table_external_LIST:
  *                            Use <a
- *                            href="../../concepts/tables.html#partitioning-by-list"
+ *                            href="../../../concepts/tables/#partitioning-by-list"
  *                            target="_top">list partitioning</a>.
  *                                    <li> gpudb::create_table_external_HASH:
  *                            Use <a
- *                            href="../../concepts/tables.html#partitioning-by-hash"
+ *                            href="../../../concepts/tables/#partitioning-by-hash"
  *                            target="_top">hash partitioning</a>.
  *                            </ul>
  *                                    <li>
@@ -12093,16 +12607,16 @@ CreateTableExternalResponse& GPUdb::createTableExternal( const CreateTableExtern
  *                            whose format depends
  *                            on the choice of @a partition_type.  See
  *                            <a
- *                            href="../../concepts/tables.html#partitioning-by-range"
+ *                            href="../../../concepts/tables/#partitioning-by-range"
  *                            target="_top">range partitioning</a>,
  *                            <a
- *                            href="../../concepts/tables.html#partitioning-by-interval"
+ *                            href="../../../concepts/tables/#partitioning-by-interval"
  *                            target="_top">interval partitioning</a>,
  *                            <a
- *                            href="../../concepts/tables.html#partitioning-by-list"
+ *                            href="../../../concepts/tables/#partitioning-by-list"
  *                            target="_top">list partitioning</a>, or
  *                            <a
- *                            href="../../concepts/tables.html#partitioning-by-hash"
+ *                            href="../../../concepts/tables/#partitioning-by-hash"
  *                            target="_top">hash partitioning</a> for example
  *                            formats.
  *                                    <li>
@@ -12111,7 +12625,7 @@ CreateTableExternalResponse& GPUdb::createTableExternal( const CreateTableExtern
  *                            a new partition will be created for values which
  *                            don't fall into an existing partition.  Currently
  *                            only supported for <a
- *                            href="../../concepts/tables.html#partitioning-by-list"
+ *                            href="../../../concepts/tables/#partitioning-by-list"
  *                            target="_top">list partitions</a>.
  *                            <ul>
  *                                    <li> gpudb::create_table_external_true
@@ -12120,7 +12634,7 @@ CreateTableExternalResponse& GPUdb::createTableExternal( const CreateTableExtern
  *                            The default value is
  *                            gpudb::create_table_external_false.
  *                                    <li> gpudb::create_table_external_ttl:
- *                            Sets the <a href="../../concepts/ttl.html"
+ *                            Sets the <a href="../../../concepts/ttl/"
  *                            target="_top">TTL</a> of the table specified in
  *                            @a tableName.
  *                                    <li>
@@ -12130,14 +12644,14 @@ CreateTableExternalResponse& GPUdb::createTableExternal( const CreateTableExtern
  *                                    <li>
  *                            gpudb::create_table_external_is_result_table:
  *                            Indicates whether the table is a
- *                            <a href="../../concepts/tables_memory_only.html"
+ *                            <a href="../../../concepts/tables_memory_only/"
  *                            target="_top">memory-only table</a>. A result
  *                            table cannot contain
  *                            columns with store_only or text_search
- *                            <a href="../../concepts/types.html#data-handling"
+ *                            <a href="../../../concepts/types/#data-handling"
  *                            target="_top">data-handling</a> or that are
  *                            <a
- *                            href="../../concepts/types.html#primitive-types"
+ *                            href="../../../concepts/types/#primitive-types"
  *                            target="_top">non-charN strings</a>, and it will
  *                            not be retained if
  *                            the server is restarted.
@@ -12150,13 +12664,13 @@ CreateTableExternalResponse& GPUdb::createTableExternal( const CreateTableExtern
  *                                    <li>
  *                            gpudb::create_table_external_strategy_definition:
  *                            The <a
- *                            href="../../rm/concepts.html#tier-strategies"
+ *                            href="../../../rm/concepts/#tier-strategies"
  *                            target="_top">tier strategy</a>
  *                            for the table and its columns. See
- *                            <a href="../../rm/concepts.html#tier-strategies"
+ *                            <a href="../../../rm/concepts/#tier-strategies"
  *                            target="_top">tier strategy usage</a> for format
  *                            and
- *                            <a href="../../rm/usage.html#tier-strategies"
+ *                            <a href="../../../rm/usage/#tier-strategies"
  *                            target="_top">tier strategy examples</a> for
  *                            examples.
  *                            </ul>
@@ -12296,9 +12810,11 @@ CreateTableExternalResponse& GPUdb::createTableExternal( const CreateTableExtern
  *                 source of data for this table.
  *                 <ul>
  *                         <li> gpudb::create_table_external_delimited_text:
- *                 Delimited text format; e.g., CSV, TSV, PSV, etc.
+ *                 Delimited text file format; e.g., CSV, TSV, PSV, etc.
  *                         <li> gpudb::create_table_external_parquet: Apache
- *                 Parquet format
+ *                 Parquet file format
+ *                         <li> gpudb::create_table_external_json: Json file
+ *                 format
  *                 </ul>
  *                 The default value is
  *                 gpudb::create_table_external_delimited_text.
@@ -12426,7 +12942,7 @@ CreateTableExternalResponse& GPUdb::createTableExternal( const CreateTableExtern
  *                         <li>
  *                 gpudb::create_table_external_text_header_property_delimiter:
  *                 Specifies the delimiter for
- *                 <a href="../../concepts/types.html#column-properties"
+ *                 <a href="../../../concepts/types/#column-properties"
  *                 target="_top">column properties</a> in the header row (if
  *                 present).  Cannot be set to same value as @a text_delimiter.
  *                 For @a delimited_text @a file_type only.  The default value
@@ -12491,13 +13007,13 @@ CreateTableExternalResponse GPUdb::createTableExternal( const std::string& table
 
 
 /**
- * Creates a new <a href="../../concepts/external_tables.html"
+ * Creates a new <a href="../../../concepts/external_tables/"
  * target="_top">external table</a>, which is a
  * local database object whose source data is located externally to the
  * database.  The source data can
  * be located either on the cluster, accessible to the database; or remotely,
  * accessible via a
- * pre-defined external <a href="../../concepts/data_sources.html"
+ * pre-defined external <a href="../../../concepts/data_sources/"
  * target="_top">data source</a>.
  * <p>
  * The external table can have its structure defined explicitly, via @a
@@ -12510,9 +13026,9 @@ CreateTableExternalResponse GPUdb::createTableExternal( const std::string& table
  * @param tableName  Name of the table to be created, in
  *                   [schema_name.]table_name format, using
  *                   standard <a
- *                   href="../../concepts/tables.html#table-name-resolution"
+ *                   href="../../../concepts/tables/#table-name-resolution"
  *                   target="_top">name resolution rules</a> and meeting
- *                   <a href="../../concepts/tables.html#table-naming-criteria"
+ *                   <a href="../../../concepts/tables/#table-naming-criteria"
  *                   target="_top">table naming criteria</a>.
  * @param filepaths  A list of file paths from which data will be sourced;
  *                   wildcards (*) can be used
@@ -12527,7 +13043,7 @@ CreateTableExternalResponse GPUdb::createTableExternal( const std::string& table
  *                   accessible to the gpudb user, residing on the path (or
  *                   relative to the path) specified by the
  *                   external files directory in the Kinetica
- *                   <a href="../../config/index.html#external-files"
+ *                   <a href="../../../config/#external-files"
  *                   target="_top">configuration file</a>.
  * @param modifyColumns  Not implemented yet
  * @param createTableOptions  Options from /create/table, allowing the
@@ -12537,7 +13053,7 @@ CreateTableExternalResponse GPUdb::createTableExternal( const std::string& table
  *                                    <li>
  *                            gpudb::create_table_external_type_id: ID of a
  *                            currently registered <a
- *                            href="../../concepts/types.html"
+ *                            href="../../../concepts/types/"
  *                            target="_top">type</a>.  The default value is ''.
  *                                    <li>
  *                            gpudb::create_table_external_no_error_if_exists:
@@ -12556,22 +13072,22 @@ CreateTableExternalResponse GPUdb::createTableExternal( const std::string& table
  *                                    <li>
  *                            gpudb::create_table_external_is_replicated:
  *                            Affects the <a
- *                            href="../../concepts/tables.html#distribution"
+ *                            href="../../../concepts/tables/#distribution"
  *                            target="_top">distribution scheme</a>
  *                            for the table's data.  If @a true and the
  *                            given table has no explicit <a
- *                            href="../../concepts/tables.html#shard-key"
+ *                            href="../../../concepts/tables/#shard-key"
  *                            target="_top">shard key</a> defined, the
  *                            table will be <a
- *                            href="../../concepts/tables.html#replication"
+ *                            href="../../../concepts/tables/#replication"
  *                            target="_top">replicated</a>.  If
  *                            @a false, the table will be
- *                            <a href="../../concepts/tables.html#sharding"
+ *                            <a href="../../../concepts/tables/#sharding"
  *                            target="_top">sharded</a> according to the shard
  *                            key specified in the
  *                            given @a type_id, or
  *                            <a
- *                            href="../../concepts/tables.html#random-sharding"
+ *                            href="../../../concepts/tables/#random-sharding"
  *                            target="_top">randomly sharded</a>, if no shard
  *                            key is specified.
  *                            Note that a type containing a shard key cannot be
@@ -12585,7 +13101,7 @@ CreateTableExternalResponse GPUdb::createTableExternal( const std::string& table
  *                                    <li>
  *                            gpudb::create_table_external_foreign_keys:
  *                            Semicolon-separated list of
- *                            <a href="../../concepts/tables.html#foreign-keys"
+ *                            <a href="../../../concepts/tables/#foreign-keys"
  *                            target="_top">foreign keys</a>, of the format
  *                            '(source_column_name [, ...]) references
  *                            target_table_name(primary_key_column_name [,
@@ -12597,24 +13113,24 @@ CreateTableExternalResponse GPUdb::createTableExternal( const std::string& table
  *                            target_table(primary_key_column)'.
  *                                    <li>
  *                            gpudb::create_table_external_partition_type: <a
- *                            href="../../concepts/tables.html#partitioning"
+ *                            href="../../../concepts/tables/#partitioning"
  *                            target="_top">Partitioning</a> scheme to use.
  *                            <ul>
  *                                    <li> gpudb::create_table_external_RANGE:
  *                            Use <a
- *                            href="../../concepts/tables.html#partitioning-by-range"
+ *                            href="../../../concepts/tables/#partitioning-by-range"
  *                            target="_top">range partitioning</a>.
  *                                    <li>
  *                            gpudb::create_table_external_INTERVAL: Use <a
- *                            href="../../concepts/tables.html#partitioning-by-interval"
+ *                            href="../../../concepts/tables/#partitioning-by-interval"
  *                            target="_top">interval partitioning</a>.
  *                                    <li> gpudb::create_table_external_LIST:
  *                            Use <a
- *                            href="../../concepts/tables.html#partitioning-by-list"
+ *                            href="../../../concepts/tables/#partitioning-by-list"
  *                            target="_top">list partitioning</a>.
  *                                    <li> gpudb::create_table_external_HASH:
  *                            Use <a
- *                            href="../../concepts/tables.html#partitioning-by-hash"
+ *                            href="../../../concepts/tables/#partitioning-by-hash"
  *                            target="_top">hash partitioning</a>.
  *                            </ul>
  *                                    <li>
@@ -12630,16 +13146,16 @@ CreateTableExternalResponse GPUdb::createTableExternal( const std::string& table
  *                            whose format depends
  *                            on the choice of @a partition_type.  See
  *                            <a
- *                            href="../../concepts/tables.html#partitioning-by-range"
+ *                            href="../../../concepts/tables/#partitioning-by-range"
  *                            target="_top">range partitioning</a>,
  *                            <a
- *                            href="../../concepts/tables.html#partitioning-by-interval"
+ *                            href="../../../concepts/tables/#partitioning-by-interval"
  *                            target="_top">interval partitioning</a>,
  *                            <a
- *                            href="../../concepts/tables.html#partitioning-by-list"
+ *                            href="../../../concepts/tables/#partitioning-by-list"
  *                            target="_top">list partitioning</a>, or
  *                            <a
- *                            href="../../concepts/tables.html#partitioning-by-hash"
+ *                            href="../../../concepts/tables/#partitioning-by-hash"
  *                            target="_top">hash partitioning</a> for example
  *                            formats.
  *                                    <li>
@@ -12648,7 +13164,7 @@ CreateTableExternalResponse GPUdb::createTableExternal( const std::string& table
  *                            a new partition will be created for values which
  *                            don't fall into an existing partition.  Currently
  *                            only supported for <a
- *                            href="../../concepts/tables.html#partitioning-by-list"
+ *                            href="../../../concepts/tables/#partitioning-by-list"
  *                            target="_top">list partitions</a>.
  *                            <ul>
  *                                    <li> gpudb::create_table_external_true
@@ -12657,7 +13173,7 @@ CreateTableExternalResponse GPUdb::createTableExternal( const std::string& table
  *                            The default value is
  *                            gpudb::create_table_external_false.
  *                                    <li> gpudb::create_table_external_ttl:
- *                            Sets the <a href="../../concepts/ttl.html"
+ *                            Sets the <a href="../../../concepts/ttl/"
  *                            target="_top">TTL</a> of the table specified in
  *                            @a tableName.
  *                                    <li>
@@ -12667,14 +13183,14 @@ CreateTableExternalResponse GPUdb::createTableExternal( const std::string& table
  *                                    <li>
  *                            gpudb::create_table_external_is_result_table:
  *                            Indicates whether the table is a
- *                            <a href="../../concepts/tables_memory_only.html"
+ *                            <a href="../../../concepts/tables_memory_only/"
  *                            target="_top">memory-only table</a>. A result
  *                            table cannot contain
  *                            columns with store_only or text_search
- *                            <a href="../../concepts/types.html#data-handling"
+ *                            <a href="../../../concepts/types/#data-handling"
  *                            target="_top">data-handling</a> or that are
  *                            <a
- *                            href="../../concepts/types.html#primitive-types"
+ *                            href="../../../concepts/types/#primitive-types"
  *                            target="_top">non-charN strings</a>, and it will
  *                            not be retained if
  *                            the server is restarted.
@@ -12687,13 +13203,13 @@ CreateTableExternalResponse GPUdb::createTableExternal( const std::string& table
  *                                    <li>
  *                            gpudb::create_table_external_strategy_definition:
  *                            The <a
- *                            href="../../rm/concepts.html#tier-strategies"
+ *                            href="../../../rm/concepts/#tier-strategies"
  *                            target="_top">tier strategy</a>
  *                            for the table and its columns. See
- *                            <a href="../../rm/concepts.html#tier-strategies"
+ *                            <a href="../../../rm/concepts/#tier-strategies"
  *                            target="_top">tier strategy usage</a> for format
  *                            and
- *                            <a href="../../rm/usage.html#tier-strategies"
+ *                            <a href="../../../rm/usage/#tier-strategies"
  *                            target="_top">tier strategy examples</a> for
  *                            examples.
  *                            </ul>
@@ -12833,9 +13349,11 @@ CreateTableExternalResponse GPUdb::createTableExternal( const std::string& table
  *                 source of data for this table.
  *                 <ul>
  *                         <li> gpudb::create_table_external_delimited_text:
- *                 Delimited text format; e.g., CSV, TSV, PSV, etc.
+ *                 Delimited text file format; e.g., CSV, TSV, PSV, etc.
  *                         <li> gpudb::create_table_external_parquet: Apache
- *                 Parquet format
+ *                 Parquet file format
+ *                         <li> gpudb::create_table_external_json: Json file
+ *                 format
  *                 </ul>
  *                 The default value is
  *                 gpudb::create_table_external_delimited_text.
@@ -12963,7 +13481,7 @@ CreateTableExternalResponse GPUdb::createTableExternal( const std::string& table
  *                         <li>
  *                 gpudb::create_table_external_text_header_property_delimiter:
  *                 Specifies the delimiter for
- *                 <a href="../../concepts/types.html#column-properties"
+ *                 <a href="../../../concepts/types/#column-properties"
  *                 target="_top">column properties</a> in the header row (if
  *                 present).  Cannot be set to same value as @a text_delimiter.
  *                 For @a delimited_text @a file_type only.  The default value
@@ -13045,7 +13563,7 @@ CreateTableExternalResponse& GPUdb::createTableExternal( const std::string& tabl
  * {@link #clearTableMonitor(const ClearTableMonitorRequest&) const}.
  * <p>
  * For more information on table monitors, see
- * <a href="../../concepts/table_monitors.html" target="_top">Table
+ * <a href="../../../concepts/table_monitors/" target="_top">Table
  * Monitors</a>.
  * 
  * @param[in] request_  Request object containing the parameters for the
@@ -13079,7 +13597,7 @@ CreateTableMonitorResponse GPUdb::createTableMonitor( const CreateTableMonitorRe
  * #clearTableMonitor(const ClearTableMonitorRequest&,ClearTableMonitorResponse&) const}.
  * <p>
  * For more information on table monitors, see
- * <a href="../../concepts/table_monitors.html" target="_top">Table
+ * <a href="../../../concepts/table_monitors/" target="_top">Table
  * Monitors</a>.
  * 
  * @param[in] request_  Request object containing the parameters for the
@@ -13116,12 +13634,12 @@ CreateTableMonitorResponse& GPUdb::createTableMonitor( const CreateTableMonitorR
  * #clearTableMonitor(const std::string&,const std::map<std::string, std::string>&) const}.
  * <p>
  * For more information on table monitors, see
- * <a href="../../concepts/table_monitors.html" target="_top">Table
+ * <a href="../../../concepts/table_monitors/" target="_top">Table
  * Monitors</a>.
  * 
  * @param tableName  Name of the table to monitor, in [schema_name.]table_name
  *                   format, using standard <a
- *                   href="../../concepts/tables.html#table-name-resolution"
+ *                   href="../../../concepts/tables/#table-name-resolution"
  *                   target="_top">name resolution rules</a>.
  * @param options  Optional parameters.
  *                 <ul>
@@ -13174,12 +13692,12 @@ CreateTableMonitorResponse GPUdb::createTableMonitor( const std::string& tableNa
  * #clearTableMonitor(const std::string&,const std::map<std::string, std::string>&,ClearTableMonitorResponse&) const}.
  * <p>
  * For more information on table monitors, see
- * <a href="../../concepts/table_monitors.html" target="_top">Table
+ * <a href="../../../concepts/table_monitors/" target="_top">Table
  * Monitors</a>.
  * 
  * @param tableName  Name of the table to monitor, in [schema_name.]table_name
  *                   format, using standard <a
- *                   href="../../concepts/tables.html#table-name-resolution"
+ *                   href="../../../concepts/tables/#table-name-resolution"
  *                   target="_top">name resolution rules</a>.
  * @param options  Optional parameters.
  *                 <ul>
@@ -13327,7 +13845,7 @@ CreateTriggerByAreaResponse& GPUdb::createTriggerByArea( const CreateTriggerByAr
  * @param tableNames  Names of the tables on which the trigger will be
  *                    activated and maintained, each in
  *                    [schema_name.]table_name format, using standard <a
- *                    href="../../concepts/tables.html#table-name-resolution"
+ *                    href="../../../concepts/tables/#table-name-resolution"
  *                    target="_top">name resolution rules</a>.
  * @param xColumnName  Name of a numeric column on which the trigger is
  *                     activated. Usually 'x' for geospatial data points.
@@ -13397,7 +13915,7 @@ CreateTriggerByAreaResponse GPUdb::createTriggerByArea( const std::string& reque
  * @param tableNames  Names of the tables on which the trigger will be
  *                    activated and maintained, each in
  *                    [schema_name.]table_name format, using standard <a
- *                    href="../../concepts/tables.html#table-name-resolution"
+ *                    href="../../../concepts/tables/#table-name-resolution"
  *                    target="_top">name resolution rules</a>.
  * @param xColumnName  Name of a numeric column on which the trigger is
  *                     activated. Usually 'x' for geospatial data points.
@@ -13543,7 +14061,7 @@ CreateTriggerByRangeResponse& GPUdb::createTriggerByRange( const CreateTriggerBy
  *                   one character.
  * @param tableNames  Tables on which the trigger will be active, each in
  *                    [schema_name.]table_name format, using standard <a
- *                    href="../../concepts/tables.html#table-name-resolution"
+ *                    href="../../../concepts/tables/#table-name-resolution"
  *                    target="_top">name resolution rules</a>.
  * @param columnName  Name of a numeric column_name on which the trigger is
  *                    activated.
@@ -13602,7 +14120,7 @@ CreateTriggerByRangeResponse GPUdb::createTriggerByRange( const std::string& req
  *                   one character.
  * @param tableNames  Tables on which the trigger will be active, each in
  *                    [schema_name.]table_name format, using standard <a
- *                    href="../../concepts/tables.html#table-name-resolution"
+ *                    href="../../../concepts/tables/#table-name-resolution"
  *                    target="_top">name resolution rules</a>.
  * @param columnName  Name of a numeric column_name on which the trigger is
  *                    activated.
@@ -13648,9 +14166,9 @@ CreateTriggerByRangeResponse& GPUdb::createTriggerByRange( const std::string& re
  * simultaneously.  One example of mutually exclusive properties are @a data
  * and @a store_only.
  * <p>
- * A single <a href="../../concepts/tables.html#primary-keys"
+ * A single <a href="../../../concepts/tables/#primary-keys"
  * target="_top">primary key</a> and/or single <a
- * href="../../concepts/tables.html#shard-keys" target="_top">shard key</a> can
+ * href="../../../concepts/tables/#shard-keys" target="_top">shard key</a> can
  * be set across one or more columns. If a primary key is specified, then a
  * uniqueness constraint is enforced, in that only a single object can exist
  * with a given primary key column value (or set of values for the key columns,
@@ -13710,9 +14228,9 @@ CreateTypeResponse GPUdb::createType( const CreateTypeRequest& request_ ) const
  * simultaneously.  One example of mutually exclusive properties are @a data
  * and @a store_only.
  * <p>
- * A single <a href="../../concepts/tables.html#primary-keys"
+ * A single <a href="../../../concepts/tables/#primary-keys"
  * target="_top">primary key</a> and/or single <a
- * href="../../concepts/tables.html#shard-keys" target="_top">shard key</a> can
+ * href="../../../concepts/tables/#shard-keys" target="_top">shard key</a> can
  * be set across one or more columns. If a primary key is specified, then a
  * uniqueness constraint is enforced, in that only a single object can exist
  * with a given primary key column value (or set of values for the key columns,
@@ -13775,9 +14293,9 @@ CreateTypeResponse& GPUdb::createType( const CreateTypeRequest& request_,
  * simultaneously.  One example of mutually exclusive properties are @a data
  * and @a store_only.
  * <p>
- * A single <a href="../../concepts/tables.html#primary-keys"
+ * A single <a href="../../../concepts/tables/#primary-keys"
  * target="_top">primary key</a> and/or single <a
- * href="../../concepts/tables.html#shard-keys" target="_top">shard key</a> can
+ * href="../../../concepts/tables/#shard-keys" target="_top">shard key</a> can
  * be set across one or more columns. If a primary key is specified, then a
  * uniqueness constraint is enforced, in that only a single object can exist
  * with a given primary key column value (or set of values for the key columns,
@@ -13936,11 +14454,11 @@ CreateTypeResponse& GPUdb::createType( const CreateTypeRequest& request_,
  *                            <li> gpudb::create_type_primary_key: This
  *                    property indicates that this column will be part of (or
  *                    the entire) <a
- *                    href="../../concepts/tables.html#primary-keys"
+ *                    href="../../../concepts/tables/#primary-keys"
  *                    target="_top">primary key</a>.
  *                            <li> gpudb::create_type_shard_key: This property
  *                    indicates that this column will be part of (or the
- *                    entire) <a href="../../concepts/tables.html#shard-keys"
+ *                    entire) <a href="../../../concepts/tables/#shard-keys"
  *                    target="_top">shard key</a>.
  *                            <li> gpudb::create_type_nullable: This property
  *                    indicates that this column is nullable.  However, setting
@@ -13958,7 +14476,7 @@ CreateTypeResponse& GPUdb::createType( const CreateTypeRequest& request_,
  *                    record.
  *                            <li> gpudb::create_type_dict: This property
  *                    indicates that this column should be <a
- *                    href="../../concepts/dictionary_encoding.html"
+ *                    href="../../../concepts/dictionary_encoding/"
  *                    target="_top">dictionary encoded</a>. It can only be used
  *                    in conjunction with restricted string (charN), int, long
  *                    or date columns. Dictionary encoding is best for columns
@@ -14010,9 +14528,9 @@ CreateTypeResponse GPUdb::createType( const std::string& typeDefinition,
  * simultaneously.  One example of mutually exclusive properties are @a data
  * and @a store_only.
  * <p>
- * A single <a href="../../concepts/tables.html#primary-keys"
+ * A single <a href="../../../concepts/tables/#primary-keys"
  * target="_top">primary key</a> and/or single <a
- * href="../../concepts/tables.html#shard-keys" target="_top">shard key</a> can
+ * href="../../../concepts/tables/#shard-keys" target="_top">shard key</a> can
  * be set across one or more columns. If a primary key is specified, then a
  * uniqueness constraint is enforced, in that only a single object can exist
  * with a given primary key column value (or set of values for the key columns,
@@ -14171,11 +14689,11 @@ CreateTypeResponse GPUdb::createType( const std::string& typeDefinition,
  *                            <li> gpudb::create_type_primary_key: This
  *                    property indicates that this column will be part of (or
  *                    the entire) <a
- *                    href="../../concepts/tables.html#primary-keys"
+ *                    href="../../../concepts/tables/#primary-keys"
  *                    target="_top">primary key</a>.
  *                            <li> gpudb::create_type_shard_key: This property
  *                    indicates that this column will be part of (or the
- *                    entire) <a href="../../concepts/tables.html#shard-keys"
+ *                    entire) <a href="../../../concepts/tables/#shard-keys"
  *                    target="_top">shard key</a>.
  *                            <li> gpudb::create_type_nullable: This property
  *                    indicates that this column is nullable.  However, setting
@@ -14193,7 +14711,7 @@ CreateTypeResponse GPUdb::createType( const std::string& typeDefinition,
  *                    record.
  *                            <li> gpudb::create_type_dict: This property
  *                    indicates that this column should be <a
- *                    href="../../concepts/dictionary_encoding.html"
+ *                    href="../../../concepts/dictionary_encoding/"
  *                    target="_top">dictionary encoded</a>. It can only be used
  *                    in conjunction with restricted string (charN), int, long
  *                    or date columns. Dictionary encoding is best for columns
@@ -14244,27 +14762,27 @@ CreateTypeResponse& GPUdb::createType( const std::string& typeDefinition,
  * The following merges are supported:
  * <p>
  * UNION (DISTINCT/ALL) - For data set union details and examples, see <a
- * href="../../concepts/unions.html" target="_top">Union</a>.  For limitations,
- * see <a href="../../concepts/unions.html#limitations-and-cautions"
+ * href="../../../concepts/unions/" target="_top">Union</a>.  For limitations,
+ * see <a href="../../../concepts/unions/#limitations-and-cautions"
  * target="_top">Union Limitations and Cautions</a>.
  * <p>
  * INTERSECT (DISTINCT/ALL) - For data set intersection details and examples,
- * see <a href="../../concepts/intersect.html" target="_top">Intersect</a>.
- * For limitations, see <a href="../../concepts/intersect.html#limitations"
+ * see <a href="../../../concepts/intersect/" target="_top">Intersect</a>.  For
+ * limitations, see <a href="../../../concepts/intersect/#limitations"
  * target="_top">Intersect Limitations</a>.
  * <p>
  * EXCEPT (DISTINCT/ALL) - For data set subtraction details and examples, see
- * <a href="../../concepts/except.html" target="_top">Except</a>.  For
- * limitations, see <a href="../../concepts/except.html#limitations"
+ * <a href="../../../concepts/except/" target="_top">Except</a>.  For
+ * limitations, see <a href="../../../concepts/except/#limitations"
  * target="_top">Except Limitations</a>.
  * <p>
- * MERGE VIEWS - For a given set of <a
- * href="../../concepts/filtered_views.html" target="_top">filtered views</a>
- * on a single table, creates a single filtered view containing all of the
- * unique records across all of the given filtered data sets.
+ * MERGE VIEWS - For a given set of <a href="../../../concepts/filtered_views/"
+ * target="_top">filtered views</a> on a single table, creates a single
+ * filtered view containing all of the unique records across all of the given
+ * filtered data sets.
  * <p>
  * Non-charN 'string' and 'bytes' column types cannot be merged, nor can
- * columns marked as <a href="../../concepts/types.html#data-handling"
+ * columns marked as <a href="../../../concepts/types/#data-handling"
  * target="_top">store-only</a>.
  * 
  * @param[in] request_  Request object containing the parameters for the
@@ -14289,27 +14807,27 @@ CreateUnionResponse GPUdb::createUnion( const CreateUnionRequest& request_ ) con
  * The following merges are supported:
  * <p>
  * UNION (DISTINCT/ALL) - For data set union details and examples, see <a
- * href="../../concepts/unions.html" target="_top">Union</a>.  For limitations,
- * see <a href="../../concepts/unions.html#limitations-and-cautions"
+ * href="../../../concepts/unions/" target="_top">Union</a>.  For limitations,
+ * see <a href="../../../concepts/unions/#limitations-and-cautions"
  * target="_top">Union Limitations and Cautions</a>.
  * <p>
  * INTERSECT (DISTINCT/ALL) - For data set intersection details and examples,
- * see <a href="../../concepts/intersect.html" target="_top">Intersect</a>.
- * For limitations, see <a href="../../concepts/intersect.html#limitations"
+ * see <a href="../../../concepts/intersect/" target="_top">Intersect</a>.  For
+ * limitations, see <a href="../../../concepts/intersect/#limitations"
  * target="_top">Intersect Limitations</a>.
  * <p>
  * EXCEPT (DISTINCT/ALL) - For data set subtraction details and examples, see
- * <a href="../../concepts/except.html" target="_top">Except</a>.  For
- * limitations, see <a href="../../concepts/except.html#limitations"
+ * <a href="../../../concepts/except/" target="_top">Except</a>.  For
+ * limitations, see <a href="../../../concepts/except/#limitations"
  * target="_top">Except Limitations</a>.
  * <p>
- * MERGE VIEWS - For a given set of <a
- * href="../../concepts/filtered_views.html" target="_top">filtered views</a>
- * on a single table, creates a single filtered view containing all of the
- * unique records across all of the given filtered data sets.
+ * MERGE VIEWS - For a given set of <a href="../../../concepts/filtered_views/"
+ * target="_top">filtered views</a> on a single table, creates a single
+ * filtered view containing all of the unique records across all of the given
+ * filtered data sets.
  * <p>
  * Non-charN 'string' and 'bytes' column types cannot be merged, nor can
- * columns marked as <a href="../../concepts/types.html#data-handling"
+ * columns marked as <a href="../../../concepts/types/#data-handling"
  * target="_top">store-only</a>.
  * 
  * @param[in] request_  Request object containing the parameters for the
@@ -14337,38 +14855,38 @@ CreateUnionResponse& GPUdb::createUnion( const CreateUnionRequest& request_,
  * The following merges are supported:
  * <p>
  * UNION (DISTINCT/ALL) - For data set union details and examples, see <a
- * href="../../concepts/unions.html" target="_top">Union</a>.  For limitations,
- * see <a href="../../concepts/unions.html#limitations-and-cautions"
+ * href="../../../concepts/unions/" target="_top">Union</a>.  For limitations,
+ * see <a href="../../../concepts/unions/#limitations-and-cautions"
  * target="_top">Union Limitations and Cautions</a>.
  * <p>
  * INTERSECT (DISTINCT/ALL) - For data set intersection details and examples,
- * see <a href="../../concepts/intersect.html" target="_top">Intersect</a>.
- * For limitations, see <a href="../../concepts/intersect.html#limitations"
+ * see <a href="../../../concepts/intersect/" target="_top">Intersect</a>.  For
+ * limitations, see <a href="../../../concepts/intersect/#limitations"
  * target="_top">Intersect Limitations</a>.
  * <p>
  * EXCEPT (DISTINCT/ALL) - For data set subtraction details and examples, see
- * <a href="../../concepts/except.html" target="_top">Except</a>.  For
- * limitations, see <a href="../../concepts/except.html#limitations"
+ * <a href="../../../concepts/except/" target="_top">Except</a>.  For
+ * limitations, see <a href="../../../concepts/except/#limitations"
  * target="_top">Except Limitations</a>.
  * <p>
- * MERGE VIEWS - For a given set of <a
- * href="../../concepts/filtered_views.html" target="_top">filtered views</a>
- * on a single table, creates a single filtered view containing all of the
- * unique records across all of the given filtered data sets.
+ * MERGE VIEWS - For a given set of <a href="../../../concepts/filtered_views/"
+ * target="_top">filtered views</a> on a single table, creates a single
+ * filtered view containing all of the unique records across all of the given
+ * filtered data sets.
  * <p>
  * Non-charN 'string' and 'bytes' column types cannot be merged, nor can
- * columns marked as <a href="../../concepts/types.html#data-handling"
+ * columns marked as <a href="../../../concepts/types/#data-handling"
  * target="_top">store-only</a>.
  * 
  * @param tableName  Name of the table to be created, in
  *                   [schema_name.]table_name format, using standard <a
- *                   href="../../concepts/tables.html#table-name-resolution"
+ *                   href="../../../concepts/tables/#table-name-resolution"
  *                   target="_top">name resolution rules</a> and meeting <a
- *                   href="../../concepts/tables.html#table-naming-criteria"
+ *                   href="../../../concepts/tables/#table-naming-criteria"
  *                   target="_top">table naming criteria</a>.
  * @param tableNames  The list of table names to merge, in
  *                    [schema_name.]table_name format, using standard <a
- *                    href="../../concepts/tables.html#table-name-resolution"
+ *                    href="../../../concepts/tables/#table-name-resolution"
  *                    target="_top">name resolution rules</a>.  Must contain
  *                    the names of one or more existing tables.
  * @param inputColumnNames  The list of columns from each of the corresponding
@@ -14384,14 +14902,14 @@ CreateUnionResponse& GPUdb::createUnion( const CreateUnionRequest& request_,
  *                 the output table. If the schema provided is non-existent, it
  *                 will be automatically created.  The default value is ''.
  *                         <li> gpudb::create_union_materialize_on_gpu: No
- *                 longer used.  See <a href="../../rm/concepts.html"
+ *                 longer used.  See <a href="../../../rm/concepts/"
  *                 target="_top">Resource Management Concepts</a> for
  *                 information about how resources are managed, <a
- *                 href="../../rm/concepts.html" target="_top">Tier Strategy
+ *                 href="../../../rm/concepts/" target="_top">Tier Strategy
  *                 Concepts</a> for how resources are targeted for VRAM, and <a
- *                 href="../../rm/usage.html#tier-strategies"
- *                 target="_top">Tier Strategy Usage</a> for how to specify a
- *                 table's priority in VRAM.
+ *                 href="../../../rm/usage/#tier-strategies" target="_top">Tier
+ *                 Strategy Usage</a> for how to specify a table's priority in
+ *                 VRAM.
  *                 <ul>
  *                         <li> gpudb::create_union_true
  *                         <li> gpudb::create_union_false
@@ -14440,7 +14958,7 @@ CreateUnionResponse& GPUdb::createUnion( const CreateUnionRequest& request_,
  *                 on the output table.  The columns specified must be present
  *                 in @a outputColumnNames.
  *                         <li> gpudb::create_union_ttl: Sets the <a
- *                 href="../../concepts/ttl.html" target="_top">TTL</a> of the
+ *                 href="../../../concepts/ttl/" target="_top">TTL</a> of the
  *                 output table specified in @a tableName.
  *                         <li> gpudb::create_union_persist: If @a true, then
  *                 the output table specified in @a tableName will be persisted
@@ -14494,38 +15012,38 @@ CreateUnionResponse GPUdb::createUnion( const std::string& tableName,
  * The following merges are supported:
  * <p>
  * UNION (DISTINCT/ALL) - For data set union details and examples, see <a
- * href="../../concepts/unions.html" target="_top">Union</a>.  For limitations,
- * see <a href="../../concepts/unions.html#limitations-and-cautions"
+ * href="../../../concepts/unions/" target="_top">Union</a>.  For limitations,
+ * see <a href="../../../concepts/unions/#limitations-and-cautions"
  * target="_top">Union Limitations and Cautions</a>.
  * <p>
  * INTERSECT (DISTINCT/ALL) - For data set intersection details and examples,
- * see <a href="../../concepts/intersect.html" target="_top">Intersect</a>.
- * For limitations, see <a href="../../concepts/intersect.html#limitations"
+ * see <a href="../../../concepts/intersect/" target="_top">Intersect</a>.  For
+ * limitations, see <a href="../../../concepts/intersect/#limitations"
  * target="_top">Intersect Limitations</a>.
  * <p>
  * EXCEPT (DISTINCT/ALL) - For data set subtraction details and examples, see
- * <a href="../../concepts/except.html" target="_top">Except</a>.  For
- * limitations, see <a href="../../concepts/except.html#limitations"
+ * <a href="../../../concepts/except/" target="_top">Except</a>.  For
+ * limitations, see <a href="../../../concepts/except/#limitations"
  * target="_top">Except Limitations</a>.
  * <p>
- * MERGE VIEWS - For a given set of <a
- * href="../../concepts/filtered_views.html" target="_top">filtered views</a>
- * on a single table, creates a single filtered view containing all of the
- * unique records across all of the given filtered data sets.
+ * MERGE VIEWS - For a given set of <a href="../../../concepts/filtered_views/"
+ * target="_top">filtered views</a> on a single table, creates a single
+ * filtered view containing all of the unique records across all of the given
+ * filtered data sets.
  * <p>
  * Non-charN 'string' and 'bytes' column types cannot be merged, nor can
- * columns marked as <a href="../../concepts/types.html#data-handling"
+ * columns marked as <a href="../../../concepts/types/#data-handling"
  * target="_top">store-only</a>.
  * 
  * @param tableName  Name of the table to be created, in
  *                   [schema_name.]table_name format, using standard <a
- *                   href="../../concepts/tables.html#table-name-resolution"
+ *                   href="../../../concepts/tables/#table-name-resolution"
  *                   target="_top">name resolution rules</a> and meeting <a
- *                   href="../../concepts/tables.html#table-naming-criteria"
+ *                   href="../../../concepts/tables/#table-naming-criteria"
  *                   target="_top">table naming criteria</a>.
  * @param tableNames  The list of table names to merge, in
  *                    [schema_name.]table_name format, using standard <a
- *                    href="../../concepts/tables.html#table-name-resolution"
+ *                    href="../../../concepts/tables/#table-name-resolution"
  *                    target="_top">name resolution rules</a>.  Must contain
  *                    the names of one or more existing tables.
  * @param inputColumnNames  The list of columns from each of the corresponding
@@ -14541,14 +15059,14 @@ CreateUnionResponse GPUdb::createUnion( const std::string& tableName,
  *                 the output table. If the schema provided is non-existent, it
  *                 will be automatically created.  The default value is ''.
  *                         <li> gpudb::create_union_materialize_on_gpu: No
- *                 longer used.  See <a href="../../rm/concepts.html"
+ *                 longer used.  See <a href="../../../rm/concepts/"
  *                 target="_top">Resource Management Concepts</a> for
  *                 information about how resources are managed, <a
- *                 href="../../rm/concepts.html" target="_top">Tier Strategy
+ *                 href="../../../rm/concepts/" target="_top">Tier Strategy
  *                 Concepts</a> for how resources are targeted for VRAM, and <a
- *                 href="../../rm/usage.html#tier-strategies"
- *                 target="_top">Tier Strategy Usage</a> for how to specify a
- *                 table's priority in VRAM.
+ *                 href="../../../rm/usage/#tier-strategies" target="_top">Tier
+ *                 Strategy Usage</a> for how to specify a table's priority in
+ *                 VRAM.
  *                 <ul>
  *                         <li> gpudb::create_union_true
  *                         <li> gpudb::create_union_false
@@ -14597,7 +15115,7 @@ CreateUnionResponse GPUdb::createUnion( const std::string& tableName,
  *                 on the output table.  The columns specified must be present
  *                 in @a outputColumnNames.
  *                         <li> gpudb::create_union_ttl: Sets the <a
- *                 href="../../concepts/ttl.html" target="_top">TTL</a> of the
+ *                 href="../../../concepts/ttl/" target="_top">TTL</a> of the
  *                 output table specified in @a tableName.
  *                         <li> gpudb::create_union_persist: If @a true, then
  *                 the output table specified in @a tableName will be persisted
@@ -15126,12 +15644,12 @@ DeleteRecordsResponse& GPUdb::deleteRecords( const DeleteRecordsRequest& request
  * 
  * @param tableName  Name of the table from which to delete records, in
  *                   [schema_name.]table_name format, using standard <a
- *                   href="../../concepts/tables.html#table-name-resolution"
+ *                   href="../../../concepts/tables/#table-name-resolution"
  *                   target="_top">name resolution rules</a>. Must contain the
  *                   name of an existing table; not applicable to views.
  * @param expressions  A list of the actual predicates, one for each select;
  *                     format should follow the guidelines provided <a
- *                     href="../../concepts/expressions.html"
+ *                     href="../../../concepts/expressions/"
  *                     target="_top">here</a>. Specifying one or more @a
  *                     expressions is mutually exclusive to specifying @a
  *                     record_id in the @a options.
@@ -15145,7 +15663,7 @@ DeleteRecordsResponse& GPUdb::deleteRecords( const DeleteRecordsRequest& request
  *                 /insert/records or by calling /get/records/fromcollection
  *                 with the *return_record_ids* option. This option cannot be
  *                 used to delete records from <a
- *                 href="../../concepts/tables.html#replication"
+ *                 href="../../../concepts/tables/#replication"
  *                 target="_top">replicated</a> tables.
  *                         <li> gpudb::delete_records_delete_all_records: If
  *                 set to @a true, all records in the table will be deleted. If
@@ -15187,12 +15705,12 @@ DeleteRecordsResponse GPUdb::deleteRecords( const std::string& tableName,
  * 
  * @param tableName  Name of the table from which to delete records, in
  *                   [schema_name.]table_name format, using standard <a
- *                   href="../../concepts/tables.html#table-name-resolution"
+ *                   href="../../../concepts/tables/#table-name-resolution"
  *                   target="_top">name resolution rules</a>. Must contain the
  *                   name of an existing table; not applicable to views.
  * @param expressions  A list of the actual predicates, one for each select;
  *                     format should follow the guidelines provided <a
- *                     href="../../concepts/expressions.html"
+ *                     href="../../../concepts/expressions/"
  *                     target="_top">here</a>. Specifying one or more @a
  *                     expressions is mutually exclusive to specifying @a
  *                     record_id in the @a options.
@@ -15206,7 +15724,7 @@ DeleteRecordsResponse GPUdb::deleteRecords( const std::string& tableName,
  *                 /insert/records or by calling /get/records/fromcollection
  *                 with the *return_record_ids* option. This option cannot be
  *                 used to delete records from <a
- *                 href="../../concepts/tables.html#replication"
+ *                 href="../../../concepts/tables/#replication"
  *                 target="_top">replicated</a> tables.
  *                         <li> gpudb::delete_records_delete_all_records: If
  *                 set to @a true, all records in the table will be deleted. If
@@ -15498,7 +16016,185 @@ DeleteUserResponse& GPUdb::deleteUser( const std::string& name,
 
 
 /**
- * Drops an existing <a href="../../concepts/data_sources.html"
+ * @private
+ * 
+ * @param[in] request_  Request object containing the parameters for the
+ *                      operation.
+ * 
+ * @return Response object containing the result of the operation.
+ * 
+ */
+
+DropContainerRegistryResponse GPUdb::dropContainerRegistry( const DropContainerRegistryRequest& request_ ) const
+{
+    DropContainerRegistryResponse actualResponse_;
+    submitRequest("/drop/container/registry", request_, actualResponse_, false);
+    return actualResponse_;
+}
+
+
+/**
+ * @private
+ * 
+ * @param[in] request_  Request object containing the parameters for the
+ *                      operation.
+ * @param[out] response_  Response object containing the results of the
+ *                        operation.
+ * 
+ * @return Response object containing the result of the operation (initially
+ *         passed in by reference).
+ * 
+ */
+
+DropContainerRegistryResponse& GPUdb::dropContainerRegistry( const DropContainerRegistryRequest& request_,
+                                                             DropContainerRegistryResponse& response_ ) const
+{
+    submitRequest("/drop/container/registry", request_, response_, false);
+    return response_;
+}
+
+
+/**
+ * @private
+ * 
+ * @param registryName
+ * @param options
+ * 
+ * @return Response object containing the result of the operation.
+ * 
+ */
+
+DropContainerRegistryResponse GPUdb::dropContainerRegistry( const std::string& registryName,
+                                                            const std::map<std::string, std::string>& options ) const
+{
+    DropContainerRegistryRequest actualRequest_;
+    actualRequest_.registryName = registryName;
+    actualRequest_.options = options;
+    DropContainerRegistryResponse actualResponse_;
+    submitRequest("/drop/container/registry", actualRequest_, actualResponse_, false);
+    return actualResponse_;
+}
+
+
+/**
+ * @private
+ * 
+ * @param registryName
+ * @param options
+ * @param[out] response_  Response object containing the results of the
+ *                        operation.
+ * 
+ * @return Response object containing the result of the operation (initially
+ *         passed in by reference).
+ * 
+ */
+
+DropContainerRegistryResponse& GPUdb::dropContainerRegistry( const std::string& registryName,
+                                                             const std::map<std::string, std::string>& options,
+                                                             DropContainerRegistryResponse& response_ ) const
+{
+    DropContainerRegistryRequest actualRequest_;
+    actualRequest_.registryName = registryName;
+    actualRequest_.options = options;
+    submitRequest("/drop/container/registry", actualRequest_, response_, false);
+    return response_;
+}
+
+
+/**
+ * Drop an existing <a href="../../../concepts/credentials/"
+ * target="_top">credential</a>.
+ * 
+ * @param[in] request_  Request object containing the parameters for the
+ *                      operation.
+ * 
+ * @return Response object containing the result of the operation.
+ * 
+ */
+
+DropCredentialResponse GPUdb::dropCredential( const DropCredentialRequest& request_ ) const
+{
+    DropCredentialResponse actualResponse_;
+    submitRequest("/drop/credential", request_, actualResponse_, false);
+    return actualResponse_;
+}
+
+
+/**
+ * Drop an existing <a href="../../../concepts/credentials/"
+ * target="_top">credential</a>.
+ * 
+ * @param[in] request_  Request object containing the parameters for the
+ *                      operation.
+ * @param[out] response_  Response object containing the results of the
+ *                        operation.
+ * 
+ * @return Response object containing the result of the operation (initially
+ *         passed in by reference).
+ * 
+ */
+
+DropCredentialResponse& GPUdb::dropCredential( const DropCredentialRequest& request_,
+                                               DropCredentialResponse& response_ ) const
+{
+    submitRequest("/drop/credential", request_, response_, false);
+    return response_;
+}
+
+
+/**
+ * Drop an existing <a href="../../../concepts/credentials/"
+ * target="_top">credential</a>.
+ * 
+ * @param credentialName  Name of the credential to be dropped. Must be an
+ *                        existing credential.
+ * @param options  Optional parameters.
+ * 
+ * @return Response object containing the result of the operation.
+ * 
+ */
+
+DropCredentialResponse GPUdb::dropCredential( const std::string& credentialName,
+                                              const std::map<std::string, std::string>& options ) const
+{
+    DropCredentialRequest actualRequest_;
+    actualRequest_.credentialName = credentialName;
+    actualRequest_.options = options;
+    DropCredentialResponse actualResponse_;
+    submitRequest("/drop/credential", actualRequest_, actualResponse_, false);
+    return actualResponse_;
+}
+
+
+/**
+ * Drop an existing <a href="../../../concepts/credentials/"
+ * target="_top">credential</a>.
+ * 
+ * @param credentialName  Name of the credential to be dropped. Must be an
+ *                        existing credential.
+ * @param options  Optional parameters.
+ * @param[out] response_  Response object containing the results of the
+ *                        operation.
+ * 
+ * @return Response object containing the result of the operation (initially
+ *         passed in by reference).
+ * 
+ */
+
+DropCredentialResponse& GPUdb::dropCredential( const std::string& credentialName,
+                                               const std::map<std::string, std::string>& options,
+                                               DropCredentialResponse& response_ ) const
+{
+    DropCredentialRequest actualRequest_;
+    actualRequest_.credentialName = credentialName;
+    actualRequest_.options = options;
+    submitRequest("/drop/credential", actualRequest_, response_, false);
+    return response_;
+}
+
+
+/**
+ * Drops an existing <a href="../../../concepts/data_sources/"
  * target="_top">data source</a>.  Any external
  * tables that depend on the data source must be dropped before it can be
  * dropped.
@@ -15519,7 +16215,7 @@ DropDatasourceResponse GPUdb::dropDatasource( const DropDatasourceRequest& reque
 
 
 /**
- * Drops an existing <a href="../../concepts/data_sources.html"
+ * Drops an existing <a href="../../../concepts/data_sources/"
  * target="_top">data source</a>.  Any external
  * tables that depend on the data source must be dropped before it can be
  * dropped.
@@ -15543,7 +16239,7 @@ DropDatasourceResponse& GPUdb::dropDatasource( const DropDatasourceRequest& requ
 
 
 /**
- * Drops an existing <a href="../../concepts/data_sources.html"
+ * Drops an existing <a href="../../../concepts/data_sources/"
  * target="_top">data source</a>.  Any external
  * tables that depend on the data source must be dropped before it can be
  * dropped.
@@ -15569,7 +16265,7 @@ DropDatasourceResponse GPUdb::dropDatasource( const std::string& name,
 
 
 /**
- * Drops an existing <a href="../../concepts/data_sources.html"
+ * Drops an existing <a href="../../../concepts/data_sources/"
  * target="_top">data source</a>.  Any external
  * tables that depend on the data source must be dropped before it can be
  * dropped.
@@ -15598,7 +16294,93 @@ DropDatasourceResponse& GPUdb::dropDatasource( const std::string& name,
 
 
 /**
- * Drops an existing SQL-style <a href="../../concepts/schemas.html"
+ * @private
+ * 
+ * @param[in] request_  Request object containing the parameters for the
+ *                      operation.
+ * 
+ * @return Response object containing the result of the operation.
+ * 
+ */
+
+DropModelResponse GPUdb::dropModel( const DropModelRequest& request_ ) const
+{
+    DropModelResponse actualResponse_;
+    submitRequest("/drop/model", request_, actualResponse_, false);
+    return actualResponse_;
+}
+
+
+/**
+ * @private
+ * 
+ * @param[in] request_  Request object containing the parameters for the
+ *                      operation.
+ * @param[out] response_  Response object containing the results of the
+ *                        operation.
+ * 
+ * @return Response object containing the result of the operation (initially
+ *         passed in by reference).
+ * 
+ */
+
+DropModelResponse& GPUdb::dropModel( const DropModelRequest& request_,
+                                     DropModelResponse& response_ ) const
+{
+    submitRequest("/drop/model", request_, response_, false);
+    return response_;
+}
+
+
+/**
+ * @private
+ * 
+ * @param modelName
+ * @param options
+ * 
+ * @return Response object containing the result of the operation.
+ * 
+ */
+
+DropModelResponse GPUdb::dropModel( const std::string& modelName,
+                                    const std::map<std::string, std::string>& options ) const
+{
+    DropModelRequest actualRequest_;
+    actualRequest_.modelName = modelName;
+    actualRequest_.options = options;
+    DropModelResponse actualResponse_;
+    submitRequest("/drop/model", actualRequest_, actualResponse_, false);
+    return actualResponse_;
+}
+
+
+/**
+ * @private
+ * 
+ * @param modelName
+ * @param options
+ * @param[out] response_  Response object containing the results of the
+ *                        operation.
+ * 
+ * @return Response object containing the result of the operation (initially
+ *         passed in by reference).
+ * 
+ */
+
+DropModelResponse& GPUdb::dropModel( const std::string& modelName,
+                                     const std::map<std::string, std::string>& options,
+                                     DropModelResponse& response_ ) const
+{
+    DropModelRequest actualRequest_;
+    actualRequest_.modelName = modelName;
+    actualRequest_.options = options;
+    submitRequest("/drop/model", actualRequest_, response_, false);
+    return response_;
+}
+
+
+/**
+ * Drops an existing SQL-style <a href="../../../concepts/schemas/"
  * target="_top">schema</a>, specified in @a schemaName.
  * 
  * @param[in] request_  Request object containing the parameters for the
@@ -15617,7 +16399,7 @@ DropSchemaResponse GPUdb::dropSchema( const DropSchemaRequest& request_ ) const
 
 
 /**
- * Drops an existing SQL-style <a href="../../concepts/schemas.html"
+ * Drops an existing SQL-style <a href="../../../concepts/schemas/"
  * target="_top">schema</a>, specified in @a schemaName.
  * 
  * @param[in] request_  Request object containing the parameters for the
@@ -15639,7 +16421,7 @@ DropSchemaResponse& GPUdb::dropSchema( const DropSchemaRequest& request_,
 
 
 /**
- * Drops an existing SQL-style <a href="../../concepts/schemas.html"
+ * Drops an existing SQL-style <a href="../../../concepts/schemas/"
  * target="_top">schema</a>, specified in @a schemaName.
  * 
  * @param schemaName  Name of the schema to be dropped. Must be an existing
@@ -15683,7 +16465,7 @@ DropSchemaResponse GPUdb::dropSchema( const std::string& schemaName,
 
 
 /**
- * Drops an existing SQL-style <a href="../../concepts/schemas.html"
+ * Drops an existing SQL-style <a href="../../../concepts/schemas/"
  * target="_top">schema</a>, specified in @a schemaName.
  * 
  * @param schemaName  Name of the schema to be dropped. Must be an existing
@@ -15725,6 +16507,116 @@ DropSchemaResponse& GPUdb::dropSchema( const std::string& schemaName,
     actualRequest_.schemaName = schemaName;
     actualRequest_.options = options;
     submitRequest("/drop/schema", actualRequest_, response_, false);
+    return response_;
+}
+
+
+/**
+ * @private
+ * 
+ * @param[in] request_  Request object containing the parameters for the
+ *                      operation.
+ * 
+ * @return Response object containing the result of the operation.
+ * 
+ */
+
+EvaluateModelResponse GPUdb::evaluateModel( const EvaluateModelRequest& request_ ) const
+{
+    EvaluateModelResponse actualResponse_;
+    submitRequest("/evaluate/model", request_, actualResponse_, false);
+    return actualResponse_;
+}
+
+
+/**
+ * @private
+ * 
+ * @param[in] request_  Request object containing the parameters for the
+ *                      operation.
+ * @param[out] response_  Response object containing the results of the
+ *                        operation.
+ * 
+ * @return Response object containing the result of the operation (initially
+ *         passed in by reference).
+ * 
+ */
+
+EvaluateModelResponse& GPUdb::evaluateModel( const EvaluateModelRequest& request_,
+                                             EvaluateModelResponse& response_ ) const
+{
+    submitRequest("/evaluate/model", request_, response_, false);
+    return response_;
+}
+
+
+/**
+ * @private
+ * 
+ * @param modelName
+ * @param replicas
+ * @param deploymentMode
+ * @param sourceTable
+ * @param destinationTable
+ * @param options
+ * 
+ * @return Response object containing the result of the operation.
+ * 
+ */
+
+EvaluateModelResponse GPUdb::evaluateModel( const std::string& modelName,
+                                            const int32_t replicas,
+                                            const std::string& deploymentMode,
+                                            const std::string& sourceTable,
+                                            const std::string& destinationTable,
+                                            const std::map<std::string, std::string>& options ) const
+{
+    EvaluateModelRequest actualRequest_;
+    actualRequest_.modelName = modelName;
+    actualRequest_.replicas = replicas;
+    actualRequest_.deploymentMode = deploymentMode;
+    actualRequest_.sourceTable = sourceTable;
+    actualRequest_.destinationTable = destinationTable;
+    actualRequest_.options = options;
+    EvaluateModelResponse actualResponse_;
+    submitRequest("/evaluate/model", actualRequest_, actualResponse_, false);
+    return actualResponse_;
+}
+
+
+/**
+ * @private
+ * 
+ * @param modelName
+ * @param replicas
+ * @param deploymentMode
+ * @param sourceTable
+ * @param destinationTable
+ * @param options
+ * @param[out] response_  Response object containing the results of the
+ *                        operation.
+ * 
+ * @return Response object containing the result of the operation (initially
+ *         passed in by reference).
+ * 
+ */
+
+EvaluateModelResponse& GPUdb::evaluateModel( const std::string& modelName,
+                                             const int32_t replicas,
+                                             const std::string& deploymentMode,
+                                             const std::string& sourceTable,
+                                             const std::string& destinationTable,
+                                             const std::map<std::string, std::string>& options,
+                                             EvaluateModelResponse& response_ ) const
+{
+    EvaluateModelRequest actualRequest_;
+    actualRequest_.modelName = modelName;
+    actualRequest_.replicas = replicas;
+    actualRequest_.deploymentMode = deploymentMode;
+    actualRequest_.sourceTable = sourceTable;
+    actualRequest_.destinationTable = destinationTable;
+    actualRequest_.options = options;
+    submitRequest("/evaluate/model", actualRequest_, response_, false);
     return response_;
 }
 
@@ -15815,7 +16707,7 @@ ExecuteProcResponse& GPUdb::executeProc( const ExecuteProcRequest& request_,
  *                         currently existing table, in
  *                         [schema_name.]table_name format, using standard
  *                         <a
- *                         href="../../concepts/tables.html#table-name-resolution"
+ *                         href="../../../concepts/tables/#table-name-resolution"
  *                         target="_top">name resolution rules</a>.
  *                         If no table names are specified, no data will be
  *                         passed to the proc.  This
@@ -15837,10 +16729,10 @@ ExecuteProcResponse& GPUdb::executeProc( const ExecuteProcRequest& request_,
  *                          be written, each in [schema_name.]table_name
  *                          format, using standard
  *                          <a
- *                          href="../../concepts/tables.html#table-name-resolution"
+ *                          href="../../../concepts/tables/#table-name-resolution"
  *                          target="_top">name resolution rules</a>
  *                          and meeting <a
- *                          href="../../concepts/tables.html#table-naming-criteria"
+ *                          href="../../../concepts/tables/#table-naming-criteria"
  *                          target="_top">table naming criteria</a>.
  *                          If a specified table does not exist, it will
  *                          automatically be created with the
@@ -15941,7 +16833,7 @@ ExecuteProcResponse GPUdb::executeProc( const std::string& procName,
  *                         currently existing table, in
  *                         [schema_name.]table_name format, using standard
  *                         <a
- *                         href="../../concepts/tables.html#table-name-resolution"
+ *                         href="../../../concepts/tables/#table-name-resolution"
  *                         target="_top">name resolution rules</a>.
  *                         If no table names are specified, no data will be
  *                         passed to the proc.  This
@@ -15963,10 +16855,10 @@ ExecuteProcResponse GPUdb::executeProc( const std::string& procName,
  *                          be written, each in [schema_name.]table_name
  *                          format, using standard
  *                          <a
- *                          href="../../concepts/tables.html#table-name-resolution"
+ *                          href="../../../concepts/tables/#table-name-resolution"
  *                          target="_top">name resolution rules</a>
  *                          and meeting <a
- *                          href="../../concepts/tables.html#table-naming-criteria"
+ *                          href="../../../concepts/tables/#table-naming-criteria"
  *                          target="_top">table naming criteria</a>.
  *                          If a specified table does not exist, it will
  *                          automatically be created with the
@@ -16046,7 +16938,7 @@ ExecuteProcResponse& GPUdb::executeProc( const std::string& procName,
 /**
  * Execute a SQL statement (query, DML, or DDL).
  * <p>
- * See <a href="../../concepts/sql.html" target="_top">SQL Support</a> for the
+ * See <a href="../../../concepts/sql/" target="_top">SQL Support</a> for the
  * complete set of supported SQL commands.
  * 
  * @param[in] request_  Request object containing the parameters for the
@@ -16067,7 +16959,7 @@ RawExecuteSqlResponse GPUdb::executeSqlRaw( const ExecuteSqlRequest& request_ ) 
 /**
  * Execute a SQL statement (query, DML, or DDL).
  * <p>
- * See <a href="../../concepts/sql.html" target="_top">SQL Support</a> for the
+ * See <a href="../../../concepts/sql/" target="_top">SQL Support</a> for the
  * complete set of supported SQL commands.
  * 
  * @param[in] request_  Request object containing the parameters for the
@@ -16091,7 +16983,7 @@ RawExecuteSqlResponse& GPUdb::executeSqlRaw( const ExecuteSqlRequest& request_,
 /**
  * Execute a SQL statement (query, DML, or DDL).
  * <p>
- * See <a href="../../concepts/sql.html" target="_top">SQL Support</a> for the
+ * See <a href="../../../concepts/sql/" target="_top">SQL Support</a> for the
  * complete set of supported SQL commands.
  * 
  * @param[in] request_  Request object containing the parameters for the
@@ -16123,7 +17015,7 @@ ExecuteSqlResponse GPUdb::executeSql( const ExecuteSqlRequest& request_ ) const
 /**
  * Execute a SQL statement (query, DML, or DDL).
  * <p>
- * See <a href="../../concepts/sql.html" target="_top">SQL Support</a> for the
+ * See <a href="../../../concepts/sql/" target="_top">SQL Support</a> for the
  * complete set of supported SQL commands.
  * 
  * @param[in] request_  Request object containing the parameters for the
@@ -16158,7 +17050,7 @@ ExecuteSqlResponse& GPUdb::executeSql( const ExecuteSqlRequest& request_,
 /**
  * Execute a SQL statement (query, DML, or DDL).
  * <p>
- * See <a href="../../concepts/sql.html" target="_top">SQL Support</a> for the
+ * See <a href="../../../concepts/sql/" target="_top">SQL Support</a> for the
  * complete set of supported SQL commands.
  * 
  * @param statement  SQL statement (query, DML, or DDL) to be executed
@@ -16171,7 +17063,7 @@ ExecuteSqlResponse& GPUdb::executeSql( const ExecuteSqlRequest& request_,
  *               maximum number of results allowed by the server should be
  *               returned.  The number of records returned will never exceed
  *               the server's own limit, defined by the <a
- *               href="../../config/index.html#general"
+ *               href="../../../config/#general"
  *               target="_top">max_get_records_size</a> parameter in the server
  *               configuration.  Use @a hasMoreRecords to see if more records
  *               exist in the result to be fetched, and @a offset & @a limit to
@@ -16226,7 +17118,7 @@ ExecuteSqlResponse& GPUdb::executeSql( const ExecuteSqlRequest& request_,
  *                 the system, the records from the paging table are returned
  *                 without evaluating the query.
  *                         <li> gpudb::execute_sql_paging_table_ttl: Sets the
- *                 <a href="../../concepts/ttl.html" target="_top">TTL</a> of
+ *                 <a href="../../../concepts/ttl/" target="_top">TTL</a> of
  *                 the paging table.
  *                         <li> gpudb::execute_sql_distributed_joins: If @a
  *                 true, enables the use of distributed joins in servicing the
@@ -16266,7 +17158,7 @@ ExecuteSqlResponse& GPUdb::executeSql( const ExecuteSqlRequest& request_,
  *                 </ul>
  *                 The default value is gpudb::execute_sql_false.
  *                         <li> gpudb::execute_sql_ttl: Sets the <a
- *                 href="../../concepts/ttl.html" target="_top">TTL</a> of the
+ *                 href="../../../concepts/ttl/" target="_top">TTL</a> of the
  *                 intermediate result tables used in query execution.
  *                         <li> gpudb::execute_sql_update_on_existing_pk: Can
  *                 be used to customize behavior when the updated primary key
@@ -16341,7 +17233,7 @@ ExecuteSqlResponse GPUdb::executeSql( const std::string& statement,
 /**
  * Execute a SQL statement (query, DML, or DDL).
  * <p>
- * See <a href="../../concepts/sql.html" target="_top">SQL Support</a> for the
+ * See <a href="../../../concepts/sql/" target="_top">SQL Support</a> for the
  * complete set of supported SQL commands.
  * 
  * @param statement  SQL statement (query, DML, or DDL) to be executed
@@ -16354,7 +17246,7 @@ ExecuteSqlResponse GPUdb::executeSql( const std::string& statement,
  *               maximum number of results allowed by the server should be
  *               returned.  The number of records returned will never exceed
  *               the server's own limit, defined by the <a
- *               href="../../config/index.html#general"
+ *               href="../../../config/#general"
  *               target="_top">max_get_records_size</a> parameter in the server
  *               configuration.  Use @a hasMoreRecords to see if more records
  *               exist in the result to be fetched, and @a offset & @a limit to
@@ -16409,7 +17301,7 @@ ExecuteSqlResponse GPUdb::executeSql( const std::string& statement,
  *                 the system, the records from the paging table are returned
  *                 without evaluating the query.
  *                         <li> gpudb::execute_sql_paging_table_ttl: Sets the
- *                 <a href="../../concepts/ttl.html" target="_top">TTL</a> of
+ *                 <a href="../../../concepts/ttl/" target="_top">TTL</a> of
  *                 the paging table.
  *                         <li> gpudb::execute_sql_distributed_joins: If @a
  *                 true, enables the use of distributed joins in servicing the
@@ -16449,7 +17341,7 @@ ExecuteSqlResponse GPUdb::executeSql( const std::string& statement,
  *                 </ul>
  *                 The default value is gpudb::execute_sql_false.
  *                         <li> gpudb::execute_sql_ttl: Sets the <a
- *                 href="../../concepts/ttl.html" target="_top">TTL</a> of the
+ *                 href="../../../concepts/ttl/" target="_top">TTL</a> of the
  *                 intermediate result tables used in query execution.
  *                         <li> gpudb::execute_sql_update_on_existing_pk: Can
  *                 be used to customize behavior when the updated primary key
@@ -16526,11 +17418,11 @@ ExecuteSqlResponse& GPUdb::executeSql( const std::string& statement,
 
 /**
  * Filters data based on the specified expression.  The results are
- * stored in a <a href="../../concepts/filtered_views.html"
- * target="_top">result set</a> with the
+ * stored in a <a href="../../../concepts/filtered_views/" target="_top">result
+ * set</a> with the
  * given @a viewName.
  * <p>
- * For details see <a href="../../concepts/expressions.html"
+ * For details see <a href="../../../concepts/expressions/"
  * target="_top">Expressions</a>.
  * <p>
  * The response message contains the number of points for which the expression
@@ -16553,11 +17445,11 @@ FilterResponse GPUdb::filter( const FilterRequest& request_ ) const
 
 /**
  * Filters data based on the specified expression.  The results are
- * stored in a <a href="../../concepts/filtered_views.html"
- * target="_top">result set</a> with the
+ * stored in a <a href="../../../concepts/filtered_views/" target="_top">result
+ * set</a> with the
  * given @a viewName.
  * <p>
- * For details see <a href="../../concepts/expressions.html"
+ * For details see <a href="../../../concepts/expressions/"
  * target="_top">Expressions</a>.
  * <p>
  * The response message contains the number of points for which the expression
@@ -16583,11 +17475,11 @@ FilterResponse& GPUdb::filter( const FilterRequest& request_,
 
 /**
  * Filters data based on the specified expression.  The results are
- * stored in a <a href="../../concepts/filtered_views.html"
- * target="_top">result set</a> with the
+ * stored in a <a href="../../../concepts/filtered_views/" target="_top">result
+ * set</a> with the
  * given @a viewName.
  * <p>
- * For details see <a href="../../concepts/expressions.html"
+ * For details see <a href="../../../concepts/expressions/"
  * target="_top">Expressions</a>.
  * <p>
  * The response message contains the number of points for which the expression
@@ -16595,19 +17487,19 @@ FilterResponse& GPUdb::filter( const FilterRequest& request_,
  * 
  * @param tableName  Name of the table to filter, in [schema_name.]table_name
  *                   format, using standard <a
- *                   href="../../concepts/tables.html#table-name-resolution"
+ *                   href="../../../concepts/tables/#table-name-resolution"
  *                   target="_top">name resolution rules</a>.  This may be the
  *                   name of a table or a view (when chaining queries).
  * @param viewName  If provided, then this will be the name of the view
  *                  containing the results, in [schema_name.]view_name format,
  *                  using standard <a
- *                  href="../../concepts/tables.html#table-name-resolution"
+ *                  href="../../../concepts/tables/#table-name-resolution"
  *                  target="_top">name resolution rules</a> and meeting <a
- *                  href="../../concepts/tables.html#table-naming-criteria"
+ *                  href="../../../concepts/tables/#table-naming-criteria"
  *                  target="_top">table naming criteria</a>.  Must not be an
  *                  already existing table or view.
  * @param expression  The select expression to filter the specified table.  For
- *                    details see <a href="../../concepts/expressions.html"
+ *                    details see <a href="../../../concepts/expressions/"
  *                    target="_top">Expressions</a>.
  * @param options  Optional parameters.
  *                 <ul>
@@ -16620,7 +17512,7 @@ FilterResponse& GPUdb::filter( const FilterRequest& request_,
  *                         <li> gpudb::filter_view_id: view this filtered-view
  *                 is part of.  The default value is ''.
  *                         <li> gpudb::filter_ttl: Sets the <a
- *                 href="../../concepts/ttl.html" target="_top">TTL</a> of the
+ *                 href="../../../concepts/ttl/" target="_top">TTL</a> of the
  *                 view specified in @a viewName.
  *                 </ul>
  * 
@@ -16646,11 +17538,11 @@ FilterResponse GPUdb::filter( const std::string& tableName,
 
 /**
  * Filters data based on the specified expression.  The results are
- * stored in a <a href="../../concepts/filtered_views.html"
- * target="_top">result set</a> with the
+ * stored in a <a href="../../../concepts/filtered_views/" target="_top">result
+ * set</a> with the
  * given @a viewName.
  * <p>
- * For details see <a href="../../concepts/expressions.html"
+ * For details see <a href="../../../concepts/expressions/"
  * target="_top">Expressions</a>.
  * <p>
  * The response message contains the number of points for which the expression
@@ -16658,19 +17550,19 @@ FilterResponse GPUdb::filter( const std::string& tableName,
  * 
  * @param tableName  Name of the table to filter, in [schema_name.]table_name
  *                   format, using standard <a
- *                   href="../../concepts/tables.html#table-name-resolution"
+ *                   href="../../../concepts/tables/#table-name-resolution"
  *                   target="_top">name resolution rules</a>.  This may be the
  *                   name of a table or a view (when chaining queries).
  * @param viewName  If provided, then this will be the name of the view
  *                  containing the results, in [schema_name.]view_name format,
  *                  using standard <a
- *                  href="../../concepts/tables.html#table-name-resolution"
+ *                  href="../../../concepts/tables/#table-name-resolution"
  *                  target="_top">name resolution rules</a> and meeting <a
- *                  href="../../concepts/tables.html#table-naming-criteria"
+ *                  href="../../../concepts/tables/#table-naming-criteria"
  *                  target="_top">table naming criteria</a>.  Must not be an
  *                  already existing table or view.
  * @param expression  The select expression to filter the specified table.  For
- *                    details see <a href="../../concepts/expressions.html"
+ *                    details see <a href="../../../concepts/expressions/"
  *                    target="_top">Expressions</a>.
  * @param options  Optional parameters.
  *                 <ul>
@@ -16683,7 +17575,7 @@ FilterResponse GPUdb::filter( const std::string& tableName,
  *                         <li> gpudb::filter_view_id: view this filtered-view
  *                 is part of.  The default value is ''.
  *                         <li> gpudb::filter_ttl: Sets the <a
- *                 href="../../concepts/ttl.html" target="_top">TTL</a> of the
+ *                 href="../../../concepts/ttl/" target="_top">TTL</a> of the
  *                 view specified in @a viewName.
  *                 </ul>
  * @param[out] response_  Response object containing the results of the
@@ -16778,15 +17670,15 @@ FilterByAreaResponse& GPUdb::filterByArea( const FilterByAreaRequest& request_,
  * 
  * @param tableName  Name of the table to filter, in [schema_name.]table_name
  *                   format, using standard <a
- *                   href="../../concepts/tables.html#table-name-resolution"
+ *                   href="../../../concepts/tables/#table-name-resolution"
  *                   target="_top">name resolution rules</a>.  This may be the
  *                   name of a table or a view (when chaining queries).
  * @param viewName  If provided, then this will be the name of the view
  *                  containing the results, in [schema_name.]view_name format,
  *                  using standard <a
- *                  href="../../concepts/tables.html#table-name-resolution"
+ *                  href="../../../concepts/tables/#table-name-resolution"
  *                  target="_top">name resolution rules</a> and meeting <a
- *                  href="../../concepts/tables.html#table-naming-criteria"
+ *                  href="../../../concepts/tables/#table-naming-criteria"
  *                  target="_top">table naming criteria</a>.  Must not be an
  *                  already existing table or view.
  * @param xColumnName  Name of the column containing the x values to be
@@ -16846,15 +17738,15 @@ FilterByAreaResponse GPUdb::filterByArea( const std::string& tableName,
  * 
  * @param tableName  Name of the table to filter, in [schema_name.]table_name
  *                   format, using standard <a
- *                   href="../../concepts/tables.html#table-name-resolution"
+ *                   href="../../../concepts/tables/#table-name-resolution"
  *                   target="_top">name resolution rules</a>.  This may be the
  *                   name of a table or a view (when chaining queries).
  * @param viewName  If provided, then this will be the name of the view
  *                  containing the results, in [schema_name.]view_name format,
  *                  using standard <a
- *                  href="../../concepts/tables.html#table-name-resolution"
+ *                  href="../../../concepts/tables/#table-name-resolution"
  *                  target="_top">name resolution rules</a> and meeting <a
- *                  href="../../concepts/tables.html#table-naming-criteria"
+ *                  href="../../../concepts/tables/#table-naming-criteria"
  *                  target="_top">table naming criteria</a>.  Must not be an
  *                  already existing table or view.
  * @param xColumnName  Name of the column containing the x values to be
@@ -16975,15 +17867,15 @@ FilterByAreaGeometryResponse& GPUdb::filterByAreaGeometry( const FilterByAreaGeo
  * 
  * @param tableName  Name of the table to filter, in [schema_name.]table_name
  *                   format, using standard <a
- *                   href="../../concepts/tables.html#table-name-resolution"
+ *                   href="../../../concepts/tables/#table-name-resolution"
  *                   target="_top">name resolution rules</a>.  This may be the
  *                   name of a table or a view (when chaining queries).
  * @param viewName  If provided, then this will be the name of the view
  *                  containing the results, in [schema_name.]view_name format,
  *                  using standard <a
- *                  href="../../concepts/tables.html#table-name-resolution"
+ *                  href="../../../concepts/tables/#table-name-resolution"
  *                  target="_top">name resolution rules</a> and meeting <a
- *                  href="../../concepts/tables.html#table-naming-criteria"
+ *                  href="../../../concepts/tables/#table-naming-criteria"
  *                  target="_top">table naming criteria</a>.  Must not be an
  *                  already existing table or view.
  * @param columnName  Name of the geospatial geometry column to be filtered.
@@ -17039,15 +17931,15 @@ FilterByAreaGeometryResponse GPUdb::filterByAreaGeometry( const std::string& tab
  * 
  * @param tableName  Name of the table to filter, in [schema_name.]table_name
  *                   format, using standard <a
- *                   href="../../concepts/tables.html#table-name-resolution"
+ *                   href="../../../concepts/tables/#table-name-resolution"
  *                   target="_top">name resolution rules</a>.  This may be the
  *                   name of a table or a view (when chaining queries).
  * @param viewName  If provided, then this will be the name of the view
  *                  containing the results, in [schema_name.]view_name format,
  *                  using standard <a
- *                  href="../../concepts/tables.html#table-name-resolution"
+ *                  href="../../../concepts/tables/#table-name-resolution"
  *                  target="_top">name resolution rules</a> and meeting <a
- *                  href="../../concepts/tables.html#table-naming-criteria"
+ *                  href="../../../concepts/tables/#table-naming-criteria"
  *                  target="_top">table naming criteria</a>.  Must not be an
  *                  already existing table or view.
  * @param columnName  Name of the geospatial geometry column to be filtered.
@@ -17158,15 +18050,15 @@ FilterByBoxResponse& GPUdb::filterByBox( const FilterByBoxRequest& request_,
  * @param tableName  Name of the table on which the bounding box operation will
  *                   be performed, in [schema_name.]table_name format, using
  *                   standard <a
- *                   href="../../concepts/tables.html#table-name-resolution"
+ *                   href="../../../concepts/tables/#table-name-resolution"
  *                   target="_top">name resolution rules</a>.  Must be an
  *                   existing table.
  * @param viewName  If provided, then this will be the name of the view
  *                  containing the results, in [schema_name.]view_name format,
  *                  using standard <a
- *                  href="../../concepts/tables.html#table-name-resolution"
+ *                  href="../../../concepts/tables/#table-name-resolution"
  *                  target="_top">name resolution rules</a> and meeting <a
- *                  href="../../concepts/tables.html#table-naming-criteria"
+ *                  href="../../../concepts/tables/#table-naming-criteria"
  *                  target="_top">table naming criteria</a>.  Must not be an
  *                  already existing table or view.
  * @param xColumnName  Name of the column on which to perform the bounding box
@@ -17234,15 +18126,15 @@ FilterByBoxResponse GPUdb::filterByBox( const std::string& tableName,
  * @param tableName  Name of the table on which the bounding box operation will
  *                   be performed, in [schema_name.]table_name format, using
  *                   standard <a
- *                   href="../../concepts/tables.html#table-name-resolution"
+ *                   href="../../../concepts/tables/#table-name-resolution"
  *                   target="_top">name resolution rules</a>.  Must be an
  *                   existing table.
  * @param viewName  If provided, then this will be the name of the view
  *                  containing the results, in [schema_name.]view_name format,
  *                  using standard <a
- *                  href="../../concepts/tables.html#table-name-resolution"
+ *                  href="../../../concepts/tables/#table-name-resolution"
  *                  target="_top">name resolution rules</a> and meeting <a
- *                  href="../../concepts/tables.html#table-naming-criteria"
+ *                  href="../../../concepts/tables/#table-naming-criteria"
  *                  target="_top">table naming criteria</a>.  Must not be an
  *                  already existing table or view.
  * @param xColumnName  Name of the column on which to perform the bounding box
@@ -17369,15 +18261,15 @@ FilterByBoxGeometryResponse& GPUdb::filterByBoxGeometry( const FilterByBoxGeomet
  * @param tableName  Name of the table on which the bounding box operation will
  *                   be performed, in [schema_name.]table_name format, using
  *                   standard <a
- *                   href="../../concepts/tables.html#table-name-resolution"
+ *                   href="../../../concepts/tables/#table-name-resolution"
  *                   target="_top">name resolution rules</a>. Must be an
  *                   existing table.
  * @param viewName  If provided, then this will be the name of the view
  *                  containing the results, in [schema_name.]view_name format,
  *                  using standard <a
- *                  href="../../concepts/tables.html#table-name-resolution"
+ *                  href="../../../concepts/tables/#table-name-resolution"
  *                  target="_top">name resolution rules</a> and meeting <a
- *                  href="../../concepts/tables.html#table-naming-criteria"
+ *                  href="../../../concepts/tables/#table-naming-criteria"
  *                  target="_top">table naming criteria</a>.  Must not be an
  *                  already existing table or view.
  * @param columnName  Name of the geospatial geometry column to be filtered.
@@ -17441,15 +18333,15 @@ FilterByBoxGeometryResponse GPUdb::filterByBoxGeometry( const std::string& table
  * @param tableName  Name of the table on which the bounding box operation will
  *                   be performed, in [schema_name.]table_name format, using
  *                   standard <a
- *                   href="../../concepts/tables.html#table-name-resolution"
+ *                   href="../../../concepts/tables/#table-name-resolution"
  *                   target="_top">name resolution rules</a>. Must be an
  *                   existing table.
  * @param viewName  If provided, then this will be the name of the view
  *                  containing the results, in [schema_name.]view_name format,
  *                  using standard <a
- *                  href="../../concepts/tables.html#table-name-resolution"
+ *                  href="../../../concepts/tables/#table-name-resolution"
  *                  target="_top">name resolution rules</a> and meeting <a
- *                  href="../../concepts/tables.html#table-naming-criteria"
+ *                  href="../../../concepts/tables/#table-naming-criteria"
  *                  target="_top">table naming criteria</a>.  Must not be an
  *                  already existing table or view.
  * @param columnName  Name of the geospatial geometry column to be filtered.
@@ -17550,16 +18442,16 @@ FilterByGeometryResponse& GPUdb::filterByGeometry( const FilterByGeometryRequest
  * @param tableName  Name of the table on which the filter by geometry will be
  *                   performed, in [schema_name.]table_name format, using
  *                   standard <a
- *                   href="../../concepts/tables.html#table-name-resolution"
+ *                   href="../../../concepts/tables/#table-name-resolution"
  *                   target="_top">name resolution rules</a>.  Must be an
  *                   existing table or view containing a geospatial geometry
  *                   column.
  * @param viewName  If provided, then this will be the name of the view
  *                  containing the results, in [schema_name.]view_name format,
  *                  using standard <a
- *                  href="../../concepts/tables.html#table-name-resolution"
+ *                  href="../../../concepts/tables/#table-name-resolution"
  *                  target="_top">name resolution rules</a> and meeting <a
- *                  href="../../concepts/tables.html#table-naming-criteria"
+ *                  href="../../../concepts/tables/#table-naming-criteria"
  *                  target="_top">table naming criteria</a>.  Must not be an
  *                  already existing table or view.
  * @param columnName  Name of the column to be used in the filter. Must be a
@@ -17627,16 +18519,16 @@ FilterByGeometryResponse GPUdb::filterByGeometry( const std::string& tableName,
  * @param tableName  Name of the table on which the filter by geometry will be
  *                   performed, in [schema_name.]table_name format, using
  *                   standard <a
- *                   href="../../concepts/tables.html#table-name-resolution"
+ *                   href="../../../concepts/tables/#table-name-resolution"
  *                   target="_top">name resolution rules</a>.  Must be an
  *                   existing table or view containing a geospatial geometry
  *                   column.
  * @param viewName  If provided, then this will be the name of the view
  *                  containing the results, in [schema_name.]view_name format,
  *                  using standard <a
- *                  href="../../concepts/tables.html#table-name-resolution"
+ *                  href="../../../concepts/tables/#table-name-resolution"
  *                  target="_top">name resolution rules</a> and meeting <a
- *                  href="../../concepts/tables.html#table-naming-criteria"
+ *                  href="../../../concepts/tables/#table-naming-criteria"
  *                  target="_top">table naming criteria</a>.  Must not be an
  *                  already existing table or view.
  * @param columnName  Name of the column to be used in the filter. Must be a
@@ -17795,15 +18687,15 @@ FilterByListResponse& GPUdb::filterByList( const FilterByListRequest& request_,
  * 
  * @param tableName  Name of the table to filter, in [schema_name.]table_name
  *                   format, using standard <a
- *                   href="../../concepts/tables.html#table-name-resolution"
+ *                   href="../../../concepts/tables/#table-name-resolution"
  *                   target="_top">name resolution rules</a>.  This may be the
  *                   name of a table or a view (when chaining queries).
  * @param viewName  If provided, then this will be the name of the view
  *                  containing the results, in [schema_name.]view_name format,
  *                  using standard <a
- *                  href="../../concepts/tables.html#table-name-resolution"
+ *                  href="../../../concepts/tables/#table-name-resolution"
  *                  target="_top">name resolution rules</a> and meeting <a
- *                  href="../../concepts/tables.html#table-naming-criteria"
+ *                  href="../../../concepts/tables/#table-naming-criteria"
  *                  target="_top">table naming criteria</a>.  Must not be an
  *                  already existing table or view.
  * @param columnValuesMap  List of values for the corresponding column in the
@@ -17870,15 +18762,15 @@ FilterByListResponse GPUdb::filterByList( const std::string& tableName,
  * 
  * @param tableName  Name of the table to filter, in [schema_name.]table_name
  *                   format, using standard <a
- *                   href="../../concepts/tables.html#table-name-resolution"
+ *                   href="../../../concepts/tables/#table-name-resolution"
  *                   target="_top">name resolution rules</a>.  This may be the
  *                   name of a table or a view (when chaining queries).
  * @param viewName  If provided, then this will be the name of the view
  *                  containing the results, in [schema_name.]view_name format,
  *                  using standard <a
- *                  href="../../concepts/tables.html#table-name-resolution"
+ *                  href="../../../concepts/tables/#table-name-resolution"
  *                  target="_top">name resolution rules</a> and meeting <a
- *                  href="../../concepts/tables.html#table-naming-criteria"
+ *                  href="../../../concepts/tables/#table-naming-criteria"
  *                  target="_top">table naming criteria</a>.  Must not be an
  *                  already existing table or view.
  * @param columnValuesMap  List of values for the corresponding column in the
@@ -18013,15 +18905,15 @@ FilterByRadiusResponse& GPUdb::filterByRadius( const FilterByRadiusRequest& requ
  * @param tableName  Name of the table on which the filter by radius operation
  *                   will be performed, in [schema_name.]table_name format,
  *                   using standard <a
- *                   href="../../concepts/tables.html#table-name-resolution"
+ *                   href="../../../concepts/tables/#table-name-resolution"
  *                   target="_top">name resolution rules</a>.  Must be an
  *                   existing table.
  * @param viewName  If provided, then this will be the name of the view
  *                  containing the results, in [schema_name.]view_name format,
  *                  using standard <a
- *                  href="../../concepts/tables.html#table-name-resolution"
+ *                  href="../../../concepts/tables/#table-name-resolution"
  *                  target="_top">name resolution rules</a> and meeting <a
- *                  href="../../concepts/tables.html#table-naming-criteria"
+ *                  href="../../../concepts/tables/#table-naming-criteria"
  *                  target="_top">table naming criteria</a>.  Must not be an
  *                  already existing table or view.
  * @param xColumnName  Name of the column to be used for the x-coordinate (the
@@ -18097,15 +18989,15 @@ FilterByRadiusResponse GPUdb::filterByRadius( const std::string& tableName,
  * @param tableName  Name of the table on which the filter by radius operation
  *                   will be performed, in [schema_name.]table_name format,
  *                   using standard <a
- *                   href="../../concepts/tables.html#table-name-resolution"
+ *                   href="../../../concepts/tables/#table-name-resolution"
  *                   target="_top">name resolution rules</a>.  Must be an
  *                   existing table.
  * @param viewName  If provided, then this will be the name of the view
  *                  containing the results, in [schema_name.]view_name format,
  *                  using standard <a
- *                  href="../../concepts/tables.html#table-name-resolution"
+ *                  href="../../../concepts/tables/#table-name-resolution"
  *                  target="_top">name resolution rules</a> and meeting <a
- *                  href="../../concepts/tables.html#table-naming-criteria"
+ *                  href="../../../concepts/tables/#table-naming-criteria"
  *                  target="_top">table naming criteria</a>.  Must not be an
  *                  already existing table or view.
  * @param xColumnName  Name of the column to be used for the x-coordinate (the
@@ -18236,15 +19128,15 @@ FilterByRadiusGeometryResponse& GPUdb::filterByRadiusGeometry( const FilterByRad
  * @param tableName  Name of the table on which the filter by radius operation
  *                   will be performed, in [schema_name.]table_name format,
  *                   using standard <a
- *                   href="../../concepts/tables.html#table-name-resolution"
+ *                   href="../../../concepts/tables/#table-name-resolution"
  *                   target="_top">name resolution rules</a>.  Must be an
  *                   existing table.
  * @param viewName  If provided, then this will be the name of the view
  *                  containing the results, in [schema_name.]view_name format,
  *                  using standard <a
- *                  href="../../concepts/tables.html#table-name-resolution"
+ *                  href="../../../concepts/tables/#table-name-resolution"
  *                  target="_top">name resolution rules</a> and meeting <a
- *                  href="../../concepts/tables.html#table-naming-criteria"
+ *                  href="../../../concepts/tables/#table-naming-criteria"
  *                  target="_top">table naming criteria</a>.  Must not be an
  *                  already existing table or view.
  * @param columnName  Name of the geospatial geometry column to be filtered.
@@ -18311,15 +19203,15 @@ FilterByRadiusGeometryResponse GPUdb::filterByRadiusGeometry( const std::string&
  * @param tableName  Name of the table on which the filter by radius operation
  *                   will be performed, in [schema_name.]table_name format,
  *                   using standard <a
- *                   href="../../concepts/tables.html#table-name-resolution"
+ *                   href="../../../concepts/tables/#table-name-resolution"
  *                   target="_top">name resolution rules</a>.  Must be an
  *                   existing table.
  * @param viewName  If provided, then this will be the name of the view
  *                  containing the results, in [schema_name.]view_name format,
  *                  using standard <a
- *                  href="../../concepts/tables.html#table-name-resolution"
+ *                  href="../../../concepts/tables/#table-name-resolution"
  *                  target="_top">name resolution rules</a> and meeting <a
- *                  href="../../concepts/tables.html#table-naming-criteria"
+ *                  href="../../../concepts/tables/#table-naming-criteria"
  *                  target="_top">table naming criteria</a>.  Must not be an
  *                  already existing table or view.
  * @param columnName  Name of the geospatial geometry column to be filtered.
@@ -18452,15 +19344,15 @@ FilterByRangeResponse& GPUdb::filterByRange( const FilterByRangeRequest& request
  * @param tableName  Name of the table on which the filter by range operation
  *                   will be performed, in [schema_name.]table_name format,
  *                   using standard <a
- *                   href="../../concepts/tables.html#table-name-resolution"
+ *                   href="../../../concepts/tables/#table-name-resolution"
  *                   target="_top">name resolution rules</a>.  Must be an
  *                   existing table.
  * @param viewName  If provided, then this will be the name of the view
  *                  containing the results, in [schema_name.]view_name format,
  *                  using standard <a
- *                  href="../../concepts/tables.html#table-name-resolution"
+ *                  href="../../../concepts/tables/#table-name-resolution"
  *                  target="_top">name resolution rules</a> and meeting <a
- *                  href="../../concepts/tables.html#table-naming-criteria"
+ *                  href="../../../concepts/tables/#table-naming-criteria"
  *                  target="_top">table naming criteria</a>.  Must not be an
  *                  already existing table or view.
  * @param columnName  Name of a column on which the operation would be applied.
@@ -18517,15 +19409,15 @@ FilterByRangeResponse GPUdb::filterByRange( const std::string& tableName,
  * @param tableName  Name of the table on which the filter by range operation
  *                   will be performed, in [schema_name.]table_name format,
  *                   using standard <a
- *                   href="../../concepts/tables.html#table-name-resolution"
+ *                   href="../../../concepts/tables/#table-name-resolution"
  *                   target="_top">name resolution rules</a>.  Must be an
  *                   existing table.
  * @param viewName  If provided, then this will be the name of the view
  *                  containing the results, in [schema_name.]view_name format,
  *                  using standard <a
- *                  href="../../concepts/tables.html#table-name-resolution"
+ *                  href="../../../concepts/tables/#table-name-resolution"
  *                  target="_top">name resolution rules</a> and meeting <a
- *                  href="../../concepts/tables.html#table-naming-criteria"
+ *                  href="../../../concepts/tables/#table-naming-criteria"
  *                  target="_top">table naming criteria</a>.  Must not be an
  *                  already existing table or view.
  * @param columnName  Name of a column on which the operation would be applied.
@@ -18667,17 +19559,17 @@ FilterBySeriesResponse& GPUdb::filterBySeries( const FilterBySeriesRequest& requ
  * @param tableName  Name of the table on which the filter by track operation
  *                   will be performed, in [schema_name.]table_name format,
  *                   using standard <a
- *                   href="../../concepts/tables.html#table-name-resolution"
+ *                   href="../../../concepts/tables/#table-name-resolution"
  *                   target="_top">name resolution rules</a>. Must be a
  *                   currently existing table with a <a
- *                   href="../../geospatial/geo_objects.html"
+ *                   href="../../../geospatial/geo_objects/"
  *                   target="_top">track</a> present.
  * @param viewName  If provided, then this will be the name of the view
  *                  containing the results, in [schema_name.]view_name format,
  *                  using standard <a
- *                  href="../../concepts/tables.html#table-name-resolution"
+ *                  href="../../../concepts/tables/#table-name-resolution"
  *                  target="_top">name resolution rules</a> and meeting <a
- *                  href="../../concepts/tables.html#table-naming-criteria"
+ *                  href="../../../concepts/tables/#table-naming-criteria"
  *                  target="_top">table naming criteria</a>.  Must not be an
  *                  already existing table or view.
  * @param trackId  The ID of the track which will act as the filtering points.
@@ -18760,17 +19652,17 @@ FilterBySeriesResponse GPUdb::filterBySeries( const std::string& tableName,
  * @param tableName  Name of the table on which the filter by track operation
  *                   will be performed, in [schema_name.]table_name format,
  *                   using standard <a
- *                   href="../../concepts/tables.html#table-name-resolution"
+ *                   href="../../../concepts/tables/#table-name-resolution"
  *                   target="_top">name resolution rules</a>. Must be a
  *                   currently existing table with a <a
- *                   href="../../geospatial/geo_objects.html"
+ *                   href="../../../geospatial/geo_objects/"
  *                   target="_top">track</a> present.
  * @param viewName  If provided, then this will be the name of the view
  *                  containing the results, in [schema_name.]view_name format,
  *                  using standard <a
- *                  href="../../concepts/tables.html#table-name-resolution"
+ *                  href="../../../concepts/tables/#table-name-resolution"
  *                  target="_top">name resolution rules</a> and meeting <a
- *                  href="../../concepts/tables.html#table-naming-criteria"
+ *                  href="../../../concepts/tables/#table-naming-criteria"
  *                  target="_top">table naming criteria</a>.  Must not be an
  *                  already existing table or view.
  * @param trackId  The ID of the track which will act as the filtering points.
@@ -18838,7 +19730,7 @@ FilterBySeriesResponse& GPUdb::filterBySeries( const std::string& tableName,
  * @a case_sensitive can modify case sensitivity in matching
  * for all modes except @a search. For
  * @a search mode details and limitations, see
- * <a href="../../concepts/full_text_search.html" target="_top">Full Text
+ * <a href="../../../concepts/full_text_search/" target="_top">Full Text
  * Search</a>.
  * 
  * @param[in] request_  Request object containing the parameters for the
@@ -18862,7 +19754,7 @@ FilterByStringResponse GPUdb::filterByString( const FilterByStringRequest& reque
  * @a case_sensitive can modify case sensitivity in matching
  * for all modes except @a search. For
  * @a search mode details and limitations, see
- * <a href="../../concepts/full_text_search.html" target="_top">Full Text
+ * <a href="../../../concepts/full_text_search/" target="_top">Full Text
  * Search</a>.
  * 
  * @param[in] request_  Request object containing the parameters for the
@@ -18889,21 +19781,21 @@ FilterByStringResponse& GPUdb::filterByString( const FilterByStringRequest& requ
  * @a case_sensitive can modify case sensitivity in matching
  * for all modes except @a search. For
  * @a search mode details and limitations, see
- * <a href="../../concepts/full_text_search.html" target="_top">Full Text
+ * <a href="../../../concepts/full_text_search/" target="_top">Full Text
  * Search</a>.
  * 
  * @param tableName  Name of the table on which the filter operation will be
  *                   performed, in [schema_name.]table_name format, using
  *                   standard <a
- *                   href="../../concepts/tables.html#table-name-resolution"
+ *                   href="../../../concepts/tables/#table-name-resolution"
  *                   target="_top">name resolution rules</a>.  Must be an
  *                   existing table or view.
  * @param viewName  If provided, then this will be the name of the view
  *                  containing the results, in [schema_name.]view_name format,
  *                  using standard <a
- *                  href="../../concepts/tables.html#table-name-resolution"
+ *                  href="../../../concepts/tables/#table-name-resolution"
  *                  target="_top">name resolution rules</a> and meeting <a
- *                  href="../../concepts/tables.html#table-naming-criteria"
+ *                  href="../../../concepts/tables/#table-naming-criteria"
  *                  target="_top">table naming criteria</a>.  Must not be an
  *                  already existing table or view.
  * @param expression  The expression with which to filter the table.
@@ -18979,21 +19871,21 @@ FilterByStringResponse GPUdb::filterByString( const std::string& tableName,
  * @a case_sensitive can modify case sensitivity in matching
  * for all modes except @a search. For
  * @a search mode details and limitations, see
- * <a href="../../concepts/full_text_search.html" target="_top">Full Text
+ * <a href="../../../concepts/full_text_search/" target="_top">Full Text
  * Search</a>.
  * 
  * @param tableName  Name of the table on which the filter operation will be
  *                   performed, in [schema_name.]table_name format, using
  *                   standard <a
- *                   href="../../concepts/tables.html#table-name-resolution"
+ *                   href="../../../concepts/tables/#table-name-resolution"
  *                   target="_top">name resolution rules</a>.  Must be an
  *                   existing table or view.
  * @param viewName  If provided, then this will be the name of the view
  *                  containing the results, in [schema_name.]view_name format,
  *                  using standard <a
- *                  href="../../concepts/tables.html#table-name-resolution"
+ *                  href="../../../concepts/tables/#table-name-resolution"
  *                  target="_top">name resolution rules</a> and meeting <a
- *                  href="../../concepts/tables.html#table-naming-criteria"
+ *                  href="../../../concepts/tables/#table-naming-criteria"
  *                  target="_top">table naming criteria</a>.  Must not be an
  *                  already existing table or view.
  * @param expression  The expression with which to filter the table.
@@ -19140,15 +20032,15 @@ FilterByTableResponse& GPUdb::filterByTable( const FilterByTableRequest& request
  * 
  * @param tableName  Name of the table whose data will be filtered, in
  *                   [schema_name.]table_name format, using standard <a
- *                   href="../../concepts/tables.html#table-name-resolution"
+ *                   href="../../../concepts/tables/#table-name-resolution"
  *                   target="_top">name resolution rules</a>.  Must be an
  *                   existing table.
  * @param viewName  If provided, then this will be the name of the view
  *                  containing the results, in [schema_name.]view_name format,
  *                  using standard <a
- *                  href="../../concepts/tables.html#table-name-resolution"
+ *                  href="../../../concepts/tables/#table-name-resolution"
  *                  target="_top">name resolution rules</a> and meeting <a
- *                  href="../../concepts/tables.html#table-naming-criteria"
+ *                  href="../../../concepts/tables/#table-naming-criteria"
  *                  target="_top">table naming criteria</a>.  Must not be an
  *                  already existing table or view.
  * @param columnName  Name of the column by whose value the data will be
@@ -19156,7 +20048,7 @@ FilterByTableResponse& GPUdb::filterByTable( const FilterByTableRequest& request
  * @param sourceTableName  Name of the table whose data will be compared
  *                         against in the table called @a tableName, in
  *                         [schema_name.]table_name format, using standard <a
- *                         href="../../concepts/tables.html#table-name-resolution"
+ *                         href="../../../concepts/tables/#table-name-resolution"
  *                         target="_top">name resolution rules</a>.  Must be an
  *                         existing table.
  * @param sourceTableColumnName  Name of the column in the @a sourceTableName
@@ -19253,15 +20145,15 @@ FilterByTableResponse GPUdb::filterByTable( const std::string& tableName,
  * 
  * @param tableName  Name of the table whose data will be filtered, in
  *                   [schema_name.]table_name format, using standard <a
- *                   href="../../concepts/tables.html#table-name-resolution"
+ *                   href="../../../concepts/tables/#table-name-resolution"
  *                   target="_top">name resolution rules</a>.  Must be an
  *                   existing table.
  * @param viewName  If provided, then this will be the name of the view
  *                  containing the results, in [schema_name.]view_name format,
  *                  using standard <a
- *                  href="../../concepts/tables.html#table-name-resolution"
+ *                  href="../../../concepts/tables/#table-name-resolution"
  *                  target="_top">name resolution rules</a> and meeting <a
- *                  href="../../concepts/tables.html#table-naming-criteria"
+ *                  href="../../../concepts/tables/#table-naming-criteria"
  *                  target="_top">table naming criteria</a>.  Must not be an
  *                  already existing table or view.
  * @param columnName  Name of the column by whose value the data will be
@@ -19269,7 +20161,7 @@ FilterByTableResponse GPUdb::filterByTable( const std::string& tableName,
  * @param sourceTableName  Name of the table whose data will be compared
  *                         against in the table called @a tableName, in
  *                         [schema_name.]table_name format, using standard <a
- *                         href="../../concepts/tables.html#table-name-resolution"
+ *                         href="../../../concepts/tables/#table-name-resolution"
  *                         target="_top">name resolution rules</a>.  Must be an
  *                         existing table.
  * @param sourceTableColumnName  Name of the column in the @a sourceTableName
@@ -19438,14 +20330,14 @@ FilterByValueResponse& GPUdb::filterByValue( const FilterByValueRequest& request
  * @param tableName  Name of an existing table on which to perform the
  *                   calculation, in [schema_name.]table_name format, using
  *                   standard <a
- *                   href="../../concepts/tables.html#table-name-resolution"
+ *                   href="../../../concepts/tables/#table-name-resolution"
  *                   target="_top">name resolution rules</a>.
  * @param viewName  If provided, then this will be the name of the view
  *                  containing the results, in [schema_name.]view_name format,
  *                  using standard <a
- *                  href="../../concepts/tables.html#table-name-resolution"
+ *                  href="../../../concepts/tables/#table-name-resolution"
  *                  target="_top">name resolution rules</a> and meeting <a
- *                  href="../../concepts/tables.html#table-naming-criteria"
+ *                  href="../../../concepts/tables/#table-naming-criteria"
  *                  target="_top">table naming criteria</a>.  Must not be an
  *                  already existing table or view.
  * @param isString  Indicates whether the value being searched for is string or
@@ -19509,14 +20401,14 @@ FilterByValueResponse GPUdb::filterByValue( const std::string& tableName,
  * @param tableName  Name of an existing table on which to perform the
  *                   calculation, in [schema_name.]table_name format, using
  *                   standard <a
- *                   href="../../concepts/tables.html#table-name-resolution"
+ *                   href="../../../concepts/tables/#table-name-resolution"
  *                   target="_top">name resolution rules</a>.
  * @param viewName  If provided, then this will be the name of the view
  *                  containing the results, in [schema_name.]view_name format,
  *                  using standard <a
- *                  href="../../concepts/tables.html#table-name-resolution"
+ *                  href="../../../concepts/tables/#table-name-resolution"
  *                  target="_top">name resolution rules</a> and meeting <a
- *                  href="../../concepts/tables.html#table-naming-criteria"
+ *                  href="../../../concepts/tables/#table-naming-criteria"
  *                  target="_top">table naming criteria</a>.  Must not be an
  *                  already existing table or view.
  * @param isString  Indicates whether the value being searched for is string or
@@ -19837,7 +20729,7 @@ GetRecordsResponse<boost::any>& GPUdb::getRecords( const GetRecordsRequest& requ
  * @param tableName  Name of the table or view from which the records will be
  *                   fetched, in [schema_name.]table_name format, using
  *                   standard <a
- *                   href="../../concepts/tables.html#table-name-resolution"
+ *                   href="../../../concepts/tables/#table-name-resolution"
  *                   target="_top">name resolution rules</a>.
  * @param offset  A positive integer indicating the number of initial results
  *                to skip (this can be useful for paging through the results).
@@ -19847,7 +20739,7 @@ GetRecordsResponse<boost::any>& GPUdb::getRecords( const GetRecordsRequest& requ
  *               be returned. Or END_OF_SET (-9999) to indicate that the max
  *               number of results should be returned.  The number of records
  *               returned will never exceed the server's own limit, defined by
- *               the <a href="../../config/index.html#general"
+ *               the <a href="../../../config/#general"
  *               target="_top">max_get_records_size</a> parameter in the server
  *               configuration.  Use @a hasMoreRecords to see if more records
  *               exist in the result to be fetched, and @a offset & @a limit to
@@ -19928,7 +20820,7 @@ GetRecordsResponse<boost::any> GPUdb::getRecords( const std::string& tableName,
  * @param tableName  Name of the table or view from which the records will be
  *                   fetched, in [schema_name.]table_name format, using
  *                   standard <a
- *                   href="../../concepts/tables.html#table-name-resolution"
+ *                   href="../../../concepts/tables/#table-name-resolution"
  *                   target="_top">name resolution rules</a>.
  * @param offset  A positive integer indicating the number of initial results
  *                to skip (this can be useful for paging through the results).
@@ -19938,7 +20830,7 @@ GetRecordsResponse<boost::any> GPUdb::getRecords( const std::string& tableName,
  *               be returned. Or END_OF_SET (-9999) to indicate that the max
  *               number of results should be returned.  The number of records
  *               returned will never exceed the server's own limit, defined by
- *               the <a href="../../config/index.html#general"
+ *               the <a href="../../../config/#general"
  *               target="_top">max_get_records_size</a> parameter in the server
  *               configuration.  Use @a hasMoreRecords to see if more records
  *               exist in the result to be fetched, and @a offset & @a limit to
@@ -20012,7 +20904,7 @@ GetRecordsResponse<boost::any>& GPUdb::getRecords( const std::string& tableName,
  * type are returned. This endpoint supports pagination with the @a offset
  * and @a limit parameters.
  * <p>
- * <a href="../../concepts/window.html" target="_top">Window functions</a>,
+ * <a href="../../../concepts/window/" target="_top">Window functions</a>,
  * which can perform
  * operations like moving averages, are available through this endpoint as well
  * as
@@ -20029,16 +20921,16 @@ GetRecordsResponse<boost::any>& GPUdb::getRecords( const std::string& tableName,
  * <p>
  * If @a tableName is empty, selection is performed against a single-row
  * virtual table.  This can be useful in executing temporal
- * (<a href="../../concepts/expressions.html#date-time-functions"
+ * (<a href="../../../concepts/expressions/#date-time-functions"
  * target="_top">NOW()</a>), identity
- * (<a href="../../concepts/expressions.html#user-security-functions"
+ * (<a href="../../../concepts/expressions/#user-security-functions"
  * target="_top">USER()</a>), or
  * constant-based functions
- * (<a href="../../concepts/expressions.html#scalar-functions"
+ * (<a href="../../../concepts/expressions/#scalar-functions"
  * target="_top">GEODIST(-77.11, 38.88, -71.06, 42.36)</a>).
  * <p>
  * The response is returned as a dynamic schema. For details see:
- * <a href="../../api/index.html#dynamic-schemas" target="_top">dynamic schemas
+ * <a href="../../../api/#dynamic-schemas" target="_top">dynamic schemas
  * documentation</a>.
  * 
  * @param[in] request_  Request object containing the parameters for the
@@ -20063,7 +20955,7 @@ RawGetRecordsByColumnResponse GPUdb::getRecordsByColumnRaw( const GetRecordsByCo
  * type are returned. This endpoint supports pagination with the @a offset
  * and @a limit parameters.
  * <p>
- * <a href="../../concepts/window.html" target="_top">Window functions</a>,
+ * <a href="../../../concepts/window/" target="_top">Window functions</a>,
  * which can perform
  * operations like moving averages, are available through this endpoint as well
  * as
@@ -20081,16 +20973,16 @@ RawGetRecordsByColumnResponse GPUdb::getRecordsByColumnRaw( const GetRecordsByCo
  * <p>
  * If @a tableName is empty, selection is performed against a single-row
  * virtual table.  This can be useful in executing temporal
- * (<a href="../../concepts/expressions.html#date-time-functions"
+ * (<a href="../../../concepts/expressions/#date-time-functions"
  * target="_top">NOW()</a>), identity
- * (<a href="../../concepts/expressions.html#user-security-functions"
+ * (<a href="../../../concepts/expressions/#user-security-functions"
  * target="_top">USER()</a>), or
  * constant-based functions
- * (<a href="../../concepts/expressions.html#scalar-functions"
+ * (<a href="../../../concepts/expressions/#scalar-functions"
  * target="_top">GEODIST(-77.11, 38.88, -71.06, 42.36)</a>).
  * <p>
  * The response is returned as a dynamic schema. For details see:
- * <a href="../../api/index.html#dynamic-schemas" target="_top">dynamic schemas
+ * <a href="../../../api/#dynamic-schemas" target="_top">dynamic schemas
  * documentation</a>.
  * 
  * @param[in] request_  Request object containing the parameters for the
@@ -20118,7 +21010,7 @@ RawGetRecordsByColumnResponse& GPUdb::getRecordsByColumnRaw( const GetRecordsByC
  * type are returned. This endpoint supports pagination with the @a offset
  * and @a limit parameters.
  * <p>
- * <a href="../../concepts/window.html" target="_top">Window functions</a>,
+ * <a href="../../../concepts/window/" target="_top">Window functions</a>,
  * which can perform
  * operations like moving averages, are available through this endpoint as well
  * as
@@ -20135,16 +21027,16 @@ RawGetRecordsByColumnResponse& GPUdb::getRecordsByColumnRaw( const GetRecordsByC
  * <p>
  * If @a tableName is empty, selection is performed against a single-row
  * virtual table.  This can be useful in executing temporal
- * (<a href="../../concepts/expressions.html#date-time-functions"
+ * (<a href="../../../concepts/expressions/#date-time-functions"
  * target="_top">NOW()</a>), identity
- * (<a href="../../concepts/expressions.html#user-security-functions"
+ * (<a href="../../../concepts/expressions/#user-security-functions"
  * target="_top">USER()</a>), or
  * constant-based functions
- * (<a href="../../concepts/expressions.html#scalar-functions"
+ * (<a href="../../../concepts/expressions/#scalar-functions"
  * target="_top">GEODIST(-77.11, 38.88, -71.06, 42.36)</a>).
  * <p>
  * The response is returned as a dynamic schema. For details see:
- * <a href="../../api/index.html#dynamic-schemas" target="_top">dynamic schemas
+ * <a href="../../../api/#dynamic-schemas" target="_top">dynamic schemas
  * documentation</a>.
  * 
  * @param[in] request_  Request object containing the parameters for the
@@ -20179,7 +21071,7 @@ GetRecordsByColumnResponse GPUdb::getRecordsByColumn( const GetRecordsByColumnRe
  * type are returned. This endpoint supports pagination with the @a offset
  * and @a limit parameters.
  * <p>
- * <a href="../../concepts/window.html" target="_top">Window functions</a>,
+ * <a href="../../../concepts/window/" target="_top">Window functions</a>,
  * which can perform
  * operations like moving averages, are available through this endpoint as well
  * as
@@ -20196,16 +21088,16 @@ GetRecordsByColumnResponse GPUdb::getRecordsByColumn( const GetRecordsByColumnRe
  * <p>
  * If @a tableName is empty, selection is performed against a single-row
  * virtual table.  This can be useful in executing temporal
- * (<a href="../../concepts/expressions.html#date-time-functions"
+ * (<a href="../../../concepts/expressions/#date-time-functions"
  * target="_top">NOW()</a>), identity
- * (<a href="../../concepts/expressions.html#user-security-functions"
+ * (<a href="../../../concepts/expressions/#user-security-functions"
  * target="_top">USER()</a>), or
  * constant-based functions
- * (<a href="../../concepts/expressions.html#scalar-functions"
+ * (<a href="../../../concepts/expressions/#scalar-functions"
  * target="_top">GEODIST(-77.11, 38.88, -71.06, 42.36)</a>).
  * <p>
  * The response is returned as a dynamic schema. For details see:
- * <a href="../../api/index.html#dynamic-schemas" target="_top">dynamic schemas
+ * <a href="../../../api/#dynamic-schemas" target="_top">dynamic schemas
  * documentation</a>.
  * 
  * @param[in] request_  Request object containing the parameters for the
@@ -20243,7 +21135,7 @@ GetRecordsByColumnResponse& GPUdb::getRecordsByColumn( const GetRecordsByColumnR
  * type are returned. This endpoint supports pagination with the @a offset
  * and @a limit parameters.
  * <p>
- * <a href="../../concepts/window.html" target="_top">Window functions</a>,
+ * <a href="../../../concepts/window/" target="_top">Window functions</a>,
  * which can perform
  * operations like moving averages, are available through this endpoint as well
  * as
@@ -20261,22 +21153,22 @@ GetRecordsByColumnResponse& GPUdb::getRecordsByColumn( const GetRecordsByColumnR
  * <p>
  * If @a tableName is empty, selection is performed against a single-row
  * virtual table.  This can be useful in executing temporal
- * (<a href="../../concepts/expressions.html#date-time-functions"
+ * (<a href="../../../concepts/expressions/#date-time-functions"
  * target="_top">NOW()</a>), identity
- * (<a href="../../concepts/expressions.html#user-security-functions"
+ * (<a href="../../../concepts/expressions/#user-security-functions"
  * target="_top">USER()</a>), or
  * constant-based functions
- * (<a href="../../concepts/expressions.html#scalar-functions"
+ * (<a href="../../../concepts/expressions/#scalar-functions"
  * target="_top">GEODIST(-77.11, 38.88, -71.06, 42.36)</a>).
  * <p>
  * The response is returned as a dynamic schema. For details see:
- * <a href="../../api/index.html#dynamic-schemas" target="_top">dynamic schemas
+ * <a href="../../../api/#dynamic-schemas" target="_top">dynamic schemas
  * documentation</a>.
  * 
  * @param tableName  Name of the table or view on which this operation will be
  *                   performed, in [schema_name.]table_name format, using
  *                   standard <a
- *                   href="../../concepts/tables.html#table-name-resolution"
+ *                   href="../../../concepts/tables/#table-name-resolution"
  *                   target="_top">name resolution rules</a>.  An empty table
  *                   name retrieves one record from a single-row virtual table,
  *                   where columns specified should be constants or constant
@@ -20291,7 +21183,7 @@ GetRecordsByColumnResponse& GPUdb::getRecordsByColumn( const GetRecordsByColumnR
  *               maximum number of results allowed by the server should be
  *               returned.  The number of records returned will never exceed
  *               the server's own limit, defined by the <a
- *               href="../../config/index.html#general"
+ *               href="../../../config/#general"
  *               target="_top">max_get_records_size</a> parameter in the server
  *               configuration.  Use @a hasMoreRecords to see if more records
  *               exist in the result to be fetched, and @a offset & @a limit to
@@ -20364,7 +21256,7 @@ GetRecordsByColumnResponse GPUdb::getRecordsByColumn( const std::string& tableNa
  * type are returned. This endpoint supports pagination with the @a offset
  * and @a limit parameters.
  * <p>
- * <a href="../../concepts/window.html" target="_top">Window functions</a>,
+ * <a href="../../../concepts/window/" target="_top">Window functions</a>,
  * which can perform
  * operations like moving averages, are available through this endpoint as well
  * as
@@ -20382,22 +21274,22 @@ GetRecordsByColumnResponse GPUdb::getRecordsByColumn( const std::string& tableNa
  * <p>
  * If @a tableName is empty, selection is performed against a single-row
  * virtual table.  This can be useful in executing temporal
- * (<a href="../../concepts/expressions.html#date-time-functions"
+ * (<a href="../../../concepts/expressions/#date-time-functions"
  * target="_top">NOW()</a>), identity
- * (<a href="../../concepts/expressions.html#user-security-functions"
+ * (<a href="../../../concepts/expressions/#user-security-functions"
  * target="_top">USER()</a>), or
  * constant-based functions
- * (<a href="../../concepts/expressions.html#scalar-functions"
+ * (<a href="../../../concepts/expressions/#scalar-functions"
  * target="_top">GEODIST(-77.11, 38.88, -71.06, 42.36)</a>).
  * <p>
  * The response is returned as a dynamic schema. For details see:
- * <a href="../../api/index.html#dynamic-schemas" target="_top">dynamic schemas
+ * <a href="../../../api/#dynamic-schemas" target="_top">dynamic schemas
  * documentation</a>.
  * 
  * @param tableName  Name of the table or view on which this operation will be
  *                   performed, in [schema_name.]table_name format, using
  *                   standard <a
- *                   href="../../concepts/tables.html#table-name-resolution"
+ *                   href="../../../concepts/tables/#table-name-resolution"
  *                   target="_top">name resolution rules</a>.  An empty table
  *                   name retrieves one record from a single-row virtual table,
  *                   where columns specified should be constants or constant
@@ -20412,7 +21304,7 @@ GetRecordsByColumnResponse GPUdb::getRecordsByColumn( const std::string& tableNa
  *               maximum number of results allowed by the server should be
  *               returned.  The number of records returned will never exceed
  *               the server's own limit, defined by the <a
- *               href="../../config/index.html#general"
+ *               href="../../../config/#general"
  *               target="_top">max_get_records_size</a> parameter in the server
  *               configuration.  Use @a hasMoreRecords to see if more records
  *               exist in the result to be fetched, and @a offset & @a limit to
@@ -20657,13 +21549,13 @@ GetRecordsBySeriesResponse<boost::any>& GPUdb::getRecordsBySeries( const GetReco
  * @param tableName  Name of the table or view for which series/tracks will be
  *                   fetched, in [schema_name.]table_name format, using
  *                   standard <a
- *                   href="../../concepts/tables.html#table-name-resolution"
+ *                   href="../../../concepts/tables/#table-name-resolution"
  *                   target="_top">name resolution rules</a>.
  * @param worldTableName  Name of the table containing the complete
  *                        series/track information to be returned for the
  *                        tracks present in the @a tableName, in
  *                        [schema_name.]table_name format, using standard <a
- *                        href="../../concepts/tables.html#table-name-resolution"
+ *                        href="../../../concepts/tables/#table-name-resolution"
  *                        target="_top">name resolution rules</a>.  Typically
  *                        this is used when retrieving series/tracks from a
  *                        view (which contains partial series/tracks) but the
@@ -20732,13 +21624,13 @@ GetRecordsBySeriesResponse<boost::any> GPUdb::getRecordsBySeries( const std::str
  * @param tableName  Name of the table or view for which series/tracks will be
  *                   fetched, in [schema_name.]table_name format, using
  *                   standard <a
- *                   href="../../concepts/tables.html#table-name-resolution"
+ *                   href="../../../concepts/tables/#table-name-resolution"
  *                   target="_top">name resolution rules</a>.
  * @param worldTableName  Name of the table containing the complete
  *                        series/track information to be returned for the
  *                        tracks present in the @a tableName, in
  *                        [schema_name.]table_name format, using standard <a
- *                        href="../../concepts/tables.html#table-name-resolution"
+ *                        href="../../../concepts/tables/#table-name-resolution"
  *                        target="_top">name resolution rules</a>.  Typically
  *                        this is used when retrieving series/tracks from a
  *                        view (which contains partial series/tracks) but the
@@ -21005,7 +21897,7 @@ GetRecordsFromCollectionResponse<boost::any>& GPUdb::getRecordsFromCollection( c
  * @param tableName  Name of the collection or table from which records are to
  *                   be retrieved, in [schema_name.]table_name format, using
  *                   standard <a
- *                   href="../../concepts/tables.html#table-name-resolution"
+ *                   href="../../../concepts/tables/#table-name-resolution"
  *                   target="_top">name resolution rules</a>.  Must be an
  *                   existing collection or table.
  * @param offset  A positive integer indicating the number of initial results
@@ -21016,7 +21908,7 @@ GetRecordsFromCollectionResponse<boost::any>& GPUdb::getRecordsFromCollection( c
  *               be returned, or END_OF_SET (-9999) to indicate that the max
  *               number of results should be returned.  The number of records
  *               returned will never exceed the server's own limit, defined by
- *               the <a href="../../config/index.html#general"
+ *               the <a href="../../../config/#general"
  *               target="_top">max_get_records_size</a> parameter in the server
  *               configuration.  Use @a offset & @a limit to request subsequent
  *               pages of results.
@@ -21106,7 +21998,7 @@ GetRecordsFromCollectionResponse<boost::any> GPUdb::getRecordsFromCollection( co
  * @param tableName  Name of the collection or table from which records are to
  *                   be retrieved, in [schema_name.]table_name format, using
  *                   standard <a
- *                   href="../../concepts/tables.html#table-name-resolution"
+ *                   href="../../../concepts/tables/#table-name-resolution"
  *                   target="_top">name resolution rules</a>.  Must be an
  *                   existing collection or table.
  * @param offset  A positive integer indicating the number of initial results
@@ -21117,7 +22009,7 @@ GetRecordsFromCollectionResponse<boost::any> GPUdb::getRecordsFromCollection( co
  *               be returned, or END_OF_SET (-9999) to indicate that the max
  *               number of results should be returned.  The number of records
  *               returned will never exceed the server's own limit, defined by
- *               the <a href="../../config/index.html#general"
+ *               the <a href="../../../config/#general"
  *               target="_top">max_get_records_size</a> parameter in the server
  *               configuration.  Use @a offset & @a limit to request subsequent
  *               pages of results.
@@ -21310,7 +22202,135 @@ GetVectortileResponse& GPUdb::getVectortile( const std::vector<std::string>& tab
 
 
 /**
- * Grants a <a href="../../concepts/data_sources.html" target="_top">data
+ * Grants a <a
+ * href="../../../security/sec_concepts/#security-concepts-permissions-credential"
+ * target="_top">credential-level permission</a> to a user or role.
+ * 
+ * @param[in] request_  Request object containing the parameters for the
+ *                      operation.
+ * 
+ * @return Response object containing the result of the operation.
+ * 
+ */
+
+GrantPermissionCredentialResponse GPUdb::grantPermissionCredential( const GrantPermissionCredentialRequest& request_ ) const
+{
+    GrantPermissionCredentialResponse actualResponse_;
+    submitRequest("/grant/permission/credential", request_, actualResponse_, false);
+    return actualResponse_;
+}
+
+
+/**
+ * Grants a <a
+ * href="../../../security/sec_concepts/#security-concepts-permissions-credential"
+ * target="_top">credential-level permission</a> to a user or role.
+ * 
+ * @param[in] request_  Request object containing the parameters for the
+ *                      operation.
+ * @param[out] response_  Response object containing the results of the
+ *                        operation.
+ * 
+ * @return Response object containing the result of the operation (initially
+ *         passed in by reference).
+ * 
+ */
+
+GrantPermissionCredentialResponse& GPUdb::grantPermissionCredential( const GrantPermissionCredentialRequest& request_,
+                                                                     GrantPermissionCredentialResponse& response_ ) const
+{
+    submitRequest("/grant/permission/credential", request_, response_, false);
+    return response_;
+}
+
+
+/**
+ * Grants a <a
+ * href="../../../security/sec_concepts/#security-concepts-permissions-credential"
+ * target="_top">credential-level permission</a> to a user or role.
+ * 
+ * @param name  Name of the user or role to which the permission will be
+ *              granted. Must be an existing user or role.
+ * @param permission  Permission to grant to the user or role.
+ *                    <ul>
+ *                            <li>
+ *                    gpudb::grant_permission_credential_credential_admin: Full
+ *                    read/write and administrative access on the credential.
+ *                            <li>
+ *                    gpudb::grant_permission_credential_credential_read:
+ *                    Ability to read and use the credential.
+ *                    </ul>
+ * @param credentialName  Name of the credential on which the permission will
+ *                        be granted. Must be an existing credential, or an
+ *                        empty string to grant access on all credentials.
+ * @param options  Optional parameters.
+ * 
+ * @return Response object containing the result of the operation.
+ * 
+ */
+
+GrantPermissionCredentialResponse GPUdb::grantPermissionCredential( const std::string& name,
+                                                                    const std::string& permission,
+                                                                    const std::string& credentialName,
+                                                                    const std::map<std::string, std::string>& options ) const
+{
+    GrantPermissionCredentialRequest actualRequest_;
+    actualRequest_.name = name;
+    actualRequest_.permission = permission;
+    actualRequest_.credentialName = credentialName;
+    actualRequest_.options = options;
+    GrantPermissionCredentialResponse actualResponse_;
+    submitRequest("/grant/permission/credential", actualRequest_, actualResponse_, false);
+    return actualResponse_;
+}
+
+
+/**
+ * Grants a <a
+ * href="../../../security/sec_concepts/#security-concepts-permissions-credential"
+ * target="_top">credential-level permission</a> to a user or role.
+ * 
+ * @param name  Name of the user or role to which the permission will be
+ *              granted. Must be an existing user or role.
+ * @param permission  Permission to grant to the user or role.
+ *                    <ul>
+ *                            <li>
+ *                    gpudb::grant_permission_credential_credential_admin: Full
+ *                    read/write and administrative access on the credential.
+ *                            <li>
+ *                    gpudb::grant_permission_credential_credential_read:
+ *                    Ability to read and use the credential.
+ *                    </ul>
+ * @param credentialName  Name of the credential on which the permission will
+ *                        be granted. Must be an existing credential, or an
+ *                        empty string to grant access on all credentials.
+ * @param options  Optional parameters.
+ * @param[out] response_  Response object containing the results of the
+ *                        operation.
+ * 
+ * @return Response object containing the result of the operation (initially
+ *         passed in by reference).
+ * 
+ */
+
+GrantPermissionCredentialResponse& GPUdb::grantPermissionCredential( const std::string& name,
+                                                                     const std::string& permission,
+                                                                     const std::string& credentialName,
+                                                                     const std::map<std::string, std::string>& options,
+                                                                     GrantPermissionCredentialResponse& response_ ) const
+{
+    GrantPermissionCredentialRequest actualRequest_;
+    actualRequest_.name = name;
+    actualRequest_.permission = permission;
+    actualRequest_.credentialName = credentialName;
+    actualRequest_.options = options;
+    submitRequest("/grant/permission/credential", actualRequest_, response_, false);
+    return response_;
+}
+
+
+/**
+ * Grants a <a href="../../../concepts/data_sources/" target="_top">data
  * source</a> permission to a user or role.
  * 
  * @param[in] request_  Request object containing the parameters for the
@@ -21329,7 +22349,7 @@ GrantPermissionDatasourceResponse GPUdb::grantPermissionDatasource( const GrantP
 
 
 /**
- * Grants a <a href="../../concepts/data_sources.html" target="_top">data
+ * Grants a <a href="../../../concepts/data_sources/" target="_top">data
  * source</a> permission to a user or role.
  * 
  * @param[in] request_  Request object containing the parameters for the
@@ -21351,7 +22371,7 @@ GrantPermissionDatasourceResponse& GPUdb::grantPermissionDatasource( const Grant
 
 
 /**
- * Grants a <a href="../../concepts/data_sources.html" target="_top">data
+ * Grants a <a href="../../../concepts/data_sources/" target="_top">data
  * source</a> permission to a user or role.
  * 
  * @param name  Name of the user or role to which the permission will be
@@ -21387,7 +22407,7 @@ GrantPermissionDatasourceResponse GPUdb::grantPermissionDatasource( const std::s
 
 
 /**
- * Grants a <a href="../../concepts/data_sources.html" target="_top">data
+ * Grants a <a href="../../../concepts/data_sources/" target="_top">data
  * source</a> permission to a user or role.
  * 
  * @param name  Name of the user or role to which the permission will be
@@ -21714,7 +22734,7 @@ GrantPermissionTableResponse& GPUdb::grantPermissionTable( const GrantPermission
  *                    </ul>
  * @param tableName  Name of the table to which the permission grants access,
  *                   in [schema_name.]table_name format, using standard <a
- *                   href="../../concepts/tables.html#table-name-resolution"
+ *                   href="../../../concepts/tables/#table-name-resolution"
  *                   target="_top">name resolution rules</a>.  Must be an
  *                   existing table, view, or schema. If a schema, the
  *                   permission also applies to tables and views in the schema.
@@ -21769,7 +22789,7 @@ GrantPermissionTableResponse GPUdb::grantPermissionTable( const std::string& nam
  *                    </ul>
  * @param tableName  Name of the table to which the permission grants access,
  *                   in [schema_name.]table_name format, using standard <a
- *                   href="../../concepts/tables.html#table-name-resolution"
+ *                   href="../../../concepts/tables/#table-name-resolution"
  *                   target="_top">name resolution rules</a>.  Must be an
  *                   existing table, view, or schema. If a schema, the
  *                   permission also applies to tables and views in the schema.
@@ -22033,7 +23053,7 @@ HasSchemaResponse& GPUdb::hasSchema( const HasSchemaRequest& request_,
  * 
  * @param schemaName  Name of the schema to check for existence, in root, using
  *                    standard <a
- *                    href="../../concepts/tables.html#table-name-resolution"
+ *                    href="../../../concepts/tables/#table-name-resolution"
  *                    target="_top">name resolution rules</a>.
  * @param options  Optional parameters.
  * 
@@ -22058,7 +23078,7 @@ HasSchemaResponse GPUdb::hasSchema( const std::string& schemaName,
  * 
  * @param schemaName  Name of the schema to check for existence, in root, using
  *                    standard <a
- *                    href="../../concepts/tables.html#table-name-resolution"
+ *                    href="../../../concepts/tables/#table-name-resolution"
  *                    target="_top">name resolution rules</a>.
  * @param options  Optional parameters.
  * @param[out] response_  Response object containing the results of the
@@ -22125,7 +23145,7 @@ HasTableResponse& GPUdb::hasTable( const HasTableRequest& request_,
  * 
  * @param tableName  Name of the table to check for existence, in
  *                   [schema_name.]table_name format, using standard <a
- *                   href="../../concepts/tables.html#table-name-resolution"
+ *                   href="../../../concepts/tables/#table-name-resolution"
  *                   target="_top">name resolution rules</a>.
  * @param options  Optional parameters.
  * 
@@ -22150,7 +23170,7 @@ HasTableResponse GPUdb::hasTable( const std::string& tableName,
  * 
  * @param tableName  Name of the table to check for existence, in
  *                   [schema_name.]table_name format, using standard <a
- *                   href="../../concepts/tables.html#table-name-resolution"
+ *                   href="../../../concepts/tables/#table-name-resolution"
  *                   target="_top">name resolution rules</a>.
  * @param options  Optional parameters.
  * @param[out] response_  Response object containing the results of the
@@ -22260,6 +23280,124 @@ HasTypeResponse& GPUdb::hasType( const std::string& typeId,
 
 
 /**
+ * @private
+ * 
+ * @param[in] request_  Request object containing the parameters for the
+ *                      operation.
+ * 
+ * @return Response object containing the result of the operation.
+ * 
+ */
+
+ImportModelResponse GPUdb::importModel( const ImportModelRequest& request_ ) const
+{
+    ImportModelResponse actualResponse_;
+    submitRequest("/import/model", request_, actualResponse_, false);
+    return actualResponse_;
+}
+
+
+/**
+ * @private
+ * 
+ * @param[in] request_  Request object containing the parameters for the
+ *                      operation.
+ * @param[out] response_  Response object containing the results of the
+ *                        operation.
+ * 
+ * @return Response object containing the result of the operation (initially
+ *         passed in by reference).
+ * 
+ */
+
+ImportModelResponse& GPUdb::importModel( const ImportModelRequest& request_,
+                                         ImportModelResponse& response_ ) const
+{
+    submitRequest("/import/model", request_, response_, false);
+    return response_;
+}
+
+
+/**
+ * @private
+ * 
+ * @param modelName
+ * @param registryName
+ * @param container
+ * @param runFunction
+ * @param modelType
+ * @param options
+ *                 <ul>
+ *                         <li> gpudb::import_model_memory_limit:   The default
+ *                 value is ''.
+ *                 </ul>
+ * 
+ * @return Response object containing the result of the operation.
+ * 
+ */
+
+ImportModelResponse GPUdb::importModel( const std::string& modelName,
+                                        const std::string& registryName,
+                                        const std::string& container,
+                                        const std::string& runFunction,
+                                        const std::string& modelType,
+                                        const std::map<std::string, std::string>& options ) const
+{
+    ImportModelRequest actualRequest_;
+    actualRequest_.modelName = modelName;
+    actualRequest_.registryName = registryName;
+    actualRequest_.container = container;
+    actualRequest_.runFunction = runFunction;
+    actualRequest_.modelType = modelType;
+    actualRequest_.options = options;
+    ImportModelResponse actualResponse_;
+    submitRequest("/import/model", actualRequest_, actualResponse_, false);
+    return actualResponse_;
+}
+
+
+/**
+ * @private
+ * 
+ * @param modelName
+ * @param registryName
+ * @param container
+ * @param runFunction
+ * @param modelType
+ * @param options
+ *                 <ul>
+ *                         <li> gpudb::import_model_memory_limit:   The default
+ *                 value is ''.
+ *                 </ul>
+ * @param[out] response_  Response object containing the results of the
+ *                        operation.
+ * 
+ * @return Response object containing the result of the operation (initially
+ *         passed in by reference).
+ * 
+ */
+
+ImportModelResponse& GPUdb::importModel( const std::string& modelName,
+                                         const std::string& registryName,
+                                         const std::string& container,
+                                         const std::string& runFunction,
+                                         const std::string& modelType,
+                                         const std::map<std::string, std::string>& options,
+                                         ImportModelResponse& response_ ) const
+{
+    ImportModelRequest actualRequest_;
+    actualRequest_.modelName = modelName;
+    actualRequest_.registryName = registryName;
+    actualRequest_.container = container;
+    actualRequest_.runFunction = runFunction;
+    actualRequest_.modelType = modelType;
+    actualRequest_.options = options;
+    submitRequest("/import/model", actualRequest_, response_, false);
+    return response_;
+}
+
+
+/**
  * Adds multiple records to the specified table. The operation is
  * synchronous, meaning that a response will not be returned until all the
  * records
@@ -22273,7 +23411,7 @@ HasTypeResponse& GPUdb::hasType( const std::string& typeId,
  * <p>
  * The @a update_on_existing_pk option specifies the record
  * collision policy for inserting into a table with a
- * <a href="../../concepts/tables.html#primary-keys" target="_top">primary
+ * <a href="../../../concepts/tables/#primary-keys" target="_top">primary
  * key</a>, but is ignored if
  * no primary key exists.
  * <p>
@@ -22309,7 +23447,7 @@ InsertRecordsResponse GPUdb::insertRecordsRaw( const RawInsertRecordsRequest& re
  * <p>
  * The @a update_on_existing_pk option specifies the record
  * collision policy for inserting into a table with a
- * <a href="../../concepts/tables.html#primary-keys" target="_top">primary
+ * <a href="../../../concepts/tables/#primary-keys" target="_top">primary
  * key</a>, but is ignored if
  * no primary key exists.
  * <p>
@@ -22432,17 +23570,17 @@ InsertRecordsFromFilesResponse& GPUdb::insertRecordsFromFiles( const InsertRecor
  * 
  * @param tableName  Name of the table into which the data will be inserted, in
  *                   [schema_name.]table_name format, using standard
- *                   <a href="../../concepts/tables.html#table-name-resolution"
+ *                   <a href="../../../concepts/tables/#table-name-resolution"
  *                   target="_top">name resolution rules</a>.
  *                   If the table does not exist, the table will be created
  *                   using either an existing
  *                   @a type_id or the type inferred from the
  *                   file, and the new table name will have to meet standard
- *                   <a href="../../concepts/tables.html#table-naming-criteria"
+ *                   <a href="../../../concepts/tables/#table-naming-criteria"
  *                   target="_top">table naming criteria</a>.
  * @param filepaths  Absolute or relative filepath(s) from where files will be
  *                   loaded. Relative filepaths are relative to the defined <a
- *                   href="../../config/index.html#external-files"
+ *                   href="../../../config/#external-files"
  *                   target="_top">external_files_directory</a> parameter in
  *                   the server configuration. The filepaths may include
  *                   wildcards (*). If the first path ends in .tsv, the text
@@ -22455,7 +23593,7 @@ InsertRecordsFromFilesResponse& GPUdb::insertRecordsFromFiles( const InsertRecor
  *                                    <li>
  *                            gpudb::insert_records_from_files_type_id: ID of a
  *                            currently registered <a
- *                            href="../../concepts/types.html"
+ *                            href="../../../concepts/types/"
  *                            target="_top">type</a>.  The default value is ''.
  *                                    <li>
  *                            gpudb::insert_records_from_files_no_error_if_exists:
@@ -22474,20 +23612,20 @@ InsertRecordsFromFilesResponse& GPUdb::insertRecordsFromFiles( const InsertRecor
  *                                    <li>
  *                            gpudb::insert_records_from_files_is_replicated:
  *                            Affects the <a
- *                            href="../../concepts/tables.html#distribution"
+ *                            href="../../../concepts/tables/#distribution"
  *                            target="_top">distribution scheme</a> for the
  *                            table's data.  If @a true and the given type has
  *                            no explicit <a
- *                            href="../../concepts/tables.html#shard-key"
+ *                            href="../../../concepts/tables/#shard-key"
  *                            target="_top">shard key</a> defined, the table
  *                            will be <a
- *                            href="../../concepts/tables.html#replication"
+ *                            href="../../../concepts/tables/#replication"
  *                            target="_top">replicated</a>.  If @a false, the
  *                            table will be <a
- *                            href="../../concepts/tables.html#sharding"
+ *                            href="../../../concepts/tables/#sharding"
  *                            target="_top">sharded</a> according to the shard
  *                            key specified in the given @a type_id, or <a
- *                            href="../../concepts/tables.html#random-sharding"
+ *                            href="../../../concepts/tables/#random-sharding"
  *                            target="_top">randomly sharded</a>, if no shard
  *                            key is specified.  Note that a type containing a
  *                            shard key cannot be used to create a replicated
@@ -22503,7 +23641,7 @@ InsertRecordsFromFilesResponse& GPUdb::insertRecordsFromFiles( const InsertRecor
  *                                    <li>
  *                            gpudb::insert_records_from_files_foreign_keys:
  *                            Semicolon-separated list of <a
- *                            href="../../concepts/tables.html#foreign-keys"
+ *                            href="../../../concepts/tables/#foreign-keys"
  *                            target="_top">foreign keys</a>, of the format
  *                            '(source_column_name [, ...]) references
  *                            target_table_name(primary_key_column_name [,
@@ -22515,24 +23653,24 @@ InsertRecordsFromFilesResponse& GPUdb::insertRecordsFromFiles( const InsertRecor
  *                            target_table(primary_key_column)'.
  *                                    <li>
  *                            gpudb::insert_records_from_files_partition_type:
- *                            <a href="../../concepts/tables.html#partitioning"
+ *                            <a href="../../../concepts/tables/#partitioning"
  *                            target="_top">Partitioning</a> scheme to use.
  *                            <ul>
  *                                    <li>
  *                            gpudb::insert_records_from_files_RANGE: Use <a
- *                            href="../../concepts/tables.html#partitioning-by-range"
+ *                            href="../../../concepts/tables/#partitioning-by-range"
  *                            target="_top">range partitioning</a>.
  *                                    <li>
  *                            gpudb::insert_records_from_files_INTERVAL: Use <a
- *                            href="../../concepts/tables.html#partitioning-by-interval"
+ *                            href="../../../concepts/tables/#partitioning-by-interval"
  *                            target="_top">interval partitioning</a>.
  *                                    <li>
  *                            gpudb::insert_records_from_files_LIST: Use <a
- *                            href="../../concepts/tables.html#partitioning-by-list"
+ *                            href="../../../concepts/tables/#partitioning-by-list"
  *                            target="_top">list partitioning</a>.
  *                                    <li>
  *                            gpudb::insert_records_from_files_HASH: Use <a
- *                            href="../../concepts/tables.html#partitioning-by-hash"
+ *                            href="../../../concepts/tables/#partitioning-by-hash"
  *                            target="_top">hash partitioning</a>.
  *                            </ul>
  *                                    <li>
@@ -22546,13 +23684,13 @@ InsertRecordsFromFilesResponse& GPUdb::insertRecordsFromFiles( const InsertRecor
  *                            Comma-separated list of partition definitions,
  *                            whose format depends on the choice of @a
  *                            partition_type.  See <a
- *                            href="../../concepts/tables.html#partitioning-by-range"
+ *                            href="../../../concepts/tables/#partitioning-by-range"
  *                            target="_top">range partitioning</a>, <a
- *                            href="../../concepts/tables.html#partitioning-by-interval"
+ *                            href="../../../concepts/tables/#partitioning-by-interval"
  *                            target="_top">interval partitioning</a>, <a
- *                            href="../../concepts/tables.html#partitioning-by-list"
+ *                            href="../../../concepts/tables/#partitioning-by-list"
  *                            target="_top">list partitioning</a>, or <a
- *                            href="../../concepts/tables.html#partitioning-by-hash"
+ *                            href="../../../concepts/tables/#partitioning-by-hash"
  *                            target="_top">hash partitioning</a> for example
  *                            formats.
  *                                    <li>
@@ -22560,7 +23698,7 @@ InsertRecordsFromFilesResponse& GPUdb::insertRecordsFromFiles( const InsertRecor
  *                            If @a true, a new partition will be created for
  *                            values which don't fall into an existing
  *                            partition.  Currently only supported for <a
- *                            href="../../concepts/tables.html#partitioning-by-list"
+ *                            href="../../../concepts/tables/#partitioning-by-list"
  *                            target="_top">list partitions</a>.
  *                            <ul>
  *                                    <li>
@@ -22572,7 +23710,7 @@ InsertRecordsFromFilesResponse& GPUdb::insertRecordsFromFiles( const InsertRecor
  *                            gpudb::insert_records_from_files_false.
  *                                    <li>
  *                            gpudb::insert_records_from_files_ttl: Sets the <a
- *                            href="../../concepts/ttl.html"
+ *                            href="../../../concepts/ttl/"
  *                            target="_top">TTL</a> of the table specified in
  *                            @a tableName.
  *                                    <li>
@@ -22582,13 +23720,13 @@ InsertRecordsFromFilesResponse& GPUdb::insertRecordsFromFiles( const InsertRecor
  *                                    <li>
  *                            gpudb::insert_records_from_files_is_result_table:
  *                            Indicates whether the table is a <a
- *                            href="../../concepts/tables_memory_only.html"
+ *                            href="../../../concepts/tables_memory_only/"
  *                            target="_top">memory-only table</a>. A result
  *                            table cannot contain columns with store_only or
  *                            text_search <a
- *                            href="../../concepts/types.html#data-handling"
+ *                            href="../../../concepts/types/#data-handling"
  *                            target="_top">data-handling</a> or that are <a
- *                            href="../../concepts/types.html#primitive-types"
+ *                            href="../../../concepts/types/#primitive-types"
  *                            target="_top">non-charN strings</a>, and it will
  *                            not be retained if the server is restarted.
  *                            <ul>
@@ -22602,12 +23740,12 @@ InsertRecordsFromFilesResponse& GPUdb::insertRecordsFromFiles( const InsertRecor
  *                                    <li>
  *                            gpudb::insert_records_from_files_strategy_definition:
  *                            The <a
- *                            href="../../rm/concepts.html#tier-strategies"
+ *                            href="../../../rm/concepts/#tier-strategies"
  *                            target="_top">tier strategy</a> for the table and
  *                            its columns. See <a
- *                            href="../../rm/concepts.html#tier-strategies"
+ *                            href="../../../rm/concepts/#tier-strategies"
  *                            target="_top">tier strategy usage</a> for format
- *                            and <a href="../../rm/usage.html#tier-strategies"
+ *                            and <a href="../../../rm/usage/#tier-strategies"
  *                            target="_top">tier strategy examples</a> for
  *                            examples.
  *                            </ul>
@@ -22734,11 +23872,12 @@ InsertRecordsFromFilesResponse& GPUdb::insertRecordsFromFiles( const InsertRecor
  *                 inserted.
  *                 <ul>
  *                         <li>
- *                 gpudb::insert_records_from_files_delimited_text: Indicates
- *                 the file(s) are in delimited text format; e.g., CSV, TSV,
- *                 PSV, etc.
+ *                 gpudb::insert_records_from_files_delimited_text: Delimited
+ *                 text file format; e.g., CSV, TSV, PSV, etc.
  *                         <li> gpudb::insert_records_from_files_parquet:
- *                 Indicates the file(s) are in Parquet format.
+ *                 Apache Parquet file format
+ *                         <li> gpudb::insert_records_from_files_json: Json
+ *                 file format
  *                 </ul>
  *                 The default value is
  *                 gpudb::insert_records_from_files_delimited_text.
@@ -22855,7 +23994,7 @@ InsertRecordsFromFilesResponse& GPUdb::insertRecordsFromFiles( const InsertRecor
  *                         <li>
  *                 gpudb::insert_records_from_files_text_header_property_delimiter:
  *                 Specifies the delimiter for
- *                 <a href="../../concepts/types.html#column-properties"
+ *                 <a href="../../../concepts/types/#column-properties"
  *                 target="_top">column properties</a> in the header row (if
  *                 present).  Cannot be set to same value as @a text_delimiter.
  *                 For @a delimited_text @a file_type only.  The default value
@@ -22953,17 +24092,17 @@ InsertRecordsFromFilesResponse GPUdb::insertRecordsFromFiles( const std::string&
  * 
  * @param tableName  Name of the table into which the data will be inserted, in
  *                   [schema_name.]table_name format, using standard
- *                   <a href="../../concepts/tables.html#table-name-resolution"
+ *                   <a href="../../../concepts/tables/#table-name-resolution"
  *                   target="_top">name resolution rules</a>.
  *                   If the table does not exist, the table will be created
  *                   using either an existing
  *                   @a type_id or the type inferred from the
  *                   file, and the new table name will have to meet standard
- *                   <a href="../../concepts/tables.html#table-naming-criteria"
+ *                   <a href="../../../concepts/tables/#table-naming-criteria"
  *                   target="_top">table naming criteria</a>.
  * @param filepaths  Absolute or relative filepath(s) from where files will be
  *                   loaded. Relative filepaths are relative to the defined <a
- *                   href="../../config/index.html#external-files"
+ *                   href="../../../config/#external-files"
  *                   target="_top">external_files_directory</a> parameter in
  *                   the server configuration. The filepaths may include
  *                   wildcards (*). If the first path ends in .tsv, the text
@@ -22976,7 +24115,7 @@ InsertRecordsFromFilesResponse GPUdb::insertRecordsFromFiles( const std::string&
  *                                    <li>
  *                            gpudb::insert_records_from_files_type_id: ID of a
  *                            currently registered <a
- *                            href="../../concepts/types.html"
+ *                            href="../../../concepts/types/"
  *                            target="_top">type</a>.  The default value is ''.
  *                                    <li>
  *                            gpudb::insert_records_from_files_no_error_if_exists:
@@ -22995,20 +24134,20 @@ InsertRecordsFromFilesResponse GPUdb::insertRecordsFromFiles( const std::string&
  *                                    <li>
  *                            gpudb::insert_records_from_files_is_replicated:
  *                            Affects the <a
- *                            href="../../concepts/tables.html#distribution"
+ *                            href="../../../concepts/tables/#distribution"
  *                            target="_top">distribution scheme</a> for the
  *                            table's data.  If @a true and the given type has
  *                            no explicit <a
- *                            href="../../concepts/tables.html#shard-key"
+ *                            href="../../../concepts/tables/#shard-key"
  *                            target="_top">shard key</a> defined, the table
  *                            will be <a
- *                            href="../../concepts/tables.html#replication"
+ *                            href="../../../concepts/tables/#replication"
  *                            target="_top">replicated</a>.  If @a false, the
  *                            table will be <a
- *                            href="../../concepts/tables.html#sharding"
+ *                            href="../../../concepts/tables/#sharding"
  *                            target="_top">sharded</a> according to the shard
  *                            key specified in the given @a type_id, or <a
- *                            href="../../concepts/tables.html#random-sharding"
+ *                            href="../../../concepts/tables/#random-sharding"
  *                            target="_top">randomly sharded</a>, if no shard
  *                            key is specified.  Note that a type containing a
  *                            shard key cannot be used to create a replicated
@@ -23024,7 +24163,7 @@ InsertRecordsFromFilesResponse GPUdb::insertRecordsFromFiles( const std::string&
  *                                    <li>
  *                            gpudb::insert_records_from_files_foreign_keys:
  *                            Semicolon-separated list of <a
- *                            href="../../concepts/tables.html#foreign-keys"
+ *                            href="../../../concepts/tables/#foreign-keys"
  *                            target="_top">foreign keys</a>, of the format
  *                            '(source_column_name [, ...]) references
  *                            target_table_name(primary_key_column_name [,
@@ -23036,24 +24175,24 @@ InsertRecordsFromFilesResponse GPUdb::insertRecordsFromFiles( const std::string&
  *                            target_table(primary_key_column)'.
  *                                    <li>
  *                            gpudb::insert_records_from_files_partition_type:
- *                            <a href="../../concepts/tables.html#partitioning"
+ *                            <a href="../../../concepts/tables/#partitioning"
  *                            target="_top">Partitioning</a> scheme to use.
  *                            <ul>
  *                                    <li>
  *                            gpudb::insert_records_from_files_RANGE: Use <a
- *                            href="../../concepts/tables.html#partitioning-by-range"
+ *                            href="../../../concepts/tables/#partitioning-by-range"
  *                            target="_top">range partitioning</a>.
  *                                    <li>
  *                            gpudb::insert_records_from_files_INTERVAL: Use <a
- *                            href="../../concepts/tables.html#partitioning-by-interval"
+ *                            href="../../../concepts/tables/#partitioning-by-interval"
  *                            target="_top">interval partitioning</a>.
  *                                    <li>
  *                            gpudb::insert_records_from_files_LIST: Use <a
- *                            href="../../concepts/tables.html#partitioning-by-list"
+ *                            href="../../../concepts/tables/#partitioning-by-list"
  *                            target="_top">list partitioning</a>.
  *                                    <li>
  *                            gpudb::insert_records_from_files_HASH: Use <a
- *                            href="../../concepts/tables.html#partitioning-by-hash"
+ *                            href="../../../concepts/tables/#partitioning-by-hash"
  *                            target="_top">hash partitioning</a>.
  *                            </ul>
  *                                    <li>
@@ -23067,13 +24206,13 @@ InsertRecordsFromFilesResponse GPUdb::insertRecordsFromFiles( const std::string&
  *                            Comma-separated list of partition definitions,
  *                            whose format depends on the choice of @a
  *                            partition_type.  See <a
- *                            href="../../concepts/tables.html#partitioning-by-range"
+ *                            href="../../../concepts/tables/#partitioning-by-range"
  *                            target="_top">range partitioning</a>, <a
- *                            href="../../concepts/tables.html#partitioning-by-interval"
+ *                            href="../../../concepts/tables/#partitioning-by-interval"
  *                            target="_top">interval partitioning</a>, <a
- *                            href="../../concepts/tables.html#partitioning-by-list"
+ *                            href="../../../concepts/tables/#partitioning-by-list"
  *                            target="_top">list partitioning</a>, or <a
- *                            href="../../concepts/tables.html#partitioning-by-hash"
+ *                            href="../../../concepts/tables/#partitioning-by-hash"
  *                            target="_top">hash partitioning</a> for example
  *                            formats.
  *                                    <li>
@@ -23081,7 +24220,7 @@ InsertRecordsFromFilesResponse GPUdb::insertRecordsFromFiles( const std::string&
  *                            If @a true, a new partition will be created for
  *                            values which don't fall into an existing
  *                            partition.  Currently only supported for <a
- *                            href="../../concepts/tables.html#partitioning-by-list"
+ *                            href="../../../concepts/tables/#partitioning-by-list"
  *                            target="_top">list partitions</a>.
  *                            <ul>
  *                                    <li>
@@ -23093,7 +24232,7 @@ InsertRecordsFromFilesResponse GPUdb::insertRecordsFromFiles( const std::string&
  *                            gpudb::insert_records_from_files_false.
  *                                    <li>
  *                            gpudb::insert_records_from_files_ttl: Sets the <a
- *                            href="../../concepts/ttl.html"
+ *                            href="../../../concepts/ttl/"
  *                            target="_top">TTL</a> of the table specified in
  *                            @a tableName.
  *                                    <li>
@@ -23103,13 +24242,13 @@ InsertRecordsFromFilesResponse GPUdb::insertRecordsFromFiles( const std::string&
  *                                    <li>
  *                            gpudb::insert_records_from_files_is_result_table:
  *                            Indicates whether the table is a <a
- *                            href="../../concepts/tables_memory_only.html"
+ *                            href="../../../concepts/tables_memory_only/"
  *                            target="_top">memory-only table</a>. A result
  *                            table cannot contain columns with store_only or
  *                            text_search <a
- *                            href="../../concepts/types.html#data-handling"
+ *                            href="../../../concepts/types/#data-handling"
  *                            target="_top">data-handling</a> or that are <a
- *                            href="../../concepts/types.html#primitive-types"
+ *                            href="../../../concepts/types/#primitive-types"
  *                            target="_top">non-charN strings</a>, and it will
  *                            not be retained if the server is restarted.
  *                            <ul>
@@ -23123,12 +24262,12 @@ InsertRecordsFromFilesResponse GPUdb::insertRecordsFromFiles( const std::string&
  *                                    <li>
  *                            gpudb::insert_records_from_files_strategy_definition:
  *                            The <a
- *                            href="../../rm/concepts.html#tier-strategies"
+ *                            href="../../../rm/concepts/#tier-strategies"
  *                            target="_top">tier strategy</a> for the table and
  *                            its columns. See <a
- *                            href="../../rm/concepts.html#tier-strategies"
+ *                            href="../../../rm/concepts/#tier-strategies"
  *                            target="_top">tier strategy usage</a> for format
- *                            and <a href="../../rm/usage.html#tier-strategies"
+ *                            and <a href="../../../rm/usage/#tier-strategies"
  *                            target="_top">tier strategy examples</a> for
  *                            examples.
  *                            </ul>
@@ -23255,11 +24394,12 @@ InsertRecordsFromFilesResponse GPUdb::insertRecordsFromFiles( const std::string&
  *                 inserted.
  *                 <ul>
  *                         <li>
- *                 gpudb::insert_records_from_files_delimited_text: Indicates
- *                 the file(s) are in delimited text format; e.g., CSV, TSV,
- *                 PSV, etc.
+ *                 gpudb::insert_records_from_files_delimited_text: Delimited
+ *                 text file format; e.g., CSV, TSV, PSV, etc.
  *                         <li> gpudb::insert_records_from_files_parquet:
- *                 Indicates the file(s) are in Parquet format.
+ *                 Apache Parquet file format
+ *                         <li> gpudb::insert_records_from_files_json: Json
+ *                 file format
  *                 </ul>
  *                 The default value is
  *                 gpudb::insert_records_from_files_delimited_text.
@@ -23376,7 +24516,7 @@ InsertRecordsFromFilesResponse GPUdb::insertRecordsFromFiles( const std::string&
  *                         <li>
  *                 gpudb::insert_records_from_files_text_header_property_delimiter:
  *                 Specifies the delimiter for
- *                 <a href="../../concepts/types.html#column-properties"
+ *                 <a href="../../../concepts/types/#column-properties"
  *                 target="_top">column properties</a> in the header row (if
  *                 present).  Cannot be set to same value as @a text_delimiter.
  *                 For @a delimited_text @a file_type only.  The default value
@@ -23510,13 +24650,13 @@ InsertRecordsFromPayloadResponse& GPUdb::insertRecordsFromPayload( const InsertR
  * 
  * @param tableName  Name of the table into which the data will be inserted, in
  *                   [schema_name.]table_name format, using standard
- *                   <a href="../../concepts/tables.html#table-name-resolution"
+ *                   <a href="../../../concepts/tables/#table-name-resolution"
  *                   target="_top">name resolution rules</a>.
  *                   If the table does not exist, the table will be created
  *                   using either an existing
  *                   @a type_id or the type inferred from the
  *                   payload, and the new table name will have to meet standard
- *                   <a href="../../concepts/tables.html#table-naming-criteria"
+ *                   <a href="../../../concepts/tables/#table-naming-criteria"
  *                   target="_top">table naming criteria</a>.
  * @param dataText  Records formatted as delimited text
  * @param dataBytes  Records formatted as binary data
@@ -23528,7 +24668,7 @@ InsertRecordsFromPayloadResponse& GPUdb::insertRecordsFromPayload( const InsertR
  *                                    <li>
  *                            gpudb::insert_records_from_payload_type_id: ID of
  *                            a currently registered <a
- *                            href="../../concepts/types.html"
+ *                            href="../../../concepts/types/"
  *                            target="_top">type</a>.  The default value is ''.
  *                                    <li>
  *                            gpudb::insert_records_from_payload_no_error_if_exists:
@@ -23547,20 +24687,20 @@ InsertRecordsFromPayloadResponse& GPUdb::insertRecordsFromPayload( const InsertR
  *                                    <li>
  *                            gpudb::insert_records_from_payload_is_replicated:
  *                            Affects the <a
- *                            href="../../concepts/tables.html#distribution"
+ *                            href="../../../concepts/tables/#distribution"
  *                            target="_top">distribution scheme</a> for the
  *                            table's data.  If @a true and the given type has
  *                            no explicit <a
- *                            href="../../concepts/tables.html#shard-key"
+ *                            href="../../../concepts/tables/#shard-key"
  *                            target="_top">shard key</a> defined, the table
  *                            will be <a
- *                            href="../../concepts/tables.html#replication"
+ *                            href="../../../concepts/tables/#replication"
  *                            target="_top">replicated</a>.  If @a false, the
  *                            table will be <a
- *                            href="../../concepts/tables.html#sharding"
+ *                            href="../../../concepts/tables/#sharding"
  *                            target="_top">sharded</a> according to the shard
  *                            key specified in the given @a type_id, or <a
- *                            href="../../concepts/tables.html#random-sharding"
+ *                            href="../../../concepts/tables/#random-sharding"
  *                            target="_top">randomly sharded</a>, if no shard
  *                            key is specified.  Note that a type containing a
  *                            shard key cannot be used to create a replicated
@@ -23576,7 +24716,7 @@ InsertRecordsFromPayloadResponse& GPUdb::insertRecordsFromPayload( const InsertR
  *                                    <li>
  *                            gpudb::insert_records_from_payload_foreign_keys:
  *                            Semicolon-separated list of <a
- *                            href="../../concepts/tables.html#foreign-keys"
+ *                            href="../../../concepts/tables/#foreign-keys"
  *                            target="_top">foreign keys</a>, of the format
  *                            '(source_column_name [, ...]) references
  *                            target_table_name(primary_key_column_name [,
@@ -23588,25 +24728,25 @@ InsertRecordsFromPayloadResponse& GPUdb::insertRecordsFromPayload( const InsertR
  *                            target_table(primary_key_column)'.
  *                                    <li>
  *                            gpudb::insert_records_from_payload_partition_type:
- *                            <a href="../../concepts/tables.html#partitioning"
+ *                            <a href="../../../concepts/tables/#partitioning"
  *                            target="_top">Partitioning</a> scheme to use.
  *                            <ul>
  *                                    <li>
  *                            gpudb::insert_records_from_payload_RANGE: Use <a
- *                            href="../../concepts/tables.html#partitioning-by-range"
+ *                            href="../../../concepts/tables/#partitioning-by-range"
  *                            target="_top">range partitioning</a>.
  *                                    <li>
  *                            gpudb::insert_records_from_payload_INTERVAL: Use
  *                            <a
- *                            href="../../concepts/tables.html#partitioning-by-interval"
+ *                            href="../../../concepts/tables/#partitioning-by-interval"
  *                            target="_top">interval partitioning</a>.
  *                                    <li>
  *                            gpudb::insert_records_from_payload_LIST: Use <a
- *                            href="../../concepts/tables.html#partitioning-by-list"
+ *                            href="../../../concepts/tables/#partitioning-by-list"
  *                            target="_top">list partitioning</a>.
  *                                    <li>
  *                            gpudb::insert_records_from_payload_HASH: Use <a
- *                            href="../../concepts/tables.html#partitioning-by-hash"
+ *                            href="../../../concepts/tables/#partitioning-by-hash"
  *                            target="_top">hash partitioning</a>.
  *                            </ul>
  *                                    <li>
@@ -23620,13 +24760,13 @@ InsertRecordsFromPayloadResponse& GPUdb::insertRecordsFromPayload( const InsertR
  *                            Comma-separated list of partition definitions,
  *                            whose format depends on the choice of @a
  *                            partition_type.  See <a
- *                            href="../../concepts/tables.html#partitioning-by-range"
+ *                            href="../../../concepts/tables/#partitioning-by-range"
  *                            target="_top">range partitioning</a>, <a
- *                            href="../../concepts/tables.html#partitioning-by-interval"
+ *                            href="../../../concepts/tables/#partitioning-by-interval"
  *                            target="_top">interval partitioning</a>, <a
- *                            href="../../concepts/tables.html#partitioning-by-list"
+ *                            href="../../../concepts/tables/#partitioning-by-list"
  *                            target="_top">list partitioning</a>, or <a
- *                            href="../../concepts/tables.html#partitioning-by-hash"
+ *                            href="../../../concepts/tables/#partitioning-by-hash"
  *                            target="_top">hash partitioning</a> for example
  *                            formats.
  *                                    <li>
@@ -23634,7 +24774,7 @@ InsertRecordsFromPayloadResponse& GPUdb::insertRecordsFromPayload( const InsertR
  *                            If @a true, a new partition will be created for
  *                            values which don't fall into an existing
  *                            partition.  Currently only supported for <a
- *                            href="../../concepts/tables.html#partitioning-by-list"
+ *                            href="../../../concepts/tables/#partitioning-by-list"
  *                            target="_top">list partitions</a>.
  *                            <ul>
  *                                    <li>
@@ -23646,7 +24786,7 @@ InsertRecordsFromPayloadResponse& GPUdb::insertRecordsFromPayload( const InsertR
  *                            gpudb::insert_records_from_payload_false.
  *                                    <li>
  *                            gpudb::insert_records_from_payload_ttl: Sets the
- *                            <a href="../../concepts/ttl.html"
+ *                            <a href="../../../concepts/ttl/"
  *                            target="_top">TTL</a> of the table specified in
  *                            @a tableName.
  *                                    <li>
@@ -23656,13 +24796,13 @@ InsertRecordsFromPayloadResponse& GPUdb::insertRecordsFromPayload( const InsertR
  *                                    <li>
  *                            gpudb::insert_records_from_payload_is_result_table:
  *                            Indicates whether the table is a <a
- *                            href="../../concepts/tables_memory_only.html"
+ *                            href="../../../concepts/tables_memory_only/"
  *                            target="_top">memory-only table</a>. A result
  *                            table cannot contain columns with store_only or
  *                            text_search <a
- *                            href="../../concepts/types.html#data-handling"
+ *                            href="../../../concepts/types/#data-handling"
  *                            target="_top">data-handling</a> or that are <a
- *                            href="../../concepts/types.html#primitive-types"
+ *                            href="../../../concepts/types/#primitive-types"
  *                            target="_top">non-charN strings</a>, and it will
  *                            not be retained if the server is restarted.
  *                            <ul>
@@ -23676,12 +24816,12 @@ InsertRecordsFromPayloadResponse& GPUdb::insertRecordsFromPayload( const InsertR
  *                                    <li>
  *                            gpudb::insert_records_from_payload_strategy_definition:
  *                            The <a
- *                            href="../../rm/concepts.html#tier-strategies"
+ *                            href="../../../rm/concepts/#tier-strategies"
  *                            target="_top">tier strategy</a> for the table and
  *                            its columns. See <a
- *                            href="../../rm/concepts.html#tier-strategies"
+ *                            href="../../../rm/concepts/#tier-strategies"
  *                            target="_top">tier strategy usage</a> for format
- *                            and <a href="../../rm/usage.html#tier-strategies"
+ *                            and <a href="../../../rm/usage/#tier-strategies"
  *                            target="_top">tier strategy examples</a> for
  *                            examples.
  *                            </ul>
@@ -23806,11 +24946,12 @@ InsertRecordsFromPayloadResponse& GPUdb::insertRecordsFromPayload( const InsertR
  *                 inserted.
  *                 <ul>
  *                         <li>
- *                 gpudb::insert_records_from_payload_delimited_text: Indicates
- *                 the file(s) are in delimited text format; e.g., CSV, TSV,
- *                 PSV, etc.
+ *                 gpudb::insert_records_from_payload_delimited_text: Delimited
+ *                 text file format; e.g., CSV, TSV, PSV, etc.
  *                         <li> gpudb::insert_records_from_payload_parquet:
- *                 Indicates the file(s) are in Parquet format.
+ *                 Apache Parquet file format
+ *                         <li> gpudb::insert_records_from_payload_json: Json
+ *                 file format
  *                 </ul>
  *                 The default value is
  *                 gpudb::insert_records_from_payload_delimited_text.
@@ -23886,7 +25027,7 @@ InsertRecordsFromPayloadResponse& GPUdb::insertRecordsFromPayload( const InsertR
  *                         <li>
  *                 gpudb::insert_records_from_payload_text_header_property_delimiter:
  *                 Specifies the delimiter for
- *                 <a href="../../concepts/types.html#column-properties"
+ *                 <a href="../../../concepts/types/#column-properties"
  *                 target="_top">column properties</a> in the header row (if
  *                 present).  Cannot be set to same value as @a text_delimiter.
  *                 For @a delimited_text @a file_type only.  The default value
@@ -23964,13 +25105,13 @@ InsertRecordsFromPayloadResponse GPUdb::insertRecordsFromPayload( const std::str
  * 
  * @param tableName  Name of the table into which the data will be inserted, in
  *                   [schema_name.]table_name format, using standard
- *                   <a href="../../concepts/tables.html#table-name-resolution"
+ *                   <a href="../../../concepts/tables/#table-name-resolution"
  *                   target="_top">name resolution rules</a>.
  *                   If the table does not exist, the table will be created
  *                   using either an existing
  *                   @a type_id or the type inferred from the
  *                   payload, and the new table name will have to meet standard
- *                   <a href="../../concepts/tables.html#table-naming-criteria"
+ *                   <a href="../../../concepts/tables/#table-naming-criteria"
  *                   target="_top">table naming criteria</a>.
  * @param dataText  Records formatted as delimited text
  * @param dataBytes  Records formatted as binary data
@@ -23982,7 +25123,7 @@ InsertRecordsFromPayloadResponse GPUdb::insertRecordsFromPayload( const std::str
  *                                    <li>
  *                            gpudb::insert_records_from_payload_type_id: ID of
  *                            a currently registered <a
- *                            href="../../concepts/types.html"
+ *                            href="../../../concepts/types/"
  *                            target="_top">type</a>.  The default value is ''.
  *                                    <li>
  *                            gpudb::insert_records_from_payload_no_error_if_exists:
@@ -24001,20 +25142,20 @@ InsertRecordsFromPayloadResponse GPUdb::insertRecordsFromPayload( const std::str
  *                                    <li>
  *                            gpudb::insert_records_from_payload_is_replicated:
  *                            Affects the <a
- *                            href="../../concepts/tables.html#distribution"
+ *                            href="../../../concepts/tables/#distribution"
  *                            target="_top">distribution scheme</a> for the
  *                            table's data.  If @a true and the given type has
  *                            no explicit <a
- *                            href="../../concepts/tables.html#shard-key"
+ *                            href="../../../concepts/tables/#shard-key"
  *                            target="_top">shard key</a> defined, the table
  *                            will be <a
- *                            href="../../concepts/tables.html#replication"
+ *                            href="../../../concepts/tables/#replication"
  *                            target="_top">replicated</a>.  If @a false, the
  *                            table will be <a
- *                            href="../../concepts/tables.html#sharding"
+ *                            href="../../../concepts/tables/#sharding"
  *                            target="_top">sharded</a> according to the shard
  *                            key specified in the given @a type_id, or <a
- *                            href="../../concepts/tables.html#random-sharding"
+ *                            href="../../../concepts/tables/#random-sharding"
  *                            target="_top">randomly sharded</a>, if no shard
  *                            key is specified.  Note that a type containing a
  *                            shard key cannot be used to create a replicated
@@ -24030,7 +25171,7 @@ InsertRecordsFromPayloadResponse GPUdb::insertRecordsFromPayload( const std::str
  *                                    <li>
  *                            gpudb::insert_records_from_payload_foreign_keys:
  *                            Semicolon-separated list of <a
- *                            href="../../concepts/tables.html#foreign-keys"
+ *                            href="../../../concepts/tables/#foreign-keys"
  *                            target="_top">foreign keys</a>, of the format
  *                            '(source_column_name [, ...]) references
  *                            target_table_name(primary_key_column_name [,
@@ -24042,25 +25183,25 @@ InsertRecordsFromPayloadResponse GPUdb::insertRecordsFromPayload( const std::str
  *                            target_table(primary_key_column)'.
  *                                    <li>
  *                            gpudb::insert_records_from_payload_partition_type:
- *                            <a href="../../concepts/tables.html#partitioning"
+ *                            <a href="../../../concepts/tables/#partitioning"
  *                            target="_top">Partitioning</a> scheme to use.
  *                            <ul>
  *                                    <li>
  *                            gpudb::insert_records_from_payload_RANGE: Use <a
- *                            href="../../concepts/tables.html#partitioning-by-range"
+ *                            href="../../../concepts/tables/#partitioning-by-range"
  *                            target="_top">range partitioning</a>.
  *                                    <li>
  *                            gpudb::insert_records_from_payload_INTERVAL: Use
  *                            <a
- *                            href="../../concepts/tables.html#partitioning-by-interval"
+ *                            href="../../../concepts/tables/#partitioning-by-interval"
  *                            target="_top">interval partitioning</a>.
  *                                    <li>
  *                            gpudb::insert_records_from_payload_LIST: Use <a
- *                            href="../../concepts/tables.html#partitioning-by-list"
+ *                            href="../../../concepts/tables/#partitioning-by-list"
  *                            target="_top">list partitioning</a>.
  *                                    <li>
  *                            gpudb::insert_records_from_payload_HASH: Use <a
- *                            href="../../concepts/tables.html#partitioning-by-hash"
+ *                            href="../../../concepts/tables/#partitioning-by-hash"
  *                            target="_top">hash partitioning</a>.
  *                            </ul>
  *                                    <li>
@@ -24074,13 +25215,13 @@ InsertRecordsFromPayloadResponse GPUdb::insertRecordsFromPayload( const std::str
  *                            Comma-separated list of partition definitions,
  *                            whose format depends on the choice of @a
  *                            partition_type.  See <a
- *                            href="../../concepts/tables.html#partitioning-by-range"
+ *                            href="../../../concepts/tables/#partitioning-by-range"
  *                            target="_top">range partitioning</a>, <a
- *                            href="../../concepts/tables.html#partitioning-by-interval"
+ *                            href="../../../concepts/tables/#partitioning-by-interval"
  *                            target="_top">interval partitioning</a>, <a
- *                            href="../../concepts/tables.html#partitioning-by-list"
+ *                            href="../../../concepts/tables/#partitioning-by-list"
  *                            target="_top">list partitioning</a>, or <a
- *                            href="../../concepts/tables.html#partitioning-by-hash"
+ *                            href="../../../concepts/tables/#partitioning-by-hash"
  *                            target="_top">hash partitioning</a> for example
  *                            formats.
  *                                    <li>
@@ -24088,7 +25229,7 @@ InsertRecordsFromPayloadResponse GPUdb::insertRecordsFromPayload( const std::str
  *                            If @a true, a new partition will be created for
  *                            values which don't fall into an existing
  *                            partition.  Currently only supported for <a
- *                            href="../../concepts/tables.html#partitioning-by-list"
+ *                            href="../../../concepts/tables/#partitioning-by-list"
  *                            target="_top">list partitions</a>.
  *                            <ul>
  *                                    <li>
@@ -24100,7 +25241,7 @@ InsertRecordsFromPayloadResponse GPUdb::insertRecordsFromPayload( const std::str
  *                            gpudb::insert_records_from_payload_false.
  *                                    <li>
  *                            gpudb::insert_records_from_payload_ttl: Sets the
- *                            <a href="../../concepts/ttl.html"
+ *                            <a href="../../../concepts/ttl/"
  *                            target="_top">TTL</a> of the table specified in
  *                            @a tableName.
  *                                    <li>
@@ -24110,13 +25251,13 @@ InsertRecordsFromPayloadResponse GPUdb::insertRecordsFromPayload( const std::str
  *                                    <li>
  *                            gpudb::insert_records_from_payload_is_result_table:
  *                            Indicates whether the table is a <a
- *                            href="../../concepts/tables_memory_only.html"
+ *                            href="../../../concepts/tables_memory_only/"
  *                            target="_top">memory-only table</a>. A result
  *                            table cannot contain columns with store_only or
  *                            text_search <a
- *                            href="../../concepts/types.html#data-handling"
+ *                            href="../../../concepts/types/#data-handling"
  *                            target="_top">data-handling</a> or that are <a
- *                            href="../../concepts/types.html#primitive-types"
+ *                            href="../../../concepts/types/#primitive-types"
  *                            target="_top">non-charN strings</a>, and it will
  *                            not be retained if the server is restarted.
  *                            <ul>
@@ -24130,12 +25271,12 @@ InsertRecordsFromPayloadResponse GPUdb::insertRecordsFromPayload( const std::str
  *                                    <li>
  *                            gpudb::insert_records_from_payload_strategy_definition:
  *                            The <a
- *                            href="../../rm/concepts.html#tier-strategies"
+ *                            href="../../../rm/concepts/#tier-strategies"
  *                            target="_top">tier strategy</a> for the table and
  *                            its columns. See <a
- *                            href="../../rm/concepts.html#tier-strategies"
+ *                            href="../../../rm/concepts/#tier-strategies"
  *                            target="_top">tier strategy usage</a> for format
- *                            and <a href="../../rm/usage.html#tier-strategies"
+ *                            and <a href="../../../rm/usage/#tier-strategies"
  *                            target="_top">tier strategy examples</a> for
  *                            examples.
  *                            </ul>
@@ -24260,11 +25401,12 @@ InsertRecordsFromPayloadResponse GPUdb::insertRecordsFromPayload( const std::str
  *                 inserted.
  *                 <ul>
  *                         <li>
- *                 gpudb::insert_records_from_payload_delimited_text: Indicates
- *                 the file(s) are in delimited text format; e.g., CSV, TSV,
- *                 PSV, etc.
+ *                 gpudb::insert_records_from_payload_delimited_text: Delimited
+ *                 text file format; e.g., CSV, TSV, PSV, etc.
  *                         <li> gpudb::insert_records_from_payload_parquet:
- *                 Indicates the file(s) are in Parquet format.
+ *                 Apache Parquet file format
+ *                         <li> gpudb::insert_records_from_payload_json: Json
+ *                 file format
  *                 </ul>
  *                 The default value is
  *                 gpudb::insert_records_from_payload_delimited_text.
@@ -24340,7 +25482,7 @@ InsertRecordsFromPayloadResponse GPUdb::insertRecordsFromPayload( const std::str
  *                         <li>
  *                 gpudb::insert_records_from_payload_text_header_property_delimiter:
  *                 Specifies the delimiter for
- *                 <a href="../../concepts/types.html#column-properties"
+ *                 <a href="../../../concepts/types/#column-properties"
  *                 target="_top">column properties</a> in the header row (if
  *                 present).  Cannot be set to same value as @a text_delimiter.
  *                 For @a delimited_text @a file_type only.  The default value
@@ -24486,7 +25628,7 @@ InsertRecordsRandomResponse& GPUdb::insertRecordsRandom( const InsertRecordsRand
  * 
  * @param tableName  Table to which random records will be added, in
  *                   [schema_name.]table_name format, using standard <a
- *                   href="../../concepts/tables.html#table-name-resolution"
+ *                   href="../../../concepts/tables/#table-name-resolution"
  *                   target="_top">name resolution rules</a>.  Must be an
  *                   existing table, not a view.
  * @param count  Number of records to generate.
@@ -24692,7 +25834,7 @@ InsertRecordsRandomResponse GPUdb::insertRecordsRandom( const std::string& table
  * 
  * @param tableName  Table to which random records will be added, in
  *                   [schema_name.]table_name format, using standard <a
- *                   href="../../concepts/tables.html#table-name-resolution"
+ *                   href="../../../concepts/tables/#table-name-resolution"
  *                   target="_top">name resolution rules</a>.  Must be an
  *                   existing table, not a view.
  * @param count  Number of records to generate.
@@ -24893,7 +26035,7 @@ InsertRecordsRandomResponse& GPUdb::insertRecordsRandom( const std::string& tabl
  * and any additional optional parameter (e.g. color). To have a symbol used
  * for rendering create a table with a string column named 'SYMBOLCODE' (along
  * with 'x' or 'y' for example). Then when the table is rendered (via <a
- * href="../../api/rest/wms_rest.html" target="_top">WMS</a>) if the
+ * href="../../../api/rest/wms_rest/" target="_top">WMS</a>) if the
  * 'dosymbology' parameter is 'true' then the value of the 'SYMBOLCODE' column
  * is used to pick the symbol displayed for each point.
  * 
@@ -24919,7 +26061,7 @@ InsertSymbolResponse GPUdb::insertSymbol( const InsertSymbolRequest& request_ ) 
  * and any additional optional parameter (e.g. color). To have a symbol used
  * for rendering create a table with a string column named 'SYMBOLCODE' (along
  * with 'x' or 'y' for example). Then when the table is rendered (via <a
- * href="../../api/rest/wms_rest.html" target="_top">WMS</a>) if the
+ * href="../../../api/rest/wms_rest/" target="_top">WMS</a>) if the
  * 'dosymbology' parameter is 'true' then the value of the 'SYMBOLCODE' column
  * is used to pick the symbol displayed for each point.
  * 
@@ -24948,7 +26090,7 @@ InsertSymbolResponse& GPUdb::insertSymbol( const InsertSymbolRequest& request_,
  * and any additional optional parameter (e.g. color). To have a symbol used
  * for rendering create a table with a string column named 'SYMBOLCODE' (along
  * with 'x' or 'y' for example). Then when the table is rendered (via <a
- * href="../../api/rest/wms_rest.html" target="_top">WMS</a>) if the
+ * href="../../../api/rest/wms_rest/" target="_top">WMS</a>) if the
  * 'dosymbology' parameter is 'true' then the value of the 'SYMBOLCODE' column
  * is used to pick the symbol displayed for each point.
  * 
@@ -25003,7 +26145,7 @@ InsertSymbolResponse GPUdb::insertSymbol( const std::string& symbolId,
  * and any additional optional parameter (e.g. color). To have a symbol used
  * for rendering create a table with a string column named 'SYMBOLCODE' (along
  * with 'x' or 'y' for example). Then when the table is rendered (via <a
- * href="../../api/rest/wms_rest.html" target="_top">WMS</a>) if the
+ * href="../../../api/rest/wms_rest/" target="_top">WMS</a>) if the
  * 'dosymbology' parameter is 'true' then the value of the 'SYMBOLCODE' column
  * is used to pick the symbol displayed for each point.
  * 
@@ -25310,7 +26452,7 @@ LockTableResponse& GPUdb::lockTable( const LockTableRequest& request_,
  * 
  * @param tableName  Name of the table to be locked, in
  *                   [schema_name.]table_name format, using standard <a
- *                   href="../../concepts/tables.html#table-name-resolution"
+ *                   href="../../../concepts/tables/#table-name-resolution"
  *                   target="_top">name resolution rules</a>.  It must be a
  *                   currently existing table or view.
  * @param lockType  The type of lock being applied to the table. Setting it to
@@ -25359,7 +26501,7 @@ LockTableResponse GPUdb::lockTable( const std::string& tableName,
  * 
  * @param tableName  Name of the table to be locked, in
  *                   [schema_name.]table_name format, using standard <a
- *                   href="../../concepts/tables.html#table-name-resolution"
+ *                   href="../../../concepts/tables/#table-name-resolution"
  *                   target="_top">name resolution rules</a>.  It must be a
  *                   currently existing table or view.
  * @param lockType  The type of lock being applied to the table. Setting it to
@@ -25407,13 +26549,13 @@ LockTableResponse& GPUdb::lockTable( const std::string& tableName,
  * given solution type.
 
  * IMPORTANT: It's highly recommended that you review the
- * <a href="../../graph_solver/network_graph_solver.html" target="_top">Network
+ * <a href="../../../graph_solver/network_graph_solver/" target="_top">Network
  * Graphs & Solvers</a>
  * concepts documentation, the
- * <a href="../../graph_solver/examples/graph_rest_guide.html"
+ * <a href="../../../graph_solver/examples/graph_rest_guide/"
  * target="_top">Graph REST Tutorial</a>,
  * and/or some
- * <a href="../../graph_solver/examples.html#match-graph"
+ * <a href="../../../graph_solver/examples/#match-graph"
  * target="_top">/match/graph examples</a>
  * before using this endpoint.
  * 
@@ -25439,13 +26581,13 @@ MatchGraphResponse GPUdb::matchGraph( const MatchGraphRequest& request_ ) const
  * given solution type.
 
  * IMPORTANT: It's highly recommended that you review the
- * <a href="../../graph_solver/network_graph_solver.html" target="_top">Network
+ * <a href="../../../graph_solver/network_graph_solver/" target="_top">Network
  * Graphs & Solvers</a>
  * concepts documentation, the
- * <a href="../../graph_solver/examples/graph_rest_guide.html"
+ * <a href="../../../graph_solver/examples/graph_rest_guide/"
  * target="_top">Graph REST Tutorial</a>,
  * and/or some
- * <a href="../../graph_solver/examples.html#match-graph"
+ * <a href="../../../graph_solver/examples/#match-graph"
  * target="_top">/match/graph examples</a>
  * before using this endpoint.
  * 
@@ -25474,13 +26616,13 @@ MatchGraphResponse& GPUdb::matchGraph( const MatchGraphRequest& request_,
  * given solution type.
 
  * IMPORTANT: It's highly recommended that you review the
- * <a href="../../graph_solver/network_graph_solver.html" target="_top">Network
+ * <a href="../../../graph_solver/network_graph_solver/" target="_top">Network
  * Graphs & Solvers</a>
  * concepts documentation, the
- * <a href="../../graph_solver/examples/graph_rest_guide.html"
+ * <a href="../../../graph_solver/examples/graph_rest_guide/"
  * target="_top">Graph REST Tutorial</a>,
  * and/or some
- * <a href="../../graph_solver/examples.html#match-graph"
+ * <a href="../../../graph_solver/examples/#match-graph"
  * target="_top">/match/graph examples</a>
  * before using this endpoint.
  * 
@@ -25489,11 +26631,11 @@ MatchGraphResponse& GPUdb::matchGraph( const MatchGraphRequest& request_,
  * @param samplePoints  Sample points used to match to an underlying geospatial
  *                      graph. Sample points must be specified using
  *                      <a
- *                      href="../../graph_solver/network_graph_solver.html#match-identifiers"
+ *                      href="../../../graph_solver/network_graph_solver/#match-identifiers"
  *                      target="_top">identifiers</a>;
  *                      identifiers are grouped as
  *                      <a
- *                      href="../../graph_solver/network_graph_solver.html#match-combinations"
+ *                      href="../../../graph_solver/network_graph_solver/#match-combinations"
  *                      target="_top">combinations</a>.
  *                      Identifiers can be used with: existing column names,
  *                      e.g.,
@@ -25529,12 +26671,12 @@ MatchGraphResponse& GPUdb::matchGraph( const MatchGraphRequest& request_,
  *                     The default value is gpudb::match_graph_markov_chain.
  * @param solutionTable  The name of the table used to store the results, in
  *                       [schema_name.]table_name format, using standard <a
- *                       href="../../concepts/tables.html#table-name-resolution"
+ *                       href="../../../concepts/tables/#table-name-resolution"
  *                       target="_top">name resolution rules</a> and meeting <a
- *                       href="../../concepts/tables.html#table-naming-criteria"
+ *                       href="../../../concepts/tables/#table-naming-criteria"
  *                       target="_top">table naming criteria</a>.  This table
  *                       contains a <a
- *                       href="../../geospatial/geo_objects.html#geospatial-tracks"
+ *                       href="../../../geospatial/geo_objects/#geospatial-tracks"
  *                       target="_top">track</a> of geospatial points for the
  *                       matched portion of the graph, a track ID, and a score
  *                       value. Also outputs a details table containing a trip
@@ -25710,13 +26852,13 @@ MatchGraphResponse GPUdb::matchGraph( const std::string& graphName,
  * given solution type.
 
  * IMPORTANT: It's highly recommended that you review the
- * <a href="../../graph_solver/network_graph_solver.html" target="_top">Network
+ * <a href="../../../graph_solver/network_graph_solver/" target="_top">Network
  * Graphs & Solvers</a>
  * concepts documentation, the
- * <a href="../../graph_solver/examples/graph_rest_guide.html"
+ * <a href="../../../graph_solver/examples/graph_rest_guide/"
  * target="_top">Graph REST Tutorial</a>,
  * and/or some
- * <a href="../../graph_solver/examples.html#match-graph"
+ * <a href="../../../graph_solver/examples/#match-graph"
  * target="_top">/match/graph examples</a>
  * before using this endpoint.
  * 
@@ -25725,11 +26867,11 @@ MatchGraphResponse GPUdb::matchGraph( const std::string& graphName,
  * @param samplePoints  Sample points used to match to an underlying geospatial
  *                      graph. Sample points must be specified using
  *                      <a
- *                      href="../../graph_solver/network_graph_solver.html#match-identifiers"
+ *                      href="../../../graph_solver/network_graph_solver/#match-identifiers"
  *                      target="_top">identifiers</a>;
  *                      identifiers are grouped as
  *                      <a
- *                      href="../../graph_solver/network_graph_solver.html#match-combinations"
+ *                      href="../../../graph_solver/network_graph_solver/#match-combinations"
  *                      target="_top">combinations</a>.
  *                      Identifiers can be used with: existing column names,
  *                      e.g.,
@@ -25765,12 +26907,12 @@ MatchGraphResponse GPUdb::matchGraph( const std::string& graphName,
  *                     The default value is gpudb::match_graph_markov_chain.
  * @param solutionTable  The name of the table used to store the results, in
  *                       [schema_name.]table_name format, using standard <a
- *                       href="../../concepts/tables.html#table-name-resolution"
+ *                       href="../../../concepts/tables/#table-name-resolution"
  *                       target="_top">name resolution rules</a> and meeting <a
- *                       href="../../concepts/tables.html#table-naming-criteria"
+ *                       href="../../../concepts/tables/#table-naming-criteria"
  *                       target="_top">table naming criteria</a>.  This table
  *                       contains a <a
- *                       href="../../geospatial/geo_objects.html#geospatial-tracks"
+ *                       href="../../../geospatial/geo_objects/#geospatial-tracks"
  *                       target="_top">track</a> of geospatial points for the
  *                       matched portion of the graph, a track ID, and a score
  *                       value. Also outputs a details table containing a trip
@@ -25949,9 +27091,9 @@ MatchGraphResponse& GPUdb::matchGraph( const std::string& graphName,
  * information (specified by @a fieldMaps).
  * <p>
  * For merge records details and examples, see
- * <a href="../../concepts/merge_records.html" target="_top">Merge Records</a>.
+ * <a href="../../../concepts/merge_records/" target="_top">Merge Records</a>.
  * For limitations, see
- * <a href="../../concepts/merge_records.html#limitations-and-cautions"
+ * <a href="../../../concepts/merge_records/#limitations-and-cautions"
  * target="_top">Merge Records Limitations and Cautions</a>.
 
  * The field map (specified by @a fieldMaps) holds the user-specified maps
@@ -25982,9 +27124,9 @@ MergeRecordsResponse GPUdb::mergeRecords( const MergeRecordsRequest& request_ ) 
  * information (specified by @a fieldMaps).
  * <p>
  * For merge records details and examples, see
- * <a href="../../concepts/merge_records.html" target="_top">Merge Records</a>.
+ * <a href="../../../concepts/merge_records/" target="_top">Merge Records</a>.
  * For limitations, see
- * <a href="../../concepts/merge_records.html#limitations-and-cautions"
+ * <a href="../../../concepts/merge_records/#limitations-and-cautions"
  * target="_top">Merge Records Limitations and Cautions</a>.
 
  * The field map (specified by @a fieldMaps) holds the user-specified maps
@@ -26018,9 +27160,9 @@ MergeRecordsResponse& GPUdb::mergeRecords( const MergeRecordsRequest& request_,
  * information (specified by @a fieldMaps).
  * <p>
  * For merge records details and examples, see
- * <a href="../../concepts/merge_records.html" target="_top">Merge Records</a>.
+ * <a href="../../../concepts/merge_records/" target="_top">Merge Records</a>.
  * For limitations, see
- * <a href="../../concepts/merge_records.html#limitations-and-cautions"
+ * <a href="../../../concepts/merge_records/#limitations-and-cautions"
  * target="_top">Merge Records Limitations and Cautions</a>.
 
  * The field map (specified by @a fieldMaps) holds the user-specified maps
@@ -26032,15 +27174,15 @@ MergeRecordsResponse& GPUdb::mergeRecords( const MergeRecordsRequest& request_,
  * @param tableName  The name of the new result table for the records to be
  *                   merged into, in [schema_name.]table_name format, using
  *                   standard <a
- *                   href="../../concepts/tables.html#table-name-resolution"
+ *                   href="../../../concepts/tables/#table-name-resolution"
  *                   target="_top">name resolution rules</a> and meeting <a
- *                   href="../../concepts/tables.html#table-naming-criteria"
+ *                   href="../../../concepts/tables/#table-naming-criteria"
  *                   target="_top">table naming criteria</a>.  Must NOT be an
  *                   existing table.
  * @param sourceTableNames  The list of names of source tables to get the
  *                          records from, each in [schema_name.]table_name
  *                          format, using standard <a
- *                          href="../../concepts/tables.html#table-name-resolution"
+ *                          href="../../../concepts/tables/#table-name-resolution"
  *                          target="_top">name resolution rules</a>.  Must be
  *                          existing table names.
  * @param fieldMaps  Contains a list of source/target column mappings, one
@@ -26049,7 +27191,7 @@ MergeRecordsResponse& GPUdb::mergeRecords( const MergeRecordsRequest& request_,
  *                   specified by @a tableName.  Each mapping contains the
  *                   target column names (as keys) that the data in the mapped
  *                   source columns or column <a
- *                   href="../../concepts/expressions.html"
+ *                   href="../../../concepts/expressions/"
  *                   target="_top">expressions</a> (as values) will be merged
  *                   into.  All of the source columns being merged into a given
  *                   target column must match in type, as that type will
@@ -26062,12 +27204,12 @@ MergeRecordsResponse& GPUdb::mergeRecords( const MergeRecordsRequest& request_,
  *                 to create the schema if non-existent]  Name of a schema for
  *                 the newly created merged table specified by @a tableName.
  *                         <li> gpudb::merge_records_is_replicated: Indicates
- *                 the <a href="../../concepts/tables.html#distribution"
+ *                 the <a href="../../../concepts/tables/#distribution"
  *                 target="_top">distribution scheme</a> for the data of the
  *                 merged table specified in @a tableName.  If true, the table
- *                 will be <a href="../../concepts/tables.html#replication"
+ *                 will be <a href="../../../concepts/tables/#replication"
  *                 target="_top">replicated</a>.  If false, the table will be
- *                 <a href="../../concepts/tables.html#random-sharding"
+ *                 <a href="../../../concepts/tables/#random-sharding"
  *                 target="_top">randomly sharded</a>.
  *                 <ul>
  *                         <li> gpudb::merge_records_true
@@ -26075,7 +27217,7 @@ MergeRecordsResponse& GPUdb::mergeRecords( const MergeRecordsRequest& request_,
  *                 </ul>
  *                 The default value is gpudb::merge_records_false.
  *                         <li> gpudb::merge_records_ttl: Sets the <a
- *                 href="../../concepts/ttl.html" target="_top">TTL</a> of the
+ *                 href="../../../concepts/ttl/" target="_top">TTL</a> of the
  *                 merged table specified in @a tableName.
  *                         <li> gpudb::merge_records_persist: If @a true, then
  *                 the table specified in @a tableName will be persisted and
@@ -26121,9 +27263,9 @@ MergeRecordsResponse GPUdb::mergeRecords( const std::string& tableName,
  * information (specified by @a fieldMaps).
  * <p>
  * For merge records details and examples, see
- * <a href="../../concepts/merge_records.html" target="_top">Merge Records</a>.
+ * <a href="../../../concepts/merge_records/" target="_top">Merge Records</a>.
  * For limitations, see
- * <a href="../../concepts/merge_records.html#limitations-and-cautions"
+ * <a href="../../../concepts/merge_records/#limitations-and-cautions"
  * target="_top">Merge Records Limitations and Cautions</a>.
 
  * The field map (specified by @a fieldMaps) holds the user-specified maps
@@ -26135,15 +27277,15 @@ MergeRecordsResponse GPUdb::mergeRecords( const std::string& tableName,
  * @param tableName  The name of the new result table for the records to be
  *                   merged into, in [schema_name.]table_name format, using
  *                   standard <a
- *                   href="../../concepts/tables.html#table-name-resolution"
+ *                   href="../../../concepts/tables/#table-name-resolution"
  *                   target="_top">name resolution rules</a> and meeting <a
- *                   href="../../concepts/tables.html#table-naming-criteria"
+ *                   href="../../../concepts/tables/#table-naming-criteria"
  *                   target="_top">table naming criteria</a>.  Must NOT be an
  *                   existing table.
  * @param sourceTableNames  The list of names of source tables to get the
  *                          records from, each in [schema_name.]table_name
  *                          format, using standard <a
- *                          href="../../concepts/tables.html#table-name-resolution"
+ *                          href="../../../concepts/tables/#table-name-resolution"
  *                          target="_top">name resolution rules</a>.  Must be
  *                          existing table names.
  * @param fieldMaps  Contains a list of source/target column mappings, one
@@ -26152,7 +27294,7 @@ MergeRecordsResponse GPUdb::mergeRecords( const std::string& tableName,
  *                   specified by @a tableName.  Each mapping contains the
  *                   target column names (as keys) that the data in the mapped
  *                   source columns or column <a
- *                   href="../../concepts/expressions.html"
+ *                   href="../../../concepts/expressions/"
  *                   target="_top">expressions</a> (as values) will be merged
  *                   into.  All of the source columns being merged into a given
  *                   target column must match in type, as that type will
@@ -26165,12 +27307,12 @@ MergeRecordsResponse GPUdb::mergeRecords( const std::string& tableName,
  *                 to create the schema if non-existent]  Name of a schema for
  *                 the newly created merged table specified by @a tableName.
  *                         <li> gpudb::merge_records_is_replicated: Indicates
- *                 the <a href="../../concepts/tables.html#distribution"
+ *                 the <a href="../../../concepts/tables/#distribution"
  *                 target="_top">distribution scheme</a> for the data of the
  *                 merged table specified in @a tableName.  If true, the table
- *                 will be <a href="../../concepts/tables.html#replication"
+ *                 will be <a href="../../../concepts/tables/#replication"
  *                 target="_top">replicated</a>.  If false, the table will be
- *                 <a href="../../concepts/tables.html#random-sharding"
+ *                 <a href="../../../concepts/tables/#random-sharding"
  *                 target="_top">randomly sharded</a>.
  *                 <ul>
  *                         <li> gpudb::merge_records_true
@@ -26178,7 +27320,7 @@ MergeRecordsResponse GPUdb::mergeRecords( const std::string& tableName,
  *                 </ul>
  *                 The default value is gpudb::merge_records_false.
  *                         <li> gpudb::merge_records_ttl: Sets the <a
- *                 href="../../concepts/ttl.html" target="_top">TTL</a> of the
+ *                 href="../../../concepts/ttl/" target="_top">TTL</a> of the
  *                 merged table specified in @a tableName.
  *                         <li> gpudb::merge_records_persist: If @a true, then
  *                 the table specified in @a tableName will be persisted and
@@ -26225,13 +27367,13 @@ MergeRecordsResponse& GPUdb::mergeRecords( const std::string& tableName,
  * restrictions, and options.
 
  * IMPORTANT: It's highly recommended that you review the
- * <a href="../../graph_solver/network_graph_solver.html" target="_top">Network
+ * <a href="../../../graph_solver/network_graph_solver/" target="_top">Network
  * Graphs & Solvers</a>
  * concepts documentation, the
- * <a href="../../graph_solver/examples/graph_rest_guide.html"
+ * <a href="../../../graph_solver/examples/graph_rest_guide/"
  * target="_top">Graph REST Tutorial</a>,
  * and/or some
- * <a href="../../graph_solver/examples.html#match-graph"
+ * <a href="../../../graph_solver/examples/#match-graph"
  * target="_top">/match/graph examples</a>
  * before using this endpoint.
  * 
@@ -26255,13 +27397,13 @@ ModifyGraphResponse GPUdb::modifyGraph( const ModifyGraphRequest& request_ ) con
  * restrictions, and options.
 
  * IMPORTANT: It's highly recommended that you review the
- * <a href="../../graph_solver/network_graph_solver.html" target="_top">Network
+ * <a href="../../../graph_solver/network_graph_solver/" target="_top">Network
  * Graphs & Solvers</a>
  * concepts documentation, the
- * <a href="../../graph_solver/examples/graph_rest_guide.html"
+ * <a href="../../../graph_solver/examples/graph_rest_guide/"
  * target="_top">Graph REST Tutorial</a>,
  * and/or some
- * <a href="../../graph_solver/examples.html#match-graph"
+ * <a href="../../../graph_solver/examples/#match-graph"
  * target="_top">/match/graph examples</a>
  * before using this endpoint.
  * 
@@ -26288,25 +27430,25 @@ ModifyGraphResponse& GPUdb::modifyGraph( const ModifyGraphRequest& request_,
  * restrictions, and options.
 
  * IMPORTANT: It's highly recommended that you review the
- * <a href="../../graph_solver/network_graph_solver.html" target="_top">Network
+ * <a href="../../../graph_solver/network_graph_solver/" target="_top">Network
  * Graphs & Solvers</a>
  * concepts documentation, the
- * <a href="../../graph_solver/examples/graph_rest_guide.html"
+ * <a href="../../../graph_solver/examples/graph_rest_guide/"
  * target="_top">Graph REST Tutorial</a>,
  * and/or some
- * <a href="../../graph_solver/examples.html#match-graph"
+ * <a href="../../../graph_solver/examples/#match-graph"
  * target="_top">/match/graph examples</a>
  * before using this endpoint.
  * 
  * @param graphName  Name of the graph resource to modify.
  * @param nodes  Nodes with which to update existing @a nodes in graph
  *               specified by @a graphName. Review <a
- *               href="../../graph_solver/network_graph_solver.html#nodes"
+ *               href="../../../graph_solver/network_graph_solver/#nodes"
  *               target="_top">Nodes</a> for more information. Nodes must be
  *               specified using <a
- *               href="../../graph_solver/network_graph_solver.html#identifiers"
+ *               href="../../../graph_solver/network_graph_solver/#identifiers"
  *               target="_top">identifiers</a>; identifiers are grouped as <a
- *               href="../../graph_solver/network_graph_solver.html#id-combos"
+ *               href="../../../graph_solver/network_graph_solver/#id-combos"
  *               target="_top">combinations</a>. Identifiers can be used with
  *               existing column names, e.g., 'table.column AS NODE_ID',
  *               expressions, e.g., 'ST_MAKEPOINT(column1, column2) AS
@@ -26319,12 +27461,12 @@ ModifyGraphResponse& GPUdb::modifyGraph( const ModifyGraphRequest& request_,
  *               to modify the graph.
  * @param edges  Edges with which to update existing @a edges in graph
  *               specified by @a graphName. Review <a
- *               href="../../graph_solver/network_graph_solver.html#edges"
+ *               href="../../../graph_solver/network_graph_solver/#edges"
  *               target="_top">Edges</a> for more information. Edges must be
  *               specified using <a
- *               href="../../graph_solver/network_graph_solver.html#identifiers"
+ *               href="../../../graph_solver/network_graph_solver/#identifiers"
  *               target="_top">identifiers</a>; identifiers are grouped as <a
- *               href="../../graph_solver/network_graph_solver.html#id-combos"
+ *               href="../../../graph_solver/network_graph_solver/#id-combos"
  *               target="_top">combinations</a>. Identifiers can be used with
  *               existing column names, e.g., 'table.column AS EDGE_ID',
  *               expressions, e.g., 'SUBSTR(column, 1, 6) AS EDGE_NODE1_NAME',
@@ -26337,12 +27479,12 @@ ModifyGraphResponse& GPUdb::modifyGraph( const ModifyGraphRequest& request_,
  *               to modify the graph.
  * @param weights  Weights with which to update existing @a weights in graph
  *                 specified by @a graphName. Review <a
- *                 href="../../graph_solver/network_graph_solver.html#graph-weights"
+ *                 href="../../../graph_solver/network_graph_solver/#graph-weights"
  *                 target="_top">Weights</a> for more information. Weights must
  *                 be specified using <a
- *                 href="../../graph_solver/network_graph_solver.html#identifiers"
+ *                 href="../../../graph_solver/network_graph_solver/#identifiers"
  *                 target="_top">identifiers</a>; identifiers are grouped as <a
- *                 href="../../graph_solver/network_graph_solver.html#id-combos"
+ *                 href="../../../graph_solver/network_graph_solver/#id-combos"
  *                 target="_top">combinations</a>. Identifiers can be used with
  *                 existing column names, e.g., 'table.column AS
  *                 WEIGHTS_EDGE_ID', expressions, e.g., 'ST_LENGTH(wkt) AS
@@ -26357,13 +27499,13 @@ ModifyGraphResponse& GPUdb::modifyGraph( const ModifyGraphRequest& request_,
  * @param restrictions  Restrictions with which to update existing @a
  *                      restrictions in graph specified by @a graphName. Review
  *                      <a
- *                      href="../../graph_solver/network_graph_solver.html#graph-restrictions"
+ *                      href="../../../graph_solver/network_graph_solver/#graph-restrictions"
  *                      target="_top">Restrictions</a> for more information.
  *                      Restrictions must be specified using <a
- *                      href="../../graph_solver/network_graph_solver.html#identifiers"
+ *                      href="../../../graph_solver/network_graph_solver/#identifiers"
  *                      target="_top">identifiers</a>; identifiers are grouped
  *                      as <a
- *                      href="../../graph_solver/network_graph_solver.html#id-combos"
+ *                      href="../../../graph_solver/network_graph_solver/#id-combos"
  *                      target="_top">combinations</a>. Identifiers can be used
  *                      with existing column names, e.g., 'table.column AS
  *                      RESTRICTIONS_EDGE_ID', expressions, e.g., 'column/2 AS
@@ -26405,7 +27547,7 @@ ModifyGraphResponse& GPUdb::modifyGraph( const ModifyGraphRequest& request_,
  *                 The default value is gpudb::modify_graph_false.
  *                         <li> gpudb::modify_graph_save_persist: If set to @a
  *                 true, the graph will be saved in the persist directory (see
- *                 the <a href="../../config/index.html" target="_top">config
+ *                 the <a href="../../../config/" target="_top">config
  *                 reference</a> for more information). If set to @a false, the
  *                 graph will be removed when the graph server is shutdown.
  *                 <ul>
@@ -26429,9 +27571,9 @@ ModifyGraphResponse& GPUdb::modifyGraph( const ModifyGraphRequest& request_,
  *                         <li> gpudb::modify_graph_graph_table: If specified,
  *                 the created graph is also created as a table with the given
  *                 name, in [schema_name.]table_name format, using standard <a
- *                 href="../../concepts/tables.html#table-name-resolution"
+ *                 href="../../../concepts/tables/#table-name-resolution"
  *                 target="_top">name resolution rules</a> and meeting <a
- *                 href="../../concepts/tables.html#table-naming-criteria"
+ *                 href="../../../concepts/tables/#table-naming-criteria"
  *                 target="_top">table naming criteria</a>.  This table will
  *                 have the following identifier columns: 'EDGE_ID',
  *                 'EDGE_NODE1_ID', 'EDGE_NODE2_ID'. If left blank, no table is
@@ -26495,25 +27637,25 @@ ModifyGraphResponse GPUdb::modifyGraph( const std::string& graphName,
  * restrictions, and options.
 
  * IMPORTANT: It's highly recommended that you review the
- * <a href="../../graph_solver/network_graph_solver.html" target="_top">Network
+ * <a href="../../../graph_solver/network_graph_solver/" target="_top">Network
  * Graphs & Solvers</a>
  * concepts documentation, the
- * <a href="../../graph_solver/examples/graph_rest_guide.html"
+ * <a href="../../../graph_solver/examples/graph_rest_guide/"
  * target="_top">Graph REST Tutorial</a>,
  * and/or some
- * <a href="../../graph_solver/examples.html#match-graph"
+ * <a href="../../../graph_solver/examples/#match-graph"
  * target="_top">/match/graph examples</a>
  * before using this endpoint.
  * 
  * @param graphName  Name of the graph resource to modify.
  * @param nodes  Nodes with which to update existing @a nodes in graph
  *               specified by @a graphName. Review <a
- *               href="../../graph_solver/network_graph_solver.html#nodes"
+ *               href="../../../graph_solver/network_graph_solver/#nodes"
  *               target="_top">Nodes</a> for more information. Nodes must be
  *               specified using <a
- *               href="../../graph_solver/network_graph_solver.html#identifiers"
+ *               href="../../../graph_solver/network_graph_solver/#identifiers"
  *               target="_top">identifiers</a>; identifiers are grouped as <a
- *               href="../../graph_solver/network_graph_solver.html#id-combos"
+ *               href="../../../graph_solver/network_graph_solver/#id-combos"
  *               target="_top">combinations</a>. Identifiers can be used with
  *               existing column names, e.g., 'table.column AS NODE_ID',
  *               expressions, e.g., 'ST_MAKEPOINT(column1, column2) AS
@@ -26526,12 +27668,12 @@ ModifyGraphResponse GPUdb::modifyGraph( const std::string& graphName,
  *               to modify the graph.
  * @param edges  Edges with which to update existing @a edges in graph
  *               specified by @a graphName. Review <a
- *               href="../../graph_solver/network_graph_solver.html#edges"
+ *               href="../../../graph_solver/network_graph_solver/#edges"
  *               target="_top">Edges</a> for more information. Edges must be
  *               specified using <a
- *               href="../../graph_solver/network_graph_solver.html#identifiers"
+ *               href="../../../graph_solver/network_graph_solver/#identifiers"
  *               target="_top">identifiers</a>; identifiers are grouped as <a
- *               href="../../graph_solver/network_graph_solver.html#id-combos"
+ *               href="../../../graph_solver/network_graph_solver/#id-combos"
  *               target="_top">combinations</a>. Identifiers can be used with
  *               existing column names, e.g., 'table.column AS EDGE_ID',
  *               expressions, e.g., 'SUBSTR(column, 1, 6) AS EDGE_NODE1_NAME',
@@ -26544,12 +27686,12 @@ ModifyGraphResponse GPUdb::modifyGraph( const std::string& graphName,
  *               to modify the graph.
  * @param weights  Weights with which to update existing @a weights in graph
  *                 specified by @a graphName. Review <a
- *                 href="../../graph_solver/network_graph_solver.html#graph-weights"
+ *                 href="../../../graph_solver/network_graph_solver/#graph-weights"
  *                 target="_top">Weights</a> for more information. Weights must
  *                 be specified using <a
- *                 href="../../graph_solver/network_graph_solver.html#identifiers"
+ *                 href="../../../graph_solver/network_graph_solver/#identifiers"
  *                 target="_top">identifiers</a>; identifiers are grouped as <a
- *                 href="../../graph_solver/network_graph_solver.html#id-combos"
+ *                 href="../../../graph_solver/network_graph_solver/#id-combos"
  *                 target="_top">combinations</a>. Identifiers can be used with
  *                 existing column names, e.g., 'table.column AS
  *                 WEIGHTS_EDGE_ID', expressions, e.g., 'ST_LENGTH(wkt) AS
@@ -26564,13 +27706,13 @@ ModifyGraphResponse GPUdb::modifyGraph( const std::string& graphName,
  * @param restrictions  Restrictions with which to update existing @a
  *                      restrictions in graph specified by @a graphName. Review
  *                      <a
- *                      href="../../graph_solver/network_graph_solver.html#graph-restrictions"
+ *                      href="../../../graph_solver/network_graph_solver/#graph-restrictions"
  *                      target="_top">Restrictions</a> for more information.
  *                      Restrictions must be specified using <a
- *                      href="../../graph_solver/network_graph_solver.html#identifiers"
+ *                      href="../../../graph_solver/network_graph_solver/#identifiers"
  *                      target="_top">identifiers</a>; identifiers are grouped
  *                      as <a
- *                      href="../../graph_solver/network_graph_solver.html#id-combos"
+ *                      href="../../../graph_solver/network_graph_solver/#id-combos"
  *                      target="_top">combinations</a>. Identifiers can be used
  *                      with existing column names, e.g., 'table.column AS
  *                      RESTRICTIONS_EDGE_ID', expressions, e.g., 'column/2 AS
@@ -26612,7 +27754,7 @@ ModifyGraphResponse GPUdb::modifyGraph( const std::string& graphName,
  *                 The default value is gpudb::modify_graph_false.
  *                         <li> gpudb::modify_graph_save_persist: If set to @a
  *                 true, the graph will be saved in the persist directory (see
- *                 the <a href="../../config/index.html" target="_top">config
+ *                 the <a href="../../../config/" target="_top">config
  *                 reference</a> for more information). If set to @a false, the
  *                 graph will be removed when the graph server is shutdown.
  *                 <ul>
@@ -26636,9 +27778,9 @@ ModifyGraphResponse GPUdb::modifyGraph( const std::string& graphName,
  *                         <li> gpudb::modify_graph_graph_table: If specified,
  *                 the created graph is also created as a table with the given
  *                 name, in [schema_name.]table_name format, using standard <a
- *                 href="../../concepts/tables.html#table-name-resolution"
+ *                 href="../../../concepts/tables/#table-name-resolution"
  *                 target="_top">name resolution rules</a> and meeting <a
- *                 href="../../concepts/tables.html#table-naming-criteria"
+ *                 href="../../../concepts/tables/#table-naming-criteria"
  *                 target="_top">table naming criteria</a>.  This table will
  *                 have the following identifier columns: 'EDGE_ID',
  *                 'EDGE_NODE1_ID', 'EDGE_NODE2_ID'. If left blank, no table is
@@ -26712,7 +27854,7 @@ ModifyGraphResponse& GPUdb::modifyGraph( const std::string& graphName,
  * provide a list of values to @a queries. This field can be populated with
  * column values from any table as long as the type is supported by the given
  * identifier. See
- * <a href="../../graph_solver/network_graph_solver.html#query-identifiers"
+ * <a href="../../../graph_solver/network_graph_solver/#query-identifiers"
  * target="_top">Query Identifiers</a>
  * for more information.
  * <p>
@@ -26727,13 +27869,13 @@ ModifyGraphResponse& GPUdb::modifyGraph( const std::string& graphName,
  * to @a true.
  * <p>
  * IMPORTANT: It's highly recommended that you review the
- * <a href="../../graph_solver/network_graph_solver.html" target="_top">Network
+ * <a href="../../../graph_solver/network_graph_solver/" target="_top">Network
  * Graphs & Solvers</a>
  * concepts documentation, the
- * <a href="../../graph_solver/examples/graph_rest_guide.html"
+ * <a href="../../../graph_solver/examples/graph_rest_guide/"
  * target="_top">Graph REST Tutorial</a>,
  * and/or some
- * <a href="../../graph_solver/examples.html#match-graph"
+ * <a href="../../../graph_solver/examples/#match-graph"
  * target="_top">/match/graph examples</a>
  * before using this endpoint.
  * 
@@ -26765,7 +27907,7 @@ QueryGraphResponse GPUdb::queryGraph( const QueryGraphRequest& request_ ) const
  * provide a list of values to @a queries. This field can be populated with
  * column values from any table as long as the type is supported by the given
  * identifier. See
- * <a href="../../graph_solver/network_graph_solver.html#query-identifiers"
+ * <a href="../../../graph_solver/network_graph_solver/#query-identifiers"
  * target="_top">Query Identifiers</a>
  * for more information.
  * <p>
@@ -26780,13 +27922,13 @@ QueryGraphResponse GPUdb::queryGraph( const QueryGraphRequest& request_ ) const
  * to @a true.
  * <p>
  * IMPORTANT: It's highly recommended that you review the
- * <a href="../../graph_solver/network_graph_solver.html" target="_top">Network
+ * <a href="../../../graph_solver/network_graph_solver/" target="_top">Network
  * Graphs & Solvers</a>
  * concepts documentation, the
- * <a href="../../graph_solver/examples/graph_rest_guide.html"
+ * <a href="../../../graph_solver/examples/graph_rest_guide/"
  * target="_top">Graph REST Tutorial</a>,
  * and/or some
- * <a href="../../graph_solver/examples.html#match-graph"
+ * <a href="../../../graph_solver/examples/#match-graph"
  * target="_top">/match/graph examples</a>
  * before using this endpoint.
  * 
@@ -26821,7 +27963,7 @@ QueryGraphResponse& GPUdb::queryGraph( const QueryGraphRequest& request_,
  * provide a list of values to @a queries. This field can be populated with
  * column values from any table as long as the type is supported by the given
  * identifier. See
- * <a href="../../graph_solver/network_graph_solver.html#query-identifiers"
+ * <a href="../../../graph_solver/network_graph_solver/#query-identifiers"
  * target="_top">Query Identifiers</a>
  * for more information.
  * <p>
@@ -26836,19 +27978,19 @@ QueryGraphResponse& GPUdb::queryGraph( const QueryGraphRequest& request_,
  * to @a true.
  * <p>
  * IMPORTANT: It's highly recommended that you review the
- * <a href="../../graph_solver/network_graph_solver.html" target="_top">Network
+ * <a href="../../../graph_solver/network_graph_solver/" target="_top">Network
  * Graphs & Solvers</a>
  * concepts documentation, the
- * <a href="../../graph_solver/examples/graph_rest_guide.html"
+ * <a href="../../../graph_solver/examples/graph_rest_guide/"
  * target="_top">Graph REST Tutorial</a>,
  * and/or some
- * <a href="../../graph_solver/examples.html#match-graph"
+ * <a href="../../../graph_solver/examples/#match-graph"
  * target="_top">/match/graph examples</a>
  * before using this endpoint.
  * 
  * @param graphName  Name of the graph resource to query.
  * @param queries  Nodes or edges to be queried specified using <a
- *                 href="../../graph_solver/network_graph_solver.html#query-identifiers"
+ *                 href="../../../graph_solver/network_graph_solver/#query-identifiers"
  *                 target="_top">query identifiers</a>. Identifiers can be used
  *                 with existing column names, e.g., 'table.column AS
  *                 QUERY_NODE_ID', raw values, e.g., '{0, 2} AS QUERY_NODE_ID',
@@ -26860,10 +28002,10 @@ QueryGraphResponse& GPUdb::queryGraph( const QueryGraphRequest& request_,
  * @param restrictions  Additional restrictions to apply to the nodes/edges of
  *                      an existing graph. Restrictions must be specified using
  *                      <a
- *                      href="../../graph_solver/network_graph_solver.html#identifiers"
+ *                      href="../../../graph_solver/network_graph_solver/#identifiers"
  *                      target="_top">identifiers</a>; identifiers are grouped
  *                      as <a
- *                      href="../../graph_solver/network_graph_solver.html#id-combos"
+ *                      href="../../../graph_solver/network_graph_solver/#id-combos"
  *                      target="_top">combinations</a>. Identifiers can be used
  *                      with existing column names, e.g., 'table.column AS
  *                      RESTRICTIONS_EDGE_ID', expressions, e.g., 'column/2 AS
@@ -26873,19 +28015,19 @@ QueryGraphResponse& GPUdb::queryGraph( const QueryGraphRequest& request_,
  *                      values specified must match across the combination.
  * @param adjacencyTable  Name of the table to store the resulting adjacencies,
  *                        in [schema_name.]table_name format, using standard <a
- *                        href="../../concepts/tables.html#table-name-resolution"
+ *                        href="../../../concepts/tables/#table-name-resolution"
  *                        target="_top">name resolution rules</a> and meeting
  *                        <a
- *                        href="../../concepts/tables.html#table-naming-criteria"
+ *                        href="../../../concepts/tables/#table-naming-criteria"
  *                        target="_top">table naming criteria</a>.  If left
  *                        blank, the query results are instead returned in the
  *                        response even if @a export_query_results is set to @a
  *                        false. If the 'QUERY_TARGET_NODE_LABEL' <a
- *                        href="../../graph_solver/network_graph_solver.html#query-identifiers"
+ *                        href="../../../graph_solver/network_graph_solver/#query-identifiers"
  *                        target="_top">query identifier</a> is used in @a
  *                        queries, then two additional columns will be
  *                        available: 'PATH_ID' and 'RING_ID'. See <a
- *                        href="../../graph_solver/network_graph_solver.html#using-labels"
+ *                        href="../../../graph_solver/network_graph_solver/#using-labels"
  *                        target="_top">Using Labels</a> for more information.
  * @param rings  Sets the number of rings around the node to query for
  *               adjacency, with '1' being the edges directly attached to the
@@ -26905,7 +28047,7 @@ QueryGraphResponse& GPUdb::queryGraph( const QueryGraphRequest& request_,
  *                 edges relative to the node will be returned. This parameter
  *                 is only applicable if the queried graph @a graphName is
  *                 directed and when querying nodes. Consult <a
- *                 href="../../graph_solver/network_graph_solver.html#directed-graphs"
+ *                 href="../../../graph_solver/network_graph_solver/#directed-graphs"
  *                 target="_top">Directed Graphs</a> for more details.
  *                 <ul>
  *                         <li> gpudb::query_graph_true
@@ -26921,9 +28063,9 @@ QueryGraphResponse& GPUdb::queryGraph( const QueryGraphRequest& request_,
  *                 the table to store the list of the final nodes reached
  *                 during the traversal, in [schema_name.]table_name format,
  *                 using standard <a
- *                 href="../../concepts/tables.html#table-name-resolution"
+ *                 href="../../../concepts/tables/#table-name-resolution"
  *                 target="_top">name resolution rules</a> and meeting <a
- *                 href="../../concepts/tables.html#table-naming-criteria"
+ *                 href="../../../concepts/tables/#table-naming-criteria"
  *                 target="_top">table naming criteria</a>.  If this value is
  *                 left as the default, the table name will default to the @a
  *                 adjacencyTable value plus a '_nodes' suffix, e.g.,
@@ -26950,10 +28092,9 @@ QueryGraphResponse& GPUdb::queryGraph( const QueryGraphRequest& request_,
  *                 to the given @a adjacencyTable and inputs WKT values from
  *                 the source graph (if available) or auto-generated WKT values
  *                 (if there are no WKT values in the source graph). A
- *                 subsequent call to the <a
- *                 href="../../api/rest/wms_rest.html" target="_top">/wms</a>
- *                 endpoint can then be made to display the query results on a
- *                 map.
+ *                 subsequent call to the <a href="../../../api/rest/wms_rest/"
+ *                 target="_top">/wms</a> endpoint can then be made to display
+ *                 the query results on a map.
  *                 <ul>
  *                         <li> gpudb::query_graph_true
  *                         <li> gpudb::query_graph_false
@@ -27018,7 +28159,7 @@ QueryGraphResponse GPUdb::queryGraph( const std::string& graphName,
  * provide a list of values to @a queries. This field can be populated with
  * column values from any table as long as the type is supported by the given
  * identifier. See
- * <a href="../../graph_solver/network_graph_solver.html#query-identifiers"
+ * <a href="../../../graph_solver/network_graph_solver/#query-identifiers"
  * target="_top">Query Identifiers</a>
  * for more information.
  * <p>
@@ -27033,19 +28174,19 @@ QueryGraphResponse GPUdb::queryGraph( const std::string& graphName,
  * to @a true.
  * <p>
  * IMPORTANT: It's highly recommended that you review the
- * <a href="../../graph_solver/network_graph_solver.html" target="_top">Network
+ * <a href="../../../graph_solver/network_graph_solver/" target="_top">Network
  * Graphs & Solvers</a>
  * concepts documentation, the
- * <a href="../../graph_solver/examples/graph_rest_guide.html"
+ * <a href="../../../graph_solver/examples/graph_rest_guide/"
  * target="_top">Graph REST Tutorial</a>,
  * and/or some
- * <a href="../../graph_solver/examples.html#match-graph"
+ * <a href="../../../graph_solver/examples/#match-graph"
  * target="_top">/match/graph examples</a>
  * before using this endpoint.
  * 
  * @param graphName  Name of the graph resource to query.
  * @param queries  Nodes or edges to be queried specified using <a
- *                 href="../../graph_solver/network_graph_solver.html#query-identifiers"
+ *                 href="../../../graph_solver/network_graph_solver/#query-identifiers"
  *                 target="_top">query identifiers</a>. Identifiers can be used
  *                 with existing column names, e.g., 'table.column AS
  *                 QUERY_NODE_ID', raw values, e.g., '{0, 2} AS QUERY_NODE_ID',
@@ -27057,10 +28198,10 @@ QueryGraphResponse GPUdb::queryGraph( const std::string& graphName,
  * @param restrictions  Additional restrictions to apply to the nodes/edges of
  *                      an existing graph. Restrictions must be specified using
  *                      <a
- *                      href="../../graph_solver/network_graph_solver.html#identifiers"
+ *                      href="../../../graph_solver/network_graph_solver/#identifiers"
  *                      target="_top">identifiers</a>; identifiers are grouped
  *                      as <a
- *                      href="../../graph_solver/network_graph_solver.html#id-combos"
+ *                      href="../../../graph_solver/network_graph_solver/#id-combos"
  *                      target="_top">combinations</a>. Identifiers can be used
  *                      with existing column names, e.g., 'table.column AS
  *                      RESTRICTIONS_EDGE_ID', expressions, e.g., 'column/2 AS
@@ -27070,19 +28211,19 @@ QueryGraphResponse GPUdb::queryGraph( const std::string& graphName,
  *                      values specified must match across the combination.
  * @param adjacencyTable  Name of the table to store the resulting adjacencies,
  *                        in [schema_name.]table_name format, using standard <a
- *                        href="../../concepts/tables.html#table-name-resolution"
+ *                        href="../../../concepts/tables/#table-name-resolution"
  *                        target="_top">name resolution rules</a> and meeting
  *                        <a
- *                        href="../../concepts/tables.html#table-naming-criteria"
+ *                        href="../../../concepts/tables/#table-naming-criteria"
  *                        target="_top">table naming criteria</a>.  If left
  *                        blank, the query results are instead returned in the
  *                        response even if @a export_query_results is set to @a
  *                        false. If the 'QUERY_TARGET_NODE_LABEL' <a
- *                        href="../../graph_solver/network_graph_solver.html#query-identifiers"
+ *                        href="../../../graph_solver/network_graph_solver/#query-identifiers"
  *                        target="_top">query identifier</a> is used in @a
  *                        queries, then two additional columns will be
  *                        available: 'PATH_ID' and 'RING_ID'. See <a
- *                        href="../../graph_solver/network_graph_solver.html#using-labels"
+ *                        href="../../../graph_solver/network_graph_solver/#using-labels"
  *                        target="_top">Using Labels</a> for more information.
  * @param rings  Sets the number of rings around the node to query for
  *               adjacency, with '1' being the edges directly attached to the
@@ -27102,7 +28243,7 @@ QueryGraphResponse GPUdb::queryGraph( const std::string& graphName,
  *                 edges relative to the node will be returned. This parameter
  *                 is only applicable if the queried graph @a graphName is
  *                 directed and when querying nodes. Consult <a
- *                 href="../../graph_solver/network_graph_solver.html#directed-graphs"
+ *                 href="../../../graph_solver/network_graph_solver/#directed-graphs"
  *                 target="_top">Directed Graphs</a> for more details.
  *                 <ul>
  *                         <li> gpudb::query_graph_true
@@ -27118,9 +28259,9 @@ QueryGraphResponse GPUdb::queryGraph( const std::string& graphName,
  *                 the table to store the list of the final nodes reached
  *                 during the traversal, in [schema_name.]table_name format,
  *                 using standard <a
- *                 href="../../concepts/tables.html#table-name-resolution"
+ *                 href="../../../concepts/tables/#table-name-resolution"
  *                 target="_top">name resolution rules</a> and meeting <a
- *                 href="../../concepts/tables.html#table-naming-criteria"
+ *                 href="../../../concepts/tables/#table-naming-criteria"
  *                 target="_top">table naming criteria</a>.  If this value is
  *                 left as the default, the table name will default to the @a
  *                 adjacencyTable value plus a '_nodes' suffix, e.g.,
@@ -27147,10 +28288,9 @@ QueryGraphResponse GPUdb::queryGraph( const std::string& graphName,
  *                 to the given @a adjacencyTable and inputs WKT values from
  *                 the source graph (if available) or auto-generated WKT values
  *                 (if there are no WKT values in the source graph). A
- *                 subsequent call to the <a
- *                 href="../../api/rest/wms_rest.html" target="_top">/wms</a>
- *                 endpoint can then be made to display the query results on a
- *                 map.
+ *                 subsequent call to the <a href="../../../api/rest/wms_rest/"
+ *                 target="_top">/wms</a> endpoint can then be made to display
+ *                 the query results on a map.
  *                 <ul>
  *                         <li> gpudb::query_graph_true
  *                         <li> gpudb::query_graph_false
@@ -27206,7 +28346,137 @@ QueryGraphResponse& GPUdb::queryGraph( const std::string& graphName,
 
 
 /**
- * Revokes a <a href="../../concepts/data_sources.html" target="_top">data
+ * Revokes a <a
+ * href="../../../security/sec_concepts/#security-concepts-permissions-credential"
+ * target="_top">credential-level permission</a> from a user or role.
+ * 
+ * @param[in] request_  Request object containing the parameters for the
+ *                      operation.
+ * 
+ * @return Response object containing the result of the operation.
+ * 
+ */
+
+RevokePermissionCredentialResponse GPUdb::revokePermissionCredential( const RevokePermissionCredentialRequest& request_ ) const
+{
+    RevokePermissionCredentialResponse actualResponse_;
+    submitRequest("/revoke/permission/credential", request_, actualResponse_, false);
+    return actualResponse_;
+}
+
+
+/**
+ * Revokes a <a
+ * href="../../../security/sec_concepts/#security-concepts-permissions-credential"
+ * target="_top">credential-level permission</a> from a user or role.
+ * 
+ * @param[in] request_  Request object containing the parameters for the
+ *                      operation.
+ * @param[out] response_  Response object containing the results of the
+ *                        operation.
+ * 
+ * @return Response object containing the result of the operation (initially
+ *         passed in by reference).
+ * 
+ */
+
+RevokePermissionCredentialResponse& GPUdb::revokePermissionCredential( const RevokePermissionCredentialRequest& request_,
+                                                                       RevokePermissionCredentialResponse& response_ ) const
+{
+    submitRequest("/revoke/permission/credential", request_, response_, false);
+    return response_;
+}
+
+
+/**
+ * Revokes a <a
+ * href="../../../security/sec_concepts/#security-concepts-permissions-credential"
+ * target="_top">credential-level permission</a> from a user or role.
+ * 
+ * @param name  Name of the user or role from which the permission will be
+ *              revoked. Must be an existing user or role.
+ * @param permission  Permission to revoke from the user or role.
+ *                    <ul>
+ *                            <li>
+ *                    gpudb::revoke_permission_credential_credential_admin:
+ *                    Full read/write and administrative access on the
+ *                    credential.
+ *                            <li>
+ *                    gpudb::revoke_permission_credential_credential_read:
+ *                    Ability to read and use the credential.
+ *                    </ul>
+ * @param credentialName  Name of the credential on which the permission will
+ *                        be revoked. Must be an existing credential, or an
+ *                        empty string to revoke access on all credentials.
+ * @param options  Optional parameters.
+ * 
+ * @return Response object containing the result of the operation.
+ * 
+ */
+
+RevokePermissionCredentialResponse GPUdb::revokePermissionCredential( const std::string& name,
+                                                                      const std::string& permission,
+                                                                      const std::string& credentialName,
+                                                                      const std::map<std::string, std::string>& options ) const
+{
+    RevokePermissionCredentialRequest actualRequest_;
+    actualRequest_.name = name;
+    actualRequest_.permission = permission;
+    actualRequest_.credentialName = credentialName;
+    actualRequest_.options = options;
+    RevokePermissionCredentialResponse actualResponse_;
+    submitRequest("/revoke/permission/credential", actualRequest_, actualResponse_, false);
+    return actualResponse_;
+}
+
+
+/**
+ * Revokes a <a
+ * href="../../../security/sec_concepts/#security-concepts-permissions-credential"
+ * target="_top">credential-level permission</a> from a user or role.
+ * 
+ * @param name  Name of the user or role from which the permission will be
+ *              revoked. Must be an existing user or role.
+ * @param permission  Permission to revoke from the user or role.
+ *                    <ul>
+ *                            <li>
+ *                    gpudb::revoke_permission_credential_credential_admin:
+ *                    Full read/write and administrative access on the
+ *                    credential.
+ *                            <li>
+ *                    gpudb::revoke_permission_credential_credential_read:
+ *                    Ability to read and use the credential.
+ *                    </ul>
+ * @param credentialName  Name of the credential on which the permission will
+ *                        be revoked. Must be an existing credential, or an
+ *                        empty string to revoke access on all credentials.
+ * @param options  Optional parameters.
+ * @param[out] response_  Response object containing the results of the
+ *                        operation.
+ * 
+ * @return Response object containing the result of the operation (initially
+ *         passed in by reference).
+ * 
+ */
+
+RevokePermissionCredentialResponse& GPUdb::revokePermissionCredential( const std::string& name,
+                                                                       const std::string& permission,
+                                                                       const std::string& credentialName,
+                                                                       const std::map<std::string, std::string>& options,
+                                                                       RevokePermissionCredentialResponse& response_ ) const
+{
+    RevokePermissionCredentialRequest actualRequest_;
+    actualRequest_.name = name;
+    actualRequest_.permission = permission;
+    actualRequest_.credentialName = credentialName;
+    actualRequest_.options = options;
+    submitRequest("/revoke/permission/credential", actualRequest_, response_, false);
+    return response_;
+}
+
+
+/**
+ * Revokes a <a href="../../../concepts/data_sources/" target="_top">data
  * source</a> permission from a user or role.
  * 
  * @param[in] request_  Request object containing the parameters for the
@@ -27225,7 +28495,7 @@ RevokePermissionDatasourceResponse GPUdb::revokePermissionDatasource( const Revo
 
 
 /**
- * Revokes a <a href="../../concepts/data_sources.html" target="_top">data
+ * Revokes a <a href="../../../concepts/data_sources/" target="_top">data
  * source</a> permission from a user or role.
  * 
  * @param[in] request_  Request object containing the parameters for the
@@ -27247,7 +28517,7 @@ RevokePermissionDatasourceResponse& GPUdb::revokePermissionDatasource( const Rev
 
 
 /**
- * Revokes a <a href="../../concepts/data_sources.html" target="_top">data
+ * Revokes a <a href="../../../concepts/data_sources/" target="_top">data
  * source</a> permission from a user or role.
  * 
  * @param name  Name of the user or role from which the permission will be
@@ -27284,7 +28554,7 @@ RevokePermissionDatasourceResponse GPUdb::revokePermissionDatasource( const std:
 
 
 /**
- * Revokes a <a href="../../concepts/data_sources.html" target="_top">data
+ * Revokes a <a href="../../../concepts/data_sources/" target="_top">data
  * source</a> permission from a user or role.
  * 
  * @param name  Name of the user or role from which the permission will be
@@ -27616,7 +28886,7 @@ RevokePermissionTableResponse& GPUdb::revokePermissionTable( const RevokePermiss
  *                    </ul>
  * @param tableName  Name of the table to which the permission grants access,
  *                   in [schema_name.]table_name format, using standard <a
- *                   href="../../concepts/tables.html#table-name-resolution"
+ *                   href="../../../concepts/tables/#table-name-resolution"
  *                   target="_top">name resolution rules</a>.  Must be an
  *                   existing table, view or schema.
  * @param options  Optional parameters.
@@ -27666,7 +28936,7 @@ RevokePermissionTableResponse GPUdb::revokePermissionTable( const std::string& n
  *                    </ul>
  * @param tableName  Name of the table to which the permission grants access,
  *                   in [schema_name.]table_name format, using standard <a
- *                   href="../../concepts/tables.html#table-name-resolution"
+ *                   href="../../../concepts/tables/#table-name-resolution"
  *                   target="_top">name resolution rules</a>.  Must be an
  *                   existing table, view or schema.
  * @param options  Optional parameters.
@@ -27796,8 +29066,190 @@ RevokeRoleResponse& GPUdb::revokeRole( const std::string& role,
 
 
 /**
+ * @private
+ * 
+ * @param[in] request_  Request object containing the parameters for the
+ *                      operation.
+ * 
+ * @return Response object containing the result of the operation.
+ * 
+ */
+
+ShowContainerRegistryResponse GPUdb::showContainerRegistry( const ShowContainerRegistryRequest& request_ ) const
+{
+    ShowContainerRegistryResponse actualResponse_;
+    submitRequest("/show/container/registry", request_, actualResponse_, false);
+    return actualResponse_;
+}
+
+
+/**
+ * @private
+ * 
+ * @param[in] request_  Request object containing the parameters for the
+ *                      operation.
+ * @param[out] response_  Response object containing the results of the
+ *                        operation.
+ * 
+ * @return Response object containing the result of the operation (initially
+ *         passed in by reference).
+ * 
+ */
+
+ShowContainerRegistryResponse& GPUdb::showContainerRegistry( const ShowContainerRegistryRequest& request_,
+                                                             ShowContainerRegistryResponse& response_ ) const
+{
+    submitRequest("/show/container/registry", request_, response_, false);
+    return response_;
+}
+
+
+/**
+ * @private
+ * 
+ * @param registryName
+ * @param options
+ * 
+ * @return Response object containing the result of the operation.
+ * 
+ */
+
+ShowContainerRegistryResponse GPUdb::showContainerRegistry( const std::string& registryName,
+                                                            const std::map<std::string, std::string>& options ) const
+{
+    ShowContainerRegistryRequest actualRequest_;
+    actualRequest_.registryName = registryName;
+    actualRequest_.options = options;
+    ShowContainerRegistryResponse actualResponse_;
+    submitRequest("/show/container/registry", actualRequest_, actualResponse_, false);
+    return actualResponse_;
+}
+
+
+/**
+ * @private
+ * 
+ * @param registryName
+ * @param options
+ * @param[out] response_  Response object containing the results of the
+ *                        operation.
+ * 
+ * @return Response object containing the result of the operation (initially
+ *         passed in by reference).
+ * 
+ */
+
+ShowContainerRegistryResponse& GPUdb::showContainerRegistry( const std::string& registryName,
+                                                             const std::map<std::string, std::string>& options,
+                                                             ShowContainerRegistryResponse& response_ ) const
+{
+    ShowContainerRegistryRequest actualRequest_;
+    actualRequest_.registryName = registryName;
+    actualRequest_.options = options;
+    submitRequest("/show/container/registry", actualRequest_, response_, false);
+    return response_;
+}
+
+
+/**
+ * Shows information about a specified <a href="../../../concepts/credentials/"
+ * target="_top">credential</a> or all credentials.
+ * 
+ * @param[in] request_  Request object containing the parameters for the
+ *                      operation.
+ * 
+ * @return Response object containing the result of the operation.
+ * 
+ */
+
+ShowCredentialResponse GPUdb::showCredential( const ShowCredentialRequest& request_ ) const
+{
+    ShowCredentialResponse actualResponse_;
+    submitRequest("/show/credential", request_, actualResponse_, false);
+    return actualResponse_;
+}
+
+
+/**
+ * Shows information about a specified <a href="../../../concepts/credentials/"
+ * target="_top">credential</a> or all credentials.
+ * 
+ * @param[in] request_  Request object containing the parameters for the
+ *                      operation.
+ * @param[out] response_  Response object containing the results of the
+ *                        operation.
+ * 
+ * @return Response object containing the result of the operation (initially
+ *         passed in by reference).
+ * 
+ */
+
+ShowCredentialResponse& GPUdb::showCredential( const ShowCredentialRequest& request_,
+                                               ShowCredentialResponse& response_ ) const
+{
+    submitRequest("/show/credential", request_, response_, false);
+    return response_;
+}
+
+
+/**
+ * Shows information about a specified <a href="../../../concepts/credentials/"
+ * target="_top">credential</a> or all credentials.
+ * 
+ * @param credentialName  Name of the credential on which to retrieve
+ *                        information. The name must refer to a currently
+ *                        existing credential. If '*' is specified, information
+ *                        about all credentials will be returned.
+ * @param options  Optional parameters.
+ * 
+ * @return Response object containing the result of the operation.
+ * 
+ */
+
+ShowCredentialResponse GPUdb::showCredential( const std::string& credentialName,
+                                              const std::map<std::string, std::string>& options ) const
+{
+    ShowCredentialRequest actualRequest_;
+    actualRequest_.credentialName = credentialName;
+    actualRequest_.options = options;
+    ShowCredentialResponse actualResponse_;
+    submitRequest("/show/credential", actualRequest_, actualResponse_, false);
+    return actualResponse_;
+}
+
+
+/**
+ * Shows information about a specified <a href="../../../concepts/credentials/"
+ * target="_top">credential</a> or all credentials.
+ * 
+ * @param credentialName  Name of the credential on which to retrieve
+ *                        information. The name must refer to a currently
+ *                        existing credential. If '*' is specified, information
+ *                        about all credentials will be returned.
+ * @param options  Optional parameters.
+ * @param[out] response_  Response object containing the results of the
+ *                        operation.
+ * 
+ * @return Response object containing the result of the operation (initially
+ *         passed in by reference).
+ * 
+ */
+
+ShowCredentialResponse& GPUdb::showCredential( const std::string& credentialName,
+                                               const std::map<std::string, std::string>& options,
+                                               ShowCredentialResponse& response_ ) const
+{
+    ShowCredentialRequest actualRequest_;
+    actualRequest_.credentialName = credentialName;
+    actualRequest_.options = options;
+    submitRequest("/show/credential", actualRequest_, response_, false);
+    return response_;
+}
+
+
+/**
  * Shows information about a specified <a
- * href="../../concepts/data_sources.html" target="_top">data source</a> or all
+ * href="../../../concepts/data_sources/" target="_top">data source</a> or all
  * data sources.
  * 
  * @param[in] request_  Request object containing the parameters for the
@@ -27817,7 +29269,7 @@ ShowDatasourceResponse GPUdb::showDatasource( const ShowDatasourceRequest& reque
 
 /**
  * Shows information about a specified <a
- * href="../../concepts/data_sources.html" target="_top">data source</a> or all
+ * href="../../../concepts/data_sources/" target="_top">data source</a> or all
  * data sources.
  * 
  * @param[in] request_  Request object containing the parameters for the
@@ -27840,7 +29292,7 @@ ShowDatasourceResponse& GPUdb::showDatasource( const ShowDatasourceRequest& requ
 
 /**
  * Shows information about a specified <a
- * href="../../concepts/data_sources.html" target="_top">data source</a> or all
+ * href="../../../concepts/data_sources/" target="_top">data source</a> or all
  * data sources.
  * 
  * @param name  Name of the data source for which to retrieve information. The
@@ -27866,7 +29318,7 @@ ShowDatasourceResponse GPUdb::showDatasource( const std::string& name,
 
 /**
  * Shows information about a specified <a
- * href="../../concepts/data_sources.html" target="_top">data source</a> or all
+ * href="../../../concepts/data_sources/" target="_top">data source</a> or all
  * data sources.
  * 
  * @param name  Name of the data source for which to retrieve information. The
@@ -27935,18 +29387,52 @@ ShowFunctionsResponse& GPUdb::showFunctions( const ShowFunctionsRequest& request
 /**
  * @private
  * 
+ * @param names
  * @param options
  *                 <ul>
  *                         <li> gpudb::show_functions_properties
+ *                         <li> gpudb::show_functions_show_scalar_functions:
+ *                 <ul>
+ *                         <li> gpudb::show_functions_true
+ *                         <li> gpudb::show_functions_false
+ *                 </ul>
+ *                 The default value is gpudb::show_functions_true.
+ *                         <li> gpudb::show_functions_show_aggregate_functions:
+ *                 <ul>
+ *                         <li> gpudb::show_functions_true
+ *                         <li> gpudb::show_functions_false
+ *                 </ul>
+ *                 The default value is gpudb::show_functions_true.
+ *                         <li> gpudb::show_functions_show_sql_procedures:
+ *                 <ul>
+ *                         <li> gpudb::show_functions_true
+ *                         <li> gpudb::show_functions_false
+ *                 </ul>
+ *                 The default value is gpudb::show_functions_true.
+ *                         <li>
+ *                 gpudb::show_functions_show_user_defined_functions:
+ *                 <ul>
+ *                         <li> gpudb::show_functions_true
+ *                         <li> gpudb::show_functions_false
+ *                 </ul>
+ *                 The default value is gpudb::show_functions_true.
+ *                         <li> gpudb::show_functions_show_cast_functions:
+ *                 <ul>
+ *                         <li> gpudb::show_functions_true
+ *                         <li> gpudb::show_functions_false
+ *                 </ul>
+ *                 The default value is gpudb::show_functions_true.
  *                 </ul>
  * 
  * @return Response object containing the result of the operation.
  * 
  */
 
-ShowFunctionsResponse GPUdb::showFunctions( const std::map<std::string, std::string>& options ) const
+ShowFunctionsResponse GPUdb::showFunctions( const std::vector<std::string>& names,
+                                            const std::map<std::string, std::string>& options ) const
 {
     ShowFunctionsRequest actualRequest_;
+    actualRequest_.names = names;
     actualRequest_.options = options;
     ShowFunctionsResponse actualResponse_;
     submitRequest("/show/functions", actualRequest_, actualResponse_, false);
@@ -27957,9 +29443,41 @@ ShowFunctionsResponse GPUdb::showFunctions( const std::map<std::string, std::str
 /**
  * @private
  * 
+ * @param names
  * @param options
  *                 <ul>
  *                         <li> gpudb::show_functions_properties
+ *                         <li> gpudb::show_functions_show_scalar_functions:
+ *                 <ul>
+ *                         <li> gpudb::show_functions_true
+ *                         <li> gpudb::show_functions_false
+ *                 </ul>
+ *                 The default value is gpudb::show_functions_true.
+ *                         <li> gpudb::show_functions_show_aggregate_functions:
+ *                 <ul>
+ *                         <li> gpudb::show_functions_true
+ *                         <li> gpudb::show_functions_false
+ *                 </ul>
+ *                 The default value is gpudb::show_functions_true.
+ *                         <li> gpudb::show_functions_show_sql_procedures:
+ *                 <ul>
+ *                         <li> gpudb::show_functions_true
+ *                         <li> gpudb::show_functions_false
+ *                 </ul>
+ *                 The default value is gpudb::show_functions_true.
+ *                         <li>
+ *                 gpudb::show_functions_show_user_defined_functions:
+ *                 <ul>
+ *                         <li> gpudb::show_functions_true
+ *                         <li> gpudb::show_functions_false
+ *                 </ul>
+ *                 The default value is gpudb::show_functions_true.
+ *                         <li> gpudb::show_functions_show_cast_functions:
+ *                 <ul>
+ *                         <li> gpudb::show_functions_true
+ *                         <li> gpudb::show_functions_false
+ *                 </ul>
+ *                 The default value is gpudb::show_functions_true.
  *                 </ul>
  * @param[out] response_  Response object containing the results of the
  *                        operation.
@@ -27969,10 +29487,12 @@ ShowFunctionsResponse GPUdb::showFunctions( const std::map<std::string, std::str
  * 
  */
 
-ShowFunctionsResponse& GPUdb::showFunctions( const std::map<std::string, std::string>& options,
+ShowFunctionsResponse& GPUdb::showFunctions( const std::vector<std::string>& names,
+                                             const std::map<std::string, std::string>& options,
                                              ShowFunctionsResponse& response_ ) const
 {
     ShowFunctionsRequest actualRequest_;
+    actualRequest_.names = names;
     actualRequest_.options = options;
     submitRequest("/show/functions", actualRequest_, response_, false);
     return response_;
@@ -28175,6 +29695,92 @@ ShowGraphGrammarResponse& GPUdb::showGraphGrammar( const std::map<std::string, s
     ShowGraphGrammarRequest actualRequest_;
     actualRequest_.options = options;
     submitRequest("/show/graph/grammar", actualRequest_, response_, false);
+    return response_;
+}
+
+
+/**
+ * @private
+ * 
+ * @param[in] request_  Request object containing the parameters for the
+ *                      operation.
+ * 
+ * @return Response object containing the result of the operation.
+ * 
+ */
+
+ShowModelResponse GPUdb::showModel( const ShowModelRequest& request_ ) const
+{
+    ShowModelResponse actualResponse_;
+    submitRequest("/show/model", request_, actualResponse_, false);
+    return actualResponse_;
+}
+
+
+/**
+ * @private
+ * 
+ * @param[in] request_  Request object containing the parameters for the
+ *                      operation.
+ * @param[out] response_  Response object containing the results of the
+ *                        operation.
+ * 
+ * @return Response object containing the result of the operation (initially
+ *         passed in by reference).
+ * 
+ */
+
+ShowModelResponse& GPUdb::showModel( const ShowModelRequest& request_,
+                                     ShowModelResponse& response_ ) const
+{
+    submitRequest("/show/model", request_, response_, false);
+    return response_;
+}
+
+
+/**
+ * @private
+ * 
+ * @param modelNames
+ * @param options
+ * 
+ * @return Response object containing the result of the operation.
+ * 
+ */
+
+ShowModelResponse GPUdb::showModel( const std::vector<std::string>& modelNames,
+                                    const std::map<std::string, std::string>& options ) const
+{
+    ShowModelRequest actualRequest_;
+    actualRequest_.modelNames = modelNames;
+    actualRequest_.options = options;
+    ShowModelResponse actualResponse_;
+    submitRequest("/show/model", actualRequest_, actualResponse_, false);
+    return actualResponse_;
+}
+
+
+/**
+ * @private
+ * 
+ * @param modelNames
+ * @param options
+ * @param[out] response_  Response object containing the results of the
+ *                        operation.
+ * 
+ * @return Response object containing the result of the operation (initially
+ *         passed in by reference).
+ * 
+ */
+
+ShowModelResponse& GPUdb::showModel( const std::vector<std::string>& modelNames,
+                                     const std::map<std::string, std::string>& options,
+                                     ShowModelResponse& response_ ) const
+{
+    ShowModelRequest actualRequest_;
+    actualRequest_.modelNames = modelNames;
+    actualRequest_.options = options;
+    submitRequest("/show/model", actualRequest_, response_, false);
     return response_;
 }
 
@@ -28646,7 +30252,7 @@ ShowResourceGroupsResponse& GPUdb::showResourceGroups( const std::vector<std::st
 
 
 /**
- * Retrieves information about a <a href="../../concepts/schemas.html"
+ * Retrieves information about a <a href="../../../concepts/schemas/"
  * target="_top">schema</a> (or all schemas), as specified in @a schemaName.
  * 
  * @param[in] request_  Request object containing the parameters for the
@@ -28665,7 +30271,7 @@ ShowSchemaResponse GPUdb::showSchema( const ShowSchemaRequest& request_ ) const
 
 
 /**
- * Retrieves information about a <a href="../../concepts/schemas.html"
+ * Retrieves information about a <a href="../../../concepts/schemas/"
  * target="_top">schema</a> (or all schemas), as specified in @a schemaName.
  * 
  * @param[in] request_  Request object containing the parameters for the
@@ -28687,7 +30293,7 @@ ShowSchemaResponse& GPUdb::showSchema( const ShowSchemaRequest& request_,
 
 
 /**
- * Retrieves information about a <a href="../../concepts/schemas.html"
+ * Retrieves information about a <a href="../../../concepts/schemas/"
  * target="_top">schema</a> (or all schemas), as specified in @a schemaName.
  * 
  * @param schemaName  Name of the schema for which to retrieve the information.
@@ -28722,7 +30328,7 @@ ShowSchemaResponse GPUdb::showSchema( const std::string& schemaName,
 
 
 /**
- * Retrieves information about a <a href="../../concepts/schemas.html"
+ * Retrieves information about a <a href="../../../concepts/schemas/"
  * target="_top">schema</a> (or all schemas), as specified in @a schemaName.
  * 
  * @param schemaName  Name of the schema for which to retrieve the information.
@@ -29017,7 +30623,7 @@ ShowStatisticsResponse& GPUdb::showStatistics( const ShowStatisticsRequest& requ
  * 
  * @param tableNames  Names of tables whose metadata will be fetched, each in
  *                    [schema_name.]table_name format, using standard <a
- *                    href="../../concepts/tables.html#table-name-resolution"
+ *                    href="../../../concepts/tables/#table-name-resolution"
  *                    target="_top">name resolution rules</a>.  All provided
  *                    tables must exist, or an error is returned.
  * @param options  Optional parameters.
@@ -29043,7 +30649,7 @@ ShowStatisticsResponse GPUdb::showStatistics( const std::vector<std::string>& ta
  * 
  * @param tableNames  Names of tables whose metadata will be fetched, each in
  *                    [schema_name.]table_name format, using standard <a
- *                    href="../../concepts/tables.html#table-name-resolution"
+ *                    href="../../../concepts/tables/#table-name-resolution"
  *                    target="_top">name resolution rules</a>.  All provided
  *                    tables must exist, or an error is returned.
  * @param options  Optional parameters.
@@ -29473,7 +31079,7 @@ ShowTableResponse& GPUdb::showTable( const ShowTableRequest& request_,
  * 
  * @param tableName  Name of the table for which to retrieve the information,
  *                   in [schema_name.]table_name format, using standard <a
- *                   href="../../concepts/tables.html#table-name-resolution"
+ *                   href="../../../concepts/tables/#table-name-resolution"
  *                   target="_top">name resolution rules</a>.  If blank, then
  *                   returns information about all tables and views.
  * @param options  Optional parameters.
@@ -29580,7 +31186,7 @@ ShowTableResponse GPUdb::showTable( const std::string& tableName,
  * 
  * @param tableName  Name of the table for which to retrieve the information,
  *                   in [schema_name.]table_name format, using standard <a
- *                   href="../../concepts/tables.html#table-name-resolution"
+ *                   href="../../../concepts/tables/#table-name-resolution"
  *                   target="_top">name resolution rules</a>.  If blank, then
  *                   returns information about all tables and views.
  * @param options  Optional parameters.
@@ -29707,7 +31313,7 @@ ShowTableMetadataResponse& GPUdb::showTableMetadata( const ShowTableMetadataRequ
  * 
  * @param tableNames  Names of tables whose metadata will be fetched, in
  *                    [schema_name.]table_name format, using standard <a
- *                    href="../../concepts/tables.html#table-name-resolution"
+ *                    href="../../../concepts/tables/#table-name-resolution"
  *                    target="_top">name resolution rules</a>.  All provided
  *                    tables must exist, or an error is returned.
  * @param options  Optional parameters.
@@ -29733,7 +31339,7 @@ ShowTableMetadataResponse GPUdb::showTableMetadata( const std::vector<std::strin
  * 
  * @param tableNames  Names of tables whose metadata will be fetched, in
  *                    [schema_name.]table_name format, using standard <a
- *                    href="../../concepts/tables.html#table-name-resolution"
+ *                    href="../../../concepts/tables/#table-name-resolution"
  *                    target="_top">name resolution rules</a>.  All provided
  *                    tables must exist, or an error is returned.
  * @param options  Optional parameters.
@@ -30148,13 +31754,13 @@ ShowTypesResponse& GPUdb::showTypes( const std::string& typeId,
  * additional, optional weights and restrictions.
  * <p>
  * IMPORTANT: It's highly recommended that you review the
- * <a href="../../graph_solver/network_graph_solver.html" target="_top">Network
+ * <a href="../../../graph_solver/network_graph_solver/" target="_top">Network
  * Graphs & Solvers</a>
  * concepts documentation, the
- * <a href="../../graph_solver/examples/graph_rest_guide.html"
+ * <a href="../../../graph_solver/examples/graph_rest_guide/"
  * target="_top">Graph REST Tutorial</a>,
  * and/or some
- * <a href="../../graph_solver/examples.html#match-graph"
+ * <a href="../../../graph_solver/examples/#match-graph"
  * target="_top">/match/graph examples</a>
  * before using this endpoint.
  * 
@@ -30180,13 +31786,13 @@ SolveGraphResponse GPUdb::solveGraph( const SolveGraphRequest& request_ ) const
  * additional, optional weights and restrictions.
  * <p>
  * IMPORTANT: It's highly recommended that you review the
- * <a href="../../graph_solver/network_graph_solver.html" target="_top">Network
+ * <a href="../../../graph_solver/network_graph_solver/" target="_top">Network
  * Graphs & Solvers</a>
  * concepts documentation, the
- * <a href="../../graph_solver/examples/graph_rest_guide.html"
+ * <a href="../../../graph_solver/examples/graph_rest_guide/"
  * target="_top">Graph REST Tutorial</a>,
  * and/or some
- * <a href="../../graph_solver/examples.html#match-graph"
+ * <a href="../../../graph_solver/examples/#match-graph"
  * target="_top">/match/graph examples</a>
  * before using this endpoint.
  * 
@@ -30215,13 +31821,13 @@ SolveGraphResponse& GPUdb::solveGraph( const SolveGraphRequest& request_,
  * additional, optional weights and restrictions.
  * <p>
  * IMPORTANT: It's highly recommended that you review the
- * <a href="../../graph_solver/network_graph_solver.html" target="_top">Network
+ * <a href="../../../graph_solver/network_graph_solver/" target="_top">Network
  * Graphs & Solvers</a>
  * concepts documentation, the
- * <a href="../../graph_solver/examples/graph_rest_guide.html"
+ * <a href="../../../graph_solver/examples/graph_rest_guide/"
  * target="_top">Graph REST Tutorial</a>,
  * and/or some
- * <a href="../../graph_solver/examples.html#match-graph"
+ * <a href="../../../graph_solver/examples/#match-graph"
  * target="_top">/match/graph examples</a>
  * before using this endpoint.
  * 
@@ -30230,11 +31836,11 @@ SolveGraphResponse& GPUdb::solveGraph( const SolveGraphRequest& request_,
  *                        existing
  *                        graph. Weights must be specified using
  *                        <a
- *                        href="../../graph_solver/network_graph_solver.html#identifiers"
+ *                        href="../../../graph_solver/network_graph_solver/#identifiers"
  *                        target="_top">identifiers</a>;
  *                        identifiers are grouped as
  *                        <a
- *                        href="../../graph_solver/network_graph_solver.html#id-combos"
+ *                        href="../../../graph_solver/network_graph_solver/#id-combos"
  *                        target="_top">combinations</a>.
  *                        Identifiers can be used with existing column names,
  *                        e.g.,
@@ -30254,11 +31860,11 @@ SolveGraphResponse& GPUdb::solveGraph( const SolveGraphRequest& request_,
  *                      an
  *                      existing graph. Restrictions must be specified using
  *                      <a
- *                      href="../../graph_solver/network_graph_solver.html#identifiers"
+ *                      href="../../../graph_solver/network_graph_solver/#identifiers"
  *                      target="_top">identifiers</a>;
  *                      identifiers are grouped as
  *                      <a
- *                      href="../../graph_solver/network_graph_solver.html#id-combos"
+ *                      href="../../../graph_solver/network_graph_solver/#id-combos"
  *                      target="_top">combinations</a>.
  *                      Identifiers can be used with existing column names,
  *                      e.g.,
@@ -30325,7 +31931,7 @@ SolveGraphResponse& GPUdb::solveGraph( const SolveGraphRequest& request_,
  *                          assets.
  * @param solutionTable  Name of the table to store the solution, in
  *                       [schema_name.]table_name format, using standard <a
- *                       href="../../concepts/tables.html#table-name-resolution"
+ *                       href="../../../concepts/tables/#table-name-resolution"
  *                       target="_top">name resolution rules</a>.
  * @param options  Additional parameters
  *                 <ul>
@@ -30488,13 +32094,13 @@ SolveGraphResponse GPUdb::solveGraph( const std::string& graphName,
  * additional, optional weights and restrictions.
  * <p>
  * IMPORTANT: It's highly recommended that you review the
- * <a href="../../graph_solver/network_graph_solver.html" target="_top">Network
+ * <a href="../../../graph_solver/network_graph_solver/" target="_top">Network
  * Graphs & Solvers</a>
  * concepts documentation, the
- * <a href="../../graph_solver/examples/graph_rest_guide.html"
+ * <a href="../../../graph_solver/examples/graph_rest_guide/"
  * target="_top">Graph REST Tutorial</a>,
  * and/or some
- * <a href="../../graph_solver/examples.html#match-graph"
+ * <a href="../../../graph_solver/examples/#match-graph"
  * target="_top">/match/graph examples</a>
  * before using this endpoint.
  * 
@@ -30503,11 +32109,11 @@ SolveGraphResponse GPUdb::solveGraph( const std::string& graphName,
  *                        existing
  *                        graph. Weights must be specified using
  *                        <a
- *                        href="../../graph_solver/network_graph_solver.html#identifiers"
+ *                        href="../../../graph_solver/network_graph_solver/#identifiers"
  *                        target="_top">identifiers</a>;
  *                        identifiers are grouped as
  *                        <a
- *                        href="../../graph_solver/network_graph_solver.html#id-combos"
+ *                        href="../../../graph_solver/network_graph_solver/#id-combos"
  *                        target="_top">combinations</a>.
  *                        Identifiers can be used with existing column names,
  *                        e.g.,
@@ -30527,11 +32133,11 @@ SolveGraphResponse GPUdb::solveGraph( const std::string& graphName,
  *                      an
  *                      existing graph. Restrictions must be specified using
  *                      <a
- *                      href="../../graph_solver/network_graph_solver.html#identifiers"
+ *                      href="../../../graph_solver/network_graph_solver/#identifiers"
  *                      target="_top">identifiers</a>;
  *                      identifiers are grouped as
  *                      <a
- *                      href="../../graph_solver/network_graph_solver.html#id-combos"
+ *                      href="../../../graph_solver/network_graph_solver/#id-combos"
  *                      target="_top">combinations</a>.
  *                      Identifiers can be used with existing column names,
  *                      e.g.,
@@ -30598,7 +32204,7 @@ SolveGraphResponse GPUdb::solveGraph( const std::string& graphName,
  *                          assets.
  * @param solutionTable  Name of the table to store the solution, in
  *                       [schema_name.]table_name format, using standard <a
- *                       href="../../concepts/tables.html#table-name-resolution"
+ *                       href="../../../concepts/tables/#table-name-resolution"
  *                       target="_top">name resolution rules</a>.
  * @param options  Additional parameters
  *                 <ul>
@@ -30786,8 +32392,8 @@ SolveGraphResponse& GPUdb::solveGraph( const std::string& graphName,
  * <p>
  * The @a update_on_existing_pk option specifies the record
  * collision policy for tables with a <a
- * href="../../concepts/tables.html#primary-keys" target="_top">primary
- * key</a>, and
+ * href="../../../concepts/tables/#primary-keys" target="_top">primary key</a>,
+ * and
  * is ignored on tables with no primary key.
  * 
  * @param[in] request_  Request object containing the parameters for the
@@ -30834,8 +32440,8 @@ UpdateRecordsResponse GPUdb::updateRecordsRaw( const RawUpdateRecordsRequest& re
  * <p>
  * The @a update_on_existing_pk option specifies the record
  * collision policy for tables with a <a
- * href="../../concepts/tables.html#primary-keys" target="_top">primary
- * key</a>, and
+ * href="../../../concepts/tables/#primary-keys" target="_top">primary key</a>,
+ * and
  * is ignored on tables with no primary key.
  * 
  * @param[in] request_  Request object containing the parameters for the
@@ -30907,18 +32513,18 @@ UpdateRecordsBySeriesResponse& GPUdb::updateRecordsBySeries( const UpdateRecords
  * @param tableName  Name of the view on which the update operation will be
  *                   performed, in [schema_name.]view_name format, using
  *                   standard <a
- *                   href="../../concepts/tables.html#table-name-resolution"
+ *                   href="../../../concepts/tables/#table-name-resolution"
  *                   target="_top">name resolution rules</a>.  Must be an
  *                   existing view.
  * @param worldTableName  Name of the table containing the complete series
  *                        (track) information, in [schema_name.]table_name
  *                        format, using standard <a
- *                        href="../../concepts/tables.html#table-name-resolution"
+ *                        href="../../../concepts/tables/#table-name-resolution"
  *                        target="_top">name resolution rules</a>.
  * @param viewName  Name of the view containing the series (tracks) which have
  *                  to be updated, in [schema_name.]view_name format, using
  *                  standard <a
- *                  href="../../concepts/tables.html#table-name-resolution"
+ *                  href="../../../concepts/tables/#table-name-resolution"
  *                  target="_top">name resolution rules</a>.
  * @param reserved
  * @param options  Optional parameters.
@@ -30953,18 +32559,18 @@ UpdateRecordsBySeriesResponse GPUdb::updateRecordsBySeries( const std::string& t
  * @param tableName  Name of the view on which the update operation will be
  *                   performed, in [schema_name.]view_name format, using
  *                   standard <a
- *                   href="../../concepts/tables.html#table-name-resolution"
+ *                   href="../../../concepts/tables/#table-name-resolution"
  *                   target="_top">name resolution rules</a>.  Must be an
  *                   existing view.
  * @param worldTableName  Name of the table containing the complete series
  *                        (track) information, in [schema_name.]table_name
  *                        format, using standard <a
- *                        href="../../concepts/tables.html#table-name-resolution"
+ *                        href="../../../concepts/tables/#table-name-resolution"
  *                        target="_top">name resolution rules</a>.
  * @param viewName  Name of the view containing the series (tracks) which have
  *                  to be updated, in [schema_name.]view_name format, using
  *                  standard <a
- *                  href="../../concepts/tables.html#table-name-resolution"
+ *                  href="../../../concepts/tables/#table-name-resolution"
  *                  target="_top">name resolution rules</a>.
  * @param reserved
  * @param options  Optional parameters.
@@ -31464,7 +33070,7 @@ VisualizeImageChartResponse& GPUdb::visualizeImageChart( const VisualizeImageCha
  * 
  * @param tableName  Name of the table containing the data to be drawn as a
  *                   chart, in [schema_name.]table_name format, using standard
- *                   <a href="../../concepts/tables.html#table-name-resolution"
+ *                   <a href="../../../concepts/tables/#table-name-resolution"
  *                   target="_top">name resolution rules</a>.
  * @param xColumnNames  Names of the columns containing the data mapped to the
  *                      x axis of a chart.
@@ -31646,7 +33252,7 @@ VisualizeImageChartResponse GPUdb::visualizeImageChart( const std::string& table
  * 
  * @param tableName  Name of the table containing the data to be drawn as a
  *                   chart, in [schema_name.]table_name format, using standard
- *                   <a href="../../concepts/tables.html#table-name-resolution"
+ *                   <a href="../../../concepts/tables/#table-name-resolution"
  *                   target="_top">name resolution rules</a>.
  * @param xColumnNames  Names of the columns containing the data mapped to the
  *                      x axis of a chart.
@@ -33555,7 +35161,7 @@ VisualizeImageLabelsResponse& GPUdb::visualizeImageLabels( const std::string& ta
  * existing graph. Isolines represent curves of equal cost, with cost typically
  * referring to the time or distance assigned as the weights of the underlying
  * graph. See
- * <a href="../../graph_solver/network_graph_solver.html" target="_top">Network
+ * <a href="../../../graph_solver/network_graph_solver/" target="_top">Network
  * Graphs & Solvers</a>
  * for more information on graphs.
  * .
@@ -33580,7 +35186,7 @@ VisualizeIsochroneResponse GPUdb::visualizeIsochrone( const VisualizeIsochroneRe
  * existing graph. Isolines represent curves of equal cost, with cost typically
  * referring to the time or distance assigned as the weights of the underlying
  * graph. See
- * <a href="../../graph_solver/network_graph_solver.html" target="_top">Network
+ * <a href="../../../graph_solver/network_graph_solver/" target="_top">Network
  * Graphs & Solvers</a>
  * for more information on graphs.
  * .
@@ -33608,7 +35214,7 @@ VisualizeIsochroneResponse& GPUdb::visualizeIsochrone( const VisualizeIsochroneR
  * existing graph. Isolines represent curves of equal cost, with cost typically
  * referring to the time or distance assigned as the weights of the underlying
  * graph. See
- * <a href="../../graph_solver/network_graph_solver.html" target="_top">Network
+ * <a href="../../../graph_solver/network_graph_solver/" target="_top">Network
  * Graphs & Solvers</a>
  * for more information on graphs.
  * .
@@ -33621,10 +35227,10 @@ VisualizeIsochroneResponse& GPUdb::visualizeIsochrone( const VisualizeIsochroneR
  *                           Set to '-1.0' for unrestricted search radius.
  * @param weightsOnEdges  Additional weights to apply to the edges of an
  *                        existing graph. Weights must be specified using <a
- *                        href="../../graph_solver/network_graph_solver.html#identifiers"
+ *                        href="../../../graph_solver/network_graph_solver/#identifiers"
  *                        target="_top">identifiers</a>; identifiers are
  *                        grouped as <a
- *                        href="../../graph_solver/network_graph_solver.html#id-combos"
+ *                        href="../../../graph_solver/network_graph_solver/#id-combos"
  *                        target="_top">combinations</a>. Identifiers can be
  *                        used with existing column names, e.g., 'table.column
  *                        AS WEIGHTS_EDGE_ID', or expressions, e.g.,
@@ -33636,10 +35242,10 @@ VisualizeIsochroneResponse& GPUdb::visualizeIsochrone( const VisualizeIsochroneR
  * @param restrictions  Additional restrictions to apply to the nodes/edges of
  *                      an existing graph. Restrictions must be specified using
  *                      <a
- *                      href="../../graph_solver/network_graph_solver.html#identifiers"
+ *                      href="../../../graph_solver/network_graph_solver/#identifiers"
  *                      target="_top">identifiers</a>; identifiers are grouped
  *                      as <a
- *                      href="../../graph_solver/network_graph_solver.html#id-combos"
+ *                      href="../../../graph_solver/network_graph_solver/#id-combos"
  *                      target="_top">combinations</a>. Identifiers can be used
  *                      with existing column names, e.g., 'table.column AS
  *                      RESTRICTIONS_EDGE_ID', or expressions, e.g., 'column/2
@@ -33660,9 +35266,9 @@ VisualizeIsochroneResponse& GPUdb::visualizeIsochrone( const VisualizeIsochroneR
  *                       The default value is gpudb::visualize_isochrone_true.
  * @param levelsTable  Name of the table to output the isochrones to, in
  *                     [schema_name.]table_name format, using standard <a
- *                     href="../../concepts/tables.html#table-name-resolution"
+ *                     href="../../../concepts/tables/#table-name-resolution"
  *                     target="_top">name resolution rules</a> and meeting <a
- *                     href="../../concepts/tables.html#table-naming-criteria"
+ *                     href="../../../concepts/tables/#table-naming-criteria"
  *                     target="_top">table naming criteria</a>.  The table will
  *                     contain levels and their corresponding WKT geometry. If
  *                     no value is provided, the table is not generated.
@@ -33889,9 +35495,9 @@ VisualizeIsochroneResponse& GPUdb::visualizeIsochrone( const VisualizeIsochroneR
  *                         <li> gpudb::visualize_isochrone_solve_table: Name of
  *                 the table to host intermediate solve results, in
  *                 [schema_name.]table_name format, using standard <a
- *                 href="../../concepts/tables.html#table-name-resolution"
+ *                 href="../../../concepts/tables/#table-name-resolution"
  *                 target="_top">name resolution rules</a> and meeting <a
- *                 href="../../concepts/tables.html#table-naming-criteria"
+ *                 href="../../../concepts/tables/#table-naming-criteria"
  *                 target="_top">table naming criteria</a>.  This table will
  *                 contain the position and cost for each vertex in the graph.
  *                 If the default value is used, a temporary table is created
@@ -33986,7 +35592,7 @@ VisualizeIsochroneResponse GPUdb::visualizeIsochrone( const std::string& graphNa
  * existing graph. Isolines represent curves of equal cost, with cost typically
  * referring to the time or distance assigned as the weights of the underlying
  * graph. See
- * <a href="../../graph_solver/network_graph_solver.html" target="_top">Network
+ * <a href="../../../graph_solver/network_graph_solver/" target="_top">Network
  * Graphs & Solvers</a>
  * for more information on graphs.
  * .
@@ -33999,10 +35605,10 @@ VisualizeIsochroneResponse GPUdb::visualizeIsochrone( const std::string& graphNa
  *                           Set to '-1.0' for unrestricted search radius.
  * @param weightsOnEdges  Additional weights to apply to the edges of an
  *                        existing graph. Weights must be specified using <a
- *                        href="../../graph_solver/network_graph_solver.html#identifiers"
+ *                        href="../../../graph_solver/network_graph_solver/#identifiers"
  *                        target="_top">identifiers</a>; identifiers are
  *                        grouped as <a
- *                        href="../../graph_solver/network_graph_solver.html#id-combos"
+ *                        href="../../../graph_solver/network_graph_solver/#id-combos"
  *                        target="_top">combinations</a>. Identifiers can be
  *                        used with existing column names, e.g., 'table.column
  *                        AS WEIGHTS_EDGE_ID', or expressions, e.g.,
@@ -34014,10 +35620,10 @@ VisualizeIsochroneResponse GPUdb::visualizeIsochrone( const std::string& graphNa
  * @param restrictions  Additional restrictions to apply to the nodes/edges of
  *                      an existing graph. Restrictions must be specified using
  *                      <a
- *                      href="../../graph_solver/network_graph_solver.html#identifiers"
+ *                      href="../../../graph_solver/network_graph_solver/#identifiers"
  *                      target="_top">identifiers</a>; identifiers are grouped
  *                      as <a
- *                      href="../../graph_solver/network_graph_solver.html#id-combos"
+ *                      href="../../../graph_solver/network_graph_solver/#id-combos"
  *                      target="_top">combinations</a>. Identifiers can be used
  *                      with existing column names, e.g., 'table.column AS
  *                      RESTRICTIONS_EDGE_ID', or expressions, e.g., 'column/2
@@ -34038,9 +35644,9 @@ VisualizeIsochroneResponse GPUdb::visualizeIsochrone( const std::string& graphNa
  *                       The default value is gpudb::visualize_isochrone_true.
  * @param levelsTable  Name of the table to output the isochrones to, in
  *                     [schema_name.]table_name format, using standard <a
- *                     href="../../concepts/tables.html#table-name-resolution"
+ *                     href="../../../concepts/tables/#table-name-resolution"
  *                     target="_top">name resolution rules</a> and meeting <a
- *                     href="../../concepts/tables.html#table-naming-criteria"
+ *                     href="../../../concepts/tables/#table-naming-criteria"
  *                     target="_top">table naming criteria</a>.  The table will
  *                     contain levels and their corresponding WKT geometry. If
  *                     no value is provided, the table is not generated.
@@ -34267,9 +35873,9 @@ VisualizeIsochroneResponse GPUdb::visualizeIsochrone( const std::string& graphNa
  *                         <li> gpudb::visualize_isochrone_solve_table: Name of
  *                 the table to host intermediate solve results, in
  *                 [schema_name.]table_name format, using standard <a
- *                 href="../../concepts/tables.html#table-name-resolution"
+ *                 href="../../../concepts/tables/#table-name-resolution"
  *                 target="_top">name resolution rules</a> and meeting <a
- *                 href="../../concepts/tables.html#table-naming-criteria"
+ *                 href="../../../concepts/tables/#table-naming-criteria"
  *                 target="_top">table naming criteria</a>.  This table will
  *                 contain the position and cost for each vertex in the graph.
  *                 If the default value is used, a temporary table is created

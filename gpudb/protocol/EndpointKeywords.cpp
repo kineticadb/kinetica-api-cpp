@@ -218,6 +218,20 @@ namespace gpudb
     // Keywords for /aggregate/unpivot response
     const std::string aggregate_unpivot_qualified_result_table_name( "qualified_result_table_name" );
 
+    // Keywords for /alter/credential request
+    const std::string alter_credential_aws_access_key   ( "aws_access_key"    );
+    const std::string alter_credential_aws_iam_role     ( "aws_iam_role"      );
+    const std::string alter_credential_azure_ad         ( "azure_ad"          );
+    const std::string alter_credential_azure_oauth      ( "azure_oauth"       );
+    const std::string alter_credential_azure_sas        ( "azure_sas"         );
+    const std::string alter_credential_azure_storage_key( "azure_storage_key" );
+    const std::string alter_credential_docker           ( "docker"            );
+    const std::string alter_credential_hdfs             ( "hdfs"              );
+    const std::string alter_credential_identity         ( "identity"          );
+    const std::string alter_credential_kafka            ( "kafka"             );
+    const std::string alter_credential_secret           ( "secret"            );
+    const std::string alter_credential_type             ( "type"              );
+
     // Keywords for /alter/datasource request
     const std::string alter_datasource_azure_container_name      ( "azure_container_name"       );
     const std::string alter_datasource_azure_oauth_token         ( "azure_oauth_token"          );
@@ -225,6 +239,7 @@ namespace gpudb
     const std::string alter_datasource_azure_storage_account_name( "azure_storage_account_name" );
     const std::string alter_datasource_azure_tenant_id           ( "azure_tenant_id"            );
     const std::string alter_datasource_connection_timeout        ( "connection_timeout"         );
+    const std::string alter_datasource_credential                ( "credential"                 );
     const std::string alter_datasource_false                     ( "false"                      );
     const std::string alter_datasource_hdfs_delegation_token     ( "hdfs_delegation_token"      );
     const std::string alter_datasource_hdfs_kerberos_keytab      ( "hdfs_kerberos_keytab"       );
@@ -237,6 +252,11 @@ namespace gpudb
     const std::string alter_datasource_true                      ( "true"                       );
     const std::string alter_datasource_user_name                 ( "user_name"                  );
     const std::string alter_datasource_wait_timeout              ( "wait_timeout"               );
+
+    // Keywords for /alter/model request
+    const std::string alter_model_container( "container" );
+    const std::string alter_model_refresh  ( "refresh"   );
+    const std::string alter_model_registry ( "registry"  );
 
     // Keywords for /alter/resourcegroup request
     const std::string alter_resource_group_empty_string           ( ""                        );
@@ -359,6 +379,27 @@ namespace gpudb
     const std::string clear_table_no_error_if_not_exists( "no_error_if_not_exists" );
     const std::string clear_table_true                  ( "true"                   );
 
+    // Keywords for /create/container/registry request
+    const std::string create_container_registry_email    ( "email"     );
+    const std::string create_container_registry_password ( "password"  );
+    const std::string create_container_registry_user_name( "user_name" );
+
+    // Keywords for /create/container/registry response
+    const std::string create_container_registry_kml_response( "kml_response" );
+
+    // Keywords for /create/credential request
+    const std::string create_credential_aws_access_key   ( "aws_access_key"    );
+    const std::string create_credential_aws_iam_role     ( "aws_iam_role"      );
+    const std::string create_credential_azure_ad         ( "azure_ad"          );
+    const std::string create_credential_azure_oauth      ( "azure_oauth"       );
+    const std::string create_credential_azure_sas        ( "azure_sas"         );
+    const std::string create_credential_azure_storage_key( "azure_storage_key" );
+    const std::string create_credential_docker           ( "docker"            );
+    const std::string create_credential_false            ( "false"             );
+    const std::string create_credential_hdfs             ( "hdfs"              );
+    const std::string create_credential_kafka            ( "kafka"             );
+    const std::string create_credential_true             ( "true"              );
+
     // Keywords for /create/datasource request
     const std::string create_datasource_azure_container_name      ( "azure_container_name"       );
     const std::string create_datasource_azure_oauth_token         ( "azure_oauth_token"          );
@@ -366,6 +407,7 @@ namespace gpudb
     const std::string create_datasource_azure_storage_account_name( "azure_storage_account_name" );
     const std::string create_datasource_azure_tenant_id           ( "azure_tenant_id"            );
     const std::string create_datasource_connection_timeout        ( "connection_timeout"         );
+    const std::string create_datasource_credential                ( "credential"                 );
     const std::string create_datasource_false                     ( "false"                      );
     const std::string create_datasource_hdfs_delegation_token     ( "hdfs_delegation_token"      );
     const std::string create_datasource_hdfs_kerberos_keytab      ( "hdfs_kerberos_keytab"       );
@@ -395,6 +437,7 @@ namespace gpudb
     const std::string create_graph_restriction_threshold_value( "restriction_threshold_value" );
     const std::string create_graph_save_persist               ( "save_persist"                );
     const std::string create_graph_server_id                  ( "server_id"                   );
+    const std::string create_graph_sql_request_avro_json      ( "sql_request_avro_json"       );
     const std::string create_graph_sync_db                    ( "sync_db"                     );
     const std::string create_graph_true                       ( "true"                        );
     const std::string create_graph_turn_angle                 ( "turn_angle"                  );
@@ -623,6 +666,7 @@ namespace gpudb
     const std::string create_table_external_is_unique                     ( "is_unique"                      );
     const std::string create_table_external_is_unpivot                    ( "is_unpivot"                     );
     const std::string create_table_external_is_update_records_by_series   ( "is_update_records_by_series"    );
+    const std::string create_table_external_json                          ( "json"                           );
     const std::string create_table_external_loading_mode                  ( "loading_mode"                   );
     const std::string create_table_external_logical                       ( "logical"                        );
     const std::string create_table_external_manual                        ( "manual"                         );
@@ -739,6 +783,12 @@ namespace gpudb
     const std::string delete_records_global_expression ( "global_expression"  );
     const std::string delete_records_record_id         ( "record_id"          );
     const std::string delete_records_true              ( "true"               );
+
+    // Keywords for /drop/container/registry response
+    const std::string drop_container_registry_kml_response( "kml_response" );
+
+    // Keywords for /drop/model response
+    const std::string drop_model_kml_response( "kml_response" );
 
     // Keywords for /drop/schema request
     const std::string drop_schema_cascade               ( "cascade"                );
@@ -963,6 +1013,10 @@ namespace gpudb
     const std::string get_records_from_collection_false( "false" );
     const std::string get_records_from_collection_true ( "true"  );
 
+    // Keywords for /grant/permission/credential request
+    const std::string grant_permission_credential_credential_admin( "credential_admin" );
+    const std::string grant_permission_credential_credential_read ( "credential_read"  );
+
     // Keywords for /grant/permission/datasource request
     const std::string grant_permission_datasource_connect( "connect" );
 
@@ -998,6 +1052,12 @@ namespace gpudb
     // Keywords for /has/type response
     const std::string has_type_false( "false" );
     const std::string has_type_true ( "true"  );
+
+    // Keywords for /import/model request
+    const std::string import_model_memory_limit( "memory_limit" );
+
+    // Keywords for /import/model response
+    const std::string import_model_kml_response( "kml_response" );
 
     // Keywords for /insert/records request
     const std::string insert_records_allow_partial_batch     ( "allow_partial_batch"      );
@@ -1075,6 +1135,7 @@ namespace gpudb
     const std::string insert_records_from_files_is_unique                     ( "is_unique"                      );
     const std::string insert_records_from_files_is_unpivot                    ( "is_unpivot"                     );
     const std::string insert_records_from_files_is_update_records_by_series   ( "is_update_records_by_series"    );
+    const std::string insert_records_from_files_json                          ( "json"                           );
     const std::string insert_records_from_files_loading_mode                  ( "loading_mode"                   );
     const std::string insert_records_from_files_no_error_if_exists            ( "no_error_if_exists"             );
     const std::string insert_records_from_files_num_tasks_per_rank            ( "num_tasks_per_rank"             );
@@ -1157,6 +1218,7 @@ namespace gpudb
     const std::string insert_records_from_payload_is_unique                     ( "is_unique"                      );
     const std::string insert_records_from_payload_is_unpivot                    ( "is_unpivot"                     );
     const std::string insert_records_from_payload_is_update_records_by_series   ( "is_update_records_by_series"    );
+    const std::string insert_records_from_payload_json                          ( "json"                           );
     const std::string insert_records_from_payload_no_error_if_exists            ( "no_error_if_exists"             );
     const std::string insert_records_from_payload_num_tasks_per_rank            ( "num_tasks_per_rank"             );
     const std::string insert_records_from_payload_parquet                       ( "parquet"                        );
@@ -1278,6 +1340,10 @@ namespace gpudb
     const std::string query_graph_target_nodes_table         ( "target_nodes_table"          );
     const std::string query_graph_true                       ( "true"                        );
 
+    // Keywords for /revoke/permission/credential request
+    const std::string revoke_permission_credential_credential_admin( "credential_admin" );
+    const std::string revoke_permission_credential_credential_read ( "credential_read"  );
+
     // Keywords for /revoke/permission/datasource request
     const std::string revoke_permission_datasource_connect( "connect" );
 
@@ -1298,6 +1364,9 @@ namespace gpudb
     const std::string revoke_permission_table_table_read  ( "table_read"   );
     const std::string revoke_permission_table_table_update( "table_update" );
 
+    // Keywords for /show/container/registry response
+    const std::string show_container_registry_kml_response( "kml_response" );
+
     // Keywords for /show/datasource response
     const std::string show_datasource_hdfs                ( "hdfs"                 );
     const std::string show_datasource_hdfs_kerberos_keytab( "hdfs_kerberos_keytab" );
@@ -1308,7 +1377,14 @@ namespace gpudb
     const std::string show_datasource_user_name           ( "user_name"            );
 
     // Keywords for /show/functions request
-    const std::string show_functions_properties( "properties" );
+    const std::string show_functions_false                      ( "false"                       );
+    const std::string show_functions_properties                 ( "properties"                  );
+    const std::string show_functions_show_aggregate_functions   ( "show_aggregate_functions"    );
+    const std::string show_functions_show_cast_functions        ( "show_cast_functions"         );
+    const std::string show_functions_show_scalar_functions      ( "show_scalar_functions"       );
+    const std::string show_functions_show_sql_procedures        ( "show_sql_procedures"         );
+    const std::string show_functions_show_user_defined_functions( "show_user_defined_functions" );
+    const std::string show_functions_true                       ( "true"                        );
 
     // Keywords for /show/functions response
     const std::string show_functions_aggregate       ( "aggregate"        );
@@ -1323,6 +1399,9 @@ namespace gpudb
     const std::string show_graph_server_id            ( "server_id"             );
     const std::string show_graph_show_original_request( "show_original_request" );
     const std::string show_graph_true                 ( "true"                  );
+
+    // Keywords for /show/model response
+    const std::string show_model_kml_response( "kml_response" );
 
     // Keywords for /show/proc request
     const std::string show_proc_false        ( "false"         );

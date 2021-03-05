@@ -35,7 +35,7 @@ namespace gpudb
          * @param[in] tableNames_  Names of tables whose metadata will be
          *                         fetched, in [schema_name.]table_name format,
          *                         using standard <a
-         *                         href="../../concepts/tables.html#table-name-resolution"
+         *                         href="../../../concepts/tables/#table-name-resolution"
          *                         target="_top">name resolution rules</a>.
          *                         All provided tables must exist, or an error
          *                         is returned.

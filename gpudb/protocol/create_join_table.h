@@ -15,9 +15,9 @@ namespace gpudb
      * <p>
      * Creates a table that is the result of a SQL JOIN.
      * <p>
-     * For join details and examples see: <a href="../../concepts/joins.html"
+     * For join details and examples see: <a href="../../../concepts/joins/"
      * target="_top">Joins</a>.  For limitations, see <a
-     * href="../../concepts/joins.html#limitations-cautions" target="_top">Join
+     * href="../../../concepts/joins/#limitations-cautions" target="_top">Join
      * Limitations and Cautions</a>.
      */
     struct CreateJoinTableRequest
@@ -43,15 +43,15 @@ namespace gpudb
          * @param[in] joinTableName_  Name of the join table to be created, in
          *                            [schema_name.]table_name format, using
          *                            standard <a
-         *                            href="../../concepts/tables.html#table-name-resolution"
+         *                            href="../../../concepts/tables/#table-name-resolution"
          *                            target="_top">name resolution rules</a>
          *                            and meeting <a
-         *                            href="../../concepts/tables.html#table-naming-criteria"
+         *                            href="../../../concepts/tables/#table-naming-criteria"
          *                            target="_top">table naming criteria</a>.
          * @param[in] tableNames_  The list of table names composing the join,
          *                         each in [schema_name.]table_name format,
          *                         using standard <a
-         *                         href="../../concepts/tables.html#table-name-resolution"
+         *                         href="../../../concepts/tables/#table-name-resolution"
          *                         target="_top">name resolution rules</a>.
          *                         Corresponds to a SQL statement FROM clause.
          * @param[in] columnNames_  List of member table columns or column
@@ -72,7 +72,7 @@ namespace gpudb
          *                          and filter the joined tables.  Corresponds
          *                          to a SQL statement WHERE clause. For
          *                          details see: <a
-         *                          href="../../concepts/expressions.html"
+         *                          href="../../../concepts/expressions/"
          *                          target="_top">expressions</a>.
          * @param[in] options_  Optional parameters.
          *                      <ul>
@@ -98,7 +98,7 @@ namespace gpudb
          *                      The default value is
          *                      gpudb::create_join_table_false.
          *                              <li> gpudb::create_join_table_ttl: Sets
-         *                      the <a href="../../concepts/ttl.html"
+         *                      the <a href="../../../concepts/ttl/"
          *                      target="_top">TTL</a> of the join table
          *                      specified in @a joinTableName.
          *                              <li> gpudb::create_join_table_view_id:
@@ -203,9 +203,9 @@ namespace gpudb
      * <p>
      * Creates a table that is the result of a SQL JOIN.
      * <p>
-     * For join details and examples see: <a href="../../concepts/joins.html"
+     * For join details and examples see: <a href="../../../concepts/joins/"
      * target="_top">Joins</a>.  For limitations, see <a
-     * href="../../concepts/joins.html#limitations-cautions" target="_top">Join
+     * href="../../../concepts/joins/#limitations-cautions" target="_top">Join
      * Limitations and Cautions</a>.
      */
     struct CreateJoinTableResponse

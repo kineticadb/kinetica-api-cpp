@@ -218,6 +218,20 @@ namespace gpudb
     // Keywords for /aggregate/unpivot response
     extern const std::string aggregate_unpivot_qualified_result_table_name;
 
+    // Keywords for /alter/credential request
+    extern const std::string alter_credential_aws_access_key;
+    extern const std::string alter_credential_aws_iam_role;
+    extern const std::string alter_credential_azure_ad;
+    extern const std::string alter_credential_azure_oauth;
+    extern const std::string alter_credential_azure_sas;
+    extern const std::string alter_credential_azure_storage_key;
+    extern const std::string alter_credential_docker;
+    extern const std::string alter_credential_hdfs;
+    extern const std::string alter_credential_identity;
+    extern const std::string alter_credential_kafka;
+    extern const std::string alter_credential_secret;
+    extern const std::string alter_credential_type;
+
     // Keywords for /alter/datasource request
     extern const std::string alter_datasource_azure_container_name;
     extern const std::string alter_datasource_azure_oauth_token;
@@ -225,6 +239,7 @@ namespace gpudb
     extern const std::string alter_datasource_azure_storage_account_name;
     extern const std::string alter_datasource_azure_tenant_id;
     extern const std::string alter_datasource_connection_timeout;
+    extern const std::string alter_datasource_credential;
     extern const std::string alter_datasource_false;
     extern const std::string alter_datasource_hdfs_delegation_token;
     extern const std::string alter_datasource_hdfs_kerberos_keytab;
@@ -237,6 +252,11 @@ namespace gpudb
     extern const std::string alter_datasource_true;
     extern const std::string alter_datasource_user_name;
     extern const std::string alter_datasource_wait_timeout;
+
+    // Keywords for /alter/model request
+    extern const std::string alter_model_container;
+    extern const std::string alter_model_refresh;
+    extern const std::string alter_model_registry;
 
     // Keywords for /alter/resourcegroup request
     extern const std::string alter_resource_group_empty_string;
@@ -359,6 +379,27 @@ namespace gpudb
     extern const std::string clear_table_no_error_if_not_exists;
     extern const std::string clear_table_true;
 
+    // Keywords for /create/container/registry request
+    extern const std::string create_container_registry_email;
+    extern const std::string create_container_registry_password;
+    extern const std::string create_container_registry_user_name;
+
+    // Keywords for /create/container/registry response
+    extern const std::string create_container_registry_kml_response;
+
+    // Keywords for /create/credential request
+    extern const std::string create_credential_aws_access_key;
+    extern const std::string create_credential_aws_iam_role;
+    extern const std::string create_credential_azure_ad;
+    extern const std::string create_credential_azure_oauth;
+    extern const std::string create_credential_azure_sas;
+    extern const std::string create_credential_azure_storage_key;
+    extern const std::string create_credential_docker;
+    extern const std::string create_credential_false;
+    extern const std::string create_credential_hdfs;
+    extern const std::string create_credential_kafka;
+    extern const std::string create_credential_true;
+
     // Keywords for /create/datasource request
     extern const std::string create_datasource_azure_container_name;
     extern const std::string create_datasource_azure_oauth_token;
@@ -366,6 +407,7 @@ namespace gpudb
     extern const std::string create_datasource_azure_storage_account_name;
     extern const std::string create_datasource_azure_tenant_id;
     extern const std::string create_datasource_connection_timeout;
+    extern const std::string create_datasource_credential;
     extern const std::string create_datasource_false;
     extern const std::string create_datasource_hdfs_delegation_token;
     extern const std::string create_datasource_hdfs_kerberos_keytab;
@@ -395,6 +437,7 @@ namespace gpudb
     extern const std::string create_graph_restriction_threshold_value;
     extern const std::string create_graph_save_persist;
     extern const std::string create_graph_server_id;
+    extern const std::string create_graph_sql_request_avro_json;
     extern const std::string create_graph_sync_db;
     extern const std::string create_graph_true;
     extern const std::string create_graph_turn_angle;
@@ -623,6 +666,7 @@ namespace gpudb
     extern const std::string create_table_external_is_unique;
     extern const std::string create_table_external_is_unpivot;
     extern const std::string create_table_external_is_update_records_by_series;
+    extern const std::string create_table_external_json;
     extern const std::string create_table_external_loading_mode;
     extern const std::string create_table_external_logical;
     extern const std::string create_table_external_manual;
@@ -739,6 +783,12 @@ namespace gpudb
     extern const std::string delete_records_global_expression;
     extern const std::string delete_records_record_id;
     extern const std::string delete_records_true;
+
+    // Keywords for /drop/container/registry response
+    extern const std::string drop_container_registry_kml_response;
+
+    // Keywords for /drop/model response
+    extern const std::string drop_model_kml_response;
 
     // Keywords for /drop/schema request
     extern const std::string drop_schema_cascade;
@@ -963,6 +1013,10 @@ namespace gpudb
     extern const std::string get_records_from_collection_false;
     extern const std::string get_records_from_collection_true;
 
+    // Keywords for /grant/permission/credential request
+    extern const std::string grant_permission_credential_credential_admin;
+    extern const std::string grant_permission_credential_credential_read;
+
     // Keywords for /grant/permission/datasource request
     extern const std::string grant_permission_datasource_connect;
 
@@ -998,6 +1052,12 @@ namespace gpudb
     // Keywords for /has/type response
     extern const std::string has_type_false;
     extern const std::string has_type_true;
+
+    // Keywords for /import/model request
+    extern const std::string import_model_memory_limit;
+
+    // Keywords for /import/model response
+    extern const std::string import_model_kml_response;
 
     // Keywords for /insert/records request
     extern const std::string insert_records_allow_partial_batch;
@@ -1075,6 +1135,7 @@ namespace gpudb
     extern const std::string insert_records_from_files_is_unique;
     extern const std::string insert_records_from_files_is_unpivot;
     extern const std::string insert_records_from_files_is_update_records_by_series;
+    extern const std::string insert_records_from_files_json;
     extern const std::string insert_records_from_files_loading_mode;
     extern const std::string insert_records_from_files_no_error_if_exists;
     extern const std::string insert_records_from_files_num_tasks_per_rank;
@@ -1157,6 +1218,7 @@ namespace gpudb
     extern const std::string insert_records_from_payload_is_unique;
     extern const std::string insert_records_from_payload_is_unpivot;
     extern const std::string insert_records_from_payload_is_update_records_by_series;
+    extern const std::string insert_records_from_payload_json;
     extern const std::string insert_records_from_payload_no_error_if_exists;
     extern const std::string insert_records_from_payload_num_tasks_per_rank;
     extern const std::string insert_records_from_payload_parquet;
@@ -1278,6 +1340,10 @@ namespace gpudb
     extern const std::string query_graph_target_nodes_table;
     extern const std::string query_graph_true;
 
+    // Keywords for /revoke/permission/credential request
+    extern const std::string revoke_permission_credential_credential_admin;
+    extern const std::string revoke_permission_credential_credential_read;
+
     // Keywords for /revoke/permission/datasource request
     extern const std::string revoke_permission_datasource_connect;
 
@@ -1298,6 +1364,9 @@ namespace gpudb
     extern const std::string revoke_permission_table_table_read;
     extern const std::string revoke_permission_table_table_update;
 
+    // Keywords for /show/container/registry response
+    extern const std::string show_container_registry_kml_response;
+
     // Keywords for /show/datasource response
     extern const std::string show_datasource_hdfs;
     extern const std::string show_datasource_hdfs_kerberos_keytab;
@@ -1308,7 +1377,14 @@ namespace gpudb
     extern const std::string show_datasource_user_name;
 
     // Keywords for /show/functions request
+    extern const std::string show_functions_false;
     extern const std::string show_functions_properties;
+    extern const std::string show_functions_show_aggregate_functions;
+    extern const std::string show_functions_show_cast_functions;
+    extern const std::string show_functions_show_scalar_functions;
+    extern const std::string show_functions_show_sql_procedures;
+    extern const std::string show_functions_show_user_defined_functions;
+    extern const std::string show_functions_true;
 
     // Keywords for /show/functions response
     extern const std::string show_functions_aggregate;
@@ -1323,6 +1399,9 @@ namespace gpudb
     extern const std::string show_graph_server_id;
     extern const std::string show_graph_show_original_request;
     extern const std::string show_graph_true;
+
+    // Keywords for /show/model response
+    extern const std::string show_model_kml_response;
 
     // Keywords for /show/proc request
     extern const std::string show_proc_false;

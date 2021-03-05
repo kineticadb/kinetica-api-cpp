@@ -83,13 +83,13 @@ namespace gpudb
          *                           "tier.ram.rank.limit":"10000000000"}'.
          *                           Currently, the available parameters are
          *                           rank-specific parameters in the <a
-         *                           href="../../config/index.html#network"
+         *                           href="../../../config/#network"
          *                           target="_top">Network</a>, <a
-         *                           href="../../config/index.html#hardware"
+         *                           href="../../../config/#hardware"
          *                           target="_top">Hardware</a>, <a
-         *                           href="../../config/index.html#text-search"
+         *                           href="../../../config/#text-search"
          *                           target="_top">Text Search</a>, and <a
-         *                           href="../../config/index.html#ram-tier"
+         *                           href="../../../config/#ram-tier"
          *                           target="_top">RAM Tiered Storage</a>
          *                           sections in the gpudb.conf file, with the
          *                           key exception of the 'rankN.host' settings

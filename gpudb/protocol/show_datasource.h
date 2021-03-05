@@ -14,7 +14,7 @@ namespace gpudb
      * #showDatasource(const ShowDatasourceRequest&) const}.
      * <p>
      * Shows information about a specified <a
-     * href="../../concepts/data_sources.html" target="_top">data source</a> or
+     * href="../../../concepts/data_sources/" target="_top">data source</a> or
      * all data sources.
      */
     struct ShowDatasourceRequest
@@ -103,7 +103,7 @@ namespace gpudb
      * #showDatasource(const ShowDatasourceRequest&) const}.
      * <p>
      * Shows information about a specified <a
-     * href="../../concepts/data_sources.html" target="_top">data source</a> or
+     * href="../../../concepts/data_sources/" target="_top">data source</a> or
      * all data sources.
      */
     struct ShowDatasourceResponse

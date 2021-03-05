@@ -14,8 +14,8 @@ namespace gpudb
      * #alterSchema(const AlterSchemaRequest&) const}.
      * <p>
      * Used to change the name of a SQL-style <a
-     * href="../../concepts/schemas.html" target="_top">schema</a>, specified
-     * in @a schemaName.
+     * href="../../../concepts/schemas/" target="_top">schema</a>, specified in
+     * @a schemaName.
      */
     struct AlterSchemaRequest
     {
@@ -42,7 +42,7 @@ namespace gpudb
          *                             <li> gpudb::alter_schema_rename_schema:
          *                     Renames a schema to @a value. Has the same
          *                     naming restrictions as <a
-         *                     href="../../concepts/tables.html"
+         *                     href="../../../concepts/tables/"
          *                     target="_top">tables</a>.
          *                     </ul>
          * @param[in] value_  The value of the modification, depending on @a
@@ -129,8 +129,8 @@ namespace gpudb
      * #alterSchema(const AlterSchemaRequest&) const}.
      * <p>
      * Used to change the name of a SQL-style <a
-     * href="../../concepts/schemas.html" target="_top">schema</a>, specified
-     * in @a schemaName.
+     * href="../../../concepts/schemas/" target="_top">schema</a>, specified in
+     * @a schemaName.
      */
     struct AlterSchemaResponse
     {

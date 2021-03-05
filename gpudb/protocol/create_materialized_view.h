@@ -18,7 +18,7 @@ namespace gpudb
      * that name.
      * <p>
      * For materialized view details and examples, see
-     * <a href="../../concepts/materialized_views.html"
+     * <a href="../../../concepts/materialized_views/"
      * target="_top">Materialized Views</a>.
      * <p>
      * The response contains @a viewId, which is used to tag each subsequent
@@ -47,10 +47,10 @@ namespace gpudb
          *                        top-level table of the materialized view, in
          *                        [schema_name.]table_name format, using
          *                        standard <a
-         *                        href="../../concepts/tables.html#table-name-resolution"
+         *                        href="../../../concepts/tables/#table-name-resolution"
          *                        target="_top">name resolution rules</a> and
          *                        meeting <a
-         *                        href="../../concepts/tables.html#table-naming-criteria"
+         *                        href="../../../concepts/tables/#table-naming-criteria"
          *                        target="_top">table naming criteria</a>.
          * @param[in] options_  Optional parameters.
          *                      <ul>
@@ -65,7 +65,7 @@ namespace gpudb
          *                      automatically created.
          *                              <li>
          *                      gpudb::create_materialized_view_ttl: Sets the
-         *                      <a href="../../concepts/ttl.html"
+         *                      <a href="../../../concepts/ttl/"
          *                      target="_top">TTL</a> of the table specified in
          *                      @a tableName.
          *                              <li>
@@ -95,8 +95,8 @@ namespace gpudb
          *                      only occurs when manually requested by calling
          *                      /alter/table with an 'action' of 'refresh'
          *                              <li>
-         *                      gpudb::create_materialized_view_on_query: For
-         *                      future use.
+         *                      gpudb::create_materialized_view_on_query:
+         *                      Refresh any time the view is queried.
          *                              <li>
          *                      gpudb::create_materialized_view_on_change: If
          *                      possible, incrementally refresh (refresh just
@@ -193,7 +193,7 @@ namespace gpudb
      * that name.
      * <p>
      * For materialized view details and examples, see
-     * <a href="../../concepts/materialized_views.html"
+     * <a href="../../../concepts/materialized_views/"
      * target="_top">Materialized Views</a>.
      * <p>
      * The response contains @a viewId, which is used to tag each subsequent

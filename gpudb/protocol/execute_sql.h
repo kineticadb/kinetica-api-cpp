@@ -17,7 +17,7 @@ namespace gpudb
      * <p>
      * Execute a SQL statement (query, DML, or DDL).
      * <p>
-     * See <a href="../../concepts/sql.html" target="_top">SQL Support</a> for
+     * See <a href="../../../concepts/sql/" target="_top">SQL Support</a> for
      * the complete set of supported SQL commands.
      */
     struct ExecuteSqlRequest
@@ -55,7 +55,7 @@ namespace gpudb
          *                    allowed by the server should be returned.  The
          *                    number of records returned will never exceed the
          *                    server's own limit, defined by the <a
-         *                    href="../../config/index.html#general"
+         *                    href="../../../config/#general"
          *                    target="_top">max_get_records_size</a> parameter
          *                    in the server configuration.  Use @a
          *                    hasMoreRecords to see if more records exist in
@@ -120,7 +120,7 @@ namespace gpudb
          *                      query.
          *                              <li>
          *                      gpudb::execute_sql_paging_table_ttl: Sets the
-         *                      <a href="../../concepts/ttl.html"
+         *                      <a href="../../../concepts/ttl/"
          *                      target="_top">TTL</a> of the paging table.
          *                              <li>
          *                      gpudb::execute_sql_distributed_joins: If @a
@@ -167,7 +167,7 @@ namespace gpudb
          *                      </ul>
          *                      The default value is gpudb::execute_sql_false.
          *                              <li> gpudb::execute_sql_ttl: Sets the
-         *                      <a href="../../concepts/ttl.html"
+         *                      <a href="../../../concepts/ttl/"
          *                      target="_top">TTL</a> of the intermediate
          *                      result tables used in query execution.
          *                              <li>
@@ -244,7 +244,7 @@ namespace gpudb
          *                    allowed by the server should be returned.  The
          *                    number of records returned will never exceed the
          *                    server's own limit, defined by the <a
-         *                    href="../../config/index.html#general"
+         *                    href="../../../config/#general"
          *                    target="_top">max_get_records_size</a> parameter
          *                    in the server configuration.  Use @a
          *                    hasMoreRecords to see if more records exist in
@@ -317,7 +317,7 @@ namespace gpudb
          *                      query.
          *                              <li>
          *                      gpudb::execute_sql_paging_table_ttl: Sets the
-         *                      <a href="../../concepts/ttl.html"
+         *                      <a href="../../../concepts/ttl/"
          *                      target="_top">TTL</a> of the paging table.
          *                              <li>
          *                      gpudb::execute_sql_distributed_joins: If @a
@@ -364,7 +364,7 @@ namespace gpudb
          *                      </ul>
          *                      The default value is gpudb::execute_sql_false.
          *                              <li> gpudb::execute_sql_ttl: Sets the
-         *                      <a href="../../concepts/ttl.html"
+         *                      <a href="../../../concepts/ttl/"
          *                      target="_top">TTL</a> of the intermediate
          *                      result tables used in query execution.
          *                              <li>
@@ -515,7 +515,7 @@ namespace gpudb
      * <p>
      * Execute a SQL statement (query, DML, or DDL).
      * <p>
-     * See <a href="../../concepts/sql.html" target="_top">SQL Support</a> for
+     * See <a href="../../../concepts/sql/" target="_top">SQL Support</a> for
      * the complete set of supported SQL commands.
      */
     struct RawExecuteSqlResponse
@@ -635,7 +635,7 @@ namespace gpudb
      * <p>
      * Execute a SQL statement (query, DML, or DDL).
      * <p>
-     * See <a href="../../concepts/sql.html" target="_top">SQL Support</a> for
+     * See <a href="../../../concepts/sql/" target="_top">SQL Support</a> for
      * the complete set of supported SQL commands.
      */
     struct ExecuteSqlResponse

@@ -41,20 +41,20 @@ namespace gpudb
          *                        operation will be performed, in
          *                        [schema_name.]view_name format, using
          *                        standard <a
-         *                        href="../../concepts/tables.html#table-name-resolution"
+         *                        href="../../../concepts/tables/#table-name-resolution"
          *                        target="_top">name resolution rules</a>.
          *                        Must be an existing view.
          * @param[in] worldTableName_  Name of the table containing the
          *                             complete series (track) information, in
          *                             [schema_name.]table_name format, using
          *                             standard <a
-         *                             href="../../concepts/tables.html#table-name-resolution"
+         *                             href="../../../concepts/tables/#table-name-resolution"
          *                             target="_top">name resolution rules</a>.
          * @param[in] viewName_  Name of the view containing the series
          *                       (tracks) which have to be updated, in
          *                       [schema_name.]view_name format, using standard
          *                       <a
-         *                       href="../../concepts/tables.html#table-name-resolution"
+         *                       href="../../../concepts/tables/#table-name-resolution"
          *                       target="_top">name resolution rules</a>.
          * @param[in] reserved_
          * @param[in] options_  Optional parameters.

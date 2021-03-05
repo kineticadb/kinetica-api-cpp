@@ -13,7 +13,7 @@ namespace gpudb
      * A set of input parameters for {@link
      * #showSchema(const ShowSchemaRequest&) const}.
      * <p>
-     * Retrieves information about a <a href="../../concepts/schemas.html"
+     * Retrieves information about a <a href="../../../concepts/schemas/"
      * target="_top">schema</a> (or all schemas), as specified in @a
      * schemaName.
      */
@@ -111,7 +111,7 @@ namespace gpudb
      * A set of output parameters for {@link
      * #showSchema(const ShowSchemaRequest&) const}.
      * <p>
-     * Retrieves information about a <a href="../../concepts/schemas.html"
+     * Retrieves information about a <a href="../../../concepts/schemas/"
      * target="_top">schema</a> (or all schemas), as specified in @a
      * schemaName.
      */

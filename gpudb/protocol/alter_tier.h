@@ -14,12 +14,12 @@ namespace gpudb
      * #alterTier(const AlterTierRequest&) const}.
      * <p>
      * Alters properties of an exisiting
-     * <a href="../../rm/concepts.html#storage-tiers" target="_top">tier</a> to
+     * <a href="../../../rm/concepts/#storage-tiers" target="_top">tier</a> to
      * facilitate
-     * <a href="../../rm/concepts.html" target="_top">resource management</a>.
+     * <a href="../../../rm/concepts/" target="_top">resource management</a>.
      * <p>
      * To disable
-     * <a href="../../rm/concepts.html#watermark-based-eviction"
+     * <a href="../../../rm/concepts/#watermark-based-eviction"
      * target="_top">watermark-based eviction</a>,
      * set both @a high_watermark and
      * @a low_watermark to 100.
@@ -119,12 +119,12 @@ namespace gpudb
      * #alterTier(const AlterTierRequest&) const}.
      * <p>
      * Alters properties of an exisiting
-     * <a href="../../rm/concepts.html#storage-tiers" target="_top">tier</a> to
+     * <a href="../../../rm/concepts/#storage-tiers" target="_top">tier</a> to
      * facilitate
-     * <a href="../../rm/concepts.html" target="_top">resource management</a>.
+     * <a href="../../../rm/concepts/" target="_top">resource management</a>.
      * <p>
      * To disable
-     * <a href="../../rm/concepts.html#watermark-based-eviction"
+     * <a href="../../../rm/concepts/#watermark-based-eviction"
      * target="_top">watermark-based eviction</a>,
      * set both @a high_watermark and
      * @a low_watermark to 100.

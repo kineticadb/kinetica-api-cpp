@@ -23,7 +23,7 @@ namespace gpudb
      * @a jsonEncodedResponse.  The results can be paged via @a offset
      * and @a limit parameters.
      * <p>
-     * Columns marked as <a href="../../concepts/types.html#data-handling"
+     * Columns marked as <a href="../../../concepts/types/#data-handling"
      * target="_top">store-only</a>
      * are unable to be used with this function.
      * <p>
@@ -33,18 +33,18 @@ namespace gpudb
      * {"limit":"10","sort_order":"descending"}.
      * <p>
      * The response is returned as a dynamic schema. For details see:
-     * <a href="../../api/index.html#dynamic-schemas" target="_top">dynamic
-     * schemas documentation</a>.
+     * <a href="../../../api/#dynamic-schemas" target="_top">dynamic schemas
+     * documentation</a>.
      * <p>
      * If a @a result_table name is specified in the
      * @a options, the results are stored in a new table with that name--no
      * results are returned in the response.  Both the table name and resulting
      * column
      * name must adhere to
-     * <a href="../../concepts/tables.html#table" target="_top">standard naming
+     * <a href="../../../concepts/tables/#table" target="_top">standard naming
      * conventions</a>;
      * any column expression will need to be aliased.  If the source table's
-     * <a href="../../concepts/tables.html#shard-keys" target="_top">shard
+     * <a href="../../../concepts/tables/#shard-keys" target="_top">shard
      * key</a> is used as the
      * @a columnName, the result table will be sharded, in all other cases it
      * will be replicated.  Sorting will properly function only if the result
@@ -79,7 +79,7 @@ namespace gpudb
          *                        the operation will be performed, in
          *                        [schema_name.]table_name format, using
          *                        standard <a
-         *                        href="../../concepts/tables.html#table-name-resolution"
+         *                        href="../../../concepts/tables/#table-name-resolution"
          *                        target="_top">name resolution rules</a>.
          * @param[in] columnName_  Name of the column or an expression
          *                         containing one or more column names on which
@@ -94,7 +94,7 @@ namespace gpudb
          *                    to indicate that the max number of results should
          *                    be returned.  The number of records returned will
          *                    never exceed the server's own limit, defined by
-         *                    the <a href="../../config/index.html#general"
+         *                    the <a href="../../../config/#general"
          *                    target="_top">max_get_records_size</a> parameter
          *                    in the server configuration.  Use @a
          *                    hasMoreRecords to see if more records exist in
@@ -129,10 +129,10 @@ namespace gpudb
          *                      of the table used to store the results, in
          *                      [schema_name.]table_name format, using standard
          *                      <a
-         *                      href="../../concepts/tables.html#table-name-resolution"
+         *                      href="../../../concepts/tables/#table-name-resolution"
          *                      target="_top">name resolution rules</a> and
          *                      meeting <a
-         *                      href="../../concepts/tables.html#table-naming-criteria"
+         *                      href="../../../concepts/tables/#table-naming-criteria"
          *                      target="_top">table naming criteria</a>.  If
          *                      present, no results are returned in the
          *                      response.  Not available if @a columnName is an
@@ -174,7 +174,7 @@ namespace gpudb
          *                      The default value is
          *                      gpudb::aggregate_unique_false.
          *                              <li> gpudb::aggregate_unique_ttl: Sets
-         *                      the <a href="../../concepts/ttl.html"
+         *                      the <a href="../../../concepts/ttl/"
          *                      target="_top">TTL</a> of the table specified in
          *                      @a result_table.
          *                              <li>
@@ -206,7 +206,7 @@ namespace gpudb
          *                        the operation will be performed, in
          *                        [schema_name.]table_name format, using
          *                        standard <a
-         *                        href="../../concepts/tables.html#table-name-resolution"
+         *                        href="../../../concepts/tables/#table-name-resolution"
          *                        target="_top">name resolution rules</a>.
          * @param[in] columnName_  Name of the column or an expression
          *                         containing one or more column names on which
@@ -221,7 +221,7 @@ namespace gpudb
          *                    to indicate that the max number of results should
          *                    be returned.  The number of records returned will
          *                    never exceed the server's own limit, defined by
-         *                    the <a href="../../config/index.html#general"
+         *                    the <a href="../../../config/#general"
          *                    target="_top">max_get_records_size</a> parameter
          *                    in the server configuration.  Use @a
          *                    hasMoreRecords to see if more records exist in
@@ -267,10 +267,10 @@ namespace gpudb
          *                      of the table used to store the results, in
          *                      [schema_name.]table_name format, using standard
          *                      <a
-         *                      href="../../concepts/tables.html#table-name-resolution"
+         *                      href="../../../concepts/tables/#table-name-resolution"
          *                      target="_top">name resolution rules</a> and
          *                      meeting <a
-         *                      href="../../concepts/tables.html#table-naming-criteria"
+         *                      href="../../../concepts/tables/#table-naming-criteria"
          *                      target="_top">table naming criteria</a>.  If
          *                      present, no results are returned in the
          *                      response.  Not available if @a columnName is an
@@ -312,7 +312,7 @@ namespace gpudb
          *                      The default value is
          *                      gpudb::aggregate_unique_false.
          *                              <li> gpudb::aggregate_unique_ttl: Sets
-         *                      the <a href="../../concepts/ttl.html"
+         *                      the <a href="../../../concepts/ttl/"
          *                      target="_top">TTL</a> of the table specified in
          *                      @a result_table.
          *                              <li>
@@ -426,7 +426,7 @@ namespace gpudb
      * @a jsonEncodedResponse.  The results can be paged via @a offset
      * and @a limit parameters.
      * <p>
-     * Columns marked as <a href="../../concepts/types.html#data-handling"
+     * Columns marked as <a href="../../../concepts/types/#data-handling"
      * target="_top">store-only</a>
      * are unable to be used with this function.
      * <p>
@@ -436,18 +436,18 @@ namespace gpudb
      * {"limit":"10","sort_order":"descending"}.
      * <p>
      * The response is returned as a dynamic schema. For details see:
-     * <a href="../../api/index.html#dynamic-schemas" target="_top">dynamic
-     * schemas documentation</a>.
+     * <a href="../../../api/#dynamic-schemas" target="_top">dynamic schemas
+     * documentation</a>.
      * <p>
      * If a @a result_table name is specified in the
      * @a options, the results are stored in a new table with that name--no
      * results are returned in the response.  Both the table name and resulting
      * column
      * name must adhere to
-     * <a href="../../concepts/tables.html#table" target="_top">standard naming
+     * <a href="../../../concepts/tables/#table" target="_top">standard naming
      * conventions</a>;
      * any column expression will need to be aliased.  If the source table's
-     * <a href="../../concepts/tables.html#shard-keys" target="_top">shard
+     * <a href="../../../concepts/tables/#shard-keys" target="_top">shard
      * key</a> is used as the
      * @a columnName, the result table will be sharded, in all other cases it
      * will be replicated.  Sorting will properly function only if the result
@@ -564,7 +564,7 @@ namespace gpudb
      * @a jsonEncodedResponse.  The results can be paged via @a offset
      * and @a limit parameters.
      * <p>
-     * Columns marked as <a href="../../concepts/types.html#data-handling"
+     * Columns marked as <a href="../../../concepts/types/#data-handling"
      * target="_top">store-only</a>
      * are unable to be used with this function.
      * <p>
@@ -574,18 +574,18 @@ namespace gpudb
      * {"limit":"10","sort_order":"descending"}.
      * <p>
      * The response is returned as a dynamic schema. For details see:
-     * <a href="../../api/index.html#dynamic-schemas" target="_top">dynamic
-     * schemas documentation</a>.
+     * <a href="../../../api/#dynamic-schemas" target="_top">dynamic schemas
+     * documentation</a>.
      * <p>
      * If a @a result_table name is specified in the
      * @a options, the results are stored in a new table with that name--no
      * results are returned in the response.  Both the table name and resulting
      * column
      * name must adhere to
-     * <a href="../../concepts/tables.html#table" target="_top">standard naming
+     * <a href="../../../concepts/tables/#table" target="_top">standard naming
      * conventions</a>;
      * any column expression will need to be aliased.  If the source table's
-     * <a href="../../concepts/tables.html#shard-keys" target="_top">shard
+     * <a href="../../../concepts/tables/#shard-keys" target="_top">shard
      * key</a> is used as the
      * @a columnName, the result table will be sharded, in all other cases it
      * will be replicated.  Sorting will properly function only if the result

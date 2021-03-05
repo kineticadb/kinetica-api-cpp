@@ -57,17 +57,17 @@ namespace gpudb
          *                        radius operation will be performed, in
          *                        [schema_name.]table_name format, using
          *                        standard <a
-         *                        href="../../concepts/tables.html#table-name-resolution"
+         *                        href="../../../concepts/tables/#table-name-resolution"
          *                        target="_top">name resolution rules</a>.
          *                        Must be an existing table.
          * @param[in] viewName_  If provided, then this will be the name of the
          *                       view containing the results, in
          *                       [schema_name.]view_name format, using standard
          *                       <a
-         *                       href="../../concepts/tables.html#table-name-resolution"
+         *                       href="../../../concepts/tables/#table-name-resolution"
          *                       target="_top">name resolution rules</a> and
          *                       meeting <a
-         *                       href="../../concepts/tables.html#table-naming-criteria"
+         *                       href="../../../concepts/tables/#table-naming-criteria"
          *                       target="_top">table naming criteria</a>.  Must
          *                       not be an already existing table or view.
          * @param[in] xColumnName_  Name of the column to be used for the

@@ -16,7 +16,7 @@ namespace gpudb
      * Apply various modifications to columns in a table, view.  The available
      * modifications include the following:
      * <p>
-     * Create or delete an <a href="../../concepts/indexes.html#column-index"
+     * Create or delete an <a href="../../../concepts/indexes/#column-index"
      * target="_top">index</a> on a
      * particular column. This can speed up certain operations when using
      * expressions
@@ -25,10 +25,10 @@ namespace gpudb
      * applies to tables.
      * <p>
      * Manage a table's columns--a column can be added, removed, or have its
-     * <a href="../../concepts/types.html" target="_top">type and
-     * properties</a> modified.
+     * <a href="../../../concepts/types/" target="_top">type and properties</a>
+     * modified.
      * <p>
-     * Set or unset <a href="../../concepts/compression.html"
+     * Set or unset <a href="../../../concepts/compression/"
      * target="_top">compression</a> for a column.
      */
     struct AlterTableColumnsRequest
@@ -53,7 +53,7 @@ namespace gpudb
          *                        performed. Must be an existing table or view,
          *                        in [schema_name.]table_name format, using
          *                        standard <a
-         *                        href="../../concepts/tables.html#table-name-resolution"
+         *                        href="../../../concepts/tables/#table-name-resolution"
          *                        target="_top">name resolution rules</a>.
          * @param[in] columnAlterations_  List of alter table add/delete/change
          *                                column requests - all for the same
@@ -140,7 +140,7 @@ namespace gpudb
      * Apply various modifications to columns in a table, view.  The available
      * modifications include the following:
      * <p>
-     * Create or delete an <a href="../../concepts/indexes.html#column-index"
+     * Create or delete an <a href="../../../concepts/indexes/#column-index"
      * target="_top">index</a> on a
      * particular column. This can speed up certain operations when using
      * expressions
@@ -149,10 +149,10 @@ namespace gpudb
      * applies to tables.
      * <p>
      * Manage a table's columns--a column can be added, removed, or have its
-     * <a href="../../concepts/types.html" target="_top">type and
-     * properties</a> modified.
+     * <a href="../../../concepts/types/" target="_top">type and properties</a>
+     * modified.
      * <p>
-     * Set or unset <a href="../../concepts/compression.html"
+     * Set or unset <a href="../../../concepts/compression/"
      * target="_top">compression</a> for a column.
      */
     struct AlterTableColumnsResponse

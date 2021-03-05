@@ -38,7 +38,7 @@ namespace gpudb
          *                        switchover to another host. Options are
          *                        'hostN' and 'rankN' where 'N' corresponds to
          *                        the number associated with a host or rank in
-         *                        the <a href="../../config/index.html#network"
+         *                        the <a href="../../../config/#network"
          *                        target="_top">Network</a> section of the
          *                        gpudb.conf file, e.g., 'host[N].address' or
          *                        'rank[N].host'. If 'hostN' is provided, all
@@ -51,8 +51,7 @@ namespace gpudb
          *                           processes. Each index must be specified as
          *                           'hostN' where 'N' corresponds to the
          *                           number associated with a host or rank in
-         *                           the <a
-         *                           href="../../config/index.html#network"
+         *                           the <a href="../../../config/#network"
          *                           target="_top">Network</a> section of the
          *                           gpudb.conf file, e.g., 'host[N].address'.
          *                           Each entry in this array will receive the

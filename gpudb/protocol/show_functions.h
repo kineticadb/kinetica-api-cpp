@@ -24,6 +24,7 @@ namespace gpudb
          * values.
          */
         ShowFunctionsRequest() :
+            names(std::vector<std::string>()),
             options(std::map<std::string, std::string>())
         {
         }
@@ -33,17 +34,60 @@ namespace gpudb
          * Constructs a ShowFunctionsRequest object with the specified
          * parameters.
          * 
+         * @param[in] names_
          * @param[in] options_
          *                      <ul>
          *                              <li> gpudb::show_functions_properties
+         *                              <li>
+         *                      gpudb::show_functions_show_scalar_functions:
+         *                      <ul>
+         *                              <li> gpudb::show_functions_true
+         *                              <li> gpudb::show_functions_false
+         *                      </ul>
+         *                      The default value is
+         *                      gpudb::show_functions_true.
+         *                              <li>
+         *                      gpudb::show_functions_show_aggregate_functions:
+         *                      <ul>
+         *                              <li> gpudb::show_functions_true
+         *                              <li> gpudb::show_functions_false
+         *                      </ul>
+         *                      The default value is
+         *                      gpudb::show_functions_true.
+         *                              <li>
+         *                      gpudb::show_functions_show_sql_procedures:
+         *                      <ul>
+         *                              <li> gpudb::show_functions_true
+         *                              <li> gpudb::show_functions_false
+         *                      </ul>
+         *                      The default value is
+         *                      gpudb::show_functions_true.
+         *                              <li>
+         *                      gpudb::show_functions_show_user_defined_functions:
+         *                      <ul>
+         *                              <li> gpudb::show_functions_true
+         *                              <li> gpudb::show_functions_false
+         *                      </ul>
+         *                      The default value is
+         *                      gpudb::show_functions_true.
+         *                              <li>
+         *                      gpudb::show_functions_show_cast_functions:
+         *                      <ul>
+         *                              <li> gpudb::show_functions_true
+         *                              <li> gpudb::show_functions_false
+         *                      </ul>
+         *                      The default value is
+         *                      gpudb::show_functions_true.
          *                      </ul>
          * 
          */
-        ShowFunctionsRequest(const std::map<std::string, std::string>& options_):
+        ShowFunctionsRequest(const std::vector<std::string>& names_, const std::map<std::string, std::string>& options_):
+            names( names_ ),
             options( options_ )
         {
         }
 
+        std::vector<std::string> names;
         std::map<std::string, std::string> options;
     };
 }
@@ -58,6 +102,7 @@ namespace avro
     {
         static void encode(Encoder& e, const gpudb::ShowFunctionsRequest& v)
         {
+            ::avro::encode(e, v.names);
             ::avro::encode(e, v.options);
         }
 
@@ -72,6 +117,10 @@ namespace avro
                     switch (*it)
                     {
                         case 0:
+                            ::avro::decode(d, v.names);
+                            break;
+
+                        case 1:
                             ::avro::decode(d, v.options);
                             break;
 
@@ -82,6 +131,7 @@ namespace avro
             }
             else
             {
+                ::avro::decode(d, v.names);
                 ::avro::decode(d, v.options);
             }
         }
@@ -111,6 +161,8 @@ namespace gpudb
             parameters(std::vector<std::vector<std::string> >()),
             optionalParameterCount(std::vector<int32_t>()),
             flags(std::vector<int32_t>()),
+            typeSchemas(std::vector<std::string>()),
+            properties(std::vector<std::map<std::string, std::vector<std::string> > >()),
             info(std::map<std::string, std::string>())
         {
         }
@@ -120,6 +172,8 @@ namespace gpudb
         std::vector<std::vector<std::string> > parameters;
         std::vector<int32_t> optionalParameterCount;
         std::vector<int32_t> flags;
+        std::vector<std::string> typeSchemas;
+        std::vector<std::map<std::string, std::vector<std::string> > > properties;
         std::map<std::string, std::string> info;
     };
 }
@@ -139,6 +193,8 @@ namespace avro
             ::avro::encode(e, v.parameters);
             ::avro::encode(e, v.optionalParameterCount);
             ::avro::encode(e, v.flags);
+            ::avro::encode(e, v.typeSchemas);
+            ::avro::encode(e, v.properties);
             ::avro::encode(e, v.info);
         }
 
@@ -173,6 +229,14 @@ namespace avro
                             break;
 
                         case 5:
+                            ::avro::decode(d, v.typeSchemas);
+                            break;
+
+                        case 6:
+                            ::avro::decode(d, v.properties);
+                            break;
+
+                        case 7:
                             ::avro::decode(d, v.info);
                             break;
 
@@ -188,6 +252,8 @@ namespace avro
                 ::avro::decode(d, v.parameters);
                 ::avro::decode(d, v.optionalParameterCount);
                 ::avro::decode(d, v.flags);
+                ::avro::decode(d, v.typeSchemas);
+                ::avro::decode(d, v.properties);
                 ::avro::decode(d, v.info);
             }
         }

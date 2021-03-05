@@ -19,13 +19,13 @@ namespace gpudb
      * additional, optional weights and restrictions.
      * <p>
      * IMPORTANT: It's highly recommended that you review the
-     * <a href="../../graph_solver/network_graph_solver.html"
+     * <a href="../../../graph_solver/network_graph_solver/"
      * target="_top">Network Graphs & Solvers</a>
      * concepts documentation, the
-     * <a href="../../graph_solver/examples/graph_rest_guide.html"
+     * <a href="../../../graph_solver/examples/graph_rest_guide/"
      * target="_top">Graph REST Tutorial</a>,
      * and/or some
-     * <a href="../../graph_solver/examples.html#match-graph"
+     * <a href="../../../graph_solver/examples/#match-graph"
      * target="_top">/match/graph examples</a>
      * before using this endpoint.
      */
@@ -55,11 +55,11 @@ namespace gpudb
          *                             of an existing
          *                             graph. Weights must be specified using
          *                             <a
-         *                             href="../../graph_solver/network_graph_solver.html#identifiers"
+         *                             href="../../../graph_solver/network_graph_solver/#identifiers"
          *                             target="_top">identifiers</a>;
          *                             identifiers are grouped as
          *                             <a
-         *                             href="../../graph_solver/network_graph_solver.html#id-combos"
+         *                             href="../../../graph_solver/network_graph_solver/#id-combos"
          *                             target="_top">combinations</a>.
          *                             Identifiers can be used with existing
          *                             column names, e.g.,
@@ -85,11 +85,11 @@ namespace gpudb
          *                           existing graph. Restrictions must be
          *                           specified using
          *                           <a
-         *                           href="../../graph_solver/network_graph_solver.html#identifiers"
+         *                           href="../../../graph_solver/network_graph_solver/#identifiers"
          *                           target="_top">identifiers</a>;
          *                           identifiers are grouped as
          *                           <a
-         *                           href="../../graph_solver/network_graph_solver.html#id-combos"
+         *                           href="../../../graph_solver/network_graph_solver/#id-combos"
          *                           target="_top">combinations</a>.
          *                           Identifiers can be used with existing
          *                           column names, e.g.,
@@ -175,7 +175,7 @@ namespace gpudb
          * @param[in] solutionTable_  Name of the table to store the solution,
          *                            in [schema_name.]table_name format, using
          *                            standard <a
-         *                            href="../../concepts/tables.html#table-name-resolution"
+         *                            href="../../../concepts/tables/#table-name-resolution"
          *                            target="_top">name resolution rules</a>.
          * @param[in] options_  Additional parameters
          *                      <ul>
@@ -448,13 +448,13 @@ namespace gpudb
      * additional, optional weights and restrictions.
      * <p>
      * IMPORTANT: It's highly recommended that you review the
-     * <a href="../../graph_solver/network_graph_solver.html"
+     * <a href="../../../graph_solver/network_graph_solver/"
      * target="_top">Network Graphs & Solvers</a>
      * concepts documentation, the
-     * <a href="../../graph_solver/examples/graph_rest_guide.html"
+     * <a href="../../../graph_solver/examples/graph_rest_guide/"
      * target="_top">Graph REST Tutorial</a>,
      * and/or some
-     * <a href="../../graph_solver/examples.html#match-graph"
+     * <a href="../../../graph_solver/examples/#match-graph"
      * target="_top">/match/graph examples</a>
      * before using this endpoint.
      */

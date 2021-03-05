@@ -13,7 +13,7 @@ namespace gpudb
      * A set of input parameters for {@link
      * #createSchema(const CreateSchemaRequest&) const}.
      * <p>
-     * Creates a SQL-style <a href="../../concepts/schemas.html"
+     * Creates a SQL-style <a href="../../../concepts/schemas/"
      * target="_top">schema</a>. Schemas are containers for tables and views.
      * Multiple tables and views can be defined with the same name in different
      * schemas.
@@ -37,7 +37,7 @@ namespace gpudb
          * 
          * @param[in] schemaName_  Name of the schema to be created.  Has the
          *                         same naming restrictions as <a
-         *                         href="../../concepts/tables.html"
+         *                         href="../../../concepts/tables/"
          *                         target="_top">tables</a>.
          * @param[in] options_  Optional parameters.
          *                      <ul>
@@ -114,7 +114,7 @@ namespace gpudb
      * A set of output parameters for {@link
      * #createSchema(const CreateSchemaRequest&) const}.
      * <p>
-     * Creates a SQL-style <a href="../../concepts/schemas.html"
+     * Creates a SQL-style <a href="../../../concepts/schemas/"
      * target="_top">schema</a>. Schemas are containers for tables and views.
      * Multiple tables and views can be defined with the same name in different
      * schemas.

@@ -39,7 +39,7 @@ namespace gpudb
          * @param[in] tableName_  Name of the table to be cleared, in
          *                        [schema_name.]table_name format, using
          *                        standard <a
-         *                        href="../../concepts/tables.html#table-name-resolution"
+         *                        href="../../../concepts/tables/#table-name-resolution"
          *                        target="_top">name resolution rules</a>. Must
          *                        be an existing table. Empty string clears all
          *                        available tables, though this behavior is be
