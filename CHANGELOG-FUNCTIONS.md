@@ -4,17 +4,14 @@
 ## Version 7.1
 
 
-### Version 7.1.3.0 -- TBD
+### Version 7.1.3.0 -- 2021-03-05
 
 #### Changed Endpoints
 
 ##### Non-breaking Changes
--   KOLAP-2752: Added a new 'credential' option to the following endpoints:
+-   Added a new 'credential' option to the following endpoints:
     -   ``/create/datasource`
     -   ``/alter/datasource`
-
-##### Breaking Changes
--   xxx
 
 #### Added Endpoints
 -   Added the following endpoints to support the kifs global file namespace:
